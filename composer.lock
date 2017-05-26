@@ -4,8 +4,49 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "915e6fb408fdf5780e4f49b03325adcd",
+    "content-hash": "67e5a8bb8a3d52ab872761fe66bd5f26",
     "packages": [
+        {
+            "name": "aziraphale/email-address-validator",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aziraphale/email-address-validator.git",
+                "reference": "fa25bc22c1c0b6491657c91473fae3e40719a650"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aziraphale/email-address-validator/zipball/fa25bc22c1c0b6491657c91473fae3e40719a650",
+                "reference": "fa25bc22c1c0b6491657c91473fae3e40719a650",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "EmailAddressValidator": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dave Child",
+                    "email": "dave@addedbytes.com"
+                },
+                {
+                    "name": "Andrew Gillard",
+                    "email": "andrew@lorddeath.net"
+                }
+            ],
+            "description": "Fork of AddedBytes' PHP EmailAddressValidator script, now with Composer support!",
+            "homepage": "https://github.com/aziraphale/email-address-validator",
+            "time": "2017-05-22T14:05:57+00:00"
+        },
         {
             "name": "geshi/geshi",
             "version": "v1.0.9.0",

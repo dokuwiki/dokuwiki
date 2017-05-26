@@ -64,7 +64,6 @@ function load_autoload($name){
         'cache_renderer'        => DOKU_INC.'inc/cache.php',
         'Doku_Event'            => DOKU_INC.'inc/events.php',
         'Doku_Event_Handler'    => DOKU_INC.'inc/events.php',
-        'EmailAddressValidator' => DOKU_INC.'inc/EmailAddressValidator.php',
         'Input'                 => DOKU_INC.'inc/Input.class.php',
         'JpegMeta'              => DOKU_INC.'inc/JpegMeta.php',
         'SimplePie'             => DOKU_INC.'inc/SimplePie.php',

@@ -267,10 +267,8 @@ function mail_encode_address($string,$header='',$names=true){
  * @param   string $email the address to check
  * @return  bool          true if address is valid
  */
-function mail_isvalid($email){
-    $validator = new EmailAddressValidator;
-    $validator->allowLocalAddresses = true;
-    return $validator->check_email_address($email);
+function mail_isvalid($email) {
+    return EmailAddressValidator::checkEmailAddress($email, true);
 }
 
 /**

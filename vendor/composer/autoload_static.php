@@ -41,6 +41,13 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
                 0 => __DIR__ . '/..' . '/simplepie/simplepie/library',
             ),
         ),
+        'E' => 
+        array (
+            'EmailAddressValidator' => 
+            array (
+                0 => __DIR__ . '/..' . '/aziraphale/email-address-validator',
+            ),
+        ),
     );
 
     public static $classMap = array (

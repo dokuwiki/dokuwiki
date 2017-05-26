@@ -11,7 +11,8 @@
         "paragonie/random_compat": "^2.0",
         "simplepie/simplepie": "^1.4",
         "geshi/geshi": "^1.0",
-        "openpsa/universalfeedcreator": "^1.8"
+        "openpsa/universalfeedcreator": "^1.8",
+        "aziraphale/email-address-validator": "^2"
     },
     "suggest": {
         "squizlabs/php_codesniffer": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",

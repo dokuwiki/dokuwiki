@@ -349,5 +349,48 @@
             "pie",
             "rss"
         ]
+    },
+    {
+        "name": "aziraphale/email-address-validator",
+        "version": "2.0.1",
+        "version_normalized": "2.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/aziraphale/email-address-validator.git",
+            "reference": "fa25bc22c1c0b6491657c91473fae3e40719a650"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/aziraphale/email-address-validator/zipball/fa25bc22c1c0b6491657c91473fae3e40719a650",
+            "reference": "fa25bc22c1c0b6491657c91473fae3e40719a650",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^5.7"
+        },
+        "time": "2017-05-22T14:05:57+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "EmailAddressValidator": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Dave Child",
+                "email": "dave@addedbytes.com"
+            },
+            {
+                "name": "Andrew Gillard",
+                "email": "andrew@lorddeath.net"
+            }
+        ],
+        "description": "Fork of AddedBytes' PHP EmailAddressValidator script, now with Composer support!",
+        "homepage": "https://github.com/aziraphale/email-address-validator"
     }
 ]
