@@ -9,6 +9,7 @@
  * @author Thanasak Sompaisansin <jombthep@gmail.com>
  * @author Yuthana Tantirungrotechai <yt203y@gmail.com>
  * @author Amnuay <amnuay@gmail.com>
+ * @author ณัฐพงษ์อินตาแก้ว <naiw403@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -242,5 +243,5 @@ $lang['days']                  = '%d วันก่อน';
 $lang['hours']                 = '%d ชั่วโมงก่อน';
 $lang['minutes']               = '%d นาทีก่อน';
 $lang['seconds']               = '%d วินาทีก่อน';
-$lang['email_signature_text'] = 'จดหมายนี้ถูกสร้างขึ้นโดยโดกุวิกิที่
+$lang['email_signature_text']  = 'จดหมายนี้ถูกสร้างขึ้นโดยโดกุวิกิที่
 @DOKUWIKIURL@';
