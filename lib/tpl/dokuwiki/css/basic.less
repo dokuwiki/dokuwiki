@@ -260,12 +260,20 @@ mark {
     color: inherit;
 }
 
+.monospaced {
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Nimbus Mono L", Monaco, "Courier New", monospace;
+    /* same font stack should be used for ".dokuwiki table.diff td" in _diff.css */
+}
+
+tt {
+    .monospaced;
+}
+
 pre,
 code,
 samp,
 kbd {
-    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Nimbus Mono L", Monaco, "Courier New", monospace;
-    /* same font stack should be used for ".dokuwiki table.diff td" in _diff.css */
+    .monospaced;
     font-size: 1em;
     direction: ltr;
     text-align: left;
