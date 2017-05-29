@@ -20,3 +20,5 @@ $conf['userkey']    = 'uid';
 $conf['groupkey']   = 'cn';
 $conf['debug']      = 0;
 $conf['modPass']    = 1;
+$conf['enableWhitelist']= 0;
+$conf['whitelist'] = '';

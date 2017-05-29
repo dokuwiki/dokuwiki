@@ -19,3 +19,5 @@ $meta['userkey']     = array('string','_caution' => 'danger');
 $meta['groupkey']    = array('string','_caution' => 'danger');
 $meta['debug']       = array('onoff','_caution' => 'security');
 $meta['modPass']     = array('onoff');
+$meta['enableWhitelist'] = array('onoff', '_caution' => 'danger');
+$meta['whitelist']  = array('string', '_caution' => 'danger');  
