@@ -1267,7 +1267,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if($rc) {
             for($x = $start; $x != $end; $x += $mod) {
                 $item = $feed->get_item($x);
-                $this->doc .= '<li><div class="li">';
+                $this->doc .= '<li class="rss_item"><div class="li">';
                 // support feeds without links
                 $lnkurl = $item->get_permalink();
                 if($lnkurl) {
@@ -1285,11 +1285,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     if($author) {
                         $name = $author->get_name();
                         if(!$name) $name = $author->get_email();
-                        if($name) $this->doc .= ' '.$lang['by'].' '.$name;
+                        if($name) $this->doc .= '<span class="author">'.$lang['by'].' '.$name.'</span>';
                     }
                 }
                 if($params['date']) {
-                    $this->doc .= ' ('.$item->get_local_date($conf['dformat']).')';
+                    $this->doc .= '<span class="date">('.$item->get_local_date($conf['dformat']).')</span>';
                 }
                 if($params['details']) {
                     $this->doc .= '<div class="detail">';
