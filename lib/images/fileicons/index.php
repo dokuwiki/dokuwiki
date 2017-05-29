@@ -28,6 +28,13 @@
 </head>
 <body>
 
+<?php
+$sizes = isset($_GET['sizes']) ? explode(',', (string)$_GET['sizes']) : array(16, 32);
+?>
+
+<?php
+if (in_array(16, $sizes)) :
+?>
 <div class="white box">
 <?php
 foreach (glob('*.png') as $img) {
@@ -45,7 +52,13 @@ foreach (glob('*.png') as $img) {
 </div>
 
 <br style="clear: left" />
+<?php
+endif;
+?>
 
+<?php
+if (in_array(32, $sizes)) :
+?>
 <div class="white box">
     <?php
     foreach (glob('32x32/*.png') as $img) {
@@ -61,7 +74,9 @@ foreach (glob('*.png') as $img) {
     }
     ?>
 </div>
-
+<?php
+endif;
+?>
 
 </body>
 </html>
