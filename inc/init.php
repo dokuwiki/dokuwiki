@@ -31,6 +31,12 @@ if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 // define config path (packagers may want to change this to /etc/dokuwiki/)
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 
+// define path where variable data is saved (packagers may want to change this to /var/lib/dokuwiki/)
+if(!defined('DOKU_DATA')) define('DOKU_DATA',DOKU_INC.'data');
+
+// define path where cache data saved (packagers may want to change this to /var/cache/dokuwiki/)
+if(!defined('DOKU_CACHE')) define('DOKU_CACHE',DOKU_DATA.'cache');
+
 // check for error reporting override or set error reporting to sane values
 if (!defined('DOKU_E_LEVEL') && file_exists(DOKU_CONF.'report_e_all')) {
     define('DOKU_E_LEVEL', E_ALL);

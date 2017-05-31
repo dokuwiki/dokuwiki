@@ -7,7 +7,9 @@
 
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
-if(!defined('DOKU_LOCAL')) define('DOKU_LOCAL',DOKU_INC.'conf/');
+if(!defined('DOKU_LOCAL')) define('DOKU_LOCAL',DOKU_CONF);
+if(!defined('DOKU_DATA')) define('DOKU_DATA',DOKU_INC.'data');
+if(!defined('DOKU_CACHE')) define('DOKU_CACHE',DOKU_DATA.'cache');
 
 // load and initialize the core system
 require_once(DOKU_INC.'inc/init.php');
@@ -512,17 +514,17 @@ function check_permissions(){
 
     $dirs = array(
         'conf'        => DOKU_LOCAL,
-        'data'        => DOKU_INC.'data',
-        'pages'       => DOKU_INC.'data/pages',
-        'attic'       => DOKU_INC.'data/attic',
-        'media'       => DOKU_INC.'data/media',
-        'media_attic' => DOKU_INC.'data/media_attic',
-        'media_meta'  => DOKU_INC.'data/media_meta',
-        'meta'        => DOKU_INC.'data/meta',
-        'cache'       => DOKU_INC.'data/cache',
-        'locks'       => DOKU_INC.'data/locks',
-        'index'       => DOKU_INC.'data/index',
-        'tmp'         => DOKU_INC.'data/tmp'
+        'data'        => DOKU_DATA,
+        'pages'       => DOKU_DATA.'pages',
+        'attic'       => DOKU_DATA.'attic',
+        'media'       => DOKU_DATA.'media',
+        'media_attic' => DOKU_DATA.'media_attic',
+        'media_meta'  => DOKU_DATA.'media_meta',
+        'meta'        => DOKU_DATA.'meta',
+        'cache'       => DOKU_CACHE,
+        'locks'       => DOKU_DATA.'locks',
+        'index'       => DOKU_DATA.'index',
+        'tmp'         => DOKU_DATA.'tmp'
     );
 
     $ok = true;
