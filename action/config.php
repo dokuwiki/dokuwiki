@@ -7,6 +7,7 @@
  */
 
 // must be run within Dokuwiki
+use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\types\AbstractBaseType;
 
 if(!defined('DOKU_INC')) die();
@@ -37,8 +38,9 @@ class action_plugin_struct_config extends DokuWiki_Action_Plugin {
         global $INPUT;
 
         $conf = json_decode($INPUT->str('conf'), true);
+        $typeclasses = Column::allTypes();
+        $class = $typeclasses[$INPUT->str('type', 'Text')];
         /** @var AbstractBaseType $type */
-        $class = 'dokuwiki\\plugin\\struct\\types\\' . $INPUT->str('type', 'Text');
         $type = new $class($conf);
 
         header('Content-Type: text/plain'); // we need the encoded string, not decoded by jQuery
