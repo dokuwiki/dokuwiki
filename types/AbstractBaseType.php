@@ -237,19 +237,20 @@ abstract class AbstractBaseType {
      *
      * @param string $name the form base name where this has to be stored
      * @param string[] $rawvalues the current values
+     * @param string $htmlID   a unique id to be referenced by the label
      * @return string html
      */
-    public function multiValueEditor($name, $rawvalues) {
+    public function multiValueEditor($name, $rawvalues, $htmlID) {
         $html = '';
         foreach($rawvalues as $value) {
             $html .= '<div class="multiwrap">';
-            $html .= $this->valueEditor($name . '[]', $value);
+            $html .= $this->valueEditor($name . '[]', $value, '');
             $html .= '</div>';
         }
         // empty field to add
         $html .= '<div class="newtemplate">';
         $html .= '<div class="multiwrap">';
-        $html .= $this->valueEditor($name . '[]', '');
+        $html .= $this->valueEditor($name . '[]', '', $htmlID);
         $html .= '</div>';
         $html .= '</div>';
 
@@ -259,11 +260,13 @@ abstract class AbstractBaseType {
     /**
      * Return the editor to edit a single value
      *
-     * @param string $name  the form name where this has to be stored
+     * @param string $name     the form name where this has to be stored
      * @param string $rawvalue the current value
+     * @param string $htmlID   a unique id to be referenced by the label
+     *
      * @return string html
      */
-    public function valueEditor($name, $rawvalue) {
+    public function valueEditor($name, $rawvalue, $htmlID) {
         $class = 'struct_' . strtolower($this->getClass());
 
         // support the autocomplete configurations out of the box
@@ -273,7 +276,9 @@ abstract class AbstractBaseType {
 
         $name = hsc($name);
         $rawvalue = hsc($rawvalue);
-        $html = "<input name=\"$name\" value=\"$rawvalue\" class=\"$class\" />";
+        $id = !empty($htmlID) ? "id=\"$htmlID\"" : '';
+
+        $html = "<input name=\"$name\" value=\"$rawvalue\" class=\"$class\" $id />";
         return "$html";
     }
 

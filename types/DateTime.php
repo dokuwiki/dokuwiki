@@ -31,11 +31,13 @@ class DateTime extends Date {
     /**
      * Return the editor to edit a single value
      *
-     * @param string $name the form name where this has to be stored
+     * @param string $name     the form name where this has to be stored
      * @param string $rawvalue the current value
+     * @param string $htmlID
+     *
      * @return string html
      */
-    public function valueEditor($name, $rawvalue) {
+    public function valueEditor($name, $rawvalue, $htmlID) {
         $name = hsc($name);
         $rawvalue = hsc($rawvalue);
 
@@ -43,7 +45,9 @@ class DateTime extends Date {
             $rawvalue = date('Y-m-d H:i:s');
         }
 
-        $html = "<input class=\"struct_datetime\" name=\"$name\" value=\"$rawvalue\" />";
+        $id = !empty($htmlID) ? "id=\"$htmlID\"" : '';
+
+        $html = "<input class=\"struct_datetime\" name=\"$name\" value=\"$rawvalue\" $id />";
         return "$html";
     }
 

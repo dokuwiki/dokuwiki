@@ -41,14 +41,17 @@ class Wiki extends AbstractBaseType {
      *
      * @param string $name
      * @param string $rawvalue
+     * @param string $htmlID
+     *
      * @return string
      */
-    public function valueEditor($name, $rawvalue) {
+    public function valueEditor($name, $rawvalue, $htmlID) {
         $class = 'struct_'.strtolower($this->getClass());
         $name = hsc($name);
         $rawvalue = formText($rawvalue);
+        $id = !empty($htmlID) ? "id=\"$htmlID\"" : '';
 
-        $html = "<textarea name=\"$name\" class=\"$class\">$rawvalue</textarea>";
+        $html = "<textarea name=\"$name\" class=\"$class\" $id>$rawvalue</textarea>";
         return "$html";
     }
 }

@@ -102,13 +102,15 @@ class helper_plugin_struct_field extends helper_plugin_bureaucracy_field {
         $colname = $field->getColumn()->getFullQualifiedLabel();
         $required = $this->opt['optional'] ? '' : ' <sup>*</sup>';
 
-        $input = $field->getValueEditor($name);
+        $id = uniqid('struct__', false);
+        $input = $field->getValueEditor($name, $id);
 
-        $html = '';
-        $html .= "<label class=\"$lclass\" data-column=\"$colname\">";
+        $html = '<div class="field">';
+        $html .= "<label class=\"$lclass\" data-column=\"$colname\" for=\"$id\">";
         $html .= "<span class=\"label $class\" title=\"$hint\">$trans$required</span>";
-        $html .= "<span class=\"input\">$input</span>";
         $html .= '</label>';
+        $html .= "<span class=\"input\">$input</span>";
+        $html .= '</div>';
 
         return $html;
     }

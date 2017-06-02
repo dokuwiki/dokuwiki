@@ -16,14 +16,16 @@ abstract class AbstractMultiBaseType extends AbstractBaseType {
     /**
      * @param string $name
      * @param \string[] $rawvalues
+     * @param string $htmlID   a unique id to be referenced by the label
+     *
      * @return string
      */
-    public function multiValueEditor($name, $rawvalues) {
+    public function multiValueEditor($name, $rawvalues, $htmlID) {
         $value = join(', ', $rawvalues);
 
         return
             '<div class="multiwrap">' .
-            $this->valueEditor($name, $value) .
+            $this->valueEditor($name, $value, $htmlID) .
             '</div>' .
             '<small>' .
             $this->getLang('multi') .

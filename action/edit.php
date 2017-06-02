@@ -119,7 +119,8 @@ class action_plugin_struct_edit extends DokuWiki_Action_Plugin {
         $class = $hint ? 'hashint' : '';
         $colname = $field->getColumn()->getFullQualifiedLabel();
 
-        $input = $field->getValueEditor($name);
+        $id = uniqid('struct__', false);
+        $input = $field->getValueEditor($name, $id);
 
         // we keep all the custom form stuff the field might produce, but hide it
         if(!$field->getColumn()->isVisibleInEditor()) {
@@ -128,11 +129,12 @@ class action_plugin_struct_edit extends DokuWiki_Action_Plugin {
             $hide = '';
         }
 
-        $html = '';
-        $html .= "<label $hide data-column=\"$colname\">";
+        $html = '<div class="field">';
+        $html .= "<label $hide data-column=\"$colname\" for=\"$id\">";
         $html .= "<span class=\"label $class\" title=\"$hint\">$trans</span>";
-        $html .= "<span class=\"input\">$input</span>";
         $html .= '</label>';
+        $html .= "<span class=\"input\">$input</span>";
+        $html .= '</div>';
 
         return $html;
     }

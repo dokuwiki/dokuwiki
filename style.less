@@ -8,6 +8,7 @@
         width: 100%;
         padding: 0.5em 0;
         display: table;
+        text-align: left;
 
         legend {
             text-align: left;
@@ -30,19 +31,22 @@
             background: transparent url(../../images/closed.png) 5px center no-repeat;
         }
     }
+    div.field {
+        display: table-row;
 
     label {
-        display: table-row;
+            display: table-cell;
         text-align: left;
         font-weight: normal;
+            width: 10em;
 
         &:hover {
             background-color: @ini_background_alt;
         }
 
         span.label {
-            width: 10em;
-            display: table-cell;
+                display: inline-block;
+                box-sizing: border-box;
             padding-left: 0.5em;
             padding-top: 0.25em;
             padding-bottom: 0.25em;
@@ -67,6 +71,7 @@
                 width: 380px;
             }
         }
+    }
     }
 
     // this should not influence the design

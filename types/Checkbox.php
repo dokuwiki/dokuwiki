@@ -24,9 +24,11 @@ class Checkbox extends AbstractBaseType {
      *
      * @param string $name
      * @param string $rawvalue
+     * @param string $htmlID
+     *
      * @return string
      */
-    public function valueEditor($name, $rawvalue) {
+    public function valueEditor($name, $rawvalue, $htmlID) {
         $class = 'struct_' . strtolower($this->getClass());
 
         $name = hsc($name);
@@ -39,18 +41,21 @@ class Checkbox extends AbstractBaseType {
             $checked = '';
         }
         $opt = hsc($opt);
-        $html = "<label><input type=\"checkbox\" name=\"$name\" class=\"$class\" value=\"$opt\" $checked>&nbsp;$opt</label>";
+        $id = !empty($htmlID) ? "id=\"$htmlID\"" : '';
+        $html = "<label><input type=\"checkbox\" name=\"$name\" class=\"$class\" value=\"$opt\" $id $checked>&nbsp;$opt</label>";
         return $html;
     }
 
     /**
      * Multiple checkboxes
      *
-     * @param string $name
+     * @param string    $name
      * @param \string[] $rawvalues
+     * @param string    $htmlID
+     *
      * @return string
      */
-    public function multiValueEditor($name, $rawvalues) {
+    public function multiValueEditor($name, $rawvalues, $htmlID) {
         $class = 'struct_' . strtolower($this->getClass());
 
         $name = hsc($name);
@@ -62,8 +67,11 @@ class Checkbox extends AbstractBaseType {
                 $checked = '';
             }
 
+            $id = !empty($htmlID) ? "id=\"$htmlID\"" : '';
+            $htmlID = null;
+
             $opt = hsc($opt);
-            $html .= "<label><input type=\"checkbox\" name=\"{$name}[]\" class=\"$class\" value=\"$opt\" $checked>&nbsp;$opt</label>";
+            $html .= "<label><input type=\"checkbox\" name=\"{$name}[]\" class=\"$class\" value=\"$opt\" $id $checked>&nbsp;$opt</label>";
         }
         return $html;
     }

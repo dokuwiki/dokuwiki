@@ -193,11 +193,11 @@ class Value {
      * @param string $name The field name to use in the editor
      * @return string The HTML for the editor
      */
-    public function getValueEditor($name) {
+    public function getValueEditor($name, $id) {
         if($this->column->isMulti()) {
-            return $this->column->getType()->multiValueEditor($name, $this->rawvalue);
+            return $this->column->getType()->multiValueEditor($name, $this->rawvalue, $id);
         } else {
-            return $this->column->getType()->valueEditor($name, $this->rawvalue);
+            return $this->column->getType()->valueEditor($name, $this->rawvalue, $id);
         }
     }
 
