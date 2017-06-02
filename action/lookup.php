@@ -146,12 +146,12 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
         echo '<div class="struct_entry_form">';
         echo '<fieldset>';
         echo '<legend>' . $this->getLang('lookup new entry') . '</legend>';
-        /** @var action_plugin_struct_entry $entry */
-        $entry = plugin_load('action', 'struct_entry');
+        /** @var action_plugin_struct_edit $edit */
+        $edit = plugin_load('action', 'struct_edit');
         foreach($schema->getColumns(false) as $column) {
             $label = $column->getLabel();
             $field = new Value($column, '');
-            echo $entry->makeField($field, "entry[$label]");
+            echo $edit->makeField($field, "entry[$label]");
         }
         formSecurityToken(); // csrf protection
         echo '<input type="hidden" name="call" value="plugin_struct_lookup_save" />';

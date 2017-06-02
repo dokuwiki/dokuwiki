@@ -8,11 +8,10 @@ use dokuwiki\plugin\struct\meta;
  * @group plugin_struct
  * @group plugins
  *
- * @covers action_plugin_struct_entry
  * @covers action_plugin_struct_revert
  * @covers action_plugin_struct_edit
  */
-class entry_struct_test extends StructTest {
+class edit_struct_test extends StructTest {
 
     public function setUp() {
         parent::setUp();
@@ -37,10 +36,10 @@ class entry_struct_test extends StructTest {
     }
 
     public function test_createForm_storedData() {
-        $entry = new mock\action_plugin_struct_entry();
+        $edit = new mock\action_plugin_struct_edit();
         global $ID;
         $ID = 'page01';
-        $test_html = $entry->createForm('schema1');
+        $test_html = $edit->createForm('schema1');
 
         $pq = \phpQuery::newDocument($test_html);
         $this->assertEquals('schema1', $pq->find('legend')->text());
@@ -51,10 +50,10 @@ class entry_struct_test extends StructTest {
     }
 
     public function test_createForm_emptyData() {
-        $entry = new mock\action_plugin_struct_entry();
+        $edit = new mock\action_plugin_struct_edit();
         global $ID;
         $ID = 'page02';
-        $test_html = $entry->createForm('schema1');
+        $test_html = $edit->createForm('schema1');
 
         $pq = \phpQuery::newDocument($test_html);
         $this->assertEquals('schema1', $pq->find('legend')->text());
@@ -75,10 +74,10 @@ class entry_struct_test extends StructTest {
                 'fourth' => 'fourth post data'
             )
         );
-        $INPUT->set(mock\action_plugin_struct_entry::getVAR(), $structdata);
+        $INPUT->set(mock\action_plugin_struct_edit::getVAR(), $structdata);
 
-        $entry = new mock\action_plugin_struct_entry();
-        $test_html = $entry->createForm('schema1');
+        $edit = new mock\action_plugin_struct_edit();
+        $test_html = $edit->createForm('schema1');
 
         $pq = \phpQuery::newDocument($test_html);
         $this->assertEquals('schema1', $pq->find('legend')->text());
