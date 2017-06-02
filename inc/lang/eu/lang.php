@@ -7,6 +7,7 @@
  * @author Inko Illarramendi <inko.i.a@gmail.com>
  * @author Zigor Astarbe <astarbe@gmail.com>
  * @author Yadav Gowda <yadav.gowda@gmail.com>
+ * @author Osoitz <oelkoro@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -63,6 +64,7 @@ $lang['fullname']              = 'Izen Deiturak';
 $lang['email']                 = 'E-Maila';
 $lang['profile']               = 'Erabiltzaile Profila';
 $lang['badlogin']              = 'Barkatu, prozesuak huts egin du; saiatu berriz';
+$lang['badpassconfirm']        = 'Pasahitz okerra';
 $lang['minoredit']             = 'Aldaketa Txikiak';
 $lang['draftdate']             = 'Zirriborroa automatikoki gorde da hemen:';
 $lang['nosecedit']             = 'Orria aldatua izan da bitartean, info atala zaharkituta geratu da, orri osoa kargatu da horren ordez.';
@@ -71,6 +73,7 @@ $lang['regmissing']            = 'Barkatu, hutsune guztiak bete behar dituzu.';
 $lang['reguexists']            = 'Barkatu, izen bereko erabiltzailea existitzen da.';
 $lang['regsuccess']            = 'Erabiltzailea sortu da. Pasahitza mailez bidaliko zaizu.';
 $lang['regsuccess2']           = 'Erabiltzailea sortua izan da.';
+$lang['regfail']               = 'Ezin izan da erabiltzailea sortu';
 $lang['regmailfail']           = 'Badirudi arazoren bat egon dela pasahitza mailez bidaltzeko orduan. Administratzailearekin harremanetan jarri!';
 $lang['regbadmail']            = 'Emandako helbidea ez da zuzena - jarri harremanetan administratzailearekin hau akats bat dela uste baduzu';
 $lang['regbadpass']            = 'Idatzitako bi pasahitzak ez dira berdinak, berriz saiatu.';
@@ -306,5 +309,5 @@ $lang['media_viewold']         = '%s -n %s';
 $lang['media_edit']            = '%s editatu';
 $lang['media_update']          = 'Bertsio berria igo';
 $lang['media_restore']         = 'Bertsio hau berrezarri';
-$lang['email_signature_text'] = 'Email hau DokuWiki erabiliz sortu da
+$lang['email_signature_text']  = 'Email hau DokuWiki erabiliz sortu da
 @DOKUWIKIURL@';
