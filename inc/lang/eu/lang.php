@@ -142,6 +142,7 @@ $lang['js']['del_confirm']     = 'Benetan ezabatu aukeratutako fitxategia(k)?';
 $lang['js']['restore_confirm'] = 'Benetan bertsio hau berrezarri?';
 $lang['js']['media_diff']      = 'Diferentziak ikusi:';
 $lang['js']['media_diff_both'] = 'Ondoz ondo';
+$lang['js']['media_diff_portions'] = 'Pasatu hatza';
 $lang['js']['media_select']    = 'Fitxategiak hautatu';
 $lang['js']['media_upload_btn'] = 'Igo';
 $lang['js']['media_done_btn']  = 'Egina';
