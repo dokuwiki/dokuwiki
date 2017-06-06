@@ -45,6 +45,7 @@
  * @author Romano <romanocl@outlook.com>
  * @author David Roy <davidroyapp@gmail.com>
  * @author Enny Rodriguez <aquilez.4@gmail.com>
+ * @author Aparher <ap3000@telefonica.net>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
