@@ -40,6 +40,7 @@
  * @author Floriang <antispam@floriang.eu>
  * @author Eric <ericstevenart@netc.fr>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
+ * @author insomniaqc <stefb965@yahoo.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
