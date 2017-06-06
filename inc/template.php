@@ -697,6 +697,7 @@ function tpl_get_action($type) {
             }
             break;
         case 'revisions':
+            if (!$INFO['writable'] && !actionOK('revisionreading')) return false;
             $type      = 'revs';
             $accesskey = 'o';
             break;

@@ -288,6 +288,7 @@ function act_validate($act) {
  * @return string action command
  */
 function act_permcheck($act){
+    global $REV;
     global $INFO;
 
     if(in_array($act,array('save','preview','edit','recover'))){
@@ -302,6 +303,8 @@ function act_permcheck($act){
         }else{
             $permneed = AUTH_CREATE;
         }
+    }elseif($act == 'revisions' && !actionOK('revisionreading')){
+        $permneed = AUTH_EDIT;
     }elseif(in_array($act,array('login','search','recent','profile','profile_delete','index', 'sitemap'))){
         $permneed = AUTH_NONE;
     }elseif($act == 'revert'){
@@ -319,6 +322,8 @@ function act_permcheck($act){
         }else{
             $permneed = AUTH_ADMIN;
         }
+    }elseif($REV && !actionOK('revisionreading')){
+        $permneed = AUTH_EDIT;
     }else{
         $permneed = AUTH_READ;
     }
