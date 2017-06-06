@@ -22,6 +22,7 @@
  * @author hznupeter <qiujiongtao@163.com>
  * @author kuma <kuma000@qq.com>
  * @author phy25 <git@phy25.com>
+ * @author 王庚辉 <wghmycl1985@163.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
