@@ -1,34 +1,70 @@
 <?php
+
 /**
- * Latin language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Massimiliano Vassalli <vassalli.max@gmail.com>
+ * @author www.xglartesaniasecuatorianas.Com <nydiakirkpatrick@aol.com>
  */
-$lang['admin_acl']             = 'Administratio Indicis Custodiae Aditus';
-$lang['acl_group']             = 'Grex:';
-$lang['acl_user']              = 'Sodalis:';
-$lang['acl_perms']             = 'Facultas:';
-$lang['page']                  = 'Pagina';
-$lang['namespace']             = 'Genus';
-$lang['btn_select']            = 'eligere';
-$lang['p_user_id']             = 'Sodalis <b class="acluser">%s</b> nunc has facultates paginae "<b class="aclpage">%s</b> habes: <i>%s</i>.';
-$lang['p_user_ns']             = 'Sodalis <b class="acluser">%s</b> nunc has facultates generis "<b class="aclns">%s</b> habes: <i>%s</i>.';
-$lang['p_group_id']            = 'Socius\a gregis <b class="aclgroup">%s</b> nunc has facultates paginae "<b class="aclpage">%s</b> habes: <i>%s</i>.';
-$lang['p_group_ns']            = 'Socius\a gregis <b class="aclgroup">%s</b> nunc has facultates generis "<b class="aclns">%s</b> habes: <i>%s</i>.';
-$lang['p_choose_id']           = '<b>Sodalis grexue</b> in campo insere ut facultates paginae <b class="aclpage">%s</b> uideas.';
-$lang['p_choose_ns']           = '<b>Sodalis grexue</b> in campo insere ut facultates generis <b class="aclns">%s</b> uideas.';
-$lang['p_inherited']           = 'Caue: hae facultates et huic rei et aliis gregibus uel generibus legitimae sunt.';
-$lang['p_isadmin']             = 'Caue: electi greges semper plenum ius habent, eo quod ut magister\stra elegitur.';
-$lang['p_include']             = 'Maiores facultates minores includunt. Creandi, onerandi uel delendi facultates solum generibus, non paginis sunt.';
-$lang['current']               = 'Communes ICA leges';
-$lang['where']                 = 'Pagina/Genus';
-$lang['who']                   = 'Sodalis/Grex';
-$lang['perm']                  = 'Facultates';
-$lang['acl_perm0']             = 'Nihil';
-$lang['acl_perm1']             = 'Legere';
-$lang['acl_perm2']             = 'Recensere';
-$lang['acl_perm4']             = 'Creare';
-$lang['acl_perm8']             = 'Onerare';
-$lang['acl_perm16']            = 'Delere';
-$lang['acl_new']               = 'Nouom addere';
-$lang['acl_mod']               = 'Nouom recensere';
+$lang['admin_acl']             = 'I\'m not sure exactly why but this blog is loading very slow 
+for me. Is anyone else having this problem or is it a issue on my end?
+
+I\'ll check back later on and see if the problem still exists.';
+$lang['acl_group']             = 'I\'m not sure exactly why but this blog is loading very slow for me.
+Is anyone else having this problem or is it a issue on my end?
+
+I\'ll check back later on and see if the problem still exists.';
+$lang['acl_user']              = 'Nydia';
+$lang['acl_perms']             = 'I\'m not sure exactly why but this blog is loading very slow for me.
+Is anyone else having this problem or is it a issue on my end?
+
+I\'ll check back later on and see if the problem still exists.';
+$lang['page']                  = 'I\'m not sure exactly why but this blog is loading very 
+slow for me. Is anyone else having this problem or is it a issue 
+on my end? I\'ll check back later on and see if the problem still exists.';
+$lang['namespace']             = 'Kirkpatrick';
+$lang['btn_select']            = 'I\'m not sure exactly why but this blog is loading very slow for 
+me. Is anyone else having this problem or is it 
+a issue on my end? I\'ll check back later on and see if the problem still exists.';
+$lang['p_user_id']             = 'Nydia';
+$lang['p_user_ns']             = 'Nydia';
+$lang['p_group_id']            = 'Gladiator';
+$lang['p_group_ns']            = 'Nydia';
+$lang['p_choose_id']           = 'Nydia';
+$lang['p_choose_ns']           = 'Nydia';
+$lang['p_inherited']           = 'Nydia';
+$lang['p_isadmin']             = 'Nydia';
+$lang['p_include']             = 'Kirkpatrick';
+$lang['current']               = '1';
+$lang['where']                 = 'Punta Raisi';
+$lang['who']                   = 'Nydia';
+$lang['perm']                  = 'I\'m not sure exactly why but this blog is loading very slow for me.
+Is anyone else having this problem or is it a issue on my end?
+I\'ll check back later on and see if the problem still 
+exists.';
+$lang['acl_perm0']             = 'I\'m not sure exactly why but this blog is loading very slow for 
+me. Is anyone else having this problem or is it a issue on my end?
+I\'ll check back later on and see if the problem still exists.';
+$lang['acl_perm1']             = 'I\'m not sure exactly why but this blog is loading very slow for 
+me. Is anyone else having this problem or is it a 
+issue on my end? I\'ll check back later on and see if the problem still exists.';
+$lang['acl_perm2']             = 'I\'m not sure exactly why but this blog is loading very slow for 
+me. Is anyone else having this problem or is it a issue on my end?
+I\'ll check back later on and see if the problem still exists.';
+$lang['acl_perm4']             = 'I\'m not sure exactly why but this blog is loading very slow for me.
+
+Is anyone else having this problem or is it a issue on my end?
+I\'ll check back later on and see if the problem still exists.';
+$lang['acl_perm8']             = 'I\'m not sure exactly why but this blog is loading very slow for me.
+Is anyone else having this problem or is it a issue on my end?
+I\'ll check back later on and see if the problem still exists.';
+$lang['acl_perm16']            = 'I\'m not sure exactly why but this blog is loading 
+very slow for me. Is anyone else having this problem or is it a issue on my end?
+I\'ll check back later on and see if the problem still exists.';
+$lang['acl_new']               = 'I\'m not sure exactly why but this blog is loading very 
+slow for me. Is anyone else having this problem or is it a issue 
+on my end? I\'ll check back later on and see if the problem still exists.';
+$lang['acl_mod']               = 'I\'m not sure exactly why but this blog is loading very slow for me.
+Is anyone else having this problem or is it a issue on my end?
+
+I\'ll check back later on and see if the problem still exists.';
