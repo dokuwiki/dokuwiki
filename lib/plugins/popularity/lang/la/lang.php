@@ -1,13 +1,22 @@
 <?php
+
 /**
- * Latin language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Massimiliano Vassalli <vassalli.max@gmail.com>
+ * @author ασφαλεια αυτοκινητου τριμηνη - Γλιτώστε Χρήματα! <devinorellana@zoho.com>
  */
-$lang['name']                  = 'Index fauoris popularis (multum tempus quaerere potest)';
-$lang['submit']                = 'Missum die';
-$lang['autosubmit']            = 'Constanter res omni mense mittuntur';
-$lang['submissionFailed']      = 'Res non mittuntur ea causa:';
-$lang['submitDirectly']        = 'Res tu mittere potes cum hoc exemplar compleas.';
-$lang['autosubmitError']       = 'Extrema missio lapsa est ea causa:';
-$lang['lastSent']              = 'Res missae sunt';
+$lang['name']                  = 'Orellana';
+$lang['submit']                = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted 
+of this your broadcast provided bright clear concept';
+$lang['autosubmit']            = '1';
+$lang['submissionFailed']      = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided 
+bright clear concept';
+$lang['submitDirectly']        = '1981';
+$lang['autosubmitError']       = '1';
+$lang['lastSent']              = 'Fantastic beat ! I would like to apprentice while you amend your site, how 
+could i subscribe for a weblog web site? The account helped me 
+a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';

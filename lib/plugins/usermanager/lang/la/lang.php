@@ -1,47 +1,144 @@
 <?php
+
 /**
- * Latin language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Massimiliano Vassalli <vassalli.max@gmail.com>
+ * @author ασφαλεια αυτοκινητου τριμηνη - Γλιτώστε Χρήματα! <devinorellana@zoho.com>
  */
-$lang['menu']                  = 'Sodalis Tabella';
-$lang['noauth']                = '(Sodalis confirmatio deest)';
-$lang['nosupport']             = '(Sodalis administratio deest)';
-$lang['badauth']               = 'Confirmatio fieri non potest.';
-$lang['user_id']               = 'Sodalis';
-$lang['user_pass']             = 'Tessera';
-$lang['user_name']             = 'Nomen uerum';
-$lang['user_mail']             = 'Cursus Interretialis';
-$lang['user_groups']           = 'Grex';
-$lang['field']                 = 'Campus';
-$lang['value']                 = 'Vis';
-$lang['add']                   = 'Addere';
-$lang['delete']                = 'Delere';
-$lang['delete_selected']       = 'Electa delere';
-$lang['edit']                  = 'Recensere';
-$lang['edit_prompt']           = 'Sodalem recensere';
-$lang['modify']                = 'Mutata seruare';
+$lang['menu']                  = 'Devin';
+$lang['noauth']                = 'Devin';
+$lang['nosupport']             = 'Olinda';
+$lang['badauth']               = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i 
+subscribe for a weblog web site? The account helped me a appropriate deal.
+
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['user_id']               = 'ασφαλεια αυτοκινητου τριμηνη - Γλιτώστε Χρήματα!';
+$lang['user_pass']             = 'Fantastic beat ! I would like to apprentice while you amend your 
+site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit 
+acquainted of this your broadcast provided bright clear concept';
+$lang['user_name']             = 'Orellana';
+$lang['user_mail']             = 'devinorellana@zoho.com';
+$lang['user_groups']           = 'Devin';
+$lang['field']                 = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear 
+concept';
+$lang['value']                 = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe 
+for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['add']                   = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal. I had 
+been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['delete']                = 'Fantastic beat ! I would like to apprentice 
+while you amend your site, how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['delete_selected']       = 'Fantastic beat ! I would like to apprentice 
+while you amend your site, how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal. I had been tiny 
+bit acquainted of this your broadcast provided bright clear concept';
+$lang['edit']                  = 'Fantastic beat ! I would like to apprentice while you amend your site, how could 
+i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear 
+concept';
+$lang['edit_prompt']           = 'Devin';
+$lang['modify']                = 'Fantastic beat ! I would like to apprentice while you amend 
+your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
 $lang['search']                = 'Quaerere';
 $lang['search_prompt']         = 'Agentem quaerere';
 $lang['clear']                 = 'Colum quaerendi abrogare';
-$lang['filter']                = 'Colum';
-$lang['summary']               = 'Sodales %1$d-%2$d inter %3$d ostenduntur. Numerus Sodalium. %4$d.';
-$lang['nonefound']             = 'Sodalis non repertus. Numerus sodalium: %d';
-$lang['delete_ok']             = '%d Sodales delentur.';
-$lang['delete_fail']           = '%d non deleri possunt.';
-$lang['update_ok']             = 'Sodalis feliciter nouatus\a';
-$lang['update_fail']           = 'Sodalis infeliciter nouatus\a';
-$lang['update_exists']         = 'Nomen Sodalis non mutatur, eo quod hoc nomen (%s) iam electum est.';
-$lang['start']                 = 'in primis';
-$lang['prev']                  = 'antea';
-$lang['next']                  = 'postea';
-$lang['last']                  = 'in extremis';
-$lang['edit_usermissing']      = 'Hic Sodalis non inuenitur, eo quod nomen iam deletum uel mutatum est.';
-$lang['user_notify']           = 'Sodalem adnotare';
-$lang['note_notify']           = 'Adnotationes cursu interretiali missae solum si noua tessera petitur.';
-$lang['note_group']            = 'Noui\ae Sodales communi Gregi adduntur (%s) si Grex non elegitur.';
-$lang['note_pass']             = 'Tessera non generata nisi campus uacuos est et Sodalis adnotationes aptae faciuntur.';
-$lang['add_ok']                = 'Sodalis feliciter additur.';
-$lang['add_fail']              = 'Sodalis infeliciter additur.';
-$lang['notify_ok']             = 'Adnotationes cursu interretiali missae';
-$lang['notify_fail']           = 'Adnotationes cursu interretiali non missae';
+$lang['filter']                = 'None';
+$lang['export_all']            = 'Olinda';
+$lang['export_filtered']       = 'Olinda';
+$lang['import']                = 'Olinda';
+$lang['line']                  = 'Fantastic beat ! I would like to apprentice while you amend 
+your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['error']                 = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i 
+subscribe for a weblog web site? The account helped 
+me a appropriate deal. I had been tiny bit acquainted 
+of this your broadcast provided bright clear 
+concept';
+$lang['summary']               = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web 
+site? The account helped me a appropriate deal. I 
+had been tiny bit acquainted of this your 
+broadcast provided bright clear concept';
+$lang['nonefound']             = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear 
+concept';
+$lang['delete_ok']             = 'Fantastic beat ! I would like to apprentice while you amend your site, how could 
+i subscribe for a weblog web site? The account helped 
+me a appropriate deal. I had been tiny bit acquainted of this 
+your broadcast provided bright clear concept';
+$lang['delete_fail']           = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web 
+site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['update_ok']             = 'Devin';
+$lang['update_fail']           = 'Devin';
+$lang['update_exists']         = 'Devin';
+$lang['start']                 = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny 
+bit acquainted of this your broadcast provided bright clear concept';
+$lang['prev']                  = 'Fantastic beat ! I would like to apprentice while 
+you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['next']                  = 'Fantastic beat ! I would like to apprentice while you amend your site, how could 
+i subscribe for a weblog web site? The account helped 
+me a appropriate deal. I had been tiny bit acquainted of this your broadcast 
+provided bright clear concept';
+$lang['last']                  = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your 
+broadcast provided bright clear concept';
+$lang['edit_usermissing']      = 'Devin';
+$lang['user_notify']           = '0';
+$lang['note_notify']           = '0';
+$lang['note_group']            = 'Fantastic beat ! I would like to apprentice while you amend your site, how could 
+i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['note_pass']             = '0';
+$lang['add_ok']                = 'Devin';
+$lang['add_fail']              = 'Devin';
+$lang['notify_ok']             = '0';
+$lang['notify_fail']           = '0';
+$lang['import_userlistcsv']    = 'Olinda';
+$lang['import_header']         = 'Olinda';
+$lang['import_success_count']  = 'Olinda';
+$lang['import_failure_count']  = 'Olinda';
+$lang['import_error_fields']   = 'Olinda';
+$lang['import_error_baduserid'] = 'Olinda';
+$lang['import_error_badname']  = 'Orellana';
+$lang['import_error_badmail']  = 'Olinda';
+$lang['import_error_upload']   = 'Olinda';
+$lang['import_error_readfail'] = 'Olinda';
+$lang['import_error_create']   = 'Olinda';
+$lang['import_notify_fail']    = '0';
+$lang['import_downloadfailures'] = 'Olinda';
+$lang['addUser_error_missing_pass'] = '0';
+$lang['addUser_error_pass_not_identical'] = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i 
+subscribe for a weblog web site? The account helped me a appropriate 
+deal. I had been tiny bit acquainted of this your broadcast 
+provided bright clear concept';
+$lang['addUser_error_modPass_disabled'] = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i 
+subscribe for a weblog web site? The account helped me a appropriate deal.
+
+I had been tiny bit acquainted of this your broadcast provided 
+bright clear concept';
+$lang['addUser_error_name_missing'] = 'Orellana';
+$lang['addUser_error_modName_disabled'] = 'Orellana';
+$lang['addUser_error_mail_missing'] = 'devinorellana@zoho.com';
+$lang['addUser_error_modMail_disabled'] = 'devinorellana@zoho.com';
+$lang['addUser_error_create_event_failed'] = 'Fantastic beat ! I would like to apprentice while 
+you amend your site, how could i subscribe for a 
+weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';

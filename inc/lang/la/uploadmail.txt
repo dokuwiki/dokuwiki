@@ -1,10 +1,1 @@
-Documentum nouatum est. Hae mutatione sunt:
-
-Documentum : @MEDIA@
-Dies : @DATE@
-Machina interretis : @BROWSER@
-IP-Numerus : @IPADDRESS@
-Hospes situs : @HOSTNAME@
-Pondus : @SIZE@
-MIME Genus : @MIME@
-Sodalis : @USER@
+devinorellana@zoho.com
