@@ -1,47 +1,164 @@
 <?php
+
 /**
- * Latin language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Massimiliano Vassalli <vassalli.max@gmail.com>
+ * @author Ασφάλεια Αυτοκινήτου Online <kyle.lahr@vegemail.com>
  */
-$lang['menu']                  = 'Sodalis Tabella';
-$lang['noauth']                = '(Sodalis confirmatio deest)';
-$lang['nosupport']             = '(Sodalis administratio deest)';
-$lang['badauth']               = 'Confirmatio fieri non potest.';
-$lang['user_id']               = 'Sodalis';
-$lang['user_pass']             = 'Tessera';
-$lang['user_name']             = 'Nomen uerum';
-$lang['user_mail']             = 'Cursus Interretialis';
-$lang['user_groups']           = 'Grex';
-$lang['field']                 = 'Campus';
-$lang['value']                 = 'Vis';
-$lang['add']                   = 'Addere';
-$lang['delete']                = 'Delere';
-$lang['delete_selected']       = 'Electa delere';
-$lang['edit']                  = 'Recensere';
-$lang['edit_prompt']           = 'Sodalem recensere';
-$lang['modify']                = 'Mutata seruare';
+$lang['menu']                  = 'Kyle';
+$lang['noauth']                = 'Kyle';
+$lang['nosupport']             = 'Uithoorn';
+$lang['badauth']               = 'With havin so much content do you ever run into any issues of plagorism or 
+copyright violation? My site has a lot of unique content I\'ve either authored myself or outsourced but it 
+appears a lot of it is popping it up all over the web without my permission. Do you know any solutions to 
+help stop content from being ripped off? I\'d definitely appreciate it.';
+$lang['user_id']               = 'Ασφάλεια Αυτοκινήτου Online';
+$lang['user_pass']             = 'With havin so much content do you ever run into any issues of plagorism 
+or copyright violation? My site has a lot of unique content I\'ve 
+either authored myself or outsourced but it 
+appears a lot of it is popping it up all over the web without my permission. Do you know 
+any solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
+$lang['user_name']             = 'Lahr';
+$lang['user_mail']             = 'kyle.lahr@vegemail.com';
+$lang['user_groups']           = 'Kyle';
+$lang['field']                 = 'With havin so much content do you ever run into any issues of plagorism or copyright violation? My site has a lot of unique content I\'ve either authored myself or outsourced but it appears a lot 
+of it is popping it up all over the web without my permission. Do you 
+know any solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
+$lang['value']                 = 'With havin so much content do you ever run into any issues of plagorism or copyright violation? My site has 
+a lot of unique content I\'ve either authored myself or outsourced 
+but it appears a lot of it is popping it up all over the web without my permission. Do you know any solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
+$lang['add']                   = 'With havin so much content do you ever run into any issues of plagorism or copyright violation? My site has a lot of unique content I\'ve either authored myself or 
+outsourced but it appears a lot of it is popping 
+it up all over the web without my permission. Do you know any solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
+$lang['delete']                = 'With havin so much content do you ever run into any 
+issues of plagorism or copyright violation? My site has a lot 
+of unique content I\'ve either authored myself or outsourced but 
+it appears a lot of it is popping it up all over the web without my permission. Do you know any 
+solutions to help stop content from being ripped off? I\'d definitely 
+appreciate it.';
+$lang['delete_selected']       = 'With havin so much content do you ever run into any issues of plagorism or copyright violation? My site has a lot of unique content I\'ve either authored myself or outsourced but 
+it appears a lot of it is popping it up all over 
+the web without my permission. Do you know any solutions to 
+help stop content from being ripped off? I\'d definitely appreciate it.';
+$lang['edit']                  = 'With havin so much content do you ever run into any issues of plagorism 
+or copyright violation? My site has a lot of unique content 
+I\'ve either authored myself or outsourced but it appears a lot 
+of it is popping it up all over the web without my permission. Do you know any solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
+$lang['edit_prompt']           = 'Kyle';
+$lang['modify']                = 'With havin so much content do you ever run into any issues 
+of plagorism or copyright violation? My site has a lot of unique content 
+I\'ve either authored myself or outsourced but it appears a lot of it is popping it up all over the web 
+without my permission. Do you know any solutions to help stop 
+content from being ripped off? I\'d definitely appreciate it.';
 $lang['search']                = 'Quaerere';
 $lang['search_prompt']         = 'Agentem quaerere';
 $lang['clear']                 = 'Colum quaerendi abrogare';
-$lang['filter']                = 'Colum';
-$lang['summary']               = 'Sodales %1$d-%2$d inter %3$d ostenduntur. Numerus Sodalium. %4$d.';
-$lang['nonefound']             = 'Sodalis non repertus. Numerus sodalium: %d';
-$lang['delete_ok']             = '%d Sodales delentur.';
-$lang['delete_fail']           = '%d non deleri possunt.';
-$lang['update_ok']             = 'Sodalis feliciter nouatus\a';
-$lang['update_fail']           = 'Sodalis infeliciter nouatus\a';
-$lang['update_exists']         = 'Nomen Sodalis non mutatur, eo quod hoc nomen (%s) iam electum est.';
-$lang['start']                 = 'in primis';
-$lang['prev']                  = 'antea';
-$lang['next']                  = 'postea';
-$lang['last']                  = 'in extremis';
-$lang['edit_usermissing']      = 'Hic Sodalis non inuenitur, eo quod nomen iam deletum uel mutatum est.';
-$lang['user_notify']           = 'Sodalem adnotare';
-$lang['note_notify']           = 'Adnotationes cursu interretiali missae solum si noua tessera petitur.';
-$lang['note_group']            = 'Noui\ae Sodales communi Gregi adduntur (%s) si Grex non elegitur.';
-$lang['note_pass']             = 'Tessera non generata nisi campus uacuos est et Sodalis adnotationes aptae faciuntur.';
-$lang['add_ok']                = 'Sodalis feliciter additur.';
-$lang['add_fail']              = 'Sodalis infeliciter additur.';
-$lang['notify_ok']             = 'Adnotationes cursu interretiali missae';
-$lang['notify_fail']           = 'Adnotationes cursu interretiali non missae';
+$lang['filter']                = 'None';
+$lang['export_all']            = 'Uithoorn';
+$lang['export_filtered']       = 'Uithoorn';
+$lang['import']                = 'Uithoorn';
+$lang['line']                  = 'With havin so much content do you ever run into any issues of plagorism or copyright violation? 
+My site has a lot of unique content I\'ve either authored myself or outsourced but it appears a lot of it is popping it up all over the 
+web without my permission. Do you know any solutions 
+to help stop content from being ripped off? I\'d definitely 
+appreciate it.';
+$lang['error']                 = 'With havin so much content do you ever run into any issues of plagorism or copyright violation? My site has 
+a lot of unique content I\'ve either authored 
+myself or outsourced but it appears a lot of it is popping it up all 
+over the web without my permission. Do you know any 
+solutions to help stop content from being ripped off? I\'d definitely appreciate it.';
+$lang['summary']               = 'With havin so much content do you ever run into any issues of plagorism 
+or copyright violation? My site has a lot of unique content I\'ve either authored 
+myself or outsourced but it appears a lot of it is popping 
+it up all over the web without my permission. Do you know any solutions 
+to help stop content from being ripped off? I\'d definitely appreciate it.';
+$lang['nonefound']             = 'With havin so much content do you ever run into any issues of plagorism or copyright 
+violation? My site has a lot of unique content I\'ve either 
+authored myself or outsourced but it appears a lot of it is popping 
+it up all over the web without my permission. Do you know any solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
+$lang['delete_ok']             = 'With havin so much content do you ever run into any issues of plagorism or copyright violation? My 
+site has a lot of unique content I\'ve either authored 
+myself or outsourced but it appears a lot of it is popping it up all 
+over the web without my permission. Do you know any solutions to help 
+stop content from being ripped off? I\'d definitely appreciate it.';
+$lang['delete_fail']           = 'With havin so much content do you ever run into any issues of 
+plagorism or copyright violation? My site has a lot of unique content I\'ve either 
+authored myself or outsourced but it appears a lot of it is popping it up all over the web without my permission. Do you know any solutions to help stop content 
+from being ripped off? I\'d definitely appreciate it.';
+$lang['update_ok']             = 'Kyle';
+$lang['update_fail']           = 'Kyle';
+$lang['update_exists']         = 'Kyle';
+$lang['start']                 = 'With havin so much content do you ever run into any issues of plagorism or copyright violation? My site has a 
+lot of unique content I\'ve either authored myself or outsourced but it 
+appears a lot of it is popping it up all over the web without 
+my permission. Do you know any solutions to help stop content from being ripped 
+off? I\'d definitely appreciate it.';
+$lang['prev']                  = 'With havin so much content do you ever run into any issues of plagorism or copyright violation? My site 
+has a lot of unique content I\'ve either authored myself or outsourced but it appears 
+a lot of it is popping it up all over the web without my permission. Do you know any solutions to help stop content from being ripped 
+off? I\'d definitely appreciate it.';
+$lang['next']                  = 'With havin so much content do you ever run into any issues of plagorism 
+or copyright violation? My site has a lot of unique content I\'ve either authored myself 
+or outsourced but it appears a lot of it is popping it up all over 
+the web without my permission. Do you know any solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
+$lang['last']                  = 'With havin so much content do you ever run into any issues of plagorism 
+or copyright violation? My site has a lot of unique content I\'ve either 
+authored myself or outsourced but it appears a 
+lot of it is popping it up all over the web without my permission. Do you know any solutions 
+to help stop content from being ripped off? I\'d definitely appreciate it.';
+$lang['edit_usermissing']      = 'Kyle';
+$lang['user_notify']           = '0';
+$lang['note_notify']           = '0';
+$lang['note_group']            = 'With havin so much content do you ever run into any issues of plagorism or 
+copyright violation? My site has a lot of unique content I\'ve either authored myself or outsourced but it appears 
+a lot of it is popping it up all over the web without my permission. Do 
+you know any solutions to help stop content from 
+being ripped off? I\'d definitely appreciate it.';
+$lang['note_pass']             = '0';
+$lang['add_ok']                = 'Kyle';
+$lang['add_fail']              = 'Kyle';
+$lang['notify_ok']             = '0';
+$lang['notify_fail']           = '0';
+$lang['import_userlistcsv']    = 'Uithoorn';
+$lang['import_header']         = 'Uithoorn';
+$lang['import_success_count']  = 'Uithoorn';
+$lang['import_failure_count']  = 'Uithoorn';
+$lang['import_error_fields']   = 'Uithoorn';
+$lang['import_error_baduserid'] = 'Uithoorn';
+$lang['import_error_badname']  = 'Lahr';
+$lang['import_error_badmail']  = 'Uithoorn';
+$lang['import_error_upload']   = 'Uithoorn';
+$lang['import_error_readfail'] = 'Uithoorn';
+$lang['import_error_create']   = 'Uithoorn';
+$lang['import_notify_fail']    = '0';
+$lang['import_downloadfailures'] = 'Uithoorn';
+$lang['addUser_error_missing_pass'] = '0';
+$lang['addUser_error_pass_not_identical'] = 'With havin so much content do you ever run into 
+any issues of plagorism or copyright violation? My site 
+has a lot of unique content I\'ve either authored myself or outsourced but it appears a lot of it is popping it up all over the web without my permission. 
+Do you know any solutions to help stop content from being 
+ripped off? I\'d definitely appreciate it.';
+$lang['addUser_error_modPass_disabled'] = 'With havin so much content do you ever run into any issues of plagorism 
+or copyright violation? My site has a lot of unique content I\'ve either authored 
+myself or outsourced but it appears a lot of it 
+is popping it up all over the web without my permission. Do you know any 
+solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
+$lang['addUser_error_name_missing'] = 'Lahr';
+$lang['addUser_error_modName_disabled'] = 'Lahr';
+$lang['addUser_error_mail_missing'] = 'kyle.lahr@vegemail.com';
+$lang['addUser_error_modMail_disabled'] = 'kyle.lahr@vegemail.com';
+$lang['addUser_error_create_event_failed'] = 'With havin so much content do you ever run into any issues 
+of plagorism or copyright violation? My site has 
+a lot of unique content I\'ve either authored myself or outsourced but it 
+appears a lot of it is popping it up all over the web without 
+my permission. Do you know any solutions to help stop content from being ripped 
+off? I\'d definitely appreciate it.';

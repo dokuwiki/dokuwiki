@@ -1,34 +1,92 @@
 <?php
+
 /**
- * Latin language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Massimiliano Vassalli <vassalli.max@gmail.com>
+ * @author Ασφάλεια Αυτοκινήτου Online <kyle.lahr@vegemail.com>
  */
-$lang['admin_acl']             = 'Administratio Indicis Custodiae Aditus';
-$lang['acl_group']             = 'Grex:';
-$lang['acl_user']              = 'Sodalis:';
-$lang['acl_perms']             = 'Facultas:';
-$lang['page']                  = 'Pagina';
-$lang['namespace']             = 'Genus';
-$lang['btn_select']            = 'eligere';
-$lang['p_user_id']             = 'Sodalis <b class="acluser">%s</b> nunc has facultates paginae "<b class="aclpage">%s</b> habes: <i>%s</i>.';
-$lang['p_user_ns']             = 'Sodalis <b class="acluser">%s</b> nunc has facultates generis "<b class="aclns">%s</b> habes: <i>%s</i>.';
-$lang['p_group_id']            = 'Socius\a gregis <b class="aclgroup">%s</b> nunc has facultates paginae "<b class="aclpage">%s</b> habes: <i>%s</i>.';
-$lang['p_group_ns']            = 'Socius\a gregis <b class="aclgroup">%s</b> nunc has facultates generis "<b class="aclns">%s</b> habes: <i>%s</i>.';
-$lang['p_choose_id']           = '<b>Sodalis grexue</b> in campo insere ut facultates paginae <b class="aclpage">%s</b> uideas.';
-$lang['p_choose_ns']           = '<b>Sodalis grexue</b> in campo insere ut facultates generis <b class="aclns">%s</b> uideas.';
-$lang['p_inherited']           = 'Caue: hae facultates et huic rei et aliis gregibus uel generibus legitimae sunt.';
-$lang['p_isadmin']             = 'Caue: electi greges semper plenum ius habent, eo quod ut magister\stra elegitur.';
-$lang['p_include']             = 'Maiores facultates minores includunt. Creandi, onerandi uel delendi facultates solum generibus, non paginis sunt.';
-$lang['current']               = 'Communes ICA leges';
-$lang['where']                 = 'Pagina/Genus';
-$lang['who']                   = 'Sodalis/Grex';
-$lang['perm']                  = 'Facultates';
-$lang['acl_perm0']             = 'Nihil';
-$lang['acl_perm1']             = 'Legere';
-$lang['acl_perm2']             = 'Recensere';
-$lang['acl_perm4']             = 'Creare';
-$lang['acl_perm8']             = 'Onerare';
-$lang['acl_perm16']            = 'Delere';
-$lang['acl_new']               = 'Nouom addere';
-$lang['acl_mod']               = 'Nouom recensere';
+$lang['admin_acl']             = 'With havin so much content do you ever run into any issues of plagorism or copyright violation? My site 
+has a lot of unique content I\'ve either authored myself or outsourced but it appears a lot 
+of it is popping it up all over the web without my permission. Do you know any solutions to help stop content 
+from being ripped off? I\'d definitely appreciate it.';
+$lang['acl_group']             = 'With havin so much content do you ever run into any issues 
+of plagorism or copyright violation? My site has a lot 
+of unique content I\'ve either authored myself or outsourced but it appears a lot of it is popping it 
+up all over the web without my permission. Do you know any solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
+$lang['acl_user']              = 'Kyle';
+$lang['acl_perms']             = 'With havin so much content do you ever run into any issues of plagorism or copyright 
+violation? My site has a lot of unique content I\'ve either 
+authored myself or outsourced but it appears a 
+lot of it is popping it up all over the web without my 
+permission. Do you know any solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
+$lang['page']                  = 'With havin so much content do you ever run into any issues of plagorism or copyright violation? My site has a lot of unique content I\'ve either authored myself or outsourced but it 
+appears a lot of it is popping it up all over the web without my permission. Do you know any 
+solutions to help stop content from being ripped off?
+
+I\'d definitely appreciate it.';
+$lang['namespace']             = 'Lahr';
+$lang['btn_select']            = 'With havin so much content do you ever run into any issues of 
+plagorism or copyright violation? My site has a lot of unique content I\'ve either authored 
+myself or outsourced but it appears a lot of it is 
+popping it up all over the web without my permission. Do you know any solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
+$lang['p_user_id']             = 'Kyle';
+$lang['p_user_ns']             = 'Kyle';
+$lang['p_group_id']            = 'Magician';
+$lang['p_group_ns']            = 'Kyle';
+$lang['p_choose_id']           = 'Kyle';
+$lang['p_choose_ns']           = 'Kyle';
+$lang['p_inherited']           = 'Kyle';
+$lang['p_isadmin']             = 'Kyle';
+$lang['p_include']             = 'Lahr';
+$lang['current']               = '1';
+$lang['where']                 = 'Uithoorn';
+$lang['who']                   = 'Kyle';
+$lang['perm']                  = 'With havin so much content do you ever run into any issues of plagorism or copyright violation? My site has a lot of unique content I\'ve either authored myself or 
+outsourced but it appears a lot of it is popping it up all 
+over the web without my permission. Do you know any 
+solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
+$lang['acl_perm0']             = 'With havin so much content do you ever run into any issues of 
+plagorism or copyright violation? My site has a lot of unique content I\'ve either authored 
+myself or outsourced but it appears a lot of it is popping it up all 
+over the web without my permission. Do you know any solutions to help 
+stop content from being ripped off? I\'d definitely appreciate it.';
+$lang['acl_perm1']             = 'With havin so much content do you ever run into any issues of plagorism or copyright violation? My site has a 
+lot of unique content I\'ve either authored myself or 
+outsourced but it appears a lot of it is popping it 
+up all over the web without my permission. Do you know any solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
+$lang['acl_perm2']             = 'With havin so much content do you ever run into any issues of plagorism or copyright violation? My site has a 
+lot of unique content I\'ve either authored myself or outsourced but 
+it appears a lot of it is popping it up all over the web without my permission. Do you know any 
+solutions to help stop content from being ripped off? I\'d definitely appreciate it.';
+$lang['acl_perm4']             = 'With havin so much content do you ever run into any issues of plagorism or 
+copyright violation? My site has a lot of unique content I\'ve 
+either authored myself or outsourced but it appears a lot of it is popping it up 
+all over the web without my permission. Do you know any solutions to help stop content from being ripped off?
+
+I\'d definitely appreciate it.';
+$lang['acl_perm8']             = 'With havin so much content do you ever run into any issues of plagorism or copyright 
+violation? My site has a lot of unique content I\'ve 
+either authored myself or outsourced but it appears a lot of it is popping it up all over the web without my 
+permission. Do you know any solutions to help stop content from being 
+ripped off? I\'d definitely appreciate it.';
+$lang['acl_perm16']            = 'With havin so much content do you ever run into any issues of plagorism or 
+copyright violation? My site has a lot of unique 
+content I\'ve either authored myself or outsourced but it appears a 
+lot of it is popping it up all over the web without my permission. Do 
+you know any solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
+$lang['acl_new']               = 'With havin so much content do you ever run into any issues of 
+plagorism or copyright violation? My site has a lot of unique content I\'ve either 
+authored myself or outsourced but it appears a lot of it is popping it up all over the web without my permission. Do you know any solutions to help stop 
+content from being ripped off? I\'d definitely appreciate it.';
+$lang['acl_mod']               = 'With havin so much content do you ever run into any issues 
+of plagorism or copyright violation? My site has a lot of unique content 
+I\'ve either authored myself or outsourced but it appears a lot of it is popping it up all over 
+the web without my permission. Do you know any solutions to help stop content from being ripped off?
+I\'d definitely appreciate it.';
