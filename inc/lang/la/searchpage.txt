@@ -1,5 +1,1 @@
-====== Quaerere ======
-
-Responsiones in hac pagina uidere potes. @CREATEPAGEINFO@
-
-===== Responsiones =====
+====== Quaerere ====== Responsiones in hac pagina uidere potes. @CREATEPAGEINFO@ ===== Responsiones =====

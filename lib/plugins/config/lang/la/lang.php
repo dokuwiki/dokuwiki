@@ -1,176 +1,507 @@
 <?php
+
 /**
- * Latin language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Massimiliano Vassalli <vassalli.max@gmail.com>
+ * @author ασφαλεια αυτοκινητου τριμηνη - Γλιτώστε Χρήματα! <devinorellana@zoho.com>
  */
-$lang['menu']                  = 'Optiones Administrationis';
-$lang['error']                 = 'Optiones non nouatae ob errores: rursum temptat. Errores rubro colore signati sunt.';
-$lang['updated']               = 'Optiones feliciter nouatae.';
-$lang['nochoice']              = '(nulla optio est)';
-$lang['locked']                = 'Optio documenti non nouata est, <br/> optiones et facultates documenti inspicis.';
-$lang['danger']                = 'CAVE: si has optiones mutabis, in administrationis indicem non inire potes.';
-$lang['warning']               = 'CAVE: si hae optiones mutabis, graues errores erunt.';
-$lang['security']              = 'CAVE: si hae optiones mutabis, graues errores erunt.';
-$lang['_configuration_manager'] = 'Optionum administratio';
-$lang['_header_dokuwiki']      = 'Vicis Optiones';
-$lang['_header_plugin']        = 'Addendorum Optiones';
-$lang['_header_template']      = 'Vicis Formae Optiones';
-$lang['_header_undefined']     = 'Variae Optiones';
-$lang['_basic']                = 'Praecipuae Optiones';
-$lang['_display']              = 'Speciei Optiones';
-$lang['_authentication']       = 'Confirmationis Optiones';
-$lang['_anti_spam']            = 'In Mala Optiones';
-$lang['_editing']              = 'Recensendi Optiones';
-$lang['_links']                = 'Nexi Optiones';
-$lang['_media']                = 'Visiuorum Optiones';
-$lang['_advanced']             = 'Maiores Optiones';
-$lang['_network']              = 'Interretis Optiones';
-$lang['_msg_setting_undefined'] = 'Res codicum sine optionibus.';
-$lang['_msg_setting_no_class'] = 'Classes sine optionibus';
-$lang['_msg_setting_no_default'] = 'Nihil';
-$lang['fmode']                 = 'Documentum creandum ratio';
-$lang['dmode']                 = 'Scrinia creandam ratio';
-$lang['lang']                  = 'Linguae optiones';
-$lang['basedir']               = 'Computatoris seruitoris domicilium (ex. <code>/dokuwiki/</code>). Nihil scribere si id machinatione agnoscere uis.';
-$lang['baseurl']               = 'Computatoris seruitoris VRL (ex. <code>http://www.yourserver.com</code>). Nihil scribere si id machinatione agnoscere uis.';
-$lang['savedir']               = 'Documentorum seruatorum domicilium';
-$lang['start']                 = 'Nomen paginae dominicae';
-$lang['title']                 = 'Vicis titulus';
-$lang['template']              = 'Vicis forma';
-$lang['license']               = 'Sub quibus legibus uicem creare uin?';
-$lang['fullpath']              = 'Totum domicilium paginae in pedibus scribis.';
-$lang['recent']                = 'Extremae mutationes';
-$lang['breadcrumbs']           = 'Numerus uestigiorum';
-$lang['youarehere']            = 'Ordo uestigiorum';
-$lang['typography']            = 'Signa supponentes';
-$lang['htmlok']                = 'HTML aptum facere';
-$lang['phpok']                 = 'PHP aptum facere';
-$lang['dformat']               = 'Forma diei (uide paginam <a href="http://php.net/strftime">de diebus</a>)';
-$lang['signature']             = 'Subscriptio';
-$lang['toptoclevel']           = 'Gradus maior tabularum argumentorum';
-$lang['tocminheads']           = 'Minimus numerus capitum';
-$lang['maxtoclevel']           = 'Maximus numerus tabularum argumentorum';
-$lang['maxseclevel']           = 'Maxima pars gradus recensendi';
-$lang['camelcase']             = 'SignaContinua nexis apta facere';
-$lang['deaccent']              = 'Titulus paginarum abrogare';
-$lang['useheading']            = 'Capite primo ut titulo paginae uti';
-$lang['refcheck']              = 'Documenta uisiua inspicere';
-$lang['allowdebug']            = '<b>ineptum facias si non necessarium!</b> aptum facere';
-$lang['usewordblock']          = 'Malum interretiale ob uerba delere';
-$lang['indexdelay']            = 'Tempus transitum in ordinando (sec)';
-$lang['relnofollow']           = 'rel="nofollow" externis nexis uti';
-$lang['mailguard']             = 'Cursus interretiales abscondere';
-$lang['iexssprotect']          = 'Documenta nouata ob mala JavaScript uel HTML inspicere';
-$lang['showuseras']            = 'Quid, cum Sodalem, qui extremus paginam recensuit, ostendat, scribere';
-$lang['useacl']                = 'Aditus inspectionis indicibus uti';
-$lang['autopasswd']            = 'Tessera machinatione generata';
-$lang['authtype']              = 'Confirmationis finis';
-$lang['passcrypt']             = 'Ratio tesserae tuendae';
-$lang['defaultgroup']          = 'Grex communis';
-$lang['superuser']             = 'Magister\stra - grex, Sodalis uel index diuisus a uigulis sodalis1,@grex,sodalis2 cum plenis facultatibus sine ICA optionum termino';
-$lang['manager']               = 'Administrator - grex, Sodalis uel index diuisus a uigulis sodalis1,@grex,sodalis2 cum certis facultatibus';
-$lang['profileconfirm']        = 'Mutationes tessera confirmanda sunt';
-$lang['disableactions']        = 'Vicis actiones ineptas facere';
-$lang['disableactions_check']  = 'Inspicere';
-$lang['disableactions_subscription'] = 'Inscribe/Delere';
-$lang['disableactions_wikicode'] = 'Fontem uidere/Rudem transcribere';
-$lang['disableactions_other']  = 'Aliae actiones (uirgulis diuisae)';
-$lang['sneaky_index']          = 'Hic uicis omnia genera in indice inserit. Si ineptam hanc optionem facias, solum ea, quae Sodales uidere possunt, in indice erunt. Hoc suggreges et suggenera abscondere potest.';
-$lang['auth_security_timeout'] = 'Confirmationis Tempus (secundis)';
-$lang['securecookie']          = 'Formulae HTTPS mittine solum per HTTPS possunt? Ineptam hanc optio facias, si accessus uicis tutus est, sed interretis non.';
-$lang['updatecheck']           = 'Nouationes et fiducias inspicerene? Hic uicis connectere update.dokuwiki.org debes.';
-$lang['userewrite']            = 'VRL formosis uti';
-$lang['useslash']              = 'Repagula in URL, ut genera diuidas, uti';
-$lang['usedraft']              = 'Propositum in recensione machinatione seruatur';
-$lang['sepchar']               = 'Signum, quod paginas diuidit';
-$lang['canonical']             = 'VRL perfecto uti';
-$lang['fnencode']              = 'Ratio quae nomen documentorum non-ASCII codificit';
-$lang['autoplural']            = 'Pluralia in nexis inspicere';
-$lang['compression']           = 'Ratio compressionis documentis "attic"';
-$lang['cachetime']             = 'Maximum tempus formulis (sec)';
-$lang['locktime']              = 'Maximum tempus documentis inclusis (sec)';
-$lang['fetchsize']             = 'Maximum pondus (bytes), quod fetch.php ab externis onerare potest';
-$lang['notify']                = 'Adnotationis mutationes ad hunc cursum mittere';
-$lang['registernotify']        = 'De nouis Sodalibus ad hunc cursum notas mittere';
-$lang['mailfrom']              = 'Cursus interretialis, quo in cursibus uti';
-$lang['gzip_output']           = 'gzip Argumentum-Codificans xhtml uti';
-$lang['gdlib']                 = 'GD Lib forma';
-$lang['im_convert']            = 'Domicilium machinae ImageMagick\'s';
-$lang['jpg_quality']           = 'JPG compressio colorum (0-100)';
-$lang['subscribers']           = 'Inscriptionis paginarum auxilium aptus facere';
-$lang['subscribe_time']        = 'Tempus post quod inscriptionum index et summa missa sunt (sec); Hic minor quam tempus declaratum fortasse est.';
-$lang['compress']              = 'CSS et javascript dimissio';
+$lang['menu']                  = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['error']                 = '1986';
+$lang['updated']               = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog 
+web site? The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['nochoice']              = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe 
+for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided 
+bright clear concept';
+$lang['locked']                = 'Devin';
+$lang['danger']                = 'Fantastic beat ! I would like to apprentice while you amend your site, how 
+could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['warning']               = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['security']              = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['_configuration_manager'] = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for 
+a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright 
+clear concept';
+$lang['_header_dokuwiki']      = 'I am the new guy';
+$lang['_header_plugin']        = 'I am the new guy';
+$lang['_header_template']      = 'I am the new guy';
+$lang['_header_undefined']     = 'I am the new guy';
+$lang['_basic']                = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['_display']              = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['_authentication']       = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['_anti_spam']            = 'None';
+$lang['_editing']              = 'Fantastic beat ! I would like to apprentice while you amend 
+your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I 
+had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['_links']                = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['_media']                = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit 
+acquainted of this your broadcast provided bright clear 
+concept';
+$lang['_notifications']        = '0';
+$lang['_syndication']          = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of 
+this your broadcast provided bright clear concept';
+$lang['_advanced']             = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a 
+weblog web site? The account helped me a appropriate 
+deal. I had been tiny bit acquainted of this your 
+broadcast provided bright clear concept';
+$lang['_network']              = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['_msg_setting_undefined'] = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['_msg_setting_no_class'] = 'Shaman';
+$lang['_msg_setting_no_default'] = 'Fantastic beat ! I would like to apprentice while you amend your 
+site, how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['title']                 = 'I am the new guy';
+$lang['start']                 = 'Devin';
+$lang['lang']                  = 'Fantastic beat ! I would like to apprentice while you amend 
+your site, how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['template']              = 'Fantastic beat ! I would like to apprentice while you amend your site, how could 
+i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear 
+concept';
+$lang['tagline']               = '27';
+$lang['sidebar']               = 'Olinda';
+$lang['license']               = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny 
+bit acquainted of this your broadcast provided bright clear 
+concept';
+$lang['savedir']               = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+
+I had been tiny bit acquainted of this your broadcast provided bright 
+clear concept';
+$lang['basedir']               = 'None';
+$lang['baseurl']               = 'http://oarrhistory.com/%CE%A4%CE%B9%CE%BC%CE%B5%CF%82_Of_Automobile_Ownership.';
+$lang['cookiedir']             = 'http://oarrhistory.com/%CE%A4%CE%B9%CE%BC%CE%B5%CF%82_Of_Automobile_Ownership.';
+$lang['dmode']                 = 'Fantastic beat ! I would like to apprentice while you amend 
+your site, how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright 
+clear concept';
+$lang['fmode']                 = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal. I had 
+been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['allowdebug']            = 'Fantastic beat ! I would like to apprentice while 
+you amend your site, how could i subscribe for a weblog web 
+site? The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['recent']                = 'Fantastic beat ! I would like to apprentice while you amend 
+your site, how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast 
+provided bright clear concept';
+$lang['recent_days']           = '28';
+$lang['breadcrumbs']           = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe 
+for a weblog web site? The account helped me a appropriate 
+deal. I had been tiny bit acquainted of this your broadcast provided 
+bright clear concept';
+$lang['youarehere']            = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe 
+for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright 
+clear concept';
+$lang['fullpath']              = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site? The account helped me a 
+appropriate deal. I had been tiny bit acquainted 
+of this your broadcast provided bright clear concept';
+$lang['typography']            = 'Fantastic beat ! I would like to apprentice while you amend 
+your site, how could i subscribe for a weblog web site? The account helped 
+me a appropriate deal. I had been tiny bit acquainted of 
+this your broadcast provided bright clear concept';
+$lang['dformat']               = 'http://oarrhistory.com/%CE%A4%CE%B9%CE%BC%CE%B5%CF%82_Of_Automobile_Ownership.';
+$lang['signature']             = 'Have a look at my webpage - ασφαλεια αυτοκινητου τριμηνη - Γλιτώστε Χρήματα!';
+$lang['showuseras']            = 'Devin';
+$lang['toptoclevel']           = 'Fantastic beat ! I would like to apprentice while you amend your site, how 
+could i subscribe for a weblog web site? The account helped me a appropriate 
+deal. I had been tiny bit acquainted of this your broadcast 
+provided bright clear concept';
+$lang['tocminheads']           = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a 
+weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['maxtoclevel']           = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast 
+provided bright clear concept';
+$lang['maxseclevel']           = 'Fantastic beat ! I would like to apprentice while you amend your 
+site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny 
+bit acquainted of this your broadcast provided bright clear concept';
+$lang['camelcase']             = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site? The account helped 
+me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided 
+bright clear concept';
+$lang['deaccent']              = 'Orellana';
+$lang['useheading']            = 'Devin';
+$lang['sneaky_index']          = 'Devin';
 $lang['hidepages']             = 'Paginas congruentes abscondere (uerba regularia)';
-$lang['send404']               = 'Mitte "HTTP 404/ Pagina non reperta" si paginae non sunt.';
-$lang['sitemap']               = 'Google formam situs gignere (dies)';
+$lang['useacl']                = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site? The account helped me a 
+appropriate deal. I had been tiny bit acquainted of this your broadcast 
+provided bright clear concept';
+$lang['autopasswd']            = 'Fantastic beat ! I would like to apprentice while you amend your 
+site, how could i subscribe for a weblog web site? The account helped me a 
+appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['authtype']              = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit 
+acquainted of this your broadcast provided bright 
+clear concept';
+$lang['passcrypt']             = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of 
+this your broadcast provided bright clear concept';
+$lang['defaultgroup']          = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal. I had 
+been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['superuser']             = 'Devin';
+$lang['manager']               = 'Devin';
+$lang['profileconfirm']        = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast 
+provided bright clear concept';
+$lang['rememberme']            = 'Devin';
+$lang['disableactions']        = 'Fantastic beat ! I would like to apprentice while you amend 
+your site, how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['disableactions_check']  = 'None';
+$lang['disableactions_subscription'] = '0';
+$lang['disableactions_wikicode'] = 'Olinda';
+$lang['disableactions_profile_delete'] = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a 
+weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear 
+concept';
+$lang['disableactions_other']  = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['disableactions_rss']    = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for 
+a weblog web site? The account helped me a appropriate deal.
+
+I had been tiny bit acquainted of this your broadcast provided bright clear 
+concept';
+$lang['auth_security_timeout'] = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright 
+clear concept';
+$lang['securecookie']          = 'Devin';
+$lang['remote']                = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided 
+bright clear concept';
+$lang['remoteuser']            = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['usewordblock']          = 'None';
+$lang['relnofollow']           = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site? The account helped 
+me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['indexdelay']            = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit 
+acquainted of this your broadcast provided bright clear concept';
+$lang['mailguard']             = 'devinorellana@zoho.com';
+$lang['iexssprotect']          = 'None';
+$lang['usedraft']              = 'Fantastic beat ! I would like to apprentice while you amend your site, how could 
+i subscribe for a weblog web site? The account helped me a 
+appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright 
+clear concept';
+$lang['htmlok']                = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny 
+bit acquainted of this your broadcast provided bright clear 
+concept';
+$lang['phpok']                 = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast 
+provided bright clear concept';
+$lang['locktime']              = '28';
+$lang['cachetime']             = '36';
+$lang['target____wiki']        = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site? The account helped 
+me a appropriate deal. I had been tiny bit acquainted of this your 
+broadcast provided bright clear concept';
+$lang['target____interwiki']   = 'Fantastic beat ! I would like to apprentice while you amend 
+your site, how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['target____extern']      = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['target____media']       = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this 
+your broadcast provided bright clear concept';
+$lang['target____windows']     = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web 
+site? The account helped me a appropriate deal.
+
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['mediarevisions']        = 'Fantastic beat ! I would like to apprentice while you amend your 
+site, how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['refcheck']              = 'None';
+$lang['gdlib']                 = 'Fantastic beat ! I would like to apprentice while you amend your site, how 
+could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['im_convert']            = 'Fantastic beat ! I would like to apprentice while you amend your 
+site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['jpg_quality']           = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe 
+for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['fetchsize']             = 'http://oarrhistory.com/%CE%A4%CE%B9%CE%BC%CE%B5%CF%82_Of_Automobile_Ownership.';
+$lang['subscribers']           = '0';
+$lang['subscribe_time']        = '0';
+$lang['notify']                = '0';
+$lang['registernotify']        = '0';
+$lang['mailfrom']              = 'devinorellana@zoho.com';
+$lang['htmlmail']              = 'devinorellana@zoho.com';
+$lang['sitemap']               = '11';
+$lang['rss_type']              = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['rss_linkto']            = 'Fantastic beat ! I would like to apprentice while you amend your 
+site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['rss_content']           = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['rss_update']            = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site? The account helped me a 
+appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['rss_show_summary']      = 'I am the new guy';
+$lang['rss_media']             = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided 
+bright clear concept';
+$lang['updatecheck']           = 'None';
+$lang['userewrite']            = 'http://oarrhistory.com/%CE%A4%CE%B9%CE%BC%CE%B5%CF%82_Of_Automobile_Ownership.';
+$lang['useslash']              = 'Orellana';
+$lang['sepchar']               = 'Devin';
+$lang['canonical']             = 'http://oarrhistory.com/%CE%A4%CE%B9%CE%BC%CE%B5%CF%82_Of_Automobile_Ownership.';
+$lang['fnencode']              = 'Devin';
+$lang['autoplural']            = 'None';
+$lang['compression']           = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for 
+a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['gzip_output']           = '53300-230';
+$lang['compress']              = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of 
+this your broadcast provided bright clear concept';
+$lang['cssdatauri']            = 'None';
+$lang['send404']               = 'http://oarrhistory.com/%CE%A4%CE%B9%CE%BC%CE%B5%CF%82_Of_Automobile_Ownership.';
 $lang['broken_iua']            = 'ignore_user_abort functio inepta estne? Hoc indicem quaestionum, quae non aptae sunt, creare non potest. IIS+PHP/CGI ineptum est. Vide <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>';
-$lang['xsendfile']             = 'X-Sendfile utine ut seruitor interretialis documenta firma creet? Tuus seruitor interretialis hunc pati debes.';
-$lang['renderer_xhtml']        = 'Quid dimittere ut hoc in principio uicis (xhtml) utaris';
-$lang['renderer__core']        = '%s (uicis nucleus)';
-$lang['renderer__plugin']      = '%s (addenda)';
-$lang['rememberme']            = 'Formulas aditus aptas facere (memento me)';
-$lang['rss_type']              = 'XML summae genus';
-$lang['rss_linkto']            = 'XML summae connectio';
-$lang['rss_content']           = 'Quid in XML summis uidere?';
-$lang['rss_update']            = 'XML summae renouationis interuallum temporis';
-$lang['recent_days']           = 'Numerus mutationum recentium tenendorum (dies)';
-$lang['rss_show_summary']      = 'XML summa titulos ostendit';
-$lang['target____wiki']        = 'Fenestra nexis internis';
-$lang['target____interwiki']   = 'Fenestra nexis inter uicem';
-$lang['target____extern']      = 'Fenestra nexis externis';
-$lang['target____media']       = 'Fenestra nexis uisiuis';
-$lang['target____windows']     = 'Fenestra nexis fenestrarum';
-$lang['proxy____host']         = 'Proxis seruitoris nomen';
-$lang['proxy____port']         = 'Proxis portus';
-$lang['proxy____user']         = 'Proxis nomen sodalis';
-$lang['proxy____pass']         = 'Proxis tessera';
-$lang['proxy____ssl']          = 'SSL ut connectas uti';
-$lang['proxy____except']       = 'Verba, ut VRL inspicias, quibus Proxis non agnoscitur.';
-$lang['safemodehack']          = 'Ad tempus conseruatio apta facere';
-$lang['ftp____host']           = 'FTP computator seruitor ad tempus seruatis';
-$lang['ftp____port']           = 'FTP ianua ad tempus seruatis';
-$lang['ftp____user']           = 'FTP Sodalis ad tempus seruatis';
-$lang['ftp____pass']           = 'FTP tessera ad tempus seruatis';
-$lang['ftp____root']           = 'FTP domicilium ad tempus seruatis';
-$lang['license_o_']            = 'Nihil electum';
-$lang['typography_o_0']        = 'neuter';
-$lang['typography_o_1']        = 'sine singulis uirgulis';
-$lang['typography_o_2']        = 'cum singulis uirgulis';
-$lang['userewrite_o_0']        = 'neuter';
-$lang['userewrite_o_1']        = '.htaccess';
-$lang['userewrite_o_2']        = 'DokuWiki domesticus';
-$lang['deaccent_o_0']          = 'ex';
-$lang['deaccent_o_1']          = 'accentum tollere';
-$lang['deaccent_o_2']          = 'Latinis litteris';
-$lang['gdlib_o_0']             = 'GD Lib inepta';
-$lang['gdlib_o_1']             = 'Forma 1.x';
-$lang['gdlib_o_2']             = 'Machinatione inspicere';
-$lang['rss_type_o_rss']        = 'RSS 0.91';
-$lang['rss_type_o_rss1']       = 'RSS 1.0';
-$lang['rss_type_o_rss2']       = 'RSS 2.0';
-$lang['rss_type_o_atom']       = 'Atom 0.3';
-$lang['rss_type_o_atom1']      = 'Atom 1.0';
-$lang['rss_content_o_abstract'] = 'Summa';
-$lang['rss_content_o_diff']    = 'Comparatio una';
-$lang['rss_content_o_htmldiff'] = 'Tabulae HTML formatae comparatae';
-$lang['rss_content_o_html']    = 'Pagina cum HTML';
-$lang['rss_linkto_o_diff']     = 'discrimina uidere';
-$lang['rss_linkto_o_page']     = 'pagina recensita';
-$lang['rss_linkto_o_rev']      = 'recensionum index';
-$lang['rss_linkto_o_current']  = 'hic pagina';
-$lang['compression_o_0']       = 'neuter';
-$lang['compression_o_gz']      = 'gzip';
-$lang['compression_o_bz2']     = 'bz2';
-$lang['xsendfile_o_0']         = 'Noli uti';
-$lang['xsendfile_o_2']         = 'Praecipuus X-Sendfile';
-$lang['xsendfile_o_3']         = 'Proprietarius Nginx X-Accel-Redirect';
-$lang['showuseras_o_loginname'] = 'Sodalis nomen';
-$lang['showuseras_o_username'] = 'Sodalis nomen uerum';
-$lang['showuseras_o_email']    = 'Sodalis cursus interretialis (absconditus ut is tueratur)';
-$lang['showuseras_o_email_link'] = 'Sodalis cursus interretialis ut mailto: nexum';
-$lang['useheading_o_0']        = 'Numquam';
-$lang['useheading_o_navigation'] = 'Solum adspicere';
-$lang['useheading_o_content']  = 'Solum uicis argumentum';
-$lang['useheading_o_1']        = 'Semper';
-$lang['readdircache']          = 'Maximum tempus readdir (sec)';
+$lang['xsendfile']             = 'Olinda';
+$lang['renderer_xhtml']        = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog 
+web site? The account helped me a appropriate deal.
+
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['renderer__core']        = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit 
+acquainted of this your broadcast provided bright clear concept';
+$lang['renderer__plugin']      = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal. I had been tiny 
+bit acquainted of this your broadcast provided bright clear 
+concept';
+$lang['dnslookups']            = 'Orellana';
+$lang['jquerycdn']             = 'Devin';
+$lang['jquerycdn_o_0']         = 'Fantastic beat ! I would like to apprentice while you amend your site, how 
+could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['jquerycdn_o_jquery']    = 'None';
+$lang['jquerycdn_o_cdnjs']     = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+
+I had been tiny bit acquainted of this your broadcast provided 
+bright clear concept';
+$lang['proxy____host']         = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog 
+web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['proxy____port']         = 'Olinda';
+$lang['proxy____user']         = 'Devin';
+$lang['proxy____pass']         = 'Fantastic beat ! I would like to apprentice while you amend your 
+site, how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal. I had been tiny bit 
+acquainted of this your broadcast provided bright clear concept';
+$lang['proxy____ssl']          = 'Fantastic beat ! I would like to apprentice while you amend your 
+site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['proxy____except']       = 'http://oarrhistory.com/%CE%A4%CE%B9%CE%BC%CE%B5%CF%82_Of_Automobile_Ownership.';
+$lang['safemodehack']          = 'Fantastic beat ! I would like to apprentice while you amend your site, how 
+could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast 
+provided bright clear concept';
+$lang['ftp____host']           = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog 
+web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['ftp____port']           = 'Olinda';
+$lang['ftp____user']           = 'Devin';
+$lang['ftp____pass']           = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web 
+site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['ftp____root']           = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site? The account 
+helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['license_o_']            = 'Fantastic beat ! I would like to apprentice while you amend your site, how 
+could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided 
+bright clear concept';
+$lang['typography_o_0']        = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web 
+site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your 
+broadcast provided bright clear concept';
+$lang['typography_o_1']        = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for 
+a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['typography_o_2']        = 'Fantastic beat ! I would like to apprentice while you amend your 
+site, how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear 
+concept';
+$lang['userewrite_o_0']        = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a 
+weblog web site? The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['userewrite_o_1']        = 'Fantastic beat ! I would like to apprentice while you amend 
+your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had 
+been tiny bit acquainted of this your broadcast 
+provided bright clear concept';
+$lang['userewrite_o_2']        = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['deaccent_o_0']          = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['deaccent_o_1']          = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal. I had been tiny bit acquainted of this 
+your broadcast provided bright clear concept';
+$lang['deaccent_o_2']          = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this 
+your broadcast provided bright clear concept';
+$lang['gdlib_o_0']             = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your 
+broadcast provided bright clear concept';
+$lang['gdlib_o_1']             = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i 
+subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright 
+clear concept';
+$lang['gdlib_o_2']             = 'Fantastic beat ! I would like to apprentice while 
+you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['rss_type_o_rss']        = 'Fantastic beat ! I would like to apprentice while you amend your site, how could 
+i subscribe for a weblog web site? The account helped me a 
+appropriate deal. I had been tiny bit acquainted of this your 
+broadcast provided bright clear concept';
+$lang['rss_type_o_rss1']       = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided 
+bright clear concept';
+$lang['rss_type_o_rss2']       = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+
+The account helped me a appropriate deal. I had been tiny bit acquainted of this 
+your broadcast provided bright clear concept';
+$lang['rss_type_o_atom']       = 'Fantastic beat ! I would like to apprentice while you amend 
+your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast 
+provided bright clear concept';
+$lang['rss_type_o_atom1']      = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['rss_content_o_abstract'] = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site? The account helped me a appropriate 
+deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['rss_content_o_diff']    = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['rss_content_o_htmldiff'] = 'Fantastic beat ! I would like to apprentice while you amend 
+your site, how could i subscribe for a weblog web site? The account helped me a appropriate 
+deal. I had been tiny bit acquainted of this 
+your broadcast provided bright clear concept';
+$lang['rss_content_o_html']    = 'Fantastic beat ! I would like to apprentice while you amend your site,
+how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['rss_linkto_o_diff']     = 'Fantastic beat ! I would like to apprentice while you amend your site, how 
+could i subscribe for a weblog web site? The account helped me a appropriate deal.
+
+I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['rss_linkto_o_page']     = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+
+I had been tiny bit acquainted of this your broadcast provided bright clear 
+concept';
+$lang['rss_linkto_o_rev']      = 'Fantastic beat ! I would like to apprentice while you amend your site, 
+how could i subscribe for a weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright 
+clear concept';
+$lang['rss_linkto_o_current']  = 'Fantastic beat ! I would like to apprentice while you amend your site, how 
+could i subscribe for a weblog web site? The account 
+helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided 
+bright clear concept';
+$lang['compression_o_0']       = 'Fantastic beat ! I would like to apprentice while you amend 
+your site, how could i subscribe for a weblog web site?
+The account helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear 
+concept';
+$lang['compression_o_gz']      = '53300-230';
+$lang['compression_o_bz2']     = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i 
+subscribe for a weblog web site? The account helped 
+me a appropriate deal. I had been tiny bit acquainted of this your broadcast 
+provided bright clear concept';
+$lang['xsendfile_o_0']         = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a 
+weblog web site? The account helped me a appropriate deal.
+I had been tiny bit acquainted of this your broadcast provided bright clear 
+concept';
+$lang['xsendfile_o_1']         = 'I am the new guy';
+$lang['xsendfile_o_2']         = 'I am the new guy';
+$lang['xsendfile_o_3']         = 'I am the new guy';
+$lang['showuseras_o_loginname'] = 'Devin';
+$lang['showuseras_o_username'] = 'Devin';
+$lang['showuseras_o_username_link'] = 'Devin';
+$lang['showuseras_o_email']    = 'devinorellana@zoho.com';
+$lang['showuseras_o_email_link'] = 'devinorellana@zoho.com';
+$lang['useheading_o_0']        = 'Fantastic beat ! I would like to apprentice while you amend your site, how could i subscribe for a weblog 
+web site? The account helped me a appropriate deal. I had been tiny bit acquainted of 
+this your broadcast provided bright clear concept';
+$lang['useheading_o_navigation'] = 'Fantastic beat ! I would like to apprentice while you amend 
+your site, how could i subscribe for a weblog web site? The account helped me 
+a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright 
+clear concept';
+$lang['useheading_o_content']  = 'Fantastic beat ! I would like to apprentice while you amend your 
+site, how could i subscribe for a weblog web site? The account 
+helped me a appropriate deal. I had been tiny bit acquainted of this your broadcast provided bright clear concept';
+$lang['useheading_o_1']        = 'Fantastic beat ! I would like to apprentice while you 
+amend your site, how could i subscribe for a weblog web 
+site? The account helped me a appropriate deal. I had been tiny bit acquainted of this your 
+broadcast provided bright clear concept';
+$lang['readdircache']          = '33';
