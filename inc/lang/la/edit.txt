@@ -1,1 +1,4 @@
-Paginam recensere et "Serua" premere. Vide [[wiki:syntax]] ut uicis stilus uidere possis. Hanc paginam recenses, solum si hanc auges. Prima uestigia apud hunc nexum [[playground:playground|playground]] uidere possis.
+I'm not sure exactly why but this blog is loading very slow for me.
+
+Is anyone else having this problem or is it a issue on my end?
+I'll check back later on and see if the problem still exists.
