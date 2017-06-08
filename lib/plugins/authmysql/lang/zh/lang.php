@@ -4,8 +4,14 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Errol <errol@hotmail.com>
+ * @author what not to take with viagra <roger.weekes@freenet.de>
  */
-$lang['connectfail']           = '连接数据库失败';
-$lang['userexists']            = '抱歉，用户名已被使用。';
-$lang['usernotexists']         = '抱歉，用户不存在。';
-$lang['writefail']             = '无法修改用户数据。请通知管理员';
+$lang['connectfail']           = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['userexists']            = 'Roger';
+$lang['usernotexists']         = 'Roger';
+$lang['writefail']             = 'Roger';

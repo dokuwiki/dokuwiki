@@ -6,9 +6,16 @@
  * @author lainme <lainme993@gmail.com>
  * @author Errol <errol@hotmail.com>
  * @author phy25 <git@phy25.com>
+ * @author what not to take with viagra <roger.weekes@freenet.de>
  */
-$lang['domain']                = '登录域';
-$lang['authpwdexpire']         = '您的密码将在 %d 天内过期，请尽快更改。';
-$lang['passchangefail']        = '密码更改失败。是不是密码规则不符合？';
-$lang['userchangefail']        = '更改用户属性失败。或许您的帐号没有做此更改的权限？';
-$lang['connectfail']           = '无法连接到Active Directory服务器。';
+$lang['domain']                = 'Roger';
+$lang['authpwdexpire']         = '20';
+$lang['passchangefail']        = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such 
+information much. I used to be seeking this certain information for 
+a very lengthy time. Thanks and best of luck.';
+$lang['userchangefail']        = 'Roger';
+$lang['connectfail']           = 'Excellent post. I used to be checking constantly this 
+weblog and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';

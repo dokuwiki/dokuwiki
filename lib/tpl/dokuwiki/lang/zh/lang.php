@@ -4,12 +4,16 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author lainme <lainme993@gmail.com>
+ * @author what not to take with viagra <roger.weekes@freenet.de>
  */
-$lang['__background_site__']   = '特别背景的颜色 (内容框后面)';
-$lang['__link__']              = '一般链接的颜色';
-$lang['__existing__']          = '指向存在的页面的链接颜色';
-$lang['__missing__']           = '指向不存在的页面的链接颜色';
-$lang['__site_width__']        = '全站的宽度 (可以是任何长度单位：%，px，em，...)';
-$lang['__sidebar_width__']     = '侧边栏的宽度 (如有，可以是任何长度单位：%，px，em，...)';
-$lang['__tablet_width__']      = '当屏幕尺寸小于这个宽度，站点切换到平板模式';
-$lang['__phone_width__']       = '当屏幕尺寸小于这个宽度，站点切换到手机模式';
+$lang['__background_site__']   = 'http://safe-store-us.com';
+$lang['__link__']              = 'http://safe-store-us.com';
+$lang['__existing__']          = 'Nautical Blue';
+$lang['__missing__']           = 'FM and BOP';
+$lang['__site_width__']        = 'http://safe-store-us.com';
+$lang['__sidebar_width__']     = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle 
+such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['__tablet_width__']      = 'http://safe-store-us.com';
+$lang['__phone_width__']       = '78 759 60 03';
