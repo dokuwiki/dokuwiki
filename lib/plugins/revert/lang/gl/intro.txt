@@ -1,3 +1,1 @@
-====== Xestor de Reversión ======
-
-Esta páxina axudarache a revertir automaticamente un ataque de correo-lixo. Para atopares unha listaxe de páxinas que conteñan correo-lixo, primeiro debes inserir unha cadea de procura (p.e. un URL do correo-lixo), e logo confirmares que as páxinas atopadas conteñen realmente o tal correo-lixo e reverter as edicións.
+====== Xestor de Reversión ====== Esta páxina axudarache a revertir automaticamente un ataque de correo-lixo. Para atopares unha listaxe de páxinas que conteñan correo-lixo, primeiro debes inserir unha cadea de procura (p.e. un URL do correo-lixo), e logo confirmares que as páxinas atopadas conteñen realmente o tal correo-lixo e reverter as edicións.
