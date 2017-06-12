@@ -15,6 +15,7 @@
  * @author Young gon Cha <garmede@gmail.com>
  * @author hyeonsoft <hyeonsoft@live.co.kr>
  * @author Erial <erial2@gmail.com>
+ * @author S.H. Lee <tuders@naver.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
