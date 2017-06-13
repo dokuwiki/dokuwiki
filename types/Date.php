@@ -40,17 +40,18 @@ class Date extends AbstractBaseType {
      * @return string html
      */
     public function valueEditor($name, $rawvalue, $htmlID) {
-        $name = hsc($name);
-        $rawvalue = hsc($rawvalue);
-
         if($this->config['prefilltoday'] && !$rawvalue) {
             $rawvalue = date('Y-m-d');
         }
 
-        $id = !empty($htmlID) ? "id=\"$htmlID\"" : '';
-
-        $html = "<input class=\"struct_date\" name=\"$name\" value=\"$rawvalue\" $id />";
-        return "$html";
+        $params = array(
+            'name' => $name,
+            'value' => $rawvalue,
+            'class' => 'struct_date',
+            'id' => $htmlID,
+        );
+        $attributes = buildAttributes($params, true);
+        return "<input $attributes />";
     }
 
     /**

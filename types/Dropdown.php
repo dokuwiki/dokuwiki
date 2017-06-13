@@ -29,11 +29,13 @@ class Dropdown extends AbstractBaseType {
      * @return string
      */
     public function valueEditor($name, $rawvalue, $htmlID) {
-        $class = 'struct_' . strtolower($this->getClass());
-
-        $name = hsc($name);
-        $id = !empty($htmlID) ? "id=\"$htmlID\"" : '';
-        $html = "<select name=\"$name\" class=\"$class\" $id>";
+        $params = array(
+            'name' => $name,
+            'class' => 'struct_'.strtolower($this->getClass()),
+            'id' => $htmlID
+        );
+        $attributes = buildAttributes($params, true);
+        $html = "<select $attributes>";
         foreach($this->getOptions() as $opt => $val) {
             if($opt == $rawvalue) {
                 $selected = 'selected="selected"';
@@ -58,11 +60,15 @@ class Dropdown extends AbstractBaseType {
      * @return string
      */
     public function multiValueEditor($name, $rawvalues, $htmlID) {
-        $class = 'struct_' . strtolower($this->getClass());
-
-        $name = hsc($name);
-        $id = !empty($htmlID) ? "id=\"$htmlID\"" : '';
-        $html = "<select name=\"{$name}[]\" class=\"$class\" multiple=\"multiple\" size=\"5\" $id>";
+        $params = array(
+            'name' => $name . '[]',
+            'class' => 'struct_'.strtolower($this->getClass()),
+            'multiple' => 'multiple',
+            'size' => '5',
+            'id' => $htmlID
+        );
+        $attributes = buildAttributes($params, true);
+        $html = "<select $attributes>";
         foreach($this->getOptions() as $raw => $opt) {
             if(in_array($raw, $rawvalues)) {
                 $selected = 'selected="selected"';

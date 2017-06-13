@@ -29,21 +29,25 @@ class Checkbox extends AbstractBaseType {
      * @return string
      */
     public function valueEditor($name, $rawvalue, $htmlID) {
-        $class = 'struct_' . strtolower($this->getClass());
-
-        $name = hsc($name);
         $options = $this->getOptions();
         $opt = array_shift($options);
 
         if($rawvalue == $opt) {
-            $checked = 'checked="checked"';
+            $checked = 'checked';
         } else {
             $checked = '';
         }
         $opt = hsc($opt);
-        $id = !empty($htmlID) ? "id=\"$htmlID\"" : '';
-        $html = "<label><input type=\"checkbox\" name=\"$name\" class=\"$class\" value=\"$opt\" $id $checked>&nbsp;$opt</label>";
-        return $html;
+        $params = array(
+            'name' => $name,
+            'value' => $opt,
+            'class' => 'struct_' . strtolower($this->getClass()),
+            'type' => 'checkbox',
+            'id' => $htmlID,
+            'checked' => $checked,
+        );
+        $attributes = buildAttributes($params, true);
+        return "<label><input $attributes>&nbsp;$opt</label>";
     }
 
     /**
@@ -58,20 +62,27 @@ class Checkbox extends AbstractBaseType {
     public function multiValueEditor($name, $rawvalues, $htmlID) {
         $class = 'struct_' . strtolower($this->getClass());
 
-        $name = hsc($name);
         $html = '';
         foreach($this->getOptions() as $opt) {
             if(in_array($opt, $rawvalues)) {
-                $checked = 'checked="checked"';
+                $checked = 'checked';
             } else {
                 $checked = '';
             }
 
-            $id = !empty($htmlID) ? "id=\"$htmlID\"" : '';
-            $htmlID = null;
+            $params = array(
+                'name' => $name . '[]',
+                'value' => $opt,
+                'class' => $class,
+                'type' => 'checkbox',
+                'id' => $htmlID,
+                'checked' => $checked,
+            );
+            $attributes = buildAttributes($params, true);
+            $htmlID = '';
 
             $opt = hsc($opt);
-            $html .= "<label><input type=\"checkbox\" name=\"{$name}[]\" class=\"$class\" value=\"$opt\" $id $checked>&nbsp;$opt</label>";
+            $html .= "<label><input $attributes>&nbsp;$opt</label>";
         }
         return $html;
     }

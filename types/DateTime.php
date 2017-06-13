@@ -38,17 +38,18 @@ class DateTime extends Date {
      * @return string html
      */
     public function valueEditor($name, $rawvalue, $htmlID) {
-        $name = hsc($name);
-        $rawvalue = hsc($rawvalue);
-
         if($this->config['prefilltoday'] && !$rawvalue) {
             $rawvalue = date('Y-m-d H:i:s');
         }
 
-        $id = !empty($htmlID) ? "id=\"$htmlID\"" : '';
-
-        $html = "<input class=\"struct_datetime\" name=\"$name\" value=\"$rawvalue\" $id />";
-        return "$html";
+        $params = array(
+            'name' => $name,
+            'value' => $rawvalue,
+            'class' => 'struct_datetime',
+            'id' => $htmlID,
+        );
+        $attributes = buildAttributes($params, true);
+        return "<input $attributes />";
     }
 
     /**

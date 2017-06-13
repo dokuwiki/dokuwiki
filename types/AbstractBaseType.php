@@ -274,12 +274,14 @@ abstract class AbstractBaseType {
             $class .= ' struct_autocomplete';
         }
 
-        $name = hsc($name);
-        $rawvalue = hsc($rawvalue);
-        $id = !empty($htmlID) ? "id=\"$htmlID\"" : '';
-
-        $html = "<input name=\"$name\" value=\"$rawvalue\" class=\"$class\" $id />";
-        return "$html";
+        $params = array(
+            'name' => $name,
+            'value' => $rawvalue,
+            'class' => $class,
+            'id' => $htmlID
+        );
+        $attributes = buildAttributes($params, true);
+        return "<input $attributes>";
     }
 
     /**
