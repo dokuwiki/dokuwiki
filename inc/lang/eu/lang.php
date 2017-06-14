@@ -325,10 +325,16 @@ $lang['media_search']          = 'Bilatu %s -n';
 $lang['media_view']            = '%s';
 $lang['media_viewold']         = '%s -n %s';
 $lang['media_edit']            = '%s editatu';
+$lang['media_history']         = '%s(a)ren historiala';
+$lang['media_meta_edited']     = 'metadatuak editatua';
+$lang['media_perm_read']       = 'Ez duzu fitxategiak irakurtzeko behar beste baimen.';
+$lang['media_perm_upload']     = 'Ez duzu fitxategiak igotzeko behar beste baimen.';
 $lang['media_update']          = 'Bertsio berria igo';
 $lang['media_restore']         = 'Bertsio hau berrezarri';
+$lang['media_acl_warning']     = 'Hau agian ez dago osorik SCL murrizketak eta ezkutuko orriak direla eta.';
 $lang['searchresult']          = 'Bilaketaren emaitza';
 $lang['plainhtml']             = 'HTML hutsa';
 $lang['wikimarkup']            = 'Wiki kodea';
+$lang['page_nonexist_rev']     = 'Ez zegoen %s izeneko orririk. Sortu egin da <a href="%s">%s</a> helbidean.';
 $lang['email_signature_text']  = 'Email hau DokuWiki erabiliz sortu da
 @DOKUWIKIURL@';
