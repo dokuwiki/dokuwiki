@@ -88,7 +88,15 @@
 /**
  * Bureaucracy form adjustments
  */
-.dokuwiki form.bureaucracy__plugin label {
+.dokuwiki form.bureaucracy__plugin div.field {
+    display: block;
+    text-align: right;
+
+    label {
+        display: inline-block;
+        width: 47%;
+    }
+
     span {
         line-height: 2em;
     }
@@ -99,7 +107,6 @@
         // fixes for bootstrap3 template
         color: @ini_text;
         font-size: 100%;
-        text-align: left;
     }
 
     span.input {
