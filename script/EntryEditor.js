@@ -57,7 +57,7 @@ var EntryEditor = function($form) {
     $form.find('input.struct_autocomplete').autocomplete({
         ismulti: false,
         source: function (request, cb) {
-            var name = jQuery(this.element[0]).closest('label').data('column');
+            var name = jQuery(this.element[0]).closest('div.field').find('label').first().data('column');
             var term = request.term;
             if (this.options.ismulti) {
                 term = extractLast(term);
