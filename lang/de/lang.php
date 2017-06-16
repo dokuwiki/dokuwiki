@@ -18,4 +18,15 @@ $lang['summary']               = 'Struct-Daten geändert';
 $lang['export']                = 'Schema als JSON exportieren';
 $lang['btn_export']            = 'Exportieren';
 
+$lang['del_confirm'] = 'Namen des Schema zur Bestätigung der Löschung eingeben';
+$lang['del_fail'] = 'Die Schemanamen stimmten nicht überein. Schema nicht gelöscht';
+$lang['del_ok'] = 'Schema wurde gelöscht';
+$lang['btn_delete'] = 'Löschen';
 $lang['js']['confirmAssignmentsDelete'] = 'Wollen Sie wirklich die Zuweisung von Schma "{0}" zu Seite/Namensraum "{1}" löschen?';
+
+$lang['clear_confirm'] = 'Namen des Schema zur Bestätigung der Entfernung aller Daten eingeben';
+$lang['clear_fail'] = 'Die Schemanamen stimmten nicht überein. Daten wurden nicht entfernt';
+$lang['clear_ok'] = 'Die Daten des Schemas wurden entfernt';
+$lang['btn_clear'] = 'Leeren';
+
+$lang['tab_delete'] = 'Löschen/Leeren';

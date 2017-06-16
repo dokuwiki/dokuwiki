@@ -36,9 +36,14 @@ $lang['del_ok'] = 'Schema has been deleted';
 $lang['btn_delete'] = 'Delete';
 $lang['js']['confirmAssignmentsDelete'] = 'Do you really want to delete the assignment of schema "{0}" to page/namespace "{1}"?';
 
+$lang['clear_confirm'] = 'Enter schema name to confirm clearing all data';
+$lang['clear_fail'] = 'Schema names did not match. Data not deleted';
+$lang['clear_ok'] = 'Data of schema has been deleted';
+$lang['btn_clear'] = 'Clear';
+
 $lang['tab_edit'] = 'Edit Schema';
 $lang['tab_export'] = 'Import/Export';
-$lang['tab_delete'] = 'Delete';
+$lang['tab_delete'] = 'Delete/Clear';
 
 $lang['editor_sort'] = 'Sort';
 $lang['editor_label'] = 'Field Name';
