@@ -1,0 +1,12 @@
+====== Struct Schema Editor ======
+
+Schemafelder können hier hinzugefügt oder bearbeitet werden.
+
+Feldnamen müssen einzigartig sein.
+Es wird empfohlen kurze Bezeichner zu verwenden, die sich wahrscheinlich später nicht ändern werden, da später sie als Verweise auf die Felder in den Aggregationen genutzt werden.
+Das Label-Konfigurations-Feld sollte für menschen-lesbare Namen verwendet werden.
+
+Der Typ des Feldes definiert welche Informationen darin gespeichert werden und beieinflusst wie diese später angezeigt werden.
+Jeder Typ hat seine eigenen Konfigurationsoptionen.
+
+Weitere Informationen finden sich in der [[doku>plugin:struct:type|Dokumentation des Plugins]].

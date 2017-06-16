@@ -2,7 +2,7 @@
 
 Add or modify fields of the schema here.
 
-Field names have to be unique. It is recommended to use short identifiers that unlikely change later as they will beused to reference the fields in aggregations later. Use the translation labels in the field's configuration for more human readable names.
+Field names have to be unique. It is recommended to use short identifiers that unlikely change later as they will be used to reference the fields in aggregations later. Use the translation labels in the field's configuration for more human readable names.
 
 The type of a field defines what kind of data can be stored in the field and influences how it will be displayed later. Each type has its own specific configuration options.
 
