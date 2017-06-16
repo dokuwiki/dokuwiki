@@ -407,6 +407,7 @@ function html_search(){
     flush();
 
     //do fulltext search
+    $regex = array();
     $data = ft_pageSearch($QUERY,$regex);
     if(count($data)){
         print '<dl class="search_results">';
