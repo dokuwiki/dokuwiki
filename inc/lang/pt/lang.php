@@ -15,6 +15,7 @@
  * @author Romulo Pereira <romuloccomp@gmail.com>
  * @author Paulo Carmino <contato@paulocarmino.com>
  * @author Alfredo Silva <alfredo.silva@sky.com>
+ * @author Guilherme Sá <guilherme.sa@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -346,5 +347,5 @@ $lang['plainhtml']             = 'HTML simples';
 $lang['wikimarkup']            = 'Markup de Wiki';
 $lang['page_nonexist_rev']     = 'Página não existia no %s. Posteriormente, foi criado em <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Não é possível analisar o parâmetro "%s".';
-$lang['email_signature_text'] = 'Este email foi gerado por DokuWiki em
+$lang['email_signature_text']  = 'Este email foi gerado por DokuWiki em
 @DOKUWIKIURL@';
