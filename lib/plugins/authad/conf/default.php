@@ -1,8 +1,12 @@
 <?php
 
 $conf['account_suffix']     = '';
+$conf["admin_account_prefix"] = '';
+$conf["admin_account_suffix"] = '';
 $conf['base_dn']            = '';
 $conf['domain_controllers'] = '';
+$conf['groups_base_dn']     = '';
+$conf['groups_domain_controllers']    = '';
 $conf['sso']                = 0;
 $conf['sso_charset']        = '';
 $conf['admin_username']     = '';
@@ -15,3 +19,12 @@ $conf['expirywarn']         = 0;
 $conf['additional']         = '';
 $conf['update_name']        = 0;
 $conf['update_mail']        = 0;
+$conf['option_deref'] = '!!not set!!';
+$conf['option_sizelimit'] = '!!not set!!';
+$conf['option_timelimit'] = '!!not set!!';
+$conf['option_network_timeout'] = '!!not set!!';
+$conf['option_error_number'] = '!!not set!!';
+$conf['option_restart'] = false;
+$conf['option_hostname'] = '!!not set!!';
+$conf['option_error_string'] ='!!not set!!';
+$conf['option_matched_dn'] = '!!not set!!';

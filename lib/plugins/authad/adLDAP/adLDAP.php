@@ -96,6 +96,15 @@ class adLDAP {
         protected $baseDn = "DC=mydomain,DC=local"; 
     
     /** 
+     * The base dn for your group search
+     *
+     * If this is set to null then adLDAP will attempt to obtain this automatically from the rootDSE
+     *
+     * @var string
+     */
+    protected $groupBaseDn = "DC=mydomain,DC=local";
+
+    /**
     * Port used to talk to the domain controllers. 
     *  
     * @var int 
@@ -111,15 +120,97 @@ class adLDAP {
     protected $domainControllers = array("dc01.mydomain.local");
         
     /**
+     * Array of domain controllers for group searches. Specifiy multiple controllers if you
+     * would like the class to balance the LDAP queries amongst multiple servers
+     *
+     * @var array
+     */
+    protected $groupDomainControllers = array("dc01.mydomain.local");
+
+
+    /**
     * Optional account with higher privileges for searching
     * This should be set to a domain admin account
     * 
     * @var string
     * @var string
     */
-        protected $adminUsername = NULL;
-    protected $adminPassword = NULL;
+    protected $adminUsername = null;
+    protected $adminPassword = null;
     
+    /**
+     * Optional Prefix / Suffix to allow searching
+     * in different domains with the admin account
+     *
+     * @var string
+     * @var string
+     */
+    protected $adminAccountSuffix = null;
+    protected $adminAccountPrefix = null;
+
+    /**
+     * specifice alternative rules to follow aliases on the server
+     *
+     * @var integer
+     */
+    protected $optionDeref = null;
+
+    /**
+     * specifice the max size of entries to be returned on a search
+     *
+     * @var integer
+     */
+    protected $optionSizeLimit = null;
+
+    /**
+     * specifice the time in seconds to wait for search results
+     *
+     * @var integer
+     */
+    protected $optionTimeLimit = null;
+
+    /**
+     * sets the network timeout (since PHP 5.3.0+)
+     *
+     * @var integer
+     */
+    protected $optionNetworkTimeout = null;
+
+    /**
+     * used to return an error code associated with the most recent LDAP error
+     *
+     * @var integer
+     */
+    protected $optionErrorNumber = null;
+
+    /**
+     * Determines whether the library should implicitly restart connections
+     *
+     * @var bool
+     */
+    protected $optionRestart = false;
+
+    /**
+     * Sets/gets a space-separated list of hosts to be contacted by the library when trying to establish a connection.
+     *
+     * @var string
+     */
+    protected $optionHostname = null;
+
+    /**
+     * Sets/gets a string containing the error string associated to the LDAP handle.
+     *
+     * @var string
+     */
+    protected $optionErrorString = null;
+
+    /**
+     * Sets/gets a string containing the matched DN associated to the LDAP handle.
+     *
+     * @var string
+     */
+    protected $optionMatchedDn = null;
+
     /**
     * AD does not return the primary group. http://support.microsoft.com/?kbid=321360
     * This tweak will resolve the real primary group. 
@@ -176,6 +267,15 @@ class adLDAP {
         protected $ldapBind;
     
     /**
+     * Connection for group search
+     *
+     * @var mixed
+     * @var mixed
+     */
+    protected $ldapGroupConnection;
+    protected $ldapGroupBind;
+
+    /**
     * Get the active LDAP Connection
     * 
     * @return resource
@@ -188,6 +288,18 @@ class adLDAP {
     }
     
     /**
+     * Get the active LDAP Group Connection
+     *
+     * @return resource
+     */
+    public function getLdapGroupConnection() {
+        if($this->ldapGroupConnection) {
+            return $this->ldapGroupConnection;
+        }
+        return false;
+    }
+
+    /**
     * Get the bind status
     * 
     * @return bool
@@ -197,6 +309,15 @@ class adLDAP {
     }
     
     /**
+     * Get the group bind status
+     *
+     * @return bool
+     */
+    public function getLdapGroupBind() {
+        return $this->ldapGroupBind;
+    }
+
+    /**
     * Get the current base DN
     * 
     * @return string
@@ -205,6 +326,16 @@ class adLDAP {
         return $this->baseDn;   
     }
     
+    /**
+     * Get the current base DN
+     *
+     * @return string
+     */
+    public function getGroupBaseDn() {
+        return $this->groupBaseDn;
+    }
+
+
     /**
     * The group class
     * 
@@ -447,6 +578,204 @@ class adLDAP {
     }
     
     /**
+     * Get the admins Account suffix
+     *
+     * This will throw an exception for security reasons
+     */
+    public function getAdminAccountSuffix() {
+        throw new adLDAPException('For security reasons you cannot access the domain administrator account details');
+    }
+
+    /**
+     * Set a suffix of an account with higher priviledges
+     *
+     * @param mixed $adminAccountSuffix
+     */
+    public function setAdminAccountSuffix($adminAccountSuffix) {
+        $this->adminAccountSuffix = $adminAccountSuffix;
+    }
+
+    /**
+     * Get the admins Account prefix
+     *
+     * This will throw an exception for security reasons
+     */
+    public function getAdminAccountPrefix() {
+        throw new adLDAPException('For security reasons you cannot access the domain administrator account details');
+    }
+
+    /**
+     * * Set a prefix of an account with higher priviledges
+     *
+     * @param mixed|null $adminAccountPrefix
+     */
+    public function setAdminAccountPrefix($adminAccountPrefix) {
+        $this->adminAccountPrefix = $adminAccountPrefix;
+    }
+
+    /**
+     * get LDAP_OPT_DEREF
+     *
+     * @return int
+     */
+    public function getOptionDeref() {
+        return $this->optionDeref;
+    }
+
+    /**
+     * set LDAP_OPT_DEREF
+     *
+     * @param int $optionDeref
+     */
+    public function setOptionDeref($optionDeref) {
+        $this->optionDeref = $optionDeref;
+    }
+
+    /**
+     * get LDAP_OPT_SIZELIMIT
+     *
+     * @return int
+     */
+    public function getOptionSizeLimit() {
+        return $this->optionSizeLimit;
+    }
+
+    /**
+     * set LDAP_OPT_SIZELIMIT
+     *
+     * @param int $optionSizeLimit
+     */
+    public function setOptionSizeLimit($optionSizeLimit) {
+        $this->optionSizeLimit = $optionSizeLimit;
+    }
+
+    /**
+     * get LDAP_OPT_TIMELIMIT
+     *
+     * @return int
+     */
+    public function getOptionTimeLimit() {
+        return $this->optionTimeLimit;
+    }
+
+    /**
+     * set LDAP_OPT_TIMELIMIT
+     *
+     * @param int $optionTimeLimit
+     */
+    public function setOptionTimeLimit($optionTimeLimit) {
+        $this->optionTimeLimit = $optionTimeLimit;
+    }
+
+    /**
+     * get LDAP_OPT_NETWORK_TIMEOUT
+     *
+     * @return int
+     */
+    public function getOptionNetworkTimeout() {
+        return $this->optionNetworkTimeout;
+    }
+
+    /**
+     * set LDAP_OPT_NETWORK_TIMEOUT
+     *
+     * @param int $optionNetworkTimeout
+     */
+    public function setOptionNetworkTimeout($optionNetworkTimeout) {
+        $this->optionNetworkTimeout = $optionNetworkTimeout;
+    }
+
+    /**
+     * get LDAP_OPT_ERROR_NUMBER
+     *
+     * @return int
+     */
+    public function getOptionErrorNumber() {
+        return $this->optionErrorNumber;
+    }
+
+    /**
+     * set LDAP_OPT_ERROR_NUMBER
+     *
+     * @param int $optionErrorNumber
+     */
+    public function setOptionErrorNumber($optionErrorNumber) {
+        $this->optionErrorNumber = $optionErrorNumber;
+    }
+
+    /**
+     * get LDAP_OPT_RESTART
+     *
+     * @return int
+     */
+    public function getOptionRestart() {
+        return $this->optionRestart;
+    }
+
+    /**
+     * set LDAP_OPT_RESTART
+     *
+     * @param bool $optionRestart
+     */
+    public function setOptionRestart($optionRestart) {
+        $this->optionRestart = $optionRestart;
+    }
+
+    /**
+     * get LDAP_OPT_HOST_NAME
+     *
+     * @return string
+     */
+    public function getOptionHostname() {
+        return $this->optionHostname;
+    }
+
+    /**
+     * set LDAP_OPT_HOST_NAME
+     *
+     * @param string $optionHostname
+     */
+    public function setOptionHostname($optionHostname) {
+        $this->optionHostname = $optionHostname;
+    }
+
+    /**
+     * get LDAP_OPT_ERROR_STRING
+     *
+     * @return string
+     */
+    public function getOptionErrorString() {
+        return $this->optionErrorString;
+    }
+
+    /**
+     * set LDAP_OPT_ERROR_STRING
+     *
+     * @param string $optionErrorString
+     */
+    public function setOptionErrorString($optionErrorString) {
+        $this->optionErrorString = $optionErrorString;
+    }
+
+    /**
+     * get LDAP_OPT_MATCHED_DN
+     *
+     * @return string
+     */
+    public function getOptionMatchedDn() {
+        return $this->optionMatchedDn;
+    }
+
+    /**
+     * set LDAP_OPT_MATCHED_DN
+     *
+     * @param string $optionMatchedDn
+     */
+    public function setOptionMatchedDn($optionMatchedDn) {
+        $this->optionMatchedDn = $optionMatchedDn;
+    }
+
+    /**
     * Set whether to detect the true primary group
     * 
     * @param bool $realPrimaryGroup
@@ -574,21 +903,83 @@ class adLDAP {
     function __construct($options = array()) {
         // You can specifically overide any of the default configuration options setup above
         if (count($options) > 0) {
-            if (array_key_exists("account_suffix",$options)){ $this->accountSuffix = $options["account_suffix"]; }
-            if (array_key_exists("base_dn",$options)){ $this->baseDn = $options["base_dn"]; }
+            if(array_key_exists("account_suffix", $options)) {
+                $this->accountSuffix = $options["account_suffix"];
+            }
+            if(array_key_exists("base_dn", $options)) {
+                $this->baseDn = $options["base_dn"];
+            }
             if (array_key_exists("domain_controllers",$options)){ 
                 if (!is_array($options["domain_controllers"])) { 
                     throw new adLDAPException('[domain_controllers] option must be an array');
                 }
                 $this->domainControllers = $options["domain_controllers"]; 
             }
-            if (array_key_exists("admin_username",$options)){ $this->adminUsername = $options["admin_username"]; }
-            if (array_key_exists("admin_password",$options)){ $this->adminPassword = $options["admin_password"]; }
-            if (array_key_exists("real_primarygroup",$options)){ $this->realPrimaryGroup = $options["real_primarygroup"]; }
-            if (array_key_exists("use_ssl",$options)){ $this->setUseSSL($options["use_ssl"]); }
-            if (array_key_exists("use_tls",$options)){ $this->useTLS = $options["use_tls"]; }
-            if (array_key_exists("recursive_groups",$options)){ $this->recursiveGroups = $options["recursive_groups"]; }
-            if (array_key_exists("ad_port",$options)){ $this->setPort($options["ad_port"]); } 
+            if(array_key_exists("groups_base_dn", $options)) {
+                $this->groupBaseDn = $options["groups_base_dn"];
+            }
+            if(array_key_exists("groups_domain_controllers", $options)) {
+                if($options['groups_domain_controllers']) {
+                    if(!is_array($options["groups_domain_controllers"])) {
+                        throw new adLDAPException('[groups_domain_controllers] option must be an array');
+                    }
+                }
+                $this->groupsDomainControllers = $options["groups_domain_controllers"];
+            }
+            if(array_key_exists("admin_username", $options)) {
+                $this->adminUsername = $options["admin_username"];
+            }
+            if(array_key_exists("admin_password", $options)) {
+                $this->adminPassword = $options["admin_password"];
+            }
+            if(array_key_exists("admin_account_prefix", $options)) {
+                $this->adminAccountPrefix = $options["admin_account_prefix"];
+            }
+            if(array_key_exists("admin_account_suffix", $options)) {
+                $this->adminAccountSuffix = $options["admin_account_suffix"];
+            }
+            if(array_key_exists("option_deref", $options)) {
+                $this->optionDeref = $options["option_deref"];
+            }
+            if(array_key_exists("option_sizelimit", $options)) {
+                $this->optionSizeLimit = $options["option_sizelimit"];
+            }
+            if(array_key_exists("option_timelimit", $options)) {
+                $this->optionTimeLimit = $options["option_timelimit"];
+            }
+            if(array_key_exists("option_network_timeout", $options)) {
+                $this->optionNetworkTimeout = $options["option_network_timeout"];
+            }
+            if(array_key_exists("option_error_number", $options)) {
+                $this->optionErrorNumber = $options["option_error_number"];
+            }
+            if(array_key_exists("option_restart", $options)) {
+                $this->optionRestart = $options["option_restart"];
+            }
+            if(array_key_exists("option_hostname", $options)) {
+                $this->optionHostname = $options["option_hostname"];
+            }
+            if(array_key_exists("option_error_string", $options)) {
+                $this->optionErrorString = $options["option_error_string"];
+            }
+            if(array_key_exists("option_matched_dn", $options)) {
+                $this->optionMatchedDn = $options["option_matched_dn"];
+            }
+            if(array_key_exists("real_primarygroup", $options)) {
+                $this->realPrimaryGroup = $options["real_primarygroup"];
+            }
+            if(array_key_exists("use_ssl", $options)) {
+                $this->setUseSSL($options["use_ssl"]);
+            }
+            if(array_key_exists("use_tls", $options)) {
+                $this->useTLS = $options["use_tls"];
+            }
+            if(array_key_exists("recursive_groups", $options)) {
+                $this->recursiveGroups = $options["recursive_groups"];
+            }
+            if(array_key_exists("ad_port", $options)) {
+                $this->setPort($options["ad_port"]);
+            }
             if (array_key_exists("sso",$options)) { 
                 $this->setUseSSO($options["sso"]);
                 if (!$this->ldapSaslSupported()) {
@@ -630,17 +1021,59 @@ class adLDAP {
             $this->ldapConnection = ldap_connect($domainController, $this->adPort);
         }
                
+        if(!empty($this->groupsDomainControllers) && !empty($this->groupBaseDn)){
+            $this->connectGroup();
+        }
+
         // Set some ldap options for talking to AD
         ldap_set_option($this->ldapConnection, LDAP_OPT_PROTOCOL_VERSION, 3);
         ldap_set_option($this->ldapConnection, LDAP_OPT_REFERRALS, 0);
         
+        if(!is_null($this->getOptionDeref()) && !(trim($this->getOptionDeref()) == '!!not set!!')) {
+            ldap_set_option($this->ldapConnection, LDAP_OPT_DEREF, $this->getOptionDeref());
+        }
+
+        if(!is_null($this->getOptionSizeLimit()) && !(trim($this->getOptionSizeLimit()) == '!!not set!!')) {
+            ldap_set_option($this->ldapConnection, LDAP_OPT_SIZELIMIT, $this->getOptionSizeLimit());
+        }
+
+        if(!is_null($this->getOptionTimeLimit()) && !(trim($this->getOptionTimeLimit()) == '!!not set!!')) {
+            ldap_set_option($this->ldapConnection, LDAP_OPT_TIMELIMIT, $this->getOptionTimeLimit());
+        }
+
+        if(!is_null($this->getOptionNetworkTimeout()) && !(trim($this->getOptionNetworkTimeout()) == '!!not set!!')) {
+            ldap_set_option($this->ldapConnection, LDAP_OPT_NETWORK_TIMEOUT, $this->getOptionNetworkTimeout());
+        }
+
+        if(!is_null($this->getOptionErrorNumber()) && !(trim($this->getOptionErrorNumber()) == '!!not set!!')) {
+            ldap_set_option($this->ldapConnection, LDAP_OPT_ERROR_NUMBER, $this->getOptionErrorNumber());
+        }
+
+        if(!is_null($this->getOptionRestart()) && !(trim($this->getOptionRestart()) == '!!not set!!')) {
+            ldap_set_option($this->ldapConnection, LDAP_OPT_RESTART, $this->getOptionRestart());
+        }
+
+        if(!is_null($this->getOptionHostname()) && !(trim($this->getOptionHostname()) == '!!not set!!')) {
+            ldap_set_option($this->ldapConnection, LDAP_OPT_HOST_NAME, $this->getOptionHostname());
+        }
+
+        if(!is_null($this->getOptionErrorString()) && !(trim($this->getOptionErrorString()) == '!!not set!!')) {
+            ldap_set_option($this->ldapConnection, LDAP_OPT_ERROR_STRING, $this->getOptionErrorString());
+        }
+
+        if(!is_null($this->getOptionMatchedDn()) && !(trim($this->getOptionMatchedDn()) == '!!not set!!')) {
+            ldap_set_option($this->ldapConnection, LDAP_OPT_MATCHED_DN, $this->getOptionMatchedDn());
+        }
+
         if ($this->useTLS) {
             ldap_start_tls($this->ldapConnection);
         }
                
         // Bind as a domain admin if they've set it up
-        if ($this->adminUsername !== NULL && $this->adminPassword !== NULL) {
-            $this->ldapBind = @ldap_bind($this->ldapConnection, $this->adminUsername . $this->accountSuffix, $this->adminPassword);
+        if($this->adminUsername !== null && $this->adminPassword !== null) {
+            // concat username with admin prefix and suffix if available
+            $adminUsernameWithAffixes = $this->concatAdminUsername($this->adminUsername);
+            $this->ldapBind           = @ldap_bind($this->ldapConnection, $adminUsernameWithAffixes, $this->adminPassword);
             if (!$this->ldapBind) {
                 if ($this->useSSL && !$this->useTLS) {
                     // If you have problems troubleshooting, remove the @ character from the ldapldapBind command above to get the actual error message
@@ -656,20 +1089,108 @@ class adLDAP {
             $this->ldapBind = @ldap_sasl_bind($this->ldapConnection, NULL, NULL, "GSSAPI"); 
             if (!$this->ldapBind){ 
                 throw new adLDAPException('Rebind to Active Directory failed. AD said: ' . $this->getLastError()); 
-            }
-            else {
+            } else {
                 return true;
             }
         }
-                
-        
-        if ($this->baseDn == NULL) {
-            $this->baseDn = $this->findBaseDn();   
+
+        if($this->baseDn == null) {
+            $this->baseDn = $this->findBaseDn();
         }
-        
+
         return true;
     }
-    
+
+    /**
+     * Connects and Binds to the Group Domain Controller
+     *
+     * @return bool
+     */
+    public function connectGroup() {
+        // Connect to the AD/LDAP server as the username/password
+        $groupDomainController = $this->randomGroupController();
+        if($this->useSSL) {
+            $this->ldapGroupConnection = ldap_connect("ldaps://" . $groupDomainController, $this->adPort);
+        } else {
+            $this->ldapGroupConnection = ldap_connect($groupDomainController, $this->adPort);
+        }
+        // Set some ldap options for talking to AD
+        ldap_set_option($this->ldapGroupConnection, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($this->ldapGroupConnection, LDAP_OPT_REFERRALS, 0);
+
+        if(!is_null($this->getOptionDeref()) && !(trim($this->getOptionDeref()) == '!!not set!!')) {
+            ldap_set_option($this->ldapGroupConnection, LDAP_OPT_DEREF, $this->getOptionDeref());
+        }
+
+        if(!is_null($this->getOptionSizeLimit()) && !(trim($this->getOptionSizeLimit()) == '!!not set!!')) {
+            ldap_set_option($this->ldapGroupConnection, LDAP_OPT_SIZELIMIT, $this->getOptionSizeLimit());
+        }
+
+        if(!is_null($this->getOptionTimeLimit()) && !(trim($this->getOptionTimeLimit()) == '!!not set!!')) {
+            ldap_set_option($this->ldapGroupConnection, LDAP_OPT_TIMELIMIT, $this->getOptionTimeLimit());
+        }
+
+        if(!is_null($this->getOptionNetworkTimeout()) && !(trim($this->getOptionNetworkTimeout()) == '!!not set!!')) {
+            ldap_set_option($this->ldapGroupConnection, LDAP_OPT_NETWORK_TIMEOUT, $this->getOptionNetworkTimeout());
+        }
+
+        if(!is_null($this->getOptionErrorNumber()) && !(trim($this->getOptionErrorNumber()) == '!!not set!!')) {
+            ldap_set_option($this->ldapGroupConnection, LDAP_OPT_ERROR_NUMBER, $this->getOptionErrorNumber());
+        }
+
+        if(!is_null($this->getOptionRestart()) && !(trim($this->getOptionRestart()) == '!!not set!!')) {
+            ldap_set_option($this->ldapGroupConnection, LDAP_OPT_RESTART, $this->getOptionRestart());
+        }
+
+        if(!is_null($this->getOptionHostname()) && !(trim($this->getOptionHostname()) == '!!not set!!')) {
+            ldap_set_option($this->ldapGroupConnection, LDAP_OPT_HOST_NAME, $this->getOptionHostname());
+        }
+
+        if(!is_null($this->getOptionErrorString()) && !(trim($this->getOptionErrorString()) == '!!not set!!')) {
+            ldap_set_option($this->ldapGroupConnection, LDAP_OPT_ERROR_STRING, $this->getOptionErrorString());
+        }
+
+        if(!is_null($this->getOptionMatchedDn()) && !(trim($this->getOptionMatchedDn()) == '!!not set!!')) {
+            ldap_set_option($this->ldapGroupConnection, LDAP_OPT_MATCHED_DN, $this->getOptionMatchedDn());
+        }
+
+        if($this->useTLS) {
+            ldap_start_tls($this->ldapGroupConnection);
+        }
+
+        // Bind as a domain admin if they've set it up
+        if($this->adminUsername !== null && $this->adminPassword !== null) {
+            // concat username with admin prefix and suffix if available
+            $adminUsernameWithAffixes = $this->concatAdminUsername($this->adminUsername);
+            $this->ldapGroupBind           = @ldap_bind($this->ldapGroupConnection, $adminUsernameWithAffixes, $this->adminPassword);
+            if(!$this->ldapGroupBind) {
+                if($this->useSSL && !$this->useTLS) {
+                    // If you have problems troubleshooting, remove the @ character from the ldapldapBind command above to get the actual error message
+                    throw new adLDAPException('Bind to Active Directory failed. Either the LDAPs connection failed or the login credentials are incorrect. AD said: ' . $this->getLastError());
+                } else {
+                    throw new adLDAPException('Bind to Active Directory failed. Check the login credentials and/or server details. AD said: ' . $this->getLastError());
+                }
+            }
+
+        }
+        if($this->useSSO && $_SERVER['REMOTE_USER'] && $this->adminUsername === null && $_SERVER['KRB5CCNAME']) {
+            putenv("KRB5CCNAME=" . $_SERVER['KRB5CCNAME']);
+            $this->ldapGroupBind = @ldap_sasl_bind($this->ldapGroupConnection, null, null, "GSSAPI");
+            if(!$this->ldapGroupBind) {
+                throw new adLDAPException('Rebind to Active Directory failed. AD said: ' . $this->getLastError());
+            } else {
+                return true;
+            }
+        }
+
+        /*
+        if($this->groupBaseDn == null) {
+            $this->groupBaseDn = $this->findBaseDn();
+        }
+        */
+        return true;
+    }
+
     /**
     * Closes the LDAP connection
     * 
@@ -678,6 +1199,9 @@ class adLDAP {
     public function close() {
         if ($this->ldapConnection) {
             @ldap_close($this->ldapConnection);
+        }
+        if($this->ldapGroupConnection) {
+            @ldap_close($this->ldapGroupConnection);
         }
     }
     
@@ -691,8 +1215,12 @@ class adLDAP {
     */
     public function authenticate($username, $password, $preventRebind = false) {
         // Prevent null binding
-        if ($username === NULL || $password === NULL) { return false; } 
-        if (empty($username) || empty($password)) { return false; }
+        if($username === null || $password === null) {
+            return false;
+        }
+        if(empty($username) || empty($password)) {
+            return false;
+        }
         
         // Allow binding over SSO for Kerberos
         if ($this->useSSO && $_SERVER['REMOTE_USER'] && $_SERVER['REMOTE_USER'] == $username && $this->adminUsername === NULL && $_SERVER['KRB5CCNAME']) { 
@@ -714,8 +1242,10 @@ class adLDAP {
         }
         
         // Cnce we've checked their details, kick back into admin mode if we have it
-        if ($this->adminUsername !== NULL && !$preventRebind) {
-            $this->ldapBind = @ldap_bind($this->ldapConnection, $this->adminUsername . $this->accountSuffix , $this->adminPassword);
+        if($this->adminUsername !== null && !$preventRebind) {
+            // concat username with admin prefix and suffix if available
+            $adminUsernameWithAffixes = $this->concatAdminUsername($this->adminUsername);
+            $this->ldapBind           = @ldap_bind($this->ldapConnection, $adminUsernameWithAffixes, $this->adminPassword);
             if (!$this->ldapBind){
                 // This should never happen in theory
                 throw new adLDAPException('Rebind to Active Directory failed. AD said: ' . $this->getLastError());
@@ -743,11 +1273,29 @@ class adLDAP {
     * @return array
     */
     public function getRootDse($attributes = array("*", "+")) {
-        if (!$this->ldapBind){ return (false); }
-        
-        $sr = @ldap_read($this->ldapConnection, NULL, 'objectClass=*', $attributes);
+        if(!$this->ldapBind) {
+            return (false);
+        }
+
+        $sr      = @ldap_read($this->ldapConnection, null, 'objectClass=*', $attributes);
         $entries = @ldap_get_entries($this->ldapConnection, $sr);
         return $entries;
+    }
+
+    /**
+     * Concats the admins username with its affixes
+     * @param $username
+     * @return string
+     */
+    public function concatAdminUsername($username) {
+        // override acountSuffix
+        if(empty($this->adminAccountSuffix) || $this->adminAccountSuffix == '') {
+            $this->adminAccountSuffix = $this->accountSuffix;
+        }
+        if(empty($this->adminAccountPrefix)) {
+            $this->adminAccountPrefix = '';
+        }
+        return $this->adminAccountPrefix . $username . $this->adminAccountSuffix;
     }
 
     /**
@@ -763,6 +1311,19 @@ class adLDAP {
         return @ldap_error($this->ldapConnection);
     }
     
+    /**
+     * Get last error from Active Directory on the group search connection
+     *
+     * This function gets the last message from Active Directory
+     * This may indeed be a 'Success' message but if you get an unknown error
+     * it might be worth calling this function to see what errors were raised
+     *
+     * return string
+     */
+    public function getLastGroupError() {
+        return @ldap_error($this->ldapGroupConnection);
+    }
+
     /**
     * Detect LDAP support in php
     * 
@@ -805,59 +1366,151 @@ class adLDAP {
         // Check every attribute to see if it contains 8bit characters and then UTF8 encode them
         array_walk($attributes, array($this, 'encode8bit'));
 
-        if ($attributes["address_city"]){ $mod["l"][0]=$attributes["address_city"]; }
-        if ($attributes["address_code"]){ $mod["postalCode"][0]=$attributes["address_code"]; }
+        if($attributes["address_city"]) {
+            $mod["l"][0] = $attributes["address_city"];
+        }
+        if($attributes["address_code"]) {
+            $mod["postalCode"][0] = $attributes["address_code"];
+        }
         //if ($attributes["address_country"]){ $mod["countryCode"][0]=$attributes["address_country"]; } // use country codes?
-        if ($attributes["address_country"]){ $mod["c"][0]=$attributes["address_country"]; }
-        if ($attributes["address_pobox"]){ $mod["postOfficeBox"][0]=$attributes["address_pobox"]; }
-        if ($attributes["address_state"]){ $mod["st"][0]=$attributes["address_state"]; }
-        if ($attributes["address_street"]){ $mod["streetAddress"][0]=$attributes["address_street"]; }
-        if ($attributes["company"]){ $mod["company"][0]=$attributes["company"]; }
-        if ($attributes["change_password"]){ $mod["pwdLastSet"][0]=0; }
-        if ($attributes["department"]){ $mod["department"][0]=$attributes["department"]; }
-        if ($attributes["description"]){ $mod["description"][0]=$attributes["description"]; }
-        if ($attributes["display_name"]){ $mod["displayName"][0]=$attributes["display_name"]; }
-        if ($attributes["email"]){ $mod["mail"][0]=$attributes["email"]; }
-        if ($attributes["expires"]){ $mod["accountExpires"][0]=$attributes["expires"]; } //unix epoch format?
-        if ($attributes["firstname"]){ $mod["givenName"][0]=$attributes["firstname"]; }
-        if ($attributes["home_directory"]){ $mod["homeDirectory"][0]=$attributes["home_directory"]; }
-        if ($attributes["home_drive"]){ $mod["homeDrive"][0]=$attributes["home_drive"]; }
-        if ($attributes["initials"]){ $mod["initials"][0]=$attributes["initials"]; }
-        if ($attributes["logon_name"]){ $mod["userPrincipalName"][0]=$attributes["logon_name"]; }
-        if ($attributes["manager"]){ $mod["manager"][0]=$attributes["manager"]; }  //UNTESTED ***Use DistinguishedName***
-        if ($attributes["office"]){ $mod["physicalDeliveryOfficeName"][0]=$attributes["office"]; }
-        if ($attributes["password"]){ $mod["unicodePwd"][0]=$this->user()->encodePassword($attributes["password"]); }
-        if ($attributes["profile_path"]){ $mod["profilepath"][0]=$attributes["profile_path"]; }
-        if ($attributes["script_path"]){ $mod["scriptPath"][0]=$attributes["script_path"]; }
-        if ($attributes["surname"]){ $mod["sn"][0]=$attributes["surname"]; }
-        if ($attributes["title"]){ $mod["title"][0]=$attributes["title"]; }
-        if ($attributes["telephone"]){ $mod["telephoneNumber"][0]=$attributes["telephone"]; }
-        if ($attributes["mobile"]){ $mod["mobile"][0]=$attributes["mobile"]; }
-        if ($attributes["pager"]){ $mod["pager"][0]=$attributes["pager"]; }
-        if ($attributes["ipphone"]){ $mod["ipphone"][0]=$attributes["ipphone"]; }
-        if ($attributes["web_page"]){ $mod["wWWHomePage"][0]=$attributes["web_page"]; }
-        if ($attributes["fax"]){ $mod["facsimileTelephoneNumber"][0]=$attributes["fax"]; }
-        if ($attributes["enabled"]){ $mod["userAccountControl"][0]=$attributes["enabled"]; }
-        if ($attributes["homephone"]){ $mod["homephone"][0]=$attributes["homephone"]; }
-        
+        if($attributes["address_country"]) {
+            $mod["c"][0] = $attributes["address_country"];
+        }
+        if($attributes["address_pobox"]) {
+            $mod["postOfficeBox"][0] = $attributes["address_pobox"];
+        }
+        if($attributes["address_state"]) {
+            $mod["st"][0] = $attributes["address_state"];
+        }
+        if($attributes["address_street"]) {
+            $mod["streetAddress"][0] = $attributes["address_street"];
+        }
+        if($attributes["company"]) {
+            $mod["company"][0] = $attributes["company"];
+        }
+        if($attributes["change_password"]) {
+            $mod["pwdLastSet"][0] = 0;
+        }
+        if($attributes["department"]) {
+            $mod["department"][0] = $attributes["department"];
+        }
+        if($attributes["description"]) {
+            $mod["description"][0] = $attributes["description"];
+        }
+        if($attributes["display_name"]) {
+            $mod["displayName"][0] = $attributes["display_name"];
+        }
+        if($attributes["email"]) {
+            $mod["mail"][0] = $attributes["email"];
+        }
+        if($attributes["expires"]) {
+            $mod["accountExpires"][0] = $attributes["expires"];
+        } //unix epoch format?
+        if($attributes["firstname"]) {
+            $mod["givenName"][0] = $attributes["firstname"];
+        }
+        if($attributes["home_directory"]) {
+            $mod["homeDirectory"][0] = $attributes["home_directory"];
+        }
+        if($attributes["home_drive"]) {
+            $mod["homeDrive"][0] = $attributes["home_drive"];
+        }
+        if($attributes["initials"]) {
+            $mod["initials"][0] = $attributes["initials"];
+        }
+        if($attributes["logon_name"]) {
+            $mod["userPrincipalName"][0] = $attributes["logon_name"];
+        }
+        if($attributes["manager"]) {
+            $mod["manager"][0] = $attributes["manager"];
+        }  //UNTESTED ***Use DistinguishedName***
+        if($attributes["office"]) {
+            $mod["physicalDeliveryOfficeName"][0] = $attributes["office"];
+        }
+        if($attributes["password"]) {
+            $mod["unicodePwd"][0] = $this->user()->encodePassword($attributes["password"]);
+        }
+        if($attributes["profile_path"]) {
+            $mod["profilepath"][0] = $attributes["profile_path"];
+        }
+        if($attributes["script_path"]) {
+            $mod["scriptPath"][0] = $attributes["script_path"];
+        }
+        if($attributes["surname"]) {
+            $mod["sn"][0] = $attributes["surname"];
+        }
+        if($attributes["title"]) {
+            $mod["title"][0] = $attributes["title"];
+        }
+        if($attributes["telephone"]) {
+            $mod["telephoneNumber"][0] = $attributes["telephone"];
+        }
+        if($attributes["mobile"]) {
+            $mod["mobile"][0] = $attributes["mobile"];
+        }
+        if($attributes["pager"]) {
+            $mod["pager"][0] = $attributes["pager"];
+        }
+        if($attributes["ipphone"]) {
+            $mod["ipphone"][0] = $attributes["ipphone"];
+        }
+        if($attributes["web_page"]) {
+            $mod["wWWHomePage"][0] = $attributes["web_page"];
+        }
+        if($attributes["fax"]) {
+            $mod["facsimileTelephoneNumber"][0] = $attributes["fax"];
+        }
+        if($attributes["enabled"]) {
+            $mod["userAccountControl"][0] = $attributes["enabled"];
+        }
+        if($attributes["homephone"]) {
+            $mod["homephone"][0] = $attributes["homephone"];
+        }
+
         // Distribution List specific schema
-        if ($attributes["group_sendpermission"]){ $mod["dlMemSubmitPerms"][0]=$attributes["group_sendpermission"]; }
-        if ($attributes["group_rejectpermission"]){ $mod["dlMemRejectPerms"][0]=$attributes["group_rejectpermission"]; }
-        
+        if($attributes["group_sendpermission"]) {
+            $mod["dlMemSubmitPerms"][0] = $attributes["group_sendpermission"];
+        }
+        if($attributes["group_rejectpermission"]) {
+            $mod["dlMemRejectPerms"][0] = $attributes["group_rejectpermission"];
+        }
+
         // Exchange Schema
-        if ($attributes["exchange_homemdb"]){ $mod["homeMDB"][0]=$attributes["exchange_homemdb"]; }
-        if ($attributes["exchange_mailnickname"]){ $mod["mailNickname"][0]=$attributes["exchange_mailnickname"]; }
-        if ($attributes["exchange_proxyaddress"]){ $mod["proxyAddresses"][0]=$attributes["exchange_proxyaddress"]; }
-        if ($attributes["exchange_usedefaults"]){ $mod["mDBUseDefaults"][0]=$attributes["exchange_usedefaults"]; }
-        if ($attributes["exchange_policyexclude"]){ $mod["msExchPoliciesExcluded"][0]=$attributes["exchange_policyexclude"]; }
-        if ($attributes["exchange_policyinclude"]){ $mod["msExchPoliciesIncluded"][0]=$attributes["exchange_policyinclude"]; }       
-        if ($attributes["exchange_addressbook"]){ $mod["showInAddressBook"][0]=$attributes["exchange_addressbook"]; }    
-        if ($attributes["exchange_altrecipient"]){ $mod["altRecipient"][0]=$attributes["exchange_altrecipient"]; } 
-        if ($attributes["exchange_deliverandredirect"]){ $mod["deliverAndRedirect"][0]=$attributes["exchange_deliverandredirect"]; }    
-        
+        if($attributes["exchange_homemdb"]) {
+            $mod["homeMDB"][0] = $attributes["exchange_homemdb"];
+        }
+        if($attributes["exchange_mailnickname"]) {
+            $mod["mailNickname"][0] = $attributes["exchange_mailnickname"];
+        }
+        if($attributes["exchange_proxyaddress"]) {
+            $mod["proxyAddresses"][0] = $attributes["exchange_proxyaddress"];
+        }
+        if($attributes["exchange_usedefaults"]) {
+            $mod["mDBUseDefaults"][0] = $attributes["exchange_usedefaults"];
+        }
+        if($attributes["exchange_policyexclude"]) {
+            $mod["msExchPoliciesExcluded"][0] = $attributes["exchange_policyexclude"];
+        }
+        if($attributes["exchange_policyinclude"]) {
+            $mod["msExchPoliciesIncluded"][0] = $attributes["exchange_policyinclude"];
+        }
+        if($attributes["exchange_addressbook"]) {
+            $mod["showInAddressBook"][0] = $attributes["exchange_addressbook"];
+        }
+        if($attributes["exchange_altrecipient"]) {
+            $mod["altRecipient"][0] = $attributes["exchange_altrecipient"];
+        }
+        if($attributes["exchange_deliverandredirect"]) {
+            $mod["deliverAndRedirect"][0] = $attributes["exchange_deliverandredirect"];
+        }
+
         // This schema is designed for contacts
-        if ($attributes["exchange_hidefromlists"]){ $mod["msExchHideFromAddressLists"][0]=$attributes["exchange_hidefromlists"]; }
-        if ($attributes["contact_email"]){ $mod["targetAddress"][0]=$attributes["contact_email"]; }
+        if($attributes["exchange_hidefromlists"]) {
+            $mod["msExchHideFromAddressLists"][0] = $attributes["exchange_hidefromlists"];
+        }
+        if($attributes["contact_email"]) {
+            $mod["targetAddress"][0] = $attributes["contact_email"];
+        }
         
         //echo ("<pre>"); print_r($mod);
         /*
@@ -869,7 +1522,9 @@ class adLDAP {
         }
         */
 
-        if (count($mod)==0){ return (false); }
+        if(count($mod) == 0) {
+            return (false);
+        }
         return ($mod);
     }
     
@@ -918,6 +1573,32 @@ class adLDAP {
     }  
     
     /** 
+     * Select a random group domain controller from your group omain controller array
+     *
+     * @return string
+     */
+    protected function randomGroupController() {
+        mt_srand(doubleval(microtime()) * 100000000); // For older PHP versions
+        /*if (sizeof($this->domainControllers) > 1) {
+            $adController = $this->domainControllers[array_rand($this->domainControllers)];
+            // Test if the controller is responding to pings
+            $ping = $this->pingController($adController);
+            if ($ping === false) {
+                // Find the current key in the domain controllers array
+                $key = array_search($adController, $this->domainControllers);
+                // Remove it so that we don't end up in a recursive loop
+                unset($this->domainControllers[$key]);
+                // Select a new controller
+                return $this->randomController();
+            }
+            else {
+                return ($adController);
+            }
+        } */
+        return $this->groupsDomainControllers[array_rand($this->groupsDomainControllers)];
+    }
+
+    /**
     * Test basic connectivity to controller 
     * 
     * @return bool
