@@ -15,9 +15,9 @@ header('Content-Type: text/html; charset=utf-8');
 
 //call the requested function
 if($INPUT->post->has('call')){
-    $call = $INPUT->post->str('call');
+    $call = $INPUT->post->filter('utf8_stripspecials')->str('call');
 }else if($INPUT->get->has('call')){
-    $call = $INPUT->get->str('call');
+    $call = $INPUT->get->filter('utf8_stripspecials')->str('call');
 }else{
     exit;
 }
