@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Felix <j.felix@mueller-donath.de>
+ * @author Felix Müller-Donath <j.felix@mueller-donath.de>
  */
 $lang['menu']                  = 'Erweiterungen verwalten';
 $lang['tab_plugins']           = 'Installierte Plugins';
@@ -30,3 +31,14 @@ $lang['js']['display_enabled'] = 'aktiviert';
 $lang['js']['display_disabled'] = 'deaktiviert';
 $lang['js']['display_updatable'] = 'Update verfügbar';
 $lang['search_for']            = 'Suche Erweiterung:';
+$lang['search']                = 'Suche';
+$lang['screenshot']            = 'Screenshot von %s';
+$lang['popularity']            = 'Popularität: %s%%';
+$lang['author_hint']           = 'Suche Erweiterungen dieses Autors';
+$lang['installed']             = 'Installiert:';
+$lang['installed_version']     = 'Installierte Version:';
+$lang['install_date']          = 'Dein letztes Update:';
+$lang['available_version']     = 'Verfügbare Version:';
+$lang['compatible']            = 'Kompatibel mit:';
+$lang['depends']               = 'Abhängig von:';
+$lang['similar']               = 'Ähnlich wie:';
