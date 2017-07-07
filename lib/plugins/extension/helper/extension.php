@@ -51,6 +51,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return bool If some (local or remote) data was found
      */
     public function setExtension($id) {
+        $id = cleanID($id);
         $this->id   = $id;
         $this->base = $id;
 
