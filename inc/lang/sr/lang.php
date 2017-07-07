@@ -176,6 +176,7 @@ $lang['mail_changed']          = 'страница измењена:';
 $lang['mail_subscribe_list']   = 'Странице промењене у именском простору:';
 $lang['mail_new_user']         = 'нови корисник:';
 $lang['mail_upload']           = 'послата датотека:';
+$lang['changes_type']          = 'Прикажи измене';
 $lang['pages_changes']         = 'Странице';
 $lang['both_changes']          = 'И странице и датотеке';
 $lang['qb_bold']               = 'Мастан текст';
