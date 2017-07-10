@@ -134,13 +134,14 @@ class WantedPagesCLI extends DokuCLI {
         $links        = array();
         $cns          = getNS($page['id']);
         $exists       = false;
+        $pid = $page['id'];
         foreach($instructions as $ins) {
             if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink')) {
                 $mid = $ins[1][0];
                 resolve_pageid($cns, $mid, $exists);
                 if(!$exists) {
                     list($mid) = explode('#', $mid); //record pages without hashs
-                    $links[] = $mid;
+                    $links[] = "$pid => $mid";
                 }
             }
         }
