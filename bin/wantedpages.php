@@ -44,14 +44,15 @@ class WantedPagesCLI extends DokuCLI {
      * @return void
      */
     protected function main(DokuCLI_Options $options) {
-        global $argc, $argv;
 
         if($options->args) {
             $startdir = dirname(wikiFN($options->args[0].':xxx'));
         } else {
             $startdir = dirname(wikiFN('xxx'));
         }
-        if($argv[1] == 'show-pages' || $argv[2] == 'show-pages') {
+        
+        $cmd = $options->getCmd();
+        if($cmd == 'show-pages') {
             $this->show_pages = true;
         }
 
