@@ -157,6 +157,7 @@ $meta['remoteuser']   = array('string');
 $meta['_anti_spam']  = array('fieldset');
 $meta['usewordblock']= array('onoff');
 $meta['relnofollow'] = array('onoff');
+$meta['relnoreferrer'] = array('onoff');
 $meta['indexdelay']  = array('numeric');
 $meta['mailguard']   = array('multichoice','_choices' => array('visible','hex','none'));
 $meta['iexssprotect']= array('onoff','_caution' => 'security');

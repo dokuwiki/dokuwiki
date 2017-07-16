@@ -961,6 +961,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['name']  = $name;
         $link['title'] = $this->_xmlEntities($url);
         if($conf['relnofollow']) $link['rel'] .= ' nofollow';
+        if($conf['relnoreferrer']) $link['rel'] .= ' noreferrer';
         if($conf['target']['extern']) $link['rel'] .= ' noopener';
 
         //output formatted

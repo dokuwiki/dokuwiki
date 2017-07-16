@@ -268,7 +268,10 @@ class DokuWiki_Plugin {
         $link = htmlentities($link);
         if (!$title) $title = $link;
         if (!$target) $target = $conf['target']['extern'];
-        if ($conf['relnofollow']) $more .= ' rel="nofollow"';
+        $rel = array();
+        if ($conf['relnofollow']) $rel[] = "nofollow";
+        if ($conf['relnoreferrer']) $rel[] = "noreferrer";
+        if (!empty($rel)) $more .= ' rel="'.join(' ', $rel).'"';
 
         if ($class) $class = " class='$class'";
         if ($target) $target = " target='$target'";
