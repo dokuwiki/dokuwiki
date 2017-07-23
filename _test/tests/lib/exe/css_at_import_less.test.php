@@ -26,7 +26,7 @@ class css_at_import_less_test extends DokuWikiTest {
             throw new Exception('failed to rename file');
         };
 
-        $this->import = w2u($import.'.less');
+        $this->import = $import.'.less';
     }
 
     private function csstest($input, $expected_css, $expected_less) {
@@ -34,14 +34,20 @@ class css_at_import_less_test extends DokuWikiTest {
         io_saveFile($this->file, $input);
         $css = css_loadfile($this->file, $location);
         $less = css_parseless($css);
-        $this->assertEquals($expected_css, $css);
+        $this->assertEquals($expected_css, w2u($css)); // w2u() for test pass, less works with both slashes on Windows OS
         $this->assertEquals($expected_less, $less);
     }
 
     public function test_basic() {
         $this->setUpFiles();
 
-        $import = preg_replace('#(^.*[/])#','',$this->import);
+        // remove path
+        if (isWindows()) {
+            $import = preg_replace('#(^.*[\\\\])#','',$this->import);
+        } else {
+            $import = preg_replace('#(^.*[/])#','',$this->import);
+        }
+
         $in_css = '@import "'.$import.'";';
         $in_less = '@foo: "bar";
 content: @foo;';
@@ -56,7 +62,13 @@ content: @foo;';
     public function test_subdirectory() {
         $this->setUpFiles('/foo/bar');
 
-        $import = preg_replace('#(^.*[/])#','',$this->import);
+        // remove path
+        if (isWindows()) {
+            $import = preg_replace('#(^.*[\\\\])#','',$this->import);
+        } else {
+            $import = preg_replace('#(^.*[/])#','',$this->import);
+        }
+
         $in_css = '@import "'.$import.'";';
         $in_less = '@foo: "bar";
 content: @foo;';

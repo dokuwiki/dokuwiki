@@ -3,11 +3,6 @@
  * Test Suite bootstrapping for DokuWiki
  */
 
-// convert windows path to unix-like
-function w2u($filename) {
-    return str_replace('\\', '/', $filename);
-}
-
 if(!defined('DOKU_UNITTEST')) define('DOKU_UNITTEST',dirname(__FILE__).'/');
 require_once DOKU_UNITTEST.'core/phpQuery-onefile.php';
 require_once DOKU_UNITTEST.'core/DokuWikiTest.php';
@@ -26,8 +21,8 @@ set_time_limit(0);
 ini_set('memory_limit','2048M');
 
 // prepare temporary directories
-define('DOKU_INC', w2u(dirname(dirname(__FILE__))).'/');
-define('TMP_DIR', w2u(sys_get_temp_dir()).'/dwtests-'.microtime(true));
+define('DOKU_INC', dirname(dirname(__FILE__)).'/');
+define('TMP_DIR', sys_get_temp_dir().'/dwtests-'.microtime(true));
 define('DOKU_CONF', TMP_DIR.'/conf/');
 define('DOKU_TMP_DATA', TMP_DIR.'/data/');
 
