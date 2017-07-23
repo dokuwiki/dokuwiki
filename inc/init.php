@@ -3,6 +3,10 @@
  * Initialize some defaults needed for DokuWiki
  */
 
+function isWindows() {
+    return (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? true : false;
+}
+
 /**
  * timing Dokuwiki execution
  *

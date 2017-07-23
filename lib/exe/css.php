@@ -467,15 +467,17 @@ class DokuCssFile {
 
         if (is_null($this->relative_path)) {
             $basedir = array(DOKU_INC);
+            $filedir = dirname($this->filepath);
 
             // during testing, files may be found relative to a second base dir, TMP_DIR
             if (defined('DOKU_UNITTEST')) {
-                $basedir[] = realpath(TMP_DIR);
+                $basedir[] = w2u(realpath(TMP_DIR));
+                $filedir = w2u($filedir);
             }
 
             $basedir = array_map('preg_quote_cb', $basedir);
             $regex = '/^('.join('|',$basedir).')/';
-            $this->relative_path = preg_replace($regex, '', dirname($this->filepath));
+            $this->relative_path = preg_replace($regex, '', $filedir);
         }
 
         return $this->relative_path;

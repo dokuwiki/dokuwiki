@@ -14,19 +14,19 @@ class css_at_import_less_test extends DokuWikiTest {
             mkdir($dir, 0777, true);
         }
         if (!is_dir($dir)) {
-            $this->markTestSkipped('Could not create directory.');
+            throw new Exception('Could not create directory.');
         }
 
         $this->file = tempnam($dir, 'css');
 
         $import = '';
-        do {
-            if ($import) unlink($import);
-            $import = tempnam($dir, 'less');
-            $ok = rename($import, $import.'.less');
-        } while (!$ok);
+        if ($import) unlink($import);
+        $import = tempnam($dir, 'less');
+        if (rename($import, $import.'.less') === false) {
+            throw new Exception('failed to rename file');
+        };
 
-        $this->import = $import.'.less';
+        $this->import = w2u($import.'.less');
     }
 
     private function csstest($input, $expected_css, $expected_less) {

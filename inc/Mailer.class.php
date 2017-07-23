@@ -331,9 +331,6 @@ class Mailer {
      * @return false|string  the prepared header (can contain multiple lines)
      */
     public function cleanAddress($addresses) {
-        // No named recipients for To: in Windows (see FS#652)
-        $names = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? false : true;
-
         $headers = '';
         if(!is_array($addresses)){
             $addresses = explode(',', $addresses);
@@ -367,7 +364,7 @@ class Mailer {
             }
 
             // text was given
-            if(!empty($text) && $names) {
+            if(!empty($text) && !isWindows()) { // No named recipients for To: in Windows (see FS#652)
                 // add address quotes
                 $addr = "<$addr>";
 

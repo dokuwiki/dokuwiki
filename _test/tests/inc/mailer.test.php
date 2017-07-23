@@ -88,27 +88,49 @@ class mailer_test extends DokuWikiTest {
         $mail->to('Andreas Gohr <andi@splitbrain.org>');
         $mail->cleanHeaders();
         $headers = $mail->prop('headers');
-        $this->assertEquals('Andreas Gohr <andi@splitbrain.org>', $headers['To']);
+
+        if (isWindows()) { // see FS#652
+            $this->assertEquals('andi@splitbrain.org', $headers['To']);
+        } else {
+            $this->assertEquals('Andreas Gohr <andi@splitbrain.org>', $headers['To']);
+        }
 
         $mail->to('Andreas Gohr <andi@splitbrain.org> , foo <foo@example.com>');
         $mail->cleanHeaders();
         $headers = $mail->prop('headers');
-        $this->assertEquals('Andreas Gohr <andi@splitbrain.org>, foo <foo@example.com>', $headers['To']);
+        if (isWindows()) { // see FS#652
+            $this->assertEquals('andi@splitbrain.org,  foo@example.com', $headers['To']);
+        } else {
+            $this->assertEquals('Andreas Gohr <andi@splitbrain.org>, foo <foo@example.com>', $headers['To']);
+        }
 
         $mail->to('Möp <moep@example.com> , foo <foo@example.com>');
         $mail->cleanHeaders();
         $headers = $mail->prop('headers');
-        $this->assertEquals('=?UTF-8?B?TcO2cA==?= <moep@example.com>, foo <foo@example.com>', $headers['To']);
+
+        if (isWindows()) { // see FS#652
+            $this->assertEquals('moep@example.com,  foo@example.com', $headers['To']);
+        } else {
+            $this->assertEquals('=?UTF-8?B?TcO2cA==?= <moep@example.com>, foo <foo@example.com>', $headers['To']);
+        }
 
         $mail->to(array('Möp <moep@example.com> ',' foo <foo@example.com>'));
         $mail->cleanHeaders();
         $headers = $mail->prop('headers');
-        $this->assertEquals('=?UTF-8?B?TcO2cA==?= <moep@example.com>, foo <foo@example.com>', $headers['To']);
+        if (isWindows()) { // see FS#652
+            $this->assertEquals('moep@example.com,  foo@example.com', $headers['To']);
+        } else {
+            $this->assertEquals('=?UTF-8?B?TcO2cA==?= <moep@example.com>, foo <foo@example.com>', $headers['To']);
+        }
 
         $mail->to(array('Beet, L van <lvb@example.com>',' foo <foo@example.com>'));
         $mail->cleanHeaders();
         $headers = $mail->prop('headers');
-        $this->assertEquals('=?UTF-8?B?QmVldCwgTCB2YW4=?= <lvb@example.com>, foo <foo@example.com>', $headers['To']);
+        if (isWindows()) { // see FS#652
+            $this->assertEquals('lvb@example.com,  foo@example.com', $headers['To']);
+        } else {
+            $this->assertEquals('=?UTF-8?B?QmVldCwgTCB2YW4=?= <lvb@example.com>, foo <foo@example.com>', $headers['To']);
+        }
 
 
     }
