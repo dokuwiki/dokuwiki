@@ -14,17 +14,17 @@ class css_at_import_less_test extends DokuWikiTest {
             mkdir($dir, 0777, true);
         }
         if (!is_dir($dir)) {
-            throw new Exception('Could not create directory.');
+            $this->markTestSkipped('Could not create directory.');
         }
 
         $this->file = tempnam($dir, 'css');
 
         $import = '';
-        if ($import) unlink($import);
-        $import = tempnam($dir, 'less');
-        if (rename($import, $import.'.less') === false) {
-            throw new Exception('failed to rename file');
-        };
+        do {
+            if ($import) unlink($import);
+            $import = tempnam($dir, 'less');
+            $ok = rename($import, $import.'.less');
+        } while (!$ok);
 
         $this->import = $import.'.less';
     }
@@ -34,20 +34,19 @@ class css_at_import_less_test extends DokuWikiTest {
         io_saveFile($this->file, $input);
         $css = css_loadfile($this->file, $location);
         $less = css_parseless($css);
-        $this->assertEquals($expected_css, w2u($css)); // w2u() for test pass, less works with both slashes on Windows OS
+        $this->assertEquals($expected_css, $css);
         $this->assertEquals($expected_less, $less);
+    }
+
+    // make relative
+    private function importPath($path) {
+        return isWindows() ? preg_replace('#(^.*[\\\\])#','', $path) : preg_replace('#(^.*[/])#','', $path);
     }
 
     public function test_basic() {
         $this->setUpFiles();
 
-        // remove path
-        if (isWindows()) {
-            $import = preg_replace('#(^.*[\\\\])#','',$this->import);
-        } else {
-            $import = preg_replace('#(^.*[/])#','',$this->import);
-        }
-
+        $import = $this->importPath($this->import);
         $in_css = '@import "'.$import.'";';
         $in_less = '@foo: "bar";
 content: @foo;';
@@ -62,18 +61,12 @@ content: @foo;';
     public function test_subdirectory() {
         $this->setUpFiles('/foo/bar');
 
-        // remove path
-        if (isWindows()) {
-            $import = preg_replace('#(^.*[\\\\])#','',$this->import);
-        } else {
-            $import = preg_replace('#(^.*[/])#','',$this->import);
-        }
-
+        $import = $this->importPath($this->import);
         $in_css = '@import "'.$import.'";';
         $in_less = '@foo: "bar";
 content: @foo;';
 
-        $expected_css = '@import "/foo/bar/'.$import.'";';
+        $expected_css = isWindows() ? '@import "\\foo\\bar/'.$import.'";' : '@import "/foo/bar/'.$import.'";';
         $expected_less = 'content: "bar";';
 
         io_saveFile($this->import, $in_less);
