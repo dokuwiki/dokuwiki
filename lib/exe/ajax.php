@@ -33,6 +33,7 @@ if(function_exists($callfn)){
     unset($evt);
 }
 
+if (!function_exists('ajax_qsearch')) {
 /**
  * Searches for matching pagenames
  *
@@ -78,7 +79,9 @@ function ajax_qsearch(){
     }
     print '</ul>';
 }
+}
 
+if (!function_exists('ajax_suggestions')) {
 /**
  * Support OpenSearch suggestions
  *
@@ -115,7 +118,9 @@ function ajax_suggestions() {
     header('Content-Type: application/x-suggestions+json');
     print $json->encode($suggestions);
 }
+}
 
+if (!function_exists('ajax_lock')) {
 /**
  * Refresh a page lock and save draft
  *
@@ -161,7 +166,9 @@ function ajax_lock(){
     }
 
 }
+}
 
+if (!function_exists('ajax_draftdel')) {
 /**
  * Delete a draft
  *
@@ -178,7 +185,9 @@ function ajax_draftdel(){
     $cname = getCacheName($client.$id,'.draft');
     @unlink($cname);
 }
+}
 
+if (!function_exists('ajax_medians')) {
 /**
  * Return subnamespaces for the Mediamanager
  *
@@ -201,7 +210,8 @@ function ajax_medians(){
     }
     echo html_buildlist($data, 'idx', 'media_nstree_item', 'media_nstree_li');
 }
-
+}
+if (!function_exists('ajax_medialist')) {
 /**
  * Return list of files for the Mediamanager
  *
@@ -219,7 +229,8 @@ function ajax_medialist(){
         tpl_mediaContent(true, $sort);
     }
 }
-
+}
+if(!function_exists('ajax_mediadetails')) {
 /**
  * Return the content of the right column
  * (image details) for the Mediamanager
@@ -241,7 +252,9 @@ function ajax_mediadetails(){
     html_msgarea();
     tpl_mediaFileDetails($image, $rev);
 }
+}
 
+if(!function_exists('ajax_mediadiff')) {
 /**
  * Returns image diff representation for mediamanager
  * @author Kate Arzamastseva <pshns@ukr.net>
@@ -256,7 +269,8 @@ function ajax_mediadiff(){
     $auth = auth_quickaclcheck("$NS:*");
     media_diff($image, $NS, $auth, true);
 }
-
+}
+if (!function_exists('ajax_mediaupload')) {
 function ajax_mediaupload(){
     global $NS, $MSG, $INPUT;
 
@@ -304,7 +318,8 @@ function ajax_mediaupload(){
     header('Content-Type: application/json');
     echo $json->encode($result);
 }
-
+}
+if (!function_exists('ajax_index')) {
 /**
  * Return sub index for index view
  *
@@ -327,7 +342,9 @@ function ajax_index(){
     }
     echo html_buildlist($data, 'idx', 'html_list_index', 'html_li_index');
 }
+}
 
+if (!function_exists('ajax_linkwiz')) {
 /**
  * List matching namespaces and pages for the link wizard
  *
@@ -434,5 +451,5 @@ function ajax_linkwiz(){
     }
 
 }
-
+}
 //Setup VIM: ex: et ts=2 :
