@@ -1645,7 +1645,7 @@ function tpl_mediaTree() {
  * @param string $empty empty option label
  * @param string $button submit button label
  */
-function tpl_actiondropdown($empty = '', $button = '&gt;') {
+function tpl_actiondropdown($empty = '&nbsp;', $button = '&gt;') {
     global $ID;
     global $REV;
     global $lang;
