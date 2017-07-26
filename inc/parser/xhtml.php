@@ -1133,7 +1133,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function internalmedia($src, $title = null, $align = null, $width = null,
                            $height = null, $cache = null, $linking = null, $return = false) {
         global $ID;
-        list($src, $hash) = explode('#', $src, 2);
+        if (strpos($src, '#') !== false) {
+            list($src, $hash) = explode('#', $src, 2);
+        }
         resolve_mediaid(getNS($ID), $src, $exists, $this->date_at, true);
 
         $noLink = false;
@@ -1154,7 +1156,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             if($exists) $link['title'] .= ' ('.filesize_h(filesize(mediaFN($src))).')';
         }
 
-        if($hash) $link['url'] .= '#'.$hash;
+        if (!empty($hash)) $link['url'] .= '#'.$hash;
 
         //markup non existing files
         if(!$exists) {
