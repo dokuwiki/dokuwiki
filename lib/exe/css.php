@@ -530,7 +530,7 @@ function css_datauri($match){
     if($size && $size < $conf['cssdatauri']){
         $data = base64_encode(file_get_contents($local));
     }
-    if($data){
+    if (!empty($data)){
         $url = 'data:image/'.$ext.';base64,'.$data;
     }else{
         $url = $base.$url;
