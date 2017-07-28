@@ -36,9 +36,7 @@ class ajax_requests_test extends DokuWikiTest {
         if (!empty($regexp)) {
             $this->assertRegExp($regexp, $response->getContent());
         }
-        if($call == 'index') {
-            //echo $response->getContent(); die;
-        }
+        
         $this->assertTrue(function_exists('ajax_'.$call));
     }
 
