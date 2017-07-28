@@ -183,7 +183,7 @@ class Mailer {
      *
      * @param string $text     plain text body
      * @param array  $textrep  replacements to apply on the text part
-     * @param array  $htmlrep  replacements to apply on the HTML part, leave null to use $textrep
+     * @param array  $htmlrep  replacements to apply on the HTML part, null to use $textrep (with urls wrapped in <a> tags)
      * @param string $html     the HTML body, leave null to create it from $text
      * @param bool   $wrap     wrap the HTML in the default header/Footer
      */
