@@ -3,18 +3,12 @@
  * Initialize some defaults needed for DokuWiki
  */
 
-if (!function_exists('isWindows')) {
-    // checks if it is windows OS
-    function isWindows() {
-        return (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? true : false;
-    }
-}
-
-if (!function_exists('w2u')) {
-    // convert windows path to unix-like on windows OS
-    function w2u($filename) {
-        return isWindows() ? str_replace('\\', '/', $filename) : $filename;
-    }
+/**
+ * checks it is windows OS
+ * @return bool
+ */
+function isWindows() {
+    return (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? true : false;
 }
 
 /**
