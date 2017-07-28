@@ -12,7 +12,7 @@ class WantedPagesCLI extends DokuCLI {
     const DIR_CONTINUE = 1;
     const DIR_NS       = 2;
     const DIR_PAGE     = 3;
-
+    private $show_pages = false;
     /**
      * Register options and arguments on the given $options object
      *
@@ -28,6 +28,11 @@ class WantedPagesCLI extends DokuCLI {
             'The namespace to lookup. Defaults to root namespace',
             false
         );
+            $options->registerCommand(
+            'show-pages',
+            'Show wiki pages on which broken links (i.e. wanted pages) are found, listed as: wiki_page=>broken_link' 
+        );
+
     }
 
     /**
@@ -44,6 +49,11 @@ class WantedPagesCLI extends DokuCLI {
             $startdir = dirname(wikiFN($options->args[0].':xxx'));
         } else {
             $startdir = dirname(wikiFN('xxx'));
+        }
+        
+        $cmd = $options->getCmd();
+        if($cmd == 'show-pages') {
+            $this->show_pages = true;
         }
 
         $this->info("searching $startdir");
@@ -134,13 +144,17 @@ class WantedPagesCLI extends DokuCLI {
         $links        = array();
         $cns          = getNS($page['id']);
         $exists       = false;
+        $pid = $page['id'];
         foreach($instructions as $ins) {
             if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink')) {
                 $mid = $ins[1][0];
                 resolve_pageid($cns, $mid, $exists);
                 if(!$exists) {
                     list($mid) = explode('#', $mid); //record pages without hashs
-                    $links[] = $mid;
+                    if($this->show_pages) {
+                    $links[] = "$pid => $mid";
+                    }                    
+                    else $links[] = $mid;
                 }
             }
         }
