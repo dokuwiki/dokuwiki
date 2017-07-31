@@ -52,6 +52,7 @@ $lang['_msg_setting_no_default'] = 'No default value.';
 /* Basic Settings */
 $lang['title']       = 'Wiki title aka. your wiki\'s name';
 $lang['start']       = 'Page name to use as the starting point for each namespace';
+$lang['hidestart']   = 'Hides start page link from breadcrumbs, youarehere and in base url';
 $lang['lang']        = 'Interface language';
 $lang['template']    = 'Template aka. the design of the wiki.';
 $lang['tagline']     = 'Tagline (if template supports it)';

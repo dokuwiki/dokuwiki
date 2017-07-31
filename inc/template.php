@@ -882,33 +882,49 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $sep Separator between entries
- * @return bool
+ * @return void
  */
 function tpl_breadcrumbs($sep = '•') {
     global $lang;
     global $conf;
 
-    //check if enabled
-    if(!$conf['breadcrumbs']) return false;
+    //check if it is enabled
+    if(!$conf['breadcrumbs']) {
+        return;
+    }
 
-    $crumbs = breadcrumbs(); //setup crumb trace
+    $crumbs = breadcrumbs();
+    $last = count($crumbs);
+
+    echo '<span class="bchead">'.$lang['breadcrumb'].'</span> ';
+
+    if ($last < 1) {
+        return;
+    }
 
     $crumbs_sep = ' <span class="bcsep">'.$sep.'</span> ';
-
-    //render crumbs, highlight the last one
-    print '<span class="bchead">'.$lang['breadcrumb'].'</span>';
-    $last = count($crumbs);
-    $i    = 0;
-    foreach($crumbs as $id => $name) {
+    $i = 0;
+    foreach ($crumbs as $id => $name) {
         $i++;
-        echo $crumbs_sep;
-        if($i == $last) print '<span class="curid">';
-        print '<bdi>';
-        tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="'.$id.'"');
-        print '</bdi>';
-        if($i == $last) print '</span>';
-    }
-    return true;
+        if($conf['hidestart'] && $id == $conf['start']) {
+            continue;
+        }
+
+        if ($i > 1) {
+            echo $crumbs_sep;
+        }
+        if ($i == $last) {
+            echo '<span class="curid">';
+            echo '<bdi>';
+            tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="'.$id.'"');
+            echo '</bdi>';
+            echo '</span>';
+        } else {
+            echo '<bdi>';
+            tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="'.$id.'"');
+            echo '</bdi>';
+        }
+    } // foreach
 }
 
 /**
@@ -924,46 +940,49 @@ function tpl_breadcrumbs($sep = '•') {
  * @todo   May behave strangely in RTL languages
  *
  * @param string $sep Separator between entries
- * @return bool
+ * @return void
  */
 function tpl_youarehere($sep = ' » ') {
     global $conf;
-    global $ID;
     global $lang;
 
-    // check if enabled
-    if(!$conf['youarehere']) return false;
-
-    $parts = explode(':', $ID);
-    $count = count($parts);
+    // check if it is enabled
+    if(!$conf['youarehere']) {
+        return;
+    }
 
     echo '<span class="bchead">'.$lang['youarehere'].' </span>';
 
-    // always print the startpage
-    echo '<span class="home">';
-    tpl_pagelink(':'.$conf['start']);
-    echo '</span>';
-
-    // print intermediate namespace links
-    $part = '';
-    for($i = 0; $i < $count - 1; $i++) {
-        $part .= $parts[$i].':';
-        $page = $part;
-        if($page == $conf['start']) continue; // Skip startpage
-
-        // output
-        echo $sep;
-        tpl_pagelink($page);
+    if(!$conf['hidestart']) { // print the startpage
+        echo '<span class="home">';
+        tpl_pagelink(':'.$conf['start']);
+        echo '</span>';
     }
 
-    // print current page, skipping start page, skipping for namespace index
-    resolve_pageid('', $page, $exists);
-    if(isset($page) && $page == $part.$parts[$i]) return true;
-    $page = $part.$parts[$i];
-    if($page == $conf['start']) return true;
-    echo $sep;
-    tpl_pagelink($page);
-    return true;
+    $parts = explode(':', $GLOBALS['ID']);
+    $count = count($parts);
+
+    if ($count < 1) {
+        return;
+    }
+
+    $ids = [];
+    $i = 1;
+    do {
+        $id = implode(':', array_slice($parts, 0, $i));
+        // Skip start page (it cannot have namespaces, so we check only on 1st part)
+        if ($i == 1 && $id == $conf['start']) {
+            continue;
+        }
+        $ids[] = $id;
+    } while($i++ < $count);
+
+    for ($i = 0; $i < count($ids); $i++) {
+        if ($i > 0) {
+            echo $sep;
+        }
+        tpl_pagelink($ids[$i]);
+    }
 }
 
 /**

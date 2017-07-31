@@ -478,7 +478,7 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
     } else {
         $urlParameters = str_replace(',', $separator, $urlParameters);
     }
-    if($id === '') {
+    if($id === '' && !$conf['hidestart']) {
         $id = $conf['start'];
     }
     $id = idfilter($id);

@@ -100,6 +100,7 @@ $config['heading'] = 'Dokuwiki\'s Main Configuration File - Local Settings';
 $meta['_basic']   = array('fieldset');
 $meta['title']    = array('string');
 $meta['start']    = array('string','_caution' => 'warning','_pattern' => '!^[^:;/]+$!'); // don't accept namespaces
+$meta['hidestart'] = ['onoff'];
 $meta['lang']     = array('dirchoice','_dir' => DOKU_INC.'inc/lang/');
 $meta['template'] = array('dirchoice','_dir' => DOKU_INC.'lib/tpl/','_pattern' => '/^[\w-]+$/');
 $meta['tagline']  = array('string');

@@ -33,6 +33,7 @@ $conf['recent']      = 20;                //how many entries to show in recent
 $conf['recent_days'] = 7;                 //How many days of recent changes to keep. (days)
 $conf['breadcrumbs'] = 10;                //how many recent visited pages to show
 $conf['youarehere']  = 0;                 //show "You are here" navigation? 0|1
+$conf['hidestart']  = 0;                 // hide start page link from breadcrumbs, youarehere and in base url? 0|1
 $conf['fullpath']    = 0;                 //show full path of the document or relative to datadir only? 0|1
 $conf['typography']  = 1;                 //smartquote conversion 0=off, 1=doublequotes, 2=all quotes
 $conf['dformat']     = '%Y/%m/%d %H:%M';  //dateformat accepted by PHPs strftime() function
