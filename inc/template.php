@@ -957,7 +957,6 @@ function tpl_youarehere($sep = ' » ') {
         echo '<span class="home">';
         tpl_pagelink(':'.$conf['start']);
         echo '</span>';
-        echo $sep;
     }
 
     $parts = explode(':', $GLOBALS['ID']);
@@ -965,6 +964,11 @@ function tpl_youarehere($sep = ' » ') {
 
     if ($count < 1) {
         return;
+    }
+
+    // avoid last separator if not needed
+    if (!$conf['hidestart'] && !($parts[0] == $conf['start'] && $count == 1)) {
+        echo $sep;
     }
 
     $ids = [];
