@@ -957,6 +957,7 @@ function tpl_youarehere($sep = ' » ') {
         echo '<span class="home">';
         tpl_pagelink(':'.$conf['start']);
         echo '</span>';
+        echo $sep;
     }
 
     $parts = explode(':', $GLOBALS['ID']);
