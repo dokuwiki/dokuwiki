@@ -986,7 +986,7 @@ function tpl_youarehere($sep = ' » ') {
         if ($i > 0) {
             echo $sep;
         }
-        tpl_pagelink($ids[$i]);
+        tpl_pagelink(':'.$ids[$i]);
     }
 }
 
