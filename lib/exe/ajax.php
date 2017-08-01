@@ -26,7 +26,7 @@ if(function_exists($callfn)){
 }else{
     $evt = new Doku_Event('AJAX_CALL_UNKNOWN', $call);
     if ($evt->advise_before()) {
-        print "AJAX call '".htmlspecialchars($call)."' unknown!\n";
+        print "AJAX call '".hsc($call)."' unknown!\n";
         exit;
     }
     $evt->advise_after();
@@ -422,13 +422,13 @@ function ajax_linkwiz(){
         if($item['type'] == 'u'){
             $name = $lang['upperns'];
         }else{
-            $name = htmlspecialchars($item['id']);
+            $name = hsc($item['id']);
         }
 
-        echo '<a href="'.$link.'" title="'.htmlspecialchars($item['id']).'" class="wikilink1">'.$name.'</a>';
+        echo '<a href="'.$link.'" title="'.hsc($item['id']).'" class="wikilink1">'.$name.'</a>';
 
         if(!blank($item['title'])){
-            echo '<span>'.htmlspecialchars($item['title']).'</span>';
+            echo '<span>'.hsc($item['title']).'</span>';
         }
         echo '</div>';
     }

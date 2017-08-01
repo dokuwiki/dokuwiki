@@ -866,7 +866,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search" method="get" role="search"><div class="no">';
     print '<input type="hidden" name="do" value="search" />';
     print '<input type="text" ';
-    if($ACT == 'search') print 'value="'.htmlspecialchars($QUERY).'" ';
+    if($ACT == 'search') print 'value="'.hsc($QUERY).'" ';
     print 'placeholder="'.$lang['btn_search'].'" ';
     if(!$autocomplete) print 'autocomplete="off" ';
     print 'id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" />';
