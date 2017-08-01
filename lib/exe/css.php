@@ -366,7 +366,7 @@ function css_filewrapper($mediatype, $files=array()){
     return array(
             'files'                 => $files,
             'mediatype'             => $mediatype,
-            'encapsulate'           => in_array($mediatype, array('screen', 'print', 'speech')),
+            'encapsulate'           => $mediatype != 'all',
             'encapsulationPrefix'   => '@media '.$mediatype
         );
 }
