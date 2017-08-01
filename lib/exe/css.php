@@ -98,7 +98,7 @@ function css_out(){
     }
 
     // The generated script depends on some dynamic options
-    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$type,'.css');
+    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].$INPUT->bool('preview').DOKU_BASE.$tpl.$type,'.css');
     $cache->_event = 'CSS_CACHE_USE';
 
     // check cache age & handle conditional request
