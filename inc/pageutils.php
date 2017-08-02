@@ -765,11 +765,11 @@ function page_findnearest($page, $useacl = true){
     $ns = $ID;
     $first = true;
     do {
-        // when start page is hidden our start page is 1 namespace higher with the name of namespace
+        // when start page is hidden our start page is 1 namespace lower with the same name of the namespace
         if ($first && $GLOBALS['conf']['hidestart']) {
             $first = false;
         } else {
-            $ns = getNS($ns); // go upper
+            $ns = getNS($ns); // strip 1 ns
         }
 
         $pageid = cleanID("$ns:$page");
