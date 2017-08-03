@@ -38,9 +38,16 @@ class css_at_import_less_test extends DokuWikiTest {
         $this->assertEquals($expected_less, $less);
     }
 
-    // make relative
+    /**
+     * makes proper relative path to be used in CSS @import
+     * @param string $path
+     * @return string
+     */
     private function importPath($path) {
-        return isWindows() ? preg_replace('#(^.*[\\\\])#','', $path) : preg_replace('#(^.*[/])#','', $path);
+        if (isWindows()) {
+            return preg_replace('#(^.*[\\\\])#','', $path);
+        }
+        return preg_replace('#(^.*[/])#','', $path);
     }
 
     public function test_basic() {
