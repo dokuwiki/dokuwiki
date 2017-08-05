@@ -599,7 +599,10 @@ class Subscription {
 
         /** @var \dokuwiki\Service\MailManager $mailManager */
         $mailManager = $GLOBALS['dwContainer']->get('mail.manager');
-        $message = $mailManager->createMessage($lang['mail_'.$subject].' '.$context, null, null, rawLocale($template), [], $subscriber_mail);
+        $message = $mailManager->createMessage($lang['mail_'.$subject].' '.$context, null, null, rawLocale($template), [
+            'textrep' => $trep,
+            'htmlrep' => $hrep
+        ], $subscriber_mail);
 
         if(in_array($template, ['subscr_list', 'subscr_digest'])){
             $message->setFrom($conf['mailfromnobody']);

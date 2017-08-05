@@ -38,6 +38,7 @@ class MailManager
             ->setTo($to)
             ->setBcc($bcc)
             ->setCc($cc)
+            ->setAllowHtml($GLOBALS['conf']['htmlmail'])
             ->setBodyReplacements($replacements)
             ->setBody($body)
             ->prepareBody();

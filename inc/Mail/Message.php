@@ -108,7 +108,9 @@ class Message extends \Swift_Message
 
     public function setAllowHtml($allow = true)
     {
-        $this->allowHtml = $allow;
+        $this->allowHtml = (bool)$allow;
+
+        return $this;
     }
 
 
