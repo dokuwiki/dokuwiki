@@ -12,11 +12,16 @@
         "simplepie/simplepie": "^1.4",
         "geshi/geshi": "^1.0",
         "openpsa/universalfeedcreator": "^1.8",
-        "aziraphale/email-address-validator": "^2"
+        "aziraphale/email-address-validator": "^2",
+        "swiftmailer/swiftmailer": "^6.0",
+        "symfony/dependency-injection": "^3.3"
     },
     "suggest": {
         "squizlabs/php_codesniffer": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
         "phpunit/phpunit": "Allows automated tests to be run without system-wide install."
+    },
+    "autoload": {
+        "psr-4": {"dokuwiki\\Service\\": "inc/Service/"}
     },
     "prefer-stable": true
 }

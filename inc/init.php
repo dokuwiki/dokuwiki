@@ -181,6 +181,34 @@ if (empty($plugin_controller_class)) $plugin_controller_class = 'Doku_Plugin_Con
 require_once(DOKU_INC.'vendor/autoload.php');
 require_once(DOKU_INC.'inc/load.php');
 
+//
+// ------------------------------- INIT CONTAINER --------------------------------------------
+//
+use \dokuwiki\Service\MailManager;
+use \Symfony\Component\DependencyInjection\Reference as sfReference;
+use \Symfony\Component\DependencyInjection\ContainerBuilder as sfContainerBuilder;
+use \Symfony\Component\DependencyInjection\ParameterBag\ParameterBag as sfParameterBag;
+
+global $dwContainer;
+$dwContainer = new sfContainerBuilder(new sfParameterBag());
+
+//
+// ------------------------------- MAIL MANAGER --------------------------------------------
+//
+$dwContainer->register('mailer.transport', Swift_SmtpTransport::class)
+    ->addArgument($conf['mailer']['smtp_host'])
+    ->addArgument($conf['mailer']['smtp_port'])
+    ->addArgument($conf['mailer']['smtp_security'])
+    ->addMethodCall('setUsername', [$conf['mailer']['smtp_user']])
+    ->addMethodCall('setPassword', [$conf['mailer']['smtp_password']])
+    ->addMethodCall('setLocalDomain', [$conf['mailer']['smtp_localdomain']]);
+$dwContainer->register('mailer', Swift_Mailer::class)->addArgument(new sfReference('mailer.transport'));
+$dwContainer->register('mail.manager', MailManager::class)->addArgument(new sfReference('mailer'));
+//
+// ---------------------------------------------------------------------------
+//
+
+
 // disable gzip if not available
 define('DOKU_HAS_BZIP', function_exists('bzopen'));
 define('DOKU_HAS_GZIP', function_exists('gzopen'));

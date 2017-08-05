@@ -174,4 +174,12 @@ $conf['ftp']['user'] = 'user';
 $conf['ftp']['pass'] = 'password';
 $conf['ftp']['root'] = '/home/user/htdocs';
 
+// mailer
+$conf['mailer']['smtp_host'] = 'example.com';
+$conf['mailer']['smtp_port'] = 465;
+$conf['mailer']['smtp_user'] = 'no-reply@example.com';
+$conf['mailer']['smtp_password'] = '';
+$conf['mailer']['smtp_localdomain'] = 'example.com';
+$conf['mailer']['smtp_security'] = 'SSL';
+$conf['mailer']['transport'] = 'Sendmail'; // Sendmail, smtp, pool?
 
