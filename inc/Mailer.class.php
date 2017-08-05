@@ -183,7 +183,7 @@ class Mailer {
      *
      * @param string $text     plain text body
      * @param array  $textrep  replacements to apply on the text part
-     * @param array  $htmlrep  replacements to apply on the HTML part, leave null to use $textrep
+     * @param array  $htmlrep  replacements to apply on the HTML part, null to use $textrep (with urls wrapped in <a> tags)
      * @param string $html     the HTML body, leave null to create it from $text
      * @param bool   $wrap     wrap the HTML in the default header/Footer
      */
@@ -357,12 +357,12 @@ class Mailer {
 
             // FIXME: is there a way to encode the localpart of a emailaddress?
             if(!utf8_isASCII($addr)) {
-                msg(htmlspecialchars("E-Mail address <$addr> is not ASCII"), -1);
+                msg(hsc("E-Mail address <$addr> is not ASCII"), -1);
                 continue;
             }
 
             if(!mail_isvalid($addr)) {
-                msg(htmlspecialchars("E-Mail address <$addr> is not valid"), -1);
+                msg(hsc("E-Mail address <$addr> is not valid"), -1);
                 continue;
             }
 

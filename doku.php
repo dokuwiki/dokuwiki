@@ -62,7 +62,7 @@ if($DATE_AT) {
     } else { // check for UNIX Timestamp
         $date_parse = @date('Ymd',$DATE_AT);
         if(!$date_parse || $date_parse === '19700101') {
-            msg(sprintf($lang['unable_to_parse_date'], $DATE_AT));
+            msg(sprintf($lang['unable_to_parse_date'], hsc($DATE_AT)));
             $DATE_AT = null;
         }
     }
