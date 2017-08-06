@@ -113,6 +113,15 @@ $meta['dmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only acce
 $meta['fmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only accept octal representation
 $meta['allowdebug']  = array('onoff','_caution' => 'security');
 
+$meta['_mailer'] = ['fieldset'];
+$meta['mailer____transport'] = ['multichoice', '_choices' => ['File', 'Sendmail', 'SMTP']];
+$meta['mailer____smtp_security'] = ['multichoice', '_choices' => ['', 'SSL', 'TLS']];
+$meta['mailer____smtp_host'] = ['string'];
+$meta['mailer____smtp_port'] = ['numeric'];
+$meta['mailer____smtp_user'] = ['string'];
+$meta['mailer____smtp_password'] = ['password'];
+$meta['mailer____smtp_localdomain'] = ['string'];
+
 $meta['_display']    = array('fieldset');
 $meta['recent']      = array('numeric');
 $meta['recent_days'] = array('numeric');

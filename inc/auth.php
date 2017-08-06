@@ -806,9 +806,9 @@ function auth_pwgen($foruser = '') {
  * @return bool  true on success
  */
 function auth_sendPassword($user, $password) {
-    global $lang;
     /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
+
     if(!$auth) return false;
 
     $user     = $auth->cleanUser($user);
@@ -816,18 +816,17 @@ function auth_sendPassword($user, $password) {
 
     if(!$userinfo['mail']) return false;
 
-    $text = rawLocale('password');
-    $trep = array(
-        'FULLNAME' => $userinfo['name'],
-        'LOGIN'    => $user,
-        'PASSWORD' => $password
-    );
+    /** @var \dokuwiki\Service\MailManager $mailManager */
+    $mailManager = $GLOBALS['dwContainer']->get('mail.manager');
+    $message = $mailManager->createMessage($GLOBALS['lang']['regpwmail'], null, [$userinfo['mail'] => $userinfo['name']],
+        rawLocale('password'), [
+        'textrep' => [
+            'FULLNAME' => $userinfo['name'],
+            'LOGIN'    => $user,
+            'PASSWORD' => $password
+        ]]);
 
-    $mail = new Mailer();
-    $mail->to($userinfo['name'].' <'.$userinfo['mail'].'>');
-    $mail->subject($lang['regpwmail']);
-    $mail->setBody($text, $trep);
-    return $mail->send();
+    return $mailManager->send($message);
 }
 
 /**
@@ -872,7 +871,7 @@ function register() {
     }
 
     //check mail
-    if(!mail_isvalid($email)) {
+    if(!$GLOBALS['dwContainer']->get('mail.manager')->isValid($email)) {
         msg($lang['regbadmail'], -1);
         return false;
     }
@@ -946,7 +945,7 @@ function updateprofile() {
         msg($lang['profnoempty'], -1);
         return false;
     }
-    if(!mail_isvalid($changes['mail']) && $auth->canDo('modMail')) {
+    if(!$GLOBALS['dwContainer']->get('mail.manager')->isValid($changes['mail']) && $auth->canDo('modMail')) {
         msg($lang['regbadmail'], -1);
         return false;
     }
@@ -1149,18 +1148,17 @@ function act_resendpwd() {
 
         io_saveFile($tfile, $user);
 
-        $text = rawLocale('pwconfirm');
-        $trep = array(
-            'FULLNAME' => $userinfo['name'],
-            'LOGIN'    => $user,
-            'CONFIRM'  => $url
-        );
+        /** @var \dokuwiki\Service\MailManager $mailManager */
+        $mailManager = $GLOBALS['dwContainer']->get('mail.manager');
+        $message = $mailManager->createMessage($GLOBALS['lang']['regpwmail'], null, [$userinfo['mail'] => $userinfo['name']],
+            rawLocale('pwconfirm'), [
+                'textrep' => [
+                    'FULLNAME' => $userinfo['name'],
+                    'LOGIN'    => $user,
+                    'CONFIRM'  => $url
+                ]]);
 
-        $mail = new Mailer();
-        $mail->to($userinfo['name'].' <'.$userinfo['mail'].'>');
-        $mail->subject($lang['regpwmail']);
-        $mail->setBody($text, $trep);
-        if($mail->send()) {
+        if($mailManager->send($message)) {
             msg($lang['resendpwdconfirm'], 1);
         } else {
             msg($lang['regmailfail'], -1);
