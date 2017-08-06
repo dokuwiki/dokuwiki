@@ -902,7 +902,7 @@ if (!class_exists('setting_email')) {
                     $addr = $mail;
                 }
 
-                if (!mail_isvalid($addr)) {
+                if (!$GLOBALS['dwContainer']->get('mail.manager')->isValid($addr)) {
                     $this->_error = true;
                     $this->_input = $input;
                     return false;

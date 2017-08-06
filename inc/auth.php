@@ -871,7 +871,7 @@ function register() {
     }
 
     //check mail
-    if(!mail_isvalid($email)) {
+    if(!$GLOBALS['dwContainer']->get('mail.manager')->isValid($email)) {
         msg($lang['regbadmail'], -1);
         return false;
     }
@@ -945,7 +945,7 @@ function updateprofile() {
         msg($lang['profnoempty'], -1);
         return false;
     }
-    if(!mail_isvalid($changes['mail']) && $auth->canDo('modMail')) {
+    if(!$GLOBALS['dwContainer']->get('mail.manager')->isValid($changes['mail']) && $auth->canDo('modMail')) {
         msg($lang['regbadmail'], -1);
         return false;
     }

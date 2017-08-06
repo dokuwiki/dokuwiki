@@ -1017,7 +1017,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         }
 
         if ($this->_auth->canDo('modMail')) {
-            if (empty($mail) || !mail_isvalid($mail)) {
+            if (empty($mail) || !$GLOBALS['dwContainer']->get('mail.manager')->isValid($mail)) {
                 $error = $this->lang['import_error_badmail'];
                 return false;
             }

@@ -114,7 +114,7 @@ $meta['fmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only acce
 $meta['allowdebug']  = array('onoff','_caution' => 'security');
 
 $meta['_mailer'] = ['fieldset'];
-$meta['mailer____transport'] = ['multichoice', '_choices' => ['Sendmail', 'SMTP']];
+$meta['mailer____transport'] = ['multichoice', '_choices' => ['File', 'Sendmail', 'SMTP']];
 $meta['mailer____smtp_security'] = ['multichoice', '_choices' => ['', 'SSL', 'TLS']];
 $meta['mailer____smtp_host'] = ['string'];
 $meta['mailer____smtp_port'] = ['numeric'];

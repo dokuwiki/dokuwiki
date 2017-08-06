@@ -195,15 +195,32 @@ $dwContainer = new sfContainerBuilder(new sfParameterBag());
 //
 // ------------------------------- MAIL MANAGER --------------------------------------------
 //
-$dwContainer->register('mailer.transport', Swift_SmtpTransport::class)
-    ->addArgument($conf['mailer']['smtp_host'])
-    ->addArgument($conf['mailer']['smtp_port'])
-    ->addArgument($conf['mailer']['smtp_security'])
-    ->addMethodCall('setUsername', [$conf['mailer']['smtp_user']])
-    ->addMethodCall('setPassword', [$conf['mailer']['smtp_password']])
-    ->addMethodCall('setLocalDomain', [$conf['mailer']['smtp_localdomain']]);
-$dwContainer->register('mailer', Swift_Mailer::class)->addArgument(new sfReference('mailer.transport'));
-$dwContainer->register('mail.manager', MailManager::class)->addArgument(new sfReference('mailer'));
+switch (strtolower($conf['mailer']['transport'])) {
+    case 'sendmail':
+        $dwContainer->register('mailer.transport', Swift_Transport_SendmailTransport::class);
+        break;
+    case 'smtp':
+        $dwContainer->register('mailer.transport', Swift_SmtpTransport::class)
+            ->addArgument($conf['mailer']['smtp_host'])
+            ->addArgument($conf['mailer']['smtp_port'])
+            ->addArgument($conf['mailer']['smtp_security'])
+            ->addMethodCall('setUsername', [$conf['mailer']['smtp_user']])
+            ->addMethodCall('setPassword', [$conf['mailer']['smtp_password']])
+            ->addMethodCall('setLocalDomain', [$conf['mailer']['smtp_localdomain']]);
+        break;
+    case 'file':
+        $dwContainer->register('mailer.transport', Swift_Transport_SpoolTransport::class)
+            ->addArgument(new \Swift_Events_SimpleEventDispatcher())
+            ->addArgument(new \Swift_FileSpool($conf['savedir'].'/spool'));
+        break;
+}
+
+$dwContainer->register('mailer', Swift_Mailer::class)
+    ->addArgument(new sfReference('mailer.transport'));
+
+$dwContainer->register('mail.manager', MailManager::class)
+    ->addArgument(new sfReference('mailer'))
+    ->addArgument(new \Egulias\EmailValidator\EmailValidator());;
 //
 // ---------------------------------------------------------------------------
 //
@@ -238,9 +255,6 @@ trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
 if (!defined('NOSESSION')) {
     auth_setup();
 }
-
-// setup mail system
-mail_setup();
 
 /**
  * Initializes the session

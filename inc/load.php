@@ -24,7 +24,7 @@ require_once(DOKU_INC.'inc/httputils.php');
 require_once(DOKU_INC.'inc/indexer.php');
 require_once(DOKU_INC.'inc/infoutils.php');
 require_once(DOKU_INC.'inc/io.php');
-require_once(DOKU_INC.'inc/mail.php');
+//require_once(DOKU_INC.'inc/mail.php');
 require_once(DOKU_INC.'inc/media.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/parserutils.php');
@@ -80,7 +80,7 @@ function load_autoload($name){
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
         'Sitemapper'            => DOKU_INC.'inc/Sitemapper.php',
         'PassHash'              => DOKU_INC.'inc/PassHash.class.php',
-        'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
+//        'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
         'RemoteAPI'             => DOKU_INC.'inc/remote.php',
         'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
         'Subscription'          => DOKU_INC.'inc/subscription.php',

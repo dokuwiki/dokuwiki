@@ -12,7 +12,6 @@
         "simplepie/simplepie": "^1.4",
         "geshi/geshi": "^1.0",
         "openpsa/universalfeedcreator": "^1.8",
-        "aziraphale/email-address-validator": "^2",
         "swiftmailer/swiftmailer": "^6.0",
         "symfony/dependency-injection": "^3.3"
     },
