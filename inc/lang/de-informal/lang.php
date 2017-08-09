@@ -25,6 +25,7 @@
  * @author rnck <dokuwiki@rnck.de>
  * @author Felix <j.felix@mueller-donath.de>
  * @author Felix Müller-Donath <j.felix@mueller-donath.de>
+ * @author Heiner Kerler <heiner.kerler@arcor.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
