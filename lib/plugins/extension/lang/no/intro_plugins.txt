@@ -1,1 +1,1 @@
-Her finner du de programtillegg som er installert i din DokuWiki. Du kan slå av/på, eller avistallere dine programtillegg her. Oppdatering av programtillegg vil også vises her, men du bør lese dokumentasjonen for disse før du oppdaterere.
+Her finner du de programtillegg som er installert i din DokuWiki. Du kan slå av/på, eller avinstallere dine programtillegg her. Oppdatering av programtillegg vil også vises her, men du bør lese dokumentasjonen for disse før oppdatering.
