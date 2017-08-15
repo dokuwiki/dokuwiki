@@ -21,6 +21,7 @@
  * @author Tor Härnqvist <tor.harnqvist@gmail.com>
  * @author Hans Iwan Bratt <hibratt@gmail.com>
  * @author Mikael Bergström <krank23@gmail.com>
+ * @author Tor Härnqvist <tor@harnqvist.se>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -86,6 +87,7 @@ $lang['regmissing']            = 'Du måste fylla i alla fälten.';
 $lang['reguexists']            = 'Det finns redan en användare med det användarnamnet.';
 $lang['regsuccess']            = 'Användarkontot skapat, lösenordet har skickats via e-post.';
 $lang['regsuccess2']           = 'Användarkontot skapat.';
+$lang['regfail']               = 'Användaren kunde inte skapas.';
 $lang['regmailfail']           = 'Ett fel uppstod när ditt lösenord skulle skickas via e-post. Var god kontakta administratören!';
 $lang['regbadmail']            = 'Den angivna e-postadressen verkar vara ogiltig - om du anser detta felaktigt, var god kontakta administratören';
 $lang['regbadpass']            = 'De två angivna lösenorden är inte identiska. Försök igen.';
@@ -100,6 +102,7 @@ $lang['profdeleteuser']        = 'Radera kontot';
 $lang['profdeleted']           = 'Ditt användarkonto har raderats från den här wiki:n';
 $lang['profconfdelete']        = 'Jag vill ta bort mitt konto/inlogg på den här wiki:n <br/> Denna åtgärd går ej att ångra.';
 $lang['profconfdeletemissing'] = 'Bekräftelse-kryssrutan är ej markerad';
+$lang['proffail']              = 'Användarprofilen uppdaterades ej.';
 $lang['pwdforget']             = 'Glömt ditt lösenord? Ordna ett nytt';
 $lang['resendna']              = 'Den här wikin stödjer inte utskick av lösenord.';
 $lang['resendpwd']             = 'Sätt lösenord för';
@@ -195,6 +198,9 @@ $lang['diff2']                 = 'Visa skillnader mellan valda versioner';
 $lang['difflink']              = 'Länk till den här jämförelsesidan';
 $lang['diff_type']             = 'Visa skillnader:';
 $lang['diff_side']             = 'Sida vid sida';
+$lang['diffprevrev']           = 'Föregående version.';
+$lang['diffnextrev']           = 'Nästa version.';
+$lang['difflastrev']           = 'Senaste version.';
 $lang['line']                  = 'Rad';
 $lang['breadcrumb']            = 'Spår:';
 $lang['youarehere']            = 'Här är du:';
@@ -263,6 +269,7 @@ $lang['img_keywords']          = 'Nyckelord:';
 $lang['img_width']             = 'Bredd:';
 $lang['img_height']            = 'Höjd:';
 $lang['subscr_subscribe_success'] = 'La till %s till prenumerationslista %s';
+$lang['subscr_subscribe_error'] = 'Error att lägga till %s till prenumerationslista för %s';
 $lang['subscr_subscribe_noaddress'] = 'Det finns ingen adress associerad med din inloggning, du kan inte bli tillagd i prenumerationslistan';
 $lang['subscr_unsubscribe_success'] = '%s borttagen från prenumerationslistan för %s';
 $lang['subscr_unsubscribe_error'] = 'Fel vid borttagning av %s från prenumerationslista %s';
@@ -275,6 +282,7 @@ $lang['subscr_m_unsubscribe']  = 'Avsluta prenumeration';
 $lang['subscr_m_subscribe']    = 'Prenumerera';
 $lang['subscr_m_receive']      = 'Ta emot';
 $lang['subscr_style_every']    = 'skicka epost vid varje ändring';
+$lang['subscr_style_digest']   = 'Samlings-e-brev av ändringar för varje sida (var %.2f dag)';
 $lang['subscr_style_list']     = 'lista över ändrade sidor sedan senaste e-post (varje %.2f dag)';
 $lang['authtempfail']          = 'Tillfälligt fel på användarautentisering. Om felet kvarstår, var vänlig meddela wikiadministratören.';
 $lang['i_chooselang']          = 'Välj språk';
@@ -339,7 +347,10 @@ $lang['media_perm_read']       = 'Du har tyvärr inte tillräckliga behörighete
 $lang['media_perm_upload']     = 'Du har tyvärr inte tillräckliga behörigheter för att ladda upp filer.';
 $lang['media_update']          = 'Ladda upp ny version';
 $lang['media_restore']         = 'Återställ denna version';
+$lang['media_acl_warning']     = 'Listan kanske inte är ';
+$lang['currentns']             = 'Nuvarande namnrymd.';
 $lang['searchresult']          = 'Sökresultat';
 $lang['plainhtml']             = 'Ren HTML';
-$lang['email_signature_text'] = 'Detta meddelande har skapats av DokuWiki på
+$lang['page_nonexist_rev']     = 'Sidan fanns inte på %s. Den blev sedermera skapad på <a href="%s">%s</a>.';
+$lang['email_signature_text']  = 'Detta meddelande har skapats av DokuWiki på
 @DOKUWIKIURL@';

@@ -1,53 +1,5 @@
 [
     {
-        "name": "easybook/geshi",
-        "version": "v1.0.8.18",
-        "version_normalized": "1.0.8.18",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/easybook/geshi.git",
-            "reference": "4b06bfe8c6fbedd6aad0a0700d650f591386e287"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/easybook/geshi/zipball/4b06bfe8c6fbedd6aad0a0700d650f591386e287",
-            "reference": "4b06bfe8c6fbedd6aad0a0700d650f591386e287",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">4.3.0"
-        },
-        "time": "2016-10-05 07:15:42",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "./"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Nigel McNie",
-                "email": "nigel@geshi.org"
-            },
-            {
-                "name": "Benny Baumann",
-                "email": "BenBE@geshi.org"
-            }
-        ],
-        "description": "GeSHi - Generic Syntax Highlighter. This is an unmodified port of GeSHi project code found on SourceForge.",
-        "homepage": "http://qbnz.com/highlighter",
-        "keywords": [
-            "highlight",
-            "highlighter",
-            "syntax"
-        ]
-    },
-    {
         "name": "phpseclib/phpseclib",
         "version": "2.0.4",
         "version_normalized": "2.0.4.0",
@@ -77,7 +29,7 @@
             "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
             "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
         },
-        "time": "2016-10-04 00:57:04",
+        "time": "2016-10-04T00:57:04+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -165,7 +117,7 @@
         "suggest": {
             "mf2/mf2": "Microformat module that allows for parsing HTML for microformats"
         },
-        "time": "2016-11-27 01:39:18",
+        "time": "2016-11-27T01:39:18+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -227,7 +179,7 @@
         "suggest": {
             "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
         },
-        "time": "2017-03-13 16:27:32",
+        "time": "2017-03-13T16:27:32+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -278,7 +230,7 @@
             "ext-iconv": "Used for proper filename encode handling",
             "ext-mbstring": "Can be used alternatively for handling filename encoding"
         },
-        "time": "2017-03-19 09:10:53",
+        "time": "2017-03-19T09:10:53+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -307,6 +259,141 @@
         ]
     },
     {
+        "name": "geshi/geshi",
+        "version": "v1.0.9.0",
+        "version_normalized": "1.0.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/GeSHi/geshi-1.0.git",
+            "reference": "5a7b461338d322d941986a656d4d1651452e73dd"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/5a7b461338d322d941986a656d4d1651452e73dd",
+            "reference": "5a7b461338d322d941986a656d4d1651452e73dd",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^5.7"
+        },
+        "time": "2017-05-05T05:51:25+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/geshi/",
+                "src/geshi.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Benny Baumann",
+                "email": "BenBE@geshi.org",
+                "homepage": "http://blog.benny-baumann.de/",
+                "role": "Developer"
+            }
+        ],
+        "description": "Generic Syntax Highlighter",
+        "homepage": "http://qbnz.com/highlighter/"
+    },
+    {
+        "name": "openpsa/universalfeedcreator",
+        "version": "v1.8.3",
+        "version_normalized": "1.8.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/flack/UniversalFeedCreator.git",
+            "reference": "6261e130446d8f787bbfd229a602fb11e6816a4e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/6261e130446d8f787bbfd229a602fb11e6816a4e",
+            "reference": "6261e130446d8f787bbfd229a602fb11e6816a4e",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "*"
+        },
+        "time": "2017-05-18T08:28:48+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "lib"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL"
+        ],
+        "authors": [
+            {
+                "name": "Andreas Flack",
+                "email": "flack@contentcontrol-berlin.de",
+                "homepage": "http://www.contentcontrol-berlin.de/"
+            }
+        ],
+        "description": "RSS and Atom feed generator by Kai Blankenhorn",
+        "keywords": [
+            "atom",
+            "georss",
+            "gpx",
+            "opml",
+            "pie",
+            "rss"
+        ]
+    },
+    {
+        "name": "aziraphale/email-address-validator",
+        "version": "2.0.1",
+        "version_normalized": "2.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/aziraphale/email-address-validator.git",
+            "reference": "fa25bc22c1c0b6491657c91473fae3e40719a650"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/aziraphale/email-address-validator/zipball/fa25bc22c1c0b6491657c91473fae3e40719a650",
+            "reference": "fa25bc22c1c0b6491657c91473fae3e40719a650",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^5.7"
+        },
+        "time": "2017-05-22T14:05:57+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "EmailAddressValidator": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Dave Child",
+                "email": "dave@addedbytes.com"
+            },
+            {
+                "name": "Andrew Gillard",
+                "email": "andrew@lorddeath.net"
+            }
+        ],
+        "description": "Fork of AddedBytes' PHP EmailAddressValidator script, now with Composer support!",
+        "homepage": "https://github.com/aziraphale/email-address-validator"
+    },
+    {
         "name": "marcusschwarz/lesserphp",
         "version": "v0.5.1",
         "version_normalized": "0.5.1.0",
@@ -324,7 +411,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.3"
         },
-        "time": "2016-09-30 11:13:18",
+        "time": "2016-09-30T11:13:18+00:00",
         "bin": [
             "plessc"
         ],

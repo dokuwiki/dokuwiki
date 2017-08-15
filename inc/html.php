@@ -208,17 +208,16 @@ function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label
     $ret .= '<form class="button btn_'.$name.'" method="'.$method.'" action="'.$script.'"><div class="no">';
 
     if(is_array($params)){
-        reset($params);
-        while (list($key, $val) = each($params)) {
+        foreach($params as $key => $val) {
             $ret .= '<input type="hidden" name="'.$key.'" ';
-            $ret .= 'value="'.htmlspecialchars($val).'" />';
+            $ret .= 'value="'.hsc($val).'" />';
         }
     }
 
     if ($tooltip!='') {
-        $tip = htmlspecialchars($tooltip);
+        $tip = hsc($tooltip);
     }else{
-        $tip = htmlspecialchars($label);
+        $tip = hsc($label);
     }
 
     $ret .= '<button type="submit" ';
@@ -408,6 +407,7 @@ function html_search(){
     flush();
 
     //do fulltext search
+    $regex = array();
     $data = ft_pageSearch($QUERY,$regex);
     if(count($data)){
         print '<dl class="search_results">';
@@ -582,7 +582,7 @@ function html_revisions($first=0, $media_id = false){
         if($summary) {
             $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
             if(!$media_id) $form->addElement(' – ');
-            $form->addElement('<bdi>' . htmlspecialchars($summary) . '</bdi>');
+            $form->addElement('<bdi>' . hsc($summary) . '</bdi>');
             $form->addElement(form_makeCloseTag('span'));
         }
 
@@ -665,7 +665,7 @@ function html_revisions($first=0, $media_id = false){
         if ($info['sum']) {
             $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
             if(!$media_id) $form->addElement(' – ');
-            $form->addElement('<bdi>'.htmlspecialchars($info['sum']).'</bdi>');
+            $form->addElement('<bdi>'.hsc($info['sum']).'</bdi>');
             $form->addElement(form_makeCloseTag('span'));
         }
 
@@ -876,7 +876,7 @@ function html_recent($first = 0, $show_changes = 'both') {
             $form->addElement(html_wikilink(':' . $recent['id'], useHeading('navigation') ? null : $recent['id']));
         }
         $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-        $form->addElement(' – ' . htmlspecialchars($recent['sum']));
+        $form->addElement(' – ' . hsc($recent['sum']));
         $form->addElement(form_makeCloseTag('span'));
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'user')));

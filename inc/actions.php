@@ -253,7 +253,7 @@ function act_validate($act) {
 
     // check if action is disabled
     if(!actionOK($act)){
-        msg('Command disabled: '.htmlspecialchars($act),-1);
+        msg('Command disabled: '.hsc($act),-1);
         return 'show';
     }
 
@@ -261,7 +261,7 @@ function act_validate($act) {
     if(!$conf['useacl'] && in_array($act,array('login','logout','register','admin',
                     'subscribe','unsubscribe','profile','revert',
                     'resendpwd','profile_delete'))){
-        msg('Command unavailable: '.htmlspecialchars($act),-1);
+        msg('Command unavailable: '.hsc($act),-1);
         return 'show';
     }
 
@@ -273,7 +273,7 @@ function act_validate($act) {
                     'diff','recent','backlink','admin','subscribe','revert',
                     'unsubscribe','profile','profile_delete','resendpwd','recover',
                     'draftdel','sitemap','media')) && substr($act,0,7) != 'export_' ) {
-        msg('Command unknown: '.htmlspecialchars($act),-1);
+        msg('Command unknown: '.hsc($act),-1);
         return 'show';
     }
     return $act;

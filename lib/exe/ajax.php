@@ -14,11 +14,9 @@ session_write_close();
 header('Content-Type: text/html; charset=utf-8');
 
 //call the requested function
-if($INPUT->post->has('call')){
-    $call = $INPUT->post->str('call');
-}else if($INPUT->get->has('call')){
-    $call = $INPUT->get->str('call');
-}else{
+if($INPUT->has('call')) {
+    $call = $INPUT->filter('utf8_stripspecials')->str('call');
+} else {
     exit;
 }
 $callfn = 'ajax_'.$call;
@@ -28,7 +26,7 @@ if(function_exists($callfn)){
 }else{
     $evt = new Doku_Event('AJAX_CALL_UNKNOWN', $call);
     if ($evt->advise_before()) {
-        print "AJAX call '".htmlspecialchars($call)."' unknown!\n";
+        print "AJAX call '".hsc($call)."' unknown!\n";
         exit;
     }
     $evt->advise_after();
@@ -424,13 +422,13 @@ function ajax_linkwiz(){
         if($item['type'] == 'u'){
             $name = $lang['upperns'];
         }else{
-            $name = htmlspecialchars($item['id']);
+            $name = hsc($item['id']);
         }
 
-        echo '<a href="'.$link.'" title="'.htmlspecialchars($item['id']).'" class="wikilink1">'.$name.'</a>';
+        echo '<a href="'.$link.'" title="'.hsc($item['id']).'" class="wikilink1">'.$name.'</a>';
 
         if(!blank($item['title'])){
-            echo '<span>'.htmlspecialchars($item['title']).'</span>';
+            echo '<span>'.hsc($item['title']).'</span>';
         }
         echo '</div>';
     }

@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author serg_stetsuk@ukr.net
  * @author okunia@gmail.com
  * @author Oleksandr Kunytsia <okunia@gmail.com>

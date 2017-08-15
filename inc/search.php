@@ -333,14 +333,14 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
 
     $item = array();
     $item['id']   = pathID($file);
-    if(!$opts['skipacl'] && auth_quickaclcheck($item['id']) < AUTH_READ){
+    if(isset($opts['skipacl']) && !$opts['skipacl'] && auth_quickaclcheck($item['id']) < AUTH_READ){
         return false;
     }
 
     $item['rev']   = filemtime($base.'/'.$file);
     $item['mtime'] = $item['rev'];
     $item['size']  = filesize($base.'/'.$file);
-    if($opts['hash']){
+    if(!empty($opts['hash'])){
         $item['hash'] = md5(trim(rawWiki($item['id'])));
     }
 

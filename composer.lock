@@ -1,56 +1,91 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8436e5bf38d0f0b964f9a68d6bdd2575",
+    "content-hash": "149ef96a4cadb6765aac9e7c6a2b5b17",
     "packages": [
         {
-            "name": "easybook/geshi",
-            "version": "v1.0.8.18",
+            "name": "aziraphale/email-address-validator",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/easybook/geshi.git",
-                "reference": "4b06bfe8c6fbedd6aad0a0700d650f591386e287"
+                "url": "https://github.com/aziraphale/email-address-validator.git",
+                "reference": "fa25bc22c1c0b6491657c91473fae3e40719a650"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/easybook/geshi/zipball/4b06bfe8c6fbedd6aad0a0700d650f591386e287",
-                "reference": "4b06bfe8c6fbedd6aad0a0700d650f591386e287",
+                "url": "https://api.github.com/repos/aziraphale/email-address-validator/zipball/fa25bc22c1c0b6491657c91473fae3e40719a650",
+                "reference": "fa25bc22c1c0b6491657c91473fae3e40719a650",
                 "shasum": ""
             },
-            "require": {
-                "php": ">4.3.0"
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "EmailAddressValidator": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dave Child",
+                    "email": "dave@addedbytes.com"
+                },
+                {
+                    "name": "Andrew Gillard",
+                    "email": "andrew@lorddeath.net"
+                }
+            ],
+            "description": "Fork of AddedBytes' PHP EmailAddressValidator script, now with Composer support!",
+            "homepage": "https://github.com/aziraphale/email-address-validator",
+            "time": "2017-05-22T14:05:57+00:00"
+        },
+        {
+            "name": "geshi/geshi",
+            "version": "v1.0.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GeSHi/geshi-1.0.git",
+                "reference": "5a7b461338d322d941986a656d4d1651452e73dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/5a7b461338d322d941986a656d4d1651452e73dd",
+                "reference": "5a7b461338d322d941986a656d4d1651452e73dd",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
             },
             "type": "library",
             "autoload": {
                 "classmap": [
-                    "./"
+                    "src/geshi/",
+                    "src/geshi.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0"
+                "GPL-2.0+"
             ],
             "authors": [
                 {
-                    "name": "Nigel McNie",
-                    "email": "nigel@geshi.org"
-                },
-                {
                     "name": "Benny Baumann",
-                    "email": "BenBE@geshi.org"
+                    "email": "BenBE@geshi.org",
+                    "homepage": "http://blog.benny-baumann.de/",
+                    "role": "Developer"
                 }
             ],
-            "description": "GeSHi - Generic Syntax Highlighter. This is an unmodified port of GeSHi project code found on SourceForge.",
-            "homepage": "http://qbnz.com/highlighter",
-            "keywords": [
-                "highlight",
-                "highlighter",
-                "syntax"
-            ],
-            "time": "2016-10-05 07:15:42"
+            "description": "Generic Syntax Highlighter",
+            "homepage": "http://qbnz.com/highlighter/",
+            "time": "2017-05-05T05:51:25+00:00"
         },
         {
             "name": "marcusschwarz/lesserphp",
@@ -102,7 +137,55 @@
             ],
             "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
             "homepage": "http://leafo.net/lessphp/",
-            "time": "2016-09-30 11:13:18"
+            "time": "2016-09-30T11:13:18+00:00"
+        },
+        {
+            "name": "openpsa/universalfeedcreator",
+            "version": "v1.8.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/flack/UniversalFeedCreator.git",
+                "reference": "6261e130446d8f787bbfd229a602fb11e6816a4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/6261e130446d8f787bbfd229a602fb11e6816a4e",
+                "reference": "6261e130446d8f787bbfd229a602fb11e6816a4e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Flack",
+                    "email": "flack@contentcontrol-berlin.de",
+                    "homepage": "http://www.contentcontrol-berlin.de/"
+                }
+            ],
+            "description": "RSS and Atom feed generator by Kai Blankenhorn",
+            "keywords": [
+                "atom",
+                "georss",
+                "gpx",
+                "opml",
+                "pie",
+                "rss"
+            ],
+            "time": "2017-05-18T08:28:48+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -150,7 +233,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-03-13 16:27:32"
+            "time": "2017-03-13T16:27:32+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -242,7 +325,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2016-10-04 00:57:04"
+            "time": "2016-10-04T00:57:04+00:00"
         },
         {
             "name": "simplepie/simplepie",
@@ -302,7 +385,7 @@
                 "feeds",
                 "rss"
             ],
-            "time": "2016-11-27 01:39:18"
+            "time": "2016-11-27T01:39:18+00:00"
         },
         {
             "name": "splitbrain/php-archive",
@@ -353,7 +436,7 @@
                 "unzip",
                 "zip"
             ],
-            "time": "2017-03-19 09:10:53"
+            "time": "2017-03-19T09:10:53+00:00"
         }
     ],
     "packages-dev": [],

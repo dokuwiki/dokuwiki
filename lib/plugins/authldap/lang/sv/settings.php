@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Smorkster Andersson smorkster@gmail.com
  * @author Tor Härnqvist <tor.harnqvist@gmail.com>
  */
