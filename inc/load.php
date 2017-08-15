@@ -84,7 +84,6 @@ function load_autoload($name){
         'RemoteAPI'             => DOKU_INC.'inc/remote.php',
         'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
         'Subscription'          => DOKU_INC.'inc/subscription.php',
-        'lessc'                 => DOKU_INC.'inc/lessc.inc.php',
 
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
