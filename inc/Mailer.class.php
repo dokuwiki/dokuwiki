@@ -727,4 +727,22 @@ class Mailer {
         $evt->advise_after();
         return $success;
     }
+
+    /**
+     * Get the plain text part of the mail
+     *
+     * @return string
+     */
+    public function getText() {
+        return $this->text;
+    }
+
+    /**
+     * Get the HTML part of the mail
+     *
+     * @return string
+     */
+    public function getHTML() {
+        return $this->html;
+    }
 }
