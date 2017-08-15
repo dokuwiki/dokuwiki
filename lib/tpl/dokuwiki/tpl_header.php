@@ -46,7 +46,7 @@ if (!defined('DOKU_INC')) die();
                             tpl_userinfo(); /* 'Logged in as ...' */
                             echo '</li>';
                         }
-                        echo (new \dokuwiki\Menu\UserMenu())->getListItems('action');
+                        echo (new \dokuwiki\Menu\UserMenu())->getListItems('action ');
                     ?>
                 </ul>
             </div>
