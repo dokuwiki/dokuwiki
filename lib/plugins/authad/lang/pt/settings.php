@@ -2,11 +2,12 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author André Neves <drakferion@gmail.com>
  * @author Murilo <muriloricci@hotmail.com>
  * @author Paulo Silva <paulotsilva@yahoo.com>
  * @author Guido Salatino <guidorafael23@gmail.com>
+ * @author Guilherme Sá <guilherme.sa@hotmail.com>
  */
 $lang['account_suffix']        = 'O sufixo da sua conta. Por exemplo, <code>@my.domain.org</code>';
 $lang['base_dn']               = 'Sua base DN. Eg. <code> DC=meu, DC=dominio, DC=org </code>';
@@ -21,3 +22,4 @@ $lang['use_tls']               = 'Usar ligação TLS? Se usada, não ative SSL a
 $lang['debug']                 = 'Deve-se mostrar saída adicional de depuração de erros?';
 $lang['expirywarn']            = 'Número de dias de avanço para avisar o utilizador da expiração da senha. 0 para desativar.';
 $lang['additional']            = 'Uma lista separada por vírgula de atributos adicionais de AD para buscar a partir de dados do usuário. Usado por alguns plugins.';
+$lang['update_mail']           = 'Permitir que usuários atualizem seus endereços de e-mail?';

@@ -64,7 +64,6 @@ function load_autoload($name){
         'cache_renderer'        => DOKU_INC.'inc/cache.php',
         'Doku_Event'            => DOKU_INC.'inc/events.php',
         'Doku_Event_Handler'    => DOKU_INC.'inc/events.php',
-        'EmailAddressValidator' => DOKU_INC.'inc/EmailAddressValidator.php',
         'Input'                 => DOKU_INC.'inc/Input.class.php',
         'JpegMeta'              => DOKU_INC.'inc/JpegMeta.php',
         'SimplePie'             => DOKU_INC.'inc/SimplePie.php',
@@ -76,7 +75,6 @@ function load_autoload($name){
         'Doku_Plugin_Controller'=> DOKU_INC.'inc/plugincontroller.class.php',
         'Tar'                   => DOKU_INC.'inc/Tar.class.php',
         'ZipLib'                => DOKU_INC.'inc/ZipLib.class.php',
-        'DokuWikiFeedCreator'   => DOKU_INC.'inc/feedcreator.class.php',
         'Doku_Parser_Mode'      => DOKU_INC.'inc/parser/parser.php',
         'Doku_Parser_Mode_Plugin' => DOKU_INC.'inc/parser/parser.php',
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
@@ -86,7 +84,6 @@ function load_autoload($name){
         'RemoteAPI'             => DOKU_INC.'inc/remote.php',
         'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
         'Subscription'          => DOKU_INC.'inc/subscription.php',
-        'lessc'                 => DOKU_INC.'inc/lessc.inc.php',
 
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',

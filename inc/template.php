@@ -372,7 +372,7 @@ function tpl_metaheaders($alt = true) {
     if(($ACT == 'show' || $ACT == 'export_xhtml') && !$REV) {
         if($INFO['exists']) {
             //delay indexing:
-            if((time() - $INFO['lastmod']) >= $conf['indexdelay']) {
+            if(!isHiddenPage($ID) &&  (time() - $INFO['lastmod']) >= $conf['indexdelay']) {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'index,follow');
             } else {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,nofollow');
@@ -872,7 +872,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search" method="get" role="search"><div class="no">';
     print '<input type="hidden" name="do" value="search" />';
     print '<input type="text" ';
-    if($ACT == 'search') print 'value="'.htmlspecialchars($QUERY).'" ';
+    if($ACT == 'search') print 'value="'.hsc($QUERY).'" ';
     print 'placeholder="'.$lang['btn_search'].'" ';
     if(!$autocomplete) print 'autocomplete="off" ';
     print 'id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" />';
@@ -1651,7 +1651,7 @@ function tpl_mediaTree() {
  * @param string $empty empty option label
  * @param string $button submit button label
  */
-function tpl_actiondropdown($empty = '', $button = '&gt;') {
+function tpl_actiondropdown($empty = '&nbsp;', $button = '&gt;') {
     global $ID;
     global $REV;
     global $lang;

@@ -10,6 +10,7 @@
  * @author erial2@gmail.com
  * @author Myeongjin <aranet100@gmail.com>
  * @author Erial <erial2@gmail.com>
+ * @author S.H. Lee <tuders@naver.com>
  */
 $lang['menu']                  = '환경 설정';
 $lang['error']                 = '잘못된 값 때문에 설정을 바꿀 수 없습니다, 바뀜을 검토하고 다시 제출하세요.
@@ -145,6 +146,10 @@ $lang['renderer_xhtml']        = '주요 (xhtml) 위키 출력에 사용할 렌�
 $lang['renderer__core']        = '%s (도쿠위키 코어)';
 $lang['renderer__plugin']      = '%s (플러그인)';
 $lang['dnslookups']            = '도쿠위키가 문서를 편집하는 사용자의 원격 IP 주소에 대한 호스트 이름을 조회합니다. 서버가 느리거나 DNS 서버를 작동하지 않거나 이 기능을 원하지 않으면, 이 옵션을 비활성화하세요';
+$lang['jquerycdn']             = '제이쿼리(jQuery)와 제이쿼리UI 스크립트 파일을 컨텐츠전송네트워크(CDN)에서 불러와야만 합니까? 이것은 추가적인 HTTP요청을 합니다. 하지만 파일이 빨리 불러지고 캐쉬에 저장되게 할 수 있습니다.';
+$lang['jquerycdn_o_0']         = '컨텐츠전송네트워크(CDN) 사용 안 함. 로컬 전송만 함';
+$lang['jquerycdn_o_jquery']    = '\'code.jquery.com\' 의 컨텐츠전송네트워크(CDN) 사용';
+$lang['jquerycdn_o_cdnjs']     = '\'cdnjs.com\' 의 컨텐츠전송네트워크(CDN) 사용';
 $lang['proxy____host']         = '프록시 서버 이름';
 $lang['proxy____port']         = '프록시 포트';
 $lang['proxy____user']         = '프록시 사용자 이름';
