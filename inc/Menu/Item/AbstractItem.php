@@ -59,7 +59,7 @@ abstract class AbstractItem {
     public function __construct() {
         global $ID;
         $this->id = $ID;
-        $this->type = strtolower(substr(strrchr(get_class($this), '\\'), 1));
+        $this->type = $this->getType();
         $this->params['do'] = $this->type;
 
         if(!actionOK($this->type)) throw new \RuntimeException("action disabled: {$this->type}");
@@ -165,6 +165,9 @@ abstract class AbstractItem {
      * @return string the name of this item
      */
     public function getType() {
+        if($this->type === '') {
+            $this->type = strtolower(substr(strrchr(get_class($this), '\\'), 1));
+        }
         return $this->type;
     }
 
