@@ -2453,4 +2453,41 @@ function media_supportedav($mime, $type=NULL){
     return in_array($mime, $supportedAv);
 }
 
+/**
+ * Return track media files with the same base name
+ * but extensions that indicate kind and lang.
+ * ie for foo.webm search foo.sub.lang.vtt, foo.cap.lang.vtt...
+ *
+ * @param string   $src     - ID of media file
+ * @return array            - array(mediaID => array( kind, srclang, lang ))
+ *
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
+ */
+function media_trackfiles($src){
+    global $code2lang;
+    $kinds=array(
+        'sub' => 'subtitles',
+        'cap' => 'captions',
+        'des' => 'descriptions',
+        'cha' => 'chapters',
+        'met' => 'metadata'
+    );
+
+    $files = array();
+    $re='/\\.(sub|cap|des|cha|met)\\.([^.]+)\\.vtt$/';
+    $baseid=pathinfo($src, PATHINFO_FILENAME);
+    $pattern=mediaFN($baseid).'.*.*.vtt';
+    $list=glob($pattern);
+    foreach($list as $track) {
+        if(preg_match($re, $track, $matches)){
+            $files[$baseid.'.'.$matches[1].'.'.$matches[2].'.vtt']=array(
+                $kinds[$matches[1]],
+                $matches[2],
+                $code2lang[$matches[2]]
+            );
+        }
+    }
+    return $files;
+}
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */

@@ -1777,6 +1777,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * Embed video(s) in HTML
      *
      * @author Anika Henke <anika@selfthinker.org>
+     * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
      *
      * @param string $src         - ID of video to embed
      * @param int    $width       - width of the video in pixels
@@ -1794,6 +1795,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $posterUrl = '';
         $files = array();
+        $tracks = array();
         $isExternal = media_isexternal($src);
 
         if ($isExternal) {
@@ -1805,6 +1807,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $extensions   = array('webm', 'ogv', 'mp4');
             $files        = media_alternativefiles($src, $extensions);
             $poster       = media_alternativefiles($src, array('jpg', 'png'));
+            $tracks       = media_trackfiles($src);
             if(!empty($poster)) {
                 $posterUrl = ml(reset($poster), '', true, '&');
             }
@@ -1831,6 +1834,19 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
             // alternative content (just a link to the file)
             $fallback .= $this->$linkType($file, $title, null, null, null, $cache = null, $linking = 'linkonly', $return = true);
+        }
+
+        // output each track if any
+        foreach( $tracks as $trackid => $info ) {
+            list( $kind, $srclang, $labellang ) = $info;
+            $out .= "<track kind=$kind srclang=$srclang ";
+            if( $labellang ) {
+                $out .= "lang=$srclang label=\"".hsc($labellang).'" ';
+            }
+            else {
+                $out .= "label=$srclang ";
+            }
+            $out .= 'src="'.ml($trackid, '', true).'">'.NL;
         }
 
         // finish
