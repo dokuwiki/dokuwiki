@@ -59,7 +59,7 @@ abstract class AbstractMenu {
                 /** @var AbstractItem $item */
                 $item = new $class();
                 if(!$item->visibleInContext($this->context)) continue;
-                $data['items'][$item->getType()] = $item;
+                $data['items'][] = $item;
             } catch(\RuntimeException $ignored) {
                 // item not available
             }
