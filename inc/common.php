@@ -1924,7 +1924,14 @@ function send_redirect($url) {
         header('Location: '.$url);
     }
 
-    if(defined('DOKU_UNITTEST')) return; // no exits during unit tests
+    if(defined('DOKU_UNITTEST')) {
+        global $currentTestRequest;
+        if ($currentTestRequest != null) {
+            $currentTestRequest->addNotification (array('name' => 'send_redirect', 'url' => $url));
+        }
+        // no exits during unit tests
+        return;
+    }
     exit;
 }
 

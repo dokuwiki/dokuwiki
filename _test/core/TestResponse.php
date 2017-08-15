@@ -19,6 +19,11 @@ class TestResponse {
     private $pq = null;
 
     /**
+     * @var notifications
+     */
+    private $notifications = null;
+
+    /**
      * @param $content string
      * @param $headers array
      */
@@ -90,4 +95,19 @@ class TestResponse {
         if(is_null($this->pq)) $this->pq = phpQuery::newDocument($this->content);
         return $this->pq->find($selector);
     }
+
+    /**
+     * @return array
+     */
+    public function getNotifications() {
+        return $this->notifications;
+    }
+
+    /**
+     * Set notifications
+     */
+    public function setNotifications(array $new) {
+        $this->notifications = $new;
+    }
+
 }
