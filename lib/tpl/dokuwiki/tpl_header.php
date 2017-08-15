@@ -46,9 +46,7 @@ if (!defined('DOKU_INC')) die();
                             tpl_userinfo(); /* 'Logged in as ...' */
                             echo '</li>';
                         }
-                        $menu = new \dokuwiki\Menu\UserMenu();
-                        echo $menu->getListItems('action ');
-                        unset($menu);
+                        echo (new \dokuwiki\Menu\UserMenu())->getListItems('action');
                     ?>
                 </ul>
             </div>
@@ -59,18 +57,10 @@ if (!defined('DOKU_INC')) die();
             <h3 class="a11y"><?php echo $lang['site_tools']; ?></h3>
             <?php tpl_searchform(); ?>
             <div class="mobileTools">
-                <?php
-                    $menu = new \dokuwiki\Menu\MobileMenu();
-                    echo $menu->getDropdown($lang['tools']);
-                    unset($menu);
-                ?>
+                <?php echo (new \dokuwiki\Menu\MobileMenu())->getDropdown($lang['tools']); ?>
             </div>
             <ul>
-                <?php
-                    $menu = new \dokuwiki\Menu\SiteMenu();
-                    echo $menu->getListItems('action ', false);
-                    unset($menu);
-                ?>
+                <?php echo (new \dokuwiki\Menu\SiteMenu())->getListItems('action ', false); ?>
             </ul>
         </div>
 

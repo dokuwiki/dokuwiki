@@ -73,11 +73,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                 <h3 class="a11y"><?php echo $lang['page_tools']; ?></h3>
                 <div class="tools">
                     <ul>
-                        <?php
-                            $menu = new \dokuwiki\Menu\PageMenu();
-                            echo $menu->getListItems();
-                            unset($menu);
-                        ?>
+                        <?php echo (new \dokuwiki\Menu\PageMenu())->getListItems(); ?>
                     </ul>
                 </div>
             </div>
