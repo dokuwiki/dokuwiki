@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Håkan Sandell <hakan.sandell@home.se>
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>

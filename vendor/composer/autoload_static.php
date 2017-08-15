@@ -7,8 +7,8 @@ namespace Composer\Autoload;
 class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
 {
     public static $files = array (
-        'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -41,6 +41,13 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
                 0 => __DIR__ . '/..' . '/simplepie/simplepie/library',
             ),
         ),
+        'E' => 
+        array (
+            'EmailAddressValidator' => 
+            array (
+                0 => __DIR__ . '/..' . '/aziraphale/email-address-validator',
+            ),
+        ),
     );
 
     public static $classMap = array (
@@ -65,6 +72,11 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         'RSSCreator10' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/RSSCreator10.php',
         'RSSCreator20' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/RSSCreator20.php',
         'UniversalFeedCreator' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/UniversalFeedCreator.php',
+        'lessc' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
+        'lessc_formatter_classic' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
+        'lessc_formatter_compressed' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
+        'lessc_formatter_lessjs' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
+        'lessc_parser' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

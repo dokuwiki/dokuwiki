@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Paulo Silva <paulotsilva@yahoo.com>
  * @author André Neves <drakferion@gmail.com>
  * @author Paulo Carmino <contato@paulocarmino.com>

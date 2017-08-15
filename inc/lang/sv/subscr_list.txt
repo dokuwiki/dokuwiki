@@ -1,0 +1,9 @@
+Hej!
+
+Sidorna i namnrymden @PAGE@ för wikin @TITLE@ har ändrats. Följande sidor har ändrats: 
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+För att inaktivera sidnotifieringar, logga in på wikin (@DOKUWIKIURL@), gå till @SUBSCRIBE@ och avanmäl dig från sid-och/eller namnrymd-ändringar.

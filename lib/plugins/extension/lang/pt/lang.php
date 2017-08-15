@@ -2,11 +2,12 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Guido Salatino <guidorafael23@gmail.com>
  * @author Romulo Pereira <romuloccomp@gmail.com>
  * @author Paulo Carmino <contato@paulocarmino.com>
  * @author Alfredo Silva <alfredo.silva@sky.com>
+ * @author Guilherme Sá <guilherme.sa@hotmail.com>
  */
 $lang['menu']                  = 'Gerenciador de Extensões';
 $lang['tab_plugins']           = 'Plugins Instalados';

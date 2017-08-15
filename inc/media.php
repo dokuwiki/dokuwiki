@@ -1734,9 +1734,9 @@ function media_printimgdetail($item, $fullscreen=false){
     // print EXIF/IPTC data
     if($t || $d || $k ){
         echo '<p>';
-        if($t) echo '<strong>'.htmlspecialchars($t).'</strong><br />';
-        if($d) echo htmlspecialchars($d).'<br />';
-        if($t) echo '<em>'.htmlspecialchars($k).'</em>';
+        if($t) echo '<strong>'.hsc($t).'</strong><br />';
+        if($d) echo hsc($d).'<br />';
+        if($t) echo '<em>'.hsc($k).'</em>';
         echo '</p>';
     }
     echo '</div>';

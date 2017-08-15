@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
@@ -12,6 +12,7 @@
  * @author Romulo Pereira <romuloccomp@gmail.com>
  * @author Paulo Carmino <contato@paulocarmino.com>
  * @author Alfredo Silva <alfredo.silva@sky.com>
+ * @author Guilherme Sá <guilherme.sa@hotmail.com>
  */
 $lang['menu']                  = 'Gestor de Perfis';
 $lang['noauth']                = '(autenticação indisponível)';

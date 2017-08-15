@@ -356,7 +356,7 @@ class Tar extends Archive
         }
 
         if ($this->comptype === Archive::COMPRESS_GZIP) {
-            return gzcompress($this->memory, $this->complevel);
+            return gzencode($this->memory, $this->complevel);
         }
         if ($this->comptype === Archive::COMPRESS_BZIP) {
             return bzcompress($this->memory);

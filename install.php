@@ -161,7 +161,7 @@ function print_form($d){
     include(DOKU_CONF.'license.php');
 
     if(!is_array($d)) $d = array();
-    $d = array_map('htmlspecialchars',$d);
+    $d = array_map('hsc',$d);
 
     if(!isset($d['acl'])) $d['acl']=1;
     if(!isset($d['pop'])) $d['pop']=1;
@@ -216,9 +216,9 @@ function print_form($d){
             if(empty($d['license'])) $d['license'] = 'cc-by-sa';
             foreach($license as $key => $lic){
                 echo '<label for="lic_'.$key.'">';
-                echo '<input type="radio" name="d[license]" value="'.htmlspecialchars($key).'" id="lic_'.$key.'"'.
+                echo '<input type="radio" name="d[license]" value="'.hsc($key).'" id="lic_'.$key.'"'.
                      (($d['license'] === $key)?' checked="checked"':'').'>';
-                echo htmlspecialchars($lic['name']);
+                echo hsc($lic['name']);
                 if($lic['url']) echo ' <a href="'.$lic['url'].'" target="_blank"><sup>[?]</sup></a>';
                 echo '</label>';
             }

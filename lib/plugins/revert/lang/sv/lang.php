@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
  * @author Håkan Sandell <hakan.sandell@home.se>
@@ -20,6 +20,7 @@
  * @author Tor Härnqvist <tor.harnqvist@gmail.com>
  * @author Hans Iwan Bratt <hibratt@gmail.com>
  * @author Mikael Bergström <krank23@gmail.com>
+ * @author Tor Härnqvist <tor@harnqvist.se>
  */
 $lang['menu']                  = 'Hantera återställningar';
 $lang['filter']                = 'Sök efter spamsidor';

@@ -24,6 +24,7 @@
  * @author Janosch <janosch@moinzen.de>
  * @author rnck <dokuwiki@rnck.de>
  * @author Felix <j.felix@mueller-donath.de>
+ * @author Felix Müller-Donath <j.felix@mueller-donath.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
