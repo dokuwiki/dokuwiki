@@ -8,6 +8,12 @@
 if(!defined('DOKU_INC')) die('meh.');
 
 /**
+ * Allowed chars in $language for code highlighting
+ * @see GeSHi::set_language()
+ */
+define('PREG_PATTERN_VALID_LANGUAGE', '#[^a-zA-Z0-9\-_]#');
+
+/**
  * An empty renderer, produces no output
  *
  * Inherits from DokuWiki_Plugin for giving additional functions to render plugins
