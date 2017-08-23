@@ -651,7 +651,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $text = substr($text, 0, -1);
         }
 
-        if(is_null($language)) {
+        if(empty($language)) { // empty is faster than is_null and can prevent '' string
             $this->doc .= '<pre class="'.$type.'">'.$this->_xmlEntities($text).'</pre>'.DOKU_LF;
         } else {
             $class = 'code'; //we always need the code class to make the syntax highlighting apply
