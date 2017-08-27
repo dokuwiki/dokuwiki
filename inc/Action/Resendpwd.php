@@ -51,7 +51,7 @@ class Resendpwd extends AbstractAclAction {
      * @fixme this should be split up into multiple methods
      * @return bool true on success, false on any error
      */
-    function resendpwd() {
+    protected function resendpwd() {
         global $lang;
         global $conf;
         /* @var \DokuWiki_Auth_Plugin $auth */

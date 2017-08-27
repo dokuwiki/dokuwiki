@@ -177,7 +177,7 @@ class ActionRouter {
     public function loadAction($actionname) {
         $actionname = strtolower($actionname); // FIXME is this needed here? should we run a cleanup somewhere else?
         $parts = explode('_', $actionname);
-        while($parts) {
+        while(!empty($parts)) {
             $load = join('_', $parts);
             $class = 'dokuwiki\\Action\\' . str_replace('_', '', ucwords($load, '_'));
             if(class_exists($class)) {
