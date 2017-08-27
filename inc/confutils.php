@@ -219,7 +219,16 @@ function linesToHash($lines, $lower=false) {
         $line = str_replace('\\#','#',$line);
         $line = trim($line);
         if(empty($line)) continue;
-        $line = preg_split('/\s+/',$line,2);
+        # checking for tab instead of just whitespace char to accomodate
+        # for explain & confmanager plugin with a space in term. 
+        # while still e.g. allowing mimetypes conf file to work that does not use tab
+        $pos = preg_match('/\t/', $line);
+        if ($pos===1) {
+            $line = preg_split('/\t+/',$line,2);
+        } else {
+            $line = preg_split('/\s+/',$line,2);
+        }
+        #$line = preg_split('/\s+/',$line,2);
         // Build the associative array
         if($lower){
             $conf[strtolower($line[0])] = $line[1];
