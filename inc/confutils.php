@@ -221,6 +221,9 @@ function linesToHash($lines, $lower=false) {
         if(empty($line)) continue;
         $line = preg_split('/\s+/',$line,2);
         // Build the associative array
+        if (empty($line[1])) {
+            $line[1] = '';
+        }
         if($lower){
             $conf[strtolower($line[0])] = $line[1];
         }else{
