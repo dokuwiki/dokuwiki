@@ -42,6 +42,9 @@ if (!defined('DOKU_E_LEVEL')) {
     error_reporting(DOKU_E_LEVEL);
 }
 
+// avoid caching issues #1594
+header('Vary: Cookie');
+
 // init memory caches
 global $cache_revinfo;
        $cache_revinfo = array();
