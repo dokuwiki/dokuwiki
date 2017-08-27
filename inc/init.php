@@ -3,13 +3,6 @@
  * Initialize some defaults needed for DokuWiki
  */
 
-/**
- * checks it is windows OS
- * @return bool
- */
-function isWindows() {
-    return (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? true : false;
-}
 
 /**
  * timing Dokuwiki execution
@@ -487,21 +480,29 @@ function getBaseURL($abs=null){
  *
  * @returns bool true when SSL is active
  */
-function is_ssl(){
+function is_ssl() {
     // check if we are behind a reverse proxy
-    if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
-        if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-	    return true;
-	} else {
-	    return false;
-	}
+    if(isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+        if($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+            return true;
+        } else {
+            return false;
+        }
     }
-    if (!isset($_SERVER['HTTPS']) ||
-        preg_match('/^(|off|false|disabled)$/i',$_SERVER['HTTPS'])){
+    if(!isset($_SERVER['HTTPS']) ||
+        preg_match('/^(|off|false|disabled)$/i', $_SERVER['HTTPS'])) {
         return false;
-    }else{
+    } else {
         return true;
     }
+}
+
+/**
+ * checks it is windows OS
+ * @return bool
+ */
+function isWindows() {
+    return (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? true : false;
 }
 
 /**
