@@ -6,7 +6,14 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 if(!defined('DOKU_INC')) die('meh.');
-if(!defined('DOKU_MESSAGEURL')) define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
+
+if(!defined('DOKU_MESSAGEURL')){
+    if(in_array('ssl', stream_get_transports())) {
+        define('DOKU_MESSAGEURL','https://update.dokuwiki.org/check/');
+    }else{
+        define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
+    }
+}
 
 /**
  * Check for new messages from upstream
@@ -22,11 +29,12 @@ function checkUpdateMessages(){
 
     $cf = getCacheName($updateVersion, '.updmsg');
     $lm = @filemtime($cf);
+    $is_http = substr(DOKU_MESSAGEURL, 0, 5) != 'https';
 
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
         @touch($cf);
-        dbglog("checkUpdateMessages(): downloading messages to ".$cf);
+        dbglog("checkUpdateMessages(): downloading messages to ".$cf.($is_http?' (without SSL)':' (with SSL)'));
         $http = new DokuHTTPClient();
         $http->timeout = 12;
         $resp = $http->get(DOKU_MESSAGEURL.$updateVersion);
