@@ -93,90 +93,13 @@ function tpl_content($prependTOC = true) {
  * @return bool
  */
 function tpl_content_core() {
-    global $ACT;
-    global $TEXT;
-    global $PRE;
-    global $SUF;
-    global $SUM;
-    global $IDX;
-    global $INPUT;
-
-    switch($ACT) {
-        case 'show':
-            html_show();
-            break;
-        /** @noinspection PhpMissingBreakStatementInspection */
-        case 'locked':
-            html_locked();
-        case 'edit':
-        case 'recover':
-            html_edit();
-            break;
-        case 'preview':
-            html_edit();
-            html_show($TEXT);
-            break;
-        case 'draft':
-            html_draft();
-            break;
-        case 'search':
-            html_search();
-            break;
-        case 'revisions':
-            html_revisions($INPUT->int('first'));
-            break;
-        case 'diff':
-            html_diff();
-            break;
-        case 'recent':
-            $show_changes = $INPUT->str('show_changes');
-            if (empty($show_changes)) {
-                $show_changes = get_doku_pref('show_changes', $show_changes);
-            }
-            html_recent($INPUT->extract('first')->int('first'), $show_changes);
-            break;
-        case 'index':
-            html_index($IDX); #FIXME can this be pulled from globals? is it sanitized correctly?
-            break;
-        case 'backlink':
-            html_backlinks();
-            break;
-        case 'conflict':
-            html_conflict(con($PRE, $TEXT, $SUF), $SUM);
-            html_diff(con($PRE, $TEXT, $SUF), false);
-            break;
-        case 'login':
-            html_login();
-            break;
-        case 'register':
-            html_register();
-            break;
-        case 'resendpwd':
-            html_resendpwd();
-            break;
-        case 'denied':
-            html_denied();
-            break;
-        case 'profile' :
-            html_updateprofile();
-            break;
-        case 'admin':
-            tpl_admin();
-            break;
-        case 'subscribe':
-            tpl_subscribe();
-            break;
-        case 'media':
-            tpl_media();
-            break;
-        default:
-            $evt = new Doku_Event('TPL_ACT_UNKNOWN', $ACT);
-            if($evt->advise_before()) {
-                msg("Failed to handle command: ".hsc($ACT), -1);
-            }
-            $evt->advise_after();
-            unset($evt);
-            return false;
+    $router = \dokuwiki\ActionRouter::getInstance();
+    try {
+        $router->getAction()->tplContent();
+    } catch(\dokuwiki\Action\Exception\FatalException $e) {
+        // there was no content for the action
+        msg(hsc($e->getMessage()), -1);
+        return false;
     }
     return true;
 }
