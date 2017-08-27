@@ -7,6 +7,8 @@
 // output buffering
 $output_buffer = '';
 
+$currentTestRequest = null;
+
 function ob_start_callback($buffer) {
     global $output_buffer;
     $output_buffer .= $buffer;
@@ -25,6 +27,7 @@ class TestRequest {
     private $session = array();
     private $get = array();
     private $post = array();
+    private $notifications = array();
 
     public function getServer($key) { return $this->server[$key]; }
     public function getSession($key) { return $this->session[$key]; }
@@ -45,6 +48,9 @@ class TestRequest {
      */
     public function execute($uri='/doku.php') {
         global $INPUT;
+        global $currentTestRequest;
+
+        $currentTestRequest = $this;
 
         // save old environment
         $server = $_SERVER;
@@ -86,6 +92,9 @@ class TestRequest {
             $output_buffer,
             (function_exists('xdebug_get_headers') ? xdebug_get_headers() : headers_list())   // cli sapi doesn't do headers, prefer xdebug_get_headers() which works under cli
         );
+        if ($this->notifications != null) {
+            $response->setNotifications($this->notifications);
+        }
 
         // reset environment
         $_SERVER = $server;
@@ -94,6 +103,8 @@ class TestRequest {
         $_POST = $post;
         $_REQUEST = $request;
         $INPUT = $input;
+
+        $currentTestRequest = null;
 
         return $response;
     }
@@ -161,5 +172,10 @@ class TestRequest {
         return $this->execute($uri);
     }
 
-
+    /**
+     * Add a notification to later store it in the test respone.
+     */
+    public function addNotification(array $new) {
+        $this->notifications[] = $new;
+    }
 }

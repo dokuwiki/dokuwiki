@@ -10,7 +10,12 @@ if(!defined('DOKU_INC')) die('meh.');
 
 
 function act_dispatch(){
-    $router = \dokuwiki\ActionRouter::getInstance(); // is this needed here or could we delegate it to tpl_content() later?
+    $reinit = false;
+    if(defined('DOKU_UNITTEST')) {
+        // For integration test running multiple requests we need a re-init here!
+        $reinit = true;
+    }
+    $router = \dokuwiki\ActionRouter::getInstance($reinit); // is this needed here or could we delegate it to tpl_content() later?
 
     $headers = array('Content-Type: text/html; charset=utf-8');
     trigger_event('ACTION_HEADERS_SEND',$headers,'act_sendheaders');
