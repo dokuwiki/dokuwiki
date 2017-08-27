@@ -129,10 +129,10 @@ class remote_plugin_testplugin2 extends DokuWiki_Remote_Plugin {
 
 class remote_test extends DokuWikiTest {
 
-    var $userinfo;
+    protected $userinfo;
 
     /** @var  RemoteAPI */
-    var $remote;
+    protected $remote;
 
     function setUp() {
         parent::setUp();
@@ -144,7 +144,7 @@ class remote_test extends DokuWikiTest {
         parent::setUp();
 
         // mock plugin controller to return our test plugins
-        $pluginManager = $this->getMock('Doku_Plugin_Controller');
+        $pluginManager = $this->createMock('Doku_Plugin_Controller');
         $pluginManager->method('getList')->willReturn(array('testplugin', 'testplugin2'));
         $pluginManager->method('load')->willReturnCallback(
             function($type, $plugin) {
@@ -256,6 +256,7 @@ class remote_test extends DokuWikiTest {
         $conf['remote'] = 1;
         $conf['remoteuser'] = '';
         $this->remote->forceAccess(); // no exception should occur
+        $this->assertTrue(true); // avoid being marked as risky for having no assertion
     }
 
     /**

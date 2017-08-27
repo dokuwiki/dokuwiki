@@ -49,7 +49,7 @@ $lang['breadcrumbs']           = 'Apmeklējumu vēstures garums';
 $lang['youarehere']            = 'Rādīt "tu atrodies šeit"';
 $lang['fullpath']              = 'Norādīt kājenē pilnu lapas ceļu';
 $lang['typography']            = 'Veikt tipogrāfijas aizvietošanu';
-$lang['dformat']               = 'Datuma formāts (sk. PHP <a href="http://www.php.net/strftime">strftime</a> funkciju)';
+$lang['dformat']               = 'Datuma formāts (sk. PHP <a href="http://php.net/strftime">strftime</a> funkciju)';
 $lang['signature']             = 'Paraksts';
 $lang['showuseras']            = 'Kā rādīt pēdējo lietotāju, ka labojis lapu';
 $lang['toptoclevel']           = 'Satura rādītāja pirmais līmenis';

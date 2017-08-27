@@ -51,6 +51,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return bool If some (local or remote) data was found
      */
     public function setExtension($id) {
+        $id = cleanID($id);
         $this->id   = $id;
         $this->base = $id;
 
@@ -107,7 +108,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         if (!empty($this->remoteInfo['bundled'])) return $this->remoteInfo['bundled'];
         return in_array($this->id,
                         array(
-                            'authad', 'authldap', 'authmysql', 'authpgsql', 'authplain', 'acl', 'info', 'extension',
+                            'authad', 'authldap', 'authmysql', 'authpdo', 'authpgsql', 'authplain', 'acl', 'info', 'extension',
                             'revert', 'popularity', 'config', 'safefnrecode', 'styling', 'testing', 'template:dokuwiki'
                         )
         );

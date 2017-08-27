@@ -2,9 +2,10 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Remon <no@email.local>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Sjoerd <sjoerd@sjomar.eu>
  */
 $lang['account_suffix']        = 'Je account domeinnaam. Bijv <code>@mijn.domein.org</code>';
 $lang['base_dn']               = 'Je basis DN. Bijv. <code>DC=mijn,DC=domein,DC=org</code>';
@@ -19,3 +20,5 @@ $lang['use_tls']               = 'TLS verbinding gebruiken? Zo ja, activeer dan 
 $lang['debug']                 = 'Aanvullende debug informatie tonen bij fouten?';
 $lang['expirywarn']            = 'Waarschuwingstermijn voor vervallen wachtwoord. 0 om te deactiveren.';
 $lang['additional']            = 'Een kommagescheiden lijst van extra AD attributen van de gebruiker. Wordt gebruikt door sommige plugins.';
+$lang['update_name']           = 'Sta gebruikers toe om hun getoonde AD naam bij te werken';
+$lang['update_mail']           = 'Sta gebruikers toe hun email adres bij te werken';

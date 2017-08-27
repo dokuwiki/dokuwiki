@@ -1,0 +1,4 @@
+# this is loaded from the update.sh script and our PHP code
+JQ_VERSION=3.1.1
+JQUI_VERSION=1.12.1
+JQM_VERSION=3.0.0

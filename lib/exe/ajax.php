@@ -14,11 +14,9 @@ session_write_close();
 header('Content-Type: text/html; charset=utf-8');
 
 //call the requested function
-if($INPUT->post->has('call')){
-    $call = $INPUT->post->str('call');
-}else if($INPUT->get->has('call')){
-    $call = $INPUT->get->str('call');
-}else{
+if($INPUT->has('call')) {
+    $call = $INPUT->filter('utf8_stripspecials')->str('call');
+} else {
     exit;
 }
 $callfn = 'ajax_'.$call;
@@ -28,7 +26,7 @@ if(function_exists($callfn)){
 }else{
     $evt = new Doku_Event('AJAX_CALL_UNKNOWN', $call);
     if ($evt->advise_before()) {
-        print "AJAX call '".htmlspecialchars($call)."' unknown!\n";
+        print "AJAX call '".hsc($call)."' unknown!\n";
         exit;
     }
     $evt->advise_after();
@@ -124,19 +122,23 @@ function ajax_suggestions() {
  * Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_lock(){
-    global $conf;
     global $lang;
     global $ID;
     global $INFO;
     global $INPUT;
 
     $ID = cleanID($INPUT->post->str('id'));
-    if(empty($ID)) return;
-
+    if($ID === '') return;
     $INFO = pageinfo();
+    if(isset($INFO['draft'])) unset($INFO['draft']);
 
-    if (!$INFO['writable']) {
-        echo 'Permission denied';
+    // the preview action does locking and draft saving for us
+    try {
+        $preview = new \dokuwiki\Action\Preview();
+        $preview->checkPermissions();
+        $preview->preProcess();
+    } catch(\dokuwiki\Action\Exception\ActionException $e) {
+        echo $e->getMessage();
         return;
     }
 
@@ -145,23 +147,9 @@ function ajax_lock(){
         echo 1;
     }
 
-    if($conf['usedraft'] && $INPUT->post->str('wikitext')){
-        $client = $_SERVER['REMOTE_USER'];
-        if(!$client) $client = clientIP(true);
-
-        $draft = array('id'     => $ID,
-                'prefix' => substr($INPUT->post->str('prefix'), 0, -1),
-                'text'   => $INPUT->post->str('wikitext'),
-                'suffix' => $INPUT->post->str('suffix'),
-                'date'   => $INPUT->post->int('date'),
-                'client' => $client,
-                );
-        $cname = getCacheName($draft['client'].$ID,'.draft');
-        if(io_saveFile($cname,serialize($draft))){
-            echo $lang['draftdate'].' '.dformat();
-        }
+    if(isset($INFO['draft'])) {
+        echo $lang['draftdate'].' '.dformat();
     }
-
 }
 
 /**
@@ -424,13 +412,13 @@ function ajax_linkwiz(){
         if($item['type'] == 'u'){
             $name = $lang['upperns'];
         }else{
-            $name = htmlspecialchars($item['id']);
+            $name = hsc($item['id']);
         }
 
-        echo '<a href="'.$link.'" title="'.htmlspecialchars($item['id']).'" class="wikilink1">'.$name.'</a>';
+        echo '<a href="'.$link.'" title="'.hsc($item['id']).'" class="wikilink1">'.$name.'</a>';
 
         if(!blank($item['title'])){
-            echo '<span>'.htmlspecialchars($item['title']).'</span>';
+            echo '<span>'.hsc($item['title']).'</span>';
         }
         echo '</div>';
     }

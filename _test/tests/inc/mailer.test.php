@@ -73,6 +73,10 @@ class mailer_test extends DokuWikiTest {
     }
 
     function test_addresses(){
+        if (isWindows()) {
+            $this->markTestSkipped();
+        }
+
         $mail = new TestMailer();
 
         $mail->to('andi@splitbrain.org');
@@ -241,6 +245,7 @@ class mailer_test extends DokuWikiTest {
             }
         }
 
+        $this->assertTrue(true); // avoid being marked as risky for having no assertion
     }
 
     function test_simplemailsignature() {

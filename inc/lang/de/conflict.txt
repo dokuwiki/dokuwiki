@@ -1,4 +1,4 @@
-====== Eine neuere Version existiert ======
+====== Es gibt eine neuere Version ======
 
 Eine neuere Version des aktuell in Bearbeitung befindlichen Dokuments existiert. Das heißt, jemand hat parallel an der selben Seite gearbeitet und zuerst gespeichert.
 

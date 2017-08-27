@@ -396,6 +396,8 @@ function metaFiles($id){
  *
  * @param string     $id  media id
  * @param string|int $rev empty string or revision timestamp
+ * @param bool $clean
+ *
  * @return string full path
  */
 function mediaFN($id, $rev='', $clean=true){
@@ -442,7 +444,7 @@ function localeFN($id,$ext='txt'){
  * instead
  *
  * Partyly based on a cleanPath function found at
- * http://www.php.net/manual/en/function.realpath.php#57016
+ * http://php.net/manual/en/function.realpath.php#57016
  *
  * @author <bart at mediawave dot nl>
  *

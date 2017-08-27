@@ -305,10 +305,15 @@ class HTTPClient {
                     $data = $this->_postEncode($data);
                 }
             }
-            $headers['Content-Length'] = strlen($data);
         }elseif($method == 'GET'){
             $data = ''; //no data allowed on GET requests
         }
+
+        $contentlength = strlen($data);
+        if($contentlength)  {
+            $headers['Content-Length'] = $contentlength;
+        }
+
         if($this->user) {
             $headers['Authorization'] = 'Basic '.base64_encode($this->user.':'.$this->pass);
         }

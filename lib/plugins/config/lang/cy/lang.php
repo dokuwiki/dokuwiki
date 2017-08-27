@@ -73,7 +73,7 @@ $lang['breadcrumbs'] = 'Nifer y briwsion "trywydd". Gosodwch i 0 i analluogi.';
 $lang['youarehere']  = 'Defnyddiwch briwsion hierarchaidd (byddwch chi yn debygol o angen analluogi\'r opsiwn uchod wedyn)';
 $lang['fullpath']    = 'Datgelu llwybr llawn y tudalennau yn y troedyn';
 $lang['typography']  = 'Gwnewch amnewidiadau argraffyddol';
-$lang['dformat']     = 'Fformat dyddiad (gweler swyddogaeth <a href="http://www.php.net/strftime">strftime</a> PHP)';
+$lang['dformat']     = 'Fformat dyddiad (gweler swyddogaeth <a href="http://php.net/strftime">strftime</a> PHP)';
 $lang['signature']   = 'Yr hyn i\'w mewnosod gyda\'r botwm llofnod yn y golygydd';
 $lang['showuseras']  = 'Yr hyn i\'w harddangos wrth ddangos y defnyddiwr a wnaeth olygu\'r dudalen yn olaf';
 $lang['toptoclevel'] = 'Lefel uchaf ar gyfer tabl cynnwys';

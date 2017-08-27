@@ -72,7 +72,7 @@ $lang['breadcrumbs'] = 'Number of "trace" breadcrumbs. Set to 0 to disable.';
 $lang['youarehere']  = 'Use hierarchical breadcrumbs (you probably want to disable the above option then)';
 $lang['fullpath']    = 'Reveal full path of pages in the footer';
 $lang['typography']  = 'Do typographical replacements';
-$lang['dformat']     = 'Date format (see PHP\'s <a href="http://www.php.net/strftime">strftime</a> function)';
+$lang['dformat']     = 'Date format (see PHP\'s <a href="http://php.net/strftime">strftime</a> function)';
 $lang['signature']   = 'What to insert with the signature button in the editor';
 $lang['showuseras']  = 'What to display when showing the user that last edited a page';
 $lang['toptoclevel'] = 'Top level for table of contents';
@@ -175,6 +175,12 @@ $lang['renderer__plugin'] = '%s (plugin)';
 
 /* Network Options */
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
+$lang['jquerycdn'] = 'Should the jQuery and jQuery UI script files be loaded from a CDN? This adds additional HTTP requests, but files may load faster and users may have them cached already.';
+
+/* jQuery CDN options */
+$lang['jquerycdn_o_0'] = 'No CDN, local delivery only';
+$lang['jquerycdn_o_jquery'] = 'CDN at code.jquery.com';
+$lang['jquerycdn_o_cdnjs'] = 'CDN at cdnjs.com';
 
 /* Proxy Options */
 $lang['proxy____host']    = 'Proxy servername';

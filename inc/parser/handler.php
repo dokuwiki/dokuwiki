@@ -23,6 +23,8 @@ class Doku_Handler {
 
     /**
      * @param string $handler
+     * @param mixed $args
+     * @param integer|string $pos
      */
     function _addCall($handler, $args, $pos) {
         $call = array($handler,$args, $pos);
@@ -55,10 +57,16 @@ class Doku_Handler {
         array_push($this->calls,array('document_end',array(),$last_call[2]));
     }
 
+    /**
+     * fetch the current call and advance the pointer to the next one
+     *
+     * @return bool|mixed
+     */
     function fetch() {
-        $call = each($this->calls);
-        if ( $call ) {
-            return $call['value'];
+        $call = current($this->calls);
+        if($call !== false) {
+            next($this->calls); //advance the pointer
+            return $call;
         }
         return false;
     }
@@ -71,6 +79,13 @@ class Doku_Handler {
      * An additional parameter with the plugin name is passed
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string|integer $match
+     * @param string|integer $state
+     * @param integer $pos
+     * @param $pluginname
+     *
+     * @return bool
      */
     function plugin($match, $state, $pos, $pluginname){
         $data = array($match);
@@ -137,6 +152,9 @@ class Doku_Handler {
     }
 
     /**
+     * @param string|integer $match
+     * @param string|integer $state
+     * @param integer $pos
      * @param string $name
      */
     function _nestingTag($match, $state, $pos, $name) {
@@ -446,7 +464,7 @@ class Doku_Handler {
 
         //decide which kind of link it is
 
-        if ( preg_match('/^[a-zA-Z0-9\.]+>{1}.*$/u',$link[0]) ) {
+        if ( link_isinterwiki($link[0]) ) {
             // Interwiki
             $interwiki = explode('>',$link[0],2);
             $this->_addCall(
@@ -693,8 +711,8 @@ function Doku_Handler_Parse_Media($match) {
         $cache = 'cache';
     }
 
-    // Check whether this is a local or remote image
-    if ( media_isexternal($src) ) {
+    // Check whether this is a local or remote image or interwiki
+    if (media_isexternal($src) || link_isinterwiki($src)){
         $call = 'externalmedia';
     } else {
         $call = 'internalmedia';
@@ -1590,6 +1608,8 @@ class Doku_Handler_Block {
      * This function makes sure there are no empty paragraphs on the stack
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string|integer $pos
      */
     function closeParagraph($pos){
         if (!$this->inParagraph) return;
@@ -1641,6 +1661,10 @@ class Doku_Handler_Block {
      *
      * @author Harry Fuecks <hfuecks@gmail.com>
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param array $calls
+     *
+     * @return array
      */
     function process($calls) {
         // open first paragraph

@@ -11,6 +11,7 @@
  * @author Marius Olar <olarmariusalex@yahoo.com>
  * @author Marian Banica <banica.marian@gmail.com>
  * @author Adrian Vesa <adrianvesa@dotwikis.com>
+ * @author valentina_prof <sadoveanu.inform@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -333,6 +334,6 @@ $lang['media_perm_read']       = 'Ne pare rău, dar nu ai suficiente permisiuni 
 $lang['media_perm_upload']     = 'Ne pare rău, dar nu ai suficiente permisiuni pentru a putea încărca fișiere.';
 $lang['media_update']          = 'Încarcă noua versiune';
 $lang['media_restore']         = 'Restaurează această versiune';
-$lang['email_signature_text']       = 'Acest e-mail a fost generat de DokuWiki la
-@DOKUWIKIURL@';
 $lang['searchresult']          = 'Rezultatul cautarii';
+$lang['email_signature_text']  = 'Acest e-mail a fost generat de DokuWiki la
+@DOKUWIKIURL@';

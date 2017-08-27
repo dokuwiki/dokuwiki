@@ -68,7 +68,7 @@
  *   '_max'        - maximum numeric value, optional for 'numeric' and 'numericopt', ignored by others
  *   '_delimiter'  - string, default '/', a single character used as a delimiter for testing regex input values
  *   '_pregflags'  - string, default 'ui', valid preg pattern modifiers used when testing regex input values, for more
- *                   information see http://uk1.php.net/manual/en/reference.pcre.pattern.modifiers.php
+ *                   information see http://php.net/manual/en/reference.pcre.pattern.modifiers.php
  *   '_multiple'   - bool, allow multiple comma separated email values; optional for 'email', ignored by others
  *   '_other'      - how to handle other values (not listed in _choices). accepted values: 'always','exists','never'
  *                   default value 'always'. 'exists' only shows 'other' input field when the setting contains value(s)
@@ -221,6 +221,7 @@ $meta['readdircache'] = array('numeric');
 
 $meta['_network']    = array('fieldset');
 $meta['dnslookups']  = array('onoff');
+$meta['jquerycdn']   = array('multichoice', '_choices' => array(0,'jquery', 'cdnjs'));
 $meta['proxy____host'] = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
 $meta['proxy____port'] = array('numericopt');
 $meta['proxy____user'] = array('string');

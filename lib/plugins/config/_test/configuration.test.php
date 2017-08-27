@@ -15,6 +15,8 @@ class plugin_config_configuration_test extends DokuWikiTest {
      * Load config files
      */
     function __construct() {
+        parent::__construct();
+
         $this->config = dirname(__FILE__).'/data/config.php';
         $this->meta   = dirname(__FILE__).'/data/metadata.php';
         require_once(dirname(__FILE__).'/../settings/config.class.php');

@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Davor Turkalj <turki.bsc@gmail.com>
  */
 $lang['server']                = 'Vaš LDAP server. Upišite ili naziv računala (<code>localhost</code>) ili puni URL (<code>ldap://server.tld:389</code>)';

@@ -9,23 +9,12 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 if(!defined('DOKU_LOCAL')) define('DOKU_LOCAL',DOKU_INC.'conf/');
 
-require_once(DOKU_INC.'inc/PassHash.class.php');
+// load and initialize the core system
+require_once(DOKU_INC.'inc/init.php');
 
 // check for error reporting override or set error reporting to sane values
 if (!defined('DOKU_E_LEVEL')) { error_reporting(E_ALL ^ E_NOTICE); }
 else { error_reporting(DOKU_E_LEVEL); }
-
-// kill magic quotes
-if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
-    if (!empty($_GET))    remove_magic_quotes($_GET);
-    if (!empty($_POST))   remove_magic_quotes($_POST);
-    if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
-    if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
-    @ini_set('magic_quotes_gpc', 0);
-    define('MAGIC_QUOTES_STRIPPED',1);
-}
-if (function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
-@ini_set('magic_quotes_sybase',0);
 
 // language strings
 require_once(DOKU_INC.'inc/lang/en/lang.php');
@@ -58,7 +47,9 @@ $dokuwiki_hash = array(
     '2013-05-10'   => '7b62b75245f57f122d3e0f8ed7989623',
     '2013-12-08'   => '263c76af309fbf083867c18a34ff5214',
     '2014-05-05'   => '263c76af309fbf083867c18a34ff5214',
-    '2015-08-10'   => '263c76af309fbf083867c18a34ff5214'
+    '2015-08-10'   => '263c76af309fbf083867c18a34ff5214',
+    '2016-06-26'   => 'fd3abb6d89853dacb032907e619fbd73',
+    '2017-02-19'   => 'e4f2f5a34c9dbcd96a5ecc8f2df25bd9'
 );
 
 
@@ -152,7 +143,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 <div style="clear: both">
   <a href="http://dokuwiki.org/"><img src="lib/tpl/dokuwiki/images/button-dw.png" alt="driven by DokuWiki" /></a>
-  <a href="http://www.php.net"><img src="lib/tpl/dokuwiki/images/button-php.gif" alt="powered by PHP" /></a>
+  <a href="http://php.net"><img src="lib/tpl/dokuwiki/images/button-php.gif" alt="powered by PHP" /></a>
 </div>
 </body>
 </html>
@@ -170,7 +161,7 @@ function print_form($d){
     include(DOKU_CONF.'license.php');
 
     if(!is_array($d)) $d = array();
-    $d = array_map('htmlspecialchars',$d);
+    $d = array_map('hsc',$d);
 
     if(!isset($d['acl'])) $d['acl']=1;
     if(!isset($d['pop'])) $d['pop']=1;
@@ -225,9 +216,9 @@ function print_form($d){
             if(empty($d['license'])) $d['license'] = 'cc-by-sa';
             foreach($license as $key => $lic){
                 echo '<label for="lic_'.$key.'">';
-                echo '<input type="radio" name="d[license]" value="'.htmlspecialchars($key).'" id="lic_'.$key.'"'.
+                echo '<input type="radio" name="d[license]" value="'.hsc($key).'" id="lic_'.$key.'"'.
                      (($d['license'] === $key)?' checked="checked"':'').'>';
-                echo htmlspecialchars($lic['name']);
+                echo hsc($lic['name']);
                 if($lic['url']) echo ' <a href="'.$lic['url'].'" target="_blank"><sup>[?]</sup></a>';
                 echo '</label>';
             }
@@ -557,8 +548,8 @@ function check_functions(){
     global $lang;
     $ok = true;
 
-    if(version_compare(phpversion(),'5.3.3','<')){
-        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.3.3');
+    if(version_compare(phpversion(),'5.6.0','<')){
+        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.6.0');
         $ok = false;
     }
 
@@ -639,21 +630,3 @@ function print_errors(){
         echo '</ul>';
     }
 }
-
-/**
- * remove magic quotes recursivly
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param array $array
- */
-function remove_magic_quotes(&$array) {
-    foreach (array_keys($array) as $key) {
-        if (is_array($array[$key])) {
-            remove_magic_quotes($array[$key]);
-        }else {
-            $array[$key] = stripslashes($array[$key]);
-        }
-    }
-}
-

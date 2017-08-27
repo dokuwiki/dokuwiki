@@ -2,9 +2,10 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Mohamad Mehdi Habibi <habibi.esf@gmail.com>
  * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
+ * @author Sam01 <m.sajad079@gmail.com>
  */
 $lang['menu']                  = 'مدیریت افزونه ها';
 $lang['tab_plugins']           = 'پلاگین های نصب شده';
@@ -33,7 +34,7 @@ $lang['js']['display_updatable'] = 'قابل به‌روزرسانی';
 $lang['search_for']            = 'جستجوی افزونه:';
 $lang['search']                = 'جستجو';
 $lang['extensionby']           = '<strong>%s</strong> به وسیلهٔ %s';
-$lang['screenshot']            = 'اسکرینشات %s';
+$lang['screenshot']            = 'اسکرین شات %s';
 $lang['popularity']            = 'محبوبیت: %s%%';
 $lang['homepage_link']         = 'مستندات';
 $lang['bugs_features']         = 'اشکالات';

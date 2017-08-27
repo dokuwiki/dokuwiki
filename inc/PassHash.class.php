@@ -143,7 +143,7 @@ class PassHash {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author <mikey_nich at hotmail dot com>
-     * @link   http://de.php.net/manual/en/function.crypt.php#73619
+     * @link   http://php.net/manual/en/function.crypt.php#73619
      *
      * @param string $clear The clear text to hash
      * @param string $salt  The salt to use, null for random
@@ -184,7 +184,7 @@ class PassHash {
      * This is basically the same as smd1 above, but as used by Apache.
      *
      * @author <mikey_nich at hotmail dot com>
-     * @link   http://de.php.net/manual/en/function.crypt.php#73619
+     * @link   http://php.net/manual/en/function.crypt.php#73619
      *
      * @param string $clear The clear text to hash
      * @param string $salt  The salt to use, null for random
@@ -284,7 +284,7 @@ class PassHash {
      *
      * This method was used by old MySQL systems
      *
-     * @link   http://www.php.net/mysql
+     * @link   http://php.net/mysql
      * @author <soren at byu dot edu>
      * @param string $clear The clear text to hash
      * @return string Hashed password
@@ -313,7 +313,7 @@ class PassHash {
      * @return string Hashed password
      */
     public function hash_my411($clear) {
-        return '*'.sha1(pack("H*", sha1($clear)));
+        return '*'.strtoupper(sha1(pack("H*", sha1($clear))));
     }
 
     /**
@@ -404,6 +404,13 @@ class PassHash {
 
     /**
      * Alias for hash_pmd5
+     *
+     * @param string $clear
+     * @param null|string $salt
+     * @param string $magic
+     * @param int $compute
+     *
+     * @return string
      */
     public function hash_hmd5($clear, $salt = null, $magic = 'H', $compute = 8) {
         return $this->hash_pmd5($clear, $salt, $magic, $compute);
@@ -530,7 +537,7 @@ class PassHash {
 
         if(is_null($salt)) {
             if($compute < 4 || $compute > 31) $compute = 8;
-            $salt = '$2a$'.str_pad($compute, 2, '0', STR_PAD_LEFT).'$'.
+            $salt = '$2y$'.str_pad($compute, 2, '0', STR_PAD_LEFT).'$'.
                 $this->gen_salt(22);
         }
 
@@ -582,7 +589,7 @@ class PassHash {
      *
      * @see hash_hmac()
      * @author KC Cloyd
-     * @link http://www.php.net/manual/en/function.hash-hmac.php#93440
+     * @link http://php.net/manual/en/function.hash-hmac.php#93440
      *
      * @param string $algo Name of selected hashing algorithm (i.e. "md5", "sha256", "haval160,4",
      *                     etc..) See hash_algos() for a list of supported algorithms.
@@ -627,10 +634,6 @@ class PassHash {
      * @return int
      */
     protected function random($min, $max){
-        if(function_exists('auth_random')){
-            return auth_random($min, $max);
-        }else{
-            return mt_rand($min, $max);
-        }
+        return random_int($min, $max);
     }
 }

@@ -304,7 +304,7 @@ function media_upload_xhr($ns,$auth){
             'mime' => $mime,
             'ext'  => $ext),
         $ns.':'.$id,
-        (($INPUT->get->str('ow') == 'checked') ? true : false),
+        (($INPUT->get->str('ow') == 'true') ? true : false),
         $auth,
         'copy'
     );
@@ -427,7 +427,12 @@ function media_save($file, $id, $ow, $auth, $move) {
 
     // get filetype regexp
     $types = array_keys(getMimeTypes());
-    $types = array_map(create_function('$q','return preg_quote($q,"/");'),$types);
+    $types = array_map(
+        function ($q) {
+            return preg_quote($q, "/");
+        },
+        $types
+    );
     $regex = join('|',$types);
 
     // because a temp file was created already
@@ -1162,6 +1167,18 @@ function media_details($image, $auth, $rev='', $meta=false) {
         }
     }
     echo '</dl>'.NL;
+    echo '<dl>'.NL;
+    echo '<dt>'.$lang['reference'].':</dt>';
+    $media_usage = ft_mediause($image,true);
+    if(count($media_usage) > 0){
+        foreach($media_usage as $path){
+            echo '<dd>'.html_wikilink($path).'</dd>';
+        }
+    }else{
+        echo '<dd>'.$lang['nothingfound'].'</dd>';
+    }
+    echo '</dl>'.NL;
+
 }
 
 /**
@@ -1717,9 +1734,9 @@ function media_printimgdetail($item, $fullscreen=false){
     // print EXIF/IPTC data
     if($t || $d || $k ){
         echo '<p>';
-        if($t) echo '<strong>'.htmlspecialchars($t).'</strong><br />';
-        if($d) echo htmlspecialchars($d).'<br />';
-        if($t) echo '<em>'.htmlspecialchars($k).'</em>';
+        if($t) echo '<strong>'.hsc($t).'</strong><br />';
+        if($d) echo hsc($d).'<br />';
+        if($t) echo '<em>'.hsc($k).'</em>';
         echo '</p>';
     }
     echo '</div>';

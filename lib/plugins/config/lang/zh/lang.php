@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  * @author George Sheraton guxd@163.com
@@ -16,6 +16,12 @@
  * @author lainme993@gmail.com
  * @author Shuo-Ting Jian <shoting@gmail.com>
  * @author Garfield <garfield_550@outlook.com>
+ * @author JellyChen <451453325@qq.com>
+ * @author tai <tai_tang@126.com>
+ * @author 高博 <bobnemo1983@gmail.com>
+ * @author hznupeter <qiujiongtao@163.com>
+ * @author kuma <kuma000@qq.com>
+ * @author phy25 <git@phy25.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
@@ -66,7 +72,7 @@ $lang['breadcrumbs']           = '显示“足迹”的数量';
 $lang['youarehere']            = '显示“您在这里”';
 $lang['fullpath']              = '在页面底部显示完整路径';
 $lang['typography']            = '进行字符替换';
-$lang['dformat']               = '日期格式（参见 PHP 的 <a href="http://www.php.net/strftime">strftime</a> 功能）';
+$lang['dformat']               = '日期格式（参见 PHP 的 <a href="http://php.net/strftime">strftime</a> 功能）';
 $lang['signature']             = '签名样式';
 $lang['showuseras']            = '显示用户为';
 $lang['toptoclevel']           = '目录的最顶层';
@@ -151,7 +157,12 @@ $lang['xsendfile']             = '使用 X-Sendfile 头让服务器发送状态�
 $lang['renderer_xhtml']        = '主维基页面 (xhtml) 输出使用的渲染';
 $lang['renderer__core']        = '%s（DokuWiki 内核）';
 $lang['renderer__plugin']      = '%s（插件）';
-$lang['dnslookups']            = 'Dokuwiki 将会查询用户编辑页面的远程 IP 地址的主机名。如果您的 DNS 服务器比较缓慢或者不工作，或者您不想要这个功能，请禁用此选项。';
+$lang['dnslookups']            = 'DokuWiki 将会查询用户编辑页面的远程 IP 地址的主机名。如果您的 DNS 服务器比较缓慢或者不工作，或者您不想要这个功能，请禁用此选项。';
+$lang['jquerycdn']             = 'jQuery和jQuery UI脚本文件应该从CDN加载吗?
+这会增加额外的HTTP请求，但文件加载可能会更快，且用户可能已经缓存过。';
+$lang['jquerycdn_o_0']         = '不使用CDN，只使用本地库';
+$lang['jquerycdn_o_jquery']    = '在code.jquery.com上的CDN';
+$lang['jquerycdn_o_cdnjs']     = '在cdnjs.com上的CDN';
 $lang['proxy____host']         = '代理服务器的名称';
 $lang['proxy____port']         = '代理服务器的端口';
 $lang['proxy____user']         = '代理服务器的用户名';

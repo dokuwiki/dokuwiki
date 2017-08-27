@@ -59,6 +59,8 @@ define('METADATA_RENDER_UNLIMITED', 4);
  * @param string $id page id
  * @param string|int $rev revision timestamp or empty string
  * @param bool $excuse
+ * @param string $date_at
+ *
  * @return null|string
  */
 function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
@@ -335,13 +337,13 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
 
             foreach ($value as $subkey => $subvalue){
                 if(isset($meta['current'][$key][$subkey]) && is_array($meta['current'][$key][$subkey])) {
-                    $meta['current'][$key][$subkey] = array_merge($meta['current'][$key][$subkey], (array)$subvalue);
+                    $meta['current'][$key][$subkey] = array_replace($meta['current'][$key][$subkey], (array)$subvalue);
                 } else {
                     $meta['current'][$key][$subkey] = $subvalue;
                 }
                 if($persistent) {
                     if(isset($meta['persistent'][$key][$subkey]) && is_array($meta['persistent'][$key][$subkey])) {
-                        $meta['persistent'][$key][$subkey] = array_merge($meta['persistent'][$key][$subkey], (array)$subvalue);
+                        $meta['persistent'][$key][$subkey] = array_replace($meta['persistent'][$key][$subkey], (array)$subvalue);
                     } else {
                         $meta['persistent'][$key][$subkey] = $subvalue;
                     }
@@ -353,10 +355,10 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
 
             // these keys, must have subkeys - a legitimate value must be an array
             if (is_array($value)) {
-                $meta['current'][$key] = !empty($meta['current'][$key]) ? array_merge((array)$meta['current'][$key],$value) : $value;
+                $meta['current'][$key] = !empty($meta['current'][$key]) ? array_replace((array)$meta['current'][$key],$value) : $value;
 
                 if ($persistent) {
-                    $meta['persistent'][$key] = !empty($meta['persistent'][$key]) ? array_merge((array)$meta['persistent'][$key],$value) : $value;
+                    $meta['persistent'][$key] = !empty($meta['persistent'][$key]) ? array_replace((array)$meta['persistent'][$key],$value) : $value;
                 }
             }
 

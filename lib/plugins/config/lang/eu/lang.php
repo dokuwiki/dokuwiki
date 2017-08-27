@@ -1,9 +1,11 @@
 <?php
+
 /**
- * Basque language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Inko Illarramendi <inko.i.a@gmail.com>
  * @author Zigor Astarbe <astarbe@gmail.com>
+ * @author Osoitz <oelkoro@gmail.com>
  */
 $lang['menu']                  = 'Konfigurazio Ezarpenak';
 $lang['error']                 = 'Ezarpenak ez dira eguneratu balio oker bat dela eta, mesedez errepasatu aldaketak eta berriz bidali. <br />Balio okerra(k) ertz gorriz inguratuak erakutsiko dira. ';
@@ -50,7 +52,7 @@ $lang['breadcrumbs']           = 'Arrasto pauso kopurua';
 $lang['youarehere']            = 'Arrasto pauso hierarkikoak';
 $lang['fullpath']              = 'Orri oinean orrien bide osoa erakutsi';
 $lang['typography']            = 'Ordezkapen tipografikoak egin';
-$lang['dformat']               = 'Data formatua (ikusi PHPren <a href="http://www.php.net/strftime">strftime</a> funtzioa)';
+$lang['dformat']               = 'Data formatua (ikusi PHPren <a href="http://php.net/strftime">strftime</a> funtzioa)';
 $lang['signature']             = 'Sinadura';
 $lang['showuseras']            = 'Zer azaldu orri bat editatu duen azken erabiltzailea erakusterakoan';
 $lang['toptoclevel']           = 'Eduki taularen goiko maila';

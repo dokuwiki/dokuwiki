@@ -6,6 +6,7 @@
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com
  * @author Martin Michalek <michalek.dev@gmail.com>
+ * @author Michalek <michalek.dev@gmail.com>
  */
 $lang['menu']                  = 'Nastavenia konfigurácie';
 $lang['error']                 = 'Nastavenia neboli aktualizované kvôli neplatnej hodnote, prosím skontrolujte vaše zmeny a znovu ich pošlite. <br />Nesprávna hodnota(y) bude ohraničená červeným okrajom.';
@@ -55,7 +56,7 @@ $lang['breadcrumbs']           = 'Počet záznamov histórie';
 $lang['youarehere']            = 'Nachádzate sa';
 $lang['fullpath']              = 'Zobrazovať plnú cestu k stránkam v pätičke';
 $lang['typography']            = 'Vykonať typografické zmeny';
-$lang['dformat']               = 'Formát dátumu (pozri funkciu PHP <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Formát dátumu (pozri funkciu PHP <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Podpis';
 $lang['showuseras']            = 'Čo použiť pri zobrazení používateľa, ktorý posledný upravoval stránku';
 $lang['toptoclevel']           = 'Najvyššia úroveň pre generovanie obsahu.';

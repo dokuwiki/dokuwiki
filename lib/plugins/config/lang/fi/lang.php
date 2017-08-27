@@ -58,7 +58,7 @@ $lang['breadcrumbs']           = 'Leivänmurujen määrä';
 $lang['youarehere']            = 'Hierarkkiset leivänmurut';
 $lang['fullpath']              = 'Näytä sivun koko polku sivun alareunassa';
 $lang['typography']            = 'Tee typografiset korvaukset';
-$lang['dformat']               = 'Päivämäärän muoto (katso PHPn <a href="http://www.php.net/strftime">strftime</a> funktiota)';
+$lang['dformat']               = 'Päivämäärän muoto (katso PHPn <a href="http://php.net/strftime">strftime</a> funktiota)';
 $lang['signature']             = 'Allekirjoitus';
 $lang['showuseras']            = 'Mitä näytetään, kun kerrotaan viimeisen editoijan tiedot';
 $lang['toptoclevel']           = 'Ylätason sisällysluettelo';

@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
@@ -25,6 +25,8 @@
  * @author Floriang <antispam@floriang.eu>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Simon DELAGE <simon.geekitude@gmail.com>
+ * @author Eric <ericstevenart@netc.fr>
+ * @author Olivier Humbert <trebmuh@tuxfamily.org>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur invalide, vérifiez vos réglages puis réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -73,7 +75,7 @@ $lang['breadcrumbs']           = 'Nombre de traces à afficher. 0 désactive cet
 $lang['youarehere']            = 'Utiliser des traces hiérarchiques (vous voulez probablement désactiver l\'option ci-dessus)';
 $lang['fullpath']              = 'Afficher le chemin complet des pages dans le pied de page';
 $lang['typography']            = 'Effectuer des améliorations typographiques';
-$lang['dformat']               = 'Format de date (cf. fonction <a href="http://fr.php.net/strftime">strftime</a> de PHP)';
+$lang['dformat']               = 'Format de date (cf. fonction <a href="http://php.net/strftime">strftime</a> de PHP)';
 $lang['signature']             = 'Données à insérer lors de l\'utilisation du bouton « signature » dans l\'éditeur';
 $lang['showuseras']            = 'Données à afficher concernant le dernier utilisateur ayant modifié une page';
 $lang['toptoclevel']           = 'Niveau le plus haut à afficher dans la table des matières';
@@ -122,7 +124,7 @@ $lang['target____media']       = 'Cible pour liens média';
 $lang['target____windows']     = 'Cible pour liens vers partages Windows';
 $lang['mediarevisions']        = 'Activer les révisions (gestion de versions) des médias';
 $lang['refcheck']              = 'Vérifier si un média est toujours utilisé avant de le supprimer';
-$lang['gdlib']                 = 'Version de la librairie GD';
+$lang['gdlib']                 = 'Version de la bibliothèque GD';
 $lang['im_convert']            = 'Chemin vers l\'outil de conversion ImageMagick';
 $lang['jpg_quality']           = 'Qualité de la compression JPEG (0-100)';
 $lang['fetchsize']             = 'Taille maximale (en octets) que fetch.php peut télécharger depuis une URL tierce (par exemple pour conserver en cache et redimensionner une image tierce)';
@@ -159,6 +161,10 @@ $lang['renderer_xhtml']        = 'Moteur de rendu du format de sortie principal 
 $lang['renderer__core']        = '%s (cœur de DokuWiki)';
 $lang['renderer__plugin']      = '%s (extension)';
 $lang['dnslookups']            = 'DokuWiki effectuera une résolution du nom d\'hôte sur les adresses IP des utilisateurs modifiant des pages. Si vous ne possédez pas de serveur DNS, que ce dernier est lent ou que vous ne souhaitez pas utiliser cette fonctionnalité : désactivez-la.';
+$lang['jquerycdn']             = 'Faut-il distribuer les scripts JQuery et JQuery UI depuis un CDN ? Cela ajoute une requête HTTP, mais les fichiers peuvent se charger plus vite et les internautes les ont peut-être déjà en cache.';
+$lang['jquerycdn_o_0']         = 'Non : utilisation de votre serveur.';
+$lang['jquerycdn_o_jquery']    = 'Oui : CDN code.jquery.com.';
+$lang['jquerycdn_o_cdnjs']     = 'Oui : CDN cdnjs.com.';
 $lang['proxy____host']         = 'Mandataire (proxy) - Hôte';
 $lang['proxy____port']         = 'Mandataire - Port';
 $lang['proxy____user']         = 'Mandataire - Identifiant';
@@ -181,7 +187,7 @@ $lang['userewrite_o_2']        = 'Interne à DokuWiki';
 $lang['deaccent_o_0']          = 'off';
 $lang['deaccent_o_1']          = 'supprimer les accents';
 $lang['deaccent_o_2']          = 'convertir en caractères latins';
-$lang['gdlib_o_0']             = 'Librairie GD non disponible';
+$lang['gdlib_o_0']             = 'Bibliothèque GD non disponible';
 $lang['gdlib_o_1']             = 'version 1.x';
 $lang['gdlib_o_2']             = 'auto-détectée';
 $lang['rss_type_o_rss']        = 'RSS 0.91';

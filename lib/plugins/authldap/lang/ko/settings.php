@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Myeongjin <aranet100@gmail.com>
  */
 $lang['server']                = 'LDAP 서버. 호스트 이름(<code>localhost</code>)이나 전체 자격 URL(<code>ldap://server.tld:389</code>) 중 하나';

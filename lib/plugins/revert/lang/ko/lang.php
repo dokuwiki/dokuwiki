@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author jk Lee
  * @author dongnak@gmail.com
  * @author Song Younghwan <purluno@gmail.com>
@@ -10,6 +10,7 @@
  * @author erial2@gmail.com
  * @author Myeongjin <aranet100@gmail.com>
  * @author Erial <erial2@gmail.com>
+ * @author S.H. Lee <tuders@naver.com>
  */
 $lang['menu']                  = '되돌리기 관리자';
 $lang['filter']                = '스팸 문서 검색';

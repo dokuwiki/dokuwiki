@@ -1,0 +1,16 @@
+Hola!
+
+La pàgina  @PAGE@ amb el títol @TITLE@ ha canviat.
+Aquí son els canvis:
+
+-------------------------------------------------------- 
+@DIFF@ 
+--------------------------------------------------------
+
+Data : @DATE@ 
+Usuari : @USER@ 
+Resum edició: @SUMMARY@ 
+Versió vella: @OLDPAGE@ 
+Nova versió: @NEWPAGE@
+
+Per cancel·lar la pàgina de notificacions, entra a la wiki a  @DOKUWIKIURL@ i llavors ves a @SUBSCRIBE@ i desinscriu-te dels canvis dels noms d'espai(namespace) i pàgines.

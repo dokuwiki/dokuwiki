@@ -17,7 +17,7 @@
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
  * @author Gerrit <klapinklapin@gmail.com>
  * @author Hugo Smet <hugo.smet@scarlet.be>
- * @author hugo smet <hugo.smet@scarlet.be>
+ * @author mark prins <mprins@users.sf.net>
  */
 $lang['menu']                  = 'Configuratie-instellingen';
 $lang['error']                 = 'De instellingen zijn niet gewijzigd wegens een incorrecte waarde, kijk je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde(s) herkennen aan de rode rand.';
@@ -66,7 +66,7 @@ $lang['breadcrumbs']           = 'Aantal broodkruimels. Zet dit op 0 om uit te s
 $lang['youarehere']            = 'Gebruik hiërarchische broodkruimels (waarschijnlijk wil je dan de optie hierboven uitschakelen)';
 $lang['fullpath']              = 'Volledig pad van pagina\'s in de footer weergeven';
 $lang['typography']            = 'Breng typografische wijzigingen aan';
-$lang['dformat']               = 'Datum formaat (zie de PHP <a href="http://www.php.net/strftime">strftime</a> functie)';
+$lang['dformat']               = 'Datum formaat (zie de PHP <a href="http://php.net/strftime">strftime</a> functie)';
 $lang['signature']             = 'Tekst die ingevoegd wordt met de Handtekening-knop in het bewerkvenster.';
 $lang['showuseras']            = 'Hoe de gebruiker die de pagina het laatst wijzigde weergeven';
 $lang['toptoclevel']           = 'Bovenste niveau voor inhoudsopgave';
@@ -151,6 +151,10 @@ $lang['renderer_xhtml']        = 'Weergavesysteem voor de standaard (xhtml) wiki
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';
 $lang['dnslookups']            = 'DokuWiki zoekt de hostnamen van IP-adressen van gebruikers die pagina wijzigen op. Schakel deze optie uit als je geen of een langzame DNS server hebt.';
+$lang['jquerycdn']             = 'Moet er een CDN gebruikt worden om de jQuery en jQuery UI bestanden te laden. Dit zorgt voor extra HTTP verzoeken, maar bestanden laden mogelijk sneller en zitten misschien al in de cache van de gebruiker.';
+$lang['jquerycdn_o_0']         = 'Geen CDN gebruiken';
+$lang['jquerycdn_o_jquery']    = 'Gebruik code.jquery.com CDN';
+$lang['jquerycdn_o_cdnjs']     = 'Gebruik cdnjs.com CDN';
 $lang['proxy____host']         = 'Proxy server';
 $lang['proxy____port']         = 'Proxy port';
 $lang['proxy____user']         = 'Proxy gebruikersnaam';

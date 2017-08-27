@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Lucien Raven <lucienraven@yahoo.com.br>
@@ -70,7 +70,7 @@ $lang['breadcrumbs']           = 'Número de elementos na trilha de páginas vis
 $lang['youarehere']            = 'Trilha hierárquica';
 $lang['fullpath']              = 'Indica o caminho completo das páginas no rodapé';
 $lang['typography']            = 'Efetuar modificações tipográficas';
-$lang['dformat']               = 'Formato da data (veja a função <a href="http://www.php.net/strftime">strftime</a> do PHP)';
+$lang['dformat']               = 'Formato da data (veja a função <a href="http://php.net/strftime">strftime</a> do PHP)';
 $lang['signature']             = 'Assinatura';
 $lang['showuseras']            = 'O que exibir quando mostrar o usuário que editou a página pela última vez';
 $lang['toptoclevel']           = 'Nível mais alto para a tabela de conteúdos';

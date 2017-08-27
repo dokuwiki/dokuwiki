@@ -4,6 +4,7 @@ require_once 'parser.inc.php';
 /**
  * Tests for the implementation of audio and video files
  *
+ * @group parser_media
  * @author  Michael Große <grosse@cosmocode.de>
 */
 class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
@@ -118,17 +119,77 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $this->assertNotSame(false, $substr_start, 'Substring not found.');
 
         // find $a_webm in $url
-        $a_webm = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?id=&amp;cache=&amp;media=wiki:kind_zu_katze.webm" class="media mediafile mf_webm" title="wiki:kind_zu_katze.webm (99.1&#xa0;KB)">kind_zu_katze.webm</a>';
+        $a_webm = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?id=&amp;cache=&amp;media=wiki:kind_zu_katze.webm" class="media mediafile mf_webm" title="wiki:kind_zu_katze.webm (99.1'."\xC2\xA0".'KB)">kind_zu_katze.webm</a>';
         $substr_start = strpos($url, $a_webm, $substr_start + strlen($source_ogv));
         $this->assertNotSame(false, $substr_start, 'Substring not found.');
 
         // find $a_webm in $url
-        $a_ogv = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?id=&amp;cache=&amp;media=wiki:kind_zu_katze.ogv" class="media mediafile mf_ogv" title="wiki:kind_zu_katze.ogv (44.8&#xa0;KB)">kind_zu_katze.ogv</a>';
+        $a_ogv = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?id=&amp;cache=&amp;media=wiki:kind_zu_katze.ogv" class="media mediafile mf_ogv" title="wiki:kind_zu_katze.ogv (44.8'."\xC2\xA0".'KB)">kind_zu_katze.ogv</a>';
         $substr_start = strpos($url, $a_ogv, $substr_start + strlen($a_webm));
         $this->assertNotSame(false, $substr_start, 'Substring not found.');
 
         $rest = '</video>'."\n";
         $substr_start = strlen($url) - strlen($rest);
         $this->assertEquals($rest, substr($url, $substr_start));
+    }
+
+    function testSimpleLinkText() {
+        $file = 'wiki:dokuwiki-128.png';
+        $parser_response = p_get_instructions('{{' . $file . '|This is a simple text.}}');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('internalmedia',array($file,'This is a simple text.',null,null,null,'cache','details')),
+            array('cdata',array(null)),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
+    }
+
+    function testLinkTextWithWavedBrackets_1() {
+        $file = 'wiki:dokuwiki-128.png';
+        $parser_response = p_get_instructions('{{' . $file . '|We got a { here.}}');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('internalmedia',array($file,'We got a { here.',null,null,null,'cache','details')),
+            array('cdata',array(null)),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
+    }
+
+    function testLinkTextWithWavedBrackets_2() {
+        $file = 'wiki:dokuwiki-128.png';
+        $parser_response = p_get_instructions('{{' . $file . '|We got a } here.}}');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('internalmedia',array($file,'We got a } here.',null,null,null,'cache','details')),
+            array('cdata',array(null)),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
+    }
+
+    function testLinkTextWithWavedBrackets_3() {
+        $file = 'wiki:dokuwiki-128.png';
+        $parser_response = p_get_instructions('{{' . $file . '|We got a { and a } here.}}');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('internalmedia',array($file,'We got a { and a } here.',null,null,null,'cache','details')),
+            array('cdata',array(null)),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
     }
 }

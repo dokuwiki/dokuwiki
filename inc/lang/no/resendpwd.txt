@@ -1,4 +1,4 @@
 ====== Send nytt passord ======
 
-Fyll inn ditt brukernavn i skjema nedenfor for å be om nytt passord for din konto i denne wiki. En bekreftelseslenke vil bli sent til din e-postadresse.
+Fyll inn ditt brukernavn i skjema nedenfor for å be om nytt passord for din konto i denne wiki. En bekreftelseslenke vil bli sendt til din e-postadresse.
 

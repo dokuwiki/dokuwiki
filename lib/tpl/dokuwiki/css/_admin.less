@@ -1,0 +1,61 @@
+.dokuwiki div.ui-admin {
+
+    /* main task grouped in two columns */
+    ul.admin_tasks {
+        float: left;
+        width: 40%;
+        list-style-type: none;
+        font-size: 1.125em;
+    }
+    [dir=rtl] & ul.admin_tasks {
+        float: right;
+    }
+
+    /* general menu item styling */
+    ul {
+        padding: 0;
+        li {
+            margin: 0 0 1em 0;
+            font-weight: bold;
+            list-style-type: none;
+            white-space: nowrap;
+
+            a span {
+                display: inline-block;
+
+                &.icon {
+                    width: 1.5em;
+                    min-height: 1.5em;
+                    margin: 0 0.5em;
+                    vertical-align: top;
+
+                    svg {
+                        width: 1.5em;
+                        height: 1.5em;
+                        fill: @ini_link;
+                        display: inline-block;
+                        path {
+                            fill: @ini_link;
+                        }
+                    }
+                }
+
+                &.prompt {
+                    white-space: normal;
+                }
+            }
+        }
+    }
+
+    /* DokuWiki version */
+    #admin__version {
+        clear: left;
+        float: right;
+        color: @ini_text_neu;
+        background-color: inherit;
+    }
+    [dir=rtl] & #admin__version {
+        clear: right;
+        float: left;
+    }
+}

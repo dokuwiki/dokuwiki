@@ -1,11 +1,8 @@
 <?php
+
 /**
- * Greek language file
- *
- * Based on DokuWiki Version rc2007-05-24 english language file
- * Original english language file contents included for reference
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
@@ -13,6 +10,7 @@
  * @author George Petsagourakis <petsagouris@gmail.com>
  * @author Petros Vidalis <pvidalis@gmail.com>
  * @author Vasileios Karavasilis vasileioskaravasilis@gmail.com
+ * @author Zacharias Sdregas <zsdregas@sch.gr>
  */
 $lang['menu']                  = 'Ρυθμίσεις';
 $lang['error']                 = 'Οι ρυθμίσεις σας δεν έγιναν δεκτές λόγω λανθασμένης τιμής κάποιας ρύθμισης. Διορθώστε την λάθος τιμή και προσπαθήστε ξανά.
@@ -62,7 +60,7 @@ $lang['breadcrumbs']           = 'Αριθμός συνδέσμων ιστορι
 $lang['youarehere']            = 'Εμφάνιση ιεραρχικής προβολής τρέχουσας σελίδας';
 $lang['fullpath']              = 'Εμφάνιση πλήρους διαδρομής σελίδας στην υποκεφαλίδα';
 $lang['typography']            = 'Μετατροπή ειδικών χαρακτήρων στο τυπογραφικό ισοδύναμό τους';
-$lang['dformat']               = 'Μορφή ημερομηνίας (βλέπε την <a href="http://www.php.net/strftime">strftime</a> function της PHP)';
+$lang['dformat']               = 'Μορφή ημερομηνίας (βλέπε την <a href="http://php.net/strftime">strftime</a> function της PHP)';
 $lang['signature']             = 'Υπογραφή';
 $lang['showuseras']            = 'Τι να εμφανίζεται όταν φαίνεται ο χρήστης που τροποποίησε τελευταίος μία σελίδα';
 $lang['toptoclevel']           = 'Ανώτατο επίπεδο πίνακα περιεχομένων σελίδας';

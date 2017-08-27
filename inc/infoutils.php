@@ -6,7 +6,14 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 if(!defined('DOKU_INC')) die('meh.');
-if(!defined('DOKU_MESSAGEURL')) define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
+
+if(!defined('DOKU_MESSAGEURL')){
+    if(in_array('ssl', stream_get_transports())) {
+        define('DOKU_MESSAGEURL','https://update.dokuwiki.org/check/');
+    }else{
+        define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
+    }
+}
 
 /**
  * Check for new messages from upstream
@@ -22,11 +29,12 @@ function checkUpdateMessages(){
 
     $cf = getCacheName($updateVersion, '.updmsg');
     $lm = @filemtime($cf);
+    $is_http = substr(DOKU_MESSAGEURL, 0, 5) != 'https';
 
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
         @touch($cf);
-        dbglog("checkUpdateMessages(): downloading messages to ".$cf);
+        dbglog("checkUpdateMessages(): downloading messages to ".$cf.($is_http?' (without SSL)':' (with SSL)'));
         $http = new DokuHTTPClient();
         $http->timeout = 12;
         $resp = $http->get(DOKU_MESSAGEURL.$updateVersion);
@@ -60,7 +68,7 @@ function getVersionData(){
     //import version string
     if(file_exists(DOKU_INC.'VERSION')){
         //official release
-        $version['date'] = trim(io_readfile(DOKU_INC.'VERSION'));
+        $version['date'] = trim(io_readFile(DOKU_INC.'VERSION'));
         $version['type'] = 'Release';
     }elseif(is_dir(DOKU_INC.'.git')){
         $version['type'] = 'Git';
@@ -114,13 +122,13 @@ function check(){
     if ($INFO['isadmin'] || $INFO['ismanager']){
         msg('DokuWiki version: '.getVersion(),1);
 
-        if(version_compare(phpversion(),'5.3.3','<')){
-            msg('Your PHP version is too old ('.phpversion().' vs. 5.3.3+ needed)',-1);
+        if(version_compare(phpversion(),'5.6.0','<')){
+            msg('Your PHP version is too old ('.phpversion().' vs. 5.6.0+ needed)',-1);
         }else{
             msg('PHP version '.phpversion(),1);
         }
     } else {
-        if(version_compare(phpversion(),'5.3.3','<')){
+        if(version_compare(phpversion(),'5.6.0','<')){
             msg('Your PHP version is too old',-1);
         }
     }
@@ -249,18 +257,41 @@ function check(){
         }
     }
 
-    if ($index_corrupted)
-        msg('The search index is corrupted. It might produce wrong results and most
+    if($index_corrupted) {
+        msg(
+            'The search index is corrupted. It might produce wrong results and most
                 probably needs to be rebuilt. See
                 <a href="http://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
-                for ways to rebuild the search index.', -1);
-    elseif (!empty($lengths))
+                for ways to rebuild the search index.', -1
+        );
+    } elseif(!empty($lengths)) {
         msg('The search index seems to be working', 1);
-    else
-        msg('The search index is empty. See
+    } else {
+        msg(
+            'The search index is empty. See
                 <a href="http://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
                 for help on how to fix the search index. If the default indexer
-                isn\'t used or the wiki is actually empty this is normal.');
+                isn\'t used or the wiki is actually empty this is normal.'
+        );
+    }
+
+    // rough time check
+    $http = new DokuHTTPClient();
+    $http->max_redirect = 0;
+    $http->timeout = 3;
+    $http->sendRequest('http://www.dokuwiki.org', '', 'HEAD');
+    $now = time();
+    if(isset($http->resp_headers['date'])) {
+        $time = strtotime($http->resp_headers['date']);
+        $diff = $time - $now;
+
+        if(abs($diff) < 4) {
+            msg("Server time seems to be okay. Diff: {$diff}s", 1);
+        } else {
+            msg("Your server's clock seems to be out of sync! Consider configuring a sync with a NTP server.  Diff: {$diff}s");
+        }
+    }
+
 }
 
 /**
@@ -360,6 +391,9 @@ function info_msg_allowed($msg){
  * little function to print the content of a var
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $msg
+ * @param bool $hidden
  */
 function dbg($msg,$hidden=false){
     if($hidden){
@@ -377,6 +411,9 @@ function dbg($msg,$hidden=false){
  * Print info to a log file
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $msg
+ * @param string $header
  */
 function dbglog($msg,$header=''){
     global $conf;
@@ -479,6 +516,8 @@ function dbg_backtrace(){
  * debug output
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
  */
 function debug_guard(&$data){
     foreach($data as $key => $value){

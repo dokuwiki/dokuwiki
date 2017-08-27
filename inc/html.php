@@ -91,7 +91,7 @@ function html_denied() {
 function html_secedit($text,$show=true){
     global $INFO;
 
-    $regexp = '#<!-- EDIT(\d+) ([A-Z_]+) (?:"([^"]*)" )?\[(\d+-\d*)\] -->#';
+    $regexp = '#<!-- EDIT(\d+) ([A-Z_]+) (?:"([^"]*)" )(?:"([^"]*)" )?\[(\d+-\d*)\] -->#';
 
     if(!$INFO['writable'] || !$show || $INFO['rev']){
         return preg_replace($regexp,'',$text);
@@ -114,8 +114,9 @@ function html_secedit($text,$show=true){
 function html_secedit_button($matches){
     $data = array('secid'  => $matches[1],
                   'target' => strtolower($matches[2]),
+                  'hid' => strtolower($matches[4]),
                   'range'  => $matches[count($matches) - 1]);
-    if (count($matches) === 5) {
+    if (count($matches) === 6) {
         $data['name'] = $matches[3];
     }
 
@@ -208,17 +209,16 @@ function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label
     $ret .= '<form class="button btn_'.$name.'" method="'.$method.'" action="'.$script.'"><div class="no">';
 
     if(is_array($params)){
-        reset($params);
-        while (list($key, $val) = each($params)) {
+        foreach($params as $key => $val) {
             $ret .= '<input type="hidden" name="'.$key.'" ';
-            $ret .= 'value="'.htmlspecialchars($val).'" />';
+            $ret .= 'value="'.hsc($val).'" />';
         }
     }
 
     if ($tooltip!='') {
-        $tip = htmlspecialchars($tooltip);
+        $tip = hsc($tooltip);
     }else{
-        $tip = htmlspecialchars($label);
+        $tip = hsc($label);
     }
 
     $ret .= '<button type="submit" ';
@@ -369,15 +369,6 @@ function html_search(){
         $intro
     );
     echo $intro;
-    flush();
-
-    //show progressbar
-    print '<div id="dw__loading">'.NL;
-    print '<script type="text/javascript">/*<![CDATA[*/'.NL;
-    print 'showLoadBar();'.NL;
-    print '/*!]]>*/</script>'.NL;
-    print '</div>'.NL;
-    flush();
 
     //do quick pagesearch
     $data = ft_pageLookup($QUERY,true,useHeading('navigation'));
@@ -405,9 +396,9 @@ function html_search(){
         print '<div class="clearer"></div>';
         print '</div>';
     }
-    flush();
 
     //do fulltext search
+    $regex = array();
     $data = ft_pageSearch($QUERY,$regex);
     if(count($data)){
         print '<dl class="search_results">';
@@ -425,18 +416,11 @@ function html_search(){
                 }
                 $num++;
             }
-            flush();
         }
         print '</dl>';
     }else{
         print '<div class="nothing">'.$lang['nothingfound'].'</div>';
     }
-
-    //hide progressbar
-    print '<script type="text/javascript">/*<![CDATA[*/'.NL;
-    print 'hideLoadBar("dw__loading");'.NL;
-    print '/*!]]>*/</script>'.NL;
-    flush();
 }
 
 /**
@@ -550,7 +534,10 @@ function html_revisions($first=0, $media_id = false){
                     $sizechange = null;
                 }
             }
-            $href = wl($id);
+            $pagelog = new PageChangeLog($ID);
+            $latestrev = $pagelog->getRevisions(-1, 1);
+            $latestrev = array_pop($latestrev);
+            $href = wl($id,"rev=$latestrev",false,'&');
             $summary = $INFO['sum'];
             $editor = $INFO['editor'];
         }
@@ -579,7 +566,7 @@ function html_revisions($first=0, $media_id = false){
         if($summary) {
             $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
             if(!$media_id) $form->addElement(' – ');
-            $form->addElement('<bdi>' . htmlspecialchars($summary) . '</bdi>');
+            $form->addElement('<bdi>' . hsc($summary) . '</bdi>');
             $form->addElement(form_makeCloseTag('span'));
         }
 
@@ -662,7 +649,7 @@ function html_revisions($first=0, $media_id = false){
         if ($info['sum']) {
             $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
             if(!$media_id) $form->addElement(' – ');
-            $form->addElement('<bdi>'.htmlspecialchars($info['sum']).'</bdi>');
+            $form->addElement('<bdi>'.hsc($info['sum']).'</bdi>');
             $form->addElement(form_makeCloseTag('span'));
         }
 
@@ -873,7 +860,7 @@ function html_recent($first = 0, $show_changes = 'both') {
             $form->addElement(html_wikilink(':' . $recent['id'], useHeading('navigation') ? null : $recent['id']));
         }
         $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-        $form->addElement(' – ' . htmlspecialchars($recent['sum']));
+        $form->addElement(' – ' . hsc($recent['sum']));
         $form->addElement(form_makeCloseTag('span'));
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
@@ -1863,6 +1850,9 @@ function html_edit(){
     }
 
     $form->addHidden('target', $data['target']);
+    if ($INPUT->has('hid')) {
+        $form->addHidden('hid', $INPUT->str('hid'));
+    }
     $form->addElement(form_makeOpenTag('div', array('id'=>'wiki__editbar', 'class'=>'editBar')));
     $form->addElement(form_makeOpenTag('div', array('id'=>'size__ctl')));
     $form->addElement(form_makeCloseTag('div'));
@@ -2046,138 +2036,6 @@ function html_debug(){
     }
 
     print '</body></html>';
-}
-
-/**
- * List available Administration Tasks
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Håkan Sandell <hakan.sandell@home.se>
- */
-function html_admin(){
-    global $ID;
-    global $INFO;
-    global $conf;
-    /** @var DokuWiki_Auth_Plugin $auth */
-    global $auth;
-
-    // build menu of admin functions from the plugins that handle them
-    $pluginlist = plugin_list('admin');
-    $menu = array();
-    foreach ($pluginlist as $p) {
-        /** @var DokuWiki_Admin_Plugin $obj */
-        if(($obj = plugin_load('admin',$p)) === null) continue;
-
-        // check permissions
-        if($obj->forAdminOnly() && !$INFO['isadmin']) continue;
-
-        $menu[$p] = array('plugin' => $p,
-                'prompt' => $obj->getMenuText($conf['lang']),
-                'sort' => $obj->getMenuSort()
-                );
-    }
-
-    // data security check
-    // simple check if the 'savedir' is relative and accessible when appended to DOKU_URL
-    // it verifies either:
-    //   'savedir' has been moved elsewhere, or
-    //   has protection to prevent the webserver serving files from it
-    if (substr($conf['savedir'],0,2) == './'){
-        echo '<a style="border:none; float:right;"
-                href="http://www.dokuwiki.org/security#web_access_security">
-                <img src="'.DOKU_URL.$conf['savedir'].'/security.png" alt="Your data directory seems to be protected properly."
-                onerror="this.parentNode.style.display=\'none\'" /></a>';
-    }
-
-    print p_locale_xhtml('admin');
-
-    // Admin Tasks
-    if($INFO['isadmin']){
-        ptln('<ul class="admin_tasks">');
-
-        if($menu['usermanager'] && $auth && $auth->canDo('getUsers')){
-            ptln('  <li class="admin_usermanager"><div class="li">'.
-                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'usermanager')).'">'.
-                    $menu['usermanager']['prompt'].'</a></div></li>');
-        }
-        unset($menu['usermanager']);
-
-        if($menu['acl']){
-            ptln('  <li class="admin_acl"><div class="li">'.
-                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'acl')).'">'.
-                    $menu['acl']['prompt'].'</a></div></li>');
-        }
-        unset($menu['acl']);
-
-        if($menu['extension']){
-            ptln('  <li class="admin_plugin"><div class="li">'.
-                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'extension')).'">'.
-                    $menu['extension']['prompt'].'</a></div></li>');
-        }
-        unset($menu['extension']);
-
-        if($menu['config']){
-            ptln('  <li class="admin_config"><div class="li">'.
-                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'config')).'">'.
-                    $menu['config']['prompt'].'</a></div></li>');
-        }
-        unset($menu['config']);
-
-        if($menu['styling']){
-            ptln('  <li class="admin_styling"><div class="li">'.
-                '<a href="'.wl($ID, array('do' => 'admin','page' => 'styling')).'">'.
-                $menu['styling']['prompt'].'</a></div></li>');
-        }
-        unset($menu['styling']);
-    }
-    ptln('</ul>');
-
-    // Manager Tasks
-    ptln('<ul class="admin_tasks">');
-
-    if($menu['revert']){
-        ptln('  <li class="admin_revert"><div class="li">'.
-                '<a href="'.wl($ID, array('do' => 'admin','page' => 'revert')).'">'.
-                $menu['revert']['prompt'].'</a></div></li>');
-    }
-    unset($menu['revert']);
-
-    if($menu['popularity']){
-        ptln('  <li class="admin_popularity"><div class="li">'.
-                '<a href="'.wl($ID, array('do' => 'admin','page' => 'popularity')).'">'.
-                $menu['popularity']['prompt'].'</a></div></li>');
-    }
-    unset($menu['popularity']);
-
-    // print DokuWiki version:
-    ptln('</ul>');
-    echo '<div id="admin__version">';
-    echo getVersion();
-    echo '</div>';
-
-    // print the rest as sorted list
-    if(count($menu)){
-        // sort by name, then sort
-        usort(
-            $menu,
-            function ($a, $b) {
-                $strcmp = strcasecmp($a['prompt'], $b['prompt']);
-                if($strcmp != 0) return $strcmp;
-                if($a['sort'] == $b['sort']) return 0;
-                return ($a['sort'] < $b['sort']) ? -1 : 1;
-            }
-        );
-
-        // output the menu
-        ptln('<div class="clearer"></div>');
-        print p_locale_xhtml('adminplugins');
-        ptln('<ul>');
-        foreach ($menu as $item) {
-            if (!$item['prompt']) continue;
-            ptln('  <li><div class="li"><a href="'.wl($ID, 'do=admin&amp;page='.$item['plugin']).'">'.$item['prompt'].'</a></div></li>');
-        }
-        ptln('</ul>');
-    }
 }
 
 /**

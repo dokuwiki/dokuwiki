@@ -1,6 +1,12 @@
 <?php
 
 class common_saveWikiText_test extends DokuWikiTest {
+    /** Delay writes of old revisions by a second. */
+    public function handle_write(Doku_Event $event, $param) {
+        if ($event->data[3] !== false) {
+            $this->waitForTick();
+        }
+    }
 
     /**
      * Execute a whole bunch of saves on the same page and check the results
@@ -24,8 +30,9 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertEquals('first save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_CREATE, $revinfo['type']);
         $this->assertEquals(10, $revinfo['sizechange']);
+        $this->assertFileExists(wikiFN($page, $revinfo['date']));
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(true); // wait for new revision ID
 
         // save with same content should be ignored
         saveWikiText($page, 'teststring', 'second save', false);
@@ -51,7 +58,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
         $this->assertEquals(5, $revinfo['sizechange']);
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(); // wait for new revision ID
 
         // add a minor edit (unauthenticated)
         saveWikiText($page, 'teststring3long', 'fourth save', true);
@@ -68,7 +75,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
         $this->assertEquals(0, $revinfo['sizechange']);
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(); // wait for new revision ID
 
         // add a minor edit (authenticated)
         $_SERVER['REMOTE_USER'] = 'user';
@@ -86,7 +93,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertEquals(DOKU_CHANGE_TYPE_MINOR_EDIT, $revinfo['type']);
         $this->assertEquals(-4, $revinfo['sizechange']);
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(); // wait for new revision ID
 
         // delete
         saveWikiText($page, '', 'sixth save', false);
@@ -100,8 +107,9 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertEquals('sixth save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_DELETE, $revinfo['type']);
         $this->assertEquals(-11, $revinfo['sizechange']);
+        $this->assertFileExists(wikiFN($page, $revinfo['date']));
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(); // wait for new revision ID
 
         // restore
         $REV = $lastmod;
@@ -120,14 +128,15 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertEquals(DOKU_CHANGE_TYPE_REVERT, $revinfo['type']);
         $this->assertEquals($REV, $revinfo['extra']);
         $this->assertEquals(11, $revinfo['sizechange']);
+        $this->assertFileExists(wikiFN($page, $revinfo['date']));
         $REV = '';
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(); // wait for new revision ID
 
         // create external edit
         file_put_contents($file, 'teststring5');
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(); // wait for new revision ID
 
         // save on top of external edit
         saveWikiText($page, 'teststring6', 'eigth save', false);
@@ -155,6 +164,12 @@ class common_saveWikiText_test extends DokuWikiTest {
      * Execute a whole bunch of saves on the same page and check the results
      */
     function test_savesequencedeleteexternalrevision() {
+        // add an additional delay when saving files to make sure
+        // nobody relies on the saving happening in the same second
+        /** @var $EVENT_HANDLER Doku_Event_Handler */
+        global $EVENT_HANDLER;
+        $EVENT_HANDLER->register_hook('IO_WIKIPAGE_WRITE', 'BEFORE', $this, 'handle_write');
+
         $page = 'page2';
         $file = wikiFN($page);
 
@@ -171,8 +186,9 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertEquals('first save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_CREATE, $revinfo['type']);
         $this->assertEquals(10, $revinfo['sizechange']);
+        $this->assertFileExists(wikiFN($page, $revinfo['date']));
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(true); // wait for new revision ID
 
         // delete
         saveWikiText($page, '', 'second save', false);
@@ -186,13 +202,14 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertEquals('second save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_DELETE, $revinfo['type']);
         $this->assertEquals(-10, $revinfo['sizechange']);
+        $this->assertFileExists(wikiFN($page, $revinfo['date']));
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(); // wait for new revision ID
 
         // create external edit
         file_put_contents($file, 'teststring5');
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(); // wait for new revision ID
 
         // save on top of external edit
         saveWikiText($page, 'teststring6', 'third save', false);
@@ -205,11 +222,13 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertEquals('third save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
         $this->assertEquals(0, $revinfo['sizechange']);
+        $this->assertFileExists(wikiFN($page, $revinfo['date']));
 
         $revinfo = $pagelog->getRevisionInfo($revisions[1]);
         $this->assertEquals('external edit', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
         $this->assertEquals(11, $revinfo['sizechange']);
+        $this->assertFileExists(wikiFN($page, $revinfo['date']));
 
     }
 
@@ -226,7 +245,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         // create external edit
         file_put_contents($file, 'teststring');
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(true); // wait for new revision ID
 
         // save on top of external edit
         saveWikiText($page, 'teststring6', 'first save', false);
@@ -268,14 +287,14 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertEquals(DOKU_CHANGE_TYPE_CREATE, $revinfo['type']);
         $this->assertEquals(10, $revinfo['sizechange']);
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(true); // wait for new revision ID
 
 
         // create external delete
         unlink($file);
         clearstatcache(false, $file);
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(); // wait for new revision ID
 
         // save on top of external delete. save is seen as creation
         saveWikiText($page, 'teststring6', 'second save', false);
@@ -317,7 +336,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertEquals(DOKU_CHANGE_TYPE_CREATE, $revinfo['type']);
         $this->assertEquals(10, $revinfo['sizechange']);
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(true); // wait for new revision ID
 
         // save with same content should be ignored
         saveWikiText($page, 'teststring', 'second save', false);
@@ -344,7 +363,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
         $this->assertEquals(5, $revinfo['sizechange']);
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(); // wait for new revision ID
 
         // add a minor edit (unauthenticated)
         saveWikiText($page, 'teststring3long', 'fourth save', true);
@@ -361,7 +380,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
         $this->assertEquals(0, $revinfo['sizechange']);
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(); // wait for new revision ID
 
         // add a minor edit (authenticated)
         $_SERVER['REMOTE_USER'] = 'user';
@@ -379,7 +398,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertEquals(DOKU_CHANGE_TYPE_MINOR_EDIT, $revinfo['type']);
         $this->assertEquals(-4, $revinfo['sizechange']);
 
-        sleep(1); // wait for new revision ID
+        $this->waitForTick(); // wait for new revision ID
 
         // restore
         $REV = $revertrev;

@@ -28,8 +28,11 @@
  * @author Johan Wijnker <johan@wijnker.eu>
  * @author Hugo Smet <hugo.smet@scarlet.be>
  * @author Mark C. Prins <mprins@users.sf.net>
- * @author hugo smet <hugo.smet@scarlet.be>
  * @author Wesley de Weerd <wesleytiel@gmail.com>
+ * @author Sjoerd <sjoerd@sjomar.eu>
+ * @author Joachim David <joa_david@hotmail.com>
+ * @author mark prins <mprins@users.sf.net>
+ * @author stafmans <dokuwiki@stafmans.net>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -39,18 +42,18 @@ $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
 $lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Pagina aanpassen';
-$lang['btn_source']            = 'Toon broncode';
+$lang['btn_source']            = 'Toon bronpagina';
 $lang['btn_show']              = 'Toon pagina';
 $lang['btn_create']            = 'Maak deze pagina aan';
 $lang['btn_search']            = 'Zoeken';
 $lang['btn_save']              = 'Opslaan';
 $lang['btn_preview']           = 'Voorbeeld';
 $lang['btn_top']               = 'Terug naar boven';
-$lang['btn_newer']             = '<< recenter';
+$lang['btn_newer']             = '<< nieuwer';
 $lang['btn_older']             = 'ouder >>';
 $lang['btn_revs']              = 'Oude revisies';
 $lang['btn_recent']            = 'Recente aanpassingen';
-$lang['btn_upload']            = 'Upload';
+$lang['btn_upload']            = 'Uploaden';
 $lang['btn_cancel']            = 'Annuleren';
 $lang['btn_index']             = 'Index';
 $lang['btn_secedit']           = 'Aanpassen';
@@ -321,7 +324,7 @@ $lang['i_pol2']                = 'Besloten wiki (lezen, schrijven en uploaden al
 $lang['i_allowreg']            = 'Toestaan dat gebruikers zichzelf registeren';
 $lang['i_retry']               = 'Opnieuw';
 $lang['i_license']             = 'Kies a.u.b. een licentie die u voor uw inhoud wilt gebruiken:';
-$lang['i_license_none']        = 'Toon geen licentie informatie';
+$lang['i_license_none']        = 'Toon geen licentie-informatie';
 $lang['i_pop_field']           = 'Help ons om je DokuWiki ervaring te verbeteren';
 $lang['i_pop_label']           = 'Stuur eens per maand geanonimiseerde gebruiksstatistieken naar de Dokuwiki ontwikkelaars';
 $lang['recent_global']         = 'Je bekijkt momenteel de wijzigingen binnen de <b>%s</b> namespace. Je kunt ook de <a href="%s">recente wijzigingen van de hele wiki</a> bekijken.';
@@ -361,7 +364,7 @@ $lang['currentns']             = 'Huidige namespace';
 $lang['searchresult']          = 'Zoekresultaat';
 $lang['plainhtml']             = 'Alleen HTML';
 $lang['wikimarkup']            = 'Wiki Opmaak';
-$lang['email_signature_text']       = 'Deze mail werd gegenereerd door DokuWiki op
-@DOKUWIKIURL@';
 $lang['page_nonexist_rev']     = 'Pagina bestaat niet bij %s. Het is vervolgens aangemaakt bij <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Begrijp het niet bij parameter "%s".';
+$lang['email_signature_text']  = 'Deze mail werd gegenereerd door DokuWiki op
+@DOKUWIKIURL@';

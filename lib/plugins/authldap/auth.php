@@ -183,7 +183,11 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
         $info = array();
         $info['user']   = $user;
+		$this->_debug('LDAP user to find: '.htmlspecialchars($info['user']), 0, __LINE__, __FILE__);
+		
         $info['server'] = $this->getConf('server');
+		$this->_debug('LDAP Server: '.htmlspecialchars($info['server']), 0, __LINE__, __FILE__);
+		
 
         //get info for given user
         $base = $this->_makeFilter($this->getConf('usertree'), $info);
@@ -193,16 +197,33 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             $filter = "(ObjectClass=*)";
         }
 
-        $sr     = $this->_ldapsearch($this->con, $base, $filter, $this->getConf('userscope'));
-        $result = @ldap_get_entries($this->con, $sr);
+		$this->_debug('LDAP Filter: '.htmlspecialchars($filter), 0, __LINE__, __FILE__);
+		
         $this->_debug('LDAP user search: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
         $this->_debug('LDAP search at: '.htmlspecialchars($base.' '.$filter), 0, __LINE__, __FILE__);
+		$sr     = $this->_ldapsearch($this->con, $base, $filter, $this->getConf('userscope'));
+		
+		$result = @ldap_get_entries($this->con, $sr);
 
-        // Don't accept more or less than one response
-        if(!is_array($result) || $result['count'] != 1) {
-            return false; //user not found
+        // if result is not an array
+        if(!is_array($result)) {
+			// no objects found
+			$this->_debug('LDAP search returned non-array result: '.htmlspecialchars(print($result)), -1, __LINE__, __FILE__);
+            return false; 
         }
-
+		
+		// Don't accept more or less than one response
+		if ($result['count'] != 1)		{
+			$this->_debug('LDAP search returned '.htmlspecialchars($result['count']).' results while it should return 1!', -1, __LINE__, __FILE__);
+			//for($i = 0; $i < $result["count"]; $i++) {
+				//$this->_debug('result: '.htmlspecialchars(print_r($result[$i])), 0, __LINE__, __FILE__);
+			//}
+			return false;
+		}
+		
+		
+		$this->_debug('LDAP search found single result !', 0, __LINE__, __FILE__);
+		
         $user_result = $result[0];
         ldap_free_result($sr);
 

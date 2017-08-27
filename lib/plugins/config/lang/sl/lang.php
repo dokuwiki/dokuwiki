@@ -52,7 +52,7 @@ $lang['youarehere']            = 'Hierarhične drobtinice poti';
 $lang['typography']            = 'Omogoči tipografske zamenjave';
 $lang['htmlok']                = 'Dovoli vstavljeno kodo HTML';
 $lang['phpok']                 = 'Dovoli vstavljeno kodo PHP';
-$lang['dformat']               = 'Oblika zapisa časa (funkcija PHP <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Oblika zapisa časa (funkcija PHP <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Podpis';
 $lang['toptoclevel']           = 'Vrhnja raven kazala';
 $lang['tocminheads']           = 'Najmanjše število naslovov za izgradnjo kazala';

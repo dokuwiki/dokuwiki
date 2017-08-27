@@ -2,7 +2,7 @@
 
 class pageutils_findnearest_test extends DokuWikiTest {
 
-    var $oldAuthAcl;
+    protected $oldAuthAcl;
 
     function setUp() {
         parent::setUp();

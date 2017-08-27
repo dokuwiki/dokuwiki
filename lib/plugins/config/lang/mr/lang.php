@@ -50,7 +50,7 @@ $lang['youarehere']            = 'प्रतवार ब्रेडक्र
 $lang['typography']            = 'अनवधानाने झालेल्या चुका बदला';
 $lang['htmlok']                = 'अंतर्गत HTML टाकायची परवानगी असू दे';
 $lang['phpok']                 = 'अंतर्गत PHP टाकायची परवानगी असू दे';
-$lang['dformat']               = 'दिनांकाची पद्धत ( PHP चं <a href="http://www.php.net/strftime">strftime</a> हे फंक्शन पाहा )';
+$lang['dformat']               = 'दिनांकाची पद्धत ( PHP चं <a href="http://php.net/strftime">strftime</a> हे फंक्शन पाहा )';
 $lang['signature']             = 'हस्ताक्षर';
 $lang['toptoclevel']           = 'अनुक्रमणिकेची सर्वोच्च पातळी';
 $lang['tocminheads']           = 'कमीत कमी किती शीर्षके असल्यास अनुक्रमणिका बनवावी';

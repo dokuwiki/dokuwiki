@@ -10,6 +10,7 @@
  * @author José Campos zecarlosdecampos@gmail.com
  * @author Paulo Carmino <contato@paulocarmino.com>
  * @author Alfredo Silva <alfredo.silva@sky.com>
+ * @author Guilherme Sá <guilherme.sa@hotmail.com>
  */
 $lang['menu']                  = 'Configuração';
 $lang['error']                 = 'Parâmetros de Configuração não actualizados devido a valores inválidos. Por favor, reveja as modificações que pretende efectuar antes de re-submetê-las.<br /> Os valores incorrectos serão mostrados dentro de uma "moldura" vermelha.';
@@ -56,7 +57,7 @@ $lang['breadcrumbs']           = 'Número máximo de breadcrumbs';
 $lang['youarehere']            = 'Breadcrumbs hierárquicas';
 $lang['fullpath']              = 'Revelar caminho completo no rodapé';
 $lang['typography']            = 'Executar substituições tipográficas';
-$lang['dformat']               = 'Formato de Data (ver função PHP\'s <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Formato de Data (ver função PHP\'s <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Assinatura';
 $lang['showuseras']            = 'O que exibir quando mostrar o utilizador que editou a página pela última vez';
 $lang['toptoclevel']           = 'Nível de topo para a tabela de conteúdo';

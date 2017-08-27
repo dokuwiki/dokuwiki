@@ -591,6 +591,10 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * casing and special chars
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string $name
+     *
+     * @return mixed|string
      */
     function _simpleTitle($name) {
         global $conf;

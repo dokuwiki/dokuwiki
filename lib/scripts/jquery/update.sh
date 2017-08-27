@@ -8,22 +8,17 @@
 # @author Stefan Grönke <stefan@gronke.net>
 # @link   http://code.jquery.com/
 
-# Adjust version for jQuery-UI here - there's no good latest link
-JQUI_VERSION='1.11.4'
+# load version infor from external file
+source ./versions
 JQUI_HOST="https://code.jquery.com/ui/$JQUI_VERSION"
 JQUI_GIT="https://raw.githubusercontent.com/jquery/jquery-ui/$JQUI_VERSION/ui"
 
-# Adjust version for jQuery here - latest updates slowly
-JQ_VERSION='2.2.4'
-
-
 # load jQuery
-wget -nv http://code.jquery.com/jquery-${JQ_VERSION}.min.js      -O jquery.min.js
-wget -nv http://code.jquery.com/jquery-${JQ_VERSION}.js          -O jquery.js
-
+wget -nv https://code.jquery.com/jquery-${JQ_VERSION}.min.js      -O jquery.min.js
 # load jQuery-UI
 wget -nv "$JQUI_HOST/jquery-ui.min.js" -O jquery-ui.min.js
-wget -nv "$JQUI_HOST/jquery-ui.js"     -O jquery-ui.js
+# load jQuery Migrate
+wget -nv https://code.jquery.com/jquery-migrate-${JQM_VERSION}.min.js      -O jquery-migrate.min.js
 
 # load the smoothness theme
 mkdir -p jquery-ui-theme/images

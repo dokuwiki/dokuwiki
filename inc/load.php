@@ -10,7 +10,6 @@ spl_autoload_register('load_autoload');
 
 // require all the common libraries
 // for a few of these order does matter
-require_once(DOKU_INC.'inc/blowfish.php');
 require_once(DOKU_INC.'inc/actions.php');
 require_once(DOKU_INC.'inc/changelog.php');
 require_once(DOKU_INC.'inc/common.php');
@@ -45,6 +44,10 @@ require_once(DOKU_INC.'inc/compatibility.php');
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @todo   add generic loading of renderers and auth backends
+ *
+ * @param string $name
+ *
+ * @return bool
  */
 function load_autoload($name){
     static $classes = null;
@@ -61,18 +64,17 @@ function load_autoload($name){
         'cache_renderer'        => DOKU_INC.'inc/cache.php',
         'Doku_Event'            => DOKU_INC.'inc/events.php',
         'Doku_Event_Handler'    => DOKU_INC.'inc/events.php',
-        'EmailAddressValidator' => DOKU_INC.'inc/EmailAddressValidator.php',
         'Input'                 => DOKU_INC.'inc/Input.class.php',
         'JpegMeta'              => DOKU_INC.'inc/JpegMeta.php',
         'SimplePie'             => DOKU_INC.'inc/SimplePie.php',
         'FeedParser'            => DOKU_INC.'inc/FeedParser.php',
         'IXR_Server'            => DOKU_INC.'inc/IXR_Library.php',
         'IXR_Client'            => DOKU_INC.'inc/IXR_Library.php',
+        'IXR_Error'             => DOKU_INC.'inc/IXR_Library.php',
         'IXR_IntrospectionServer' => DOKU_INC.'inc/IXR_Library.php',
         'Doku_Plugin_Controller'=> DOKU_INC.'inc/plugincontroller.class.php',
         'Tar'                   => DOKU_INC.'inc/Tar.class.php',
         'ZipLib'                => DOKU_INC.'inc/ZipLib.class.php',
-        'DokuWikiFeedCreator'   => DOKU_INC.'inc/feedcreator.class.php',
         'Doku_Parser_Mode'      => DOKU_INC.'inc/parser/parser.php',
         'Doku_Parser_Mode_Plugin' => DOKU_INC.'inc/parser/parser.php',
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
@@ -82,11 +84,6 @@ function load_autoload($name){
         'RemoteAPI'             => DOKU_INC.'inc/remote.php',
         'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
         'Subscription'          => DOKU_INC.'inc/subscription.php',
-        'Crypt_Base'            => DOKU_INC.'inc/phpseclib/Crypt_Base.php',
-        'Crypt_Rijndael'        => DOKU_INC.'inc/phpseclib/Crypt_Rijndael.php',
-        'Crypt_AES'             => DOKU_INC.'inc/phpseclib/Crypt_AES.php',
-        'Crypt_Hash'            => DOKU_INC.'inc/phpseclib/Crypt_Hash.php',
-        'lessc'                 => DOKU_INC.'inc/lessc.inc.php',
 
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
@@ -124,10 +121,23 @@ function load_autoload($name){
         }
     }
 
+    // template namespace
+    if(substr($name, 0, 18) == 'dokuwiki/template/') {
+        $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
+        $file = DOKU_INC.'lib/tpl/' . substr($name, 18) . '.php';
+        if(file_exists($file)) {
+            require $file;
+            return true;
+        }
+    }
+
     // our own namespace
     if(substr($name, 0, 9) == 'dokuwiki/') {
-        require substr($name, 9) . '.php';
-        return true;
+        $file = DOKU_INC . 'inc/' . substr($name, 9) . '.php';
+        if(file_exists($file)) {
+            require $file;
+            return true;
+        }
     }
 
     // Plugin loading

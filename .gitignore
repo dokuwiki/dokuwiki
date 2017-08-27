@@ -18,6 +18,11 @@
 *.DS_Store
 *.iml
 .idea/
+# Eclipse IDE
+.buildpath
+.project
+.settings/
+# DokuWiki
 /data/attic/*
 /data/cache/*
 /data/index/*
@@ -40,6 +45,7 @@
 !/lib/plugins/authldap
 !/lib/plugins/authmysql
 !/lib/plugins/authpgsql
+!/lib/plugins/authpdo
 !/lib/plugins/authplain
 !/lib/plugins/config
 !/lib/plugins/extension
@@ -61,7 +67,7 @@ lib/images/*/local/*
 # composer default ignores
 composer.phar
 vendor/bin/*
-vendor/*/*/phpunit.xml
+vendor/*/*/phpunit.xml*
 vendor/*/*/.travis.yml
 vendor/*/*/bin/*
 vendor/*/*/tests/*
@@ -71,3 +77,12 @@ vendor/*/*/docs/*
 vendor/*/*/contrib/*
 vendor/splitbrain/php-archive/apigen.neon
 vendor/splitbrain/php-archive/generate-api.sh
+vendor/paragonie/random_compat/build-phar.sh
+vendor/paragonie/random_compat/dist/*
+vendor/paragonie/random_compat/other/*
+vendor/simplepie/simplepie/db.sql
+vendor/marcusschwarz/lesserphp/package.sh
+vendor/marcusschwarz/lesserphp/lessify*
+vendor/marcusschwarz/lesserphp/Makefile
+vendor/marcusschwarz/lesserphp/plessc
+

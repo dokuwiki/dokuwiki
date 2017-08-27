@@ -94,7 +94,13 @@ function stripctl($string) {
 function getSecurityToken() {
     /** @var Input $INPUT */
     global $INPUT;
-    return PassHash::hmac('md5', session_id().$INPUT->server->str('REMOTE_USER'), auth_cookiesalt());
+
+    $user = $INPUT->server->str('REMOTE_USER');
+    $session = session_id();
+
+    // CSRF checks are only for logged in users - do not generate for anonymous
+    if(trim($user) == '' || trim($session) == '') return '';
+    return PassHash::hmac('md5', $session.$user, auth_cookiesalt());
 }
 
 /**
@@ -213,7 +219,7 @@ function pageinfo() {
     }
 
     $info['locked']     = checklock($ID);
-    $info['filepath']   = fullpath(wikiFN($ID));
+    $info['filepath']   = wikiFN($ID);
     $info['exists']     = file_exists($info['filepath']);
     $info['currentrev'] = @filemtime($info['filepath']);
     if($REV) {
@@ -227,7 +233,7 @@ function pageinfo() {
             msg($lang['nosecedit'], 0);
         } else {
             //really use old revision
-            $info['filepath'] = fullpath(wikiFN($ID, $REV));
+            $info['filepath'] = wikiFN($ID, $REV);
             $info['exists']   = file_exists($info['filepath']);
         }
     }
@@ -724,7 +730,9 @@ function checkwordblock($text = '') {
                 $data['userinfo']['name'] = $INFO['userinfo']['name'];
                 $data['userinfo']['mail'] = $INFO['userinfo']['mail'];
             }
-            $callback = create_function('', 'return true;');
+            $callback = function () {
+                return true;
+            };
             return trigger_event('COMMON_WORDBLOCK_BLOCKED', $data, $callback, true);
         }
     }
@@ -831,6 +839,17 @@ function clientismobile() {
 
     if(preg_match("/$uamatches/i", $INPUT->server->str('HTTP_USER_AGENT'))) return true;
 
+    return false;
+}
+
+/**
+ * check if a given link is interwiki link
+ *
+ * @param string $link the link, e.g. "wiki>page"
+ * @return bool
+ */
+function link_isinterwiki($link){
+    if (preg_match('/^[a-zA-Z0-9\.]+>/u',$link)) return true;
     return false;
 }
 
@@ -1122,7 +1141,13 @@ function parsePageTemplate(&$data) {
     );
 
     // we need the callback to work around strftime's char limit
-    $tpl         = preg_replace_callback('/%./', create_function('$m', 'return strftime($m[0]);'), $tpl);
+    $tpl = preg_replace_callback(
+        '/%./',
+        function ($m) {
+            return strftime($m[0]);
+        },
+        $tpl
+    );
     $data['tpl'] = $tpl;
     return $tpl;
 }
@@ -1313,7 +1338,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         // pre-save deleted revision
         @touch($svdta['file']);
         clearstatcache();
-        $data['newRevision'] = saveOldRevision($id);
+        $svdta['newRevision'] = saveOldRevision($id);
         // remove empty file
         @unlink($svdta['file']);
         $filesize_new = 0;
@@ -1325,7 +1350,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         io_sweepNS($id, 'mediadir');
     } else {
         // save file (namespace dir is created in io_writeWikiPage)
-        io_writeWikiPage($svdta['file'], $text, $id);
+        io_writeWikiPage($svdta['file'], $svdta['newContent'], $id);
         // pre-save the revision, to keep the attic in sync
         $svdta['newRevision'] = saveOldRevision($id);
         $filesize_new = filesize($svdta['file']);
@@ -1477,7 +1502,7 @@ function filesize_h($size, $dec = 1) {
         $i++;
     }
 
-    return round($size, $dec).'&#xa0;'.$sizes[$i];
+    return round($size, $dec)."\xC2\xA0".$sizes[$i]; //non-breaking space
 }
 
 /**
@@ -1541,7 +1566,7 @@ function dformat($dt = null, $format = '') {
  * Formats a timestamp as ISO 8601 date
  *
  * @author <ungu at terong dot com>
- * @link http://www.php.net/manual/en/function.date.php#54072
+ * @link http://php.net/manual/en/function.date.php#54072
  *
  * @param int $int_date current date in UNIX timestamp
  * @return string
@@ -1602,7 +1627,7 @@ function unslash($string, $char = "'") {
  * Convert php.ini shorthands to byte
  *
  * @author <gilthans dot NO dot SPAM at gmail dot com>
- * @link   http://de3.php.net/manual/en/ini.core.php#79564
+ * @link   http://php.net/manual/en/ini.core.php#79564
  *
  * @param string $v shorthands
  * @return int|string
@@ -2000,6 +2025,35 @@ function set_doku_pref($pref, $val) {
  */
 function stripsourcemaps(&$text){
     $text = preg_replace('/^(\/\/|\/\*)[@#]\s+sourceMappingURL=.*?(\*\/)?$/im', '\\1\\2', $text);
+}
+
+/**
+ * Returns the contents of a given SVG file for embedding
+ *
+ * Inlining SVGs saves on HTTP requests and more importantly allows for styling them through
+ * CSS. However it should used with small SVGs only. The $maxsize setting ensures only small
+ * files are embedded.
+ *
+ * This strips unneeded headers, comments and newline. The result is not a vaild standalone SVG!
+ *
+ * @param string $file full path to the SVG file
+ * @param int $maxsize maximum allowed size for the SVG to be embedded
+ * @return string|false the SVG content, false if the file couldn't be loaded
+ */
+function inlineSVG($file, $maxsize = 2048) {
+    $file = trim($file);
+    if($file === '') return false;
+    if(!file_exists($file)) return false;
+    if(filesize($file) > $maxsize) return false;
+    if(!is_readable($file)) return false;
+    $content = file_get_contents($file);
+    $content = preg_replace('/<!--.*?(-->)/s','', $content); // comments
+    $content = preg_replace('/<\?xml .*?\?>/i', '', $content); // xml header
+    $content = preg_replace('/<!DOCTYPE .*?>/i', '', $content); // doc type
+    $content = preg_replace('/>\s+</s', '><', $content); // newlines between tags
+    $content = trim($content);
+    if(substr($content, 0, 5) !== '<svg ') return false;
+    return $content;
 }
 
 //Setup VIM: ex: et ts=2 :

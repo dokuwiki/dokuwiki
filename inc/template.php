@@ -93,90 +93,13 @@ function tpl_content($prependTOC = true) {
  * @return bool
  */
 function tpl_content_core() {
-    global $ACT;
-    global $TEXT;
-    global $PRE;
-    global $SUF;
-    global $SUM;
-    global $IDX;
-    global $INPUT;
-
-    switch($ACT) {
-        case 'show':
-            html_show();
-            break;
-        /** @noinspection PhpMissingBreakStatementInspection */
-        case 'locked':
-            html_locked();
-        case 'edit':
-        case 'recover':
-            html_edit();
-            break;
-        case 'preview':
-            html_edit();
-            html_show($TEXT);
-            break;
-        case 'draft':
-            html_draft();
-            break;
-        case 'search':
-            html_search();
-            break;
-        case 'revisions':
-            html_revisions($INPUT->int('first'));
-            break;
-        case 'diff':
-            html_diff();
-            break;
-        case 'recent':
-            $show_changes = $INPUT->str('show_changes');
-            if (empty($show_changes)) {
-                $show_changes = get_doku_pref('show_changes', $show_changes);
-            }
-            html_recent($INPUT->extract('first')->int('first'), $show_changes);
-            break;
-        case 'index':
-            html_index($IDX); #FIXME can this be pulled from globals? is it sanitized correctly?
-            break;
-        case 'backlink':
-            html_backlinks();
-            break;
-        case 'conflict':
-            html_conflict(con($PRE, $TEXT, $SUF), $SUM);
-            html_diff(con($PRE, $TEXT, $SUF), false);
-            break;
-        case 'login':
-            html_login();
-            break;
-        case 'register':
-            html_register();
-            break;
-        case 'resendpwd':
-            html_resendpwd();
-            break;
-        case 'denied':
-            html_denied();
-            break;
-        case 'profile' :
-            html_updateprofile();
-            break;
-        case 'admin':
-            tpl_admin();
-            break;
-        case 'subscribe':
-            tpl_subscribe();
-            break;
-        case 'media':
-            tpl_media();
-            break;
-        default:
-            $evt = new Doku_Event('TPL_ACT_UNKNOWN', $ACT);
-            if($evt->advise_before()) {
-                msg("Failed to handle command: ".hsc($ACT), -1);
-            }
-            $evt->advise_after();
-            unset($evt);
-            return false;
+    $router = \dokuwiki\ActionRouter::getInstance();
+    try {
+        $router->getAction()->tplContent();
+    } catch(\dokuwiki\Action\Exception\FatalException $e) {
+        // there was no content for the action
+        msg(hsc($e->getMessage()), -1);
+        return false;
     }
     return true;
 }
@@ -262,7 +185,8 @@ function tpl_admin() {
         if($INFO['prependTOC']) tpl_toc();
         $plugin->html();
     } else {
-        html_admin();
+        $admin = new dokuwiki\Ui\Admin();
+        $admin->show();
     }
     return true;
 }
@@ -365,7 +289,7 @@ function tpl_metaheaders($alt = true) {
     if(($ACT == 'show' || $ACT == 'export_xhtml') && !$REV) {
         if($INFO['exists']) {
             //delay indexing:
-            if((time() - $INFO['lastmod']) >= $conf['indexdelay']) {
+            if(!isHiddenPage($ID) &&  (time() - $INFO['lastmod']) >= $conf['indexdelay']) {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'index,follow');
             } else {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,nofollow');
@@ -409,7 +333,15 @@ function tpl_metaheaders($alt = true) {
     $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
     $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
 
-    // load external javascript
+    // load jquery
+    $jquery = getCdnUrls();
+    foreach($jquery as $src) {
+        $head['script'][] = array(
+            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '', 'src' => $src
+        );
+    }
+
+    // load our javascript dispatcher
     $head['script'][] = array(
         'type'=> 'text/javascript', 'charset'=> 'utf-8', '_data'=> '',
         'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed
@@ -436,7 +368,11 @@ function tpl_metaheaders($alt = true) {
  */
 function _tpl_metaheaders_action($data) {
     foreach($data as $tag => $inst) {
+        if($tag == 'script') {
+            echo "<!--[if gte IE 9]><!-->\n"; // no scripts for old IE
+        }
         foreach($inst as $attr) {
+            if ( empty($attr) ) { continue; }
             echo '<', $tag, ' ', buildAttributes($attr);
             if(isset($attr['_data']) || $tag == 'script') {
                 if($tag == 'script' && $attr['_data'])
@@ -449,6 +385,9 @@ function _tpl_metaheaders_action($data) {
                 echo '/>';
             }
             echo "\n";
+        }
+        if($tag == 'script') {
+            echo "<!--<![endif]-->\n";
         }
     }
 }
@@ -850,7 +789,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search" method="get" role="search"><div class="no">';
     print '<input type="hidden" name="do" value="search" />';
     print '<input type="text" ';
-    if($ACT == 'search') print 'value="'.htmlspecialchars($QUERY).'" ';
+    if($ACT == 'search') print 'value="'.hsc($QUERY).'" ';
     print 'placeholder="'.$lang['btn_search'].'" ';
     if(!$autocomplete) print 'autocomplete="off" ';
     print 'id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" />';
@@ -995,9 +934,9 @@ function tpl_pageinfo($ret = false) {
     $fn = $INFO['filepath'];
     if(!$conf['fullpath']) {
         if($INFO['rev']) {
-            $fn = str_replace(fullpath($conf['olddir']).'/', '', $fn);
+            $fn = str_replace($conf['olddir'].'/', '', $fn);
         } else {
-            $fn = str_replace(fullpath($conf['datadir']).'/', '', $fn);
+            $fn = str_replace($conf['datadir'].'/', '', $fn);
         }
     }
     $fn   = utf8_decodeFN($fn);
@@ -1224,8 +1163,8 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     /** @var Input $INPUT */
     global $INPUT;
     global $REV;
-    $w = tpl_img_getTag('File.Width');
-    $h = tpl_img_getTag('File.Height');
+    $w = (int) tpl_img_getTag('File.Width');
+    $h = (int) tpl_img_getTag('File.Height');
 
     //resize to given max values
     $ratio = 1;
@@ -1545,6 +1484,9 @@ function tpl_mediaFileList() {
  * list of file revisions
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $image
+ * @param boolean $rev
  */
 function tpl_mediaFileDetails($image, $rev) {
     global $conf, $DEL, $lang;
@@ -1626,7 +1568,7 @@ function tpl_mediaTree() {
  * @param string $empty empty option label
  * @param string $button submit button label
  */
-function tpl_actiondropdown($empty = '', $button = '&gt;') {
+function tpl_actiondropdown($empty = '&nbsp;', $button = '&gt;') {
     global $ID;
     global $REV;
     global $lang;

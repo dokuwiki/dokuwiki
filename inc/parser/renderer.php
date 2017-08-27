@@ -8,6 +8,12 @@
 if(!defined('DOKU_INC')) die('meh.');
 
 /**
+ * Allowed chars in $language for code highlighting
+ * @see GeSHi::set_language()
+ */
+define('PREG_PATTERN_VALID_LANGUAGE', '#[^a-zA-Z0-9\-_]#');
+
+/**
  * An empty renderer, produces no output
  *
  * Inherits from DokuWiki_Plugin for giving additional functions to render plugins
@@ -720,6 +726,18 @@ class Doku_Renderer extends DokuWiki_Plugin {
     }
 
     /**
+     * Open a table footer
+     */
+    function tabletfoot_open() {
+    }
+
+    /**
+     * Close a table footer
+     */
+    function tabletfoot_close() {
+    }
+
+    /**
      * Open a table row
      */
     function tablerow_open() {
@@ -827,12 +845,18 @@ class Doku_Renderer extends DokuWiki_Plugin {
                                     return rawurlencode($match[0]);
                                   }, $reference), $url);
             $parsed = parse_url($reference);
-            if(!$parsed['port']) $parsed['port'] = 80;
-            $url = str_replace('{SCHEME}', $parsed['scheme'], $url);
-            $url = str_replace('{HOST}', $parsed['host'], $url);
-            $url = str_replace('{PORT}', $parsed['port'], $url);
-            $url = str_replace('{PATH}', $parsed['path'], $url);
-            $url = str_replace('{QUERY}', $parsed['query'], $url);
+            if (empty($parsed['scheme'])) $parsed['scheme'] = '';
+            if (empty($parsed['host'])) $parsed['host'] = '';
+            if (empty($parsed['port'])) $parsed['port'] = 80;
+            if (empty($parsed['path'])) $parsed['path'] = '';
+            if (empty($parsed['query'])) $parsed['query'] = '';
+            $url = strtr($url,[
+                '{SCHEME}' => $parsed['scheme'],
+                '{HOST}' => $parsed['host'],
+                '{PORT}' => $parsed['port'],
+                '{PATH}' => $parsed['path'],
+                '{QUERY}' => $parsed['query'] ,
+            ]);
         } else {
             //default
             $url = $url.rawurlencode($reference);

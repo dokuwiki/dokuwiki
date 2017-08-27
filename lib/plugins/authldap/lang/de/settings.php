@@ -2,11 +2,12 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author christian studer <cstuder@existenz.ch>
  * @author Philip Knack <p.knack@stollfuss.de>
  * @author Anika Henke <anika@selfthinker.org>
+ * @author Hella Breitkopf <hella.breitkopf@gmail.com>
  */
 $lang['server']                = 'Adresse zum LDAP-Server. Entweder als Hostname (<code>localhost</code>) oder als FQDN (<code>ldap://server.tld:389</code>).';
 $lang['port']                  = 'Port des LDAP-Servers, falls kein Port angegeben wurde.';
@@ -31,5 +32,5 @@ $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
 $lang['deref_o_2']             = 'LDAP_DEREF_FINDING';
 $lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS';
 $lang['referrals_o_-1']        = 'Standard verwenden';
-$lang['referrals_o_0']         = 'Nicht Referrals folgen';
+$lang['referrals_o_0']         = 'Referrals nicht folgen';
 $lang['referrals_o_1']         = 'Referrals folgen';

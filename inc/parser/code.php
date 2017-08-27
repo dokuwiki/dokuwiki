@@ -13,10 +13,15 @@ class Doku_Renderer_code extends Doku_Renderer {
      * Send the wanted code block to the browser
      *
      * When the correct block was found it exits the script.
+     *
+     * @param string $text
+     * @param string $language
+     * @param string $filename
      */
     function code($text, $language = null, $filename = '') {
         global $INPUT;
         if(!$language) $language = 'txt';
+        $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language);
         if(!$filename) $filename = 'snippet.'.$language;
         $filename = utf8_basename($filename);
         $filename = utf8_stripspecials($filename, '_');
@@ -39,6 +44,10 @@ class Doku_Renderer_code extends Doku_Renderer {
 
     /**
      * Wraps around code()
+     *
+     * @param string $text
+     * @param string $language
+     * @param string $filename
      */
     function file($text, $language = null, $filename = '') {
         $this->code($text, $language, $filename);

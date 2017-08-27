@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Razvan Deaconescu <razvan.deaconescu@cs.pub.ro>
  * @author Adrian Vesa <adrianvesa@dotwikis.com>
  */

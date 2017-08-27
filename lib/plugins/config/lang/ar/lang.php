@@ -55,7 +55,7 @@ $lang['breadcrumbs']           = 'عدد العناقيد للزيارات';
 $lang['youarehere']            = 'عناقيد هرمية';
 $lang['fullpath']              = 'اظهر المحتوى الكامل للصفحات في ';
 $lang['typography']            = 'اعمل استبدالات طبوغرافية';
-$lang['dformat']               = 'تنسيق التاريخ (انظر وظيفة PHP,s <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'تنسيق التاريخ (انظر وظيفة PHP,s <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'التوقيع';
 $lang['showuseras']            = 'الذي يعرض لاظهار المستخدم الذي قام بآخر تحرير لصفحة';
 $lang['toptoclevel']           = 'المستوى الأعلى لمحتويات الجدول';
