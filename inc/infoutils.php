@@ -6,7 +6,13 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 if(!defined('DOKU_INC')) die('meh.');
-if(!defined('DOKU_MESSAGEURL')) define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
+if(!defined('DOKU_MESSAGEURL')){
+    if(in_array('ssl', stream_get_transports())) {
+        define('DOKU_MESSAGEURL','https://update.dokuwiki.org/check/');
+    }else{
+        define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
+    }
+}
 
 /**
  * Check for new messages from upstream
@@ -22,20 +28,16 @@ function checkUpdateMessages(){
 
     $cf = getCacheName($updateVersion, '.updmsg');
     $lm = @filemtime($cf);
+    $is_http = substr(DOKU_MESSAGEURL, 0, 5) != 'https';
 
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
         @touch($cf);
-        dbglog("checkUpdateMessages(): downloading messages to ".$cf);
-        $http = new DokuHTTPClient();
-        $http->timeout = 12;
-        $resp = $http->get(DOKU_MESSAGEURL.$updateVersion);
-        if(is_string($resp) && ($resp == "" || substr(trim($resp), -1) == '%')) {
-            // basic sanity check that this is either an empty string response (ie "no messages")
-            // or it looks like one of our messages, not WiFi login or other interposed response
-            io_saveFile($cf,$resp);
-        } else {
-            dbglog("checkUpdateMessages(): unexpected HTTP response received");
+        if(_checkUpdateMessages_remote($cf, DOKU_MESSAGEURL)){
+            // fallback to HTTP if in HTTPS
+            if(!$is_http){
+                _checkUpdateMessages_remote($cf, substr_replace(DOKU_MESSAGEURL, 'http', 0, 5));
+            }
         }
     }else{
         dbglog("checkUpdateMessages(): messages up to date");
@@ -49,6 +51,24 @@ function checkUpdateMessages(){
     }
 }
 
+/**
+ * Internal function to connect to upstream
+ */
+function _checkUpdateMessages_remote($cf, $url){
+    $is_http = substr($url, 0, 5) != 'https';
+    dbglog("checkUpdateMessages(): downloading messages to ".$cf.($is_http?' (without SSL)':' (with SSL)'));
+    $http = new DokuHTTPClient();
+    $http->timeout = 8; // In some cases (https > http retry) this might present twice
+    $resp = $http->get($url.$updateVersion);
+    if(is_string($resp) && ($resp == "" || substr(trim($resp), -1) == '%')) {
+        // basic sanity check that this is either an empty string response (ie "no messages")
+        // or it looks like one of our messages, not WiFi login or other interposed response
+        return io_saveFile($cf,$resp);
+    } else {
+        dbglog("checkUpdateMessages(): unexpected HTTP response received");
+        return false;
+    }
+}
 
 /**
  * Return DokuWiki's version (split up in date and type)
@@ -114,13 +134,13 @@ function check(){
     if ($INFO['isadmin'] || $INFO['ismanager']){
         msg('DokuWiki version: '.getVersion(),1);
 
-        if(version_compare(phpversion(),'5.6.0','<')){
-            msg('Your PHP version is too old ('.phpversion().' vs. 5.6.0+ needed)',-1);
+        if(version_compare(phpversion(),'5.3.3','<')){
+            msg('Your PHP version is too old ('.phpversion().' vs. 5.3.3+ needed)',-1);
         }else{
             msg('PHP version '.phpversion(),1);
         }
     } else {
-        if(version_compare(phpversion(),'5.6.0','<')){
+        if(version_compare(phpversion(),'5.3.3','<')){
             msg('Your PHP version is too old',-1);
         }
     }
@@ -320,24 +340,31 @@ define('MSG_ADMINS_ONLY',4);
  */
 function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
     global $MSG, $MSG_shown;
-    $errors = array();
-    $errors[-1] = 'error';
-    $errors[0]  = 'info';
-    $errors[1]  = 'success';
-    $errors[2]  = 'notify';
+    static $errors = array(-1=>'error', 0=>'info', 1=>'success', 2=>'notify');
+    $msgdata = array();
+    $msgdata['message'] = $message;
+    $msgdata['lvl'] = $lvl;
+    $msgdata['line'] = $line;
+    $msgdata['file'] = $file;
+    $msgdata['allow'] = $allow;
+    $evt = new Doku_Event('HOWTO_GLOBAL_MSG', $msgdata);
+    if ($evt->advise_before()) {
+        /* Show msg normally */
+        if($msgdata['line'] || $msgdata['file']) $msgdata['message'].=' ['.utf8_basename($msgdata['file']).':'.$msgdata['line'].']';
 
-    if($line || $file) $message.=' ['.utf8_basename($file).':'.$line.']';
-
-    if(!isset($MSG)) $MSG = array();
-    $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message, 'allow' => $allow);
-    if(isset($MSG_shown) || headers_sent()){
-        if(function_exists('html_msgarea')){
-            html_msgarea();
-        }else{
-            print "ERROR($lvl) $message";
+        if(!isset($MSG)) $MSG = array();
+        $MSG[]=array('lvl' => $errors[$msgdata['lvl']], 'msg' => $msgdata['message'], 'allow' => $msgdata['allow']);
+        if(isset($MSG_shown) || headers_sent()){
+            if(function_exists('html_msgarea')){
+                html_msgarea();
+            }else{
+                print "ERROR(".$msgdata['lvl'].") ".$msgdata['message'];
+            }
+            unset($GLOBALS['MSG']);
         }
-        unset($GLOBALS['MSG']);
     }
+    $evt->advise_after();
+    unset($evt);
 }
 /**
  * Determine whether the current user is allowed to view the message
@@ -383,9 +410,6 @@ function info_msg_allowed($msg){
  * little function to print the content of a var
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param string $msg
- * @param bool $hidden
  */
 function dbg($msg,$hidden=false){
     if($hidden){
@@ -403,9 +427,6 @@ function dbg($msg,$hidden=false){
  * Print info to a log file
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param string $msg
- * @param string $header
  */
 function dbglog($msg,$header=''){
     global $conf;
@@ -508,8 +529,6 @@ function dbg_backtrace(){
  * debug output
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param array $data
  */
 function debug_guard(&$data){
     foreach($data as $key => $value){
