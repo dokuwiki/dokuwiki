@@ -52,6 +52,9 @@ class OptGroup extends Element {
         foreach($options as $key => $val) {
             if (is_array($val)) {
                 if (!key_exists('label', $val)) throw new \InvalidArgumentException('If option is given as array, it has to have a "label"-key!');
+                if (key_exists('attrs', $val) && is_array($val['attrs']) && key_exists('selected', $val['attrs'])) {
+                    throw new \InvalidArgumentException('Please use function "DropdownElement::val()" to set the selected option');
+                }
                 $this->options[$key] = $val;
             } elseif(is_int($key)) {
                 $this->options[$val] = array('label' => (string) $val);
