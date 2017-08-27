@@ -1046,7 +1046,8 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapp
         return '';
     }
 
-    $start_level = $data[0]['level'];
+    $firstElement = reset($data);
+    $start_level = $firstElement['level'];
     $level = $start_level;
     $ret   = '';
     $open  = 0;
