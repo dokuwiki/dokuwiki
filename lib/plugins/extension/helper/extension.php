@@ -340,7 +340,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return array The names of the conflicting extensions
      */
     public function getConflicts() {
-        if (!empty($this->remoteInfo['conflicts'])) return $this->remoteInfo['dependencies'];
+        if (!empty($this->remoteInfo['conflicts'])) return $this->remoteInfo['conflicts'];
         return array();
     }
 
