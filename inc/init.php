@@ -4,6 +4,14 @@
  */
 
 /**
+ * checks it is windows OS
+ * @return bool
+ */
+function isWindows() {
+    return (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? true : false;
+}
+
+/**
  * timing Dokuwiki execution
  *
  * @param integer $start
