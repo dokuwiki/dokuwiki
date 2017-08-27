@@ -354,6 +354,24 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
 
+    function testTwoInternalLinks() {
+        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->parse("Foo [[foo:bar|one]] and [[bar:foo|two]] Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('internallink',array('foo:bar','one')),
+            array('cdata',array(' and ')),
+            array('internallink',array('bar:foo','two')),
+            array('cdata',array(' Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
+
     function testInterwikiLink() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[iw>somepage|Some Page]] Bar");
@@ -458,7 +476,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testWindowsShareLinkHyphen() {
         $this->P->addMode('windowssharelink',new Doku_Parser_Mode_WindowsShareLink());
         $this->P->parse('Foo \\\server\share-hyphen Bar');
