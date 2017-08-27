@@ -863,7 +863,11 @@ class Doku_Renderer extends DokuWiki_Plugin {
         }
         //handle as wiki links
         if($url{0} === ':') {
-            list($id, $urlparam) = explode('?', $url, 2);
+            $urlparam = null;
+            $id = $url;
+            if (strpos($url, '?') !== false) {
+                list($id, $urlparam) = explode('?', $url, 2);
+            }
             $url    = wl(cleanID($id), $urlparam);
             $exists = page_exists($id);
         }
