@@ -11,7 +11,7 @@ class HTTPMockClient extends HTTPClient {
     /**
      * Sets shorter timeout
      */
-    function __construct() {
+    public function __construct() {
         parent::__construct();
         $this->timeout = 8; // slightly faster timeouts
     }
@@ -21,7 +21,7 @@ class HTTPMockClient extends HTTPClient {
      *
      * @return bool
      */
-    function noconnection() {
+    public function noconnection() {
         return ($this->tries === 0);
     }
 
@@ -33,7 +33,7 @@ class HTTPMockClient extends HTTPClient {
      * @param string $method
      * @return bool
      */
-    function sendRequest($url, $data = '', $method = 'GET') {
+    public function sendRequest($url, $data = '', $method = 'GET') {
         $this->tries = 2; // configures the number of retries
         $return      = false;
         while($this->tries) {
@@ -42,5 +42,22 @@ class HTTPMockClient extends HTTPClient {
             $this->tries--;
         }
         return $return;
+    }
+
+    /**
+     * Return detailed error data
+     *
+     * @param string $info optional additional info
+     * @return string
+     */
+    public function errorInfo($info = '') {
+        return json_encode(
+            array(
+                'Error' => $this->error,
+                'Status' => $this->status,
+                'Body' => $this->resp_body,
+                'Info' => $info
+            ), JSON_PRETTY_PRINT
+        );
     }
 }
