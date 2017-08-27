@@ -1,43 +1,51 @@
 <?php
+
 /**
- * Unit Test for inc/common.php - pageinfo()
- *
- * @author Christopher Smith <chris@jalakai.co.uk>
+ * Class parserutils_set_metadata_test
  */
 class parserutils_set_metadata_test extends DokuWikiTest {
     // the id used for this test case
     private $id;
 
-    function helper_prepare_users($id = 1){
+    /**
+     * Set up fake user environment with for the gieven user
+     *
+     * @param string $user
+     */
+    function helper_prepare_user($user = '1') {
         global $INFO, $USERINFO;
+
+        // prepare fake users
+        static $users = [
+            '1' => [
+                'pass' => '179ad45c6ce2cb97cf1029e212046e81',
+                'name' => 'Tester1',
+                'mail' => 'tester1@example.com',
+                'grps' => array('admin', 'user'),
+            ]
+            ,
+            'tester2' => [
+                'pass' => '179ad45c6ce2cb97cf1029e212046e81',
+                'name' => 'Tester2',
+                'mail' => 'tester2@example.com',
+                'grps' => array('user'),
+            ]
+        ];
+        if(!isset($users[$user])) throw new RuntimeException('requested non-existing user');
+
+        // set up globals
         $_SERVER['REMOTE_ADDR'] = '1.2.3.4';
-        if($id == 2){
-            $USERINFO = array(
-               'pass' => '179ad45c6ce2cb97cf1029e212046e81',
-               'name' => 'Tester2',
-               'mail' => 'tester2@example.com',
-               'grps' => array ('user'),
-            );
-            $INFO['userinfo'] = $USERINFO;
-            $_SERVER['REMOTE_USER'] = 'tester2';
-        }else{
-            global $USERINFO, $INFO;
-            $USERINFO = array(
-               'pass' => '179ad45c6ce2cb97cf1029e212046e81',
-               'name' => 'Tester1',
-               'mail' => 'tester1@example.com',
-               'grps' => array ('admin','user'),
-            );
-            $INFO['userinfo'] = $USERINFO;
-            $_SERVER['REMOTE_USER'] = '1';
-        }
+        $USERINFO = $users[$user];
+        $INFO['userinfo'] = $USERINFO;
+        $_SERVER['REMOTE_USER'] = $user;
     }
+
     /**
      *  test array merge, including contributors with numeric keys and array data overwritting
      */
     function test_array_replace(){
         // prepare user
-        $this->helper_prepare_users(1);
+        $this->helper_prepare_user('1');
 
         // prepare page
         $this->id = 'test:set_metadata_array_replace';
@@ -48,6 +56,7 @@ class parserutils_set_metadata_test extends DokuWikiTest {
         // $this->assertEquals(empty($meta['contributor']), true, 'Initial page should have no contributors');
 
         // first revision with numeric user
+        $this->waitForTick();
         saveWikiText($this->id, 'Test1', 'Test first edit');
         $meta = p_get_metadata($this->id);
 
@@ -55,8 +64,8 @@ class parserutils_set_metadata_test extends DokuWikiTest {
         $this->assertEquals(array('1'=>'Tester1'), $meta['contributor'], 'First edit contributors error');
 
         // second revision with alphabetic user
-        sleep(1); // To generate a different timestamp
-        $this->helper_prepare_users(2);
+        $this->waitForTick();
+        $this->helper_prepare_user('tester2');
         saveWikiText($this->id, 'Test2', 'Test second edit');
         $meta = p_get_metadata($this->id);
 
@@ -64,12 +73,11 @@ class parserutils_set_metadata_test extends DokuWikiTest {
         $this->assertEquals(array('tester2'=>'Tester2', '1'=>'Tester1'), $meta['contributor'], 'Second edit contributors error');
 
         // third revision with the first user
-        $this->helper_prepare_users(1);
+        $this->waitForTick();
+        $this->helper_prepare_user('1');
         saveWikiText($this->id, 'Test3', 'Test third edit');
         $meta = p_get_metadata($this->id);
 
         $this->assertEquals(array('tester2'=>'Tester2', '1'=>'Tester1'), $meta['contributor'], 'Third edit contributors error');
     }
 }
-
-//Setup VIM: ex: et ts=4 :
