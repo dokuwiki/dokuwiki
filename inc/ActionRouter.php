@@ -19,7 +19,7 @@ class ActionRouter {
     protected $action;
 
     /** @var  ActionRouter */
-    protected static $instance = NULL;
+    protected static $instance = null;
 
     /** @var int transition counter */
     protected $transitions = 0;
@@ -44,14 +44,9 @@ class ActionRouter {
         $this->disabled = array_map('trim', $this->disabled);
         $this->transitions = 0;
 
-        if(defined('DOKU_UNITTEST') && (self::$instance !== null)) {
-            $ACT = act_clean($ACT);
-            $this->setupAction($ACT);
-        } else {
-            $ACT = act_clean($ACT);
-            $this->setupAction($ACT);
-            $ACT = $this->action->getActionName();
-        }
+        $ACT = act_clean($ACT);
+        $this->setupAction($ACT);
+        $ACT = $this->action->getActionName();
     }
 
     /**
