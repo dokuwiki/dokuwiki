@@ -2459,12 +2459,11 @@ function media_supportedav($mime, $type=NULL){
  * ie for foo.webm search foo.sub.lang.vtt, foo.cap.lang.vtt...
  *
  * @param string   $src     - ID of media file
- * @return array            - array(mediaID => array( kind, srclang, lang ))
+ * @return array            - array(mediaID => array( kind, srclang ))
  *
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  */
 function media_trackfiles($src){
-    global $code2lang;
     $kinds=array(
         'sub' => 'subtitles',
         'cap' => 'captions',
@@ -2483,7 +2482,6 @@ function media_trackfiles($src){
             $files[$baseid.'.'.$matches[1].'.'.$matches[2].'.vtt']=array(
                 $kinds[$matches[1]],
                 $matches[2],
-                $code2lang[$matches[2]]
             );
         }
     }

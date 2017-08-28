@@ -278,7 +278,7 @@ function init_paths(){
  */
 function init_lang($langCode) {
     //prepare language array
-    global $lang, $code2lang, $config_cascade;
+    global $lang, $config_cascade;
     $lang = array();
 
     //load the language files
@@ -299,7 +299,6 @@ function init_lang($langCode) {
             }
         }
     }
-    require(DOKU_INC.'inc/code2lang.php');
 }
 
 /**

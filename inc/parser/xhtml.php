@@ -1838,14 +1838,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         // output each track if any
         foreach( $tracks as $trackid => $info ) {
-            list( $kind, $srclang, $labellang ) = $info;
+            list( $kind, $srclang ) = $info;
             $out .= "<track kind=$kind srclang=$srclang ";
-            if( $labellang ) {
-                $out .= "lang=$srclang label=\"".hsc($labellang).'" ';
-            }
-            else {
-                $out .= "label=$srclang ";
-            }
+            $out .= "label=$srclang ";
             $out .= 'src="'.ml($trackid, '', true).'">'.NL;
         }
 
