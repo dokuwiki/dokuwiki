@@ -5,6 +5,11 @@
  */
 class ajax_requests_test extends DokuWikiTest {
 
+    /**
+     * DataProvider for the builtin Ajax calls
+     *
+     * @return array
+     */
     public function defaultCalls() {
         return [
             // TODO: better logic and DOM walks
@@ -23,9 +28,11 @@ class ajax_requests_test extends DokuWikiTest {
         ];
     }
 
-
     /**
      * @dataProvider defaultCalls
+     * @param string $call
+     * @param array $post
+     * @param string $regexp
      */
     public function test_defaultCallsExist($call, $post, $regexp) {
 
@@ -36,8 +43,6 @@ class ajax_requests_test extends DokuWikiTest {
         if (!empty($regexp)) {
             $this->assertRegExp($regexp, $response->getContent());
         }
-        
-        $this->assertTrue(function_exists('ajax_'.$call));
     }
 
     public function test_CallNotProvided() {
@@ -51,7 +56,6 @@ class ajax_requests_test extends DokuWikiTest {
         $request = new TestRequest();
         $response = $request->post(['call'=> $call], '/lib/exe/ajax.php');
         $this->assertEquals("AJAX call '$call' unknown!\n", $response->getContent());
-        $this->assertFalse(function_exists('ajax_'.$call));
     }
 
 
