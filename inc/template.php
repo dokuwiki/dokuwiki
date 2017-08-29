@@ -1581,30 +1581,37 @@ function tpl_actiondropdown($empty = '&nbsp;', $button = '&gt;') {
         'user_tools' => array('login', 'register', 'profile', 'admin'),
     );
 
-    echo '<form action="'.script().'" method="get" accept-charset="utf-8">';
-    echo '<div class="no">';
-    echo '<input type="hidden" name="id" value="'.$ID.'" />';
-    if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
-    if ($INPUT->server->str('REMOTE_USER')) {
-        echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
-    }
+    $evt = new Doku_Event('TEMPLATE_MOBILETOOLS_DISPLAY', $action_structure);
+    if ($evt->advise_before()) {
 
-    echo '<select name="do" class="edit quickselect" title="'.$lang['tools'].'">';
-    echo '<option value="">'.$empty.'</option>';
-
-    foreach($action_structure as $tools => $actions) {
-        echo '<optgroup label="'.$lang[$tools].'">';
-        foreach($actions as $action) {
-            $act = tpl_get_action($action);
-            if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+        echo '<form action="'.script().'" method="get" accept-charset="utf-8">';
+        echo '<div class="no">';
+        echo '<input type="hidden" name="id" value="'.$ID.'" />';
+        if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
+        if ($INPUT->server->str('REMOTE_USER')) {
+            echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
         }
-        echo '</optgroup>';
+
+        echo '<select name="do" class="edit quickselect" title="'.$lang['tools'].'">';
+        echo '<option value="">'.$empty.'</option>';
+
+        foreach($action_structure as $tools => $actions) {
+            echo '<optgroup label="'.$lang[$tools].'">';
+            foreach($actions as $action) {
+                $act = tpl_get_action($action);
+                if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+            }
+            echo '</optgroup>';
+        }
+
+        echo '</select>';
+        echo '<button type="submit">'.$button.'</button>';
+        echo '</div>';
+        echo '</form>';
+
     }
 
-    echo '</select>';
-    echo '<button type="submit">'.$button.'</button>';
-    echo '</div>';
-    echo '</form>';
+    $evt->advise_after();
 }
 
 /**
