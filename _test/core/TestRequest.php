@@ -18,7 +18,7 @@ function ob_start_callback($buffer) {
  */
 class TestRequest {
 
-    private $valid_scripts = array('/doku.php', '/lib/exe/fetch.php', '/lib/exe/detail.php');
+    private $valid_scripts = array('/doku.php', '/lib/exe/fetch.php', '/lib/exe/detail.php', '/lib/exe/ajax.php');
     private $script;
 
     private $server = array();
