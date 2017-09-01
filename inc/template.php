@@ -462,8 +462,10 @@ function tpl_getparent($id) {
  * @param string $type
  * @param bool $return
  * @return bool|string html, or false if no data, true if printed
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_button($type, $return = false) {
+    dbg_deprecated('see devel:menus');
     $data = tpl_get_action($type);
     if($data === false) {
         return false;
@@ -500,8 +502,10 @@ function tpl_button($type, $return = false) {
  * @param string $inner   innerHML of link
  * @param bool   $return  if true it returns html, otherwise prints
  * @return bool|string html or false if no data, true if printed
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = false) {
+    dbg_deprecated('see devel:menus');
     global $lang;
     $data = tpl_get_action($type);
     if($data === false) {
@@ -548,16 +552,16 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
 /**
  * Check the actions and get data for buttons and links
  *
- * @deprecated use \dokuwiki\Menu\Item\AbstractItem descendants instead
- *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Adrian Lang <mail@adrianlang.de>
  *
  * @param string $type
  * @return array|bool|string
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_get_action($type) {
+    dbg_deprecated('see devel:menus');
     if($type == 'history') $type = 'revisions';
     if($type == 'subscription') $type = 'subscribe';
     if($type == 'img_backto') $type = 'imgBackto';
@@ -612,8 +616,10 @@ function tpl_get_action($type) {
  * @param string        $suf suffix for links
  * @param string        $inner inner HTML for links
  * @return bool|string
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_action($type, $link = false, $wrapper = false, $return = false, $pre = '', $suf = '', $inner = '') {
+    dbg_deprecated('see devel:menus');
     $out = '';
     if($link) {
         $out .= tpl_actionlink($type, $pre, $suf, $inner, true);
@@ -1432,8 +1438,10 @@ function tpl_mediaTree() {
  *
  * @param string $empty empty option label
  * @param string $button submit button label
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_actiondropdown($empty = '', $button = '&gt;') {
+    dbg_deprecated('see devel:menus');
     $menu = new \dokuwiki\Menu\MobileMenu();
     echo $menu->getDropdown($empty, $button);
 }
@@ -1785,8 +1793,10 @@ function tpl_classes() {
  * @param string $toolsname name of menu
  * @param array $items
  * @param string $view e.g. 'main', 'detail', ...
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_toolsevent($toolsname, $items, $view = 'main') {
+    dbg_deprecated('see devel:menus');
     $data = array(
         'view' => $view,
         'items' => $items
