@@ -11,7 +11,7 @@ use dokuwiki\Menu\Item\AbstractItem;
  * It contains convenience functions to display the menu in HTML, but template authors can also
  * just accesst the items via getItems() and create the HTML as however they see fit.
  */
-abstract class AbstractMenu {
+abstract class AbstractMenu implements MenuInterface {
 
     /** @var string[] list of Item classes to load */
     protected $types = array();
