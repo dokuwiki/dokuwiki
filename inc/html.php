@@ -91,7 +91,7 @@ function html_denied() {
 function html_secedit($text,$show=true){
     global $INFO;
 
-    $regexp = '#<!-- EDIT(\d+) ([A-Z_]+) (?:"([^"]*)" )?\[(\d+-\d*)\] -->#';
+    $regexp = '#<!-- EDIT(\d+) ([A-Z_]+) (?:"([^"]*)" )(?:"([^"]*)" )?\[(\d+-\d*)\] -->#';
 
     if(!$INFO['writable'] || !$show || $INFO['rev']){
         return preg_replace($regexp,'',$text);
@@ -114,8 +114,9 @@ function html_secedit($text,$show=true){
 function html_secedit_button($matches){
     $data = array('secid'  => $matches[1],
                   'target' => strtolower($matches[2]),
+                  'hid' => strtolower($matches[4]),
                   'range'  => $matches[count($matches) - 1]);
-    if (count($matches) === 5) {
+    if (count($matches) === 6) {
         $data['name'] = $matches[3];
     }
 
@@ -368,15 +369,6 @@ function html_search(){
         $intro
     );
     echo $intro;
-    flush();
-
-    //show progressbar
-    print '<div id="dw__loading">'.NL;
-    print '<script type="text/javascript">/*<![CDATA[*/'.NL;
-    print 'showLoadBar();'.NL;
-    print '/*!]]>*/</script>'.NL;
-    print '</div>'.NL;
-    flush();
 
     //do quick pagesearch
     $data = ft_pageLookup($QUERY,true,useHeading('navigation'));
@@ -404,7 +396,6 @@ function html_search(){
         print '<div class="clearer"></div>';
         print '</div>';
     }
-    flush();
 
     //do fulltext search
     $regex = array();
@@ -425,18 +416,11 @@ function html_search(){
                 }
                 $num++;
             }
-            flush();
         }
         print '</dl>';
     }else{
         print '<div class="nothing">'.$lang['nothingfound'].'</div>';
     }
-
-    //hide progressbar
-    print '<script type="text/javascript">/*<![CDATA[*/'.NL;
-    print 'hideLoadBar("dw__loading");'.NL;
-    print '/*!]]>*/</script>'.NL;
-    flush();
 }
 
 /**
@@ -1062,7 +1046,8 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapp
         return '';
     }
 
-    $start_level = $data[0]['level'];
+    $firstElement = reset($data);
+    $start_level = $firstElement['level'];
     $level = $start_level;
     $ret   = '';
     $open  = 0;
@@ -1866,6 +1851,9 @@ function html_edit(){
     }
 
     $form->addHidden('target', $data['target']);
+    if ($INPUT->has('hid')) {
+        $form->addHidden('hid', $INPUT->str('hid'));
+    }
     $form->addElement(form_makeOpenTag('div', array('id'=>'wiki__editbar', 'class'=>'editBar')));
     $form->addElement(form_makeOpenTag('div', array('id'=>'size__ctl')));
     $form->addElement(form_makeCloseTag('div'));

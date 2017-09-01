@@ -982,6 +982,22 @@ if (!class_exists('setting_numericopt')) {
     class setting_numericopt extends setting_numeric {
         // just allow an empty config
         var $_pattern = '/^(|[-]?[0-9]+(?:[-+*][0-9]+)*)$/';
+
+
+        /**
+         * Empty string is valid for numericopt
+         *
+         * @param mixed $input
+         *
+         * @return bool
+         */
+        function update($input) {
+            if ($input === '') {
+                return true;
+            }
+
+            return parent::update($input);
+        }
     }
 }
 

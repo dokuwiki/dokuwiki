@@ -133,7 +133,7 @@ function load_autoload($name){
 
     // our own namespace
     if(substr($name, 0, 9) == 'dokuwiki/') {
-        $file = DOKU_INC . 'inc/'. substr($name, 9) . '.php';
+        $file = DOKU_INC . 'inc/' . substr($name, 9) . '.php';
         if(file_exists($file)) {
             require $file;
             return true;

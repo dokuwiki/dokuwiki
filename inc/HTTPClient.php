@@ -297,10 +297,15 @@ class HTTPClient {
 
         if($method == 'POST'){
             if(is_array($data)){
-                if($headers['Content-Type'] == 'multipart/form-data'){
-                    $headers['Content-Type']   = 'multipart/form-data; boundary='.$this->boundary;
+                if (empty($headers['Content-Type'])) {
+                    $headers['Content-Type'] = null;
+                }
+                switch ($headers['Content-Type']) {
+                case 'multipart/form-data':
+                    $headers['Content-Type']   = 'multipart/form-data; boundary=' . $this->boundary;
                     $data = $this->_postMultipartEncode($data);
-                }else{
+                    break;
+                default:
                     $headers['Content-Type']   = 'application/x-www-form-urlencoded';
                     $data = $this->_postEncode($data);
                 }
