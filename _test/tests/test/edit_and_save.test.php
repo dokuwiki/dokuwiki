@@ -17,7 +17,7 @@ class EditAndSaveTest extends DokuWikiTest {
         $request = new TestRequest();
 
         $input = array(
-            'id'     => 'wiki:editandsavetest'
+            'id'     => 'int:editandsavetest'
         );
 
         // Show page
@@ -106,7 +106,7 @@ class EditAndSaveTest extends DokuWikiTest {
         $request = new TestRequest();
 
         $input = array(
-            'id'     => 'wiki:editandsavetest'
+            'id'     => 'int:editandsavetest'
         );
 
         // Show page
