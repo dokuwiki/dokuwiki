@@ -4,15 +4,8 @@
  * runtime inspection.
  */
 
-// output buffering
-$output_buffer = '';
-
 $currentTestRequest = null;
 
-function ob_start_callback($buffer) {
-    global $output_buffer;
-    $output_buffer .= $buffer;
-}
 
 /**
  * Helper class to execute a fake request
@@ -27,6 +20,12 @@ class TestRequest {
     protected $get = array();
     protected $post = array();
     protected $notifications = array();
+
+    /** @var string stores the output buffer, even when it's flushed */
+    protected $output_buffer = '';
+
+    /** @var null|TestRequest the currently running request */
+    static protected $running = null;
 
     /**
      * Get a $_SERVER var
@@ -154,19 +153,20 @@ class TestRequest {
         $_REQUEST = array_merge($_GET, $_POST);
 
         // reset output buffer
-        global $output_buffer;
-        $output_buffer = '';
+        $this->output_buffer = '';
 
         // now execute dokuwiki and grep the output
+        self::$running = $this;
         header_remove();
-        ob_start('ob_start_callback');
+        ob_start(array($this, 'ob_start_callback'));
         $INPUT = new Input();
         include(DOKU_INC . $this->script);
         ob_end_flush();
+        self::$running = null;
 
         // create the response object
         $response = new TestResponse(
-            $output_buffer,
+            $this->output_buffer,
             (function_exists('xdebug_get_headers') ? xdebug_get_headers() : headers_list())   // cli sapi doesn't do headers, prefer xdebug_get_headers() which works under cli
         );
         if($this->notifications != null) {
@@ -247,6 +247,18 @@ class TestRequest {
         $this->get = array_merge($this->get, $get);
         $this->setServer('REQUEST_METHOD', 'GET');
         return $this->execute($uri);
+    }
+
+    /**
+     * Callback for ob_start
+     *
+     * This continues to fill our own buffer, even when some part
+     * of the code askes for flushing the buffers
+     *
+     * @param string $buffer
+     */
+    public function ob_start_callback($buffer) {
+        $this->output_buffer .= $buffer;
     }
 
     /**
