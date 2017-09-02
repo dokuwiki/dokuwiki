@@ -201,6 +201,24 @@ function js_pluginscripts(){
     $plugins = plugin_list();
     foreach ($plugins as $p){
         $list[] = DOKU_PLUGIN."$p/script.js";
+        // check for additional scripts
+        $path = DOKU_PLUGIN."$p/scripts";
+        if(is_dir($path)) {
+            $plugin_scripts = array_filter(scandir($path),
+                function($file) {
+                    if ($file === '.' || $file === '..') {
+                        return false;
+                    }
+                    $ext = pathinfo($file, PATHINFO_EXTENSION);
+                    if ($ext != 'js') {
+                        return false;
+                    }
+                    return true;
+                });
+            foreach ($plugin_scripts as $script) {
+                $list[] =  $path.'/'.$script;
+            }            
+        }
     }
     return $list;
 }
