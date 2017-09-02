@@ -527,6 +527,9 @@ function nice_die($msg){
 </body>
 </html>
 EOT;
+    if(defined('DOKU_UNITTEST')) {
+        throw new RuntimeException('nice_die: '.$msg);
+    }
     exit(1);
 }
 
