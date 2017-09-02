@@ -21,4 +21,16 @@ class Top extends AbstractItem {
         $this->context = self::CTX_DESKTOP;
     }
 
+    /**
+     * Convenience method to create a <button> element
+     *
+     * Uses html_topbtn()
+     *
+     * @todo this does currently not support the SVG icon
+     * @return string
+     */
+    public function asHtmlButton() {
+        return html_topbtn();
+    }
+
 }

@@ -167,6 +167,26 @@ abstract class AbstractItem {
     }
 
     /**
+     * Convenience method to create a <button> element inside it's own form element
+     *
+     * Uses html_btn()
+     *
+     * @todo this does currently not support the SVG icon
+     * @return string
+     */
+    public function asHtmlButton() {
+        return html_btn(
+            $this->getType(),
+            $this->id,
+            $this->getAccesskey(),
+            $this->getParams(),
+            $this->method,
+            $this->getTitle(),
+            $this->getLabel()
+        );
+    }
+
+    /**
      * Should this item be shown in the given context
      *
      * @param int $ctx the current context
