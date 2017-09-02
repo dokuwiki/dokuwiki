@@ -164,7 +164,7 @@ function html_secedit_get_button($data) {
 function html_topbtn(){
     global $lang;
 
-    $ret  = '<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="'.$lang['btn_top'].'" onclick="window.scrollTo(0, 0)" title="'.$lang['btn_top'].'" /></a>';
+    $ret  = '<a class="nolink" href="#dokuwiki__top"><button class="button" onclick="window.scrollTo(0, 0)" title="'.$lang['btn_top'].'">'.$lang['btn_top'].'</button></a>';
 
     return $ret;
 }
