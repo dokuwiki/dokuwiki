@@ -17,6 +17,8 @@ class Register extends AbstractItem {
         if($INPUT->server->str('REMOTE_USER')) {
             throw new \RuntimeException("no register when already logged in");
         }
+
+        $this->svg = DOKU_INC . 'lib/images/menu/account-plus.svg';
     }
 
 }
