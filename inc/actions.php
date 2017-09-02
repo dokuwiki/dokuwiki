@@ -8,9 +8,12 @@
 
 if(!defined('DOKU_INC')) die('meh.');
 
-
+/**
+ * All action processing starts here
+ */
 function act_dispatch(){
-    $router = \dokuwiki\ActionRouter::getInstance(); // is this needed here or could we delegate it to tpl_content() later?
+    // always initialize on first dispatch (test request may dispatch mutliple times on one request)
+    $router = \dokuwiki\ActionRouter::getInstance(true);
 
     $headers = array('Content-Type: text/html; charset=utf-8');
     trigger_event('ACTION_HEADERS_SEND',$headers,'act_sendheaders');

@@ -19,7 +19,7 @@ class ActionRouter {
     protected $action;
 
     /** @var  ActionRouter */
-    protected static $instance;
+    protected static $instance = null;
 
     /** @var int transition counter */
     protected $transitions = 0;
@@ -149,12 +149,16 @@ class ActionRouter {
      * When a FataException instanc is passed, the code is treated as Status code
      *
      * @param \Exception|FatalException $e
+     * @throws FatalException during unit testing
      */
     protected function handleFatalException(\Exception $e) {
         if(is_a($e, FatalException::class)) {
             http_status($e->getCode());
         } else {
             http_status(500);
+        }
+        if(defined('DOKU_UNITTEST')) {
+            throw $e;
         }
         $msg = 'Something unforseen has happened: ' . $e->getMessage();
         nice_die(hsc($msg));

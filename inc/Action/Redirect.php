@@ -44,7 +44,7 @@ class Redirect extends AbstractAliasAction {
         trigger_event('ACTION_SHOW_REDIRECT', $opts, array($this, 'redirect'));
 
         // should never be reached
-        throw new ActionAbort();
+        throw new ActionAbort('show');
     }
 
     /**
