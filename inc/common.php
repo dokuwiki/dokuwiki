@@ -1924,16 +1924,16 @@ function send_redirect($url) {
         header('Location: '.$url);
     }
 
+    // no exits during unit tests
     if(defined('DOKU_UNITTEST')) {
-        global $currentTestRequest;
-        if ($currentTestRequest != null) {
-            // Create a notification which later can we queried from the TestResponse by
-            // calling 'getNotifications()'.
-            $currentTestRequest->addNotification (array('name' => 'send_redirect', 'url' => $url));
+        // pass info about the redirect back to the test suite
+        $testRequest = TestRequest::getRunning();
+        if($testRequest !== null) {
+            $testRequest->addData('send_redirect', $url);
         }
-        // no exits during unit tests
         return;
     }
+
     exit;
 }
 

@@ -81,16 +81,10 @@ class EditAndSaveTest extends DokuWikiTest {
 
         // The response should carry a notification that a redirect
         // was executed to our header ID
-        $found = null;
-        $notifications = $response->getNotifications();
-        foreach ($notifications as $notification) {
-            if ($notification['name'] == 'send_redirect') {
-                $found = &$notification;
-            }
-        }
-        $this->assertTrue($found !== null);
-        $hash = strpos($found['url'], '#');
-        $headerID = substr($found['url'], $hash);
+        $found = $response->getData('send_redirect');
+        $this->assertCount(1, $found);
+        $hash = strpos($found[0], '#');
+        $headerID = substr($found[0], $hash);
         $this->assertEquals($headerID, '#'.$idA[1]);
     }
 
@@ -170,16 +164,10 @@ class EditAndSaveTest extends DokuWikiTest {
 
         // The response should carry a notification that a redirect
         // was executed to our header ID
-        $found = null;
-        $notifications = $response->getNotifications();
-        foreach ($notifications as $notification) {
-            if ($notification['name'] == 'send_redirect') {
-                $found = &$notification;
-            }
-        }
-        $this->assertTrue($found !== null);
-        $hash = strpos($found['url'], '#');
-        $headerID = substr($found['url'], $hash);
+        $found = $response->getData('send_redirect');
+        $this->assertCount(1, $found);
+        $hash = strpos($found[0], '#');
+        $headerID = substr($found[0], $hash);
         $this->assertEquals($headerID, '#'.$idB[1]);
     }
 }

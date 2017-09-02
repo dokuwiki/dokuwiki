@@ -4,9 +4,6 @@
  * runtime inspection.
  */
 
-$currentTestRequest = null;
-
-
 /**
  * Helper class to execute a fake request
  */
@@ -19,7 +16,7 @@ class TestRequest {
     protected $session = array();
     protected $get = array();
     protected $post = array();
-    protected $notifications = array();
+    protected $data = array();
 
     /** @var string stores the output buffer, even when it's flushed */
     protected $output_buffer = '';
@@ -124,9 +121,6 @@ class TestRequest {
      */
     public function execute($uri = '/doku.php') {
         global $INPUT;
-        global $currentTestRequest;
-
-        $currentTestRequest = $this;
 
         // save old environment
         $server = $_SERVER;
@@ -167,11 +161,10 @@ class TestRequest {
         // create the response object
         $response = new TestResponse(
             $this->output_buffer,
-            (function_exists('xdebug_get_headers') ? xdebug_get_headers() : headers_list())   // cli sapi doesn't do headers, prefer xdebug_get_headers() which works under cli
+            // cli sapi doesn't do headers, prefer xdebug_get_headers() which works under cli
+            (function_exists('xdebug_get_headers') ? xdebug_get_headers() : headers_list()),
+            $this->data
         );
-        if($this->notifications != null) {
-            $response->setNotifications($this->notifications);
-        }
 
         // reset environment
         $_SERVER = $server;
@@ -180,8 +173,6 @@ class TestRequest {
         $_POST = $post;
         $_REQUEST = $request;
         $INPUT = $input;
-
-        $currentTestRequest = null;
 
         return $response;
     }
@@ -262,9 +253,28 @@ class TestRequest {
     }
 
     /**
-     * Add a notification to later store it in the test respone.
+     * Access the TestRequest from the executed code
+     *
+     * This allows certain functions to access the TestRequest that is accessing them
+     * to add additional info.
+     *
+     * @return null|TestRequest the currently executed request if any
      */
-    public function addNotification(array $new) {
-        $this->notifications[] = $new;
+    public static function getRunning() {
+        return self::$running;
+    }
+
+    /**
+     * Store data to be read in the response later
+     *
+     * When called multiple times with the same key, the data is appended to this
+     * key's array
+     *
+     * @param string $key the identifier for this information
+     * @param mixed $value arbitrary data to store
+     */
+    public function addData($key, $value) {
+        if(!isset($this->data[$key])) $this->data[$key] = array();
+        $this->data[$key][] = $value;
     }
 }
