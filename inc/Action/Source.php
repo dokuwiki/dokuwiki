@@ -17,8 +17,20 @@ class Source extends AbstractAction {
     }
 
     /** @inheritdoc */
+    public function preProcess() {
+        global $TEXT;
+        global $INFO;
+        global $ID;
+        global $REV;
+
+        if($INFO['exists']) {
+            $TEXT = rawWiki($ID, $REV);
+        }
+    }
+
+    /** @inheritdoc */
     public function tplContent() {
-        html_edit(); // FIXME is this correct? Should we split it off completely?
+        html_edit();
     }
 
 }
