@@ -5,8 +5,8 @@ namespace dokuwiki\Menu\Item;
 /**
  * Class Back
  *
- * @fixme where is this used?
- * @fixme missing SVG
+ * Navigates back up one namepspace. This is currently not used in any menu. Templates
+ * would need to add this item manually.
  */
 class Back extends AbstractItem {
 
@@ -23,6 +23,7 @@ class Back extends AbstractItem {
         $this->id = $parent;
         $this->params = array('do' => '');
         $this->accesskey = 'b';
+        $this->svg = DOKU_INC . 'lib/images/menu/12-back_arrow-left.svg';
     }
 
 }

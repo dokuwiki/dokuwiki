@@ -17,6 +17,8 @@ class Resendpwd extends AbstractItem {
         if($INPUT->server->str('REMOTE_USER')) {
             throw new \RuntimeException("no resendpwd when already logged in");
         }
+
+        $this->svg = DOKU_INC . 'lib/images/menu/lock-reset.svg';
     }
 
 }
