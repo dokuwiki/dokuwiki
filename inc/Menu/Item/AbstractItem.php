@@ -44,6 +44,8 @@ abstract class AbstractItem {
     protected $svg = DOKU_INC . 'lib/images/menu/00-default_checkbox-blank-circle-outline.svg';
     /** @var string can be set to overwrite the default lookup in $lang.btn_* */
     protected $label = '';
+    /** @var string the tooltip title, defaults to $label */
+    protected $title = '';
     /** @var int the context this titme is shown in */
     protected $context = self::CTX_ALL;
 
@@ -88,6 +90,19 @@ abstract class AbstractItem {
     }
 
     /**
+     * Return this item's title
+     *
+     * This title should be used to display a tooltip (using the HTML title attribute). If
+     * a title property was not explicitly set, the label will be returned.
+     *
+     * @return string
+     */
+    public function getTitle() {
+        if($this->title === '') return $this->getLabel();
+        return $this->title;
+    }
+
+    /**
      * Return the link this item links to
      *
      * Basically runs wl() on $id and $params. However if the ID is a hash it is used directly
@@ -116,7 +131,7 @@ abstract class AbstractItem {
     public function getLinkAttributes($classprefix = 'menuitem ') {
         $attr = array(
             'href' => $this->getLink(),
-            'title' => $this->getLabel(),
+            'title' => $this->getTitle(),
         );
         if($this->isNofollow()) $attr['rel'] = 'nofollow';
         if($this->getAccesskey()) {
