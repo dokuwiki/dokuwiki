@@ -7,6 +7,7 @@
  */
 class HTTPMockClient extends HTTPClient {
     protected $tries;
+    protected $lasturl;
 
     /**
      * Sets shorter timeout
@@ -34,11 +35,13 @@ class HTTPMockClient extends HTTPClient {
      * @return bool
      */
     public function sendRequest($url, $data = '', $method = 'GET') {
+        $this->lasturl = $url;
         $this->tries = 2; // configures the number of retries
         $return      = false;
         while($this->tries) {
             $return = parent::sendRequest($url, $data, $method);
-            if($this->status != -100) break;
+            if($this->status != -100 && $this->status != 408) break;
+            usleep((3 - $this->tries) * 250000);
             $this->tries--;
         }
         return $return;
@@ -53,6 +56,7 @@ class HTTPMockClient extends HTTPClient {
     public function errorInfo($info = '') {
         return json_encode(
             array(
+                'URL' => $this->lasturl,
                 'Error' => $this->error,
                 'Status' => $this->status,
                 'Body' => $this->resp_body,
