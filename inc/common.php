@@ -1111,6 +1111,7 @@ function parsePageTemplate(&$data) {
         array(
              '@ID@',
              '@NS@',
+             '@CURNS@',
              '@FILE@',
              '@!FILE@',
              '@!FILE!@',
@@ -1126,6 +1127,7 @@ function parsePageTemplate(&$data) {
         array(
              $id,
              getNS($id),
+             curNS($id),
              $file,
              utf8_ucfirst($file),
              utf8_strtoupper($file),
