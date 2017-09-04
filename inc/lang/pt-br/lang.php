@@ -27,6 +27,7 @@
  * @author Hudson FAS <hudsonfas@gmail.com>
  * @author Guilherme Cardoso <guicardoso@gmail.com>
  * @author Viliam Dias <viliamjr@gmail.com>
+ * @author tarcizio walter <tarcizioduartewalter@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
