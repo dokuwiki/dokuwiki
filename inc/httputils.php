@@ -67,9 +67,10 @@ function http_conditionalRequest($timestamp){
  * @author Chris Smith <chris@jalakai.co.uk>
  *
  * @param string $file absolute path of file to send
+ * @param bool $exit set to false in case you want to return instead of exit
  * @returns  void or exits with previous header() commands executed
  */
-function http_sendfile($file) {
+function http_sendfile($file,$exit=true) {
     global $conf;
 
     //use x-sendfile header to pass the delivery to compatible web servers
@@ -86,7 +87,8 @@ function http_sendfile($file) {
         $file = DOKU_REL.substr($file, strlen(fullpath(DOKU_INC)) + 1);
         header("X-Accel-Redirect: $file");
         ob_end_clean();
-        exit;
+	if($exit) exit;
+	return;
     }
 }
 
@@ -98,10 +100,11 @@ function http_sendfile($file) {
  * @param resource $fh - file handle for an already open file
  * @param int $size     - size of the whole file
  * @param int $mime     - MIME type of the file
+ * @param bool $exit set to false in case you want to return instead of exit
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function http_rangeRequest($fh,$size,$mime){
+function http_rangeRequest($fh,$size,$mime,$exit=true){
     $ranges  = array();
     $isrange = false;
 
@@ -127,7 +130,12 @@ function http_rangeRequest($fh,$size,$mime){
                 if ($start > $end || $start > $size || $end > $size){
                     header('HTTP/1.1 416 Requested Range Not Satisfiable');
                     print 'Bad Range Request!';
-                    exit;
+		    if($exit){
+                        exit;
+		    }
+		    else{
+			return false;
+		    }
                 }
                 $len = $end - $start + 1;
                 $ranges[] = array($start,$end,$len);
@@ -181,8 +189,8 @@ function http_rangeRequest($fh,$size,$mime){
     }
 
     // everything should be done here, exit (or return if testing)
-    if (defined('SIMPLE_TEST')) return;
-    exit;
+    if ($exit) exit;
+    return;
 }
 
 /**
