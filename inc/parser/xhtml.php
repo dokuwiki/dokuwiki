@@ -1339,7 +1339,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $class .= ' ' . $classes;
         }
         if($pos !== null) {
-            $class .= ' '.$this->startSectionEdit($pos, 'table');
+            $hid = $this->_headerToLink($class, true);
+            $class .= ' '.$this->startSectionEdit($pos, 'table', '', $hid);
         }
         $this->doc .= '<div class="'.$class.'"><table class="inline">'.
             DOKU_LF;

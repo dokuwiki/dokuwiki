@@ -91,7 +91,7 @@ function html_denied() {
 function html_secedit($text,$show=true){
     global $INFO;
 
-    $regexp = '#<!-- EDIT(\d+) ([A-Z_]+) (?:"([^"]*)" )(?:"([^"]*)" )?\[(\d+-\d*)\] -->#';
+    $regexp = '#<!-- EDIT(?<secid>\d+) (?<target>[A-Z_]+) (?:"(?<name>[^"]*)" )?(?:"(?<hid>[^"]*)" )?\[(?<range>\d+-\d*)\] -->#';
 
     if(!$INFO['writable'] || !$show || $INFO['rev']){
         return preg_replace($regexp,'',$text);
@@ -112,12 +112,16 @@ function html_secedit($text,$show=true){
  * @triggers HTML_SECEDIT_BUTTON
  */
 function html_secedit_button($matches){
-    $data = array('secid'  => $matches[1],
-                  'target' => strtolower($matches[2]),
-                  'hid' => strtolower($matches[4]),
-                  'range'  => $matches[count($matches) - 1]);
-    if (count($matches) === 6) {
-        $data['name'] = $matches[3];
+    $data = array('secid'  => $matches['secid'],
+        'target' => strtolower($matches['target']),
+        'range'  => $matches['range']);
+
+    if (!empty($matches['hid'])) {
+        $data['hid'] = strtolower($matches['hid']);
+    }
+
+    if (!empty($matches['name'])) {
+        $data['name'] = $matches['name'];
     }
 
     return trigger_event('HTML_SECEDIT_BUTTON', $data,
