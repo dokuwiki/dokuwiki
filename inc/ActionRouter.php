@@ -68,10 +68,10 @@ class ActionRouter {
      * Instantiates the right class, runs permission checks and pre-processing and
      * sets $action
      *
-     * @param string $actionname
+     * @param string $actionname this is passed as a reference to $ACT, for plugin backward compatibility
      * @triggers ACTION_ACT_PREPROCESS
      */
-    protected function setupAction($actionname) {
+    protected function setupAction(&$actionname) {
         $presetup = $actionname;
 
         try {
