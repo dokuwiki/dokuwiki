@@ -241,7 +241,7 @@ abstract class AbstractItem {
      */
     public function getLegacyData() {
         return array(
-            'accesskey' => $this->accesskey ? $this->accesskey : null,
+            'accesskey' => $this->accesskey ?: null,
             'type' => $this->type,
             'id' => $this->id,
             'method' => $this->method,
