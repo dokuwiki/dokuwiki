@@ -14,6 +14,7 @@
  * @author Pavel <pavelholovko@yandex.ru>
  * @author Maksim <nikropol@yandex.ru>
  * @author Nina Zolotova <nina-z@i.ua>
+ * @author Roman <vsmemorial@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -207,6 +208,7 @@ $lang['tools']                 = 'Налаштування';
 $lang['user_tools']            = 'Користувальницькькі налаштування';
 $lang['site_tools']            = 'Налаштування сайту';
 $lang['page_tools']            = 'Налаштування сторінки';
+$lang['skip_to_content']       = 'Перейти до змісту';
 $lang['sidebar']               = 'Сайдбар';
 $lang['mail_newpage']          = 'сторінку додано:';
 $lang['mail_changed']          = 'сторінку змінено:';
