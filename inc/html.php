@@ -8,6 +8,10 @@
 
 if(!defined('DOKU_INC')) die('meh.');
 if(!defined('NL')) define('NL',"\n");
+if (!defined('SEC_EDIT_PATTERN')) {
+    define('SEC_EDIT_PATTERN', '#<!-- EDIT(?<secid>\d+) (?<target>[A-Z_]+) (?:"(?<name>[^"]*)" )?(?:"(?<hid>[^"]*)" )?\[(?<range>\d+-\d*)\] -->#');
+}
+
 
 /**
  * Convenience function to quickly build a wikilink
@@ -91,13 +95,11 @@ function html_denied() {
 function html_secedit($text,$show=true){
     global $INFO;
 
-    $regexp = '#<!-- EDIT(?<secid>\d+) (?<target>[A-Z_]+) (?:"(?<name>[^"]*)" )?(?:"(?<hid>[^"]*)" )?\[(?<range>\d+-\d*)\] -->#';
-
     if(!$INFO['writable'] || !$show || $INFO['rev']){
-        return preg_replace($regexp,'',$text);
+        return preg_replace(SEC_EDIT_PATTERN,'',$text);
     }
 
-    return preg_replace_callback($regexp,
+    return preg_replace_callback(SEC_EDIT_PATTERN,
                 'html_secedit_button', $text);
 }
 
