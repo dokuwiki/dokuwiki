@@ -155,6 +155,10 @@ $conf['broken_iua']  = 0;                //Platform with broken ignore_user_abor
 $conf['xsendfile']   = 0;                //Use X-Sendfile (1 = lighttpd, 2 = standard)
 $conf['renderer_xhtml'] = 'xhtml';       //renderer to use for main page generation
 $conf['readdircache'] = 0;               //time cache in second for the readdir operation, 0 to deactivate.
+$conf['rev_handle'] = 'normal';          //when displaying an old page revision:
+                                         //  0: parese as normal wiki page
+                                         //  1: parse links as in normal wiki page, medias as in "&at="
+                                         //  2: use "&at=" instead of "&rev=" in "Old revisions" list
 
 /* Network Settings */
 $conf['dnslookups'] = 1;                 //disable to disallow IP to hostname lookups
