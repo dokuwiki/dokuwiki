@@ -236,7 +236,7 @@ function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label
 /**
  * show a revision warning
  *
- * @author Szymon Olewniczak <dokuwiki@imz.re>
+ * @author Szymon Olewniczak <solewniczak@rid.pl>
  */
 function html_showrev() {
     print p_locale_xhtml('showrev');
