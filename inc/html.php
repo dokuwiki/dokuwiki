@@ -446,6 +446,19 @@ function html_locked(){
 }
 
 /**
+ * Return the revision url
+ *
+ * @author Szymon Olewniczak <solewniczak@rid.pl>
+ *
+ * @param $id
+ * @param $rev
+ * @return string
+ */
+function html_revision_link($id, $rev) {
+    return wl($id,"rev=$rev",false,'&');
+}
+
+/**
  * list old revisions
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -630,7 +643,7 @@ function html_revisions($first=0, $media_id = false){
             $form->addElement(form_makeCloseTag('a'));
 
             if (!$media_id) {
-                $href = wl($id,"rev=$rev",false,'&');
+                $href = html_revision_link($id, $rev);
             } else {
                 $href = media_managerURL(array('image' => $id, 'tab_details' => 'view', 'rev' => $rev), '&');
             }
