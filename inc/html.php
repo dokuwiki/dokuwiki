@@ -455,7 +455,13 @@ function html_locked(){
  * @return string
  */
 function html_revision_link($id, $rev) {
-    return wl($id,"rev=$rev",false,'&');
+    global $conf;
+
+    $rev_var = 'rev';
+    if ($conf['rev_handle'] == 'at') {
+        $rev_var = 'at';
+    }
+    return wl($id,"$rev_var=$rev",false,'&');
 }
 
 /**
@@ -550,7 +556,7 @@ function html_revisions($first=0, $media_id = false){
             $pagelog = new PageChangeLog($ID);
             $latestrev = $pagelog->getRevisions(-1, 1);
             $latestrev = array_pop($latestrev);
-            $href = wl($id,"rev=$latestrev",false,'&');
+            $href = html_revision_link($id, $latestrev);
             $summary = $INFO['sum'];
             $editor = $INFO['editor'];
         }
