@@ -458,7 +458,7 @@ function html_revision_link($id, $rev) {
     global $conf;
 
     $rev_var = 'rev';
-    if ($conf['rev_handle'] == 'at') {
+    if ($conf['rev_handle'] != 'normal') {
         $rev_var = 'at';
     }
     return wl($id,"$rev_var=$rev",false,'&');
