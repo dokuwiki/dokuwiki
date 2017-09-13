@@ -13,7 +13,7 @@ class html_revision_link extends DokuWikiTest {
 
         $this->assertEquals(
             DOKU_BASE.DOKU_SCRIPT.'?id='.$id.'&rev='.$rev,
-            html_revision_link($id, $rev)
+            html_revision_link($id, $rev, 'wl', '&')
         );
     }
 
@@ -27,8 +27,8 @@ class html_revision_link extends DokuWikiTest {
         $id = ':wiki:syntax';
 
         $this->assertEquals(
-            DOKU_BASE.DOKU_SCRIPT.'?id='.$id.'&rev='.$rev,
-            html_revision_link($id, $rev)
+            DOKU_BASE.DOKU_SCRIPT.'?id='.$id.'&at='.$rev,
+            html_revision_link($id, $rev, 'wl', '&')
         );
     }
 
@@ -43,7 +43,7 @@ class html_revision_link extends DokuWikiTest {
 
         $this->assertEquals(
             DOKU_BASE.DOKU_SCRIPT.'?id='.$id.'&at='.$rev,
-            html_revision_link($id, $rev)
+            html_revision_link($id, $rev, 'wl', '&')
         );
     }
 }
