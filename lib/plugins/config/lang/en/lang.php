@@ -173,9 +173,9 @@ $lang['renderer_xhtml']   = 'Renderer to use for main (xhtml) wiki output';
 $lang['renderer__core']   = '%s (dokuwiki core)';
 $lang['renderer__plugin'] = '%s (plugin)';
 $lang['rev_handle']  = 'How to handle old revisions?';
-$lang['rev_handle_o_normal']     = 'as normal wiki pages (default)';
-$lang['rev_handle_o_only_media'] = 'links normally; medias as in "&at="';
-$lang['rev_handle_o_at']         = 'use "&at=" instead of "&rev="';
+$lang['rev_handle_o_normal']     = 'parse them as standard wiki pages (default)';
+$lang['rev_handle_o_only_media'] = 'internal links works normally, media files points to historical versions';
+$lang['rev_handle_o_at']         = 'links and media files points to historical versions';
 
 /* Network Options */
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
