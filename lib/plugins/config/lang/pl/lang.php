@@ -145,10 +145,6 @@ $lang['xsendfile']             = 'Użyj nagłówka HTTP X-Sendfile w celu przesy
 $lang['renderer_xhtml']        = 'Mechanizm renderowania głównej treści strony (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki)';
 $lang['renderer__plugin']      = '%s (wtyczka)';
-$lang['rev_handle']            = 'Jak obsługiwać historyczne wersje?';
-$lang['rev_handle_o_normal']     = 'jak każdą stronę wiki (domyślnie)';
-$lang['rev_handle_o_only_media'] = 'linki zwyczajnie; media jak w "&at="';
-$lang['rev_handle_o_at']         = 'używaj "&at=" zamiast "&rev="';
 $lang['dnslookups']            = 'DokiWiki wyszuka nazwy hostów dla zdalnych adresów IP użytkowników edytujących strony. Jeśli twój serwer DNS działa zbyt wolno, uległ awarii lub nie chcesz używać wyszukiwania, wyłącz tę opcję.';
 $lang['proxy____host']         = 'Proxy - serwer';
 $lang['proxy____port']         = 'Proxy - port';
