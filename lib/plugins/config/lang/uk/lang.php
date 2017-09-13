@@ -12,6 +12,7 @@
  * @author Kate Arzamastseva pshns@ukr.net
  * @author Maksim <nikropol@yandex.ru>
  * @author Nina Zolotova <nina-z@i.ua>
+ * @author Roman <vsmemorial@gmail.com>
  */
 $lang['menu']                  = 'Налаштування Вікі';
 $lang['error']                 = 'Параметри не збережено через помилкові значення. Будь ласка, перегляньте ваші зміни та спробуйте ще раз
