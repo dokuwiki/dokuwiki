@@ -174,8 +174,8 @@ $lang['renderer__core']   = '%s (dokuwiki core)';
 $lang['renderer__plugin'] = '%s (plugin)';
 $lang['rev_handle']  = 'How to handle old revisions?';
 $lang['rev_handle_o_normal']     = 'parse them as standard wiki pages (default)';
-$lang['rev_handle_o_only_media'] = 'internal links works normally, media files points to historical versions';
-$lang['rev_handle_o_at']         = 'links and media files points to historical versions';
+$lang['rev_handle_o_only_media'] = 'internal links works normally, media files point to historical versions';
+$lang['rev_handle_o_at']         = 'links and media files point to historical versions';
 
 /* Network Options */
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
