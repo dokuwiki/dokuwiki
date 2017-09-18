@@ -131,8 +131,8 @@ class AggregationCloud {
         if (is_array($tagValue)) {
             $tagValue = $tagValue[0];
         }
-        $key = $value->getColumn()->getFullQualifiedLabel() . '*~';
-        $filter = SearchConfigParameters::$PARAM_FILTER . "[$key]=" . urlencode($tagValue);
+        $key = $value->getColumn()->getFullQualifiedLabel() . '=';
+        $filter = SearchConfigParameters::$PARAM_FILTER . '[' . urlencode($key) . ']=' . urlencode($tagValue);
 
         $this->renderer->listitem_open(1);
         $this->renderer->listcontent_open();
