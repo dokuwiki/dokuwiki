@@ -203,4 +203,54 @@ class SearchConfigParameter_struct_test extends StructTest {
         $this->assertArrayNotHasKey('sort', $conf);
         $this->assertArrayNotHasKey(meta\SearchConfigParameters::$PARAM_SORT, $param);
     }
+
+    public function test_pagination() {
+        global $INPUT;
+
+        $data = array(
+            'schemas' => array(
+                array('schema2', 'alias2'),
+            ),
+            'cols' => array(
+                'afirst'
+            ),
+            'rownumbers' => '1',
+            'limit' => '5',
+        );
+
+        $R = new \Doku_Renderer_xhtml();
+        // init with offset
+        $INPUT->set(meta\SearchConfigParameters::$PARAM_OFFSET, 5);
+        //$params[meta\SearchConfigParameters::$PARAM_OFFSET] = 25;
+        $searchConfig = new meta\SearchConfig($data);
+        $aggregationTable = new meta\AggregationTable('test_pagination', 'xhtml', $R, $searchConfig);
+        $aggregationTable->render();
+        $expect = '<div class="structaggregation"><div class="table"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0">#</th><th  data-field="schema2.afirst"><a href="/./doku.php?id=test_pagination&amp;ofs=5&amp;srt=schema2.afirst" class="" title="Sort by this column">afirst</a></th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr class="row1" data-pid="page14"><td class="col0">6</td><td class="col1">page14 first data</td>
+	</tr>
+	<tr class="row2" data-pid="page15"><td class="col0">7</td><td class="col1">page15 first data</td>
+	</tr>
+	<tr class="row3" data-pid="page16"><td class="col0">8</td><td class="col1">page16 first data</td>
+	</tr>
+	<tr class="row4" data-pid="page17"><td class="col0">9</td><td class="col1">page17 first data</td>
+	</tr>
+	<tr class="row5" data-pid="page18"><td class="col0">10</td><td class="col1">page18 first data</td>
+	</tr>
+	</tbody>
+	<tfoot>
+	<tr class="row6">
+		<th class="col0" colspan="2"><a href="/./doku.php?id=test_pagination" class="prev">Previous page</a><a href="/./doku.php?id=test_pagination&amp;ofs=10" class="next">Next page</a></th>
+	</tr>
+	</tfoot>
+</table></div>
+</div>';
+
+        $this->assertEquals($expect, $R->doc);
+    }
 }

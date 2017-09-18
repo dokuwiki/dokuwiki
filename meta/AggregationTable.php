@@ -360,7 +360,8 @@ class AggregationTable {
         // row number column
         if($this->data['rownumbers']) {
             $this->renderer->tablecell_open();
-            $this->renderer->cdata($rownum + 1);
+            $searchConfigConf = $this->searchConfig->getConf();
+            $this->renderer->cdata($rownum + $searchConfigConf['offset'] + 1);
             $this->renderer->tablecell_close();
         }
 
