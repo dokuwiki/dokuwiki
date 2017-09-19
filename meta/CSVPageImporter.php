@@ -152,12 +152,6 @@ class CSVPageImporter extends CSVImporter {
                 return false;
             }
             if(page_exists($pid)) {
-                //check if schema is assigned to page
-                $tables = Assignments::getInstance()->getPageAssignments($pid, true);
-                if (!in_array($this->schema->getTable(), $tables)) {
-                    $this->errors[] = 'Schema not assigned to page "'.$pid.'"';
-                    return false;
-                }
                 $this->importedPids[$pid] = true;
                 return true;
             }
