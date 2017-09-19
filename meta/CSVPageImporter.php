@@ -4,6 +4,9 @@ namespace dokuwiki\plugin\struct\meta;
 use dokuwiki\plugin\struct\types\Page;
 
 class CSVPageImporter extends CSVImporter {
+
+    protected $importedPids = array();
+
     /**
      * Chceck if schema is page schema
      *
@@ -50,8 +53,7 @@ class CSVPageImporter extends CSVImporter {
         $colnames = join(', ', $colnames);
         $table = $this->schema->getTable();
 
-        //replace previous data
-        return "REPLACE INTO data_$table ($colnames, latest) VALUES ($placeholds, 1)";
+        return "INSERT INTO data_$table ($colnames, latest) VALUES ($placeholds, 1)";
     }
 
     /**
@@ -63,8 +65,22 @@ class CSVPageImporter extends CSVImporter {
      * @param string   $multi
      */
     protected function saveLine($values, $line, $single, $multi) {
-        //read the lastest revision of inserted page
-        $values[] = @filemtime(wikiFN($values[0]));
+        //create new page revision
+        $pid = $values[0];
+        $helper = plugin_load('helper', 'struct');
+        $revision = $helper->createPageRevision($pid, 'CSV data imported');
+        p_get_metadata($pid); // reparse the metadata of the page top update the titles/rev/lasteditor table
+
+        // make sure this schema is assigned
+        /** @noinspection PhpUndefinedVariableInspection */
+        Assignments::getInstance()->assignPageSchema(
+            $pid,
+            $this->schema->getTable()
+        );
+
+        //add page revision to values
+        $values[] = $revision;
+
         parent::saveLine($values, $line, $single, $multi);
     }
 
@@ -76,9 +92,16 @@ class CSVPageImporter extends CSVImporter {
      * @return array(pid, rev)
      */
     protected function insertIntoSingle($values, $single) {
-        parent::insertIntoSingle($values, $single);
         $pid = $values[0];
         $rev = $values[count($values) - 1];
+
+        //update latest
+        $table = $this->schema->getTable();
+        $this->sqlite->query("UPDATE data_$table SET latest = 0 WHERE latest = 1 AND pid = ?", array($pid));
+
+        //insert into table
+        parent::insertIntoSingle($values, $single);
+
         //primary key is touple of (pid, rev)
         return array($pid, $rev);
     }
@@ -94,6 +117,11 @@ class CSVPageImporter extends CSVImporter {
      */
     protected function insertIntoMulti($multi, $pk, $column, $row, $value) {
         list($pid, $rev) = $pk;
+
+        //update latest
+        $table = $this->schema->getTable();
+        $this->sqlite->query("UPDATE multi_$table SET latest = 0 WHERE latest = 1 AND pid = ?", array($pid));
+
         $this->sqlite->query($multi, array($pid, $rev, $column->getColref(), $row + 1, $value));
     }
 
@@ -105,7 +133,7 @@ class CSVPageImporter extends CSVImporter {
     protected function getSQLforMultiValue() {
         $table = $this->schema->getTable();
         /** @noinspection SqlResolve */
-        return "REPLACE INTO multi_$table (pid, rev, colref, row, value, latest) VALUES (?,?,?,?,?,1)";
+        return "INSERT INTO multi_$table (pid, rev, colref, row, value, latest) VALUES (?,?,?,?,?,1)";
     }
 
     /**
@@ -116,13 +144,24 @@ class CSVPageImporter extends CSVImporter {
      * @return bool
      */
     protected function validateValue(Column $col, &$rawvalue) {
-        //check if page id exists
+        //check if page id exists and schema is bounded to the page
         if($col->getLabel() == 'pid') {
-            $rawvalue = cleanID($rawvalue);
-            if(page_exists($rawvalue)) {
+            $pid = cleanID($rawvalue);
+            if (isset($this->importedPids[$pid])) {
+                $this->errors[] = 'Page "'.$pid.'" already imported. Skipping the row.';
+                return false;
+            }
+            if(page_exists($pid)) {
+                //check if schema is assigned to page
+                $tables = Assignments::getInstance()->getPageAssignments($pid, true);
+                if (!in_array($this->schema->getTable(), $tables)) {
+                    $this->errors[] = 'Schema not assigned to page "'.$pid.'"';
+                    return false;
+                }
+                $this->importedPids[$pid] = true;
                 return true;
             }
-            $this->errors[] = 'Page "'.$rawvalue.'" does not exists. Skipping the row.';
+            $this->errors[] = 'Page "'.$pid.'" does not exists. Skipping the row.';
             return false;
         }
 
