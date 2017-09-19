@@ -179,10 +179,12 @@ abstract class CSVImporter {
     }
 
     /**
+     * INSERT $values into data_* table
+     *
      * @param string[] $values
      * @param string $single SQL for single table
      *
-     * @return string pid
+     * @return string last_insert_rowid()
      */
     protected function insertIntoSingle($values, $single) {
         $this->sqlite->query($single, $values);
@@ -194,6 +196,8 @@ abstract class CSVImporter {
     }
 
     /**
+     * INSERT one row into multi_* table
+     *
      * @param string $multi SQL for multi table
      * @param $pid string
      * @param $column string
@@ -205,6 +209,8 @@ abstract class CSVImporter {
     }
 
     /**
+     * Save one CSV line into database
+     *
      * @param string[] $values parsed line values
      * @param string $single SQL for single table
      * @param string $multi SQL for multi table
