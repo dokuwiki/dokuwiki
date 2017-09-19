@@ -124,12 +124,12 @@ abstract class CSVImporter {
         $single = $this->getSQLforAllValues();
         $multi = $this->getSQLforMultiValue();
 
-        $this->sqlite->query('BEGIN TRANSACTION');
         while(($data = fgetcsv($this->fh)) !== false) {
+            $this->sqlite->query('BEGIN TRANSACTION');
             $this->line++;
             $this->importLine($data, $single, $multi);
+            $this->sqlite->query('COMMIT TRANSACTION');
         }
-        $this->sqlite->query('COMMIT TRANSACTION');
     }
 
     /**
