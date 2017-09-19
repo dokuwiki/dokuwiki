@@ -8,7 +8,8 @@
 
 use dokuwiki\Form\Form;
 use dokuwiki\plugin\struct\meta\CSVExporter;
-use dokuwiki\plugin\struct\meta\CSVImporter;
+use dokuwiki\plugin\struct\meta\CSVLookupImporter;
+use dokuwiki\plugin\struct\meta\CSVPageImporter;
 use dokuwiki\plugin\struct\meta\Schema;
 use dokuwiki\plugin\struct\meta\SchemaBuilder;
 use dokuwiki\plugin\struct\meta\SchemaEditor;
@@ -80,7 +81,13 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
         if($table && $INPUT->bool('importcsv')) {
             if(isset($_FILES['csvfile']['tmp_name'])) {
                 try {
-                    new CSVImporter($table, $_FILES['csvfile']['tmp_name']);
+                    if ($INPUT->bool('lookup')) {
+                        $csvImporter = new CSVLookupImporter($table, $_FILES['csvfile']['tmp_name']);
+                    } else {
+                        $csvImporter = new CSVPageImporter($table, $_FILES['csvfile']['tmp_name']);
+                    }
+                    $csvImporter->import();
+
                     msg($this->getLang('admin_csvdone'), 1);
                 } catch(StructException $e) {
                     msg(hsc($e->getMessage()), -1);
