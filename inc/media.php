@@ -1492,7 +1492,11 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
             $dir = utf8_encodeFN(str_replace(':','/',$evdata['ns']));
             $quoted = preg_quote($evdata['query'],'/');
             //apply globbing
-            $quoted = str_replace(array('\*', '\?'), array('.*', '.'), $quoted);
+            $quoted = str_replace(array('\*', '\?'), array('.*', '.'), $quoted, $count);
+
+            //if we use globbing file name must match entirely but may be preceded by arbitrary namespace
+            if ($count > 0) $quoted = '^([^:]*:)*'.$quoted.'$';
+
             $pattern = '/'.$quoted.'/i';
             search($evdata['data'],
                     $conf['mediadir'],
