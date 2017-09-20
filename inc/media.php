@@ -1490,7 +1490,10 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
         $evt = new Doku_Event('MEDIA_SEARCH', $evdata);
         if ($evt->advise_before()) {
             $dir = utf8_encodeFN(str_replace(':','/',$evdata['ns']));
-            $pattern = '/'.preg_quote($evdata['query'],'/').'/i';
+            $quoted = preg_quote($evdata['query'],'/');
+            //apply globbing
+            $quoted = str_replace(array('\*', '\?'), array('.*', '.'), $quoted);
+            $pattern = '/'.$quoted.'/i';
             search($evdata['data'],
                     $conf['mediadir'],
                     'search_media',
