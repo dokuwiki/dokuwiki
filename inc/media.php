@@ -1486,7 +1486,7 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
         'data'  => array(),
         'query' => $query
     );
-    if ($query) {
+    if (!blank($query)) {
         $evt = new Doku_Event('MEDIA_SEARCH', $evdata);
         if ($evt->advise_before()) {
             $dir = utf8_encodeFN(str_replace(':','/',$evdata['ns']));

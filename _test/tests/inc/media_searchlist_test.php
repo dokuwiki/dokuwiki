@@ -27,6 +27,7 @@ class media_searchlist_test extends DokuWikiTest {
         //create some files to search
         $png = mediaFN('wiki:kind_zu_katze.png');
         $ogv = mediaFN('wiki:kind_zu_katze.ogv');
+        $webm = mediaFN('wiki:kind_zu_katze.webm');
 
         $this->save('a.png', $png);
         $this->save('aa.png', $png);
@@ -38,6 +39,8 @@ class media_searchlist_test extends DokuWikiTest {
 
         $this->save('a:a.png', $png);
         $this->save('b:a.png', $png);
+
+        $this->save('0.webm', $webm);
 
     }
 
@@ -239,6 +242,16 @@ class media_searchlist_test extends DokuWikiTest {
 
         $result = $this->media_searchlist($query, $ns);
         $expect = $this->media_searchlist_except(array('aa.ogv', 'aa.png', 'ab.ogv', 'ab.png'), $query, $ns);
+
+        $this->assertEquals($expect, $result);
+    }
+
+    public function test_zero_search(){
+        $query = '0';
+        $ns = $this->upload_ns;
+
+        $result = $this->media_searchlist($query, $ns);
+        $expect = $this->media_searchlist_except(array('0.webm'), $query, $ns);
 
         $this->assertEquals($expect, $result);
     }
