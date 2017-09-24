@@ -5,11 +5,12 @@
  *
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
  * @author Nicolas Friedli <nicolas@theologique.ch>
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  */
 $lang['menu']                  = 'Paramètres de style du thème (template)';
 $lang['js']['loader']          = 'La prévisualisation est en chargement... <br />Si rien ne se passe, les données sont peut-être erronées';
 $lang['js']['popup']           = 'Ouvrir dans une nouvelle fenêtre';
-$lang['error']                 = 'Désolé, ce thème ne supporte pas cette fonctionnalité.';
+$lang['error']                 = 'Désolé, ce thème n\'utilise pas cette fonctionnalité.';
 $lang['btn_preview']           = 'Aperçu des changements';
 $lang['btn_save']              = 'sauvegarder les changements.';
 $lang['btn_reset']             = 'Remettre les changements courants à zéro';

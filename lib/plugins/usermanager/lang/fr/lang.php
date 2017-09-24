@@ -28,7 +28,7 @@
  */
 $lang['menu']                  = 'Gestion des utilisateurs';
 $lang['noauth']                = '(authentification de l\'utilisateur non disponible)';
-$lang['nosupport']             = '(gestion de l\'utilisateur non supportée)';
+$lang['nosupport']             = '(gestion de l\'utilisateur non pris en charge)';
 $lang['badauth']               = 'mécanisme d\'authentification invalide';
 $lang['user_id']               = 'Identifiant ';
 $lang['user_pass']             = 'Mot de passe ';
