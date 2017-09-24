@@ -91,7 +91,7 @@ class PassHash {
         //crypt and compare
         $call = 'hash_'.$method;
         $newhash = $this->$call($clear, $salt, $magic);
-        if($newhash === $hash) {
+        if(\hash_equals($newhash, $hash)) {
             return true;
         }
         return false;
