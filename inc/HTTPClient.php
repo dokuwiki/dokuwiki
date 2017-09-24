@@ -604,18 +604,16 @@ class HTTPClient {
             // set correct peer name for verification (enabled since PHP 5.6)
             stream_context_set_option($socket, 'ssl', 'peer_name', $requestinfo['host']);
 
-            // because SSLv3 is mostly broken, we try TLS connections here first.
-            // according to  https://github.com/splitbrain/dokuwiki/commit/c05ef534 we had problems with certain
-            // setups with this solution before, but we have no usable test for that and TLS should be the more
-            // common crypto by now
-            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
-                $requesturl = $requestinfo['path'].
-                  (!empty($requestinfo['query'])?'?'.$requestinfo['query']:'');
-                return true;
+            // SSLv3 is broken, use only TLS connections.
+            // @link https://bugs.php.net/69195
+            if (PHP_VERSION_ID >= 50600 && PHP_VERSION_ID <= 50606) {
+                $cryptoMethod = STREAM_CRYPTO_METHOD_TLS_CLIENT;
+            } else {
+                // actually means neither SSLv2 nor SSLv3
+                $cryptoMethod = STREAM_CRYPTO_METHOD_SSLv23_CLIENT;
             }
 
-            // if the above failed, this will most probably not work either, but we can try
-            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
+            if (@stream_socket_enable_crypto($socket, true, $cryptoMethod)) {
                 $requesturl = $requestinfo['path'].
                   (!empty($requestinfo['query'])?'?'.$requestinfo['query']:'');
                 return true;
