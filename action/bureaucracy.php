@@ -155,7 +155,8 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
                 );
 
                 // trigger meta data rendering to set page title
-                p_get_metadata($id);
+                // expire the cache in order to correctly render the struct header on the first page visit
+                p_get_metadata($id, array('cache' => 'expire'));
             }
         }
 
