@@ -1,0 +1,58 @@
+{
+    "structversion": "2017-07-11",
+    "schema": "bureaucracy_lookup",
+    "id": "1",
+    "user": "",
+    "config": {
+        "allowed editors": "",
+        "label": {
+            "en": ""
+        }
+    },
+    "columns": [
+        {
+            "colref": 1,
+            "ismulti": false,
+            "isenabled": true,
+            "sort": 10,
+            "label": "lookup_first",
+            "class": "Text",
+            "config": {
+                "visibility": {
+                    "inpage": true,
+                    "ineditor": true
+                },
+                "prefix": "",
+                "postfix": "",
+                "label": {
+                    "en": ""
+                },
+                "hint": {
+                    "en": ""
+                }
+            }
+        },
+        {
+            "colref": 2,
+            "ismulti": false,
+            "isenabled": true,
+            "sort": 20,
+            "label": "lookup_second",
+            "class": "Text",
+            "config": {
+                "visibility": {
+                    "inpage": true,
+                    "ineditor": true
+                },
+                "prefix": "",
+                "postfix": "",
+                "label": {
+                    "en": ""
+                },
+                "hint": {
+                    "en": ""
+                }
+            }
+        }
+    ]
+}
