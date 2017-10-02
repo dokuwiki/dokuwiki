@@ -148,8 +148,16 @@ if(!function_exists('utf8_strlen')){
      * @param string $string
      * @return int
      */
-    function utf8_strlen($string){
-        return strlen(utf8_decode($string));
+    function utf8_strlen($string) {
+        if (function_exists('utf8_decode')) {
+            return strlen(utf8_decode($string));
+        } elseif (UTF8_MBSTRING) {
+            return mb_strlen($string, 'UTF-8');
+        } elseif (function_exists('iconv_strlen')) {
+            return iconv_strlen($string, 'UTF-8');
+        } else {
+            return strlen($string);
+        }
     }
 }
 
