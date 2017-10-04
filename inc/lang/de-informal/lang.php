@@ -25,6 +25,7 @@
  * @author rnck <dokuwiki@rnck.de>
  * @author Felix <j.felix@mueller-donath.de>
  * @author Felix Müller-Donath <j.felix@mueller-donath.de>
+ * @author F. Mueller-Donath <j.felix@mueller-donath.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -355,5 +356,6 @@ $lang['searchresult']          = 'Suchergebnis';
 $lang['plainhtml']             = 'Reines HTML';
 $lang['wikimarkup']            = 'Wiki Markup';
 $lang['page_nonexist_rev']     = 'Seite existierte nicht an der Stelle %s. Sie wurde an folgende Stelle erstellt: <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';
 $lang['email_signature_text']  = 'Diese E-Mail wurde erzeugt vom DokuWiki unter
 @DOKUWIKIURL@';
