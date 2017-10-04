@@ -1486,11 +1486,18 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
         'data'  => array(),
         'query' => $query
     );
-    if ($query) {
+    if (!blank($query)) {
         $evt = new Doku_Event('MEDIA_SEARCH', $evdata);
         if ($evt->advise_before()) {
             $dir = utf8_encodeFN(str_replace(':','/',$evdata['ns']));
-            $pattern = '/'.preg_quote($evdata['query'],'/').'/i';
+            $quoted = preg_quote($evdata['query'],'/');
+            //apply globbing
+            $quoted = str_replace(array('\*', '\?'), array('.*', '.'), $quoted, $count);
+
+            //if we use globbing file name must match entirely but may be preceded by arbitrary namespace
+            if ($count > 0) $quoted = '^([^:]*:)*'.$quoted.'$';
+
+            $pattern = '/'.$quoted.'/i';
             search($evdata['data'],
                     $conf['mediadir'],
                     'search_media',
