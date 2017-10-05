@@ -18,5 +18,7 @@ $conf['userscope']  = 'sub';
 $conf['groupscope'] = 'sub';
 $conf['userkey']    = 'uid';
 $conf['groupkey']   = 'cn';
+$conf['sso']        = 0;
+$conf['sso_charset'] = '';
 $conf['debug']      = 0;
 $conf['modPass']    = 1;

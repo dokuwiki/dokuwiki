@@ -17,5 +17,7 @@ $meta['userscope']   = array('multichoice','_choices' => array('sub','one','base
 $meta['groupscope']  = array('multichoice','_choices' => array('sub','one','base'),'_caution' => 'danger');
 $meta['userkey']     = array('string','_caution' => 'danger');
 $meta['groupkey']    = array('string','_caution' => 'danger');
+$meta['sso']         = array('onoff','_caution' => 'danger');
+$meta['sso_charset'] = array('string','_caution' => 'danger');
 $meta['debug']       = array('onoff','_caution' => 'security');
 $meta['modPass']     = array('onoff');

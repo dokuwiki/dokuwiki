@@ -16,5 +16,7 @@ $lang['groupfilter']           = 'LDAP filter tder benyttes til at søge efter g
 $lang['version']               = 'Protokol version der skal benyttes. Det er muligvis nødvendigt at sætte denne til <code>3</code>';
 $lang['starttls']              = 'Benyt TLS forbindelser?';
 $lang['bindpw']                = 'Kodeord til ovenstående bruger';
+$lang['sso']                   = 'Bør Single-Sign-On via Kerberos bruges?';
+$lang['sso_charset']           = 'Tegnsættet som webserveren sender Kerberos brugernavnet i. Ingenting for UTF-8 ellers latin-1. Kræver iconv udvidelsen';
 $lang['modPass']               = 'Kan LDAP adgangskoden skiftes via DokuWiki?';
 $lang['debug']                 = 'Vis yderligere debug output ved fejl';

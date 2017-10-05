@@ -27,6 +27,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * Constructor
      */
     public function __construct() {
+        global $INPUT;
         parent::__construct();
 
         // ldap extension is needed
@@ -34,6 +35,28 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             $this->_debug("LDAP err: PHP LDAP extension not found.", -1, __LINE__, __FILE__);
             $this->success = false;
             return;
+        }
+
+       // Prepare SSO
+        if(!empty($_SERVER['REMOTE_USER'])) {
+
+            // make sure the right encoding is used
+            if($this->getConf('sso_charset')) {
+                $_SERVER['REMOTE_USER'] = iconv($this->getConf('sso_charset'), 'UTF-8', $_SERVER['REMOTE_USER']);
+            } elseif(!utf8_check($_SERVER['REMOTE_USER'])) {
+                $_SERVER['REMOTE_USER'] = utf8_encode($_SERVER['REMOTE_USER']);
+            }
+
+            // trust the incoming user
+            if($this->conf['sso']) {
+                $_SERVER['REMOTE_USER'] = $this->cleanUser($_SERVER['REMOTE_USER']);
+
+                // we need to simulate a login
+                if(empty($_COOKIE[DOKU_COOKIE])) {
+                    $INPUT->set('u', $_SERVER['REMOTE_USER']);
+                    $INPUT->set('p', 'sso_only');
+                }
+            }
         }
 
         // Add the capabilities to change the password
@@ -53,6 +76,11 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @return  bool
      */
     public function checkPass($user, $pass) {
+        if($_SERVER['REMOTE_USER'] &&
+            $_SERVER['REMOTE_USER'] == $user &&
+            $this->conf['sso']
+        ) return true;
+
         // reject empty password
         if(empty($pass)) return false;
         if(!$this->_openLDAP()) return false;
@@ -352,6 +380,39 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         }
 
         return true;
+    }
+
+    /**
+     * Sanitize user names
+     *
+     * Normalizes domain parts, does not modify the user name itself
+     *
+     * @author Andreas Gohr <gohr@cosmocode.de>
+     * @param string $user
+     * @return string
+     */
+    public function cleanUser($user) {
+        $domain = '';
+
+        // get Kerberos domain part
+        list($dom, $user) = explode('\\', $user, 2);
+        if(!$user) $user = $dom;
+        if($dom) $domain = $dom;
+        list($user, $dom) = explode('@', $user, 2);
+        if($dom) $domain = $dom;
+
+        // clean up both
+        $domain = utf8_strtolower(trim($domain));
+        $user   = utf8_strtolower(trim($user));
+
+        // is this a known, valid domain? if not discard
+        if(!is_array($this->conf[$domain])) {
+            $domain = '';
+        }
+
+        // reattach domain
+        if($domain) $user = "$user@$domain";
+        return $user;
     }
 
     /**
