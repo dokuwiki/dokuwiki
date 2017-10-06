@@ -1,7 +1,9 @@
 <?php
 
 /**
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  *
  * @author Soren Birk <soer9648@hotmail.com>
  * @author Jens Hyllegaard <jens.hyllegaard@gmail.com>
