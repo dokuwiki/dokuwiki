@@ -31,6 +31,12 @@ class GitToolCLI extends DokuCLI {
             true
         );
 
+        $options->registerOption(
+            'quiet',
+            'If specified, show less cli boilerplate when running unknown commands',
+            'q'
+        );
+
         $options->registerCommand(
             'clone',
             'Tries to install a known plugin or template (prefix with template:) via git. Uses the DokuWiki.org '.
@@ -94,7 +100,7 @@ class GitToolCLI extends DokuCLI {
                 $this->cmd_repos();
                 break;
             default:
-                $this->cmd_git($command, $options->args);
+                $this->cmd_git($command, $options->args, $options->getOpt('quiet'));
         }
     }
 
@@ -166,7 +172,7 @@ class GitToolCLI extends DokuCLI {
      * @param $cmd
      * @param $arg
      */
-    public function cmd_git($cmd, $arg) {
+    public function cmd_git($cmd, $arg, $quiet) {
         $repos = $this->findRepos();
 
         $shell = array_merge(array('git', $cmd), $arg);
@@ -179,15 +185,19 @@ class GitToolCLI extends DokuCLI {
                 continue;
             }
 
-            echo "\n";
-            $this->info("executing $shell in $repo");
             $ret = 0;
-            system($shell, $ret);
-
-            if($ret == 0) {
-                $this->success("git succeeded in $repo");
-            } else {
-                $this->error("git failed in $repo");
+            $output = array();
+            exec($shell, $output, $ret);
+            if (!$quiet || $output || $ret !== 0) {
+                echo "\n";
+                $this->info("executing $shell in $repo");
+                echo implode("\n",$output);
+                echo "\n";
+                if($ret === 0) {
+                    $this->success("git succeeded in $repo");
+                } else {
+                    $this->error("git failed in $repo");
+                }
             }
         }
     }
