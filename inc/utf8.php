@@ -212,7 +212,7 @@ if(!function_exists('utf8_substr')){
 
         // normalise -ve offsets (we could use a tail anchored pattern, but they are horribly slow!)
         if ($offset < 0) {
-            $strlen = strlen(utf8_decode($str));        // see notes
+            $strlen = utf8_strlen($str);        // see notes
             $offset = $strlen + $offset;
             if ($offset < 0) $offset = 0;
         }
@@ -233,7 +233,7 @@ if(!function_exists('utf8_substr')){
             $length_pattern = '(.*)$';                  // the rest of the string
         } else {
 
-            if (!isset($strlen)) $strlen = strlen(utf8_decode($str));    // see notes
+            if (!isset($strlen)) $strlen = utf8_strlen($str);    // see notes
             if ($offset > $strlen) return '';           // another trivial case
 
             if ($length > 0) {
