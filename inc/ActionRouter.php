@@ -68,16 +68,24 @@ class ActionRouter {
      * Instantiates the right class, runs permission checks and pre-processing and
      * sets $action
      *
-     * @param string $actionname
+     * @param string $actionname this is passed as a reference to $ACT, for plugin backward compatibility
      * @triggers ACTION_ACT_PREPROCESS
      */
-    protected function setupAction($actionname) {
+    protected function setupAction(&$actionname) {
         $presetup = $actionname;
 
         try {
-            $this->action = $this->loadAction($actionname);
-            $this->checkAction($this->action);
-            $this->action->preProcess();
+            // give plugins an opportunity to process the actionname
+            $evt = new \Doku_Event('ACTION_ACT_PREPROCESS', $actionname);
+            if ($evt->advise_before()) {
+                $this->action = $this->loadAction($actionname);
+                $this->checkAction($this->action);
+                $this->action->preProcess();
+            } else {
+                // event said the action should be kept, assume action plugin will handle it later
+                $this->action = new Plugin($actionname);
+            }
+            $evt->advise_after();
 
         } catch(ActionException $e) {
             // we should have gotten a new action
@@ -97,21 +105,9 @@ class ActionRouter {
             $this->transitionAction($presetup, $actionname);
 
         } catch(NoActionException $e) {
-            // give plugins an opportunity to process the actionname
-            $evt = new \Doku_Event('ACTION_ACT_PREPROCESS', $actionname);
-            if($evt->advise_before()) {
-                if($actionname == $presetup) {
-                    // no plugin changed the action, complain and switch to show
-                    msg('Action unknown: ' . hsc($actionname), -1);
-                    $actionname = 'show';
-                }
-                $this->transitionAction($presetup, $actionname);
-            } else {
-                // event said the action should be kept, assume action plugin will handle it later
-                $this->action = new Plugin($actionname);
-            }
-            $evt->advise_after();
-
+            msg('Action unknown: ' . hsc($actionname), -1);
+            $actionname = 'show';
+            $this->transitionAction($presetup, $actionname);
         } catch(\Exception $e) {
             $this->handleFatalException($e);
         }
