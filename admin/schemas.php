@@ -120,6 +120,23 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
             }
         }
 
+        // clear
+        if($table && $INPUT->bool('clear')) {
+            if($table != $INPUT->str('confirm_clear')) {
+                msg($this->getLang('clear_fail'), -1);
+            } else {
+                try {
+                    $schema = new Schema($table);
+                    $schema->clear();
+                    msg($this->getLang('clear_ok'), 1);
+                    touch(action_plugin_struct_cache::getSchemaRefreshFile());
+                    send_redirect(wl($ID, array('do' => 'admin', 'page' => 'struct_schemas'), true, '&'));
+                } catch(StructException $e) {
+                    msg(hsc($e->getMessage()), -1);
+                }
+            }
+        }
+
     }
 
     /**
@@ -209,12 +226,18 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
         $form->setHiddenField('page', 'struct_schemas');
         $form->setHiddenField('table', $schema->getTable());
 
+        $form->addFieldsetOpen($this->getLang('btn_delete'));
         $form->addHTML($this->locale_xhtml('delete_intro'));
-
-        $form->addFieldsetOpen($this->getLang('tab_delete'));
         $form->addTextInput('confirm', $this->getLang('del_confirm'));
         $form->addButton('delete', $this->getLang('btn_delete'));
         $form->addFieldsetClose();
+
+        $form->addFieldsetOpen($this->getLang('btn_clear'));
+        $form->addHTML($this->locale_xhtml('clear_intro'));
+        $form->addTextInput('confirm_clear', $this->getLang('clear_confirm'));
+        $form->addButton('clear', $this->getLang('btn_clear'));
+        $form->addFieldsetClose();
+
         return $form->toHTML();
     }
 

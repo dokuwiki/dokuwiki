@@ -252,6 +252,21 @@ class Schema {
         $this->ts = 0;
     }
 
+
+    /**
+     * Clear all data of a schema, but retain the schema itself
+     */
+    public function clear() {
+        if(!$this->id) throw new StructException('can not clear data of unsaved schema');
+
+        $this->sqlite->query('BEGIN TRANSACTION');
+        $sql = 'DELETE FROM ?';
+        $this->sqlite->query($sql, 'data_' . $this->table);
+        $this->sqlite->query($sql, 'multi_' . $this->table);
+        $this->sqlite->query('COMMIT TRANSACTION');
+        $this->sqlite->query('VACUUM');
+    }
+
     /**
      * @return string
      */
