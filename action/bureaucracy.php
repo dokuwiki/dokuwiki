@@ -12,6 +12,7 @@ if(!defined('DOKU_INC')) die();
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\Schema;
+use dokuwiki\plugin\struct\meta\Search;
 
 /**
  * Handles bureaucracy additions
@@ -32,6 +33,7 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
      * @return void
      */
     public function register(Doku_Event_Handler $controller) {
+        $controller->register_hook('PLUGIN_BUREAUCRACY_TEMPLATE_SAVE', 'BEFORE', $this, 'handle_lookup_fields');
         $controller->register_hook('PLUGIN_BUREAUCRACY_TEMPLATE_SAVE', 'AFTER', $this, 'handle_save');
         $controller->register_hook('PLUGIN_BUREAUCRACY_FIELD_UNKNOWN', 'BEFORE', $this, 'handle_schema');
     }
@@ -68,6 +70,47 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
             $field->opt['label'] = $column->getFullQualifiedLabel();
             $field->column = $column;
             $event->data['fields'][] = $field;
+        }
+        return true;
+    }
+
+    /**
+     * Replace lookup fields placeholder's values
+     *
+     * @param Doku_Event $event event object by reference
+     * @param mixed $param [the parameters passed as fifth argument to register_hook() when this
+     *                           handler was registered]
+     * @return bool
+     */
+    public function handle_lookup_fields(Doku_Event $event, $param) {
+        foreach($event->data['fields'] as $field) {
+            if(!is_a($field, 'helper_plugin_struct_field')) continue;
+            if($field->column->getType()->getClass() != 'Lookup') continue;
+
+            $pid = $field->getParam('value');
+            $config = $field->column->getType()->getConfig();
+
+            // find proper value
+            // current Search implementation doesn't allow doing it using SQL
+            $search = new Search();
+            $search->addSchema($config['schema']);
+            $search->addColumn($config['field']);
+            $result = $search->execute();
+            $pids = $search->getPids();
+            $len = count($result);
+
+            $value = '';
+            for($i = 0; $i < $len; $i++) {
+                if ($pids[$i] == $pid) {
+                   $value = $result[$i][0]->getDisplayValue();
+                   break;
+                }
+            }
+
+            //replace previous value
+            if ($value) {
+                $event->data['values'][$field->column->getFullQualifiedLabel()] = $value;
+            }
         }
         return true;
     }
@@ -112,7 +155,8 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
                 );
 
                 // trigger meta data rendering to set page title
-                p_get_metadata($id);
+                // expire the cache in order to correctly render the struct header on the first page visit
+                p_get_metadata($id, array('cache' => 'expire'));
             }
         }
 

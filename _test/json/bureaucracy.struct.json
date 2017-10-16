@@ -1,0 +1,36 @@
+{
+    "structversion": "2017-07-11",
+    "schema": "bureaucracy",
+    "id": "2",
+    "user": "",
+    "config": {
+        "allowed editors": "",
+        "label": {
+            "en": ""
+        }
+    },
+    "columns": [
+        {
+            "colref": 1,
+            "ismulti": false,
+            "isenabled": true,
+            "sort": 10,
+            "label": "lookup_select",
+            "class": "Lookup",
+            "config": {
+                "visibility": {
+                    "inpage": true,
+                    "ineditor": true
+                },
+                "schema": "bureaucracy_lookup",
+                "field": "lookup_first",
+                "label": {
+                    "en": ""
+                },
+                "hint": {
+                    "en": ""
+                }
+            }
+        }
+    ]
+}

@@ -7,6 +7,8 @@
  */
 
 // must be run within Dokuwiki
+use dokuwiki\plugin\struct\meta\ConfigParser;
+use dokuwiki\plugin\struct\meta\SearchConfig;
 use dokuwiki\plugin\struct\meta\StructException;
 
 if(!defined('DOKU_INC')) die();
@@ -112,6 +114,46 @@ class remote_plugin_struct extends DokuWiki_Remote_Plugin {
                 }
             }
             return $result;
+        } catch (StructException $e) {
+            throw new RemoteException($e->getMessage(), 0, $e);
+        }
+    }
+
+    /**
+     * Get the data that would be shown in an aggregation
+     *
+     * @param array  $schemas array of strings with the schema-names
+     * @param array  $cols array of strings with the columns
+     * @param array  $filter array of arrays with ['logic'=> 'and'|'or', 'condition' => 'your condition']
+     * @param string $sort string indicating the column to sort by
+     *
+     * @return array array of rows, each row is an array of the column values
+     * @throws RemoteException
+     */
+    public function getAggregationData(array $schemas, array $cols, array $filter = [], $sort = '') {
+        $schemaLine = 'schema: ' . implode(', ', $schemas);
+        $columnLine = 'cols: ' . implode(', ', $cols);
+        $filterLines = array_map(function ($filter) {
+            return 'filter' . $filter['logic'] . ': ' . $filter['condition'];
+        }, $filter);
+        $sortLine = 'sort: ' . $sort;
+        // schemas, cols, REV?, filter, order
+
+        try {
+            $parser = new ConfigParser(array_merge([$schemaLine, $columnLine, $sortLine], $filterLines));
+            $config = $parser->getConfig();
+            $search = new SearchConfig($config);
+            $results = $search->execute();
+            $data = [];
+            /** @var \dokuwiki\plugin\struct\meta\Value[] $rowValues */
+            foreach ($results as $rowValues) {
+                $row = [];
+                foreach ($rowValues as $value) {
+                    $row[$value->getColumn()->getFullQualifiedLabel()] = $value->getDisplayValue();
+                }
+                $data[] = $row;
+            }
+            return $data;
         } catch (StructException $e) {
             throw new RemoteException($e->getMessage(), 0, $e);
         }
