@@ -88,7 +88,7 @@ class OptGroup extends Element {
     protected function renderOptions() {
         $html = '';
         foreach($this->options as $key => $val) {
-            $selected = ($key == $this->value) ? ' selected="selected"' : '';
+            $selected = ((string)$key === (string)$this->value) ? ' selected="selected"' : '';
             $attrs = '';
             if (!empty($val['attrs']) && is_array($val['attrs'])) {
                 $attrs = buildAttributes($val['attrs']);
