@@ -305,10 +305,10 @@ function html_draft(){
     $text  = cleanText(con($draft['prefix'],$draft['text'],$draft['suffix'],true));
 
     print p_locale_xhtml('draft');
+    html_diff($text, false);
     $form = new Doku_Form(array('id' => 'dw__editform'));
     $form->addHidden('id', $ID);
     $form->addHidden('date', $draft['date']);
-    $form->addElement(form_makeWikiText($text, array('readonly'=>'readonly')));
     $form->addElement(form_makeOpenTag('div', array('id'=>'draft__status')));
     $form->addElement($lang['draftdate'].' '. dformat(filemtime($INFO['draft'])));
     $form->addElement(form_makeCloseTag('div'));
