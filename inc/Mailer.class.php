@@ -54,6 +54,9 @@ class Mailer {
         $this->allowhtml = (bool)$conf['htmlmail'];
 
         // add some default headers for mailfiltering FS#2247
+        if(!empty($conf['mailreturnpath'])) {
+            $this->setHeader('Return-Path', $conf['mailreturnpath']);
+        }
         $this->setHeader('X-Mailer', 'DokuWiki');
         $this->setHeader('X-DokuWiki-User', $INPUT->server->str('REMOTE_USER'));
         $this->setHeader('X-DokuWiki-Title', $conf['title']);
