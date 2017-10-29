@@ -233,8 +233,8 @@ function tpl_metaheaders($alt = true) {
             'href'=> DOKU_BASE.'lib/exe/opensearch.php', 'title'=> $conf['title']
         );
     }
-
     $head['link'][] = array('rel'=> 'start', 'href'=> DOKU_BASE);
+    $head['link'][] = array('rel'=> 'manifest', 'href'=> DOKU_BASE.'lib/manifest/manifest.json');
     if(actionOK('index')) {
         $head['link'][] = array(
             'rel'  => 'contents', 'href'=> wl($ID, 'do=index', false, '&'),

@@ -1,0 +1,9 @@
+{
+    "name": "DokuWiki",
+    "short_name": "DokuWiki",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#fff",
+    "description": "A simple to use and highly versatile open source wiki software."
+}
+
