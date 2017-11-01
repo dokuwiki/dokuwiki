@@ -347,3 +347,4 @@ $lang['plainhtml']             = '純 HTML';
 $lang['wikimarkup']            = 'Wiki 語法標記';
 $lang['email_signature_text'] = '本信件由以下 DokuWiki 網站產生
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

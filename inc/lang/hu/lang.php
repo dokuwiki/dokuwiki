@@ -349,3 +349,4 @@ $lang['email_signature_text']       = 'Ezt a levelet a DokuWiki generálta
 @DOKUWIKIURL@';
 $lang['page_nonexist_rev']     = 'A(z) %s oldal nem létezik. Később lett létrehozva a(z) <a href="%s">%s</a> helyen.';
 $lang['unable_to_parse_date']  = 'A "%s" paraméter feldolgozása sikertelen.';
+$lang['email_signature_html'] = ' ';

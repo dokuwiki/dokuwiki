@@ -341,3 +341,4 @@ $lang['page_nonexist_rev']     = 'Страница не постоји у %s. К
 $lang['unable_to_parse_date']  = 'Не могу да обрадим код параметра "%s".';
 $lang['email_signature_text']  = 'Ову поруку је генерисао DokuWiki sa
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

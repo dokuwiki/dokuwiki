@@ -346,3 +346,4 @@ $lang['page_nonexist_rev']     = 'Pàgina no existeix a %s. Aixó es conseqüenc
 $lang['unable_to_parse_date']  = 'Impossible de esbrinar el paràmetre "%s".';
 $lang['email_signature_text']  = 'Aquest mail ha estat generat per DokuWiki a
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

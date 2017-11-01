@@ -341,3 +341,4 @@ $lang['plainhtml']             = 'Yalın HTML';
 $lang['wikimarkup']            = 'Wiki Biçimlendirmesi';
 $lang['email_signature_text'] = 'Bu e-posta aşağıdaki DokuWiki tarafından otomatik olarak oluşturulmuştur
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

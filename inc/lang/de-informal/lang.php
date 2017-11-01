@@ -359,3 +359,4 @@ $lang['page_nonexist_rev']     = 'Seite existierte nicht an der Stelle %s. Sie w
 $lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';
 $lang['email_signature_text']  = 'Diese E-Mail wurde erzeugt vom DokuWiki unter
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

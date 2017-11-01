@@ -93,3 +93,4 @@ $lang['toc']                   = 'Jadual Kandungan';
 $lang['current']               = 'kini';
 $lang['restored']              = 'Telah dikembalikan ke semakan sebelumnya (%s)';
 $lang['summary']               = 'Paparan';
+$lang['email_signature_html'] = ' ';

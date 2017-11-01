@@ -118,3 +118,4 @@ $lang['searchcreatepage']      = "Raha tsy nahita izay notadiavinao ianao, dia a
 //Setup VIM: ex: et ts=2 :
 $lang['email_signature_text'] = 'Ity imailaka ity dia navoakan\'ny wiki tao amin\'ny
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

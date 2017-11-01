@@ -337,3 +337,4 @@ $lang['plainhtml']             = 'Jednoduché HTML';
 $lang['wikimarkup']            = 'Wiki formát';
 $lang['email_signature_text']  = 'Táto správa bola zaslaná DokuWiki
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

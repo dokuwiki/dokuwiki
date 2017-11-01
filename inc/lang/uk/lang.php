@@ -339,3 +339,4 @@ $lang['plainhtml']             = 'Простий HTML';
 $lang['wikimarkup']            = 'Wiki розмітка';
 $lang['email_signature_text']  = 'Це повідомлення було створене ДокуВікі з
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

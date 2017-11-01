@@ -182,3 +182,4 @@ $lang['i_superuser']           = 'Supervartotojas';
 $lang['i_problems']            = 'Instaliavimo metu buvo klaidų, kurios pateiktos žemiau. Tęsti negalima, kol nebus pašalintos priežastys.';
 $lang['email_signature_text'] = 'Šis laiškas buvo sugeneruotas DokuWiki
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

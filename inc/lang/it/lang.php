@@ -360,3 +360,4 @@ $lang['page_nonexist_rev']     = 'Pagina non esistente a %s. E\' stata creata su
 $lang['unable_to_parse_date']  = 'Impossibile eseguire l\'analisi al parametro "%s".';
 $lang['email_signature_text']  = 'Questa email è stata generata dal DokuWiki all\'indirizzo
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

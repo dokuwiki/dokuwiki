@@ -179,3 +179,4 @@ $lang['img_format']            = 'Forsnið:';
 $lang['img_camera']            = 'Myndavél:';
 $lang['img_keywords']          = 'Lykilorðir:';
 $lang['i_retry']               = 'Reyna aftur';
+$lang['email_signature_html'] = ' ';

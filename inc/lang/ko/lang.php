@@ -351,3 +351,4 @@ $lang['wikimarkup']            = '위키 문법';
 $lang['page_nonexist_rev']     = '문서가 %s에 존재하지 않았습니다. 그 뒤로 <a href="%s">%s</a>에 만들어졌습니다.';
 $lang['unable_to_parse_date']  = '"%s" 변수에서 구문 분석할 수 없습니다.';
 $lang['email_signature_text']  = '이 메일은 @DOKUWIKIURL@에서 도쿠위키가 생성했습니다';
+$lang['email_signature_html'] = ' ';

@@ -365,3 +365,4 @@ $lang['page_nonexist_rev']     = 'Finnes ingen side på %s. Den er derfor laget 
 $lang['unable_to_parse_date']  = 'Ikke mulig å tolke "%s".';
 $lang['email_signature_text']  = 'Denne meldingen ble laget av DokuWiki
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

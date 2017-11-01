@@ -169,3 +169,4 @@ $lang['img_keywords']          = 'Evnisorð:';
 $lang['authtempfail']          = 'Validering av brúkara virkar fyribils ikki. Um hetta er varandi, fá so samband við umboðsstjóran á hesi wiki.';
 $lang['email_signature_text'] = 'Hesin t-postur var skaptur av DokuWiki á
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

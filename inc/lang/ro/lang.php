@@ -337,3 +337,4 @@ $lang['media_restore']         = 'Restaurează această versiune';
 $lang['searchresult']          = 'Rezultatul cautarii';
 $lang['email_signature_text']  = 'Acest e-mail a fost generat de DokuWiki la
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

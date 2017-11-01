@@ -333,3 +333,4 @@ $lang['plainhtml']             = 'Zapis HTML';
 $lang['wikimarkup']            = 'Oblikovni jezik Wiki';
 $lang['email_signature_text'] = 'Sporočilo je samodejno ustvarjeno na spletišču
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

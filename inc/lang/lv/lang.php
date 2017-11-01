@@ -335,3 +335,4 @@ $lang['plainhtml']             = 'Tīrs HTML';
 $lang['wikimarkup']            = 'Viki iezīmēšana valoda';
 $lang['email_signature_text'] = 'Vēstuli nosūtījusi DokuWiki programma no
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

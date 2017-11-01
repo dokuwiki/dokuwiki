@@ -127,3 +127,4 @@ $lang['img_format']            = 'Формат:';
 $lang['img_camera']            = 'Камера:';
 $lang['i_chooselang']          = 'Тіл таңдау';
 $lang['i_retry']               = 'Қайталау';
+$lang['email_signature_html'] = ' ';

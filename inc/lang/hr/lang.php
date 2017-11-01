@@ -343,3 +343,4 @@ $lang['page_nonexist_rev']     = 'Stranica ne postoji na %s. Ona je naknadno nap
 $lang['unable_to_parse_date']  = 'Ne mogu analizirati parametar "%s".';
 $lang['email_signature_text']  = 'Ovaj email je poslan na
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

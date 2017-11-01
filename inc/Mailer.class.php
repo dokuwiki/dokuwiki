@@ -629,7 +629,7 @@ class Mailer {
                 hsc($INFO['userinfo']['mail']) . '</a>'
         );
         $signature = $lang['email_signature_text'];
-        if(!empty($lang['email_signature_html'])) {
+        if(!empty(trim($lang['email_signature_html']))) {
             $signature = $lang['email_signature_html'];
         }
         $signature = str_replace(

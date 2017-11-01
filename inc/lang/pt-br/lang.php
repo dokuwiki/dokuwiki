@@ -363,3 +363,4 @@ $lang['page_nonexist_rev']     = 'Página não encontrada em %s. Foi criada post
 $lang['unable_to_parse_date']  = 'Impossível analisar em "%s".';
 $lang['email_signature_text']  = 'Essa mensagem foi gerada pelo DokuWiki em
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

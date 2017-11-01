@@ -235,3 +235,4 @@ $lang['minutes']               = '%d minuta më parë';
 $lang['seconds']               = '%d sekonda më parë';
 $lang['email_signature_text'] = 'Ky email u gjenerua nga DokuWiki në
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

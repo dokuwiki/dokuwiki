@@ -380,3 +380,4 @@ $lang['page_nonexist_rev']     = 'La página no existía en %s. Por tanto fue cr
 $lang['unable_to_parse_date']  = 'Incapaz de evaluar el parámetro "%s".';
 $lang['email_signature_text']  = 'Este mail ha sido generado por DokuWiki en
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

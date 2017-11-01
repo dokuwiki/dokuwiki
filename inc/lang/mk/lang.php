@@ -224,3 +224,4 @@ $lang['days']                  = 'пред %d денови';
 $lang['hours']                 = 'пред %d часа';
 $lang['minutes']               = 'пред %d минути';
 $lang['seconds']               = 'пред %d секунди';
+$lang['email_signature_html'] = ' ';

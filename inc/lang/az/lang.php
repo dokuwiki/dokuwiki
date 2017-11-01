@@ -230,3 +230,4 @@ $lang['minutes']               = '%d dəqiqə əvvəl';
 $lang['seconds']               = '%d saniyə əvvəl';
 $lang['email_signature_text']  = 'DokuWiki aşağıdakı adresdə yerləşir
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

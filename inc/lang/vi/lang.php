@@ -241,3 +241,4 @@ $lang['media_update']          = 'Tải lên phiên bản mới';
 $lang['media_restore']         = 'Phục hồi phiên bản này';
 $lang['email_signature_text'] = 'Điện thư này tạo bởi DokuWiki ở
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

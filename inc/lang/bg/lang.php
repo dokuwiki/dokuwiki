@@ -336,3 +336,4 @@ $lang['searchresult']          = 'Резултати от търсенето';
 $lang['plainhtml']             = 'Обикновен HTML';
 $lang['email_signature_text'] = 'Писмото е генерирано от DokuWiki на адрес
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';
