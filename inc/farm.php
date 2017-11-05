@@ -68,6 +68,9 @@ function farm_confpath($farm) {
             if(is_dir("$farm/$dir/conf/")) {
                 if(!defined('DOKU_FARM')) define('DOKU_FARM', 'virtual');
                 return "$farm/$dir/conf/";
+            } else if (is_dir(dirname(__FILE__)."/../$farm/$dir/conf/")) {
+                if(!defined('DOKU_FARM')) define('DOKU_FARM', 'virtual');
+                return dirname(__FILE__)."/../$farm/$dir/conf/";
             }
         }
     }
