@@ -56,6 +56,12 @@ class LookupTable extends AggregationTable {
      * @return string
      */
     public function getFirstRow() {
+        // XHTML renderer doesn't like calling ->tablerow_open() without
+        // ->table_open() first, since it leaves some internal variables unset.
+        // Therefore, call ->table_open() and throw away the generated HTML.
+        $this->renderer->table_open();
+        $this->renderer->doc = '';
+
         $this->renderResultRow(0, $this->result[0]);
         return $this->renderer->doc;
     }
