@@ -1,0 +1,8 @@
+====== Schema-Zuweisungen ======
+
+Hier können Sie Muster definieren, um Seiten automatisch Schemas zuzuweisen. Immer wenn eine Seite mit einem der Muster übereinstimmt, werden die entsprechenden Schemas angezeigt.
+
+* Namensräume, mit Ausnahme von untergeordneten Namensräumen, werden als ''<nowiki>namespace:*</nowiki>'' zugewiesen:
+* Namensräume, einschließlich untergeordneten Namensräumen, werden als ''<nowiki>namespace** </ nowiki>'' zugewiesen: .
+* Seiten erhalten wie gewohnt hre vollständige Seiten-ID.
+* Reguläre Ausdrücke, welche mit ''/'' beginnen und enden, werden mit einem vorangestellten '':'' mit der kompletten Seiten-ID  verglichen.

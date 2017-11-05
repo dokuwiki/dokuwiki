@@ -1,0 +1,5 @@
+====== Struktur Schema-Editor ======
+
+Schemas sind der Kern des Struct Plugins. Ein Schema definiert eine Vorlage mit strukturierten Daten, welche den Seiten später zugeordnet werden sollen.
+
+Wählen Sie ein vorhandenes Schema aus dem Inhaltsverzeichnis oder erstellen Sie ein neues Schema.
