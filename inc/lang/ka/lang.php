@@ -254,3 +254,4 @@ $lang['media_view']            = '%s';
 $lang['media_edit']            = 'რედაქტირება %s';
 $lang['media_history']         = 'ისტორია %s';
 $lang['media_perm_read']       = 'თვენ არ გაქვთ უფლება წაიკითხოთ ეს მასალა';
+$lang['email_signature_html'] = ' ';

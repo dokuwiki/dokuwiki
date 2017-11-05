@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Bernat Arlandis i Mañó <berarma@ya.com>
  * @author Bernat Arlandis <berarma@llenguaitecnologia.com>
- * 
+ *
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -221,4 +221,4 @@ $lang['minutes']               = 'fa %d minuts';
 $lang['seconds']               = 'fa %d segons';
 $lang['email_signature_text'] = 'Este correu ha segut generat per DokuWiki en
 @DOKUWIKIURL@';
-
+$lang['email_signature_html'] = ' ';

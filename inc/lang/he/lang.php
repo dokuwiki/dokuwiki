@@ -351,3 +351,4 @@ $lang['page_nonexist_rev']     = 'העמוד לא קיים ב%s. העמוד נו
 $lang['unable_to_parse_date']  = 'לא ניתן לפענח פרמטר "%s".';
 $lang['email_signature_text'] = 'הודעת דוא״ל זו נוצרה על ידי ה־DokuWiki הזמין בכתובת
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

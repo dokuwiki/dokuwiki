@@ -347,3 +347,4 @@ $lang['page_nonexist_rev']     = '指定ページ %s はありません。この
 $lang['unable_to_parse_date']  = 'パラメータ "%s" を処理できません。';
 $lang['email_signature_text']  = 'このメールは次のDokuWikiより自動的に送信されています。
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

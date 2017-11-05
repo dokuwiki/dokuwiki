@@ -352,3 +352,4 @@ $lang['page_nonexist_rev']     = 'صفحه %s وجود نداشت. این صفح
 $lang['unable_to_parse_date']  = 'امکان تجزیه و تحلیل پارامتر «%s» وجود ندارد.';
 $lang['email_signature_text']  = 'این ایمیل توسط دوکوویکی تولید شده است
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

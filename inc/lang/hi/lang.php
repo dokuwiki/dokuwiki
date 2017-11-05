@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Abhinav Tyagi <abhinavtyagi11@gmail.com>
  * @author yndesai@gmail.com
  * @author Santosh Joshi <sanjujoshhi@gmail.com>
@@ -114,3 +114,4 @@ $lang['i_installer']           = 'डोकुविकी इंस्टॉल
 $lang['i_wikiname']            = 'विकी का नाम';
 $lang['i_superuser']           = 'महाउपयोगकर्ता';
 $lang['i_retry']               = 'पुनःप्रयास';
+$lang['email_signature_html'] = ' ';

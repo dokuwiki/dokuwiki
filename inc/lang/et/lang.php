@@ -335,3 +335,4 @@ $lang['plainhtml']             = 'Liht-HTML';
 $lang['wikimarkup']            = 'Wiki märgistus';
 $lang['email_signature_text'] = 'See meil on saadetud DokuWiki poolt
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

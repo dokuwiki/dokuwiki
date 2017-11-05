@@ -375,3 +375,4 @@ $lang['page_nonexist_rev']     = 'Эта страница ещё не сущес
 $lang['unable_to_parse_date']  = 'Невозможно обработать параметр "%s".';
 $lang['email_signature_text']  = 'Это письмо создано «Докувики» с сайта
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

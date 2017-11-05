@@ -53,3 +53,4 @@ $lang['media_list_rows']       = 'வரிசைகள் ';
 $lang['media_sort_name']       = 'பெயர் ';
 $lang['media_sort_date']       = 'தேதி ';
 $lang['media_namespaces']      = 'பெயர்வெளியை தேர்வுசெய் ';
+$lang['email_signature_html'] = ' ';

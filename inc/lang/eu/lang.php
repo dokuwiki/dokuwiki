@@ -338,3 +338,4 @@ $lang['wikimarkup']            = 'Wiki kodea';
 $lang['page_nonexist_rev']     = 'Ez zegoen %s izeneko orririk. Sortu egin da <a href="%s">%s</a> helbidean.';
 $lang['email_signature_text']  = 'Email hau DokuWiki erabiliz sortu da
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

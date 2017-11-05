@@ -66,3 +66,4 @@ $lang['img_date']              = 'Datem:';
 $lang['img_camera']            = 'Camera:';
 $lang['i_wikiname']            = 'Wiki Naam';
 $lang['i_funcna']              = 'PHP funksie <code>%s</code> is nie beskibaar nie. Miskien is dit af gehaal.';
+$lang['email_signature_html'] = ' ';

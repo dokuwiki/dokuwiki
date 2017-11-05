@@ -370,4 +370,5 @@ $lang['plainhtml']             = 'HTML Plaen';
 $lang['wikimarkup']            = 'Iaith Wici';
 $lang['page_nonexist_rev']     = 'Doedd y dudalen ddim yn bodoli ar %s. Cafodd ei chreu wedyn ar <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Methu dosbarthu ar baramedr "%s".';
+$lang['email_signature_html'] = ' ';
 //Setup VIM: ex: et ts=2 :

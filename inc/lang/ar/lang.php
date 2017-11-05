@@ -347,3 +347,4 @@ $lang['plainhtml']             = 'نص HTML غير منسق';
 $lang['wikimarkup']            = 'علامات الوكي';
 $lang['email_signature_text']       = 'أنشئت هذه الرسالة من دوكو ويكي في
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

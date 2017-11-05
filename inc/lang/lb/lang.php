@@ -194,3 +194,4 @@ $lang['minutes']               = 'virun %d Minutten';
 $lang['seconds']               = 'virun %d Sekonnen';
 $lang['email_signature_text'] = 'Dës Mail gouf generéiert vun DokuWiki op
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

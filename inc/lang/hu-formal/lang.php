@@ -27,3 +27,4 @@ $lang['btn_recent']            = 'Legújabb változások';
 $lang['btn_upload']            = 'Feltöltés';
 $lang['email_signature_text'] = 'Ezt a levelet a DokuWiki generálta
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

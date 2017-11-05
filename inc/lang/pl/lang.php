@@ -351,3 +351,4 @@ $lang['plainhtml']             = 'Czysty HTML';
 $lang['wikimarkup']            = 'Znaczniki';
 $lang['email_signature_text']  = 'List został wygenerowany przez DokuWiki pod adresem
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

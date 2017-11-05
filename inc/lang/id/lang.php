@@ -311,3 +311,4 @@ $lang['searchresult']          = 'Hasil Pencarian';
 $lang['wikimarkup']            = 'Markah Wiki';
 $lang['email_signature_text'] = 'Email ini dibuat otomatis oleh DokuWiki
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

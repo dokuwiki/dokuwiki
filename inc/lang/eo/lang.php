@@ -339,3 +339,4 @@ $lang['plainhtml']             = 'Plena HTML';
 $lang['wikimarkup']            = 'Vikiteksto';
 $lang['email_signature_text'] = 'Tiu ĉi mesaĝo kreiĝis de DokuWiki ĉe
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

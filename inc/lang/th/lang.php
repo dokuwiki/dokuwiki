@@ -244,3 +244,4 @@ $lang['minutes']               = '%d นาทีก่อน';
 $lang['seconds']               = '%d วินาทีก่อน';
 $lang['email_signature_text'] = 'จดหมายนี้ถูกสร้างขึ้นโดยโดกุวิกิที่
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

@@ -354,3 +354,4 @@ $lang['plainhtml']             = 'Ren HTML';
 $lang['page_nonexist_rev']     = 'Sidan fanns inte på %s. Den blev sedermera skapad på <a href="%s">%s</a>.';
 $lang['email_signature_text']  = 'Detta meddelande har skapats av DokuWiki på
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';

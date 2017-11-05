@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Petteri <petteri@gmail.com>
  * @author Matti Pöllä <mpo@iki.fi>
  * @author Otto Vainio <otto@valjakko.net>
@@ -341,3 +341,4 @@ $lang['wikimarkup']            = 'Wiki markup';
 $lang['unable_to_parse_date']  = 'Parametrin "%s" jäsennys ei onnistu.';
 $lang['email_signature_text'] = 'Tämän postin loi DokuWiki osoitteessa
 @DOKUWIKIURL@';
+$lang['email_signature_html'] = ' ';
