@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Joerg <scooter22@gmx.de>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Christof <gagi@fin.de>
  * @author Anika Henke <anika@selfthinker.org>
@@ -23,7 +24,6 @@
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Mateng Schimmerlos <mateng@firemail.de>
  * @author Benedikt Fey <spam@lifeisgoooood.de>
- * @author Joerg <scooter22@gmx.de>
  * @author Simon <st103267@stud.uni-stuttgart.de>
  * @author Hoisl <hoisl@gmx.at>
  * @author Marcel Eickhoff <eickhoff.marcel@gmail.com>
@@ -58,7 +58,7 @@ $lang['btn_secedit']           = 'Bearbeiten';
 $lang['btn_login']             = 'Anmelden';
 $lang['btn_logout']            = 'Abmelden';
 $lang['btn_admin']             = 'Admin';
-$lang['btn_update']            = 'Updaten';
+$lang['btn_update']            = 'Aktualisieren';
 $lang['btn_delete']            = 'Löschen';
 $lang['btn_back']              = 'Zurück';
 $lang['btn_backlink']          = 'Links hierher';
@@ -106,11 +106,11 @@ $lang['profna']                = 'Änderung des Benutzerprofils in diesem Wiki n
 $lang['profnochange']          = 'Keine Änderungen, nichts zu tun.';
 $lang['profnoempty']           = 'Es muss ein Name und eine E-Mail-Adresse angegeben werden.';
 $lang['profchanged']           = 'Benutzerprofil erfolgreich geändert.';
-$lang['profnodelete']          = 'Dieses Wiki unterstützt nicht das Löschen von Benutzern.';
+$lang['profnodelete']          = 'Dieses Wiki unterstützt kein Löschen von Benutzern.';
 $lang['profdeleteuser']        = 'Benutzerprofil löschen';
 $lang['profdeleted']           = 'Ihr Benutzerprofil wurde im Wiki gelöscht.';
-$lang['profconfdelete']        = 'Ich möchte mein Benutzerprofil löschen.<br/> Diese Aktion ist nicht umkehrbar.';
-$lang['profconfdeletemissing'] = 'Bestätigung im Ankreuzkästchen fehlt';
+$lang['profconfdelete']        = 'Ich möchte mein Benutzerprofil löschen.<br/> Diese Aktion lässt sich nicht rückgängig machen,';
+$lang['profconfdeletemissing'] = 'Bestätigung in Kontrollkästchen fehlt';
 $lang['proffail']              = 'Das Benutzerkonto konnte nicht aktualisiert werden.';
 $lang['pwdforget']             = 'Passwort vergessen? Fordern Sie ein neues an';
 $lang['resendna']              = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
