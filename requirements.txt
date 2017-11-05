@@ -1,4 +1,5 @@
 # we need additional plugin(s) for testing
 https://github.com/cosmocode/sqlite.git                         lib/plugins/sqlite
-https://github.com/dokufreaks/plugin-include/                   lib/plugins/include
+https://github.com/dokufreaks/plugin-include                    lib/plugins/include
 https://github.com/cosmocode/log                                lib/plugins/log
+https://github.com/splitbrain/dokuwiki-plugin-bureaucracy       lib/plugins/bureaucracy
