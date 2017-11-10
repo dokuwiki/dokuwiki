@@ -446,5 +446,58 @@
             "feeds",
             "rss"
         ]
+    },
+    {
+        "name": "splitbrain/php-cli",
+        "version": "1.1.1",
+        "version_normalized": "1.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/splitbrain/php-cli.git",
+            "reference": "4795af10ff1c3b1ac614ef380d7d810af495e6f1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/4795af10ff1c3b1ac614ef380d7d810af495e6f1",
+            "reference": "4795af10ff1c3b1ac614ef380d7d810af495e6f1",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.5.*"
+        },
+        "suggest": {
+            "psr/log": "Allows you to make the CLI available as PSR-3 logger"
+        },
+        "time": "2017-10-27T16:18:07+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "splitbrain\\phpcli\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andreas Gohr",
+                "email": "andi@splitbrain.org"
+            }
+        ],
+        "description": "Easy command line scripts for PHP with opt parsing and color output. No dependencies",
+        "keywords": [
+            "argparse",
+            "cli",
+            "command line",
+            "console",
+            "getopt",
+            "optparse",
+            "terminal"
+        ]
     }
 ]
