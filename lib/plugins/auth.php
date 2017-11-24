@@ -32,6 +32,7 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
         'getUserCount' => false, // can the number of users be retrieved?
         'getGroups'    => false, // can a list of available groups be retrieved?
         'external'     => false, // does the module do external auth checking?
+        'login'        => false, // does the module do logins? (replacing the default form)
         'logout'       => true, // can the user logout again? (eg. not possible with HTTP auth)
     );
 
