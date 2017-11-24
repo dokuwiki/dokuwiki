@@ -43,30 +43,35 @@ function html_login(){
     global $ID;
     global $INPUT;
 
-    print p_locale_xhtml('login');
-    print '<div class="centeralign">'.NL;
-    $form = new Doku_Form(array('id' => 'dw__login'));
-    $form->startFieldset($lang['btn_login']);
-    $form->addHidden('id', $ID);
-    $form->addHidden('do', 'login');
-    $form->addElement(form_makeTextField('u', ((!$INPUT->bool('http_credentials')) ? $INPUT->str('u') : ''), $lang['user'], 'focus__this', 'block'));
-    $form->addElement(form_makePasswordField('p', $lang['pass'], '', 'block'));
-    if($conf['rememberme']) {
-        $form->addElement(form_makeCheckboxField('r', '1', $lang['remember'], 'remember__me', 'simple'));
-    }
-    $form->addElement(form_makeButton('submit', '', $lang['btn_login']));
-    $form->endFieldset();
+    if(actionOK('login')){
+        print tpl_actionlink('login','','','',true);
+    }else{
 
-    if(actionOK('register')){
-        $form->addElement('<p>'.$lang['reghere'].': '.tpl_actionlink('register','','','',true).'</p>');
-    }
+        print p_locale_xhtml('login');
+        print '<div class="centeralign">'.NL;
+        $form = new Doku_Form(array('id' => 'dw__login'));
+        $form->startFieldset($lang['btn_login']);
+        $form->addHidden('id', $ID);
+        $form->addHidden('do', 'login');
+        $form->addElement(form_makeTextField('u', ((!$INPUT->bool('http_credentials')) ? $INPUT->str('u') : ''), $lang['user'], 'focus__this', 'block'));
+        $form->addElement(form_makePasswordField('p', $lang['pass'], '', 'block'));
+        if($conf['rememberme']) {
+            $form->addElement(form_makeCheckboxField('r', '1', $lang['remember'], 'remember__me', 'simple'));
+        }
+        $form->addElement(form_makeButton('submit', '', $lang['btn_login']));
+        $form->endFieldset();
 
-    if (actionOK('resendpwd')) {
-        $form->addElement('<p>'.$lang['pwdforget'].': '.tpl_actionlink('resendpwd','','','',true).'</p>');
-    }
+        if(actionOK('register')){
+            $form->addElement('<p>'.$lang['reghere'].': '.tpl_actionlink('register','','','',true).'</p>');
+        }
 
-    html_form('login', $form);
-    print '</div>'.NL;
+        if (actionOK('resendpwd')) {
+            $form->addElement('<p>'.$lang['pwdforget'].': '.tpl_actionlink('resendpwd','','','',true).'</p>');
+        }
+
+        html_form('login', $form);
+        print '</div>'.NL;
+    }
 }
 
 
