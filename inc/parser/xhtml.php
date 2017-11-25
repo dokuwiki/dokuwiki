@@ -893,7 +893,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
         $link['url']    = wl($id, $params);
         $link['name']   = $name;
-        $link['title']  = $id;
+        $link['title']  = $name;
         //add search string
         if($search) {
             ($conf['userewrite']) ? $link['url'] .= '?' : $link['url'] .= '&amp;';
