@@ -267,7 +267,7 @@ class renderer_xhtml_test extends DokuWikiTest {
         $this->assertSame('0', $header);
 
         $this->R->internallink($id);
-        $expected = '<a href="/./doku.php?id='.$id.'" class="wikilink1" title="'.$id.'">0</a>';
+        $expected = '<a href="/./doku.php?id='.$id.'" class="wikilink1">0</a>';
         $this->assertEquals($expected, trim($this->R->doc));
     }
 }
