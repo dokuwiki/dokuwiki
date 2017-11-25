@@ -21,9 +21,9 @@ class Admin extends Ui {
      */
     public function show() {
         $this->menu = $this->getPluginList();
+        $this->showSecurityCheck();
         echo '<div class="ui-admin">';
         echo p_locale_xhtml('admin');
-        $this->showSecurityCheck();
         $this->showAdminMenu();
         $this->showManagerMenu();
         $this->showVersion();
@@ -100,12 +100,23 @@ class Admin extends Ui {
      *   has protection to prevent the webserver serving files from it
      */
     protected function showSecurityCheck() {
-        global $conf;
-        if(substr($conf['savedir'], 0, 2) !== './') return;
-        echo '<a style="border:none; float:right;"
-                href="http://www.dokuwiki.org/security#web_access_security">
-                <img src="' . DOKU_URL . $conf['savedir'] . '/security.png" alt="Your data directory seems to be protected properly."
-                onerror="this.parentNode.style.display=\'none\'" /></a>';
+        if(substr($GLOBALS['conf']['savedir'], 0, 2) !== './') return;
+
+        $url = DOKU_URL.$GLOBALS['conf']['savedir'].'/security.png';
+        // Fail is 'success' because we check if there is no access to file in the data folder
+        echo <<<CHK
+<button style="padding: 0.2rem; float:right" onclick="var btn = this; jQuery.ajax('$url')
+.fail(function(xhr) {
+ btn.style['background'] = 'green';
+ btn.style['color'] = 'white';
+ btn.innerHTML = '<b>'+xhr.status+'</b>: Your data directory seems to be protected properly.'
+}).success(function(data,result,xhr) {
+    console.log(xhr)
+ btn.style['background'] = 'red';
+ btn.style['color'] = 'white';
+ btn.innerHTML = '<b>'+xhr.status+'</b>: It seems your data directory is <b>NOT</b> properly secured!<br>Please read<br><a target=\'_blank\' href=\'https://dokuwiki.org/security#web_access_security\'>https://dokuwiki.org/security</a>';
+});" >security check</button>
+CHK;
     }
 
     /**
