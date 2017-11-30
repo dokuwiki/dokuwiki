@@ -37,6 +37,7 @@ class SearchCloud extends SearchConfig {
         }
         $QB->addTable($datatable);
         $QB->filters()->whereAnd("$datatable.latest = 1");
+        $QB->filters()->where('AND', 'tag IS NOT \'\'');
 
         $col = $this->columns[0];
         if($col->isMulti()) {
