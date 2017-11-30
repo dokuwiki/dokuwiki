@@ -323,23 +323,27 @@ form.struct_newschema {
 }
 
 .dokuwiki .structcloud {
-    li {
-        float: left;
-        list-style: none;
-        margin: 0 1em 0 0;
-        padding: 0;
+    ul {
+        text-align: center;
 
-        .struct_color, .struct_media {
-            a {
-                display: block;
-                height: 100%;
+        li {
+            list-style: none;
+            margin: 0 1em 0 0;
+            padding: 0;
+            display: inline-block;
+
+            .struct_color, .struct_media {
+                a {
+                    display: block;
+                    height: 100%;
+                }
             }
-        }
 
-        .struct_media a {
-            background-size: cover;
-            background-position: center;
-            box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.5)
+            .struct_media a {
+                background-size: cover;
+                background-position: center;
+                box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.5)
+            }
         }
     }
 }
