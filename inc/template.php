@@ -289,7 +289,7 @@ function tpl_metaheaders($alt = true) {
     if(($ACT == 'show' || $ACT == 'export_xhtml') && !$REV) {
         if($INFO['exists']) {
             //delay indexing:
-            if((time() - $INFO['lastmod']) >= $conf['indexdelay']) {
+            if((time() - $INFO['lastmod']) >= $conf['indexdelay'] && !isHiddenPage($ID) ) {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'index,follow');
             } else {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,nofollow');
