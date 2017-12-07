@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Kęstutis Snieška <kestutis.snieska@gmail.com>
  * @author Linas Valiukas <shirshegsm@gmail.com>
  * @author Edmondas Girkantas <eg@zemaitija.net>
  * @author Arūnas Vaitekūnas <aras@fan.lt>
@@ -180,5 +181,5 @@ $lang['i_wikiname']            = 'Wiki vardas';
 $lang['i_enableacl']           = 'Įjungti ACL (rekomenduojama)';
 $lang['i_superuser']           = 'Supervartotojas';
 $lang['i_problems']            = 'Instaliavimo metu buvo klaidų, kurios pateiktos žemiau. Tęsti negalima, kol nebus pašalintos priežastys.';
-$lang['email_signature_text'] = 'Šis laiškas buvo sugeneruotas DokuWiki
+$lang['email_signature_text']  = 'Šis laiškas buvo sugeneruotas DokuWiki
 @DOKUWIKIURL@';
