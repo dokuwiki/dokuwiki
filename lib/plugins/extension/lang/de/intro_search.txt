@@ -1,1 +1,1 @@
-Dieser Tab gibt Ihnen Zugriff auf alle vorhandenen Plugins und Templates für DokuWiki. Bitte bedenken sie das jede installierte Erweiterung ein Sicherheitsrisiko darstellen kann. Sie sollten vor einer Installation die [[doku>security#plugin_security|Plugin Security]] Informationen lesen.
+Dieser Tab gibt Ihnen Zugriff auf alle vorhandenen Plugins und Templates für DokuWiki. Bitte bedenken Sie, dass jede installierte Erweiterung ein Sicherheitsrisiko darstellen kann. Sie sollten vor einer Installation die [[doku>security#plugin_security|Plugin Security]] Informationen lesen.
