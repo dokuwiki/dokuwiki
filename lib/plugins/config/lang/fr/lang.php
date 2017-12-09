@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
@@ -15,7 +16,6 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz <samuel.dorsaz@novelion.net>
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
- * @author <skimpax@gmail.com>
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
@@ -23,7 +23,6 @@
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Floriang <antispam@floriang.eu>
- * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Simon DELAGE <simon.geekitude@gmail.com>
  * @author Eric <ericstevenart@netc.fr>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
@@ -151,7 +150,7 @@ $lang['fnencode']              = 'Méthode pour l\'encodage des fichiers non-ASC
 $lang['autoplural']            = 'Rechercher les formes plurielles dans les liens';
 $lang['compression']           = 'Méthode de compression pour les fichiers attic';
 $lang['gzip_output']           = 'Utiliser gzip pour le Content-Encoding du XHTML';
-$lang['compress']              = 'Compresser les flux CSS et JavaScript';
+$lang['compress']              = 'Compresser les fichiers CSS et JavaScript';
 $lang['cssdatauri']            = 'Taille maximale en octets pour inclure dans les feuilles de styles CSS les images qui y sont référencées. Cette technique réduit le nombre de requêtes HTTP. Cette fonctionnalité ne fonctionne qu\'à partir de la version 8 d\'Internet Explorer! Nous recommandons une valeur entre <code>400</code> et <code>600</code>. <code>0</code> pour désactiver.';
 $lang['send404']               = 'Renvoyer « HTTP 404/Page Not Found » pour les pages inexistantes';
 $lang['broken_iua']            = 'La fonction ignore_user_abort est-elle opérationnelle sur votre système ? Ceci peut empêcher le fonctionnement de l\'index de recherche. IIS+PHP/
