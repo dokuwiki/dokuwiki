@@ -8,14 +8,10 @@
  * @author Håkan Sandell <hakan.sandell@home.se>
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
- * @author emil@sys.nu
  * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
- * @author Tormod Johansson tormod.otter.johansson@gmail.com
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
- * @author mikael@mallander.net
- * @author Smorkster Andersson smorkster@gmail.com
  * @author Tor Härnqvist <tor.harnqvist@gmail.com>
  */
 $lang['menu']                  = 'Hantera användare';
