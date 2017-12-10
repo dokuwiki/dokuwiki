@@ -84,7 +84,7 @@ function css_out(){
         // Let plugins decide to either put more styles here or to remove some
         $media_files[$mediatype] = css_filewrapper($mediatype, $files);
         $CSSEvt = new Doku_Event('CSS_STYLES_INCLUDED', $media_files[$mediatype]);
-    
+
         // Make it preventable.
         if ( $CSSEvt->advise_before() ) {
             $cache_files = array_merge($cache_files, array_keys($media_files[$mediatype]['files']));
@@ -92,7 +92,7 @@ function css_out(){
             // unset if prevented. Nothing will be printed for this mediatype.
             unset($media_files[$mediatype]);
         }
-        
+
         // finish event.
         $CSSEvt->advise_after();
     }
@@ -108,7 +108,7 @@ function css_out(){
 
     // start output buffering
     ob_start();
-    
+
     // Fire CSS_STYLES_INCLUDED for one last time to let the
     // plugins decide whether to include the DW default styles.
     // This can be done by preventing the Default.
@@ -124,19 +124,19 @@ function css_out(){
         }
 
         $cssData = $media_files[$mediatype];
-        
+
         // Print the styles.
         print NL;
         if ( $cssData['encapsulate'] === true ) print $cssData['encapsulationPrefix'] . ' {';
         print '/* START '.$cssData['mediatype'].' styles */'.NL;
-    
+
         // load files
         foreach($cssData['files'] as $file => $location){
             $display = str_replace(fullpath(DOKU_INC), '', fullpath($file));
             print "\n/* XXXXXXXXX $display XXXXXXXXX */\n";
             print css_loadfile($file, $location);
         }
-        
+
         print NL;
         if ( $cssData['encapsulate'] === true ) print '} /* /@media ';
         else print '/*';
@@ -280,7 +280,18 @@ function css_styleini($tpl, $preview=false) {
     global $conf;
 
     $stylesheets = array(); // mode, file => base
-    $replacements = array(); // placeholder => value
+    // guaranteed placeholder => value
+    $replacements = array(
+        '__text__' => "#000",
+        '__background__' => "#fff",
+        '__text_alt__' => "#999",
+        '__background_alt__' => "#eee",
+        '__text_neu__' => "#666",
+        '__background_neu__' => "#ddd",
+        '__border__' => "#ccc",
+        '__highlight__' => "#ff9",
+        '__link__' => "#00f",
+    );
 
     // load template's style.ini
     $incbase = tpl_incdir($tpl);
