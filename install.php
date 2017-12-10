@@ -110,7 +110,7 @@ header('Content-Type: text/html; charset=utf-8');
                 print "</div>\n";
             }
         ?>
-        <a style="background: transparent url(data/security.png) left top no-repeat;
+        <a style="background: transparent url(data/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png) left top no-repeat;
                   display: block; width:380px; height:73px; border:none; clear:both;"
            target="_blank"
            href="http://www.dokuwiki.org/security#web_access_security"></a>
