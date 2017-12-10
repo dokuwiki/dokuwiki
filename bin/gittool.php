@@ -184,7 +184,6 @@ class GitToolCLI extends CLI {
                 continue;
             }
 
-            echo "\n";
             $this->info("executing $shell in $repo");
             $ret = 0;
             system($shell, $ret);
