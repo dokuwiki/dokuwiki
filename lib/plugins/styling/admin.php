@@ -28,7 +28,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
     }
 
     /**
-     * handle the different actions (also called from ajax)
+     * Handle the different actions (also called from ajax)
      */
     public function handle() {
         global $INPUT;
@@ -57,10 +57,13 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
     public function form() {
         global $conf;
         global $ID;
+        global $INPUT;
         define('SIMPLE_TEST', 1); // hack, ideally certain functions should be moved out of css.php
         require_once(DOKU_INC.'lib/exe/css.php');
         $styleini     = css_styleini($conf['template'], true);
         $replacements = $styleini['replacements'];
+        $styles = array('userstyle', 'userprint', 'userfeed', 'userall');
+        $exts = array('.css', '.less');
 
         if($this->ispopup) {
             $target = DOKU_BASE.'lib/plugins/styling/popup.php';
@@ -86,6 +89,34 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
                 echo '<td><input type="text" name="tpl['.hsc($key).']" id="tpl__'.hsc($key).'" value="'.hsc($value).'" '.$this->colorClass($key).' dir="ltr" /></td>';
                 echo '</tr>';
             }
+
+            foreach($styles as $style) {
+                $dirname = DOKU_CONF;
+                if($INPUT->str('run') == 'preview') {
+                    $dirname = $conf['cachedir'].'/';
+                }
+                $content = array();
+                echo '<tr>';
+                echo '<td>';
+                echo '<label for="sty__'.hsc($style).'">'.$this->getLang($style).'</label><br />';
+                foreach($exts as $ext) {
+                    if(file_exists($dirname.$style.$ext)) {
+                        $content = file($dirname.$style.$ext);
+                        echo '<input type="radio" name="sty['.hsc($style).'][extension]" value="'.hsc($ext).'" checked>'.$ext.'<br />';
+                    } else {
+                        echo '<input type="radio" name="sty['.hsc($style).'][extension]" value="'.hsc($ext).'">'.$ext.'<br>';
+                    }
+                }
+                echo '</td>';
+                echo '<td>';
+                echo '<textarea name="sty['.hsc($style).'][content]" id="sty__'.hsc($style).'" rows="4" cols="40">';
+                foreach($content as $line) {
+                    echo $line;
+                }
+                echo '</textarea>';
+                echo '</td>';
+                echo '</tr>';
+            }
             echo '</tbody></table>';
 
             echo '<p>';
@@ -104,12 +135,11 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
             echo '</form>';
 
             echo tpl_locale_xhtml('style');
-
         }
     }
 
     /**
-     * set the color class attribute
+     * Set the color class attribute
      */
     protected function colorClass($key) {
         static $colors = array(
@@ -135,41 +165,46 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
     }
 
     /**
-     * saves the preview.ini (alos called from ajax directly)
+     * Save the preview.ini (also called from ajax directly)
+     * and the user style files in the cache directory
      */
     public function run_preview() {
         global $conf;
         $ini = $conf['cachedir'].'/preview.ini';
         io_saveFile($ini, $this->makeini());
+        $this->replacecss($conf['cachedir'].'/');
     }
 
     /**
-     * deletes the preview.ini
+     * Delete the preview.ini and the user style files from the cache directory
      */
     protected function run_reset() {
         global $conf;
         $ini = $conf['cachedir'].'/preview.ini';
         io_saveFile($ini, '');
+        $this->replacecss($conf['cachedir'].'/', true);
     }
 
     /**
-     * deletes the local style.ini replacements
+     * Delete the local style.ini replacements and the user style files
      */
     protected function run_revert() {
         $this->replaceini('');
+        $this->replacecss(DOKU_CONF, true);
         $this->run_reset();
     }
 
     /**
-     * save the local style.ini replacements
+     * Save the local style.ini replacements and the user style files
      */
     protected function run_save() {
         $this->replaceini($this->makeini());
+        $this->replacecss(DOKU_CONF);
         $this->run_reset();
     }
 
     /**
-     * create the replacement part of a style.ini from submitted data
+     * Create the replacement part of a style.ini from submitted data
      *
      * @return string
      */
@@ -187,7 +222,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
     }
 
     /**
-     * replaces the replacement parts in the local ini
+     * Replaces the replacement parts in the local ini
      *
      * @param string $new the new ini contents
      */
@@ -206,6 +241,31 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
         io_saveFile($ini, "$old\n\n$new");
     }
 
+    /**
+     * Replace the style in the user style files
+     *
+     * @param string $dirname path to files
+     * @param bool $remove if true, force removal files otherwise only if they have empty content
+     */
+    protected function replacecss($dirname, $remove = false) {
+        global $INPUT;
+        foreach($INPUT->arr('sty') as $key => $val) {
+            if(!isset($val[extension])) {
+                $val[extension] = '.css';
+            }
+            if(empty($val[content]) || $remove) {
+                io_rmdir($dirname.$key.$val[extension], true);
+            } else {
+                io_saveFile($dirname.$key.$val[extension], $val[content]);
+                // if the extension is changed, delete the old version
+                if($val[extension] == '.css') {
+                    io_rmdir($dirname.$key.'.less', true);
+                } else {
+                    io_rmdir($dirname.$key.'.css', true);
+                }
+            }
+        }
+    }
 }
 
 // vim:ts=4:sw=4:et:
