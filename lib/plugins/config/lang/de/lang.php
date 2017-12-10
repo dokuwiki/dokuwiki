@@ -127,6 +127,7 @@ $lang['subscribe_time']        = 'Zeit nach der Zusammenfassungs- und Änderungs
 $lang['notify']                = 'Änderungsmitteilungen an diese E-Mail-Adresse versenden';
 $lang['registernotify']        = 'Information über neu registrierte Benutzer an diese E-Mail-Adresse senden';
 $lang['mailfrom']              = 'Absender-E-Mail-Adresse für automatische Mails';
+$lang['mailreturnpath']        = 'Empfänger-E-Mail-Adresse für Unzustellbarkeitsnachricht';
 $lang['mailprefix']            = 'Präfix für E-Mail-Betreff beim automatischen Versand von Benachrichtigungen (Leer lassen um den Wiki-Titel zu verwenden)';
 $lang['htmlmail']              = 'Versendet optisch angenehmere, aber größere E-Mails im HTML-Format (multipart). Deaktivieren, um Text-Mails zu versenden.';
 $lang['sitemap']               = 'Google Sitemap erzeugen (Tage). Mit 0 deaktivieren.';
