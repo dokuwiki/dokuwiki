@@ -382,9 +382,9 @@ function breadcrumbs() {
 
     //first visit?
     $crumbs = isset($_SESSION[DOKU_COOKIE]['bc']) ? $_SESSION[DOKU_COOKIE]['bc'] : array();
-    //we only save on show and existing wiki documents
+    //we only save on show and existing visible wiki documents
     $file = wikiFN($ID);
-    if($ACT != 'show' || !file_exists($file)) {
+    if($ACT != 'show' || isHiddenPage($ID) || !file_exists($file)) {
         $_SESSION[DOKU_COOKIE]['bc'] = $crumbs;
         return $crumbs;
     }
