@@ -330,6 +330,7 @@ function tpl_metaheaders($alt = true) {
     if($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
         $script .= "var SIG='".toolbar_signature()."';";
     }
+    $JSINFO['ACT'] = act_clean($ACT);
     $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
     $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
 
