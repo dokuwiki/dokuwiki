@@ -99,8 +99,8 @@ function js_out(){
                  'secure' => $conf['securecookie'] && is_ssl()
             )).";";
     // FIXME: Move those to JSINFO
-    print "var DOKU_UHN    = ".((int) useHeading('navigation')).";";
-    print "var DOKU_UHC    = ".((int) useHeading('content')).";";
+    print "Object.defineProperty(window, 'DOKU_UHN', { get: function() { console.warn('Using DOKU_UHN is deprecated. Please use JSINFO.DOKU_UHN instead'); return JSINFO.DOKU_UHN; } });";
+    print "Object.defineProperty(window, 'DOKU_UHC', { get: function() { console.warn('Using DOKU_UHC is deprecated. Please use JSINFO.DOKU_UHC instead'); return JSINFO.DOKU_UHC; } });";
 
     // load JS specific translations
     $lang['js']['plugins'] = js_pluginstrings();

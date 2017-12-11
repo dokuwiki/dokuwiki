@@ -331,6 +331,8 @@ function tpl_metaheaders($alt = true) {
         $script .= "var SIG='".toolbar_signature()."';";
     }
     $JSINFO['ACT'] = act_clean($ACT);
+    $JSINFO['DOKU_UHN'] = (int) useHeading('navigation');
+    $JSINFO['DOKU_UHC'] = (int) useHeading('content');
     $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
     $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
 
