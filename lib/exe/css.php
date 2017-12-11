@@ -78,6 +78,10 @@ function css_out(){
         if(!empty($config_cascade['userstyle'][$mediatype])) {
             foreach($config_cascade['userstyle'][$mediatype] as $userstyle) {
                 $files[$userstyle] = DOKU_BASE;
+                if($INPUT->bool('preview')) {
+                    $userstyle = str_replace(DOKU_CONF, $conf['cachedir'].'/', $userstyle);
+                    $files[$userstyle] = DOKU_BASE;
+                }
             }
         }
 
