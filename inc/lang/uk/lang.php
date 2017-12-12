@@ -3,12 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Vitaly <vitaly.balashov@smuzzy.com.ua>
  * @author Oleksiy Voronin <ovoronin@gmail.com>
  * @author serg_stetsuk@ukr.net
  * @author Oleksandr Kunytsia <okunia@gmail.com>
  * @author Uko <uko@uar.net>
  * @author Ulrikhe Lukoie <lukoie@gmail.com>
- * @author Kate Arzamastseva pshns@ukr.net
  * @author Egor Smkv <egorsmkv@gmail.com>
  * @author Max Lyashuk <m_lyashuk@ukr.net>
  * @author Pavel <pavelholovko@yandex.ru>
