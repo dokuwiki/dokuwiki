@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Michael Bohn <mjbohn@gmail.com>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
@@ -132,6 +133,7 @@ $lang['subscribe_time']        = 'Délai après lequel les listes d\'abonnement 
 $lang['notify']                = 'Notifier systématiquement les modifications à cette adresse de courriel';
 $lang['registernotify']        = 'Notifier systématiquement les nouveaux utilisateurs enregistrés à cette adresse de courriel';
 $lang['mailfrom']              = 'Adresse de courriel de l\'expéditeur des notifications par courriel du wiki';
+$lang['mailreturnpath']        = 'Adresse e-mail du destinataire pour les notifications de non-remise';
 $lang['mailprefix']            = 'Préfixe à utiliser dans les objets des courriels automatiques. Laisser vide pour utiliser le titre du wiki';
 $lang['htmlmail']              = 'Envoyer des courriel HTML multipart (visuellement plus agréable, mais plus lourd). Désactiver pour utiliser uniquement des courriel plain text';
 $lang['sitemap']               = 'Fréquence de génération du sitemap Google (jours). 0 pour désactiver';
