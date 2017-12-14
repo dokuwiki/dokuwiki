@@ -8,7 +8,6 @@
  * @author Artur <ncuxxx@gmail.com>
  * @author Erli Moen <evseev.jr@gmail.com>
  * @author Владимир <id37736@yandex.ru>
- * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Type-kun <workwork-1@yandex.ru>
  * @author Vitaly Filatenko <kot@hacktest.net>
  * @author Radimir <radimir.shevchenko@gmail.com>

@@ -8,7 +8,6 @@
  * @author Змей Этерийский evil_snake@eternion.ru
  * @author Hikaru Nakajima <jisatsu@mail.ru>
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
- * @author Irina Ponomareva irinaponomareva@webperfectionist.com
  * @author Alexander Sorkin <kibizoid@gmail.com>
  * @author Kirill Krasnov <krasnovforum@gmail.com>
  * @author Vlad Tsybenko <vlad.development@gmail.com>
@@ -17,9 +16,7 @@
  * @author Ladyko Andrey <fylh@succexy.spb.ru>
  * @author Eugene <windy.wanderer@gmail.com>
  * @author Johnny Utah <pcpa@cyberpunk.su>
- * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author Pavel <ivanovtsk@mail.ru>
- * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Igor Degraf <igordegraf@gmail.com>
  * @author Vitaly Filatenko <kot@hacktest.net>
  * @author dimsharav <dimsharav@gmail.com>
