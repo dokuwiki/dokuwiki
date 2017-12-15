@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author F. Mueller-Donath <j.felix@mueller-donath.de>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Christof <gagi@fin.de>
  * @author Anika Henke <anika@selfthinker.org>
@@ -23,9 +24,6 @@
  * @author Volker Bödker <volker@boedker.de>
  * @author Janosch <janosch@moinzen.de>
  * @author rnck <dokuwiki@rnck.de>
- * @author Felix <j.felix@mueller-donath.de>
- * @author Felix Müller-Donath <j.felix@mueller-donath.de>
- * @author F. Mueller-Donath <j.felix@mueller-donath.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -157,7 +155,7 @@ $lang['js']['linkto']          = 'Link zu:';
 $lang['js']['del_confirm']     = 'Die ausgewählten Dateien wirklich löschen?';
 $lang['js']['restore_confirm'] = 'Wirklich diese Version wiederherstellen?';
 $lang['js']['media_diff']      = 'Unterschiede anzeigen:';
-$lang['js']['media_diff_both'] = 'Seite für Seite';
+$lang['js']['media_diff_both'] = 'Nebeneinander';
 $lang['js']['media_diff_opacity'] = 'Überblenden';
 $lang['js']['media_diff_portions'] = 'Übergang';
 $lang['js']['media_select']    = 'Dateien auswählen…';
@@ -201,7 +199,7 @@ $lang['diff2']                 = 'Zeige Unterschiede der ausgewählten Versionen
 $lang['difflink']              = 'Link zu der Vergleichsansicht';
 $lang['diff_type']             = 'Unterschiede anzeigen:';
 $lang['diff_inline']           = 'Inline';
-$lang['diff_side']             = 'Side by Side';
+$lang['diff_side']             = 'Nebeneinander';
 $lang['diffprevrev']           = 'Vorherige Überarbeitung';
 $lang['diffnextrev']           = 'Nächste Überarbeitung';
 $lang['difflastrev']           = 'Letzte Überarbeitung';
