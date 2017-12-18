@@ -13,12 +13,16 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
 $hasSidebar = page_findnearest($conf['sidebar']);
 $showSidebar = $hasSidebar && ($ACT=='show');
+
+global $JSINFO; // Check global for "nonce" by the contentsecurity plugin. If it is set, we will need to set it for our inline script.
+$scriptNonce = array_key_exists('nonce', $JSINFO) ? ' nonce="' . $JSINFO['nonce'] . '"' : '';
+
 ?><!DOCTYPE html>
 <html lang="<?php echo $conf['lang'] ?>" dir="<?php echo $lang['direction'] ?>" class="no-js">
 <head>
     <meta charset="utf-8" />
     <title><?php tpl_pagetitle() ?> [<?php echo strip_tags($conf['title']) ?>]</title>
-    <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
+    <script<?php echo $scriptNonce?>>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
     <?php tpl_metaheaders() ?>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <?php echo tpl_favicon(array('favicon', 'mobile')) ?>
