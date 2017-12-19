@@ -270,7 +270,7 @@ function html_show($txt=null){
 
     if (!is_null($txt)){
         //PreviewHeader
-        echo '<br id="scroll__here"/>';
+        echo '<br id="scroll__here" />';
         echo p_locale_xhtml('preview');
         echo '<div class="preview"><div class="pad">';
         $html = html_secedit(p_render('xhtml',p_get_instructions($txt),$info),$secedit);
@@ -1002,7 +1002,7 @@ function html_li_index($item){
         // scroll to the current item
         if($item['id'] == $INFO['id'] && $ACT == 'index') {
             $id = ' id="scroll__here"';
-            $class = ' scroll_here bounce';
+            $class = ' bounce';
         }
         return '<li class="level'.$item['level'].$class.'" '.$id.'>';
     }elseif($item['open']){
