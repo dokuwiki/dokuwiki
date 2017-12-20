@@ -2522,13 +2522,13 @@ class JpegMeta {
             $pos = 14;
 
             reset($this->_info['adobe']['raw']);
-            while (list($key) = each($this->_info['adobe']['raw'])) {
+            foreach ($this->_info['adobe']['raw'] as $value){
                 $pos = $this->_write8BIM(
                         $data,
                         $pos,
-                        $this->_info['adobe']['raw'][$key]['type'],
-                        $this->_info['adobe']['raw'][$key]['header'],
-                        $this->_info['adobe']['raw'][$key]['data'] );
+                        $value['type'],
+                        $value['header'],
+                        $value['data'] );
             }
         }
 

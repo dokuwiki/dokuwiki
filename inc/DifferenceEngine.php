@@ -270,27 +270,29 @@ class _DiffEngine {
                 if (empty($ymatches[$line]))
                     continue;
                 $matches = $ymatches[$line];
-                reset($matches);
-                while (list ($junk, $y) = each($matches))
-                    if (empty($this->in_seq[$y])) {
-                        $k = $this->_lcs_pos($y);
-                        USE_ASSERTS && assert($k > 0);
-                        $ymids[$k] = $ymids[$k-1];
-                        break;
-                    }
-                while (list ($junk, $y) = each($matches)) {
-                    if ($y > $this->seq[$k-1]) {
-                        USE_ASSERTS && assert($y < $this->seq[$k]);
-                        // Optimization: this is a common case:
-                        //  next match is just replacing previous match.
-                        $this->in_seq[$this->seq[$k]] = false;
-                        $this->seq[$k] = $y;
-                        $this->in_seq[$y] = 1;
-                    }
-                    else if (empty($this->in_seq[$y])) {
-                        $k = $this->_lcs_pos($y);
-                        USE_ASSERTS && assert($k > 0);
-                        $ymids[$k] = $ymids[$k-1];
+                $switch = false;
+                foreach ($matches as $y) {
+                    if(!$switch) {
+                        if (empty($this->in_seq[$y])) {
+                            $k = $this->_lcs_pos($y);
+                            USE_ASSERTS && assert($k > 0);
+                            $ymids[$k] = $ymids[$k-1];
+                            $switch = true;
+                        }
+                    }else{
+                        if ($y > $this->seq[$k-1]) {
+                            USE_ASSERTS && assert($y < $this->seq[$k]);
+                            // Optimization: this is a common case:
+                            //  next match is just replacing previous match.
+                            $this->in_seq[$this->seq[$k]] = false;
+                            $this->seq[$k] = $y;
+                            $this->in_seq[$y] = 1;
+                        }
+                        else if (empty($this->in_seq[$y])) {
+                            $k = $this->_lcs_pos($y);
+                            USE_ASSERTS && assert($k > 0);
+                            $ymids[$k] = $ymids[$k-1];
+                        }
                     }
                 }
             }
@@ -876,10 +878,10 @@ class DiffFormatter {
 
     /**
      * Escape string
-     * 
+     *
      * Override this method within other formatters if escaping required.
      * Base class requires $str to be returned WITHOUT escaping.
-     * 
+     *
      * @param $str string Text string to escape
      * @return string The escaped string.
      */
