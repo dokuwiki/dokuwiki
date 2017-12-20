@@ -386,15 +386,16 @@ class Subscription {
      * @param string   $id              Page for which the notification is
      * @param int|null $rev             Old revision if any
      * @param string   $summary         Change summary if any
+     * @param int|null $current_rev     New revision if any
      * @return bool                     true if successfully sent
      */
-    public function send_diff($subscriber_mail, $template, $id, $rev = null, $summary = '') {
+    public function send_diff($subscriber_mail, $template, $id, $rev = null, $summary = '', $current_rev = null) {
         global $DIFF_INLINESTYLES;
 
         // prepare replacements (keys not set in hrep will be taken from trep)
         $trep = array(
             'PAGE' => $id,
-            'NEWPAGE' => wl($id, '', true, '&'),
+            'NEWPAGE' => wl($id, $current_rev?('rev='.$current_rev):'', true, '&'),
             'SUMMARY' => $summary,
             'SUBSCRIBE' => wl($id, array('do' => 'subscribe'), true, '&')
         );
@@ -449,8 +450,9 @@ class Subscription {
      * @param string   $template        Mail template ('uploadmail', ...)
      * @param string   $id              Media file for which the notification is
      * @param int|bool $rev             Old revision if any
+     * @param int|bool $current_rev     New revision if any
      */
-    public function send_media_diff($subscriber_mail, $template, $id, $rev = false) {
+    public function send_media_diff($subscriber_mail, $template, $id, $rev = false, $current_rev = false) {
         global $conf;
 
         $file = mediaFN($id);
@@ -458,7 +460,7 @@ class Subscription {
 
         $trep = array(
             'MIME'  => $mime,
-            'MEDIA' => ml($id,'',true,'&',true),
+            'MEDIA' => ml($id,$current_rev?('rev='.$current_rev):'',true,'&',true),
             'SIZE'  => filesize_h(filesize($file)),
         );
 

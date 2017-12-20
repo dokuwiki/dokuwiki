@@ -1364,8 +1364,8 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     addLogEntry($svdta['newRevision'], $svdta['id'], $svdta['changeType'], $svdta['summary'], $svdta['changeInfo'], null, $svdta['sizechange']);
 
     // send notify mails
-    notify($svdta['id'], 'admin', $svdta['oldRevision'], $svdta['summary'], $minor);
-    notify($svdta['id'], 'subscribers', $svdta['oldRevision'], $svdta['summary'], $minor);
+    notify($svdta['id'], 'admin', $svdta['oldRevision'], $svdta['summary'], $minor, $svdta['newRevision']);
+    notify($svdta['id'], 'subscribers', $svdta['oldRevision'], $svdta['summary'], $minor, $svdta['newRevision']);
 
     // update the purgefile (timestamp of the last time anything within the wiki was changed)
     io_saveFile($conf['cachedir'].'/purgefile', time());
@@ -1401,17 +1401,18 @@ function saveOldRevision($id) {
 /**
  * Sends a notify mail on page change or registration
  *
- * @param string     $id       The changed page
- * @param string     $who      Who to notify (admin|subscribers|register)
- * @param int|string $rev Old page revision
- * @param string     $summary  What changed
- * @param boolean    $minor    Is this a minor edit?
- * @param string[]   $replace  Additional string substitutions, @KEY@ to be replaced by value
+ * @param string     $id           The changed page
+ * @param string     $who          Who to notify (admin|subscribers|register)
+ * @param int|string $rev          Old page revision
+ * @param string     $summary      What changed
+ * @param boolean    $minor        Is this a minor edit?
+ * @param string[]   $replace      Additional string substitutions, @KEY@ to be replaced by value
+ * @param int|string $current_rev  New page revision
  * @return bool
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = array()) {
+function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = array(), $current_rev = false) {
     global $conf;
     /* @var Input $INPUT */
     global $INPUT;
@@ -1438,7 +1439,7 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
 
     // prepare content
     $subscription = new Subscription();
-    return $subscription->send_diff($to, $tpl, $id, $rev, $summary);
+    return $subscription->send_diff($to, $tpl, $id, $rev, $summary, $current_rev);
 }
 
 /**

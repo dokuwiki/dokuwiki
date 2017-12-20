@@ -525,7 +525,7 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
         // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
         chmod($fn, $conf['fmode']);
         msg($lang['uploadsucc'],1);
-        media_notify($id,$fn,$imime,$old);
+        media_notify($id,$fn,$imime,$old,$new);
         // add a log entry to the media changelog
         $filesize_new = filesize($fn);
         $sizechange = $filesize_new - $filesize_old;
@@ -639,18 +639,19 @@ function media_contentcheck($file,$mime){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string   $id      media id
- * @param string   $file    path to file
- * @param string   $mime    mime type
- * @param bool|int $old_rev revision timestamp or false
+ * @param string   $id          media id
+ * @param string   $file        path to file
+ * @param string   $mime        mime type
+ * @param bool|int $old_rev     revision timestamp or false
+ * @param bool|int $current_rev current revision timestamp or false
  * @return bool
  */
-function media_notify($id,$file,$mime,$old_rev=false){
+function media_notify($id,$file,$mime,$old_rev=false,$current_rev=false){
     global $conf;
     if(empty($conf['notify'])) return false; //notify enabled?
 
     $subscription = new Subscription();
-    return $subscription->send_media_diff($conf['notify'], 'uploadmail', $id, $old_rev);
+    return $subscription->send_media_diff($conf['notify'], 'uploadmail', $id, $old_rev, $current_rev);
 }
 
 /**
