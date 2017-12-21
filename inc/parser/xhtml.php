@@ -889,7 +889,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['more']   = '';
         $link['class']  = $class;
         if($this->date_at) {
-            $params = $params.'&at='.urlencode($this->date_at);// Not perfect, but it works
+            $params = $params.'&at='.rawurlencode($this->date_at);
         }
         $link['url']    = wl($id, $params);
         $link['name']   = $name;
