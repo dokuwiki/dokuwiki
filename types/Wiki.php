@@ -9,6 +9,8 @@ class Wiki extends AbstractBaseType {
     protected $config = array(
         'prefix' => '',
         'postfix' => '',
+        'rows' => '5',
+        'cols' => '50'
     );
 
     /**
@@ -50,7 +52,9 @@ class Wiki extends AbstractBaseType {
         $params = array(
             'name' => $name,
             'class' => 'struct_'.strtolower($this->getClass()),
-            'id' => $htmlID
+            'id' => $htmlID,
+            'rows' => $this->config['rows'],
+            'cols' => $this->config['cols']
         );
         $attributes = buildAttributes($params, true);
 
