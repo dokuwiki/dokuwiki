@@ -272,27 +272,19 @@ class _DiffEngine {
                 $matches = $ymatches[$line];
                 $switch = false;
                 foreach ($matches as $y) {
-                    if(!$switch) {
-                        if (empty($this->in_seq[$y])) {
-                            $k = $this->_lcs_pos($y);
-                            USE_ASSERTS && assert($k > 0);
-                            $ymids[$k] = $ymids[$k-1];
-                            $switch = true;
-                        }
-                    }else{
-                        if ($y > $this->seq[$k-1]) {
-                            USE_ASSERTS && assert($y < $this->seq[$k]);
-                            // Optimization: this is a common case:
-                            //  next match is just replacing previous match.
-                            $this->in_seq[$this->seq[$k]] = false;
-                            $this->seq[$k] = $y;
-                            $this->in_seq[$y] = 1;
-                        }
-                        else if (empty($this->in_seq[$y])) {
-                            $k = $this->_lcs_pos($y);
-                            USE_ASSERTS && assert($k > 0);
-                            $ymids[$k] = $ymids[$k-1];
-                        }
+                    if ($switch && $y > $this->seq[$k-1]) {
+                        USE_ASSERTS && assert($y < $this->seq[$k]);
+                        // Optimization: this is a common case:
+                        //  next match is just replacing previous match.
+                        $this->in_seq[$this->seq[$k]] = false;
+                        $this->seq[$k] = $y;
+                        $this->in_seq[$y] = 1;
+                    }
+                    else if (empty($this->in_seq[$y])) {
+                        $k = $this->_lcs_pos($y);
+                        USE_ASSERTS && assert($k > 0);
+                        $ymids[$k] = $ymids[$k-1];
+                        $switch = true;
                     }
                 }
             }
