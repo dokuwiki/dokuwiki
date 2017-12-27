@@ -14,8 +14,8 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 $hasSidebar = page_findnearest($conf['sidebar']);
 $showSidebar = $hasSidebar && ($ACT=='show');
 
-global $JSINFO; // Check global for "nonce" by the contentsecurity plugin. If it is set, we will need to set it for our inline script.
-$scriptNonce = array_key_exists('nonce', $JSINFO) ? ' nonce="' . $JSINFO['nonce'] . '"' : '';
+global $JSINFO; // Check global for "scriptNonce" by the contentsecurity plugin. If it is set, we will need to set it for our inline script.
+$scriptNonce = array_key_exists('scriptNonce', $JSINFO) ? ' nonce="' . $JSINFO['scriptNonce'] . '"' : '';
 
 ?><!DOCTYPE html>
 <html lang="<?php echo $conf['lang'] ?>" dir="<?php echo $lang['direction'] ?>" class="no-js">
