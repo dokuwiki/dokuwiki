@@ -127,7 +127,7 @@ function html_secedit_button($matches){
     }
 
     if (!empty($matches['codeblockOffset'])) {
-        $data['codeblockOffset'] = strtolower($matches['codeblockOffset']);
+        $data['codeblockOffset'] = $matches['codeblockOffset'];
     }
 
     return trigger_event('HTML_SECEDIT_BUTTON', $data,
