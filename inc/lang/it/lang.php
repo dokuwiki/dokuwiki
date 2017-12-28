@@ -3,24 +3,22 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Torpedo <dgtorpedo@gmail.com>
  * @author Giorgio Vecchiocattivi <giorgio@vecchio.it>
  * @author Roberto Bolli [http://www.rbnet.it/]
  * @author Silvia Sargentoni <polinnia@tin.it>
  * @author Diego Pierotto <ita.translations@tiscali.it>
  * @author Lorenzo Breda <lbreda@gmail.com>
- * @author snarchio@alice.it
  * @author robocap <robocap1@gmail.com>
  * @author Matteo Carnevali <rekstorm@gmail.com>
  * @author Osman Tekin <osman.tekin93@hotmail.it>
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  * @author Matteo Pasotti <matteo@xquiet.eu>
- * @author snarchio@gmail.com
  * @author Edmondo Di Tucci <snarchio@gmail.com>
  * @author Claudio Lanconelli <lancos@libero.it>
  * @author Mirko <malisan.mirko@gmail.com>
  * @author Francesco <francesco.cavalli@hotmail.com>
  * @author Fabio <fabioslurp@yahoo.it>
- * @author Torpedo <dgtorpedo@gmail.com>
  * @author Maurizio <mcannavo@katamail.com>
  * @author Riccardo <riccardofila@gmail.com>
  * @author Paolo <paolopoz12@gmail.com>
