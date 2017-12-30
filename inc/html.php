@@ -939,7 +939,7 @@ function html_index($ns){
     $ns  = utf8_encodeFN(str_replace(':','/',$ns));
 
     echo p_locale_xhtml('index');
-    echo '<div id="index__tree">';
+    echo '<div id="index__tree" class="index__tree">';
 
     $data = array();
     search($data,$conf['datadir'],'search_index',array('ns' => $ns));
@@ -1895,8 +1895,8 @@ function html_edit(){
     <div class="editBox" role="application">
 
     <div class="toolbar group">
-        <div id="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.dformat();?></div>
-        <div id="tool__bar"><?php if ($wr && $data['media_manager']){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
+        <div id="draft__status" class="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.dformat();?></div>
+        <div id="tool__bar" class="tool__bar"><?php if ($wr && $data['media_manager']){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
             target="_blank"><?php echo $lang['mediaselect'] ?></a><?php }?></div>
     </div>
     <?php
@@ -2103,7 +2103,7 @@ function html_TOC($toc){
     if(!count($toc)) return '';
     global $lang;
     $out  = '<!-- TOC START -->'.DOKU_LF;
-    $out .= '<div id="dw__toc">'.DOKU_LF;
+    $out .= '<div id="dw__toc" class="dw__toc">'.DOKU_LF;
     $out .= '<h3 class="toggle">';
     $out .= $lang['toc'];
     $out .= '</h3>'.DOKU_LF;
