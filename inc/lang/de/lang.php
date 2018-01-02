@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Joel Strasser <strasser999@gmail.com>
  * @author Robert Riebisch <robert.riebisch@googlemail.com>
  * @author Joerg <scooter22@gmx.de>
  * @author Andreas Gohr <andi@splitbrain.org>
