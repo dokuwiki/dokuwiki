@@ -70,7 +70,6 @@ $lang['status_template']       = '模板';
 $lang['status_bundled']        = '内建';
 $lang['msg_enabled']           = '插件 %s 已启用';
 $lang['msg_disabled']          = '插件 %s 已禁用';
-$lang['msg_delete_success']    = '插件已经卸载';
 $lang['msg_delete_failed']     = '卸载扩展 %s 失败';
 $lang['msg_template_install_success'] = '模板 %s 安装成功';
 $lang['msg_template_update_success'] = '模板 %s 更新成功';
