@@ -87,15 +87,19 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         // output the editor
         $value = $this->schemadata->getDataColumn($this->column);
         $id = uniqid('struct__', false);
+        echo '<div class="field">';
         echo '<label data-column="' . hsc($this->column->getFullQualifiedLabel()) . '" for="' . $id . '">';
         echo '</label>';
+        echo '<span class="input">';
         echo $value->getValueEditor('entry', $id);
+        echo '</span>';
         $hint = $this->column->getType()->getTranslatedHint();
         if($hint) {
             echo '<p class="hint">';
             echo hsc($hint);
             echo '</p>';
         }
+        echo '</div>';
 
         // csrf protection
         formSecurityToken();
