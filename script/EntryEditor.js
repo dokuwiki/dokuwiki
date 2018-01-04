@@ -14,39 +14,32 @@ var EntryEditor = function($form) {
     $form.find('.struct .hashint').tooltip();
 
     /**
-     * Attach datepicker to date types.
-     * Only if browser does not support HTML5 date input.
+     * Attach datepicker to date types, if lacking HTML5 support.
      */
-    var testelem = document.createElement('input');
-    testelem.setAttribute("type", "date");
-    if (testelem.type === "text") {
-        $form.find('input.struct_date').datepicker({
-            dateFormat: 'yyyy-mm-dd',
-            changeYear: true,
-        });
-    }
+    var ftypetext = function() { return this.type === 'text'; };
+    $form.find('input.struct_date').filter(ftypetext).datepicker({
+        dateFormat: 'yyyy-mm-dd',
+        changeYear: true,
+    });
 
     /**
      * Attach datepicker to datetype types, keeps time part.
      * Only if browser does not support HTML5 datetime-local input.
      */
-    testelem.setAttribute("type", "datetime-local");
-    if (testelem.type === "text") {
-        $form.find('input.struct_datetime').datepicker({
-            dateFormat: 'yyyy-mm-dd',
-            changeYear: true,
-            onSelect: function (date, inst) {
-                var $input = jQuery(this);
-                var both = inst.lastVal.split(' ', 2);
-                if (both.length == 2) {
-                    date += ' ' + both[1];
-                } else {
-                    date += ' 00:00:00';
-                }
-                $input.val(date);
+    $form.find('input.struct_datetime').filter(ftypetext).datepicker({
+        dateFormat: 'yyyy-mm-dd',
+        changeYear: true,
+        onSelect: function (date, inst) {
+            var $input = jQuery(this);
+            var both = inst.lastVal.split(' ', 2);
+            if (both.length == 2) {
+                date += ' ' + both[1];
+            } else {
+                date += ' 00:00:00';
             }
-        });
-    }
+            $input.val(date);
+        }
+    });
 
     /**
      * Attach image dialog to image types
