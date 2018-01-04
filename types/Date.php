@@ -48,6 +48,7 @@ class Date extends AbstractBaseType {
             'name' => $name,
             'value' => $rawvalue,
             'class' => 'struct_date',
+            'type' => 'date',  // HTML5 date picker
             'id' => $htmlID,
         );
         $attributes = buildAttributes($params, true);
