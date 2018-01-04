@@ -5,5 +5,5 @@
  *
  * @author Hugo Smet <hugo.smet@scarlet.be>
  */
-$lang['connectfail']           = 'LDAP kan niet connecteren: %s';
+$lang['connectfail']           = 'LDAP kan niet connecten: %s';
 $lang['domainfail']            = 'LDAP kan je gebruikers dn niet vinden';
