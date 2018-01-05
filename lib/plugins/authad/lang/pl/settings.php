@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Max <maxrb146@gmail.com>
  * @author Tomasz Bosak <bosak.tomasz@gmail.com>
  * @author Paweł Jan Czochański <czochanski@gmail.com>
  * @author Mati <mackosa@wp.pl>
