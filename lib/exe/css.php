@@ -44,7 +44,7 @@ function css_out(){
     $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
     if(!$tpl) $tpl = $conf['template'];
 
-    // load styl.ini
+    // load style.ini
     $styleini = css_styleini($tpl, $INPUT->bool('preview'));
 
     // cache influencers
