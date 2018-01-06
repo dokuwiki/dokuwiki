@@ -97,7 +97,13 @@ class action_plugin_struct_edit extends DokuWiki_Action_Plugin {
             $label = $field->getColumn()->getLabel();
             if(isset($postdata[$label])) {
                 // posted data trumps stored data
-                $field->setValue(cleanText($postdata[$label]), true);
+                $data = $postdata[$label];
+                if (is_array($data)) {
+                    $data = array_map("cleanText", $data);
+                } else {
+                    $data = cleanText($data);
+                }
+                $field->setValue($data, true);
             }
             $html .= $this->makeField($field, self::$VAR . "[$tablename][$label]");
         }
