@@ -14,17 +14,21 @@ var EntryEditor = function($form) {
     $form.find('.struct .hashint').tooltip();
 
     /**
-     * Attach datepicker to date types
+     * Attach datepicker to date types, if lacking HTML5 support.
      */
-    $form.find('input.struct_date').datepicker({
-        dateFormat: 'yy-mm-dd'
+    var ftypetext = function() { return this.type === 'text'; };
+    $form.find('input.struct_date').filter(ftypetext).datepicker({
+        dateFormat: 'yyyy-mm-dd',
+        changeYear: true,
     });
 
     /**
-     * Attach datepicker to datetype types, keeps time part
+     * Attach datepicker to datetype types, keeps time part.
+     * Only if browser does not support HTML5 datetime-local input.
      */
-    $form.find('input.struct_datetime').datepicker({
-        dateFormat: 'yy-mm-dd',
+    $form.find('input.struct_datetime').filter(ftypetext).datepicker({
+        dateFormat: 'yyyy-mm-dd',
+        changeYear: true,
         onSelect: function (date, inst) {
             var $input = jQuery(this);
             var both = inst.lastVal.split(' ', 2);

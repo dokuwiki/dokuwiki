@@ -46,6 +46,7 @@ class DateTime extends Date {
             'name' => $name,
             'value' => $rawvalue,
             'class' => 'struct_datetime',
+            'type' => 'datetime-local', // HTML5 datetime picker
             'id' => $htmlID,
         );
         $attributes = buildAttributes($params, true);
