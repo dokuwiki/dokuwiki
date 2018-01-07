@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author serg_stetsuk@ukr.net
+ * @author serg_stetsuk <serg_stetsuk@ukr.net>
  * @author Oleksandr Kunytsia <okunia@gmail.com>
  */
 $lang['menu']                  = 'Менеджер відновлення';

@@ -6,7 +6,7 @@
  * @author Олексій <alexey.furashev@gmail.com>
  * @author Vitaly <vitaly.balashov@smuzzy.com.ua>
  * @author Oleksiy Voronin <ovoronin@gmail.com>
- * @author serg_stetsuk@ukr.net
+ * @author serg_stetsuk <serg_stetsuk@ukr.net>
  * @author Oleksandr Kunytsia <okunia@gmail.com>
  * @author Maksim <nikropol@yandex.ru>
  * @author Nina Zolotova <nina-z@i.ua>

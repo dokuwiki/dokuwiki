@@ -6,7 +6,7 @@
  * @author Олексій <alexey.furashev@gmail.com>
  * @author Vitaly <vitaly.balashov@smuzzy.com.ua>
  * @author Oleksiy Voronin <ovoronin@gmail.com>
- * @author serg_stetsuk@ukr.net
+ * @author serg_stetsuk <serg_stetsuk@ukr.net>
  * @author Oleksandr Kunytsia <okunia@gmail.com>
  * @author Uko <uko@uar.net>
  * @author Ulrikhe Lukoie <lukoie@gmail.com>
@@ -307,6 +307,7 @@ $lang['i_allowreg']            = 'Дозволити користувачам р
 $lang['i_retry']               = 'Повторити';
 $lang['i_license']             = 'Будь ласка, виберіть тип ліцензії, під якою Ві бажаєте опублікувати матеріал:';
 $lang['i_license_none']        = 'Не показувати жодної інформації про ліцензії.';
+$lang['i_pop_field']           = 'Будь ласка, допоможіть нам покращити DokuWiki:';
 $lang['i_pop_label']           = 'Одного разу на місяць надсилати дані про використання розробникам DokuWiki.';
 $lang['recent_global']         = 'Ви переглядаєте зміни в межах простору імен <b>%s</b>. Також можна <a href="%s">переглянути зміни в межах усієї Вікі</a>.';
 $lang['years']                 = '%d років тому';

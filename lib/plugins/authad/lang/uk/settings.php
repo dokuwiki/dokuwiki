@@ -6,6 +6,7 @@
  * @author Олексій <alexey.furashev@gmail.com>
  * @author Nina Zolotova <nina-z@i.ua>
  */
+$lang['admin_password']        = 'Пароль вказаного користувача.';
 $lang['use_ssl']               = 'Використовуєте SSL-з\'єднання? Якщо так, не вмикайте TLS нижче.';
 $lang['use_tls']               = 'Використовуєте TLS-з\'єднання? Якщо так, не вмикайте SSL нижче.';
 $lang['debug']                 = 'Показати додаткові відомості щодо помилок?';
