@@ -109,4 +109,6 @@ $lang['no_lookup_for_page'] = 'You can\'t use the Lookup Editor on a page schema
 $lang['lookup new entry'] = 'Create new Entry';
 $lang['js']['lookup_delete'] = 'Delete Entry';
 
+$lang['bureaucracy_action_struct_lookup_thanks'] = 'The entry has been stored. <a href="%s">Add another entry</a>.';
+
 //Setup VIM: ex: et ts=4 :
