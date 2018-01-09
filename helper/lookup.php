@@ -38,7 +38,8 @@ class helper_plugin_struct_lookup extends helper_plugin_bureaucracy_action {
             if (!$access instanceof AccessTableLookup) continue;
 
             if(!$access->getSchema()->isEditable()) {
-                throw new StructException('lookup save error: no permission for schema');
+                msg('lookup save error: no permission for schema', -1);
+                return false;
             }
             $validator = $access->getValidator($data);
             if($validator->validate()) {
