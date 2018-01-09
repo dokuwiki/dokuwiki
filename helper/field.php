@@ -22,7 +22,7 @@ class helper_plugin_struct_field extends helper_plugin_bureaucracy_field {
      * @param array $args
      */
     public function initialize($args) {
-        parent::initialize($args);
+        $this->init($args);
 
         // find the column
         try {
@@ -30,6 +30,8 @@ class helper_plugin_struct_field extends helper_plugin_bureaucracy_field {
         } catch(StructException $e) {
             msg(hsc($e->getMessage()), -1);
         }
+
+        $this->standardArgs($args);
     }
 
     /**
@@ -41,7 +43,8 @@ class helper_plugin_struct_field extends helper_plugin_bureaucracy_field {
     protected function setVal($value) {
         if(!$this->column) {
             $value = '';
-        } else {
+        //don't validate placeholders here
+        } elseif($this->replace($value) == $value) {
             $validator = new ValueValidator();
             $this->error = !$validator->validateValue($this->column, $value);
             if($this->error) {
