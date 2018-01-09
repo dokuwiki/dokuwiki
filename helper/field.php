@@ -43,7 +43,8 @@ class helper_plugin_struct_field extends helper_plugin_bureaucracy_field {
     protected function setVal($value) {
         if(!$this->column) {
             $value = '';
-        } else {
+        //don't validate placeholders here
+        } elseif($this->replace($value) == $value) {
             $validator = new ValueValidator();
             $this->error = !$validator->validateValue($this->column, $value);
             if($this->error) {
