@@ -86,6 +86,9 @@ class helper_plugin_struct_field extends helper_plugin_bureaucracy_field {
 
         // output the field
         $value = new Value($this->column, $this->opt['value']);
+        if ($this->column->getType()->getClass() == 'Lookup') {
+            $value->setValue($this->opt['value'], true);
+        }
         $field = $this->makeField($value, $params['name']);
         $form->addElement($field);
     }
