@@ -7,6 +7,10 @@ use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 use dokuwiki\plugin\struct\meta\Schema;
 use dokuwiki\plugin\struct\meta\Search;
 use dokuwiki\plugin\struct\meta\Value;
+use dokuwiki\plugin\struct\meta\PageColumn;
+use dokuwiki\plugin\struct\meta\RevisionColumn;
+use dokuwiki\plugin\struct\meta\UserColumn;
+use dokuwiki\plugin\struct\meta\RowColumn;
 
 class Lookup extends Dropdown {
 
@@ -65,6 +69,26 @@ class Lookup extends Dropdown {
         if(!$column) {
             $field = str_replace('$LANG', 'en', $infield); // fallback to en
             $column = $table->findColumn($field);
+        }
+        if(!$column) {
+            if(!$table->isLookup()) {
+                if($infield == '%pageid%') {
+                    $column = new PageColumn(0, new Page(), $table);
+                }
+                if($infield == '%title%') {
+                    $column = new PageColumn(0, new Page(array('usetitles' => true)), $table);
+                }
+                if($infield == '%lastupdate%') {
+                    $column = new RevisionColumn(0, new DateTime(), $table);
+                }
+                if ($infield == '%lasteditor%') {
+                    $column = new UserColumn(0, new User(), $table);
+                }
+            } else {
+                if($infield == '%rowid%') {
+                    $column = new RowColumn(0, new Decimal(), $table);
+                }
+            }
         }
         if(!$column) {
             // field does not exist
