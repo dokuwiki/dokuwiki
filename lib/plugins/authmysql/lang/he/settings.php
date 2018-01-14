@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Menashe Tomer <menashesite@gmail.com>
  */
 $lang['getUserID']             = 'שאילתת SQL לקבלת מפתח ראשי של המשתמש';
