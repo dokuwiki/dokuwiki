@@ -5,6 +5,11 @@
  *
  * @author Guy Yakobovitch <guy.yakobovitch@gmail.com>
  */
+$lang['menu']                  = 'מנהל הרחבות';
+$lang['tab_plugins']           = 'תוספים מותקנים';
+$lang['tab_templates']         = 'תבניות מותקנות';
+$lang['tab_install']           = 'התקנה ידנית';
+$lang['notinstalled']          = 'הרחבה זו לא מותקנת';
 $lang['status_not_installed']  = 'לא מותקן';
 $lang['status_protected']      = 'מוגן';
 $lang['status_enabled']        = 'מופעל';
