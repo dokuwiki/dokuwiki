@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Guy Yakobovitch <guy.yakobovitch@gmail.com>
  * @author גיא שפר <guysoft@ort.org.il>
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Dotan Kamber <kamberd@yahoo.com>
@@ -349,5 +350,5 @@ $lang['searchresult']          = 'תוצאות חיפוש';
 $lang['plainhtml']             = 'HTML פשוט';
 $lang['page_nonexist_rev']     = 'העמוד לא קיים ב%s. העמוד נוצר במקום זאת ב<a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'לא ניתן לפענח פרמטר "%s".';
-$lang['email_signature_text'] = 'הודעת דוא״ל זו נוצרה על ידי ה־DokuWiki הזמין בכתובת
+$lang['email_signature_text']  = 'הודעת דוא״ל זו נוצרה על ידי ה־DokuWiki הזמין בכתובת
 @DOKUWIKIURL@';

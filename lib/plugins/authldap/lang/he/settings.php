@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author matt carroll <matt.carroll@gmail.com>
  * @author Menashe Tomer <menashesite@gmail.com>
  */
