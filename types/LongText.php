@@ -24,7 +24,12 @@ class LongText extends AbstractMultiBaseType {
      * @return bool true if $mode could be satisfied
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
-        $R->cdata($this->config['prefix'] . $value . $this->config['postfix']);
+        if ($mode === 'xhtml') {
+            $valueWithBR = nl2br(hsc($value));
+            $R->doc .= hsc($this->config['prefix']) . $valueWithBR . hsc($this->config['postfix']);
+        } else {
+            $R->cdata($this->config['prefix'] . $value . $this->config['postfix']);
+        }
         return true;
     }
 
@@ -39,7 +44,7 @@ class LongText extends AbstractMultiBaseType {
         $rawvalue = cleanText($rawvalue);
         return $rawvalue;
     }
-    
+
     /**
      * Use a text area for input
      *
