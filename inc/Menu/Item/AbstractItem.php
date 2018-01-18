@@ -171,7 +171,6 @@ abstract class AbstractItem {
      *
      * Uses html_btn()
      *
-     * @todo this does currently not support the SVG icon
      * @return string
      */
     public function asHtmlButton() {
@@ -182,7 +181,8 @@ abstract class AbstractItem {
             $this->getParams(),
             $this->method,
             $this->getTitle(),
-            $this->getLabel()
+            $this->getLabel(),
+            inlineSVG($this->getSvg())
         );
     }
 
