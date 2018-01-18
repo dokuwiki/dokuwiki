@@ -25,7 +25,7 @@ class LongText extends AbstractMultiBaseType {
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
         if ($mode === 'xhtml') {
-            $valueWithBR = str_replace("\n", '<br>', hsc($value));
+            $valueWithBR = nl2br(hsc($value));
             $R->doc .= hsc($this->config['prefix']) . $valueWithBR . hsc($this->config['postfix']);
         } else {
             $R->cdata($this->config['prefix'] . $value . $this->config['postfix']);
