@@ -36,8 +36,10 @@ function html_wikilink($id,$name=null,$search=''){
  * The loginform
  *
  * @author   Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param bool $svg Whether to show svg icons in the register and resendpwd links or not
  */
-function html_login(){
+function html_login($svg = false){
     global $lang;
     global $conf;
     global $ID;
@@ -58,11 +60,13 @@ function html_login(){
     $form->endFieldset();
 
     if(actionOK('register')){
-        $form->addElement('<p>'.$lang['reghere'].': '.tpl_actionlink('register','','','',true).'</p>');
+        $registerLink = (new \dokuwiki\Menu\Item\Register())->asHtmlLink('', $svg);
+        $form->addElement('<p>'.$lang['reghere'].': '. $registerLink .'</p>');
     }
 
     if (actionOK('resendpwd')) {
-        $form->addElement('<p>'.$lang['pwdforget'].': '.tpl_actionlink('resendpwd','','','',true).'</p>');
+        $resendPwLink = (new \dokuwiki\Menu\Item\Resendpwd())->asHtmlLink('', $svg);
+        $form->addElement('<p>'.$lang['pwdforget'].': '. $resendPwLink .'</p>');
     }
 
     html_form('login', $form);
