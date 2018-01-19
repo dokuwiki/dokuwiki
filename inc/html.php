@@ -188,10 +188,10 @@ function html_topbtn(){
  * @param string         $method
  * @param string         $tooltip
  * @param bool|string    $label  label text, false: lookup btn_$name in localization
- * @param string $inlineSVG (optional) inlineSVG code, inserted into the button
+ * @param string         $svg (optional) svg code, inserted into the button
  * @return string
  */
-function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label=false, $inlineSVG=null){
+function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label=false, $svg=null){
     global $conf;
     global $lang;
 
@@ -234,9 +234,9 @@ function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label
         $ret .= 'accesskey="'.$akey.'" ';
     }
     $ret .= 'title="'.$tip.'">';
-    if ($inlineSVG) {
+    if ($svg) {
         $ret .= '<span>' . hsc($label) . '</span>';
-        $ret .= $inlineSVG;
+        $ret .= inlineSVG($svg);
     } else {
         $ret .= hsc($label);
     }

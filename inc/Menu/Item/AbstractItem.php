@@ -182,7 +182,7 @@ abstract class AbstractItem {
             $this->method,
             $this->getTitle(),
             $this->getLabel(),
-            inlineSVG($this->getSvg())
+            $this->getSvg()
         );
     }
 
