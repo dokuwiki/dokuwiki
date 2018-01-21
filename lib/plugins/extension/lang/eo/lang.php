@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
  * @author Robert Bogenschneider <bogi@uea.org>
  */
 $lang['menu']                  = 'Aldonaĵa administrado';
@@ -25,6 +26,7 @@ $lang['btn_disable']           = 'Malebligi';
 $lang['btn_install']           = 'Instali';
 $lang['btn_reinstall']         = 'Re-instali';
 $lang['js']['reallydel']       = 'Ĉu vere malinstali la aldonaĵon?';
+$lang['js']['display_updatable'] = 'ĝisdatigebla';
 $lang['search_for']            = 'Serĉi la aldonaĵon:';
 $lang['search']                = 'Serĉi';
 $lang['extensionby']           = '<strong>%s</strong> fare de %s';
