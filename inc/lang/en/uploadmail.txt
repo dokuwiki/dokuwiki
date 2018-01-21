@@ -9,3 +9,6 @@ Hostname    : @HOSTNAME@
 Size        : @SIZE@
 MIME Type   : @MIME@
 User        : @USER@
+
+There may be newer changes after this revision. If this
+happens, a hint will be shown on the top of the rev page.
