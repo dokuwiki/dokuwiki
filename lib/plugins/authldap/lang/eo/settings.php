@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Felipe Castro <fefcas@yahoo.com.br>
  */
 $lang['server']                = 'Via LDAP-servilo. Aŭ servila nomo (<code>localhost</code>) aŭ plene detala URL (<code>ldap://servilo.lando:389</code>)';

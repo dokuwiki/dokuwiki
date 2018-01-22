@@ -5,5 +5,4 @@
  *
  * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
  */
-$lang['userexists']            = 'Pardonu, ĉi tiu uzanto-nomo jam ekzistas.';
 $lang['usernotexists']         = 'Pardonu, tiu uzanto ne ekzistas.';

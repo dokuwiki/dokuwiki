@@ -3,13 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
  * @author Antono Vasiljev <esperanto.minsk ĈE tut.by>
  * @author Felipe Castro <fefcas@yahoo.com.br>
- * @author Felipe Castro <fefcas@uol.com.br>
- * @author Felipe Castro <fefcas@gmail.com>
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
- * @author Robert Bogenschneider <bogi@uea.org>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -75,6 +73,7 @@ $lang['regmissing']            = 'Pardonu, vi devas plenigi ĉiujn kampojn.';
 $lang['reguexists']            = 'Pardonu, ĉi tiu uzanto-nomo jam ekzistas.';
 $lang['regsuccess']            = 'La uzanto kreiĝis kaj la pasvorto sendiĝis per retpoŝto.';
 $lang['regsuccess2']           = 'La uzanto kreiĝis.';
+$lang['regfail']               = 'Ne eblis krei uzanton.';
 $lang['regmailfail']           = 'Ŝajne okazis eraro dum elsendo de la pasvorto. Bonvolu informi administranton pri tio!';
 $lang['regbadmail']            = 'Entajpita retpoŝta adreso ŝajnas ne valida. Se vi pensas, ke tio estas eraro, kontaktu la administranton.';
 $lang['regbadpass']            = 'La du pasvortoj ne samas, bonvolu provi refoje.';
@@ -89,6 +88,7 @@ $lang['profdeleteuser']        = 'Forigi aliĝon';
 $lang['profdeleted']           = 'Via uzant-aliĝo estis forigata de tiu ĉi vikio';
 $lang['profconfdelete']        = 'Mi deziras forigi mian aliĝon de tiu ĉi vikio. <br/> Tiu ĉi ago ne povos esti malfarata.';
 $lang['profconfdeletemissing'] = 'Konfirmilo ne estas markita';
+$lang['proffail']              = 'La uzantokonto ne estis aktualigita.';
 $lang['pwdforget']             = 'Ĉu vi forgesis vian pasvorton? Prenu novan';
 $lang['resendna']              = 'Tiu ĉi vikio ne ebligas resendon de la pasvortoj.';
 $lang['resendpwd']             = 'Sendi novan pasvorton al';
@@ -337,5 +337,5 @@ $lang['currentns']             = 'Aktuala nomspaco';
 $lang['searchresult']          = 'Serĉrezulto';
 $lang['plainhtml']             = 'Plena HTML';
 $lang['wikimarkup']            = 'Vikiteksto';
-$lang['email_signature_text'] = 'Tiu ĉi mesaĝo kreiĝis de DokuWiki ĉe
+$lang['email_signature_text']  = 'Tiu ĉi mesaĝo kreiĝis de DokuWiki ĉe
 @DOKUWIKIURL@';
