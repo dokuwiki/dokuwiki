@@ -242,6 +242,10 @@ function tpl_metaheaders($alt = true) {
         );
     }
 
+    if (actionOK('manifest')) {
+        $head['link'][] = array('rel'=> 'manifest', 'href'=> DOKU_BASE.'lib/exe/manifest.php');
+    }
+
     if($alt) {
         if(actionOK('rss')) {
             $head['link'][] = array(
