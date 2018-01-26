@@ -18,7 +18,7 @@ var EntryEditor = function($form) {
      */
     var ftypetext = function() { return this.type === 'text'; };
     $form.find('input.struct_date').filter(ftypetext).datepicker({
-        dateFormat: 'yyyy-mm-dd',
+        dateFormat: 'yy-mm-dd',
         changeYear: true,
     });
 
@@ -27,7 +27,7 @@ var EntryEditor = function($form) {
      * Only if browser does not support HTML5 datetime-local input.
      */
     $form.find('input.struct_datetime').filter(ftypetext).datepicker({
-        dateFormat: 'yyyy-mm-dd',
+        dateFormat: 'yy-mm-dd',
         changeYear: true,
         onSelect: function (date, inst) {
             var $input = jQuery(this);
