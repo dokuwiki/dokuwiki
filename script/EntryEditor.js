@@ -26,19 +26,24 @@ var EntryEditor = function($form) {
      * Attach datepicker to datetype types, keeps time part.
      * Only if browser does not support HTML5 datetime-local input.
      */
-    $form.find('input.struct_datetime').filter(ftypetext).datepicker({
-        dateFormat: 'yy-mm-dd',
-        changeYear: true,
-        onSelect: function (date, inst) {
-            var $input = jQuery(this);
-            var both = inst.lastVal.split(' ', 2);
-            if (both.length == 2) {
-                date += ' ' + both[1];
-            } else {
-                date += ' 00:00:00';
+
+    $form.find('input.struct_datetime').filter(ftypetext).each(function (index, element) {
+        const $dtInput = jQuery(element);
+        $dtInput.val($dtInput.val().replace('T', ' '));
+        $dtInput.datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeYear: true,
+            onSelect: function (date, inst) {
+                var $input = jQuery(this);
+                var both = inst.lastVal.split(' ', 2);
+                if (both.length === 2) {
+                    date += ' ' + both[1];
+                } else {
+                    date += ' 00:00';
+                }
+                $input.val(date);
             }
-            $input.val(date);
-        }
+        });
     });
 
     /**

@@ -74,7 +74,7 @@ $lang['Validation Exception Media mime type'] = 'MIME type %s has to match the a
 $lang['Validation Exception Url invalid'] = '%s is not a valid URL';
 $lang['Validation Exception Mail invalid'] = '%s is not a valid email address';
 $lang['Validation Exception invalid date format'] = 'must be of format YYYY-MM-DD';
-$lang['Validation Exception invalid datetime format'] = 'must be of format YYYY-MM-DD HH:MM:SS';
+$lang['Validation Exception invalid datetime format'] = 'must be of format YYYY-MM-DD HH:MM';
 $lang['Validation Exception bad color specification'] = 'must be of format #RRGGBB';
 
 $lang['Exception illegal option'] = 'The option \'<code>%s</code>\' is invalid for this aggregation type.';
