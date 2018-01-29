@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Tom Leblanc <tomleblancbuais@gmail.com>
  * @author Michael Bohn <mjbohn@gmail.com>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Sébastien Bauer <sebastien.bauer@advalvas.be>
@@ -14,7 +15,7 @@
  * @author Stéphane Chamberland <stephane.chamberland@ec.gc.ca>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
- * @author stephane.gully@gmail.com
+ * @author stephane.gully <stephane.gully@gmail.com>
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author olivier duperray <duperray.olivier@laposte.net>
