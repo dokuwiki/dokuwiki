@@ -11,6 +11,8 @@ class Manifest {
 
         global $conf;
 
+        $manifest['scope'] = DOKU_REL;
+
         if (empty($manifest['name'])) {
             $manifest['name'] = $conf['title'];
         }
