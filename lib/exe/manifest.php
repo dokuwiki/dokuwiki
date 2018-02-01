@@ -27,6 +27,18 @@ class Manifest {
             $manifest['start_url'] = DOKU_REL;
         }
 
+        $styleUtil = new \dokuwiki\StyleUtils();
+        $styleIni = $styleUtil->cssStyleini($conf['template']);
+        $replacements = $styleIni['replacements'];
+
+        if (empty($manifest['background_color'])) {
+            $manifest['background_color'] = $replacements['__background__'];
+        }
+
+        if (empty($manifest['theme_color'])) {
+            $manifest['theme_color'] = !empty($replacements['__theme_color__']) ? $replacements['__theme_color__'] : $replacements['__background_alt__'];
+        }
+
         if (empty($manifest['icons'])) {
             $manifest['icons'] = [];
             $look = [
