@@ -423,7 +423,8 @@ function tpl_link($url, $name, $more = '', $return = false) {
  *
  * @param string      $id   page id
  * @param string|null $name the name of the link
- * @return bool true
+ * @param bool        $return
+ * @return true|string
  */
 function tpl_pagelink($id, $name = null, $return = false) {
     $out = '<bdi>'.html_wikilink($id, $name).'</bdi>';
