@@ -208,22 +208,23 @@ function getSchemes() {
  *
  * @return array
  */
-function linesToHash($lines, $lower=false) {
+function linesToHash($lines, $lower = false) {
     $conf = array();
     // remove BOM
-    if (isset($lines[0]) && substr($lines[0],0,3) == pack('CCC',0xef,0xbb,0xbf))
-        $lines[0] = substr($lines[0],3);
-    foreach ( $lines as $line ) {
+    if(isset($lines[0]) && substr($lines[0], 0, 3) == pack('CCC', 0xef, 0xbb, 0xbf))
+        $lines[0] = substr($lines[0], 3);
+    foreach($lines as $line) {
         //ignore comments (except escaped ones)
-        $line = preg_replace('/(?<![&\\\\])#.*$/','',$line);
-        $line = str_replace('\\#','#',$line);
+        $line = preg_replace('/(?<![&\\\\])#.*$/', '', $line);
+        $line = str_replace('\\#', '#', $line);
         $line = trim($line);
-        if(empty($line)) continue;
-        $line = preg_split('/\s+/',$line,2);
+        if($line === '') continue;
+        $line = preg_split('/\s+/', $line, 2);
+        $line = array_pad($line, 2, '');
         // Build the associative array
-        if($lower){
+        if($lower) {
             $conf[strtolower($line[0])] = $line[1];
-        }else{
+        } else {
             $conf[$line[0]] = $line[1];
         }
     }

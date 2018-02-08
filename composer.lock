@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "67e5a8bb8a3d52ab872761fe66bd5f26",
+    "content-hash": "149ef96a4cadb6765aac9e7c6a2b5b17",
     "packages": [
         {
             "name": "aziraphale/email-address-validator",
@@ -86,6 +86,58 @@
             "description": "Generic Syntax Highlighter",
             "homepage": "http://qbnz.com/highlighter/",
             "time": "2017-05-05T05:51:25+00:00"
+        },
+        {
+            "name": "marcusschwarz/lesserphp",
+            "version": "v0.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MarcusSchwarz/lesserphp.git",
+                "reference": "e9e3d53980c0e486b07c75e12f2bae5e10bdee44"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MarcusSchwarz/lesserphp/zipball/e9e3d53980c0e486b07c75e12f2bae5e10bdee44",
+                "reference": "e9e3d53980c0e486b07c75e12f2bae5e10bdee44",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.3"
+            },
+            "bin": [
+                "plessc"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.5.1-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lessc.inc.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Leaf Corcoran",
+                    "email": "leafot@gmail.com",
+                    "homepage": "http://leafo.net"
+                },
+                {
+                    "name": "Marcus Schwarz",
+                    "email": "github@maswaba.de",
+                    "homepage": "https://www.maswaba.de"
+                }
+            ],
+            "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
+            "homepage": "http://leafo.net/lessphp/",
+            "time": "2016-09-30T11:13:18+00:00"
         },
         {
             "name": "openpsa/universalfeedcreator",
@@ -185,16 +237,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.4",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "ab8028c93c03cc8d9c824efa75dc94f1db2369bf"
+                "reference": "34a7699e6f31b1ef4035ee36444407cecf9f56aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/ab8028c93c03cc8d9c824efa75dc94f1db2369bf",
-                "reference": "ab8028c93c03cc8d9c824efa75dc94f1db2369bf",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/34a7699e6f31b1ef4035ee36444407cecf9f56aa",
+                "reference": "34a7699e6f31b1ef4035ee36444407cecf9f56aa",
                 "shasum": ""
             },
             "require": {
@@ -273,20 +325,20 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2016-10-04T00:57:04+00:00"
+            "time": "2017-06-05T06:31:10+00:00"
         },
         {
             "name": "simplepie/simplepie",
-            "version": "1.4.3",
+            "version": "1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simplepie/simplepie.git",
-                "reference": "2a24b6e74aa9bf33243020f52895fe77efe94ccf"
+                "reference": "5de5551953f95feef12cf355a7a26a70f94aa3ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/2a24b6e74aa9bf33243020f52895fe77efe94ccf",
-                "reference": "2a24b6e74aa9bf33243020f52895fe77efe94ccf",
+                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/5de5551953f95feef12cf355a7a26a70f94aa3ab",
+                "reference": "5de5551953f95feef12cf355a7a26a70f94aa3ab",
                 "shasum": ""
             },
             "require": {
@@ -333,20 +385,20 @@
                 "feeds",
                 "rss"
             ],
-            "time": "2016-11-27T01:39:18+00:00"
+            "time": "2017-04-17T07:29:31+00:00"
         },
         {
             "name": "splitbrain/php-archive",
-            "version": "1.0.8",
+            "version": "1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-archive.git",
-                "reference": "6b1c1746fa0a6f9f68f0bc832892ddeda8db905c"
+                "reference": "2a63b8cf0bfc7fdc0d987c9b7348e639e55cce76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/6b1c1746fa0a6f9f68f0bc832892ddeda8db905c",
-                "reference": "6b1c1746fa0a6f9f68f0bc832892ddeda8db905c",
+                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/2a63b8cf0bfc7fdc0d987c9b7348e639e55cce76",
+                "reference": "2a63b8cf0bfc7fdc0d987c9b7348e639e55cce76",
                 "shasum": ""
             },
             "require": {
@@ -384,7 +436,7 @@
                 "unzip",
                 "zip"
             ],
-            "time": "2017-03-19T09:10:53+00:00"
+            "time": "2017-06-11T06:11:38+00:00"
         }
     ],
     "packages-dev": [],

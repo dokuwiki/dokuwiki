@@ -903,7 +903,7 @@ class Doku_Parser_Mode_internallink extends Doku_Parser_Mode {
 
     function connectTo($mode) {
         // Word boundaries?
-        $this->Lexer->addSpecialPattern("\[\[(?:(?:[^[\]]*?\[.*?\])|.*?)\]\]",$mode,'internallink');
+        $this->Lexer->addSpecialPattern("\[\[.*?\]\](?!\])",$mode,'internallink');
     }
 
     function getSort() {
@@ -955,8 +955,8 @@ class Doku_Parser_Mode_externallink extends Doku_Parser_Mode {
             $this->patterns[] = '\b(?i)'.$scheme.'(?-i)://['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
         }
 
-        $this->patterns[] = '\b(?i)www?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
-        $this->patterns[] = '\b(?i)ftp?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
+        $this->patterns[] = '(?<=\s)(?i)www?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
+        $this->patterns[] = '(?<=\s)(?i)ftp?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
     }
 
     function connectTo($mode) {

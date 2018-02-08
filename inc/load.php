@@ -73,8 +73,6 @@ function load_autoload($name){
         'IXR_Error'             => DOKU_INC.'inc/IXR_Library.php',
         'IXR_IntrospectionServer' => DOKU_INC.'inc/IXR_Library.php',
         'Doku_Plugin_Controller'=> DOKU_INC.'inc/plugincontroller.class.php',
-        'Tar'                   => DOKU_INC.'inc/Tar.class.php',
-        'ZipLib'                => DOKU_INC.'inc/ZipLib.class.php',
         'Doku_Parser_Mode'      => DOKU_INC.'inc/parser/parser.php',
         'Doku_Parser_Mode_Plugin' => DOKU_INC.'inc/parser/parser.php',
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
@@ -84,7 +82,6 @@ function load_autoload($name){
         'RemoteAPI'             => DOKU_INC.'inc/remote.php',
         'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
         'Subscription'          => DOKU_INC.'inc/subscription.php',
-        'lessc'                 => DOKU_INC.'inc/lessc.inc.php',
 
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
@@ -134,8 +131,11 @@ function load_autoload($name){
 
     // our own namespace
     if(substr($name, 0, 9) == 'dokuwiki/') {
-        require substr($name, 9) . '.php';
-        return true;
+        $file = DOKU_INC . 'inc/' . substr($name, 9) . '.php';
+        if(file_exists($file)) {
+            require $file;
+            return true;
+        }
     }
 
     // Plugin loading

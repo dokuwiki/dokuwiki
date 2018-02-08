@@ -8,6 +8,12 @@
 if(!defined('DOKU_INC')) die('meh.');
 
 /**
+ * Allowed chars in $language for code highlighting
+ * @see GeSHi::set_language()
+ */
+define('PREG_PATTERN_VALID_LANGUAGE', '#[^a-zA-Z0-9\-_]#');
+
+/**
  * An empty renderer, produces no output
  *
  * Inherits from DokuWiki_Plugin for giving additional functions to render plugins
@@ -857,7 +863,11 @@ class Doku_Renderer extends DokuWiki_Plugin {
         }
         //handle as wiki links
         if($url{0} === ':') {
-            list($id, $urlparam) = explode('?', $url, 2);
+            $urlparam = null;
+            $id = $url;
+            if (strpos($url, '?') !== false) {
+                list($id, $urlparam) = explode('?', $url, 2);
+            }
             $url    = wl(cleanID($id), $urlparam);
             $exists = page_exists($id);
         }

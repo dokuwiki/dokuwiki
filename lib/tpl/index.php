@@ -50,11 +50,11 @@ $ini = css_styleini($conf['template']);
 
 if ($ini) {
     echo '<table>';
-    echo "<caption>".htmlspecialchars($conf['template'])."'s style.ini</caption>";
+    echo "<caption>".hsc($conf['template'])."'s style.ini</caption>";
     foreach($ini['replacements'] as $key => $val){
         echo '<tr>';
-        echo '<td>'.htmlspecialchars($key).'</td>';
-        echo '<td>'.htmlspecialchars($val).'</td>';
+        echo '<td>'.hsc($key).'</td>';
+        echo '<td>'.hsc($val).'</td>';
         echo '<td>';
         if(preg_match('/^#[0-f]{3,6}$/i',$val)){
             echo '<div class="color" style="background-color:'.$val.';">&#160;</div>';
@@ -64,7 +64,7 @@ if ($ini) {
     }
     echo '</table>';
 } else {
-    echo "<p>Non-existent or invalid template or style.ini: <strong>".htmlspecialchars($conf['template'])."</strong></p>";
+    echo "<p>Non-existent or invalid template or style.ini: <strong>".hsc($conf['template'])."</strong></p>";
 }
 ?>
 </body>

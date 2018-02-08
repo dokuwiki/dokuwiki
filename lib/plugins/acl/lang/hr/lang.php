@@ -5,7 +5,7 @@
  *
  * @author Branko Rihtman <theney@gmail.com>
  * @author Dražen Odobašić <dodobasic@gmail.com>
- * @author Dejan Igrec dejan.igrec@gmail.com
+ * @author Dejan Igrec <dejan.igrec@gmail.com>
  */
 $lang['admin_acl']             = 'Upravljanje listom kontrole pristupa';
 $lang['acl_group']             = 'Grupa:';

@@ -91,7 +91,7 @@ class PassHash {
         //crypt and compare
         $call = 'hash_'.$method;
         $newhash = $this->$call($clear, $salt, $magic);
-        if($newhash === $hash) {
+        if(\hash_equals($newhash, $hash)) {
             return true;
         }
         return false;
@@ -530,7 +530,7 @@ class PassHash {
      * @throws Exception
      * @return string Hashed password
      */
-    public function hash_bcrypt($clear, $salt = null, $compute = 8) {
+    public function hash_bcrypt($clear, $salt = null, $compute = 10) {
         if(!defined('CRYPT_BLOWFISH') || CRYPT_BLOWFISH != 1) {
             throw new Exception('This PHP installation has no bcrypt support');
         }

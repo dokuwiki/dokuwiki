@@ -1,0 +1,50 @@
+#dokuwiki__usertools {
+    position: absolute;
+    top: .5em;
+    right: 40px; // pagetool width
+    text-align: right;
+    width: 100%;
+
+    ul {
+        margin: 0 auto;
+        padding: 0;
+        max-width: @ini_site_width;
+    }
+
+    li.action a {
+        display: inline-flex;
+        flex-direction: row-reverse;
+        flex-wrap: nowrap;
+
+        svg {
+            height: 1.4em;
+            width: 1.4em;
+            vertical-align: middle;
+            fill: @ini_border;
+            margin-right: 0.2em;
+        }
+    }
+
+    li.action a:hover,
+    li.action a:active {
+        svg {
+            fill: @ini_link;
+        }
+    }
+
+}
+
+[dir=rtl] #dokuwiki__usertools {
+    text-align: left;
+    left: 40px; // pagetool width
+    right: auto;
+
+
+    li.action a {
+
+        svg {
+            margin-right: 0;
+            margin-left: 0.2em;
+        }
+    }
+}

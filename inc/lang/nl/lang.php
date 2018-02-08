@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author mark prins <mprins@users.sf.net>
  * @author François Kooman <fkooman.tuxed.net>
  * @author Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
  * @author Riny Heijdendael <riny@heijdendael.nl>
@@ -17,9 +18,6 @@
  * @author Jeroen
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
  * @author Gerrit <klapinklapin@gmail.com>
- * @author mprins <mprins@users.sf.net>
- * @author Gerrit Uitslag <klapinklapin@gmail.com>
- * @author Klap-in <klapinklapin@gmail.com>
  * @author Remon <no@email.local>
  * @author gicalle <gicalle@hotmail.com>
  * @author Rene <wllywlnt@yahoo.com>
@@ -27,11 +25,9 @@
  * @author Mijndert <mijndert@mijndertstuij.nl>
  * @author Johan Wijnker <johan@wijnker.eu>
  * @author Hugo Smet <hugo.smet@scarlet.be>
- * @author Mark C. Prins <mprins@users.sf.net>
  * @author Wesley de Weerd <wesleytiel@gmail.com>
  * @author Sjoerd <sjoerd@sjomar.eu>
  * @author Joachim David <joa_david@hotmail.com>
- * @author mark prins <mprins@users.sf.net>
  * @author stafmans <dokuwiki@stafmans.net>
  */
 $lang['encoding']              = 'utf-8';

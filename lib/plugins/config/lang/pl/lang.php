@@ -3,12 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Max <maxrb146@gmail.com>
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
  * @author Sławomir Boczek <slawkens@gmail.com>
  * @author Piotr JANKOWSKI <jankowski.piotr@gmail.com>
- * @author sleshek@wp.pl
+ * @author sleshek <sleshek@wp.pl>
  * @author Leszek Stachowski <shazarre@gmail.com>
  * @author maros <dobrimaros@yahoo.pl>
  * @author Grzegorz Widła <dzesdzes@gmail.com>
@@ -88,6 +89,7 @@ $lang['disableactions']        = 'Wyłącz akcje DokuWiki';
 $lang['disableactions_check']  = 'Sprawdzanie';
 $lang['disableactions_subscription'] = 'Subskrypcje';
 $lang['disableactions_wikicode'] = 'Pokazywanie źródeł';
+$lang['disableactions_profile_delete'] = 'Usuń własne konto ';
 $lang['disableactions_other']  = 'Inne akcje (oddzielone przecinkiem)';
 $lang['auth_security_timeout'] = 'Czas wygaśnięcia uwierzytelnienia (w sekundach)';
 $lang['securecookie']          = 'Czy ciasteczka wysłane do przeglądarki przez HTTPS powinny być przez nią odsyłane też tylko przez HTTPS? Odznacz tę opcję tylko wtedy, gdy logowanie użytkowników jest zabezpieczone SSL, ale przeglądanie stron odbywa się bez zabezpieczenia.';
@@ -128,6 +130,7 @@ $lang['rss_content']           = 'Rodzaj informacji wyświetlanych w RSS ';
 $lang['rss_update']            = 'Okres aktualizacji RSS (w sekundach)';
 $lang['rss_show_summary']      = 'Podsumowanie w tytule';
 $lang['rss_media']             = 'Rodzaj zmian wyświetlanych w RSS';
+$lang['rss_media_o_pages']     = 'strony';
 $lang['updatecheck']           = 'Sprawdzanie aktualizacji i bezpieczeństwa. DokuWiki będzie kontaktować się z serwerem update.dokuwiki.org.';
 $lang['userewrite']            = 'Proste adresy URL';
 $lang['useslash']              = 'Używanie ukośnika jako separatora w adresie URL';

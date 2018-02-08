@@ -93,90 +93,13 @@ function tpl_content($prependTOC = true) {
  * @return bool
  */
 function tpl_content_core() {
-    global $ACT;
-    global $TEXT;
-    global $PRE;
-    global $SUF;
-    global $SUM;
-    global $IDX;
-    global $INPUT;
-
-    switch($ACT) {
-        case 'show':
-            html_show();
-            break;
-        /** @noinspection PhpMissingBreakStatementInspection */
-        case 'locked':
-            html_locked();
-        case 'edit':
-        case 'recover':
-            html_edit();
-            break;
-        case 'preview':
-            html_edit();
-            html_show($TEXT);
-            break;
-        case 'draft':
-            html_draft();
-            break;
-        case 'search':
-            html_search();
-            break;
-        case 'revisions':
-            html_revisions($INPUT->int('first'));
-            break;
-        case 'diff':
-            html_diff();
-            break;
-        case 'recent':
-            $show_changes = $INPUT->str('show_changes');
-            if (empty($show_changes)) {
-                $show_changes = get_doku_pref('show_changes', $show_changes);
-            }
-            html_recent($INPUT->extract('first')->int('first'), $show_changes);
-            break;
-        case 'index':
-            html_index($IDX); #FIXME can this be pulled from globals? is it sanitized correctly?
-            break;
-        case 'backlink':
-            html_backlinks();
-            break;
-        case 'conflict':
-            html_conflict(con($PRE, $TEXT, $SUF), $SUM);
-            html_diff(con($PRE, $TEXT, $SUF), false);
-            break;
-        case 'login':
-            html_login();
-            break;
-        case 'register':
-            html_register();
-            break;
-        case 'resendpwd':
-            html_resendpwd();
-            break;
-        case 'denied':
-            html_denied();
-            break;
-        case 'profile' :
-            html_updateprofile();
-            break;
-        case 'admin':
-            tpl_admin();
-            break;
-        case 'subscribe':
-            tpl_subscribe();
-            break;
-        case 'media':
-            tpl_media();
-            break;
-        default:
-            $evt = new Doku_Event('TPL_ACT_UNKNOWN', $ACT);
-            if($evt->advise_before()) {
-                msg("Failed to handle command: ".hsc($ACT), -1);
-            }
-            $evt->advise_after();
-            unset($evt);
-            return false;
+    $router = \dokuwiki\ActionRouter::getInstance();
+    try {
+        $router->getAction()->tplContent();
+    } catch(\dokuwiki\Action\Exception\FatalException $e) {
+        // there was no content for the action
+        msg(hsc($e->getMessage()), -1);
+        return false;
     }
     return true;
 }
@@ -366,7 +289,7 @@ function tpl_metaheaders($alt = true) {
     if(($ACT == 'show' || $ACT == 'export_xhtml') && !$REV) {
         if($INFO['exists']) {
             //delay indexing:
-            if(!isHiddenPage($ID) &&  (time() - $INFO['lastmod']) >= $conf['indexdelay']) {
+            if((time() - $INFO['lastmod']) >= $conf['indexdelay'] && !isHiddenPage($ID) ) {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'index,follow');
             } else {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,nofollow');
@@ -541,8 +464,10 @@ function tpl_getparent($id) {
  * @param string $type
  * @param bool $return
  * @return bool|string html, or false if no data, true if printed
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_button($type, $return = false) {
+    dbg_deprecated('see devel:menus');
     $data = tpl_get_action($type);
     if($data === false) {
         return false;
@@ -579,8 +504,10 @@ function tpl_button($type, $return = false) {
  * @param string $inner   innerHML of link
  * @param bool   $return  if true it returns html, otherwise prints
  * @return bool|string html or false if no data, true if printed
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = false) {
+    dbg_deprecated('see devel:menus');
     global $lang;
     $data = tpl_get_action($type);
     if($data === false) {
@@ -627,178 +554,43 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
 /**
  * Check the actions and get data for buttons and links
  *
- * Available actions are
- *
- *  edit        - edit/create/show/draft
- *  history     - old revisions
- *  recent      - recent changes
- *  login       - login/logout - if ACL enabled
- *  profile     - user profile (if logged in)
- *  index       - The index
- *  admin       - admin page - if enough rights
- *  top         - back to top
- *  back        - back to parent - if available
- *  backlink    - links to the list of backlinks
- *  subscribe/subscription- subscribe/unsubscribe
- *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Adrian Lang <mail@adrianlang.de>
  *
  * @param string $type
  * @return array|bool|string
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_get_action($type) {
-    global $ID;
-    global $INFO;
-    global $REV;
-    global $ACT;
-    global $conf;
-    /** @var Input $INPUT */
-    global $INPUT;
-
-    // check disabled actions and fix the badly named ones
+    dbg_deprecated('see devel:menus');
     if($type == 'history') $type = 'revisions';
-    if ($type == 'subscription') $type = 'subscribe';
-    if(!actionOK($type)) return false;
+    if($type == 'subscription') $type = 'subscribe';
+    if($type == 'img_backto') $type = 'imgBackto';
 
-    $accesskey   = null;
-    $id          = $ID;
-    $method      = 'get';
-    $params      = array('do' => $type);
-    $nofollow    = true;
-    $replacement = '';
-
-    $unknown = false;
-    switch($type) {
-        case 'edit':
-            // most complicated type - we need to decide on current action
-            if($ACT == 'show' || $ACT == 'search') {
-                $method = 'post';
-                if($INFO['writable']) {
-                    $accesskey = 'e';
-                    if(!empty($INFO['draft'])) {
-                        $type         = 'draft';
-                        $params['do'] = 'draft';
-                    } else {
-                        $params['rev'] = $REV;
-                        if(!$INFO['exists']) {
-                            $type = 'create';
-                        }
-                    }
-                } else {
-                    if(!actionOK('source')) return false; //pseudo action
-                    $params['rev'] = $REV;
-                    $type          = 'source';
-                    $accesskey     = 'v';
-                }
-            } else {
-                $params    = array('do' => '');
-                $type      = 'show';
-                $accesskey = 'v';
-            }
-            break;
-        case 'revisions':
-            $type      = 'revs';
-            $accesskey = 'o';
-            break;
-        case 'recent':
-            $accesskey = 'r';
-            break;
-        case 'index':
-            $accesskey = 'x';
-            // allow searchbots to get to the sitemap from the homepage (when dokuwiki isn't providing a sitemap.xml)
-            if ($conf['start'] == $ID && !$conf['sitemap']) {
-                $nofollow = false;
-            }
-            break;
-        case 'top':
-            $accesskey = 't';
-            $params    = array('do' => '');
-            $id        = '#dokuwiki__top';
-            break;
-        case 'back':
-            $parent = tpl_getparent($ID);
-            if(!$parent) {
-                return false;
-            }
-            $id        = $parent;
-            $params    = array('do' => '');
-            $accesskey = 'b';
-            break;
-        case 'img_backto':
-            $params = array();
-            $accesskey = 'b';
-            $replacement = $ID;
-            break;
-        case 'login':
-            $params['sectok'] = getSecurityToken();
-            if($INPUT->server->has('REMOTE_USER')) {
-                if(!actionOK('logout')) {
-                    return false;
-                }
-                $params['do'] = 'logout';
-                $type         = 'logout';
-            }
-            break;
-        case 'register':
-            if($INPUT->server->str('REMOTE_USER')) {
-                return false;
-            }
-            break;
-        case 'resendpwd':
-            if($INPUT->server->str('REMOTE_USER')) {
-                return false;
-            }
-            break;
-        case 'admin':
-            if(!$INFO['ismanager']) {
-                return false;
-            }
-            break;
-        case 'revert':
-            if(!$INFO['ismanager'] || !$REV || !$INFO['writable']) {
-                return false;
-            }
-            $params['rev']    = $REV;
-            $params['sectok'] = getSecurityToken();
-            break;
-        case 'subscribe':
-            if(!$INPUT->server->str('REMOTE_USER')) {
-                return false;
-            }
-            break;
-        case 'backlink':
-            break;
-        case 'profile':
-            if(!$INPUT->server->has('REMOTE_USER')) {
-                return false;
-            }
-            break;
-        case 'media':
-            $params['ns'] = getNS($ID);
-            break;
-        case 'mediaManager':
-            // View image in media manager
-            global $IMG;
-            $imgNS = getNS($IMG);
-            $authNS = auth_quickaclcheck("$imgNS:*");
-            if ($authNS < AUTH_UPLOAD) {
-                return false;
-            }
-            $params = array(
-                'ns' => $imgNS,
-                'image' => $IMG,
-                'do' => 'media'
-            );
-            //$type = 'media';
-            break;
-        default:
-            //unknown type
-            $unknown = true;
+    $class = '\\dokuwiki\\Menu\\Item\\' . ucfirst($type);
+    if(class_exists($class)) {
+        try {
+            /** @var \dokuwiki\Menu\Item\AbstractItem $item */
+            $item = new $class;
+            $data = $item->getLegacyData();
+            $unknown = false;
+        } catch(\RuntimeException $ignored) {
+            return false;
+        }
+    } else {
+        global $ID;
+        $data = array(
+            'accesskey' => null,
+            'type' => $type,
+            'id' => $ID,
+            'method' => 'get',
+            'params' => array('do' => $type),
+            'nofollow' => true,
+            'replacement' => '',
+        );
+        $unknown = true;
     }
-
-    $data = compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow', 'replacement');
 
     $evt = new Doku_Event('TPL_ACTION_GET', $data);
     if($evt->advise_before()) {
@@ -826,8 +618,10 @@ function tpl_get_action($type) {
  * @param string        $suf suffix for links
  * @param string        $inner inner HTML for links
  * @return bool|string
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_action($type, $link = false, $wrapper = false, $return = false, $pre = '', $suf = '', $inner = '') {
+    dbg_deprecated('see devel:menus');
     $out = '';
     if($link) {
         $out .= tpl_actionlink($type, $pre, $suf, $inner, true);
@@ -1610,7 +1404,8 @@ function tpl_mediaFileDetails($image, $rev) {
     list($ext) = mimetype($image, false);
     $class    = preg_replace('/[^_\-a-z0-9]+/i', '_', $ext);
     $class    = 'select mediafile mf_'.$class;
-    $tabTitle = '<strong><a href="'.ml($image).'" class="'.$class.'" title="'.$lang['mediaview'].'">'.$image.'</a>'.'</strong>';
+    $attributes = $rev ? ['rev' => $rev] : [];
+    $tabTitle = '<strong><a href="'.ml($image, $attributes).'" class="'.$class.'" title="'.$lang['mediaview'].'">'.$image.'</a>'.'</strong>';
     if($opened_tab === 'view' && $rev) {
         printf($lang['media_viewold'], $tabTitle, dformat($rev));
     } else {
@@ -1657,44 +1452,12 @@ function tpl_mediaTree() {
  *
  * @param string $empty empty option label
  * @param string $button submit button label
+ * @deprecated 2017-09-01 see devel:menus
  */
-function tpl_actiondropdown($empty = '&nbsp;', $button = '&gt;') {
-    global $ID;
-    global $REV;
-    global $lang;
-    /** @var Input $INPUT */
-    global $INPUT;
-
-    $action_structure = array(
-        'page_tools' => array('edit', 'revert', 'revisions', 'backlink', 'subscribe'),
-        'site_tools' => array('recent', 'media', 'index'),
-        'user_tools' => array('login', 'register', 'profile', 'admin'),
-    );
-
-    echo '<form action="'.script().'" method="get" accept-charset="utf-8">';
-    echo '<div class="no">';
-    echo '<input type="hidden" name="id" value="'.$ID.'" />';
-    if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
-    if ($INPUT->server->str('REMOTE_USER')) {
-        echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
-    }
-
-    echo '<select name="do" class="edit quickselect" title="'.$lang['tools'].'">';
-    echo '<option value="">'.$empty.'</option>';
-
-    foreach($action_structure as $tools => $actions) {
-        echo '<optgroup label="'.$lang[$tools].'">';
-        foreach($actions as $action) {
-            $act = tpl_get_action($action);
-            if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-        }
-        echo '</optgroup>';
-    }
-
-    echo '</select>';
-    echo '<button type="submit">'.$button.'</button>';
-    echo '</div>';
-    echo '</form>';
+function tpl_actiondropdown($empty = '', $button = '&gt;') {
+    dbg_deprecated('see devel:menus');
+    $menu = new \dokuwiki\Menu\MobileMenu();
+    echo $menu->getDropdown($empty, $button);
 }
 
 /**
@@ -2044,8 +1807,10 @@ function tpl_classes() {
  * @param string $toolsname name of menu
  * @param array $items
  * @param string $view e.g. 'main', 'detail', ...
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_toolsevent($toolsname, $items, $view = 'main') {
+    dbg_deprecated('see devel:menus');
     $data = array(
         'view' => $view,
         'items' => $items

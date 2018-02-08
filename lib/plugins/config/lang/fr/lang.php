@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Michael Bohn <mjbohn@gmail.com>
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
@@ -15,7 +17,6 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz <samuel.dorsaz@novelion.net>
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
- * @author <skimpax@gmail.com>
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
@@ -23,7 +24,6 @@
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Floriang <antispam@floriang.eu>
- * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Simon DELAGE <simon.geekitude@gmail.com>
  * @author Eric <ericstevenart@netc.fr>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
@@ -39,7 +39,7 @@ $lang['security']              = 'Avertissement de sécurité : modifier cette o
 $lang['_configuration_manager'] = 'Gestionnaire de configuration';
 $lang['_header_dokuwiki']      = 'Paramètres de DokuWiki';
 $lang['_header_plugin']        = 'Paramètres des extensions';
-$lang['_header_template']      = 'Paramètres du modèle';
+$lang['_header_template']      = 'Paramètres du thème';
 $lang['_header_undefined']     = 'Paramètres indéfinis';
 $lang['_basic']                = 'Paramètres de base';
 $lang['_display']              = 'Paramètres d\'affichage';
@@ -58,9 +58,9 @@ $lang['_msg_setting_no_default'] = 'Pas de valeur par défaut.';
 $lang['title']                 = 'Titre du wiki (nom du wiki)';
 $lang['start']                 = 'Nom de la page d\'accueil à utiliser pour toutes les catégories';
 $lang['lang']                  = 'Langue de l\'interface';
-$lang['template']              = 'Modèle (rendu visuel du wiki)';
-$lang['tagline']               = 'Descriptif du site (si le modèle supporte cette fonctionnalité)';
-$lang['sidebar']               = 'Nom du panneau latéral (si le modèle supporte cette fonctionnalité). Laisser le champ vide désactive le panneau latéral.';
+$lang['template']              = 'Thème (rendu visuel du wiki)';
+$lang['tagline']               = 'Descriptif du site (si le thème utilise cette fonctionnalité)';
+$lang['sidebar']               = 'Nom du panneau latéral (si le thème utilise cette fonctionnalité). Laisser le champ vide désactive le panneau latéral.';
 $lang['license']               = 'Sous quelle licence doit-être placé le contenu ?';
 $lang['savedir']               = 'Répertoire d\'enregistrement des données';
 $lang['basedir']               = 'Répertoire de base du serveur (par exemple : <code>/dokuwiki/</code>). Laisser vide pour une détection automatique.';
@@ -133,6 +133,7 @@ $lang['subscribe_time']        = 'Délai après lequel les listes d\'abonnement 
 $lang['notify']                = 'Notifier systématiquement les modifications à cette adresse de courriel';
 $lang['registernotify']        = 'Notifier systématiquement les nouveaux utilisateurs enregistrés à cette adresse de courriel';
 $lang['mailfrom']              = 'Adresse de courriel de l\'expéditeur des notifications par courriel du wiki';
+$lang['mailreturnpath']        = 'Adresse de courriel du destinataire pour les notifications de non-remise';
 $lang['mailprefix']            = 'Préfixe à utiliser dans les objets des courriels automatiques. Laisser vide pour utiliser le titre du wiki';
 $lang['htmlmail']              = 'Envoyer des courriel HTML multipart (visuellement plus agréable, mais plus lourd). Désactiver pour utiliser uniquement des courriel plain text';
 $lang['sitemap']               = 'Fréquence de génération du sitemap Google (jours). 0 pour désactiver';
@@ -142,6 +143,9 @@ $lang['rss_content']           = 'Quel contenu afficher dans le flux XML?';
 $lang['rss_update']            = 'Fréquence de mise à jour du flux XML (secondes)';
 $lang['rss_show_summary']      = 'Le flux XML affiche le résumé dans le titre';
 $lang['rss_media']             = 'Quels types de changements doivent être listés dans le flux XML?';
+$lang['rss_media_o_both']      = 'les deux';
+$lang['rss_media_o_pages']     = 'pages';
+$lang['rss_media_o_media']     = 'media';
 $lang['updatecheck']           = 'Vérifier les mises à jour et alertes de sécurité? DokuWiki doit pouvoir contacter update.dokuwiki.org';
 $lang['userewrite']            = 'Utiliser des URL esthétiques';
 $lang['useslash']              = 'Utiliser « / » comme séparateur de catégories dans les URL';
@@ -151,12 +155,12 @@ $lang['fnencode']              = 'Méthode pour l\'encodage des fichiers non-ASC
 $lang['autoplural']            = 'Rechercher les formes plurielles dans les liens';
 $lang['compression']           = 'Méthode de compression pour les fichiers attic';
 $lang['gzip_output']           = 'Utiliser gzip pour le Content-Encoding du XHTML';
-$lang['compress']              = 'Compresser les flux CSS et JavaScript';
+$lang['compress']              = 'Compresser les fichiers CSS et JavaScript';
 $lang['cssdatauri']            = 'Taille maximale en octets pour inclure dans les feuilles de styles CSS les images qui y sont référencées. Cette technique réduit le nombre de requêtes HTTP. Cette fonctionnalité ne fonctionne qu\'à partir de la version 8 d\'Internet Explorer! Nous recommandons une valeur entre <code>400</code> et <code>600</code>. <code>0</code> pour désactiver.';
 $lang['send404']               = 'Renvoyer « HTTP 404/Page Not Found » pour les pages inexistantes';
 $lang['broken_iua']            = 'La fonction ignore_user_abort est-elle opérationnelle sur votre système ? Ceci peut empêcher le fonctionnement de l\'index de recherche. IIS+PHP/
 CGI dysfonctionne. Voir le <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">bug 852</a> pour plus d\'informations.';
-$lang['xsendfile']             = 'Utiliser l\'en-tête X-Sendfile pour permettre au serveur web de délivrer les fichiers statiques ? Votre serveur web doit supporter cette fonctionnalité.';
+$lang['xsendfile']             = 'Utiliser l\'en-tête X-Sendfile pour permettre au serveur web de délivrer les fichiers statiques ? Votre serveur web doit prendre en charge cette technologie.';
 $lang['renderer_xhtml']        = 'Moteur de rendu du format de sortie principal (XHTML)';
 $lang['renderer__core']        = '%s (cœur de DokuWiki)';
 $lang['renderer__plugin']      = '%s (extension)';

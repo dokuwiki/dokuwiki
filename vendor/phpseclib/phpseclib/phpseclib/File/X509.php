@@ -1907,6 +1907,9 @@ class X509
             // "SET Secure Electronic Transaction Specification"
             // http://www.maithean.com/docs/set_bk3.pdf
             case '2.23.42.7.0': // id-set-hashedRootKey
+            // "Certificate Transparency"
+            // https://tools.ietf.org/html/rfc6962
+            case '1.3.6.1.4.1.11129.2.4.2':
                 return true;
 
             // CSR attributes
@@ -3463,8 +3466,8 @@ class X509
 
         $altName = array();
 
-        if (isset($subject->domains) && count($subject->domains) > 1) {
-            $altName = array_map(array('X509', '_dnsName'), $subject->domains);
+        if (isset($subject->domains) && count($subject->domains)) {
+            $altName = array_map(array('\phpseclib\File\X509', '_dnsName'), $subject->domains);
         }
 
         if (isset($subject->ipAddresses) && count($subject->ipAddresses)) {

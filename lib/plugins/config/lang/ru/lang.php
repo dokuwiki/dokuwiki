@@ -3,12 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Zhassulan <zyesmukanov@gmail.com>
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Andrew Pleshakov <beotiger@mail.ru>
  * @author Змей Этерийский evil_snake@eternion.ru
  * @author Hikaru Nakajima <jisatsu@mail.ru>
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
- * @author Irina Ponomareva irinaponomareva@webperfectionist.com
  * @author Alexander Sorkin <kibizoid@gmail.com>
  * @author Kirill Krasnov <krasnovforum@gmail.com>
  * @author Vlad Tsybenko <vlad.development@gmail.com>
@@ -17,9 +17,7 @@
  * @author Ladyko Andrey <fylh@succexy.spb.ru>
  * @author Eugene <windy.wanderer@gmail.com>
  * @author Johnny Utah <pcpa@cyberpunk.su>
- * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author RainbowSpike <1@2.ru>
- * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author alexey <xeenych@gmail.com>
  */
 $lang['menu']                  = 'Настройки вики';
@@ -127,6 +125,7 @@ $lang['subscribe_time']        = 'Интервал рассылки подпис
 $lang['notify']                = 'Всегда отправлять сообщения об изменениях на этот электронный адрес';
 $lang['registernotify']        = 'Всегода отправлять информацию о новых зарегистрированных пользователях на этот электронный адрес';
 $lang['mailfrom']              = 'Электронный адрес вики (От:)';
+$lang['mailreturnpath']        = 'Адрес электронной почты для доставки отчета о недоставленных сообщений';
 $lang['mailprefix']            = 'Префикс, используемый для автоматического письма, станет темой сообщения. Оставьте поле пустым для использования названия вики.';
 $lang['htmlmail']              = 'Отправлять красивые, но крупные HTML-многочастные письма. Для отправки простых текстовых писем - отключить';
 $lang['sitemap']               = 'Число дней, через которое нужно создавать (обновлять) карту сайта для поисковиков (Гугл, Яндекс и др.). Укажите 0 (ноль) для отключения.';
@@ -136,6 +135,9 @@ $lang['rss_content']           = 'Что показывать в XML-ленте?
 $lang['rss_update']            = 'Интервал обновления XML-ленты (сек.)';
 $lang['rss_show_summary']      = 'Показывать краткую выдержку в заголовках XML-ленты';
 $lang['rss_media']             = 'Какие изменения должны быть отображены в XML-ленте?';
+$lang['rss_media_o_both']      = 'оба';
+$lang['rss_media_o_pages']     = 'страницы';
+$lang['rss_media_o_media']     = 'медиа';
 $lang['updatecheck']           = 'Проверять наличие обновлений и предупреждений о безопасности? Для этого «Докувики» потребуется связываться с update.dokuwiki.org.';
 $lang['userewrite']            = 'Удобочитаемые адреса (URL)';
 $lang['useslash']              = 'Использовать слэш в URL';
@@ -154,6 +156,7 @@ $lang['renderer_xhtml']        = 'Обработчик основного (xhtml
 $lang['renderer__core']        = '%s (ядро «Докувики»)';
 $lang['renderer__plugin']      = '%s (плагин)';
 $lang['dnslookups']            = '«Докувики» ищет DNS-имена пользователей, редактирующих страницы. Если у вас нет DNS-сервера или он работает медленно, рекомендуем отключить эту опцию.';
+$lang['jquerycdn']             = 'Требуется ли загрузка jQuery-скриптов (включая jQuery UI-скрипты) из CDN сети? Данная функция увеличивает количество HTTP запросов, но загрузка файлов будет проходить быстрее и пользователи смогут кэшировать запросы.';
 $lang['jquerycdn_o_0']         = 'Не использовать CDN. Использовать только локальную доставку';
 $lang['jquerycdn_o_jquery']    = 'Использовать CDN с code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'Использовать CDN с cdnjs.com';

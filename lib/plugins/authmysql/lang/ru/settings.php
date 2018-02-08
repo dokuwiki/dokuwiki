@@ -6,7 +6,6 @@
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Type-kun <workwork-1@yandex.ru>
- * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  */
 $lang['server']                = 'Ваш MySQL-сервер';
 $lang['user']                  = 'Имя пользователя MySQL';

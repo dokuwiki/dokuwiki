@@ -210,12 +210,12 @@ function mail_encode_address($string,$header='',$names=true){
 
         // FIXME: is there a way to encode the localpart of a emailaddress?
         if(!utf8_isASCII($addr)){
-            msg(htmlspecialchars("E-Mail address <$addr> is not ASCII"),-1);
+            msg(hsc("E-Mail address <$addr> is not ASCII"),-1);
             continue;
         }
 
         if(!mail_isvalid($addr)){
-            msg(htmlspecialchars("E-Mail address <$addr> is not valid"),-1);
+            msg(hsc("E-Mail address <$addr> is not valid"),-1);
             continue;
         }
 

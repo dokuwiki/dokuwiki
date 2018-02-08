@@ -12,6 +12,7 @@
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Volker Bödker <volker@boedker.de>
  * @author Dennis Plöger <develop@dieploegers.de>
+ * @author F. Mueller-Donath <j.felix@mueller-donath.de>
  */
 $lang['menu']                  = 'Benutzerverwaltung';
 $lang['noauth']                = '(Benutzeranmeldung ist nicht verfügbar)';
@@ -59,6 +60,8 @@ $lang['add_ok']                = 'Benutzer erfolgreich hinzugefügt';
 $lang['add_fail']              = 'Hinzufügen des Benutzers fehlgeschlagen';
 $lang['notify_ok']             = 'Benachrichtigungsmail wurde versendet';
 $lang['notify_fail']           = 'Benachrichtigungsemail konnte nicht gesendet werden';
+$lang['import_userlistcsv']    = 'Benutzerliste (CSV-Datei):';
+$lang['import_header']         = 'Letzte Fehler bei Import';
 $lang['import_success_count']  = 'Benutzerimport: %d Benutzer gefunden, %d erfolgreich importiert.';
 $lang['import_failure_count']  = 'Benutzerimport: %d Benutzerimporte fehlgeschalten. Alle Fehler werden unten angezeigt.';
 $lang['import_error_fields']   = 'Falsche Anzahl Felder. Gefunden: %d. Benötigt: 4.';
@@ -69,3 +72,12 @@ $lang['import_error_upload']   = 'Import fehlgeschlagen. Die CSV-Datei konnte ni
 $lang['import_error_readfail'] = 'Import fehlgeschlagen. Konnte die hochgeladene Datei nicht lesen.';
 $lang['import_error_create']   = 'Konnte den Benutzer nicht erzeugen';
 $lang['import_notify_fail']    = 'Benachrichtigung konnte an Benutzer %s (%s) nicht geschickt werden.';
+$lang['import_downloadfailures'] = 'Fehler als CSV-Datei zur Korrektur herunterladen';
+$lang['addUser_error_missing_pass'] = 'Bitte setze entweder ein Passwort oder aktiviere die Benutzerbenachrichtigung, um die Passwortgenerierung zu ermöglichen.';
+$lang['addUser_error_pass_not_identical'] = 'Die eingegebenen Passwörter stimmen nicht überein.';
+$lang['addUser_error_modPass_disabled'] = 'Das Bearbeiten von Passwörtern ist momentan deaktiviert';
+$lang['addUser_error_name_missing'] = 'Bitte gib den Namen des neuen Benutzer ein.';
+$lang['addUser_error_modName_disabled'] = 'Das Bearbeiten von Namen ist momentan deaktiviert.';
+$lang['addUser_error_mail_missing'] = 'Bitte gib die E-Mail-Adresse des neuen Benutzer ein.';
+$lang['addUser_error_modMail_disabled'] = 'Das Bearbeiten von E-Mailadressen ist momentan deaktiviert.';
+$lang['addUser_error_create_event_failed'] = 'Ein Plug-in hat das Hinzufügen des neuen Benutzers verhindert. Für weitere Informationen sieh dir mögliche andere Meldungen an.';

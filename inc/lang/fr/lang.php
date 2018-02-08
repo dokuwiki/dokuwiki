@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Michael Bohn <mjbohn@gmail.com>
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Sébastien Bauer <sebastien.bauer@advalvas.be>
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
@@ -21,8 +23,6 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz <samuel.dorsaz@novelion.net>
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
- * @author schplurtz@laposte.net
- * @author skimpax@gmail.com
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
@@ -33,7 +33,6 @@
  * @author ggallon <gwenael.gallon@mac.com>
  * @author David VANTYGHEM <david.vantyghem@free.fr>
  * @author Caillot <remicaillot5@gmail.com>
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author YoBoY <yoboy@ubuntu-fr.org>
  * @author james <j.mccann@celcat.com>
  * @author Pietroni <pietroni@informatique.univ-paris-diderot.fr>

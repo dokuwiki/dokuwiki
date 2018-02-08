@@ -54,6 +54,9 @@ class Mailer {
         $this->allowhtml = (bool)$conf['htmlmail'];
 
         // add some default headers for mailfiltering FS#2247
+        if(!empty($conf['mailreturnpath'])) {
+            $this->setHeader('Return-Path', $conf['mailreturnpath']);
+        }
         $this->setHeader('X-Mailer', 'DokuWiki');
         $this->setHeader('X-DokuWiki-User', $INPUT->server->str('REMOTE_USER'));
         $this->setHeader('X-DokuWiki-Title', $conf['title']);
@@ -331,9 +334,6 @@ class Mailer {
      * @return false|string  the prepared header (can contain multiple lines)
      */
     public function cleanAddress($addresses) {
-        // No named recipients for To: in Windows (see FS#652)
-        $names = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? false : true;
-
         $headers = '';
         if(!is_array($addresses)){
             $addresses = explode(',', $addresses);
@@ -357,17 +357,17 @@ class Mailer {
 
             // FIXME: is there a way to encode the localpart of a emailaddress?
             if(!utf8_isASCII($addr)) {
-                msg(htmlspecialchars("E-Mail address <$addr> is not ASCII"), -1);
+                msg(hsc("E-Mail address <$addr> is not ASCII"), -1);
                 continue;
             }
 
             if(!mail_isvalid($addr)) {
-                msg(htmlspecialchars("E-Mail address <$addr> is not valid"), -1);
+                msg(hsc("E-Mail address <$addr> is not valid"), -1);
                 continue;
             }
 
             // text was given
-            if(!empty($text) && $names) {
+            if(!empty($text) && !isWindows()) { // No named recipients for To: in Windows (see FS#652)
                 // add address quotes
                 $addr = "<$addr>";
 

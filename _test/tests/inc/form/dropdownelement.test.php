@@ -130,6 +130,21 @@ class form_dropdownelement_test extends DokuWikiTest {
     }
 
     /**
+     * Prevent double select that might occur because `'Auto' == 0` is true
+     */
+    public function test_doubleselect() {
+        $form = new Form\Form();
+        $form->addDropdown('foo', ['Auto', 0, 1]);
+
+        $html = $form->toHTML();
+
+        $pq = phpQuery::newDocumentXHTML($html);
+        $selected = $pq->find('option[selected=selected]');
+        $this->assertEquals(1, $selected->length);
+        $this->assertEquals('Auto', $selected->text());
+    }
+
+    /**
      * Ensure that there is always only a single one selected option
      */
     public function test_optgroups_doubleselect() {

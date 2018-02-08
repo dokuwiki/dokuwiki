@@ -3,11 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Davor Turkalj <turki.bsc@gmail.com>
  * @author Tomo Krajina <aaa@puzz.info>
  * @author Branko Rihtman <theney@gmail.com>
  * @author Dražen Odobašić <dodobasic@gmail.com>
- * @author Dejan Igrec dejan.igrec@gmail.com
- * @author Davor Turkalj <turki.bsc@gmail.com>
+ * @author Dejan Igrec <dejan.igrec@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

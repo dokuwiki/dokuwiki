@@ -382,9 +382,9 @@ function breadcrumbs() {
 
     //first visit?
     $crumbs = isset($_SESSION[DOKU_COOKIE]['bc']) ? $_SESSION[DOKU_COOKIE]['bc'] : array();
-    //we only save on show and existing wiki documents
+    //we only save on show and existing visible wiki documents
     $file = wikiFN($ID);
-    if($ACT != 'show' || !file_exists($file)) {
+    if($ACT != 'show' || isHiddenPage($ID) || !file_exists($file)) {
         $_SESSION[DOKU_COOKIE]['bc'] = $crumbs;
         return $crumbs;
     }
@@ -1111,6 +1111,7 @@ function parsePageTemplate(&$data) {
         array(
              '@ID@',
              '@NS@',
+             '@CURNS@',
              '@FILE@',
              '@!FILE@',
              '@!FILE!@',
@@ -1126,6 +1127,7 @@ function parsePageTemplate(&$data) {
         array(
              $id,
              getNS($id),
+             curNS($id),
              $file,
              utf8_ucfirst($file),
              utf8_strtoupper($file),
@@ -1924,7 +1926,16 @@ function send_redirect($url) {
         header('Location: '.$url);
     }
 
-    if(defined('DOKU_UNITTEST')) return; // no exits during unit tests
+    // no exits during unit tests
+    if(defined('DOKU_UNITTEST')) {
+        // pass info about the redirect back to the test suite
+        $testRequest = TestRequest::getRunning();
+        if($testRequest !== null) {
+            $testRequest->addData('send_redirect', $url);
+        }
+        return;
+    }
+
     exit;
 }
 

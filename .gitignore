@@ -81,3 +81,8 @@ vendor/paragonie/random_compat/build-phar.sh
 vendor/paragonie/random_compat/dist/*
 vendor/paragonie/random_compat/other/*
 vendor/simplepie/simplepie/db.sql
+vendor/marcusschwarz/lesserphp/package.sh
+vendor/marcusschwarz/lesserphp/lessify*
+vendor/marcusschwarz/lesserphp/Makefile
+vendor/marcusschwarz/lesserphp/plessc
+

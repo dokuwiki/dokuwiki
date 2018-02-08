@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author mark prins <mprins@users.sf.net>
  * @author Pieter van der Meulen <pieter@vdmeulen.net>
  * @author Wouter Schoot <wouter@schoot.org>
  * @author John de Graaff <john@de-graaff.net>
@@ -10,14 +11,11 @@
  * @author Dion Nicolaas <dion@nicolaas.net>
  * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
  * @author Marijn Hofstra hofstra.m@gmail.com
- * @author Matthias Carchon webmaster@c-mattic.be
  * @author Marijn Hofstra <hofstra.m@gmail.com>
  * @author Timon Van Overveldt <timonvo@gmail.com>
- * @author Jeroen
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
  * @author Gerrit <klapinklapin@gmail.com>
  * @author Hugo Smet <hugo.smet@scarlet.be>
- * @author mark prins <mprins@users.sf.net>
  */
 $lang['menu']                  = 'Configuratie-instellingen';
 $lang['error']                 = 'De instellingen zijn niet gewijzigd wegens een incorrecte waarde, kijk je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde(s) herkennen aan de rode rand.';
@@ -124,6 +122,7 @@ $lang['subscribe_time']        = 'Inschrijvingsmeldingen en samenvattingen worde
 $lang['notify']                = 'Stuur altijd e-mailnotificaties naar dit adres';
 $lang['registernotify']        = 'Stuur altijd informatie over nieuw geregistreerde gebruikers naar dit e-mailadres';
 $lang['mailfrom']              = 'E-mailadres van afzender voor automatische e-mail';
+$lang['mailreturnpath']        = 'Email adres voor de ontvanger van meldingen van niet-afleverbare berichten';
 $lang['mailprefix']            = 'Te gebruiken voorvoegsel voor onderwerp automatische email. Leeglaten gebruik de wikititel.';
 $lang['htmlmail']              = 'Zend multipart HTML e-mail. Dit ziet er beter uit, maar is groter. Uitschakelen betekent e-mail in platte tekst.';
 $lang['sitemap']               = 'Genereer Google sitemap (dagen). 0 betekent uitschakelen.';
@@ -133,6 +132,9 @@ $lang['rss_content']           = 'Wat moet er in de XML feed items weergegeven w
 $lang['rss_update']            = 'XML feed verversingsinterval (sec)';
 $lang['rss_show_summary']      = 'XML feed samenvatting in titel weergeven';
 $lang['rss_media']             = 'Welk type verandering moet in de XML feed worden weergegeven?';
+$lang['rss_media_o_both']      = 'beide';
+$lang['rss_media_o_pages']     = 'pagina\'s';
+$lang['rss_media_o_media']     = 'media';
 $lang['updatecheck']           = 'Controleer op nieuwe versies en beveiligingswaarschuwingen? DokuWiki moet hiervoor contact opnemen met update.dokuwiki.org.';
 $lang['userewrite']            = 'Gebruik nette URL\'s';
 $lang['useslash']              = 'Gebruik slash (/) als scheiding tussen namepaces in URL\'s';

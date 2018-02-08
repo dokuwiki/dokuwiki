@@ -358,4 +358,3 @@ $lang['page_nonexist_rev']     = 'Stránka neexistovala na %s. Byla vytvořena d
 $lang['unable_to_parse_date']  = 'Nelze rozebrat parametr "%s".';
 $lang['email_signature_text']  = 'Tento e-mail byl automaticky vygenerován systémem DokuWiki
 @DOKUWIKIURL@';
-$lang['email_signature_html']  = ' ';

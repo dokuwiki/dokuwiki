@@ -402,34 +402,30 @@ function rss_buildItems(&$rss, &$data, $opt) {
             // add user
             # FIXME should the user be pulled from metadata as well?
             $user         = @$ditem['user']; // the @ spares time repeating lookup
-            $item->author = '';
-            if($user && $conf['useacl'] && $auth) {
-                $userInfo = $auth->getUserData($user);
-                if($userInfo) {
-                    switch($conf['showuseras']) {
-                        case 'username':
-                        case 'username_link':
-                            $item->author = $userInfo['name'];
-                            break;
-                        default:
-                            $item->author = $user;
-                            break;
-                    }
-                } else {
-                    $item->author = $user;
-                }
-                if($userInfo && !$opt['guardmail']) {
-                    $item->authorEmail = $userInfo['mail'];
-                } else {
-                    //cannot obfuscate because some RSS readers may check validity
-                    $item->authorEmail = $user.'@'.$ditem['ip'];
-                }
-            } elseif($user) {
-                // this happens when no ACL but some Apache auth is used
-                $item->author      = $user;
-                $item->authorEmail = $user.'@'.$ditem['ip'];
+            if(blank($user)) {
+                $item->author = 'Anonymous';
+                $item->authorEmail = 'anonymous@undisclosed.example.com';
             } else {
-                $item->authorEmail = 'anonymous@'.$ditem['ip'];
+                $item->author = $user;
+                $item->authorEmail = $user . '@undisclosed.example.com';
+
+                // get real user name if configured
+                if($conf['useacl'] && $auth) {
+                    $userInfo = $auth->getUserData($user);
+                    if($userInfo) {
+                        switch($conf['showuseras']) {
+                            case 'username':
+                            case 'username_link':
+                                $item->author = $userInfo['name'];
+                                break;
+                            default:
+                                $item->author = $user;
+                                break;
+                        }
+                    } else {
+                        $item->author = $user;
+                    }
+                }
             }
 
             // add category

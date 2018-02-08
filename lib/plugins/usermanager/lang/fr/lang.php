@@ -13,9 +13,7 @@
  * @author Vincent Feltz <psycho@feltzv.fr>
  * @author Philippe Bajoit <philippe.bajoit@gmail.com>
  * @author Florian Gaub <floriang@floriang.net>
- * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
- * @author skimpax@gmail.com
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
@@ -28,7 +26,7 @@
  */
 $lang['menu']                  = 'Gestion des utilisateurs';
 $lang['noauth']                = '(authentification de l\'utilisateur non disponible)';
-$lang['nosupport']             = '(gestion de l\'utilisateur non supportée)';
+$lang['nosupport']             = '(gestion de l\'utilisateur non pris en charge)';
 $lang['badauth']               = 'mécanisme d\'authentification invalide';
 $lang['user_id']               = 'Identifiant ';
 $lang['user_pass']             = 'Mot de passe ';

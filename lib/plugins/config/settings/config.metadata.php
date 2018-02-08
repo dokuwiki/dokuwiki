@@ -189,6 +189,7 @@ $meta['subscribe_time'] = array('numeric');
 $meta['notify']         = array('email', '_multiple' => true);
 $meta['registernotify'] = array('email', '_multiple' => true);
 $meta['mailfrom']       = array('email', '_placeholders' => true);
+$meta['mailreturnpath']       = array('email', '_placeholders' => true);
 $meta['mailprefix']     = array('string');
 $meta['htmlmail']       = array('onoff');
 

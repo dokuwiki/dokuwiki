@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Zhassulan <zyesmukanov@gmail.com>
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Yuri Pimenov <up@ftpsearch.lv>
  * @author Igor Tarasov <tigr@mail15.com>
  * @author Denis Simakov <akinoame1@gmail.com>
@@ -16,7 +18,6 @@
  * @author Kirill Krasnov <krasnovforum@gmail.com>
  * @author Vlad Tsybenko <vlad.development@gmail.com>
  * @author Aleksey Osadchiy <rfc@nm.ru>
- * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Ladyko Andrey <fylh@succexy.spb.ru>
  * @author Eugene <windy.wanderer@gmail.com>
  * @author Johnny Utah <pcpa@cyberpunk.su>
@@ -24,7 +25,6 @@
  * @author Pavel <ivanovtsk@mail.ru>
  * @author Artur <ncuxxx@gmail.com>
  * @author Erli Moen <evseev.jr@gmail.com>
- * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Владимир <id37736@yandex.ru>
  * @author Igor Degraf <igordegraf@gmail.com>
  * @author Type-kun <workwork-1@yandex.ru>
@@ -143,8 +143,7 @@ $lang['js']['keepopen']        = 'Не закрывать окно после в
 $lang['js']['hidedetails']     = 'Скрыть детали';
 $lang['js']['mediatitle']      = 'Настройка ссылки';
 $lang['js']['mediadisplay']    = 'Тип ссылки';
-$lang['js']['mediaalign']      = 'Выравнивание
-';
+$lang['js']['mediaalign']      = 'Выравнивание';
 $lang['js']['mediasize']       = 'Размер';
 $lang['js']['mediatarget']     = 'Целевая ссылка';
 $lang['js']['mediaclose']      = 'Закрыть';
