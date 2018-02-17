@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Олексій <alexey.furashev@gmail.com>
+ * @author Oleksii <alexey.furashev@gmail.com>
  * @author Vitaly <vitaly.balashov@smuzzy.com.ua>
  * @author Oleksiy Voronin <ovoronin@gmail.com>
  * @author serg_stetsuk <serg_stetsuk@ukr.net>
@@ -196,10 +196,13 @@ $lang['diff_side']             = 'Поряд';
 $lang['diffprevrev']           = 'Попередня ревізія';
 $lang['diffnextrev']           = 'Наступна ревізія';
 $lang['difflastrev']           = 'Остання ревізія';
+$lang['diffbothprevrev']       = 'Порівняння попередніх версій';
+$lang['diffbothnextrev']       = 'По сторонах наступні версії';
 $lang['line']                  = 'Рядок';
 $lang['breadcrumb']            = 'Відвідано:';
 $lang['youarehere']            = 'Ви тут:';
 $lang['lastmod']               = 'Востаннє змінено:';
+$lang['by']                    = 'повз';
 $lang['deleted']               = 'знищено';
 $lang['created']               = 'створено';
 $lang['restored']              = 'відновлено стару ревізію (%s)';
@@ -333,6 +336,7 @@ $lang['media_files']           = 'Файли у %s';
 $lang['media_upload']          = 'Завантажити до %s';
 $lang['media_search']          = 'Шукати у %s';
 $lang['media_view']            = '%s';
+$lang['media_viewold']         = '%s до %s';
 $lang['media_edit']            = 'Редагувати %s';
 $lang['media_history']         = 'Історія %s';
 $lang['media_meta_edited']     = 'метаданні відредаговано';
