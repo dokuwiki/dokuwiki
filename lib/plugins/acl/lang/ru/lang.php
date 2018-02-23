@@ -4,7 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Denis Simakov <akinoame1@gmail.com>
- * @author Змей Этерийский evil_snake@eternion.ru
+ * @author Змей Этерийский <evil_snake@eternion.ru>
  * @author Hikaru Nakajima <jisatsu@mail.ru>
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
  * @author Alexander Sorkin <kibizoid@gmail.com>
