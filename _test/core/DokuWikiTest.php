@@ -1,5 +1,5 @@
 <?php
-
+use PHPUnit\Framework\MockObject\MockObject;
 
 if(!class_exists('PHPUnit_Framework_TestCase')) {
     /**
@@ -17,14 +17,46 @@ if(!class_exists('PHPUnit_Framework_TestCase')) {
             }
         }
     }
+    class PHPUnit_Framework_TestCase_Compat extends PHPUnit_Framework_TestCase {
+
+    }
+}else{
+    class PHPUnit_Framework_TestCase_Compat extends PHPUnit_Framework_TestCase {
+        /**
+         * Compatibility for older PHPUnit versions (<5.2)
+         *
+         * @param string $originalClassName
+         * @return PHPUnit_Framework_MockObject_MockObject
+         */
+        protected function createMock($originalClassName) {
+            if(is_callable(array('parent', 'createMock'))) {
+                return parent::createMock($originalClassName);
+            } else {
+                return $this->getMock($originalClassName);
+            }
+        }
+
+        /**
+         * Compatibility for older PHPUnit versions (<5.2)
+         *
+         * @param string $originalClassName
+         * @param array $methods
+         * @return PHPUnit_Framework_MockObject_MockObject
+         */
+        protected function createPartialMock($originalClassName, array $methods) {
+            if(is_callable(array('parent', 'createPartialMock'))) {
+                return parent::createPartialMock($originalClassName, $methods);
+            } else {
+                return $this->getMock($originalClassName, $methods);
+            }
+        }
+    }
 }
-
-
 
 /**
  * Helper class to provide basic functionality for tests
  */
-abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
+abstract class DokuWikiTest extends PHPUnit_Framework_TestCase_Compat {
 
     /**
      * tests can override this
@@ -148,35 +180,6 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
         global $INPUT;
         $INPUT = new Input();
-    }
-
-    /**
-     * Compatibility for older PHPUnit versions
-     *
-     * @param string $originalClassName
-     * @return PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function createMock($originalClassName):MockObject{
-        if(is_callable(array('parent', 'createMock'))) {
-            return parent::createMock($originalClassName);
-        } else {
-            return $this->getMock($originalClassName);
-        }
-    }
-
-    /**
-     * Compatibility for older PHPUnit versions
-     *
-     * @param string $originalClassName
-     * @param array $methods
-     * @return PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function createPartialMock($originalClassName, array $methods):MockObject{
-        if(is_callable(array('parent', 'createPartialMock'))) {
-            return parent::createPartialMock($originalClassName, $methods);
-        } else {
-            return $this->getMock($originalClassName, $methods);
-        }
     }
 
     /**
