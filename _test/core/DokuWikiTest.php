@@ -23,7 +23,7 @@ if(!class_exists('PHPUnit_Framework_TestCase')) {
 }else{
     class PHPUnit_Framework_TestCase_Compat extends PHPUnit_Framework_TestCase {
         /**
-         * Compatibility for older PHPUnit versions (<5.2)
+         * Compatibility for older PHPUnit versions (<5.4)
          *
          * @param string $originalClassName
          * @return PHPUnit_Framework_MockObject_MockObject
@@ -37,7 +37,7 @@ if(!class_exists('PHPUnit_Framework_TestCase')) {
         }
 
         /**
-         * Compatibility for older PHPUnit versions (<5.2)
+         * Compatibility for older PHPUnit versions (<5.4)
          *
          * @param string $originalClassName
          * @param array $methods
