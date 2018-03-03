@@ -156,7 +156,7 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
      * @param string $originalClassName
      * @return PHPUnit_Framework_MockObject_MockObject
      */
-    protected function createMock($originalClassName) {
+    protected function createMock($originalClassName):MockObject{
         if(is_callable(array('parent', 'createMock'))) {
             return parent::createMock($originalClassName);
         } else {
@@ -171,7 +171,7 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
      * @param array $methods
      * @return PHPUnit_Framework_MockObject_MockObject
      */
-    protected function createPartialMock($originalClassName, array $methods) {
+    protected function createPartialMock($originalClassName, array $methods):MockObject{
         if(is_callable(array('parent', 'createPartialMock'))) {
             return parent::createPartialMock($originalClassName, $methods);
         } else {
