@@ -1,12 +1,12 @@
 <?php
-
-
 if(!class_exists('PHPUnit_Framework_TestCase')) {
     /**
      * phpunit 5/6 compatibility
      */
     class PHPUnit_Framework_TestCase extends PHPUnit\Framework\TestCase {
         /**
+         * setExpectedException is deprecated in PHPUnit 6
+         *
          * @param string $class
          * @param null|string $message
          */
@@ -19,10 +19,10 @@ if(!class_exists('PHPUnit_Framework_TestCase')) {
     }
 }
 
-
-
 /**
  * Helper class to provide basic functionality for tests
+ *
+ * @uses PHPUnit_Framework_TestCase and thus PHPUnit 5.7+ is required
  */
 abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
@@ -148,35 +148,6 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
         global $INPUT;
         $INPUT = new Input();
-    }
-
-    /**
-     * Compatibility for older PHPUnit versions
-     *
-     * @param string $originalClassName
-     * @return PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function createMock($originalClassName) {
-        if(is_callable(array('parent', 'createMock'))) {
-            return parent::createMock($originalClassName);
-        } else {
-            return $this->getMock($originalClassName);
-        }
-    }
-
-    /**
-     * Compatibility for older PHPUnit versions
-     *
-     * @param string $originalClassName
-     * @param array $methods
-     * @return PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function createPartialMock($originalClassName, array $methods) {
-        if(is_callable(array('parent', 'createPartialMock'))) {
-            return parent::createPartialMock($originalClassName, $methods);
-        } else {
-            return $this->getMock($originalClassName, $methods);
-        }
     }
 
     /**
