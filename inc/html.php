@@ -9,7 +9,7 @@
 if(!defined('DOKU_INC')) die('meh.');
 if(!defined('NL')) define('NL',"\n");
 if (!defined('SEC_EDIT_PATTERN')) {
-    define('SEC_EDIT_PATTERN', '#<!-- EDIT(?<secid>\d+) (?<target>[A-Z_]+) (?:"(?<name>[^"]*)" )?(?:"(?<hid>[^"]*)" )?\[(?<range>\d+-\d*)\] -->#');
+    define('SEC_EDIT_PATTERN', '#<!-- EDIT({.*}) -->#');
 }
 
 
@@ -118,17 +118,12 @@ function html_secedit($text,$show=true){
  * @triggers HTML_SECEDIT_BUTTON
  */
 function html_secedit_button($matches){
-    $data = array('secid'  => $matches['secid'],
-        'target' => strtolower($matches['target']),
-        'range'  => $matches['range']);
-
-    if (!empty($matches['hid'])) {
-        $data['hid'] = strtolower($matches['hid']);
+    $data = json_decode($matches[1], true);
+    if ($data == NULL) {
+        return;
     }
-
-    if (!empty($matches['name'])) {
-        $data['name'] = $matches['name'];
-    }
+    $data ['target'] = strtolower($data['target']);
+    $data ['hid'] = strtolower($data['hid']);
 
     return trigger_event('HTML_SECEDIT_BUTTON', $data,
                          'html_secedit_get_button');
@@ -1869,6 +1864,9 @@ function html_edit(){
     $form->addHidden('target', $data['target']);
     if ($INPUT->has('hid')) {
         $form->addHidden('hid', $INPUT->str('hid'));
+    }
+    if ($INPUT->has('codeblockOffset')) {
+        $form->addHidden('codeblockOffset', $INPUT->str('codeblockOffset'));
     }
     $form->addElement(form_makeOpenTag('div', array('id'=>'wiki__editbar', 'class'=>'editBar')));
     $form->addElement(form_makeOpenTag('div', array('id'=>'size__ctl')));
