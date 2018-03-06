@@ -3,18 +3,18 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Seungheon Song <esketch@gmail.com>
  * @author Hyun Kim <lawfully@gmail.com>
  * @author jk Lee
- * @author dongnak@gmail.com
+ * @author dongnak <dongnak@gmail.com>
  * @author Song Younghwan <purluno@gmail.com>
  * @author Seung-Chul Yoo <dryoo@live.com>
- * @author erial2@gmail.com
+ * @author erial2 <erial2@gmail.com>
  * @author Myeongjin <aranet100@gmail.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Garam <rowain8@gmail.com>
  * @author Young gon Cha <garmede@gmail.com>
  * @author hyeonsoft <hyeonsoft@live.co.kr>
- * @author Erial <erial2@gmail.com>
  * @author S.H. Lee <tuders@naver.com>
  */
 $lang['encoding']              = 'utf-8';
