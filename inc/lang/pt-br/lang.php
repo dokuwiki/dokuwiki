@@ -3,21 +3,18 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Luis Fernando Enciso <lfenciso@certto.com.br>
  * @author Alauton/Loug
- * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Lucien Raven <lucienraven@yahoo.com.br>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Flávio Veras <flaviove@gmail.com>
  * @author Jeferson Propheta <jeferson.propheta@gmail.com>
- * @author jair.henrique@gmail.com
+ * @author jair.henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luis@dantas.com>
- * @author Luis Dantas <luisdantas@gmail.com>
- * @author Jair Henrique <jair.henrique@gmail.com>
  * @author Sergio Motta <sergio@cisne.com.br>
  * @author Isaias Masiero Filho <masiero@masiero.org>
- * @author Frederico Guimarães <frederico@teia.bio.br>
  * @author Balaco Baco <balacobaco@imap.cc>
  * @author Victor Westmann <victor.westmann@gmail.com>
  * @author Leone Lisboa Magevski <leone1983@gmail.com>
