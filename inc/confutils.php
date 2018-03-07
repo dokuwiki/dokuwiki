@@ -267,45 +267,7 @@ function jsonToArray($file)
 
     $conf = json_decode($json, true);
 
-    $jsonError = json_last_error();
-    if (!is_array($conf) && $jsonError !== JSON_ERROR_NONE) {
-
-        switch ($jsonError) {
-            case JSON_ERROR_DEPTH:
-                $jsonErrorText = 'The maximum stack depth has been exceeded';
-                break;
-            case JSON_ERROR_STATE_MISMATCH:
-                $jsonErrorText = 'Invalid or malformed JSON';
-                break;
-            case JSON_ERROR_CTRL_CHAR:
-                $jsonErrorText = 'Control character error, possibly incorrectly encoded';
-                break;
-            case JSON_ERROR_SYNTAX:
-                $jsonErrorText = 'Syntax error';
-                break;
-            case JSON_ERROR_UTF8:
-                $jsonErrorText = 'Malformed UTF-8 characters, possibly incorrectly encoded';
-                break;
-            case JSON_ERROR_RECURSION:
-                $jsonErrorText = 'One or more recursive references in the value to be encoded';
-                break;
-            case JSON_ERROR_INF_OR_NAN:
-                $jsonErrorText = 'One or more NAN or INF values in the value to be encoded';
-                break;
-            case JSON_ERROR_UNSUPPORTED_TYPE:
-                $jsonErrorText = 'A value of a type that cannot be encoded was given';
-                break;
-            case JSON_ERROR_INVALID_PROPERTY_NAME:
-                $jsonErrorText = 'A property name that cannot be encoded was given';
-                break;
-            case JSON_ERROR_UTF16:
-                $jsonErrorText = 'Malformed UTF-16 characters, possibly incorrectly encoded';
-                break;
-            default:
-                $jsonErrorText = 'Unknown Error Code';
-        }
-
-        trigger_error('JSON decoding error "' . $jsonErrorText . '" for file ' . $file, E_USER_WARNING);
+    if ($conf === null) {
         return [];
     }
 
