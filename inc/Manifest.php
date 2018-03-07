@@ -42,47 +42,32 @@ class Manifest
 
         if (empty($manifest['icons'])) {
             $manifest['icons'] = [];
+            if (file_exists(mediaFN(':wiki:favicon.ico'))) {
+                $url = ml(':wiki:favicon.ico', '', true, '', true);
+                $manifest['icons'][] = [
+                    'src' => $url,
+                    'sizes' => '16x16',
+                ];
+            }
+
             $look = [
-                ':wiki:logo.png',
-                ':logo.png',
-                'images/logo.png',
-                ':wiki:apple-touch-icon.png',
-                ':apple-touch-icon.png',
-                'images/apple-touch-icon.png',
-                ':wiki:favicon.svg',
-                ':favicon.svg',
-                'images/favicon.svg',
-                ':wiki:favicon.ico',
-                ':favicon.ico',
-                'images/favicon.ico',
-                ':wiki:logo',
+                ':wiki:logo.svg',
+                ':logo.svg',
+                ':wiki:dokuwiki.svg'
             ];
 
-            $abs = true;
-            foreach ($look as $img) {
-                if ($img[0] === ':') {
-                    $file = mediaFN($img);
-                    $ismedia = true;
-                } else {
-                    $file = tpl_incdir() . $img;
-                    $ismedia = false;
-                }
+            foreach ($look as $svgLogo) {
 
-                if (file_exists($file)) {
-                    $imginfo = getimagesize($file);
-                    if ($ismedia) {
-                        $url = ml($img, '', true, '', $abs);
-                    } else {
-                        $url = tpl_basedir() . $img;
-                        if ($abs) {
-                            $url = DOKU_URL . substr($url, strlen(DOKU_REL));
-                        }
-                    }
+                $svgLogoFN = mediaFN($svgLogo);
+
+                if (file_exists($svgLogoFN)) {
+                    $url = ml($svgLogo, '', true, '', true);
                     $manifest['icons'][] = [
                         'src' => $url,
-                        'sizes' => $imginfo[0] . 'x' . $imginfo[1],
-                        'type' => $imginfo['mime'],
+                        'sizes' => '17x17 512x512',
+                        'type' => 'image/svg+xml',
                     ];
+                    break;
                 };
             }
         }
