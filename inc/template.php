@@ -423,10 +423,13 @@ function tpl_link($url, $name, $more = '', $return = false) {
  *
  * @param string      $id   page id
  * @param string|null $name the name of the link
- * @return bool true
+ * @param bool        $return
+ * @return true|string
  */
-function tpl_pagelink($id, $name = null) {
-    print '<bdi>'.html_wikilink($id, $name).'</bdi>';
+function tpl_pagelink($id, $name = null, $return = false) {
+    $out = '<bdi>'.html_wikilink($id, $name).'</bdi>';
+    if($return) return $out;
+    print $out;
     return true;
 }
 
@@ -676,33 +679,39 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $sep Separator between entries
- * @return bool
+ * @param bool   $return return or print
+ * @return bool|string
  */
-function tpl_breadcrumbs($sep = '•') {
+function tpl_breadcrumbs($sep = null, $return = false) {
     global $lang;
     global $conf;
 
     //check if enabled
     if(!$conf['breadcrumbs']) return false;
 
+    //set default
+    if(is_null($sep)) $sep = '•';
+
+    $out='';
+
     $crumbs = breadcrumbs(); //setup crumb trace
 
     $crumbs_sep = ' <span class="bcsep">'.$sep.'</span> ';
 
     //render crumbs, highlight the last one
-    print '<span class="bchead">'.$lang['breadcrumb'].'</span>';
+    $out .= '<span class="bchead">'.$lang['breadcrumb'].'</span>';
     $last = count($crumbs);
     $i    = 0;
     foreach($crumbs as $id => $name) {
         $i++;
-        echo $crumbs_sep;
-        if($i == $last) print '<span class="curid">';
-        print '<bdi>';
-        tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="'.$id.'"');
-        print '</bdi>';
-        if($i == $last) print '</span>';
+        $out .= $crumbs_sep;
+        if($i == $last) $out .= '<span class="curid">';
+        $out .= '<bdi>' . tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="'.$id.'"', true) .  '</bdi>';
+        if($i == $last) $out .= '</span>';
     }
-    return true;
+    if($return) return $out;
+    print $out;
+    return $out ? true : false;
 }
 
 /**
@@ -718,9 +727,10 @@ function tpl_breadcrumbs($sep = '•') {
  * @todo   May behave strangely in RTL languages
  *
  * @param string $sep Separator between entries
- * @return bool
+ * @param bool   $return return or print
+ * @return bool|string
  */
-function tpl_youarehere($sep = ' » ') {
+function tpl_youarehere($sep = null, $return = false) {
     global $conf;
     global $ID;
     global $lang;
@@ -728,15 +738,18 @@ function tpl_youarehere($sep = ' » ') {
     // check if enabled
     if(!$conf['youarehere']) return false;
 
+    //set default
+    if(is_null($sep)) $sep = ' » ';
+
+    $out = '';
+
     $parts = explode(':', $ID);
     $count = count($parts);
 
-    echo '<span class="bchead">'.$lang['youarehere'].' </span>';
+    $out .= '<span class="bchead">'.$lang['youarehere'].' </span>';
 
     // always print the startpage
-    echo '<span class="home">';
-    tpl_pagelink(':'.$conf['start']);
-    echo '</span>';
+    $out .= '<span class="home">' . tpl_pagelink(':'.$conf['start'], null, true) . '</span>';
 
     // print intermediate namespace links
     $part = '';
@@ -746,8 +759,7 @@ function tpl_youarehere($sep = ' » ') {
         if($page == $conf['start']) continue; // Skip startpage
 
         // output
-        echo $sep;
-        tpl_pagelink($page);
+        $out .= $sep . tpl_pagelink($page, null, true);
     }
 
     // print current page, skipping start page, skipping for namespace index
@@ -755,9 +767,11 @@ function tpl_youarehere($sep = ' » ') {
     if(isset($page) && $page == $part.$parts[$i]) return true;
     $page = $part.$parts[$i];
     if($page == $conf['start']) return true;
-    echo $sep;
-    tpl_pagelink($page);
-    return true;
+    $out .= $sep;
+    $out .= tpl_pagelink($page, null, true);
+    if($return) return $out;
+    print $out;
+    return $out ? true : false;
 }
 
 /**
