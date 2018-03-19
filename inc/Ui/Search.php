@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Ui;
 
+use \dokuwiki\Form\Form;
+
 class Search extends Ui
 {
     protected $query;
@@ -38,6 +40,8 @@ class Search extends Ui
     {
         $searchHTML = '';
 
+        $searchHTML .= $this->getSearchFormHTML($this->query);
+
         $searchHTML .= $this->getSearchIntroHTML($this->query);
 
         $searchHTML .= $this->getPageLookupHTML($this->pageLookupResults);
@@ -45,6 +49,28 @@ class Search extends Ui
         $searchHTML .= $this->getFulltextResultsHTML($this->fullTextResults, $this->highlight);
 
         echo $searchHTML;
+    }
+
+    /**
+     * Get a form which can be used to adjust/refine the search
+     *
+     * @param string $query
+     *
+     * @return string
+     */
+    protected function getSearchFormHTML($query)
+    {
+        global $lang;
+
+        $searchForm = (new Form())->attrs(['method' => 'get']);
+        $searchForm->setHiddenField('do', 'search');
+
+        $searchForm->addFieldsetOpen();
+        $searchForm->addTextInput('id', '')->val($query);
+        $searchForm->addButton('', $lang['btn_search'])->attr('type', 'submit');
+        $searchForm->addFieldsetClose();
+
+        return $searchForm->toHTML();
     }
 
     /**
@@ -68,7 +94,6 @@ class Search extends Ui
         );
         return $intro;
     }
-
 
     /**
      * Build HTML for a list of pages with matching pagenames
