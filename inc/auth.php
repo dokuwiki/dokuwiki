@@ -309,7 +309,7 @@ function auth_browseruid() {
  */
 function auth_cookiesalt($addsession = false, $secure = false) {
     if (defined('SIMPLE_TEST')) {
-        return '';
+        return 'test';
     }
     global $conf;
     $file = $conf['metadir'].'/_htcookiesalt';
