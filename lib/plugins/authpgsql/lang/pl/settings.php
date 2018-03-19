@@ -9,6 +9,7 @@
  */
 $lang['server']                = 'Twój serwer PostgreSQL';
 $lang['user']                  = 'Nazwa użytkownika PostgreSQL';
+$lang['password']              = 'Hasła dla powyższego użytkownika';
 $lang['database']              = 'Baza danych do użycia';
 $lang['debug']                 = 'Wyświetl dodatkowe informacje debagowania';
 $lang['checkPass']             = 'Instrukcja SQL sprawdzająca hasła';
@@ -24,3 +25,9 @@ $lang['addUser']               = 'Instrukcja SQL dodająca nowego użytkownika';
 $lang['addGroup']              = 'Instrukcja SQL dodająca nową grupę';
 $lang['addUserGroup']          = 'Instrukcja SQL dodająca użytkownika do istniejącej grupy';
 $lang['delGroup']              = 'Instrukcja SQL usuwająca grupę';
+$lang['getUserID']             = 'Instrukcja SQL pobierająca klucz główny użytkownika';
+$lang['delUser']               = 'Instrukcja SQL usuwająca użytkownika';
+$lang['delUserRefs']           = 'Instrukcja SQL usuwająca użytkownika ze wszystkich grup';
+$lang['updateUser']            = 'Instrukcja SQL aktualizująca profil użytkownika';
+$lang['delUserGroup']          = 'Instrukcja SQL usuwająca użytkownika ze wskazanej grupy';
+$lang['getGroupID']            = 'Instrukcja SQL pobierająca klucz główny wskazanej grupy';
