@@ -32,6 +32,9 @@ class Search extends AbstractAction {
 
     /** @inheritdoc */
     public function tplContent() {
-        html_search();
+        global $QUERY;
+        $search = new \dokuwiki\Ui\Search($QUERY);
+        $search->execute();
+        $search->show();
     }
 }
