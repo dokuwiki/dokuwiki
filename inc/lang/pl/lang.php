@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Wojciech Lichota <wojciech@lichota.pl>
  * @author Max <maxrb146@gmail.com>
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
@@ -201,6 +202,8 @@ $lang['diff_side']             = 'Jeden obok drugiego';
 $lang['diffprevrev']           = 'Poprzednia wersja';
 $lang['diffnextrev']           = 'Nowa wersja';
 $lang['difflastrev']           = 'Ostatnia wersja';
+$lang['diffbothprevrev']       = 'Poprzednia rewizja po obu stronach';
+$lang['diffbothnextrev']       = 'Następna rewizja po obu stronach';
 $lang['line']                  = 'Linia';
 $lang['breadcrumb']            = 'Ślad:';
 $lang['youarehere']            = 'Jesteś tutaj:';
@@ -350,5 +353,7 @@ $lang['currentns']             = 'Obecny katalog';
 $lang['searchresult']          = 'Wyniki wyszukiwania';
 $lang['plainhtml']             = 'Czysty HTML';
 $lang['wikimarkup']            = 'Znaczniki';
+$lang['page_nonexist_rev']     = 'Strona nie istnieje w %s. Została następnie utworzony w <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Nie można przeanalizować parametru "%s".';
 $lang['email_signature_text']  = 'List został wygenerowany przez DokuWiki pod adresem
 @DOKUWIKIURL@';
