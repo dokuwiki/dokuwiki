@@ -8,6 +8,7 @@
  * @author Mati <mackosa@wp.pl>
  */
 $lang['server']                = 'Twój serwer PostgreSQL';
+$lang['port']                  = 'Port Twojego serwera PostgreSQL';
 $lang['user']                  = 'Nazwa użytkownika PostgreSQL';
 $lang['password']              = 'Hasła dla powyższego użytkownika';
 $lang['database']              = 'Baza danych do użycia';
@@ -29,5 +30,9 @@ $lang['getUserID']             = 'Instrukcja SQL pobierająca klucz główny uż
 $lang['delUser']               = 'Instrukcja SQL usuwająca użytkownika';
 $lang['delUserRefs']           = 'Instrukcja SQL usuwająca użytkownika ze wszystkich grup';
 $lang['updateUser']            = 'Instrukcja SQL aktualizująca profil użytkownika';
+$lang['UpdateLogin']           = 'Polecenie służące do aktualizacji loginu użytkownika';
+$lang['UpdatePass']            = 'Polecenie służące do aktualizacji hasła użytkownika';
+$lang['UpdateEmail']           = 'Polecenie służące do aktualizacji e-mailu użytkownika';
+$lang['UpdateName']            = 'Polecenie służące do aktualizacji imienia i nazwiska użytkownika';
 $lang['delUserGroup']          = 'Instrukcja SQL usuwająca użytkownika ze wskazanej grupy';
 $lang['getGroupID']            = 'Instrukcja SQL pobierająca klucz główny wskazanej grupy';
