@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Wojciech Lichota <wojciech@lichota.pl>
  * @author Max <maxrb146@gmail.com>
  * @author Mati <mackosa@wp.pl>
  */
@@ -11,9 +12,11 @@ $lang['tab_plugins']           = 'Zainstalowane dodatki';
 $lang['tab_templates']         = 'Zainstalowane Szablony';
 $lang['tab_search']            = 'Znajdź i zainstaluj';
 $lang['tab_install']           = 'Instalacja ręczna';
+$lang['notimplemented']        = 'Ta funkcja nie została jeszcze zaimplementowana';
 $lang['notinstalled']          = 'Te rozszerzenie nie zostało zainstalowane';
 $lang['alreadyenabled']        = 'Te rozszerzenie jest już uruchomione';
 $lang['alreadydisabled']       = 'Rozszerzenie zostało wyłączone';
+$lang['pluginlistsaveerror']   = 'Wystąpił błąd podczas zapisywania listy wtyczek';
 $lang['unknownauthor']         = 'Nieznany autor';
 $lang['unknownversion']        = 'Nieznana wersja';
 $lang['btn_info']              = 'Pokaż więcej informacji';
@@ -27,9 +30,13 @@ $lang['js']['reallydel']       = 'Naprawdę odinstalować te rozszerzenie?';
 $lang['js']['display_viewoptions'] = 'Zobacz Opcje';
 $lang['js']['display_enabled'] = 'włącz';
 $lang['js']['display_disabled'] = 'wyłącz';
+$lang['js']['display_updatable'] = 'do aktualizacji';
 $lang['search_for']            = 'Szukaj rozszerzenia:';
 $lang['search']                = 'Szukaj';
+$lang['extensionby']           = '<strong>%s</strong> przez %s';
 $lang['screenshot']            = 'Zrzut ekranu z %s';
+$lang['popularity']            = 'Popularność: %s%%';
+$lang['homepage_link']         = 'Dokumenty';
 $lang['bugs_features']         = 'Błędy';
 $lang['tags']                  = 'Tagi:';
 $lang['author_hint']           = 'Szukaj rozszerzenia po autorze';
@@ -57,6 +64,7 @@ $lang['status_disabled']       = 'wyłączone';
 $lang['status_unmodifiable']   = 'niemodyfikowalny';
 $lang['status_plugin']         = 'dodatek';
 $lang['status_template']       = 'szablon';
+$lang['status_bundled']        = 'paczka';
 $lang['msg_enabled']           = 'Dodatek %s włączony';
 $lang['msg_disabled']          = 'Dodatek %s wyłączony';
 $lang['msg_delete_success']    = 'Rozszerzenie %s odinstalowane';
@@ -66,8 +74,11 @@ $lang['msg_template_update_success'] = 'Szablon %s został zaktualizowany';
 $lang['msg_plugin_install_success'] = 'Dodatek %s został zainstalowany';
 $lang['msg_plugin_update_success'] = 'Dodatek %s został zaktualizowany';
 $lang['msg_upload_failed']     = 'Ładowanie pliku nie powiodło się';
+$lang['missing_dependency']    = '<strong>Brakująca lub wyłączona zależność:</strong> %s';
+$lang['security_issue']        = '<strong>Problemy bezpieczeństwa:</strong> %s';
 $lang['security_warning']      = '<strong>Alert Bezpieczeństwa:</strong>%s';
 $lang['update_available']      = '<strong>Uaktualnij</strong> Nowa wersja %s jest dostępna.';
+$lang['wrong_folder']          = '<strong>Nieprawidłowo zainstalowana wtyczka:</strong> Zmień nazwę katalogu wtyczek z "%s" na "%s".';
 $lang['error_badurl']          = 'URL powinien zaczynać się od http lub https';
 $lang['error_dircreate']       = 'Nie można utworzyć tymczasowego folderu pobierania ';
 $lang['error_download']        = 'Nie można pobrać pliku %s';
