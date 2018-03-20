@@ -12,6 +12,22 @@
     margin-bottom: 1.4em;
 }
 
+.search-results-form .search-results-form__fieldset {
+    width: 80vw;
+}
+
+.search-results-form__show-assistance-button {
+    float: right;
+}
+
+.search-results-form__no-assistance-message {
+    color: grey;
+    float: right;
+    font-size: 80%;
+    margin-top: -0.3em;
+}
+
+
 /*____________ matching pagenames ____________*/
 
 .dokuwiki div.search_quickresult {
