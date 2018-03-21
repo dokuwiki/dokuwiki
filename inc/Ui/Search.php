@@ -7,6 +7,7 @@ use \dokuwiki\Form\Form;
 class Search extends Ui
 {
     protected $query;
+    protected $parsedQuery;
     protected $pageLookupResults = array();
     protected $fullTextResults = array();
     protected $highlight = array();
@@ -19,6 +20,8 @@ class Search extends Ui
     public function __construct($query)
     {
         $this->query = $query;
+        $Indexer = idx_get_indexer();
+        $this->parsedQuery = ft_queryParser($Indexer, $query);
     }
 
     /**
@@ -62,17 +65,14 @@ class Search extends Ui
     {
         global $lang;
 
-        $Indexer = idx_get_indexer();
-        $parsedQuery = ft_queryParser($Indexer, $query);
-
         $searchForm = (new Form())->attrs(['method' => 'get'])->addClass('search-results-form');
         $searchForm->setHiddenField('do', 'search');
         $searchForm->addFieldsetOpen()->addClass('search-results-form__fieldset');
         $searchForm->addTextInput('id')->val($query);
         $searchForm->addButton('', $lang['btn_search'])->attr('type', 'submit');
 
-        if ($this->isSearchAssistanceAvailable($parsedQuery)) {
-            $this->addSearchAssistanceElements($searchForm, $parsedQuery);
+        if ($this->isSearchAssistanceAvailable($this->parsedQuery)) {
+            $this->addSearchAssistanceElements($searchForm, $this->parsedQuery);
         } else {
             $searchForm->addClass('search-results-form--no-assistance');
             $searchForm->addTagOpen('span')->addClass('search-results-form__no-assistance-message');
@@ -317,20 +317,28 @@ class Search extends Ui
         $html = '';
         $html .= '<dl class="search_results">';
         $num = 1;
+
         foreach ($data as $id => $cnt) {
             $resultLink = html_wikilink(':' . $id, null, $highlight);
-            $hits = '';
+
+            $resultHeader = [$resultLink];
+
             $snippet = '';
             if ($cnt !== 0) {
-                $hits = $cnt . ' ' . $lang['hits'];
+                $resultHeader[] = $cnt . ' ' . $lang['hits'];
                 if ($num < FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
                     $snippet = '<dd>' . ft_snippet($id, $highlight) . '</dd>';
                 }
                 $num++;
             }
 
+            $restrictQueryToNSLink = $this->restrictQueryToNSLink(getNS($id));
+            if ($restrictQueryToNSLink) {
+                $resultHeader[] = $restrictQueryToNSLink;
+            }
+
             $eventData = [
-                'resultHeader' => [$resultLink, $hits],
+                'resultHeader' => $resultHeader,
                 'resultBody' => [$snippet],
                 'page' => $id,
             ];
@@ -343,5 +351,40 @@ class Search extends Ui
         $html .= '</dl>';
 
         return $html;
+    }
+
+    /**
+     * create a link to restrict the current query to a namespace
+     *
+     * @param bool|string $ns the namespace to which to restrict the query
+     *
+     * @return bool|string
+     */
+    protected function restrictQueryToNSLink($ns)
+    {
+        if (!$ns) {
+            return false;
+        }
+        if (!$this->isSearchAssistanceAvailable($this->parsedQuery)) {
+            return false;
+        }
+        if (!empty($this->parsedQuery['ns']) && $this->parsedQuery['ns'][0] === $ns) {
+            return false;
+        }
+
+        $newQuery = ft_queryUnparser_simple(
+            $this->parsedQuery['and'],
+            [],
+            [],
+            [$ns],
+            []
+        );
+        $href = wl($newQuery, ['do' => 'search']);
+        $attributes = buildAttributes([
+            'rel' => 'nofollow',
+            'class' => 'search_namespace_link',
+        ]);
+        $name = '@' . $ns;
+        return "<a href=\"$href\" $attributes>$name</a>";
     }
 }
