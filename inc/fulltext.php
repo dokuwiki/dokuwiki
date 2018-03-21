@@ -813,4 +813,36 @@ function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = f
     return $parsed;
 }
 
+/**
+ * Recreate a search query string based on parsed parts, doesn't support negated phrases and `OR` searches
+ *
+ * @param array $and
+ * @param array $not
+ * @param array $phrases
+ * @param array $ns
+ * @param array $notns
+ *
+ * @return string
+ */
+function ft_queryUnparser_simple(array $and, array $not, array $phrases, array $ns, array $notns) {
+    $query = implode(' ', $and);
+    if (!empty($not)) {
+        $query .= ' -' . implode(' -', $not);
+    }
+
+    if (!empty($phrases)) {
+        $query .= ' "' . implode('" "', $phrases) . '"';
+    }
+
+    if (!empty($ns)) {
+        $query .= ' @' . implode(' @', $ns);
+    }
+
+    if (!empty($notns)) {
+        $query .= ' ^' . implode(' ^', $notns);
+    }
+
+    return $query;
+}
+
 //Setup VIM: ex: et ts=4 :
