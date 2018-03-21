@@ -39,5 +39,6 @@ $lang['UpdateEmail']           = 'Polecenie służące do aktualizacji e-mailu u
 $lang['UpdateName']            = 'Polecenie służące do aktualizacji imienia i nazwiska użytkownika';
 $lang['delUserGroup']          = 'Instrukcja SQL usuwająca użytkownika ze wskazanej grupy';
 $lang['getGroupID']            = 'Instrukcja SQL pobierający klucz główny wskazanej grupy';
+$lang['debug_o_0']             = 'brak';
 $lang['debug_o_1']             = 'tylko w przypadku błędów';
 $lang['debug_o_2']             = 'wszystkie zapytania SQL';
