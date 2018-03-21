@@ -13,6 +13,7 @@ $lang['user']                  = 'Nazwa użytkownika PostgreSQL';
 $lang['password']              = 'Hasła dla powyższego użytkownika';
 $lang['database']              = 'Baza danych do użycia';
 $lang['debug']                 = 'Wyświetl dodatkowe informacje debagowania';
+$lang['forwardClearPass']      = 'Przekazuj do poniższej instrukcji SQL hasła użytkowników jako czysty tekst do instrukcji SQL zamiast używać opcji passcrypt';
 $lang['checkPass']             = 'Instrukcja SQL sprawdzająca hasła';
 $lang['getUserInfo']           = 'Instrukcja SQL pobierająca dane użytkownika';
 $lang['getGroups']             = 'Instrukcja SQL pobierająca przynależność użytkownika do grup';
