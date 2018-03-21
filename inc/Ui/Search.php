@@ -82,6 +82,8 @@ class Search extends Ui
 
         $searchForm->addFieldsetClose();
 
+        trigger_event('SEARCH_FORM_DISPLAY', $searchForm);
+
         return $searchForm->toHTML();
     }
 
