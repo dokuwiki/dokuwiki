@@ -38,30 +38,6 @@ if($LC && $LC != 'en' ) {
 // initialise variables ...
 $error = array();
 
-$dokuwiki_hash = array(
-    '2005-09-22'   => 'e33223e957b0b0a130d0520db08f8fb7',
-    '2006-03-05'   => '51295727f79ab9af309a2fd9e0b61acc',
-    '2006-03-09'   => '51295727f79ab9af309a2fd9e0b61acc',
-    '2006-11-06'   => 'b3a8af76845977c2000d85d6990dd72b',
-    '2007-05-24'   => 'd80f2740c84c4a6a791fd3c7a353536f',
-    '2007-06-26'   => 'b3ca19c7a654823144119980be73cd77',
-    '2008-05-04'   => '1e5c42eac3219d9e21927c39e3240aad',
-    '2009-02-14'   => 'ec8c04210732a14fdfce0f7f6eead865',
-    '2009-12-25'   => '993c4b2b385643efe5abf8e7010e11f4',
-    '2010-11-07'   => '7921d48195f4db21b8ead6d9bea801b8',
-    '2011-05-25'   => '4241865472edb6fa14a1227721008072',
-    '2011-11-10'   => 'b46ff19a7587966ac4df61cbab1b8b31',
-    '2012-01-25'   => '72c083c73608fc43c586901fd5dabb74',
-    '2012-09-10'   => 'eb0b3fc90056fbc12bac6f49f7764df3',
-    '2013-05-10'   => '7b62b75245f57f122d3e0f8ed7989623',
-    '2013-12-08'   => '263c76af309fbf083867c18a34ff5214',
-    '2014-05-05'   => '263c76af309fbf083867c18a34ff5214',
-    '2015-08-10'   => '263c76af309fbf083867c18a34ff5214',
-    '2016-06-26'   => 'fd3abb6d89853dacb032907e619fbd73',
-    '2017-02-19'   => 'e4f2f5a34c9dbcd96a5ecc8f2df25bd9'
-);
-
-
 // begin output
 header('Content-Type: text/html; charset=utf-8');
 ?>
@@ -478,7 +454,6 @@ function fileWrite($filename, $data) {
 function check_configs(){
     global $error;
     global $lang;
-    global $dokuwiki_hash;
 
     $ok = true;
 
@@ -487,14 +462,6 @@ function check_configs(){
         'users' => DOKU_LOCAL.'users.auth.php',
         'auth'  => DOKU_LOCAL.'acl.auth.php'
     );
-
-    // main dokuwiki config file (conf/dokuwiki.php) must not have been modified
-    $installation_hash = md5(preg_replace("/(\015\012)|(\015)/","\012",
-                             @file_get_contents(DOKU_CONF.'dokuwiki.php')));
-    if (!in_array($installation_hash, $dokuwiki_hash)) {
-        $error[] = sprintf($lang['i_badhash'],$installation_hash);
-        $ok = false;
-    }
 
     // configs shouldn't exist
     foreach ($config_files as $file) {
