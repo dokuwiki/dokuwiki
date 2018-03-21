@@ -280,19 +280,13 @@ class Search extends Ui
         $html .= '<h3>' . $lang['quickhits'] . ':</h3>';
         $html .= '<ul class="search_quickhits">';
         foreach ($data as $id => $title) {
-            $html .= '<li> ';
-            if (useHeading('navigation')) {
-                $name = $title;
-            } else {
-                $ns = getNS($id);
-                if ($ns) {
-                    $name = shorten(noNS($id), ' (' . $ns . ')', 30);
-                } else {
-                    $name = $id;
-                }
-            }
-            $html .= html_wikilink(':' . $id, $name);
-            $html .= '</li> ';
+            $link = html_wikilink(':' . $id);
+            $eventData = [
+                'listItemContent' => [$link],
+                'page' => $id,
+            ];
+            trigger_event('SEARCH_RESULT_PAGELOOKUP', $eventData);
+            $html .= '<li>' . implode('', $eventData['listItemContent']) . '</li>';
         }
         $html .= '</ul> ';
         //clear float (see http://www.complexspiral.com/publications/containing-floats/)
@@ -322,18 +316,27 @@ class Search extends Ui
         $html .= '<dl class="search_results">';
         $num = 1;
         foreach ($data as $id => $cnt) {
-            $html .= '<dt>';
-            $html .= html_wikilink(':' . $id, useHeading('navigation') ? null : $id, $highlight);
+            $resultLink = html_wikilink(':' . $id, null, $highlight);
+            $hits = '';
+            $snippet = '';
             if ($cnt !== 0) {
-                $html .= ': ' . $cnt . ' ' . $lang['hits'] . '';
-            }
-            $html .= '</dt>';
-            if ($cnt !== 0) {
+                $hits = $cnt . ' ' . $lang['hits'];
                 if ($num < FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
-                    $html .= '<dd>' . ft_snippet($id, $highlight) . '</dd>';
+                    $snippet = '<dd>' . ft_snippet($id, $highlight) . '</dd>';
                 }
                 $num++;
             }
+
+            $eventData = [
+                'resultHeader' => [$resultLink, $hits],
+                'resultBody' => [$snippet],
+                'page' => $id,
+            ];
+            trigger_event('SEARCH_RESULT_FULLPAGE', $eventData);
+            $html .= '<div class="search_fullpage_result">';
+            $html .= '<dt>' . implode(' ', $eventData['resultHeader']) . '</dt>';
+            $html .= implode('', $eventData['resultBody']);
+            $html .= '</div>';
         }
         $html .= '</dl>';
 
