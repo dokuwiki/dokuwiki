@@ -30,11 +30,79 @@ class Search extends AbstractAction {
         if($s === '') throw new ActionAbort();
     }
 
+    public function preProcess()
+    {
+        $this->adjustGlobalQuery();
+    }
+
     /** @inheritdoc */
-    public function tplContent() {
-        global $QUERY;
-        $search = new \dokuwiki\Ui\Search($QUERY);
+    public function tplContent()
+    {
+        $search = new \dokuwiki\Ui\Search();
         $search->execute();
         $search->show();
+    }
+
+    /**
+     * Adjust the global query accordingly to the config search_limit_to_first_ns and search_default_fragment_behaviour
+     *
+     * This will only do something if the search didn't originate from the form on the searchpage itself
+     */
+    protected function adjustGlobalQuery()
+    {
+        global $conf, $INPUT, $QUERY;
+
+        if ($INPUT->bool('searchPageForm')) {
+            return;
+        }
+
+        $Indexer = idx_get_indexer();
+        $parsedQuery = ft_queryParser($Indexer, $QUERY);
+
+        if (empty($parsedQuery['ns']) && empty($parsedQuery['notns'])) {
+            if ($conf['search_limit_to_first_ns'] > 0) {
+                $searchOriginPage = $INPUT->str('from');
+                if (getNS($searchOriginPage) !== false) {
+                    $nsParts = explode(':', getNS($searchOriginPage));
+                    $ns = implode(':', array_slice($nsParts, 0, $conf['search_limit_to_first_ns']));
+                    $QUERY .= " @$ns";
+                }
+            }
+        }
+
+        if ($conf['search_default_fragment_behaviour'] !== 'exact') {
+            if (empty(array_diff($parsedQuery['words'], $parsedQuery['and']))) {
+                if (strpos($QUERY, '*') === false) {
+                    $queryParts = explode(' ', $QUERY);
+                    $queryParts = array_map(function ($part) {
+                        if (strpos($part, '@') === 0) {
+                            return $part;
+                        }
+                        if (strpos($part, 'ns:') === 0) {
+                            return $part;
+                        }
+                        if (strpos($part, '^') === 0) {
+                            return $part;
+                        }
+                        if (strpos($part, '-ns:') === 0) {
+                            return $part;
+                        }
+
+                        global $conf;
+
+                        if ($conf['search_default_fragment_behaviour'] === 'starts_with') {
+                            return $part . '*';
+                        }
+                        if ($conf['search_default_fragment_behaviour'] === 'ends_with') {
+                            return '*' . $part;
+                        }
+
+                        return '*' . $part . '*';
+
+                    }, $queryParts);
+                    $QUERY = implode(' ', $queryParts);
+                }
+            }
+        }
     }
 }

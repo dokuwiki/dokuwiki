@@ -17,11 +17,15 @@ class Search extends Ui
      *
      * @param string $query the search query
      */
-    public function __construct($query)
+    public function __construct()
     {
-        $this->query = $query;
+        global $QUERY;
+
         $Indexer = idx_get_indexer();
-        $this->parsedQuery = ft_queryParser($Indexer, $query);
+        $parsedQuery = ft_queryParser($Indexer, $QUERY);
+
+        $this->query = $QUERY;
+        $this->parsedQuery = $parsedQuery;
     }
 
     /**
@@ -68,8 +72,9 @@ class Search extends Ui
         $searchForm = (new Form())->attrs(['method' => 'get'])->addClass('search-results-form');
         $searchForm->setHiddenField('do', 'search');
         $searchForm->setHiddenField('from', $ID);
+        $searchForm->setHiddenField('searchPageForm', '1');
         $searchForm->addFieldsetOpen()->addClass('search-results-form__fieldset');
-        $searchForm->addTextInput('id')->val($query);
+        $searchForm->addTextInput('id')->val($query)->useInput(false);
         $searchForm->addButton('', $lang['btn_search'])->attr('type', 'submit');
 
         if ($this->isSearchAssistanceAvailable($this->parsedQuery)) {
