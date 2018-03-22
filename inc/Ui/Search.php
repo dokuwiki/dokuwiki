@@ -63,10 +63,11 @@ class Search extends Ui
      */
     protected function getSearchFormHTML($query)
     {
-        global $lang;
+        global $lang, $ID;
 
         $searchForm = (new Form())->attrs(['method' => 'get'])->addClass('search-results-form');
         $searchForm->setHiddenField('do', 'search');
+        $searchForm->setHiddenField('from', $ID);
         $searchForm->addFieldsetOpen()->addClass('search-results-form__fieldset');
         $searchForm->addTextInput('id')->val($query);
         $searchForm->addButton('', $lang['btn_search'])->attr('type', 'submit');

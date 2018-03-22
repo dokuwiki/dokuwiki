@@ -656,6 +656,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     global $lang;
     global $ACT;
     global $QUERY;
+    global $ID;
 
     // don't print the search form if search action has been disabled
     if(!actionOK('search')) return false;
@@ -668,6 +669,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
         'id' => 'dw__search',
     ]);
     $searchForm->setHiddenField('do', 'search');
+    $searchForm->setHiddenField('from', $ID);
     $searchForm->addTextInput('id')
         ->addClass('edit')
         ->attrs([
