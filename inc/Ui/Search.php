@@ -131,33 +131,6 @@ class Search extends Ui
      */
     protected function addSearchAssistanceElements(Form $searchForm, array $parsedQuery)
     {
-        $matchType = '';
-        $searchTerm = null;
-        if (count($parsedQuery['words']) === 1) {
-            $searchTerm = $parsedQuery['words'][0];
-            $firstChar = $searchTerm[0];
-            $lastChar = substr($searchTerm, -1);
-            $matchType = 'exact';
-
-            if ($firstChar === '*') {
-                $matchType = 'starts';
-            }
-            if ($lastChar === '*') {
-                $matchType = 'ends';
-            }
-            if ($firstChar === '*' && $lastChar === '*') {
-                $matchType = 'contains';
-            }
-            $searchTerm = trim($searchTerm, '*');
-        }
-
-        $searchForm->addTextInput(
-            'searchTerm',
-            '',
-            $searchForm->findPositionByAttribute('type', 'submit')
-        )
-            ->val($searchTerm)
-            ->attr('style', 'display: none;');
         $searchForm->addButton('toggleAssistant', 'toggle search assistant')
             ->attr('type', 'button')
             ->id('search-results-form__show-assistance-button')
@@ -167,20 +140,68 @@ class Search extends Ui
             ->addClass('js-advancedSearchOptions')
             ->attr('style', 'display: none;');
 
-        $searchForm->addTagOpen('div')->addClass('search-results-form__subwrapper');
-        $searchForm->addRadioButton('matchType', 'exact Match FM')->val('exact')->attr('checked',
-            $matchType === 'exact' ?: null);
-        $searchForm->addRadioButton('matchType', 'starts with FM')->val('starts')->attr('checked',
-            $matchType === 'starts' ?: null);
-        $searchForm->addRadioButton('matchType', 'ends with FM')->val('ends')->attr('checked',
-            $matchType === 'ends' ?: null);
-        $searchForm->addRadioButton('matchType', 'contains FM')->val('contains')->attr('checked',
-            $matchType === 'contains' ?: null);
-        $searchForm->addTagClose('div');
-
+        $this->addFragmentBehaviorLinks($searchForm, $parsedQuery);
         $this->addNamespaceSelector($searchForm, $parsedQuery);
 
         $searchForm->addTagClose('div');
+    }
+
+    protected function addFragmentBehaviorLinks(Form $searchForm, array $parsedQuery)
+    {
+        $searchForm->addTagOpen('div')->addClass('search-results-form__subwrapper');
+
+        $this->addSearchLink(
+            $searchForm,
+            'exact Match',
+            array_map(function($term){return trim($term, '*');},$this->parsedQuery['and']),
+            $this->parsedQuery['ns']
+        );
+
+        $searchForm->addHTML(' ');
+
+        $this->addSearchLink(
+            $searchForm,
+            'starts with',
+            array_map(function($term){return trim($term, '*') . '*';},$this->parsedQuery['and']),
+            $this->parsedQuery['ns']
+        );
+
+        $searchForm->addHTML(' ');
+
+        $this->addSearchLink(
+            $searchForm,
+            'ends with',
+            array_map(function($term){return '*' . trim($term, '*');},$this->parsedQuery['and']),
+            $this->parsedQuery['ns']
+        );
+
+        $searchForm->addHTML(' ');
+
+        $this->addSearchLink(
+            $searchForm,
+            'contains',
+            array_map(function($term){return '*' . trim($term, '*') . '*';},$this->parsedQuery['and']),
+            $this->parsedQuery['ns']
+        );
+
+        $searchForm->addTagClose('div');
+    }
+
+    protected function addSearchLink(Form $searchForm, $label, $and, $ns) {
+        $newQuery = ft_queryUnparser_simple(
+            $and,
+            [],
+            [],
+            $ns,
+            []
+        );
+        $searchForm->addTagOpen('a')
+            ->attrs([
+                'href' => wl($newQuery, ['do' => 'search', 'searchPageForm' => '1'], false, '&')
+            ])
+        ;
+        $searchForm->addHTML($label);
+        $searchForm->addTagClose('a');
     }
 
     /**
@@ -192,26 +213,33 @@ class Search extends Ui
     protected function addNamespaceSelector(Form $searchForm, array $parsedQuery)
     {
         $baseNS = empty($parsedQuery['ns']) ? '' : $parsedQuery['ns'][0];
-        $namespaces = [];
         $searchForm->addTagOpen('div')->addClass('search-results-form__subwrapper');
+
         if ($baseNS) {
-            $searchForm->addRadioButton('namespace', '(no namespace FIXME)')->val('');
-            $parts = [$baseNS => count($this->fullTextResults)];
-            $upperNameSpace = $baseNS;
-            while ($upperNameSpace = getNS($upperNameSpace)) {
-                $parts[$upperNameSpace] = 0;
-            }
-            $namespaces = array_reverse($parts);
-        };
+            $searchForm->addTagOpen('div');
 
-        $namespaces = array_merge($namespaces, $this->getAdditionalNamespacesFromResults($baseNS));
+            $this->addSearchLink(
+                $searchForm,
+                'remove current namespace restriction',
+                $this->parsedQuery['and'],
+                []
+            );
 
-        foreach ($namespaces as $extraNS => $count) {
-            $label = $extraNS . ($count ? " ($count)" : '');
-            $namespaceCB = $searchForm->addRadioButton('namespace', $label)->val($extraNS);
-            if ($extraNS === $baseNS) {
-                $namespaceCB->attr('checked', true);
+            $searchForm->addTagClose('div');
+        }
+
+        $extraNS = $this->getAdditionalNamespacesFromResults($baseNS);
+        if (!empty($extraNS)) {
+            $searchForm->addTagOpen('div');
+            $searchForm->addHTML('first level ns below current: ');
+
+            foreach ($extraNS as $extraNS => $count) {
+                $searchForm->addHTML(' ');
+                $label = $extraNS . ($count ? " ($count)" : '');
+
+                $this->addSearchLink($searchForm, $label, $this->parsedQuery['and'], [$extraNS]);
             }
+            $searchForm->addTagClose('div');
         }
 
         $searchForm->addTagClose('div');
@@ -385,7 +413,7 @@ class Search extends Ui
             [$ns],
             []
         );
-        $href = wl($newQuery, ['do' => 'search']);
+        $href = wl($newQuery, ['do' => 'search', 'searchPageForm' => '1']);
         $attributes = buildAttributes([
             'rel' => 'nofollow',
             'class' => 'search_namespace_link',
