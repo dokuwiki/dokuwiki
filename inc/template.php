@@ -660,16 +660,37 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     // don't print the search form if search action has been disabled
     if(!actionOK('search')) return false;
 
-    print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search" method="get" role="search"><div class="no">';
-    print '<input type="hidden" name="do" value="search" />';
-    print '<input type="text" ';
-    if($ACT == 'search') print 'value="'.htmlspecialchars($QUERY).'" ';
-    print 'placeholder="'.$lang['btn_search'].'" ';
-    if(!$autocomplete) print 'autocomplete="off" ';
-    print 'id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" />';
-    print '<button type="submit" title="'.$lang['btn_search'].'">'.$lang['btn_search'].'</button>';
-    if($ajax) print '<div id="qsearch__out" class="ajax_qsearch JSpopup"></div>';
-    print '</div></form>';
+    $searchForm = new dokuwiki\Form\Form([
+        'action' => wl(),
+        'method' => 'get',
+        'role' => 'search',
+        'class' => 'search',
+        'id' => 'dw__search',
+    ]);
+    $searchForm->setHiddenField('do', 'search');
+    $searchForm->addTextInput('id')
+        ->addClass('edit')
+        ->attrs([
+            'title' => '[F]',
+            'accesskey' => 'f',
+            'placeholder' => $lang['btn_search'],
+            'autocomplete' => $autocomplete ? 'on' : 'off',
+        ])
+        ->id('qsearch__in')
+        ->val($ACT === 'search' ? $QUERY : '')
+        ->useInput(false)
+    ;
+    $searchForm->addButton('', $lang['btn_search'])->attrs([
+        'type' => 'submit',
+        'title' => $lang['btn_search'],
+    ]);
+    if ($ajax) {
+        $searchForm->addTagOpen('div')->id('qsearch__out')->addClass('ajax_qsearch JSpopup');
+        $searchForm->addTagClose('div');
+    }
+
+    echo $searchForm->toHTML();
+
     return true;
 }
 
