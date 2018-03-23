@@ -35,5 +35,6 @@ $lang['UpdateLogin']           = 'Polecenie służące do aktualizacji loginu u�
 $lang['UpdatePass']            = 'Polecenie służące do aktualizacji hasła użytkownika';
 $lang['UpdateEmail']           = 'Polecenie służące do aktualizacji e-mailu użytkownika';
 $lang['UpdateName']            = 'Polecenie służące do aktualizacji imienia i nazwiska użytkownika';
+$lang['UpdateTarget']          = 'Instrukcja limitu do identyfikacji użytkownika podczas aktualizacji';
 $lang['delUserGroup']          = 'Instrukcja SQL usuwająca użytkownika ze wskazanej grupy';
 $lang['getGroupID']            = 'Instrukcja SQL pobierająca klucz główny wskazanej grupy';
