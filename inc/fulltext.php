@@ -100,7 +100,7 @@ function _ft_pageSearch(&$data) {
                 break;
             case 'N+:':
             case 'N-:': // namespace
-                $ns = substr($token, 3);
+                $ns = cleanID(substr($token, 3)) . ':';
                 $pages_matched = array();
                 foreach (array_keys($pages_all) as $id) {
                     if (strpos($id, $ns) === 0) {
