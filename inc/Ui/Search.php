@@ -357,23 +357,34 @@ class Search extends Ui
 
             $resultHeader = [$resultLink];
 
-            $snippet = '';
-            if ($cnt !== 0) {
-                $resultHeader[] = $cnt . ' ' . $lang['hits'];
-                if ($num < FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
-                    $snippet = '<dd>' . ft_snippet($id, $highlight) . '</dd>';
-                }
-                $num++;
-            }
 
             $restrictQueryToNSLink = $this->restrictQueryToNSLink(getNS($id));
             if ($restrictQueryToNSLink) {
                 $resultHeader[] = $restrictQueryToNSLink;
             }
 
+            $snippet = '';
+            $lastMod = '';
+            $mtime = filemtime(wikiFN($id));
+            if ($cnt !== 0) {
+                $resultHeader[] = $cnt . ' ' . $lang['hits'];
+                if ($num < FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
+                    $snippet = '<dd>' . ft_snippet($id, $highlight) . '</dd>';
+                    $lastMod = '<span class="search_results__lastmod">'. $lang['lastmod'] . ' ';
+                    $lastMod .= '<time datetime="' . date_iso8601($mtime) . '">'. dformat($mtime) . '</time>';
+                    $lastMod .= '</span>';
+                }
+                $num++;
+            }
+
+            $metaLine = '<div class="search_results__metaLine">';
+            $metaLine .= $lastMod;
+            $metaLine .= '</div>';
+
+
             $eventData = [
                 'resultHeader' => $resultHeader,
-                'resultBody' => [$snippet],
+                'resultBody' => [$metaLine, $snippet],
                 'page' => $id,
             ];
             trigger_event('SEARCH_RESULT_FULLPAGE', $eventData);
