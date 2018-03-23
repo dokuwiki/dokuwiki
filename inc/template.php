@@ -668,6 +668,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
         'class' => 'search',
         'id' => 'dw__search',
     ]);
+    $searchForm->addTagOpen('div')->addClass('no');
     $searchForm->setHiddenField('do', 'search');
     $searchForm->setHiddenField('from', $ID);
     $searchForm->addTextInput('id')
@@ -690,6 +691,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
         $searchForm->addTagOpen('div')->id('qsearch__out')->addClass('ajax_qsearch JSpopup');
         $searchForm->addTagClose('div');
     }
+    $searchForm->addTagClose('div');
 
     echo $searchForm->toHTML();
 
