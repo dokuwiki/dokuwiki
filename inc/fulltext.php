@@ -233,9 +233,11 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false){
 function _ft_pageLookup(&$data){
     // split out original parameters
     $id = $data['id'];
-    if (preg_match('/(?:^| )(?:@|ns:)([\w:]+)/', $id, $matches)) {
-        $ns = cleanID($matches[1]) . ':';
-        $id = str_replace($matches[0], '', $id);
+    $Indexer = idx_get_indexer();
+    $parsedQuery = ft_queryParser($Indexer, $id);
+    if (count($parsedQuery['ns']) > 0) {
+        $ns = cleanID($parsedQuery['ns'][0]) . ':';
+        $id = implode(' ', $parsedQuery['highlight']);
     }
 
     $in_ns    = $data['in_ns'];
