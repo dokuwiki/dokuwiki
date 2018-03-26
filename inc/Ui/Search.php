@@ -8,14 +8,13 @@ class Search extends Ui
 {
     protected $query;
     protected $parsedQuery;
+    protected $searchState;
     protected $pageLookupResults = array();
     protected $fullTextResults = array();
     protected $highlight = array();
 
     /**
      * Search constructor.
-     *
-     * @param string $query the search query
      */
     public function __construct()
     {
@@ -24,6 +23,7 @@ class Search extends Ui
 
         $this->query = $QUERY;
         $this->parsedQuery = ft_queryParser($Indexer, $QUERY);
+        $this->searchState = new SearchState($this->parsedQuery);
     }
 
     /**
@@ -82,7 +82,7 @@ class Search extends Ui
         $searchForm->addButton('', $lang['btn_search'])->attr('type', 'submit');
 
         if ($this->isSearchAssistanceAvailable($this->parsedQuery)) {
-            $this->addSearchAssistanceElements($searchForm, $this->parsedQuery);
+            $this->addSearchAssistanceElements($searchForm);
         } else {
             $searchForm->addClass('search-results-form--no-assistance');
             $searchForm->addTagOpen('span')->addClass('search-results-form__no-assistance-message');
@@ -131,9 +131,8 @@ class Search extends Ui
      * Add the elements to be used for search assistance
      *
      * @param Form  $searchForm
-     * @param array $parsedQuery
      */
-    protected function addSearchAssistanceElements(Form $searchForm, array $parsedQuery)
+    protected function addSearchAssistanceElements(Form $searchForm)
     {
         $searchForm->addButton('toggleAssistant', 'toggle search assistant')
             ->attr('type', 'button')
@@ -144,19 +143,19 @@ class Search extends Ui
             ->addClass('js-advancedSearchOptions')
             ->attr('style', 'display: none;');
 
-        $this->addFragmentBehaviorLinks($searchForm, $parsedQuery);
-        $this->addNamespaceSelector($searchForm, $parsedQuery);
-        $this->addDateSelector($searchForm, $parsedQuery);
+        $this->addFragmentBehaviorLinks($searchForm);
+        $this->addNamespaceSelector($searchForm);
+        $this->addDateSelector($searchForm);
 
         $searchForm->addTagClose('div');
     }
 
-    protected function addFragmentBehaviorLinks(Form $searchForm, array $parsedQuery)
+    protected function addFragmentBehaviorLinks(Form $searchForm)
     {
         $searchForm->addTagOpen('div')->addClass('search-results-form__subwrapper');
         $searchForm->addHTML('fragment behavior: ');
 
-        $this->addSearchLink(
+        $this->searchState->addSearchLinkFragment(
             $searchForm,
             'exact match',
             array_map(function($term){return trim($term, '*');},$this->parsedQuery['and'])
@@ -164,7 +163,7 @@ class Search extends Ui
 
         $searchForm->addHTML(', ');
 
-        $this->addSearchLink(
+        $this->searchState->addSearchLinkFragment(
             $searchForm,
             'starts with',
             array_map(function($term){return trim($term, '*') . '*';},$this->parsedQuery['and'])
@@ -172,7 +171,7 @@ class Search extends Ui
 
         $searchForm->addHTML(', ');
 
-        $this->addSearchLink(
+        $this->searchState->addSearchLinkFragment(
             $searchForm,
             'ends with',
             array_map(function($term){return '*' . trim($term, '*');},$this->parsedQuery['and'])
@@ -180,7 +179,7 @@ class Search extends Ui
 
         $searchForm->addHTML(', ');
 
-        $this->addSearchLink(
+        $this->searchState->addSearchLinkFragment(
             $searchForm,
             'contains',
             array_map(function($term){return '*' . trim($term, '*') . '*';},$this->parsedQuery['and'])
@@ -189,72 +188,14 @@ class Search extends Ui
         $searchForm->addTagClose('div');
     }
 
-    protected function addSearchLink(
-        Form $searchForm,
-        $label,
-        array $and = null,
-        array $ns = null,
-        array $not = null,
-        array $notns = null,
-        array $phrases = null,
-        $after = null,
-        $before = null
-    ) {
-        global $INPUT, $ID;
-        if (null === $and) {
-            $and = $this->parsedQuery['and'];
-        }
-        if (null === $ns) {
-            $ns = $this->parsedQuery['ns'];
-        }
-        if (null === $not) {
-            $not = $this->parsedQuery['not'];
-        }
-        if (null === $phrases) {
-            $phrases = $this->parsedQuery['phrases'];
-        }
-        if (null === $notns) {
-            $notns = $this->parsedQuery['notns'];
-        }
-        if (null === $after) {
-            $after = $INPUT->str('after');
-        }
-        if (null === $before) {
-            $before = $INPUT->str('before');
-        }
-
-        $newQuery = ft_queryUnparser_simple(
-            $and,
-            $not,
-            $phrases,
-            $ns,
-            $notns
-        );
-        $hrefAttributes = ['do' => 'search', 'searchPageForm' => '1', 'q' => $newQuery];
-        if ($after) {
-            $hrefAttributes['after'] = $after;
-        }
-        if ($before) {
-            $hrefAttributes['before'] = $before;
-        }
-        $searchForm->addTagOpen('a')
-            ->attrs([
-                'href' => wl($ID, $hrefAttributes, false, '&')
-            ])
-        ;
-        $searchForm->addHTML($label);
-        $searchForm->addTagClose('a');
-    }
-
     /**
      * Add the elements for the namespace selector
      *
      * @param Form  $searchForm
-     * @param array $parsedQuery
      */
-    protected function addNamespaceSelector(Form $searchForm, array $parsedQuery)
+    protected function addNamespaceSelector(Form $searchForm)
     {
-        $baseNS = empty($parsedQuery['ns']) ? '' : $parsedQuery['ns'][0];
+        $baseNS = empty($this->parsedQuery['ns']) ? '' : $this->parsedQuery['ns'][0];
         $searchForm->addTagOpen('div')->addClass('search-results-form__subwrapper');
 
         $extraNS = $this->getAdditionalNamespacesFromResults($baseNS);
@@ -263,21 +204,18 @@ class Search extends Ui
             $searchForm->addHTML('limit to namespace: ');
 
             if ($baseNS) {
-                $this->addSearchLink(
+                $this->searchState->addSeachLinkNS(
                     $searchForm,
                     '(remove limit)',
-                    null,
-                    [],
-                    null,
-                    []
+                    ''
                 );
             }
 
-            foreach ($extraNS as $extraNS => $count) {
+            foreach ($extraNS as $ns => $count) {
                 $searchForm->addHTML(' ');
-                $label = $extraNS . ($count ? " ($count)" : '');
+                $label = $ns . ($count ? " ($count)" : '');
 
-                $this->addSearchLink($searchForm, $label, null, [$extraNS], null, []);
+                $this->searchState->addSeachLinkNS($searchForm, $label, $ns);
             }
             $searchForm->addTagClose('div');
         }
@@ -316,26 +254,19 @@ class Search extends Ui
     }
 
     /**
-     * @ToDo: we need to remember this date when clicking on other links
      * @ToDo: custom date input
      *
      * @param Form $searchForm
-     * @param      $parsedQuery
      */
-    protected function addDateSelector(Form $searchForm, $parsedQuery) {
+    protected function addDateSelector(Form $searchForm) {
         $searchForm->addTagOpen('div')->addClass('search-results-form__subwrapper');
         $searchForm->addHTML('limit by date: ');
 
         global $INPUT;
         if ($INPUT->has('before') || $INPUT->has('after')) {
-            $this->addSearchLink(
+            $this->searchState->addSearchLinkTime(
                 $searchForm,
                 '(remove limit)',
-                null,
-                null,
-                null,
-                null,
-                null,
                 false,
                 false
             );
@@ -346,14 +277,9 @@ class Search extends Ui
         if ($INPUT->str('after') === '1 week ago') {
             $searchForm->addHTML('<span class="active">past 7 days</span>');
         } else {
-            $this->addSearchLink(
+            $this->searchState->addSearchLinkTime(
                 $searchForm,
                 'past 7 days',
-                null,
-                null,
-                null,
-                null,
-                null,
                 '1 week ago',
                 false
             );
@@ -364,14 +290,9 @@ class Search extends Ui
         if ($INPUT->str('after') === '1 month ago') {
             $searchForm->addHTML('<span class="active">past month</span>');
         } else {
-            $this->addSearchLink(
+            $this->searchState->addSearchLinkTime(
                 $searchForm,
                 'past month',
-                null,
-                null,
-                null,
-                null,
-                null,
                 '1 month ago',
                 false
             );
@@ -382,14 +303,9 @@ class Search extends Ui
         if ($INPUT->str('after') === '1 year ago') {
             $searchForm->addHTML('<span class="active">past year</span>');
         } else {
-            $this->addSearchLink(
+            $this->searchState->addSearchLinkTime(
                 $searchForm,
                 'past year',
-                null,
-                null,
-                null,
-                null,
-                null,
                 '1 year ago',
                 false
             );
@@ -542,7 +458,7 @@ class Search extends Ui
         }
         $name = '@' . $ns;
         $tmpForm = new Form();
-        $this->addSearchLink($tmpForm, $name, null, [$ns], null, []);
+        $this->searchState->addSeachLinkNS($tmpForm, $name, $ns);
         return $tmpForm->toHTML();
     }
 }
