@@ -25,13 +25,22 @@ class Search extends AbstractAction {
      */
     public function checkPermissions() {
         parent::checkPermissions();
-        global $QUERY;
-        $s = cleanID($QUERY);
-        if($s === '') throw new ActionAbort();
     }
 
     public function preProcess()
     {
+        global $QUERY, $ID, $conf, $INPUT;
+        $s = cleanID($QUERY);
+
+        if ($ID !== $conf['start'] && $s === '') {
+            parse_str($INPUT->server->str('QUERY_STRING'), $urlParts);
+            $urlParts['q'] = $urlParts['id'];
+            $urlParts['id'] = $conf['start'];
+            $url = DOKU_URL . DOKU_SCRIPT . '?' . http_build_query($urlParts, null, '&');
+            send_redirect($url);
+        }
+
+        if ($s === '') throw new ActionAbort();
         $this->adjustGlobalQuery();
     }
 

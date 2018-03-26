@@ -91,7 +91,7 @@ class Search extends Ui
 
         $searchForm = (new Form())->attrs(['method' => 'get'])->addClass('search-results-form');
         $searchForm->setHiddenField('do', 'search');
-        $searchForm->setHiddenField('from', $ID);
+        $searchForm->setHiddenField('id', $ID);
         $searchForm->setHiddenField('searchPageForm', '1');
         if ($INPUT->has('after')) {
             $searchForm->setHiddenField('after', $INPUT->str('after'));
@@ -100,7 +100,7 @@ class Search extends Ui
             $searchForm->setHiddenField('before', $INPUT->str('before'));
         }
         $searchForm->addFieldsetOpen()->addClass('search-results-form__fieldset');
-        $searchForm->addTextInput('id')->val($query)->useInput(false);
+        $searchForm->addTextInput('q')->val($query)->useInput(false);
         $searchForm->addButton('', $lang['btn_search'])->attr('type', 'submit');
 
         if ($this->isSearchAssistanceAvailable($this->parsedQuery)) {
@@ -222,7 +222,7 @@ class Search extends Ui
         $after = null,
         $before = null
     ) {
-        global $INPUT;
+        global $INPUT, $ID;
         if (null === $and) {
             $and = $this->parsedQuery['and'];
         }
@@ -252,7 +252,7 @@ class Search extends Ui
             $ns,
             $notns
         );
-        $hrefAttributes = ['do' => 'search', 'searchPageForm' => '1'];
+        $hrefAttributes = ['do' => 'search', 'searchPageForm' => '1', 'q' => $newQuery];
         if ($after) {
             $hrefAttributes['after'] = $after;
         }
@@ -261,7 +261,7 @@ class Search extends Ui
         }
         $searchForm->addTagOpen('a')
             ->attrs([
-                'href' => wl($newQuery, $hrefAttributes, false, '&')
+                'href' => wl($ID, $hrefAttributes, false, '&')
             ])
         ;
         $searchForm->addHTML($label);

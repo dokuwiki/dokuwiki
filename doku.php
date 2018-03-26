@@ -35,7 +35,7 @@ require_once(DOKU_INC.'inc/init.php');
 
 //import variables
 $INPUT->set('id', str_replace("\xC2\xAD", '', $INPUT->str('id'))); //soft-hyphen
-$QUERY          = trim($INPUT->str('id'));
+$QUERY          = trim($INPUT->str('q'));
 $ID             = getID();
 
 $REV   = $INPUT->int('rev');

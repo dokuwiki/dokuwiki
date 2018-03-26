@@ -670,8 +670,8 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     ]);
     $searchForm->addTagOpen('div')->addClass('no');
     $searchForm->setHiddenField('do', 'search');
-    $searchForm->setHiddenField('from', $ID);
-    $searchForm->addTextInput('id')
+    $searchForm->setHiddenField('id', $ID);
+    $searchForm->addTextInput('q')
         ->addClass('edit')
         ->attrs([
             'title' => '[F]',
