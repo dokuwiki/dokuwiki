@@ -16,8 +16,8 @@ class Search extends Ui
     /**
      * Search constructor.
      *
-     * @param array $pageLookupResults
-     * @param array $fullTextResults
+     * @param array  $pageLookupResults
+     * @param array  $fullTextResults
      * @param string $highlight
      */
     public function __construct(array $pageLookupResults, array $fullTextResults, $highlight)
@@ -90,17 +90,65 @@ class Search extends Ui
             $searchForm->addHTML('FIXME Your query is too complex. Search assistance is unavailable. See <a href="https://doku.wiki/search">doku.wiki/search</a> for more help.');
             $searchForm->addTagClose('span');
         }
-        if ($INPUT->str('sort') === 'mtime') {
-            $this->searchState->addSearchLinkSort($searchForm, 'sort by hits', '');
-        } else {
-            $this->searchState->addSearchLinkSort($searchForm, 'sort by mtime', 'mtime');
-        }
 
         $searchForm->addFieldsetClose();
 
         trigger_event('SEARCH_FORM_DISPLAY', $searchForm);
 
         return $searchForm->toHTML();
+    }
+
+    protected function addSortTool(Form $searchForm)
+    {
+        global $INPUT, $lang;
+
+        $options = [
+            'hits' => [
+                'label' => $lang['search_sort_by_hits'],
+                'sort' => '',
+            ],
+            'mtime' => [
+                'label' => $lang['search_sort_by_mtime'],
+                'sort' => 'mtime',
+            ],
+        ];
+        $activeOption = 'hits';
+
+        if ($INPUT->str('sort') === 'mtime') {
+            $activeOption = 'mtime';
+        }
+
+        $searchForm->addTagOpen('div')->addClass('search-tool js-search-tool');
+        // render current
+        $currentWrapper = $searchForm->addTagOpen('div')->addClass('search-tool__current js-current');
+        if ($activeOption !== 'hits') {
+            $currentWrapper->addClass('search-tool__current--changed');
+        }
+        $searchForm->addHTML($options[$activeOption]['label']);
+        $searchForm->addTagClose('div');
+
+        // render options list
+        $searchForm->addTagOpen('ul')->addClass('search-tool__options-list js-optionsList');
+
+        foreach ($options as $key => $option) {
+            $listItem = $searchForm->addTagOpen('li')->addClass('search-tool__options-list-item');
+
+            if ($key === $activeOption) {
+                $listItem->addClass('search-tool__options-list-item--active');
+                $searchForm->addHTML($option['label']);
+            } else {
+                $this->searchState->addSearchLinkSort(
+                    $searchForm,
+                    $option['label'],
+                    $option['sort']
+                );
+            }
+            $searchForm->addTagClose('li');
+        }
+        $searchForm->addTagClose('ul');
+
+        $searchForm->addTagClose('div');
+
     }
 
     /**
@@ -136,7 +184,7 @@ class Search extends Ui
     /**
      * Add the elements to be used for search assistance
      *
-     * @param Form  $searchForm
+     * @param Form $searchForm
      */
     protected function addSearchAssistanceElements(Form $searchForm)
     {
@@ -152,81 +200,143 @@ class Search extends Ui
         $this->addFragmentBehaviorLinks($searchForm);
         $this->addNamespaceSelector($searchForm);
         $this->addDateSelector($searchForm);
+        $this->addSortTool($searchForm);
 
         $searchForm->addTagClose('div');
     }
 
     protected function addFragmentBehaviorLinks(Form $searchForm)
     {
-        $searchForm->addTagOpen('div')->addClass('search-results-form__subwrapper');
-        $searchForm->addHTML('fragment behavior: ');
+        global $lang;
 
-        $this->searchState->addSearchLinkFragment(
-            $searchForm,
-            'exact match',
-            array_map(function($term){return trim($term, '*');},$this->parsedQuery['and'])
-        );
+        $options = [
+            'exact' => [
+                'label' => $lang['search_exact_match'],
+                'and' => array_map(function ($term) {
+                    return trim($term, '*');
+                }, $this->parsedQuery['and']),
+            ],
+            'starts' => [
+                'label' => $lang['search_starts_with'],
+                'and' => array_map(function ($term) {
+                    return trim($term, '*') . '*';
+                }, $this->parsedQuery['and'])
+            ],
+            'ends' => [
+                'label' => $lang['search_ends_with'],
+                'and' => array_map(function ($term) {
+                    return '*' . trim($term, '*');
+                }, $this->parsedQuery['and'])
+            ],
+            'contains' => [
+                'label' => $lang['search_contains'],
+                'and' => array_map(function ($term) {
+                    return '*' . trim($term, '*') . '*';
+                }, $this->parsedQuery['and'])
+            ]
+        ];
 
-        $searchForm->addHTML(', ');
+        // detect current
+        $activeOption = 'exact';
+        foreach ($options as $key => $option) {
+            if ($this->parsedQuery['and'] === $option['and']) {
+                $activeOption = $key;
+            }
+        }
 
-        $this->searchState->addSearchLinkFragment(
-            $searchForm,
-            'starts with',
-            array_map(function($term){return trim($term, '*') . '*';},$this->parsedQuery['and'])
-        );
+        $searchForm->addTagOpen('div')->addClass('search-tool js-search-tool');
+        // render current
+        $currentWrapper = $searchForm->addTagOpen('div')->addClass('search-tool__current js-current');
+        if ($activeOption !== 'exact') {
+            $currentWrapper->addClass('search-tool__current--changed');
+        }
+        $searchForm->addHTML($options[$activeOption]['label']);
+        $searchForm->addTagClose('div');
 
-        $searchForm->addHTML(', ');
+        // render options list
+        $searchForm->addTagOpen('ul')->addClass('search-tool__options-list js-optionsList');
 
-        $this->searchState->addSearchLinkFragment(
-            $searchForm,
-            'ends with',
-            array_map(function($term){return '*' . trim($term, '*');},$this->parsedQuery['and'])
-        );
+        foreach ($options as $key => $option) {
+            $listItem = $searchForm->addTagOpen('li')->addClass('search-tool__options-list-item');
 
-        $searchForm->addHTML(', ');
-
-        $this->searchState->addSearchLinkFragment(
-            $searchForm,
-            'contains',
-            array_map(function($term){return '*' . trim($term, '*') . '*';},$this->parsedQuery['and'])
-        );
+            if ($key === $activeOption) {
+                $listItem->addClass('search-tool__options-list-item--active');
+                $searchForm->addHTML($option['label']);
+            } else {
+                $this->searchState->addSearchLinkFragment(
+                    $searchForm,
+                    $option['label'],
+                    $option['and']
+                );
+            }
+            $searchForm->addTagClose('li');
+        }
+        $searchForm->addTagClose('ul');
 
         $searchForm->addTagClose('div');
+
+        // render options list
     }
 
     /**
      * Add the elements for the namespace selector
      *
-     * @param Form  $searchForm
+     * @param Form $searchForm
      */
     protected function addNamespaceSelector(Form $searchForm)
     {
+        global $lang;
+
         $baseNS = empty($this->parsedQuery['ns']) ? '' : $this->parsedQuery['ns'][0];
-        $searchForm->addTagOpen('div')->addClass('search-results-form__subwrapper');
-
         $extraNS = $this->getAdditionalNamespacesFromResults($baseNS);
-        if (!empty($extraNS) || $baseNS) {
-            $searchForm->addTagOpen('div');
-            $searchForm->addHTML('limit to namespace: ');
 
-            if ($baseNS) {
+        $searchForm->addTagOpen('div')->addClass('search-tool js-search-tool');
+        // render current
+        $currentWrapper = $searchForm->addTagOpen('div')->addClass('search-tool__current js-current');
+        if ($baseNS) {
+            $currentWrapper->addClass('search-tool__current--changed');
+            $searchForm->addHTML('@' . $baseNS);
+        } else {
+            $searchForm->addHTML($lang['search_any_ns']);
+        }
+        $searchForm->addTagClose('div');
+
+        // render options list
+        $searchForm->addTagOpen('ul')->addClass('search-tool__options-list js-optionsList');
+
+        $listItem = $searchForm->addTagOpen('li')->addClass('search-tool__options-list-item');
+        if ($baseNS) {
+            $listItem->addClass('search-tool__options-list-item--active');
+            $this->searchState->addSeachLinkNS(
+                $searchForm,
+                $lang['search_any_ns'],
+                ''
+            );
+        } else {
+            $searchForm->addHTML($lang['search_any_ns']);
+        }
+        $searchForm->addTagClose('li');
+
+        foreach ($extraNS as $ns => $count) {
+            $listItem = $searchForm->addTagOpen('li')->addClass('search-tool__options-list-item');
+            $label = $ns . ($count ? " ($count)" : '');
+
+            if ($ns === $baseNS) {
+                $listItem->addClass('search-tool__options-list-item--active');
+                $searchForm->addHTML($label);
+            } else {
                 $this->searchState->addSeachLinkNS(
                     $searchForm,
-                    '(remove limit)',
-                    ''
+                    $label,
+                    $ns
                 );
             }
-
-            foreach ($extraNS as $ns => $count) {
-                $searchForm->addHTML(' ');
-                $label = $ns . ($count ? " ($count)" : '');
-
-                $this->searchState->addSeachLinkNS($searchForm, $label, $ns);
-            }
-            $searchForm->addTagClose('div');
+            $searchForm->addTagClose('li');
         }
+        $searchForm->addTagClose('ul');
 
         $searchForm->addTagClose('div');
+
     }
 
     /**
@@ -264,58 +374,69 @@ class Search extends Ui
      *
      * @param Form $searchForm
      */
-    protected function addDateSelector(Form $searchForm) {
-        $searchForm->addTagOpen('div')->addClass('search-results-form__subwrapper');
-        $searchForm->addHTML('limit by date: ');
+    protected function addDateSelector(Form $searchForm)
+    {
+        global $INPUT, $lang;
 
-        global $INPUT;
+        $options = [
+            'any' => [
+                'before' => false,
+                'after' => false,
+                'label' => $lang['search_any_time'],
+            ],
+            'week' => [
+                'before' => false,
+                'after' => '1 week ago',
+                'label' => $lang['search_past_7_days'],
+            ],
+            'month' => [
+                'before' => false,
+                'after' => '1 month ago',
+                'label' => $lang['search_past_month'],
+            ],
+            'year' => [
+                'before' => false,
+                'after' => '1 year ago',
+                'label' => $lang['search_past_year'],
+            ],
+        ];
+        $activeOption = 'any';
+        foreach ($options as $key => $option) {
+            if ($INPUT->str('after') === $option['after']) {
+                $activeOption = $key;
+                break;
+            }
+        }
+
+        $searchForm->addTagOpen('div')->addClass('search-tool js-search-tool');
+        // render current
+        $currentWrapper = $searchForm->addTagOpen('div')->addClass('search-tool__current js-current');
         if ($INPUT->has('before') || $INPUT->has('after')) {
-            $this->searchState->addSearchLinkTime(
-                $searchForm,
-                '(remove limit)',
-                false,
-                false
-            );
-
-            $searchForm->addHTML(', ');
+            $currentWrapper->addClass('search-tool__current--changed');
         }
+        $searchForm->addHTML($options[$activeOption]['label']);
+        $searchForm->addTagClose('div');
 
-        if ($INPUT->str('after') === '1 week ago') {
-            $searchForm->addHTML('<span class="active">past 7 days</span>');
-        } else {
-            $this->searchState->addSearchLinkTime(
-                $searchForm,
-                'past 7 days',
-                '1 week ago',
-                false
-            );
+        // render options list
+        $searchForm->addTagOpen('ul')->addClass('search-tool__options-list js-optionsList');
+
+        foreach ($options as $key => $option) {
+            $listItem = $searchForm->addTagOpen('li')->addClass('search-tool__options-list-item');
+
+            if ($key === $activeOption) {
+                $listItem->addClass('search-tool__options-list-item--active');
+                $searchForm->addHTML($option['label']);
+            } else {
+                $this->searchState->addSearchLinkTime(
+                    $searchForm,
+                    $option['label'],
+                    $option['after'],
+                    $option['before']
+                );
+            }
+            $searchForm->addTagClose('li');
         }
-
-        $searchForm->addHTML(', ');
-
-        if ($INPUT->str('after') === '1 month ago') {
-            $searchForm->addHTML('<span class="active">past month</span>');
-        } else {
-            $this->searchState->addSearchLinkTime(
-                $searchForm,
-                'past month',
-                '1 month ago',
-                false
-            );
-        }
-
-        $searchForm->addHTML(', ');
-
-        if ($INPUT->str('after') === '1 year ago') {
-            $searchForm->addHTML('<span class="active">past year</span>');
-        } else {
-            $this->searchState->addSearchLinkTime(
-                $searchForm,
-                'past year',
-                '1 year ago',
-                false
-            );
-        }
+        $searchForm->addTagClose('ul');
 
         $searchForm->addTagClose('div');
     }
@@ -416,8 +537,8 @@ class Search extends Ui
                 $resultHeader[] = $cnt . ' ' . $lang['hits'];
                 if ($num < FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
                     $snippet = '<dd>' . ft_snippet($id, $highlight) . '</dd>';
-                    $lastMod = '<span class="search_results__lastmod">'. $lang['lastmod'] . ' ';
-                    $lastMod .= '<time datetime="' . date_iso8601($mtime) . '">'. dformat($mtime) . '</time>';
+                    $lastMod = '<span class="search_results__lastmod">' . $lang['lastmod'] . ' ';
+                    $lastMod .= '<time datetime="' . date_iso8601($mtime) . '">' . dformat($mtime) . '</time>';
                     $lastMod .= '</span>';
                 }
                 $num++;

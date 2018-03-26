@@ -13,7 +13,7 @@
 }
 
 .search-results-form .search-results-form__fieldset {
-    width: 80vw;
+    width: 80%;
 }
 
 .search-results-form__show-assistance-button {
@@ -25,6 +25,24 @@
     float: right;
     font-size: 80%;
     margin-top: -0.3em;
+}
+
+.search-tool__current {
+    cursor: pointer;
+}
+
+.search-tool__current--changed {
+    font-weight: bold;
+}
+
+.search-tool__options-list {
+    display: none;
+
+    border: 1px solid @ini_border;
+}
+
+.search-tool__options-list-item {
+    list-style: none;
 }
 
 
