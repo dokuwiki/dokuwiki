@@ -31,11 +31,21 @@ class Search extends Ui
      */
     public function execute()
     {
-        $this->pageLookupResults = ft_pageLookup($this->query, true, useHeading('navigation'));
-        $this->fullTextResults = ft_pageSearch($this->query, $highlight);
+        $this->pageLookupResults = $this->filterResultsByTime(
+            ft_pageLookup($this->query, true, useHeading('navigation'))
+        );
+        $this->fullTextResults = $this->filterResultsByTime(
+            ft_pageSearch($this->query, $highlight)
+        );
         $this->highlight = $highlight;
+    }
 
-        // fixme: find better place for this
+    /**
+     * @param array $results search results in the form pageid => value
+     *
+     * @return array
+     */
+    protected function filterResultsByTime(array $results) {
         global $INPUT;
         if ($INPUT->has('after') || $INPUT->has('before')) {
             $after = $INPUT->str('after');
@@ -45,17 +55,19 @@ class Search extends Ui
             $before = is_int($before) ? $before : strtotime($before);
 
             // todo: should we filter $this->pageLookupResults as well?
-            foreach ($this->fullTextResults as $id => $cnt) {
+            foreach ($results as $id => $value) {
                 $mTime = filemtime(wikiFN($id));
                 if ($after && $after > $mTime) {
-                    unset($this->fullTextResults[$id]);
+                    unset($results[$id]);
                     continue;
                 }
                 if ($before && $before < $mTime) {
-                    unset($this->fullTextResults[$id]);
+                    unset($results[$id]);
                 }
             }
         }
+
+        return $results;
     }
 
     /**
