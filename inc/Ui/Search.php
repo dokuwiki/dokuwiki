@@ -15,8 +15,12 @@ class Search extends Ui
 
     /**
      * Search constructor.
+     *
+     * @param array $pageLookupResults
+     * @param array $fullTextResults
+     * @param string $highlight
      */
-    public function __construct()
+    public function __construct(array $pageLookupResults, array $fullTextResults, $highlight)
     {
         global $QUERY;
         $Indexer = idx_get_indexer();
@@ -24,15 +28,9 @@ class Search extends Ui
         $this->query = $QUERY;
         $this->parsedQuery = ft_queryParser($Indexer, $QUERY);
         $this->searchState = new SearchState($this->parsedQuery);
-    }
 
-    /**
-     * run the search
-     */
-    public function execute()
-    {
-        $this->pageLookupResults = ft_pageLookup($this->query, true, useHeading('navigation'));
-        $this->fullTextResults = ft_pageSearch($this->query, $highlight);
+        $this->pageLookupResults = $pageLookupResults;
+        $this->fullTextResults = $fullTextResults;
         $this->highlight = $highlight;
     }
 

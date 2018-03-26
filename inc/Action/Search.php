@@ -13,6 +13,10 @@ use dokuwiki\Action\Exception\ActionAbort;
  */
 class Search extends AbstractAction {
 
+    protected $pageLookupResults = array();
+    protected $fullTextResults = array();
+    protected $highlight = array();
+
     /** @inheritdoc */
     public function minimumPermission() {
         return AUTH_NONE;
@@ -47,9 +51,22 @@ class Search extends AbstractAction {
     /** @inheritdoc */
     public function tplContent()
     {
-        $search = new \dokuwiki\Ui\Search();
-        $search->execute();
+        $this->execute();
+
+        $search = new \dokuwiki\Ui\Search($this->pageLookupResults, $this->fullTextResults, $this->highlight);
         $search->show();
+    }
+
+
+    /**
+     * run the search
+     */
+    protected function execute()
+    {
+        global $INPUT, $QUERY;
+        $this->pageLookupResults = ft_pageLookup($QUERY, true, useHeading('navigation'));
+        $this->fullTextResults = ft_pageSearch($QUERY, $highlight, $INPUT->str('sort'));
+        $this->highlight = $highlight;
     }
 
     /**
