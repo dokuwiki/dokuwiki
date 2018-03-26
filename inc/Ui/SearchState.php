@@ -18,6 +18,7 @@ class SearchState
         $this->parsedQuery = $parsedQuery;
         $this->parsedQuery['after'] = $INPUT->str('after');
         $this->parsedQuery['before'] = $INPUT->str('before');
+        $this->parsedQuery['sort'] = $INPUT->str('sort');
     }
 
     /**
@@ -66,6 +67,21 @@ class SearchState
         $this->addSearchLink($searchForm, $label, $parsedQuery);
     }
 
+    /**
+     * Add a link to the form which sets the sort preference for the current search
+     *
+     * @param Form $searchForm
+     * @param string $label
+     * @param string $sort
+     */
+    public function addSearchLinkSort(Form $searchForm, $label, $sort)
+    {
+        $parsedQuery = $this->parsedQuery;
+        $parsedQuery['sort'] = $sort;
+
+        $this->addSearchLink($searchForm, $label, $parsedQuery);
+    }
+
     protected function addSearchLink(
         Form $searchForm,
         $label,
@@ -86,6 +102,9 @@ class SearchState
         }
         if ($parsedQuery['before']) {
             $hrefAttributes['before'] = $parsedQuery['before'];
+        }
+        if ($parsedQuery['sort']) {
+            $hrefAttributes['sort'] = $parsedQuery['sort'];
         }
         $searchForm->addTagOpen('a')
             ->attrs([

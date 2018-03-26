@@ -24,11 +24,12 @@ if(!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER',15);
  * @param array $highlight
  * @return array
  */
-function ft_pageSearch($query,&$highlight){
+function ft_pageSearch($query,&$highlight, $sort = 'hits'){
 
     $data = array();
     $data['query'] = $query;
     $data['highlight'] =& $highlight;
+    $data['sort'] = $sort;
 
     return trigger_event('SEARCH_QUERY_FULLPAGE', $data, '_ft_pageSearch');
 }
@@ -135,8 +136,13 @@ function _ft_pageSearch(&$data) {
     }
 
     $docs = _ft_filterResultsByTime($docs);
-    // sort docs by count
-    arsort($docs);
+
+    if ($data['sort'] === 'mtime') {
+        uksort($docs, 'ft_pagemtimesorter');
+    } else {
+        // sort docs by count
+        arsort($docs);
+    }
 
     return $docs;
 }
@@ -349,6 +355,20 @@ function ft_pagesorter($a, $b){
         return 1;
     }
     return strcmp ($a,$b);
+}
+
+/**
+ * Sort pages by their mtime, from newest to oldest
+ *
+ * @param string $a
+ * @param string $b
+ *
+ * @return int Returns < 0 if $a is newer than $b, > 0 if $b is newer than $a and 0 if they are of the same age
+ */
+function ft_pagemtimesorter($a, $b) {
+    $mtimeA = filemtime(wikiFN($a));
+    $mtimeB = filemtime(wikiFN($b));
+    return $mtimeB - $mtimeA;
 }
 
 /**

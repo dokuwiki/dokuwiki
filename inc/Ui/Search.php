@@ -77,6 +77,9 @@ class Search extends Ui
         if ($INPUT->has('before')) {
             $searchForm->setHiddenField('before', $INPUT->str('before'));
         }
+        if ($INPUT->has('sort')) {
+            $searchForm->setHiddenField('sort', $INPUT->str('sort'));
+        }
         $searchForm->addFieldsetOpen()->addClass('search-results-form__fieldset');
         $searchForm->addTextInput('q')->val($query)->useInput(false);
         $searchForm->addButton('', $lang['btn_search'])->attr('type', 'submit');
@@ -88,6 +91,11 @@ class Search extends Ui
             $searchForm->addTagOpen('span')->addClass('search-results-form__no-assistance-message');
             $searchForm->addHTML('FIXME Your query is too complex. Search assistance is unavailable. See <a href="https://doku.wiki/search">doku.wiki/search</a> for more help.');
             $searchForm->addTagClose('span');
+        }
+        if ($INPUT->str('sort') === 'mtime') {
+            $this->searchState->addSearchLinkSort($searchForm, 'sort by hits', '');
+        } else {
+            $this->searchState->addSearchLinkSort($searchForm, 'sort by mtime', 'mtime');
         }
 
         $searchForm->addFieldsetClose();
