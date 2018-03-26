@@ -31,43 +31,9 @@ class Search extends Ui
      */
     public function execute()
     {
-        $this->pageLookupResults = $this->filterResultsByTime(
-            ft_pageLookup($this->query, true, useHeading('navigation'))
-        );
-        $this->fullTextResults = $this->filterResultsByTime(
-            ft_pageSearch($this->query, $highlight)
-        );
+        $this->pageLookupResults = ft_pageLookup($this->query, true, useHeading('navigation'));
+        $this->fullTextResults = ft_pageSearch($this->query, $highlight);
         $this->highlight = $highlight;
-    }
-
-    /**
-     * @param array $results search results in the form pageid => value
-     *
-     * @return array
-     */
-    protected function filterResultsByTime(array $results) {
-        global $INPUT;
-        if ($INPUT->has('after') || $INPUT->has('before')) {
-            $after = $INPUT->str('after');
-            $after = is_int($after) ? $after : strtotime($after);
-
-            $before = $INPUT->str('before');
-            $before = is_int($before) ? $before : strtotime($before);
-
-            // todo: should we filter $this->pageLookupResults as well?
-            foreach ($results as $id => $value) {
-                $mTime = filemtime(wikiFN($id));
-                if ($after && $after > $mTime) {
-                    unset($results[$id]);
-                    continue;
-                }
-                if ($before && $before < $mTime) {
-                    unset($results[$id]);
-                }
-            }
-        }
-
-        return $results;
     }
 
     /**

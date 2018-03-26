@@ -134,6 +134,7 @@ function _ft_pageSearch(&$data) {
         }
     }
 
+    $docs = _ft_filterResultsByTime($docs);
     // sort docs by count
     arsort($docs);
 
@@ -281,8 +282,40 @@ function _ft_pageLookup(&$data){
         }
     }
 
+    $pages = _ft_filterResultsByTime($pages);
+
     uksort($pages,'ft_pagesorter');
     return $pages;
+}
+
+
+/**
+ * @param array $results search results in the form pageid => value
+ *
+ * @return array
+ */
+function _ft_filterResultsByTime(array $results) {
+    global $INPUT;
+    if ($INPUT->has('after') || $INPUT->has('before')) {
+        $after = $INPUT->str('after');
+        $after = is_int($after) ? $after : strtotime($after);
+
+        $before = $INPUT->str('before');
+        $before = is_int($before) ? $before : strtotime($before);
+
+        foreach ($results as $id => $value) {
+            $mTime = filemtime(wikiFN($id));
+            if ($after && $after > $mTime) {
+                unset($results[$id]);
+                continue;
+            }
+            if ($before && $before < $mTime) {
+                unset($results[$id]);
+            }
+        }
+    }
+
+    return $results;
 }
 
 /**
