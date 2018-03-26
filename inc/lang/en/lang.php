@@ -71,6 +71,18 @@ $lang['draftdate']             = 'Draft autosaved on'; // full dformat date will
 $lang['nosecedit']             = 'The page was changed in the meantime, section info was out of date loaded full page instead.';
 $lang['searchcreatepage']      = 'If you didn\'t find what you were looking for, you can create or edit the page named after your query with the appropriate tool.';
 
+$lang['search_exact_match']    = 'Exact match';
+$lang['search_starts_with']    = 'Starts with';
+$lang['search_ends_with']      = 'Ends with';
+$lang['search_contains']       = 'Contains';
+$lang['search_any_ns']         = 'Any namespace';
+$lang['search_any_time']       = 'Any time';
+$lang['search_past_7_days']    = 'Past week';
+$lang['search_past_month']     = 'Past month';
+$lang['search_past_year']      = 'Past year';
+$lang['search_sort_by_hits']   = 'Sort by hits';
+$lang['search_sort_by_mtime']  = 'Sort by last modified';
+
 $lang['regmissing']            = 'Sorry, you must fill in all fields.';
 $lang['reguexists']            = 'Sorry, a user with this login already exists.';
 $lang['regsuccess']            = 'The user has been created and the password was sent by email.';
