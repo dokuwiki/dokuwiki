@@ -78,7 +78,7 @@ class Search extends Ui
         if ($INPUT->has('srt')) {
             $searchForm->setHiddenField('srt', $INPUT->str('srt'));
         }
-        $searchForm->addFieldsetOpen()->addClass('search-results-form__fieldset');
+        $searchForm->addFieldsetOpen()->addClass('search-form');
         $searchForm->addTextInput('q')->val($query)->useInput(false);
         $searchForm->addButton('', $lang['btn_search'])->attr('type', 'submit');
 
@@ -111,23 +111,23 @@ class Search extends Ui
             $activeOption = 'mtime';
         }
 
-        $searchForm->addTagOpen('div')->addClass('search-tool js-search-tool');
+        $searchForm->addTagOpen('div')->addClass('toggle');
         // render current
-        $currentWrapper = $searchForm->addTagOpen('div')->addClass('search-tool__current js-current');
+        $currentWrapper = $searchForm->addTagOpen('div')->addClass('current');
         if ($activeOption !== 'hits') {
-            $currentWrapper->addClass('search-tool__current--changed');
+            $currentWrapper->addClass('changed');
         }
         $searchForm->addHTML($options[$activeOption]['label']);
         $searchForm->addTagClose('div');
 
         // render options list
-        $searchForm->addTagOpen('ul')->addClass('search-tool__options-list js-optionsList');
+        $searchForm->addTagOpen('ul');
 
         foreach ($options as $key => $option) {
-            $listItem = $searchForm->addTagOpen('li')->addClass('search-tool__options-list-item');
+            $listItem = $searchForm->addTagOpen('li');
 
             if ($key === $activeOption) {
-                $listItem->addClass('search-tool__options-list-item--active');
+                $listItem->addClass('active');
                 $searchForm->addHTML($option['label']);
             } else {
                 $this->searchState->addSearchLinkSort(
@@ -171,13 +171,13 @@ class Search extends Ui
      */
     protected function addSearchAssistanceElements(Form $searchForm)
     {
+        // FIXME localize
         $searchForm->addButton('toggleAssistant', 'toggle search assistant')
             ->attr('type', 'button')
-            ->id('search-results-form__show-assistance-button')
-            ->addClass('search-results-form__show-assistance-button');
+            ->addClass('toggleAssistant');
 
         $searchForm->addTagOpen('div')
-            ->addClass('js-advancedSearchOptions')
+            ->addClass('advancedOptions')
             ->attr('style', 'display: none;');
 
         $this->addFragmentBehaviorLinks($searchForm);
@@ -247,23 +247,23 @@ class Search extends Ui
             ]], $options);
         }
 
-        $searchForm->addTagOpen('div')->addClass('search-tool js-search-tool');
+        $searchForm->addTagOpen('div')->addClass('toggle');
         // render current
-        $currentWrapper = $searchForm->addTagOpen('div')->addClass('search-tool__current js-current');
+        $currentWrapper = $searchForm->addTagOpen('div')->addClass('current');
         if ($activeOption !== 'exact') {
-            $currentWrapper->addClass('search-tool__current--changed');
+            $currentWrapper->addClass('changed');
         }
         $searchForm->addHTML($options[$activeOption]['label']);
         $searchForm->addTagClose('div');
 
         // render options list
-        $searchForm->addTagOpen('ul')->addClass('search-tool__options-list js-optionsList');
+        $searchForm->addTagOpen('ul');
 
         foreach ($options as $key => $option) {
-            $listItem = $searchForm->addTagOpen('li')->addClass('search-tool__options-list-item');
+            $listItem = $searchForm->addTagOpen('li');
 
             if ($key === $activeOption) {
-                $listItem->addClass('search-tool__options-list-item--active');
+                $listItem->addClass('active');
                 $searchForm->addHTML($option['label']);
             } else {
                 $this->searchState->addSearchLinkFragment(
@@ -298,11 +298,11 @@ class Search extends Ui
         $baseNS = empty($this->parsedQuery['ns']) ? '' : $this->parsedQuery['ns'][0];
         $extraNS = $this->getAdditionalNamespacesFromResults($baseNS);
 
-        $searchForm->addTagOpen('div')->addClass('search-tool js-search-tool');
+        $searchForm->addTagOpen('div')->addClass('toggle');
         // render current
-        $currentWrapper = $searchForm->addTagOpen('div')->addClass('search-tool__current js-current');
+        $currentWrapper = $searchForm->addTagOpen('div')->addClass('current');
         if ($baseNS) {
-            $currentWrapper->addClass('search-tool__current--changed');
+            $currentWrapper->addClass('changed');
             $searchForm->addHTML('@' . $baseNS);
         } else {
             $searchForm->addHTML($lang['search_any_ns']);
@@ -310,11 +310,11 @@ class Search extends Ui
         $searchForm->addTagClose('div');
 
         // render options list
-        $searchForm->addTagOpen('ul')->addClass('search-tool__options-list js-optionsList');
+        $searchForm->addTagOpen('ul');
 
-        $listItem = $searchForm->addTagOpen('li')->addClass('search-tool__options-list-item');
+        $listItem = $searchForm->addTagOpen('li');
         if ($baseNS) {
-            $listItem->addClass('search-tool__options-list-item--active');
+            $listItem->addClass('active');
             $this->searchState->addSeachLinkNS(
                 $searchForm,
                 $lang['search_any_ns'],
@@ -326,11 +326,11 @@ class Search extends Ui
         $searchForm->addTagClose('li');
 
         foreach ($extraNS as $ns => $count) {
-            $listItem = $searchForm->addTagOpen('li')->addClass('search-tool__options-list-item');
+            $listItem = $searchForm->addTagOpen('li');
             $label = $ns . ($count ? " ($count)" : '');
 
             if ($ns === $baseNS) {
-                $listItem->addClass('search-tool__options-list-item--active');
+                $listItem->addClass('active');
                 $searchForm->addHTML($label);
             } else {
                 $this->searchState->addSeachLinkNS(
@@ -416,23 +416,23 @@ class Search extends Ui
             }
         }
 
-        $searchForm->addTagOpen('div')->addClass('search-tool js-search-tool');
+        $searchForm->addTagOpen('div')->addClass('toggle');
         // render current
-        $currentWrapper = $searchForm->addTagOpen('div')->addClass('search-tool__current js-current');
+        $currentWrapper = $searchForm->addTagOpen('div')->addClass('current');
         if ($INPUT->has('dtb') || $INPUT->has('dta')) {
-            $currentWrapper->addClass('search-tool__current--changed');
+            $currentWrapper->addClass('changed');
         }
         $searchForm->addHTML($options[$activeOption]['label']);
         $searchForm->addTagClose('div');
 
         // render options list
-        $searchForm->addTagOpen('ul')->addClass('search-tool__options-list js-optionsList');
+        $searchForm->addTagOpen('ul');
 
         foreach ($options as $key => $option) {
-            $listItem = $searchForm->addTagOpen('li')->addClass('search-tool__options-list-item');
+            $listItem = $searchForm->addTagOpen('li');
 
             if ($key === $activeOption) {
-                $listItem->addClass('search-tool__options-list-item--active');
+                $listItem->addClass('active');
                 $searchForm->addHTML($option['label']);
             } else {
                 $this->searchState->addSearchLinkTime(
