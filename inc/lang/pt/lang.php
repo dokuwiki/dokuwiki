@@ -3,12 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marilia Moreira <m2biam@gmail.com>
  * @author José Carlos Monteiro <jose.c.monteiro@netcabo.pt>
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
  * @author André Neves <drakferion@gmail.com>
- * @author José Campos zecarlosdecampos@gmail.com
+ * @author José Campos <zecarlosdecampos@gmail.com>
  * @author Murilo <muriloricci@hotmail.com>
  * @author Paulo Silva <paulotsilva@yahoo.com>
  * @author Guido Salatino <guidorafael23@gmail.com>
