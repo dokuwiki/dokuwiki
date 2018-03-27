@@ -39,9 +39,9 @@ class DateTime extends Date {
      */
     public function valueEditor($name, $rawvalue, $htmlID) {
         if($this->config['prefilltoday'] && !$rawvalue) {
-            $rawvalue = date('Y-m-d H:i:s');
+            $rawvalue = date('Y-m-dTH:i');
         }
-
+        $rawvalue = str_replace(' ', 'T', $rawvalue);
         $params = array(
             'name' => $name,
             'value' => $rawvalue,
@@ -65,7 +65,7 @@ class DateTime extends Date {
      */
     public function validate($rawvalue) {
         $rawvalue = trim($rawvalue);
-        list($date, $time) = explode(' ', $rawvalue, 2);
+        list($date, $time) = preg_split('/[ |T]/', $rawvalue, 2);
         $date = trim($date);
         $time = trim($time);
 
@@ -74,15 +74,14 @@ class DateTime extends Date {
             throw new ValidationException('invalid datetime format');
         }
 
-        list($h, $m, $s) = explode(':', $time, 3);
+        list($h, $m) = explode(':', $time, 3); // drop seconds
         $h = (int) $h;
         $m = (int) $m;
-        $s = (int) $s;
-        if($h < 0 || $h > 23 || $m < 0 || $m > 59 || $s < 0 || $s > 59) {
+        if($h < 0 || $h > 23 || $m < 0 || $m > 59) {
             throw new ValidationException('invalid datetime format');
         }
 
-        return sprintf("%d-%02d-%02d %02d:%02d:%02d", $year, $month, $day, $h, $m, $s);
+        return sprintf("%d-%02d-%02d %02d:%02d", $year, $month, $day, $h, $m);
     }
 
     /**
