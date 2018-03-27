@@ -82,14 +82,7 @@ class Search extends Ui
         $searchForm->addTextInput('q')->val($query)->useInput(false);
         $searchForm->addButton('', $lang['btn_search'])->attr('type', 'submit');
 
-        if ($this->isSearchAssistanceAvailable($this->parsedQuery)) {
-            $this->addSearchAssistanceElements($searchForm);
-        } else {
-            $searchForm->addClass('search-results-form--no-assistance');
-            $searchForm->addTagOpen('span')->addClass('search-results-form__no-assistance-message');
-            $searchForm->addHTML('FIXME Your query is too complex. Search assistance is unavailable. See <a href="https://doku.wiki/search">doku.wiki/search</a> for more help.');
-            $searchForm->addTagClose('span');
-        }
+        $this->addSearchAssistanceElements($searchForm);
 
         $searchForm->addFieldsetClose();
 
@@ -151,30 +144,20 @@ class Search extends Ui
 
     }
 
-    /**
-     * Decide if the given query is simple enough to provide search assistance
-     *
-     * @param array $parsedQuery
-     *
-     * @return bool
-     */
-    protected function isSearchAssistanceAvailable(array $parsedQuery)
-    {
-        if (count($parsedQuery['words']) > 1) {
+    protected function isNamespaceAssistanceAvailable(array $parsedQuery) {
+        if (preg_match('/[\(\)\|]/', $parsedQuery['query']) === 1) {
             return false;
         }
-        if (!empty($parsedQuery['not'])) {
+
+        return true;
+    }
+
+    protected function isFragmentAssistanceAvailable(array $parsedQuery) {
+        if (preg_match('/[\(\)\|]/', $parsedQuery['query']) === 1) {
             return false;
         }
 
         if (!empty($parsedQuery['phrases'])) {
-            return false;
-        }
-
-        if (!empty($parsedQuery['notns'])) {
-            return false;
-        }
-        if (count($parsedQuery['ns']) > 1) {
             return false;
         }
 
@@ -207,6 +190,9 @@ class Search extends Ui
 
     protected function addFragmentBehaviorLinks(Form $searchForm)
     {
+        if (!$this->isFragmentAssistanceAvailable($this->parsedQuery)) {
+            return;
+        }
         global $lang;
 
         $options = [
@@ -215,24 +201,36 @@ class Search extends Ui
                 'and' => array_map(function ($term) {
                     return trim($term, '*');
                 }, $this->parsedQuery['and']),
+                'not' => array_map(function ($term) {
+                    return trim($term, '*');
+                }, $this->parsedQuery['not']),
             ],
             'starts' => [
                 'label' => $lang['search_starts_with'],
                 'and' => array_map(function ($term) {
                     return trim($term, '*') . '*';
-                }, $this->parsedQuery['and'])
+                }, $this->parsedQuery['and']),
+                'not' => array_map(function ($term) {
+                    return trim($term, '*') . '*';
+                }, $this->parsedQuery['not']),
             ],
             'ends' => [
                 'label' => $lang['search_ends_with'],
                 'and' => array_map(function ($term) {
                     return '*' . trim($term, '*');
-                }, $this->parsedQuery['and'])
+                }, $this->parsedQuery['and']),
+                'not' => array_map(function ($term) {
+                    return '*' . trim($term, '*');
+                }, $this->parsedQuery['not']),
             ],
             'contains' => [
                 'label' => $lang['search_contains'],
                 'and' => array_map(function ($term) {
                     return '*' . trim($term, '*') . '*';
-                }, $this->parsedQuery['and'])
+                }, $this->parsedQuery['and']),
+                'not' => array_map(function ($term) {
+                    return '*' . trim($term, '*') . '*';
+                }, $this->parsedQuery['not']),
             ]
         ];
 
@@ -266,7 +264,8 @@ class Search extends Ui
                 $this->searchState->addSearchLinkFragment(
                     $searchForm,
                     $option['label'],
-                    $option['and']
+                    $option['and'],
+                    $option['not']
                 );
             }
             $searchForm->addTagClose('li');
@@ -285,6 +284,10 @@ class Search extends Ui
      */
     protected function addNamespaceSelector(Form $searchForm)
     {
+        if (!$this->isNamespaceAssistanceAvailable($this->parsedQuery)) {
+            return;
+        }
+
         global $lang;
 
         $baseNS = empty($this->parsedQuery['ns']) ? '' : $this->parsedQuery['ns'][0];
@@ -577,7 +580,7 @@ class Search extends Ui
         if (!$ns) {
             return false;
         }
-        if (!$this->isSearchAssistanceAvailable($this->parsedQuery)) {
+        if (!$this->isNamespaceAssistanceAvailable($this->parsedQuery)) {
             return false;
         }
         if (!empty($this->parsedQuery['ns']) && $this->parsedQuery['ns'][0] === $ns) {

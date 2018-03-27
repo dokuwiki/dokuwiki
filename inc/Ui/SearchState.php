@@ -42,11 +42,13 @@ class SearchState
      * @param Form   $searchForm
      * @param string $label
      * @param array  $and
+     * @param array  $not
      */
-    public function addSearchLinkFragment(Form $searchForm, $label, array $and)
+    public function addSearchLinkFragment(Form $searchForm, $label, array $and, array $not)
     {
         $parsedQuery = $this->parsedQuery;
         $parsedQuery['and'] = $and;
+        $parsedQuery['not'] = $not;
         $this->addSearchLink($searchForm, $label, $parsedQuery);
     }
 
