@@ -91,6 +91,11 @@ class Search extends Ui
         return $searchForm->toHTML();
     }
 
+    /**
+     * Add elements to adjust how the results are sorted
+     *
+     * @param Form $searchForm
+     */
     protected function addSortTool(Form $searchForm)
     {
         global $INPUT, $lang;
@@ -141,6 +146,13 @@ class Search extends Ui
 
     }
 
+    /**
+     * Check if the query is simple enough to modify its namespace limitations without breaking the rest of the query
+     *
+     * @param array $parsedQuery
+     *
+     * @return bool
+     */
     protected function isNamespaceAssistanceAvailable(array $parsedQuery) {
         if (preg_match('/[\(\)\|]/', $parsedQuery['query']) === 1) {
             return false;
@@ -149,6 +161,13 @@ class Search extends Ui
         return true;
     }
 
+    /**
+     * Check if the query is simple enough to modify the fragment search behavior without breaking the rest of the query
+     *
+     * @param array $parsedQuery
+     *
+     * @return bool
+     */
     protected function isFragmentAssistanceAvailable(array $parsedQuery) {
         if (preg_match('/[\(\)\|]/', $parsedQuery['query']) === 1) {
             return false;
@@ -185,6 +204,11 @@ class Search extends Ui
         $searchForm->addTagClose('div');
     }
 
+    /**
+     *  Add the elements to adjust the fragment search behavior
+     *
+     * @param Form $searchForm
+     */
     protected function addFragmentBehaviorLinks(Form $searchForm)
     {
         if (!$this->isFragmentAssistanceAvailable($this->parsedQuery)) {
