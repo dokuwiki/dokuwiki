@@ -20,16 +20,26 @@ if(!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER',15);
  *
  * refactored into ft_pageSearch(), _ft_pageSearch() and trigger_event()
  *
- * @param string $query
- * @param array $highlight
+ * @param string     $query
+ * @param array      $highlight
+ * @param string     $sort
+ * @param int|string $after  only show results with an modified time after this date, accepts timestap or strtotime arguments
+ * @param int|string $before only show results with an modified time before this date, accepts timestap or strtotime arguments
+ *
  * @return array
  */
-function ft_pageSearch($query,&$highlight, $sort = 'hits'){
+function ft_pageSearch($query,&$highlight, $sort = null, $after = null, $before = null){
 
-    $data = array();
-    $data['query'] = $query;
+    if ($sort === null) {
+        $sort = 'hits';
+    }
+    $data = [
+        'query' => $query,
+        'sort' => $sort,
+        'after' => $after,
+        'before' => $before
+    ];
     $data['highlight'] =& $highlight;
-    $data['sort'] = $sort;
 
     return trigger_event('SEARCH_QUERY_FULLPAGE', $data, '_ft_pageSearch');
 }
@@ -135,7 +145,7 @@ function _ft_pageSearch(&$data) {
         }
     }
 
-    $docs = _ft_filterResultsByTime($docs);
+    $docs = _ft_filterResultsByTime($docs, $data['after'], $data['before']);
 
     if ($data['sort'] === 'mtime') {
         uksort($docs, 'ft_pagemtimesorter');
@@ -206,7 +216,6 @@ function ft_mediause($id, $ignore_perms = false){
 }
 
 
-
 /**
  * Quicksearch for pagenames
  *
@@ -217,16 +226,25 @@ function ft_mediause($id, $ignore_perms = false){
  * The function always returns titles as well
  *
  * @triggers SEARCH_QUERY_PAGELOOKUP
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Adrian Lang <lang@cosmocode.de>
+ * @author   Andreas Gohr <andi@splitbrain.org>
+ * @author   Adrian Lang <lang@cosmocode.de>
  *
- * @param string $id        page id
- * @param bool   $in_ns     match against namespace as well?
- * @param bool   $in_title  search in title?
+ * @param string     $id       page id
+ * @param bool       $in_ns    match against namespace as well?
+ * @param bool       $in_title search in title?
+ * @param int|string $after    only show results with an modified time after this date, accepts timestap or strtotime arguments
+ * @param int|string $before   only show results with an modified time before this date, accepts timestap or strtotime arguments
+ *
  * @return string[]
  */
-function ft_pageLookup($id, $in_ns=false, $in_title=false){
-    $data = compact('id', 'in_ns', 'in_title');
+function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $before = null){
+    $data = [
+        'id' => $id,
+        'in_ns' => $in_ns,
+        'in_title' => $in_title,
+        'after' => $after,
+        'before' => $before
+    ];
     $data['has_titles'] = true; // for plugin backward compatibility check
     return trigger_event('SEARCH_QUERY_PAGELOOKUP', $data, '_ft_pageLookup');
 }
@@ -288,7 +306,7 @@ function _ft_pageLookup(&$data){
         }
     }
 
-    $pages = _ft_filterResultsByTime($pages);
+    $pages = _ft_filterResultsByTime($pages, $data['after'], $data['before']);
 
     uksort($pages,'ft_pagesorter');
     return $pages;
@@ -296,17 +314,15 @@ function _ft_pageLookup(&$data){
 
 
 /**
- * @param array $results search results in the form pageid => value
+ * @param array      $results search results in the form pageid => value
+ * @param int|string $after   only returns results with an modified time after this date, accepts timestap or strtotime arguments
+ * @param int|string $before  only returns results with an modified time after this date, accepts timestap or strtotime arguments
  *
  * @return array
  */
-function _ft_filterResultsByTime(array $results) {
-    global $INPUT;
-    if ($INPUT->has('after') || $INPUT->has('before')) {
-        $after = $INPUT->str('after');
+function _ft_filterResultsByTime(array $results, $after, $before) {
+    if ($after || $before) {
         $after = is_int($after) ? $after : strtotime($after);
-
-        $before = $INPUT->str('before');
         $before = is_int($before) ? $before : strtotime($before);
 
         foreach ($results as $id => $value) {

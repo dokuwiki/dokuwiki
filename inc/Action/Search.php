@@ -64,8 +64,10 @@ class Search extends AbstractAction {
     protected function execute()
     {
         global $INPUT, $QUERY;
-        $this->pageLookupResults = ft_pageLookup($QUERY, true, useHeading('navigation'));
-        $this->fullTextResults = ft_pageSearch($QUERY, $highlight, $INPUT->str('srt'));
+        $after = $INPUT->str('dta');
+        $before = $INPUT->str('dtb');
+        $this->pageLookupResults = ft_pageLookup($QUERY, true, useHeading('navigation'), $after, $before);
+        $this->fullTextResults = ft_pageSearch($QUERY, $highlight, $INPUT->str('srt'), $after, $before);
         $this->highlight = $highlight;
     }
 
