@@ -16,9 +16,9 @@ class SearchState
         global $INPUT;
 
         $this->parsedQuery = $parsedQuery;
-        $this->parsedQuery['after'] = $INPUT->str('after');
-        $this->parsedQuery['before'] = $INPUT->str('before');
-        $this->parsedQuery['sort'] = $INPUT->str('sort');
+        $this->parsedQuery['after'] = $INPUT->str('dta');
+        $this->parsedQuery['before'] = $INPUT->str('dtb');
+        $this->parsedQuery['sort'] = $INPUT->str('srt');
     }
 
     /**
@@ -98,15 +98,15 @@ class SearchState
             $parsedQuery['ns'],
             $parsedQuery['notns']
         );
-        $hrefAttributes = ['do' => 'search', 'searchPageForm' => '1', 'q' => $newQuery];
+        $hrefAttributes = ['do' => 'search', 'sf' => '1', 'q' => $newQuery];
         if ($parsedQuery['after']) {
-            $hrefAttributes['after'] = $parsedQuery['after'];
+            $hrefAttributes['dta'] = $parsedQuery['after'];
         }
         if ($parsedQuery['before']) {
-            $hrefAttributes['before'] = $parsedQuery['before'];
+            $hrefAttributes['dtb'] = $parsedQuery['before'];
         }
         if ($parsedQuery['sort']) {
-            $hrefAttributes['sort'] = $parsedQuery['sort'];
+            $hrefAttributes['srt'] = $parsedQuery['sort'];
         }
         $searchForm->addTagOpen('a')
             ->attrs([

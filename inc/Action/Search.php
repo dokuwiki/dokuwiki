@@ -65,7 +65,7 @@ class Search extends AbstractAction {
     {
         global $INPUT, $QUERY;
         $this->pageLookupResults = ft_pageLookup($QUERY, true, useHeading('navigation'));
-        $this->fullTextResults = ft_pageSearch($QUERY, $highlight, $INPUT->str('sort'));
+        $this->fullTextResults = ft_pageSearch($QUERY, $highlight, $INPUT->str('srt'));
         $this->highlight = $highlight;
     }
 
@@ -78,7 +78,7 @@ class Search extends AbstractAction {
     {
         global $conf, $INPUT, $QUERY, $ID;
 
-        if ($INPUT->bool('searchPageForm')) {
+        if ($INPUT->bool('sf')) {
             return;
         }
 

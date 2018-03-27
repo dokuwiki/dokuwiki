@@ -68,15 +68,15 @@ class Search extends Ui
         $searchForm = (new Form())->attrs(['method' => 'get'])->addClass('search-results-form');
         $searchForm->setHiddenField('do', 'search');
         $searchForm->setHiddenField('id', $ID);
-        $searchForm->setHiddenField('searchPageForm', '1');
-        if ($INPUT->has('after')) {
-            $searchForm->setHiddenField('after', $INPUT->str('after'));
+        $searchForm->setHiddenField('sf', '1');
+        if ($INPUT->has('dta')) {
+            $searchForm->setHiddenField('dta', $INPUT->str('dta'));
         }
-        if ($INPUT->has('before')) {
-            $searchForm->setHiddenField('before', $INPUT->str('before'));
+        if ($INPUT->has('dtb')) {
+            $searchForm->setHiddenField('dtb', $INPUT->str('dtb'));
         }
-        if ($INPUT->has('sort')) {
-            $searchForm->setHiddenField('sort', $INPUT->str('sort'));
+        if ($INPUT->has('srt')) {
+            $searchForm->setHiddenField('srt', $INPUT->str('srt'));
         }
         $searchForm->addFieldsetOpen()->addClass('search-results-form__fieldset');
         $searchForm->addTextInput('q')->val($query)->useInput(false);
@@ -107,7 +107,7 @@ class Search extends Ui
         ];
         $activeOption = 'hits';
 
-        if ($INPUT->str('sort') === 'mtime') {
+        if ($INPUT->str('srt') === 'mtime') {
             $activeOption = 'mtime';
         }
 
@@ -410,7 +410,7 @@ class Search extends Ui
         ];
         $activeOption = 'any';
         foreach ($options as $key => $option) {
-            if ($INPUT->str('after') === $option['after']) {
+            if ($INPUT->str('dta') === $option['after']) {
                 $activeOption = $key;
                 break;
             }
@@ -419,7 +419,7 @@ class Search extends Ui
         $searchForm->addTagOpen('div')->addClass('search-tool js-search-tool');
         // render current
         $currentWrapper = $searchForm->addTagOpen('div')->addClass('search-tool__current js-current');
-        if ($INPUT->has('before') || $INPUT->has('after')) {
+        if ($INPUT->has('dtb') || $INPUT->has('dta')) {
             $currentWrapper->addClass('search-tool__current--changed');
         }
         $searchForm->addHTML($options[$activeOption]['label']);
