@@ -2,8 +2,6 @@
 
 namespace dokuwiki\Ui;
 
-use dokuwiki\Form\Form;
-
 class SearchState
 {
     /**
@@ -11,85 +9,113 @@ class SearchState
      */
     protected $parsedQuery = [];
 
+    /**
+     * SearchState constructor.
+     *
+     * @param array $parsedQuery
+     */
     public function __construct(array $parsedQuery)
     {
         global $INPUT;
 
         $this->parsedQuery = $parsedQuery;
-        $this->parsedQuery['after'] = $INPUT->str('dta');
-        $this->parsedQuery['before'] = $INPUT->str('dtb');
-        $this->parsedQuery['sort'] = $INPUT->str('srt');
+        if (!isset($parsedQuery['after'])) {
+            $this->parsedQuery['after'] = $INPUT->str('dta');
+        }
+        if (!isset($parsedQuery['before'])) {
+            $this->parsedQuery['before'] = $INPUT->str('dtb');
+        }
+        if (!isset($parsedQuery['sort'])) {
+            $this->parsedQuery['sort'] = $INPUT->str('srt');
+        }
     }
 
     /**
-     * Add a link to the form which limits the search to the provided namespace
+     * Get a search state for the current search limited to a new namespace
      *
-     * @param Form   $searchForm
-     * @param string $label
-     * @param string $ns namespace to which to limit the search, empty string to remove namespace limitation
+     * @param string $ns the namespace to which to limit the search, falsy to remove the limitation
+     * @param array  $notns
+     *
+     * @return SearchState
      */
-    public function addSeachLinkNS(Form $searchForm, $label, $ns)
+    public function withNamespace($ns, array $notns = [])
     {
         $parsedQuery = $this->parsedQuery;
-        $parsedQuery['notns'] = [];
         $parsedQuery['ns'] = $ns ? [$ns] : [];
-        $this->addSearchLink($searchForm, $label, $parsedQuery);
+        $parsedQuery['notns'] = $notns;
+
+        return new SearchState($parsedQuery);
     }
 
     /**
-     * Add a link to the form which searches only for the provided words, but keeps the namespace and time limitations
+     * Get a search state for the current search with new search fragments and optionally phrases
      *
-     * @param Form   $searchForm
-     * @param string $label
-     * @param array  $and
-     * @param array  $not
+     * @param array $and
+     * @param array $not
+     * @param array $phrases
+     *
+     * @return SearchState
      */
-    public function addSearchLinkFragment(Form $searchForm, $label, array $and, array $not)
+    public function withFragments(array $and, array $not, array $phrases = [])
     {
         $parsedQuery = $this->parsedQuery;
         $parsedQuery['and'] = $and;
         $parsedQuery['not'] = $not;
-        $this->addSearchLink($searchForm, $label, $parsedQuery);
+        $parsedQuery['phrases'] = $phrases;
+
+        return new SearchState($parsedQuery);
     }
 
     /**
-     * Add a link to the form which modifies the current search's time limitations
+     * Get a search state for the current search with with adjusted time limitations
      *
-     * @param Form        $searchForm
-     * @param string      $label
-     * @param string      $after
-     * @param null|string $before
+     * @param $after
+     * @param $before
+     *
+     * @return SearchState
      */
-    public function addSearchLinkTime(Form $searchForm, $label, $after, $before = null)
+    public function withTimeLimitations($after, $before)
     {
         $parsedQuery = $this->parsedQuery;
         $parsedQuery['after'] = $after;
         $parsedQuery['before'] = $before;
 
-        $this->addSearchLink($searchForm, $label, $parsedQuery);
+        return new SearchState($parsedQuery);
     }
 
     /**
-     * Add a link to the form which sets the sort preference for the current search
+     * Get a search state for the current search with adjusted sort preference
      *
-     * @param Form $searchForm
-     * @param string $label
-     * @param string $sort
+     * @param $sort
+     *
+     * @return SearchState
      */
-    public function addSearchLinkSort(Form $searchForm, $label, $sort)
+    public function withSorting($sort)
     {
         $parsedQuery = $this->parsedQuery;
         $parsedQuery['sort'] = $sort;
 
-        $this->addSearchLink($searchForm, $label, $parsedQuery);
+        return new SearchState($parsedQuery);
     }
 
-    protected function addSearchLink(
-        Form $searchForm,
-        $label,
-        $parsedQuery
-    ) {
-        global $ID;
+    /**
+     * Get a link that represents the current search state
+     *
+     * Note that this represents only a simplified version of the search state.
+     * Grouping with braces and "OR" conditions are not supported.
+     *
+     * @param $label
+     *
+     * @return string
+     */
+    public function getSearchLink($label)
+    {
+        global $ID, $conf;
+        $parsedQuery = $this->parsedQuery;
+
+        $tagAttributes = [
+            'target' => $conf['target']['wiki'],
+        ];
 
         $newQuery = ft_queryUnparser_simple(
             $parsedQuery['and'],
@@ -108,11 +134,8 @@ class SearchState
         if ($parsedQuery['sort']) {
             $hrefAttributes['srt'] = $parsedQuery['sort'];
         }
-        $searchForm->addTagOpen('a')
-            ->attrs([
-                'href' => wl($ID, $hrefAttributes, false, '&')
-            ]);
-        $searchForm->addHTML($label);
-        $searchForm->addTagClose('a');
+
+        $href = wl($ID, $hrefAttributes, false, '&');
+        return "<a href='$href' " . buildAttributes($tagAttributes) . ">$label</a>";
     }
 }

@@ -130,11 +130,8 @@ class Search extends Ui
                 $listItem->addClass('active');
                 $searchForm->addHTML($option['label']);
             } else {
-                $this->searchState->addSearchLinkSort(
-                    $searchForm,
-                    $option['label'],
-                    $option['sort']
-                );
+                $link = $this->searchState->withSorting($option['sort'])->getSearchLink($option['label']);
+                $searchForm->addHTML($link);
             }
             $searchForm->addTagClose('li');
         }
@@ -266,12 +263,11 @@ class Search extends Ui
                 $listItem->addClass('active');
                 $searchForm->addHTML($option['label']);
             } else {
-                $this->searchState->addSearchLinkFragment(
-                    $searchForm,
-                    $option['label'],
-                    $option['and'],
-                    $option['not']
-                );
+                $link = $this->searchState
+                    ->withFragments($option['and'], $option['not'])
+                    ->getSearchLink($option['label'])
+                ;
+                $searchForm->addHTML($link);
             }
             $searchForm->addTagClose('li');
         }
@@ -315,11 +311,8 @@ class Search extends Ui
         $listItem = $searchForm->addTagOpen('li');
         if ($baseNS) {
             $listItem->addClass('active');
-            $this->searchState->addSeachLinkNS(
-                $searchForm,
-                $lang['search_any_ns'],
-                ''
-            );
+            $link = $this->searchState->withNamespace('')->getSearchLink($lang['search_any_ns']);
+            $searchForm->addHTML($link);
         } else {
             $searchForm->addHTML($lang['search_any_ns']);
         }
@@ -333,11 +326,8 @@ class Search extends Ui
                 $listItem->addClass('active');
                 $searchForm->addHTML($label);
             } else {
-                $this->searchState->addSeachLinkNS(
-                    $searchForm,
-                    $label,
-                    $ns
-                );
+                $link = $this->searchState->withNamespace($ns)->getSearchLink($label);
+                $searchForm->addHTML($link);
             }
             $searchForm->addTagClose('li');
         }
@@ -436,12 +426,11 @@ class Search extends Ui
                 $listItem->addClass('active');
                 $searchForm->addHTML($option['label']);
             } else {
-                $this->searchState->addSearchLinkTime(
-                    $searchForm,
-                    $option['label'],
-                    $option['after'],
-                    $option['before']
-                );
+                $link = $this->searchState
+                    ->withTimeLimitations($option['after'], $option['before'])
+                    ->getSearchLink($option['label'])
+                ;
+                $searchForm->addHTML($link);
             }
             $searchForm->addTagClose('li');
         }
@@ -620,9 +609,8 @@ class Search extends Ui
         if (!empty($this->parsedQuery['ns']) && $this->parsedQuery['ns'][0] === $ns) {
             return false;
         }
+
         $name = '@' . $ns;
-        $tmpForm = new Form();
-        $this->searchState->addSeachLinkNS($tmpForm, $name, $ns);
-        return $tmpForm->toHTML();
+        return $this->searchState->withNamespace($ns)->getSearchLink($name);
     }
 }
