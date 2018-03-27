@@ -76,7 +76,7 @@ class Search extends AbstractAction {
      */
     protected function adjustGlobalQuery()
     {
-        global $conf, $INPUT, $QUERY;
+        global $conf, $INPUT, $QUERY, $ID;
 
         if ($INPUT->bool('searchPageForm')) {
             return;
@@ -87,9 +87,8 @@ class Search extends AbstractAction {
 
         if (empty($parsedQuery['ns']) && empty($parsedQuery['notns'])) {
             if ($conf['search_limit_to_first_ns'] > 0) {
-                $searchOriginPage = $INPUT->str('from');
-                if (getNS($searchOriginPage) !== false) {
-                    $nsParts = explode(':', getNS($searchOriginPage));
+                if (getNS($ID) !== false) {
+                    $nsParts = explode(':', getNS($ID));
                     $ns = implode(':', array_slice($nsParts, 0, $conf['search_limit_to_first_ns']));
                     $QUERY .= " @$ns";
                 }
