@@ -235,11 +235,16 @@ class Search extends Ui
         ];
 
         // detect current
-        $activeOption = 'exact';
+        $activeOption = 'custom';
         foreach ($options as $key => $option) {
             if ($this->parsedQuery['and'] === $option['and']) {
                 $activeOption = $key;
             }
+        }
+        if ($activeOption === 'custom') {
+            $options = array_merge(['custom' => [
+                'label' => $lang['search_custom_match'],
+            ]], $options);
         }
 
         $searchForm->addTagOpen('div')->addClass('search-tool js-search-tool');

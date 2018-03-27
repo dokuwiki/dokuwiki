@@ -75,6 +75,7 @@ $lang['search_exact_match']    = 'Exact match';
 $lang['search_starts_with']    = 'Starts with';
 $lang['search_ends_with']      = 'Ends with';
 $lang['search_contains']       = 'Contains';
+$lang['search_custom_match']   = 'Custom';
 $lang['search_any_ns']         = 'Any namespace';
 $lang['search_any_time']       = 'Any time';
 $lang['search_past_7_days']    = 'Past week';
