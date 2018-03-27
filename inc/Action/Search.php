@@ -36,7 +36,7 @@ class Search extends AbstractAction {
         global $QUERY, $ID, $conf, $INPUT;
         $s = cleanID($QUERY);
 
-        if ($ID !== $conf['start'] && $s === '') {
+        if ($ID !== $conf['start'] && !$INPUT->has('q')) {
             parse_str($INPUT->server->str('QUERY_STRING'), $urlParts);
             $urlParts['q'] = $urlParts['id'];
             $urlParts['id'] = $conf['start'];
