@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marilia Moreira <m2biam@gmail.com>
  * @author Guido Salatino <guidorafael23@gmail.com>
  * @author Romulo Pereira <romuloccomp@gmail.com>
  * @author Paulo Carmino <contato@paulocarmino.com>
