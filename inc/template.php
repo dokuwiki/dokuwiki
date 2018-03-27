@@ -667,7 +667,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
         'role' => 'search',
         'class' => 'search',
         'id' => 'dw__search',
-    ]);
+    ], true);
     $searchForm->addTagOpen('div')->addClass('no');
     $searchForm->setHiddenField('do', 'search');
     $searchForm->setHiddenField('id', $ID);

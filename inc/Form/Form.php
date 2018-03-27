@@ -24,8 +24,9 @@ class Form extends Element {
      * Creates a new, empty form with some default attributes
      *
      * @param array $attributes
+     * @param bool  $unsafe     if true, then the security token is ommited
      */
-    public function __construct($attributes = array()) {
+    public function __construct($attributes = array(), $unsafe = false) {
         global $ID;
 
         parent::__construct('form', $attributes);
@@ -49,7 +50,9 @@ class Form extends Element {
         }
 
         // add the security token by default
-        $this->setHiddenField('sectok', getSecurityToken());
+        if (!$unsafe) {
+            $this->setHiddenField('sectok', getSecurityToken());
+        }
 
         // identify this as a new form based form in HTML
         $this->addClass('doku_form');

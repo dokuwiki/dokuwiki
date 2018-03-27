@@ -65,7 +65,7 @@ class Search extends Ui
     {
         global $lang, $ID, $INPUT;
 
-        $searchForm = (new Form())->attrs(['method' => 'get'])->addClass('search-results-form');
+        $searchForm = (new Form(['method' => 'get'], true))->addClass('search-results-form');
         $searchForm->setHiddenField('do', 'search');
         $searchForm->setHiddenField('id', $ID);
         $searchForm->setHiddenField('sf', '1');
