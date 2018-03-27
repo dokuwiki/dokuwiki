@@ -79,6 +79,20 @@ class Form extends Element {
     }
 
     /**
+     * Get the position of the element in the form or false if it is not in the form
+     *
+     * Warning: This function may return Boolean FALSE, but may also return a non-Boolean value which evaluates to FALSE. Please read the section on Booleans for more information. Use the === operator for testing the return value of this function.
+     *
+     * @param Element $element
+     *
+     * @return false|int
+     */
+    public function getElementPosition(Element $element)
+    {
+        return array_search($element, $this->elements, true);
+    }
+
+    /**
      * Returns a reference to the element at a position.
      * A position out-of-bounds will return either the
      * first (underflow) or last (overflow) element.
