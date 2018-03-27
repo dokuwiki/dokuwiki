@@ -43,9 +43,9 @@ class Search extends Ui
     {
         $searchHTML = '';
 
-        $searchHTML .= $this->getSearchFormHTML($this->query);
-
         $searchHTML .= $this->getSearchIntroHTML($this->query);
+
+        $searchHTML .= $this->getSearchFormHTML($this->query);
 
         $searchHTML .= $this->getPageLookupHTML($this->pageLookupResults);
 
@@ -460,17 +460,41 @@ class Search extends Ui
      */
     protected function getSearchIntroHTML($query)
     {
-        global $ID, $lang;
+        global $lang;
 
         $intro = p_locale_xhtml('searchpage');
-        // allow use of placeholder in search intro
-        $pagecreateinfo = (auth_quickaclcheck($ID) >= AUTH_CREATE) ? $lang['searchcreatepage'] : '';
+
+        $queryPagename = $this->createPagenameFromQuery($this->parsedQuery);
+        $createQueryPageLink = html_wikilink($queryPagename . '?do=edit', $queryPagename);
+
+        $pagecreateinfo = '';
+        if (auth_quickaclcheck($queryPagename) >= AUTH_CREATE) {
+            $pagecreateinfo = sprintf($lang['searchcreatepage'], $createQueryPageLink);
+        }
         $intro = str_replace(
             array('@QUERY@', '@SEARCH@', '@CREATEPAGEINFO@'),
             array(hsc(rawurlencode($query)), hsc($query), $pagecreateinfo),
             $intro
         );
+
         return $intro;
+    }
+
+    /**
+     * Create a pagename based the parsed search query
+     *
+     * @param array $parsedQuery
+     *
+     * @return string pagename constructed from the parsed query
+     */
+    protected function createPagenameFromQuery($parsedQuery)
+    {
+        $pagename = '';
+        if (!empty($parsedQuery['ns'])) {
+            $pagename .= cleanID($parsedQuery['ns'][0]);
+        }
+        $pagename .= ':' . cleanID(implode(' ' , $parsedQuery['highlight']));
+        return $pagename;
     }
 
     /**
@@ -524,7 +548,9 @@ class Search extends Ui
             return '<div class="nothing">' . $lang['nothingfound'] . '</div>';
         }
 
-        $html = '';
+        $html = '<div class="search_fulltextresult">';
+        $html .= '<h3>' . $lang['search_fullresults'] . ':</h3>';
+
         $html .= '<dl class="search_results">';
         $num = 1;
 
@@ -570,6 +596,8 @@ class Search extends Ui
             $html .= '</div>';
         }
         $html .= '</dl>';
+
+        $html .= '</div>';
 
         return $html;
     }
