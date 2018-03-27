@@ -168,8 +168,8 @@ class Search extends Ui
      */
     protected function addSearchAssistanceElements(Form $searchForm)
     {
-        // FIXME localize
-        $searchForm->addButton('toggleAssistant', 'toggle search assistant')
+        global $lang;
+        $searchForm->addButton('toggleAssistant', $lang['search_toggle_tools'])
             ->attr('type', 'button')
             ->addClass('toggleAssistant');
 
