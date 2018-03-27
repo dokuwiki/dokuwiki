@@ -373,6 +373,7 @@ class Search extends Ui
             }
             $namespaces[$subtopNS] += 1;
         }
+        ksort($namespaces);
         arsort($namespaces);
         return $namespaces;
     }
