@@ -2,4 +2,3 @@
 
 Du kan se resultaterne af din søgning nedenunder. @CREATEPAGEINFO@
 
-===== Søgeresultater =====

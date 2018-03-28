@@ -2,4 +2,3 @@
 
 Emaitzak ondorengo aurkiketan bilatu ditzakezu. @CREATEPAGEINFO@
 
-===== Bilaketa emaitzak: =====
