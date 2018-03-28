@@ -586,7 +586,7 @@ class Search extends Ui
                 if ($num < FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
                     $snippet = '<dd>' . ft_snippet($id, $highlight) . '</dd>';
                     $lastMod = '<span class="search_results__lastmod">' . $lang['lastmod'] . ' ';
-                    $lastMod .= '<time datetime="' . date_iso8601($mtime) . '">' . dformat($mtime) . '</time>';
+                    $lastMod .= '<time datetime="' . date_iso8601($mtime) . '" title="'.dformat($mtime).'">' . dformat($mtime, '%f') . '</time>';
                     $lastMod .= '</span>';
                 }
                 $num++;
