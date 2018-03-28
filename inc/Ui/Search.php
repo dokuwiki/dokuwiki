@@ -614,9 +614,9 @@ class Search extends Ui
     /**
      * create a link to restrict the current query to a namespace
      *
-     * @param bool|string $ns the namespace to which to restrict the query
+     * @param false|string $ns the namespace to which to restrict the query
      *
-     * @return bool|string
+     * @return false|string
      */
     protected function restrictQueryToNSLink($ns)
     {
