@@ -16,9 +16,9 @@ class Search extends Ui
     /**
      * Search constructor.
      *
-     * @param array  $pageLookupResults
-     * @param array  $fullTextResults
-     * @param string $highlight
+     * @param array $pageLookupResults pagename lookup results in the form [pagename => pagetitle]
+     * @param array $fullTextResults fulltext search results in the form [pagename => #hits]
+     * @param array $highlight  array of strings to be highlighted
      */
     public function __construct(array $pageLookupResults, array $fullTextResults, $highlight)
     {
