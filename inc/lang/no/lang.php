@@ -86,7 +86,6 @@ $lang['badpassconfirm']        = 'Beklager, passordet var feil';
 $lang['minoredit']             = 'Mindre endringer';
 $lang['draftdate']             = 'Kladd autolagret';
 $lang['nosecedit']             = 'Siden er i mellomtiden endret, seksjonsinfo har blitt foreldet - lastet full side istedet.';
-$lang['searchcreatepage']      = 'Hvis du ikke finner det du leter etter, så kan du skape en ny side med samme navn som ditt søk ved å klikke på \'\'**Lag denne siden**\'\'-knappen.';
 $lang['regmissing']            = 'Vennligst fyll ut alle felt.';
 $lang['reguexists']            = 'Det finnes allerede en konto med dette brukernavnet.';
 $lang['regsuccess']            = 'Brukerkonto har blitt laget og passord har blitt sendt via e-post.';

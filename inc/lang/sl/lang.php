@@ -71,7 +71,6 @@ $lang['badpassconfirm']        = 'Napaka! Geslo ni pravo.';
 $lang['minoredit']             = 'Manjše spremembe';
 $lang['draftdate']             = 'Samodejno shranjevanje osnutka je omogočeno';
 $lang['nosecedit']             = 'Stran je bila v vmesnem času spremenjena. Podatki strani so bili zastareli, zato se je celotna vsebina naložila znova.';
-$lang['searchcreatepage']      = 'V kolikor rezultati niso skladni z zahtevami iskanja, je mogoče ustvariti  novo stran z nazivom vaše poizvedbe preko povezave \'\'Uredi stran\'\'.';
 $lang['regmissing']            = 'Izpolniti je treba vsa polja.';
 $lang['reguexists']            = 'Uporabnik s tem imenom že obstaja.';
 $lang['regsuccess']            = 'Uporabniški račun je uspešno ustvarjen. Geslo je bilo poslano na naveden elektronski naslov.';

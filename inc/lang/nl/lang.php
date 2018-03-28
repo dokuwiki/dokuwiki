@@ -89,7 +89,6 @@ $lang['badpassconfirm']        = 'Sorry, het wachtwoord was onjuist';
 $lang['minoredit']             = 'Kleine wijziging';
 $lang['draftdate']             = 'Concept automatisch opgeslagen op';
 $lang['nosecedit']             = 'De pagina is tussentijds veranderd, sectie-informatie was verouderd, volledige pagina geladen.';
-$lang['searchcreatepage']      = 'Niks gevonden? Maak een nieuwe pagina met als naam je zoekopdracht. Klik hiervoor op \'\'Maak deze pagina aan\'\'.';
 $lang['regmissing']            = 'Vul alle velden in';
 $lang['reguexists']            = 'Er bestaat al een gebruiker met deze loginnaam.';
 $lang['regsuccess']            = 'De gebruiker is aangemaakt. Het wachtwoord is per e-mail verzonden.';

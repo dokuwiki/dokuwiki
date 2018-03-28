@@ -59,7 +59,6 @@ $lang['badlogin']              = 'Təssüf ki istifadəçi adı və ya şifrə s
 $lang['minoredit']             = 'Az dəyişiklər';
 $lang['draftdate']             = 'Qaralama yadda saxlandı';
 $lang['nosecedit']             = 'Bu vaxt ərzində səhifə dəyişilmişdir, və bölmə haqqında məlumat köhnəlmişdir. Səhifənin tam versiyası yüklənmişdir.';
-$lang['searchcreatepage']      = 'Əgər Siz axtardığınızı tapa bilmədinizsə, onda Siz adı axtarışınız ilə uyğun düşən yeni səhifə yarada bilərsiniz. Bunu eləmək üçün, sadəcə \'\'Səhifəni yarat\'\' düyməsini sıxın.';
 $lang['regmissing']            = 'Təssüf ki Siz bütün xanələri doldurmalısınız.';
 $lang['reguexists']            = 'Təssüf ki bu ad ilə istifadəçi artıq mövcuddur.';
 $lang['regsuccess']            = 'İstivadəci yaradıldı və şifrə sizin e-maila göndərildi.';

@@ -84,7 +84,6 @@ $lang['badpassconfirm']        = 'Das Passwort war falsch.';
 $lang['minoredit']             = 'Kleine Änderung';
 $lang['draftdate']             = 'Entwurf gespeichert am';
 $lang['nosecedit']             = 'Diese Seite wurde in der Zwischenzeit geändert, da das Sektionsinfo veraltet ist. Die ganze Seite wird stattdessen geladen.';
-$lang['searchcreatepage']      = 'Falls der gesuchte Begriff nicht gefunden wurde, kannst du direkt eine neue Seite für den Suchbegriff anlegen, indem du auf den Knopf **\'\'[Seite anlegen]\'\'** drückst.';
 $lang['regmissing']            = 'Alle Felder müssen ausgefüllt werden';
 $lang['reguexists']            = 'Der Benutzername existiert leider schon.';
 $lang['regsuccess']            = 'Der neue Benutzer wurde angelegt und das Passwort per E-Mail versandt.';

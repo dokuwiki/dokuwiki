@@ -81,7 +81,6 @@ $lang['badpassconfirm']        = 'Niestety, hasło jest niepoprawne.';
 $lang['minoredit']             = 'Mniejsze zmiany';
 $lang['draftdate']             = 'Czas zachowania szkicu';
 $lang['nosecedit']             = 'Strona została zmodyfikowana, sekcje zostały zmienione. Załadowano całą stronę.';
-$lang['searchcreatepage']      = 'Jeśli nie znaleziono szukanego hasła, możesz utworzyć nową stronę, której tytułem będzie poszukiwane hasło.';
 $lang['regmissing']            = 'Wypełnij wszystkie pola.';
 $lang['reguexists']            = 'Użytkownik o tej nazwie już istnieje.';
 $lang['regsuccess']            = 'Utworzono użytkownika. Hasło zostało przesłane pocztą.';

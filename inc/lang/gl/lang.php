@@ -62,7 +62,6 @@ $lang['badlogin']              = 'Sentímolo, mais o nome de usuario ou o contra
 $lang['minoredit']             = 'Trocos Menores';
 $lang['draftdate']             = 'Borrador gardado automaticamente en';
 $lang['nosecedit']             = 'A páxina mudou entrementres, a información da sección estaba desfasada polo que se cargou a páxina completa no seu lugar.';
-$lang['searchcreatepage']      = "Se non atopaches o que estabas a procurar, podes crear ou editar a páxina co nome relacionado coa túa procura empregando o botón axeitado.";
 $lang['regmissing']            = 'Sentímolo, mais tes que cubrir todos os campos.';
 $lang['reguexists']            = 'Sentímolo, mais xa existe un usuario con ese nome.';
 $lang['regsuccess']            = 'O usuario foi creado e o contrasinal enviado por correo-e.';

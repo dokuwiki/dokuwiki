@@ -69,7 +69,7 @@ $lang['badpassconfirm']        = 'Sorry, the password was wrong';
 $lang['minoredit']             = 'Minor Changes';
 $lang['draftdate']             = 'Draft autosaved on'; // full dformat date will be added
 $lang['nosecedit']             = 'The page was changed in the meantime, section info was out of date loaded full page instead.';
-$lang['searchcreatepage']      = 'If you didn\'t find what you were looking for, you can create or edit the page %s, named after your query, with the appropriate tool.';
+$lang['searchcreatepage']      = 'If you didn\'t find what you were looking for, you can create or edit the page %s, named after your query.';
 
 $lang['search_fullresults']    = 'Fulltext results';
 $lang['search_toggle_tools']   = 'Toggle search tools';
