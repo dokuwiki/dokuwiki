@@ -344,7 +344,7 @@ class Search extends Ui
 
         foreach ($extraNS as $ns => $count) {
             $listItem = $searchForm->addTagOpen('li');
-            $label = $ns . ($count ? " ($count)" : '');
+            $label = $ns . ($count ? " <bdi>($count)</bdi>" : '');
 
             if ($ns === $baseNS) {
                 $listItem->addClass('active');

@@ -21,8 +21,9 @@
 ********************************************************************/
 
 /*____________ advanced search form ____________*/
-.search-results-form fieldset.search-form {
+.dokuwiki .search-results-form fieldset.search-form {
     width: 100%;
+    margin: 1em 0;
 
     input[name="q"] {
         width: 50%;
@@ -35,21 +36,26 @@
     .advancedOptions {
         padding: 1em 0;
 
-        div {
+        > div {
             display: inline-block;
             position: relative;
-            margin: 0 0.25em 0 0.5em;
+            margin: 0 0.5em;
         }
 
         div.toggle {
             // default closed toggle state
-            &::after {
-                content: '▼';
-                font-size: smaller;
-                color: @ini_text_alt;
-            }
             div.current {
                 cursor: pointer;
+                max-width: 10em;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                &::after {
+                    content: '▼';
+                    font-size: smaller;
+                    color: @ini_text_alt;
+                }
             }
             div.changed {
                 font-weight: bold;
@@ -59,11 +65,15 @@
                 position: absolute;
                 border: 1px solid @ini_border;
                 background-color: @ini_background;
-                padding: 0.2em;
+                padding: 0.25em 0.5em;
                 text-align: left;
-                width: 10em;
+                min-width: 10em;
+                max-width: 15em;
+                max-height: 50vh;
+                overflow: auto;
+                z-index: 100;
                 li {
-                    margin: 0.2em 0;
+                    margin: 0.25em 0;
                     list-style: none;
 
                     a {
@@ -74,7 +84,7 @@
 
             // open toggle state
             &.open {
-                &::after {
+                div.current::after {
                     content: '▲';
                 }
 
@@ -85,6 +95,13 @@
         }
     }
 }
+
+[dir=rtl] .search-results-form fieldset.search-form .advancedOptions {
+    div.toggle ul {
+        text-align: right;
+    }
+}
+
 
 /*____________ matching pagenames ____________*/
 
