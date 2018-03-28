@@ -187,11 +187,6 @@ class Search extends Ui
      */
     protected function addSearchAssistanceElements(Form $searchForm)
     {
-        global $lang;
-        $searchForm->addButton('toggleAssistant', $lang['search_toggle_tools'])
-            ->attr('type', 'button')
-            ->addClass('toggleAssistant');
-
         $searchForm->addTagOpen('div')
             ->addClass('advancedOptions')
             ->attr('style', 'display: none;')
