@@ -116,7 +116,7 @@ class Search extends Ui
             $activeOption = 'mtime';
         }
 
-        $searchForm->addTagOpen('div')->addClass('toggle');
+        $searchForm->addTagOpen('div')->addClass('toggle')->attr('aria-haspopup', 'true');
         // render current
         $currentWrapper = $searchForm->addTagOpen('div')->addClass('current');
         if ($activeOption !== 'hits') {
@@ -126,7 +126,7 @@ class Search extends Ui
         $searchForm->addTagClose('div');
 
         // render options list
-        $searchForm->addTagOpen('ul');
+        $searchForm->addTagOpen('ul')->attr('aria-expanded', 'false');
 
         foreach ($options as $key => $option) {
             $listItem = $searchForm->addTagOpen('li');
@@ -194,7 +194,8 @@ class Search extends Ui
 
         $searchForm->addTagOpen('div')
             ->addClass('advancedOptions')
-            ->attr('style', 'display: none;');
+            ->attr('style', 'display: none;')
+            ->attr('aria-hidden', 'true');
 
         $this->addFragmentBehaviorLinks($searchForm);
         $this->addNamespaceSelector($searchForm);
@@ -268,7 +269,7 @@ class Search extends Ui
             ]], $options);
         }
 
-        $searchForm->addTagOpen('div')->addClass('toggle');
+        $searchForm->addTagOpen('div')->addClass('toggle')->attr('aria-haspopup', 'true');
         // render current
         $currentWrapper = $searchForm->addTagOpen('div')->addClass('current');
         if ($activeOption !== 'exact') {
@@ -278,7 +279,7 @@ class Search extends Ui
         $searchForm->addTagClose('div');
 
         // render options list
-        $searchForm->addTagOpen('ul');
+        $searchForm->addTagOpen('ul')->attr('aria-expanded', 'false');
 
         foreach ($options as $key => $option) {
             $listItem = $searchForm->addTagOpen('li');
@@ -318,7 +319,7 @@ class Search extends Ui
         $baseNS = empty($this->parsedQuery['ns']) ? '' : $this->parsedQuery['ns'][0];
         $extraNS = $this->getAdditionalNamespacesFromResults($baseNS);
 
-        $searchForm->addTagOpen('div')->addClass('toggle');
+        $searchForm->addTagOpen('div')->addClass('toggle')->attr('aria-haspopup', 'true');
         // render current
         $currentWrapper = $searchForm->addTagOpen('div')->addClass('current');
         if ($baseNS) {
@@ -330,7 +331,7 @@ class Search extends Ui
         $searchForm->addTagClose('div');
 
         // render options list
-        $searchForm->addTagOpen('ul');
+        $searchForm->addTagOpen('ul')->attr('aria-expanded', 'false');
 
         $listItem = $searchForm->addTagOpen('li');
         if ($baseNS) {
@@ -431,7 +432,7 @@ class Search extends Ui
             }
         }
 
-        $searchForm->addTagOpen('div')->addClass('toggle');
+        $searchForm->addTagOpen('div')->addClass('toggle')->attr('aria-haspopup', 'true');
         // render current
         $currentWrapper = $searchForm->addTagOpen('div')->addClass('current');
         if ($INPUT->has('dtb') || $INPUT->has('dta')) {
@@ -441,7 +442,7 @@ class Search extends Ui
         $searchForm->addTagClose('div');
 
         // render options list
-        $searchForm->addTagOpen('ul');
+        $searchForm->addTagOpen('ul')->attr('aria-expanded', 'false');
 
         foreach ($options as $key => $option) {
             $listItem = $searchForm->addTagOpen('li');
