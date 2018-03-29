@@ -352,7 +352,7 @@ function tpl_metaheaders($alt = true) {
 }
 
 function _tpl_ensureJSINFO() {
-    global $JSINFO, $ID, $INFO;
+    global $JSINFO, $ID, $INFO, $ACT;
 
     if (!is_array($JSINFO)) {
         $JSINFO = [];
