@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author jrgarcia <jrgarcia@jrgarcia.es>
  * @author Zigor Astarbe <zigor@astarbe.com>
  * @author Adrián Ariza <adrian_ariza.ciudad.com.ar>
  * @author Gabiel Molina <gabriel191@gmail.com>
@@ -11,7 +12,7 @@
  * @author Miguel Pagano <miguel.pagano@gmail.com>
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author Gabriel Castillo <gch@pumas.ii.unam.mx>
- * @author oliver@samera.com.py
+ * @author oliver <oliver@samera.com.py>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
  * @author Jordan Mero <hack.jord@gmail.com>
@@ -27,8 +28,7 @@
  * @author Oscar Ciudad <oscar@jacho.net>
  * @author Ruben Figols <ruben.figols@gmail.com>
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
- * @author Mercè López mercelz@gmail.com
- * @author r0sk <r0sk10@gmail.com>
+ * @author Mercè López <mercelz@gmail.com>
  * @author monica <may.dorado@gmail.com>
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Juan De La Cruz <juann.dlc@gmail.com>
