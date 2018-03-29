@@ -69,11 +69,11 @@ class Search extends Ui
         $searchForm->setHiddenField('do', 'search');
         $searchForm->setHiddenField('id', $ID);
         $searchForm->setHiddenField('sf', '1');
-        if ($INPUT->has('dta')) {
-            $searchForm->setHiddenField('dta', $INPUT->str('dta'));
+        if ($INPUT->has('min')) {
+            $searchForm->setHiddenField('min', $INPUT->str('min'));
         }
-        if ($INPUT->has('dtb')) {
-            $searchForm->setHiddenField('dtb', $INPUT->str('dtb'));
+        if ($INPUT->has('max')) {
+            $searchForm->setHiddenField('max', $INPUT->str('max'));
         }
         if ($INPUT->has('srt')) {
             $searchForm->setHiddenField('srt', $INPUT->str('srt'));
@@ -421,7 +421,7 @@ class Search extends Ui
         ];
         $activeOption = 'any';
         foreach ($options as $key => $option) {
-            if ($INPUT->str('dta') === $option['after']) {
+            if ($INPUT->str('min') === $option['after']) {
                 $activeOption = $key;
                 break;
             }
@@ -430,7 +430,7 @@ class Search extends Ui
         $searchForm->addTagOpen('div')->addClass('toggle')->attr('aria-haspopup', 'true');
         // render current
         $currentWrapper = $searchForm->addTagOpen('div')->addClass('current');
-        if ($INPUT->has('dtb') || $INPUT->has('dta')) {
+        if ($INPUT->has('max') || $INPUT->has('min')) {
             $currentWrapper->addClass('changed');
         }
         $searchForm->addHTML($options[$activeOption]['label']);

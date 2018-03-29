@@ -20,10 +20,10 @@ class SearchState
 
         $this->parsedQuery = $parsedQuery;
         if (!isset($parsedQuery['after'])) {
-            $this->parsedQuery['after'] = $INPUT->str('dta');
+            $this->parsedQuery['after'] = $INPUT->str('min');
         }
         if (!isset($parsedQuery['before'])) {
-            $this->parsedQuery['before'] = $INPUT->str('dtb');
+            $this->parsedQuery['before'] = $INPUT->str('max');
         }
         if (!isset($parsedQuery['sort'])) {
             $this->parsedQuery['sort'] = $INPUT->str('srt');
@@ -126,10 +126,10 @@ class SearchState
         );
         $hrefAttributes = ['do' => 'search', 'sf' => '1', 'q' => $newQuery];
         if ($parsedQuery['after']) {
-            $hrefAttributes['dta'] = $parsedQuery['after'];
+            $hrefAttributes['min'] = $parsedQuery['after'];
         }
         if ($parsedQuery['before']) {
-            $hrefAttributes['dtb'] = $parsedQuery['before'];
+            $hrefAttributes['max'] = $parsedQuery['before'];
         }
         if ($parsedQuery['sort']) {
             $hrefAttributes['srt'] = $parsedQuery['sort'];
