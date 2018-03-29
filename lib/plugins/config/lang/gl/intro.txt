@@ -1,7 +1,1 @@
-====== Xestor de Configuración ======
-
-Usa esta páxina para controlares a configuración da túa instalación do Dokuwiki.  Para atopares axuda verbo de cada opción da configuración vai a [[doku>config]]. Para obteres pormenores desta extensión bota un ollo a [[doku>plugin:config]].
-
-As opcións que amosan un fondo de cor vermella clara están protexidas e non poden ser alteradas con esta extensión. As opcións que amosan un fondo de cor azul son valores predeterminados e as opcións que teñen fondo branco foron configuradas de xeito local para esta instalación en concreto. Ámbalas dúas, as opcións azuis e brancas, poden ser alteradas.
-
-Lembra premer no boton **GARDAR** denantes de saíres desta páxina ou, en caso contrario, os teus trocos perderanse.
+24 years old Dental Specialist Ciaburri from Clifford, likes 4 wheeling, Les Derniers Produits High and collecting music albums. Loves to go to unknown locations for example Kenya Lake System in the Great Rift Valley.

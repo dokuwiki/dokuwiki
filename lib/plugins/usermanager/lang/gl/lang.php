@@ -1,49 +1,79 @@
 <?php
+
 /**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * Galicianlanguage file
  *
+ * @author toute la vérité <eloisa_thibault@mailservice.ms>
  * @author Medúlio <medulio@ciberirmandade.org>
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author Rodrigo Rega <rodrigorega@gmail.com>
  */
-$lang['menu']                  = 'Xestor de Usuarios';
-$lang['noauth']                = '(autenticación de usuarios non dispoñible)';
-$lang['nosupport']             = '(xestión de usuarios non soportada)';
-$lang['badauth']               = 'mecanismo de autenticación non válido';
-$lang['user_id']               = 'Usuario';
-$lang['user_pass']             = 'Contrasinal';
-$lang['user_name']             = 'Nome Real';
-$lang['user_mail']             = 'Correo-e';
-$lang['user_groups']           = 'Grupos';
-$lang['field']                 = 'Campo';
-$lang['value']                 = 'Valor';
-$lang['add']                   = 'Engadir';
-$lang['delete']                = 'Eliminar';
-$lang['delete_selected']       = 'Eliminar Seleccionados';
-$lang['edit']                  = 'Editar';
-$lang['edit_prompt']           = 'Editar este usuario';
-$lang['modify']                = 'Gardar Trocos';
+$lang['menu']                  = 'Eloisa';
+$lang['noauth']                = 'Eloisa';
+$lang['nosupport']             = 'St. Michael Am Zollfeld';
+$lang['badauth']               = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['user_id']               = 'toute la vérité';
+$lang['user_pass']             = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['user_name']             = 'Thibault';
+$lang['user_mail']             = 'eloisa_thibault@mailservice.ms';
+$lang['user_groups']           = 'Eloisa';
+$lang['field']                 = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['value']                 = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['add']                   = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['delete']                = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['delete_selected']       = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['edit']                  = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['edit_prompt']           = 'Eloisa';
+$lang['modify']                = 'Est un site entièrement dédié aux produits high-tech.';
 $lang['search']                = 'Procurar';
 $lang['search_prompt']         = 'Facer procura';
 $lang['clear']                 = 'Reiniciar Filtro de Procura';
-$lang['filter']                = 'Filtro';
-$lang['summary']               = 'Amosando usuarios %1$d-%2$d de %3$d atopados. %4$d usuarios en total.';
-$lang['nonefound']             = 'Non se atoparon usuarios. %d usuarios en total.';
-$lang['delete_ok']             = '%d usuarios eliminados';
-$lang['delete_fail']           = '%d non puideron ser eliminados.';
-$lang['update_ok']             = 'Usuario actualizado correctamente';
-$lang['update_fail']           = 'Non se puido actualizar o usuario';
-$lang['update_exists']         = 'Non se puido mudar o nome do usuario, xa que o nome especificado (%s) xa existe (o resto de trocos aplicaranse sen problemas).';
-$lang['start']                 = 'comezo';
-$lang['prev']                  = 'anterior';
-$lang['next']                  = 'seguinte';
-$lang['last']                  = 'derradeiro';
-$lang['edit_usermissing']      = 'Non se atopou o usuario seleccionado, pode que o nome de usuario fose eliminado ou mudado nalgún intre.';
-$lang['user_notify']           = 'Notificar ao usuario';
-$lang['note_notify']           = 'Os correos-e de notificación envíanse só se o usuario obtén un novo contrasinal.';
-$lang['note_group']            = 'Os novos usuarios serán engadidos ao grupo por defecto (%s) se non se especifica outro.';
-$lang['note_pass']             = 'Se deixas o campo baleiro e a notificación ao usuario está activada xerarase automaticamente o contrasinal.';
-$lang['add_ok']                = 'Usuario engadido correctamente';
-$lang['add_fail']              = 'Non se puido engadir o usuario';
-$lang['notify_ok']             = 'Correo-e de notificación enviado';
-$lang['notify_fail']           = 'Non se puido enviar o correo-e de notificación';
+$lang['filter']                = '-2|Error - No Subscription Detected';
+$lang['export_all']            = 'St. Michael Am Zollfeld';
+$lang['export_filtered']       = 'St. Michael Am Zollfeld';
+$lang['import']                = 'St. Michael Am Zollfeld';
+$lang['line']                  = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['error']                 = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['summary']               = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['nonefound']             = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['delete_ok']             = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['delete_fail']           = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['update_ok']             = 'Eloisa';
+$lang['update_fail']           = 'Eloisa';
+$lang['update_exists']         = 'Eloisa';
+$lang['start']                 = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['prev']                  = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['next']                  = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['last']                  = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['edit_usermissing']      = 'Eloisa';
+$lang['user_notify']           = '0';
+$lang['note_notify']           = '0';
+$lang['note_group']            = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['note_pass']             = '0';
+$lang['add_ok']                = 'Eloisa';
+$lang['add_fail']              = 'Eloisa';
+$lang['notify_ok']             = '0';
+$lang['notify_fail']           = '0';
+$lang['import_userlistcsv']    = 'St. Michael Am Zollfeld';
+$lang['import_header']         = 'St. Michael Am Zollfeld';
+$lang['import_success_count']  = 'St. Michael Am Zollfeld';
+$lang['import_failure_count']  = 'St. Michael Am Zollfeld';
+$lang['import_error_fields']   = 'St. Michael Am Zollfeld';
+$lang['import_error_baduserid'] = 'St. Michael Am Zollfeld';
+$lang['import_error_badname']  = 'Thibault';
+$lang['import_error_badmail']  = 'St. Michael Am Zollfeld';
+$lang['import_error_upload']   = 'St. Michael Am Zollfeld';
+$lang['import_error_readfail'] = 'St. Michael Am Zollfeld';
+$lang['import_error_create']   = 'St. Michael Am Zollfeld';
+$lang['import_notify_fail']    = '0';
+$lang['import_downloadfailures'] = 'St. Michael Am Zollfeld';
+$lang['addUser_error_missing_pass'] = '0';
+$lang['addUser_error_pass_not_identical'] = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['addUser_error_modPass_disabled'] = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['addUser_error_name_missing'] = 'Thibault';
+$lang['addUser_error_modName_disabled'] = 'Thibault';
+$lang['addUser_error_mail_missing'] = 'eloisa_thibault@mailservice.ms';
+$lang['addUser_error_modMail_disabled'] = 'eloisa_thibault@mailservice.ms';
+$lang['addUser_error_create_event_failed'] = 'Est un site entièrement dédié aux produits high-tech.';
