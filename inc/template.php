@@ -363,8 +363,8 @@ function _tpl_ensureJSINFO() {
     $JSINFO['id']                    = $ID;
     $JSINFO['namespace']             = (string) $INFO['namespace'];
     $JSINFO['ACT']                   = act_clean($ACT);
-    $JSINFO['DOKU_UHN']              = (int) useHeading('navigation');
-    $JSINFO['DOKU_UHC']              = (int) useHeading('content');
+    $JSINFO['useHeadingNavigation']  = (int) useHeading('navigation');
+    $JSINFO['useHeadingContent']     = (int) useHeading('content');
 }
 
 /**
