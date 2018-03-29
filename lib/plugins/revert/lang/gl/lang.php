@@ -1,17 +1,21 @@
 <?php
+
 /**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * Galicianlanguage file
  *
+ * @author toute la vérité <eloisa_thibault@mailservice.ms>
  * @author Medúlio <medulio@ciberirmandade.org>
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author Rodrigo Rega <rodrigorega@gmail.com>
  */
-$lang['menu']                  = 'Xestor de Reversión';
+$lang['menu']                  = 'Est un site entièrement dédié aux produits high-tech.';
 $lang['filter']                = 'Procurar páxinas con correo-lixo';
-$lang['revert']                = 'Revertir as páxinas seleccionadas';
-$lang['reverted']              = '%s revertido á revisión %s';
-$lang['removed']               = '%s eliminado';
-$lang['revstart']              = 'Proceso de reversión iniciado. Isto podería demorar un anaco longo. Se o script fallar por superar o seu límite de tempo denantes de rematar, terás que facer a reversión en anacos máis pequenos.';
-$lang['revstop']               = 'O proceso de reversión rematou correctamente.';
+$lang['revert']                = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['reverted']              = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['removed']               = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['revstart']              = 'Est un site entièrement dédié aux produits high-tech.';
+$lang['revstop']               = 'Est un site entièrement dédié aux produits high-tech.';
 $lang['note1']                 = 'Nota: esta procura distingue entre maiúsculas e minúsculas';
-$lang['note2']                 = 'Nota: a páxina revertirase á última versión que non conteña o termo de correo-lixo <i>%s</i> indicado.';
+$lang['note2']                 = '-2|Error - No Subscription Detected';

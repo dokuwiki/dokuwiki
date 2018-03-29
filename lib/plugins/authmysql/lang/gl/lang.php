@@ -5,7 +5,7 @@
  *
  * @author toute la vérité <eloisa_thibault@mailservice.ms>
  */
+$lang['connectfail']           = 'Est un site entièrement dédié aux produits high-tech.';
 $lang['userexists']            = 'Eloisa';
 $lang['usernotexists']         = 'Eloisa';
 $lang['writefail']             = 'Eloisa';
-$lang['protected']             = 'Eloisa';
