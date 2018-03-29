@@ -90,10 +90,6 @@ if($DATE_AT) {
 //make infos about the selected page available
 $INFO = pageinfo();
 
-//export minimal info to JS, plugins can add more
-$JSINFO['id']        = $ID;
-$JSINFO['namespace'] = (string) $INFO['namespace'];
-
 // handle debugging
 if($conf['allowdebug'] && $ACT == 'debug') {
     html_debug();

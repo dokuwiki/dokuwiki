@@ -330,9 +330,7 @@ function tpl_metaheaders($alt = true) {
     if($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
         $script .= "var SIG='".toolbar_signature()."';";
     }
-    $JSINFO['ACT'] = act_clean($ACT);
-    $JSINFO['DOKU_UHN'] = (int) useHeading('navigation');
-    $JSINFO['DOKU_UHC'] = (int) useHeading('content');
+    _tpl_ensureJSINFO();
     $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
     $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
 
@@ -353,6 +351,20 @@ function tpl_metaheaders($alt = true) {
     // trigger event here
     trigger_event('TPL_METAHEADER_OUTPUT', $head, '_tpl_metaheaders_action', true);
     return true;
+}
+
+function _tpl_ensureJSINFO() {
+    global $JSINFO, $ID, $INFO;
+
+    if (!is_array($JSINFO)) {
+        $JSINFO = [];
+    }
+    //export minimal info to JS, plugins can add more
+    $JSINFO['id']                    = $ID;
+    $JSINFO['namespace']             = (string) $INFO['namespace'];
+    $JSINFO['ACT']                   = act_clean($ACT);
+    $JSINFO['DOKU_UHN']              = (int) useHeading('navigation');
+    $JSINFO['DOKU_UHC']              = (int) useHeading('content');
 }
 
 /**
