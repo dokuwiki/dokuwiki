@@ -324,14 +324,12 @@ function tpl_metaheaders($alt = true) {
         'href'=> DOKU_BASE.'lib/exe/css.php?t='.rawurlencode($conf['template']).'&tseed='.$tseed
     );
 
-    // make $INFO and other vars available to JavaScripts
-    $json   = new JSON();
     $script = "var NS='".$INFO['namespace']."';";
     if($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
         $script .= "var SIG='".toolbar_signature()."';";
     }
     _tpl_ensureJSINFO();
-    $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
+    $script .= 'var JSINFO = ' . json_encode($JSINFO).';';
     $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
 
     // load jquery
