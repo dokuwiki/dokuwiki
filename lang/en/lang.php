@@ -23,6 +23,7 @@ $lang['pagelabel'] = 'Page';
 $lang['rowlabel'] = 'Row #';
 $lang['revisionlabel'] = 'Last Updated';
 $lang['userlabel'] = 'Last Editor';
+$lang['summarylabel'] = 'Last Summary';
 $lang['summary'] = 'Struct data changed';
 $lang['export'] = 'Export Schema as JSON';
 $lang['btn_export'] = 'Export';

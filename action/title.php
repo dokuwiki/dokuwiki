@@ -60,6 +60,13 @@ class action_plugin_struct_title extends DokuWiki_Action_Plugin {
             } else {
                 $page->setLastEditor(null);
             }
+
+            if(!blank($event->data['current']['last_change']['sum'])) {
+                $page->setLastSummary($event->data['current']['last_change']['sum']);
+            } else {
+                $page->setLastSummary(null);
+            }
+
             $page->savePageData();
         } catch(StructException $e) {
             msg($e->getMessage(), -1);
