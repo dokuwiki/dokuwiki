@@ -1,10 +1,1 @@
-S'ha registrat un usuari nou. Estes són les senyes:
-
-Nom d'usuari : @NEWUSER@
-Nom complet : @NEWNAME@
-Correu electrònic : @NEWEMAIL@
-
-Data : @DATE@
-Navegador : @BROWSER@
-Direcció IP : @IPADDRESS@
-Nom de la màquina : @HOSTNAME@
+bianca_harcus@gmail.com
