@@ -1,9 +1,1 @@
-====== Retroalimentació de popularitat ======
-
-Esta ferramenta arreplega senyes anònimes sobre el wiki i permet enviar-les als desenrolladors de DokuWiki. Açò els ajuda a comprendre cóm utilisen DokuWiki els usuaris i assegura que les decisions futures de desenroll estaran recolzades per estadístiques d'us real.
-
-L'animem a que repetixca este procés de tant en tant per a mantindre informats als desenrolladors quan el wiki creixca. Els seus conjunts reiteratius de senyes s'identificaran en un ID anònim.
-
-Les senyes arreplegades contenen informació com la versió del DokuWiki, el número i tamany de les pàgines i els archius, plúgins instalats i informació sobre l'instalació de PHP.
-
-Les senyes reals que s'enviaran es mostren ací avall. Per favor, utilise el botó "Enviar senyes" per a transferir l'informació.
+27 year-old Dressmaker or Tailor Donahey from Langley, likes to spend some time crosswords, Adala News and home for habitat for humanity. Has completed a fantastic around the world tour that included going to the Works of Antoni Gaudí.

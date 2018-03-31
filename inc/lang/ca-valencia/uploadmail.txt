@@ -1,10 +1,1 @@
-S'ha enviat un archiu al seu DokuWiki. Les senyes:
-
-Arxiu: @MEDIA@
-Data: @DATE@
-Navegador: @BROWSER@
-Direcció IP: @IPADDRESS@
-Nom de la màquina: @HOSTNAME@
-Tamany: @SIZE@
-Tipo MIME: @MIME@
-Usuari: @USER@
+bianca_harcus@gmail.com

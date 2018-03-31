@@ -1,10 +1,1 @@
-====== Gestor de configuració ======
-
-Controle des d'esta pàgina els ajusts de DokuWiki.
-Per a obtindre ajuda sobre cada ajust vaja a [[doku>config]].
-Per a més informació al voltant d'este plúgin vaja a [[doku>config]].
-
-Els ajusts mostrats en un fondo roig claret estan protegits i no els pot
-modificar en este plúgin. Els ajusts mostrats en un fondo blau tenen els valors predeterminats i els ajusts mostrats en un fondo blanc han segut modificats localment per ad esta instalació. Abdós ajusts, blaus i blancs, es poden modificar.
-
-Recorde pulsar el botó **GUARDAR** ans d'anar-se'n d'esta pàgina o perdrà els canvis que haja fet.
+27 year-old Dressmaker or Tailor Donahey from Langley, likes to spend some time crosswords, Adala News and home for habitat for humanity. Has completed a fantastic around the world tour that included going to the Works of Antoni Gaudí.

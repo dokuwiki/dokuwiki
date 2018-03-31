@@ -1,5 +1,1 @@
-====== Buscar ======
-
-Pot vore els resultats de la busca ací baix.  @CREATEPAGEINFO@
-
-===== Resultats =====
+====== Buscar ====== Pot vore els resultats de la busca ací baix. @CREATEPAGEINFO@ ===== Resultats =====
