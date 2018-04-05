@@ -28,6 +28,10 @@ $config_cascade = array_merge(
             'default'   => array(DOKU_CONF . 'license.php'),
             'local'     => array(DOKU_CONF . 'license.local.php'),
         ),
+        'manifest' => array(
+            'default'   => array(DOKU_CONF . 'manifest.json'),
+            'local'     => array(DOKU_CONF . 'manifest.local.json'),
+        ),
         'mediameta' => array(
             'default'   => array(DOKU_CONF . 'mediameta.php'),
             'local'     => array(DOKU_CONF . 'mediameta.local.php'),

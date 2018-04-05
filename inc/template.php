@@ -242,6 +242,17 @@ function tpl_metaheaders($alt = true) {
         );
     }
 
+    if (actionOK('manifest')) {
+        $head['link'][] = array('rel'=> 'manifest', 'href'=> DOKU_BASE.'lib/exe/manifest.php');
+    }
+
+    $styleUtil = new \dokuwiki\StyleUtils();
+    $styleIni = $styleUtil->cssStyleini($conf['template']);
+    $replacements = $styleIni['replacements'];
+    if (!empty($replacements['__theme_color__'])) {
+        $head['meta'][] = array('name' => 'theme-color', 'content' => $replacements['__theme_color__']);
+    }
+
     if($alt) {
         if(actionOK('rss')) {
             $head['link'][] = array(
