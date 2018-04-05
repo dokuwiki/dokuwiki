@@ -42,7 +42,18 @@ class StyleUtils
 
             // stylesheets
             if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
-                $stylesheets[$mode][$incbase.$file] = $webbase;
+                if (!file_exists($incbase . $file)) {
+                    list($extension, $basename) = array_map('strrev', explode('.', strrev($file), 2));
+                    $newExtension = $extension === 'css' ? 'less' : 'css';
+                    if (file_exists($incbase . $basename . '.' . $newExtension)) {
+                        $stylesheets[$mode][$incbase . $basename . '.' . $newExtension] = $webbase;
+                        if ($conf['allowdebug']) {
+                            msg("Stylesheet $file not found, using $basename.$newExtension instead. Please contact developer of \"{$conf['template']}\" template.", 2);
+                        }
+                        continue;
+                    }
+                }
+                $stylesheets[$mode][$incbase . $file] = $webbase;
             }
 
             // replacements
