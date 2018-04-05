@@ -2,6 +2,9 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# removed in 2018-01-06
+inc/plugin.php
+
 # remove in 2017-02-19
 inc/SimplePie.php
 inc/Tar.class.php

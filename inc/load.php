@@ -15,7 +15,6 @@ require_once(DOKU_INC.'inc/changelog.php');
 require_once(DOKU_INC.'inc/common.php');
 require_once(DOKU_INC.'inc/confutils.php');
 require_once(DOKU_INC.'inc/pluginutils.php');
-require_once(DOKU_INC.'inc/plugin.php');
 require_once(DOKU_INC.'inc/events.php');
 require_once(DOKU_INC.'inc/form.php');
 require_once(DOKU_INC.'inc/fulltext.php');
@@ -83,11 +82,17 @@ function load_autoload($name){
         'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
         'Subscription'          => DOKU_INC.'inc/subscription.php',
 
+        'DokuWiki_PluginInterface' => DOKU_INC.'inc/PluginInterface.php',
+        'DokuWiki_PluginTrait'     => DOKU_INC.'inc/PluginTrait.php',
+        'DokuWiki_Plugin'          => DOKU_INC.'inc/Plugin.php',
+
+
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
         'DokuWiki_Syntax_Plugin' => DOKU_PLUGIN.'syntax.php',
         'DokuWiki_Remote_Plugin' => DOKU_PLUGIN.'remote.php',
         'DokuWiki_Auth_Plugin'   => DOKU_PLUGIN.'auth.php',
+        'DokuWiki_CLI_Plugin'    => DOKU_PLUGIN.'cli.php',
 
         'Doku_Renderer'          => DOKU_INC.'inc/parser/renderer.php',
         'Doku_Renderer_xhtml'    => DOKU_INC.'inc/parser/xhtml.php',
@@ -139,7 +144,7 @@ function load_autoload($name){
     }
 
     // Plugin loading
-    if(preg_match('/^(auth|helper|syntax|action|admin|renderer|remote)_plugin_('.DOKU_PLUGIN_NAME_REGEX.')(?:_([^_]+))?$/',
+    if(preg_match('/^(auth|helper|syntax|action|admin|renderer|remote|cli)_plugin_('.DOKU_PLUGIN_NAME_REGEX.')(?:_([^_]+))?$/',
                   $name, $m)) {
         // try to load the wanted plugin file
         $c = ((count($m) === 4) ? "/{$m[3]}" : '');

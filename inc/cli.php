@@ -25,6 +25,9 @@ abstract class DokuCLI {
 
         $this->options = new DokuCLI_Options();
         $this->colors  = new DokuCLI_Colors();
+
+        dbg_deprecated('use \splitbrain\phpcli\CLI instead');
+        $this->error('DokuCLI is deprecated, use \splitbrain\phpcli\CLI instead.');
     }
 
     /**
