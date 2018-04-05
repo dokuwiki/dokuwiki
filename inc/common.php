@@ -301,6 +301,23 @@ function pageinfo() {
 }
 
 /**
+ * Initialize and/or fill global $JSINFO with some basic info to be given to javascript
+ */
+function jsinfo() {
+    global $JSINFO, $ID, $INFO, $ACT;
+
+    if (!is_array($JSINFO)) {
+        $JSINFO = [];
+    }
+    //export minimal info to JS, plugins can add more
+    $JSINFO['id']                    = $ID;
+    $JSINFO['namespace']             = (string) $INFO['namespace'];
+    $JSINFO['ACT']                   = act_clean($ACT);
+    $JSINFO['useHeadingNavigation']  = (int) useHeading('navigation');
+    $JSINFO['useHeadingContent']     = (int) useHeading('content');
+}
+
+/**
  * Return information about the current media item as an associative array.
  *
  * @return array with info about current media item
