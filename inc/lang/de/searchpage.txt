@@ -1,7 +1,3 @@
 ====== Suche ======
 
 Unten sind die Ergebnisse Ihrer Suche gelistet. @CREATEPAGEINFO@
-
-===== Ergebnisse =====
-
-

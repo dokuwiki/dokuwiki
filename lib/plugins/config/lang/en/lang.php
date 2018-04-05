@@ -178,6 +178,12 @@ $lang['xsendfile']   = 'Use the X-Sendfile header to let the webserver deliver s
 $lang['renderer_xhtml']   = 'Renderer to use for main (xhtml) wiki output';
 $lang['renderer__core']   = '%s (dokuwiki core)';
 $lang['renderer__plugin'] = '%s (plugin)';
+$lang['search_limit_to_first_ns'] = 'Limit the search to the current X namespaces. When a search is executed from a page within a deeper namespace, the first X namespaces will be added as filter';
+$lang['search_default_fragment_behaviour'] = 'Specify the default fragment search behavior';
+$lang['search_default_fragment_behaviour_o_exact'] = 'exact';
+$lang['search_default_fragment_behaviour_o_starts_with'] = 'starts with';
+$lang['search_default_fragment_behaviour_o_ends_with'] = 'ends with';
+$lang['search_default_fragment_behaviour_o_contains'] = 'contains';
 
 /* Network Options */
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';

@@ -68,7 +68,6 @@ $lang['badpassconfirm']        = 'Väär salasõna';
 $lang['minoredit']             = 'Ebaolulised muudatused';
 $lang['draftdate']             = 'Mustand automaatselt salvestatud';
 $lang['nosecedit']             = 'Leht on vahepeal muutunud, jaotiste teave osutus aegunuks sestap laeti tervelehekülg.';
-$lang['searchcreatepage']      = "Kui Sa otsitavat ei leidnud võid tekitada oma otsingu nimelise uue lehe kasutades ''Toimeta seda lehte'' nuppu.";
 $lang['regmissing']            = 'Kõik väljad tuleb ära täita.';
 $lang['reguexists']            = 'Tegelikult on sellise nimega kasutaja juba olemas.';
 $lang['regsuccess']            = 'Kasutaja sai tehtud. Parool saadeti Sulle e-posti aadressil.';

@@ -114,7 +114,6 @@ $lang['qb_sig']     = 'Manisy sonia';
 
 $lang['js']['del_confirm']= 'Hofafana ilay andalana?';
 
-$lang['searchcreatepage']      = "Raha tsy nahita izay notadiavinao ianao, dia afaka mamorona pejy vaovao avy amin'ny teny nanaovanao fikarohana; Ampiasao ny bokotra ''Hanova ny pejy''.";
 //Setup VIM: ex: et ts=2 :
 $lang['email_signature_text'] = 'Ity imailaka ity dia navoakan\'ny wiki tao amin\'ny
 @DOKUWIKIURL@';

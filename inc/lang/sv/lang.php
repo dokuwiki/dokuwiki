@@ -78,7 +78,6 @@ $lang['badpassconfirm']        = 'Ledsen, lösenordet var felaktigt';
 $lang['minoredit']             = 'Små ändringar';
 $lang['draftdate']             = 'Utkast automatiskt sparat';
 $lang['nosecedit']             = 'Sidan ändrades medan du skrev, sektionsinformationen var inte uppdaterad. Laddar hela sidan istället.';
-$lang['searchcreatepage']      = 'Om du inte hittar det du letar efter, så kan du skapa eller redigera sidan med någon av knapparna.';
 $lang['regmissing']            = 'Du måste fylla i alla fälten.';
 $lang['reguexists']            = 'Det finns redan en användare med det användarnamnet.';
 $lang['regsuccess']            = 'Användarkontot skapat, lösenordet har skickats via e-post.';

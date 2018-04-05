@@ -68,7 +68,6 @@ $lang['badpassconfirm']        = 'Pardonu, la pasvorto malĝustis';
 $lang['minoredit']             = 'Etaj modifoj';
 $lang['draftdate']             = 'Lasta konservo de la skizo:';
 $lang['nosecedit']             = 'La paĝo ŝanĝiĝis intertempe, sekcio-informo estis malĝisdata, tial la tuta paĝo estas reŝargita.';
-$lang['searchcreatepage']      = 'Se vi ne trovis tion, kion vi serĉis, vi povas krei novan paĝon kun necesa nomo per la koresponda butono.';
 $lang['regmissing']            = 'Pardonu, vi devas plenigi ĉiujn kampojn.';
 $lang['reguexists']            = 'Pardonu, ĉi tiu uzanto-nomo jam ekzistas.';
 $lang['regsuccess']            = 'La uzanto kreiĝis kaj la pasvorto sendiĝis per retpoŝto.';

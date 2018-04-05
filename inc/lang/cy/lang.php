@@ -70,7 +70,6 @@ $lang['badpassconfirm']        = 'Sori, roedd y cyfrinair yn anghywir';
 $lang['minoredit']             = 'Newidiadau Bach';
 $lang['draftdate']             = 'Awtogadwyd drafft ar'; // full dformat date will be added
 $lang['nosecedit']             = 'Newidiwyd y dudaen yn y cyfamser, roedd gwybodaeth yr adran wedi dyddio, felly llwythwyd y dudalen gyfan.';
-$lang['searchcreatepage']      = 'Os na wnaethoch chi ddod o hyd i\'r hyn roeddech chi am ddarganfod, gallwch chi greu neu golygu\'r dudalen wedi\'i henwi ar ôl eich ymholiad gyda\'r teclyn priodol.';
 
 $lang['regmissing']            = 'Sori, llenwch bob maes.';
 $lang['reguexists']            = 'Sori, mae defnyddiwr â\'r enw hwn yn bodoli eisoes.';

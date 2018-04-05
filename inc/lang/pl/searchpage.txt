@@ -2,4 +2,3 @@
 
 Wyniki wyszukiwania. @CREATEPAGEINFO@
 
-===== Wyniki =====

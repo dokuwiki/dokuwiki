@@ -13,6 +13,10 @@ use dokuwiki\Action\Exception\ActionAbort;
  */
 class Search extends AbstractAction {
 
+    protected $pageLookupResults = array();
+    protected $fullTextResults = array();
+    protected $highlight = array();
+
     /** @inheritdoc */
     public function minimumPermission() {
         return AUTH_NONE;
@@ -25,13 +29,107 @@ class Search extends AbstractAction {
      */
     public function checkPermissions() {
         parent::checkPermissions();
-        global $QUERY;
+    }
+
+    public function preProcess()
+    {
+        global $QUERY, $ID, $conf, $INPUT;
         $s = cleanID($QUERY);
-        if($s === '') throw new ActionAbort();
+
+        if ($ID !== $conf['start'] && !$INPUT->has('q')) {
+            parse_str($INPUT->server->str('QUERY_STRING'), $urlParts);
+            $urlParts['q'] = $urlParts['id'];
+            $urlParts['id'] = $conf['start'];
+            $url = DOKU_URL . DOKU_SCRIPT . '?' . http_build_query($urlParts, null, '&');
+            send_redirect($url);
+        }
+
+        if ($s === '') throw new ActionAbort();
+        $this->adjustGlobalQuery();
     }
 
     /** @inheritdoc */
-    public function tplContent() {
-        html_search();
+    public function tplContent()
+    {
+        $this->execute();
+
+        $search = new \dokuwiki\Ui\Search($this->pageLookupResults, $this->fullTextResults, $this->highlight);
+        $search->show();
+    }
+
+
+    /**
+     * run the search
+     */
+    protected function execute()
+    {
+        global $INPUT, $QUERY;
+        $after = $INPUT->str('min');
+        $before = $INPUT->str('max');
+        $this->pageLookupResults = ft_pageLookup($QUERY, true, useHeading('navigation'), $after, $before);
+        $this->fullTextResults = ft_pageSearch($QUERY, $highlight, $INPUT->str('srt'), $after, $before);
+        $this->highlight = $highlight;
+    }
+
+    /**
+     * Adjust the global query accordingly to the config search_limit_to_first_ns and search_default_fragment_behaviour
+     *
+     * This will only do something if the search didn't originate from the form on the searchpage itself
+     */
+    protected function adjustGlobalQuery()
+    {
+        global $conf, $INPUT, $QUERY, $ID;
+
+        if ($INPUT->bool('sf')) {
+            return;
+        }
+
+        $Indexer = idx_get_indexer();
+        $parsedQuery = ft_queryParser($Indexer, $QUERY);
+
+        if (empty($parsedQuery['ns']) && empty($parsedQuery['notns'])) {
+            if ($conf['search_limit_to_first_ns'] > 0) {
+                if (getNS($ID) !== false) {
+                    $nsParts = explode(':', getNS($ID));
+                    $ns = implode(':', array_slice($nsParts, 0, $conf['search_limit_to_first_ns']));
+                    $QUERY .= " @$ns";
+                }
+            }
+        }
+
+        if ($conf['search_default_fragment_behaviour'] !== 'exact') {
+            if (empty(array_diff($parsedQuery['words'], $parsedQuery['and']))) {
+                if (strpos($QUERY, '*') === false) {
+                    $queryParts = explode(' ', $QUERY);
+                    $queryParts = array_map(function ($part) {
+                        if (strpos($part, '@') === 0) {
+                            return $part;
+                        }
+                        if (strpos($part, 'ns:') === 0) {
+                            return $part;
+                        }
+                        if (strpos($part, '^') === 0) {
+                            return $part;
+                        }
+                        if (strpos($part, '-ns:') === 0) {
+                            return $part;
+                        }
+
+                        global $conf;
+
+                        if ($conf['search_default_fragment_behaviour'] === 'starts_with') {
+                            return $part . '*';
+                        }
+                        if ($conf['search_default_fragment_behaviour'] === 'ends_with') {
+                            return '*' . $part;
+                        }
+
+                        return '*' . $part . '*';
+
+                    }, $queryParts);
+                    $QUERY = implode(' ', $queryParts);
+                }
+            }
+        }
     }
 }

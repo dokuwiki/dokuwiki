@@ -67,7 +67,6 @@ $lang['badpassconfirm']        = 'Ľutujem, heslo bolo nesprávne.';
 $lang['minoredit']             = 'Menšie zmeny';
 $lang['draftdate']             = 'Koncept automaticky uložený';
 $lang['nosecedit']             = 'Stránka bola medzičasom zmenená, informácie o sekcii sú zastaralé a z tohto dôvodu bola nahraná celá stránka.';
-$lang['searchcreatepage']      = 'Pokiaľ ste nenašli, čo hľadáte, skúste požadovanú stránku sami vytvoriť stlačením tlačidla \'\'Vytvoriť stránku\'\'.';
 $lang['regmissing']            = 'Musíte vyplniť všetky údaje.';
 $lang['reguexists']            = 'Používateľ s rovnakým menom je už zaregistrovaný.';
 $lang['regsuccess']            = 'Používateľský účet bol vytvorený a heslo zaslané emailom.';

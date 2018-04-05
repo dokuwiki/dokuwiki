@@ -18,7 +18,7 @@ class Edit extends AbstractItem {
 
         parent::__construct();
 
-        if($ACT == 'show' || $ACT == 'search') {
+        if($ACT === 'show') {
             $this->method = 'post';
             if($INFO['writable']) {
                 $this->accesskey = 'e';

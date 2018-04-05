@@ -65,7 +65,6 @@ $lang['badpassconfirm']        = 'Atvaino, aplama parole';
 $lang['minoredit']             = 'Sīki labojumi';
 $lang['draftdate']             = 'Melnraksts automātiski saglabāts';
 $lang['nosecedit']             = 'Lapa pa šo laiku ir mainījusies, sekcijas informācija novecojusi. Ielādēta lapas  pilnās versija.';
-$lang['searchcreatepage']      = 'Ja neatradi meklēto, nospiežot pogu "Labot lapu", vari izveidot jaunu lapu ar tevis meklētajiem atslēgvārdiem nosaukumā.';
 $lang['regmissing']            = 'Atvaino, jāaizpilda visas ailes.';
 $lang['reguexists']            = 'Atvaino, tāds lietotājs jau ir.';
 $lang['regsuccess']            = 'Lietotājs izveidots. Parole nosūtīta pa pastu.';
