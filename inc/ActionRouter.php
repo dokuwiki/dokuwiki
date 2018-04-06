@@ -32,21 +32,13 @@ class ActionRouter {
 
     /**
      * ActionRouter constructor. Singleton, thus protected!
-     *
-     * Sets up the correct action based on the $ACT global. Writes back
-     * the selected action to $ACT
      */
     protected function __construct() {
-        global $ACT;
         global $conf;
 
         $this->disabled = explode(',', $conf['disableactions']);
         $this->disabled = array_map('trim', $this->disabled);
         $this->transitions = 0;
-
-        $ACT = act_clean($ACT);
-        $this->setupAction($ACT);
-        $ACT = $this->action->getActionName();
     }
 
     /**
@@ -60,6 +52,17 @@ class ActionRouter {
             self::$instance = new ActionRouter();
         }
         return self::$instance;
+    }
+
+    /**
+     * Sets up the correct action based on the $ACT global. Writes back the selected action to $ACT
+     */
+    public function setupACT() {
+        global $ACT;
+
+        $ACT = act_clean($ACT);
+        $this->setupAction($ACT);
+        $ACT = $this->action->getActionName();
     }
 
     /**

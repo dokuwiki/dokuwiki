@@ -14,6 +14,7 @@ if(!defined('DOKU_INC')) die('meh.');
 function act_dispatch(){
     // always initialize on first dispatch (test request may dispatch mutliple times on one request)
     $router = \dokuwiki\ActionRouter::getInstance(true);
+    $router->setupACT();
 
     $headers = array('Content-Type: text/html; charset=utf-8');
     trigger_event('ACTION_HEADERS_SEND',$headers,'act_sendheaders');
