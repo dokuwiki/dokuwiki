@@ -59,10 +59,10 @@ $conf['passcrypt']   = 'smd5';           //Used crypt method (smd5,md5,sha1,ssha
 $conf['defaultgroup']= 'user';           //Default groups new Users are added to
 $conf['superuser']   = '!!not set!!';    //The admin can be user or @group or comma separated list user1,@group1,user2
 $conf['manager']     = '!!not set!!';    //The manager can be user or @group or comma separated list user1,@group1,user2
-$conf['profileconfirm'] = 1;             //Require current password to confirm changes to user profile
+$conf['profileconfirm'] = 0;             //Require current password to confirm changes to user profile
 $conf['rememberme'] = 1;                 //Enable/disable remember me on login
 $conf['disableactions'] = '';            //comma separated list of actions to disable
-$conf['auth_security_timeout'] = 900;    //time (seconds) auth data is considered valid, set to 0 to recheck on every page view
+$conf['auth_security_timeout'] = 24*3600;    //time (seconds) auth data is considered valid, set to 0 to recheck on every page view
 $conf['securecookie'] = 1;               //never send HTTPS cookies via HTTP
 $conf['remote']      = 0;                //Enable/disable remote interfaces
 $conf['remoteuser']  = '!!not set!!';    //user/groups that have access to remote interface (comma separated)
@@ -156,8 +156,6 @@ $conf['broken_iua']  = 0;                //Platform with broken ignore_user_abor
 $conf['xsendfile']   = 0;                //Use X-Sendfile (1 = lighttpd, 2 = standard)
 $conf['renderer_xhtml'] = 'xhtml';       //renderer to use for main page generation
 $conf['readdircache'] = 0;               //time cache in second for the readdir operation, 0 to deactivate.
-$conf['search_limit_to_first_ns'] = 0;   //Option to limit the search to the current X namespaces
-$conf['search_default_fragment_behaviour'] = 'exact'; // Option to specify the default fragment search behavior
 
 /* Network Settings */
 $conf['dnslookups'] = 1;                 //disable to disallow IP to hostname lookups
