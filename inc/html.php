@@ -9,7 +9,7 @@
 if(!defined('DOKU_INC')) die('meh.');
 if(!defined('NL')) define('NL',"\n");
 if (!defined('SEC_EDIT_PATTERN')) {
-    define('SEC_EDIT_PATTERN', '#<!-- EDIT({.*}) -->#');
+    define('SEC_EDIT_PATTERN', '#<!-- EDIT({.*?}) -->#');
 }
 
 
