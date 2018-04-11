@@ -72,7 +72,7 @@ class Search extends AbstractAction {
     }
 
     /**
-     * Adjust the global query accordingly to the config search_limit_to_first_ns and search_default_fragment_behaviour
+     * Adjust the global query accordingly to the config search_nslimit and search_fragment
      *
      * This will only do something if the search didn't originate from the form on the searchpage itself
      */
@@ -88,16 +88,16 @@ class Search extends AbstractAction {
         $parsedQuery = ft_queryParser($Indexer, $QUERY);
 
         if (empty($parsedQuery['ns']) && empty($parsedQuery['notns'])) {
-            if ($conf['search_limit_to_first_ns'] > 0) {
+            if ($conf['search_nslimit'] > 0) {
                 if (getNS($ID) !== false) {
                     $nsParts = explode(':', getNS($ID));
-                    $ns = implode(':', array_slice($nsParts, 0, $conf['search_limit_to_first_ns']));
+                    $ns = implode(':', array_slice($nsParts, 0, $conf['search_nslimit']));
                     $QUERY .= " @$ns";
                 }
             }
         }
 
-        if ($conf['search_default_fragment_behaviour'] !== 'exact') {
+        if ($conf['search_fragment'] !== 'exact') {
             if (empty(array_diff($parsedQuery['words'], $parsedQuery['and']))) {
                 if (strpos($QUERY, '*') === false) {
                     $queryParts = explode(' ', $QUERY);
@@ -117,10 +117,10 @@ class Search extends AbstractAction {
 
                         global $conf;
 
-                        if ($conf['search_default_fragment_behaviour'] === 'starts_with') {
+                        if ($conf['search_fragment'] === 'starts_with') {
                             return $part . '*';
                         }
-                        if ($conf['search_default_fragment_behaviour'] === 'ends_with') {
+                        if ($conf['search_fragment'] === 'ends_with') {
                             return '*' . $part;
                         }
 
