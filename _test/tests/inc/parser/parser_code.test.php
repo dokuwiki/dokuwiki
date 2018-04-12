@@ -75,7 +75,7 @@ class TestOfDoku_Parser_Code extends TestOfDoku_Parser {
     }
 
     function testCodeOptionsArray_OneOption() {
-        $this->P->parse('Foo <code C [enable_line_numbers]>Test</code> Bar');
+        $this->P->parse('Foo <code C {"enable_line_numbers":true}>Test</code> Bar');
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -93,7 +93,7 @@ class TestOfDoku_Parser_Code extends TestOfDoku_Parser {
     }
 
     function testCodeOptionsArray_TwoOptions() {
-        $this->P->parse('Foo <code C [enable_line_numbers, highlight_lines_extra="3"]>Test</code> Bar');
+        $this->P->parse('Foo <code C {"enable_line_numbers":true, "highlight_lines_extra":[3]}>Test</code> Bar');
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -112,7 +112,7 @@ class TestOfDoku_Parser_Code extends TestOfDoku_Parser {
     }
 
     function testCodeOptionsArray_UnknownOption() {
-        $this->P->parse('Foo <code C [unknown="I will be deleted/ignored!"]>Test</code> Bar');
+        $this->P->parse('Foo <code C {"unknown":"I will be deleted/ignored!"}>Test</code> Bar');
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -128,7 +128,7 @@ class TestOfDoku_Parser_Code extends TestOfDoku_Parser {
     }
 
     function testCodeOptionsArray_EnableLineNumbers1() {
-        $this->P->parse('Foo <code C [enable_line_numbers]>Test</code> Bar');
+        $this->P->parse('Foo <code C {"enable_line_numbers":true}>Test</code> Bar');
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -146,25 +146,7 @@ class TestOfDoku_Parser_Code extends TestOfDoku_Parser {
     }
 
     function testCodeOptionsArray_EnableLineNumbers2() {
-        $this->P->parse('Foo <code C [enable_line_numbers="1"]>Test</code> Bar');
-        $calls = array (
-            array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n".'Foo ')),
-            array('p_close',array()),
-            array('code',array('Test','C', null,
-                               array('enable_line_numbers' => 1)
-                               )),
-            array('p_open',array()),
-            array('cdata',array(' Bar')),
-            array('p_close',array()),
-            array('document_end',array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
-    }
-
-    function testCodeOptionsArray_EnableLineNumbers3() {
-        $this->P->parse('Foo <code C [enable_line_numbers="0"]>Test</code> Bar');
+        $this->P->parse('Foo <code C {"enable_line_numbers":false}>Test</code> Bar');
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -181,26 +163,8 @@ class TestOfDoku_Parser_Code extends TestOfDoku_Parser {
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
-    function testCodeOptionsArray_EnableLineNumbers4() {
-        $this->P->parse('Foo <code C [enable_line_numbers=""]>Test</code> Bar');
-        $calls = array (
-            array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n".'Foo ')),
-            array('p_close',array()),
-            array('code',array('Test','C', null,
-                               array('enable_line_numbers' => 1)
-                               )),
-            array('p_open',array()),
-            array('cdata',array(' Bar')),
-            array('p_close',array()),
-            array('document_end',array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
-    }
-
-    function testCodeOptionsArray_HighlightLinesExtra1() {
-        $this->P->parse('Foo <code C [enable_line_numbers, highlight_lines_extra="42, 123, 456, 789"]>Test</code> Bar');
+    function testCodeOptionsArray_HighlightLinesExtra() {
+        $this->P->parse('Foo <code C {"enable_line_numbers":true, "highlight_lines_extra":[42, 123, 456, 789]}>Test</code> Bar');
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -218,46 +182,8 @@ class TestOfDoku_Parser_Code extends TestOfDoku_Parser {
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
-    function testCodeOptionsArray_HighlightLinesExtra2() {
-        $this->P->parse('Foo <code C [enable_line_numbers, highlight_lines_extra]>Test</code> Bar');
-        $calls = array (
-            array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n".'Foo ')),
-            array('p_close',array()),
-            array('code',array('Test','C', null,
-                               array('enable_line_numbers' => 1,
-                                     'highlight_lines_extra' => array(1))
-                               )),
-            array('p_open',array()),
-            array('cdata',array(' Bar')),
-            array('p_close',array()),
-            array('document_end',array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
-    }
-
-    function testCodeOptionsArray_HighlightLinesExtra3() {
-        $this->P->parse('Foo <code C [enable_line_numbers, highlight_lines_extra=""]>Test</code> Bar');
-        $calls = array (
-            array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n".'Foo ')),
-            array('p_close',array()),
-            array('code',array('Test','C', null,
-                               array('enable_line_numbers' => 1,
-                                     'highlight_lines_extra' => array(1))
-                               )),
-            array('p_open',array()),
-            array('cdata',array(' Bar')),
-            array('p_close',array()),
-            array('document_end',array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
-    }
-
     function testCodeOptionsArray_StartLineNumbersAt1() {
-        $this->P->parse('Foo <code C [enable_line_numbers, [enable_line_numbers, start_line_numbers_at="42"]]>Test</code> Bar');
+        $this->P->parse('Foo <code C {"enable_line_numbers":true, "start_line_numbers_at":42}>Test</code> Bar');
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -275,46 +201,8 @@ class TestOfDoku_Parser_Code extends TestOfDoku_Parser {
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
-    function testCodeOptionsArray_StartLineNumbersAt2() {
-        $this->P->parse('Foo <code C [enable_line_numbers, [enable_line_numbers, start_line_numbers_at]]>Test</code> Bar');
-        $calls = array (
-            array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n".'Foo ')),
-            array('p_close',array()),
-            array('code',array('Test','C', null,
-                               array('enable_line_numbers' => 1,
-                                     'start_line_numbers_at' => 1)
-                               )),
-            array('p_open',array()),
-            array('cdata',array(' Bar')),
-            array('p_close',array()),
-            array('document_end',array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
-    }
-
-    function testCodeOptionsArray_StartLineNumbersAt3() {
-        $this->P->parse('Foo <code C [enable_line_numbers, [enable_line_numbers, start_line_numbers_at=""]]>Test</code> Bar');
-        $calls = array (
-            array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n".'Foo ')),
-            array('p_close',array()),
-            array('code',array('Test','C', null,
-                               array('enable_line_numbers' => 1,
-                                     'start_line_numbers_at' => 1)
-                               )),
-            array('p_open',array()),
-            array('cdata',array(' Bar')),
-            array('p_close',array()),
-            array('document_end',array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
-    }
-
     function testCodeOptionsArray_EnableKeywordLinks1() {
-        $this->P->parse('Foo <code C [enable_keyword_links="false"]>Test</code> Bar');
+        $this->P->parse('Foo <code C {"enable_keyword_links":false}>Test</code> Bar');
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -332,7 +220,7 @@ class TestOfDoku_Parser_Code extends TestOfDoku_Parser {
     }
 
     function testCodeOptionsArray_EnableKeywordLinks2() {
-        $this->P->parse('Foo <code C [enable_keyword_links="true"]>Test</code> Bar');
+        $this->P->parse('Foo <code C {"enable_keyword_links":true}>Test</code> Bar');
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
