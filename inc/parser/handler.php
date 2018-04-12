@@ -376,23 +376,9 @@ class Doku_Handler {
      *                        or null if no entries found
      */
     protected function parse_highlight_options ($options) {
-        $result = array();
-        preg_match_all('/(\w+(?:="[^"]*"))|(\w+[^=,\]])(?:,*)/', $options, $matches, PREG_SET_ORDER);
-        foreach ($matches as $match) {
-            $equal_sign = strpos($match [0], '=');
-            if ($equal_sign === false) {
-                $key = trim($match[0],',');
-                $result [$key] = 1;
-            } else {
-                $key = substr($match[0], 0, $equal_sign);
-                $value = substr($match[0], $equal_sign+1);
-                $value = trim($value, '"');
-                if (strlen($value) > 0) {
-                    $result [$key] = $value;
-                } else {
-                    $result [$key] = 1;
-                }
-            }
+        $result = json_decode($options, true);
+        if ($result === null) {
+            return null;
         }
 
         // Check for supported options
@@ -411,15 +397,13 @@ class Doku_Handler {
             $result['enable_line_numbers'] = (bool) $result['enable_line_numbers'];
         }
         if(isset($result['highlight_lines_extra'])) {
-            $result['highlight_lines_extra'] = array_map('intval', explode(',', $result['highlight_lines_extra']));
-            $result['highlight_lines_extra'] = array_filter($result['highlight_lines_extra']);
             $result['highlight_lines_extra'] = array_unique($result['highlight_lines_extra']);
         }        
         if(isset($result['start_line_numbers_at'])) {
             $result['start_line_numbers_at'] = (int) $result['start_line_numbers_at'];
         }
         if(isset($result['enable_keyword_links'])) {
-            $result['enable_keyword_links'] = ($result['enable_keyword_links'] !== 'false');
+            $result['enable_keyword_links'] = (bool) $result['enable_keyword_links'];
         }
         if (count($result) == 0) {
             return null;
@@ -436,7 +420,7 @@ class Doku_Handler {
         if ( $state == DOKU_LEXER_UNMATCHED ) {
             $matches = explode('>',$match,2);
             // Cut out variable options enclosed in []
-            preg_match('/\[.*\]/', $matches[0], $options);
+            preg_match('/{.*}/', $matches[0], $options);
             if (!empty($options[0])) {
                 $matches[0] = str_replace($options[0], '', $matches[0]);
             }
