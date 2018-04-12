@@ -27,8 +27,8 @@ class Search extends AbstractAction {
      *
      * @inheritdoc
      */
-    public function checkPermissions() {
-        parent::checkPermissions();
+    public function checkPreconditions() {
+        parent::checkPreconditions();
     }
 
     public function preProcess()

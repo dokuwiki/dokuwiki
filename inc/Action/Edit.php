@@ -26,8 +26,8 @@ class Edit extends AbstractAction {
     /**
      * @inheritdoc falls back to 'source' if page not writable
      */
-    public function checkPermissions() {
-        parent::checkPermissions();
+    public function checkPreconditions() {
+        parent::checkPreconditions();
         global $INFO;
 
         // no edit permission? view source

@@ -133,7 +133,7 @@ class action_general extends DokuWikiTest {
         $conf['subscribers'] = 1;
 
         try {
-            $class->checkPermissions();
+            $class->checkPreconditions();
         } catch(\Exception $e) {
             $this->assertNotSame(ActionAclRequiredException::class, get_class($e));
         }
@@ -141,7 +141,7 @@ class action_general extends DokuWikiTest {
         $conf['useacl'] = 0;
 
         try {
-            $class->checkPermissions();
+            $class->checkPreconditions();
         } catch(\Exception $e) {
             $this->assertSame(ActionAclRequiredException::class, get_class($e));
         }
@@ -166,7 +166,7 @@ class action_general extends DokuWikiTest {
         $_SERVER['REMOTE_USER'] = 'test';
 
         try {
-            $class->checkPermissions();
+            $class->checkPreconditions();
         } catch(\Exception $e) {
             $this->assertNotSame(ActionUserRequiredException::class, get_class($e));
         }
@@ -174,7 +174,7 @@ class action_general extends DokuWikiTest {
         unset($_SERVER['REMOTE_USER']);
 
         try {
-            $class->checkPermissions();
+            $class->checkPreconditions();
         } catch(\Exception $e) {
             $this->assertSame(ActionUserRequiredException::class, get_class($e));
         }

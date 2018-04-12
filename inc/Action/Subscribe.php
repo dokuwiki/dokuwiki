@@ -20,8 +20,8 @@ class Subscribe extends AbstractUserAction {
     }
 
     /** @inheritdoc */
-    public function checkPermissions() {
-        parent::checkPermissions();
+    public function checkPreconditions() {
+        parent::checkPreconditions();
 
         global $conf;
         if(isset($conf['subscribers']) && !$conf['subscribers']) throw new ActionDisabledException();

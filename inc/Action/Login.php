@@ -19,9 +19,9 @@ class Login extends AbstractAclAction {
     }
 
     /** @inheritdoc */
-    public function checkPermissions() {
+    public function checkPreconditions() {
         global $INPUT;
-        parent::checkPermissions();
+        parent::checkPreconditions();
         if($INPUT->server->has('REMOTE_USER')) {
             // nothing to do
             throw new ActionException();
