@@ -370,18 +370,18 @@ class Doku_Handler {
      * be set to true. Commas in strings are ignored, e.g. option="4,56"
      * will work as expected and will only create one entry.
      *
-     * @param string $options Comma separated list of key-value pairs,
+     * @param string $options space separated list of key-value pairs,
      *                        e.g. option1=123, option2="456"
      * @return array|null     Array of key-value pairs $array['key'] = 'value';
      *                        or null if no entries found
      */
     protected function parse_highlight_options ($options) {
         $result = array();
-        preg_match_all('/(\w+(?:="[^"]*"))|(\w+[^=,\]])(?:,*)/', $options, $matches, PREG_SET_ORDER);
+        preg_match_all('/(\w+(?:="[^"]*"))|(\w+(?:=[^\s]*))|(\w+[^=\s\]])(?:\s*)/', $options, $matches, PREG_SET_ORDER);
         foreach ($matches as $match) {
             $equal_sign = strpos($match [0], '=');
             if ($equal_sign === false) {
-                $key = trim($match[0],',');
+                $key = trim($match[0]);
                 $result [$key] = 1;
             } else {
                 $key = substr($match[0], 0, $equal_sign);
@@ -408,18 +408,24 @@ class Doku_Handler {
 
         // Sanitize values
         if(isset($result['enable_line_numbers'])) {
+            if($result['enable_line_numbers'] === 'false') {
+                $result['enable_line_numbers'] = false;
+            }
             $result['enable_line_numbers'] = (bool) $result['enable_line_numbers'];
         }
         if(isset($result['highlight_lines_extra'])) {
             $result['highlight_lines_extra'] = array_map('intval', explode(',', $result['highlight_lines_extra']));
             $result['highlight_lines_extra'] = array_filter($result['highlight_lines_extra']);
             $result['highlight_lines_extra'] = array_unique($result['highlight_lines_extra']);
-        }        
+        }
         if(isset($result['start_line_numbers_at'])) {
             $result['start_line_numbers_at'] = (int) $result['start_line_numbers_at'];
         }
         if(isset($result['enable_keyword_links'])) {
-            $result['enable_keyword_links'] = ($result['enable_keyword_links'] !== 'false');
+            if($result['enable_keyword_links'] === 'false') {
+                $result['enable_keyword_links'] = false;
+            }
+            $result['enable_keyword_links'] = (bool) $result['enable_keyword_links'];
         }
         if (count($result) == 0) {
             return null;
