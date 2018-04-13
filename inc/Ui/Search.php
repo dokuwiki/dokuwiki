@@ -525,7 +525,11 @@ class Search extends Ui
         $html .= '<h3>' . $lang['quickhits'] . ':</h3>';
         $html .= '<ul class="search_quickhits">';
         foreach ($data as $id => $title) {
-            $link = html_wikilink(':' . $id);
+            $name = null;
+            if (!useHeading('navigation') && $ns = getNS($id)) {
+                $name = shorten(noNS($id), ' (' . $ns . ')', 30);
+            }
+            $link = html_wikilink(':' . $id, $name);
             $eventData = [
                 'listItemContent' => [$link],
                 'page' => $id,
