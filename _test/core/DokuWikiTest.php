@@ -171,4 +171,24 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
         $last = $now;
         return $now;
     }
+
+    /**
+     * Allow for testing inaccessible methods (private or protected)
+     *
+     * This makes it easier to test protected methods without needing to create intermediate
+     * classes inheriting and changing the access.
+     *
+     * @link https://stackoverflow.com/a/8702347/172068
+     * @param object $obj Object in which to call the method
+     * @param string $func The method to call
+     * @param array $args The arguments to call the method with
+     * @return mixed
+     * @throws ReflectionException when the given obj/func does not exist
+     */
+    protected static function callInaccessibleMethod($obj, $func, array $args) {
+        $class = new \ReflectionClass($obj);
+        $method = $class->getMethod($func);
+        $method->setAccessible(true);
+        return $method->invokeArgs($obj, $args);
+    }
 }
