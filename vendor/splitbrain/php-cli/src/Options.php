@@ -285,7 +285,7 @@ class Options
      *
      * @param mixed $option
      * @param bool|string $default what to return if the option was not set
-     * @return bool|string
+     * @return bool|string|string[]
      */
     public function getOpt($option = null, $default = false)
     {
@@ -325,6 +325,8 @@ class Options
      * Builds a help screen from the available options. You may want to call it from -h or on error
      *
      * @return string
+     *
+     * @throws Exception
      */
     public function help()
     {

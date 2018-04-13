@@ -99,9 +99,11 @@ class Colors
     /**
      * Convenience function to print a line in a given color
      *
-     * @param string $line the line to print, a new line is added automatically
-     * @param string $color one of the available color names
+     * @param string   $line    the line to print, a new line is added automatically
+     * @param string   $color   one of the available color names
      * @param resource $channel file descriptor to write to
+     *
+     * @throws Exception
      */
     public function ptln($line, $color, $channel = STDOUT)
     {
@@ -158,6 +160,8 @@ class Colors
      * reset the terminal color
      *
      * @param resource $channel file descriptor to write to
+     *
+     * @throws Exception
      */
     public function reset($channel = STDOUT)
     {

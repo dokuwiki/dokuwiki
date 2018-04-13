@@ -31,6 +31,8 @@ use phpseclib\Crypt\Random;
 use phpseclib\Crypt\RSA;
 use phpseclib\File\ASN1\Element;
 use phpseclib\Math\BigInteger;
+use DateTime;
+use DateTimeZone;
 
 /**
  * Pure-PHP X.509 Parser
@@ -2030,30 +2032,32 @@ class X509
         }
 
         if ($names = $this->getExtension('id-ce-subjectAltName')) {
-            foreach ($names as $key => $value) {
-                $value = str_replace(array('.', '*'), array('\.', '[^.]*'), $value);
-                switch ($key) {
-                    case 'dNSName':
-                        /* From RFC2818 "HTTP over TLS":
+            foreach ($names as $name) {
+                foreach ($name as $key => $value) {
+                    $value = str_replace(array('.', '*'), array('\.', '[^.]*'), $value);
+                    switch ($key) {
+                        case 'dNSName':
+                            /* From RFC2818 "HTTP over TLS":
 
-                           If a subjectAltName extension of type dNSName is present, that MUST
-                           be used as the identity. Otherwise, the (most specific) Common Name
-                           field in the Subject field of the certificate MUST be used. Although
-                           the use of the Common Name is existing practice, it is deprecated and
-                           Certification Authorities are encouraged to use the dNSName instead. */
-                        if (preg_match('#^' . $value . '$#', $components['host'])) {
-                            return true;
-                        }
-                        break;
-                    case 'iPAddress':
-                        /* From RFC2818 "HTTP over TLS":
+                               If a subjectAltName extension of type dNSName is present, that MUST
+                               be used as the identity. Otherwise, the (most specific) Common Name
+                               field in the Subject field of the certificate MUST be used. Although
+                               the use of the Common Name is existing practice, it is deprecated and
+                               Certification Authorities are encouraged to use the dNSName instead. */
+                            if (preg_match('#^' . $value . '$#', $components['host'])) {
+                                return true;
+                            }
+                            break;
+                        case 'iPAddress':
+                            /* From RFC2818 "HTTP over TLS":
 
-                           In some cases, the URI is specified as an IP address rather than a
-                           hostname. In this case, the iPAddress subjectAltName must be present
-                           in the certificate and must exactly match the IP in the URI. */
-                        if (preg_match('#(?:\d{1-3}\.){4}#', $components['host'] . '.') && preg_match('#^' . $value . '$#', $components['host'])) {
-                            return true;
-                        }
+                               In some cases, the URI is specified as an IP address rather than a
+                               hostname. In this case, the iPAddress subjectAltName must be present
+                               in the certificate and must exactly match the IP in the URI. */
+                            if (preg_match('#(?:\d{1-3}\.){4}#', $components['host'] . '.') && preg_match('#^' . $value . '$#', $components['host'])) {
+                                return true;
+                            }
+                    }
                 }
             }
             return false;
@@ -2082,7 +2086,7 @@ class X509
         }
 
         if (!isset($date)) {
-            $date = time();
+            $date = new DateTime($date, new DateTimeZone(@date_default_timezone_get()));
         }
 
         $notBefore = $this->currentCert['tbsCertificate']['validity']['notBefore'];
@@ -2092,8 +2096,8 @@ class X509
         $notAfter = isset($notAfter['generalTime']) ? $notAfter['generalTime'] : $notAfter['utcTime'];
 
         switch (true) {
-            case $date < @strtotime($notBefore):
-            case $date > @strtotime($notAfter):
+            case $date < new DateTime($notBefore, new DateTimeZone(@date_default_timezone_get())):
+            case $date > new DateTime($notAfter, new DateTimeZone(@date_default_timezone_get())):
                 return false;
         }
 
@@ -2137,7 +2141,8 @@ class X509
                         $subjectKeyID = $this->getExtension('id-ce-subjectKeyIdentifier');
                         switch (true) {
                             case !is_array($authorityKey):
-                            case is_array($authorityKey) && isset($authorityKey['keyIdentifier']) && $authorityKey['keyIdentifier'] === $subjectKeyID:
+                            case !$subjectKeyID:
+                            case isset($authorityKey['keyIdentifier']) && $authorityKey['keyIdentifier'] === $subjectKeyID:
                                 $signingCert = $this->currentCert; // working cert
                         }
                 }
@@ -2154,7 +2159,11 @@ class X509
                                 $subjectKeyID = $this->getExtension('id-ce-subjectKeyIdentifier', $ca);
                                 switch (true) {
                                     case !is_array($authorityKey):
-                                    case is_array($authorityKey) && isset($authorityKey['keyIdentifier']) && $authorityKey['keyIdentifier'] === $subjectKeyID:
+                                    case !$subjectKeyID:
+                                    case isset($authorityKey['keyIdentifier']) && $authorityKey['keyIdentifier'] === $subjectKeyID:
+                                        if (is_array($authorityKey) && isset($authorityKey['authorityCertSerialNumber']) && !$authorityKey['authorityCertSerialNumber']->equals($ca['tbsCertificate']['serialNumber'])) {
+                                            break 2; // serial mismatch - check other ca
+                                        }
                                         $signingCert = $ca; // working cert
                                         break 3;
                                 }
@@ -2200,7 +2209,11 @@ class X509
                                 $subjectKeyID = $this->getExtension('id-ce-subjectKeyIdentifier', $ca);
                                 switch (true) {
                                     case !is_array($authorityKey):
-                                    case is_array($authorityKey) && isset($authorityKey['keyIdentifier']) && $authorityKey['keyIdentifier'] === $subjectKeyID:
+                                    case !$subjectKeyID:
+                                    case isset($authorityKey['keyIdentifier']) && $authorityKey['keyIdentifier'] === $subjectKeyID:
+                                        if (is_array($authorityKey) && isset($authorityKey['authorityCertSerialNumber']) && !$authorityKey['authorityCertSerialNumber']->equals($ca['tbsCertificate']['serialNumber'])) {
+                                            break 2; // serial mismatch - check other ca
+                                        }
                                         $signingCert = $ca; // working cert
                                         break 3;
                                 }
@@ -2472,6 +2485,10 @@ class X509
         }
 
         $dn = array_values($dn);
+        // fix for https://bugs.php.net/75433 affecting PHP 7.2
+        if (!isset($dn[0])) {
+            $dn = array_splice($dn, 0, 0);
+        }
     }
 
     /**
@@ -2715,7 +2732,9 @@ class X509
                     $value = array_pop($value); // Always strip data type.
                 }
             } elseif (is_object($value) && $value instanceof Element) {
-                $callback = create_function('$x', 'return "\x" . bin2hex($x[0]);');
+                $callback = function ($x) {
+                    return "\x" . bin2hex($x[0]);
+                };
                 $value = strtoupper(preg_replace_callback('#[^\x20-\x7E]#', $callback, $value->element));
             }
             $output.= $desc . '=' . $value;
@@ -3338,7 +3357,11 @@ class X509
      */
     function _timeField($date)
     {
-        $year = @gmdate("Y", @strtotime($date)); // the same way ASN1.php parses this
+        if ($date instanceof Element) {
+            return $date;
+        }
+        $dateObj = new DateTime($date, new DateTimeZone('GMT'));
+        $year = $dateObj->format('Y'); // the same way ASN1.php parses this
         if ($year < 2050) {
             return array('utcTime' => $date);
         } else {
@@ -3403,8 +3426,12 @@ class X509
                 return false;
             }
 
-            $startDate = !empty($this->startDate) ? $this->startDate : @date('D, d M Y H:i:s O');
-            $endDate = !empty($this->endDate) ? $this->endDate : @date('D, d M Y H:i:s O', strtotime('+1 year'));
+            $startDate = new DateTime('now', new DateTimeZone(@date_default_timezone_get()));
+            $startDate = !empty($this->startDate) ? $this->startDate : $startDate->format('D, d M Y H:i:s O');
+
+            $endDate = new DateTime('+1 year', new DateTimeZone(@date_default_timezone_get()));
+            $endDate = !empty($this->endDate) ? $this->endDate : $endDate->format('D, d M Y H:i:s O');
+
             /* "The serial number MUST be a positive integer"
                "Conforming CAs MUST NOT use serialNumber values longer than 20 octets."
                 -- https://tools.ietf.org/html/rfc5280#section-4.1.2.2
@@ -3672,7 +3699,9 @@ class X509
 
         $currentCert = isset($this->currentCert) ? $this->currentCert : null;
         $signatureSubject = isset($this->signatureSubject) ? $this->signatureSubject : null;
-        $thisUpdate = !empty($this->startDate) ? $this->startDate : @date('D, d M Y H:i:s O');
+
+        $thisUpdate = new DateTime('now', new DateTimeZone(@date_default_timezone_get()));
+        $thisUpdate = !empty($this->startDate) ? $this->startDate : $thisUpdate->format('D, d M Y H:i:s O');
 
         if (isset($crl->currentCert) && is_array($crl->currentCert) && isset($crl->currentCert['tbsCertList'])) {
             $this->currentCert = $crl->currentCert;
@@ -3823,7 +3852,11 @@ class X509
      */
     function setStartDate($date)
     {
-        $this->startDate = @date('D, d M Y H:i:s O', @strtotime($date));
+        if (!is_object($date) || !is_a($date, 'DateTime')) {
+            $date = new DateTime($date, new DateTimeZone(@date_default_timezone_get()));
+        }
+
+        $this->startDate = $date->format('D, d M Y H:i:s O');
     }
 
     /**
@@ -3847,7 +3880,11 @@ class X509
             $temp = chr(ASN1::TYPE_GENERALIZED_TIME) . $asn1->_encodeLength(strlen($temp)) . $temp;
             $this->endDate = new Element($temp);
         } else {
-            $this->endDate = @date('D, d M Y H:i:s O', @strtotime($date));
+            if (!is_object($date) || !is_a($date, 'DateTime')) {
+                $date = new DateTime($date, new DateTimeZone(@date_default_timezone_get()));
+            }
+
+            $this->endDate = $date->format('D, d M Y H:i:s O');
         }
     }
 
@@ -4057,6 +4094,10 @@ class X509
         }
 
         $extensions = array_values($extensions);
+        // fix for https://bugs.php.net/75433 affecting PHP 7.2
+        if (!isset($extensions[0])) {
+            $extensions = array_splice($extensions, 0, 0);
+        }
         return $result;
     }
 
@@ -4577,8 +4618,9 @@ class X509
         }
 
         $i = count($rclist);
+        $revocationDate = new DateTime('now', new DateTimeZone(@date_default_timezone_get()));
         $rclist[] = array('userCertificate' => $serial,
-                          'revocationDate'  => $this->_timeField(@date('D, d M Y H:i:s O')));
+                          'revocationDate'  => $this->_timeField($revocationDate->format('D, d M Y H:i:s O')));
         return $i;
     }
 

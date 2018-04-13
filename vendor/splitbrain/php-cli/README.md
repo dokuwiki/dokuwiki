@@ -65,7 +65,7 @@ The basic usage is simple:
     - ``$options->setHelp()`` adds a general description
     - ``$options->registerOption()`` adds an option
     - ``$options->registerArgument()`` adds an argument
-    - ``$options->registerComman()`` adds a sub command
+    - ``$options->registerCommand()`` adds a sub command
 - implement the ```main($options)``` method and do your business logic there
     - ``$options->getOpts`` lets you access set options
     - ``$options->getArgs()`` returns the remaining arguments after removing the options

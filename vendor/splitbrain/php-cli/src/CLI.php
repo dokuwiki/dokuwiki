@@ -56,6 +56,8 @@ abstract class CLI
      *
      * @param Options $options
      * @return void
+     *
+     * @throws Exception
      */
     abstract protected function setup(Options $options);
 
@@ -66,6 +68,8 @@ abstract class CLI
      *
      * @param Options $options
      * @return void
+     *
+     * @throws Exception
      */
     abstract protected function main(Options $options);
 
@@ -74,6 +78,8 @@ abstract class CLI
      *
      * Executes the setup() routine, adds default options, initiate the options parsing and argument checking
      * and finally executes main()
+     *
+     * @throws Exception
      */
     public function run()
     {

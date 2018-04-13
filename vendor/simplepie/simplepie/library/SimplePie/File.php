@@ -136,8 +136,7 @@ class SimplePie_File
 						$this->url = $info['url'];
 					}
 					curl_close($fp);
-					$this->headers = explode("\r\n\r\n", $this->headers, $info['redirect_count'] + 1);
-					$this->headers = array_pop($this->headers);
+					$this->headers = SimplePie_HTTP_Parser::prepareHeaders($this->headers, $info['redirect_count'] + 1);
 					$parser = new SimplePie_HTTP_Parser($this->headers);
 					if ($parser->parse())
 					{

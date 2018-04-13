@@ -39,7 +39,7 @@ class TableFormatter
             $width = @exec('tput cols');
         }
         if ($width) {
-            $this->max = $width;
+            $this->max = $width - 1;
         }
 
         if ($colors) {
