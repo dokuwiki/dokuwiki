@@ -20,14 +20,25 @@ if(!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER',15);
  *
  * refactored into ft_pageSearch(), _ft_pageSearch() and trigger_event()
  *
- * @param string $query
- * @param array $highlight
+ * @param string     $query
+ * @param array      $highlight
+ * @param string     $sort
+ * @param int|string $after  only show results with an modified time after this date, accepts timestap or strtotime arguments
+ * @param int|string $before only show results with an modified time before this date, accepts timestap or strtotime arguments
+ *
  * @return array
  */
-function ft_pageSearch($query,&$highlight){
+function ft_pageSearch($query,&$highlight, $sort = null, $after = null, $before = null){
 
-    $data = array();
-    $data['query'] = $query;
+    if ($sort === null) {
+        $sort = 'hits';
+    }
+    $data = [
+        'query' => $query,
+        'sort' => $sort,
+        'after' => $after,
+        'before' => $before
+    ];
     $data['highlight'] =& $highlight;
 
     return trigger_event('SEARCH_QUERY_FULLPAGE', $data, '_ft_pageSearch');
@@ -100,7 +111,7 @@ function _ft_pageSearch(&$data) {
                 break;
             case 'N+:':
             case 'N-:': // namespace
-                $ns = substr($token, 3);
+                $ns = cleanID(substr($token, 3)) . ':';
                 $pages_matched = array();
                 foreach (array_keys($pages_all) as $id) {
                     if (strpos($id, $ns) === 0) {
@@ -134,8 +145,14 @@ function _ft_pageSearch(&$data) {
         }
     }
 
-    // sort docs by count
-    arsort($docs);
+    $docs = _ft_filterResultsByTime($docs, $data['after'], $data['before']);
+
+    if ($data['sort'] === 'mtime') {
+        uksort($docs, 'ft_pagemtimesorter');
+    } else {
+        // sort docs by count
+        arsort($docs);
+    }
 
     return $docs;
 }
@@ -199,7 +216,6 @@ function ft_mediause($id, $ignore_perms = false){
 }
 
 
-
 /**
  * Quicksearch for pagenames
  *
@@ -210,16 +226,25 @@ function ft_mediause($id, $ignore_perms = false){
  * The function always returns titles as well
  *
  * @triggers SEARCH_QUERY_PAGELOOKUP
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Adrian Lang <lang@cosmocode.de>
+ * @author   Andreas Gohr <andi@splitbrain.org>
+ * @author   Adrian Lang <lang@cosmocode.de>
  *
- * @param string $id        page id
- * @param bool   $in_ns     match against namespace as well?
- * @param bool   $in_title  search in title?
+ * @param string     $id       page id
+ * @param bool       $in_ns    match against namespace as well?
+ * @param bool       $in_title search in title?
+ * @param int|string $after    only show results with an modified time after this date, accepts timestap or strtotime arguments
+ * @param int|string $before   only show results with an modified time before this date, accepts timestap or strtotime arguments
+ *
  * @return string[]
  */
-function ft_pageLookup($id, $in_ns=false, $in_title=false){
-    $data = compact('id', 'in_ns', 'in_title');
+function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $before = null){
+    $data = [
+        'id' => $id,
+        'in_ns' => $in_ns,
+        'in_title' => $in_title,
+        'after' => $after,
+        'before' => $before
+    ];
     $data['has_titles'] = true; // for plugin backward compatibility check
     return trigger_event('SEARCH_QUERY_PAGELOOKUP', $data, '_ft_pageLookup');
 }
@@ -233,9 +258,11 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false){
 function _ft_pageLookup(&$data){
     // split out original parameters
     $id = $data['id'];
-    if (preg_match('/(?:^| )(?:@|ns:)([\w:]+)/', $id, $matches)) {
-        $ns = cleanID($matches[1]) . ':';
-        $id = str_replace($matches[0], '', $id);
+    $Indexer = idx_get_indexer();
+    $parsedQuery = ft_queryParser($Indexer, $id);
+    if (count($parsedQuery['ns']) > 0) {
+        $ns = cleanID($parsedQuery['ns'][0]) . ':';
+        $id = implode(' ', $parsedQuery['highlight']);
     }
 
     $in_ns    = $data['in_ns'];
@@ -279,8 +306,38 @@ function _ft_pageLookup(&$data){
         }
     }
 
+    $pages = _ft_filterResultsByTime($pages, $data['after'], $data['before']);
+
     uksort($pages,'ft_pagesorter');
     return $pages;
+}
+
+
+/**
+ * @param array      $results search results in the form pageid => value
+ * @param int|string $after   only returns results with an modified time after this date, accepts timestap or strtotime arguments
+ * @param int|string $before  only returns results with an modified time after this date, accepts timestap or strtotime arguments
+ *
+ * @return array
+ */
+function _ft_filterResultsByTime(array $results, $after, $before) {
+    if ($after || $before) {
+        $after = is_int($after) ? $after : strtotime($after);
+        $before = is_int($before) ? $before : strtotime($before);
+
+        foreach ($results as $id => $value) {
+            $mTime = filemtime(wikiFN($id));
+            if ($after && $after > $mTime) {
+                unset($results[$id]);
+                continue;
+            }
+            if ($before && $before < $mTime) {
+                unset($results[$id]);
+            }
+        }
+    }
+
+    return $results;
 }
 
 /**
@@ -314,6 +371,20 @@ function ft_pagesorter($a, $b){
         return 1;
     }
     return strcmp ($a,$b);
+}
+
+/**
+ * Sort pages by their mtime, from newest to oldest
+ *
+ * @param string $a
+ * @param string $b
+ *
+ * @return int Returns < 0 if $a is newer than $b, > 0 if $b is newer than $a and 0 if they are of the same age
+ */
+function ft_pagemtimesorter($a, $b) {
+    $mtimeA = filemtime(wikiFN($a));
+    $mtimeB = filemtime(wikiFN($b));
+    return $mtimeB - $mtimeA;
 }
 
 /**
@@ -811,6 +882,38 @@ function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = f
         }
     }
     return $parsed;
+}
+
+/**
+ * Recreate a search query string based on parsed parts, doesn't support negated phrases and `OR` searches
+ *
+ * @param array $and
+ * @param array $not
+ * @param array $phrases
+ * @param array $ns
+ * @param array $notns
+ *
+ * @return string
+ */
+function ft_queryUnparser_simple(array $and, array $not, array $phrases, array $ns, array $notns) {
+    $query = implode(' ', $and);
+    if (!empty($not)) {
+        $query .= ' -' . implode(' -', $not);
+    }
+
+    if (!empty($phrases)) {
+        $query .= ' "' . implode('" "', $phrases) . '"';
+    }
+
+    if (!empty($ns)) {
+        $query .= ' @' . implode(' @', $ns);
+    }
+
+    if (!empty($notns)) {
+        $query .= ' ^' . implode(' ^', $notns);
+    }
+
+    return $query;
 }
 
 //Setup VIM: ex: et ts=4 :

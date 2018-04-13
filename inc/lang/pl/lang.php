@@ -3,11 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Wojciech Lichota <wojciech@lichota.pl>
+ * @author Max <maxrb146@gmail.com>
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
  * @author Sławomir Boczek <slawkens@gmail.com>
- * @author sleshek@wp.pl
+ * @author sleshek <sleshek@wp.pl>
  * @author Leszek Stachowski <shazarre@gmail.com>
  * @author maros <dobrimaros@yahoo.pl>
  * @author Grzegorz Widła <dzesdzes@gmail.com>
@@ -79,7 +81,6 @@ $lang['badpassconfirm']        = 'Niestety, hasło jest niepoprawne.';
 $lang['minoredit']             = 'Mniejsze zmiany';
 $lang['draftdate']             = 'Czas zachowania szkicu';
 $lang['nosecedit']             = 'Strona została zmodyfikowana, sekcje zostały zmienione. Załadowano całą stronę.';
-$lang['searchcreatepage']      = 'Jeśli nie znaleziono szukanego hasła, możesz utworzyć nową stronę, której tytułem będzie poszukiwane hasło.';
 $lang['regmissing']            = 'Wypełnij wszystkie pola.';
 $lang['reguexists']            = 'Użytkownik o tej nazwie już istnieje.';
 $lang['regsuccess']            = 'Utworzono użytkownika. Hasło zostało przesłane pocztą.';
@@ -200,6 +201,8 @@ $lang['diff_side']             = 'Jeden obok drugiego';
 $lang['diffprevrev']           = 'Poprzednia wersja';
 $lang['diffnextrev']           = 'Nowa wersja';
 $lang['difflastrev']           = 'Ostatnia wersja';
+$lang['diffbothprevrev']       = 'Poprzednia rewizja po obu stronach';
+$lang['diffbothnextrev']       = 'Następna rewizja po obu stronach';
 $lang['line']                  = 'Linia';
 $lang['breadcrumb']            = 'Ślad:';
 $lang['youarehere']            = 'Jesteś tutaj:';
@@ -349,5 +352,7 @@ $lang['currentns']             = 'Obecny katalog';
 $lang['searchresult']          = 'Wyniki wyszukiwania';
 $lang['plainhtml']             = 'Czysty HTML';
 $lang['wikimarkup']            = 'Znaczniki';
+$lang['page_nonexist_rev']     = 'Strona nie istnieje w %s. Została następnie utworzony w <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Nie można przeanalizować parametru "%s".';
 $lang['email_signature_text']  = 'List został wygenerowany przez DokuWiki pod adresem
 @DOKUWIKIURL@';

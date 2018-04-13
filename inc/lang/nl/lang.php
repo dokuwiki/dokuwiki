@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author mark prins <mprins@users.sf.net>
  * @author François Kooman <fkooman.tuxed.net>
  * @author Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
  * @author Riny Heijdendael <riny@heijdendael.nl>
@@ -17,9 +18,6 @@
  * @author Jeroen
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
  * @author Gerrit <klapinklapin@gmail.com>
- * @author mprins <mprins@users.sf.net>
- * @author Gerrit Uitslag <klapinklapin@gmail.com>
- * @author Klap-in <klapinklapin@gmail.com>
  * @author Remon <no@email.local>
  * @author gicalle <gicalle@hotmail.com>
  * @author Rene <wllywlnt@yahoo.com>
@@ -27,11 +25,9 @@
  * @author Mijndert <mijndert@mijndertstuij.nl>
  * @author Johan Wijnker <johan@wijnker.eu>
  * @author Hugo Smet <hugo.smet@scarlet.be>
- * @author Mark C. Prins <mprins@users.sf.net>
  * @author Wesley de Weerd <wesleytiel@gmail.com>
  * @author Sjoerd <sjoerd@sjomar.eu>
  * @author Joachim David <joa_david@hotmail.com>
- * @author mark prins <mprins@users.sf.net>
  * @author stafmans <dokuwiki@stafmans.net>
  */
 $lang['encoding']              = 'utf-8';
@@ -93,7 +89,6 @@ $lang['badpassconfirm']        = 'Sorry, het wachtwoord was onjuist';
 $lang['minoredit']             = 'Kleine wijziging';
 $lang['draftdate']             = 'Concept automatisch opgeslagen op';
 $lang['nosecedit']             = 'De pagina is tussentijds veranderd, sectie-informatie was verouderd, volledige pagina geladen.';
-$lang['searchcreatepage']      = 'Niks gevonden? Maak een nieuwe pagina met als naam je zoekopdracht. Klik hiervoor op \'\'Maak deze pagina aan\'\'.';
 $lang['regmissing']            = 'Vul alle velden in';
 $lang['reguexists']            = 'Er bestaat al een gebruiker met deze loginnaam.';
 $lang['regsuccess']            = 'De gebruiker is aangemaakt. Het wachtwoord is per e-mail verzonden.';

@@ -24,8 +24,9 @@ class Form extends Element {
      * Creates a new, empty form with some default attributes
      *
      * @param array $attributes
+     * @param bool  $unsafe     if true, then the security token is ommited
      */
-    public function __construct($attributes = array()) {
+    public function __construct($attributes = array(), $unsafe = false) {
         global $ID;
 
         parent::__construct('form', $attributes);
@@ -49,7 +50,9 @@ class Form extends Element {
         }
 
         // add the security token by default
-        $this->setHiddenField('sectok', getSecurityToken());
+        if (!$unsafe) {
+            $this->setHiddenField('sectok', getSecurityToken());
+        }
 
         // identify this as a new form based form in HTML
         $this->addClass('doku_form');
@@ -76,6 +79,20 @@ class Form extends Element {
      */
     public function elementCount() {
         return count($this->elements);
+    }
+
+    /**
+     * Get the position of the element in the form or false if it is not in the form
+     *
+     * Warning: This function may return Boolean FALSE, but may also return a non-Boolean value which evaluates to FALSE. Please read the section on Booleans for more information. Use the === operator for testing the return value of this function.
+     *
+     * @param Element $element
+     *
+     * @return false|int
+     */
+    public function getElementPosition(Element $element)
+    {
+        return array_search($element, $this->elements, true);
     }
 
     /**

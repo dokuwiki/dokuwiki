@@ -9,12 +9,9 @@
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Flávio Veras <flaviove@gmail.com>
  * @author Jeferson Propheta <jeferson.propheta@gmail.com>
- * @author jair.henrique@gmail.com
+ * @author jair.henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luis@dantas.com>
- * @author Frederico Guimarães <frederico@teia.bio.br>
- * @author Jair Henrique <jair.henrique@gmail.com>
- * @author Luis Dantas <luisdantas@gmail.com>
- * @author Sergio Motta sergio@cisne.com.br
+ * @author Sergio Motta <sergio@cisne.com.br>
  * @author Isaias Masiero Filho <masiero@masiero.org>
  * @author Balaco Baco <balacobaco@imap.cc>
  * @author Victor Westmann <victor.westmann@gmail.com>
@@ -128,6 +125,7 @@ $lang['subscribe_time']        = 'Tempo de espera antes do envio das listas e me
 $lang['notify']                = 'Enviar notificações de mudança para esse endereço de e-mail';
 $lang['registernotify']        = 'Enviar informações de usuários registrados para esse endereço de e-mail';
 $lang['mailfrom']              = 'Endereço de e-mail a ser utilizado para mensagens automáticas';
+$lang['mailreturnpath']        = 'Endereço de e-mail do destinatário para notificações de falha de entrega';
 $lang['mailprefix']            = 'Prefixo do assunto dos e-mails de envio automático';
 $lang['htmlmail']              = 'Enviar e-mail HTML multipartes, que têm uma aparência melhor, mas um tamanho maior. Desabilite para enviar e-mails em texto puro.';
 $lang['sitemap']               = 'Gerar Google Sitemap (dias)';
@@ -137,6 +135,9 @@ $lang['rss_content']           = 'O que deve ser exibido nos itens da fonte XML?
 $lang['rss_update']            = 'Intervalo de atualização da fonte XML (seg)';
 $lang['rss_show_summary']      = 'Resumo de exibição da fonte XML no título';
 $lang['rss_media']             = 'Que tipo de alterações devem ser listadas na fonte XML?';
+$lang['rss_media_o_both']      = 'ambos';
+$lang['rss_media_o_pages']     = 'páginas';
+$lang['rss_media_o_media']     = 'mídia';
 $lang['updatecheck']           = 'Verificar atualizações e avisos de segurança? O DokuWiki precisa contactar o "splitbrain.org" para efetuar esse recurso.';
 $lang['userewrite']            = 'Usar URLs "limpas"';
 $lang['useslash']              = 'Usar a barra como separador de espaços de nomes nas URLs';
@@ -155,6 +156,10 @@ $lang['renderer_xhtml']        = 'Renderizador a ser utilizado para a saída pri
 $lang['renderer__core']        = '%s (núcleo do DokuWiki)';
 $lang['renderer__plugin']      = '%s ("plug-in")';
 $lang['dnslookups']            = 'O DokuWiki procurará pelo nome de host dos endereços IP remotos dos usuários que estão editando as páginas. Caso você tenha um DNS lento, ele não esteja funcionando ou, ainda, você não queira esse recurso, desabilite essa opção.';
+$lang['jquerycdn']             = 'Os scripts jQuery e jQuery UI devem ser carregados a partir de uma CND? Isso adiciona requisições HTTP adicionais, mas os arquivos podem carregar mais rapidamente e os usuários podem já tê-los no cache.';
+$lang['jquerycdn_o_0']         = 'Sem CDN, somente entrega local';
+$lang['jquerycdn_o_jquery']    = 'CDN em code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'CDN em cdnjs.com';
 $lang['proxy____host']         = 'Nome do servidor proxy';
 $lang['proxy____port']         = 'Porta do proxy';
 $lang['proxy____user']         = 'Nome de usuário do proxy';

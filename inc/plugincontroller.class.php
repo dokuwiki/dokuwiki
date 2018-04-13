@@ -66,7 +66,7 @@ class Doku_Plugin_Controller {
      * @param  $name     string name of the plugin to load
      * @param  $new      bool   true to return a new instance of the plugin, false to use an already loaded instance
      * @param  $disabled bool   true to load even disabled plugins
-     * @return DokuWiki_Plugin|DokuWiki_Syntax_Plugin|DokuWiki_Auth_Plugin|DokuWiki_Admin_Plugin|DokuWiki_Action_Plugin|DokuWiki_Remote_Plugin|null  the plugin object or null on failure
+     * @return DokuWiki_PluginInterface|null  the plugin object or null on failure
      */
     public function load($type,$name,$new=false,$disabled=false){
 

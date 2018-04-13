@@ -1,13 +1,17 @@
 #!/usr/bin/php
 <?php
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__).'/../').'/');
+
+use splitbrain\phpcli\CLI;
+use splitbrain\phpcli\Options;
+
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
 define('NOSESSION', 1);
-require_once(DOKU_INC.'inc/init.php');
+require_once(DOKU_INC . 'inc/init.php');
 
 /**
  * Checkout and commit pages from the command line while maintaining the history
  */
-class PageCLI extends DokuCLI {
+class PageCLI extends CLI {
 
     protected $force = false;
     protected $username = '';
@@ -15,10 +19,10 @@ class PageCLI extends DokuCLI {
     /**
      * Register options and arguments on the given $options object
      *
-     * @param DokuCLI_Options $options
+     * @param Options $options
      * @return void
      */
-    protected function setup(DokuCLI_Options $options) {
+    protected function setup(Options $options) {
         /* global */
         $options->registerOption(
             'force',
@@ -32,17 +36,17 @@ class PageCLI extends DokuCLI {
             'username'
         );
         $options->setHelp(
-            'Utility to help command line Dokuwiki page editing, allow '.
+            'Utility to help command line Dokuwiki page editing, allow ' .
             'pages to be checked out for editing then committed after changes'
         );
 
         /* checkout command */
         $options->registerCommand(
             'checkout',
-            'Checks out a file from the repository, using the wiki id and obtaining '.
-            'a lock for the page. '."\n".
-            'If a working_file is specified, this is where the page is copied to. '.
-            'Otherwise defaults to the same as the wiki page in the current '.
+            'Checks out a file from the repository, using the wiki id and obtaining ' .
+            'a lock for the page. ' . "\n" .
+            'If a working_file is specified, this is where the page is copied to. ' .
+            'Otherwise defaults to the same as the wiki page in the current ' .
             'working directory.'
         );
         $options->registerArgument(
@@ -61,7 +65,7 @@ class PageCLI extends DokuCLI {
         /* commit command */
         $options->registerCommand(
             'commit',
-            'Checks in the working_file into the repository using the specified '.
+            'Checks in the working_file into the repository using the specified ' .
             'wiki id, archiving the previous version.'
         );
         $options->registerArgument(
@@ -121,23 +125,24 @@ class PageCLI extends DokuCLI {
      *
      * Arguments and options have been parsed when this is run
      *
-     * @param DokuCLI_Options $options
+     * @param Options $options
      * @return void
      */
-    protected function main(DokuCLI_Options $options) {
-        $this->force    = $options->getOpt('force', false);
+    protected function main(Options $options) {
+        $this->force = $options->getOpt('force', false);
         $this->username = $options->getOpt('user', $this->getUser());
 
         $command = $options->getCmd();
+        $args = $options->getArgs();
         switch($command) {
             case 'checkout':
-                $wiki_id   = array_shift($options->args);
-                $localfile = array_shift($options->args);
+                $wiki_id = array_shift($args);
+                $localfile = array_shift($args);
                 $this->commandCheckout($wiki_id, $localfile);
                 break;
             case 'commit':
-                $localfile = array_shift($options->args);
-                $wiki_id   = array_shift($options->args);
+                $localfile = array_shift($args);
+                $wiki_id = array_shift($args);
                 $this->commandCommit(
                     $localfile,
                     $wiki_id,
@@ -146,12 +151,12 @@ class PageCLI extends DokuCLI {
                 );
                 break;
             case 'lock':
-                $wiki_id = array_shift($options->args);
+                $wiki_id = array_shift($args);
                 $this->obtainLock($wiki_id);
                 $this->success("$wiki_id locked");
                 break;
             case 'unlock':
-                $wiki_id = array_shift($options->args);
+                $wiki_id = array_shift($args);
                 $this->clearLock($wiki_id);
                 $this->success("$wiki_id unlocked");
                 break;
@@ -177,11 +182,11 @@ class PageCLI extends DokuCLI {
         }
 
         if(empty($localfile)) {
-            $localfile = getcwd().'/'.utf8_basename($wiki_fn);
+            $localfile = getcwd() . '/' . utf8_basename($wiki_fn);
         }
 
         if(!file_exists(dirname($localfile))) {
-            $this->fatal("Directory ".dirname($localfile)." does not exist");
+            $this->fatal("Directory " . dirname($localfile) . " does not exist");
         }
 
         if(stristr(realpath(dirname($localfile)), realpath($conf['datadir'])) !== false) {
@@ -204,7 +209,7 @@ class PageCLI extends DokuCLI {
      * @param string $localfile
      * @param string $wiki_id
      * @param string $message
-     * @param bool   $minor
+     * @param bool $minor
      */
     protected function commandCommit($localfile, $wiki_id, $message, $minor) {
         $wiki_id = cleanID($wiki_id);
@@ -311,7 +316,6 @@ class PageCLI extends DokuCLI {
         return $user;
     }
 }
-
 
 // Main
 $cli = new PageCLI();

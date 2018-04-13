@@ -1,0 +1,10 @@
+*.swp
+*~
+/*.less
+/*.css
+tests/bootstrap
+tests/tmp
+vendor
+composer.lock
+
+.idea/

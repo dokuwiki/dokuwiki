@@ -1,5 +1,3 @@
-## Enable this to restrict editing to logged in users only
-
 ## You should disable Indexes and MultiViews either here or in the
 ## global config. Symlinks maybe needed for URL rewriting.
 #Options -Indexes -MultiViews +FollowSymLinks

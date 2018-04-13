@@ -59,16 +59,31 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Register a new edit section range
      *
-     * @param string $type   The section type identifier
-     * @param string $title  The section title
      * @param int    $start  The byte position for the edit start
+     * @param array  $data   Associative array with section data:
+     *                       Key 'name': the section name/title
+     *                       Key 'target': the target for the section edit,
+     *                                     e.g. 'section' or 'table'
+     *                       Key 'hid': header id
+     *                       Key 'codeblockOffset': actual code block index
+     *                       Key 'start': set in startSectionEdit(),
+     *                                    do not set yourself
+     *                       Key 'range': calculated from 'start' and
+     *                                    $key in finishSectionEdit(),
+     *                                    do not set yourself
      * @return string  A marker class for the starting HTML element
      *
      * @author Adrian Lang <lang@cosmocode.de>
      */
-    public function startSectionEdit($start, $type, $title = null) {
-        $this->sectionedits[] = array(++$this->lastsecid, $start, $type, $title);
-        return 'sectionedit'.$this->lastsecid;
+    public function startSectionEdit($start, $data) {
+        if (!is_array($data)) {
+            msg('startSectionEdit: $data is NOT an array!', -1);
+            return '';
+        }
+        $data['secid'] = ++$this->lastsecid;
+        $data['start'] = $start;
+        $this->sectionedits[] = $data;
+        return 'sectionedit'.$data['secid'];
     }
 
     /**
@@ -78,16 +93,17 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      *
      * @author Adrian Lang <lang@cosmocode.de>
      */
-    public function finishSectionEdit($end = null) {
-        list($id, $start, $type, $title) = array_pop($this->sectionedits);
-        if(!is_null($end) && $end <= $start) {
+    public function finishSectionEdit($end = null, $hid = null) {
+        $data = array_pop($this->sectionedits);
+        if(!is_null($end) && $end <= $data['start']) {
             return;
         }
-        $this->doc .= "<!-- EDIT$id ".strtoupper($type).' ';
-        if(!is_null($title)) {
-            $this->doc .= '"'.str_replace('"', '', $title).'" ';
+        if(!is_null($hid)) {
+            $data['hid'] .= $hid;
         }
-        $this->doc .= "[$start-".(is_null($end) ? '' : $end).'] -->';
+        $data['range'] = $data['start'].'-'.(is_null($end) ? '' : $end);
+        unset($data['start']);
+        $this->doc .= '<!-- EDIT'.json_encode ($data).' -->';
     }
 
     /**
@@ -114,7 +130,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function document_end() {
         // Finish open section edits.
         while(count($this->sectionedits) > 0) {
-            if($this->sectionedits[count($this->sectionedits) - 1][1] <= 1) {
+            if($this->sectionedits[count($this->sectionedits) - 1]['start'] <= 1) {
                 // If there is only one section, do not write a section edit
                 // marker.
                 array_pop($this->sectionedits);
@@ -209,7 +225,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         if($level <= $conf['maxseclevel'] &&
             count($this->sectionedits) > 0 &&
-            $this->sectionedits[count($this->sectionedits) - 1][2] === 'section'
+            $this->sectionedits[count($this->sectionedits) - 1]['target'] === 'section'
         ) {
             $this->finishSectionEdit($pos - 1);
         }
@@ -217,7 +233,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         // write the header
         $this->doc .= DOKU_LF.'<h'.$level;
         if($level <= $conf['maxseclevel']) {
-            $this->doc .= ' class="'.$this->startSectionEdit($pos, 'section', $text).'"';
+            $data = array();
+            $data['target'] = 'section';
+            $data['name'] = $text;
+            $data['hid'] = $hid;
+            $data['codeblockOffset'] = $this->_codeblock;
+            $this->doc .= ' class="'.$this->startSectionEdit($pos, $data).'"';
         }
         $this->doc .= ' id="'.$hid.'">';
         $this->doc .= $this->_xmlEntities($text);
@@ -632,6 +653,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function _highlight($type, $text, $language = null, $filename = null, $options = null) {
         global $ID;
         global $lang;
+        global $INPUT;
+
+        $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language);
 
         if($filename) {
             // add icon
@@ -639,8 +663,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $class = preg_replace('/[^_\-a-z0-9]+/i', '_', $ext);
             $class = 'mediafile mf_'.$class;
 
+            $offset = 0;
+            if ($INPUT->has('codeblockOffset')) {
+                $offset = $INPUT->str('codeblockOffset');
+            }
             $this->doc .= '<dl class="'.$type.'">'.DOKU_LF;
-            $this->doc .= '<dt><a href="'.exportlink($ID, 'code', array('codeblock' => $this->_codeblock)).'" title="'.$lang['download'].'" class="'.$class.'">';
+            $this->doc .= '<dt><a href="'.exportlink($ID, 'code', array('codeblock' => $offset+$this->_codeblock)).'" title="'.$lang['download'].'" class="'.$class.'">';
             $this->doc .= hsc($filename);
             $this->doc .= '</a></dt>'.DOKU_LF.'<dd>';
         }
@@ -652,7 +680,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $text = substr($text, 0, -1);
         }
 
-        if(is_null($language)) {
+        if(empty($language)) { // empty is faster than is_null and can prevent '' string
             $this->doc .= '<pre class="'.$type.'">'.$this->_xmlEntities($text).'</pre>'.DOKU_LF;
         } else {
             $class = 'code'; //we always need the code class to make the syntax highlighting apply
@@ -887,7 +915,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['more']   = '';
         $link['class']  = $class;
         if($this->date_at) {
-            $params['at'] = $this->date_at;
+            $params = $params.'&at='.rawurlencode($this->date_at);
         }
         $link['url']    = wl($id, $params);
         $link['name']   = $name;
@@ -1136,7 +1164,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function internalmedia($src, $title = null, $align = null, $width = null,
                            $height = null, $cache = null, $linking = null, $return = false) {
         global $ID;
-        list($src, $hash) = explode('#', $src, 2);
+        if (strpos($src, '#') !== false) {
+            list($src, $hash) = explode('#', $src, 2);
+        }
         resolve_mediaid(getNS($ID), $src, $exists, $this->date_at, true);
 
         $noLink = false;
@@ -1157,7 +1187,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             if($exists) $link['title'] .= ' ('.filesize_h(filesize(mediaFN($src))).')';
         }
 
-        if($hash) $link['url'] .= '#'.$hash;
+        if (!empty($hash)) $link['url'] .= '#'.$hash;
 
         //markup non existing files
         if(!$exists) {
@@ -1288,7 +1318,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     if($author) {
                         $name = $author->get_name();
                         if(!$name) $name = $author->get_email();
-                        if($name) $this->doc .= ' '.$lang['by'].' '.$name;
+                        if($name) $this->doc .= ' '.$lang['by'].' '.hsc($name);
                     }
                 }
                 if($params['date']) {
@@ -1335,7 +1365,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $class .= ' ' . $classes;
         }
         if($pos !== null) {
-            $class .= ' '.$this->startSectionEdit($pos, 'table');
+            $hid = $this->_headerToLink($class, true);
+            $data = array();
+            $data['target'] = 'table';
+            $data['name'] = '';
+            $data['hid'] = $hid;
+            $class .= ' '.$this->startSectionEdit($pos, $data);
         }
         $this->doc .= '<div class="'.$class.'"><table class="inline">'.
             DOKU_LF;
@@ -1778,6 +1813,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * Embed video(s) in HTML
      *
      * @author Anika Henke <anika@selfthinker.org>
+     * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
      *
      * @param string $src         - ID of video to embed
      * @param int    $width       - width of the video in pixels
@@ -1795,6 +1831,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $posterUrl = '';
         $files = array();
+        $tracks = array();
         $isExternal = media_isexternal($src);
 
         if ($isExternal) {
@@ -1806,6 +1843,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $extensions   = array('webm', 'ogv', 'mp4');
             $files        = media_alternativefiles($src, $extensions);
             $poster       = media_alternativefiles($src, array('jpg', 'png'));
+            $tracks       = media_trackfiles($src);
             if(!empty($poster)) {
                 $posterUrl = ml(reset($poster), '', true, '&');
             }
@@ -1832,6 +1870,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
             // alternative content (just a link to the file)
             $fallback .= $this->$linkType($file, $title, null, null, null, $cache = null, $linking = 'linkonly', $return = true);
+        }
+
+        // output each track if any
+        foreach( $tracks as $trackid => $info ) {
+            list( $kind, $srclang ) = array_map( 'hsc', $info );
+            $out .= "<track kind=\"$kind\" srclang=\"$srclang\" ";
+            $out .= "label=\"$srclang\" ";
+            $out .= 'src="'.ml($trackid, '', true).'">'.NL;
         }
 
         // finish

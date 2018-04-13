@@ -1,0 +1,1 @@
+Są to szablony aktualnie zainstalowane w twoim DokuWiki. [[?do=admin&page=config|Menadżer konfiguracji]] pozwala wybrać używany szablon.

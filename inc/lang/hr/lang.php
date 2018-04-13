@@ -3,11 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Davor Turkalj <turki.bsc@gmail.com>
  * @author Tomo Krajina <aaa@puzz.info>
  * @author Branko Rihtman <theney@gmail.com>
  * @author Dražen Odobašić <dodobasic@gmail.com>
- * @author Dejan Igrec dejan.igrec@gmail.com
- * @author Davor Turkalj <turki.bsc@gmail.com>
+ * @author Dejan Igrec <dejan.igrec@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -68,7 +68,6 @@ $lang['badpassconfirm']        = 'Nažalost, lozinka nije ispravna';
 $lang['minoredit']             = 'Manje izmjene';
 $lang['draftdate']             = 'Nacrt promjena automatski spremljen u';
 $lang['nosecedit']             = 'Stranica se u međuvremenu promijenila. Informacija o odjeljku je ostarila pa je učitana kompletna stranica.';
-$lang['searchcreatepage']      = 'Ako ne možete naći što tražite, možete urediti ili stvoriti novu stranicu s odgovarajućim alatom.';
 $lang['regmissing']            = 'Morate popuniti sva polja.';
 $lang['reguexists']            = 'Korisnik s tim korisničkim imenom već postoji.';
 $lang['regsuccess']            = 'Korisnik je uspješno stvoren i poslana je lozinka emailom.';

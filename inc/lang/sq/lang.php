@@ -62,7 +62,6 @@ $lang['badlogin']              = 'Na vjen keq, emri ose fjalëkalimi është gab
 $lang['minoredit']             = 'Ndryshime të Vogla';
 $lang['draftdate']             = 'Skica u ruajt automatikisht në';
 $lang['nosecedit']             = 'Faqja u ndryshua ndëwrkohë, informacioni i kwtij seksioni ishte i vjetër, u ngarkua faqja e tërë në vend të saj.';
-$lang['searchcreatepage']      = 'Nëse nuk e gjetët atë që po kërkonit, mund të krijoni ose redaktoni një faqe pas pyetjes suaj me butonin përkatës.';
 $lang['regmissing']            = 'Na vjen keq, duhet të plotësoni të gjitha fushat.';
 $lang['reguexists']            = 'Na vjen keq, ekziston një përdorues tjetër me të njëjtin emër.';
 $lang['regsuccess']            = 'Përdoruesi u regjistrua dhe fjalëkalimi u dërgua me email.';

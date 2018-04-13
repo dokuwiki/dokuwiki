@@ -105,7 +105,6 @@ $lang['badpassconfirm']        = 'Lo siento, la contraseña es errónea';
 $lang['minoredit']             = 'Cambios menores';
 $lang['draftdate']             = 'Borrador guardado automáticamente:';
 $lang['nosecedit']             = 'La página ha cambiado en el lapso, la información de sección estaba anticuada, en su lugar se cargó la página completa.';
-$lang['searchcreatepage']      = 'Si no has encontrado lo que buscabas, puedes crear una nueva página con tu consulta utilizando el botón  \'\'Crea esta página\'\'.';
 $lang['regmissing']            = 'Lo siento, tienes que completar todos los campos.';
 $lang['reguexists']            = 'Lo siento, ya existe un usuario con este nombre.';
 $lang['regsuccess']            = 'El usuario ha sido creado y la contraseña se ha enviado por correo.';

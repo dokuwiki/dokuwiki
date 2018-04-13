@@ -64,7 +64,6 @@ $lang['badlogin']              = 'Maaf, username atau password salah.';
 $lang['badpassconfirm']        = 'Maaf, password salah';
 $lang['minoredit']             = 'Perubahan Minor';
 $lang['draftdate']             = 'Simpan draft secara otomatis';
-$lang['searchcreatepage']      = 'Jika Anda tidak menemukan apa yang diinginkan, Anda dapat membuat halaman baru, dengan nama sesuai "text pencarian" Anda. Gunakan tombol "Edit halaman ini".';
 $lang['regmissing']            = 'Maaf, Anda harus mengisi semua field.';
 $lang['reguexists']            = 'Maaf, user dengan user login ini telah ada.';
 $lang['regsuccess']            = 'User telah didaftarkan dan password telah dikirim ke email Anda.';

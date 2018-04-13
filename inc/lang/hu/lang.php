@@ -74,7 +74,6 @@ $lang['badpassconfirm']        = 'Hibás jelszó';
 $lang['minoredit']             = 'Apróbb változások';
 $lang['draftdate']             = 'Piszkozat elmentve:';
 $lang['nosecedit']             = 'Időközben megváltozott az oldal, emiatt a szakasz nem friss. Töltsd újra az egész oldalt!';
-$lang['searchcreatepage']      = 'Ha nem találtad meg amit kerestél, akkor létrehozhatsz egy új oldalt a keresésed alapján \'\'Az oldal szerkesztése\'\' gombbal.';
 $lang['regmissing']            = 'Sajnáljuk, az összes mezőt ki kell töltened.';
 $lang['reguexists']            = 'Sajnáljuk, ilyen azonosítójú felhasználónk már van.';
 $lang['regsuccess']            = 'A felhasználói azonosítót létrehoztuk. A jelszót postáztuk.';

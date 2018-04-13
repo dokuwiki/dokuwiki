@@ -83,7 +83,6 @@ $lang['badpassconfirm']        = 'Bohužel špatné heslo';
 $lang['minoredit']             = 'Drobné změny';
 $lang['draftdate']             = 'Koncept automaticky uložen v';
 $lang['nosecedit']             = 'Stránka byla v mezičase změněna. Informace o sekci již nebylo platné, byla načtena celá stránka.';
-$lang['searchcreatepage']      = 'Pokud jste nenašli, co hledáte, zkuste požadovanou stránku sami vytvořit stisknutím tlačítka \'\'Vytvořit stránku\'\'.';
 $lang['regmissing']            = 'Musíte vyplnit všechny údaje.';
 $lang['reguexists']            = 'Uživatel se stejným jménem už je zaregistrován.';
 $lang['regsuccess']            = 'Uživatelský účet byl vytvořen a heslo zasláno e-mailem.';
@@ -358,4 +357,3 @@ $lang['page_nonexist_rev']     = 'Stránka neexistovala na %s. Byla vytvořena d
 $lang['unable_to_parse_date']  = 'Nelze rozebrat parametr "%s".';
 $lang['email_signature_text']  = 'Tento e-mail byl automaticky vygenerován systémem DokuWiki
 @DOKUWIKIURL@';
-$lang['email_signature_html']  = ' ';

@@ -2,13 +2,15 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Smorkster Andersson smorkster@gmail.com
  */
 $lang['server']                = 'Din MySQL server';
 $lang['user']                  = 'Användarnamn för MySQL';
 $lang['password']              = 'Lösenord för användare ovan';
 $lang['database']              = 'Databas att använda';
+$lang['charset']               = 'Teckenuppsättning som används i databas';
 $lang['debug']                 = 'Visa ytterligare felsökningsinformation';
 $lang['forwardClearPass']      = 'Skicka användares lösenord i klartext till SQL sats nedan, istället för att använda passcrypt alternativet';
 $lang['checkPass']             = 'SQL sats för kontroll av lösenord';
@@ -24,3 +26,4 @@ $lang['delUserRefs']           = 'SQL sats för att ta bort en användare från 
 $lang['updateUser']            = 'SQL sats för att uppdatera en användarprofil';
 $lang['delUserGroup']          = 'SQL sats för att ta bort en användare från en angiven grupp';
 $lang['debug_o_0']             = 'ingen';
+$lang['debug_o_1']             = 'enbart för fel';

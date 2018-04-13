@@ -9,11 +9,9 @@
  * @author Harith <haj@berlingske.dk>
  * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
- * @author rasmus@kinnerup.com
- * @author Michael Pedersen subben@gmail.com
+ * @author rasmus <rasmus@kinnerup.com>
  * @author Mikael Lyngvig <mikael@lyngvig.org>
  * @author soer9648 <soer9648@eucl.dk>
- * @author Søren Birk <soer9648@eucl.dk>
  */
 $lang['menu']                  = 'Brugerstyring';
 $lang['noauth']                = '(Brugervalidering er ikke tilgængelig)';

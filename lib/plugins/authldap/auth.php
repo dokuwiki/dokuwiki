@@ -184,10 +184,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         $info = array();
         $info['user']   = $user;
 		$this->_debug('LDAP user to find: '.htmlspecialchars($info['user']), 0, __LINE__, __FILE__);
-		
+
         $info['server'] = $this->getConf('server');
 		$this->_debug('LDAP Server: '.htmlspecialchars($info['server']), 0, __LINE__, __FILE__);
-		
+
 
         //get info for given user
         $base = $this->_makeFilter($this->getConf('usertree'), $info);
@@ -198,20 +198,20 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         }
 
 		$this->_debug('LDAP Filter: '.htmlspecialchars($filter), 0, __LINE__, __FILE__);
-		
+
         $this->_debug('LDAP user search: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
         $this->_debug('LDAP search at: '.htmlspecialchars($base.' '.$filter), 0, __LINE__, __FILE__);
 		$sr     = $this->_ldapsearch($this->con, $base, $filter, $this->getConf('userscope'));
-		
+
 		$result = @ldap_get_entries($this->con, $sr);
 
         // if result is not an array
         if(!is_array($result)) {
 			// no objects found
 			$this->_debug('LDAP search returned non-array result: '.htmlspecialchars(print($result)), -1, __LINE__, __FILE__);
-            return false; 
+            return false;
         }
-		
+
 		// Don't accept more or less than one response
 		if ($result['count'] != 1)		{
 			$this->_debug('LDAP search returned '.htmlspecialchars($result['count']).' results while it should return 1!', -1, __LINE__, __FILE__);
@@ -220,10 +220,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 			//}
 			return false;
 		}
-		
-		
+
+
 		$this->_debug('LDAP search found single result !', 0, __LINE__, __FILE__);
-		
+
         $user_result = $result[0];
         ldap_free_result($sr);
 
@@ -239,7 +239,9 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             foreach($this->getConf('mapping') as $localkey => $key) {
                 if(is_array($key)) {
                     // use regexp to clean up user_result
-                    list($key, $regexp) = each($key);
+                    // $key = array($key=>$regexp), only handles the first key-value
+                    $regexp = current($key);
+                    $key = key($key);
                     if($user_result[$key]) foreach($user_result[$key] as $grpkey => $grp) {
                         if($grpkey !== 'count' && preg_match($regexp, $grp, $match)) {
                             if($localkey == 'grps') {

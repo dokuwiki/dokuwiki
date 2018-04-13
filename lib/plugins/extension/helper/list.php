@@ -340,9 +340,9 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $link = parse_url($url);
 
         $base = $link['host'];
-        if($link['port']) $base .= $base.':'.$link['port'];
+        if(!empty($link['port'])) $base .= $base.':'.$link['port'];
         $long = $link['path'];
-        if($link['query']) $long .= $link['query'];
+        if(!empty($link['query'])) $long .= $link['query'];
 
         $name = shorten($base, $long, 55);
 

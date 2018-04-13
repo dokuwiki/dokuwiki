@@ -3,13 +3,14 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Seungheon Song <esketch@gmail.com>
  * @author jk Lee
- * @author dongnak@gmail.com
+ * @author dongnak <dongnak@gmail.com>
  * @author Song Younghwan <purluno@gmail.com>
  * @author Seung-Chul Yoo <dryoo@live.com>
- * @author erial2@gmail.com
+ * @author erial2 <erial2@gmail.com>
  * @author Myeongjin <aranet100@gmail.com>
- * @author Erial <erial2@gmail.com>
+ * @author S.H. Lee <tuders@naver.com>
  */
 $lang['menu']                  = '환경 설정';
 $lang['error']                 = '잘못된 값 때문에 설정을 바꿀 수 없습니다, 바뀜을 검토하고 다시 제출하세요.
@@ -118,6 +119,7 @@ $lang['subscribe_time']        = '구독 목록과 요약이 보내질 경과 �
 $lang['notify']                = '항상 이 이메일 주소로 바뀜 알림을 보냄';
 $lang['registernotify']        = '항상 이 이메일 주소로 새로 등록한 사용자의 정보를 보냄';
 $lang['mailfrom']              = '자동으로 보내는 메일에 사용할 보내는 사람 이메일 주소';
+$lang['mailreturnpath']        = '배달 불가 안내를 위한 수신자 메일 주소';
 $lang['mailprefix']            = '자동으로 보내는 메일에 사용할 이메일 제목 접두어. 위키 제목을 사용하려면 비워 두세요';
 $lang['htmlmail']              = '보기에는 더 좋지만 크키가 조금 더 큰 HTML 태그가 포함된 이메일을 보내기. 일반 텍스트만으로 된 메일을 보내려면 비활성화하세요.';
 $lang['sitemap']               = 'Google 사이트맵 생성 날짜 빈도 (일). 비활성화하려면 0';
@@ -127,6 +129,9 @@ $lang['rss_content']           = 'XML 피드 항목에 보여주는 내용은 �
 $lang['rss_update']            = 'XML 피드 업데이트 간격 (초)';
 $lang['rss_show_summary']      = 'XML 피드의 제목에서 요악 보여주기';
 $lang['rss_media']             = '어떤 규격으로 XML 피드에 바뀜을 나열해야 합니까?';
+$lang['rss_media_o_both']      = '양방향';
+$lang['rss_media_o_pages']     = '쪽';
+$lang['rss_media_o_media']     = '미디어';
 $lang['updatecheck']           = '업데이트와 보안 경고를 검사할까요? 도쿠위키는 이 기능을 위해 update.dokuwiki.org에 연결이 필요합니다.';
 $lang['userewrite']            = '멋진 URL 사용';
 $lang['useslash']              = 'URL에서 이름공간 구분자로 슬래시 사용';
@@ -145,6 +150,10 @@ $lang['renderer_xhtml']        = '주요 (xhtml) 위키 출력에 사용할 렌�
 $lang['renderer__core']        = '%s (도쿠위키 코어)';
 $lang['renderer__plugin']      = '%s (플러그인)';
 $lang['dnslookups']            = '도쿠위키가 문서를 편집하는 사용자의 원격 IP 주소에 대한 호스트 이름을 조회합니다. 서버가 느리거나 DNS 서버를 작동하지 않거나 이 기능을 원하지 않으면, 이 옵션을 비활성화하세요';
+$lang['jquerycdn']             = '제이쿼리(jQuery)와 제이쿼리UI 스크립트 파일을 컨텐츠전송네트워크(CDN)에서 불러와야만 합니까? 이것은 추가적인 HTTP요청을 합니다. 하지만 파일이 빨리 불러지고 캐쉬에 저장되게 할 수 있습니다.';
+$lang['jquerycdn_o_0']         = '컨텐츠전송네트워크(CDN) 사용 안 함. 로컬 전송만 함';
+$lang['jquerycdn_o_jquery']    = '\'code.jquery.com\' 의 컨텐츠전송네트워크(CDN) 사용';
+$lang['jquerycdn_o_cdnjs']     = '\'cdnjs.com\' 의 컨텐츠전송네트워크(CDN) 사용';
 $lang['proxy____host']         = '프록시 서버 이름';
 $lang['proxy____port']         = '프록시 포트';
 $lang['proxy____user']         = '프록시 사용자 이름';

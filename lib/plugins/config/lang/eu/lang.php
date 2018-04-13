@@ -1,9 +1,11 @@
 <?php
+
 /**
- * Basque language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Inko Illarramendi <inko.i.a@gmail.com>
  * @author Zigor Astarbe <astarbe@gmail.com>
+ * @author Osoitz <oelkoro@gmail.com>
  */
 $lang['menu']                  = 'Konfigurazio Ezarpenak';
 $lang['error']                 = 'Ezarpenak ez dira eguneratu balio oker bat dela eta, mesedez errepasatu aldaketak eta berriz bidali. <br />Balio okerra(k) ertz gorriz inguratuak erakutsiko dira. ';
