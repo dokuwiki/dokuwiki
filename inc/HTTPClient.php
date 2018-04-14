@@ -442,7 +442,9 @@ class HTTPClient {
                 $r_body = $this->_readData($socket, $length, 'response (content-length limited)', true);
             }elseif( !isset($this->resp_headers['transfer-encoding']) && $this->max_bodysize && !$this->keep_alive){
                 $r_body = $this->_readData($socket, $this->max_bodysize, 'response (content-length limited)', true);
-            }else{
+            } elseif ((int)$this->status === 204) {
+                // request has no content
+            } else{
                 // read entire socket
                 while (!feof($socket)) {
                     $r_body .= $this->_readData($socket, 4096, 'response (unlimited)', true);
