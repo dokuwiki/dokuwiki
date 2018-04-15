@@ -118,7 +118,8 @@ function html_secedit($text,$show=true){
  * @triggers HTML_SECEDIT_BUTTON
  */
 function html_secedit_button($matches){
-    $data = json_decode($matches[1], true);
+    $json = htmlspecialchars_decode($matches[1], ENT_QUOTES);
+    $data = json_decode($json, true);
     if ($data == NULL) {
         return;
     }

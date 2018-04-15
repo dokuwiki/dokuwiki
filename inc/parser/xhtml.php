@@ -103,7 +103,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
         $data['range'] = $data['start'].'-'.(is_null($end) ? '' : $end);
         unset($data['start']);
-        $this->doc .= '<!-- EDIT'.json_encode ($data).' -->';
+        $this->doc .= '<!-- EDIT'.hsc(json_encode ($data)).' -->';
     }
 
     /**
