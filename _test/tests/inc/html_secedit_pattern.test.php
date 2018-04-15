@@ -56,4 +56,15 @@ class html_scedit_pattern_test extends DokuWikiTest {
         }
     }
 
+    public function testSecEditHTMLInjection() {
+        $ins = p_get_instructions("====== Foo ======\n\n===== } --> <script> =====\n\n===== Bar =====\n");
+        $info = array();
+        $xhtml = p_render('xhtml', $ins, $info);
+
+        $this->assertNotNull($xhtml);
+
+        $xhtml_without_secedit = html_secedit($xhtml, false);
+
+        $this->assertFalse(strpos($xhtml_without_secedit, '<script>'), 'Plain <script> tag found in output - HTML/JS injection might be possible!');
+    }
 }
