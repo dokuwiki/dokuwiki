@@ -136,6 +136,6 @@ class SearchState
         }
 
         $href = wl($ID, $hrefAttributes, false, '&');
-        return "<a href='$href' " . buildAttributes($tagAttributes) . ">$label</a>";
+        return "<a href='$href' " . buildAttributes($tagAttributes, true) . ">$label</a>";
     }
 }
