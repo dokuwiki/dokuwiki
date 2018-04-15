@@ -77,8 +77,19 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      */
     public function startSectionEdit($start, $data) {
         if (!is_array($data)) {
-            msg('startSectionEdit: $data is NOT an array!', -1);
-            return '';
+            msg(
+                sprintf(
+                    'startSectionEdit: $data "%s" is NOT an array! One of your plugins needs an update.',
+                    hsc((string) $data)
+                ), -1
+            );
+
+            // @deprecated 2018-04-14, backward compatibility
+            $args = func_get_args();
+            $data = array();
+            if(isset($args[1])) $data['target'] = $args[1];
+            if(isset($args[2])) $data['name'] = $args[2];
+            if(isset($args[3])) $data['hid'] = $args[3];
         }
         $data['secid'] = ++$this->lastsecid;
         $data['start'] = $start;
