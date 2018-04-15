@@ -633,9 +633,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param string $text     text to show
      * @param string $language programming language to use for syntax highlighting
      * @param string $filename file path label
+     * @param array  $options  assoziative array with additional geshi options
      */
-    function file($text, $language = null, $filename = null) {
-        $this->_highlight('file', $text, $language, $filename);
+    function file($text, $language = null, $filename = null, $options=null) {
+        $this->_highlight('file', $text, $language, $filename, $options);
     }
 
     /**
@@ -644,9 +645,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param string $text     text to show
      * @param string $language programming language to use for syntax highlighting
      * @param string $filename file path label
+     * @param array  $options  assoziative array with additional geshi options
      */
-    function code($text, $language = null, $filename = null) {
-        $this->_highlight('code', $text, $language, $filename);
+    function code($text, $language = null, $filename = null, $options=null) {
+        $this->_highlight('code', $text, $language, $filename, $options);
     }
 
     /**
@@ -657,8 +659,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param string $text     text to show
      * @param string $language programming language to use for syntax highlighting
      * @param string $filename file path label
+     * @param array  $options  assoziative array with additional geshi options
      */
-    function _highlight($type, $text, $language = null, $filename = null) {
+    function _highlight($type, $text, $language = null, $filename = null, $options = null) {
         global $ID;
         global $lang;
         global $INPUT;
@@ -694,7 +697,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $class = 'code'; //we always need the code class to make the syntax highlighting apply
             if($type != 'code') $class .= ' '.$type;
 
-            $this->doc .= "<pre class=\"$class $language\">".p_xhtml_cached_geshi($text, $language, '').'</pre>'.DOKU_LF;
+            $this->doc .= "<pre class=\"$class $language\">".p_xhtml_cached_geshi($text, $language, '', $options).'</pre>'.DOKU_LF;
         }
 
         if($filename) {
