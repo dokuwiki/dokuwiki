@@ -566,8 +566,10 @@ class Search extends Ui
 
         $html .= '<dl class="search_results">';
         $num = 1;
+        $position = 1;
 
         foreach ($data as $id => $cnt) {
+            $position += 1;
             $resultLink = html_wikilink(':' . $id, null, $highlight);
 
             $resultHeader = [$resultLink];
@@ -602,6 +604,7 @@ class Search extends Ui
                 'resultHeader' => $resultHeader,
                 'resultBody' => $resultBody,
                 'page' => $id,
+                'position' => $position,
             ];
             trigger_event('SEARCH_RESULT_FULLPAGE', $eventData);
             $html .= '<div class="search_fullpage_result">';
