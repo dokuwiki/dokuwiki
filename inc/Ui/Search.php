@@ -522,7 +522,7 @@ class Search extends Ui
         global $lang;
 
         $html = '<div class="search_quickresult">';
-        $html .= '<h3>' . $lang['quickhits'] . ':</h3>';
+        $html .= '<h2>' . $lang['quickhits'] . ':</h2>';
         $html .= '<ul class="search_quickhits">';
         foreach ($data as $id => $title) {
             $name = null;
@@ -562,7 +562,7 @@ class Search extends Ui
         }
 
         $html = '<div class="search_fulltextresult">';
-        $html .= '<h3>' . $lang['search_fullresults'] . ':</h3>';
+        $html .= '<h2>' . $lang['search_fullresults'] . ':</h2>';
 
         $html .= '<dl class="search_results">';
         $num = 1;
