@@ -579,30 +579,37 @@ class Search extends Ui
             }
 
             $snippet = '';
-            $lastMod = '';
+            $hits = '';
+            $resultBody = [];
             $mtime = filemtime(wikiFN($id));
+            $lastMod = '<span class="lastmod">' . $lang['lastmod'] . '</span> ';
+            $lastMod .= '<time datetime="' . date_iso8601($mtime) . '" title="'.dformat($mtime).'">' . dformat($mtime, '%f') . '</time>';
             if ($cnt !== 0) {
-                $resultHeader[] = $cnt . ' ' . $lang['hits'];
+                $hits = '<span class="hits">' . $cnt . ' ' . $lang['hits'] . '</span>';
                 if ($num < FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
-                    $snippet = '<dd class="snippet">' . ft_snippet($id, $highlight) . '</dd>';
-                    $lastMod = $lang['lastmod'] . ' ';
-                    $lastMod .= '<time datetime="' . date_iso8601($mtime) . '" title="'.dformat($mtime).'">' . dformat($mtime, '%f') . '</time>';
+                    $snippet = ft_snippet($id, $highlight);
                 }
                 $num++;
             }
 
-            $metaLine = '<dd class="lastmod">';
-            $metaLine .= $lastMod;
-            $metaLine .= '</dd>';
+            $resultBody['meta'] = $hits . $lastMod;
+
+            if ($snippet) {
+                $resultBody['snippet'] = $snippet;
+            }
 
             $eventData = [
                 'resultHeader' => $resultHeader,
-                'resultBody' => [$metaLine, $snippet],
+                'resultBody' => $resultBody,
                 'page' => $id,
             ];
             trigger_event('SEARCH_RESULT_FULLPAGE', $eventData);
+            $html .= '<div class="search_fullpage_result">';
             $html .= '<dt>' . implode(' ', $eventData['resultHeader']) . '</dt>';
-            $html .= implode('', $eventData['resultBody']);
+            foreach ($eventData['resultBody'] as $class => $htmlContent) {
+                $html .= "<dd class=\"$class\">$htmlContent</dd>";
+            }
+            $html .= '</div>';
         }
         $html .= '</dl>';
 
