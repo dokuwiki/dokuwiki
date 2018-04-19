@@ -587,7 +587,7 @@ class Search extends Ui
             $lastMod = '<span class="lastmod">' . $lang['lastmod'] . '</span> ';
             $lastMod .= '<time datetime="' . date_iso8601($mtime) . '" title="'.dformat($mtime).'">' . dformat($mtime, '%f') . '</time>';
             if ($cnt !== 0) {
-                $hits = '<span class="hits">' . $cnt . ' ' . $lang['hits'] . '</span>';
+                $hits = '<span class="hits">' . $cnt . ' ' . $lang['hits'] . '</span>, ';
                 if ($num < FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
                     $snippet = ft_snippet($id, $highlight);
                 }
