@@ -565,8 +565,8 @@ class Search extends Ui
         $html .= '<h2>' . $lang['search_fullresults'] . ':</h2>';
 
         $html .= '<dl class="search_results">';
-        $num = 1;
-        $position = 1;
+        $num = 0;
+        $position = 0;
 
         foreach ($data as $id => $cnt) {
             $position += 1;
@@ -586,12 +586,12 @@ class Search extends Ui
             $lastMod .= '<time datetime="' . date_iso8601($mtime) . '" title="'.dformat($mtime).'">' . dformat($mtime, '%f') . '</time>';
             $resultBody['meta'] = $lastMod;
             if ($cnt !== 0) {
+                $num++;
                 $hits = '<span class="hits">' . $cnt . ' ' . $lang['hits'] . '</span>, ';
                 $resultBody['meta'] = $hits . $resultBody['meta'];
-                if ($num < FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
+                if ($num <= FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
                     $resultBody['snippet'] = ft_snippet($id, $highlight);
                 }
-                $num++;
             }
 
             $eventData = [
