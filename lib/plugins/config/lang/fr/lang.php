@@ -3,12 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Michael Bohn <mjbohn@gmail.com>
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
- * @author <stephane.gully@gmail.com>
+ * @author stephane.gully <stephane.gully@gmail.com>
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author olivier duperray <duperray.olivier@laposte.net>
@@ -164,6 +164,12 @@ $lang['xsendfile']             = 'Utiliser l\'en-tête X-Sendfile pour permettre
 $lang['renderer_xhtml']        = 'Moteur de rendu du format de sortie principal (XHTML)';
 $lang['renderer__core']        = '%s (cœur de DokuWiki)';
 $lang['renderer__plugin']      = '%s (extension)';
+$lang['search_nslimit']        = 'Limiter la recherche aux X catégories courantes. Quand une recherche est effectuée à partir d\'une page dans une catégorie profondément imbriquée, les premières X catégories sont ajoutées comme filtre.';
+$lang['search_fragment']       = 'Spécifier le comportement de recherche fragmentaire par défaut';
+$lang['search_fragment_o_exact'] = 'exact';
+$lang['search_fragment_o_starts_with'] = 'commence par';
+$lang['search_fragment_o_ends_with'] = 'se termine par';
+$lang['search_fragment_o_contains'] = 'contient';
 $lang['dnslookups']            = 'DokuWiki effectuera une résolution du nom d\'hôte sur les adresses IP des utilisateurs modifiant des pages. Si vous ne possédez pas de serveur DNS, que ce dernier est lent ou que vous ne souhaitez pas utiliser cette fonctionnalité : désactivez-la.';
 $lang['jquerycdn']             = 'Faut-il distribuer les scripts JQuery et JQuery UI depuis un CDN ? Cela ajoute une requête HTTP, mais les fichiers peuvent se charger plus vite et les internautes les ont peut-être déjà en cache.';
 $lang['jquerycdn_o_0']         = 'Non : utilisation de votre serveur.';
