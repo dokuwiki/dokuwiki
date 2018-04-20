@@ -580,24 +580,18 @@ class Search extends Ui
                 $resultHeader[] = $restrictQueryToNSLink;
             }
 
-            $snippet = '';
-            $hits = '';
             $resultBody = [];
             $mtime = filemtime(wikiFN($id));
             $lastMod = '<span class="lastmod">' . $lang['lastmod'] . '</span> ';
             $lastMod .= '<time datetime="' . date_iso8601($mtime) . '" title="'.dformat($mtime).'">' . dformat($mtime, '%f') . '</time>';
+            $resultBody['meta'] = $lastMod;
             if ($cnt !== 0) {
                 $hits = '<span class="hits">' . $cnt . ' ' . $lang['hits'] . '</span>, ';
+                $resultBody['meta'] = $hits . $resultBody['meta'];
                 if ($num < FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
-                    $snippet = ft_snippet($id, $highlight);
+                    $resultBody['snippet'] = ft_snippet($id, $highlight);
                 }
                 $num++;
-            }
-
-            $resultBody['meta'] = $hits . $lastMod;
-
-            if ($snippet) {
-                $resultBody['snippet'] = $snippet;
             }
 
             $eventData = [
