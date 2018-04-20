@@ -47,7 +47,7 @@ function html_login($svg = false){
 
     print p_locale_xhtml('login');
     print '<div class="centeralign">'.NL;
-    $form = new Doku_Form(array('id' => 'dw__login'));
+    $form = new Doku_Form(array('id' => 'dw__login', 'action'=>wl($ID)));
     $form->startFieldset($lang['btn_login']);
     $form->addHidden('id', $ID);
     $form->addHidden('do', 'login');
