@@ -522,7 +522,7 @@ class Search extends Ui
         global $lang;
 
         $html = '<div class="search_quickresult">';
-        $html .= '<h3>' . $lang['quickhits'] . ':</h3>';
+        $html .= '<h2>' . $lang['quickhits'] . ':</h2>';
         $html .= '<ul class="search_quickhits">';
         foreach ($data as $id => $title) {
             $name = null;
@@ -562,12 +562,14 @@ class Search extends Ui
         }
 
         $html = '<div class="search_fulltextresult">';
-        $html .= '<h3>' . $lang['search_fullresults'] . ':</h3>';
+        $html .= '<h2>' . $lang['search_fullresults'] . ':</h2>';
 
         $html .= '<dl class="search_results">';
-        $num = 1;
+        $num = 0;
+        $position = 0;
 
         foreach ($data as $id => $cnt) {
+            $position += 1;
             $resultLink = html_wikilink(':' . $id, null, $highlight);
 
             $resultHeader = [$resultLink];
@@ -578,34 +580,32 @@ class Search extends Ui
                 $resultHeader[] = $restrictQueryToNSLink;
             }
 
-            $snippet = '';
-            $lastMod = '';
+            $resultBody = [];
             $mtime = filemtime(wikiFN($id));
+            $lastMod = '<span class="lastmod">' . $lang['lastmod'] . '</span> ';
+            $lastMod .= '<time datetime="' . date_iso8601($mtime) . '" title="'.dformat($mtime).'">' . dformat($mtime, '%f') . '</time>';
+            $resultBody['meta'] = $lastMod;
             if ($cnt !== 0) {
-                $resultHeader[] = $cnt . ' ' . $lang['hits'];
-                if ($num < FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
-                    $snippet = '<dd>' . ft_snippet($id, $highlight) . '</dd>';
-                    $lastMod = '<span class="search_results__lastmod">' . $lang['lastmod'] . ' ';
-                    $lastMod .= '<time datetime="' . date_iso8601($mtime) . '" title="'.dformat($mtime).'">' . dformat($mtime, '%f') . '</time>';
-                    $lastMod .= '</span>';
-                }
                 $num++;
+                $hits = '<span class="hits">' . $cnt . ' ' . $lang['hits'] . '</span>, ';
+                $resultBody['meta'] = $hits . $resultBody['meta'];
+                if ($num <= FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
+                    $resultBody['snippet'] = ft_snippet($id, $highlight);
+                }
             }
-
-            $metaLine = '<div class="search_results__metaLine">';
-            $metaLine .= $lastMod;
-            $metaLine .= '</div>';
-
 
             $eventData = [
                 'resultHeader' => $resultHeader,
-                'resultBody' => [$metaLine, $snippet],
+                'resultBody' => $resultBody,
                 'page' => $id,
+                'position' => $position,
             ];
             trigger_event('SEARCH_RESULT_FULLPAGE', $eventData);
             $html .= '<div class="search_fullpage_result">';
             $html .= '<dt>' . implode(' ', $eventData['resultHeader']) . '</dt>';
-            $html .= implode('', $eventData['resultBody']);
+            foreach ($eventData['resultBody'] as $class => $htmlContent) {
+                $html .= "<dd class=\"$class\">$htmlContent</dd>";
+            }
             $html .= '</div>';
         }
         $html .= '</dl>';
