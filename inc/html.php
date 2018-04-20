@@ -692,7 +692,7 @@ function html_recent($first = 0, $show_changes = 'both') {
         print '<div class="level1"><p>' . sprintf($lang['recent_global'], getNS($ID), wl('', 'do=recent')) . '</p></div>';
     }
 
-    $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET', 'class' => 'changes'));
+    $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET', 'class' => 'changes', 'action'=>wl($ID)));
     $form->addHidden('sectok', null);
     $form->addHidden('do', 'recent');
     $form->addHidden('id', $ID);
