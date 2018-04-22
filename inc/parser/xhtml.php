@@ -147,7 +147,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     }
 
                     // add footnote markup and close this footnote
-                    $this->doc .= $footnote;
+                    $this->doc .= '<div class="content">'.$footnote.'</div>';
                     $this->doc .= '</div>'.DOKU_LF;
                 }
             }
@@ -191,7 +191,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function header($text, $level, $pos) {
         global $conf;
 
-        if(!$text) return; //skip empty headlines
+        if(blank($text)) return; //skip empty headlines
 
         $hid = $this->_headerToLink($text, true);
 
@@ -1188,6 +1188,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      */
     function externalmedia($src, $title = null, $align = null, $width = null,
                            $height = null, $cache = null, $linking = null, $return = false) {
+        if(link_isinterwiki($src)){
+            list($shortcut, $reference) = explode('>', $src, 2);
+            $exists = null;
+            $src = $this->_resolveInterWiki($shortcut, $reference, $exists);
+        }
         list($src, $hash) = explode('#', $src, 2);
         $noLink = false;
         $render = ($linking == 'linkonly') ? false : true;
@@ -1373,6 +1378,20 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      */
     function tabletbody_close() {
         $this->doc .= DOKU_TAB.'</tbody>'.DOKU_LF;
+    }
+
+    /**
+     * Open a table footer
+     */
+    function tabletfoot_open() {
+        $this->doc .= DOKU_TAB.'<tfoot>'.DOKU_LF;
+    }
+
+    /**
+     * Close a table footer
+     */
+    function tabletfoot_close() {
+        $this->doc .= DOKU_TAB.'</tfoot>'.DOKU_LF;
     }
 
     /**
@@ -1685,7 +1704,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         } elseif(is_null($title) || trim($title) == '') {
             if(useHeading($linktype) && $id) {
                 $heading = p_get_first_heading($id);
-                if($heading) {
+                if(!blank($heading)) {
                     return $this->_xmlEntities($heading);
                 }
             }

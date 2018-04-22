@@ -27,6 +27,11 @@
  * @author Errol <errol@hotmail.com>
  * @author Garfield <garfield_550@outlook.com>
  * @author JellyChen <451453325@qq.com>
+ * @author tai <tai_tang@126.com>
+ * @author 高博 <bobnemo1983@gmail.com>
+ * @author hznupeter <qiujiongtao@163.com>
+ * @author kuma <kuma000@qq.com>
+ * @author phy25 <git@phy25.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -300,12 +305,12 @@ $lang['i_wikiname']            = '维基名称';
 $lang['i_enableacl']           = '启用 ACL（推荐）';
 $lang['i_superuser']           = '超级用户';
 $lang['i_problems']            = '安装工具发现一些问题，已在下面列出。您必须先修复这些问题，才能继续安装。';
-$lang['i_modified']            = '由于安全上的考虑，该脚本只能用于全新且做任何改动的 Dokuwiki 安装包。
+$lang['i_modified']            = '由于安全上的考虑，该脚本只能用于全新且做任何改动的 DokuWiki 安装包。
                          您可以重新解压下载的程序包，或查阅完整的
                          <a href="http://dokuwiki.org/install">Dokuwiki 安装指南</a>';
 $lang['i_funcna']              = 'PHP 功能 <code>%s</code> 无法使用。也许您的服务器提供商因为某些原因禁用了它。';
 $lang['i_phpver']              = '您的 PHP 版本 <code>%s</code> 低于最低要求的 <code>%s</code>。您需要升级您的 PHP 版本。';
-$lang['i_mbfuncoverload']      = '为了运行DocuWiki，您必须在php.ini中禁用mbstring.func_overload。';
+$lang['i_mbfuncoverload']      = '为了运行DokuWiki，您必须在php.ini中禁用mbstring.func_overload。';
 $lang['i_permfail']            = 'DokuWiki 无法写入 <code>%s</code>。您需要修改该路径的权限设定！';
 $lang['i_confexists']          = '<code>%s</code> 已经存在';
 $lang['i_writeerr']            = '无法创建 <code>%s</code>。您需要检查该路径/文件的权限设定并手动创建该文件。';
@@ -323,8 +328,8 @@ $lang['i_allowreg']            = '允许用户自行注册';
 $lang['i_retry']               = '重试';
 $lang['i_license']             = '请选择您希望的内容发布许可协议：';
 $lang['i_license_none']        = '不要显示任何许可协议信息';
-$lang['i_pop_field']           = '请帮助我们改进 Dokuwiki 的体验：';
-$lang['i_pop_label']           = '每个月向 Dokuwiki 开发者发送匿名的使用数据';
+$lang['i_pop_field']           = '请帮助我们改进 DokuWiki 的体验：';
+$lang['i_pop_label']           = '每个月向 DokuWiki 开发者发送匿名的使用数据';
 $lang['recent_global']         = '您当前看到的是<b>%s</b> 名称空间的变动。你还可以在<a href="%s">查看整个维基的近期变动</a>。';
 $lang['years']                 = '%d年前';
 $lang['months']                = '%d月前';

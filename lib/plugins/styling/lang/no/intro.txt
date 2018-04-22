@@ -1,0 +1,2 @@
+Dette verktøyet lar deg endre visse instillinger for malen som nå er i bruk.
+Alle endringer lagres i en lokal konfigurasjonsfil og vil ikke bli overskrevet ved en oppgradering.

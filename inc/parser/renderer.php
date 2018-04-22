@@ -726,6 +726,18 @@ class Doku_Renderer extends DokuWiki_Plugin {
     }
 
     /**
+     * Open a table footer
+     */
+    function tabletfoot_open() {
+    }
+
+    /**
+     * Close a table footer
+     */
+    function tabletfoot_close() {
+    }
+
+    /**
      * Open a table row
      */
     function tablerow_open() {

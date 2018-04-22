@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
  * @author omidmr@gmail.com

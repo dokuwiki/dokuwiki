@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Christof <gagi@fin.de>
  * @author Anika Henke <anika@selfthinker.org>
@@ -16,7 +16,6 @@
  * @author Dirk Einecke <dirk@dirkeinecke.de>
  * @author Blitzi94@gmx.de
  * @author Robert Bogenschneider <robog@GMX.de>
- * @author Robert Bogenschneider <robog@gmx.de>
  * @author Niels Lange <niels@boldencursief.nl>
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Paul Lachewsky <kaeptn.haddock@gmail.com>

@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Remon <no@email.local>
  * @author Johan Wijnker <johan@wijnker.eu>

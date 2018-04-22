@@ -16,6 +16,8 @@
  * @author Matteo Pasotti <matteo@xquiet.eu>
  * @author snarchio@gmail.com
  * @author Torpedo <dgtorpedo@gmail.com>
+ * @author Riccardo <riccardofila@gmail.com>
+ * @author Paolo <paolopoz12@gmail.com>
  */
 $lang['menu']                  = 'Configurazione Wiki';
 $lang['error']                 = 'Impostazioni non aggiornate a causa di un valore non corretto, controlla le modifiche apportate e salva di nuovo.
@@ -119,7 +121,7 @@ $lang['gdlib']                 = 'Versione GD Lib ';
 $lang['im_convert']            = 'Percorso per il convertitore di ImageMagick';
 $lang['jpg_quality']           = 'Qualità di compressione JPG (0-100)';
 $lang['fetchsize']             = 'Dimensione massima (bytes) scaricabile da fetch.php da extern';
-$lang['subscribers']           = 'Abilita la sottoscrizione alle pagine';
+$lang['subscribers']           = 'Permetti agli utenti la sottoscrizione alle modifiche delle pagine via e-mail';
 $lang['subscribe_time']        = 'Tempo dopo il quale le liste di sottoscrizione e i riassunti vengono inviati (sec); Dovrebbe essere inferiore al tempo specificato in recent_days.';
 $lang['notify']                = 'Invia notifiche sulle modifiche a questo indirizzo';
 $lang['registernotify']        = 'Invia informazioni sui nuovi utenti registrati a questo indirizzo email';
@@ -151,6 +153,10 @@ $lang['renderer_xhtml']        = 'Renderer da usare per la visualizzazione del w
 $lang['renderer__core']        = '%s (dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
 $lang['dnslookups']            = 'Dokuwiki farà il lookup dei nomi host per ricavare l\'indirizzo IP remoto degli utenti che modificano le pagine. Se hai un DNS lento o non funzionante o se non vuoi questa funzione, disabilita l\'opzione';
+$lang['jquerycdn']             = 'Vuoi che gli script jQuery e jQuery UI siano caricati da una CDN? Questo richiederà richieste HTTP aggiuntive ma i file potrebbero caricarsi più velocemente e gli utenti potrebbero averli già in cache.';
+$lang['jquerycdn_o_0']         = 'Nessuna CDN, solo consegna locale';
+$lang['jquerycdn_o_jquery']    = 'CDN presso code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'CDN presso cdnjs.com';
 $lang['proxy____host']         = 'Nome server proxy';
 $lang['proxy____port']         = 'Porta proxy';
 $lang['proxy____user']         = 'Nome utente proxy';

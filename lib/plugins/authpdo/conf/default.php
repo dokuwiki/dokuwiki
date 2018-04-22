@@ -19,6 +19,14 @@ $conf['pass'] = '';
 $conf['select-user'] = '';
 
 /**
+ * statement to check the password in SQL, optional when above returned clear or hash
+ *
+ * input: :user, :clear, :hash, [uid], [*]
+ * return: *
+ */
+$conf['check-pass'] = '';
+
+/**
  * statement to select a single user identified by its login name
  *
  * input: :user, [uid]

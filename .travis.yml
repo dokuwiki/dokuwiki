@@ -1,29 +1,51 @@
 language: php
 sudo: false
 php:
+  - "7.1"
   - "7.0"
   - "5.6"
   - "5.5"
   - "5.4"
   - "5.3"
-  - "hhvm"
+
 env:
   - DISABLE_FUNCTIONS=
   - DISABLE_FUNCTIONS="gzopen"
 matrix:
+  fast_finish: true
+  include:
+    - php: hhvm
+      sudo: true
+      dist: trusty
+      group: edge # until the next update
+      addons:
+        apt:
+          packages:
+            - mysql-server-5.6
+            - mysql-client-core-5.6
+            - mysql-client-5.6
+      services:
+        - mysql
+        - postgresql
+      env: DISABLE_FUNCTIONS=
   allow_failures:
     - php: "hhvm"
+  exclude:
+    - php: "hhvm"
+      env: DISABLE_FUNCTIONS="gzopen"
 notifications:
   irc:
     channels:
         - "chat.freenode.net#dokuwiki"
     on_success: change
     on_failure: change
-services:
-  - "mysql"
-  - "postgresql"
+install:
+  - wget -O ~/.phpenv/versions/hhvm/bin/phpunit https://phar.phpunit.de/phpunit.phar
+  - chmod 755 ~/.phpenv/versions/hhvm/bin/phpunit
 before_script:
-  - echo "disable_functions=$DISABLE_FUNCTIONS" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  # Disable the HHVM JIT for faster Unit Testing
+  - if [[ $TRAVIS_PHP_VERSION = hhv* ]]; then echo 'hhvm.jit = 0' >> /etc/hhvm/php.ini; fi
+  - if [[ $TRAVIS_PHP_VERSION != hhv* ]]; then test -z "$DISABLE_FUNCTIONS" || echo "disable_functions=$DISABLE_FUNCTIONS" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi
   - cp _test/mysql.conf.php.dist _test/mysql.conf.php
   - cp _test/pgsql.conf.php.dist _test/pgsql.conf.php
 script: cd _test && phpunit --verbose --stderr

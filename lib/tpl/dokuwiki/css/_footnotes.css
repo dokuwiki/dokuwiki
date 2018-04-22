@@ -23,6 +23,9 @@ div.insitu-footnote {
 }
 .dokuwiki div.footnotes div.fn {
 }
+.dokuwiki div.footnotes div.fn div.content {
+    display: inline;
+}
 .dokuwiki div.footnotes div.fn sup a.fn_bot {
     font-weight: bold;
 }

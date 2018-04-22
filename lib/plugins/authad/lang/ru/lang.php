@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Takumo <9206984@mail.ru>
  * @author dimsharav <dimsharav@gmail.com>

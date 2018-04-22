@@ -1,0 +1,7 @@
+===== Masseimport av brukerer =====
+
+Er avhengig av en CSV-fil med brukere med minst fire felt. Feltene må inneholde i rekkefølge: brukernavn, fult navn, e-postadresse, og grupper.
+CSV-feltene separeres med komma (,) og tekst må avgrensen ved hjelp av anførselstegn (%%""%%). Omvendt skråtegn (\) brukes for å beskytte spesialtegn.
+Et eksempel på en CSV-fil kan lages ved å bruke «Eksportere brukere»-funksjonene over her. Dupliserte brukernavn vil bli ignorert.
+
+Et passord vil bli laget, og sendt via e-post til alle bruker som ble importert.

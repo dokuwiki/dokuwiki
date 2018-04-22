@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author RainbowSpike <1@2.ru>
  */
 $lang['menu']                  = 'Настройки стилей шаблона';

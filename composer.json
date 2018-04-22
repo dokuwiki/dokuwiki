@@ -1,6 +1,20 @@
 {
+    "name": "splitbrain/dokuwiki",
+    "description": "DokuWiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database",
+    "homepage": "https://www.dokuwiki.org",
+    "type": "project",
+    "license": "GPL v2",
     "require": {
+        "php": ">=5.3",
         "splitbrain/php-archive": "~1.0",
-        "easybook/geshi": "~1.0"
-    }
+        "easybook/geshi": "~1.0",
+        "phpseclib/phpseclib": "~2.0",
+        "paragonie/random_compat": "^2.0",
+        "simplepie/simplepie": "^1.4"
+    },
+    "suggest": {
+        "squizlabs/php_codesniffer": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+        "phpunit/phpunit": "Allows automated tests to be run without system-wide install."
+    },
+    "prefer-stable": true
 }

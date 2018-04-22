@@ -34,6 +34,8 @@
  * @author Takumo <9206984@mail.ru>
  * @author RainbowSpike <1@2.ru>
  * @author dimsharav <dimsharav@gmail.com>
+ * @author Radimir <radimir.shevchenko@gmail.com>
+ * @author alexey <xeenych@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -371,5 +373,5 @@ $lang['plainhtml']             = 'Простой HTML';
 $lang['wikimarkup']            = 'вики-разметка';
 $lang['page_nonexist_rev']     = 'Эта страница ещё не существовала %s. Она была создана <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Невозможно обработать параметр "%s".';
-$lang['email_signature_text'] = 'Это письмо создано «Докувики» с сайта
+$lang['email_signature_text']  = 'Это письмо создано «Докувики» с сайта
 @DOKUWIKIURL@';

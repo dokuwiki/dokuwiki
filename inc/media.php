@@ -304,7 +304,7 @@ function media_upload_xhr($ns,$auth){
             'mime' => $mime,
             'ext'  => $ext),
         $ns.':'.$id,
-        (($INPUT->get->str('ow') == 'checked') ? true : false),
+        (($INPUT->get->str('ow') == 'true') ? true : false),
         $auth,
         'copy'
     );
@@ -1162,6 +1162,18 @@ function media_details($image, $auth, $rev='', $meta=false) {
         }
     }
     echo '</dl>'.NL;
+    echo '<dl>'.NL;
+    echo '<dt>'.$lang['reference'].':</dt>';
+    $media_usage = ft_mediause($image,true);
+    if(count($media_usage) > 0){
+        foreach($media_usage as $path){
+            echo '<dd>'.html_wikilink($path).'</dd>';
+        }
+    }else{
+        echo '<dd>'.$lang['nothingfound'].'</dd>';
+    }
+    echo '</dl>'.NL;
+
 }
 
 /**

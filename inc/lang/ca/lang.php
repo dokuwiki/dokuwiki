@@ -8,6 +8,7 @@
  * @author daniel@6temes.cat
  * @author Eduard Díaz <edudiaz@scopia.es>
  * @author controlonline.net <controlonline.net@gmail.com>
+ * @author Pauet <pauet@gmx.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -189,6 +190,8 @@ $lang['diff_side']             = 'Un al costat de l\'altre';
 $lang['diffprevrev']           = 'Revisió prèvia';
 $lang['diffnextrev']           = 'Següent revisió';
 $lang['difflastrev']           = 'Ultima revisió';
+$lang['diffbothprevrev']       = 'Ambdós costats versió prèvia';
+$lang['diffbothnextrev']       = 'Ambdós costats nova versio';
 $lang['line']                  = 'Línia';
 $lang['breadcrumb']            = 'Camí:';
 $lang['youarehere']            = 'Sou aquí:';
@@ -282,6 +285,7 @@ $lang['i_problems']            = 'L\'instal·lador ha trobat alguns problemes, q
 $lang['i_modified']            = 'Per raons de seguretat aquesta seqüència només funciona amb una instal·lació nova i no modificada de Dokuwiki. Hauríeu de tornar a baixar el paquet i/o descomprimir-lo o consultar les <a href="http://dokuwiki.org/install">instruccions d\'instal·lació de Dokuwiki</a> completes';
 $lang['i_funcna']              = 'La funció PHP <code>%s</code> no està disponible. Potser el vostre proveïdor de serveis l\'ha inhabilitada per alguna raó';
 $lang['i_phpver']              = 'La vostra versió de PHP <code>%s</code> és inferior a la requerida <code>%s</code>. Necessiteu actualitzar la vostra instal·lació de PHP.';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload cal que sigui deshabilitada en php.ini perquè funcioni DokuWiki';
 $lang['i_permfail']            = 'DokuWiki no pot escriure <code>%s</code>. Heu d\'arreglar els permisos d\'aquest directori';
 $lang['i_confexists']          = '<code>%s</code> ja existeix';
 $lang['i_writeerr']            = 'No es pot crear <code>%s</code>. Comproveu els permisos del directori i/o del fitxer i creeu el fitxer manualment.';
@@ -331,8 +335,12 @@ $lang['media_perm_read']       = 'No teniu permisos suficients per a llegir arxi
 $lang['media_perm_upload']     = 'No teniu permisos suficients per a pujar arxius';
 $lang['media_update']          = 'Puja la nova versió';
 $lang['media_restore']         = 'Restaura aquesta versió';
-$lang['email_signature_text']       = 'Aquest mail ha estat generat per DokuWiki a
-@DOKUWIKIURL@';
+$lang['media_acl_warning']     = 'Aquesta llista pot no estar completa per restriccions ACL i per llistes ocultes';
 $lang['currentns']             = 'Espai de noms actual';
 $lang['searchresult']          = 'Resultats cerca';
 $lang['plainhtml']             = 'HTML pla';
+$lang['wikimarkup']            = 'Wiki Marcatge';
+$lang['page_nonexist_rev']     = 'Pàgina no existeix a %s. Aixó es conseqüencia d\'haver-la creada a <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Impossible de esbrinar el paràmetre "%s".';
+$lang['email_signature_text']  = 'Aquest mail ha estat generat per DokuWiki a
+@DOKUWIKIURL@';

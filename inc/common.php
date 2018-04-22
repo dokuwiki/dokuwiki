@@ -219,7 +219,7 @@ function pageinfo() {
     }
 
     $info['locked']     = checklock($ID);
-    $info['filepath']   = fullpath(wikiFN($ID));
+    $info['filepath']   = wikiFN($ID);
     $info['exists']     = file_exists($info['filepath']);
     $info['currentrev'] = @filemtime($info['filepath']);
     if($REV) {
@@ -233,7 +233,7 @@ function pageinfo() {
             msg($lang['nosecedit'], 0);
         } else {
             //really use old revision
-            $info['filepath'] = fullpath(wikiFN($ID, $REV));
+            $info['filepath'] = wikiFN($ID, $REV);
             $info['exists']   = file_exists($info['filepath']);
         }
     }
@@ -841,6 +841,17 @@ function clientismobile() {
 }
 
 /**
+ * check if a given link is interwiki link
+ *
+ * @param string $link the link, e.g. "wiki>page"
+ * @return bool
+ */
+function link_isinterwiki($link){
+    if (preg_match('/^[a-zA-Z0-9\.]+>/u',$link)) return true;
+    return false;
+}
+
+/**
  * Convert one or more comma separated IPs to hostnames
  *
  * If $conf['dnslookups'] is disabled it simply returns the input string
@@ -1319,7 +1330,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         // pre-save deleted revision
         @touch($svdta['file']);
         clearstatcache();
-        $data['newRevision'] = saveOldRevision($id);
+        $svdta['newRevision'] = saveOldRevision($id);
         // remove empty file
         @unlink($svdta['file']);
         $filesize_new = 0;
@@ -1331,7 +1342,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         io_sweepNS($id, 'mediadir');
     } else {
         // save file (namespace dir is created in io_writeWikiPage)
-        io_writeWikiPage($svdta['file'], $text, $id);
+        io_writeWikiPage($svdta['file'], $svdta['newContent'], $id);
         // pre-save the revision, to keep the attic in sync
         $svdta['newRevision'] = saveOldRevision($id);
         $filesize_new = filesize($svdta['file']);
@@ -2006,6 +2017,35 @@ function set_doku_pref($pref, $val) {
  */
 function stripsourcemaps(&$text){
     $text = preg_replace('/^(\/\/|\/\*)[@#]\s+sourceMappingURL=.*?(\*\/)?$/im', '\\1\\2', $text);
+}
+
+/**
+ * Returns the contents of a given SVG file for embedding
+ *
+ * Inlining SVGs saves on HTTP requests and more importantly allows for styling them through
+ * CSS. However it should used with small SVGs only. The $maxsize setting ensures only small
+ * files are embedded.
+ *
+ * This strips unneeded headers, comments and newline. The result is not a vaild standalone SVG!
+ *
+ * @param string $file full path to the SVG file
+ * @param int $maxsize maximum allowed size for the SVG to be embedded
+ * @return string|false the SVG content, false if the file couldn't be loaded
+ */
+function inlineSVG($file, $maxsize = 2048) {
+    $file = trim($file);
+    if($file === '') return false;
+    if(!file_exists($file)) return false;
+    if(filesize($file) > $maxsize) return false;
+    if(!is_readable($file)) return false;
+    $content = file_get_contents($file);
+    $content = preg_replace('/<!--.*?(-->)/s','', $content); // comments
+    $content = preg_replace('/<\?xml .*?\?>/i', '', $content); // xml header
+    $content = preg_replace('/<!DOCTYPE .*?>/i', '', $content); // doc type
+    $content = preg_replace('/>\s+</s', '><', $content); // newlines between tags
+    $content = trim($content);
+    if(substr($content, 0, 5) !== '<svg ') return false;
+    return $content;
 }
 
 //Setup VIM: ex: et ts=2 :
