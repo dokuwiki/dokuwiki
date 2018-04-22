@@ -75,6 +75,9 @@ class Doku_Parser {
     /**
      * PHP preserves order of associative elements
      * Mode sequence is important
+     *
+     * @param string $name
+     * @param Doku_Parser_Mode_Interface $Mode
      */
     function addMode($name, Doku_Parser_Mode_Interface $Mode) {
         if ( !isset($this->modes['base']) ) {
@@ -709,6 +712,11 @@ class Doku_Parser_Mode_acronym extends Doku_Parser_Mode {
 
     /**
      * sort callback to order by string length descending
+     *
+     * @param string $a
+     * @param string $b
+     *
+     * @return int
      */
     function _compare($a,$b) {
         $a_len = strlen($a);
@@ -895,7 +903,7 @@ class Doku_Parser_Mode_internallink extends Doku_Parser_Mode {
 
     function connectTo($mode) {
         // Word boundaries?
-        $this->Lexer->addSpecialPattern("\[\[(?:(?:[^[\]]*?\[.*?\])|.*?)\]\]",$mode,'internallink');
+        $this->Lexer->addSpecialPattern("\[\[.*?\]\](?!\])",$mode,'internallink');
     }
 
     function getSort() {
@@ -908,7 +916,7 @@ class Doku_Parser_Mode_media extends Doku_Parser_Mode {
 
     function connectTo($mode) {
         // Word boundaries?
-        $this->Lexer->addSpecialPattern("\{\{[^\}]+\}\}",$mode,'media');
+        $this->Lexer->addSpecialPattern("\{\{(?:[^\}]|(?:\}[^\}]))+\}\}",$mode,'media');
     }
 
     function getSort() {
@@ -947,8 +955,8 @@ class Doku_Parser_Mode_externallink extends Doku_Parser_Mode {
             $this->patterns[] = '\b(?i)'.$scheme.'(?-i)://['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
         }
 
-        $this->patterns[] = '\b(?i)www?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
-        $this->patterns[] = '\b(?i)ftp?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
+        $this->patterns[] = '(?<=\s)(?i)www?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
+        $this->patterns[] = '(?<=\s)(?i)ftp?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
     }
 
     function connectTo($mode) {
@@ -996,7 +1004,7 @@ class Doku_Parser_Mode_windowssharelink extends Doku_Parser_Mode {
     var $pattern;
 
     function preConnect() {
-        $this->pattern = "\\\\\\\\\w+?(?:\\\\[\w-$]+)+";
+        $this->pattern = "\\\\\\\\\w+?(?:\\\\[\w\-$]+)+";
     }
 
     function connectTo($mode) {

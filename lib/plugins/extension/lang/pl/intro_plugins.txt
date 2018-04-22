@@ -1,0 +1,1 @@
+Są to wtyczki aktualnie zainstalowane w twoim DokuWiki. Możesz je tutaj włączyć lub wyłączyć, a nawet całkowicie odinstalować. Znajdziesz tu również informację o nowych wersjach. Przed aktualizacją koniecznie przeczytaj dokumentację wtyczki.

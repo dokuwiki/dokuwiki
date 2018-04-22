@@ -28,8 +28,6 @@ class Mailer {
     protected $partid    = '';
     protected $sendparam = null;
 
-    /** @var EmailAddressValidator */
-    protected $validator = null;
     protected $allowhtml = true;
 
     protected $replacements = array('text'=> array(), 'html' => array());
@@ -56,6 +54,9 @@ class Mailer {
         $this->allowhtml = (bool)$conf['htmlmail'];
 
         // add some default headers for mailfiltering FS#2247
+        if(!empty($conf['mailreturnpath'])) {
+            $this->setHeader('Return-Path', $conf['mailreturnpath']);
+        }
         $this->setHeader('X-Mailer', 'DokuWiki');
         $this->setHeader('X-DokuWiki-User', $INPUT->server->str('REMOTE_USER'));
         $this->setHeader('X-DokuWiki-Title', $conf['title']);
@@ -185,7 +186,7 @@ class Mailer {
      *
      * @param string $text     plain text body
      * @param array  $textrep  replacements to apply on the text part
-     * @param array  $htmlrep  replacements to apply on the HTML part, leave null to use $textrep
+     * @param array  $htmlrep  replacements to apply on the HTML part, null to use $textrep (with urls wrapped in <a> tags)
      * @param string $html     the HTML body, leave null to create it from $text
      * @param bool   $wrap     wrap the HTML in the default header/Footer
      */
@@ -333,9 +334,6 @@ class Mailer {
      * @return false|string  the prepared header (can contain multiple lines)
      */
     public function cleanAddress($addresses) {
-        // No named recipients for To: in Windows (see FS#652)
-        $names = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? false : true;
-
         $headers = '';
         if(!is_array($addresses)){
             $addresses = explode(',', $addresses);
@@ -359,21 +357,17 @@ class Mailer {
 
             // FIXME: is there a way to encode the localpart of a emailaddress?
             if(!utf8_isASCII($addr)) {
-                msg(htmlspecialchars("E-Mail address <$addr> is not ASCII"), -1);
+                msg(hsc("E-Mail address <$addr> is not ASCII"), -1);
                 continue;
             }
 
-            if(is_null($this->validator)) {
-                $this->validator                      = new EmailAddressValidator();
-                $this->validator->allowLocalAddresses = true;
-            }
-            if(!$this->validator->check_email_address($addr)) {
-                msg(htmlspecialchars("E-Mail address <$addr> is not valid"), -1);
+            if(!mail_isvalid($addr)) {
+                msg(hsc("E-Mail address <$addr> is not valid"), -1);
                 continue;
             }
 
             // text was given
-            if(!empty($text) && $names) {
+            if(!empty($text) && !isWindows()) { // No named recipients for To: in Windows (see FS#652)
                 // add address quotes
                 $addr = "<$addr>";
 

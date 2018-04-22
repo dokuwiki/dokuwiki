@@ -148,8 +148,16 @@ if(!function_exists('utf8_strlen')){
      * @param string $string
      * @return int
      */
-    function utf8_strlen($string){
-        return strlen(utf8_decode($string));
+    function utf8_strlen($string) {
+        if (function_exists('utf8_decode')) {
+            return strlen(utf8_decode($string));
+        } elseif (UTF8_MBSTRING) {
+            return mb_strlen($string, 'UTF-8');
+        } elseif (function_exists('iconv_strlen')) {
+            return iconv_strlen($string, 'UTF-8');
+        } else {
+            return strlen($string);
+        }
     }
 }
 
@@ -204,7 +212,7 @@ if(!function_exists('utf8_substr')){
 
         // normalise -ve offsets (we could use a tail anchored pattern, but they are horribly slow!)
         if ($offset < 0) {
-            $strlen = strlen(utf8_decode($str));        // see notes
+            $strlen = utf8_strlen($str);        // see notes
             $offset = $strlen + $offset;
             if ($offset < 0) $offset = 0;
         }
@@ -225,7 +233,7 @@ if(!function_exists('utf8_substr')){
             $length_pattern = '(.*)$';                  // the rest of the string
         } else {
 
-            if (!isset($strlen)) $strlen = strlen(utf8_decode($str));    // see notes
+            if (!isset($strlen)) $strlen = utf8_strlen($str);    // see notes
             if ($offset > $strlen) return '';           // another trivial case
 
             if ($length > 0) {
@@ -357,7 +365,7 @@ if(!function_exists('utf8_strtolower')){
      */
     function utf8_strtolower($string){
         if(UTF8_MBSTRING) {
-            if (class_exists("Normalizer", $autoload = false)) 
+            if (class_exists("Normalizer", $autoload = false))
                 return normalizer::normalize(mb_strtolower($string,'utf-8'));
             else
                 return (mb_strtolower($string,'utf-8'));
@@ -636,7 +644,7 @@ if(!class_exists('utf8_entity_decoder')){
      * Encapsulate HTML entity decoding tables
      */
     class utf8_entity_decoder {
-        var $table;
+        protected $table;
 
         /**
          * Initializes the decoding tables

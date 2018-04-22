@@ -3,11 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Martin Michalek <michalek.dev@gmail.com>
  * @author Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
  * @author Michal Mesko <michal.mesko@gmail.com>
- * @author exusik@gmail.com
- * @author Martin Michalek <michalek.dev@gmail.com>
- * @author Michalek <michalek.dev@gmail.com>
+ * @author exusik <exusik@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -68,7 +67,6 @@ $lang['badpassconfirm']        = 'Ľutujem, heslo bolo nesprávne.';
 $lang['minoredit']             = 'Menšie zmeny';
 $lang['draftdate']             = 'Koncept automaticky uložený';
 $lang['nosecedit']             = 'Stránka bola medzičasom zmenená, informácie o sekcii sú zastaralé a z tohto dôvodu bola nahraná celá stránka.';
-$lang['searchcreatepage']      = 'Pokiaľ ste nenašli, čo hľadáte, skúste požadovanú stránku sami vytvoriť stlačením tlačidla \'\'Vytvoriť stránku\'\'.';
 $lang['regmissing']            = 'Musíte vyplniť všetky údaje.';
 $lang['reguexists']            = 'Používateľ s rovnakým menom je už zaregistrovaný.';
 $lang['regsuccess']            = 'Používateľský účet bol vytvorený a heslo zaslané emailom.';
@@ -282,6 +280,7 @@ $lang['i_problems']            = 'Inštalátor narazil na nižšie uvedené prob
 $lang['i_modified']            = 'Z bezpečnostných dôvodov bude tento skript fungovať iba s novou, neupravenou inštaláciou Dokuwiki. Môžete buď znovu rozbaliť stiahnutý inštalačný balík alebo preštudovať <a href="http://dokuwiki.org/install"> inštalačné inštrukcie Dokuwiki</a>';
 $lang['i_funcna']              = 'PHP funkcia <code>%s</code> nie je dostupná. Je možné, že ju z určitých dôvodov zablokoval váš poskytovateľ webhostingu?';
 $lang['i_phpver']              = 'Vaša verzia PHP <code>%s</code> je nižšia ako požadovaná <code>%s</code>. Potrebujete aktualizovať Vašu inštaláciu PHP.';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload musí byt zakázaná v php.ini pre bezproblémový chod DokuWiki.';
 $lang['i_permfail']            = '<code>%s</code> nie je zapisovateľný pre DokuWiki. Musíte zmeniť prístupové práva pre tento adresár!';
 $lang['i_confexists']          = '<code>%s</code> už existuje';
 $lang['i_writeerr']            = 'Nie je možné vytvoriť <code>%s</code>. Potrebujete skontrolovať prístupové práva pre adresár/súbor a vytvoriť ho manuálne.';
@@ -331,9 +330,11 @@ $lang['media_perm_read']       = 'Prepáčte, ale nemáte dostatočné oprávnen
 $lang['media_perm_upload']     = 'Prepáčte, ale nemáte dostatočné oprávnenie na nahrávanie súborov.';
 $lang['media_update']          = 'Nahrať novú verziu';
 $lang['media_restore']         = 'Obnoviť túto verziu';
+$lang['media_acl_warning']     = 'Tento zoznam nemusí byť úplný z dôvodu ACL obmedzení alebo skratých stránok.';
 $lang['currentns']             = 'Aktuálny menný priestor';
 $lang['searchresult']          = 'Výsledky hľadania';
 $lang['plainhtml']             = 'Jednoduché HTML';
 $lang['wikimarkup']            = 'Wiki formát';
+$lang['unable_to_parse_date']  = 'Nie je možné spracovať parameter "%s".';
 $lang['email_signature_text']  = 'Táto správa bola zaslaná DokuWiki
 @DOKUWIKIURL@';

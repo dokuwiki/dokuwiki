@@ -2,9 +2,9 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Smorkster Andersson smorkster@gmail.com
- * @author Tor Härnqvist <tor.harnqvist@gmail.com>
  */
 $lang['server']                = 'Din LDAO server. Antingen värdnamn (<code>localhost</code>) eller giltig full URL (<code>ldap://server.tld:389</code>)';
 $lang['port']                  = 'LDAP server port, om det inte angavs full URL ovan';
@@ -15,5 +15,9 @@ $lang['groupfilter']           = 'LDAP filter för att söka efter grupper. T.ex
 $lang['version']               = 'Version av protokoll att använda. Du kan behöva sätta detta till <code>3</code>';
 $lang['starttls']              = 'Använd TLS-anslutningar';
 $lang['bindpw']                = 'Lösenord för användare ovan';
+$lang['userscope']             = 'Begränsa sökomfattning för användarsökning';
+$lang['groupscope']            = 'Begränsa sökomfattning för gruppsökning';
 $lang['groupkey']              = 'Gruppmedlemskap från något användarattribut (istället för standard AD grupp) t.ex. grupp från avdelning eller telefonnummer';
+$lang['modPass']               = 'Får LDAP-lösenordet ändras via DokuWiki?';
 $lang['debug']                 = 'Visa ytterligare felsökningsinformation vid fel';
+$lang['referrals_o_-1']        = 'använd standard';

@@ -58,7 +58,6 @@ $lang['badlogin']              = 'Skeivt brúkaranavn ella loyniorð.';
 $lang['minoredit']             = 'Smærri broytingar';
 $lang['draftdate']             = 'Goym kladdu sett frá';
 $lang['nosecedit']             = 'Hendan síðan var broytt undir tilevnan, brotið var ikki rætt dagfest, heintaði fulla síðu í staðin';
-$lang['searchcreatepage']      = "Um úrslitini ikki innihalda tað sum tú leitaði eftir kanst tú upprætta eitt nýtt skjal við sama navni sum leitingin við at trýsta á **''[Upprætta hetta skjal]''** knappin.";
 $lang['regmissing']            = 'Tú skalt fylla út øll øki.';
 $lang['reguexists']            = 'Hetta brúkaranavn er upptiki.';
 $lang['regsuccess']            = 'Tú ert nú stovnavur sum brúkari. Títt loyniorð verður sent til tín í einum T-posti.';

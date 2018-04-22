@@ -10,3 +10,4 @@ $lang['__site_width__']    = 'The width of the full site (can be any length unit
 $lang['__sidebar_width__'] = 'The width of the sidebar, if any (can be any length unit: %, px, em, ...)';
 $lang['__tablet_width__']  = 'Below screensizes of this width, the site switches to tablet mode';
 $lang['__phone_width__']   = 'Below screensizes of this width, the site switches to phone mode';
+$lang['__theme_color__']   = 'Theme color of the web app';

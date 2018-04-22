@@ -3,28 +3,27 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Domingo Redal <docxml@gmail.com>
  * @author Miguel Pagano <miguel.pagano@gmail.com>
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author Gabriel Castillo <gch@pumas.ii.unam.mx>
- * @author oliver@samera.com.py
+ * @author oliver <oliver@samera.com.py>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
  * @author VictorCastelan <victorcastelan@gmail.com>
- * @author Jordan Mero  hack.jord@gmail.com
+ * @author Jordan Mero <hack.jord@gmail.com>
  * @author Felipe Martinez <metalmartinez@gmail.com>
  * @author Javier Aranda <internet@javierav.com>
  * @author Zerial <fernando@zerial.org>
  * @author Marvin Ortega <maty1206@maryanlinux.com>
  * @author Daniel Castro Alvarado <dancas2@gmail.com>
  * @author Fernando J. Gómez <fjgomez@gmail.com>
- * @author Victor Castelan <victorcastelan@gmail.com>
  * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
  * @author emezeta <emezeta@infoprimo.com>
  * @author Oscar Ciudad <oscar@jacho.net>
  * @author Ruben Figols <ruben.figols@gmail.com>
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
- * @author Mercè López mercelz@gmail.com
- * @author Domingo Redal <docxml@gmail.com>
+ * @author Mercè López <mercelz@gmail.com>
  */
 $lang['menu']                  = 'Parámetros de configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';
@@ -131,6 +130,7 @@ $lang['subscribe_time']        = 'Tiempo después que alguna lista de suscripci�
 $lang['notify']                = 'Enviar notificación de cambios a esta dirección de correo electrónico';
 $lang['registernotify']        = 'Enviar información cuando se registran nuevos usuarios a esta dirección de correo electrónico';
 $lang['mailfrom']              = 'Dirección de correo electrónico para emails automáticos';
+$lang['mailreturnpath']        = 'Dirección de correo electrónico del destinatario para las notificaciones de no entrega';
 $lang['mailprefix']            = 'Asunto por defecto que se utilizará en mails automáticos.';
 $lang['htmlmail']              = 'Enviar correos electronicos en HTML con mejor aspecto pero mayor peso. Desactivar para enviar correos electronicos en texto plano.';
 $lang['sitemap']               = 'Generar sitemap de Google (días)';
@@ -140,6 +140,9 @@ $lang['rss_content']           = '¿Qué mostrar en los items del archivo XML?';
 $lang['rss_update']            = 'Intervalo de actualización de feed XML (segundos)';
 $lang['rss_show_summary']      = 'Feed XML muestra el resumen en el título';
 $lang['rss_media']             = '¿Qué tipo de cambios deberían aparecer en el feed XML?';
+$lang['rss_media_o_both']      = 'ambos';
+$lang['rss_media_o_pages']     = 'páginas';
+$lang['rss_media_o_media']     = 'multimedia';
 $lang['updatecheck']           = '¿Comprobar actualizaciones y advertencias de seguridad? Esta característica requiere que DokuWiki se conecte a update.dokuwiki.org.';
 $lang['userewrite']            = 'Usar URLs bonitas';
 $lang['useslash']              = 'Usar barra (/) como separador de espacios de nombres en las URLs';
@@ -157,7 +160,17 @@ $lang['xsendfile']             = '¿Utilizar la cabecera X-Sendfile para permiti
 $lang['renderer_xhtml']        = 'Visualizador a usar para salida (xhtml) principal del wiki';
 $lang['renderer__core']        = '%s (núcleo dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_nslimit']        = 'Limite la búsqueda a los actuales X espacios de nombres. Cuando se ejecuta una búsqueda desde una página dentro de un espacio de nombres más profundo, los primeros X espacios de nombres se agregarán como filtro';
+$lang['search_fragment']       = 'Especifique el comportamiento predeterminado de la búsqueda de fragmentos';
+$lang['search_fragment_o_exact'] = 'exacto';
+$lang['search_fragment_o_starts_with'] = 'comienza con';
+$lang['search_fragment_o_ends_with'] = 'termina con';
+$lang['search_fragment_o_contains'] = 'contiene';
 $lang['dnslookups']            = 'DokuWiki buscara los hostnames para usuarios editando las páginas con IP remota. Si usted tiene un servidor DNS bastante lento o que no funcione, favor de desactivar esta opción.';
+$lang['jquerycdn']             = '¿Deberían cargarse los ficheros de script jQuery y jQuery UI desde un CDN? Esto añade peticiones HTTP adicionales, pero los ficheros se pueden cargar más rápido y los usuarios pueden tenerlas ya almacenadas en caché.';
+$lang['jquerycdn_o_0']         = 'No CDN, sólo entrega local';
+$lang['jquerycdn_o_jquery']    = 'CDN en code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'CDN en cdnjs.com';
 $lang['proxy____host']         = 'Nombre del servidor Proxy';
 $lang['proxy____port']         = 'Puerto del servidor Proxy';
 $lang['proxy____user']         = 'Nombre de usuario para el servidor Proxy';

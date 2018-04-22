@@ -1,22 +1,18 @@
 <?php
+
 /**
- * swedish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
  * @author Håkan Sandell <hakan.sandell[at]mydata.se>
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
- * @author emil@sys.nu
  * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
- * @author Tormod Johansson tormod.otter.johansson@gmail.com
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
- * @author Håkan Sandell <hakan.sandell@home.se>
- * @author mikael@mallander.net
- * @author Smorkster Andersson smorkster@gmail.com
  */
 $lang['menu']                  = 'Hantera inställningar';
 $lang['error']                 = 'Inställningarna uppdaterades inte på grund av ett felaktigt värde. Titta igenom dina ändringar och försök sedan spara igen.
@@ -90,6 +86,7 @@ $lang['disableactions']        = 'Stäng av funktioner i DokuWiki';
 $lang['disableactions_check']  = 'Kontroll';
 $lang['disableactions_subscription'] = 'Prenumerera/Säg upp prenumeration';
 $lang['disableactions_wikicode'] = 'Visa källkod/Exportera råtext';
+$lang['disableactions_profile_delete'] = 'Ta bort eget konto';
 $lang['disableactions_other']  = 'Andra funktioner (kommaseparerade)';
 $lang['auth_security_timeout'] = 'Autentisieringssäkerhets timeout (sekunder)';
 $lang['securecookie']          = 'Skall cookies som sätts via HTTPS endast skickas via HTTPS från webbläsaren? Avaktivera detta alternativ endast om inloggningen till din wiki är säkrad med SSL men läsning av wikin är osäkrad.';
@@ -141,6 +138,8 @@ $lang['xsendfile']             = 'Använd X-Sendfile huvudet för att låta webs
 $lang['renderer_xhtml']        = 'Generera för användning i huvudwikipresentation (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['jquerycdn_o_jquery']    = 'CDN på code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'CDN på cdnjs.com';
 $lang['proxy____host']         = 'Proxyserver';
 $lang['proxy____port']         = 'Proxyport';
 $lang['proxy____user']         = 'Användarnamn för proxy';
@@ -188,6 +187,7 @@ $lang['xsendfile_o_2']         = 'Standard X-Sendfile-huvud';
 $lang['xsendfile_o_3']         = 'Proprietär Nginx X-Accel-Redirect header';
 $lang['showuseras_o_loginname'] = 'Användarnamn';
 $lang['showuseras_o_username'] = 'Namn';
+$lang['showuseras_o_username_link'] = 'Användarens fullständiga namn som interwiki-användarlänk';
 $lang['showuseras_o_email']    = 'Användarens e-postadress (obfuskerad enligt inställningarna i mailguard)';
 $lang['showuseras_o_email_link'] = 'Användarens e-postadress som mailto: länk';
 $lang['useheading_o_0']        = 'Aldrig';

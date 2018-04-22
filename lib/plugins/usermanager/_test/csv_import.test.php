@@ -103,7 +103,7 @@ importuser,"Ford Prefect",ford@example.com,user
 ';
         $failures = array(
             '2' => array(
-                'error' => $this->usermanager->lang['import_error_create'],
+                'error' => $this->usermanager->getLang('import_error_create'),
                 'user'  => array(
                     'importuser',
                     'Ford Prefect',

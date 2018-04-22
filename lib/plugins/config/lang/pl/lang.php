@@ -1,14 +1,16 @@
 <?php
+
 /**
- * polish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author Wojciech Lichota <wojciech@lichota.pl>
+ * @author Max <maxrb146@gmail.com>
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
  * @author Sławomir Boczek <slawkens@gmail.com>
  * @author Piotr JANKOWSKI <jankowski.piotr@gmail.com>
- * @author sleshek@wp.pl
+ * @author sleshek <sleshek@wp.pl>
  * @author Leszek Stachowski <shazarre@gmail.com>
  * @author maros <dobrimaros@yahoo.pl>
  * @author Grzegorz Widła <dzesdzes@gmail.com>
@@ -88,7 +90,9 @@ $lang['disableactions']        = 'Wyłącz akcje DokuWiki';
 $lang['disableactions_check']  = 'Sprawdzanie';
 $lang['disableactions_subscription'] = 'Subskrypcje';
 $lang['disableactions_wikicode'] = 'Pokazywanie źródeł';
+$lang['disableactions_profile_delete'] = 'Usuń własne konto ';
 $lang['disableactions_other']  = 'Inne akcje (oddzielone przecinkiem)';
+$lang['disableactions_rss']    = 'XML Syndication (RSS)';
 $lang['auth_security_timeout'] = 'Czas wygaśnięcia uwierzytelnienia (w sekundach)';
 $lang['securecookie']          = 'Czy ciasteczka wysłane do przeglądarki przez HTTPS powinny być przez nią odsyłane też tylko przez HTTPS? Odznacz tę opcję tylko wtedy, gdy logowanie użytkowników jest zabezpieczone SSL, ale przeglądanie stron odbywa się bez zabezpieczenia.';
 $lang['remote']                = 'Włącz API zdalnego dostępu. Pozwoli to innym aplikacjom na dostęp do wiki poprzez XML-RPC lub inne mechanizmy.';
@@ -119,6 +123,7 @@ $lang['subscribe_time']        = 'Czas po którym są wysyłane listy subskrypcj
 $lang['notify']                = 'Wysyłanie powiadomień na adres e-mail';
 $lang['registernotify']        = 'Prześlij informacje o nowych użytkownikach na adres e-mail';
 $lang['mailfrom']              = 'Adres e-mail tego wiki';
+$lang['mailreturnpath']        = 'Adres e-mail odbiorcy dla powiadomień o niedostarczeniu';
 $lang['mailprefix']            = 'Prefiks tematu e-mail do automatycznych wiadomości';
 $lang['htmlmail']              = 'Wysyłaj wiadomości e-mail w formacie HTML, które wyglądają lepiej, lecz ich rozmiar jest większy. Wyłącz wysyłanie wiadomości zawierających tekst niesformatowany.';
 $lang['sitemap']               = 'Okres generowania Google Sitemap (w dniach)';
@@ -128,6 +133,9 @@ $lang['rss_content']           = 'Rodzaj informacji wyświetlanych w RSS ';
 $lang['rss_update']            = 'Okres aktualizacji RSS (w sekundach)';
 $lang['rss_show_summary']      = 'Podsumowanie w tytule';
 $lang['rss_media']             = 'Rodzaj zmian wyświetlanych w RSS';
+$lang['rss_media_o_both']      = 'oba';
+$lang['rss_media_o_pages']     = 'strony';
+$lang['rss_media_o_media']     = 'media';
 $lang['updatecheck']           = 'Sprawdzanie aktualizacji i bezpieczeństwa. DokuWiki będzie kontaktować się z serwerem update.dokuwiki.org.';
 $lang['userewrite']            = 'Proste adresy URL';
 $lang['useslash']              = 'Używanie ukośnika jako separatora w adresie URL';
@@ -146,6 +154,10 @@ $lang['renderer_xhtml']        = 'Mechanizm renderowania głównej treści stron
 $lang['renderer__core']        = '%s (dokuwiki)';
 $lang['renderer__plugin']      = '%s (wtyczka)';
 $lang['dnslookups']            = 'DokiWiki wyszuka nazwy hostów dla zdalnych adresów IP użytkowników edytujących strony. Jeśli twój serwer DNS działa zbyt wolno, uległ awarii lub nie chcesz używać wyszukiwania, wyłącz tę opcję.';
+$lang['jquerycdn']             = 'Czy pliki skryptów jQuery i jQuery UI powinny być ładowane z CDN? Powoduje to dodanie dodatkowych żądań HTTP, ale pliki mogą być ładowane szybciej, a użytkownicy mogą już je mieć zbuforowane.';
+$lang['jquerycdn_o_0']         = 'Bez CDN, tylko lokalne zasoby';
+$lang['jquerycdn_o_jquery']    = 'CDN z code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'CDN z cdnjs.com';
 $lang['proxy____host']         = 'Proxy - serwer';
 $lang['proxy____port']         = 'Proxy - port';
 $lang['proxy____user']         = 'Proxy - nazwa użytkownika';
@@ -193,6 +205,7 @@ $lang['xsendfile_o_2']         = 'Standardowy nagłówek HTTP X-Sendfile';
 $lang['xsendfile_o_3']         = 'Specyficzny nagłówek Nginx X-Accel-Redirect';
 $lang['showuseras_o_loginname'] = 'Login użytkownika';
 $lang['showuseras_o_username'] = 'Pełne nazwisko użytkownika';
+$lang['showuseras_o_username_link'] = 'Imię i nazwisko użytkownika jako połączenie między wiki';
 $lang['showuseras_o_email']    = 'E-mail użytkownika (ukrywanie według ustawień mailguard)';
 $lang['showuseras_o_email_link'] = 'Adresy e-mail użytkowników w formie linku mailto:';
 $lang['useheading_o_0']        = 'Nigdy';

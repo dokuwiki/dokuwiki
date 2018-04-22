@@ -106,82 +106,8 @@
     margin-left: 0;
 }
 
-#dokuwiki__usertools a.action,
-#dokuwiki__usertools a.iw_user {
-    padding-left: 20px;
-    background: transparent url(images/usertools.png) no-repeat 0 0;
-}
-
-[dir=rtl] #dokuwiki__usertools a.action {
-    padding-left: 0;
-    padding-right: 20px;
-}
-
 #dokuwiki__header .mobileTools {
     display: none; /* hide mobile tools dropdown to only show in mobile view */
-}
-
-/*____________ user tools ____________*/
-
-#dokuwiki__usertools {
-    position: absolute;
-    top: .5em;
-    right: .5em;
-    text-align: right;
-    width: 100%;
-
-    ul {
-        margin: 0 auto;
-        padding: 0;
-        max-width: @ini_site_width;
-    }
-
-    a.action.admin {
-        background-position: left 0;
-    }
-
-    a.iw_user,
-    a.action.profile {
-        background-position: left -32px;
-    }
-
-    a.action.register {
-        background-position: left -64px;
-    }
-
-    a.action.login {
-        background-position: left -96px;
-    }
-
-    a.action.logout {
-        background-position: left -128px;
-    }
-}
-
-[dir=rtl] #dokuwiki__usertools {
-    text-align: left;
-    left: 40px;
-    right: auto;
-
-    a.action.admin {
-        background-position: right 0;
-    }
-
-    a.action.profile {
-        background-position: right -32px;
-    }
-
-    a.action.register {
-        background-position: right -64px;
-    }
-
-    a.action.login {
-        background-position: right -96px;
-    }
-
-    a.action.logout {
-        background-position: right -128px;
-    }
 }
 
 /*____________ site tools ____________*/

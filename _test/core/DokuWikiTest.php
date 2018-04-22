@@ -1,6 +1,28 @@
 <?php
+if(!class_exists('PHPUnit_Framework_TestCase')) {
+    /**
+     * phpunit 5/6 compatibility
+     */
+    class PHPUnit_Framework_TestCase extends PHPUnit\Framework\TestCase {
+        /**
+         * setExpectedException is deprecated in PHPUnit 6
+         *
+         * @param string $class
+         * @param null|string $message
+         */
+        public function setExpectedException($class, $message=null) {
+            $this->expectException($class);
+            if(!is_null($message)) {
+                $this->expectExceptionMessage($message);
+            }
+        }
+    }
+}
+
 /**
  * Helper class to provide basic functionality for tests
+ *
+ * @uses PHPUnit_Framework_TestCase and thus PHPUnit 5.7+ is required
  */
 abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
@@ -129,35 +151,6 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Compatibility for older PHPUnit versions
-     *
-     * @param string $originalClassName
-     * @return PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function createMock($originalClassName) {
-        if(is_callable(array('parent', 'createMock'))) {
-            return parent::createMock($originalClassName);
-        } else {
-            return $this->getMock($originalClassName);
-        }
-    }
-
-    /**
-     * Compatibility for older PHPUnit versions
-     *
-     * @param string $originalClassName
-     * @param array $methods
-     * @return PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function createPartialMock($originalClassName, array $methods) {
-        if(is_callable(array('parent', 'createPartialMock'))) {
-            return parent::createPartialMock($originalClassName, $methods);
-        } else {
-            return $this->getMock($originalClassName, $methods);
-        }
-    }
-
-    /**
      * Waits until a new second has passed
      *
      * The very first call will return immeadiately, proceeding calls will return
@@ -177,5 +170,25 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
         }
         $last = $now;
         return $now;
+    }
+
+    /**
+     * Allow for testing inaccessible methods (private or protected)
+     *
+     * This makes it easier to test protected methods without needing to create intermediate
+     * classes inheriting and changing the access.
+     *
+     * @link https://stackoverflow.com/a/8702347/172068
+     * @param object $obj Object in which to call the method
+     * @param string $func The method to call
+     * @param array $args The arguments to call the method with
+     * @return mixed
+     * @throws ReflectionException when the given obj/func does not exist
+     */
+    protected static function callInaccessibleMethod($obj, $func, array $args) {
+        $class = new \ReflectionClass($obj);
+        $method = $class->getMethod($func);
+        $method->setAccessible(true);
+        return $method->invokeArgs($obj, $args);
     }
 }

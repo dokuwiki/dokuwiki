@@ -18,3 +18,5 @@ $lang['use_tls']               = 'Použiť TLS pripojenie? Ak áno, nepovoľte S
 $lang['debug']                 = 'Zobraziť dodatočné ladiace informácie pri chybe?';
 $lang['expirywarn']            = 'Počet dní pred uplynutím platnosti hesla, počas ktorých používateľ dostáva upozornenie. 0 deaktivuje túto voľbu.';
 $lang['additional']            = 'Zoznam dodatočných AD atribútov oddelených čiarkou získaných z údajov používateľa. Používané niektorými pluginmi.';
+$lang['update_name']           = 'Povoliť používateľom zmenu ich zobrazovaného mena v AD?';
+$lang['update_mail']           = 'Povoliť používateľom zmenu ich emailovej adresy?';

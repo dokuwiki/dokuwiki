@@ -10,6 +10,7 @@
  * @author José Campos zecarlosdecampos@gmail.com
  * @author Paulo Carmino <contato@paulocarmino.com>
  * @author Alfredo Silva <alfredo.silva@sky.com>
+ * @author Guilherme Sá <guilherme.sa@hotmail.com>
  */
 $lang['menu']                  = 'Configuração';
 $lang['error']                 = 'Parâmetros de Configuração não actualizados devido a valores inválidos. Por favor, reveja as modificações que pretende efectuar antes de re-submetê-las.<br /> Os valores incorrectos serão mostrados dentro de uma "moldura" vermelha.';

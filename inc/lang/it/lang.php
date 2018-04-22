@@ -3,24 +3,22 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Torpedo <dgtorpedo@gmail.com>
  * @author Giorgio Vecchiocattivi <giorgio@vecchio.it>
  * @author Roberto Bolli [http://www.rbnet.it/]
  * @author Silvia Sargentoni <polinnia@tin.it>
  * @author Diego Pierotto <ita.translations@tiscali.it>
  * @author Lorenzo Breda <lbreda@gmail.com>
- * @author snarchio@alice.it
  * @author robocap <robocap1@gmail.com>
  * @author Matteo Carnevali <rekstorm@gmail.com>
  * @author Osman Tekin <osman.tekin93@hotmail.it>
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  * @author Matteo Pasotti <matteo@xquiet.eu>
- * @author snarchio@gmail.com
  * @author Edmondo Di Tucci <snarchio@gmail.com>
  * @author Claudio Lanconelli <lancos@libero.it>
  * @author Mirko <malisan.mirko@gmail.com>
  * @author Francesco <francesco.cavalli@hotmail.com>
  * @author Fabio <fabioslurp@yahoo.it>
- * @author Torpedo <dgtorpedo@gmail.com>
  * @author Maurizio <mcannavo@katamail.com>
  * @author Riccardo <riccardofila@gmail.com>
  * @author Paolo <paolopoz12@gmail.com>
@@ -84,7 +82,6 @@ $lang['badpassconfirm']        = 'La password è errata';
 $lang['minoredit']             = 'Modifiche minori';
 $lang['draftdate']             = 'Bozza salvata in automatico il';
 $lang['nosecedit']             = 'La pagina è stata modificata nel frattempo; è impossibile modificare solo la sezione scelta, quindi è stata caricata la pagina intera.';
-$lang['searchcreatepage']      = 'Se non hai trovato quello che cercavi, puoi creare una nuova pagina con questo titolo usando il pulsante \'\'Crea questa pagina\'\'.';
 $lang['regmissing']            = 'Devi riempire tutti i campi.';
 $lang['reguexists']            = 'Il nome utente inserito esiste già.';
 $lang['regsuccess']            = 'L\'utente è stato creato. La password è stata spedita via email.';

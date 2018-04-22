@@ -2,4 +2,4 @@
 
 Existuje novější verze právě upravovaného dokumentu. To se stává, pokud někdo jiný změnil dokument, který právě upravujete.
 
-Prohlédněte si níže uvedené rozdíly, případně rozdíly z obou verzí ručně spojte dohromady a rozhodněte se, kterou verzi uchovat. Pokud zvolíte ''Uložit'', bude uložena vaše verze. Jinak stiskněte ''Storno'' pro uchování původní verze.
+Prohlédněte si níže uvedené rozdíly, případně rozdíly z obou verzí ručně spojte dohromady a rozhodněte se, kterou verzi uchovat. Pokud zvolíte ''Uložit'', bude uložena vaše verze. Jinak stiskněte ''Zrušit'' pro uchování původní verze.

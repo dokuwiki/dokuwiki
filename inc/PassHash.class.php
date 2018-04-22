@@ -91,7 +91,7 @@ class PassHash {
         //crypt and compare
         $call = 'hash_'.$method;
         $newhash = $this->$call($clear, $salt, $magic);
-        if($newhash === $hash) {
+        if(\hash_equals($newhash, $hash)) {
             return true;
         }
         return false;
@@ -404,6 +404,13 @@ class PassHash {
 
     /**
      * Alias for hash_pmd5
+     *
+     * @param string $clear
+     * @param null|string $salt
+     * @param string $magic
+     * @param int $compute
+     *
+     * @return string
      */
     public function hash_hmd5($clear, $salt = null, $magic = 'H', $compute = 8) {
         return $this->hash_pmd5($clear, $salt, $magic, $compute);
@@ -523,14 +530,14 @@ class PassHash {
      * @throws Exception
      * @return string Hashed password
      */
-    public function hash_bcrypt($clear, $salt = null, $compute = 8) {
+    public function hash_bcrypt($clear, $salt = null, $compute = 10) {
         if(!defined('CRYPT_BLOWFISH') || CRYPT_BLOWFISH != 1) {
             throw new Exception('This PHP installation has no bcrypt support');
         }
 
         if(is_null($salt)) {
             if($compute < 4 || $compute > 31) $compute = 8;
-            $salt = '$2a$'.str_pad($compute, 2, '0', STR_PAD_LEFT).'$'.
+            $salt = '$2y$'.str_pad($compute, 2, '0', STR_PAD_LEFT).'$'.
                 $this->gen_salt(22);
         }
 

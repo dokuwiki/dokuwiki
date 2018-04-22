@@ -15,7 +15,7 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin {
             'listAcls' => array(
                 'args' => array(),
                 'return' => 'Array of ACLs {scope, user, permission}',
-                'name' => 'listAcl',
+                'name' => 'listAcls',
                 'doc' => 'Get the list of all ACLs',
             ),'addAcl' => array(
                 'args' => array('string','string','int'),

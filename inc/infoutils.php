@@ -6,7 +6,14 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 if(!defined('DOKU_INC')) die('meh.');
-if(!defined('DOKU_MESSAGEURL')) define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
+
+if(!defined('DOKU_MESSAGEURL')){
+    if(in_array('ssl', stream_get_transports())) {
+        define('DOKU_MESSAGEURL','https://update.dokuwiki.org/check/');
+    }else{
+        define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
+    }
+}
 
 /**
  * Check for new messages from upstream
@@ -22,11 +29,12 @@ function checkUpdateMessages(){
 
     $cf = getCacheName($updateVersion, '.updmsg');
     $lm = @filemtime($cf);
+    $is_http = substr(DOKU_MESSAGEURL, 0, 5) != 'https';
 
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
         @touch($cf);
-        dbglog("checkUpdateMessages(): downloading messages to ".$cf);
+        dbglog("checkUpdateMessages(): downloading messages to ".$cf.($is_http?' (without SSL)':' (with SSL)'));
         $http = new DokuHTTPClient();
         $http->timeout = 12;
         $resp = $http->get(DOKU_MESSAGEURL.$updateVersion);
@@ -114,13 +122,13 @@ function check(){
     if ($INFO['isadmin'] || $INFO['ismanager']){
         msg('DokuWiki version: '.getVersion(),1);
 
-        if(version_compare(phpversion(),'5.3.3','<')){
-            msg('Your PHP version is too old ('.phpversion().' vs. 5.3.3+ needed)',-1);
+        if(version_compare(phpversion(),'5.6.0','<')){
+            msg('Your PHP version is too old ('.phpversion().' vs. 5.6.0+ needed)',-1);
         }else{
             msg('PHP version '.phpversion(),1);
         }
     } else {
-        if(version_compare(phpversion(),'5.3.3','<')){
+        if(version_compare(phpversion(),'5.6.0','<')){
             msg('Your PHP version is too old',-1);
         }
     }
@@ -383,6 +391,9 @@ function info_msg_allowed($msg){
  * little function to print the content of a var
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $msg
+ * @param bool $hidden
  */
 function dbg($msg,$hidden=false){
     if($hidden){
@@ -400,6 +411,9 @@ function dbg($msg,$hidden=false){
  * Print info to a log file
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $msg
+ * @param string $header
  */
 function dbglog($msg,$header=''){
     global $conf;
@@ -502,6 +516,8 @@ function dbg_backtrace(){
  * debug output
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
  */
 function debug_guard(&$data){
     foreach($data as $key => $value){

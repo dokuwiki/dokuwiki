@@ -28,17 +28,17 @@ if(!defined('DOKU_INC')) die('meh.');
 class Doku_Form {
 
     // Form id attribute
-    var $params = array();
+    public $params = array();
 
     // Draw a border around form fields.
     // Adds <fieldset></fieldset> around the elements
-    var $_infieldset = false;
+    public $_infieldset = false;
 
     // Hidden form fields.
-    var $_hidden = array();
+    public $_hidden = array();
 
     // Array of pseudo-tags
-    var $_content = array();
+    public $_content = array();
 
     /**
      * Constructor
@@ -441,6 +441,16 @@ function form_makeField($type, $name, $value='', $label=null, $id='', $class='',
  *
  * @see     form_makeField
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param string $type
+ * @param string $name
+ * @param string $value
+ * @param null|string $label
+ * @param string $id
+ * @param string $class
+ * @param array $attrs
+ *
+ * @return array
  */
 function form_makeFieldRight($type, $name, $value='', $label=null, $id='', $class='', $attrs=array()) {
     if (is_null($label)) $label = $name;
@@ -456,6 +466,15 @@ function form_makeFieldRight($type, $name, $value='', $label=null, $id='', $clas
  *
  * @see     form_makeField
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param string $name
+ * @param string $value
+ * @param null|string $label
+ * @param string $id
+ * @param string $class
+ * @param array $attrs
+ *
+ * @return array
  */
 function form_makeTextField($name, $value='', $label=null, $id='', $class='', $attrs=array()) {
     if (is_null($label)) $label = $name;
@@ -472,6 +491,14 @@ function form_makeTextField($name, $value='', $label=null, $id='', $class='', $a
  *
  * @see     form_makeField
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param string $name
+ * @param null|string $label
+ * @param string $id
+ * @param string $class
+ * @param array $attrs
+ *
+ * @return array
  */
 function form_makePasswordField($name, $label=null, $id='', $class='', $attrs=array()) {
     if (is_null($label)) $label = $name;
@@ -487,6 +514,14 @@ function form_makePasswordField($name, $label=null, $id='', $class='', $attrs=ar
  *
  * @see     form_makeField
  * @author  Michael Klier <chi@chimeric.de>
+ *
+ * @param string $name
+ * @param null|string $label
+ * @param string $id
+ * @param string $class
+ * @param array $attrs
+ *
+ * @return array
  */
 function form_makeFileField($name, $label=null, $id='', $class='', $attrs=array()) {
     if (is_null($label)) $label = $name;
@@ -504,6 +539,15 @@ function form_makeFileField($name, $label=null, $id='', $class='', $attrs=array(
  *
  * @see     form_makeFieldRight
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param string $name
+ * @param string $value
+ * @param null|string $label
+ * @param string $id
+ * @param string $class
+ * @param array $attrs
+ *
+ * @return array
  */
 function form_makeCheckboxField($name, $value='1', $label=null, $id='', $class='', $attrs=array()) {
     if (is_null($label)) $label = $name;
@@ -520,6 +564,15 @@ function form_makeCheckboxField($name, $value='1', $label=null, $id='', $class='
  *
  * @see     form_makeFieldRight
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param string $name
+ * @param string $value
+ * @param null|string $label
+ * @param string $id
+ * @param string $class
+ * @param array $attrs
+ *
+ * @return array
  */
 function form_makeRadioField($name, $value='1', $label=null, $id='', $class='', $attrs=array()) {
     if (is_null($label)) $label = $name;

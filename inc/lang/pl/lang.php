@@ -3,11 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Wojciech Lichota <wojciech@lichota.pl>
+ * @author Max <maxrb146@gmail.com>
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
  * @author Sławomir Boczek <slawkens@gmail.com>
- * @author sleshek@wp.pl
+ * @author sleshek <sleshek@wp.pl>
  * @author Leszek Stachowski <shazarre@gmail.com>
  * @author maros <dobrimaros@yahoo.pl>
  * @author Grzegorz Widła <dzesdzes@gmail.com>
@@ -18,6 +20,7 @@
  * @author Paweł Jan Czochański <czochanski@gmail.com>
  * @author Mati <mackosa@wp.pl>
  * @author Maciej Helt <geraldziu@gmail.com>
+ * @author Kris Charatonik <krishary@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -78,11 +81,11 @@ $lang['badpassconfirm']        = 'Niestety, hasło jest niepoprawne.';
 $lang['minoredit']             = 'Mniejsze zmiany';
 $lang['draftdate']             = 'Czas zachowania szkicu';
 $lang['nosecedit']             = 'Strona została zmodyfikowana, sekcje zostały zmienione. Załadowano całą stronę.';
-$lang['searchcreatepage']      = 'Jeśli nie znaleziono szukanego hasła, możesz utworzyć nową stronę, której tytułem będzie poszukiwane hasło.';
 $lang['regmissing']            = 'Wypełnij wszystkie pola.';
 $lang['reguexists']            = 'Użytkownik o tej nazwie już istnieje.';
 $lang['regsuccess']            = 'Utworzono użytkownika. Hasło zostało przesłane pocztą.';
 $lang['regsuccess2']           = 'Utworzono użytkownika.';
+$lang['regfail']               = 'Użytkownik nie mógł zostać utworzony.';
 $lang['regmailfail']           = 'Wystąpił błąd przy wysyłaniu hasła pocztą!';
 $lang['regbadmail']            = 'Adres e-mail jest nieprawidłowy!';
 $lang['regbadpass']            = 'Hasła nie są identyczne, spróbuj ponownie.';
@@ -97,6 +100,7 @@ $lang['profdeleteuser']        = 'Usuń konto';
 $lang['profdeleted']           = 'Twoje konto zostało usunięte z tej wiki';
 $lang['profconfdelete']        = 'Chcę usunąć moje konto z tej wiki. <br/> Decyzja nie może być cofnięta.';
 $lang['profconfdeletemissing'] = 'Pole potwierdzenia nie zostało zaznaczone';
+$lang['proffail']              = 'Profil użytkownika nie został uaktualniony.';
 $lang['pwdforget']             = 'Nie pamiętasz hasła? Zdobądź nowe!';
 $lang['resendna']              = 'To wiki nie pozwala na powtórne przesyłanie hasła.';
 $lang['resendpwd']             = 'Podaj nowe hasło dla';
@@ -197,6 +201,8 @@ $lang['diff_side']             = 'Jeden obok drugiego';
 $lang['diffprevrev']           = 'Poprzednia wersja';
 $lang['diffnextrev']           = 'Nowa wersja';
 $lang['difflastrev']           = 'Ostatnia wersja';
+$lang['diffbothprevrev']       = 'Poprzednia rewizja po obu stronach';
+$lang['diffbothnextrev']       = 'Następna rewizja po obu stronach';
 $lang['line']                  = 'Linia';
 $lang['breadcrumb']            = 'Ślad:';
 $lang['youarehere']            = 'Jesteś tutaj:';
@@ -341,9 +347,12 @@ $lang['media_perm_read']       = 'Przepraszamy, nie masz wystarczających uprawn
 $lang['media_perm_upload']     = 'Przepraszamy, nie masz wystarczających uprawnień do przesyłania plików.';
 $lang['media_update']          = 'Prześlij nową wersję';
 $lang['media_restore']         = 'Odtwórz tą wersję';
+$lang['media_acl_warning']     = 'Ta lista może nie być kompletna ze względu na ograniczenia ACL oraz ukryte strony.';
 $lang['currentns']             = 'Obecny katalog';
 $lang['searchresult']          = 'Wyniki wyszukiwania';
 $lang['plainhtml']             = 'Czysty HTML';
 $lang['wikimarkup']            = 'Znaczniki';
-$lang['email_signature_text'] = 'List został wygenerowany przez DokuWiki pod adresem
+$lang['page_nonexist_rev']     = 'Strona nie istnieje w %s. Została następnie utworzony w <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Nie można przeanalizować parametru "%s".';
+$lang['email_signature_text']  = 'List został wygenerowany przez DokuWiki pod adresem
 @DOKUWIKIURL@';

@@ -94,6 +94,15 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
  * Searches for pages beginning with the given query
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
  */
 function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
     $opts = array(
@@ -110,6 +119,15 @@ function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
  * $opts['ns'] is the currently viewed namespace
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
  */
 function search_index(&$data,$base,$file,$type,$lvl,$opts){
     global $conf;
@@ -129,6 +147,15 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
  * List all namespaces
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
  */
 function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
     $opts = array(
@@ -146,6 +173,15 @@ function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
  *   $opts['hash']      add hashes to result list
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
  */
 function search_media(&$data,$base,$file,$type,$lvl,$opts){
 
@@ -199,6 +235,15 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
  * This function just lists documents (for RSS namespace export)
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
  */
 function search_list(&$data,$base,$file,$type,$lvl,$opts){
     //we do nothing with directories
@@ -221,6 +266,15 @@ function search_list(&$data,$base,$file,$type,$lvl,$opts){
  * $opts['query'] is the search query
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
  */
 function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
     //we do nothing with directories
@@ -250,6 +304,15 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
  * $opts['skipacl'] list everything regardless of ACL
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
  */
 function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
     if(isset($opts['depth']) && $opts['depth']){
@@ -270,14 +333,14 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
 
     $item = array();
     $item['id']   = pathID($file);
-    if(!$opts['skipacl'] && auth_quickaclcheck($item['id']) < AUTH_READ){
+    if(isset($opts['skipacl']) && !$opts['skipacl'] && auth_quickaclcheck($item['id']) < AUTH_READ){
         return false;
     }
 
     $item['rev']   = filemtime($base.'/'.$file);
     $item['mtime'] = $item['rev'];
     $item['size']  = filesize($base.'/'.$file);
-    if($opts['hash']){
+    if(!empty($opts['hash'])){
         $item['hash'] = md5(trim(rawWiki($item['id'])));
     }
 
@@ -294,6 +357,11 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
  * structure created by search_fulltext. Sorts descending by count
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $a
+ * @param array $b
+ *
+ * @return int
  */
 function sort_search_fulltext($a,$b){
     if($a['count'] > $b['count']){
@@ -310,6 +378,11 @@ function sort_search_fulltext($a,$b){
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @todo    move to pageutils
+ *
+ * @param string $path
+ * @param bool $keeptxt
+ *
+ * @return mixed|string
  */
 function pathID($path,$keeptxt=false){
     $id = utf8_decodeFN($path);

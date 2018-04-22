@@ -47,6 +47,7 @@ function js_out(){
                 DOKU_INC.'lib/scripts/cookie.js',
                 DOKU_INC.'lib/scripts/script.js',
                 DOKU_INC.'lib/scripts/qsearch.js',
+                DOKU_INC.'lib/scripts/search.js',
                 DOKU_INC.'lib/scripts/tree.js',
                 DOKU_INC.'lib/scripts/index.js',
                 DOKU_INC.'lib/scripts/textselection.js',
@@ -99,8 +100,8 @@ function js_out(){
                  'secure' => $conf['securecookie'] && is_ssl()
             )).";";
     // FIXME: Move those to JSINFO
-    print "var DOKU_UHN    = ".((int) useHeading('navigation')).";";
-    print "var DOKU_UHC    = ".((int) useHeading('content')).";";
+    print "Object.defineProperty(window, 'DOKU_UHN', { get: function() { console.warn('Using DOKU_UHN is deprecated. Please use JSINFO.useHeadingNavigation instead'); return JSINFO.useHeadingNavigation; } });";
+    print "Object.defineProperty(window, 'DOKU_UHC', { get: function() { console.warn('Using DOKU_UHC is deprecated. Please use JSINFO.useHeadingContent instead'); return JSINFO.useHeadingContent; } });";
 
     // load JS specific translations
     $lang['js']['plugins'] = js_pluginstrings();

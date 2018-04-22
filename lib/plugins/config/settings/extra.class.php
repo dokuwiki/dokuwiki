@@ -172,20 +172,19 @@ if (!class_exists('setting_disableactions')) {
         /**
          * Build html for label and input of setting
          *
-         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param admin_plugin_config $plugin object of config plugin
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
          * @return array with content array(string $label_html, string $input_html)
          */
-        function html(&$plugin, $echo=false) {
+        function html(admin_plugin_config $plugin, $echo=false) {
             global $lang;
 
             // make some language adjustments (there must be a better way)
             // transfer some DokuWiki language strings to the plugin
-            if (!$plugin->localised) $plugin->setupLocale();
-            $plugin->lang[$this->_key.'_revisions'] = $lang['btn_revs'];
-
-            foreach ($this->_choices as $choice)
-              if (isset($lang['btn_'.$choice])) $plugin->lang[$this->_key.'_'.$choice] = $lang['btn_'.$choice];
+            $plugin->addLang($this->_key.'_revisions', $lang['btn_revs']);
+            foreach ($this->_choices as $choice) {
+              if (isset($lang['btn_'.$choice])) $plugin->addLang($this->_key.'_'.$choice, $lang['btn_'.$choice]);
+            }
 
             return parent::html($plugin, $echo);
         }
@@ -281,22 +280,26 @@ if (!class_exists('setting_renderer')) {
         /**
          * Build html for label and input of setting
          *
-         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param admin_plugin_config $plugin object of config plugin
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
          * @return array with content array(string $label_html, string $input_html)
          */
-        function html(&$plugin, $echo=false) {
+        function html(admin_plugin_config $plugin, $echo=false) {
 
             // make some language adjustments (there must be a better way)
             // transfer some plugin names to the config plugin
-            if (!$plugin->localised) $plugin->setupLocale();
-
-            foreach ($this->_choices as $choice) {
-                if (!isset($plugin->lang[$this->_key.'_o_'.$choice])) {
-                    if (!isset($this->_prompts[$choice])) {
-                        $plugin->lang[$this->_key.'_o_'.$choice] = sprintf($plugin->lang['renderer__core'],$choice);
+            foreach($this->_choices as $choice) {
+                if(!$plugin->getLang($this->_key . '_o_' . $choice)) {
+                    if(!isset($this->_prompts[$choice])) {
+                        $plugin->addLang(
+                            $this->_key . '_o_' . $choice,
+                            sprintf($plugin->getLang('renderer__core'), $choice)
+                        );
                     } else {
-                        $plugin->lang[$this->_key.'_o_'.$choice] = sprintf($plugin->lang['renderer__plugin'],$this->_prompts[$choice]);
+                        $plugin->addLang(
+                            $this->_key . '_o_' . $choice,
+                            sprintf($plugin->getLang('renderer__plugin'), $this->_prompts[$choice])
+                        );
                     }
                 }
             }

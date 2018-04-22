@@ -25,6 +25,9 @@ abstract class DokuCLI {
 
         $this->options = new DokuCLI_Options();
         $this->colors  = new DokuCLI_Colors();
+
+        dbg_deprecated('use \splitbrain\phpcli\CLI instead');
+        $this->error('DokuCLI is deprecated, use \splitbrain\phpcli\CLI instead.');
     }
 
     /**
@@ -62,7 +65,7 @@ abstract class DokuCLI {
         );
         $this->options->registerOption(
             'help',
-            'Display this help screen and exit immeadiately.',
+            'Display this help screen and exit immediately.',
             'h'
         );
 

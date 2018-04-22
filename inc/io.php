@@ -339,7 +339,8 @@ function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) 
     if ($maxlines > 0) {
         $count = 0;
         $matched = 0;
-        while (($count < $maxlines) && (list($i,$line) = each($lines))) {
+        foreach($lines as $i => $line) {
+            if($count >= $maxlines) break;
             // $matched will be set to 0|1 depending on whether pattern is matched and line replaced
             $lines[$i] = preg_replace($pattern, $replace, $line, -1, $matched);
             if ($matched) $count++;

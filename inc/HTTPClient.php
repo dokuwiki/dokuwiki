@@ -9,77 +9,6 @@
 
 define('HTTP_NL',"\r\n");
 
-
-/**
- * Adds DokuWiki specific configs to the HTTP client
- *
- * @author Andreas Goetz <cpuidle@gmx.de>
- */
-class DokuHTTPClient extends HTTPClient {
-
-    /**
-     * Constructor.
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     */
-    function __construct(){
-        global $conf;
-
-        // call parent constructor
-        parent::__construct();
-
-        // set some values from the config
-        $this->proxy_host   = $conf['proxy']['host'];
-        $this->proxy_port   = $conf['proxy']['port'];
-        $this->proxy_user   = $conf['proxy']['user'];
-        $this->proxy_pass   = conf_decodeString($conf['proxy']['pass']);
-        $this->proxy_ssl    = $conf['proxy']['ssl'];
-        $this->proxy_except = $conf['proxy']['except'];
-
-        // allow enabling debugging via URL parameter (if debugging allowed)
-        if($conf['allowdebug']) {
-            if(
-                isset($_REQUEST['httpdebug']) ||
-                (
-                    isset($_SERVER['HTTP_REFERER']) &&
-                    strpos($_SERVER['HTTP_REFERER'], 'httpdebug') !== false
-                )
-            ) {
-                $this->debug = true;
-            }
-        }
-    }
-
-
-    /**
-     * Wraps an event around the parent function
-     *
-     * @triggers HTTPCLIENT_REQUEST_SEND
-     * @author   Andreas Gohr <andi@splitbrain.org>
-     */
-    /**
-     * @param string $url
-     * @param string|array $data the post data either as array or raw data
-     * @param string $method
-     * @return bool
-     */
-    function sendRequest($url,$data='',$method='GET'){
-        $httpdata = array('url'    => $url,
-                          'data'   => $data,
-                          'method' => $method);
-        $evt = new Doku_Event('HTTPCLIENT_REQUEST_SEND',$httpdata);
-        if($evt->advise_before()){
-            $url    = $httpdata['url'];
-            $data   = $httpdata['data'];
-            $method = $httpdata['method'];
-        }
-        $evt->advise_after();
-        unset($evt);
-        return parent::sendRequest($url,$data,$method);
-    }
-
-}
-
 /**
  * Class HTTPClientException
  */
@@ -297,10 +226,15 @@ class HTTPClient {
 
         if($method == 'POST'){
             if(is_array($data)){
-                if($headers['Content-Type'] == 'multipart/form-data'){
-                    $headers['Content-Type']   = 'multipart/form-data; boundary='.$this->boundary;
+                if (empty($headers['Content-Type'])) {
+                    $headers['Content-Type'] = null;
+                }
+                switch ($headers['Content-Type']) {
+                case 'multipart/form-data':
+                    $headers['Content-Type']   = 'multipart/form-data; boundary=' . $this->boundary;
                     $data = $this->_postMultipartEncode($data);
-                }else{
+                    break;
+                default:
                     $headers['Content-Type']   = 'application/x-www-form-urlencoded';
                     $data = $this->_postEncode($data);
                 }
@@ -508,7 +442,9 @@ class HTTPClient {
                 $r_body = $this->_readData($socket, $length, 'response (content-length limited)', true);
             }elseif( !isset($this->resp_headers['transfer-encoding']) && $this->max_bodysize && !$this->keep_alive){
                 $r_body = $this->_readData($socket, $this->max_bodysize, 'response (content-length limited)', true);
-            }else{
+            } elseif ((int)$this->status === 204) {
+                // request has no content
+            } else{
                 // read entire socket
                 while (!feof($socket)) {
                     $r_body .= $this->_readData($socket, 4096, 'response (unlimited)', true);
@@ -599,18 +535,16 @@ class HTTPClient {
             // set correct peer name for verification (enabled since PHP 5.6)
             stream_context_set_option($socket, 'ssl', 'peer_name', $requestinfo['host']);
 
-            // because SSLv3 is mostly broken, we try TLS connections here first.
-            // according to  https://github.com/splitbrain/dokuwiki/commit/c05ef534 we had problems with certain
-            // setups with this solution before, but we have no usable test for that and TLS should be the more
-            // common crypto by now
-            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
-                $requesturl = $requestinfo['path'].
-                  (!empty($requestinfo['query'])?'?'.$requestinfo['query']:'');
-                return true;
+            // SSLv3 is broken, use only TLS connections.
+            // @link https://bugs.php.net/69195
+            if (PHP_VERSION_ID >= 50600 && PHP_VERSION_ID <= 50606) {
+                $cryptoMethod = STREAM_CRYPTO_METHOD_TLS_CLIENT;
+            } else {
+                // actually means neither SSLv2 nor SSLv3
+                $cryptoMethod = STREAM_CRYPTO_METHOD_SSLv23_CLIENT;
             }
 
-            // if the above failed, this will most probably not work either, but we can try
-            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
+            if (@stream_socket_enable_crypto($socket, true, $cryptoMethod)) {
                 $requesturl = $requestinfo['path'].
                   (!empty($requestinfo['query'])?'?'.$requestinfo['query']:'');
                 return true;
@@ -933,6 +867,77 @@ class HTTPClient {
     function _uniqueConnectionId($server, $port) {
         return "$server:$port";
     }
+}
+
+
+/**
+ * Adds DokuWiki specific configs to the HTTP client
+ *
+ * @author Andreas Goetz <cpuidle@gmx.de>
+ */
+class DokuHTTPClient extends HTTPClient {
+
+    /**
+     * Constructor.
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function __construct(){
+        global $conf;
+
+        // call parent constructor
+        parent::__construct();
+
+        // set some values from the config
+        $this->proxy_host   = $conf['proxy']['host'];
+        $this->proxy_port   = $conf['proxy']['port'];
+        $this->proxy_user   = $conf['proxy']['user'];
+        $this->proxy_pass   = conf_decodeString($conf['proxy']['pass']);
+        $this->proxy_ssl    = $conf['proxy']['ssl'];
+        $this->proxy_except = $conf['proxy']['except'];
+
+        // allow enabling debugging via URL parameter (if debugging allowed)
+        if($conf['allowdebug']) {
+            if(
+                isset($_REQUEST['httpdebug']) ||
+                (
+                    isset($_SERVER['HTTP_REFERER']) &&
+                    strpos($_SERVER['HTTP_REFERER'], 'httpdebug') !== false
+                )
+            ) {
+                $this->debug = true;
+            }
+        }
+    }
+
+
+    /**
+     * Wraps an event around the parent function
+     *
+     * @triggers HTTPCLIENT_REQUEST_SEND
+     * @author   Andreas Gohr <andi@splitbrain.org>
+     */
+    /**
+     * @param string $url
+     * @param string|array $data the post data either as array or raw data
+     * @param string $method
+     * @return bool
+     */
+    function sendRequest($url,$data='',$method='GET'){
+        $httpdata = array('url'    => $url,
+                          'data'   => $data,
+                          'method' => $method);
+        $evt = new Doku_Event('HTTPCLIENT_REQUEST_SEND',$httpdata);
+        if($evt->advise_before()){
+            $url    = $httpdata['url'];
+            $data   = $httpdata['data'];
+            $method = $httpdata['method'];
+        }
+        $evt->advise_after();
+        unset($evt);
+        return parent::sendRequest($url,$data,$method);
+    }
+
 }
 
 //Setup VIM: ex: et ts=4 :

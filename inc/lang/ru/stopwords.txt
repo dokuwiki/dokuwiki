@@ -1,6 +1,6 @@
-# This is a list of words the indexer ignores, one word per line
-# When you edit this file be sure to use UNIX line endings (single newline)
-# No need to include words shorter than 3 chars - these are ignored anyway
+# Это список слов, которые индексатор игнорирует, по одному слову в строке
+# При редактировании этого файла обязательно используйте окончания строк UNIX (только newline)
+# Не нужно включать слова короче 3 символов - они игнорируются в любом случае
 более
 больше
 будет

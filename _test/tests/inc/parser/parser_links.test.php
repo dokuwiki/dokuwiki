@@ -1,6 +1,11 @@
 <?php
 require_once 'parser.inc.php';
 
+/**
+ * Tests for the implementation of link syntax
+ *
+ * @group parser_links
+*/
 class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
 
     function testExternalLinkSimple() {
@@ -139,6 +144,35 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
 
+    function testExternalWWWLinkInPath() {
+        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        // See issue #936. Should NOT generate a link!
+        $this->P->parse("Foo /home/subdir/www/www.something.de/somedir/ Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo /home/subdir/www/www.something.de/somedir/ Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
+    function testExternalWWWLinkFollowingPath() {
+        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->parse("Foo /home/subdir/www/ www.something.de/somedir/ Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo /home/subdir/www/ ')),
+            array('externallink',array('http://www.something.de/somedir/', 'www.something.de/somedir/')),
+            array('cdata',array(' Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
     function testExternalFTPLink() {
         $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
         $this->P->parse("Foo ftp.sunsite.com Bar");
@@ -153,6 +187,36 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
+
+    function testExternalFTPLinkInPath() {
+        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        // See issue #936. Should NOT generate a link!
+        $this->P->parse("Foo /home/subdir/www/ftp.something.de/somedir/ Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo /home/subdir/www/ftp.something.de/somedir/ Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
+    function testExternalFTPLinkFollowingPath() {
+        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->parse("Foo /home/subdir/www/ ftp.something.de/somedir/ Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo /home/subdir/www/ ')),
+            array('externallink',array('ftp://ftp.something.de/somedir/', 'ftp.something.de/somedir/')),
+            array('cdata',array(' Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
     function testEmail() {
         $this->P->addMode('emaillink',new Doku_Parser_Mode_Emaillink());
         $this->P->parse("Foo <bugs@php.net> Bar");
@@ -274,6 +338,36 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
 
+    function testInternalLinkCodeFollows() {
+        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->parse("Foo [[wiki:internal:link|Test]] Bar <code>command [arg1 [arg2 [arg3]]]</code>");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('internallink',array('wiki:internal:link','Test')),
+            array('cdata',array(' Bar <code>command [arg1 [arg2 [arg3]]]</code>')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
+    function testInternalLinkCodeFollows2() {
+        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->parse("Foo [[wiki:internal:link|[Square brackets in title] Test]] Bar <code>command [arg1 [arg2 [arg3]]]</code>");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('internallink',array('wiki:internal:link','[Square brackets in title] Test')),
+            array('cdata',array(' Bar <code>command [arg1 [arg2 [arg3]]]</code>')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
     function testExternalInInternalLink() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[http://www.google.com|Google]] Bar");
@@ -288,6 +382,54 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
+
+    function testExternalInInternalLink2() {
+        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->parse("Foo [[http://www.google.com?test[]=squarebracketsinurl|Google]] Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('externallink',array('http://www.google.com?test[]=squarebracketsinurl','Google')),
+            array('cdata',array(' Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
+    function testExternalInInternalLink2CodeFollows() {
+        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->parse("Foo [[http://www.google.com?test[]=squarebracketsinurl|Google]] Bar <code>command [arg1 [arg2 [arg3]]]</code>");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('externallink',array('http://www.google.com?test[]=squarebracketsinurl','Google')),
+            array('cdata',array(' Bar <code>command [arg1 [arg2 [arg3]]]</code>')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
+    function testTwoInternalLinks() {
+        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->parse("Foo [[foo:bar|one]] and [[bar:foo|two]] Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('internallink',array('foo:bar','one')),
+            array('cdata',array(' and ')),
+            array('internallink',array('bar:foo','two')),
+            array('cdata',array(' Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
 
     function testInterwikiLink() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
@@ -393,7 +535,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testWindowsShareLinkHyphen() {
         $this->P->addMode('windowssharelink',new Doku_Parser_Mode_WindowsShareLink());
         $this->P->parse('Foo \\\server\share-hyphen Bar');

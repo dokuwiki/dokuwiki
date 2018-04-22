@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author F. Mueller-Donath <j.felix@mueller-donath.de>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Christof <gagi@fin.de>
  * @author Anika Henke <anika@selfthinker.org>
@@ -83,7 +84,6 @@ $lang['badpassconfirm']        = 'Das Passwort war falsch.';
 $lang['minoredit']             = 'Kleine Änderung';
 $lang['draftdate']             = 'Entwurf gespeichert am';
 $lang['nosecedit']             = 'Diese Seite wurde in der Zwischenzeit geändert, da das Sektionsinfo veraltet ist. Die ganze Seite wird stattdessen geladen.';
-$lang['searchcreatepage']      = 'Falls der gesuchte Begriff nicht gefunden wurde, kannst du direkt eine neue Seite für den Suchbegriff anlegen, indem du auf den Knopf **\'\'[Seite anlegen]\'\'** drückst.';
 $lang['regmissing']            = 'Alle Felder müssen ausgefüllt werden';
 $lang['reguexists']            = 'Der Benutzername existiert leider schon.';
 $lang['regsuccess']            = 'Der neue Benutzer wurde angelegt und das Passwort per E-Mail versandt.';
@@ -154,7 +154,7 @@ $lang['js']['linkto']          = 'Link zu:';
 $lang['js']['del_confirm']     = 'Die ausgewählten Dateien wirklich löschen?';
 $lang['js']['restore_confirm'] = 'Wirklich diese Version wiederherstellen?';
 $lang['js']['media_diff']      = 'Unterschiede anzeigen:';
-$lang['js']['media_diff_both'] = 'Seite für Seite';
+$lang['js']['media_diff_both'] = 'Nebeneinander';
 $lang['js']['media_diff_opacity'] = 'Überblenden';
 $lang['js']['media_diff_portions'] = 'Übergang';
 $lang['js']['media_select']    = 'Dateien auswählen…';
@@ -198,7 +198,7 @@ $lang['diff2']                 = 'Zeige Unterschiede der ausgewählten Versionen
 $lang['difflink']              = 'Link zu der Vergleichsansicht';
 $lang['diff_type']             = 'Unterschiede anzeigen:';
 $lang['diff_inline']           = 'Inline';
-$lang['diff_side']             = 'Side by Side';
+$lang['diff_side']             = 'Nebeneinander';
 $lang['diffprevrev']           = 'Vorherige Überarbeitung';
 $lang['diffnextrev']           = 'Nächste Überarbeitung';
 $lang['difflastrev']           = 'Letzte Überarbeitung';
@@ -353,5 +353,6 @@ $lang['searchresult']          = 'Suchergebnis';
 $lang['plainhtml']             = 'Reines HTML';
 $lang['wikimarkup']            = 'Wiki Markup';
 $lang['page_nonexist_rev']     = 'Seite existierte nicht an der Stelle %s. Sie wurde an folgende Stelle erstellt: <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';
 $lang['email_signature_text']  = 'Diese E-Mail wurde erzeugt vom DokuWiki unter
 @DOKUWIKIURL@';

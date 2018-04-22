@@ -12,6 +12,7 @@
  * @author Constantinos Xanthopoulos <conx@xanthopoulos.info>
  * @author chris taklis <ctaklis@gmail.com>
  * @author cross <cross1962@gmail.com>
+ * @author Zacharias Sdregas <zsdregas@sch.gr>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -55,6 +56,8 @@ $lang['btn_register']          = 'Εγγραφή';
 $lang['btn_apply']             = 'Εφαρμογή';
 $lang['btn_media']             = 'Διαχειριστής πολυμέσων';
 $lang['btn_deleteuser']        = 'Αφαίρεσε τον λογαριασμό μου';
+$lang['btn_img_backto']        = 'Επιστροφή σε %s';
+$lang['btn_mediaManager']      = 'Εμφάνιση στον διαχειριστή πολυμέσων';
 $lang['loggedinas']            = 'Συνδεδεμένος ως:';
 $lang['user']                  = 'Όνομα χρήστη';
 $lang['pass']                  = 'Κωδικός';
@@ -74,6 +77,7 @@ $lang['regmissing']            = 'Πρέπει να συμπληρώσετε ό�
 $lang['reguexists']            = 'Αυτός ο λογαριασμός υπάρχει ήδη.';
 $lang['regsuccess']            = 'Ο λογαριασμός δημιουργήθηκε και ο κωδικός εστάλει με e-mail.';
 $lang['regsuccess2']           = 'Ο λογαριασμός δημιουργήθηκε.';
+$lang['regfail']               = 'Δεν έγινε η δημιουργία χρήστη.';
 $lang['regmailfail']           = 'Φαίνεται να υπάρχει πρόβλημα με την αποστολή του κωδικού μέσω e-mail. Παρακαλούμε επικοινωνήστε μαζί μας!';
 $lang['regbadmail']            = 'Η διεύθυνση e-mail δεν είναι έγκυρη - εάν πιστεύετε ότι αυτό είναι λάθος, επικοινωνήστε μαζί μας';
 $lang['regbadpass']            = 'Οι δύο κωδικοί δεν είναι ίδιοι, προσπαθήστε ξανά.';
@@ -87,6 +91,8 @@ $lang['profnodelete']          = 'Το wiki δεν υποστηρίζει την
 $lang['profdeleteuser']        = 'Διαγραφή λογαριασμού';
 $lang['profdeleted']           = 'Ο λογαριασμός διαγράφηκε από αυτό το wiki';
 $lang['profconfdelete']        = 'Επιθυμώ να διαγράψω τον λογαριασμό μου από αυτό το wiki. <br/> Αυτή η επιλογή δεν μπορεί να αναιρεθεί.';
+$lang['profconfdeletemissing'] = 'Το κουμπί επιβεβαίωσης δεν πατήθηκε';
+$lang['proffail']              = 'Δεν ενημερώθηκε το προφίλ του χρήστη.';
 $lang['pwdforget']             = 'Ξεχάσατε το κωδικό σας; Αποκτήστε νέο.';
 $lang['resendna']              = 'Αυτό το wiki δεν υποστηρίζει την εκ\' νέου αποστολή κωδικών.';
 $lang['resendpwd']             = 'Εισαγωγή νέου ωδικού για';
@@ -183,6 +189,9 @@ $lang['difflink']              = 'Σύνδεσμος σε αυτή την προ
 $lang['diff_type']             = 'Προβολή διαφορών:';
 $lang['diff_inline']           = 'Σε σειρά';
 $lang['diff_side']             = 'Δίπλα-δίπλα';
+$lang['diffprevrev']           = 'Προηγούμενη αναθεώρηση';
+$lang['diffnextrev']           = 'Επόμενη αναθεώρηση';
+$lang['difflastrev']           = 'Τελευταία αναθεώρηση';
 $lang['line']                  = 'Γραμμή';
 $lang['breadcrumb']            = 'Ιστορικό:';
 $lang['youarehere']            = 'Είστε εδώ:';
@@ -238,7 +247,6 @@ $lang['upperns']               = 'πήγαινε στον μητρικό φάκ�
 $lang['metaedit']              = 'Τροποποίηση metadata';
 $lang['metasaveerr']           = 'Η αποθήκευση των metadata απέτυχε';
 $lang['metasaveok']            = 'Επιτυχής αποθήκευση metadata';
-$lang['btn_img_backto']            = 'Επιστροφή σε %s';
 $lang['img_title']             = 'Τίτλος:';
 $lang['img_caption']           = 'Λεζάντα:';
 $lang['img_date']              = 'Ημερομηνία:';
@@ -251,7 +259,6 @@ $lang['img_camera']            = 'Camera:';
 $lang['img_keywords']          = 'Λέξεις-κλειδιά:';
 $lang['img_width']             = 'Πλάτος:';
 $lang['img_height']            = 'Ύψος:';
-$lang['btn_mediaManager']           = 'Εμφάνιση στον διαχειριστή πολυμέσων';
 $lang['subscr_subscribe_success'] = 'Ο/η %s προστέθηκε στην λίστα ειδοποιήσεων για το %s';
 $lang['subscr_subscribe_error'] = 'Σφάλμα κατά την προσθήκη του/της %s στην λίστα ειδοποιήσεων για το %s';
 $lang['subscr_subscribe_noaddress'] = 'Δεν υπάρχει διεύθυνση ταχυδρομείου συσχετισμένη με το όνομα χρήστη σας. Κατά συνέπεια δεν μπορείτε να προστεθείτε στην λίστα ειδοποιήσεων';
@@ -279,6 +286,7 @@ $lang['i_modified']            = 'Για λόγους ασφαλείας, ο ο�
 Πρέπει είτε να κάνετε νέα εγκατάσταση, χρησιμοποιώντας το αρχικό πακέτο εγκατάστασης, ή να συμβουλευτείτε τις <a href="http://dokuwiki.org/el:install">οδηγίες εγκατάστασης της εφαρμογής</a>.';
 $lang['i_funcna']              = 'Η λειτουργία <code>%s</code> της PHP δεν είναι διαθέσιμη. Πιθανόν να είναι απενεργοποιημένη στις ρυθμίσεις έναρξης της PHP';
 $lang['i_phpver']              = 'Η έκδοση <code>%s</code> της PHP που έχετε είναι παλαιότερη της απαιτούμενης <code>%s</code>. Πρέπει να αναβαθμίσετε την PHP.';
+$lang['i_mbfuncoverload']      = 'Για να εκτελεστεί το Dokuwiki πρέπει να απενεργοποιήσετε τη ρύθμιση mbstring.func_overload στο αρχείο php.ini';
 $lang['i_permfail']            = 'Ο φάκελος <code>%s</code> δεν είναι εγγράψιμος από την εφαρμογή DokuWiki. Πρέπει να διορθώσετε τα δικαιώματα πρόσβασης αυτού του φακέλου!';
 $lang['i_confexists']          = '<code>%s</code> υπάρχει ήδη';
 $lang['i_writeerr']            = 'Δεν είναι δυνατή η δημιουργία του <code>%s</code>. Πρέπει να διορθώσετε τα δικαιώματα πρόσβασης αυτού του φακέλου/αρχείου και να δημιουργήσετε το αρχείο χειροκίνητα!';
@@ -326,5 +334,5 @@ $lang['media_perm_upload']     = 'Συγνώμη, δεν έχετε επαρκή
 $lang['media_update']          = 'Φόρτωση νέας έκδοσης';
 $lang['media_restore']         = 'Επαναφορά αυτή της έκδοσης';
 $lang['searchresult']          = 'Αποτέλεσμα έρευνας';
-$lang['email_signature_text'] = 'Αυτό το e-mail δημιουργήθηκε αυτόματα από την εφαρμογή DokuWiki στην διεύθυνση
+$lang['email_signature_text']  = 'Αυτό το e-mail δημιουργήθηκε αυτόματα από την εφαρμογή DokuWiki στην διεύθυνση
 @DOKUWIKIURL@';

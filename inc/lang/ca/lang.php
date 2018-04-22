@@ -9,6 +9,8 @@
  * @author Eduard Díaz <edudiaz@scopia.es>
  * @author controlonline.net <controlonline.net@gmail.com>
  * @author Pauet <pauet@gmx.com>
+ * @author Àngel Pérez Beroy <aperezberoy@gmail.com>
+ * @author David Surroca <david.tb303@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -69,7 +71,6 @@ $lang['badpassconfirm']        = 'Contrasenya incorrecta';
 $lang['minoredit']             = 'Canvis menors';
 $lang['draftdate']             = 'L\'esborrany s\'ha desat automàticament';
 $lang['nosecedit']             = 'Mentrestant la pàgina ha estat modificada. La informació de seccions estava obsoleta i ha calgut carregar la pàgina sencera.';
-$lang['searchcreatepage']      = 'Si no trobeu allò que buscàveu, podeu crear una pàgina nova per mitjà del botó \'\'Edita aquesta pàgina\'\'.';
 $lang['regmissing']            = 'Heu d\'omplir tots els camps.';
 $lang['reguexists']            = 'Ja existeix un altre usuari amb aquest nom.';
 $lang['regsuccess']            = 'S\'ha creat l\'usuari. La contrasenya s\'ha enviat per correu.';

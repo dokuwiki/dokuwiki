@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  */
 $lang['server']                = 'Via MySQL-servilo';
 $lang['user']                  = 'MySQL uzantonomo';
