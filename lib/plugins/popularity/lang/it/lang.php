@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Diego Pierotto ita.translations@tiscali.it
+ * @author Diego Pierotto <ita.translations@tiscali.it>
  * @author Lorenzo Breda <lbreda@gmail.com>
  * @author robocap <robocap1@gmail.com>
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
