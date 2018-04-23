@@ -5,7 +5,7 @@
  *
  * @author Giorgio Vecchiocattivi <giorgio@vecchio.it>
  * @author Roberto Bolli <http://www.rbnet.it/>
- * @author Pietro Battiston toobaz@email.it
+ * @author Pietro Battiston <toobaz@email.it>
  * @author Lorenzo Breda <lbreda@gmail.com>
  * @author robocap <robocap1@gmail.com>
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
