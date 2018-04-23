@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Karl_de_Hall <Karl.Grohmueller@sonnenhof-sha.de>
  * @author Michael Bohn <mjbohn@gmail.com>
  * @author Joel Strasser <strasser999@gmail.com>
  * @author Robert Riebisch <robert.riebisch@googlemail.com>
@@ -148,6 +149,8 @@ $lang['search_any_time']       = 'jederzeit';
 $lang['search_past_7_days']    = 'letzte Woche';
 $lang['search_past_month']     = 'letzter Monat';
 $lang['search_past_year']      = 'letztes Jahr';
+$lang['search_sort_by_hits']   = 'Sortiere nach Treffer';
+$lang['search_sort_by_mtime']  = 'Sortiere nach letzter Änderung';
 $lang['regmissing']            = 'Bitte alle Felder ausfüllen!';
 $lang['reguexists']            = 'Der Benutzername existiert leider schon.';
 $lang['regsuccess']            = 'Der neue Benutzer wurde angelegt und das Passwort per E-Mail versandt.';
