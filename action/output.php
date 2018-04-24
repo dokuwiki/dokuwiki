@@ -51,7 +51,7 @@ class action_plugin_struct_output extends DokuWiki_Action_Plugin {
             }
 
             // abort when after we looked at the first 150 bytes
-            if($call[3] > 150) {
+            if(isset($call[3]) && $call[3] > 150) {
                 break;
             }
         }
