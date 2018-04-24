@@ -98,7 +98,7 @@ abstract class AbstractBaseType {
     protected function mergeConfig($current, &$config) {
         foreach($current as $key => $value) {
             if(isset($config[$key]) || in_array($key, $this->keepconfig)) {
-                if(is_array($config[$key])) {
+                if(isset($config[$key]) && is_array($config[$key])) {
                     $this->mergeConfig($value, $config[$key]);
                 } else {
                     $config[$key] = $value;

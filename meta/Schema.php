@@ -98,7 +98,7 @@ class Schema {
             $result = array_shift($schema);
             $this->id = $result['id'];
             $this->user = $result['user'];
-            $this->chksum = $result['chksum'];
+            $this->chksum = isset($result['chksum']) ? $result['chksum'] : '';
             $this->islookup = $result['islookup'];
             $this->ts = $result['ts'];
             $config = json_decode($result['config'], true);
