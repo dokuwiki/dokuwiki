@@ -16,10 +16,9 @@ $required_php = "5.6";
 
 if (version_compare(phpversion(), $required_php, '<')) {
 
-  die('<h2 style="margin:1.2em;text-align:center;color:red;line-height:1.6;" >Error: You are currently running PHP/'.phpversion().'.<br>
+  die('<h2 style="margin:1.2em;text-align:center;color:red;line-height:1.6;" >Web server setup error: You are currently running PHP/'.phpversion().'.<br>
        <span style="color:#606060;" >DokuWiki requires PHP/'.$required_php.' or higher.</span></h3>');
-
-} else {
+} 
 
 //  xdebug_start_profiling();
 
@@ -134,4 +133,3 @@ trigger_event('DOKUWIKI_DONE', $tmp);
 
 //  xdebug_dump_function_profile(1);
 
-}
