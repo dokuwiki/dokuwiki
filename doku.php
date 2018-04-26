@@ -11,6 +11,16 @@
 // update message version - always use a string to avoid localized floats!
 $updateVersion = "50";
 
+// let people know if they are running an unsupported version of PHP
+$required_php = "5.6";
+
+if (version_compare(phpversion(), $required_php, '<')) {
+
+  die('<h2 style="margin:1.2em;text-align:center;color:red;line-height:1.6;" >Error: You are currently running PHP/'.phpversion().'.<br>
+       <span style="color:#606060;" >DokuWiki requires PHP/'.$required_php.' or higher.</span></h3>');
+
+} else {
+
 //  xdebug_start_profiling();
 
 if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/');
@@ -123,3 +133,5 @@ $tmp = array(); // No event data
 trigger_event('DOKUWIKI_DONE', $tmp);
 
 //  xdebug_dump_function_profile(1);
+
+}
