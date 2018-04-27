@@ -26,6 +26,7 @@
     <exclude-pattern>*/inc/IXR_Library.php</exclude-pattern>
     <exclude-pattern>*/inc/JSON.php</exclude-pattern>
     <exclude-pattern>*/inc/JpegMeta.php</exclude-pattern>
+    <exclude-pattern>*/lib/plugins/authad/adLDAP</exclude-pattern>
 
     <!-- rules on top of PSR-2 -->
     <rule ref="PSR2">
