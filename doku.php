@@ -15,7 +15,7 @@ $updateVersion = "50";
 define('DOKU_MIN_PHP', '5.6');
 
 if (version_compare(PHP_VERSION, DOKU_MIN_PHP, '<')) {
-  die('WEB SERVER SETUP ERROR: Your PHP version '.PHP_VERSION.' that is running on your web server does not meet the required minimum of '. DOKU_MIN_PHP);
+  die('WEB SERVER SETUP ERROR: Your PHP version '.PHP_VERSION.' which is currently running on your web server does not meet the required minimum of '. DOKU_MIN_PHP);
 }
 
 //  xdebug_start_profiling();
