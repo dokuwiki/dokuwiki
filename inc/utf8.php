@@ -238,7 +238,7 @@ if(!function_exists('utf8_substr')){
 
             if ($length > 0) {
 
-                $length = min($strlen-$offset, $length);  // reduce any length that would go passed the end of the string
+                $length = min($strlen-$offset, $length);  // reduce any length that would go past the end of the string
 
                 $Lx = (int)($length/65535);
                 $Ly = $length%65535;
@@ -1474,7 +1474,8 @@ if(empty($UTF8_ROMANIZATION)) $UTF8_ROMANIZATION = array(
   'っりゃ'=>'rrya','っりぇ'=>'rrye','っりぃ'=>'rryi','っりょ'=>'rryo','っりゅ'=>'rryu',
   'っしゃ'=>'ssha','っしぇ'=>'sshe','っし'=>'sshi','っしょ'=>'ssho','っしゅ'=>'sshu',
 
-  // seperate hiragana 'n' ('n' + 'i' != 'ni', normally we would write "kon'nichi wa" but the apostrophe would be converted to _ anyway)
+  // seperate hiragana 'n' ('n' + 'i' != 'ni', normally we would write "kon'nichi wa" but the
+  // apostrophe would be converted to _ anyway)
   'んあ'=>'n_a','んえ'=>'n_e','んい'=>'n_i','んお'=>'n_o','んう'=>'n_u',
   'んや'=>'n_ya','んよ'=>'n_yo','んゆ'=>'n_yu',
 
@@ -1561,7 +1562,8 @@ if(empty($UTF8_ROMANIZATION)) $UTF8_ROMANIZATION = array(
 
   // Japanese katakana
 
-  // 4 character syllables: ッ doubles the consonant after, ー doubles the vowel before (usualy written with macron, but we don't want that in our URLs)
+  // 4 character syllables: ッ doubles the consonant after, ー doubles the vowel before
+  // (usualy written with macron, but we don't want that in our URLs)
   'ッビャー'=>'bbyaa','ッビェー'=>'bbyee','ッビィー'=>'bbyii','ッビョー'=>'bbyoo','ッビュー'=>'bbyuu',
   'ッピャー'=>'ppyaa','ッピェー'=>'ppyee','ッピィー'=>'ppyii','ッピョー'=>'ppyoo','ッピュー'=>'ppyuu',
   'ッキャー'=>'kkyaa','ッキェー'=>'kkyee','ッキィー'=>'kkyii','ッキョー'=>'kkyoo','ッキュー'=>'kkyuu',

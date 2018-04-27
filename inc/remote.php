@@ -235,7 +235,7 @@ class RemoteAPI {
         global $INPUT;
 
         if (!$conf['remote']) {
-            throw new RemoteAccessDeniedException('server error. RPC server not enabled.',-32604); //should not be here,just throw
+            throw new RemoteAccessDeniedException('server error. RPC server not enabled.',-32604);
         }
         if(trim($conf['remoteuser']) == '!!not set!!') {
             return false;

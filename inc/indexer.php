@@ -401,7 +401,7 @@ class Doku_Indexer {
      *
      * @param string $key       The metadata key of which a value shall be changed
      * @param string $oldvalue  The old value that shall be renamed
-     * @param string $newvalue  The new value to which the old value shall be renamed, can exist (then values will be merged)
+     * @param string $newvalue  The new value to which the old value shall be renamed, if exists values will be merged
      * @return bool|string      If renaming the value has been successful, false or error message on error.
      */
     public function renameMetaValue($key, $oldvalue, $newvalue) {
@@ -1519,7 +1519,10 @@ function idx_listIndexLengths() {
         clearstatcache();
         if (file_exists($conf['indexdir'].'/lengths.idx')
         && (time() < @filemtime($conf['indexdir'].'/lengths.idx') + $conf['readdircache'])) {
-            if (($lengths = @file($conf['indexdir'].'/lengths.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)) !== false) {
+            if (
+                ($lengths = @file($conf['indexdir'].'/lengths.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))
+                !== false
+            ) {
                 $idx = array();
                 foreach ($lengths as $length) {
                     $idx[] = (int)$length;

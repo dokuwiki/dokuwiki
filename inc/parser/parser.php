@@ -338,7 +338,8 @@ class Doku_Parser_Mode_eol extends Doku_Parser_Mode {
         if ( in_array($mode, $badModes) ) {
             return;
         }
-        // see FS#1652, pattern extended to swallow preceding whitespace to avoid issues with lines that only contain whitespace
+        // see FS#1652, pattern extended to swallow preceding whitespace to avoid
+        // issues with lines that only contain whitespace
         $this->Lexer->addSpecialPattern('(?:^[ \t]*)?\n',$mode,'eol');
     }
 

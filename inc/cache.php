@@ -214,7 +214,9 @@ class cache_parser extends cache {
                 );
         $files = array_merge($files, getConfigFiles('main'));    // ... wiki settings
 
-        $this->depends['files'] = !empty($this->depends['files']) ? array_merge($files, $this->depends['files']) : $files;
+        $this->depends['files'] = !empty($this->depends['files']) ?
+            array_merge($files, $this->depends['files']) :
+            $files;
         parent::_addDependencies();
     }
 
@@ -239,7 +241,8 @@ class cache_renderer extends cache_parser {
             return true;
         }
 
-        if ($this->_time < @filemtime(metaFN($this->page,'.meta'))) return false;         // meta cache older than file it depends on?
+        // meta cache older than file it depends on?
+        if ($this->_time < @filemtime(metaFN($this->page,'.meta'))) return false;
 
         // check current link existence is consistent with cache version
         // first check the purgefile
@@ -285,14 +288,18 @@ class cache_renderer extends cache_parser {
         // page implies metadata and possibly some other dependencies
         if (isset($this->page)) {
 
-            $valid = p_get_metadata($this->page, 'date valid');         // for xhtml this will render the metadata if needed
+            // for xhtml this will render the metadata if needed
+            $valid = p_get_metadata($this->page, 'date valid');
             if (!empty($valid['age'])) {
                 $this->depends['age'] = isset($this->depends['age']) ?
                     min($this->depends['age'],$valid['age']) : $valid['age'];
             }
         }
 
-        $this->depends['files'] = !empty($this->depends['files']) ? array_merge($files, $this->depends['files']) : $files;
+        $this->depends['files'] = !empty($this->depends['files']) ?
+            array_merge($files, $this->depends['files']) :
+            $files;
+
         parent::_addDependencies();
     }
 }

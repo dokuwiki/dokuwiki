@@ -104,7 +104,13 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null) {
  * @return string           in the format " name*=charset'lang'value" for values WITH special characters
  */
 function rfc2231_encode($name, $value, $charset='utf-8', $lang='en') {
-    $internal = preg_replace_callback('/[\x00-\x20*\'%()<>@,;:\\\\"\/[\]?=\x80-\xFF]/', function($match) { return rawurlencode($match[0]); }, $value);
+    $internal = preg_replace_callback(
+        '/[\x00-\x20*\'%()<>@,;:\\\\"\/[\]?=\x80-\xFF]/',
+        function ($match) {
+            return rawurlencode($match[0]);
+        },
+        $value
+    );
     if ( $value != $internal ) {
         return ' '.$name.'*='.$charset."'".$lang."'".$internal;
     } else {

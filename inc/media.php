@@ -169,7 +169,17 @@ function media_metaform($id,$auth){
 
         $form->addElement('<div class="row">');
         if($field[2] == 'text'){
-            $form->addElement(form_makeField('text', $p['name'], $value, ($lang[$field[1]]) ? $lang[$field[1]] : $field[1] . ':', $p['id'], $p['class'], $p_attrs));
+            $form->addElement(
+                form_makeField(
+                    'text',
+                    $p['name'],
+                    $value,
+                    ($lang[$field[1]]) ? $lang[$field[1]] : $field[1] . ':',
+                    $p['id'],
+                    $p['class'],
+                    $p_attrs
+                )
+            );
         }else{
             $att = buildAttributes($p);
             $form->addElement('<label for="meta__'.$key.'">'.$lang[$field[1]].'</label>');
@@ -178,7 +188,14 @@ function media_metaform($id,$auth){
         $form->addElement('</div>'.NL);
     }
     $form->addElement('<div class="buttons">');
-    $form->addElement(form_makeButton('submit', '', $lang['btn_save'], array('accesskey' => 's', 'name' => 'mediado[save]')));
+    $form->addElement(
+        form_makeButton(
+            'submit',
+            '',
+            $lang['btn_save'],
+            array('accesskey' => 's', 'name' => 'mediado[save]')
+        )
+    );
     $form->addElement('</div>'.NL);
     $form->printForm();
 
@@ -527,7 +544,15 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
         $filesize_new = filesize($fn);
         $sizechange = $filesize_new - $filesize_old;
         if($REV) {
-            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_REVERT, sprintf($lang['restored'], dformat($REV)), $REV, null, $sizechange);
+            addMediaLogEntry(
+                $new,
+                $id,
+                DOKU_CHANGE_TYPE_REVERT,
+                sprintf($lang['restored'], dformat($REV)),
+                $REV,
+                null,
+                $sizechange
+            );
         } elseif($overwrite) {
             addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT, '', '', null, $sizechange);
         } else {
@@ -1713,7 +1738,7 @@ function media_printimgdetail($item, $fullscreen=false){
     // output
     if ($fullscreen) {
         echo '<a id="l_:'.$item['id'].'" class="image thumb" href="'.
-            media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']), 'tab_details' => 'view')).'">';
+            media_managerURL(['image' => hsc($item['id']), 'ns' => getNS($item['id']), 'tab_details' => 'view']).'">';
         echo '<img src="'.$src.'" '.$att.' />';
         echo '</a>';
     }
@@ -1897,7 +1922,16 @@ function media_searchform($ns,$query='',$fullscreen=false){
     $form->addHidden($fullscreen ? 'mediado' : 'do', 'searchlist');
 
     $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeTextField('q', $query,$lang['searchmedia'],'','',array('title'=>sprintf($lang['searchmedia_in'],hsc($ns).':*'))));
+    $form->addElement(
+        form_makeTextField(
+            'q',
+            $query,
+            $lang['searchmedia'],
+            '',
+            '',
+            array('title' => sprintf($lang['searchmedia_in'], hsc($ns) . ':*'))
+        )
+    );
     $form->addElement(form_makeButton('submit', '', $lang['btn_search']));
     $form->addElement(form_makeCloseTag('p'));
     html_form('searchmedia', $form);
@@ -1940,7 +1974,13 @@ function media_nstree($ns){
 
         // find the namespace parts or insert them
         while ($data[$pos]['id'] != $tmp_ns) {
-            if ($pos >= count($data) || ($data[$pos]['level'] <= $level+1 && strnatcmp(utf8_encodeFN($data[$pos]['id']), utf8_encodeFN($tmp_ns)) > 0)) {
+            if (
+                $pos >= count($data) ||
+                (
+                    $data[$pos]['level'] <= $level+1 &&
+                    strnatcmp(utf8_encodeFN($data[$pos]['id']), utf8_encodeFN($tmp_ns)) > 0
+                )
+            ) {
                 array_splice($data, $pos, 0, array(array('level' => $level+1, 'id' => $tmp_ns, 'open' => 'true')));
                 break;
             }
@@ -2350,7 +2390,12 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
             $transcolorindex = @imagecolortransparent($image);
             if($transcolorindex >= 0 ) { //transparent color exists
                 $transcolor = @imagecolorsforindex($image, $transcolorindex);
-                $transcolorindex = @imagecolorallocate($newimg, $transcolor['red'], $transcolor['green'], $transcolor['blue']);
+                $transcolorindex = @imagecolorallocate(
+                    $newimg,
+                    $transcolor['red'],
+                    $transcolor['green'],
+                    $transcolor['blue']
+                );
                 @imagefill($newimg, 0, 0, $transcolorindex);
                 @imagecolortransparent($newimg, $transcolorindex);
             }else{ //filling with white

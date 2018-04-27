@@ -186,7 +186,7 @@ class Mailer {
      *
      * @param string $text     plain text body
      * @param array  $textrep  replacements to apply on the text part
-     * @param array  $htmlrep  replacements to apply on the HTML part, null to use $textrep (with urls wrapped in <a> tags)
+     * @param array  $htmlrep  replacements to apply on the HTML part, null to use $textrep (urls wrapped in <a> tags)
      * @param string $html     the HTML body, leave null to create it from $text
      * @param bool   $wrap     wrap the HTML in the default header/Footer
      */
@@ -616,7 +616,11 @@ class Mailer {
             'NAME' => $INFO['userinfo']['name'],
             'MAIL' => $INFO['userinfo']['mail']
         );
-        $signature = str_replace('@DOKUWIKIURL@', $this->replacements['text']['DOKUWIKIURL'], $lang['email_signature_text']);
+        $signature = str_replace(
+            '@DOKUWIKIURL@',
+            $this->replacements['text']['DOKUWIKIURL'],
+            $lang['email_signature_text']
+        );
         $this->replacements['text']['EMAILSIGNATURE'] = "\n-- \n" . $signature . "\n";
 
         $this->replacements['html'] = array(

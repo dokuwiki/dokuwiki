@@ -54,7 +54,9 @@ class Doku_Plugin_Controller {
             $this->list_bytype[$type]['disabled'] = $this->_getListByType($type,false);
         }
 
-        return $all ? array_merge($this->list_bytype[$type]['enabled'],$this->list_bytype[$type]['disabled']) : $this->list_bytype[$type]['enabled'];
+        return $all
+            ? array_merge($this->list_bytype[$type]['enabled'], $this->list_bytype[$type]['disabled'])
+            : $this->list_bytype[$type]['enabled'];
     }
 
     /**
@@ -98,10 +100,22 @@ class Doku_Plugin_Controller {
             $dir = $this->get_directory($plugin);
             $inf = confToHash(DOKU_PLUGIN."$dir/plugin.info.txt");
             if($inf['base'] && $inf['base'] != $plugin){
-                msg(sprintf("Plugin installed incorrectly. Rename plugin directory '%s' to '%s'.", hsc($plugin), hsc($inf['base'])), -1);
+                msg(
+                    sprintf(
+                        "Plugin installed incorrectly. Rename plugin directory '%s' to '%s'.",
+                        hsc($plugin),
+                        hsc(
+                            $inf['base']
+                        )
+                    ), -1
+                );
             } elseif (preg_match('/^'.DOKU_PLUGIN_NAME_REGEX.'$/', $plugin) !== 1) {
-                msg(sprintf("Plugin name '%s' is not a valid plugin name, only the characters a-z and 0-9 are allowed. ".
-                                'Maybe the plugin has been installed in the wrong directory?', hsc($plugin)), -1);
+                msg(
+                    sprintf(
+                        "Plugin name '%s' is not a valid plugin name, only the characters a-z and 0-9 are allowed. " .
+                        'Maybe the plugin has been installed in the wrong directory?', hsc($plugin)
+                    ), -1
+                );
             }
             return null;
         }
@@ -222,8 +236,10 @@ class Doku_Plugin_Controller {
         $local_plugins = $this->rebuildLocal();
         if($local_plugins != $this->plugin_cascade['local'] || $forceSave) {
             $file = $this->last_local_config_file;
-            $out = "<?php\n/*\n * Local plugin enable/disable settings\n * Auto-generated through plugin/extension manager\n *\n".
-                   " * NOTE: Plugins will not be added to this file unless there is a need to override a default setting. Plugins are\n".
+            $out = "<?php\n/*\n * Local plugin enable/disable settings\n".
+                   " * Auto-generated through plugin/extension manager\n *\n".
+                   " * NOTE: Plugins will not be added to this file unless there ".
+                   "is a need to override a default setting. Plugins are\n".
                    " *       enabled by default.\n */\n";
             foreach ($local_plugins as $plugin => $value) {
                 $out .= "\$plugins['$plugin'] = $value;\n";
@@ -276,9 +292,16 @@ class Doku_Plugin_Controller {
         $this->last_local_config_file = array_pop($local);
         $this->plugin_cascade['local'] = $this->checkRequire(array($this->last_local_config_file));
         if(is_array($local)) {
-            $this->plugin_cascade['default'] = array_merge($this->plugin_cascade['default'],$this->checkRequire($local));
+            $this->plugin_cascade['default'] = array_merge(
+                $this->plugin_cascade['default'],
+                $this->checkRequire($local)
+            );
         }
-        $this->tmp_plugins = array_merge($this->plugin_cascade['default'],$this->plugin_cascade['local'],$this->plugin_cascade['protected']);
+        $this->tmp_plugins = array_merge(
+            $this->plugin_cascade['default'],
+            $this->plugin_cascade['local'],
+            $this->plugin_cascade['protected']
+        );
     }
 
     /**
@@ -290,7 +313,9 @@ class Doku_Plugin_Controller {
      * @return array of plugin components of requested type
      */
     protected function _getListByType($type, $enabled) {
-        $master_list = $enabled ? array_keys(array_filter($this->tmp_plugins)) : array_keys(array_filter($this->tmp_plugins,array($this,'negate')));
+        $master_list = $enabled
+            ? array_keys(array_filter($this->tmp_plugins))
+            : array_keys(array_filter($this->tmp_plugins,array($this,'negate')));
         $plugins = array();
 
         foreach ($master_list as $plugin) {

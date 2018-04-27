@@ -115,7 +115,8 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      *
      * @author Gabriel Birke <birke@d-scribe.de>
      * @param string $type   Modification type ('create', 'modify', 'delete')
-     * @param array  $params Parameters for the createUser, modifyUser or deleteUsers method. The content of this array depends on the modification type
+     * @param array  $params Parameters for the createUser, modifyUser or deleteUsers method.
+     *                       The content of this array depends on the modification type
      * @return bool|null|int Result from the modification function or false if an event handler has canceled the action
      */
     public function triggerUserMod($type, $params) {
@@ -132,7 +133,7 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
         $eventdata = array('type' => $type, 'params' => $params, 'modification_result' => null);
         $evt       = new Doku_Event('AUTH_USER_CHANGE', $eventdata);
         if($evt->advise_before(true)) {
-            $result                           = call_user_func_array(array($this, $validTypes[$type]), $evt->data['params']);
+            $result = call_user_func_array(array($this, $validTypes[$type]), $evt->data['params']);
             $evt->data['modification_result'] = $result;
         }
         $evt->advise_after();

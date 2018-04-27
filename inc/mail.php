@@ -25,7 +25,10 @@ if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");
  * Check if a given mail address is valid
  */
 if (!defined('RFC2822_ATEXT')) define('RFC2822_ATEXT',"0-9a-zA-Z!#$%&'*+/=?^_`{|}~-");
-if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', '['.RFC2822_ATEXT.']+(?:\.['.RFC2822_ATEXT.']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,63})');
+if (!defined('PREG_PATTERN_VALID_EMAIL')) define(
+    'PREG_PATTERN_VALID_EMAIL',
+    '['.RFC2822_ATEXT.']+(?:\.['.RFC2822_ATEXT.']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,63})'
+);
 
 /**
  * Prepare mailfrom replacement patterns

@@ -381,8 +381,16 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                 $usermanager->setLastdisabled(true);
                 if (!isset($this->_grpsusers[$this->_filterToString($filter)])){
                     $this->_fillGroupUserArray($filter,$usermanager->getStart() + 3*$usermanager->getPagesize());
-                } elseif (count($this->_grpsusers[$this->_filterToString($filter)]) < $usermanager->getStart() + 3*$usermanager->getPagesize()) {
-                    $this->_fillGroupUserArray($filter,$usermanager->getStart() + 3*$usermanager->getPagesize() - count($this->_grpsusers[$this->_filterToString($filter)]));
+                } elseif (
+                    count($this->_grpsusers[$this->_filterToString($filter)]) <
+                    $usermanager->getStart() + 3*$usermanager->getPagesize()
+                ) {
+                    $this->_fillGroupUserArray(
+                        $filter,
+                        $usermanager->getStart() +
+                        3*$usermanager->getPagesize() -
+                        count($this->_grpsusers[$this->_filterToString($filter)])
+                    );
                 }
                 $result = $this->_grpsusers[$this->_filterToString($filter)];
             } else {
@@ -494,8 +502,14 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         } else {
             $usermanager = plugin_load("admin", "usermanager", false);
             $usermanager->setLastdisabled(true);
-            if (!isset($this->_grpsusers[$this->_filterToString($filter)]) || count($this->_grpsusers[$this->_filterToString($filter)]) < ($start+$limit)) {
-                $this->_fillGroupUserArray($filter,$start+$limit - count($this->_grpsusers[$this->_filterToString($filter)]) +1);
+            if (
+                !isset($this->_grpsusers[$this->_filterToString($filter)]) ||
+                count($this->_grpsusers[$this->_filterToString($filter)]) < ($start+$limit)
+            ) {
+                $this->_fillGroupUserArray(
+                    $filter,
+                    $start+$limit - count($this->_grpsusers[$this->_filterToString($filter)]) +1
+                );
             }
             if (!$this->_grpsusers[$this->_filterToString($filter)]) return false;
             foreach($this->_grpsusers[$this->_filterToString($filter)] as $user => &$info) {
@@ -638,8 +652,12 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $opts['domain_controllers'] = array_filter($opts['domain_controllers']);
 
         // compatibility with old option name
-        if(empty($opts['admin_username']) && !empty($opts['ad_username'])) $opts['admin_username'] = $opts['ad_username'];
-        if(empty($opts['admin_password']) && !empty($opts['ad_password'])) $opts['admin_password'] = $opts['ad_password'];
+        if(empty($opts['admin_username']) && !empty($opts['ad_username'])) {
+            $opts['admin_username'] = $opts['ad_username'];
+        }
+        if(empty($opts['admin_password']) && !empty($opts['ad_password'])) {
+            $opts['admin_password'] = $opts['ad_password'];
+        }
         $opts['admin_password'] = conf_decodeString($opts['admin_password']); // deobfuscate
 
         // we can change the password if SSL is set

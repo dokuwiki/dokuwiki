@@ -1504,7 +1504,10 @@ class Doku_Handler_Table implements Doku_Handler_CallWriter_Interface {
 
                     for($i = $key-2; $i >= $cellKey[$lastRow][1]; $i--) {
 
-                        if ( $this->tableCalls[$i][0] == 'tablecell_open' || $this->tableCalls[$i][0] == 'tableheader_open' ) {
+                        if (
+                            $this->tableCalls[$i][0] == 'tablecell_open' ||
+                            $this->tableCalls[$i][0] == 'tableheader_open'
+                        ) {
 
                             if ( false !== $this->tableCalls[$i][1][0] ) {
                                 $this->tableCalls[$i][1][0]++;
@@ -1522,7 +1525,8 @@ class Doku_Handler_Table implements Doku_Handler_CallWriter_Interface {
                 case 'rowspan':
 
                     if ( $this->tableCalls[$key-1][0] == 'cdata' ) {
-                        // ignore rowspan if previous call was cdata (text mixed with :::) we don't have to check next call as that wont match regex
+                        // ignore rowspan if previous call was cdata (text mixed with :::)
+                        // we don't have to check next call as that wont match regex
                         $this->tableCalls[$key][0] = 'cdata';
 
                     } else {
@@ -1533,7 +1537,10 @@ class Doku_Handler_Table implements Doku_Handler_CallWriter_Interface {
                         if (!$this->countTableHeadRows || ($lastRow-1 != $this->countTableHeadRows)) {
                             for($i = $lastRow-1; $i > 0; $i--) {
 
-                                if ( $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tablecell_open' || $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tableheader_open' ) {
+                                if (
+                                    $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tablecell_open' ||
+                                    $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tableheader_open'
+                                ) {
 
                                     if ($this->tableCalls[$cellKey[$i][$lastCell]][1][2] >= $lastRow - $i) {
                                         $spanning_cell = $i;

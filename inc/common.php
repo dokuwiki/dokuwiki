@@ -488,7 +488,9 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
     global $conf;
     if(is_array($urlParameters)) {
         if(isset($urlParameters['rev']) && !$urlParameters['rev']) unset($urlParameters['rev']);
-        if(isset($urlParameters['at']) && $conf['date_at_format']) $urlParameters['at'] = date($conf['date_at_format'],$urlParameters['at']);
+        if(isset($urlParameters['at']) && $conf['date_at_format']) {
+            $urlParameters['at'] = date($conf['date_at_format'], $urlParameters['at']);
+        }
         $urlParameters = buildURLparams($urlParameters, $separator);
     } else {
         $urlParameters = str_replace(',', $separator, $urlParameters);
@@ -712,7 +714,13 @@ function checkwordblock($text = '') {
     if(!$text) $text = "$PRE $TEXT $SUF $SUM";
 
     // we prepare the text a tiny bit to prevent spammers circumventing URL checks
-    $text = preg_replace('!(\b)(www\.[\w.:?\-;,]+?\.[\w.:?\-;,]+?[\w/\#~:.?+=&%@\!\-.:?\-;,]+?)([.:?\-;,]*[^\w/\#~:.?+=&%@\!\-.:?\-;,])!i', '\1http://\2 \2\3', $text);
+    // phpcs:disable Generic.Files.LineLength.TooLong
+    $text = preg_replace(
+        '!(\b)(www\.[\w.:?\-;,]+?\.[\w.:?\-;,]+?[\w/\#~:.?+=&%@\!\-.:?\-;,]+?)([.:?\-;,]*[^\w/\#~:.?+=&%@\!\-.:?\-;,])!i',
+        '\1http://\2 \2\3',
+        $text
+    );
+    // phpcs:enable
 
     $wordblocks = getWordblocks();
     // how many lines to read at once (to work around some PCRE limits)
@@ -838,6 +846,7 @@ function clientIP($single = false) {
  *
  * @link http://www.brainhandles.com/2007/10/15/detecting-mobile-browsers/#code
  *
+ * @deprecated 2018-04-27 you probably want media queries instead anyway
  * @return bool if true, client is mobile browser; otherwise false
  */
 function clientismobile() {
@@ -850,7 +859,18 @@ function clientismobile() {
 
     if(!$INPUT->server->has('HTTP_USER_AGENT')) return false;
 
-    $uamatches = 'midp|j2me|avantg|docomo|novarra|palmos|palmsource|240x320|opwv|chtml|pda|windows ce|mmp\/|blackberry|mib\/|symbian|wireless|nokia|hand|mobi|phone|cdm|up\.b|audio|SIE\-|SEC\-|samsung|HTC|mot\-|mitsu|sagem|sony|alcatel|lg|erics|vx|NEC|philips|mmm|xx|panasonic|sharp|wap|sch|rover|pocket|benq|java|pt|pg|vox|amoi|bird|compal|kg|voda|sany|kdd|dbt|sendo|sgh|gradi|jb|\d\d\di|moto';
+    $uamatches = join(
+        '|',
+        [
+            'midp', 'j2me', 'avantg', 'docomo', 'novarra', 'palmos', 'palmsource', '240x320', 'opwv',
+            'chtml', 'pda', 'windows ce', 'mmp\/', 'blackberry', 'mib\/', 'symbian', 'wireless', 'nokia',
+            'hand', 'mobi', 'phone', 'cdm', 'up\.b', 'audio', 'SIE\-', 'SEC\-', 'samsung', 'HTC', 'mot\-',
+            'mitsu', 'sagem', 'sony', 'alcatel', 'lg', 'erics', 'vx', 'NEC', 'philips', 'mmm', 'xx',
+            'panasonic', 'sharp', 'wap', 'sch', 'rover', 'pocket', 'benq', 'java', 'pt', 'pg', 'vox',
+            'amoi', 'bird', 'compal', 'kg', 'voda', 'sany', 'kdd', 'dbt', 'sendo', 'sgh', 'gradi', 'jb',
+            '\d\d\di', 'moto'
+        ]
+    );
 
     if(preg_match("/$uamatches/i", $INPUT->server->str('HTTP_USER_AGENT'))) return true;
 
@@ -1266,7 +1286,15 @@ function detectExternalEdit($id) {
             $filesize_new = filesize($fileLastMod);
             $sizechange = $filesize_new - $filesize_old;
 
-            addLogEntry($lastMod, $id, DOKU_CHANGE_TYPE_EDIT, $lang['external_edit'], '', array('ExternalEdit'=> true), $sizechange);
+            addLogEntry(
+                $lastMod,
+                $id,
+                DOKU_CHANGE_TYPE_EDIT,
+                $lang['external_edit'],
+                '',
+                array('ExternalEdit' => true),
+                $sizechange
+            );
             // remove soon to be stale instructions
             $cache = new cache_instructions($id, $fileLastMod);
             $cache->removeCache();
@@ -1359,7 +1387,8 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         // remove empty file
         @unlink($svdta['file']);
         $filesize_new = 0;
-        // don't remove old meta info as it should be saved, plugins can use IO_WIKIPAGE_WRITE for removing their metadata...
+        // don't remove old meta info as it should be saved, plugins can use
+        // IO_WIKIPAGE_WRITE for removing their metadata...
         // purge non-persistant meta data
         p_purge_metadata($id);
         // remove empty namespaces
@@ -1376,7 +1405,15 @@ function saveWikiText($id, $text, $summary, $minor = false) {
 
     $event->advise_after();
 
-    addLogEntry($svdta['newRevision'], $svdta['id'], $svdta['changeType'], $svdta['summary'], $svdta['changeInfo'], null, $svdta['sizechange']);
+    addLogEntry(
+        $svdta['newRevision'],
+        $svdta['id'],
+        $svdta['changeType'],
+        $svdta['summary'],
+        $svdta['changeInfo'],
+        null,
+        $svdta['sizechange']
+    );
 
     // send notify mails
     notify($svdta['id'], 'admin', $svdta['oldRevision'], $svdta['summary'], $minor);
@@ -1762,7 +1799,8 @@ function userlink($username = null, $textonly = false) {
         if($textonly){
             $data['name'] = $INFO['userinfo']['name']. ' (' . $INPUT->server->str('REMOTE_USER') . ')';
         }else {
-            $data['name'] = '<bdi>' . hsc($INFO['userinfo']['name']) . '</bdi> (<bdi>' . hsc($INPUT->server->str('REMOTE_USER')) . '</bdi>)';
+            $data['name'] = '<bdi>' . hsc($INFO['userinfo']['name']) . '</bdi> '.
+                '(<bdi>' . hsc($INPUT->server->str('REMOTE_USER')) . '</bdi>)';
         }
     }
 
@@ -2035,7 +2073,8 @@ function set_doku_pref($pref, $val) {
         }
         $cookieVal = implode('#', $parts);
     } else if (!$orig && $val !== false) {
-        $cookieVal = ($_COOKIE['DOKU_PREFS'] ? $_COOKIE['DOKU_PREFS'].'#' : '').rawurlencode($pref).'#'.rawurlencode($val);
+        $cookieVal = ($_COOKIE['DOKU_PREFS'] ? $_COOKIE['DOKU_PREFS'].'#' : '').
+            rawurlencode($pref).'#'.rawurlencode($val);
     }
 
     if (!empty($cookieVal)) {

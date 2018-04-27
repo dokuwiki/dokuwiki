@@ -8,7 +8,8 @@
 
 // plugin related constants
 if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
-// note that only [a-z0-9]+ is officially supported, this is only to support plugins that don't follow these conventions, too
+// note that only [a-z0-9]+ is officially supported,
+// this is only to support plugins that don't follow these conventions, too
 if(!defined('DOKU_PLUGIN_NAME_REGEX')) define('DOKU_PLUGIN_NAME_REGEX', '[a-zA-Z0-9\x7f-\xff]+');
 
 /**

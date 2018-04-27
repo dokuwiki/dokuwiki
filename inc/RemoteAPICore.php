@@ -772,7 +772,10 @@ class RemoteAPICore {
      * @author Michael Klier <chi@chimeric.de>
      *
      * @param string $id    page id
-     * @param int    $first skip the first n changelog lines (0 = from current(if exists), 1 = from 1st old rev, 2 = from 2nd old rev, etc)
+     * @param int    $first skip the first n changelog lines
+     *                      0 = from current(if exists)
+     *                      1 = from 1st old rev
+     *                      2 = from 2nd old rev, etc
      * @return array
      * @throws RemoteAccessDeniedException no read access for page
      * @throws RemoteException empty id

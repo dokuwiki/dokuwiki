@@ -644,7 +644,8 @@ function io_mktmpdir() {
  *
  * @param string $url           url to download
  * @param string $file          path to file or directory where to save
- * @param bool   $useAttachment if true: try to use name of download, uses otherwise $defaultName, false: uses $file as path to file
+ * @param bool   $useAttachment true: try to use name of download, uses otherwise $defaultName
+ *                              false: uses $file as path to file
  * @param string $defaultName   fallback for if using $useAttachment
  * @param int    $maxSize       maximum file size
  * @return bool|string          if failed false, otherwise true or the name of the file in the given dir

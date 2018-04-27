@@ -72,7 +72,8 @@ function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
 
     if($rev || $date_at){
         if(file_exists($file)){
-            $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info,$date_at); //no caching on old revisions
+            //no caching on old revisions
+            $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info,$date_at);
         }elseif($excuse){
             $ret = p_locale_xhtml('norev');
         }
@@ -211,7 +212,8 @@ function p_get_instructions($text){
  * returns the metadata of a page
  *
  * @param string $id      The id of the page the metadata should be returned from
- * @param string $key     The key of the metdata value that shall be read (by default everything) - separate hierarchies by " " like "date created"
+ * @param string $key     The key of the metdata value that shall be read (by default everything)
+ *                        separate hierarchies by " " like "date created"
  * @param int    $render  If the page should be rendererd - possible values:
  *     METADATA_DONT_RENDER, METADATA_RENDER_USING_SIMPLE_CACHE, METADATA_RENDER_USING_CACHE
  *     METADATA_RENDER_UNLIMITED (also combined with the previous two options),
@@ -341,7 +343,10 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
                 }
                 if($persistent) {
                     if(isset($meta['persistent'][$key][$subkey]) && is_array($meta['persistent'][$key][$subkey])) {
-                        $meta['persistent'][$key][$subkey] = array_replace($meta['persistent'][$key][$subkey], (array)$subvalue);
+                        $meta['persistent'][$key][$subkey] = array_replace(
+                            $meta['persistent'][$key][$subkey],
+                            (array) $subvalue
+                        );
                     } else {
                         $meta['persistent'][$key][$subkey] = $subvalue;
                     }
@@ -353,10 +358,14 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
 
             // these keys, must have subkeys - a legitimate value must be an array
             if (is_array($value)) {
-                $meta['current'][$key] = !empty($meta['current'][$key]) ? array_replace((array)$meta['current'][$key],$value) : $value;
+                $meta['current'][$key] = !empty($meta['current'][$key]) ?
+                    array_replace((array)$meta['current'][$key],$value) :
+                    $value;
 
                 if ($persistent) {
-                    $meta['persistent'][$key] = !empty($meta['persistent'][$key]) ? array_replace((array)$meta['persistent'][$key],$value) : $value;
+                    $meta['persistent'][$key] = !empty($meta['persistent'][$key]) ?
+                        array_replace((array)$meta['persistent'][$key],$value) :
+                        $value;
                 }
             }
 
@@ -420,7 +429,9 @@ function p_read_metadata($id,$cache=false) {
     if (isset($cache_metadata[(string)$id])) return $cache_metadata[(string)$id];
 
     $file = metaFN($id, '.meta');
-    $meta = file_exists($file) ? unserialize(io_readFile($file, false)) : array('current'=>array(),'persistent'=>array());
+    $meta = file_exists($file) ?
+        unserialize(io_readFile($file, false)) :
+        array('current'=>array(),'persistent'=>array());
 
     if ($cache) {
         $cache_metadata[(string)$id] = $meta;

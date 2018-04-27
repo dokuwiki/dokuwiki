@@ -48,7 +48,11 @@ class StyleUtils
                     if (file_exists($incbase . $basename . '.' . $newExtension)) {
                         $stylesheets[$mode][$incbase . $basename . '.' . $newExtension] = $webbase;
                         if ($conf['allowdebug']) {
-                            msg("Stylesheet $file not found, using $basename.$newExtension instead. Please contact developer of \"{$conf['template']}\" template.", 2);
+                            msg(
+                                "Stylesheet $file not found, using $basename.$newExtension instead. '. 
+                                'Please contact developer of \"{$conf['template']}\" template.",
+                                2
+                            );
                         }
                         continue;
                     }
@@ -58,7 +62,10 @@ class StyleUtils
 
             // replacements
             if(is_array($data['replacements'])){
-                $replacements = array_merge($replacements, $this->cssFixreplacementurls($data['replacements'],$webbase));
+                $replacements = array_merge(
+                    $replacements,
+                    $this->cssFixreplacementurls($data['replacements'], $webbase)
+                );
             }
         }
 
@@ -70,13 +77,18 @@ class StyleUtils
             $data = parse_ini_file($ini, true);
 
             // stylesheets
-            if(isset($data['stylesheets']) && is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
-                $stylesheets[$mode][$incbase.$file] = $webbase;
+            if(isset($data['stylesheets']) && is_array($data['stylesheets'])) {
+                foreach($data['stylesheets'] as $file => $mode) {
+                    $stylesheets[$mode][$incbase . $file] = $webbase;
+                }
             }
 
             // replacements
             if(isset($data['replacements']) && is_array($data['replacements'])){
-                $replacements = array_merge($replacements, $this->cssFixreplacementurls($data['replacements'],$webbase));
+                $replacements = array_merge(
+                    $replacements,
+                    $this->cssFixreplacementurls($data['replacements'], $webbase)
+                );
             }
         }
 
@@ -88,7 +100,10 @@ class StyleUtils
                 $data = parse_ini_file($ini, true);
                 // replacements
                 if(is_array($data['replacements'])) {
-                    $replacements = array_merge($replacements, $this->cssFixreplacementurls($data['replacements'], $webbase));
+                    $replacements = array_merge(
+                        $replacements,
+                        $this->cssFixreplacementurls($data['replacements'], $webbase)
+                    );
                 }
             }
         }
@@ -111,7 +126,11 @@ class StyleUtils
      */
     protected function cssFixreplacementurls($replacements, $location) {
         foreach($replacements as $key => $value) {
-            $replacements[$key] = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$value);
+            $replacements[$key] = preg_replace(
+                '#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#',
+                '\\1' . $location,
+                $value
+            );
         }
         return $replacements;
     }

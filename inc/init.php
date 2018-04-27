@@ -109,7 +109,10 @@ if(!defined('DOKU_LF')) define ('DOKU_LF',"\n");
 if(!defined('DOKU_TAB')) define ('DOKU_TAB',"\t");
 
 // define cookie and session id, append server port when securecookie is configured FS#1664
-if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5(DOKU_REL.(($conf['securecookie'])?$_SERVER['SERVER_PORT']:'')));
+if(!defined('DOKU_COOKIE')) define(
+    'DOKU_COOKIE',
+    'DW' . md5(DOKU_REL . (($conf['securecookie']) ? $_SERVER['SERVER_PORT'] : ''))
+);
 
 
 // define main script
@@ -230,7 +233,13 @@ mail_setup();
 function init_session() {
     global $conf;
     session_name(DOKU_SESSION_NAME);
-    session_set_cookie_params(DOKU_SESSION_LIFETIME, DOKU_SESSION_PATH, DOKU_SESSION_DOMAIN, ($conf['securecookie'] && is_ssl()), true);
+    session_set_cookie_params(
+        DOKU_SESSION_LIFETIME,
+        DOKU_SESSION_PATH,
+        DOKU_SESSION_DOMAIN,
+        ($conf['securecookie'] && is_ssl()),
+        true
+    );
 
     // make sure the session cookie contains a valid session ID
     if(isset($_COOKIE[DOKU_SESSION_NAME]) && !preg_match('/^[-,a-zA-Z0-9]{22,256}$/', $_COOKIE[DOKU_SESSION_NAME])) {
@@ -269,7 +278,9 @@ function init_paths(){
     }
 
     // path to old changelog only needed for upgrading
-    $conf['changelog_old'] = init_path((isset($conf['changelog']))?($conf['changelog']):($conf['savedir'].'/changes.log'));
+    $conf['changelog_old'] = init_path(
+        (isset($conf['changelog'])) ? ($conf['changelog']) : ($conf['savedir'] . '/changes.log')
+    );
     if ($conf['changelog_old']=='') { unset($conf['changelog_old']); }
     // hardcoded changelog because it is now a cache that lives in meta
     $conf['changelog'] = $conf['metadir'].'/_dokuwiki.changes';
@@ -438,7 +449,7 @@ function getBaseURL($abs=null){
     //finish here for relative URLs
     if(!$abs) return $dir;
 
-    //use config option if available, trim any slash from end of baseurl to avoid multiple consecutive slashes in the path
+    //use config if available, trim any slash from end of baseurl to avoid multiple consecutive slashes in the path
     if(!empty($conf['baseurl'])) return rtrim($conf['baseurl'],'/').$dir;
 
     //split hostheader into host and port

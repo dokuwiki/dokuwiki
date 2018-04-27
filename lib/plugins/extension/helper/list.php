@@ -106,7 +106,8 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param helper_plugin_extension_extension $extension The extension
      */
     private function start_row(helper_plugin_extension_extension $extension) {
-        $this->form .= '<li id="extensionplugin__'.hsc($extension->getID()).'" class="'.$this->make_class($extension).'">';
+        $this->form .= '<li id="extensionplugin__'.hsc($extension->getID()).
+            '" class="'.$this->make_class($extension).'">';
     }
 
     /**
@@ -170,7 +171,9 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             $mailid = $extension->getEmailID();
             if($mailid){
                 $url = $this->gui->tabURL('search', array('q' => 'authorid:'.$mailid));
-                return '<bdi><a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" ><img src="//www.gravatar.com/avatar/'.$mailid.'?s=20&amp;d=mm" width="20" height="20" alt="" /> '.hsc($extension->getAuthor()).'</a></bdi>';
+                return '<bdi><a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" >'.
+                    '<img src="//www.gravatar.com/avatar/'.$mailid.'?s=20&amp;d=mm" width="20" height="20" alt="" /> '.
+                    hsc($extension->getAuthor()).'</a></bdi>';
 
             }else{
                 return '<bdi><span class="author">'.hsc($extension->getAuthor()).'</span></bdi>';
@@ -199,10 +202,12 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                 '<img alt="'.$title.'" width="120" height="70" src="'.hsc($thumb).'" />'.
                 '</a>';
         } elseif($extension->isTemplate()) {
-            $img = '<img alt="" width="120" height="70" src="'.DOKU_BASE.'lib/plugins/extension/images/template.png" />';
+            $img = '<img alt="" width="120" height="70" src="'.DOKU_BASE.
+                'lib/plugins/extension/images/template.png" />';
 
         } else {
-            $img = '<img alt="" width="120" height="70" src="'.DOKU_BASE.'lib/plugins/extension/images/plugin.png" />';
+            $img = '<img alt="" width="120" height="70" src="'.DOKU_BASE.
+                'lib/plugins/extension/images/plugin.png" />';
         }
         return '<div class="screenshot" >'.$img.'<span></span></div>'.DOKU_LF;
     }
@@ -217,7 +222,11 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
     function make_legend(helper_plugin_extension_extension $extension, $showinfo = false) {
         $return  = '<div>';
         $return .= '<h2>';
-        $return .= sprintf($this->getLang('extensionby'), '<bdi>'.hsc($extension->getDisplayName()).'</bdi>', $this->make_author($extension));
+        $return .= sprintf(
+            $this->getLang('extensionby'),
+            '<bdi>'.hsc($extension->getDisplayName()).'</bdi>',
+            $this->make_author($extension)
+        );
         $return .= '</h2>'.DOKU_LF;
 
         $return .= $this->make_screenshot($extension);
@@ -225,7 +234,10 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $popularity = $extension->getPopularity();
         if ($popularity !== false && !$extension->isBundled()) {
             $popularityText = sprintf($this->getLang('popularity'), round($popularity*100, 2));
-            $return .= '<div class="popularity" title="'.$popularityText.'"><div style="width: '.($popularity * 100).'%;"><span class="a11y">'.$popularityText.'</span></div></div>'.DOKU_LF;
+            $return .= '<div class="popularity" title="'.$popularityText.'">'.
+                '<div style="width: '.($popularity * 100).'%;">'.
+                '<span class="a11y">'.$popularityText.'</span>'.
+                '</div></div>'.DOKU_LF;
         }
 
         if($extension->getDescription()) {
@@ -243,7 +255,9 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             $url = $this->gui->tabURL('', array('info' => $extension->getID()));
             $class = '';
         }
-        $return .= ' <a href="'.$url.'#extensionplugin__'.$extension->getID().'" class="info '.$class.'" title="'.$this->getLang('btn_info').'" data-extid="'.$extension->getID().'">'.$this->getLang('btn_info').'</a>';
+        $return .= ' <a href="'.$url.'#extensionplugin__'.$extension->getID().
+            '" class="info '.$class.'" title="'.$this->getLang('btn_info').
+            '" data-extid="'.$extension->getID().'">'.$this->getLang('btn_info').'</a>';
 
         if ($showinfo) {
             $return .= $this->make_info($extension);
@@ -263,7 +277,9 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $return  = '<div class="linkbar">';
         $return .= $this->make_homepagelink($extension);
         if ($extension->getBugtrackerURL()) {
-            $return .= ' <a href="'.hsc($extension->getBugtrackerURL()).'" title="'.hsc($extension->getBugtrackerURL()).'" class ="bugs">'.$this->getLang('bugs_features').'</a> ';
+            $return .= ' <a href="'.hsc($extension->getBugtrackerURL()).
+                '" title="'.hsc($extension->getBugtrackerURL()).'" class ="bugs">'.
+                $this->getLang('bugs_features').'</a> ';
         }
         if ($extension->getTags()){
             $first = true;
@@ -293,13 +309,20 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $return = '';
         $missing_dependencies = $extension->getMissingDependencies();
         if(!empty($missing_dependencies)) {
-            $return .= '<div class="msg error">'.
-                sprintf($this->getLang('missing_dependency'), '<bdi>'.implode(', ', /*array_map(array($this->helper, 'make_extensionsearchlink'),*/ $missing_dependencies).'</bdi>').
+            $return .= '<div class="msg error">' .
+                sprintf(
+                    $this->getLang('missing_dependency'),
+                    '<bdi>' . implode(', ', $missing_dependencies) . '</bdi>'
+                ) .
                 '</div>';
         }
         if($extension->isInWrongFolder()) {
-            $return .= '<div class="msg error">'.
-                sprintf($this->getLang('wrong_folder'), '<bdi>'.hsc($extension->getInstallName()).'</bdi>', '<bdi>'.hsc($extension->getBase()).'</bdi>').
+            $return .= '<div class="msg error">' .
+                sprintf(
+                    $this->getLang('wrong_folder'),
+                    '<bdi>' . hsc($extension->getInstallName()) . '</bdi>',
+                    '<bdi>' . hsc($extension->getBase()) . '</bdi>'
+                ) .
                 '</div>';
         }
         if(($securityissue = $extension->getSecurityIssue()) !== false) {
@@ -318,8 +341,12 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                 '</div>';
         }
         if($extension->hasDownloadURLChanged()) {
-            $return .=  '<div class="msg notify">'.
-                sprintf($this->getLang('url_change'), '<bdi>'.hsc($extension->getDownloadURL()).'</bdi>', '<bdi>'.hsc($extension->getLastDownloadURL()).'</bdi>').
+            $return .= '<div class="msg notify">' .
+                sprintf(
+                    $this->getLang('url_change'),
+                    '<bdi>' . hsc($extension->getDownloadURL()) . '</bdi>',
+                    '<bdi>' . hsc($extension->getLastDownloadURL()) . '</bdi>'
+                ) .
                 '</div>';
         }
         return $return.DOKU_LF;
@@ -362,7 +389,8 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         if ($extension->getDonationURL()) {
             $return .= '<dt>'.$this->getLang('donate').'</dt>';
             $return .= '<dd>';
-            $return .= '<a href="'.$extension->getDonationURL().'" class="donate">'.$this->getLang('donate_action').'</a>';
+            $return .= '<a href="'.$extension->getDonationURL().'" class="donate">'.
+                $this->getLang('donate_action').'</a>';
             $return .= '</dd>';
         }
 
@@ -446,7 +474,8 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
     function make_linklist($ext) {
         $return = '';
         foreach ($ext as $link) {
-            $return .= '<bdi><a href="'.$this->gui->tabURL('search', array('q'=>'ext:'.$link)).'">'.hsc($link).'</a></bdi>, ';
+            $return .= '<bdi><a href="'.
+                $this->gui->tabURL('search', array('q'=>'ext:'.$link)).'">'.hsc($link).'</a></bdi>, ';
         }
         return rtrim($return, ', ');
     }
@@ -490,7 +519,11 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                 $errors .= '<p class="permerror">'.$this->getLang('git').'</p>';
             }
 
-            if ($extension->isEnabled() && in_array('Auth', $extension->getTypes()) && $conf['authtype'] != $extension->getID()) {
+            if (
+                $extension->isEnabled() &&
+                in_array('Auth', $extension->getTypes()) &&
+                $conf['authtype'] != $extension->getID()
+            ) {
                 $errors .= '<p class="permerror">'.$this->getLang('auth').'</p>';
             }
 
@@ -506,7 +539,9 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
 
         if (!$extension->isInstalled() && $extension->getDownloadURL()) {
             $return .= ' <span class="version">'.$this->getLang('available_version').' ';
-            $return .= ($extension->getLastUpdate() ? hsc($extension->getLastUpdate()) : $this->getLang('unknown')).'</span>';
+            $return .= ($extension->getLastUpdate()
+                    ? hsc($extension->getLastUpdate())
+                    : $this->getLang('unknown')).'</span>';
         }
 
         return $return.' '.$errors.DOKU_LF;
@@ -532,7 +567,8 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $classes = 'button '.$action;
         $name    = 'fn['.$action.']['.hsc($extension->getID()).']';
 
-        return '<button class="'.$classes.'" name="'.$name.'" type="submit" '.$title.'>'.$this->getLang('btn_'.$action).'</button> ';
+        return '<button class="'.$classes.'" name="'.$name.'" type="submit" '.$title.'>'.
+            $this->getLang('btn_'.$action).'</button> ';
     }
 
     /**
@@ -550,7 +586,9 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             if ($extension->isProtected()) {
                 $status[] = $this->getLang('status_protected');
             } else {
-                $status[] = $extension->isEnabled() ? $this->getLang('status_enabled') : $this->getLang('status_disabled');
+                $status[] = $extension->isEnabled()
+                    ? $this->getLang('status_enabled')
+                    : $this->getLang('status_disabled');
             }
         } else {
             $status[] = $this->getLang('status_not_installed');

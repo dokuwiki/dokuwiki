@@ -136,9 +136,11 @@ function check(){
         if($mem < 16777216){
             msg('PHP is limited to less than 16MB RAM ('.$mem.' bytes). Increase memory_limit in php.ini',-1);
         }elseif($mem < 20971520){
-            msg('PHP is limited to less than 20MB RAM ('.$mem.' bytes), you might encounter problems with bigger pages. Increase memory_limit in php.ini',-1);
+            msg('PHP is limited to less than 20MB RAM ('.$mem.' bytes), 
+                 you might encounter problems with bigger pages. Increase memory_limit in php.ini',-1);
         }elseif($mem < 33554432){
-            msg('PHP is limited to less than 32MB RAM ('.$mem.' bytes), but that should be enough in most cases. If not, increase memory_limit in php.ini',0);
+            msg('PHP is limited to less than 32MB RAM ('.$mem.' bytes), 
+                 but that should be enough in most cases. If not, increase memory_limit in php.ini',0);
         }else{
             msg('More than 32MB RAM ('.$mem.' bytes) available.',1);
         }
@@ -206,7 +208,8 @@ function check(){
     if(!$loc){
         msg('No valid locale is set for your PHP setup. You should fix this',-1);
     }elseif(stripos($loc,'utf') === false){
-        msg('Your locale <code>'.hsc($loc).'</code> seems not to be a UTF-8 locale, you should fix this if you encounter problems.',0);
+        msg('Your locale <code>'.hsc($loc).'</code> seems not to be a UTF-8 locale,
+             you should fix this if you encounter problems.',0);
     }else{
         msg('Valid locale '.hsc($loc).' found.', 1);
     }
@@ -286,7 +289,8 @@ function check(){
         if(abs($diff) < 4) {
             msg("Server time seems to be okay. Diff: {$diff}s", 1);
         } else {
-            msg("Your server's clock seems to be out of sync! Consider configuring a sync with a NTP server.  Diff: {$diff}s");
+            msg("Your server's clock seems to be out of sync!
+                 Consider configuring a sync with a NTP server.  Diff: {$diff}s");
         }
     }
 
@@ -376,7 +380,8 @@ function info_msg_allowed($msg){
             return $INFO['isadmin'];
 
         default:
-            trigger_error('invalid msg allow restriction.  msg="'.$msg['msg'].'" allow='.$msg['allow'].'"', E_USER_WARNING);
+            trigger_error('invalid msg allow restriction.  msg="'.$msg['msg'].'" allow='.$msg['allow'].'"',
+                          E_USER_WARNING);
             return $INFO['isadmin'];
     }
 

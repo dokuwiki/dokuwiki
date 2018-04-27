@@ -2,7 +2,7 @@
 
 namespace dokuwiki\Ui;
 
-use \dokuwiki\Form\Form;
+use dokuwiki\Form\Form;
 
 class Search extends Ui
 {
@@ -587,7 +587,9 @@ class Search extends Ui
             $resultBody = [];
             $mtime = filemtime(wikiFN($id));
             $lastMod = '<span class="lastmod">' . $lang['lastmod'] . '</span> ';
-            $lastMod .= '<time datetime="' . date_iso8601($mtime) . '" title="'.dformat($mtime).'">' . dformat($mtime, '%f') . '</time>';
+            $lastMod .= '<time datetime="' . date_iso8601($mtime) . '" title="' . dformat($mtime) . '">' .
+                dformat($mtime, '%f') .
+                '</time>';
             $resultBody['meta'] = $lastMod;
             if ($cnt !== 0) {
                 $num++;

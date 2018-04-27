@@ -513,11 +513,15 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
                 $alt   = '+';
             }
             $ret .= '<img src="'.$img.'" alt="'.$alt.'" />';
-            $ret .= '<a href="'.wl('',$this->_get_opts(array('ns'=>$item['id'],'sectok'=>getSecurityToken()))).'" class="idx_dir'.$cl.'">';
+            $ret .= '<a href="'.
+                wl('',$this->_get_opts(array('ns'=>$item['id'],'sectok'=>getSecurityToken()))).
+                '" class="idx_dir'.$cl.'">';
             $ret .= $base;
             $ret .= '</a>';
         }else{
-            $ret .= '<a href="'.wl('',$this->_get_opts(array('id'=>$item['id'],'ns'=>'','sectok'=>getSecurityToken()))).'" class="wikilink1'.$cl.'">';
+            $ret .= '<a href="'.
+                wl('',$this->_get_opts(array('id'=>$item['id'],'ns'=>'','sectok'=>getSecurityToken()))).
+                '" class="wikilink1'.$cl.'">';
             $ret .= noNS($item['id']);
             $ret .= '</a>';
         }

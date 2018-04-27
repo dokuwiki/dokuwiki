@@ -79,14 +79,17 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
 
                 echo '<tr>';
                 echo '<td><label for="tpl__'.hsc($key).'">'.$name.'</label></td>';
-                echo '<td><input type="text" name="tpl['.hsc($key).']" id="tpl__'.hsc($key).'" value="'.hsc($value).'" '.$this->colorClass($key).' dir="ltr" /></td>';
+                echo '<td><input type="text" name="tpl['.hsc($key).']" id="tpl__'.hsc($key).'" 
+                    value="'.hsc($value).'" '.$this->colorClass($key).' dir="ltr" /></td>';
                 echo '</tr>';
             }
             echo '</tbody></table>';
 
             echo '<p>';
-            echo '<button type="submit" name="run[preview]" class="btn_preview primary">'.$this->getLang('btn_preview').'</button> ';
-            echo '<button type="submit" name="run[reset]">'.$this->getLang('btn_reset').'</button>'; #FIXME only if preview.ini exists
+            echo '<button type="submit" name="run[preview]" class="btn_preview primary">'.
+                $this->getLang('btn_preview').'</button> ';
+            #FIXME only if preview.ini exists:
+            echo '<button type="submit" name="run[reset]">'.$this->getLang('btn_reset').'</button>';
             echo '</p>';
 
             echo '<p>';
@@ -94,7 +97,8 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
             echo '</p>';
 
             echo '<p>';
-            echo '<button type="submit" name="run[revert]">'.$this->getLang('btn_revert').'</button>'; #FIXME only if local.ini exists
+            #FIXME only if local.ini exists:
+            echo '<button type="submit" name="run[revert]">'.$this->getLang('btn_revert').'</button>';
             echo '</p>';
 
             echo '</form>';

@@ -148,9 +148,16 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 // config settings
                 list($label,$input) = $setting->html($this, $this->_error);
 
-                $class = $setting->is_default() ? ' class="default"' : ($setting->is_protected() ? ' class="protected"' : '');
-                $error = $setting->error() ? ' class="value error"' : ' class="value"';
-                $icon = $setting->caution() ? '<img src="'.DOKU_PLUGIN_IMAGES.$setting->caution().'.png" alt="'.$setting->caution().'" title="'.$this->getLang($setting->caution()).'" />' : '';
+                $class = $setting->is_default()
+                    ? ' class="default"'
+                    : ($setting->is_protected() ? ' class="protected"' : '');
+                $error = $setting->error()
+                    ? ' class="value error"'
+                    : ' class="value"';
+                $icon = $setting->caution()
+                    ? '<img src="'.DOKU_PLUGIN_IMAGES.$setting->caution().'.png" '.
+                      'alt="'.$setting->caution().'" title="'.$this->getLang($setting->caution()).'" />'
+                    : '';
 
                 ptln('    <tr'.$class.'>');
                 ptln('      <td class="label">');
@@ -188,13 +195,20 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             ptln('<table class="inline">');
             $undefined_setting_match = array();
             foreach($undefined_settings as $setting) {
-                if (preg_match('/^(?:plugin|tpl)'.CM_KEYMARKER.'.*?'.CM_KEYMARKER.'(.*)$/', $setting->_key, $undefined_setting_match)) {
+                if (
+                    preg_match(
+                        '/^(?:plugin|tpl)'.CM_KEYMARKER.'.*?'.CM_KEYMARKER.'(.*)$/',
+                        $setting->_key,
+                        $undefined_setting_match
+                    )
+                ) {
                     $undefined_setting_key = $undefined_setting_match[1];
                 } else {
                     $undefined_setting_key = $setting->_key;
                 }
                 ptln('  <tr>');
-                ptln('    <td class="label"><span title="$meta[\''.$undefined_setting_key.'\']">$'.$this->_config->_name.'[\''.$setting->_out_key().'\']</span></td>');
+                ptln('    <td class="label"><span title="$meta[\''.$undefined_setting_key.'\']">$'.
+                     $this->_config->_name.'[\''.$setting->_out_key().'\']</span></td>');
                 ptln('    <td>'.$this->getLang('_msg_'.get_class($setting)).'</td>');
                 ptln('  </tr>');
             }

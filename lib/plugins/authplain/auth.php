@@ -191,7 +191,13 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
             $userinfo[$field] = $value;
         }
 
-        $userline = $this->_createUserLine($newuser, $userinfo['pass'], $userinfo['name'], $userinfo['mail'], $userinfo['grps']);
+        $userline = $this->_createUserLine(
+            $newuser,
+            $userinfo['pass'],
+            $userinfo['name'],
+            $userinfo['mail'],
+            $userinfo['grps']
+        );
 
         if(!io_replaceInFile($config_cascade['plainauth.users']['default'], '/^'.$user.':/', $userline, true)) {
             msg('There was an error modifying your user data. You may need to register again.', -1);

@@ -39,7 +39,10 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin {
      */
     public function listAcls(){
         if(!auth_isadmin()) {
-         throw new RemoteAccessDeniedException('You are not allowed to access ACLs, superuser permission is required', 114);
+         throw new RemoteAccessDeniedException(
+             'You are not allowed to access ACLs, superuser permission is required',
+             114
+         );
         }
         /** @var admin_plugin_acl $apa */
         $apa = plugin_load('admin', 'acl');
@@ -58,7 +61,10 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin {
      */
     public function addAcl($scope, $user, $level){
         if(!auth_isadmin()) {
-            throw new RemoteAccessDeniedException('You are not allowed to access ACLs, superuser permission is required', 114);
+            throw new RemoteAccessDeniedException(
+                'You are not allowed to access ACLs, superuser permission is required',
+                114
+            );
         }
 
         /** @var admin_plugin_acl $apa */
@@ -76,7 +82,10 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin {
      */
     public function delAcl($scope, $user){
         if(!auth_isadmin()) {
-            throw new RemoteAccessDeniedException('You are not allowed to access ACLs, superuser permission is required', 114);
+            throw new RemoteAccessDeniedException(
+                'You are not allowed to access ACLs, superuser permission is required',
+                114
+            );
         }
 
         /** @var admin_plugin_acl $apa */

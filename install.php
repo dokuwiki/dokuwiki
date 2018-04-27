@@ -95,8 +95,11 @@ header('Content-Type: text/html; charset=utf-8');
                 print "</div>\n";
             }
         ?>
-        <a style="background: transparent url(data/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png) left top no-repeat;
-                  display: block; width:380px; height:73px; border:none; clear:both;"
+        <a style="
+                background: transparent
+                url(data/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png)
+                left top no-repeat;
+                display: block; width:380px; height:73px; border:none; clear:both;"
            target="_blank"
            href="http://www.dokuwiki.org/security#web_access_security"></a>
     </div>
@@ -166,10 +169,12 @@ function print_form($d){
 
             <fieldset id="acldep">
                 <label for="superuser"><?php echo $lang['i_superuser']?></label>
-                <input class="text" type="text" name="d[superuser]" id="superuser" value="<?php echo $d['superuser'] ?>" />
+                <input class="text" type="text" name="d[superuser]" id="superuser"
+                       value="<?php echo $d['superuser'] ?>" />
 
                 <label for="fullname"><?php echo $lang['fullname']?></label>
-                <input class="text" type="text" name="d[fullname]" id="fullname" value="<?php echo $d['fullname'] ?>" />
+                <input class="text" type="text" name="d[fullname]" id="fullname"
+                       value="<?php echo $d['fullname'] ?>" />
 
                 <label for="email"><?php echo $lang['email']?></label>
                 <input class="text" type="text" name="d[email]" id="email" value="<?php echo $d['email'] ?>" />
@@ -182,13 +187,17 @@ function print_form($d){
 
                 <label for="policy"><?php echo $lang['i_policy']?></label>
                 <select class="text" name="d[policy]" id="policy">
-                    <option value="0" <?php echo ($d['policy'] == 0)?'selected="selected"':'' ?>><?php echo $lang['i_pol0']?></option>
-                    <option value="1" <?php echo ($d['policy'] == 1)?'selected="selected"':'' ?>><?php echo $lang['i_pol1']?></option>
-                    <option value="2" <?php echo ($d['policy'] == 2)?'selected="selected"':'' ?>><?php echo $lang['i_pol2']?></option>
+                    <option value="0" <?php echo ($d['policy'] == 0)?'selected="selected"':'' ?>><?php
+                        echo $lang['i_pol0']?></option>
+                    <option value="1" <?php echo ($d['policy'] == 1)?'selected="selected"':'' ?>><?php
+                        echo $lang['i_pol1']?></option>
+                    <option value="2" <?php echo ($d['policy'] == 2)?'selected="selected"':'' ?>><?php
+                        echo $lang['i_pol2']?></option>
                 </select>
 
                 <label for="allowreg">
-                    <input type="checkbox" name="d[allowreg]" id="allowreg" <?php echo(($d['allowreg'] ? ' checked="checked"' : ''));?> />
+                    <input type="checkbox" name="d[allowreg]" id="allowreg" <?php
+                        echo(($d['allowreg'] ? ' checked="checked"' : ''));?> />
                     <?php echo $lang['i_allowreg']?>
                 </label>
             </fieldset>
@@ -213,8 +222,10 @@ function print_form($d){
         <fieldset>
             <p><?php echo $lang['i_pop_field']?></p>
             <label for="pop">
-                <input type="checkbox" name="d[pop]" id="pop" <?php echo(($d['pop'] ? ' checked="checked"' : ''));?> />
-                <?php echo $lang['i_pop_label']?> <a href="http://www.dokuwiki.org/popularity" target="_blank"><sup>[?]</sup></a>
+                <input type="checkbox" name="d[pop]" id="pop" <?php
+                    echo(($d['pop'] ? ' checked="checked"' : ''));?> />
+                <?php echo $lang['i_pop_label']?>
+                <a href="http://www.dokuwiki.org/popularity" target="_blank"><sup>[?]</sup></a>
             </label>
         </fieldset>
 

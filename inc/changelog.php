@@ -104,13 +104,15 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
     if (!$wasRemoved) {
         $oldmeta = p_read_metadata($id);
         $meta    = array();
-        if ($wasCreated && empty($oldmeta['persistent']['date']['created'])){ // newly created
+        if ($wasCreated && empty($oldmeta['persistent']['date']['created'])){
+            // newly created
             $meta['date']['created'] = $created;
             if ($user){
                 $meta['creator'] = $INFO['userinfo']['name'];
                 $meta['user']    = $user;
             }
-        } elseif (($wasCreated || $wasReverted) && !empty($oldmeta['persistent']['date']['created'])) { // re-created / restored
+        } elseif (($wasCreated || $wasReverted) && !empty($oldmeta['persistent']['date']['created'])) {
+            // re-created / restored
             $meta['date']['created']  = $oldmeta['persistent']['date']['created'];
             $meta['date']['modified'] = $created; // use the files ctime here
             $meta['creator'] = $oldmeta['persistent']['creator'];
@@ -147,7 +149,15 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
  *                             - (none, so far)
  * @param null|int $sizechange Change of filesize
  */
-function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extra='', $flags=null, $sizechange = null){
+function addMediaLogEntry(
+    $date,
+    $id,
+    $type=DOKU_CHANGE_TYPE_EDIT,
+    $summary='',
+    $extra='',
+    $flags=null,
+    $sizechange = null)
+{
     global $conf;
     /** @var Input $INPUT */
     global $INPUT;
@@ -238,7 +248,12 @@ function getRecents($first,$num,$ns='',$flags=0){
             }
         }
         if (($flags & RECENTS_MEDIA_PAGES_MIXED) && empty($media_rec) && $media_lines_position >= 0) {
-            $media_rec = _handleRecent(@$media_lines[$media_lines_position], $ns, $flags | RECENTS_MEDIA_CHANGES, $seen);
+            $media_rec = _handleRecent(
+                @$media_lines[$media_lines_position],
+                $ns,
+                $flags | RECENTS_MEDIA_CHANGES,
+                $seen
+            );
             if (!$media_rec) {
                 $media_lines_position --;
                 continue;

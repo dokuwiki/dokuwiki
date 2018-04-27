@@ -169,7 +169,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         // Prepare the TOC
         global $conf;
-        if($this->info['toc'] && is_array($this->toc) && $conf['tocminheads'] && count($this->toc) >= $conf['tocminheads']) {
+        if(
+            $this->info['toc'] &&
+            is_array($this->toc) &&
+            $conf['tocminheads'] && count($this->toc) >= $conf['tocminheads']
+        ) {
             global $TOC;
             $TOC = $this->toc;
         }
@@ -665,7 +669,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $offset = $INPUT->str('codeblockOffset');
             }
             $this->doc .= '<dl class="'.$type.'">'.DOKU_LF;
-            $this->doc .= '<dt><a href="'.exportlink($ID, 'code', array('codeblock' => $offset+$this->_codeblock)).'" title="'.$lang['download'].'" class="'.$class.'">';
+            $this->doc .= '<dt><a href="' .
+                exportlink(
+                    $ID,
+                    'code',
+                    array('codeblock' => $offset + $this->_codeblock)
+                ) . '" title="' . $lang['download'] . '" class="' . $class . '">';
             $this->doc .= hsc($filename);
             $this->doc .= '</a></dt>'.DOKU_LF.'<dd>';
         }
@@ -683,7 +692,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $class = 'code'; //we always need the code class to make the syntax highlighting apply
             if($type != 'code') $class .= ' '.$type;
 
-            $this->doc .= "<pre class=\"$class $language\">".p_xhtml_cached_geshi($text, $language, '', $options).'</pre>'.DOKU_LF;
+            $this->doc .= "<pre class=\"$class $language\">" .
+                p_xhtml_cached_geshi($text, $language, '', $options) .
+                '</pre>' . DOKU_LF;
         }
 
         if($filename) {
@@ -1172,7 +1183,15 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         list($ext, $mime) = mimetype($src, false);
         if(substr($mime, 0, 5) == 'image' && $render) {
-            $link['url'] = ml($src, array('id' => $ID, 'cache' => $cache, 'rev'=>$this->_getLastMediaRevisionAt($src)), ($linking == 'direct'));
+            $link['url'] = ml(
+                $src,
+                array(
+                    'id' => $ID,
+                    'cache' => $cache,
+                    'rev' => $this->_getLastMediaRevisionAt($src)
+                ),
+                ($linking == 'direct')
+            );
         } elseif(($mime == 'application/x-shockwave-flash' || media_supportedav($mime)) && $render) {
             // don't link movies
             $noLink = true;
@@ -1180,7 +1199,15 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             // add file icons
             $class = preg_replace('/[^_\-a-z0-9]+/i', '_', $ext);
             $link['class'] .= ' mediafile mf_'.$class;
-            $link['url'] = ml($src, array('id' => $ID, 'cache' => $cache , 'rev'=>$this->_getLastMediaRevisionAt($src)), true);
+            $link['url'] = ml(
+                $src,
+                array(
+                    'id' => $ID,
+                    'cache' => $cache,
+                    'rev' => $this->_getLastMediaRevisionAt($src)
+                ),
+                true
+            );
             if($exists) $link['title'] .= ' ('.filesize_h(filesize(mediaFN($src))).')';
         }
 
@@ -1616,7 +1643,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 return $title;
             }
             //add image tag
-            $ret .= '<img src="'.ml($src, array('w' => $width, 'h' => $height, 'cache' => $cache, 'rev'=>$this->_getLastMediaRevisionAt($src))).'"';
+            $ret .= '<img src="' . ml(
+                    $src,
+                    array(
+                        'w' => $width, 'h' => $height,
+                        'cache' => $cache,
+                        'rev' => $this->_getLastMediaRevisionAt($src)
+                    )
+                ) . '"';
             $ret .= ' class="media'.$align.'"';
 
             if($title) {
@@ -1866,7 +1900,16 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
             // alternative content (just a link to the file)
-            $fallback .= $this->$linkType($file, $title, null, null, null, $cache = null, $linking = 'linkonly', $return = true);
+            $fallback .= $this->$linkType(
+                $file,
+                $title,
+                null,
+                null,
+                null,
+                $cache = null,
+                $linking = 'linkonly',
+                $return = true
+            );
         }
 
         // output each track if any
@@ -1924,7 +1967,16 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
             // alternative content (just a link to the file)
-            $fallback .= $this->$linkType($file, $title, null, null, null, $cache = null, $linking = 'linkonly', $return = true);
+            $fallback .= $this->$linkType(
+                $file,
+                $title,
+                null,
+                null,
+                null,
+                $cache = null,
+                $linking = 'linkonly',
+                $return = true
+            );
         }
 
         // finish

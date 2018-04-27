@@ -180,7 +180,15 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("<div class=\"level2\">");
 
         if ($this->_user_total > 0) {
-            ptln("<p>".sprintf($this->lang['summary'],$this->_start+1,$this->_last,$this->_user_total,$this->_auth->getUserCount())."</p>");
+            ptln(
+                "<p>" . sprintf(
+                    $this->lang['summary'],
+                    $this->_start + 1,
+                    $this->_last,
+                    $this->_user_total,
+                    $this->_auth->getUserCount()
+                ) . "</p>"
+            );
         } else {
             if($this->_user_total < 0) {
                 $allUserTotal = 0;
@@ -195,15 +203,25 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("  <table class=\"inline\">");
         ptln("    <thead>");
         ptln("      <tr>");
-        ptln("        <th>&#160;</th><th>".$this->lang["user_id"]."</th><th>".$this->lang["user_name"]."</th><th>".$this->lang["user_mail"]."</th><th>".$this->lang["user_groups"]."</th>");
+        ptln("        <th>&#160;</th>
+            <th>".$this->lang["user_id"]."</th>
+            <th>".$this->lang["user_name"]."</th>
+            <th>".$this->lang["user_mail"]."</th>
+            <th>".$this->lang["user_groups"]."</th>");
         ptln("      </tr>");
 
         ptln("      <tr>");
-        ptln("        <td class=\"rightalign\"><input type=\"image\" src=\"".DOKU_PLUGIN_IMAGES."search.png\" name=\"fn[search][new]\" title=\"".$this->lang['search_prompt']."\" alt=\"".$this->lang['search']."\" class=\"button\" /></td>");
-        ptln("        <td><input type=\"text\" name=\"userid\" class=\"edit\" value=\"".$this->_htmlFilter('user')."\" /></td>");
-        ptln("        <td><input type=\"text\" name=\"username\" class=\"edit\" value=\"".$this->_htmlFilter('name')."\" /></td>");
-        ptln("        <td><input type=\"text\" name=\"usermail\" class=\"edit\" value=\"".$this->_htmlFilter('mail')."\" /></td>");
-        ptln("        <td><input type=\"text\" name=\"usergroups\" class=\"edit\" value=\"".$this->_htmlFilter('grps')."\" /></td>");
+        ptln("        <td class=\"rightalign\"><input type=\"image\" src=\"".
+             DOKU_PLUGIN_IMAGES."search.png\" name=\"fn[search][new]\" title=\"".
+             $this->lang['search_prompt']."\" alt=\"".$this->lang['search']."\" class=\"button\" /></td>");
+        ptln("        <td><input type=\"text\" name=\"userid\" class=\"edit\" value=\"".
+             $this->_htmlFilter('user')."\" /></td>");
+        ptln("        <td><input type=\"text\" name=\"username\" class=\"edit\" value=\"".
+             $this->_htmlFilter('name')."\" /></td>");
+        ptln("        <td><input type=\"text\" name=\"usermail\" class=\"edit\" value=\"".
+             $this->_htmlFilter('mail')."\" /></td>");
+        ptln("        <td><input type=\"text\" name=\"usergroups\" class=\"edit\" value=\"".
+             $this->_htmlFilter('grps')."\" /></td>");
         ptln("      </tr>");
         ptln("    </thead>");
 
@@ -219,7 +237,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                  */
                 $groups = join(', ',$grps);
                 ptln("    <tr class=\"user_info\">");
-                ptln("      <td class=\"centeralign\"><input type=\"checkbox\" name=\"delete[".hsc($user)."]\" ".$delete_disable." /></td>");
+                ptln("      <td class=\"centeralign\"><input type=\"checkbox\" name=\"delete[".hsc($user).
+                     "]\" ".$delete_disable." /></td>");
                 if ($editable) {
                     ptln("    <td><a href=\"".wl($ID,array('fn[edit]['.$user.']' => 1,
                                                            'do' => 'admin',
@@ -238,13 +257,18 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("    <tbody>");
         ptln("      <tr><td colspan=\"5\" class=\"centeralign\">");
         ptln("        <span class=\"medialeft\">");
-        ptln("          <button type=\"submit\" name=\"fn[delete]\" id=\"usrmgr__del\" ".$delete_disable.">".$this->lang['delete_selected']."</button>");
+        ptln("          <button type=\"submit\" name=\"fn[delete]\" id=\"usrmgr__del\" ".$delete_disable.">".
+             $this->lang['delete_selected']."</button>");
         ptln("        </span>");
         ptln("        <span class=\"mediaright\">");
-        ptln("          <button type=\"submit\" name=\"fn[start]\" ".$page_buttons['start'].">".$this->lang['start']."</button>");
-        ptln("          <button type=\"submit\" name=\"fn[prev]\" ".$page_buttons['prev'].">".$this->lang['prev']."</button>");
-        ptln("          <button type=\"submit\" name=\"fn[next]\" ".$page_buttons['next'].">".$this->lang['next']."</button>");
-        ptln("          <button type=\"submit\" name=\"fn[last]\" ".$page_buttons['last'].">".$this->lang['last']."</button>");
+        ptln("          <button type=\"submit\" name=\"fn[start]\" ".$page_buttons['start'].">".
+             $this->lang['start']."</button>");
+        ptln("          <button type=\"submit\" name=\"fn[prev]\" ".$page_buttons['prev'].">".
+             $this->lang['prev']."</button>");
+        ptln("          <button type=\"submit\" name=\"fn[next]\" ".$page_buttons['next'].">".
+             $this->lang['next']."</button>");
+        ptln("          <button type=\"submit\" name=\"fn[last]\" ".$page_buttons['last'].">".
+             $this->lang['last']."</button>");
         ptln("        </span>");
         if (!empty($this->_filter)) {
             ptln("    <button type=\"submit\" name=\"fn[search][clear]\">".$this->lang['clear']."</button>");
@@ -326,12 +350,60 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("    </thead>",$indent);
         ptln("    <tbody>",$indent);
 
-        $this->_htmlInputField($cmd."_userid",    "userid",    $this->lang["user_id"],    $user,  $this->_auth->canDo("modLogin"),   true, $indent+6);
-        $this->_htmlInputField($cmd."_userpass",  "userpass",  $this->lang["user_pass"],  "",     $this->_auth->canDo("modPass"),   false, $indent+6);
-        $this->_htmlInputField($cmd."_userpass2", "userpass2", $lang["passchk"],          "",     $this->_auth->canDo("modPass"),   false, $indent+6);
-        $this->_htmlInputField($cmd."_username",  "username",  $this->lang["user_name"],  $name,  $this->_auth->canDo("modName"),    true, $indent+6);
-        $this->_htmlInputField($cmd."_usermail",  "usermail",  $this->lang["user_mail"],  $mail,  $this->_auth->canDo("modMail"),    true, $indent+6);
-        $this->_htmlInputField($cmd."_usergroups","usergroups",$this->lang["user_groups"],$groups,$this->_auth->canDo("modGroups"), false, $indent+6);
+        $this->_htmlInputField(
+            $cmd . "_userid",
+            "userid",
+            $this->lang["user_id"],
+            $user,
+            $this->_auth->canDo("modLogin"),
+            true,
+            $indent + 6
+        );
+        $this->_htmlInputField(
+            $cmd . "_userpass",
+            "userpass",
+            $this->lang["user_pass"],
+            "",
+            $this->_auth->canDo("modPass"),
+            false,
+            $indent + 6
+        );
+        $this->_htmlInputField(
+            $cmd . "_userpass2",
+            "userpass2",
+            $lang["passchk"],
+            "",
+            $this->_auth->canDo("modPass"),
+            false,
+            $indent + 6
+        );
+        $this->_htmlInputField(
+            $cmd . "_username",
+            "username",
+            $this->lang["user_name"],
+            $name,
+            $this->_auth->canDo("modName"),
+            true,
+            $indent + 6
+        );
+        $this->_htmlInputField(
+            $cmd . "_usermail",
+            "usermail",
+            $this->lang["user_mail"],
+            $mail,
+            $this->_auth->canDo("modMail"),
+            true,
+            $indent + 6
+        );
+        $this->_htmlInputField(
+            $cmd . "_usergroups",
+            "usergroups",
+            $this->lang["user_groups"],
+            $groups,
+            $this->_auth->canDo("modGroups"),
+            false,
+            $indent + 6
+        );
 
         if ($this->_auth->canDo("modPass")) {
             if ($cmd == 'add') {
@@ -341,7 +413,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                 $notes[] = $this->lang['note_notify'];
             }
 
-            ptln("<tr><td><label for=\"".$cmd."_usernotify\" >".$this->lang["user_notify"].": </label></td><td><input type=\"checkbox\" id=\"".$cmd."_usernotify\" name=\"usernotify\" value=\"1\" /></td></tr>", $indent);
+            ptln("<tr><td><label for=\"".$cmd."_usernotify\" >".
+                 $this->lang["user_notify"].": </label></td>
+                 <td><input type=\"checkbox\" id=\"".$cmd."_usernotify\" name=\"usernotify\" value=\"1\" />
+                 </td></tr>", $indent);
         }
 
         ptln("    </tbody>",$indent);
@@ -407,10 +482,12 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if($cando){
             $req = '';
             if($required) $req = 'required="required"';
-            echo "<input type=\"$fieldtype\" id=\"$id\" name=\"$name\" value=\"$value\" class=\"edit\" $autocomp $req />";
+            echo "<input type=\"$fieldtype\" id=\"$id\" name=\"$name\"
+                  value=\"$value\" class=\"edit\" $autocomp $req />";
         }else{
             echo "<input type=\"hidden\" name=\"$name\" value=\"$value\" />";
-            echo "<input type=\"$fieldtype\" id=\"$id\" name=\"$name\" value=\"$value\" class=\"edit disabled\" disabled=\"disabled\" />";
+            echo "<input type=\"$fieldtype\" id=\"$id\" name=\"$name\"
+                  value=\"$value\" class=\"edit disabled\" disabled=\"disabled\" />";
         }
         echo "</td>";
         echo "</tr>";
@@ -867,7 +944,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             $buttons['last'] = $disabled;
             $buttons['next'] = '';
         } else {
-            $buttons['last'] = $buttons['next'] = (($this->_start + $this->_pagesize) >= $this->_user_total) ? $disabled : '';
+            $buttons['last'] = $buttons['next'] =
+                (($this->_start + $this->_pagesize) >= $this->_user_total) ? $disabled : '';
         }
 
         if ($this->_lastdisabled) {
@@ -924,7 +1002,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!$this->_auth->canDo('addUser')) return false;
 
         // check file uploaded ok.
-        if (empty($_FILES['import']['size']) || !empty($_FILES['import']['error']) && $this->_isUploadedFile($_FILES['import']['tmp_name'])) {
+        if (
+            empty($_FILES['import']['size']) ||
+            !empty($_FILES['import']['error']) && $this->_isUploadedFile($_FILES['import']['tmp_name'])
+        ) {
             msg($this->lang['import_error_upload'],-1);
             return false;
         }
@@ -965,7 +1046,14 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                     $this->_import_failures[$line] = array('error' => $error, 'user' => $raw, 'orig' => $csv);
                 }
             }
-            msg(sprintf($this->lang['import_success_count'], ($import_success_count+$import_fail_count), $import_success_count),($import_success_count ? 1 : -1));
+            msg(
+                sprintf(
+                    $this->lang['import_success_count'],
+                    ($import_success_count + $import_fail_count),
+                    $import_success_count
+                ),
+                ($import_success_count ? 1 : -1)
+            );
             if ($import_fail_count) {
                 msg(sprintf($this->lang['import_failure_count'], $import_fail_count),-1);
             }

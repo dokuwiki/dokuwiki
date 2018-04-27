@@ -102,9 +102,11 @@ class Admin extends Ui {
     protected function showSecurityCheck() {
         global $conf;
         if(substr($conf['savedir'], 0, 2) !== './') return;
+        $img = DOKU_URL . $conf['savedir'] .
+            '/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png';
         echo '<a style="border:none; float:right;"
                 href="http://www.dokuwiki.org/security#web_access_security">
-                <img src="' . DOKU_URL . $conf['savedir'] . '/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png" alt="Your data directory seems to be protected properly."
+                <img src="' . $img . '" alt="Your data directory seems to be protected properly."
                 onerror="this.parentNode.style.display=\'none\'" /></a>';
     }
 

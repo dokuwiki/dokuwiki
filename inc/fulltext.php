@@ -21,8 +21,8 @@ if(!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER',15);
  * @param string     $query
  * @param array      $highlight
  * @param string     $sort
- * @param int|string $after  only show results with an modified time after this date, accepts timestap or strtotime arguments
- * @param int|string $before only show results with an modified time before this date, accepts timestap or strtotime arguments
+ * @param int|string $after  only show results with mtime after this date, accepts timestap or strtotime arguments
+ * @param int|string $before only show results with mtime before this date, accepts timestap or strtotime arguments
  *
  * @return array
  */
@@ -230,8 +230,8 @@ function ft_mediause($id, $ignore_perms = false){
  * @param string     $id       page id
  * @param bool       $in_ns    match against namespace as well?
  * @param bool       $in_title search in title?
- * @param int|string $after    only show results with an modified time after this date, accepts timestap or strtotime arguments
- * @param int|string $before   only show results with an modified time before this date, accepts timestap or strtotime arguments
+ * @param int|string $after    only show results with mtime after this date, accepts timestap or strtotime arguments
+ * @param int|string $before   only show results with mtime before this date, accepts timestap or strtotime arguments
  *
  * @return string[]
  */
@@ -313,8 +313,8 @@ function _ft_pageLookup(&$data){
 
 /**
  * @param array      $results search results in the form pageid => value
- * @param int|string $after   only returns results with an modified time after this date, accepts timestap or strtotime arguments
- * @param int|string $before  only returns results with an modified time after this date, accepts timestap or strtotime arguments
+ * @param int|string $after   only returns results with mtime after this date, accepts timestap or strtotime arguments
+ * @param int|string $before  only returns results with mtime after this date, accepts timestap or strtotime arguments
  *
  * @return array
  */
@@ -413,7 +413,18 @@ function ft_snippet($id,$highlight){
         $len = utf8_strlen($text);
 
         // build a regexp from the phrases to highlight
-        $re1 = '('.join('|',array_map('ft_snippet_re_preprocess', array_map('preg_quote_cb',array_filter((array) $highlight)))).')';
+        $re1 = '(' .
+            join(
+                '|',
+                array_map(
+                    'ft_snippet_re_preprocess',
+                    array_map(
+                        'preg_quote_cb',
+                        array_filter((array) $highlight)
+                    )
+                )
+            ) .
+            ')';
         $re2 = "$re1.{0,75}(?!\\1)$re1";
         $re3 = "$re1.{0,45}(?!\\1)$re1.{0,45}(?!\\1)(?!\\2)$re1";
 
@@ -476,7 +487,11 @@ function ft_snippet($id,$highlight){
 
         $m = "\1";
         $snippets = preg_replace('/'.$re1.'/iu',$m.'$1'.$m,$snippets);
-        $snippet = preg_replace('/'.$m.'([^'.$m.']*?)'.$m.'/iu','<strong class="search_hit">$1</strong>',hsc(join('... ',$snippets)));
+        $snippet = preg_replace(
+            '/' . $m . '([^' . $m . ']*?)' . $m . '/iu',
+            '<strong class="search_hit">$1</strong>',
+            hsc(join('... ', $snippets))
+        );
 
         $evdata['snippet'] = $snippet;
     }

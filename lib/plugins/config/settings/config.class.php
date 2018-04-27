@@ -15,14 +15,14 @@ if (!class_exists('configuration')) {
      */
     class configuration {
 
-        var $_name = 'conf';           // name of the config variable found in the files (overridden by $config['varname'])
-        var $_format = 'php';          // format of the config file, supported formats - php (overridden by $config['format'])
-        var $_heading = '';            // heading string written at top of config file - don't include comment indicators
-        var $_loaded = false;          // set to true after configuration files are loaded
-        var $_metadata = array();      // holds metadata describing the settings
+        var $_name = 'conf';     // name of the config variable found in the files (overridden by $config['varname'])
+        var $_format = 'php';    // format of the config file, supported formats - php (overridden by $config['format'])
+        var $_heading = '';      // heading string written at top of config file - don't include comment indicators
+        var $_loaded = false;    // set to true after configuration files are loaded
+        var $_metadata = array();// holds metadata describing the settings
         /** @var setting[]  */
-        var $setting = array();        // array of setting objects
-        var $locked = false;           // configuration is considered locked if it can't be updated
+        var $setting = array();  // array of setting objects
+        var $locked = false;     // configuration is considered locked if it can't be updated
         var $show_disabled_plugins = false;
 
         // configuration filenames
@@ -68,11 +68,19 @@ if (!class_exists('configuration')) {
             $no_default_check = array('setting_fieldset', 'setting_undefined', 'setting_no_class');
 
             if (!$this->_loaded) {
-                $default = array_merge($this->get_plugintpl_default($conf['template']), $this->_read_config_group($this->_default_files));
+                $default = array_merge(
+                    $this->get_plugintpl_default($conf['template']),
+                    $this->_read_config_group($this->_default_files)
+                );
                 $local = $this->_read_config_group($this->_local_files);
                 $protected = $this->_read_config_group($this->_protected_files);
 
-                $keys = array_merge(array_keys($this->_metadata),array_keys($default), array_keys($local), array_keys($protected));
+                $keys = array_merge(
+                    array_keys($this->_metadata),
+                    array_keys($default),
+                    array_keys($local),
+                    array_keys($protected)
+                );
                 $keys = array_unique($keys);
 
                 $param = null;
@@ -378,7 +386,7 @@ if (!class_exists('configuration')) {
                     @include(DOKU_PLUGIN.$plugin_dir.$file);
                     @include(DOKU_PLUGIN.$plugin_dir.$class);
                     if (!empty($meta)) {
-                        $metadata['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.'plugin_settings_name'] = array('fieldset');
+                        $metadata['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.'plugin_settings_name'] = ['fieldset'];
                     }
                     foreach ($meta as $key => $value){
                         if ($value[0]=='fieldset') { continue; } //plugins only get one fieldset
@@ -535,7 +543,8 @@ if (!class_exists('setting')) {
             $value = formText($value);
 
             $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
-            $input = '<textarea rows="3" cols="40" id="config___'.$key.'" name="config['.$key.']" class="edit" '.$disable.'>'.$value.'</textarea>';
+            $input = '<textarea rows="3" cols="40" id="config___'.$key.
+                '" name="config['.$key.']" class="edit" '.$disable.'>'.$value.'</textarea>';
             return array($label,$input);
         }
 
@@ -603,7 +612,10 @@ if (!class_exists('setting')) {
         public function caution() {
             if (!empty($this->_caution)) {
                 if (!in_array($this->_caution, setting::$_validCautions)) {
-                    trigger_error('Invalid caution string ('.$this->_caution.') in metadata for setting "'.$this->_key.'"', E_USER_WARNING);
+                    trigger_error(
+                        'Invalid caution string ('.$this->_caution.') in metadata for setting "'.$this->_key.'"',
+                        E_USER_WARNING
+                    );
                     return false;
                 }
                 return $this->_caution;
@@ -760,7 +772,8 @@ if (!class_exists('setting_array')) {
             $value = htmlspecialchars($this->_from_array($value));
 
             $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
-            $input = '<input id="config___'.$key.'" name="config['.$key.']" type="text" class="edit" value="'.$value.'" '.$disable.'/>';
+            $input = '<input id="config___'.$key.'" name="config['.$key.
+                ']" type="text" class="edit" value="'.$value.'" '.$disable.'/>';
             return array($label,$input);
         }
     }
@@ -796,7 +809,8 @@ if (!class_exists('setting_string')) {
             $value = htmlspecialchars($value);
 
             $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
-            $input = '<input id="config___'.$key.'" name="config['.$key.']" type="text" class="edit" value="'.$value.'" '.$disable.'/>';
+            $input = '<input id="config___'.$key.'" name="config['.$key.
+                ']" type="text" class="edit" value="'.$value.'" '.$disable.'/>';
             return array($label,$input);
         }
     }
@@ -846,7 +860,8 @@ if (!class_exists('setting_password')) {
             $key = htmlspecialchars($this->_key);
 
             $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
-            $input = '<input id="config___'.$key.'" name="config['.$key.']" autocomplete="off" type="password" class="edit" value="" '.$disable.' />';
+            $input = '<input id="config___'.$key.'" name="config['.$key.
+                ']" autocomplete="off" type="password" class="edit" value="" '.$disable.' />';
             return array($label,$input);
         }
     }
@@ -1027,7 +1042,8 @@ if (!class_exists('setting_onoff')) {
             $checked = ($value) ? ' checked="checked"' : '';
 
             $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
-            $input = '<div class="input"><input id="config___'.$key.'" name="config['.$key.']" type="checkbox" class="checkbox" value="1"'.$checked.$disable.'/></div>';
+            $input = '<div class="input"><input id="config___'.$key.'" name="config['.$key.
+                ']" type="checkbox" class="checkbox" value="1"'.$checked.$disable.'/></div>';
             return array($label,$input);
         }
 
@@ -1097,7 +1113,9 @@ if (!class_exists('setting_multichoice')) {
             foreach ($this->_choices as $choice) {
                 $selected = ($value == $choice) ? ' selected="selected"' : '';
                 $option = $plugin->getLang($this->_key.'_o_'.$choice);
-                if (!$option && isset($this->lang[$this->_key.'_o_'.$choice])) $option = $this->lang[$this->_key.'_o_'.$choice];
+                if (!$option && isset($this->lang[$this->_key.'_o_'.$choice])) {
+                    $option = $this->lang[$this->_key . '_o_' . $choice];
+                }
                 if (!$option) $option = $choice;
 
                 $choice = htmlspecialchars($choice);
@@ -1303,7 +1321,8 @@ if (!class_exists('setting_multicheckbox')) {
 
                 $input .= '<div class="selection'.$class.'">'."\n";
                 $input .= '<label for="config___'.$key.'_'.$choice.'">'.$prompt."</label>\n";
-                $input .= '<input id="config___'.$key.'_'.$choice.'" name="config['.$key.'][]" type="checkbox" class="checkbox" value="'.$choice.'" '.$disable.' '.$checked."/>\n";
+                $input .= '<input id="config___'.$key.'_'.$choice.'" name="config['.$key.
+                    '][]" type="checkbox" class="checkbox" value="'.$choice.'" '.$disable.' '.$checked."/>\n";
                 $input .= "</div>\n";
 
                 // remove this action from the disabledactions array
@@ -1318,12 +1337,16 @@ if (!class_exists('setting_multicheckbox')) {
                 // use != 'exists' rather than == 'always' to ensure invalid values default to 'always'
                 if ($this->_other != 'exists' || $other) {
 
-                    $class = ((count($default) == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
+                    $class = (
+                        (count($default) == count($value)) &&
+                        (count($value) == count(array_intersect($value,$default)))
+                    ) ?
                                     " selectiondefault" : "";
 
                     $input .= '<div class="other'.$class.'">'."\n";
                     $input .= '<label for="config___'.$key.'_other">'.$plugin->getLang($key.'_other')."</label>\n";
-                    $input .= '<input id="config___'.$key.'_other" name="config['.$key.'][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
+                    $input .= '<input id="config___'.$key.'_other" name="config['.$key.
+                        '][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
                     $input .= "</div>\n";
                 }
             }

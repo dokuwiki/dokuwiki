@@ -174,8 +174,10 @@ class SitemapItem {
      *
      * @param string $url        The url of the item
      * @param int    $lastmod    Timestamp of the last modification
-     * @param string $changefreq How frequently the item is likely to change. Valid values: always, hourly, daily, weekly, monthly, yearly, never.
-     * @param $priority float|string The priority of the item relative to other URLs on your site. Valid values range from 0.0 to 1.0.
+     * @param string $changefreq How frequently the item is likely to change.
+     *                           Valid values: always, hourly, daily, weekly, monthly, yearly, never.
+     * @param $priority float|string The priority of the item relative to other URLs on your site.
+     *                           Valid values range from 0.0 to 1.0.
      */
     public function __construct($url, $lastmod, $changefreq = null, $priority = null) {
         $this->url = $url;
@@ -188,8 +190,10 @@ class SitemapItem {
      * Helper function for creating an item for a wikipage id.
      *
      * @param string       $id         A wikipage id.
-     * @param string       $changefreq How frequently the item is likely to change. Valid values: always, hourly, daily, weekly, monthly, yearly, never.
-     * @param float|string $priority   The priority of the item relative to other URLs on your site. Valid values     range from 0.0 to 1.0.
+     * @param string       $changefreq How frequently the item is likely to change.
+     *                                 Valid values: always, hourly, daily, weekly, monthly, yearly, never.
+     * @param float|string $priority   The priority of the item relative to other URLs on your site.
+     *                                 Valid values range from 0.0 to 1.0.
      * @return SitemapItem The sitemap item.
      */
     public static function createFromID($id, $changefreq = null, $priority = null) {

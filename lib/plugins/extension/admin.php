@@ -70,16 +70,34 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
                                 $extension->setExtension($extname);
                                 $installed = $extension->installOrUpdate();
                                 foreach($installed as $ext => $info) {
-                                    msg(sprintf($this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'), $info['base']), 1);
+                                    msg(
+                                        sprintf(
+                                            $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
+                                            $info['base']
+                                        ),
+                                        1
+                                    );
                                 }
                                 break;
                             case 'uninstall':
                                 $extension->setExtension($extname);
                                 $status = $extension->uninstall();
                                 if($status) {
-                                    msg(sprintf($this->getLang('msg_delete_success'), hsc($extension->getDisplayName())), 1);
+                                    msg(
+                                        sprintf(
+                                            $this->getLang('msg_delete_success'),
+                                            hsc($extension->getDisplayName())
+                                        ),
+                                        1
+                                    );
                                 } else {
-                                    msg(sprintf($this->getLang('msg_delete_failed'), hsc($extension->getDisplayName())), -1);
+                                    msg(
+                                        sprintf(
+                                            $this->getLang('msg_delete_failed'),
+                                            hsc($extension->getDisplayName())
+                                        ),
+                                        -1
+                                    );
                                 }
                                 break;
                             case 'enable';

@@ -398,8 +398,15 @@ class HTTPClient {
 
             //read body (with chunked encoding if needed)
             $r_body    = '';
-            if((isset($this->resp_headers['transfer-encoding']) && $this->resp_headers['transfer-encoding'] == 'chunked')
-            || (isset($this->resp_headers['transfer-coding']) && $this->resp_headers['transfer-coding'] == 'chunked')){
+            if(
+                (
+                    isset($this->resp_headers['transfer-encoding']) &&
+                    $this->resp_headers['transfer-encoding'] == 'chunked'
+                ) || (
+                    isset($this->resp_headers['transfer-coding']) &&
+                    $this->resp_headers['transfer-coding'] == 'chunked'
+                )
+            ) {
                 $abort = false;
                 do {
                     $chunk_size = '';
@@ -433,7 +440,11 @@ class HTTPClient {
 
                 // read up to the content-length or max_bodysize
                 // for keep alive we need to read the whole message to clean up the socket for the next read
-                if(!$this->keep_alive && $this->max_bodysize && $this->max_bodysize < $this->resp_headers['content-length']){
+                if(
+                    !$this->keep_alive &&
+                    $this->max_bodysize &&
+                    $this->max_bodysize < $this->resp_headers['content-length']
+                ) {
                     $length = $this->max_bodysize;
                 }else{
                     $length = $this->resp_headers['content-length'];
@@ -550,7 +561,9 @@ class HTTPClient {
                 return true;
             }
 
-            throw new HTTPClientException('Failed to set up crypto for secure connection to '.$requestinfo['host'], -151);
+            throw new HTTPClientException(
+                'Failed to set up crypto for secure connection to '.$requestinfo['host'], -151
+            );
         }
 
         throw new HTTPClientException('Failed to establish secure proxy connection', -150);

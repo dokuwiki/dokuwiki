@@ -1420,7 +1420,11 @@ function tpl_mediaFileDetails($image, $rev) {
     /** @var Input $INPUT */
     global $INPUT;
 
-    $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')) && $conf['mediarevisions']);
+    $removed = (
+        !file_exists(mediaFN($image)) &&
+        file_exists(mediaMetaFN($image, '.changes')) &&
+        $conf['mediarevisions']
+    );
     if(!$image || (!file_exists(mediaFN($image)) && !$removed) || $DEL) return;
     if($rev && !file_exists(mediaFN($image, $rev))) $rev = false;
     $ns = getNS($image);
@@ -1448,7 +1452,8 @@ function tpl_mediaFileDetails($image, $rev) {
     $class    = preg_replace('/[^_\-a-z0-9]+/i', '_', $ext);
     $class    = 'select mediafile mf_'.$class;
     $attributes = $rev ? ['rev' => $rev] : [];
-    $tabTitle = '<strong><a href="'.ml($image, $attributes).'" class="'.$class.'" title="'.$lang['mediaview'].'">'.$image.'</a>'.'</strong>';
+    $tabTitle = '<strong><a href="'.ml($image, $attributes).'" class="'.$class.'" title="'.$lang['mediaview'].'">'.
+        $image.'</a>'.'</strong>';
     if($opened_tab === 'view' && $rev) {
         printf($lang['media_viewold'], $tabTitle, dformat($rev));
     } else {

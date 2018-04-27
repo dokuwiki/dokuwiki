@@ -129,7 +129,8 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
 
             echo ($recent['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
             echo '<div class="li">';
-            echo '<input type="checkbox" name="revert[]" value="'.hsc($recent['id']).'" checked="checked" id="revert__'.$cnt.'" />';
+            echo '<input type="checkbox" name="revert[]" value="'.hsc($recent['id']).
+                '" checked="checked" id="revert__'.$cnt.'" />';
             echo ' <label for="revert__'.$cnt.'">'.$date.'</label> ';
 
             echo '<a href="'.wl($recent['id'],"do=diff").'">';
