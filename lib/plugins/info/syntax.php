@@ -11,21 +11,21 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     /**
      * What kind of syntax are we?
      */
-    function getType(){
+    public function getType(){
         return 'substition';
     }
 
     /**
      * What about paragraphs?
      */
-    function getPType(){
+    public function getPType(){
         return 'block';
     }
 
     /**
      * Where to sort in?
      */
-    function getSort(){
+    public function getSort(){
         return 155;
     }
 
@@ -33,7 +33,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     /**
      * Connect pattern to lexer
      */
-    function connectTo($mode) {
+    public function connectTo($mode) {
         $this->Lexer->addSpecialPattern('~~INFO:\w+~~',$mode,'plugin_info');
     }
 
@@ -46,7 +46,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      * @param   Doku_Handler $handler The Doku_Handler object
      * @return  array Return an array with all data you want to use in render
      */
-    function handle($match, $state, $pos, Doku_Handler $handler){
+    public function handle($match, $state, $pos, Doku_Handler $handler){
         $match = substr($match,7,-2); //strip ~~INFO: from start and ~~ from end
         return array(strtolower($match));
     }
@@ -59,7 +59,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      * @param array            $data      data created by handler()
      * @return  boolean                 rendered correctly?
      */
-    function render($format, Doku_Renderer $renderer, $data) {
+    public function render($format, Doku_Renderer $renderer, $data) {
         if($format == 'xhtml'){
             /** @var Doku_Renderer_xhtml $renderer */
             //handle various info stuff
@@ -110,7 +110,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      * @param string $type
      * @param Doku_Renderer_xhtml $renderer
      */
-    function _plugins_xhtml($type, Doku_Renderer_xhtml $renderer){
+    protected function _plugins_xhtml($type, Doku_Renderer_xhtml $renderer){
         global $lang;
         $renderer->doc .= '<ul>';
 
@@ -150,7 +150,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      *
      * @param Doku_Renderer_xhtml $renderer
      */
-    function _helpermethods_xhtml(Doku_Renderer_xhtml $renderer){
+    protected function _helpermethods_xhtml(Doku_Renderer_xhtml $renderer){
         $plugins = plugin_list('helper');
         foreach($plugins as $p){
             if (!$po = plugin_load('helper',$p)) continue;
@@ -200,7 +200,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      *
      * @return string
      */
-    function _syntaxtypes_xhtml(){
+    protected function _syntaxtypes_xhtml(){
         global $PARSER_MODES;
         $doc  = '';
 
@@ -224,7 +224,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      *
      * @return string
      */
-    function _syntaxmodes_xhtml(){
+    protected function _syntaxmodes_xhtml(){
         $modes = p_get_parsermodes();
 
         $compactmodes = array();

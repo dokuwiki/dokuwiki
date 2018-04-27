@@ -10,31 +10,33 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
     /**
      * @var helper_plugin_popularity
      */
-    var $helper;
-    var $sentStatus = null;
+    protected $helper;
+    protected $sentStatus = null;
 
-    function __construct(){
+    public function __construct(){
         $this->helper = $this->loadHelper('popularity', false);
     }
 
     /**
      * return prompt for admin menu
+     * @param $language
+     * @return string
      */
-    function getMenuText($language) {
+    public function getMenuText($language) {
         return $this->getLang('name');
     }
 
     /**
      * return sort order for position in admin menu
      */
-    function getMenuSort() {
+    public function getMenuSort() {
         return 2000;
     }
 
     /**
      * Accessible for managers
      */
-    function forAdminOnly() {
+    public function forAdminOnly() {
         return false;
     }
 
@@ -42,7 +44,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
     /**
      * handle user request
      */
-    function handle() {
+    public function handle() {
         global $INPUT;
 
         //Send the data
@@ -61,7 +63,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
      * Enable or disable autosubmit
      * @param bool $enable If TRUE, it will enable autosubmit. Else, it will disable it.
      */
-    function _enableAutosubmit( $enable ){
+    protected function _enableAutosubmit( $enable ){
         if ( $enable ){
             io_saveFile( $this->helper->autosubmitFile, ' ');
         } else {
@@ -72,7 +74,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
     /**
      * Output HTML form
      */
-    function html() {
+    public function html() {
         global $INPUT;
 
         if ( ! $INPUT->has('data') ){
@@ -115,7 +117,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
      * @param string $data   The popularity data, if it has already been computed. NULL otherwise.
      * @return string The form, as an html string
      */
-    function buildForm($submissionMode, $data = null){
+    protected function buildForm($submissionMode, $data = null){
         $url = ($submissionMode === 'browser' ? $this->helper->submitUrl : script());
         if ( is_null($data) ){
             $data = $this->helper->gatherAsString();

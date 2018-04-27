@@ -309,8 +309,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @param   array  $changes array of field/value pairs to be changed (password will be clear text)
      * @return  bool   true on success, false on error
      */
-
-    function modifyUser($user,$changes){
+    public function modifyUser($user,$changes){
 
         // open the connection to the ldap
         if(!$this->_openLDAP()){
@@ -384,7 +383,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @param   array $filter  array of field/pattern pairs, null for no filter
      * @return  array of userinfo (refer getUserData for internal userinfo details)
      */
-    function retrieveUsers($start = 0, $limit = 0, $filter = array()) {
+    public function retrieveUsers($start = 0, $limit = 0, $filter = array()) {
         if(!$this->_openLDAP()) return false;
 
         if(is_null($this->users)) {

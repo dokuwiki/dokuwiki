@@ -15,22 +15,22 @@ if (!class_exists('configuration')) {
      */
     class configuration {
 
-        var $_name = 'conf';     // name of the config variable found in the files (overridden by $config['varname'])
-        var $_format = 'php';    // format of the config file, supported formats - php (overridden by $config['format'])
-        var $_heading = '';      // heading string written at top of config file - don't include comment indicators
-        var $_loaded = false;    // set to true after configuration files are loaded
-        var $_metadata = array();// holds metadata describing the settings
+        protected $_name = 'conf';     // name of the config variable found in the files (overridden by $config['varname'])
+        protected $_format = 'php';    // format of the config file, supported formats - php (overridden by $config['format'])
+        protected $_heading = '';      // heading string written at top of config file - don't include comment indicators
+        protected $_loaded = false;    // set to true after configuration files are loaded
+        protected $_metadata = array();// holds metadata describing the settings
         /** @var setting[]  */
-        var $setting = array();  // array of setting objects
-        var $locked = false;     // configuration is considered locked if it can't be updated
-        var $show_disabled_plugins = false;
+        public $setting = array();  // array of setting objects
+        public $locked = false;     // configuration is considered locked if it can't be updated
+        public $show_disabled_plugins = false;
 
         // configuration filenames
-        var $_default_files  = array();
-        var $_local_files = array();      // updated configuration is written to the first file
-        var $_protected_files = array();
+        protected $_default_files  = array();
+        protected $_local_files = array();      // updated configuration is written to the first file
+        protected $_protected_files = array();
 
-        var $_plugin_list = null;
+        protected $_plugin_list = null;
 
         /**
          * constructor
@@ -45,6 +45,7 @@ if (!class_exists('configuration')) {
                 return;
             }
             $meta = array();
+            /** @var array $config gets loaded via include here */
             include($datafile);
 
             if (isset($config['varname'])) $this->_name = $config['varname'];
@@ -196,7 +197,7 @@ if (!class_exists('configuration')) {
          * @param string $file file path
          * @return array config settings
          */
-        function _read_config($file) {
+        protected function _read_config($file) {
 
             if (!$file) return array();
 
@@ -353,7 +354,7 @@ if (!class_exists('configuration')) {
          * @return array plugin names
          * @triggers PLUGIN_CONFIG_PLUGINLIST event
          */
-        function get_plugin_list() {
+        protected function get_plugin_list() {
             if (is_null($this->_plugin_list)) {
                 $list = plugin_list('',$this->show_disabled_plugins);
 
@@ -374,7 +375,7 @@ if (!class_exists('configuration')) {
          * @param string $tpl name of active template
          * @return array metadata of settings
          */
-        function get_plugintpl_metadata($tpl){
+        protected function get_plugintpl_metadata($tpl){
             $file     = '/conf/metadata.php';
             $class    = '/conf/settings.class.php';
             $metadata = array();
@@ -418,7 +419,7 @@ if (!class_exists('configuration')) {
          * @param string $tpl name of active template
          * @return array default settings
          */
-        function get_plugintpl_default($tpl){
+        protected function get_plugintpl_default($tpl){
             $file    = '/conf/default.php';
             $default = array();
 
@@ -452,17 +453,17 @@ if (!class_exists('setting')) {
      */
     class setting {
 
-        var $_key = '';
-        var $_default = null;
-        var $_local = null;
-        var $_protected = null;
+        protected $_key = '';
+        protected $_default = null;
+        protected $_local = null;
+        protected $_protected = null;
 
-        var $_pattern = '';
-        var $_error = false;            // only used by those classes which error check
-        var $_input = null;             // only used by those classes which error check
-        var $_caution = null;           // used by any setting to provide an alert along with the setting
-                                        // valid alerts, 'warning', 'danger', 'security'
-                                        // images matching the alerts are in the plugin's images directory
+        protected $_pattern = '';
+        protected $_error = false;            // only used by those classes which error check
+        protected $_input = null;             // only used by those classes which error check
+        protected $_caution = null;           // used by any setting to provide an alert along with the setting
+                                              // valid alerts, 'warning', 'danger', 'security'
+                                              // images matching the alerts are in the plugin's images directory
 
         static protected $_validCautions = array('warning','danger','security');
 
@@ -693,7 +694,7 @@ if (!class_exists('setting_array')) {
          * @param string $input
          * @return bool true if changed, false otherwise (incl. on error)
          */
-        function update($input) {
+        public function update($input) {
             if (is_null($input)) return false;
             if ($this->is_protected()) return false;
 
@@ -732,7 +733,7 @@ if (!class_exists('setting_array')) {
          * @param string $fmt save format
          * @return string
          */
-        function out($var, $fmt='php') {
+        public function out($var, $fmt='php') {
 
             if ($this->is_protected()) return '';
             if (is_null($this->_local) || ($this->_default == $this->_local)) return '';
@@ -754,7 +755,7 @@ if (!class_exists('setting_array')) {
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
-        function html(admin_plugin_config $plugin, $echo=false) {
+        public function html(admin_plugin_config $plugin, $echo=false) {
             $disable = '';
 
             if ($this->is_protected()) {
@@ -791,7 +792,7 @@ if (!class_exists('setting_string')) {
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
-        function html(admin_plugin_config $plugin, $echo=false) {
+        public function html(admin_plugin_config $plugin, $echo=false) {
             $disable = '';
 
             if ($this->is_protected()) {
@@ -822,7 +823,7 @@ if (!class_exists('setting_password')) {
      */
     class setting_password extends setting_string {
 
-        var $_code = 'plain';  // mechanism to be used to obscure passwords
+        protected $_code = 'plain';  // mechanism to be used to obscure passwords
 
         /**
          * update changed setting with user provided value $input
@@ -832,7 +833,7 @@ if (!class_exists('setting_password')) {
          * @param  mixed   $input   the new value
          * @return boolean          true if changed, false otherwise (also on error)
          */
-        function update($input) {
+        public function update($input) {
             if ($this->is_protected()) return false;
             if (!$input) return false;
 
@@ -853,7 +854,7 @@ if (!class_exists('setting_password')) {
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
-        function html(admin_plugin_config $plugin, $echo=false) {
+        public function html(admin_plugin_config $plugin, $echo=false) {
 
             $disable = $this->is_protected() ? 'disabled="disabled"' : '';
 
@@ -872,8 +873,8 @@ if (!class_exists('setting_email')) {
      * Class setting_email
      */
     class setting_email extends setting_string {
-        var $_multiple = false;
-        var $_placeholders = false;
+        protected $_multiple = false;
+        protected $_placeholders = false;
 
         /**
          * update setting with user provided value $input
@@ -882,7 +883,7 @@ if (!class_exists('setting_email')) {
          * @param mixed $input
          * @return boolean true if changed, false otherwise (incl. on error)
          */
-        function update($input) {
+        public function update($input) {
             if (is_null($input)) return false;
             if ($this->is_protected()) return false;
 
@@ -938,9 +939,9 @@ if (!class_exists('setting_numeric')) {
         // This allows for many PHP syntax errors...
         // var $_pattern = '/^[-+\/*0-9 ]*$/';
         // much more restrictive, but should eliminate syntax errors.
-        var $_pattern = '/^[-+]? *[0-9]+ *(?:[-+*] *[0-9]+ *)*$/';
-        var $_min = null;
-        var $_max = null;
+        protected $_pattern = '/^[-+]? *[0-9]+ *(?:[-+*] *[0-9]+ *)*$/';
+        protected $_min = null;
+        protected $_max = null;
 
         /**
          * update changed setting with user provided value $input
@@ -950,7 +951,7 @@ if (!class_exists('setting_numeric')) {
          * @param  mixed   $input   the new value
          * @return boolean          true if changed, false otherwise (also on error)
          */
-        function update($input) {
+        public function update($input) {
             $local = $this->_local;
             $valid = parent::update($input);
             if ($valid && !(is_null($this->_min) && is_null($this->_max))) {
@@ -973,7 +974,7 @@ if (!class_exists('setting_numeric')) {
          * @param string $fmt save format
          * @return string
          */
-        function out($var, $fmt='php') {
+        public function out($var, $fmt='php') {
 
             if ($this->is_protected()) return '';
             if (is_null($this->_local) || ($this->_default == $this->_local)) return '';
@@ -996,7 +997,7 @@ if (!class_exists('setting_numericopt')) {
      */
     class setting_numericopt extends setting_numeric {
         // just allow an empty config
-        var $_pattern = '/^(|[-]?[0-9]+(?:[-+*][0-9]+)*)$/';
+        protected $_pattern = '/^(|[-]?[0-9]+(?:[-+*][0-9]+)*)$/';
 
 
         /**
@@ -1006,7 +1007,7 @@ if (!class_exists('setting_numericopt')) {
          *
          * @return bool
          */
-        function update($input) {
+        public function update($input) {
             if ($input === '') {
                 return true;
             }
@@ -1028,7 +1029,7 @@ if (!class_exists('setting_onoff')) {
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
-        function html(admin_plugin_config $plugin, $echo = false) {
+        public function html(admin_plugin_config $plugin, $echo = false) {
             $disable = '';
 
             if ($this->is_protected()) {
@@ -1055,7 +1056,7 @@ if (!class_exists('setting_onoff')) {
          * @param  mixed   $input   the new value
          * @return boolean          true if changed, false otherwise (also on error)
          */
-        function update($input) {
+        public function update($input) {
             if ($this->is_protected()) return false;
 
             $input = ($input) ? 1 : 0;
@@ -1073,8 +1074,8 @@ if (!class_exists('setting_multichoice')) {
      * Class setting_multichoice
      */
     class setting_multichoice extends setting_string {
-        var $_choices = array();
-        var $lang; //some custom language strings are stored in setting
+        protected $_choices = array();
+        public $lang; //some custom language strings are stored in setting
 
         /**
          * Build html for label and input of setting
@@ -1083,7 +1084,7 @@ if (!class_exists('setting_multichoice')) {
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
-        function html(admin_plugin_config $plugin, $echo = false) {
+        public function html(admin_plugin_config $plugin, $echo = false) {
             $disable = '';
             $nochoice = '';
 
@@ -1136,7 +1137,7 @@ if (!class_exists('setting_multichoice')) {
          * @param  mixed   $input   the new value
          * @return boolean          true if changed, false otherwise (also on error)
          */
-        function update($input) {
+        public function update($input) {
             if (is_null($input)) return false;
             if ($this->is_protected()) return false;
 
@@ -1158,7 +1159,7 @@ if (!class_exists('setting_dirchoice')) {
      */
     class setting_dirchoice extends setting_multichoice {
 
-        var $_dir = '';
+        protected $_dir = '';
 
         /**
          * Receives current values for the setting $key
@@ -1167,7 +1168,7 @@ if (!class_exists('setting_dirchoice')) {
          * @param mixed $local     local setting value
          * @param mixed $protected protected setting value
          */
-        function initialize($default,$local,$protected) {
+        public function initialize($default,$local,$protected) {
 
             // populate $this->_choices with a list of directories
             $list = array();
@@ -1246,9 +1247,9 @@ if (!class_exists('setting_multicheckbox')) {
      */
     class setting_multicheckbox extends setting_string {
 
-        var $_choices = array();
-        var $_combine = array();
-        var $_other = 'always';
+        protected $_choices = array();
+        protected $_combine = array();
+        protected $_other = 'always';
 
         /**
          * update changed setting with user provided value $input
@@ -1258,7 +1259,7 @@ if (!class_exists('setting_multicheckbox')) {
          * @param  mixed   $input   the new value
          * @return boolean          true if changed, false otherwise (also on error)
          */
-        function update($input) {
+        public function update($input) {
             if ($this->is_protected()) return false;
 
             // split any combined values + convert from array to comma separated string
@@ -1285,7 +1286,7 @@ if (!class_exists('setting_multicheckbox')) {
          * @param bool            $echo   true: show input value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
-        function html(admin_plugin_config $plugin, $echo=false) {
+        public function html(admin_plugin_config $plugin, $echo=false) {
 
             $disable = '';
 
@@ -1360,7 +1361,7 @@ if (!class_exists('setting_multicheckbox')) {
          * @param string $str
          * @return array
          */
-        function _str2array($str) {
+        protected function _str2array($str) {
             $array = explode(',',$str);
 
             if (!empty($this->_combine)) {
@@ -1386,7 +1387,7 @@ if (!class_exists('setting_multicheckbox')) {
          * @param array $input
          * @return string
          */
-        function _array2str($input) {
+        protected function _array2str($input) {
 
             // handle other
             $other = trim($input['other']);
@@ -1418,8 +1419,8 @@ if (!class_exists('setting_regex')){
      */
     class setting_regex extends setting_string {
 
-        var $_delimiter = '/';    // regex delimiter to be used in testing input
-        var $_pregflags = 'ui';   // regex pattern modifiers to be used in testing input
+        protected $_delimiter = '/';    // regex delimiter to be used in testing input
+        protected $_pregflags = 'ui';   // regex pattern modifiers to be used in testing input
 
         /**
          * update changed setting with user provided value $input
@@ -1429,7 +1430,7 @@ if (!class_exists('setting_regex')){
          * @param  mixed   $input   the new value
          * @return boolean          true if changed, false otherwise (incl. on error)
          */
-        function update($input) {
+        public function update($input) {
 
             // let parent do basic checks, value, not changed, etc.
             $local = $this->_local;

@@ -13,20 +13,26 @@ class action_plugin_popularity extends Dokuwiki_Action_Plugin {
     /**
      * @var helper_plugin_popularity
      */
-    var $helper;
+    protected $helper;
 
-    function __construct(){
+    public function __construct(){
         $this->helper = $this->loadHelper('popularity', false);
     }
 
     /**
      * Register its handlers with the dokuwiki's event controller
      */
-    function register(Doku_Event_Handler $controller) {
+    public function register(Doku_Event_Handler $controller) {
         $controller->register_hook('INDEXER_TASKS_RUN', 'AFTER',  $this, '_autosubmit', array());
     }
 
-    function _autosubmit(Doku_Event &$event, $param){
+    /**
+     * Event handler
+     *
+     * @param Doku_Event $event
+     * @param $param
+     */
+    public function _autosubmit(Doku_Event &$event, $param){
         //Do we have to send the data now
         if ( !$this->helper->isAutosubmitEnabled() || $this->_isTooEarlyToSubmit() ){
             return;
@@ -53,7 +59,7 @@ class action_plugin_popularity extends Dokuwiki_Action_Plugin {
      * Check if it's time to send autosubmit data
      * (we should have check if autosubmit is enabled first)
      */
-    function _isTooEarlyToSubmit(){
+    protected function _isTooEarlyToSubmit(){
         $lastSubmit = $this->helper->lastSentTime();
         return $lastSubmit + 24*60*60*30 > time();
     }

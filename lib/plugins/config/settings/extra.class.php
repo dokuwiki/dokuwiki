@@ -15,7 +15,7 @@ if (!class_exists('setting_sepchar')) {
          * @param string $key
          * @param array|null $param array with metadata of setting
          */
-        function __construct($key,$param=null) {
+        public function __construct($key,$param=null) {
             $str = '_-.';
             for ($i=0;$i<strlen($str);$i++) $this->_choices[] = $str{$i};
 
@@ -39,7 +39,7 @@ if (!class_exists('setting_savedir')) {
          * @param  mixed   $input   the new value
          * @return boolean          true if changed, false otherwise (also on error)
          */
-        function update($input) {
+        public function update($input) {
             if ($this->is_protected()) return false;
 
             $value = is_null($this->_local) ? $this->_default : $this->_local;
@@ -70,7 +70,7 @@ if (!class_exists('setting_authtype')) {
          * @param mixed $local     local setting value
          * @param mixed $protected protected setting value
          */
-        function initialize($default,$local,$protected) {
+        public function initialize($default,$local,$protected) {
             /** @var $plugin_controller Doku_Plugin_Controller */
             global $plugin_controller;
 
@@ -90,7 +90,7 @@ if (!class_exists('setting_authtype')) {
          * @param  mixed   $input   the new value
          * @return boolean          true if changed, false otherwise (also on error)
          */
-        function update($input) {
+        public function update($input) {
             /** @var $plugin_controller Doku_Plugin_Controller */
             global $plugin_controller;
 
@@ -143,7 +143,7 @@ if (!class_exists('setting_im_convert')) {
          * @param  mixed   $input   the new value
          * @return boolean          true if changed, false otherwise (also on error)
          */
-        function update($input) {
+        public function update($input) {
             if ($this->is_protected()) return false;
 
             $input = trim($input);
@@ -176,7 +176,7 @@ if (!class_exists('setting_disableactions')) {
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
          * @return array with content array(string $label_html, string $input_html)
          */
-        function html(admin_plugin_config $plugin, $echo=false) {
+        public function html(admin_plugin_config $plugin, $echo=false) {
             global $lang;
 
             // make some language adjustments (there must be a better way)
@@ -197,7 +197,7 @@ if (!class_exists('setting_compression')) {
      */
     class setting_compression extends setting_multichoice {
 
-        var $_choices = array('0');      // 0 = no compression, always supported
+        protected $_choices = array('0');      // 0 = no compression, always supported
 
         /**
          * Receives current values for the setting $key
@@ -206,7 +206,7 @@ if (!class_exists('setting_compression')) {
          * @param mixed $local     local setting value
          * @param mixed $protected protected setting value
          */
-        function initialize($default,$local,$protected) {
+        public function initialize($default,$local,$protected) {
 
             // populate _choices with the compression methods supported by this php installation
             if (function_exists('gzopen')) $this->_choices[] = 'gz';
@@ -223,7 +223,7 @@ if (!class_exists('setting_license')) {
      */
     class setting_license extends setting_multichoice {
 
-        var $_choices = array('');      // none choosen
+        protected $_choices = array('');      // none choosen
 
         /**
          * Receives current values for the setting $key
@@ -232,7 +232,7 @@ if (!class_exists('setting_license')) {
          * @param mixed $local     local setting value
          * @param mixed $protected protected setting value
          */
-        function initialize($default,$local,$protected) {
+        public function initialize($default,$local,$protected) {
             global $license;
 
             foreach($license as $key => $data){
@@ -251,8 +251,8 @@ if (!class_exists('setting_renderer')) {
      * Class setting_renderer
      */
     class setting_renderer extends setting_multichoice {
-        var $_prompts = array();
-        var $_format = null;
+        protected $_prompts = array();
+        protected $_format = null;
 
         /**
          * Receives current values for the setting $key
@@ -261,7 +261,7 @@ if (!class_exists('setting_renderer')) {
          * @param mixed $local     local setting value
          * @param mixed $protected protected setting value
          */
-        function initialize($default,$local,$protected) {
+        public function initialize($default,$local,$protected) {
             $format = $this->_format;
 
             foreach (plugin_list('renderer') as $plugin) {
@@ -284,7 +284,7 @@ if (!class_exists('setting_renderer')) {
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
          * @return array with content array(string $label_html, string $input_html)
          */
-        function html(admin_plugin_config $plugin, $echo=false) {
+        public function html(admin_plugin_config $plugin, $echo=false) {
 
             // make some language adjustments (there must be a better way)
             // transfer some plugin names to the config plugin

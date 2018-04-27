@@ -4,43 +4,43 @@
  * need to inherit from this class
  */
 class admin_plugin_revert extends DokuWiki_Admin_Plugin {
-    var $cmd;
+    protected $cmd;
     // some vars which might need tuning later
-    var $max_lines = 800; // lines to read from changelog
-    var $max_revs  = 20;  // numer of old revisions to check
+    protected $max_lines = 800; // lines to read from changelog
+    protected $max_revs  = 20;  // numer of old revisions to check
 
 
     /**
      * Constructor
      */
-    function __construct(){
+    public function __construct(){
         $this->setupLocale();
     }
 
     /**
      * access for managers
      */
-    function forAdminOnly(){
+    public function forAdminOnly(){
         return false;
     }
 
     /**
      * return sort order for position in admin menu
      */
-    function getMenuSort() {
+    public function getMenuSort() {
         return 40;
     }
 
     /**
      * handle user request
      */
-    function handle() {
+    public function handle() {
     }
 
     /**
      * output appropriate html
      */
-    function html() {
+    public function html() {
         global $INPUT;
 
         echo $this->locale_xhtml('intro');
@@ -57,7 +57,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
     /**
      * Display the form for searching spam pages
      */
-    function _searchform(){
+    protected function _searchform(){
         global $lang, $INPUT;
         echo '<form action="" method="post"><div class="no">';
         echo '<label>'.$this->getLang('filter').': </label>';
@@ -70,7 +70,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
     /**
      * Start the reversion process
      */
-    function _revert($revert,$filter){
+    protected function _revert($revert,$filter){
         echo '<hr /><br />';
         echo '<p>'.$this->getLang('revstart').'</p>';
 
@@ -107,7 +107,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
     /**
      * List recent edits matching the given filter
      */
-    function _list($filter){
+    protected function _list($filter){
         global $conf;
         global $lang;
         echo '<hr /><br />';

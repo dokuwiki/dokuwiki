@@ -23,7 +23,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $this->gui = plugin_load('helper', 'extension_gui');
     }
 
-    function start_form() {
+    public function start_form() {
         $this->form .= '<form id="extension__list" accept-charset="utf-8" method="post" action="">';
         $hidden = array(
             'do'=>'admin',
@@ -38,7 +38,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param helper_plugin_extension_extension  $extension The extension that shall be added
      * @param bool                               $showinfo  Show the info area
      */
-    function add_row(helper_plugin_extension_extension $extension, $showinfo = false) {
+    public function add_row(helper_plugin_extension_extension $extension, $showinfo = false) {
         $this->start_row($extension);
         $this->populate_column('legend', $this->make_legend($extension, $showinfo));
         $this->populate_column('actions', $this->make_actions($extension));
@@ -52,7 +52,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param string $header The content of the header
      * @param int    $level  The level of the header
      */
-    function add_header($id, $header, $level = 2) {
+    public function add_header($id, $header, $level = 2) {
         $this->form .='<h'.$level.' id="'.$id.'">'.hsc($header).'</h'.$level.'>'.DOKU_LF;
     }
 
@@ -61,7 +61,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      *
      * @param string $data The content
      */
-    function add_p($data) {
+    public function add_p($data) {
         $this->form .= '<p>'.hsc($data).'</p>'.DOKU_LF;
     }
 
@@ -69,7 +69,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * Add hidden fields to the form with the given data
      * @param array $array
      */
-    function add_hidden(array $array) {
+    public function add_hidden(array $array) {
         $this->form .= '<div class="no">';
         foreach ($array as $key => $value) {
             $this->form .= '<input type="hidden" name="'.hsc($key).'" value="'.hsc($value).'" />';
@@ -80,7 +80,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
     /**
      * Add closing tags
      */
-    function end_form() {
+    public function end_form() {
         $this->form .= '</ul>';
         $this->form .= '</form>'.DOKU_LF;
     }
@@ -88,7 +88,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
     /**
      * Show message when no results are found
      */
-    function nothing_found() {
+    public function nothing_found() {
         global $lang;
         $this->form .= '<li class="notfound">'.$lang['nothingfound'].'</li>';
     }
@@ -96,7 +96,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
     /**
      * Print the form
      */
-    function render() {
+    public function render() {
         echo $this->form;
     }
 
@@ -132,7 +132,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param helper_plugin_extension_extension $extension The extension
      * @return string The HTML code
      */
-    function make_homepagelink(helper_plugin_extension_extension $extension) {
+    public function make_homepagelink(helper_plugin_extension_extension $extension) {
         $text = $this->getLang('homepage_link');
         $url = hsc($extension->getURL());
         return '<a href="'.$url.'" title="'.$url.'" class ="urlextern">'.$text.'</a> ';
@@ -144,7 +144,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param helper_plugin_extension_extension $extension The extension object
      * @return string The class name
      */
-    function make_class(helper_plugin_extension_extension $extension) {
+    public function make_class(helper_plugin_extension_extension $extension) {
         $class = ($extension->isTemplate()) ? 'template' : 'plugin';
         if($extension->isInstalled()) {
             $class.=' installed';
@@ -163,7 +163,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param helper_plugin_extension_extension $extension The extension object
      * @return string The HTML code of the link
      */
-    function make_author(helper_plugin_extension_extension $extension) {
+    public function make_author(helper_plugin_extension_extension $extension) {
         global $ID;
 
         if($extension->getAuthor()) {
@@ -188,7 +188,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param helper_plugin_extension_extension $extension The extension object
      * @return string The HTML code
      */
-    function make_screenshot(helper_plugin_extension_extension $extension) {
+    public function make_screenshot(helper_plugin_extension_extension $extension) {
         $screen = $extension->getScreenshotURL();
         $thumb = $extension->getThumbnailURL();
 
@@ -219,7 +219,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param bool                              $showinfo  Show the info section
      * @return string The HTML code
      */
-    function make_legend(helper_plugin_extension_extension $extension, $showinfo = false) {
+    public function make_legend(helper_plugin_extension_extension $extension, $showinfo = false) {
         $return  = '<div>';
         $return .= '<h2>';
         $return .= sprintf(
@@ -273,7 +273,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param helper_plugin_extension_extension $extension The extension instance
      * @return string The HTML code
      */
-    function make_linkbar(helper_plugin_extension_extension $extension) {
+    public function make_linkbar(helper_plugin_extension_extension $extension) {
         $return  = '<div class="linkbar">';
         $return .= $this->make_homepagelink($extension);
         if ($extension->getBugtrackerURL()) {
@@ -305,7 +305,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param helper_plugin_extension_extension $extension The extension
      * @return string The HTML code
      */
-    function make_noticearea(helper_plugin_extension_extension $extension) {
+    public function make_noticearea(helper_plugin_extension_extension $extension) {
         $return = '';
         $missing_dependencies = $extension->getMissingDependencies();
         if(!empty($missing_dependencies)) {
@@ -360,7 +360,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param string $url
      * @return string  HTML link
      */
-    function shortlink($url){
+    public function shortlink($url){
         $link = parse_url($url);
 
         $base = $link['host'];
@@ -379,7 +379,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param helper_plugin_extension_extension $extension The extension
      * @return string The HTML code
      */
-    function make_info(helper_plugin_extension_extension $extension) {
+    public function make_info(helper_plugin_extension_extension $extension) {
         $default = $this->getLang('unknown');
         $return = '<dl class="details">';
 
@@ -471,7 +471,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param array $ext The extensions
      * @return string The HTML code
      */
-    function make_linklist($ext) {
+    public function make_linklist($ext) {
         $return = '';
         foreach ($ext as $link) {
             $return .= '<bdi><a href="'.
@@ -486,7 +486,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param helper_plugin_extension_extension $extension The extension
      * @return string The HTML code
      */
-    function make_actions(helper_plugin_extension_extension $extension) {
+    public function make_actions(helper_plugin_extension_extension $extension) {
         global $conf;
         $return = '';
         $errors = '';
@@ -554,7 +554,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param helper_plugin_extension_extension $extension The extension
      * @return string The HTML code
      */
-    function make_action($action, $extension) {
+    public function make_action($action, $extension) {
         $title = '';
 
         switch ($action) {
@@ -577,7 +577,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param helper_plugin_extension_extension $extension The extension
      * @return string The description of all relevant statusses
      */
-    function make_status(helper_plugin_extension_extension $extension) {
+    public function make_status(helper_plugin_extension_extension $extension) {
         $status = array();
 
 

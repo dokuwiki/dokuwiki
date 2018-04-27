@@ -13,8 +13,8 @@
  * need to inherit from this class
  */
 class admin_plugin_acl extends DokuWiki_Admin_Plugin {
-    var $acl = null;
-    var $ns  = null;
+    public $acl = null;
+    protected $ns  = null;
     /**
      * The currently selected item, associative array with id and type.
      * Populated from (in this order):
@@ -23,22 +23,22 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * $ns
      * $ID
      */
-    var $current_item = null;
-    var $who = '';
-    var $usersgroups = array();
-    var $specials = array();
+    protected $current_item = null;
+    protected $who = '';
+    protected $usersgroups = array();
+    protected $specials = array();
 
     /**
      * return prompt for admin menu
      */
-    function getMenuText($language) {
+    public function getMenuText($language) {
         return $this->getLang('admin_acl');
     }
 
     /**
      * return sort order for position in admin menu
      */
-    function getMenuSort() {
+    public function getMenuSort() {
         return 1;
     }
 
@@ -49,7 +49,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function handle() {
+    public function handle() {
         global $AUTH_ACL;
         global $ID;
         global $auth;
@@ -169,7 +169,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * @author  Frank Schubert <frank@schokilade.de>
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
-    function html() {
+    public function html() {
         echo '<div id="acl_manager">'.NL;
         echo '<h1>'.$this->getLang('admin_acl').'</h1>'.NL;
         echo '<div class="level1">'.NL;
@@ -202,7 +202,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function _get_opts($addopts=null){
+    protected function _get_opts($addopts=null){
         $opts = array(
                     'do'=>'admin',
                     'page'=>'acl',
@@ -219,7 +219,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function _html_explorer(){
+    protected function _html_explorer(){
         global $conf;
         global $ID;
         global $lang;
@@ -249,9 +249,10 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * get a combined list of media and page files
      *
      * @param string $folder an already converted filesystem folder of the current namespace
-     * @param string $limit  limit the search to this folder
+     * @param string $limit limit the search to this folder
+     * @return array
      */
-    function _get_tree($folder,$limit=''){
+    protected function _get_tree($folder,$limit=''){
         global $conf;
 
         // read tree structure from pages and media
@@ -279,7 +280,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * Sorts the combined trees of media and page files
      */
-    function _tree_sort($a,$b){
+    public function _tree_sort($a,$b){
         // handle the trivial cases first
         if ($a['id'] == '') return -1;
         if ($b['id'] == '') return 1;
@@ -313,6 +314,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         // before that other part.
         if (empty($a_ids)) return ($a['type'] == 'd') ? -1 : 1;
         if (empty($b_ids)) return ($b['type'] == 'd') ? 1 : -1;
+        return 0; //shouldn't happen
     }
 
     /**
@@ -321,7 +323,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function _html_detail(){
+    protected function _html_detail(){
         global $ID;
 
         echo '<form action="'.wl().'" method="post" accept-charset="utf-8"><div class="no">'.NL;
@@ -348,7 +350,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     /**
      * Print info and editor
      */
-    function _html_info(){
+    protected function _html_info(){
         global $ID;
 
         if($this->who){
@@ -376,7 +378,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function _html_acleditor($current){
+    protected function _html_acleditor($current){
         global $lang;
 
         echo '<fieldset>';
@@ -403,7 +405,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function _html_explain($current){
+    protected function _html_explain($current){
         global $ID;
         global $auth;
 
@@ -486,7 +488,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function _html_list_acl($item){
+    protected function _html_list_acl($item){
         $ret = '';
         // what to display
         if(!empty($item['label'])){
@@ -528,8 +530,13 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         return $ret;
     }
 
-
-    function _html_li_acl($item){
+    /**
+     * List Item formatter
+     *
+     * @param array $item
+     * @return string
+     */
+    public function _html_li_acl($item){
         return '<li class="level' . $item['level'] . ' ' .
                ($item['open'] ? 'open' : 'closed') . '">';
     }
@@ -540,7 +547,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function _init_acl_config(){
+    public function _init_acl_config(){
         global $AUTH_ACL;
         global $conf;
         $acl_config=array();
@@ -587,7 +594,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function _html_table(){
+    protected function _html_table(){
         global $lang;
         global $ID;
 
@@ -657,7 +664,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function _get_exact_perm(){
+    protected function _get_exact_perm(){
         global $ID;
         if($this->ns){
             if($this->ns == '*'){
@@ -681,7 +688,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * @author  Frank Schubert <frank@schokilade.de>
      */
-    function _acl_add($acl_scope, $acl_user, $acl_level){
+    public function _acl_add($acl_scope, $acl_user, $acl_level){
         global $config_cascade;
         $acl_user = auth_nameencode($acl_user,true);
 
@@ -700,7 +707,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * @author  Frank Schubert <frank@schokilade.de>
      */
-    function _acl_del($acl_scope, $acl_user){
+    public function _acl_del($acl_scope, $acl_user){
         global $config_cascade;
         $acl_user = auth_nameencode($acl_user,true);
 
@@ -715,7 +722,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * @author  Frank Schubert <frank@schokilade.de>
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
-    function _html_checkboxes($setperm,$ispage,$name){
+    protected function _html_checkboxes($setperm,$ispage,$name){
         global $lang;
 
         static $label = 0; //number labels
@@ -754,7 +761,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
-    function _html_select(){
+    protected function _html_select(){
         $inlist = false;
         $usel = '';
         $gsel = '';

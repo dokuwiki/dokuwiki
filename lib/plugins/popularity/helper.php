@@ -9,28 +9,28 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
     /**
      * The url where the data should be sent
      */
-    var $submitUrl = 'http://update.dokuwiki.org/popularity.php';
+    public $submitUrl = 'http://update.dokuwiki.org/popularity.php';
 
     /**
      * Name of the file which determine if the the autosubmit is enabled,
      * and when it was submited for the last time
      */
-    var $autosubmitFile;
+    public $autosubmitFile;
 
     /**
      * File where the last error which happened when we tried to autosubmit, will be log
      */
-    var $autosubmitErrorFile;
+    public $autosubmitErrorFile;
 
     /**
      * Name of the file which determine when the popularity data was manually
      * submitted for the last time
      * (If this file doesn't exist, the data has never been sent)
      */
-    var $popularityLastSubmitFile;
+    public $popularityLastSubmitFile;
 
 
-    function __construct(){
+    public function __construct(){
         global $conf;
         $this->autosubmitFile = $conf['cachedir'].'/autosubmit.txt';
         $this->autosubmitErrorFile = $conf['cachedir'].'/autosubmitError.txt';
@@ -38,46 +38,11 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
     }
 
     /**
-     * Return methods of this helper
-     *
-     * @return array with methods description
-     */
-    function getMethods(){
-        $result = array();
-        $result[] = array(
-                'name'   => 'isAutoSubmitEnabled',
-                'desc'   => 'Check if autosubmit is enabled',
-                'params' => array(),
-                'return' => array('result' => 'bool')
-                );
-        $result[] = array(
-                'name'   => 'sendData',
-                'desc'   => 'Send the popularity data',
-                'params' => array('data' => 'string'),
-                'return' => array()
-                );
-        $result[] = array(
-                'name' => 'gatherAsString',
-                'desc' => 'Gather the popularity data',
-                'params' => array(),
-                'return' => array('data' => 'string')
-                );
-        $result[] = array(
-                'name'   => 'lastSentTime',
-                'desc'   => 'Compute the last time popularity data was sent',
-                'params' => array(),
-                'return' => array('data' => 'int')
-                );
-        return $result;
-
-    }
-
-    /**
      * Check if autosubmit is enabled
      *
      * @return boolean TRUE if we should send data once a month, FALSE otherwise
      */
-    function isAutoSubmitEnabled(){
+    public function isAutoSubmitEnabled(){
         return file_exists($this->autosubmitFile);
     }
 
@@ -87,7 +52,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      * @param string $data The popularity data
      * @return string An empty string if everything worked fine, a string describing the error otherwise
      */
-    function sendData($data){
+    public function sendData($data){
         $error = '';
         $httpClient = new DokuHTTPClient();
         $status = $httpClient->sendRequest($this->submitUrl, array('data' => $data), 'POST');
@@ -102,7 +67,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      *
      * @return int
      */
-    function lastSentTime(){
+    public function lastSentTime(){
         $manualSubmission = @filemtime($this->popularityLastSubmitFile);
         $autoSubmission   = @filemtime($this->autosubmitFile);
 
@@ -114,7 +79,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      *
      * @return string The popularity data as a string
      */
-    function gatherAsString(){
+    public function gatherAsString(){
         $data = $this->_gather();
         $string = '';
         foreach($data as $key => $val){
@@ -132,7 +97,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      *
      * @return array The popularity data as an array
      */
-    function _gather(){
+    protected function _gather(){
         global $conf;
         /** @var $auth DokuWiki_Auth_Plugin */
         global $auth;
@@ -259,6 +224,11 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         return $data;
     }
 
+    /**
+     * Triggers event to let plugins add their own data
+     *
+     * @param $data
+     */
     protected function _add_plugin_usage_data(&$data){
         $pluginsData = array();
         trigger_event('PLUGIN_POPULARITY_DATA_SETUP', $pluginsData);
@@ -284,7 +254,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      * @param array  $opts  option array as given to search()
      * @return bool
      */
-    function _search_count(&$data,$base,$file,$type,$lvl,$opts){
+    protected function _search_count(&$data,$base,$file,$type,$lvl,$opts){
         // traverse
         if($type == 'd'){
             if($data['dir_nest'] < $lvl) $data['dir_nest'] = $lvl;
@@ -315,7 +285,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      * @param string $v
      * @return int|string
      */
-    function _to_byte($v){
+    protected function _to_byte($v){
         $l = substr($v, -1);
         $ret = substr($v, 0, -1);
         switch(strtoupper($l)){
