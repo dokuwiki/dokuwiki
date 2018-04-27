@@ -114,6 +114,15 @@ function load_autoload($name){
     // namespace to directory conversion
     $name = str_replace('\\', '/', $name);
 
+    // test namespace
+    if(substr($name, 0, 14) == 'dokuwiki/test/') {
+        $file = DOKU_INC . '_test/' . substr($name, 14) . '.php';
+        if(file_exists($file)) {
+            require $file;
+            return true;
+        }
+    }
+
     // plugin namespace
     if(substr($name, 0, 16) == 'dokuwiki/plugin/') {
         $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace

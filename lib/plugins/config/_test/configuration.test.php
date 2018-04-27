@@ -25,7 +25,7 @@ class plugin_config_configuration_test extends DokuWikiTest {
     function test_readconfig() {
         $confmgr = new configuration($this->meta);
 
-        $conf = $confmgr->_read_config($this->config);
+        $conf = $this->callInaccessibleMethod($confmgr, '_read_config', [$this->config]);
 
         // var_dump($conf);
 
@@ -44,7 +44,7 @@ class plugin_config_configuration_test extends DokuWikiTest {
     function test_readconfig_onoff() {
         $confmgr = new configuration($this->meta);
 
-        $conf = $confmgr->_read_config($this->config);
+        $conf = $this->callInaccessibleMethod($confmgr, '_read_config', [$this->config]);
 
         // var_dump($conf);
 

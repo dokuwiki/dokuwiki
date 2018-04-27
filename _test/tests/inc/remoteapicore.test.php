@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\test\mock\DokuWiki_Auth_Plugin;
+
 /**
  * Class remoteapicore_test
  */

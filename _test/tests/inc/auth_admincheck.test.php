@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\test\mock\DokuWiki_Auth_Plugin;
+
 class auth_admin_test_AuthInSensitive extends DokuWiki_Auth_Plugin {
     function isCaseSensitive(){
         return false;
