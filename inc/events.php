@@ -29,7 +29,7 @@ class Doku_Event {
      * @param string $name
      * @param mixed $data
      */
-    function __construct($name, &$data) {
+    public function __construct($name, &$data) {
 
         $this->name = $name;
         $this->data =& $data;
@@ -39,7 +39,7 @@ class Doku_Event {
     /**
      * @return string
      */
-    function __toString() {
+    public function __toString() {
         return $this->name;
     }
 
@@ -61,7 +61,7 @@ class Doku_Event {
      * @param bool $enablePreventDefault
      * @return bool results of processing the event, usually $this->_default
      */
-    function advise_before($enablePreventDefault=true) {
+    public function advise_before($enablePreventDefault=true) {
         global $EVENT_HANDLER;
 
         $this->canPreventDefault = $enablePreventDefault;
@@ -70,7 +70,7 @@ class Doku_Event {
         return (!$enablePreventDefault || $this->_default);
     }
 
-    function advise_after() {
+    public function advise_after() {
         global $EVENT_HANDLER;
 
         $this->_continue = true;
@@ -92,7 +92,7 @@ class Doku_Event {
      *          or the results of the default action (as modified by <event>_after handlers)
      *          or NULL no action took place and no handler modified the value
      */
-    function trigger($action=null, $enablePrevent=true) {
+    public function trigger($action=null, $enablePrevent=true) {
 
         if (!is_callable($action)) {
             $enablePrevent = false;
@@ -173,7 +173,7 @@ class Doku_Event_Handler {
      * constructor, loads all action plugins and calls their register() method giving them
      * an opportunity to register any hooks they require
      */
-    function __construct() {
+    public function __construct() {
 
         // load action plugins
         /** @var DokuWiki_Action_Plugin $plugin */
@@ -200,7 +200,7 @@ class Doku_Event_Handler {
      * @param  mixed    $param   data passed to the event handler
      * @param  int      $seq     sequence number for ordering hook execution (ascending)
      */
-    function register_hook($event, $advise, $obj, $method, $param=null, $seq=0) {
+    public function register_hook($event, $advise, $obj, $method, $param=null, $seq=0) {
         $seq = (int)$seq;
         $doSort = !isset($this->_hooks[$event.'_'.$advise][$seq]);
         $this->_hooks[$event.'_'.$advise][$seq][] = array($obj, $method, $param);
@@ -216,7 +216,7 @@ class Doku_Event_Handler {
      * @param Doku_Event $event
      * @param string     $advise BEFORE or AFTER
      */
-    function process_event($event,$advise='') {
+    public function process_event($event,$advise='') {
 
         $evt_name = $event->name . ($advise ? '_'.$advise : '_BEFORE');
 

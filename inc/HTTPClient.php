@@ -28,53 +28,53 @@ class HTTPClientException extends Exception { }
  */
 class HTTPClient {
     //set these if you like
-    var $agent;         // User agent
-    var $http;          // HTTP version defaults to 1.0
-    var $timeout;       // read timeout (seconds)
-    var $cookies;
-    var $referer;
-    var $max_redirect;
-    var $max_bodysize;
-    var $max_bodysize_abort = true;  // if set, abort if the response body is bigger than max_bodysize
-    var $header_regexp; // if set this RE must match against the headers, else abort
-    var $headers;
-    var $debug;
-    var $start = 0.0; // for timings
-    var $keep_alive = true; // keep alive rocks
+    public $agent;         // User agent
+    public $http;          // HTTP version defaults to 1.0
+    public $timeout;       // read timeout (seconds)
+    public $cookies;
+    public $referer;
+    public $max_redirect;
+    public $max_bodysize;
+    public $max_bodysize_abort = true;  // if set, abort if the response body is bigger than max_bodysize
+    public $header_regexp; // if set this RE must match against the headers, else abort
+    public $headers;
+    public $debug;
+    public $start = 0.0; // for timings
+    public $keep_alive = true; // keep alive rocks
 
     // don't set these, read on error
-    var $error;
-    var $redirect_count;
+    public $error;
+    public $redirect_count;
 
     // read these after a successful request
-    var $status;
-    var $resp_body;
-    var $resp_headers;
+    public $status;
+    public $resp_body;
+    public $resp_headers;
 
     // set these to do basic authentication
-    var $user;
-    var $pass;
+    public $user;
+    public $pass;
 
     // set these if you need to use a proxy
-    var $proxy_host;
-    var $proxy_port;
-    var $proxy_user;
-    var $proxy_pass;
-    var $proxy_ssl; //boolean set to true if your proxy needs SSL
-    var $proxy_except; // regexp of URLs to exclude from proxy
+    public $proxy_host;
+    public $proxy_port;
+    public $proxy_user;
+    public $proxy_pass;
+    public $proxy_ssl; //boolean set to true if your proxy needs SSL
+    public $proxy_except; // regexp of URLs to exclude from proxy
 
     // list of kept alive connections
-    static $connections = array();
+    protected static $connections = array();
 
     // what we use as boundary on multipart/form-data posts
-    var $boundary = '---DokuWikiHTTPClient--4523452351';
+    protected $boundary = '---DokuWikiHTTPClient--4523452351';
 
     /**
      * Constructor.
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function __construct(){
+    public function __construct(){
         $this->agent        = 'Mozilla/4.0 (compatible; DokuWiki HTTP Client; '.PHP_OS.')';
         $this->timeout      = 15;
         $this->cookies      = array();
@@ -105,7 +105,7 @@ class HTTPClient {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function get($url,$sloppy304=false){
+    public function get($url,$sloppy304=false){
         if(!$this->sendRequest($url)) return false;
         if($this->status == 304 && $sloppy304) return $this->resp_body;
         if($this->status < 200 || $this->status > 206) return false;
@@ -127,7 +127,7 @@ class HTTPClient {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function dget($url,$data,$sloppy304=false){
+    public function dget($url,$data,$sloppy304=false){
         if(strpos($url,'?')){
             $url .= '&';
         }else{
@@ -147,7 +147,7 @@ class HTTPClient {
      * @return false|string  response body, false on error
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function post($url,$data){
+    public function post($url,$data){
         if(!$this->sendRequest($url,$data,'POST')) return false;
         if($this->status < 200 || $this->status > 206) return false;
         return $this->resp_body;
@@ -170,7 +170,7 @@ class HTTPClient {
      * @author Andreas Goetz <cpuidle@gmx.de>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function sendRequest($url,$data='',$method='GET'){
+    public function sendRequest($url,$data='',$method='GET'){
         $this->start  = $this->_time();
         $this->error  = '';
         $this->status = 0;
@@ -517,7 +517,7 @@ class HTTPClient {
      * @throws HTTPClientException when a tunnel is needed but could not be established
      * @return bool true if a tunnel was established
      */
-    function _ssltunnel(&$socket, &$requesturl){
+    protected function _ssltunnel(&$socket, &$requesturl){
         if(!$this->proxy_host) return false;
         $requestinfo = parse_url($requesturl);
         if($requestinfo['scheme'] != 'https') return false;
@@ -579,7 +579,7 @@ class HTTPClient {
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    function _sendData($socket, $data, $message) {
+    protected function _sendData($socket, $data, $message) {
         // send request
         $towrite = strlen($data);
         $written = 0;
@@ -624,7 +624,7 @@ class HTTPClient {
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    function _readData($socket, $nbytes, $message, $ignore_eof = false) {
+    protected function _readData($socket, $nbytes, $message, $ignore_eof = false) {
         $r_data = '';
         // Does not return immediately so timeout and eof can be checked
         if ($nbytes < 0) $nbytes = 0;
@@ -674,7 +674,7 @@ class HTTPClient {
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    function _readLine($socket, $message) {
+    protected function _readLine($socket, $message) {
         $r_data = '';
         do {
             $time_used = $this->_time() - $this->start;
@@ -710,7 +710,7 @@ class HTTPClient {
      * @param string $info
      * @param mixed  $var
      */
-    function _debug($info,$var=null){
+    protected function _debug($info,$var=null){
         if(!$this->debug) return;
         if(php_sapi_name() == 'cli'){
             $this->_debug_text($info, $var);
@@ -725,7 +725,7 @@ class HTTPClient {
      * @param string $info
      * @param mixed  $var
      */
-    function _debug_html($info, $var=null){
+    protected function _debug_html($info, $var=null){
         print '<b>'.$info.'</b> '.($this->_time() - $this->start).'s<br />';
         if(!is_null($var)){
             ob_start();
@@ -742,7 +742,7 @@ class HTTPClient {
      * @param string $info
      * @param mixed  $var
      */
-    function _debug_text($info, $var=null){
+    protected function _debug_text($info, $var=null){
         print '*'.$info.'* '.($this->_time() - $this->start)."s\n";
         if(!is_null($var)) print_r($var);
         print "\n-----------------------------------------------\n";
@@ -753,7 +753,7 @@ class HTTPClient {
      *
      * @return float
      */
-    static function _time(){
+    protected static function _time(){
         list($usec, $sec) = explode(" ", microtime());
         return ((float)$usec + (float)$sec);
     }
@@ -768,7 +768,7 @@ class HTTPClient {
      * @param string $string
      * @return array
      */
-    function _parseHeaders($string){
+    protected function _parseHeaders($string){
         $headers = array();
         $lines = explode("\n",$string);
         array_shift($lines); //skip first line (status)
@@ -799,7 +799,7 @@ class HTTPClient {
      * @param array $headers
      * @return string
      */
-    function _buildHeaders($headers){
+    protected function _buildHeaders($headers){
         $string = '';
         foreach($headers as $key => $value){
             if($value === '') continue;
@@ -815,7 +815,7 @@ class HTTPClient {
      *
      * @return string
      */
-    function _getCookies(){
+    protected function _getCookies(){
         $headers = '';
         foreach ($this->cookies as $key => $val){
             $headers .= "$key=$val; ";
@@ -833,7 +833,7 @@ class HTTPClient {
      * @param array $data
      * @return string
      */
-    function _postEncode($data){
+    protected function _postEncode($data){
         return http_build_query($data,'','&');
     }
 
@@ -846,7 +846,7 @@ class HTTPClient {
      * @param array $data
      * @return string
      */
-    function _postMultipartEncode($data){
+    protected function _postMultipartEncode($data){
         $boundary = '--'.$this->boundary;
         $out = '';
         foreach($data as $key => $val){
@@ -877,7 +877,7 @@ class HTTPClient {
      * @param  string $port
      * @return string unique identifier
      */
-    function _uniqueConnectionId($server, $port) {
+    protected function _uniqueConnectionId($server, $port) {
         return "$server:$port";
     }
 }
@@ -895,7 +895,7 @@ class DokuHTTPClient extends HTTPClient {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function __construct(){
+    public function __construct(){
         global $conf;
 
         // call parent constructor
@@ -936,7 +936,7 @@ class DokuHTTPClient extends HTTPClient {
      * @param string $method
      * @return bool
      */
-    function sendRequest($url,$data='',$method='GET'){
+    public function sendRequest($url,$data='',$method='GET'){
         $httpdata = array('url'    => $url,
                           'data'   => $data,
                           'method' => $method);

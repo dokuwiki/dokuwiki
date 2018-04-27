@@ -13,7 +13,7 @@ class FeedParser extends SimplePie {
     /**
      * Constructor. Set some defaults
      */
-    function __construct(){
+    public function __construct(){
         parent::__construct();
         $this->enable_cache(false);
         $this->set_file_class('FeedParser_File');
@@ -24,7 +24,7 @@ class FeedParser extends SimplePie {
      *
      * @param string $url
      */
-    function feed_url($url){
+    public function feed_url($url){
         $this->set_feed_url($url);
     }
 }
@@ -35,12 +35,7 @@ class FeedParser extends SimplePie {
  * Replaces SimplePie's own class
  */
 class FeedParser_File extends SimplePie_File {
-    var $http;
-    var $useragent;
-    var $success = true;
-    var $headers = array();
-    var $body;
-    var $error;
+    protected $http;
     /** @noinspection PhpMissingParentConstructorInspection */
 
     /**
@@ -50,7 +45,7 @@ class FeedParser_File extends SimplePie_File {
      *
      * @inheritdoc
      */
-    function __construct($url, $timeout=10, $redirects=5,
+    public function __construct($url, $timeout=10, $redirects=5,
                          $headers=null, $useragent=null, $force_fsockopen=false, $curl_options = array()) {
         $this->http    = new DokuHTTPClient();
         $this->success = $this->http->sendRequest($url);
@@ -65,17 +60,17 @@ class FeedParser_File extends SimplePie_File {
     }
 
     /** @inheritdoc */
-    function headers(){
+    public function headers(){
         return $this->headers;
     }
 
     /** @inheritdoc */
-    function body(){
+    public function body(){
         return $this->body;
     }
 
     /** @inheritdoc */
-    function close(){
+    public function close(){
         return true;
     }
 

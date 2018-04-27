@@ -21,7 +21,7 @@ class PassHash {
      * @param string $hash  Hash to compare against
      * @return  bool
      */
-    function verify_hash($clear, $hash) {
+    public function verify_hash($clear, $hash) {
         $method = '';
         $salt   = '';
         $magic  = '';

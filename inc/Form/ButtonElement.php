@@ -17,7 +17,7 @@ class ButtonElement extends Element {
      * @param string $name
      * @param string $content HTML content of the button. You have to escape it yourself.
      */
-    function __construct($name, $content = '') {
+    public function __construct($name, $content = '') {
         parent::__construct('button', array('name' => $name, 'value' => 1));
         $this->content = $content;
     }

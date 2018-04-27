@@ -425,7 +425,7 @@ class RemoteAPICore {
      * @param string $id page id
      * @return array
      */
-    function listBackLinks($id){
+    public function listBackLinks($id){
         return ft_backlinks($this->resolvePageId($id));
     }
 

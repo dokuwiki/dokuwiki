@@ -649,7 +649,7 @@ if(!class_exists('utf8_entity_decoder')){
         /**
          * Initializes the decoding tables
          */
-        function __construct() {
+        public function __construct() {
             $table = get_html_translation_table(HTML_ENTITIES);
             $table = array_flip($table);
             $this->table = array_map(array(&$this,'makeutf8'), $table);
@@ -661,7 +661,7 @@ if(!class_exists('utf8_entity_decoder')){
          * @param string $c
          * @return string|false
          */
-        function makeutf8($c) {
+        public function makeutf8($c) {
             return unicode_to_utf8(array(ord($c)));
         }
 
@@ -671,7 +671,7 @@ if(!class_exists('utf8_entity_decoder')){
          * @param string $ent An entity
          * @return string|false
          */
-        function decode($ent) {
+        public function decode($ent) {
             if ($ent[1] == '#') {
                 return utf8_decode_numeric($ent);
             } elseif (array_key_exists($ent[0],$this->table)) {

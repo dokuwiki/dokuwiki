@@ -28,7 +28,7 @@ class Input {
     /**
      * Intilizes the Input class and it subcomponents
      */
-    function __construct() {
+    public function __construct() {
         $this->access = &$_REQUEST;
         $this->post   = new PostInput();
         $this->get    = new GetInput();
@@ -273,12 +273,13 @@ class Input {
  * Internal class used for $_POST access in Input class
  */
 class PostInput extends Input {
+
     protected $access;
 
-    /**
+    /** @noinspection PhpMissingParentConstructorInspection
      * Initialize the $access array, remove subclass members
      */
-    function __construct() {
+    public function __construct() {
         $this->access = &$_POST;
     }
 
@@ -300,10 +301,10 @@ class PostInput extends Input {
 class GetInput extends Input {
     protected $access;
 
-    /**
+    /** @noinspection PhpMissingParentConstructorInspection
      * Initialize the $access array, remove subclass members
      */
-    function __construct() {
+    public function __construct() {
         $this->access = &$_GET;
     }
 
@@ -325,10 +326,10 @@ class GetInput extends Input {
 class ServerInput extends Input {
     protected $access;
 
-    /**
+    /** @noinspection PhpMissingParentConstructorInspection
      * Initialize the $access array, remove subclass members
      */
-    function __construct() {
+    public function __construct() {
         $this->access = &$_SERVER;
     }
 

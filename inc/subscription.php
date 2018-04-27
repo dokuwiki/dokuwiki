@@ -249,10 +249,10 @@ class Subscription {
      *
      * @param string $id  Page ID, defaults to global $ID
      * @param string $user User, defaults to $_SERVER['REMOTE_USER']
-     * @return array
+     * @return array|false
      * @author Adrian Lang <lang@cosmocode.de>
      */
-    function user_subscription($id = '', $user = '') {
+    public function user_subscription($id = '', $user = '') {
         if(!$this->isenabled()) return false;
 
         global $ID;

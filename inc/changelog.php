@@ -894,7 +894,7 @@ abstract class ChangeLog {
     * @param number $date_at timestamp
     * @return string revision ('' for current)
     */
-    function getLastRevisionAt($date_at){
+    public function getLastRevisionAt($date_at){
         //requested date_at(timestamp) younger or equal then modified_time($this->id) => load current
         if(file_exists($this->getFilename()) && $date_at >= @filemtime($this->getFilename())) {
             return '';
