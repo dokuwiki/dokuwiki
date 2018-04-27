@@ -12,14 +12,11 @@
 $updateVersion = "50";
 
 // let people know if they are running an unsupported version of PHP
-$required_php = "5.6";
+define('DOKU_MIN_PHP', '5.6');
 
-if (version_compare(phpversion(), $required_php, '<')) {
-
-  die('<h2 style="margin:1.2em;text-align:center;color:red;line-height:1.6;" >Web Server Setup Error: The web server currently runs PHP/'.phpversion().'.<br>
-       <span style="color:#606060;" >DokuWiki requires PHP/'.$required_php.' or higher.</span></h3>');
-} 
-
+if (version_compare(PHP_VERSION, DOKU_MIN_PHP, '<')) {
+  die('WEB SERVER SETUP ERROR: Your PHP version '.PHP_VERSION.' that is running on your web server does not meet the required minimum of '. DOKU_MIN_PHP);
+}
 
 //  xdebug_start_profiling();
 
