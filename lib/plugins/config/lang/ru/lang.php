@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Zhassulan <zyesmukanov@gmail.com>
  * @author Denis Simakov <akinoame1@gmail.com>
@@ -14,7 +15,6 @@
  * @author Kirill Krasnov <krasnovforum@gmail.com>
  * @author Vlad Tsybenko <vlad.development@gmail.com>
  * @author Aleksey Osadchiy <rfc@nm.ru>
- * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Ladyko Andrey <fylh@succexy.spb.ru>
  * @author Eugene <windy.wanderer@gmail.com>
  * @author Johnny Utah <pcpa@cyberpunk.su>
@@ -124,7 +124,7 @@ $lang['fetchsize']             = 'Максимальный размер файл
 $lang['subscribers']           = 'Разрешить подписку на изменения';
 $lang['subscribe_time']        = 'Интервал рассылки подписок и сводок (сек.). Должен быть меньше, чем значение, указанное в recent_days.';
 $lang['notify']                = 'Всегда отправлять сообщения об изменениях на этот электронный адрес';
-$lang['registernotify']        = 'Всегода отправлять информацию о новых зарегистрированных пользователях на этот электронный адрес';
+$lang['registernotify']        = 'Всегда отправлять информацию о новых зарегистрированных пользователях на этот электронный адрес';
 $lang['mailfrom']              = 'Электронный адрес вики (От:)';
 $lang['mailreturnpath']        = 'Адрес электронной почты для доставки отчета о недоставленных сообщений';
 $lang['mailprefix']            = 'Префикс, используемый для автоматического письма, станет темой сообщения. Оставьте поле пустым для использования названия вики.';
@@ -149,13 +149,14 @@ $lang['autoplural']            = 'Проверять можественную ф
 $lang['compression']           = 'Метод сжатия для архивных файлов';
 $lang['gzip_output']           = 'Использовать gzip-сжатие для xhtml (Content-Encoding)';
 $lang['compress']              = 'Сжимать файлы CSS и javascript';
-$lang['cssdatauri']            = 'Размер в байтах, до которого изображения, указанные в CSS-файлах, должны быть встроены прямо в таблицу стилей, для уменьшения избыточных HTTP-запросов. Этот метод не будет работать в IE версии 7 и ниже! Установка от <code>400</code> до <code>600</code> байт является хорошим показателем. Установите <code>0</code>, чтобы отключить.';
+$lang['cssdatauri']            = 'Размер в байтах, до которого изображения, указанные в CSS-файлах, должны быть встроены прямо в таблицу стилей для уменьшения избыточных HTTP-запросов. Этот метод не будет работать в IE версии 7 и ниже! Установка от <code>400</code> до <code>600</code> байт является хорошим показателем. Установите <code>0</code>, чтобы отключить.';
 $lang['send404']               = 'Посылать «HTTP 404/Страница не найдена» для несуществующих страниц';
 $lang['broken_iua']            = 'Возможно, функция ignore_user_abort не работает в вашей системе? Это может привести к потере функциональности индексирования поиска. Эта проблема присутствует, например, в IIS+PHP/CGI. Для дополнительной информации смотрите <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">баг 852</a>.';
 $lang['xsendfile']             = 'Используете заголовок X-Sendfile для загрузки файлов на веб-сервер? Ваш веб-сервер должен поддерживать это.';
 $lang['renderer_xhtml']        = 'Обработчик основного (xhtml) вывода вики';
 $lang['renderer__core']        = '%s (ядро «Докувики»)';
 $lang['renderer__plugin']      = '%s (плагин)';
+$lang['search_nslimit']        = 'Ограничить поиск текущими пространствами имён X. Когда поиск выполняется со страницы в более глубоком пространстве имён, первые X-пространства имен будут добавлены в качестве фильтра.';
 $lang['search_fragment_o_exact'] = 'точно';
 $lang['search_fragment_o_starts_with'] = 'начинается на';
 $lang['search_fragment_o_ends_with'] = 'заканчивается';
