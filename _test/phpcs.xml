@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ruleset name="DokuWiki Coding Standard Standard" namespace="DokuWiki\CS\Standard">
+    <description>Coding Standard used for DokuWiki</description>
+    <file>../inc</file>
+    <file>../lib</file>
+    <file>../bin</file>
+    <file>../doku.php</file>
+    <file>../index.php</file>
+    <file>../feed.php</file>
+    <file>../install.php</file>
+    <exclude-pattern>*/lang/*/lang.php</exclude-pattern>
+    <exclude-pattern>*/lang/*/settings.php</exclude-pattern>
+    <exclude-pattern>*/_test/*</exclude-pattern>
+    <arg name="colors"/>
+    <arg value="sp"/>
+    <arg name="extensions" value="php"/>
+    <!-- rules on top of PSR-2 -->
+    <rule ref="PSR2">
+        <!-- the following rule is not in PSR-2 and breaks the guardian pattern -->
+        <exclude name="Generic.ControlStructures.InlineControlStructure.NotAllowed"/>
+    </rule>
+    <!-- configure additional rules here later -->
+</ruleset>
