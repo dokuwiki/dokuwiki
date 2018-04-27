@@ -2,19 +2,15 @@
 /**
  * Syntax Plugin Prototype
  *
+ * All DokuWiki plugins to extend the parser/rendering mechanism
+ * need to inherit from this class
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
+abstract class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
 
-/**
- * All DokuWiki plugins to extend the parser/rendering mechanism
- * need to inherit from this class
- */
-class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
-
-    var $allowedModesSetup = false;
+    protected $allowedModesSetup = false;
 
     /**
      * Syntax Type
@@ -23,10 +19,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      *
      * @return string
      */
-    function getType(){
-        trigger_error('getType() not implemented in '.get_class($this), E_USER_WARNING);
-        return '';
-    }
+    abstract public function getType();
 
     /**
      * Allowed Mode Types
@@ -37,7 +30,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      *
      * @return array
      */
-    function getAllowedTypes() {
+    public function getAllowedTypes() {
         return array();
     }
 
@@ -55,7 +48,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      *
      * @return string
      */
-    function getPType(){
+    public function getPType(){
         return 'normal';
     }
 
@@ -73,9 +66,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * @param   Doku_Handler $handler The Doku_Handler object
      * @return  bool|array Return an array with all data you want to use in render, false don't add an instruction
      */
-    function handle($match, $state, $pos, Doku_Handler $handler){
-        trigger_error('handle() not implemented in '.get_class($this), E_USER_WARNING);
-    }
+    abstract public function handle($match, $state, $pos, Doku_Handler $handler);
 
     /**
      * Handles the actual output creation.
@@ -100,10 +91,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * @param array           $data     data created by handler()
      * @return  boolean                 rendered correctly? (however, returned value is not used at the moment)
      */
-    function render($format, Doku_Renderer $renderer, $data) {
-        trigger_error('render() not implemented in '.get_class($this), E_USER_WARNING);
-
-    }
+    abstract public function render($format, Doku_Renderer $renderer, $data);
 
     /**
      *  There should be no need to override this function
@@ -111,7 +99,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * @param string $mode
      * @return bool
      */
-    function accepts($mode) {
+    public function accepts($mode) {
 
         if (!$this->allowedModesSetup) {
             global $PARSER_MODES;

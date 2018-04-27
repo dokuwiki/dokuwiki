@@ -2,17 +2,13 @@
 /**
  * Admin Plugin Prototype
  *
+ * All DokuWiki plugins to extend the admin function
+ * need to inherit from this class
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
  */
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
-/**
- * All DokuWiki plugins to extend the admin function
- * need to inherit from this class
- */
-class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
+abstract class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
 
     /**
      * Return the text that is displayed at the main admin menu
@@ -62,15 +58,13 @@ class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
      * Carry out required processing
      */
     public function handle() {
-        trigger_error('handle() not implemented in '.get_class($this), E_USER_WARNING);
+        // some plugins might not need this
     }
 
     /**
      * Output html of the admin page
      */
-    public function html() {
-        trigger_error('html() not implemented in '.get_class($this), E_USER_WARNING);
-    }
+    abstract public function html();
 
     /**
      * Return true for access only by admins (config:superuser) or false if managers are allowed as well

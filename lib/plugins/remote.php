@@ -21,6 +21,7 @@ abstract class DokuWiki_Remote_Plugin extends DokuWiki_Plugin {
      * with an underscore are skipped.
      *
      * @return array Information about all provided methods. {@see RemoteAPI}.
+     * @throws ReflectionException
      */
     public function _getMethods() {
         $result = array();

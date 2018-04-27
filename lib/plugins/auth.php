@@ -1,7 +1,4 @@
 <?php
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
 /**
  * Auth Plugin Prototype
  *
@@ -12,7 +9,7 @@ if(!defined('DOKU_INC')) die();
  * @author     Chris Smith <chris@jalakai.co.uk>
  * @author     Jan Schumann <js@jschumann-it.com>
  */
-class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
+abstract class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
     public $success = true;
 
     /**
