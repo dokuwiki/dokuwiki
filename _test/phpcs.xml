@@ -18,6 +18,9 @@
     <rule ref="PSR2">
         <!-- the following rule is not in PSR-2 and breaks the guardian pattern -->
         <exclude name="Generic.ControlStructures.InlineControlStructure.NotAllowed"/>
+
+        <!-- we have lots of legacy classes without name spaces -->
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
     </rule>
     <!-- configure additional rules here later -->
 </ruleset>
