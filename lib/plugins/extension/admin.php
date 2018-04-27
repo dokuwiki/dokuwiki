@@ -6,9 +6,6 @@
  * @author  Michael Hamann <michael@content-space.de>
  */
 
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
 /**
  * Admin part of the extension manager
  */

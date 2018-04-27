@@ -7,8 +7,6 @@
  * @author     Anika Henke <anika@selfthinker.org> (concepts)
  * @author     Frank Schubert <frank@schokilade.de> (old version)
  */
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
 
 /**
  * All DokuWiki plugins to extend the admin function

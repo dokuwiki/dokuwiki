@@ -6,9 +6,6 @@
  * @author  Michael Hamann <michael@content-space.de>
  */
 
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
 /**
  * Class helper_plugin_extension_list takes care of creating a HTML list of extensions
  */

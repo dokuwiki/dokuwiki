@@ -55,9 +55,6 @@
  * @link        http://pear.php.net/pepr/pepr-proposal-show.php?id=198
  */
 
-// for DokuWiki
-if(!defined('DOKU_INC')) die('meh.');
-
 /**
  * Marker constant for JSON::decode(), used to flag stack state
  */

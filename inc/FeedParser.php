@@ -5,8 +5,6 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 /**
  * We override some methods of the original SimplePie class here
  */

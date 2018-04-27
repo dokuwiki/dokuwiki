@@ -5,8 +5,6 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-if(!defined('DOKU_INC')) die('meh.');
-
 if(!defined('DOKU_MESSAGEURL')){
     if(in_array('ssl', stream_get_transports())) {
         define('DOKU_MESSAGEURL','https://update.dokuwiki.org/check/');

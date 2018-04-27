@@ -6,8 +6,6 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 /**
  * All action processing starts here
  */

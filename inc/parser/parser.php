@@ -1,9 +1,4 @@
 <?php
-if(!defined('DOKU_INC')) die('meh.');
-require_once DOKU_INC . 'inc/parser/lexer.php';
-require_once DOKU_INC . 'inc/parser/handler.php';
-
-
 /**
  * Define various types of modes used by the parser - they are used to
  * populate the list of modes another mode accepts

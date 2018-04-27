@@ -4,8 +4,6 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-if(!defined('DOKU_INC')) die('meh.');
-
 class Doku_Renderer_code extends Doku_Renderer {
     var $_codeblock = 0;
 

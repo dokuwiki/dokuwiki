@@ -2,25 +2,11 @@
 /**
  * Renderer for XHTML output
  *
+ * This is DokuWiki's main renderer used to display page content in the wiki
+ *
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
- */
-if(!defined('DOKU_INC')) die('meh.');
-
-if(!defined('DOKU_LF')) {
-    // Some whitespace to help View > Source
-    define ('DOKU_LF', "\n");
-}
-
-if(!defined('DOKU_TAB')) {
-    // Some whitespace to help View > Source
-    define ('DOKU_TAB', "\t");
-}
-
-/**
- * The XHTML Renderer
  *
- * This is DokuWiki's main renderer used to display page content in the wiki
  */
 class Doku_Renderer_xhtml extends Doku_Renderer {
     /** @var array store the table of contents */

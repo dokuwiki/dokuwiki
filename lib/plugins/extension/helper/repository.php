@@ -11,9 +11,6 @@
 if (!defined('EXTENSION_REPOSITORY_API_ENDPOINT'))
     define('EXTENSION_REPOSITORY_API', 'http://www.dokuwiki.org/lib/plugins/pluginrepo/api.php');
 
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
 /**
  * Class helper_plugin_extension_repository provides access to the extension repository on dokuwiki.org
  */

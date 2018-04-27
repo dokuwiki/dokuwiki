@@ -1,6 +1,4 @@
 <?php
-if(!defined('DOKU_INC')) die('meh.');
-
 /**
  * The summary XHTML form selects either up to the first two paragraphs
  * it find in a page or the first section (whichever comes first)

@@ -1,22 +1,5 @@
 <?php
 /**
- * Renderer for metadata
- *
- * @author Esther Brunner <wikidesign@gmail.com>
- */
-if(!defined('DOKU_INC')) die('meh.');
-
-if(!defined('DOKU_LF')) {
-    // Some whitespace to help View > Source
-    define ('DOKU_LF', "\n");
-}
-
-if(!defined('DOKU_TAB')) {
-    // Some whitespace to help View > Source
-    define ('DOKU_TAB', "\t");
-}
-
-/**
  * The MetaData Renderer
  *
  * Metadata is additional information about a DokuWiki page that gets extracted mainly from the page's content
@@ -24,6 +7,8 @@ if(!defined('DOKU_TAB')) {
  * $persistent.
  *
  * Some simplified rendering to $doc is done to gather the page's (text-only) abstract.
+ *
+ * @author Esther Brunner <wikidesign@gmail.com>
  */
 class Doku_Renderer_metadata extends Doku_Renderer {
     /** the approximate byte lenght to capture for the abstract */

@@ -7,8 +7,6 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 /**
  * How many pages shall be rendered for getting metadata during one request
  * at maximum? Note that this limit isn't respected when METADATA_RENDER_UNLIMITED

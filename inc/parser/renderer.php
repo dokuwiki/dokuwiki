@@ -5,7 +5,6 @@
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-if(!defined('DOKU_INC')) die('meh.');
 
 /**
  * Allowed chars in $language for code highlighting

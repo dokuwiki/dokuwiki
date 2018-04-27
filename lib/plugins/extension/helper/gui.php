@@ -6,9 +6,6 @@
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
 /**
  * Class helper_plugin_extension_list takes care of the overall GUI
  */

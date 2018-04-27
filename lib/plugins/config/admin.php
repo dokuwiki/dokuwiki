@@ -6,8 +6,6 @@
  * @author     Christopher Smith <chris@jalakai.co.uk>
  * @author     Ben Coburn <btcoburn@silicodon.net>
  */
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
 
 define('CM_KEYMARKER','____');            // used for settings with multiple dimensions of array indices
 

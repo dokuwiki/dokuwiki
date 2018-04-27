@@ -104,6 +104,7 @@ if(!defined('DOKU_BASE')){
 }
 
 // define whitespace
+if(!defined('NL')) define ('NL',"\n");
 if(!defined('DOKU_LF')) define ('DOKU_LF',"\n");
 if(!defined('DOKU_TAB')) define ('DOKU_TAB',"\t");
 

@@ -9,8 +9,6 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 // some ACL level defines
 define('AUTH_NONE', 0);
 define('AUTH_READ', 1);

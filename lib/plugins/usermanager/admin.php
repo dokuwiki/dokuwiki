@@ -10,9 +10,6 @@
  *  @author  neolao <neolao@neolao.com>
  *  @author  Chris Smith <chris@jalakai.co.uk>
  */
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
 if(!defined('DOKU_PLUGIN_IMAGES')) define('DOKU_PLUGIN_IMAGES',DOKU_BASE.'lib/plugins/usermanager/images/');
 
 /**

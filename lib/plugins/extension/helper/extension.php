@@ -6,8 +6,6 @@
  * @author  Michael Hamann <michael@content-space.de>
  */
 
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
 if(!defined('DOKU_TPLLIB')) define('DOKU_TPLLIB', DOKU_INC.'lib/tpl/');
 
 /**

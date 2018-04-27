@@ -10,11 +10,6 @@
  * @version $Id: lexer.php,v 1.1 2005/03/23 23:14:09 harryf Exp $
  */
 
-/**
- * Init path constant
- */
-if(!defined('DOKU_INC')) die('meh.');
-
 /**#@+
  * lexer mode constant
  */

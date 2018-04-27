@@ -6,8 +6,6 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 // end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
 // think different
 if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");

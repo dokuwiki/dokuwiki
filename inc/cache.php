@@ -6,8 +6,6 @@
  * @author     Chris Smith <chris@jalakai.co.uk>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 /**
  * Generic handling of caching
  */

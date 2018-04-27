@@ -1,6 +1,4 @@
 <?php
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
 
 require_once(DOKU_PLUGIN.'authad/adLDAP/adLDAP.php');
 require_once(DOKU_PLUGIN.'authad/adLDAP/classes/adLDAPUtils.php');

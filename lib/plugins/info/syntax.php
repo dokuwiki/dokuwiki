@@ -6,13 +6,6 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Esther Brunner <wikidesign@gmail.com>
  */
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
-/**
- * All DokuWiki plugins to extend the parser/rendering mechanism
- * need to inherit from this class
- */
 class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
     /**

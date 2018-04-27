@@ -5,18 +5,6 @@
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
-/**
- * Class action_plugin_styling
- *
- * This handles all the save actions and loading the interface
- *
- * All this usually would be done within an admin plugin, but we want to have this available outside
- * the admin interface using our floating dialog.
- */
 class action_plugin_styling extends DokuWiki_Action_Plugin {
 
     /**

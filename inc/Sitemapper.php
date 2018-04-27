@@ -6,8 +6,6 @@
  * @author     Michael Hamann <michael@content-space.de>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 /**
  * A class for building sitemaps and pinging search engines with the sitemap URL.
  *

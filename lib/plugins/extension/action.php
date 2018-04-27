@@ -5,9 +5,6 @@
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
 class action_plugin_extension extends DokuWiki_Action_Plugin {
 
     /**

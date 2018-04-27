@@ -5,13 +5,6 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
-/**
- * All DokuWiki plugins to extend the admin function
- * need to inherit from this class
- */
 class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
 
     /**

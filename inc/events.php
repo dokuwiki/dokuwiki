@@ -6,8 +6,6 @@
  * @author     Christopher Smith <chris@jalakai.co.uk>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 /**
  * The event
  */

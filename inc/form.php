@@ -6,8 +6,6 @@
  * @author     Tom N Harris <tnharris@whoopdedo.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 /**
  * Class for creating simple HTML forms.
  *

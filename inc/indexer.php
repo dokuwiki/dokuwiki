@@ -7,8 +7,6 @@
  * @author     Tom N Harris <tnharris@whoopdedo.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 // Version tag used to force rebuild on upgrade
 define('INDEXER_VERSION', 8);
 

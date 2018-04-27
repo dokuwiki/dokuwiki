@@ -6,8 +6,6 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 /**
  * These constants are used with the recents function
  */
