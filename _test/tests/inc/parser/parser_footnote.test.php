@@ -1,11 +1,23 @@
 <?php
+
+use dokuwiki\ParserMode\Code;
+use dokuwiki\ParserMode\Eol;
+use dokuwiki\ParserMode\Footnote;
+use dokuwiki\ParserMode\Formatting;
+use dokuwiki\ParserMode\Hr;
+use dokuwiki\ParserMode\Listblock;
+use dokuwiki\ParserMode\Preformatted;
+use dokuwiki\ParserMode\Quote;
+use dokuwiki\ParserMode\Table;
+use dokuwiki\ParserMode\Unformatted;
+
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
 
     function setUp() {
         parent::setUp();
-        $this->P->addMode('footnote',new Doku_Parser_Mode_Footnote());
+        $this->P->addMode('footnote',new Footnote());
     }
 
     function testFootnote() {
@@ -39,7 +51,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnoteLinefeed() {
-        $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
+        $this->P->addMode('eol',new Eol());
         $this->P->parse("Foo (( testing\ntesting )) Bar");
         $calls = array (
             array('document_start',array()),
@@ -76,7 +88,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnoteEol() {
-        $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
+        $this->P->addMode('eol',new Eol());
         $this->P->parse("Foo \nX(( test\ning ))Y\n Bar");
         $calls = array (
             array('document_start',array()),
@@ -95,7 +107,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnoteStrong() {
-        $this->P->addMode('strong',new Doku_Parser_Mode_Formatting('strong'));
+        $this->P->addMode('strong',new Formatting('strong'));
         $this->P->parse('Foo (( **testing** )) Bar');
         $calls = array (
             array('document_start',array()),
@@ -118,7 +130,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnoteHr() {
-        $this->P->addMode('hr',new Doku_Parser_Mode_HR());
+        $this->P->addMode('hr',new Hr());
         $this->P->parse("Foo (( \n ---- \n )) Bar");
         $calls = array (
             array('document_start',array()),
@@ -139,7 +151,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnoteCode() {
-        $this->P->addMode('code',new Doku_Parser_Mode_Code());
+        $this->P->addMode('code',new Code());
         $this->P->parse("Foo (( <code>Test</code> )) Bar");
         $calls = array (
             array('document_start',array()),
@@ -160,7 +172,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnotePreformatted() {
-        $this->P->addMode('preformatted',new Doku_Parser_Mode_Preformatted());
+        $this->P->addMode('preformatted',new Preformatted());
         $this->P->parse("Foo (( \n  Test\n )) Bar");
         $calls = array (
             array('document_start',array()),
@@ -181,8 +193,8 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnotePreformattedEol() {
-        $this->P->addMode('preformatted',new Doku_Parser_Mode_Preformatted());
-        $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
+        $this->P->addMode('preformatted',new Preformatted());
+        $this->P->addMode('eol',new Eol());
         $this->P->parse("Foo (( \n  Test\n )) Bar");
         $calls = array (
             array('document_start',array()),
@@ -204,7 +216,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnoteUnformatted() {
-        $this->P->addMode('unformatted',new Doku_Parser_Mode_Unformatted());
+        $this->P->addMode('unformatted',new Unformatted());
         $this->P->parse("Foo (( <nowiki>Test</nowiki> )) Bar");
         $calls = array (
             array('document_start',array()),
@@ -225,7 +237,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnoteNotHeader() {
-        $this->P->addMode('unformatted',new Doku_Parser_Mode_Unformatted());
+        $this->P->addMode('unformatted',new Unformatted());
         $this->P->parse("Foo (( \n====Test====\n )) Bar");
         $calls = array (
             array('document_start',array()),
@@ -244,7 +256,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnoteTable() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse("Foo ((
 | Row 0 Col 1    | Row 0 Col 2     | Row 0 Col 3        |
 | Row 1 Col 1    | Row 1 Col 2     | Row 1 Col 3        |
@@ -290,7 +302,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnoteList() {
-        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
+        $this->P->addMode('listblock',new ListBlock());
         $this->P->parse("Foo ((
   *A
     * B
@@ -332,7 +344,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnoteQuote() {
-        $this->P->addMode('quote',new Doku_Parser_Mode_Quote());
+        $this->P->addMode('quote',new Quote());
         $this->P->parse("Foo ((
 > def
 >>ghi
@@ -361,7 +373,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnoteNesting() {
-        $this->P->addMode('strong',new Doku_Parser_Mode_Formatting('strong'));
+        $this->P->addMode('strong',new Formatting('strong'));
         $this->P->parse("(( a ** (( b )) ** c ))");
 
         $calls = array(
