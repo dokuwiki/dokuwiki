@@ -49,8 +49,8 @@ class StyleUtils
                         $stylesheets[$mode][$incbase . $basename . '.' . $newExtension] = $webbase;
                         if ($conf['allowdebug']) {
                             msg(
-                                "Stylesheet $file not found, using $basename.$newExtension instead. '. 
-                                'Please contact developer of \"{$conf['template']}\" template.",
+                                "Stylesheet $file not found, using $basename.$newExtension instead.  
+                                Please contact developer of \"{$conf['template']}\" template.",
                                 2
                             );
                         }
