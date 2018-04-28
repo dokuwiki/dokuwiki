@@ -5,7 +5,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 class Doku_Renderer_code extends Doku_Renderer {
-    var $_codeblock = 0;
+    protected $_codeblock = 0;
 
     /**
      * Send the wanted code block to the browser
@@ -16,7 +16,7 @@ class Doku_Renderer_code extends Doku_Renderer {
      * @param string $language
      * @param string $filename
      */
-    function code($text, $language = null, $filename = '') {
+    public function code($text, $language = null, $filename = '') {
         global $INPUT;
         if(!$language) $language = 'txt';
         $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language);
@@ -47,14 +47,14 @@ class Doku_Renderer_code extends Doku_Renderer {
      * @param string $language
      * @param string $filename
      */
-    function file($text, $language = null, $filename = '') {
+    public function file($text, $language = null, $filename = '') {
         $this->code($text, $language, $filename);
     }
 
     /**
      * This should never be reached, if it is send a 404
      */
-    function document_end() {
+    public function document_end() {
         http_status(404);
         echo '404 - Not found';
         exit;
@@ -65,7 +65,7 @@ class Doku_Renderer_code extends Doku_Renderer {
      *
      * @returns string 'code'
      */
-    function getFormat() {
+    public function getFormat() {
         return 'code';
     }
 }

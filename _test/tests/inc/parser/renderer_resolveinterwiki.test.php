@@ -1,6 +1,6 @@
 <?php
 
-require_once DOKU_INC . 'inc/parser/renderer.php';
+use dokuwiki\test\mock\Doku_Renderer;
 
 /**
  * Tests for Doku_Renderer::_resolveInterWiki()

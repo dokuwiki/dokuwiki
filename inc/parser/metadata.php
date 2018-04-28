@@ -43,7 +43,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      *
      * @return string always 'metadata'
      */
-    function getFormat() {
+    public function getFormat() {
         return 'metadata';
     }
 
@@ -52,7 +52,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      *
      * Sets up some of the persistent info about the page if it doesn't exist, yet.
      */
-    function document_start() {
+    public function document_start() {
         global $ID;
 
         $this->headers = array();
@@ -76,7 +76,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      *
      * Stores collected data in the metadata
      */
-    function document_end() {
+    public function document_end() {
         global $ID;
 
         // store internal info in metadata (notoc,nocache)
@@ -107,7 +107,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      *
      * @param $text
      */
-    function cdata($text) {
+    public function cdata($text) {
         if(!$this->capture) return;
 
         $this->doc .= $text;
@@ -123,7 +123,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string $text     the text to display
      * @param int    $level    the nesting level
      */
-    function toc_additem($id, $text, $level) {
+    public function toc_additem($id, $text, $level) {
         global $conf;
 
         //only add items within configured levels
@@ -146,7 +146,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param int    $level header level
      * @param int    $pos   byte position in the original source
      */
-    function header($text, $level, $pos) {
+    public function header($text, $level, $pos) {
         if(!isset($this->meta['title'])) $this->meta['title'] = $text;
 
         // add the header to the TOC
@@ -160,28 +160,28 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     /**
      * Open a paragraph
      */
-    function p_open() {
+    public function p_open() {
         $this->cdata(DOKU_LF);
     }
 
     /**
      * Close a paragraph
      */
-    function p_close() {
+    public function p_close() {
         $this->cdata(DOKU_LF);
     }
 
     /**
      * Create a line break
      */
-    function linebreak() {
+    public function linebreak() {
         $this->cdata(DOKU_LF);
     }
 
     /**
      * Create a horizontal line
      */
-    function hr() {
+    public function hr() {
         $this->cdata(DOKU_LF.'----------'.DOKU_LF);
     }
 
@@ -194,7 +194,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function footnote_open() {
+    public function footnote_open() {
         if($this->capture) {
             // move current content to store and record footnote
             $this->store = $this->doc;
@@ -210,7 +210,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      *
      * @author Andreas Gohr
      */
-    function footnote_close() {
+    public function footnote_close() {
         if($this->capture) {
             // restore old content
             $this->doc   = $this->store;
@@ -221,14 +221,14 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     /**
      * Open an unordered list
      */
-    function listu_open() {
+    public function listu_open() {
         $this->cdata(DOKU_LF);
     }
 
     /**
      * Open an ordered list
      */
-    function listo_open() {
+    public function listo_open() {
         $this->cdata(DOKU_LF);
     }
 
@@ -238,14 +238,14 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param int $level the nesting level
      * @param bool $node true when a node; false when a leaf
      */
-    function listitem_open($level,$node=false) {
+    public function listitem_open($level,$node=false) {
         $this->cdata(str_repeat(DOKU_TAB, $level).'* ');
     }
 
     /**
      * Close a list item
      */
-    function listitem_close() {
+    public function listitem_close() {
         $this->cdata(DOKU_LF);
     }
 
@@ -254,21 +254,21 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      *
      * @param string $text
      */
-    function preformatted($text) {
+    public function preformatted($text) {
         $this->cdata($text);
     }
 
     /**
      * Start a block quote
      */
-    function quote_open() {
+    public function quote_open() {
         $this->cdata(DOKU_LF.DOKU_TAB.'"');
     }
 
     /**
      * Stop a block quote
      */
-    function quote_close() {
+    public function quote_close() {
         $this->cdata('"'.DOKU_LF);
     }
 
@@ -279,7 +279,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string $lang programming language to use for syntax highlighting
      * @param string $file file path label
      */
-    function file($text, $lang = null, $file = null) {
+    public function file($text, $lang = null, $file = null) {
         $this->cdata(DOKU_LF.$text.DOKU_LF);
     }
 
@@ -290,7 +290,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string $language programming language to use for syntax highlighting
      * @param string $file     file path label
      */
-    function code($text, $language = null, $file = null) {
+    public function code($text, $language = null, $file = null) {
         $this->cdata(DOKU_LF.$text.DOKU_LF);
     }
 
@@ -301,7 +301,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      *
      * @param string $acronym
      */
-    function acronym($acronym) {
+    public function acronym($acronym) {
         $this->cdata($acronym);
     }
 
@@ -312,7 +312,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      *
      * @param string $smiley
      */
-    function smiley($smiley) {
+    public function smiley($smiley) {
         $this->cdata($smiley);
     }
 
@@ -325,7 +325,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      *
      * @param string $entity
      */
-    function entity($entity) {
+    public function entity($entity) {
         $this->cdata($entity);
     }
 
@@ -337,14 +337,14 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string|int $x first value
      * @param string|int $y second value
      */
-    function multiplyentity($x, $y) {
+    public function multiplyentity($x, $y) {
         $this->cdata($x.'×'.$y);
     }
 
     /**
      * Render an opening single quote char (language specific)
      */
-    function singlequoteopening() {
+    public function singlequoteopening() {
         global $lang;
         $this->cdata($lang['singlequoteopening']);
     }
@@ -352,7 +352,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     /**
      * Render a closing single quote char (language specific)
      */
-    function singlequoteclosing() {
+    public function singlequoteclosing() {
         global $lang;
         $this->cdata($lang['singlequoteclosing']);
     }
@@ -360,7 +360,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     /**
      * Render an apostrophe char (language specific)
      */
-    function apostrophe() {
+    public function apostrophe() {
         global $lang;
         $this->cdata($lang['apostrophe']);
     }
@@ -368,7 +368,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     /**
      * Render an opening double quote char (language specific)
      */
-    function doublequoteopening() {
+    public function doublequoteopening() {
         global $lang;
         $this->cdata($lang['doublequoteopening']);
     }
@@ -376,7 +376,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     /**
      * Render an closinging double quote char (language specific)
      */
-    function doublequoteclosing() {
+    public function doublequoteclosing() {
         global $lang;
         $this->cdata($lang['doublequoteclosing']);
     }
@@ -387,7 +387,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string $link The link name
      * @see http://en.wikipedia.org/wiki/CamelCase
      */
-    function camelcaselink($link) {
+    public function camelcaselink($link) {
         $this->internallink($link, $link);
     }
 
@@ -397,7 +397,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string $hash hash link identifier
      * @param string $name name for the link
      */
-    function locallink($hash, $name = null) {
+    public function locallink($hash, $name = null) {
         if(is_array($name)) {
             $this->_firstimage($name['src']);
             if($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
@@ -410,7 +410,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string            $id   page ID to link to. eg. 'wiki:syntax'
      * @param string|array|null $name name for the link, array for media file
      */
-    function internallink($id, $name = null) {
+    public function internallink($id, $name = null) {
         global $ID;
 
         if(is_array($name)) {
@@ -447,7 +447,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string            $url  full URL with scheme
      * @param string|array|null $name name for the link, array for media file
      */
-    function externallink($url, $name = null) {
+    public function externallink($url, $name = null) {
         if(is_array($name)) {
             $this->_firstimage($name['src']);
             if($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
@@ -468,7 +468,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string       $wikiName  indentifier (shortcut) for the remote wiki
      * @param string       $wikiUri   the fragment parsed from the original link
      */
-    function interwikilink($match, $name = null, $wikiName, $wikiUri) {
+    public function interwikilink($match, $name = null, $wikiName, $wikiUri) {
         if(is_array($name)) {
             $this->_firstimage($name['src']);
             if($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
@@ -487,7 +487,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string       $url  the link
      * @param string|array $name name for the link, array for media file
      */
-    function windowssharelink($url, $name = null) {
+    public function windowssharelink($url, $name = null) {
         if(is_array($name)) {
             $this->_firstimage($name['src']);
             if($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
@@ -507,7 +507,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string       $address Email-Address
      * @param string|array $name    name for the link, array for media file
      */
-    function emaillink($address, $name = null) {
+    public function emaillink($address, $name = null) {
         if(is_array($name)) {
             $this->_firstimage($name['src']);
             if($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
@@ -530,7 +530,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string $cache   cache|recache|nocache
      * @param string $linking linkonly|detail|nolink
      */
-    function internalmedia($src, $title = null, $align = null, $width = null,
+    public function internalmedia($src, $title = null, $align = null, $width = null,
                            $height = null, $cache = null, $linking = null) {
         if($this->capture && $title) $this->doc .= '['.$title.']';
         $this->_firstimage($src);
@@ -548,7 +548,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string $cache   cache|recache|nocache
      * @param string $linking linkonly|detail|nolink
      */
-    function externalmedia($src, $title = null, $align = null, $width = null,
+    public function externalmedia($src, $title = null, $align = null, $width = null,
                            $height = null, $cache = null, $linking = null) {
         if($this->capture && $title) $this->doc .= '['.$title.']';
         $this->_firstimage($src);
@@ -560,7 +560,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string $url    URL of the feed
      * @param array  $params Finetuning of the output
      */
-    function rss($url, $params) {
+    public function rss($url, $params) {
         $this->meta['relation']['haspart'][$url] = true;
 
         $this->meta['date']['valid']['age'] =
@@ -581,7 +581,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      *
      * @return mixed|string
      */
-    function _simpleTitle($name) {
+    public function _simpleTitle($name) {
         global $conf;
 
         if(is_array($name)) return '';
@@ -598,23 +598,6 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     }
 
     /**
-     * Creates a linkid from a headline
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     * @param string  $title   The headline title
-     * @param boolean $create  Create a new unique ID?
-     * @return string
-     */
-    function _headerToLink($title, $create = false) {
-        if($create) {
-            return sectionID($title, $this->headers);
-        } else {
-            $check = false;
-            return sectionID($title, $check);
-        }
-    }
-
-    /**
      * Construct a title and handle images in titles
      *
      * @author Harry Fuecks <hfuecks@gmail.com>
@@ -623,7 +606,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param null|string       $id       linked page id (used to extract title from first heading)
      * @return string title text
      */
-    function _getLinkTitle($title, $default, $id = null) {
+    public function _getLinkTitle($title, $default, $id = null) {
         if(is_array($title)) {
             if($title['title']) {
                 return '['.$title['title'].']';
@@ -646,7 +629,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      *
      * @param string $src image URL or ID
      */
-    function _firstimage($src) {
+    protected function _firstimage($src) {
         if($this->firstimage) return;
         global $ID;
 
@@ -664,7 +647,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      *
      * @param string $src media ID
      */
-    function _recordMediaUsage($src) {
+    protected function _recordMediaUsage($src) {
         global $ID;
 
         list ($src) = explode('#', $src, 2);
