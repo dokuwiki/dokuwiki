@@ -1904,7 +1904,7 @@ function html_edit(){
                 array('id' => 'edbtn__preview', 'accesskey' => 'p', 'tabindex' => '5')
             )
         );
-        $form->addElement(form_makeButton('submit', 'draftdel', $lang['btn_cancel'], array('tabindex'=>'6')));
+        $form->addElement(form_makeButton('submit', 'cancel', $lang['btn_cancel'], array('tabindex'=>'6')));
         $form->addElement(form_makeCloseTag('div'));
         $form->addElement(form_makeOpenTag('div', array('class'=>'summary')));
         $form->addElement(

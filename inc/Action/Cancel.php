@@ -13,7 +13,11 @@ use dokuwiki\Action\Exception\ActionAbort;
  */
 class Cancel extends AbstractAliasAction {
 
+    /** @inheritdoc */
     public function preProcess() {
+        global $ID;
+        unlock($ID);
+
         // continue with draftdel -> redirect -> show
         throw new ActionAbort('draftdel');
     }
