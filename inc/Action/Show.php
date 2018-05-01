@@ -23,6 +23,12 @@ class Show extends AbstractAction {
     }
 
     /** @inheritdoc */
+    public function preProcess() {
+        global $ID;
+        unlock($ID);
+    }
+
+    /** @inheritdoc */
     public function tplContent() {
         html_show();
     }
