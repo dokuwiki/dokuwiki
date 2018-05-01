@@ -15,6 +15,7 @@
  */
 
 // let people know if they are running an unsupported version of PHP
+
 define('DOKU_MIN_PHP', '5.6');   /* IMPORTANT: If DOKU_MIN_PHP changed you have to update DOKU.PHP and COMPOSER.JSON too.   */ 
 
 if (version_compare(PHP_VERSION, DOKU_MIN_PHP, '<')) {
