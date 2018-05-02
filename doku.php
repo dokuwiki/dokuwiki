@@ -11,6 +11,13 @@
 // update message version - always use a string to avoid localized floats!
 $updateVersion = "50";
 
+// let people know if they are running an unsupported version of PHP
+define('DOKU_MIN_PHP', '5.6');   /* IMPORTANT: If DOKU_MIN_PHP changed you have to update INSTALL.PHP and COMPOSER.JSON too.   */ 
+
+if (version_compare(PHP_VERSION, DOKU_MIN_PHP, '<')) {
+  die('WEB SERVER SETUP ERROR: Your PHP version '.PHP_VERSION.' which is currently running on your web server does not meet the required minimum of '. DOKU_MIN_PHP);
+}
+
 //  xdebug_start_profiling();
 
 if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/');
@@ -123,3 +130,4 @@ $tmp = array(); // No event data
 trigger_event('DOKUWIKI_DONE', $tmp);
 
 //  xdebug_dump_function_profile(1);
+
