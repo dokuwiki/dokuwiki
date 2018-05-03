@@ -800,9 +800,17 @@ function tpl_youarehere($sep = null, $return = false) {
 
     // print current page, skipping start page, skipping for namespace index
     resolve_pageid('', $page, $exists);
-    if(isset($page) && $page == $part.$parts[$i]) return true;
+    if (isset($page) && $page == $part.$parts[$i]) {
+        if($return) return $out;
+        print $out;
+        return true;
+    }
     $page = $part.$parts[$i];
-    if($page == $conf['start']) return true;
+    if($page == $conf['start']) {
+        if($return) return $out;
+        print $out;
+        return true;
+    }
     $out .= $sep;
     $out .= tpl_pagelink($page, null, true);
     if($return) return $out;

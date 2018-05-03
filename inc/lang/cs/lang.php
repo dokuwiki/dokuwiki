@@ -3,17 +3,15 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Jonáš Dyba <jonas.dyba@gmail.com>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
- * @author Tomas Valenta <tomas@valenta.cz>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author Marek Sacha <sachamar@fel.cvut.cz>
  * @author Lefty <lefty@multihost.cz>
  * @author Vojta Beran <xmamut@email.cz>
- * @author zbynek.krivka@seznam.cz
- * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  * @author Jakub A. Těšínský (j@kub.cz)
- * @author mkucera66@seznam.cz
+ * @author mkucera66 <mkucera66@seznam.cz>
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
  * @author Petr Klíma <qaxi@seznam.cz>
  * @author Radovan Buroň <radovan@buron.cz>
@@ -83,44 +81,7 @@ $lang['badpassconfirm']        = 'Bohužel špatné heslo';
 $lang['minoredit']             = 'Drobné změny';
 $lang['draftdate']             = 'Koncept automaticky uložen v';
 $lang['nosecedit']             = 'Stránka byla v mezičase změněna. Informace o sekci již nebylo platné, byla načtena celá stránka.';
-$lang['regmissing']            = 'Musíte vyplnit všechny údaje.';
-$lang['reguexists']            = 'Uživatel se stejným jménem už je zaregistrován.';
-$lang['regsuccess']            = 'Uživatelský účet byl vytvořen a heslo zasláno e-mailem.';
-$lang['regsuccess2']           = 'Uživatelský účet byl vytvořen.';
-$lang['regfail']               = 'Uživatelský profil nemohl být vytvořen.';
-$lang['regmailfail']           = 'Zdá se, že nastala chyba při posílání mailu s heslem. Zkuste kontaktovat správce.';
-$lang['regbadmail']            = 'Zadaná e-mailová adresa není platná. Pokud si myslíte, že to je špatně, zkuste kontaktovat správce.';
-$lang['regbadpass']            = 'Heslo nebylo zadáno dvakrát stejně, zkuste to prosím znovu.';
-$lang['regpwmail']             = 'Vaše heslo do systému DokuWiki';
-$lang['reghere']               = 'Nemáte uživatelský účet? Zřiďte si ho';
-$lang['profna']                = 'Tato wiki neumožňuje změnu profilu';
-$lang['profnochange']          = 'Žádné změny nebyly provedeny.';
-$lang['profnoempty']           = 'Nelze vynechat jméno nebo e-mailovou adresu.';
-$lang['profchanged']           = 'Uživatelský profil změněn.';
-$lang['profnodelete']          = 'Tato wiki nepodporuje mazání uživatelů';
-$lang['profdeleteuser']        = 'Smazat účet';
-$lang['profdeleted']           = 'Váš uživatelský účet byl z této wiki smazán';
-$lang['profconfdelete']        = 'Chci smazat můj účet z této wiki. <br/> Tato akce je nevratná.';
-$lang['profconfdeletemissing'] = 'Potvrzovací tlačítko nezaškrtnuto';
-$lang['proffail']              = 'Uživatelský profil nebyl aktualizován.';
-$lang['pwdforget']             = 'Zapomněli jste heslo? Nechte si zaslat nové';
-$lang['resendna']              = 'Tato wiki neumožňuje zasílání nových hesel.';
-$lang['resendpwd']             = 'Nastavit nové heslo pro';
-$lang['resendpwdmissing']      = 'Musíte vyplnit všechny položky.';
-$lang['resendpwdnouser']       = 'Bohužel takový uživatel v systému není.';
-$lang['resendpwdbadauth']      = 'Tento autorizační kód není platný. Zadali jste opravdu celý odkaz na potvrzovací stránku?';
-$lang['resendpwdconfirm']      = 'Odkaz na potvrzovací stránku byl odeslán e-mailem.';
-$lang['resendpwdsuccess']      = 'Vaše nové heslo bylo odesláno e-mailem.';
-$lang['license']               = 'Kromě míst, kde je explicitně uvedeno jinak, je obsah této wiki licencován pod následující licencí:';
-$lang['licenseok']             = 'Poznámka: Tím, že editujete tuto stránku, souhlasíte, aby váš obsah byl licencován pod následující licencí:';
-$lang['searchmedia']           = 'Hledat jméno souboru:';
-$lang['searchmedia_in']        = 'Hledat v %s';
-$lang['txt_upload']            = 'Vyberte soubor jako přílohu:';
-$lang['txt_filename']          = 'Wiki jméno (volitelné):';
-$lang['txt_overwrt']           = 'Přepsat existující soubor';
-$lang['maxuploadsize']         = 'Max. velikost souboru %s';
-$lang['lockedby']              = 'Právě zamknuto:';
-$lang['lockexpire']            = 'Zámek vyprší:';
+$lang['search_fullresults']    = 'Fulltextové výsledky';
 $lang['js']['willexpire']      = 'Váš zámek pro editaci za chvíli vyprší.\nAbyste předešli konfliktům, stiskněte tlačítko Náhled a zámek se prodlouží.';
 $lang['js']['notsavedyet']     = 'Jsou tu neuložené změny, které budou ztraceny.
 Chcete opravdu pokračovat?';
@@ -164,6 +125,52 @@ $lang['js']['media_done_btn']  = 'Hotovo';
 $lang['js']['media_drop']      = 'Sem přetáhněte soubory pro nahrátí';
 $lang['js']['media_cancel']    = 'odstranit';
 $lang['js']['media_overwrt']   = 'Přepsat existující soubory';
+$lang['search_starts_with']    = 'Začíná s';
+$lang['search_ends_with']      = 'Končí s';
+$lang['search_contains']       = 'Obsahuje';
+$lang['search_custom_match']   = 'Vlastní';
+$lang['search_past_7_days']    = 'Minulý týden';
+$lang['search_past_month']     = 'Minulý měsíc';
+$lang['search_past_year']      = 'Minulý rok';
+$lang['search_sort_by_mtime']  = 'Řadit podle naposledy změněných';
+$lang['regmissing']            = 'Musíte vyplnit všechny údaje.';
+$lang['reguexists']            = 'Uživatel se stejným jménem už je zaregistrován.';
+$lang['regsuccess']            = 'Uživatelský účet byl vytvořen a heslo zasláno e-mailem.';
+$lang['regsuccess2']           = 'Uživatelský účet byl vytvořen.';
+$lang['regfail']               = 'Uživatelský profil nemohl být vytvořen.';
+$lang['regmailfail']           = 'Zdá se, že nastala chyba při posílání mailu s heslem. Zkuste kontaktovat správce.';
+$lang['regbadmail']            = 'Zadaná e-mailová adresa není platná. Pokud si myslíte, že to je špatně, zkuste kontaktovat správce.';
+$lang['regbadpass']            = 'Heslo nebylo zadáno dvakrát stejně, zkuste to prosím znovu.';
+$lang['regpwmail']             = 'Vaše heslo do systému DokuWiki';
+$lang['reghere']               = 'Nemáte uživatelský účet? Zřiďte si ho';
+$lang['profna']                = 'Tato wiki neumožňuje změnu profilu';
+$lang['profnochange']          = 'Žádné změny nebyly provedeny.';
+$lang['profnoempty']           = 'Nelze vynechat jméno nebo e-mailovou adresu.';
+$lang['profchanged']           = 'Uživatelský profil změněn.';
+$lang['profnodelete']          = 'Tato wiki nepodporuje mazání uživatelů';
+$lang['profdeleteuser']        = 'Smazat účet';
+$lang['profdeleted']           = 'Váš uživatelský účet byl z této wiki smazán';
+$lang['profconfdelete']        = 'Chci smazat můj účet z této wiki. <br/> Tato akce je nevratná.';
+$lang['profconfdeletemissing'] = 'Potvrzovací tlačítko nezaškrtnuto';
+$lang['proffail']              = 'Uživatelský profil nebyl aktualizován.';
+$lang['pwdforget']             = 'Zapomněli jste heslo? Nechte si zaslat nové';
+$lang['resendna']              = 'Tato wiki neumožňuje zasílání nových hesel.';
+$lang['resendpwd']             = 'Nastavit nové heslo pro';
+$lang['resendpwdmissing']      = 'Musíte vyplnit všechny položky.';
+$lang['resendpwdnouser']       = 'Bohužel takový uživatel v systému není.';
+$lang['resendpwdbadauth']      = 'Tento autorizační kód není platný. Zadali jste opravdu celý odkaz na potvrzovací stránku?';
+$lang['resendpwdconfirm']      = 'Odkaz na potvrzovací stránku byl odeslán e-mailem.';
+$lang['resendpwdsuccess']      = 'Vaše nové heslo bylo odesláno e-mailem.';
+$lang['license']               = 'Kromě míst, kde je explicitně uvedeno jinak, je obsah této wiki licencován pod následující licencí:';
+$lang['licenseok']             = 'Poznámka: Tím, že editujete tuto stránku, souhlasíte, aby váš obsah byl licencován pod následující licencí:';
+$lang['searchmedia']           = 'Hledat jméno souboru:';
+$lang['searchmedia_in']        = 'Hledat v %s';
+$lang['txt_upload']            = 'Vyberte soubor jako přílohu:';
+$lang['txt_filename']          = 'Wiki jméno (volitelné):';
+$lang['txt_overwrt']           = 'Přepsat existující soubor';
+$lang['maxuploadsize']         = 'Max. velikost souboru %s';
+$lang['lockedby']              = 'Právě zamknuto:';
+$lang['lockexpire']            = 'Zámek vyprší:';
 $lang['rssfailed']             = 'Nastala chyba při vytváření tohoto RSS: ';
 $lang['nothingfound']          = 'Nic nenalezeno.';
 $lang['mediaselect']           = 'Výběr dokumentu';

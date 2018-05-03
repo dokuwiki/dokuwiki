@@ -164,7 +164,7 @@ class Tar extends Archive
 
             // extract data
             if (!$fileinfo->getIsdir()) {
-                $fp = fopen($output, "wb");
+                $fp = @fopen($output, "wb");
                 if (!$fp) {
                     throw new ArchiveIOException('Could not open file for writing: '.$output);
                 }
@@ -245,7 +245,7 @@ class Tar extends Archive
             throw new ArchiveIOException('Archive has been closed, files can no longer be added');
         }
 
-        $fp = fopen($file, 'rb');
+        $fp = @fopen($file, 'rb');
         if (!$fp) {
             throw new ArchiveIOException('Could not open file for reading: '.$file);
         }
@@ -379,7 +379,7 @@ class Tar extends Archive
             $this->setCompression($this->complevel, $this->filetype($file));
         }
 
-        if (!file_put_contents($file, $this->getArchive())) {
+        if (!@file_put_contents($file, $this->getArchive())) {
             throw new ArchiveIOException('Could not write to file: '.$file);
         }
     }
@@ -433,7 +433,7 @@ class Tar extends Archive
      *
      * @param int $bytes seek to this position
      */
-    function skipbytes($bytes)
+    protected function skipbytes($bytes)
     {
         if ($this->comptype === Archive::COMPRESS_GZIP) {
             @gzseek($this->fh, $bytes, SEEK_CUR);
@@ -645,7 +645,7 @@ class Tar extends Archive
     {
         // for existing files, try to read the magic bytes
         if(file_exists($file) && is_readable($file) && filesize($file) > 5) {
-            $fh = fopen($file, 'rb');
+            $fh = @fopen($file, 'rb');
             if(!$fh) return false;
             $magic = fread($fh, 5);
             fclose($fh);

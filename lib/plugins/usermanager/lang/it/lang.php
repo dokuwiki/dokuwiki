@@ -5,7 +5,7 @@
  *
  * @author Chris Smith <chris@jalakai.co.uk>
  * @author Silvia Sargentoni <polinnia@tin.it>
- * @author Pietro Battiston toobaz@email.it
+ * @author Pietro Battiston <toobaz@email.it>
  * @author Lorenzo Breda <lbreda@gmail.com>
  * @author robocap <robocap1@gmail.com>
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
