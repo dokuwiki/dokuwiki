@@ -136,12 +136,12 @@ Resize to given width:            {{wiki:dokuwiki-128.png?50}}
 
 Resize to given width and height((when the aspect ratio of the given width and height doesn't match that of the image, it will be cropped to the new ratio before resizing)): {{wiki:dokuwiki-128.png?200x50}}
 
-Resized external image:           {{http://php.net/images/php.gif?200x50}}
+Resized external image:           {{https://secure.php.net/images/php.gif?200x50}}
 
   Real size:                        {{wiki:dokuwiki-128.png}}
   Resize to given width:            {{wiki:dokuwiki-128.png?50}}
   Resize to given width and height: {{wiki:dokuwiki-128.png?200x50}}
-  Resized external image:           {{http://php.net/images/php.gif?200x50}}
+  Resized external image:           {{https://secure.php.net/images/php.gif?200x50}}
 
 
 By using left or right whitespaces you can choose the alignment.
