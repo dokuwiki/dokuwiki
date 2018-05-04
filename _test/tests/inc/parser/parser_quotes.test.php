@@ -182,7 +182,12 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
     function testDoubleQuoteClosing() {
         $raw = 'Foo hello" Bar';
         $this->P->addMode('quotes',new Quotes());
-        $this->H->status['doublequote'] = 1;
+
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $status = $this->getInaccessibleProperty($this->H, 'status');
+        $status['doublequote'] = 1;
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->setInaccessibleProperty($this->H, 'status', $status);
         $this->P->parse($raw);
 
         $calls = array (
@@ -201,7 +206,12 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
     function testDoubleQuoteClosingSpecial() {
         $raw = 'Foo hello") Bar';
         $this->P->addMode('quotes',new Quotes());
-        $this->H->status['doublequote'] = 1;
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $status = $this->getInaccessibleProperty($this->H, 'status');
+        $status['doublequote'] = 1;
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->setInaccessibleProperty($this->H, 'status', $status);
+
         $this->P->parse($raw);
 
         $calls = array (
@@ -219,7 +229,12 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
     function testDoubleQuoteClosingSpecial2() {
         $raw = 'Foo hello") Bar';
         $this->P->addMode('quotes',new Quotes());
-        $this->H->status['doublequote'] = 0;
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $status = $this->getInaccessibleProperty($this->H, 'status');
+        $status['doublequote'] = 0;
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->setInaccessibleProperty($this->H, 'status', $status);
+
         $this->P->parse($raw);
 
         $calls = array (
