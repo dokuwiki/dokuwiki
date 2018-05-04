@@ -191,4 +191,41 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
         $method->setAccessible(true);
         return $method->invokeArgs($obj, $args);
     }
+
+    /**
+     * Allow for reading inaccessible properties (private or protected)
+     *
+     * This makes it easier to check internals of tested objects. This should generally
+     * be avoided.
+     *
+     * @param object $obj Object on which to access the property
+     * @param string $prop name of the property to access
+     * @return mixed
+     * @throws ReflectionException  when the given obj/prop does not exist
+     */
+    protected static function getInaccessibleProperty($obj, $prop) {
+        $class = new \ReflectionClass($obj);
+        $property = $class->getProperty($prop);
+        $property->setAccessible(true);
+        return $property->getValue($obj);
+    }
+
+    /**
+     * Allow for reading inaccessible properties (private or protected)
+     *
+     * This makes it easier to set internals of tested objects. This should generally
+     * be avoided.
+     *
+     * @param object $obj Object on which to access the property
+     * @param string $prop name of the property to access
+     * @param mixed $value new value to set the property to
+     * @return void
+     * @throws ReflectionException when the given obj/prop does not exist
+     */
+    protected static function setInaccessibleProperty($obj, $prop, $value) {
+        $class = new \ReflectionClass($obj);
+        $property = $class->getProperty($prop);
+        $property->setAccessible(true);
+        $property->setValue($obj, $value);
+    }
 }
