@@ -16,7 +16,7 @@ abstract class DokuWiki_Syntax_Plugin extends \dokuwiki\Parsing\ParserMode\Plugi
     /**
      * Syntax Type
      *
-     * Needs to return one of the mode types defined in $PARSER_MODES in parser.php
+     * Needs to return one of the mode types defined in $PARSER_MODES in Parser.php
      *
      * @return string
      */
@@ -27,7 +27,7 @@ abstract class DokuWiki_Syntax_Plugin extends \dokuwiki\Parsing\ParserMode\Plugi
      *
      * Defines the mode types for other dokuwiki markup that maybe nested within the
      * plugin's own markup. Needs to return an array of one or more of the mode types
-     * defined in $PARSER_MODES in parser.php
+     * defined in $PARSER_MODES in Parser.php
      *
      * @return array
      */

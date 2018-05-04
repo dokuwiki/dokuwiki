@@ -209,7 +209,7 @@ class cache_parser extends cache {
 
         // parser cache file dependencies ...
         $files = array($this->file,                              // ... source
-                DOKU_INC.'inc/parser/parser.php',                // ... parser
+                DOKU_INC.'inc/parser/Parser.php',                // ... parser
                 DOKU_INC.'inc/parser/handler.php',               // ... handler
                 );
         $files = array_merge($files, getConfigFiles('main'));    // ... wiki settings

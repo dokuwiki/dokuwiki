@@ -7,6 +7,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Parsing\Parser;
+
 /**
  * How many pages shall be rendered for getting metadata during one request
  * at maximum? Note that this limit isn't respected when METADATA_RENDER_UNLIMITED
@@ -191,7 +193,7 @@ function p_get_instructions($text){
     $modes = p_get_parsermodes();
 
     // Create the parser and handler
-    $Parser = new Doku_Parser(new Doku_Handler());
+    $Parser = new Parser(new Doku_Handler());
 
     //add modes to parser
     foreach($modes as $mode){
