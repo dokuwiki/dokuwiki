@@ -2,6 +2,8 @@
 
 namespace dokuwiki\ParserMode;
 
+use dokuwiki\Lexer\Lexer;
+
 /**
  * @fixme is this actually used?
  */
@@ -29,7 +31,7 @@ class Wordblock extends AbstractMode
 
         $sep = '';
         foreach ($this->badwords as $badword) {
-            $this->pattern .= $sep.'(?<=\b)(?i)'.Doku_Lexer_Escape($badword).'(?-i)(?=\b)';
+            $this->pattern .= $sep.'(?<=\b)(?i)'. Lexer::escape($badword).'(?-i)(?=\b)';
             $sep = '|';
         }
     }

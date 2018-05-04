@@ -2,6 +2,8 @@
 
 namespace dokuwiki\ParserMode;
 
+use dokuwiki\Lexer\Lexer;
+
 class Smiley extends AbstractMode
 {
     protected $smileys = array();
@@ -23,7 +25,7 @@ class Smiley extends AbstractMode
 
         $sep = '';
         foreach ($this->smileys as $smiley) {
-            $this->pattern .= $sep.'(?<=\W|^)'.Doku_Lexer_Escape($smiley).'(?=\W|$)';
+            $this->pattern .= $sep.'(?<=\W|^)'. Lexer::escape($smiley).'(?=\W|$)';
             $sep = '|';
         }
     }

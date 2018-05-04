@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\Lexer\Lexer;
 use dokuwiki\ParserMode\Base;
 use dokuwiki\ParserMode\ModeInterface;
 
@@ -50,7 +51,7 @@ class Doku_Parser {
     /** @var Doku_Handler */
     protected $handler;
 
-    /** @var Doku_Lexer $lexer */
+    /** @var Lexer $lexer */
     protected $lexer;
 
     /** @var ModeInterface[] $modes */
@@ -76,7 +77,7 @@ class Doku_Parser {
     protected function addBaseMode($BaseMode) {
         $this->modes['base'] = $BaseMode;
         if ( !$this->lexer ) {
-            $this->lexer = new Doku_Lexer($this->handler, 'base', true);
+            $this->lexer = new Lexer($this->handler, 'base', true);
         }
         $this->modes['base']->Lexer = $this->lexer;
     }

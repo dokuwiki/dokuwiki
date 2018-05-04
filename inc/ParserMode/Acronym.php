@@ -27,7 +27,7 @@ class Acronym extends AbstractMode
         if (!count($this->acronyms)) return;
 
         $bound = '[\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]';
-        $acronyms = array_map('Doku_Lexer_Escape', $this->acronyms);
+        $acronyms = array_map(['\\dokuwiki\\Lexer\\Lexer','escape'], $this->acronyms);
         $this->pattern = '(?<=^|'.$bound.')(?:'.join('|', $acronyms).')(?='.$bound.')';
     }
 

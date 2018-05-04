@@ -92,10 +92,7 @@ function load_autoload($name){
         'DokuWiki_Auth_Plugin'   => DOKU_PLUGIN.'auth.php',
         'DokuWiki_CLI_Plugin'    => DOKU_PLUGIN.'cli.php',
 
-        'Doku_Lexer'            => DOKU_INC.'inc/parser/lexer.php',
         'Doku_Handler'          => DOKU_INC.'inc/parser/handler.php',
-        'Doku_Parser_Mode'      => DOKU_INC.'inc/parser/parser.php',
-        'Doku_Parser_Mode_Plugin' => DOKU_INC.'inc/parser/parser.php',
         'Doku_Renderer'          => DOKU_INC.'inc/parser/renderer.php',
         'Doku_Renderer_xhtml'    => DOKU_INC.'inc/parser/xhtml.php',
         'Doku_Renderer_code'     => DOKU_INC.'inc/parser/code.php',

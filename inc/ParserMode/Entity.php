@@ -2,6 +2,8 @@
 
 namespace dokuwiki\ParserMode;
 
+use dokuwiki\Lexer\Lexer;
+
 class Entity extends AbstractMode
 {
 
@@ -25,7 +27,7 @@ class Entity extends AbstractMode
 
         $sep = '';
         foreach ($this->entities as $entity) {
-            $this->pattern .= $sep.Doku_Lexer_Escape($entity);
+            $this->pattern .= $sep. Lexer::escape($entity);
             $sep = '|';
         }
     }
