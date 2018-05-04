@@ -163,7 +163,7 @@ class Lexer
         if (!$parsed) {
             return false;
         }
-        return $this->invokeParser($raw, DOKU_LEXER_UNMATCHED, $pos);
+        return $this->invokeHandler($raw, DOKU_LEXER_UNMATCHED, $pos);
     }
 
     /**
@@ -180,27 +180,27 @@ class Lexer
      */
     protected function dispatchTokens($unmatched, $matched, $mode = false, $initialPos, $matchPos)
     {
-        if (! $this->invokeParser($unmatched, DOKU_LEXER_UNMATCHED, $initialPos)) {
+        if (! $this->invokeHandler($unmatched, DOKU_LEXER_UNMATCHED, $initialPos)) {
             return false;
         }
         if ($this->isModeEnd($mode)) {
-            if (! $this->invokeParser($matched, DOKU_LEXER_EXIT, $matchPos)) {
+            if (! $this->invokeHandler($matched, DOKU_LEXER_EXIT, $matchPos)) {
                 return false;
             }
             return $this->mode->leave();
         }
         if ($this->isSpecialMode($mode)) {
             $this->mode->enter($this->decodeSpecial($mode));
-            if (! $this->invokeParser($matched, DOKU_LEXER_SPECIAL, $matchPos)) {
+            if (! $this->invokeHandler($matched, DOKU_LEXER_SPECIAL, $matchPos)) {
                 return false;
             }
             return $this->mode->leave();
         }
         if (is_string($mode)) {
             $this->mode->enter($mode);
-            return $this->invokeParser($matched, DOKU_LEXER_ENTER, $matchPos);
+            return $this->invokeHandler($matched, DOKU_LEXER_ENTER, $matchPos);
         }
-        return $this->invokeParser($matched, DOKU_LEXER_MATCHED, $matchPos);
+        return $this->invokeHandler($matched, DOKU_LEXER_MATCHED, $matchPos);
     }
 
     /**
@@ -250,7 +250,7 @@ class Lexer
      *                             thats being parsed
      * @return bool
      */
-    protected function invokeParser($content, $is_match, $pos)
+    protected function invokeHandler($content, $is_match, $pos)
     {
         if (($content === "") || ($content === false)) {
             return true;
