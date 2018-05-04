@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\ParserMode\File;
+use dokuwiki\Parsing\ParserMode\File;
 
 require_once 'parser.inc.php';
 

@@ -1,13 +1,13 @@
 <?php
 
-use dokuwiki\ParserMode\Code;
-use dokuwiki\ParserMode\Eol;
-use dokuwiki\ParserMode\File;
-use dokuwiki\ParserMode\Header;
-use dokuwiki\ParserMode\Html;
-use dokuwiki\ParserMode\Listblock;
-use dokuwiki\ParserMode\Php;
-use dokuwiki\ParserMode\Preformatted;
+use dokuwiki\Parsing\ParserMode\Code;
+use dokuwiki\Parsing\ParserMode\Eol;
+use dokuwiki\Parsing\ParserMode\File;
+use dokuwiki\Parsing\ParserMode\Header;
+use dokuwiki\Parsing\ParserMode\Html;
+use dokuwiki\Parsing\ParserMode\Listblock;
+use dokuwiki\Parsing\ParserMode\Php;
+use dokuwiki\Parsing\ParserMode\Preformatted;
 
 require_once 'parser.inc.php';
 

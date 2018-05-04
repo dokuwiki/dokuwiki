@@ -1,13 +1,13 @@
 <?php
 
-use dokuwiki\Handler\Block;
-use dokuwiki\Handler\CallWriter;
-use dokuwiki\Handler\CallWriterInterface;
-use dokuwiki\Handler\Lists;
-use dokuwiki\Handler\Nest;
-use dokuwiki\Handler\Preformatted;
-use dokuwiki\Handler\Quote;
-use dokuwiki\Handler\Table;
+use dokuwiki\Parsing\Handler\Block;
+use dokuwiki\Parsing\Handler\CallWriter;
+use dokuwiki\Parsing\Handler\CallWriterInterface;
+use dokuwiki\Parsing\Handler\Lists;
+use dokuwiki\Parsing\Handler\Nest;
+use dokuwiki\Parsing\Handler\Preformatted;
+use dokuwiki\Parsing\Handler\Quote;
+use dokuwiki\Parsing\Handler\Table;
 
 /**
  * Class Doku_Handler
@@ -202,7 +202,7 @@ class Doku_Handler {
     /**
      * The following methods define the handlers for the different Syntax modes
      *
-     * The handlers are called from dokuwiki\Lexer\Lexer\invokeParser()
+     * The handlers are called from dokuwiki\Parsing\Lexer\Lexer\invokeParser()
      *
      * @todo it might make sense to move these into their own class or merge them with the
      *       ParserMode classes some time.

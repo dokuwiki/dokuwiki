@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\ParserMode\Acronym;
-use dokuwiki\ParserMode\Entity;
-use dokuwiki\ParserMode\Hr;
-use dokuwiki\ParserMode\Multiplyentity;
-use dokuwiki\ParserMode\Smiley;
-use dokuwiki\ParserMode\Wordblock;
+use dokuwiki\Parsing\ParserMode\Acronym;
+use dokuwiki\Parsing\ParserMode\Entity;
+use dokuwiki\Parsing\ParserMode\Hr;
+use dokuwiki\Parsing\ParserMode\Multiplyentity;
+use dokuwiki\Parsing\ParserMode\Smiley;
+use dokuwiki\Parsing\ParserMode\Wordblock;
 
 require_once 'parser.inc.php';
 

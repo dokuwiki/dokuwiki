@@ -1,12 +1,12 @@
 <?php
 
-use dokuwiki\ParserMode\Camelcaselink;
-use dokuwiki\ParserMode\Emaillink;
-use dokuwiki\ParserMode\Externallink;
-use dokuwiki\ParserMode\Filelink;
-use dokuwiki\ParserMode\Internallink;
-use dokuwiki\ParserMode\Media;
-use dokuwiki\ParserMode\Windowssharelink;
+use dokuwiki\Parsing\ParserMode\Camelcaselink;
+use dokuwiki\Parsing\ParserMode\Emaillink;
+use dokuwiki\Parsing\ParserMode\Externallink;
+use dokuwiki\Parsing\ParserMode\Filelink;
+use dokuwiki\Parsing\ParserMode\Internallink;
+use dokuwiki\Parsing\ParserMode\Media;
+use dokuwiki\Parsing\ParserMode\Windowssharelink;
 
 require_once 'parser.inc.php';
 

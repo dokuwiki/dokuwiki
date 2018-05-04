@@ -1,7 +1,7 @@
 <?php
 
-use dokuwiki\ParserMode\Eol;
-use dokuwiki\ParserMode\Linebreak;
+use dokuwiki\Parsing\ParserMode\Eol;
+use dokuwiki\Parsing\ParserMode\Linebreak;
 
 require_once 'parser.inc.php';
 

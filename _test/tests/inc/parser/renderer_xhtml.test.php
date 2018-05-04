@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\Handler\Lists;
+use dokuwiki\Parsing\Handler\Lists;
 
 /**
  * Class renderer_xhtml_test

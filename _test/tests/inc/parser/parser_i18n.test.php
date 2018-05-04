@@ -1,10 +1,10 @@
 <?php
 
-use dokuwiki\ParserMode\Acronym;
-use dokuwiki\ParserMode\Formatting;
-use dokuwiki\ParserMode\Header;
-use dokuwiki\ParserMode\Internallink;
-use dokuwiki\ParserMode\Table;
+use dokuwiki\Parsing\ParserMode\Acronym;
+use dokuwiki\Parsing\ParserMode\Formatting;
+use dokuwiki\Parsing\ParserMode\Header;
+use dokuwiki\Parsing\ParserMode\Internallink;
+use dokuwiki\Parsing\ParserMode\Table;
 
 require_once 'parser.inc.php';
 

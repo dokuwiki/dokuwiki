@@ -5,9 +5,9 @@
 * @subpackage Tests
 */
 
-use dokuwiki\Lexer\Lexer;
-use dokuwiki\Lexer\ParallelRegex;
-use dokuwiki\Lexer\StateStack;
+use dokuwiki\Parsing\Lexer\Lexer;
+use dokuwiki\Parsing\Lexer\ParallelRegex;
+use dokuwiki\Parsing\Lexer\StateStack;
 
 /**
 * @package Doku

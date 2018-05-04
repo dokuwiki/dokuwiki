@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\ParserMode\Quotes;
+use dokuwiki\Parsing\ParserMode\Quotes;
 
 require_once 'parser.inc.php';
 

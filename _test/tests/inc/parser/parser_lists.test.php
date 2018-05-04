@@ -1,12 +1,12 @@
 <?php
 
-use dokuwiki\Handler\Lists;
-use dokuwiki\ParserMode\Eol;
-use dokuwiki\ParserMode\Footnote;
-use dokuwiki\ParserMode\Formatting;
-use dokuwiki\ParserMode\Linebreak;
-use dokuwiki\ParserMode\Listblock;
-use dokuwiki\ParserMode\Unformatted;
+use dokuwiki\Parsing\Handler\Lists;
+use dokuwiki\Parsing\ParserMode\Eol;
+use dokuwiki\Parsing\ParserMode\Footnote;
+use dokuwiki\Parsing\ParserMode\Formatting;
+use dokuwiki\Parsing\ParserMode\Linebreak;
+use dokuwiki\Parsing\ParserMode\Listblock;
+use dokuwiki\Parsing\ParserMode\Unformatted;
 
 require_once 'parser.inc.php';
 

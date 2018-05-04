@@ -1,8 +1,8 @@
 <?php
 
-use dokuwiki\Lexer\Lexer;
-use dokuwiki\ParserMode\Base;
-use dokuwiki\ParserMode\ModeInterface;
+use dokuwiki\Parsing\Lexer\Lexer;
+use dokuwiki\Parsing\ParserMode\Base;
+use dokuwiki\Parsing\ParserMode\ModeInterface;
 
 /**
  * Define various types of modes used by the parser - they are used to

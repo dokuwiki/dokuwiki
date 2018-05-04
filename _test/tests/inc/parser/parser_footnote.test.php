@@ -1,16 +1,16 @@
 <?php
 
-use dokuwiki\Handler\Lists;
-use dokuwiki\ParserMode\Code;
-use dokuwiki\ParserMode\Eol;
-use dokuwiki\ParserMode\Footnote;
-use dokuwiki\ParserMode\Formatting;
-use dokuwiki\ParserMode\Hr;
-use dokuwiki\ParserMode\Listblock;
-use dokuwiki\ParserMode\Preformatted;
-use dokuwiki\ParserMode\Quote;
-use dokuwiki\ParserMode\Table;
-use dokuwiki\ParserMode\Unformatted;
+use dokuwiki\Parsing\Handler\Lists;
+use dokuwiki\Parsing\ParserMode\Code;
+use dokuwiki\Parsing\ParserMode\Eol;
+use dokuwiki\Parsing\ParserMode\Footnote;
+use dokuwiki\Parsing\ParserMode\Formatting;
+use dokuwiki\Parsing\ParserMode\Hr;
+use dokuwiki\Parsing\ParserMode\Listblock;
+use dokuwiki\Parsing\ParserMode\Preformatted;
+use dokuwiki\Parsing\ParserMode\Quote;
+use dokuwiki\Parsing\ParserMode\Table;
+use dokuwiki\Parsing\ParserMode\Unformatted;
 
 require_once 'parser.inc.php';
 

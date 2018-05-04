@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\ParserMode\Unformatted;
+use dokuwiki\Parsing\ParserMode\Unformatted;
 
 require_once 'parser.inc.php';
 

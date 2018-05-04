@@ -8,7 +8,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-abstract class DokuWiki_Syntax_Plugin extends \dokuwiki\ParserMode\Plugin {
+abstract class DokuWiki_Syntax_Plugin extends \dokuwiki\Parsing\ParserMode\Plugin {
     use DokuWiki_PluginTrait;
 
     protected $allowedModesSetup = false;

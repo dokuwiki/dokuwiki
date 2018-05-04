@@ -1,7 +1,7 @@
 <?php
 
-use dokuwiki\ParserMode\Eol;
-use dokuwiki\ParserMode\Header;
+use dokuwiki\Parsing\ParserMode\Eol;
+use dokuwiki\Parsing\ParserMode\Header;
 
 require_once 'parser.inc.php';
 

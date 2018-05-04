@@ -566,7 +566,7 @@ function p_get_parsermodes(){
         $std_modes[] = 'multiplyentity';
     }
     foreach($std_modes as $m){
-        $class = 'dokuwiki\\ParserMode\\'.ucfirst($m);
+        $class = 'dokuwiki\\Parsing\\ParserMode\\'.ucfirst($m);
         $obj   = new $class();
         $modes[] = array(
                 'sort' => $obj->getSort(),
@@ -579,7 +579,7 @@ function p_get_parsermodes(){
     $fmt_modes = array('strong','emphasis','underline','monospace',
             'subscript','superscript','deleted');
     foreach($fmt_modes as $m){
-        $obj   = new \dokuwiki\ParserMode\Formatting($m);
+        $obj   = new \dokuwiki\Parsing\ParserMode\Formatting($m);
         $modes[] = array(
                 'sort' => $obj->getSort(),
                 'mode' => $m,
@@ -588,16 +588,16 @@ function p_get_parsermodes(){
     }
 
     // add modes which need files
-    $obj     = new \dokuwiki\ParserMode\Smiley(array_keys(getSmileys()));
+    $obj     = new \dokuwiki\Parsing\ParserMode\Smiley(array_keys(getSmileys()));
     $modes[] = array('sort' => $obj->getSort(), 'mode' => 'smiley','obj'  => $obj );
-    $obj     = new \dokuwiki\ParserMode\Acronym(array_keys(getAcronyms()));
+    $obj     = new \dokuwiki\Parsing\ParserMode\Acronym(array_keys(getAcronyms()));
     $modes[] = array('sort' => $obj->getSort(), 'mode' => 'acronym','obj'  => $obj );
-    $obj     = new \dokuwiki\ParserMode\Entity(array_keys(getEntities()));
+    $obj     = new \dokuwiki\Parsing\ParserMode\Entity(array_keys(getEntities()));
     $modes[] = array('sort' => $obj->getSort(), 'mode' => 'entity','obj'  => $obj );
 
     // add optional camelcase mode
     if($conf['camelcase']){
-        $obj     = new \dokuwiki\ParserMode\Camelcaselink();
+        $obj     = new \dokuwiki\Parsing\ParserMode\Camelcaselink();
         $modes[] = array('sort' => $obj->getSort(), 'mode' => 'camelcaselink','obj'  => $obj );
     }
 

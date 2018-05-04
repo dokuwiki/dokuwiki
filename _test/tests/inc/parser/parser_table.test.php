@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\ParserMode\Eol;
-use dokuwiki\ParserMode\Footnote;
-use dokuwiki\ParserMode\Formatting;
-use dokuwiki\ParserMode\Linebreak;
-use dokuwiki\ParserMode\Table;
-use dokuwiki\ParserMode\Unformatted;
+use dokuwiki\Parsing\ParserMode\Eol;
+use dokuwiki\Parsing\ParserMode\Footnote;
+use dokuwiki\Parsing\ParserMode\Formatting;
+use dokuwiki\Parsing\ParserMode\Linebreak;
+use dokuwiki\Parsing\ParserMode\Table;
+use dokuwiki\Parsing\ParserMode\Unformatted;
 
 require_once 'parser.inc.php';
 
