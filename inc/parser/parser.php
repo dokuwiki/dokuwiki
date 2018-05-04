@@ -41,59 +41,75 @@ $PARSER_MODES = array(
     'paragraphs'   => array('eol')
 );
 
-//-------------------------------------------------------------------
-
 /**
  * Sets up the Lexer with modes and points it to the Handler
  * For an intro to the Lexer see: wiki:parser
  */
 class Doku_Parser {
 
-    var $Handler;
+    /** @var Doku_Handler */
+    protected $handler;
+
+    /** @var Doku_Lexer $lexer */
+    protected $lexer;
+
+    /** @var ModeInterface[] $modes */
+    protected $modes = array();
+
+    /** @var bool mode connections may only be set up once */
+    protected $connected = false;
 
     /**
-     * @var Doku_Lexer $Lexer
+     * Doku_Parser constructor.
+     *
+     * @param Doku_Handler $handler
      */
-    var $Lexer;
-
-    var $modes = array();
-
-    var $connected = false;
-
-    /**
-     * @param Base $BaseMode
-     */
-    function addBaseMode($BaseMode) {
-        $this->modes['base'] = $BaseMode;
-        if ( !$this->Lexer ) {
-            $this->Lexer = new Doku_Lexer($this->Handler,'base', true);
-        }
-        $this->modes['base']->Lexer = $this->Lexer;
+    public function __construct(Doku_Handler $handler) {
+        $this->handler = $handler;
     }
 
     /**
+     * Adds the base mode and initialized the lexer
+     *
+     * @param Base $BaseMode
+     */
+    protected function addBaseMode($BaseMode) {
+        $this->modes['base'] = $BaseMode;
+        if ( !$this->lexer ) {
+            $this->lexer = new Doku_Lexer($this->handler, 'base', true);
+        }
+        $this->modes['base']->Lexer = $this->lexer;
+    }
+
+    /**
+     * Add a new syntax element (mode) to the parser
+     *
      * PHP preserves order of associative elements
      * Mode sequence is important
      *
      * @param string $name
      * @param ModeInterface $Mode
      */
-    function addMode($name, ModeInterface $Mode) {
+    public function addMode($name, ModeInterface $Mode) {
         if ( !isset($this->modes['base']) ) {
             $this->addBaseMode(new Base());
         }
-        $Mode->Lexer = $this->Lexer;
+        $Mode->Lexer = $this->lexer; // FIXME should be done by setter
         $this->modes[$name] = $Mode;
     }
 
-    function connectModes() {
+    /**
+     * Connect all modes with each other
+     *
+     * This is the last step before actually parsing.
+     */
+    protected function connectModes() {
 
         if ( $this->connected ) {
             return;
         }
 
         foreach ( array_keys($this->modes) as $mode ) {
-
             // Base isn't connected to anything
             if ( $mode == 'base' ) {
                 continue;
@@ -114,20 +130,19 @@ class Doku_Parser {
         $this->connected = true;
     }
 
-    function parse($doc) {
-        if ( $this->Lexer ) {
-            $this->connectModes();
-            // Normalize CRs and pad doc
-            $doc = "\n".str_replace("\r\n","\n",$doc)."\n";
-            $this->Lexer->parse($doc);
-            $this->Handler->_finalize();
-            return $this->Handler->calls;
-        } else {
-            return false;
-        }
+    /**
+     * Parses wiki syntax to instructions
+     *
+     * @param string $doc the wiki syntax text
+     * @return array instructions
+     */
+    public function parse($doc) {
+        $this->connectModes();
+        // Normalize CRs and pad doc
+        $doc = "\n".str_replace("\r\n","\n",$doc)."\n";
+        $this->lexer->parse($doc);
+        $this->handler->_finalize();
+        return $this->handler->calls;
     }
 
 }
-
-
-//Setup VIM: ex: et ts=4 :

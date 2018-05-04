@@ -10,7 +10,7 @@ namespace dokuwiki\ParserMode;
  */
 abstract class AbstractMode implements ModeInterface
 {
-    /** @var \Doku_Lexer $Lexer will be injected on loading */
+    /** @var \Doku_Lexer $Lexer will be injected on loading FIXME this should be done by setter */
     public $Lexer;
     protected $allowedModes = array();
 

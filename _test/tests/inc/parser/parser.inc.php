@@ -12,9 +12,8 @@ abstract class TestOfDoku_Parser extends DokuWikiTest {
 
     function setUp() {
         parent::setUp();
-        $this->P = new Doku_Parser();
         $this->H = new Doku_Handler();
-        $this->P->Handler = $this->H;
+        $this->P = new Doku_Parser($this->H);
     }
 
     function tearDown() {

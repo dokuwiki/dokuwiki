@@ -190,11 +190,8 @@ function p_get_instructions($text){
 
     $modes = p_get_parsermodes();
 
-    // Create the parser
-    $Parser = new Doku_Parser();
-
-    // Add the Handler
-    $Parser->Handler = new Doku_Handler();
+    // Create the parser and handler
+    $Parser = new Doku_Parser(new Doku_Handler());
 
     //add modes to parser
     foreach($modes as $mode){
