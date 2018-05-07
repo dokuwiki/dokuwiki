@@ -120,13 +120,13 @@ class Api
      * @param string $method name of method
      * @param array $args
      * @return mixed
-     * @throws \dokuwiki\Remote\RemoteException if method not exists
+     * @throws RemoteException if method not exists
      */
     private function callCustomCallPlugin($method, $args)
     {
         $customCalls = $this->getCustomCallPlugins();
         if (!array_key_exists($method, $customCalls)) {
-            throw new \dokuwiki\Remote\RemoteException('Method does not exist', -32603);
+            throw new RemoteException('Method does not exist', -32603);
         }
         $customCall = $customCalls[$method];
         return $this->callPlugin($customCall[0], $customCall[1], $args);
@@ -155,14 +155,14 @@ class Api
      * @param string $method method name
      * @param array $args
      * @return mixed return of custom method
-     * @throws \dokuwiki\Remote\RemoteException
+     * @throws RemoteException
      */
     private function callPlugin($pluginName, $method, $args)
     {
         $plugin = plugin_load('remote', $pluginName);
         $methods = $this->getPluginMethods();
         if (!$plugin) {
-            throw new \dokuwiki\Remote\RemoteException('Method does not exist', -32603);
+            throw new RemoteException('Method does not exist', -32603);
         }
         $this->checkAccess($methods[$method]);
         $name = $this->getMethodName($methods, $method);
@@ -175,7 +175,7 @@ class Api
      * @param string $method name of method
      * @param array $args
      * @return mixed
-     * @throws \dokuwiki\Remote\RemoteException if method not exist
+     * @throws RemoteException if method not exist
      */
     private function callCoreMethod($method, $args)
     {
