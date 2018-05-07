@@ -109,7 +109,7 @@ class Block
         } else {
             // remove ending linebreaks in the paragraph
             $i=count($this->calls)-1;
-            if ($this->calls[$i][0] == 'cdata') $this->calls[$i][1][0] = rtrim($this->calls[$i][1][0], DOKU_PARSER_EOL);
+            if ($this->calls[$i][0] == 'cdata') $this->calls[$i][1][0] = rtrim($this->calls[$i][1][0], "\n");
             $this->calls[] = array('p_close',array(), $pos);
         }
 
@@ -194,7 +194,7 @@ class Block
                         $this->openParagraph($call[2]);
                     } else {
                         //if this is just a single eol make a space from it
-                        $this->addCall(array('cdata',array(DOKU_PARSER_EOL), $call[2]));
+                        $this->addCall(array('cdata',array("\n"), $call[2]));
                     }
                 }
                 continue;
