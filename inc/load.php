@@ -34,6 +34,7 @@ require_once(DOKU_INC.'inc/toolbar.php');
 require_once(DOKU_INC.'inc/utf8.php');
 require_once(DOKU_INC.'inc/auth.php');
 require_once(DOKU_INC.'inc/compatibility.php');
+require_once(DOKU_INC.'inc/deprecated.php');
 
 /**
  * spl_autoload_register callback
