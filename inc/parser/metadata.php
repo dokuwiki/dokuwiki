@@ -468,7 +468,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string       $wikiName  indentifier (shortcut) for the remote wiki
      * @param string       $wikiUri   the fragment parsed from the original link
      */
-    public function interwikilink($match, $name = null, $wikiName, $wikiUri) {
+    public function interwikilink($match, $name, $wikiName, $wikiUri) {
         if(is_array($name)) {
             $this->_firstimage($name['src']);
             if($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);

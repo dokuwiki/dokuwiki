@@ -81,7 +81,7 @@ abstract class Doku_Renderer extends DokuWiki_Plugin {
     /**
      * Disable caching of this renderer's output
      */
-    function nocache() {
+    public function nocache() {
         $this->info['cache'] = false;
     }
 
@@ -90,7 +90,7 @@ abstract class Doku_Renderer extends DokuWiki_Plugin {
      *
      * This might not be used for certain sub renderer
      */
-    function notoc() {
+    public function notoc() {
         $this->info['toc'] = false;
     }
 

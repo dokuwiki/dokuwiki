@@ -31,7 +31,7 @@ class Doku_Handler {
     /**
      * Doku_Handler constructor.
      */
-    function __construct() {
+    public function __construct() {
         $this->callWriter = new CallWriter($this);
     }
 
@@ -117,7 +117,7 @@ class Doku_Handler {
      * @return array|null     Array of key-value pairs $array['key'] = 'value';
      *                        or null if no entries found
      */
-    protected function parse_highlight_options ($options) {
+    protected function parse_highlight_options($options) {
         $result = array();
         preg_match_all('/(\w+(?:="[^"]*"))|(\w+(?:=[^\s]*))|(\w+[^=\s\]])(?:\s*)/', $options, $matches, PREG_SET_ORDER);
         foreach ($matches as $match) {
