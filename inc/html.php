@@ -322,6 +322,7 @@ function html_draft(){
     $form = new Doku_Form(array('id' => 'dw__editform'));
     $form->addHidden('id', $ID);
     $form->addHidden('date', $draft['date']);
+    $form->addHidden('wikitext', $text);
     $form->addElement(form_makeOpenTag('div', array('id'=>'draft__status')));
     $form->addElement($lang['draftdate'].' '. dformat(filemtime($INFO['draft'])));
     $form->addElement(form_makeCloseTag('div'));

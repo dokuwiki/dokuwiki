@@ -106,24 +106,28 @@ header('Content-Type: text/html; charset=utf-8');
 
     <div style="float: left; width: 58%;">
         <?php
-            if(! (check_functions() && check_permissions()) ){
-                echo '<p>'.$lang['i_problems'].'</p>';
-                print_errors();
-                print_retry();
-            }elseif(!check_configs()){
-                echo '<p>'.$lang['i_modified'].'</p>';
-                print_errors();
-            }elseif(check_data($_REQUEST['d'])){
-                // check_data has sanitized all input parameters
-                if(!store_data($_REQUEST['d'])){
-                    echo '<p>'.$lang['i_failure'].'</p>';
+            try {
+                if(! (check_functions() && check_permissions()) ){
+                    echo '<p>'.$lang['i_problems'].'</p>';
                     print_errors();
+                    print_retry();
+                }elseif(!check_configs()){
+                    echo '<p>'.$lang['i_modified'].'</p>';
+                    print_errors();
+                }elseif(check_data($_REQUEST['d'])){
+                    // check_data has sanitized all input parameters
+                    if(!store_data($_REQUEST['d'])){
+                        echo '<p>'.$lang['i_failure'].'</p>';
+                        print_errors();
+                    }else{
+                        echo '<p>'.$lang['i_success'].'</p>';
+                    }
                 }else{
-                    echo '<p>'.$lang['i_success'].'</p>';
+                    print_errors();
+                    print_form($_REQUEST['d']);
                 }
-            }else{
-                print_errors();
-                print_form($_REQUEST['d']);
+            } catch (Exception $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
             }
         ?>
     </div>
