@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Andrew Pleshakov <beotiger@mail.ru>
@@ -13,7 +14,6 @@
  * @author Kirill Krasnov <krasnovforum@gmail.com>
  * @author Vlad Tsybenko <vlad.development@gmail.com>
  * @author Aleksey Osadchiy <rfc@nm.ru>
- * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Ladyko Andrey <fylh@succexy.spb.ru>
  * @author Eugene <windy.wanderer@gmail.com>
  * @author Johnny Utah <pcpa@cyberpunk.su>
@@ -88,5 +88,5 @@ $lang['addUser_error_modPass_disabled'] = 'Изменение пароля в н
 $lang['addUser_error_name_missing'] = 'Укажите имя нового пользователя.';
 $lang['addUser_error_modName_disabled'] = 'Изменение имени в настоящее время невозможно.';
 $lang['addUser_error_mail_missing'] = 'Укажите адрес эл. почты нового пользователя.';
-$lang['addUser_error_modMail_disabled'] = 'Изменение e-mail в настоящее время невозможно.';
+$lang['addUser_error_modMail_disabled'] = 'Изменение адреса эл. почты отключено.';
 $lang['addUser_error_create_event_failed'] = 'Плагин заблокировал добавление нового пользователя. Смотрите также другие сообщения.';
