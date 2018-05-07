@@ -1,9 +1,9 @@
 <?php
 
-if (!defined('DOKU_INC')) die();
+namespace dokuwiki\Remote;
 
-class RemoteException extends Exception {}
-class RemoteAccessDeniedException extends RemoteException {}
+use DokuWiki_Remote_Plugin;
+use Input;
 
 /**
  * This class provides information about remote access to the wiki.
@@ -33,19 +33,18 @@ class RemoteAccessDeniedException extends RemoteException {}
  *
  * plugin methods are formed like 'plugin.<plugin name>.<method name>'.
  * i.e.: plugin.clock.getTime or plugin.clock_gmt.getTime
- *
- * @throws RemoteException
  */
-class RemoteAPI {
+class Api
+{
 
     /**
-     * @var RemoteAPICore
+     * @var ApiCore
      */
     private $coreMethods = null;
 
     /**
      * @var array remote methods provided by dokuwiki plugins - will be filled lazy via
-     * {@see RemoteAPI#getPluginMethods}
+     * {@see dokuwiki\Remote\RemoteAPI#getPluginMethods}
      */
     private $pluginMethods = null;
 
@@ -63,7 +62,8 @@ class RemoteAPI {
     /**
      * constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->dateTransformation = array($this, 'dummyTransformation');
         $this->fileTransformation = array($this, 'dummyTransformation');
     }
@@ -72,8 +72,10 @@ class RemoteAPI {
      * Get all available methods with remote access.
      *
      * @return array with information to all available methods
+     * @throws RemoteException
      */
-    public function getMethods() {
+    public function getMethods()
+    {
         return array_merge($this->getCoreMethods(), $this->getPluginMethods());
     }
 
@@ -83,8 +85,10 @@ class RemoteAPI {
      * @param string $method name of the method to call.
      * @param array $args arguments to pass to the given method
      * @return mixed result of method call, must be a primitive type.
+     * @throws RemoteException
      */
-    public function call($method, $args = array()) {
+    public function call($method, $args = array())
+    {
         if ($args === null) {
             $args = array();
         }
@@ -104,7 +108,8 @@ class RemoteAPI {
      * @param string $name name of the method
      * @return bool if method exists
      */
-    private function coreMethodExist($name) {
+    private function coreMethodExist($name)
+    {
         $coreMethods = $this->getCoreMethods();
         return array_key_exists($name, $coreMethods);
     }
@@ -113,14 +118,15 @@ class RemoteAPI {
      * Try to call custom methods provided by plugins
      *
      * @param string $method name of method
-     * @param array  $args
+     * @param array $args
      * @return mixed
-     * @throws RemoteException if method not exists
+     * @throws \dokuwiki\Remote\RemoteException if method not exists
      */
-    private function  callCustomCallPlugin($method, $args) {
+    private function callCustomCallPlugin($method, $args)
+    {
         $customCalls = $this->getCustomCallPlugins();
         if (!array_key_exists($method, $customCalls)) {
-            throw new RemoteException('Method does not exist', -32603);
+            throw new \dokuwiki\Remote\RemoteException('Method does not exist', -32603);
         }
         $customCall = $customCalls[$method];
         return $this->callPlugin($customCall[0], $customCall[1], $args);
@@ -132,7 +138,8 @@ class RemoteAPI {
      * @return array with pairs of custom plugin calls
      * @triggers RPC_CALL_ADD
      */
-    private function getCustomCallPlugins() {
+    private function getCustomCallPlugins()
+    {
         if ($this->pluginCustomCalls === null) {
             $data = array();
             trigger_event('RPC_CALL_ADD', $data);
@@ -146,15 +153,16 @@ class RemoteAPI {
      *
      * @param string $pluginName
      * @param string $method method name
-     * @param array  $args
+     * @param array $args
      * @return mixed return of custom method
-     * @throws RemoteException
+     * @throws \dokuwiki\Remote\RemoteException
      */
-    private function callPlugin($pluginName, $method, $args) {
+    private function callPlugin($pluginName, $method, $args)
+    {
         $plugin = plugin_load('remote', $pluginName);
         $methods = $this->getPluginMethods();
         if (!$plugin) {
-            throw new RemoteException('Method does not exist', -32603);
+            throw new \dokuwiki\Remote\RemoteException('Method does not exist', -32603);
         }
         $this->checkAccess($methods[$method]);
         $name = $this->getMethodName($methods, $method);
@@ -165,11 +173,12 @@ class RemoteAPI {
      * Call a core method
      *
      * @param string $method name of method
-     * @param array  $args
+     * @param array $args
      * @return mixed
-     * @throws RemoteException if method not exist
+     * @throws \dokuwiki\Remote\RemoteException if method not exist
      */
-    private function callCoreMethod($method, $args) {
+    private function callCoreMethod($method, $args)
+    {
         $coreMethods = $this->getCoreMethods();
         $this->checkAccess($coreMethods[$method]);
         if (!isset($coreMethods[$method])) {
@@ -183,11 +192,13 @@ class RemoteAPI {
      * Check if access should be checked
      *
      * @param array $methodMeta data about the method
+     * @throws AccessDeniedException
      */
-    private function checkAccess($methodMeta) {
+    private function checkAccess($methodMeta)
+    {
         if (!isset($methodMeta['public'])) {
             $this->forceAccess();
-        } else{
+        } else {
             if ($methodMeta['public'] == '0') {
                 $this->forceAccess();
             }
@@ -201,7 +212,8 @@ class RemoteAPI {
      * @param array $args
      * @throws RemoteException if wrong parameter count
      */
-    private function checkArgumentLength($methodMeta, $args) {
+    private function checkArgumentLength($methodMeta, $args)
+    {
         if (count($methodMeta['args']) < count($args)) {
             throw new RemoteException('Method does not exist - wrong parameter count.', -32603);
         }
@@ -214,36 +226,38 @@ class RemoteAPI {
      * @param string $method name of method
      * @return string
      */
-    private function getMethodName($methodMeta, $method) {
+    private function getMethodName($methodMeta, $method)
+    {
         if (isset($methodMeta[$method]['name'])) {
             return $methodMeta[$method]['name'];
         }
         $method = explode('.', $method);
-        return $method[count($method)-1];
+        return $method[count($method) - 1];
     }
 
     /**
      * Perform access check for current user
      *
      * @return bool true if the current user has access to remote api.
-     * @throws RemoteAccessDeniedException If remote access disabled
+     * @throws AccessDeniedException If remote access disabled
      */
-    public function hasAccess() {
+    public function hasAccess()
+    {
         global $conf;
         global $USERINFO;
         /** @var Input $INPUT */
         global $INPUT;
 
         if (!$conf['remote']) {
-            throw new RemoteAccessDeniedException('server error. RPC server not enabled.',-32604);
+            throw new AccessDeniedException('server error. RPC server not enabled.', -32604);
         }
-        if(trim($conf['remoteuser']) == '!!not set!!') {
+        if (trim($conf['remoteuser']) == '!!not set!!') {
             return false;
         }
-        if(!$conf['useacl']) {
+        if (!$conf['useacl']) {
             return true;
         }
-        if(trim($conf['remoteuser']) == '') {
+        if (trim($conf['remoteuser']) == '') {
             return true;
         }
 
@@ -254,11 +268,12 @@ class RemoteAPI {
      * Requests access
      *
      * @return void
-     * @throws RemoteException On denied access.
+     * @throws AccessDeniedException On denied access.
      */
-    public function forceAccess() {
+    public function forceAccess()
+    {
         if (!$this->hasAccess()) {
-            throw new RemoteAccessDeniedException('server error. not authorized to call method', -32604);
+            throw new AccessDeniedException('server error. not authorized to call method', -32604);
         }
     }
 
@@ -268,7 +283,8 @@ class RemoteAPI {
      * @return array all plugin methods.
      * @throws RemoteException if not implemented
      */
-    public function getPluginMethods() {
+    public function getPluginMethods()
+    {
         if ($this->pluginMethods === null) {
             $this->pluginMethods = array();
             $plugins = plugin_list('remote');
@@ -280,7 +296,12 @@ class RemoteAPI {
                     throw new RemoteException("Plugin $pluginName does not implement DokuWiki_Remote_Plugin");
                 }
 
-                $methods = $plugin->_getMethods();
+                try {
+                    $methods = $plugin->_getMethods();
+                } catch (\ReflectionException $e) {
+                    throw new RemoteException('Automatic aggregation of available remote methods failed', 0, $e);
+                }
+
                 foreach ($methods as $method => $meta) {
                     $this->pluginMethods["plugin.$pluginName.$method"] = $meta;
                 }
@@ -292,14 +313,15 @@ class RemoteAPI {
     /**
      * Collects all the core methods
      *
-     * @param RemoteAPICore $apiCore this parameter is used for testing. Here you can pass a non-default RemoteAPICore
-     *                               instance. (for mocking)
+     * @param ApiCore $apiCore this parameter is used for testing. Here you can pass a non-default RemoteAPICore
+     *                         instance. (for mocking)
      * @return array all core methods.
      */
-    public function getCoreMethods($apiCore = null) {
+    public function getCoreMethods($apiCore = null)
+    {
         if ($this->coreMethods === null) {
             if ($apiCore === null) {
-                $this->coreMethods = new RemoteAPICore($this);
+                $this->coreMethods = new ApiCore($this);
             } else {
                 $this->coreMethods = $apiCore;
             }
@@ -313,7 +335,8 @@ class RemoteAPI {
      * @param mixed $data
      * @return mixed
      */
-    public function toFile($data) {
+    public function toFile($data)
+    {
         return call_user_func($this->fileTransformation, $data);
     }
 
@@ -323,7 +346,8 @@ class RemoteAPI {
      * @param mixed $data
      * @return mixed
      */
-    public function toDate($data) {
+    public function toDate($data)
+    {
         return call_user_func($this->dateTransformation, $data);
     }
 
@@ -333,7 +357,8 @@ class RemoteAPI {
      * @param mixed $data
      * @return mixed
      */
-    public function dummyTransformation($data) {
+    public function dummyTransformation($data)
+    {
         return $data;
     }
 
@@ -342,7 +367,8 @@ class RemoteAPI {
      *
      * @param callback $dateTransformation
      */
-    public function setDateTransformation($dateTransformation) {
+    public function setDateTransformation($dateTransformation)
+    {
         $this->dateTransformation = $dateTransformation;
     }
 
@@ -351,7 +377,8 @@ class RemoteAPI {
      *
      * @param callback $fileTransformation
      */
-    public function setFileTransformation($fileTransformation) {
+    public function setFileTransformation($fileTransformation)
+    {
         $this->fileTransformation = $fileTransformation;
     }
 }

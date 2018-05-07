@@ -1,5 +1,10 @@
 <?php
-if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
+
+use dokuwiki\Remote\AccessDeniedException;
+use dokuwiki\Remote\Api;
+use dokuwiki\Remote\RemoteException;
+
+if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/../../');
 
 require_once(DOKU_INC.'inc/init.php');
 session_write_close();  //close session
@@ -17,7 +22,7 @@ class dokuwiki_xmlrpc_server extends IXR_Server {
      * Constructor. Register methods and run Server
      */
     public function __construct(){
-        $this->remote = new RemoteAPI();
+        $this->remote = new Api();
         $this->remote->setDateTransformation(array($this, 'toDate'));
         $this->remote->setFileTransformation(array($this, 'toFile'));
         parent::__construct();
@@ -32,7 +37,7 @@ class dokuwiki_xmlrpc_server extends IXR_Server {
         try {
             $result = $this->remote->call($methodname, $args);
             return $result;
-        } catch (RemoteAccessDeniedException $e) {
+        } catch (AccessDeniedException $e) {
             if (!isset($_SERVER['REMOTE_USER'])) {
                 http_status(401);
                 return new IXR_Error(-32603, "server error. not authorized to call method $methodname");

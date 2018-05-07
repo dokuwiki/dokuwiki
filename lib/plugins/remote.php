@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Remote\Api;
+
 /**
  * Class DokuWiki_Remote_Plugin
  */
@@ -11,7 +13,7 @@ abstract class DokuWiki_Remote_Plugin extends DokuWiki_Plugin {
      * Constructor
      */
     public function __construct() {
-        $this->api = new RemoteAPI();
+        $this->api = new Api();
     }
 
     /**
@@ -20,7 +22,7 @@ abstract class DokuWiki_Remote_Plugin extends DokuWiki_Plugin {
      * By default it exports all public methods of a remote plugin. Methods beginning
      * with an underscore are skipped.
      *
-     * @return array Information about all provided methods. {@see RemoteAPI}.
+     * @return array Information about all provided methods. {@see dokuwiki\Remote\RemoteAPI}.
      * @throws ReflectionException
      */
     public function _getMethods() {
@@ -96,7 +98,7 @@ abstract class DokuWiki_Remote_Plugin extends DokuWiki_Plugin {
     }
 
     /**
-     * @return RemoteAPI
+     * @return Api
      */
     protected function getApi() {
         return $this->api;

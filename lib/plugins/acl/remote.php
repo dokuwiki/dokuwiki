@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Remote\AccessDeniedException;
+
 /**
  * Class remote_plugin_acl
  */
@@ -8,7 +10,7 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin {
     /**
      * Returns details about the remote plugin methods
      *
-     * @return array Information about all provided methods. {@see RemoteAPI}
+     * @return array Information about all provided methods. {@see dokuwiki\Remote\RemoteAPI}
      */
     public function _getMethods() {
         return array(
@@ -34,12 +36,12 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin {
     /**
      * List all ACL config entries
      *
-     * @throws RemoteAccessDeniedException
+     * @throws AccessDeniedException
      * @return dictionary {Scope: ACL}, where ACL = dictionnary {user/group: permissions_int}
      */
     public function listAcls(){
         if(!auth_isadmin()) {
-         throw new RemoteAccessDeniedException(
+         throw new AccessDeniedException(
              'You are not allowed to access ACLs, superuser permission is required',
              114
          );
@@ -56,12 +58,12 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin {
      * @param string $scope
      * @param string $user
      * @param int    $level see also inc/auth.php
-     * @throws RemoteAccessDeniedException
+     * @throws AccessDeniedException
      * @return bool
      */
     public function addAcl($scope, $user, $level){
         if(!auth_isadmin()) {
-            throw new RemoteAccessDeniedException(
+            throw new AccessDeniedException(
                 'You are not allowed to access ACLs, superuser permission is required',
                 114
             );
@@ -77,12 +79,12 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin {
      *
      * @param string $scope
      * @param string $user
-     * @throws RemoteAccessDeniedException
+     * @throws AccessDeniedException
      * @return bool
      */
     public function delAcl($scope, $user){
         if(!auth_isadmin()) {
-            throw new RemoteAccessDeniedException(
+            throw new AccessDeniedException(
                 'You are not allowed to access ACLs, superuser permission is required',
                 114
             );

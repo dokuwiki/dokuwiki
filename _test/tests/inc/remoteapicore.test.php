@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Remote\Api;
+use dokuwiki\Remote\ApiCore;
 use dokuwiki\test\mock\DokuWiki_Auth_Plugin;
 
 /**
@@ -9,7 +11,7 @@ class remoteapicore_test extends DokuWikiTest {
 
     protected $userinfo;
     protected $oldAuthAcl;
-    /** @var  RemoteAPI */
+    /** @var  Api */
     protected $remote;
 
     public function setUp() {
@@ -29,7 +31,7 @@ class remoteapicore_test extends DokuWikiTest {
         $conf['remoteuser'] = '@user';
         $conf['useacl'] = 0;
 
-        $this->remote = new RemoteAPI();
+        $this->remote = new Api();
     }
 
     public function tearDown() {
@@ -468,7 +470,7 @@ You can use up to five different levels of',
     }
 
     public function test_getXMLRPCAPIVersion() {
-        $this->assertEquals(DOKU_API_VERSION, $this->remote->call('dokuwiki.getXMLRPCAPIVersion'));
+        $this->assertEquals(ApiCore::API_VERSION, $this->remote->call('dokuwiki.getXMLRPCAPIVersion'));
     }
 
     public function test_getRPCVersionSupported() {
