@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
 
-class action_plugin_popularity extends Dokuwiki_Action_Plugin
+class action_plugin_popularity extends DokuWiki_Action_Plugin
 {
 
     /**
