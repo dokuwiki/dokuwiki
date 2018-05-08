@@ -5,7 +5,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
 
-class helper_plugin_popularity extends Dokuwiki_Plugin {
+class helper_plugin_popularity extends Dokuwiki_Plugin
+{
     /**
      * The url where the data should be sent
      */
@@ -29,8 +30,11 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      */
     public $popularityLastSubmitFile;
 
-
-    public function __construct(){
+    /**
+     * helper_plugin_popularity constructor.
+     */
+    public function __construct()
+    {
         global $conf;
         $this->autosubmitFile = $conf['cachedir'].'/autosubmit.txt';
         $this->autosubmitErrorFile = $conf['cachedir'].'/autosubmitError.txt';
@@ -42,7 +46,8 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      *
      * @return boolean TRUE if we should send data once a month, FALSE otherwise
      */
-    public function isAutoSubmitEnabled(){
+    public function isAutoSubmitEnabled()
+    {
         return file_exists($this->autosubmitFile);
     }
 
@@ -52,11 +57,12 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      * @param string $data The popularity data
      * @return string An empty string if everything worked fine, a string describing the error otherwise
      */
-    public function sendData($data){
+    public function sendData($data)
+    {
         $error = '';
         $httpClient = new DokuHTTPClient();
         $status = $httpClient->sendRequest($this->submitUrl, array('data' => $data), 'POST');
-        if ( ! $status ){
+        if (! $status) {
             $error = $httpClient->error;
         }
         return $error;
@@ -67,7 +73,8 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      *
      * @return int
      */
-    public function lastSentTime(){
+    public function lastSentTime()
+    {
         $manualSubmission = @filemtime($this->popularityLastSubmitFile);
         $autoSubmission   = @filemtime($this->autosubmitFile);
 
@@ -79,13 +86,14 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      *
      * @return string The popularity data as a string
      */
-    public function gatherAsString(){
-        $data = $this->_gather();
+    public function gatherAsString()
+    {
+        $data = $this->gather();
         $string = '';
-        foreach($data as $key => $val){
-            if(is_array($val)) foreach($val as $v){
+        foreach ($data as $key => $val) {
+            if (is_array($val)) foreach ($val as $v) {
                 $string .=  hsc($key)."\t".hsc($v)."\n";
-            }else{
+            } else {
                 $string .= hsc($key)."\t".hsc($val)."\n";
             }
         }
@@ -97,7 +105,8 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      *
      * @return array The popularity data as an array
      */
-    protected function _gather(){
+    protected function gather()
+    {
         global $conf;
         /** @var $auth DokuWiki_Auth_Plugin */
         global $auth;
@@ -121,81 +130,81 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
         // number and size of pages
         $list = array();
-        search($list,$conf['datadir'],array($this,'_search_count'),array('all'=>false),'');
+        search($list, $conf['datadir'], array($this, 'searchCountCallback'), array('all'=>false), '');
         $data['page_count']    = $list['file_count'];
         $data['page_size']     = $list['file_size'];
         $data['page_biggest']  = $list['file_max'];
         $data['page_smallest'] = $list['file_min'];
         $data['page_nscount']  = $list['dir_count'];
         $data['page_nsnest']   = $list['dir_nest'];
-        if($list['file_count']) $data['page_avg'] = $list['file_size'] / $list['file_count'];
+        if ($list['file_count']) $data['page_avg'] = $list['file_size'] / $list['file_count'];
         $data['page_oldest']   = $list['file_oldest'];
         unset($list);
 
         // number and size of media
         $list = array();
-        search($list,$conf['mediadir'],array($this,'_search_count'),array('all'=>true));
+        search($list, $conf['mediadir'], array($this, 'searchCountCallback'), array('all'=>true));
         $data['media_count']    = $list['file_count'];
         $data['media_size']     = $list['file_size'];
         $data['media_biggest']  = $list['file_max'];
         $data['media_smallest'] = $list['file_min'];
         $data['media_nscount']  = $list['dir_count'];
         $data['media_nsnest']   = $list['dir_nest'];
-        if($list['file_count']) $data['media_avg'] = $list['file_size'] / $list['file_count'];
+        if ($list['file_count']) $data['media_avg'] = $list['file_size'] / $list['file_count'];
         unset($list);
 
         // number and size of cache
         $list = array();
-        search($list,$conf['cachedir'],array($this,'_search_count'),array('all'=>true));
+        search($list, $conf['cachedir'], array($this, 'searchCountCallback'), array('all'=>true));
         $data['cache_count']    = $list['file_count'];
         $data['cache_size']     = $list['file_size'];
         $data['cache_biggest']  = $list['file_max'];
         $data['cache_smallest'] = $list['file_min'];
-        if($list['file_count']) $data['cache_avg'] = $list['file_size'] / $list['file_count'];
+        if ($list['file_count']) $data['cache_avg'] = $list['file_size'] / $list['file_count'];
         unset($list);
 
         // number and size of index
         $list = array();
-        search($list,$conf['indexdir'],array($this,'_search_count'),array('all'=>true));
+        search($list, $conf['indexdir'], array($this, 'searchCountCallback'), array('all'=>true));
         $data['index_count']    = $list['file_count'];
         $data['index_size']     = $list['file_size'];
         $data['index_biggest']  = $list['file_max'];
         $data['index_smallest'] = $list['file_min'];
-        if($list['file_count']) $data['index_avg'] = $list['file_size'] / $list['file_count'];
+        if ($list['file_count']) $data['index_avg'] = $list['file_size'] / $list['file_count'];
         unset($list);
 
         // number and size of meta
         $list = array();
-        search($list,$conf['metadir'],array($this,'_search_count'),array('all'=>true));
+        search($list, $conf['metadir'], array($this, 'searchCountCallback'), array('all'=>true));
         $data['meta_count']    = $list['file_count'];
         $data['meta_size']     = $list['file_size'];
         $data['meta_biggest']  = $list['file_max'];
         $data['meta_smallest'] = $list['file_min'];
-        if($list['file_count']) $data['meta_avg'] = $list['file_size'] / $list['file_count'];
+        if ($list['file_count']) $data['meta_avg'] = $list['file_size'] / $list['file_count'];
         unset($list);
 
         // number and size of attic
         $list = array();
-        search($list,$conf['olddir'],array($this,'_search_count'),array('all'=>true));
+        search($list, $conf['olddir'], array($this, 'searchCountCallback'), array('all'=>true));
         $data['attic_count']    = $list['file_count'];
         $data['attic_size']     = $list['file_size'];
         $data['attic_biggest']  = $list['file_max'];
         $data['attic_smallest'] = $list['file_min'];
-        if($list['file_count']) $data['attic_avg'] = $list['file_size'] / $list['file_count'];
+        if ($list['file_count']) $data['attic_avg'] = $list['file_size'] / $list['file_count'];
         $data['attic_oldest']   = $list['file_oldest'];
         unset($list);
 
         // user count
-        if($auth && $auth->canDo('getUserCount')){
+        if ($auth && $auth->canDo('getUserCount')) {
             $data['user_count'] = $auth->getUserCount();
         }
 
         // calculate edits per day
         $list = @file($conf['metadir'].'/_dokuwiki.changes');
         $count = count($list);
-        if($count > 2){
-            $first = (int) substr(array_shift($list),0,10);
-            $last  = (int) substr(array_pop($list),0,10);
+        if ($count > 2) {
+            $first = (int) substr(array_shift($list), 0, 10);
+            $last  = (int) substr(array_pop($list), 0, 10);
             $dur = ($last - $first)/(60*60*24); // number of days in the changelog
             $data['edits_per_day'] = $count/$dur;
         }
@@ -205,7 +214,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         $data['plugin'] = plugin_list();
 
         // pcre info
-        if(defined('PCRE_VERSION')) $data['pcre_version'] = PCRE_VERSION;
+        if (defined('PCRE_VERSION')) $data['pcre_version'] = PCRE_VERSION;
         $data['pcre_backtrack'] = ini_get('pcre.backtrack_limit');
         $data['pcre_recursion'] = ini_get('pcre.recursion_limit');
 
@@ -214,12 +223,12 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         $data['webserver'] = $_SERVER['SERVER_SOFTWARE'];
         $data['php_version'] = phpversion();
         $data['php_sapi'] = php_sapi_name();
-        $data['php_memory'] = $this->_to_byte(ini_get('memory_limit'));
+        $data['php_memory'] = php_to_byte(ini_get('memory_limit'));
         $data['php_exectime'] = $phptime;
         $data['php_extension'] = get_loaded_extensions();
 
         // plugin usage data
-        $this->_add_plugin_usage_data($data);
+        $this->addPluginUsageData($data);
 
         return $data;
     }
@@ -229,17 +238,18 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      *
      * @param $data
      */
-    protected function _add_plugin_usage_data(&$data){
+    protected function addPluginUsageData(&$data)
+    {
         $pluginsData = array();
         trigger_event('PLUGIN_POPULARITY_DATA_SETUP', $pluginsData);
-        foreach($pluginsData as $plugin => $d){
-           if ( is_array($d) ) {
-               foreach($d as $key => $value){
-                   $data['plugin_' . $plugin . '_' . $key] = $value;
-               }
-           } else {
-               $data['plugin_' . $plugin] = $d;
-           }
+        foreach ($pluginsData as $plugin => $d) {
+            if (is_array($d)) {
+                foreach ($d as $key => $value) {
+                    $data['plugin_' . $plugin . '_' . $key] = $value;
+                }
+            } else {
+                $data['plugin_' . $plugin] = $d;
+            }
         }
     }
 
@@ -254,57 +264,26 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      * @param array  $opts  option array as given to search()
      * @return bool
      */
-    protected function _search_count(&$data,$base,$file,$type,$lvl,$opts){
+    protected function searchCountCallback(&$data, $base, $file, $type, $lvl, $opts)
+    {
         // traverse
-        if($type == 'd'){
-            if($data['dir_nest'] < $lvl) $data['dir_nest'] = $lvl;
+        if ($type == 'd') {
+            if ($data['dir_nest'] < $lvl) $data['dir_nest'] = $lvl;
             $data['dir_count']++;
             return true;
         }
 
         //only search txt files if 'all' option not set
-        if($opts['all'] || substr($file,-4) == '.txt'){
+        if ($opts['all'] || substr($file, -4) == '.txt') {
             $size = filesize($base.'/'.$file);
             $date = filemtime($base.'/'.$file);
             $data['file_count']++;
             $data['file_size'] += $size;
-            if(!isset($data['file_min']) || $data['file_min'] > $size) $data['file_min'] = $size;
-            if($data['file_max'] < $size) $data['file_max'] = $size;
-            if(!isset($data['file_oldest']) || $data['file_oldest'] > $date) $data['file_oldest'] = $date;
+            if (!isset($data['file_min']) || $data['file_min'] > $size) $data['file_min'] = $size;
+            if ($data['file_max'] < $size) $data['file_max'] = $size;
+            if (!isset($data['file_oldest']) || $data['file_oldest'] > $date) $data['file_oldest'] = $date;
         }
 
         return false;
-    }
-
-    /**
-     * Convert php.ini shorthands to byte
-     *
-     * @author <gilthans dot NO dot SPAM at gmail dot com>
-     * @link   http://php.net/manual/en/ini.core.php#79564
-     *
-     * @param string $v
-     * @return int|string
-     */
-    protected function _to_byte($v){
-        $l = substr($v, -1);
-        $ret = substr($v, 0, -1);
-        switch(strtoupper($l)){
-            /** @noinspection PhpMissingBreakStatementInspection */
-            case 'P':
-                $ret *= 1024;
-            /** @noinspection PhpMissingBreakStatementInspection */
-            case 'T':
-                $ret *= 1024;
-            /** @noinspection PhpMissingBreakStatementInspection */
-            case 'G':
-                $ret *= 1024;
-            /** @noinspection PhpMissingBreakStatementInspection */
-            case 'M':
-                $ret *= 1024;
-            case 'K':
-                $ret *= 1024;
-            break;
-        }
-        return $ret;
     }
 }
