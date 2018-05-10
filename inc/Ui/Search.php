@@ -498,8 +498,13 @@ class Search extends Ui
      */
     public function createPagenameFromQuery($parsedQuery)
     {
+        GLOBAL $conf;
+
         $cleanedQuery = cleanID($parsedQuery['query']);
         if ($cleanedQuery === $parsedQuery['query']) {
+            return ':' . $cleanedQuery;
+        }
+        if ($cleanedQuery === utf8_strtolower(str_replace(' ',$conf['sepchar'],$parsedQuery['query']))) {
             return ':' . $cleanedQuery;
         }
         $pagename = '';
