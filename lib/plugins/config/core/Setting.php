@@ -58,6 +58,15 @@ class Setting {
     }
 
     /**
+     * Get this setting's unique key
+     *
+     * @return string
+     */
+    public function getKey() {
+        return $this->_key;
+    }
+
+    /**
      * update changed setting with user provided value $input
      * - if changed value fails error check, save it to $this->_input (to allow echoing later)
      * - if changed value passes error check, set $this->_local to the new value

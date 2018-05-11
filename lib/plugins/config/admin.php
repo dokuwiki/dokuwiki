@@ -8,6 +8,9 @@
  */
 
 use dokuwiki\plugin\config\core\Configuration;
+use dokuwiki\plugin\config\core\Setting;
+use dokuwiki\plugin\config\core\SettingFieldset;
+use dokuwiki\plugin\config\core\SettingHidden;
 
 /**
  * All DokuWiki plugins to extend the admin function
@@ -16,19 +19,19 @@ use dokuwiki\plugin\config\core\Configuration;
 class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
     const METADATA = __DIR__ . 'settings/config.metadata.php';
-    const IMGDIR = DOKU_BASE.'lib/plugins/config/images/';
+    const IMGDIR = DOKU_BASE . 'lib/plugins/config/images/';
 
-    protected $_config = null;
-    protected $_input = null;
-    protected $_changed = false;          // set to true if configuration has altered
-    protected $_error = false;
-    protected $_session_started = false;
     protected $_localised_prompts = false;
 
+    /** @var Configuration */
+    protected $configuration;
+
     /**
-     * @return int
+     * admin_plugin_config constructor.
      */
-    public function getMenuSort() { return 100; }
+    public function __construct() {
+        $this->configuration = new Configuration();
+    }
 
     /**
      * handle user request
@@ -36,44 +39,28 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
     public function handle() {
         global $ID, $INPUT;
 
-        if(!$this->_restore_session() || $INPUT->int('save') != 1 || !checkSecurityToken()) {
-            $this->_close_session();
+        if(!$INPUT->bool('save') || !checkSecurityToken()) {
             return;
-        }
-
-        if(is_null($this->_config)) {
-            $this->_config = new Configuration(self::METADATA);
         }
 
         // don't go any further if the configuration is locked
-        if($this->_config->locked) {
-            $this->_close_session();
-            return;
-        }
+        if($this->configuration->isLocked()) return;
 
-        $this->_input = $INPUT->arr('config');
-
-        foreach ($this->_config->setting as $key => $value){
-            $input = isset($this->_input[$key]) ? $this->_input[$key] : null;
-            if ($this->_config->setting[$key]->update($input)) {
-                $this->_changed = true;
+        // update settings and redirect of successful
+        $ok = $this->configuration->updateSettings($INPUT->arr('config'));
+        if($ok) { // no errors
+            try {
+                if($this->configuration->hasChanged()) {
+                    $this->configuration->save();
+                } else {
+                    $this->configuration->touch();
+                }
+                msg($this->getLang('updated'), -1);
+            } catch(Exception $e) {
+                msg($this->getLang('error'), -1);
             }
-            if ($this->_config->setting[$key]->error()) $this->_error = true;
+            send_redirect(wl($ID, array('do' => 'admin', 'page' => 'config'), true, '&'));
         }
-
-        if ($this->_changed  && !$this->_error) {
-            $this->_config->save_settings($this->getPluginName());
-
-            // save state & force a page reload to get the new settings to take effect
-            $_SESSION['PLUGIN_CONFIG'] = array('state' => 'updated', 'time' => time());
-            $this->_close_session();
-            send_redirect(wl($ID,array('do'=>'admin','page'=>'config'),true,'&'));
-            exit();
-        } elseif(!$this->_error) {
-            $this->_config->touch_settings(); // just touch to refresh cache
-        }
-
-        $this->_close_session();
     }
 
     /**
@@ -84,64 +71,54 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         global $lang;
         global $ID;
 
-        if (is_null($this->_config)) { $this->_config = new Configuration(self::METADATA); }
         $this->setupLocale(true);
 
         print $this->locale_xhtml('intro');
 
         ptln('<div id="config__manager">');
 
-        if ($this->_config->locked)
-            ptln('<div class="info">'.$this->getLang('locked').'</div>');
-        elseif ($this->_error)
-            ptln('<div class="error">'.$this->getLang('error').'</div>');
-        elseif ($this->_changed)
-            ptln('<div class="success">'.$this->getLang('updated').'</div>');
+        if($this->configuration->isLocked()) {
+            ptln('<div class="info">' . $this->getLang('locked') . '</div>');
+        }
 
         // POST to script() instead of wl($ID) so config manager still works if
         // rewrite config is broken. Add $ID as hidden field to remember
         // current ID in most cases.
-        ptln('<form action="'.script().'" method="post">');
-        ptln('<div class="no"><input type="hidden" name="id" value="'.$ID.'" /></div>');
+        ptln('<form action="' . script() . '" method="post">');
+        ptln('<div class="no"><input type="hidden" name="id" value="' . $ID . '" /></div>');
         formSecurityToken();
         $this->_print_h1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));
 
-        /** @var setting[] $undefined_settings */
-        $undefined_settings = array();
         $in_fieldset = false;
         $first_plugin_fieldset = true;
         $first_template_fieldset = true;
-        foreach($this->_config->setting as $setting) {
-            if (is_a($setting, 'setting_hidden')) {
-                // skip hidden (and undefined) settings
-                if ($allow_debug && is_a($setting, 'setting_undefined')) {
-                    $undefined_settings[] = $setting;
-                } else {
-                    continue;
-                }
-            } else if (is_a($setting, 'setting_fieldset')) {
+        foreach($this->configuration->getSettings() as $setting) {
+            if(is_a($setting, SettingHidden::class)) {
+                continue;
+            } else if(is_a($setting, settingFieldset::class)) {
                 // config setting group
-                if ($in_fieldset) {
+                if($in_fieldset) {
                     ptln('  </table>');
                     ptln('  </div>');
                     ptln('  </fieldset>');
                 } else {
                     $in_fieldset = true;
                 }
-                if ($first_plugin_fieldset && substr($setting->_key, 0, 10)=='plugin'.Configuration::KEYMARKER) {
+                // fixme this should probably be a function in setting:
+                if($first_plugin_fieldset && substr($setting->getKey(), 0, 10) == 'plugin' . Configuration::KEYMARKER) {
                     $this->_print_h1('plugin_settings', $this->getLang('_header_plugin'));
                     $first_plugin_fieldset = false;
-                } else if ($first_template_fieldset && substr($setting->_key, 0, 7)=='tpl'.Configuration::KEYMARKER) {
+                } else if($first_template_fieldset && substr($setting->getKey(), 0, 7) == 'tpl' . Configuration::KEYMARKER) {
                     $this->_print_h1('template_settings', $this->getLang('_header_template'));
                     $first_template_fieldset = false;
                 }
-                ptln('  <fieldset id="'.$setting->_key.'">');
-                ptln('  <legend>'.$setting->prompt($this).'</legend>');
+                ptln('  <fieldset id="' . $setting->getKey() . '">');
+                ptln('  <legend>' . $setting->prompt($this) . '</legend>');
                 ptln('  <div class="table">');
                 ptln('  <table class="inline">');
             } else {
                 // config settings
-                list($label,$input) = $setting->html($this, $this->_error);
+                list($label, $input) = $setting->html($this, $this->_error);
 
                 $class = $setting->is_default()
                     ? ' class="default"'
@@ -150,37 +127,38 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                     ? ' class="value error"'
                     : ' class="value"';
                 $icon = $setting->caution()
-                    ? '<img src="'.self::IMGDIR.$setting->caution().'.png" '.
-                      'alt="'.$setting->caution().'" title="'.$this->getLang($setting->caution()).'" />'
+                    ? '<img src="' . self::IMGDIR . $setting->caution() . '.png" ' .
+                    'alt="' . $setting->caution() . '" title="' . $this->getLang($setting->caution()) . '" />'
                     : '';
 
-                ptln('    <tr'.$class.'>');
+                ptln('    <tr' . $class . '>');
                 ptln('      <td class="label">');
-                ptln('        <span class="outkey">'.$setting->_out_key(true, true).'</span>');
-                ptln('        '.$icon.$label);
+                ptln('        <span class="outkey">' . $setting->_out_key(true, true) . '</span>');
+                ptln('        ' . $icon . $label);
                 ptln('      </td>');
-                ptln('      <td'.$error.'>'.$input.'</td>');
+                ptln('      <td' . $error . '>' . $input . '</td>');
                 ptln('    </tr>');
             }
         }
 
         ptln('  </table>');
         ptln('  </div>');
-        if ($in_fieldset) {
+        if($in_fieldset) {
             ptln('  </fieldset>');
         }
 
         // show undefined settings list
-        if ($allow_debug && !empty($undefined_settings)) {
+        $undefined_settings = $this->configuration->getUndefined();
+        if($allow_debug && !empty($undefined_settings)) {
             /**
              * Callback for sorting settings
              *
-             * @param setting $a
-             * @param setting $b
+             * @param Setting $a
+             * @param Setting $b
              * @return int if $a is lower/equal/higher than $b
              */
             function _setting_natural_comparison($a, $b) {
-                return strnatcmp($a->_key, $b->_key);
+                return strnatcmp($a->getKey(), $b->getKey());
             }
 
             usort($undefined_settings, '_setting_natural_comparison');
@@ -190,21 +168,23 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             ptln('<table class="inline">');
             $undefined_setting_match = array();
             foreach($undefined_settings as $setting) {
-                if (
-                    preg_match(
-                        '/^(?:plugin|tpl)'.Configuration::KEYMARKER.'.*?'.Configuration::KEYMARKER.'(.*)$/',
-                        $setting->_key,
-                        $undefined_setting_match
-                    )
+                if(
+                preg_match(
+                    '/^(?:plugin|tpl)' . Configuration::KEYMARKER . '.*?' . Configuration::KEYMARKER . '(.*)$/',
+                    $setting->getKey(),
+                    $undefined_setting_match
+                )
                 ) {
                     $undefined_setting_key = $undefined_setting_match[1];
                 } else {
-                    $undefined_setting_key = $setting->_key;
+                    $undefined_setting_key = $setting->getKey();
                 }
                 ptln('  <tr>');
-                ptln('    <td class="label"><span title="$meta[\''.$undefined_setting_key.'\']">$'.
-                     $this->_config->_name.'[\''.$setting->_out_key().'\']</span></td>');
-                ptln('    <td>'.$this->getLang('_msg_'.get_class($setting)).'</td>');
+                ptln(
+                    '    <td class="label"><span title="$meta[\'' . $undefined_setting_key . '\']">$' .
+                    'conf' . '[\'' . $setting->_out_key() . '\']</span></td>'
+                );
+                ptln('    <td>' . $this->getLang('_msg_' . get_class($setting)) . '</td>');
                 ptln('  </tr>');
             }
             ptln('</table>');
@@ -217,10 +197,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         ptln('  <input type="hidden" name="do"     value="admin" />');
         ptln('  <input type="hidden" name="page"   value="config" />');
 
-        if (!$this->_config->locked) {
+        if(!$this->configuration->isLocked()) {
             ptln('  <input type="hidden" name="save"   value="1" />');
-            ptln('  <button type="submit" name="submit" accesskey="s">'.$lang['btn_save'].'</button>');
-            ptln('  <button type="reset">'.$lang['btn_reset'].'</button>');
+            ptln('  <button type="submit" name="submit" accesskey="s">' . $lang['btn_save'] . '</button>');
+            ptln('  <button type="reset">' . $lang['btn_reset'] . '</button>');
         }
 
         ptln('</p>');
@@ -230,45 +210,12 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
     }
 
     /**
-     * @return boolean   true - proceed with handle, false - don't proceed
-     */
-    protected function _restore_session() {
-
-        // dokuwiki closes the session before act_dispatch. $_SESSION variables are all set,
-        // however they can't be changed without starting the session again
-        if (!headers_sent()) {
-            session_start();
-            $this->_session_started = true;
-        }
-
-        if (!isset($_SESSION['PLUGIN_CONFIG'])) return true;
-
-        $session = $_SESSION['PLUGIN_CONFIG'];
-        unset($_SESSION['PLUGIN_CONFIG']);
-
-        // still valid?
-        if (time() - $session['time'] > 120) return true;
-
-        switch ($session['state']) {
-            case 'updated' :
-                $this->_changed = true;
-                return false;
-        }
-
-        return true;
-    }
-
-    protected function _close_session() {
-      if ($this->_session_started) session_write_close();
-    }
-
-    /**
      * @param bool $prompts
      */
-    public function setupLocale($prompts=false) {
+    public function setupLocale($prompts = false) {
 
         parent::setupLocale();
-        if (!$prompts || $this->_localised_prompts) return;
+        if(!$prompts || $this->_localised_prompts) return;
 
         $this->_setup_localised_plugin_prompts();
         $this->_localised_prompts = true;
@@ -277,52 +224,53 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
     /**
      * @return bool
+     * @fixme this should be done by the loader
      */
     protected function _setup_localised_plugin_prompts() {
         global $conf;
 
-        $langfile   = '/lang/'.$conf['lang'].'/settings.php';
+        $langfile = '/lang/' . $conf['lang'] . '/settings.php';
         $enlangfile = '/lang/en/settings.php';
 
-        if ($dh = opendir(DOKU_PLUGIN)) {
-            while (false !== ($plugin = readdir($dh))) {
-                if ($plugin == '.' || $plugin == '..' || $plugin == 'tmp' || $plugin == 'config') continue;
-                if (is_file(DOKU_PLUGIN.$plugin)) continue;
+        if($dh = opendir(DOKU_PLUGIN)) {
+            while(false !== ($plugin = readdir($dh))) {
+                if($plugin == '.' || $plugin == '..' || $plugin == 'tmp' || $plugin == 'config') continue;
+                if(is_file(DOKU_PLUGIN . $plugin)) continue;
 
-                if (file_exists(DOKU_PLUGIN.$plugin.$enlangfile)){
+                if(file_exists(DOKU_PLUGIN . $plugin . $enlangfile)) {
                     $lang = array();
-                    @include(DOKU_PLUGIN.$plugin.$enlangfile);
-                    if ($conf['lang'] != 'en') @include(DOKU_PLUGIN.$plugin.$langfile);
-                    foreach ($lang as $key => $value){
-                        $this->lang['plugin'.Configuration::KEYMARKER.$plugin.Configuration::KEYMARKER.$key] = $value;
+                    @include(DOKU_PLUGIN . $plugin . $enlangfile);
+                    if($conf['lang'] != 'en') @include(DOKU_PLUGIN . $plugin . $langfile);
+                    foreach($lang as $key => $value) {
+                        $this->lang['plugin' . Configuration::KEYMARKER . $plugin . Configuration::KEYMARKER . $key] = $value;
                     }
                 }
 
                 // fill in the plugin name if missing (should exist for plugins with settings)
-                if (!isset($this->lang['plugin'.Configuration::KEYMARKER.$plugin.Configuration::KEYMARKER.'plugin_settings_name'])) {
-                    $this->lang['plugin'.Configuration::KEYMARKER.$plugin.Configuration::KEYMARKER.'plugin_settings_name'] =
-                      ucwords(str_replace('_', ' ', $plugin));
+                if(!isset($this->lang['plugin' . Configuration::KEYMARKER . $plugin . Configuration::KEYMARKER . 'plugin_settings_name'])) {
+                    $this->lang['plugin' . Configuration::KEYMARKER . $plugin . Configuration::KEYMARKER . 'plugin_settings_name'] =
+                        ucwords(str_replace('_', ' ', $plugin));
                 }
             }
             closedir($dh);
-      }
+        }
 
         // the same for the active template
         $tpl = $conf['template'];
 
-        if (file_exists(tpl_incdir().$enlangfile)){
+        if(file_exists(tpl_incdir() . $enlangfile)) {
             $lang = array();
-            @include(tpl_incdir().$enlangfile);
-            if ($conf['lang'] != 'en') @include(tpl_incdir().$langfile);
-            foreach ($lang as $key => $value){
-                $this->lang['tpl'.Configuration::KEYMARKER.$tpl.Configuration::KEYMARKER.$key] = $value;
+            @include(tpl_incdir() . $enlangfile);
+            if($conf['lang'] != 'en') @include(tpl_incdir() . $langfile);
+            foreach($lang as $key => $value) {
+                $this->lang['tpl' . Configuration::KEYMARKER . $tpl . Configuration::KEYMARKER . $key] = $value;
             }
         }
 
         // fill in the template name if missing (should exist for templates with settings)
-        if (!isset($this->lang['tpl'.Configuration::KEYMARKER.$tpl.Configuration::KEYMARKER.'template_settings_name'])) {
-            $this->lang['tpl'.Configuration::KEYMARKER.$tpl.Configuration::KEYMARKER.'template_settings_name'] =
-              ucwords(str_replace('_', ' ', $tpl));
+        if(!isset($this->lang['tpl' . Configuration::KEYMARKER . $tpl . Configuration::KEYMARKER . 'tpl_settings_name'])) {
+            $this->lang['tpl' . Configuration::KEYMARKER . $tpl . Configuration::KEYMARKER . 'tpl_settings_name'] =
+                ucwords(str_replace('_', ' ', $tpl));
         }
 
         return true;
@@ -336,25 +284,22 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      * @return array
      */
     public function getTOC() {
-        if (is_null($this->_config)) { $this->_config = new Configuration(self::METADATA); }
         $this->setupLocale(true);
 
         $allow_debug = $GLOBALS['conf']['allowdebug']; // avoid global $conf; here.
 
         // gather toc data
-        $has_undefined = false;
-        $toc = array('conf'=>array(), 'plugin'=>array(), 'template'=>null);
-        foreach($this->_config->setting as $setting) {
-            if (is_a($setting, 'setting_fieldset')) {
-                if (substr($setting->_key, 0, 10)=='plugin'.Configuration::KEYMARKER) {
+        $toc = array('conf' => array(), 'plugin' => array(), 'template' => null);
+        foreach($this->configuration->getSettings() as $setting) {
+            if(is_a($setting, 'setting_fieldset')) {
+                // FIXME as above this should go into Setting class
+                if(substr($setting->getKey(), 0, 10) == 'plugin' . Configuration::KEYMARKER) {
                     $toc['plugin'][] = $setting;
-                } else if (substr($setting->_key, 0, 7)=='tpl'.Configuration::KEYMARKER) {
+                } else if(substr($setting->getKey(), 0, 7) == 'tpl' . Configuration::KEYMARKER) {
                     $toc['template'] = $setting;
                 } else {
                     $toc['conf'][] = $setting;
                 }
-            } else if (!$has_undefined && is_a($setting, 'setting_undefined')) {
-                $has_undefined = true;
             }
         }
 
@@ -368,22 +313,22 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         /** @var setting $setting */
         foreach($toc['conf'] as $setting) {
             $name = $setting->prompt($this);
-            $t[] = html_mktocitem($setting->_key, $name, 2);
+            $t[] = html_mktocitem($setting->getKey(), $name, 2);
         }
-        if (!empty($toc['plugin'])) {
+        if(!empty($toc['plugin'])) {
             $t[] = html_mktocitem('plugin_settings', $this->getLang('_header_plugin'), 1);
         }
         foreach($toc['plugin'] as $setting) {
             $name = $setting->prompt($this);
-            $t[] = html_mktocitem($setting->_key, $name, 2);
+            $t[] = html_mktocitem($setting->getKey(), $name, 2);
         }
-        if (isset($toc['template'])) {
+        if(isset($toc['template'])) {
             $t[] = html_mktocitem('template_settings', $this->getLang('_header_template'), 1);
             $setting = $toc['template'];
             $name = $setting->prompt($this);
-            $t[] = html_mktocitem($setting->_key, $name, 2);
+            $t[] = html_mktocitem($setting->getKey(), $name, 2);
         }
-        if ($has_undefined && $allow_debug) {
+        if(count($this->configuration->getUndefined()) && $allow_debug) {
             $t[] = html_mktocitem('undefined_settings', $this->getLang('_header_undefined'), 1);
         }
 
@@ -395,7 +340,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      * @param string $text
      */
     protected function _print_h1($id, $text) {
-        ptln('<h1 id="'.$id.'">'.$text.'</h1>');
+        ptln('<h1 id="' . $id . '">' . $text . '</h1>');
     }
 
     /**
@@ -405,7 +350,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      * @param string $value
      */
     public function addLang($key, $value) {
-        if (!$this->localised) $this->setupLocale();
+        if(!$this->localised) $this->setupLocale();
         $this->lang[$key] = $value;
     }
 }
