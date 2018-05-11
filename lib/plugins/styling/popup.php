@@ -1,5 +1,7 @@
 <?php
-if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/../../../');
+// FIXME the following skip rule seems not to work - https://github.com/squizlabs/PHP_CodeSniffer/issues/2015
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
+if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/../../../');
 require_once(DOKU_INC . 'inc/init.php');
 //close session
 session_write_close();
@@ -8,7 +10,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
 /** @var admin_plugin_styling $plugin */
 $plugin = plugin_load('admin', 'styling');
-if(!auth_isadmin()) die('only admins allowed');
+if (!auth_isadmin()) die('only admins allowed');
 $plugin->ispopup = true;
 
 // handle posts
