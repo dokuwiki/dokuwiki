@@ -1,0 +1,195 @@
+<?php
+
+namespace dokuwiki\plugin\config\core;
+
+/**
+ * Configuration loader
+ *
+ * Loads configuration meta data and settings from the various files. Honors the
+ * configuration cascade and installed plugins.
+ */
+class Loader {
+    /** @var ConfigParser */
+    protected $parser;
+
+    /** @var string[] list of enabled plugins */
+    protected $plugins;
+    /** @var string current template */
+    protected $template;
+
+    /**
+     * Loader constructor.
+     * @param ConfigParser $parser
+     */
+    public function __construct(ConfigParser $parser) {
+        global $conf;
+        $this->parser = $parser;
+        $this->plugins = plugin_list();
+        $this->template = $conf['template'];
+    }
+
+    /**
+     * Read the settings meta data
+     *
+     * Reads the main file, plugins and template settings meta data
+     *
+     * @return array
+     */
+    public function loadMeta() {
+        // load main file
+        $meta = array();
+        include DOKU_PLUGIN . 'config/settings/config.metadata.php';
+
+        // plugins
+        foreach($this->plugins as $plugin) {
+            array_merge(
+                $meta,
+                $this->loadExtensionMeta(
+                    DOKU_PLUGIN . $plugin . '/conf/settings.php',
+                    'plugin',
+                    $plugin
+                )
+            );
+        }
+
+        // current template
+        array_merge(
+            $meta,
+            $this->loadExtensionMeta(
+                tpl_incdir() . '/conf/settings.php',
+                'tpl',
+                $this->template
+            )
+        );
+
+        return $meta;
+    }
+
+    /**
+     * Read the default values
+     *
+     * Reads the main file, plugins and template defaults
+     *
+     * @return array
+     */
+    public function loadDefaults() {
+        // load main files
+        global $config_cascade;
+        $conf = $this->loadConfigs($config_cascade['main']['default']);
+
+        // plugins
+        foreach($this->plugins as $plugin) {
+            array_merge(
+                $conf,
+                $this->loadExtensionConf(
+                    DOKU_PLUGIN . $plugin . '/conf/default.php',
+                    'plugin',
+                    $plugin
+                )
+            );
+        }
+
+        // current template
+        array_merge(
+            $conf,
+            $this->loadExtensionConf(
+                tpl_incdir() . '/conf/default.php',
+                'tpl',
+                $this->template
+            )
+        );
+
+        return $conf;
+    }
+
+    /**
+     * Read the local settings
+     *
+     * @return array
+     */
+    public function loadLocal() {
+        global $config_cascade;
+        return $this->loadConfigs($config_cascade['main']['local']);
+    }
+
+    /**
+     * Read the protected settings
+     *
+     * @return array
+     */
+    public function loadProtected() {
+        global $config_cascade;
+        return $this->loadConfigs($config_cascade['main']['protected']);
+    }
+
+    /**
+     * Read the config values from the given files
+     *
+     * @param string[] $files paths to config php's
+     * @return array
+     */
+    protected function loadConfigs($files) {
+        $conf = array();
+        foreach($files as $file) {
+            $conf = array_merge($conf, $this->parser->parse($file));
+        }
+        return $conf;
+    }
+
+    /**
+     * Read settings file from an extension
+     *
+     * This is used to read the settings.php files of plugins and templates
+     *
+     * @param string $file php file to read
+     * @param string $type should be 'plugin' or 'tpl'
+     * @param string $extname name of the extension
+     * @return array
+     */
+    protected function loadExtensionMeta($file, $type, $extname) {
+        if(!file_exists($file)) return array();
+        $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
+
+        // include file
+        $meta = array();
+        include $file;
+        if(empty($meta)) return array();
+
+        // read data
+        $data = array();
+        $data[$prefix . $type . '_settings_name'] = ['fieldset'];
+        foreach($meta as $key => $value) {
+            if($value[0] == 'fieldset') continue; //plugins only get one fieldset
+            $data[$prefix . $key] = $value;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Read a default file from an extension
+     *
+     * This is used to read the default.php files of plugins and templates
+     *
+     * @param string $file php file to read
+     * @param string $type should be 'plugin' or 'tpl'
+     * @param string $extname name of the extension
+     * @return array
+     */
+    protected function loadExtensionConf($file, $type, $extname) {
+        if(!file_exists($file)) return array();
+        $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
+
+        // parse file
+        $conf = $this->parser->parse($file);
+        if(empty($conf)) return array();
+
+        // read data
+        $data = array();
+        foreach($conf as $key => $value) {
+            $data[$prefix . $key] = $value;
+        }
+
+        return $data;
+    }
+}
