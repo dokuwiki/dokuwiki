@@ -129,6 +129,6 @@ class auth_plugin_authplainharness extends auth_plugin_authplain {
      * @return array
      */
     public function splitUserData($line){
-        return $this->splitUserData($line);
+        return parent::splitUserData($line);
     }
 }
