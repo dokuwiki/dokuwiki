@@ -18,6 +18,11 @@ class Configuration {
     protected $_name = 'conf';     // name of the config variable found in the files (overridden by $config['varname'])
     protected $_format = 'php';    // format of the config file, supported formats - php (overridden by $config['format'])
     protected $_heading = '';      // heading string written at top of config file - don't include comment indicators
+
+    /** @var ConfigParser */
+    protected $parser;
+
+
     protected $_loaded = false;    // set to true after configuration files are loaded
     protected $_metadata = array();// holds metadata describing the settings
     /** @var Setting[] */
@@ -55,6 +60,8 @@ class Configuration {
         $this->_default_files = $config_cascade['main']['default'];
         $this->_local_files = $config_cascade['main']['local'];
         $this->_protected_files = $config_cascade['main']['protected'];
+
+        $this->parser = new ConfigParser($this->_name, Configuration::KEYMARKER);
 
         $this->locked = $this->_is_locked();
         $this->_metadata = array_merge($meta, $this->get_plugintpl_metadata($conf['template']));
@@ -185,90 +192,12 @@ class Configuration {
     protected function _read_config_group($files) {
         $config = array();
         foreach($files as $file) {
-            $config = array_merge($config, $this->_read_config($file));
+            $config = array_merge($config, $this->parser->parse($file));
         }
 
         return $config;
     }
 
-    /**
-     * Return an array of config settings
-     *
-     * @param string $file file path
-     * @return array config settings
-     */
-    protected function _read_config($file) {
-
-        if(!$file) return array();
-
-        $config = array();
-
-        if($this->_format == 'php') {
-
-            if(file_exists($file)) {
-                $contents = @php_strip_whitespace($file);
-            } else {
-                $contents = '';
-            }
-            $pattern = '/\$' . $this->_name . '\[[\'"]([^=]+)[\'"]\] ?= ?(.*?);(?=[^;]*(?:\$' . $this->_name . '|$))/s';
-            $matches = array();
-            preg_match_all($pattern, $contents, $matches, PREG_SET_ORDER);
-
-            for($i = 0; $i < count($matches); $i++) {
-                $value = $matches[$i][2];
-
-                // correct issues with the incoming data
-                // FIXME ... for now merge multi-dimensional array indices using ____
-                $key = preg_replace('/.\]\[./', Configuration::KEYMARKER, $matches[$i][1]);
-
-                // handle arrays
-                if(preg_match('/^array ?\((.*)\)/', $value, $match)) {
-                    $arr = explode(',', $match[1]);
-
-                    // remove quotes from quoted strings & unescape escaped data
-                    $len = count($arr);
-                    for($j = 0; $j < $len; $j++) {
-                        $arr[$j] = trim($arr[$j]);
-                        $arr[$j] = $this->_readValue($arr[$j]);
-                    }
-
-                    $value = $arr;
-                } else {
-                    $value = $this->_readValue($value);
-                }
-
-                $config[$key] = $value;
-            }
-        }
-
-        return $config;
-    }
-
-    /**
-     * Convert php string into value
-     *
-     * @param string $value
-     * @return bool|string
-     */
-    protected function _readValue($value) {
-        $removequotes_pattern = '/^(\'|")(.*)(?<!\\\\)\1$/s';
-        $unescape_pairs = array(
-            '\\\\' => '\\',
-            '\\\'' => '\'',
-            '\\"' => '"'
-        );
-
-        if($value == 'true') {
-            $value = true;
-        } elseif($value == 'false') {
-            $value = false;
-        } else {
-            // remove quotes from quoted strings & unescape escaped data
-            $value = preg_replace($removequotes_pattern, '$2', $value);
-            $value = strtr($value, $unescape_pairs);
-        }
-        return $value;
-    }
 
     /**
      * Returns header of rewritten settings file
@@ -430,7 +359,7 @@ class Configuration {
         foreach($this->get_plugin_list() as $plugin) {
             $plugin_dir = plugin_directory($plugin);
             if(file_exists(DOKU_PLUGIN . $plugin_dir . $file)) {
-                $conf = $this->_read_config(DOKU_PLUGIN . $plugin_dir . $file);
+                $conf = $this->parser->parse(DOKU_PLUGIN . $plugin_dir . $file);
                 foreach($conf as $key => $value) {
                     $default['plugin' . Configuration::KEYMARKER . $plugin . Configuration::KEYMARKER . $key] = $value;
                 }
@@ -439,7 +368,7 @@ class Configuration {
 
         // the same for the active template
         if(file_exists(tpl_incdir() . $file)) {
-            $conf = $this->_read_config(tpl_incdir() . $file);
+            $conf = $this->parser->parse(tpl_incdir() . $file);
             foreach($conf as $key => $value) {
                 $default['tpl' . Configuration::KEYMARKER . $tpl . Configuration::KEYMARKER . $key] = $value;
             }
