@@ -44,6 +44,7 @@
         <exclude-pattern>*/inc/Plugin.php</exclude-pattern>
         <exclude-pattern>*/inc/PluginInterface.php</exclude-pattern>
 
+        <exclude-pattern>*/lib/plugins/*.php</exclude-pattern>
         <exclude-pattern>*/lib/plugins/*/action.php</exclude-pattern>
         <exclude-pattern>*/lib/plugins/*/action/*.php</exclude-pattern>
         <exclude-pattern>*/lib/plugins/*/admin.php</exclude-pattern>
@@ -59,6 +60,14 @@
         <exclude-pattern>*/lib/plugins/*/syntax.php</exclude-pattern>
         <exclude-pattern>*/lib/plugins/*/syntax/*.php</exclude-pattern>
     </rule>
+
+    <!-- underscore skips exposing public methods to remote api -->
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+        <exclude-pattern>*/lib/plugins/remote.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/remote.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/remote/*.php</exclude-pattern>
+    </rule>
+
     <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
         <exclude-pattern>*/inc/parser/*</exclude-pattern>
     </rule>
