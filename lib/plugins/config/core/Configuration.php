@@ -22,11 +22,9 @@ class Configuration {
     /** @var ConfigParser */
     protected $parser;
 
-
     protected $_loaded = false;    // set to true after configuration files are loaded
     protected $_metadata = array();// holds metadata describing the settings
-    /** @var Setting[] */
-    public $setting = array();  // array of setting objects
+
     public $locked = false;     // configuration is considered locked if it can't be updated
     public $show_disabled_plugins = false;
 
@@ -36,6 +34,10 @@ class Configuration {
     protected $_protected_files = array();
 
     protected $_plugin_list = null;
+
+    /** @var ConfigSettings FIXME better name? */
+    protected $confset;
+
 
     /**
      * constructor
@@ -49,84 +51,19 @@ class Configuration {
             msg('No configuration metadata found at - ' . htmlspecialchars($datafile), -1);
             return;
         }
-        $meta = array();
-        /** @var array $config gets loaded via include here */
-        include($datafile);
 
+        /** @var array $config gets loaded via include here */
+        /* FIXME I think we can remove this
+        include($datafile);
         if(isset($config['varname'])) $this->_name = $config['varname'];
         if(isset($config['format'])) $this->_format = $config['format'];
         if(isset($config['heading'])) $this->_heading = $config['heading'];
+        */
 
-        $this->_default_files = $config_cascade['main']['default'];
-        $this->_local_files = $config_cascade['main']['local'];
-        $this->_protected_files = $config_cascade['main']['protected'];
-
-        $this->parser = new ConfigParser($this->_name, Configuration::KEYMARKER);
-
+        $this->_local_files = $config_cascade['main']['local']; // FIXME simplify and remove this later
         $this->locked = $this->_is_locked();
-        $this->_metadata = array_merge($meta, $this->get_plugintpl_metadata($conf['template']));
-        $this->retrieve_settings();
-    }
 
-    /**
-     * Retrieve and stores settings in setting[] attribute
-     */
-    public function retrieve_settings() {
-        global $conf;
-        $no_default_check = array('setting_fieldset', 'setting_undefined', 'setting_no_class');
-
-        if(!$this->_loaded) {
-            $default = array_merge(
-                $this->get_plugintpl_default($conf['template']),
-                $this->_read_config_group($this->_default_files)
-            );
-            $local = $this->_read_config_group($this->_local_files);
-            $protected = $this->_read_config_group($this->_protected_files);
-
-            $keys = array_merge(
-                array_keys($this->_metadata),
-                array_keys($default),
-                array_keys($local),
-                array_keys($protected)
-            );
-            $keys = array_unique($keys);
-
-            $param = null;
-            foreach($keys as $key) {
-                if(isset($this->_metadata[$key])) {
-                    $class = $this->_metadata[$key][0];
-
-                    if($class && class_exists('setting_' . $class)) {
-                        $class = 'setting_' . $class;
-                    } else {
-                        if($class != '') {
-                            $this->setting[] = new SettingNoClass($key, $param);
-                        }
-                        $class = 'setting';
-                    }
-
-                    $param = $this->_metadata[$key];
-                    array_shift($param);
-                } else {
-                    $class = 'setting_undefined';
-                    $param = null;
-                }
-
-                if(!in_array($class, $no_default_check) && !isset($default[$key])) {
-                    $this->setting[] = new SettingNoDefault($key, $param);
-                }
-
-                $this->setting[$key] = new $class($key, $param);
-
-                $d = array_key_exists($key, $default) ? $default[$key] : null;
-                $l = array_key_exists($key, $local) ? $local[$key] : null;
-                $p = array_key_exists($key, $protected) ? $protected[$key] : null;
-
-                $this->setting[$key]->initialize($d, $l, $p);
-            }
-
-            $this->_loaded = true;
-        }
+        $this->confset = new ConfigSettings();
     }
 
     /**
@@ -160,7 +97,7 @@ class Configuration {
 
         $out = $this->_out_header($id, $header);
 
-        foreach($this->setting as $setting) {
+        foreach($this->confset->getSettings() as $setting) {
             $out .= $setting->out($this->_name, $this->_format);
         }
 
@@ -182,22 +119,6 @@ class Configuration {
         $file = end($this->_local_files);
         return @touch($file);
     }
-
-    /**
-     * Read and merge given config files
-     *
-     * @param array $files file paths
-     * @return array config settings
-     */
-    protected function _read_config_group($files) {
-        $config = array();
-        foreach($files as $file) {
-            $config = array_merge($config, $this->parser->parse($file));
-        }
-
-        return $config;
-    }
-
 
     /**
      * Returns header of rewritten settings file
@@ -250,131 +171,6 @@ class Configuration {
         if(file_exists($local) && !is_writable($local)) return true;
 
         return false;
-    }
-
-    /**
-     * not used ... conf's contents are an array!
-     * reduce any multidimensional settings to one dimension using Configuration::KEYMARKER
-     *
-     * @param $conf
-     * @param string $prefix
-     * @return array
-     */
-    protected function _flatten($conf, $prefix = '') {
-
-        $out = array();
-
-        foreach($conf as $key => $value) {
-            if(!is_array($value)) {
-                $out[$prefix . $key] = $value;
-                continue;
-            }
-
-            $tmp = $this->_flatten($value, $prefix . $key . Configuration::KEYMARKER);
-            $out = array_merge($out, $tmp);
-        }
-
-        return $out;
-    }
-
-    /**
-     * Returns array of plugin names
-     *
-     * @return array plugin names
-     * @triggers PLUGIN_CONFIG_PLUGINLIST event
-     */
-    protected function get_plugin_list() {
-        if(is_null($this->_plugin_list)) {
-            $list = plugin_list('', $this->show_disabled_plugins);
-
-            // remove this plugin from the list
-            $idx = array_search('config', $list);
-            unset($list[$idx]);
-
-            trigger_event('PLUGIN_CONFIG_PLUGINLIST', $list);
-            $this->_plugin_list = $list;
-        }
-
-        return $this->_plugin_list;
-    }
-
-    /**
-     * load metadata for plugin and template settings
-     *
-     * @param string $tpl name of active template
-     * @return array metadata of settings
-     */
-    protected function get_plugintpl_metadata($tpl) {
-        $file = '/conf/metadata.php';
-        $class = '/conf/settings.class.php';
-        $metadata = array();
-
-        foreach($this->get_plugin_list() as $plugin) {
-            $plugin_dir = plugin_directory($plugin);
-            if(file_exists(DOKU_PLUGIN . $plugin_dir . $file)) {
-                $meta = array();
-                @include(DOKU_PLUGIN . $plugin_dir . $file);
-                @include(DOKU_PLUGIN . $plugin_dir . $class);
-                if(!empty($meta)) {
-                    $metadata['plugin' . Configuration::KEYMARKER . $plugin . Configuration::KEYMARKER . 'plugin_settings_name'] = ['fieldset'];
-                }
-                foreach($meta as $key => $value) {
-                    if($value[0] == 'fieldset') {
-                        continue;
-                    } //plugins only get one fieldset
-                    $metadata['plugin' . Configuration::KEYMARKER . $plugin . Configuration::KEYMARKER . $key] = $value;
-                }
-            }
-        }
-
-        // the same for the active template
-        if(file_exists(tpl_incdir() . $file)) {
-            $meta = array();
-            @include(tpl_incdir() . $file);
-            @include(tpl_incdir() . $class);
-            if(!empty($meta)) {
-                $metadata['tpl' . Configuration::KEYMARKER . $tpl . Configuration::KEYMARKER . 'template_settings_name'] = array('fieldset');
-            }
-            foreach($meta as $key => $value) {
-                if($value[0] == 'fieldset') {
-                    continue;
-                } //template only gets one fieldset
-                $metadata['tpl' . Configuration::KEYMARKER . $tpl . Configuration::KEYMARKER . $key] = $value;
-            }
-        }
-
-        return $metadata;
-    }
-
-    /**
-     * Load default settings for plugins and templates
-     *
-     * @param string $tpl name of active template
-     * @return array default settings
-     */
-    protected function get_plugintpl_default($tpl) {
-        $file = '/conf/default.php';
-        $default = array();
-
-        foreach($this->get_plugin_list() as $plugin) {
-            $plugin_dir = plugin_directory($plugin);
-            if(file_exists(DOKU_PLUGIN . $plugin_dir . $file)) {
-                $conf = $this->parser->parse(DOKU_PLUGIN . $plugin_dir . $file);
-                foreach($conf as $key => $value) {
-                    $default['plugin' . Configuration::KEYMARKER . $plugin . Configuration::KEYMARKER . $key] = $value;
-                }
-            }
-        }
-
-        // the same for the active template
-        if(file_exists(tpl_incdir() . $file)) {
-            $conf = $this->parser->parse(tpl_incdir() . $file);
-            foreach($conf as $key => $value) {
-                $default['tpl' . Configuration::KEYMARKER . $tpl . Configuration::KEYMARKER . $key] = $value;
-            }
-        }
-
-        return $default;
     }
 
 }

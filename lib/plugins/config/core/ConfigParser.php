@@ -21,6 +21,7 @@ class ConfigParser {
      *
      * @param string $varname variable to parse from the file
      * @param string $keymarker the key to mark sub arrays
+     * @fixme let's skip the parameters
      */
     public function __construct($varname = 'conf', $keymarker = '____') {
         $this->varname = $varname;

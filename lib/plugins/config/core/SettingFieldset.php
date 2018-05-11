@@ -3,9 +3,15 @@
 namespace dokuwiki\plugin\config\core;
 
 /**
- * Class setting_fieldset
+ * A do-nothing class used to detect the 'fieldset' type.
+ *
+ * Used to start a new settings "display-group".
  */
 class SettingFieldset extends Setting {
-    // A do-nothing class used to detect the 'fieldset' type.
-    // Used to start a new settings "display-group".
+
+    /** @inheritdoc */
+    public function shouldHaveDefault() {
+        return false;
+    }
+
 }

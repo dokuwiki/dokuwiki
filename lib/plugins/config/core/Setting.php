@@ -49,6 +49,15 @@ class Setting {
     }
 
     /**
+     * Should this type of config have a default?
+     *
+     * @return bool
+     */
+    public function shouldHaveDefault() {
+        return true;
+    }
+
+    /**
      * update changed setting with user provided value $input
      * - if changed value fails error check, save it to $this->_input (to allow echoing later)
      * - if changed value passes error check, set $this->_local to the new value
