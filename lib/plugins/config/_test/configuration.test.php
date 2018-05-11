@@ -1,4 +1,7 @@
 <?php
+
+use dokuwiki\plugin\config\core\configuration;
+
 /**
  * @group plugin_config
  * @group admin_plugins
@@ -19,7 +22,7 @@ class plugin_config_configuration_test extends DokuWikiTest {
 
         $this->config = dirname(__FILE__).'/data/config.php';
         $this->meta   = dirname(__FILE__).'/data/metadata.php';
-        require_once(dirname(__FILE__).'/../settings/config.class.php');
+        require_once(dirname(__FILE__).'/../settings/Configuration.php');
     }
 
     function test_readconfig() {

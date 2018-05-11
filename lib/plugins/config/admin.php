@@ -7,14 +7,7 @@
  * @author     Ben Coburn <btcoburn@silicodon.net>
  */
 
-define('CM_KEYMARKER','____');            // used for settings with multiple dimensions of array indices
-
-define('PLUGIN_SELF',dirname(__FILE__).'/');
-define('PLUGIN_METADATA',PLUGIN_SELF.'settings/config.metadata.php');
-if(!defined('DOKU_PLUGIN_IMAGES')) define('DOKU_PLUGIN_IMAGES',DOKU_BASE.'lib/plugins/config/images/');
-
-require_once(PLUGIN_SELF.'settings/config.class.php');  // main configuration class and generic settings classes
-require_once(PLUGIN_SELF.'settings/extra.class.php');   // settings classes specific to these settings
+use dokuwiki\plugin\config\core\Configuration;
 
 /**
  * All DokuWiki plugins to extend the admin function
@@ -22,7 +15,9 @@ require_once(PLUGIN_SELF.'settings/extra.class.php');   // settings classes spec
  */
 class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
-    protected $_file = PLUGIN_METADATA;
+    const METADATA = __DIR__ . 'settings/config.metadata.php';
+    const IMGDIR = DOKU_BASE.'lib/plugins/config/images/';
+
     protected $_config = null;
     protected $_input = null;
     protected $_changed = false;          // set to true if configuration has altered
@@ -47,7 +42,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         }
 
         if(is_null($this->_config)) {
-            $this->_config = new configuration($this->_file);
+            $this->_config = new Configuration(self::METADATA);
         }
 
         // don't go any further if the configuration is locked
@@ -89,7 +84,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         global $lang;
         global $ID;
 
-        if (is_null($this->_config)) { $this->_config = new configuration($this->_file); }
+        if (is_null($this->_config)) { $this->_config = new Configuration(self::METADATA); }
         $this->setupLocale(true);
 
         print $this->locale_xhtml('intro');
@@ -133,10 +128,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 } else {
                     $in_fieldset = true;
                 }
-                if ($first_plugin_fieldset && substr($setting->_key, 0, 10)=='plugin'.CM_KEYMARKER) {
+                if ($first_plugin_fieldset && substr($setting->_key, 0, 10)=='plugin'.Configuration::KEYMARKER) {
                     $this->_print_h1('plugin_settings', $this->getLang('_header_plugin'));
                     $first_plugin_fieldset = false;
-                } else if ($first_template_fieldset && substr($setting->_key, 0, 7)=='tpl'.CM_KEYMARKER) {
+                } else if ($first_template_fieldset && substr($setting->_key, 0, 7)=='tpl'.Configuration::KEYMARKER) {
                     $this->_print_h1('template_settings', $this->getLang('_header_template'));
                     $first_template_fieldset = false;
                 }
@@ -155,7 +150,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                     ? ' class="value error"'
                     : ' class="value"';
                 $icon = $setting->caution()
-                    ? '<img src="'.DOKU_PLUGIN_IMAGES.$setting->caution().'.png" '.
+                    ? '<img src="'.self::IMGDIR.$setting->caution().'.png" '.
                       'alt="'.$setting->caution().'" title="'.$this->getLang($setting->caution()).'" />'
                     : '';
 
@@ -197,7 +192,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             foreach($undefined_settings as $setting) {
                 if (
                     preg_match(
-                        '/^(?:plugin|tpl)'.CM_KEYMARKER.'.*?'.CM_KEYMARKER.'(.*)$/',
+                        '/^(?:plugin|tpl)'.Configuration::KEYMARKER.'.*?'.Configuration::KEYMARKER.'(.*)$/',
                         $setting->_key,
                         $undefined_setting_match
                     )
@@ -299,13 +294,13 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                     @include(DOKU_PLUGIN.$plugin.$enlangfile);
                     if ($conf['lang'] != 'en') @include(DOKU_PLUGIN.$plugin.$langfile);
                     foreach ($lang as $key => $value){
-                        $this->lang['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.$key] = $value;
+                        $this->lang['plugin'.Configuration::KEYMARKER.$plugin.Configuration::KEYMARKER.$key] = $value;
                     }
                 }
 
                 // fill in the plugin name if missing (should exist for plugins with settings)
-                if (!isset($this->lang['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.'plugin_settings_name'])) {
-                    $this->lang['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.'plugin_settings_name'] =
+                if (!isset($this->lang['plugin'.Configuration::KEYMARKER.$plugin.Configuration::KEYMARKER.'plugin_settings_name'])) {
+                    $this->lang['plugin'.Configuration::KEYMARKER.$plugin.Configuration::KEYMARKER.'plugin_settings_name'] =
                       ucwords(str_replace('_', ' ', $plugin));
                 }
             }
@@ -320,13 +315,13 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             @include(tpl_incdir().$enlangfile);
             if ($conf['lang'] != 'en') @include(tpl_incdir().$langfile);
             foreach ($lang as $key => $value){
-                $this->lang['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
+                $this->lang['tpl'.Configuration::KEYMARKER.$tpl.Configuration::KEYMARKER.$key] = $value;
             }
         }
 
         // fill in the template name if missing (should exist for templates with settings)
-        if (!isset($this->lang['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.'template_settings_name'])) {
-            $this->lang['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.'template_settings_name'] =
+        if (!isset($this->lang['tpl'.Configuration::KEYMARKER.$tpl.Configuration::KEYMARKER.'template_settings_name'])) {
+            $this->lang['tpl'.Configuration::KEYMARKER.$tpl.Configuration::KEYMARKER.'template_settings_name'] =
               ucwords(str_replace('_', ' ', $tpl));
         }
 
@@ -341,7 +336,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      * @return array
      */
     public function getTOC() {
-        if (is_null($this->_config)) { $this->_config = new configuration($this->_file); }
+        if (is_null($this->_config)) { $this->_config = new Configuration(self::METADATA); }
         $this->setupLocale(true);
 
         $allow_debug = $GLOBALS['conf']['allowdebug']; // avoid global $conf; here.
@@ -351,9 +346,9 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         $toc = array('conf'=>array(), 'plugin'=>array(), 'template'=>null);
         foreach($this->_config->setting as $setting) {
             if (is_a($setting, 'setting_fieldset')) {
-                if (substr($setting->_key, 0, 10)=='plugin'.CM_KEYMARKER) {
+                if (substr($setting->_key, 0, 10)=='plugin'.Configuration::KEYMARKER) {
                     $toc['plugin'][] = $setting;
-                } else if (substr($setting->_key, 0, 7)=='tpl'.CM_KEYMARKER) {
+                } else if (substr($setting->_key, 0, 7)=='tpl'.Configuration::KEYMARKER) {
                     $toc['template'] = $setting;
                 } else {
                     $toc['conf'][] = $setting;

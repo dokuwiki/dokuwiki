@@ -11,7 +11,7 @@
  *   <handler class id>  is the handler class name without the "setting_" prefix
  *
  * Defined classes:
- *   Generic (source: settings/config.class.php)
+ *   Generic (source: settings/Configuration.php)
  *   -------------------------------------------
  *   ''             - default class ('setting'), textarea, minimal input validation, setting output in quotes
  *   'string'       - single line text input, minimal input validation, setting output in quotes
@@ -38,7 +38,7 @@
  *                    to see if will compile & run as a regex.  in addition to _pattern, also accepts _delimiter
  *                    (default '/') and _pregflags (default 'ui')
  *
- *  Single Setting (source: settings/extra.class.php)
+ *  Single Setting (source: settings/SettingRenderer.php)
  *  -------------------------------------------------
  *   'savedir'     - as 'setting', input tested against initpath() (inc/init.php)
  *   'sepchar'     - as multichoice, selection constructed from string of valid values
