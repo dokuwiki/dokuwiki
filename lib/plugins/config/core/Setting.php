@@ -67,6 +67,27 @@ class Setting {
     }
 
     /**
+     * What type of configuration is this
+     *
+     * Returns one of
+     *
+     * 'plugin' for plugin configuration
+     * 'template' for template configuration
+     * 'conf' for core configuration
+     *
+     * @return string
+     */
+    public function getType() {
+        if(substr($this->getKey(), 0, 10) == 'plugin' . Configuration::KEYMARKER) {
+            return 'plugin';
+        } else if(substr($this->getKey(), 0, 7) == 'tpl' . Configuration::KEYMARKER) {
+            return 'template';
+        } else {
+            return 'conf';
+        }
+    }
+
+    /**
      * update changed setting with user provided value $input
      * - if changed value fails error check, save it to $this->_input (to allow echoing later)
      * - if changed value passes error check, set $this->_local to the new value

@@ -18,13 +18,16 @@ use dokuwiki\plugin\config\core\SettingHidden;
  */
 class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
-    const METADATA = __DIR__ . 'settings/config.metadata.php';
     const IMGDIR = DOKU_BASE . 'lib/plugins/config/images/';
-
-    protected $_localised_prompts = false;
 
     /** @var Configuration */
     protected $configuration;
+
+    /** @var bool were there any errors in the submitted data? */
+    protected $hasErrors = false;
+
+    /** @var bool have the settings translations been loaded? */
+    protected $promptsLocalized = false;
 
     /**
      * admin_plugin_config constructor.
@@ -60,6 +63,8 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 msg($this->getLang('error'), -1);
             }
             send_redirect(wl($ID, array('do' => 'admin', 'page' => 'config'), true, '&'));
+        } else {
+            $this->hasErrors = true;
         }
     }
 
@@ -105,10 +110,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                     $in_fieldset = true;
                 }
                 // fixme this should probably be a function in setting:
-                if($first_plugin_fieldset && substr($setting->getKey(), 0, 10) == 'plugin' . Configuration::KEYMARKER) {
+                if($first_plugin_fieldset && $setting->getType() == 'plugin') {
                     $this->_print_h1('plugin_settings', $this->getLang('_header_plugin'));
                     $first_plugin_fieldset = false;
-                } else if($first_template_fieldset && substr($setting->getKey(), 0, 7) == 'tpl' . Configuration::KEYMARKER) {
+                } else if($first_template_fieldset && $setting->getType() == 'template') {
                     $this->_print_h1('template_settings', $this->getLang('_header_template'));
                     $first_template_fieldset = false;
                 }
@@ -118,7 +123,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 ptln('  <table class="inline">');
             } else {
                 // config settings
-                list($label, $input) = $setting->html($this, $this->_error);
+                list($label, $input) = $setting->html($this, $this->hasErrors);
 
                 $class = $setting->is_default()
                     ? ' class="default"'
@@ -214,9 +219,9 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      */
     public function setupLocale($prompts = false) {
         parent::setupLocale();
-        if(!$prompts || $this->_localised_prompts) return;
+        if(!$prompts || $this->promptsLocalized) return;
         $this->configuration->getLangs();
-        $this->_localised_prompts = true;
+        $this->promptsLocalized = true;
     }
 
     /**
@@ -231,18 +236,11 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
         $allow_debug = $GLOBALS['conf']['allowdebug']; // avoid global $conf; here.
 
-        // gather toc data
+        // gather settings data into three sub arrays
         $toc = array('conf' => array(), 'plugin' => array(), 'template' => null);
         foreach($this->configuration->getSettings() as $setting) {
             if(is_a($setting, 'setting_fieldset')) {
-                // FIXME as above this should go into Setting class
-                if(substr($setting->getKey(), 0, 10) == 'plugin' . Configuration::KEYMARKER) {
-                    $toc['plugin'][] = $setting;
-                } else if(substr($setting->getKey(), 0, 7) == 'tpl' . Configuration::KEYMARKER) {
-                    $toc['template'] = $setting;
-                } else {
-                    $toc['conf'][] = $setting;
-                }
+                $toc[$setting->getType()][] = $setting;
             }
         }
 
@@ -288,6 +286,8 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
     /**
      * Adds a translation to this plugin's language array
+     *
+     * Used by some settings to set up dynamic translations
      *
      * @param string $key
      * @param string $value
