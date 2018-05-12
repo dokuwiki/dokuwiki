@@ -1,6 +1,8 @@
 <?php
 
-use dokuwiki\plugin\config\core\configuration;
+namespace dokuwiki\plugin\config\test;
+
+use dokuwiki\plugin\config\core\ConfigParser;
 
 /**
  * @group plugin_config
@@ -8,27 +10,11 @@ use dokuwiki\plugin\config\core\configuration;
  * @group plugins
  * @group bundled_plugins
  */
-
-class plugin_config_configuration_test extends DokuWikiTest {
-
-    private $config = '';
-    private $meta = '';
-
-    /**
-     * Load config files
-     */
-    function __construct() {
-        parent::__construct();
-
-        $this->config = dirname(__FILE__).'/data/config.php';
-        $this->meta   = dirname(__FILE__).'/data/metadata.php';
-        require_once(dirname(__FILE__).'/../settings/Configuration.php');
-    }
+class ConfigParserTest extends \DokuWikiTest {
 
     function test_readconfig() {
-        $confmgr = new configuration($this->meta);
-
-        $conf = $this->callInaccessibleMethod($confmgr, '_read_config', [$this->config]);
+        $parser = new ConfigParser();
+        $conf = $parser->parse(__DIR__ . '/data/config.php');
 
         // var_dump($conf);
 
@@ -45,9 +31,8 @@ class plugin_config_configuration_test extends DokuWikiTest {
     }
 
     function test_readconfig_onoff() {
-        $confmgr = new configuration($this->meta);
-
-        $conf = $this->callInaccessibleMethod($confmgr, '_read_config', [$this->config]);
+        $parser = new ConfigParser();
+        $conf = $parser->parse(__DIR__ . '/data/config.php');
 
         // var_dump($conf);
 
