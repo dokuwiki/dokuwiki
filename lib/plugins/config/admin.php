@@ -213,67 +213,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      * @param bool $prompts
      */
     public function setupLocale($prompts = false) {
-
         parent::setupLocale();
         if(!$prompts || $this->_localised_prompts) return;
-
-        $this->_setup_localised_plugin_prompts();
+        $this->configuration->getLangs();
         $this->_localised_prompts = true;
-
-    }
-
-    /**
-     * @return bool
-     * @fixme this should be done by the loader
-     */
-    protected function _setup_localised_plugin_prompts() {
-        global $conf;
-
-        $langfile = '/lang/' . $conf['lang'] . '/settings.php';
-        $enlangfile = '/lang/en/settings.php';
-
-        if($dh = opendir(DOKU_PLUGIN)) {
-            while(false !== ($plugin = readdir($dh))) {
-                if($plugin == '.' || $plugin == '..' || $plugin == 'tmp' || $plugin == 'config') continue;
-                if(is_file(DOKU_PLUGIN . $plugin)) continue;
-
-                if(file_exists(DOKU_PLUGIN . $plugin . $enlangfile)) {
-                    $lang = array();
-                    @include(DOKU_PLUGIN . $plugin . $enlangfile);
-                    if($conf['lang'] != 'en') @include(DOKU_PLUGIN . $plugin . $langfile);
-                    foreach($lang as $key => $value) {
-                        $this->lang['plugin' . Configuration::KEYMARKER . $plugin . Configuration::KEYMARKER . $key] = $value;
-                    }
-                }
-
-                // fill in the plugin name if missing (should exist for plugins with settings)
-                if(!isset($this->lang['plugin' . Configuration::KEYMARKER . $plugin . Configuration::KEYMARKER . 'plugin_settings_name'])) {
-                    $this->lang['plugin' . Configuration::KEYMARKER . $plugin . Configuration::KEYMARKER . 'plugin_settings_name'] =
-                        ucwords(str_replace('_', ' ', $plugin));
-                }
-            }
-            closedir($dh);
-        }
-
-        // the same for the active template
-        $tpl = $conf['template'];
-
-        if(file_exists(tpl_incdir() . $enlangfile)) {
-            $lang = array();
-            @include(tpl_incdir() . $enlangfile);
-            if($conf['lang'] != 'en') @include(tpl_incdir() . $langfile);
-            foreach($lang as $key => $value) {
-                $this->lang['tpl' . Configuration::KEYMARKER . $tpl . Configuration::KEYMARKER . $key] = $value;
-            }
-        }
-
-        // fill in the template name if missing (should exist for templates with settings)
-        if(!isset($this->lang['tpl' . Configuration::KEYMARKER . $tpl . Configuration::KEYMARKER . 'tpl_settings_name'])) {
-            $this->lang['tpl' . Configuration::KEYMARKER . $tpl . Configuration::KEYMARKER . 'tpl_settings_name'] =
-                ucwords(str_replace('_', ' ', $tpl));
-        }
-
-        return true;
     }
 
     /**

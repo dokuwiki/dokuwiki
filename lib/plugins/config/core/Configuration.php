@@ -3,7 +3,7 @@
 namespace dokuwiki\plugin\config\core;
 
 /**
- * Holds all the current settings
+ * Holds all the current settings and proxies the Loader and Writer
  *
  * @author Chris Smith <chris@jalakai.co.uk>
  * @author Ben Coburn <btcoburn@silicodon.net>
@@ -32,6 +32,8 @@ class Configuration {
     /** @var bool have the settings been changed since loading from disk? */
     protected $changed = false;
 
+    /** @var Loader */
+    protected $loader;
     /** @var Writer */
     protected $writer;
 
@@ -39,13 +41,13 @@ class Configuration {
      * ConfigSettings constructor.
      */
     public function __construct() {
-        $loader = new Loader(new ConfigParser());
+        $this->loader = new Loader(new ConfigParser());
         $this->writer = new Writer();
 
-        $this->metadata = $loader->loadMeta();
-        $this->default = $loader->loadDefaults();
-        $this->local = $loader->loadLocal();
-        $this->protected = $loader->loadProtected();
+        $this->metadata = $this->loader->loadMeta();
+        $this->default = $this->loader->loadDefaults();
+        $this->local = $this->loader->loadLocal();
+        $this->protected = $this->loader->loadProtected();
 
         $this->initSettings();
     }
@@ -131,6 +133,15 @@ class Configuration {
      */
     public function touch() {
         $this->writer->touch();
+    }
+
+    /**
+     * Load the extension language strings
+     *
+     * @return array
+     */
+    public function getLangs() {
+        return $this->loader->loadLangs();
     }
 
     /**

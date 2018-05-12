@@ -103,6 +103,41 @@ class Loader {
     }
 
     /**
+     * Reads the language strings
+     *
+     * Only reads extensions, main one is loaded the usual way
+     *
+     * @return array
+     */
+    public function loadLangs() {
+        $lang = array();
+
+        // plugins
+        foreach($this->plugins as $plugin) {
+            array_merge(
+                $lang,
+                $this->loadExtensionLang(
+                    DOKU_PLUGIN . $plugin . '/',
+                    'plugin',
+                    $plugin
+                )
+            );
+        }
+
+        // current template
+        array_merge(
+            $lang,
+            $this->loadExtensionConf(
+                tpl_incdir() . '/',
+                'tpl',
+                $this->template
+            )
+        );
+
+        return $lang;
+    }
+
+    /**
      * Read the local settings
      *
      * @return array
@@ -191,5 +226,39 @@ class Loader {
         }
 
         return $data;
+    }
+
+    /**
+     * Read the language file of an extension
+     *
+     * @param string $dir directory of the extension
+     * @param string $type should be 'plugin' or 'tpl'
+     * @param string $extname name of the extension
+     * @return array
+     */
+    protected function loadExtensionLang($dir, $type, $extname) {
+        global $conf;
+        $ll = $conf['lang'];
+        $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
+
+        // include files
+        $lang = array();
+        if(file_exists($dir . 'lang/en/settings.php')) {
+            include $dir . 'lang/en/settings.php';
+        }
+        if($ll != 'en' && file_exists($dir . 'lang/' . $ll . '/settings.php')) {
+            include $dir . 'lang/' . $ll . '/settings.php';
+        }
+
+        // set up correct keys
+        $strings = array();
+        foreach($lang as $key => $val) {
+            $strings[$prefix . $key] = $val;
+        }
+
+        // add fieldset key
+        $strings[$prefix . $type . '_settings_name'] = ucwords(str_replace('_', ' ', $type));
+
+        return $strings;
     }
 }
