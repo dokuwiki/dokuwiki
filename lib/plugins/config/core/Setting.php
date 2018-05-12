@@ -6,30 +6,38 @@ namespace dokuwiki\plugin\config\core;
  * Class setting
  */
 class Setting {
+    /** @var string unique identifier of this setting */
+    protected $key = '';
 
-    protected $_key = '';
-    protected $_default = null;
-    protected $_local = null;
-    protected $_protected = null;
+    /** @var mixed the default value of this setting */
+    protected $default = null;
+    /** @var mixed the local value of this setting */
+    protected $local = null;
+    /** @var mixed the protected value of this setting */
+    protected $protected = null;
 
-    protected $_pattern = '';
-    protected $_error = false;            // only used by those classes which error check
-    protected $_input = null;             // only used by those classes which error check
-    protected $_caution = null;           // used by any setting to provide an alert along with the setting
-    // valid alerts, 'warning', 'danger', 'security'
-    // images matching the alerts are in the plugin's images directory
+    /** @var array valid alerts, images matching the alerts are in the plugin's images directory */
+    static protected $validCautions = array('warning', 'danger', 'security');
 
-    static protected $_validCautions = array('warning', 'danger', 'security');
+    protected $pattern = '';
+    protected $error = false;            // only used by those classes which error check
+    protected $input = null;             // only used by those classes which error check
+    protected $caution = null;           // used by any setting to provide an alert along with the setting
 
     /**
+     * Constructor.
+     *
+     * The given parameters will be set up as class properties
+     *
      * @param string $key
      * @param array|null $params array with metadata of setting
      */
     public function __construct($key, $params = null) {
-        $this->_key = $key;
+        $this->key = $key;
 
         if(is_array($params)) {
             foreach($params as $property => $value) {
+                $property = trim($property, '_'); // we don't use underscores anymore
                 $this->$property = $value;
             }
         }
@@ -43,9 +51,9 @@ class Setting {
      * @param mixed $protected protected setting value
      */
     public function initialize($default, $local, $protected) {
-        if(isset($default)) $this->_default = $default;
-        if(isset($local)) $this->_local = $local;
-        if(isset($protected)) $this->_protected = $protected;
+        if(isset($default)) $this->default = $default;
+        if(isset($local)) $this->local = $local;
+        if(isset($protected)) $this->protected = $protected;
     }
 
     /**
@@ -63,7 +71,37 @@ class Setting {
      * @return string
      */
     public function getKey() {
-        return $this->_key;
+        return $this->key;
+    }
+
+    /**
+     * Get the key of this setting marked up human readable
+     *
+     * @param bool $url link to dokuwiki.org manual?
+     * @return string
+     */
+    public function getPrettyKey($url = true) {
+        $out = str_replace(Configuration::KEYMARKER, "»", $this->key);
+        if($url && !strstr($out, '»')) {//provide no urls for plugins, etc.
+            if($out == 'start') {
+                // exception, because this config name is clashing with our actual start page
+                return '<a href="http://www.dokuwiki.org/config:startpage">' . $out . '</a>';
+            } else {
+                return '<a href="http://www.dokuwiki.org/config:' . $out . '">' . $out . '</a>';
+            }
+        }
+        return $out;
+    }
+
+    /**
+     * Returns setting key as an array key separator
+     *
+     * This is used to create form output
+     *
+     * @return string key
+     */
+    public function getArrayKey() {
+        return str_replace(Configuration::KEYMARKER, "']['", $this->key);
     }
 
     /**
@@ -97,18 +135,18 @@ class Setting {
      */
     public function update($input) {
         if(is_null($input)) return false;
-        if($this->is_protected()) return false;
+        if($this->isProtected()) return false;
 
-        $value = is_null($this->_local) ? $this->_default : $this->_local;
+        $value = is_null($this->local) ? $this->default : $this->local;
         if($value == $input) return false;
 
-        if($this->_pattern && !preg_match($this->_pattern, $input)) {
-            $this->_error = true;
-            $this->_input = $input;
+        if($this->pattern && !preg_match($this->pattern, $input)) {
+            $this->error = true;
+            $this->input = $input;
             return false;
         }
 
-        $this->_local = $input;
+        $this->local = $input;
         return true;
     }
 
@@ -122,18 +160,18 @@ class Setting {
     public function html(\admin_plugin_config $plugin, $echo = false) {
         $disable = '';
 
-        if($this->is_protected()) {
-            $value = $this->_protected;
+        if($this->isProtected()) {
+            $value = $this->protected;
             $disable = 'disabled="disabled"';
         } else {
-            if($echo && $this->_error) {
-                $value = $this->_input;
+            if($echo && $this->error) {
+                $value = $this->input;
             } else {
-                $value = is_null($this->_local) ? $this->_default : $this->_local;
+                $value = is_null($this->local) ? $this->default : $this->local;
             }
         }
 
-        $key = htmlspecialchars($this->_key);
+        $key = htmlspecialchars($this->key);
         $value = formText($value);
 
         $label = '<label for="config___' . $key . '">' . $this->prompt($plugin) . '</label>';
@@ -151,15 +189,15 @@ class Setting {
      */
     public function out($var, $fmt = 'php') {
 
-        if($this->is_protected()) return '';
-        if(is_null($this->_local) || ($this->_default == $this->_local)) return '';
+        if($this->isProtected()) return '';
+        if(is_null($this->local) || ($this->default == $this->local)) return '';
 
         $out = '';
 
         if($fmt == 'php') {
             $tr = array("\\" => '\\\\', "'" => '\\\'');
 
-            $out = '$' . $var . "['" . $this->_out_key() . "'] = '" . strtr(cleanText($this->_local), $tr) . "';\n";
+            $out = '$' . $var . "['" . $this->getArrayKey() . "'] = '" . strtr(cleanText($this->local), $tr) . "';\n";
         }
 
         return $out;
@@ -172,8 +210,8 @@ class Setting {
      * @return string text
      */
     public function prompt(\admin_plugin_config $plugin) {
-        $prompt = $plugin->getLang($this->_key);
-        if(!$prompt) $prompt = htmlspecialchars(str_replace(array('____', '_'), ' ', $this->_key));
+        $prompt = $plugin->getLang($this->key);
+        if(!$prompt) $prompt = htmlspecialchars(str_replace(array('____', '_'), ' ', $this->key));
         return $prompt;
     }
 
@@ -182,8 +220,8 @@ class Setting {
      *
      * @return bool
      */
-    public function is_protected() {
-        return !is_null($this->_protected);
+    public function isProtected() {
+        return !is_null($this->protected);
     }
 
     /**
@@ -191,8 +229,8 @@ class Setting {
      *
      * @return bool
      */
-    public function is_default() {
-        return !$this->is_protected() && is_null($this->_local);
+    public function isDefault() {
+        return !$this->isProtected() && is_null($this->local);
     }
 
     /**
@@ -200,8 +238,8 @@ class Setting {
      *
      * @return bool
      */
-    public function error() {
-        return $this->_error;
+    public function hasError() {
+        return $this->error;
     }
 
     /**
@@ -210,46 +248,25 @@ class Setting {
      * @return false|string caution string, otherwise false for invalid caution
      */
     public function caution() {
-        if(!empty($this->_caution)) {
-            if(!in_array($this->_caution, Setting::$_validCautions)) {
+        if(!empty($this->caution)) {
+            if(!in_array($this->caution, Setting::$validCautions)) {
                 trigger_error(
-                    'Invalid caution string (' . $this->_caution . ') in metadata for setting "' . $this->_key . '"',
+                    'Invalid caution string (' . $this->caution . ') in metadata for setting "' . $this->key . '"',
                     E_USER_WARNING
                 );
                 return false;
             }
-            return $this->_caution;
+            return $this->caution;
         }
         // compatibility with previous cautionList
         // TODO: check if any plugins use; remove
-        if(!empty($this->_cautionList[$this->_key])) {
-            $this->_caution = $this->_cautionList[$this->_key];
-            unset($this->_cautionList);
+        if(!empty($this->cautionList[$this->key])) {
+            $this->caution = $this->cautionList[$this->key];
+            unset($this->cautionList);
 
             return $this->caution();
         }
         return false;
     }
 
-    /**
-     * Returns setting key, eventually with referer to config: namespace at dokuwiki.org
-     *
-     * @param bool $pretty create nice key
-     * @param bool $url provide url to config: namespace
-     * @return string key
-     */
-    public function _out_key($pretty = false, $url = false) {
-        if($pretty) {
-            $out = str_replace(Configuration::KEYMARKER, "»", $this->_key);
-            if($url && !strstr($out, '»')) {//provide no urls for plugins, etc.
-                if($out == 'start') //one exception
-                    return '<a href="http://www.dokuwiki.org/config:startpage">' . $out . '</a>';
-                else
-                    return '<a href="http://www.dokuwiki.org/config:' . $out . '">' . $out . '</a>';
-            }
-            return $out;
-        } else {
-            return str_replace(Configuration::KEYMARKER, "']['", $this->_key);
-        }
-    }
 }

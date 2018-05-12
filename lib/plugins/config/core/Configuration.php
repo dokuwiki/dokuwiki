@@ -111,7 +111,7 @@ class Configuration {
             if($obj->update($value)) {
                 $this->changed = true;
             }
-            if($obj->error()) $ok = false;
+            if($obj->hasError()) $ok = false;
         }
 
         return $ok;

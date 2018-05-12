@@ -7,42 +7,29 @@ namespace dokuwiki\plugin\config\core;
  */
 class SettingPassword extends SettingString {
 
-    protected $_code = 'plain';  // mechanism to be used to obscure passwords
+    protected $code = 'plain';  // mechanism to be used to obscure passwords
 
-    /**
-     * update changed setting with user provided value $input
-     * - if changed value fails error check, save it to $this->_input (to allow echoing later)
-     * - if changed value passes error check, set $this->_local to the new value
-     *
-     * @param  mixed $input the new value
-     * @return boolean          true if changed, false otherwise (also on error)
-     */
+    /** @inheritdoc */
     public function update($input) {
-        if($this->is_protected()) return false;
+        if($this->isProtected()) return false;
         if(!$input) return false;
 
-        if($this->_pattern && !preg_match($this->_pattern, $input)) {
-            $this->_error = true;
-            $this->_input = $input;
+        if($this->pattern && !preg_match($this->pattern, $input)) {
+            $this->error = true;
+            $this->input = $input;
             return false;
         }
 
-        $this->_local = conf_encodeString($input, $this->_code);
+        $this->local = conf_encodeString($input, $this->code);
         return true;
     }
 
-    /**
-     * Build html for label and input of setting
-     *
-     * @param \admin_plugin_config $plugin object of config plugin
-     * @param bool $echo true: show inputted value, when error occurred, otherwise the stored setting
-     * @return string[] with content array(string $label_html, string $input_html)
-     */
+    /** @inheritdoc */
     public function html(\admin_plugin_config $plugin, $echo = false) {
 
-        $disable = $this->is_protected() ? 'disabled="disabled"' : '';
+        $disable = $this->isProtected() ? 'disabled="disabled"' : '';
 
-        $key = htmlspecialchars($this->_key);
+        $key = htmlspecialchars($this->key);
 
         $label = '<label for="config___' . $key . '">' . $this->prompt($plugin) . '</label>';
         $input = '<input id="config___' . $key . '" name="config[' . $key .

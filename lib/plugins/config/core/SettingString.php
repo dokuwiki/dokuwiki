@@ -6,28 +6,22 @@ namespace dokuwiki\plugin\config\core;
  * Class setting_string
  */
 class SettingString extends Setting {
-    /**
-     * Build html for label and input of setting
-     *
-     * @param \admin_plugin_config $plugin object of config plugin
-     * @param bool $echo true: show inputted value, when error occurred, otherwise the stored setting
-     * @return string[] with content array(string $label_html, string $input_html)
-     */
+    /** @inheritdoc */
     public function html(\admin_plugin_config $plugin, $echo = false) {
         $disable = '';
 
-        if($this->is_protected()) {
-            $value = $this->_protected;
+        if($this->isProtected()) {
+            $value = $this->protected;
             $disable = 'disabled="disabled"';
         } else {
-            if($echo && $this->_error) {
-                $value = $this->_input;
+            if($echo && $this->error) {
+                $value = $this->input;
             } else {
-                $value = is_null($this->_local) ? $this->_default : $this->_local;
+                $value = is_null($this->local) ? $this->default : $this->local;
             }
         }
 
-        $key = htmlspecialchars($this->_key);
+        $key = htmlspecialchars($this->key);
         $value = htmlspecialchars($value);
 
         $label = '<label for="config___' . $key . '">' . $this->prompt($plugin) . '</label>';

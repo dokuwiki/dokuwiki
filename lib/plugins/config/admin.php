@@ -125,10 +125,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 // config settings
                 list($label, $input) = $setting->html($this, $this->hasErrors);
 
-                $class = $setting->is_default()
+                $class = $setting->isDefault()
                     ? ' class="default"'
-                    : ($setting->is_protected() ? ' class="protected"' : '');
-                $error = $setting->error()
+                    : ($setting->isProtected() ? ' class="protected"' : '');
+                $error = $setting->hasError()
                     ? ' class="value error"'
                     : ' class="value"';
                 $icon = $setting->caution()
@@ -138,7 +138,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
                 ptln('    <tr' . $class . '>');
                 ptln('      <td class="label">');
-                ptln('        <span class="outkey">' . $setting->_out_key(true, true) . '</span>');
+                ptln('        <span class="outkey">' . $setting->getPrettyKey() . '</span>');
                 ptln('        ' . $icon . $label);
                 ptln('      </td>');
                 ptln('      <td' . $error . '>' . $input . '</td>');
@@ -187,7 +187,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 ptln('  <tr>');
                 ptln(
                     '    <td class="label"><span title="$meta[\'' . $undefined_setting_key . '\']">$' .
-                    'conf' . '[\'' . $setting->_out_key() . '\']</span></td>'
+                    'conf' . '[\'' . $setting->getArrayKey() . '\']</span></td>'
                 );
                 ptln('    <td>' . $this->getLang('_msg_' . get_class($setting)) . '</td>');
                 ptln('  </tr>');

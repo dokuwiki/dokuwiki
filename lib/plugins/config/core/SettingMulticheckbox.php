@@ -7,68 +7,55 @@ namespace dokuwiki\plugin\config\core;
  */
 class SettingMulticheckbox extends SettingString {
 
-    protected $_choices = array();
-    protected $_combine = array();
-    protected $_other = 'always';
+    protected $choices = array();
+    protected $combine = array();
+    protected $other = 'always';
 
-    /**
-     * update changed setting with user provided value $input
-     * - if changed value fails error check, save it to $this->_input (to allow echoing later)
-     * - if changed value passes error check, set $this->_local to the new value
-     *
-     * @param  mixed $input the new value
-     * @return boolean          true if changed, false otherwise (also on error)
-     */
+    /** @inheritdoc */
     public function update($input) {
-        if($this->is_protected()) return false;
+        if($this->isProtected()) return false;
 
         // split any combined values + convert from array to comma separated string
         $input = ($input) ? $input : array();
-        $input = $this->_array2str($input);
+        $input = $this->array2str($input);
 
-        $value = is_null($this->_local) ? $this->_default : $this->_local;
+        $value = is_null($this->local) ? $this->default : $this->local;
         if($value == $input) return false;
 
-        if($this->_pattern && !preg_match($this->_pattern, $input)) {
-            $this->_error = true;
-            $this->_input = $input;
+        if($this->pattern && !preg_match($this->pattern, $input)) {
+            $this->error = true;
+            $this->input = $input;
             return false;
         }
 
-        $this->_local = $input;
+        $this->local = $input;
         return true;
     }
 
-    /**
-     * Build html for label and input of setting
-     *
-     * @param \admin_plugin_config $plugin object of config plugin
-     * @param bool $echo true: show input value, when error occurred, otherwise the stored setting
-     * @return string[] with content array(string $label_html, string $input_html)
-     */
+    /** @inheritdoc */
     public function html(\admin_plugin_config $plugin, $echo = false) {
 
         $disable = '';
 
-        if($this->is_protected()) {
-            $value = $this->_protected;
+        if($this->isProtected()) {
+            $value = $this->protected;
             $disable = 'disabled="disabled"';
         } else {
-            if($echo && $this->_error) {
-                $value = $this->_input;
+            if($echo && $this->error) {
+                $value = $this->input;
             } else {
-                $value = is_null($this->_local) ? $this->_default : $this->_local;
+                $value = is_null($this->local) ? $this->default : $this->local;
             }
         }
 
-        $key = htmlspecialchars($this->_key);
+        $key = htmlspecialchars($this->key);
 
         // convert from comma separated list into array + combine complimentary actions
-        $value = $this->_str2array($value);
-        $default = $this->_str2array($this->_default);
+        $value = $this->str2array($value);
+        $default = $this->str2array($this->default);
 
         $input = '';
-        foreach($this->_choices as $choice) {
+        foreach($this->choices as $choice) {
             $idx = array_search($choice, $value);
             $idx_default = array_search($choice, $default);
 
@@ -77,8 +64,8 @@ class SettingMulticheckbox extends SettingString {
             // @todo ideally this would be handled using a second class of "default"
             $class = (($idx !== false) == (false !== $idx_default)) ? " selectiondefault" : "";
 
-            $prompt = ($plugin->getLang($this->_key . '_' . $choice) ?
-                $plugin->getLang($this->_key . '_' . $choice) : htmlspecialchars($choice));
+            $prompt = ($plugin->getLang($this->key . '_' . $choice) ?
+                $plugin->getLang($this->key . '_' . $choice) : htmlspecialchars($choice));
 
             $input .= '<div class="selection' . $class . '">' . "\n";
             $input .= '<label for="config___' . $key . '_' . $choice . '">' . $prompt . "</label>\n";
@@ -92,11 +79,11 @@ class SettingMulticheckbox extends SettingString {
         }
 
         // handle any remaining values
-        if($this->_other != 'never') {
+        if($this->other != 'never') {
             $other = join(',', $value);
             // test equivalent to ($this->_other == 'always' || ($other && $this->_other == 'exists')
             // use != 'exists' rather than == 'always' to ensure invalid values default to 'always'
-            if($this->_other != 'exists' || $other) {
+            if($this->other != 'exists' || $other) {
 
                 $class = (
                     (count($default) == count($value)) &&
@@ -105,9 +92,12 @@ class SettingMulticheckbox extends SettingString {
                     " selectiondefault" : "";
 
                 $input .= '<div class="other' . $class . '">' . "\n";
-                $input .= '<label for="config___' . $key . '_other">' . $plugin->getLang($key . '_other') . "</label>\n";
+                $input .= '<label for="config___' . $key . '_other">' .
+                    $plugin->getLang($key . '_other') .
+                    "</label>\n";
                 $input .= '<input id="config___' . $key . '_other" name="config[' . $key .
-                    '][other]" type="text" class="edit" value="' . htmlspecialchars($other) . '" ' . $disable . " />\n";
+                    '][other]" type="text" class="edit" value="' . htmlspecialchars($other) .
+                    '" ' . $disable . " />\n";
                 $input .= "</div>\n";
             }
         }
@@ -121,11 +111,11 @@ class SettingMulticheckbox extends SettingString {
      * @param string $str
      * @return array
      */
-    protected function _str2array($str) {
+    protected function str2array($str) {
         $array = explode(',', $str);
 
-        if(!empty($this->_combine)) {
-            foreach($this->_combine as $key => $combinators) {
+        if(!empty($this->combine)) {
+            foreach($this->combine as $key => $combinators) {
                 $idx = array();
                 foreach($combinators as $val) {
                     if(($idx[] = array_search($val, $array)) === false) break;
@@ -147,7 +137,7 @@ class SettingMulticheckbox extends SettingString {
      * @param array $input
      * @return string
      */
-    protected function _array2str($input) {
+    protected function array2str($input) {
 
         // handle other
         $other = trim($input['other']);
@@ -157,8 +147,8 @@ class SettingMulticheckbox extends SettingString {
         $array = array_unique(array_merge($input, $other));
 
         // deconstruct any combinations
-        if(!empty($this->_combine)) {
-            foreach($this->_combine as $key => $combinators) {
+        if(!empty($this->combine)) {
+            foreach($this->combine as $key => $combinators) {
 
                 $idx = array_search($key, $array);
                 if($idx !== false) {

@@ -7,14 +7,11 @@ namespace dokuwiki\plugin\config\core;
  */
 class SettingNumericopt extends SettingNumeric {
     // just allow an empty config
-    protected $_pattern = '/^(|[-]?[0-9]+(?:[-+*][0-9]+)*)$/';
+    protected $pattern = '/^(|[-]?[0-9]+(?:[-+*][0-9]+)*)$/';
 
     /**
+     * @inheritdoc
      * Empty string is valid for numericopt
-     *
-     * @param mixed $input
-     *
-     * @return bool
      */
     public function update($input) {
         if($input === '') {

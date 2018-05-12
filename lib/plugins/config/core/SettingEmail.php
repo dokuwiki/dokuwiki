@@ -6,29 +6,23 @@ namespace dokuwiki\plugin\config\core;
  * Class setting_email
  */
 class SettingEmail extends SettingString {
-    protected $_multiple = false;
-    protected $_placeholders = false;
+    protected $multiple = false;
+    protected $placeholders = false;
 
-    /**
-     * update setting with user provided value $input
-     * if value fails error check, save it
-     *
-     * @param mixed $input
-     * @return boolean true if changed, false otherwise (incl. on error)
-     */
+    /** @inheritdoc */
     public function update($input) {
         if(is_null($input)) return false;
-        if($this->is_protected()) return false;
+        if($this->isProtected()) return false;
 
-        $value = is_null($this->_local) ? $this->_default : $this->_local;
+        $value = is_null($this->local) ? $this->default : $this->local;
         if($value == $input) return false;
         if($input === '') {
-            $this->_local = $input;
+            $this->local = $input;
             return true;
         }
         $mail = $input;
 
-        if($this->_placeholders) {
+        if($this->placeholders) {
             // replace variables with pseudo values
             $mail = str_replace('@USER@', 'joe', $mail);
             $mail = str_replace('@NAME@', 'Joe Schmoe', $mail);
@@ -36,7 +30,7 @@ class SettingEmail extends SettingString {
         }
 
         // multiple mail addresses?
-        if($this->_multiple) {
+        if($this->multiple) {
             $mails = array_filter(array_map('trim', explode(',', $mail)));
         } else {
             $mails = array($mail);
@@ -52,13 +46,13 @@ class SettingEmail extends SettingString {
             }
 
             if(!mail_isvalid($addr)) {
-                $this->_error = true;
-                $this->_input = $input;
+                $this->error = true;
+                $this->input = $input;
                 return false;
             }
         }
 
-        $this->_local = $input;
+        $this->local = $input;
         return true;
     }
 }
