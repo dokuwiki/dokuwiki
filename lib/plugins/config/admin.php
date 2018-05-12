@@ -92,7 +92,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         ptln('<form action="' . script() . '" method="post">');
         ptln('<div class="no"><input type="hidden" name="id" value="' . $ID . '" /></div>');
         formSecurityToken();
-        $this->_print_h1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));
+        $this->printH1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));
 
         $in_fieldset = false;
         $first_plugin_fieldset = true;
@@ -111,10 +111,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 }
                 // fixme this should probably be a function in setting:
                 if($first_plugin_fieldset && $setting->getType() == 'plugin') {
-                    $this->_print_h1('plugin_settings', $this->getLang('_header_plugin'));
+                    $this->printH1('plugin_settings', $this->getLang('_header_plugin'));
                     $first_plugin_fieldset = false;
                 } else if($first_template_fieldset && $setting->getType() == 'template') {
-                    $this->_print_h1('template_settings', $this->getLang('_header_template'));
+                    $this->printH1('template_settings', $this->getLang('_header_template'));
                     $first_template_fieldset = false;
                 }
                 ptln('  <fieldset id="' . $setting->getKey() . '">');
@@ -162,12 +162,12 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
              * @param Setting $b
              * @return int if $a is lower/equal/higher than $b
              */
-            function _setting_natural_comparison($a, $b) {
+            function settingNaturalComparison($a, $b) {
                 return strnatcmp($a->getKey(), $b->getKey());
             }
 
-            usort($undefined_settings, '_setting_natural_comparison');
-            $this->_print_h1('undefined_settings', $this->getLang('_header_undefined'));
+            usort($undefined_settings, 'settingNaturalComparison');
+            $this->printH1('undefined_settings', $this->getLang('_header_undefined'));
             ptln('<fieldset>');
             ptln('<div class="table">');
             ptln('<table class="inline">');
@@ -280,7 +280,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      * @param string $id
      * @param string $text
      */
-    protected function _print_h1($id, $text) {
+    protected function printH1($id, $text) {
         ptln('<h1 id="' . $id . '">' . $text . '</h1>');
     }
 
