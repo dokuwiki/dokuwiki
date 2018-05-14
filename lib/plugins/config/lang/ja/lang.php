@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Ikuo Obataya <i.obataya@gmail.com>
@@ -145,6 +146,12 @@ $lang['xsendfile']             = 'ウェブサーバーが静的ファイルを�
 $lang['renderer_xhtml']        = 'Wikiの出力（xhtml）にレンダラーを使用する';
 $lang['renderer__core']        = '%s （Dokuwikiコア）';
 $lang['renderer__plugin']      = '%s （プラグイン）';
+$lang['search_nslimit']        = '現在の名前空間 X 内のみ検索します。より下層の名前空間から検索が実行された場合、最初の名前空間 X がフィルターとして追加されます。';
+$lang['search_fragment']       = '部分検索の規定の動作を指定する';
+$lang['search_fragment_o_exact'] = '完全一致';
+$lang['search_fragment_o_starts_with'] = '検索ワードで始まる';
+$lang['search_fragment_o_ends_with'] = '検索ワードで終わる';
+$lang['search_fragment_o_contains'] = '部分一致';
 $lang['dnslookups']            = 'ページを編集しているユーザーのIPアドレスからホスト名を逆引きする。利用できるDNSサーバーがない、あるいはこの機能が不要な場合にはオフにします。';
 $lang['jquerycdn']             = 'コンテンツ・デリバリー・ネットワーク (CDN) の選択：jQuery と jQuery UI スクリプトを CDN からロードさせる場合には、追加的な HTTP リクエストが発生しますが、ブラウザキャッシュが使用されるため、表示速度の向上が期待できます。';
 $lang['jquerycdn_o_0']         = 'CDN を使用しない（または利用できない）';

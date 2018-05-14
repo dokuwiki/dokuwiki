@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Ikuo Obataya <i.obataya@gmail.com>
  * @author Daniel Dupriest <kououken@gmail.com>
@@ -10,7 +11,6 @@
  * @author Taisuke Shimamoto <dentostar@gmail.com>
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  * @author Hideaki SAWADA <chuno@live.jp>
- * @author Hideaki SAWADA <sawadakun@live.jp>
  * @author PzF_X <jp_minecraft@yahoo.co.jp>
  */
 $lang['encoding']              = 'utf-8';
@@ -72,44 +72,6 @@ $lang['badpassconfirm']        = 'パスワードが間違っています。';
 $lang['minoredit']             = '小変更';
 $lang['draftdate']             = 'ドラフト保存日時：';
 $lang['nosecedit']             = 'ページ内容が変更されていますがセクション情報が古いため、代わりにページ全体をロードしました。';
-$lang['regmissing']            = '全ての項目を入力してください。';
-$lang['reguexists']            = 'このユーザー名は既に存在しています。';
-$lang['regsuccess']            = '新しいユーザーが作成されました。パスワードは登録したメールアドレス宛てに送付されます。';
-$lang['regsuccess2']           = '新しいユーザーが作成されました。';
-$lang['regfail']               = 'ユーザーを作成できませんでした。';
-$lang['regmailfail']           = 'パスワードのメール送信に失敗しました。お手数ですが管理者まで連絡をお願いします。';
-$lang['regbadmail']            = 'メールアドレスが有効ではありません。';
-$lang['regbadpass']            = '確認用のパスワードが正しくありません。';
-$lang['regpwmail']             = 'あなたの DokuWiki パスワード';
-$lang['reghere']               = 'ご自分用のアカウントを取ってみては如何ですか？';
-$lang['profna']                = 'ユーザー情報の変更は出来ません';
-$lang['profnochange']          = '変更点はありませんでした。';
-$lang['profnoempty']           = 'ユーザー名とメールアドレスを入力して下さい。';
-$lang['profchanged']           = 'ユーザー情報は更新されました。';
-$lang['profnodelete']          = 'この wiki はユーザーを削除できない。';
-$lang['profdeleteuser']        = 'アカウントの削除';
-$lang['profdeleted']           = 'このwikiからあなたのユーザーアカウントは削除済です。';
-$lang['profconfdelete']        = 'このwikiから自分のアカウント抹消を希望します。<br/> この操作は取消すことができません。';
-$lang['profconfdeletemissing'] = '確認のチェックボックスがチェックされていません。';
-$lang['proffail']              = 'ユーザー情報は更新されませんでした。';
-$lang['pwdforget']             = 'パスワードをお忘れですか？パスワード再発行';
-$lang['resendna']              = 'パスワードの再発行は出来ません。';
-$lang['resendpwd']             = '新しいパスワードをセット';
-$lang['resendpwdmissing']      = '全ての項目を入力して下さい。';
-$lang['resendpwdnouser']       = '入力されたユーザーが見つかりませんでした。';
-$lang['resendpwdbadauth']      = '申し訳ありません。この確認コードは有効ではありません。メール内に記載されたリンクを確認してください。';
-$lang['resendpwdconfirm']      = '確認用のリンクを含んだメールを送信しました。';
-$lang['resendpwdsuccess']      = '新しいパスワードがメールで送信されました。';
-$lang['license']               = '特に明示されていない限り、本Wikiの内容は次のライセンスに従います：';
-$lang['licenseok']             = '注意： 本ページを編集することは、あなたの編集した内容が次のライセンスに従うことに同意したものとみなします：';
-$lang['searchmedia']           = '検索ファイル名：';
-$lang['searchmedia_in']        = '%s 内を検索';
-$lang['txt_upload']            = 'アップロードするファイルを選んでください。:';
-$lang['txt_filename']          = '名前を変更してアップロード（オプション）:';
-$lang['txt_overwrt']           = '既存のファイルを上書き';
-$lang['maxuploadsize']         = 'アップロード上限サイズ %s /ファイル';
-$lang['lockedby']              = 'この文書は次のユーザーによってロックされています:';
-$lang['lockexpire']            = 'ロック期限：:';
 $lang['js']['willexpire']      = '編集中の文書はロック期限を過ぎようとしています。このままロックする場合は、一度文書の確認を行って期限をリセットしてください。';
 $lang['js']['notsavedyet']     = '変更は保存されません。このまま処理を続けてよろしいですか？';
 $lang['js']['searchmedia']     = 'ファイル検索';
@@ -151,6 +113,44 @@ $lang['js']['media_done_btn']  = '完了';
 $lang['js']['media_drop']      = 'ここにファイルをドロップするとアップロードします';
 $lang['js']['media_cancel']    = '削除';
 $lang['js']['media_overwrt']   = '既存のファイルを上書きする';
+$lang['regmissing']            = '全ての項目を入力してください。';
+$lang['reguexists']            = 'このユーザー名は既に存在しています。';
+$lang['regsuccess']            = '新しいユーザーが作成されました。パスワードは登録したメールアドレス宛てに送付されます。';
+$lang['regsuccess2']           = '新しいユーザーが作成されました。';
+$lang['regfail']               = 'ユーザーを作成できませんでした。';
+$lang['regmailfail']           = 'パスワードのメール送信に失敗しました。お手数ですが管理者まで連絡をお願いします。';
+$lang['regbadmail']            = 'メールアドレスが有効ではありません。';
+$lang['regbadpass']            = '確認用のパスワードが正しくありません。';
+$lang['regpwmail']             = 'あなたの DokuWiki パスワード';
+$lang['reghere']               = 'ご自分用のアカウントを取ってみては如何ですか？';
+$lang['profna']                = 'ユーザー情報の変更は出来ません';
+$lang['profnochange']          = '変更点はありませんでした。';
+$lang['profnoempty']           = 'ユーザー名とメールアドレスを入力して下さい。';
+$lang['profchanged']           = 'ユーザー情報は更新されました。';
+$lang['profnodelete']          = 'この wiki はユーザーを削除できない。';
+$lang['profdeleteuser']        = 'アカウントの削除';
+$lang['profdeleted']           = 'このwikiからあなたのユーザーアカウントは削除済です。';
+$lang['profconfdelete']        = 'このwikiから自分のアカウント抹消を希望します。<br/> この操作は取消すことができません。';
+$lang['profconfdeletemissing'] = '確認のチェックボックスがチェックされていません。';
+$lang['proffail']              = 'ユーザー情報は更新されませんでした。';
+$lang['pwdforget']             = 'パスワードをお忘れですか？パスワード再発行';
+$lang['resendna']              = 'パスワードの再発行は出来ません。';
+$lang['resendpwd']             = '新しいパスワードをセット';
+$lang['resendpwdmissing']      = '全ての項目を入力して下さい。';
+$lang['resendpwdnouser']       = '入力されたユーザーが見つかりませんでした。';
+$lang['resendpwdbadauth']      = '申し訳ありません。この確認コードは有効ではありません。メール内に記載されたリンクを確認してください。';
+$lang['resendpwdconfirm']      = '確認用のリンクを含んだメールを送信しました。';
+$lang['resendpwdsuccess']      = '新しいパスワードがメールで送信されました。';
+$lang['license']               = '特に明示されていない限り、本Wikiの内容は次のライセンスに従います：';
+$lang['licenseok']             = '注意： 本ページを編集することは、あなたの編集した内容が次のライセンスに従うことに同意したものとみなします：';
+$lang['searchmedia']           = '検索ファイル名：';
+$lang['searchmedia_in']        = '%s 内を検索';
+$lang['txt_upload']            = 'アップロードするファイルを選んでください。:';
+$lang['txt_filename']          = '名前を変更してアップロード（オプション）:';
+$lang['txt_overwrt']           = '既存のファイルを上書き';
+$lang['maxuploadsize']         = 'アップロード上限サイズ %s /ファイル';
+$lang['lockedby']              = 'この文書は次のユーザーによってロックされています:';
+$lang['lockexpire']            = 'ロック期限：:';
 $lang['rssfailed']             = 'RSSの取得に失敗しました：';
 $lang['nothingfound']          = '該当文書はありませんでした。';
 $lang['mediaselect']           = 'メディアファイル';
