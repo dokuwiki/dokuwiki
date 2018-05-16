@@ -91,6 +91,13 @@ class TaskRunner
                 $out_lines = array_merge(array_slice($old_lines, -$extra), $out_lines);
             }
 
+            $eventData = [
+                'trimmedChangelogLines' => $out_lines,
+                'removedChangelogLines' => $extra > 0 ? array_slice($old_lines, 0, -$extra) : $old_lines,
+            ];
+            trigger_event('TRIM_RECENT_CHANGES', $eventData);
+            $out_lines = $eventData['trimmedChangelogLines'];
+
             // save trimmed changelog
             io_saveFile($fn . '_tmp', implode('', $out_lines));
             @unlink($fn);
