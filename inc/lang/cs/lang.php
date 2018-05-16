@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Martin Hořínek <hev@hev.cz>
  * @author Jonáš Dyba <jonas.dyba@gmail.com>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
@@ -81,7 +82,9 @@ $lang['badpassconfirm']        = 'Bohužel špatné heslo';
 $lang['minoredit']             = 'Drobné změny';
 $lang['draftdate']             = 'Koncept automaticky uložen v';
 $lang['nosecedit']             = 'Stránka byla v mezičase změněna. Informace o sekci již nebylo platné, byla načtena celá stránka.';
+$lang['searchcreatepage']      = 'Pokud jste nenašli to, co jste hledali, můžete vytvořit nebo upravit stránku% s, pojmenovanou podle vašeho dotazu.';
 $lang['search_fullresults']    = 'Fulltextové výsledky';
+$lang['js']['search_toggle_tools'] = 'Zobrazit/skrýt vyhledávací nástroje';
 $lang['js']['willexpire']      = 'Váš zámek pro editaci za chvíli vyprší.\nAbyste předešli konfliktům, stiskněte tlačítko Náhled a zámek se prodlouží.';
 $lang['js']['notsavedyet']     = 'Jsou tu neuložené změny, které budou ztraceny.
 Chcete opravdu pokračovat?';
@@ -125,13 +128,17 @@ $lang['js']['media_done_btn']  = 'Hotovo';
 $lang['js']['media_drop']      = 'Sem přetáhněte soubory pro nahrátí';
 $lang['js']['media_cancel']    = 'odstranit';
 $lang['js']['media_overwrt']   = 'Přepsat existující soubory';
+$lang['search_exact_match']    = 'Přesná shoda';
 $lang['search_starts_with']    = 'Začíná s';
 $lang['search_ends_with']      = 'Končí s';
 $lang['search_contains']       = 'Obsahuje';
 $lang['search_custom_match']   = 'Vlastní';
+$lang['search_any_ns']         = 'Jakýkoliv jmenný prostor';
+$lang['search_any_time']       = 'Jakýkoliv čas';
 $lang['search_past_7_days']    = 'Minulý týden';
 $lang['search_past_month']     = 'Minulý měsíc';
 $lang['search_past_year']      = 'Minulý rok';
+$lang['search_sort_by_hits']   = 'Řadit podle shody';
 $lang['search_sort_by_mtime']  = 'Řadit podle naposledy změněných';
 $lang['regmissing']            = 'Musíte vyplnit všechny údaje.';
 $lang['reguexists']            = 'Uživatel se stejným jménem už je zaregistrován.';
