@@ -6,8 +6,19 @@ use Doku_Event;
 use Sitemapper;
 use Subscription;
 
+/**
+ * Class TaskRunner
+ *
+ * Run an asynchronous task.
+ */
 class TaskRunner
 {
+    /**
+     * Run the next task
+     *
+     * @todo refactor to remove dependencies on globals
+     * @triggers INDEXER_TASKS_RUN
+     */
     public function run()
     {
         global $INPUT, $conf, $ID;
@@ -57,7 +68,8 @@ class TaskRunner
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Harry Fuecks <fuecks@gmail.com>
      */
-    function sendGIF(){
+    protected function sendGIF()
+    {
         $img = base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAIBTAA7');
         header('Content-Type: image/gif');
         header('Content-Length: '.strlen($img));
