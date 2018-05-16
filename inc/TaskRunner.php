@@ -87,7 +87,7 @@ class TaskRunner
      *                              the page changelog
      *
      * @return bool
-     *
+     * @triggers TASK_RECENTCHANGES_TRIM
      * @author Ben Coburn <btcoburn@silicodon.net>
      */
     protected function runTrimRecentChanges($media_changes = false)
@@ -152,7 +152,7 @@ class TaskRunner
                 'trimmedChangelogLines' => $out_lines,
                 'removedChangelogLines' => $extra > 0 ? array_slice($old_lines, 0, -$extra) : $old_lines,
             ];
-            trigger_event('TRIM_RECENT_CHANGES', $eventData);
+            trigger_event('TASK_RECENTCHANGES_TRIM', $eventData);
             $out_lines = $eventData['trimmedChangelogLines'];
 
             // save trimmed changelog
