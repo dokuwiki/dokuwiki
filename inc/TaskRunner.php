@@ -26,16 +26,18 @@ class TaskRunner
     /**
      * Trims the recent changes cache (or imports the old changelog) as needed.
      *
-     * @param bool $media_changes If the media changelog shall be trimmed instead of
+     * @param bool $media_changes   If the media changelog shall be trimmed instead of
      *                              the page changelog
+     *
      * @return bool
      *
      * @author Ben Coburn <btcoburn@silicodon.net>
      */
-    protected function runTrimRecentChanges($media_changes = false) {
+    protected function runTrimRecentChanges($media_changes = false)
+    {
         global $conf;
 
-        echo "runTrimRecentChanges($media_changes): started".NL;
+        echo "runTrimRecentChanges($media_changes): started" . NL;
 
         $fn = ($media_changes ? $conf['media_changelog'] : $conf['changelog']);
 
@@ -44,37 +46,39 @@ class TaskRunner
         // changes or $conf['recent'] items, which ever is larger.
         // The trimming is only done once a day.
         if (file_exists($fn) &&
-            (@filemtime($fn.'.trimmed')+86400)<time() &&
-            !file_exists($fn.'_tmp')) {
-            @touch($fn.'.trimmed');
+            (@filemtime($fn . '.trimmed') + 86400) < time() &&
+            !file_exists($fn . '_tmp')) {
+            @touch($fn . '.trimmed');
             io_lock($fn);
             $lines = file($fn);
-            if (count($lines)<=$conf['recent']) {
+            if (count($lines) <= $conf['recent']) {
                 // nothing to trim
                 io_unlock($fn);
-                echo "runTrimRecentChanges($media_changes): finished".NL;
+                echo "runTrimRecentChanges($media_changes): finished" . NL;
                 return false;
             }
 
-            io_saveFile($fn.'_tmp', '');          // presave tmp as 2nd lock
-            $trim_time = time() - $conf['recent_days']*86400;
-            $out_lines = array();
-            $old_lines = array();
-            for ($i=0; $i<count($lines); $i++) {
+            io_saveFile($fn . '_tmp', '');          // presave tmp as 2nd lock
+            $trim_time = time() - $conf['recent_days'] * 86400;
+            $out_lines = [];
+            $old_lines = [];
+            for ($i = 0; $i < count($lines); $i++) {
                 $log = parseChangelogLine($lines[$i]);
-                if ($log === false) continue;                      // discard junk
+                if ($log === false) {
+                    continue;
+                }                      // discard junk
                 if ($log['date'] < $trim_time) {
-                    $old_lines[$log['date'].".$i"] = $lines[$i];     // keep old lines for now (append .$i to prevent key collisions)
+                    $old_lines[$log['date'] . ".$i"] = $lines[$i];     // keep old lines for now (append .$i to prevent key collisions)
                 } else {
-                    $out_lines[$log['date'].".$i"] = $lines[$i];     // definitely keep these lines
+                    $out_lines[$log['date'] . ".$i"] = $lines[$i];     // definitely keep these lines
                 }
             }
 
-            if (count($lines)==count($out_lines)) {
+            if (count($lines) == count($out_lines)) {
                 // nothing to trim
-                @unlink($fn.'_tmp');
+                @unlink($fn . '_tmp');
                 io_unlock($fn);
-                echo "runTrimRecentChanges($media_changes): finished".NL;
+                echo "runTrimRecentChanges($media_changes): finished" . NL;
                 return false;
             }
 
@@ -84,26 +88,26 @@ class TaskRunner
             $extra = $conf['recent'] - count($out_lines);        // do we need extra lines do bring us up to minimum
             if ($extra > 0) {
                 ksort($old_lines);
-                $out_lines = array_merge(array_slice($old_lines,-$extra),$out_lines);
+                $out_lines = array_merge(array_slice($old_lines, -$extra), $out_lines);
             }
 
             // save trimmed changelog
-            io_saveFile($fn.'_tmp', implode('', $out_lines));
+            io_saveFile($fn . '_tmp', implode('', $out_lines));
             @unlink($fn);
-            if (!rename($fn.'_tmp', $fn)) {
+            if (!rename($fn . '_tmp', $fn)) {
                 // rename failed so try another way...
                 io_unlock($fn);
                 io_saveFile($fn, implode('', $out_lines));
-                @unlink($fn.'_tmp');
+                @unlink($fn . '_tmp');
             } else {
                 io_unlock($fn);
             }
-            echo "runTrimRecentChanges($media_changes): finished".NL;
+            echo "runTrimRecentChanges($media_changes): finished" . NL;
             return true;
         }
 
         // nothing done
-        echo "runTrimRecentChanges($media_changes): finished".NL;
+        echo "runTrimRecentChanges($media_changes): finished" . NL;
         return false;
     }
 
@@ -113,12 +117,15 @@ class TaskRunner
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    protected function runIndexer(){
+    protected function runIndexer()
+    {
         global $ID;
         global $conf;
-        print "runIndexer(): started".NL;
+        print 'runIndexer(): started' . NL;
 
-        if(!$ID) return false;
+        if (!$ID) {
+            return false;
+        }
 
         // do the work
         return idx_addPage($ID, true);
@@ -133,10 +140,11 @@ class TaskRunner
      * @author Andreas Gohr
      * @link   https://www.google.com/webmasters/sitemaps/docs/en/about.html
      */
-    protected function runSitemapper(){
-        print "runSitemapper(): started".NL;
+    protected function runSitemapper()
+    {
+        print 'runSitemapper(): started' . NL;
         $result = Sitemapper::generate() && Sitemapper::pingSearchEngines();
-        print 'runSitemapper(): finished'.NL;
+        print 'runSitemapper(): finished' . NL;
         return $result;
     }
 
@@ -146,20 +154,21 @@ class TaskRunner
      *
      * @author Adrian Lang <lang@cosmocode.de>
      */
-    protected function sendDigest() {
+    protected function sendDigest()
+    {
         global $conf;
         global $ID;
 
-        echo 'sendDigest(): started'.NL;
-        if(!actionOK('subscribe')) {
-            echo 'sendDigest(): disabled'.NL;
+        echo 'sendDigest(): started' . NL;
+        if (!actionOK('subscribe')) {
+            echo 'sendDigest(): disabled' . NL;
             return false;
         }
         $sub = new Subscription();
         $sent = $sub->send_bulk($ID);
 
-        echo "sendDigest(): sent $sent mails".NL;
-        echo 'sendDigest(): finished'.NL;
-        return (bool) $sent;
+        echo "sendDigest(): sent $sent mails" . NL;
+        echo 'sendDigest(): finished' . NL;
+        return (bool)$sent;
     }
 }
