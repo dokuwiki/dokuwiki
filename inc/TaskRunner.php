@@ -149,6 +149,7 @@ class TaskRunner
             }
 
             $eventData = [
+                'isMedia' => $media_changes,
                 'trimmedChangelogLines' => $out_lines,
                 'removedChangelogLines' => $extra > 0 ? array_slice($old_lines, 0, -$extra) : $old_lines,
             ];
