@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Stefano <stefano.stefano@gmail.com>
  * @author damiano <damiano@spagnuolo.eu>
  * @author Torpedo <dgtorpedo@gmail.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
@@ -152,6 +153,13 @@ $lang['xsendfile']             = 'Usare l\'header X-Sendfile per permettere al w
 $lang['renderer_xhtml']        = 'Renderer da usare per la visualizzazione del wiki (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_nslimit']        = 'Limita la ricerca agli attuali spazi dei nomi X. Quando una ricerca viene eseguita da una pagina all\'interno di uno spazio dei nomi più profondo, i primi spazi dei nomi X verranno aggiunti come filtro';
+$lang['search_fragment']       = '
+Specificare il comportamento di ricerca del frammento predefinito';
+$lang['search_fragment_o_exact'] = 'esatto';
+$lang['search_fragment_o_starts_with'] = 'inizia con';
+$lang['search_fragment_o_ends_with'] = 'finisce con';
+$lang['search_fragment_o_contains'] = 'contiene';
 $lang['dnslookups']            = 'Dokuwiki farà il lookup dei nomi host per ricavare l\'indirizzo IP remoto degli utenti che modificano le pagine. Se hai un DNS lento o non funzionante o se non vuoi questa funzione, disabilita l\'opzione';
 $lang['jquerycdn']             = 'Vuoi che gli script jQuery e jQuery UI siano caricati da una CDN? Questo richiederà richieste HTTP aggiuntive ma i file potrebbero caricarsi più velocemente e gli utenti potrebbero averli già in cache.';
 $lang['jquerycdn_o_0']         = 'Nessuna CDN, solo consegna locale';
