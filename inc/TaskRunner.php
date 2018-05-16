@@ -10,6 +10,27 @@ class TaskRunner
 {
     public function run()
     {
+        global $INPUT, $conf, $ID;
+
+        // keep running after browser closes connection
+        @ignore_user_abort(true);
+
+        // check if user abort worked, if yes send output early
+        $defer = !@ignore_user_abort() || $conf['broken_iua'];
+        $output = $INPUT->has('debug') && $conf['allowdebug'];
+        if(!$defer && !$output){
+            $this->sendGIF();
+        }
+
+        $ID = cleanID($INPUT->str('id'));
+
+        // Catch any possible output (e.g. errors)
+        if(!$output) {
+            ob_start();
+        } else {
+            header('Content-Type: text/plain');
+        }
+
         // run one of the jobs
         $tmp = []; // No event data
         $evt = new Doku_Event('INDEXER_TASKS_RUN', $tmp);
@@ -21,6 +42,30 @@ class TaskRunner
             $this->runTrimRecentChanges(true) or
             $evt->advise_after();
         }
+
+        if(!$output) {
+            ob_end_clean();
+            if($defer) {
+                $this->sendGIF();
+            }
+        }
+    }
+
+    /**
+     * Just send a 1x1 pixel blank gif to the browser
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @author Harry Fuecks <fuecks@gmail.com>
+     */
+    function sendGIF(){
+        $img = base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAIBTAA7');
+        header('Content-Type: image/gif');
+        header('Content-Length: '.strlen($img));
+        header('Connection: Close');
+        print $img;
+        tpl_flush();
+        // Browser should drop connection after this
+        // Thinks it's got the whole image
     }
 
     /**
