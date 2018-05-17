@@ -8,13 +8,13 @@ version: '{build}.{branch}'
 
 environment:
   matrix:
-    - PHP_VERSION: '7.2.5'
+    - PHP_VERSION: '7.2.4'
       VC: 'VC15'
       PHPUNIT: '7'
-    - PHP_VERSION: '7.0.30'
+    - PHP_VERSION: '7.0.29'
       VC: 'VC14'
       PHPUNIT: '6'
-    - PHP_VERSION: '5.6.36'
+    - PHP_VERSION: '5.6.35'
       VC: 'VC11'
       PHPUNIT: '5'
 
