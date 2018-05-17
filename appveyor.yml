@@ -8,12 +8,15 @@ version: '{build}.{branch}'
 
 environment:
   matrix:
-    - PHP_VERSION: '7.0.21'
+    - PHP_VERSION: '7.2.5'
+      VC: 'VC15'
+      PHPUNIT: '7'
+    - PHP_VERSION: '7.0.30'
       VC: 'VC14'
-      PHPUNIT: '6.3'
-    - PHP_VERSION: '5.6.30'
+      PHPUNIT: '6'
+    - PHP_VERSION: '5.6.36'
       VC: 'VC11'
-      PHPUNIT: '5.7'
+      PHPUNIT: '5'
 
 cache:
   - c:\php -> appveyor.yml
