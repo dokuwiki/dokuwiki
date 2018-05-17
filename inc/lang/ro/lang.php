@@ -3,13 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marian Banica <open@banica.eu.org>
  * @author Tiberiu Micu <tibimicu@gmx.net>
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
- * @author Emanuel-Emeric Andrași <em.andrasi@mandrivausers.ro>
  * @author Marius OLAR <olarmariusalex@gmail.com>
- * @author Marius Olar <olarmariusalex@yahoo.com>
- * @author Marian Banica <banica.marian@gmail.com>
  * @author Adrian Vesa <adrianvesa@dotwikis.com>
  * @author valentina_prof <sadoveanu.inform@gmail.com>
  */
@@ -72,43 +70,6 @@ $lang['badpassconfirm']        = 'Ne pare rau, parola este gresita';
 $lang['minoredit']             = 'Modificare minoră';
 $lang['draftdate']             = 'Schiță salvată automat la';
 $lang['nosecedit']             = 'Pagina s-a modificat între timp, secțiunea info a expirat, s-a încărcat pagina întreagă în loc.';
-$lang['regmissing']            = 'Ne pare rău, trebuie să completezi toate cîmpurile.';
-$lang['reguexists']            = 'Ne pare rău, un utilizator cu acest nume este deja autentificat.';
-$lang['regsuccess']            = 'Utilizatorul a fost creat. Parola a fost trimisă prin e-mail.';
-$lang['regsuccess2']           = 'Utilizatorul a fost creat.';
-$lang['regfail']               = 'Utilizatorul nu a putu fi creat.';
-$lang['regmailfail']           = 'Se pare că a fost o eroare la trimiterea parolei prin e-mail. Contactează administratorul!';
-$lang['regbadmail']            = 'Adresa de e-mail este nevalidă - dacă ești de părere că este o eroare contactează administratorul.';
-$lang['regbadpass']            = 'Cele două parole furnizate nu sunt identice; încearcă din nou.';
-$lang['regpwmail']             = 'Parola ta DokuWiki';
-$lang['reghere']               = 'Încă nu ai un cont? Creează unul!';
-$lang['profna']                = 'Acest wiki nu permite modificarea profilului';
-$lang['profnochange']          = 'Nici o modificare; nimic de făcut.';
-$lang['profnoempty']           = 'Nu sunt permise numele sau adresa de e-mail necompletate.';
-$lang['profchanged']           = 'Profilul de utilizator a fost actualizat cu succes.';
-$lang['profnodelete']          = 'Acest wiki nu accepta stergerea conturilor utilizatorilor';
-$lang['profdeleteuser']        = 'Sterge cont';
-$lang['profdeleted']           = 'Contul tau a fost sters de pe acest wiki';
-$lang['profconfdelete']        = 'As dori sa sterf contul meu de pe acest Wiki. <br/> Aceasta actiune nu poate fi anulata.';
-$lang['proffail']              = 'Profilul utilizatorului nu a fost actualizat.';
-$lang['pwdforget']             = 'Parolă uitată? Obține una nouă!';
-$lang['resendna']              = 'Acest wiki nu permite retrimiterea parolei.';
-$lang['resendpwd']             = 'Configurează o parolă nouă pentru';
-$lang['resendpwdmissing']      = 'Ne pare rău, trebuie completate toate câmpurile.';
-$lang['resendpwdnouser']       = 'Ne pare rău, acest utilizator nu poate fi găsit în baza de date.';
-$lang['resendpwdbadauth']      = 'Ne pare rău, acest cod de autorizare nu este corect. Verifică dacă ai folosit întreg link-ul de confirmare.';
-$lang['resendpwdconfirm']      = 'Un link de confirmare a fost trimis prin e-mail.';
-$lang['resendpwdsuccess']      = 'Noua parolă a fost trimisă prin e-mail.';
-$lang['license']               = 'Exceptând locurile unde este altfel specificat, conținutul acestui wiki este licențiat sub următoarea licență:';
-$lang['licenseok']             = 'Notă: Prin editarea acestei pagini ești de acord să publici conțintul sub următoarea licență:';
-$lang['searchmedia']           = 'Caută numele fișierului:';
-$lang['searchmedia_in']        = 'Caută în %s';
-$lang['txt_upload']            = 'Selectează fișierul de încărcat:';
-$lang['txt_filename']          = 'Încarcă fișierul ca (opțional):';
-$lang['txt_overwrt']           = 'Suprascrie fișierul existent';
-$lang['maxuploadsize']         = 'Incarcare maxima %s per fisier.';
-$lang['lockedby']              = 'Momentan blocat de:';
-$lang['lockexpire']            = 'Blocarea expiră la:';
 $lang['js']['willexpire']      = 'Blocarea pentru editarea paginii expiră intr-un minut.\nPentru a preveni conflictele folosește butonul de previzualizare pentru resetarea blocării.';
 $lang['js']['notsavedyet']     = 'Există modificări nesalvate care se vor pierde.
 Dorești să continui?';
@@ -152,6 +113,47 @@ $lang['js']['media_done_btn']  = 'Gata';
 $lang['js']['media_drop']      = 'Lasă fișierele aici pentru încărcarea lor';
 $lang['js']['media_cancel']    = 'Înlătură';
 $lang['js']['media_overwrt']   = 'Suprascrie fișierele deja existente';
+$lang['search_starts_with']    = 'Începe cu';
+$lang['search_ends_with']      = 'Termină cu';
+$lang['search_contains']       = 'Conţine';
+$lang['search_any_time']       = 'Oricând';
+$lang['regmissing']            = 'Ne pare rău, trebuie să completezi toate cîmpurile.';
+$lang['reguexists']            = 'Ne pare rău, un utilizator cu acest nume este deja autentificat.';
+$lang['regsuccess']            = 'Utilizatorul a fost creat. Parola a fost trimisă prin e-mail.';
+$lang['regsuccess2']           = 'Utilizatorul a fost creat.';
+$lang['regfail']               = 'Utilizatorul nu a putu fi creat.';
+$lang['regmailfail']           = 'Se pare că a fost o eroare la trimiterea parolei prin e-mail. Contactează administratorul!';
+$lang['regbadmail']            = 'Adresa de e-mail este nevalidă - dacă ești de părere că este o eroare contactează administratorul.';
+$lang['regbadpass']            = 'Cele două parole furnizate nu sunt identice; încearcă din nou.';
+$lang['regpwmail']             = 'Parola ta DokuWiki';
+$lang['reghere']               = 'Încă nu ai un cont? Creează unul!';
+$lang['profna']                = 'Acest wiki nu permite modificarea profilului';
+$lang['profnochange']          = 'Nici o modificare; nimic de făcut.';
+$lang['profnoempty']           = 'Nu sunt permise numele sau adresa de e-mail necompletate.';
+$lang['profchanged']           = 'Profilul de utilizator a fost actualizat cu succes.';
+$lang['profnodelete']          = 'Acest wiki nu accepta stergerea conturilor utilizatorilor';
+$lang['profdeleteuser']        = 'Sterge cont';
+$lang['profdeleted']           = 'Contul tau a fost sters de pe acest wiki';
+$lang['profconfdelete']        = 'As dori sa sterf contul meu de pe acest Wiki. <br/> Aceasta actiune nu poate fi anulata.';
+$lang['proffail']              = 'Profilul utilizatorului nu a fost actualizat.';
+$lang['pwdforget']             = 'Parolă uitată? Obține una nouă!';
+$lang['resendna']              = 'Acest wiki nu permite retrimiterea parolei.';
+$lang['resendpwd']             = 'Configurează o parolă nouă pentru';
+$lang['resendpwdmissing']      = 'Ne pare rău, trebuie completate toate câmpurile.';
+$lang['resendpwdnouser']       = 'Ne pare rău, acest utilizator nu poate fi găsit în baza de date.';
+$lang['resendpwdbadauth']      = 'Ne pare rău, acest cod de autorizare nu este corect. Verifică dacă ai folosit întreg link-ul de confirmare.';
+$lang['resendpwdconfirm']      = 'Un link de confirmare a fost trimis prin e-mail.';
+$lang['resendpwdsuccess']      = 'Noua parolă a fost trimisă prin e-mail.';
+$lang['license']               = 'Exceptând locurile unde este altfel specificat, conținutul acestui wiki este licențiat sub următoarea licență:';
+$lang['licenseok']             = 'Notă: Prin editarea acestei pagini ești de acord să publici conțintul sub următoarea licență:';
+$lang['searchmedia']           = 'Caută numele fișierului:';
+$lang['searchmedia_in']        = 'Caută în %s';
+$lang['txt_upload']            = 'Selectează fișierul de încărcat:';
+$lang['txt_filename']          = 'Încarcă fișierul ca (opțional):';
+$lang['txt_overwrt']           = 'Suprascrie fișierul existent';
+$lang['maxuploadsize']         = 'Incarcare maxima %s per fisier.';
+$lang['lockedby']              = 'Momentan blocat de:';
+$lang['lockexpire']            = 'Blocarea expiră la:';
 $lang['rssfailed']             = 'A apărut o eroare in timpul descărcării acestui câmp: ';
 $lang['nothingfound']          = 'Nu am găsit nimic.';
 $lang['mediaselect']           = 'Fișiere media';

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Martin Hořínek <hev@hev.cz>
  * @author Jonáš Dyba <jonas.dyba@gmail.com>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
