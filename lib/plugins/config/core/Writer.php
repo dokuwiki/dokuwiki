@@ -50,7 +50,7 @@ class Writer {
         fwrite($fh, $out);
         fclose($fh);
         if($conf['fperm']) chmod($this->savefile, $conf['fperm']);
-        @opcache_invalidate($this->savefile);
+        $this->opcacheUpdate($this->savefile);
     }
 
     /**
@@ -63,7 +63,18 @@ class Writer {
     public function touch() {
         if($this->isLocked()) throw new \Exception('no save');
         @touch($this->savefile);
-        @opcache_invalidate($this->savefile);
+        $this->opcacheUpdate($this->savefile);
+    }
+
+    /**
+     * Invalidate the opcache of the given file
+     *
+     * @todo this should probably be moved to core
+     * @param string $file
+     */
+    protected function opcacheUpdate($file) {
+        if(!function_exists('opcache_invalidate')) return;
+        opcache_invalidate($file);
     }
 
     /**
