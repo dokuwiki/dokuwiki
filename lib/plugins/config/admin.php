@@ -58,7 +58,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 } else {
                     $this->configuration->touch();
                 }
-                msg($this->getLang('updated'), -1);
+                msg($this->getLang('updated'), 1);
             } catch(Exception $e) {
                 msg($this->getLang('error'), -1);
             }
