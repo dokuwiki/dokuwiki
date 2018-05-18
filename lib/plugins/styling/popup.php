@@ -1,6 +1,5 @@
 <?php
-// FIXME the following skip rule seems not to work - https://github.com/squizlabs/PHP_CodeSniffer/issues/2015
-// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
+// phpcs:disable PSR1.Files.SideEffects
 if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/../../../');
 require_once(DOKU_INC . 'inc/init.php');
 //close session
