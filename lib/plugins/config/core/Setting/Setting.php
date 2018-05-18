@@ -1,9 +1,11 @@
 <?php
 
-namespace dokuwiki\plugin\config\core;
+
+namespace dokuwiki\plugin\config\core\Setting;
+use dokuwiki\plugin\config\core\Configuration;
 
 /**
- * Class setting
+ * Class Setting
  */
 class Setting {
     /** @var string unique identifier of this setting */

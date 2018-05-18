@@ -1,6 +1,7 @@
 <?php
 
 namespace dokuwiki\plugin\config\core;
+use dokuwiki\plugin\config\core\Setting\Setting;
 
 /**
  * Writes the settings to the correct local file

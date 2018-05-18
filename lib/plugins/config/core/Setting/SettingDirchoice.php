@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\plugin\config\core;
+namespace dokuwiki\plugin\config\core\Setting;
 
 /**
  * Class setting_dirchoice

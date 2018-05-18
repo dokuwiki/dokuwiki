@@ -5,7 +5,7 @@
  * @author    Chris Smith <chris@jalakai.co.uk>
  */
 
-namespace dokuwiki\plugin\config\core;
+namespace dokuwiki\plugin\config\core\Setting;
 
 /**
  * Class setting_renderer

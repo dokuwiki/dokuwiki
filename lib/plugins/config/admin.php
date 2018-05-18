@@ -8,9 +8,9 @@
  */
 
 use dokuwiki\plugin\config\core\Configuration;
-use dokuwiki\plugin\config\core\Setting;
-use dokuwiki\plugin\config\core\SettingFieldset;
-use dokuwiki\plugin\config\core\SettingHidden;
+use dokuwiki\plugin\config\core\Setting\Setting;
+use dokuwiki\plugin\config\core\Setting\SettingFieldset;
+use dokuwiki\plugin\config\core\Setting\SettingHidden;
 
 /**
  * All DokuWiki plugins to extend the admin function
@@ -251,7 +251,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         $title = $this->getLang('_configuration_manager');
         $t[] = html_mktocitem(sectionID($title, $check), $title, 1);
         $t[] = html_mktocitem('dokuwiki_settings', $this->getLang('_header_dokuwiki'), 1);
-        /** @var setting $setting */
+        /** @var Setting $setting */
         foreach($toc['conf'] as $setting) {
             $name = $setting->prompt($this);
             $t[] = html_mktocitem($setting->getKey(), $name, 2);

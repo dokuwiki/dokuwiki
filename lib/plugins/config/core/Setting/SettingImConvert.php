@@ -1,20 +1,22 @@
 <?php
 
-namespace dokuwiki\plugin\config\core;
+namespace dokuwiki\plugin\config\core\Setting;
 
 /**
- * Class setting_savedir
+ * Class setting_im_convert
  */
-class SettingSavedir extends SettingString {
+class SettingImConvert extends SettingString {
 
     /** @inheritdoc */
     public function update($input) {
         if($this->isProtected()) return false;
 
+        $input = trim($input);
+
         $value = is_null($this->local) ? $this->default : $this->local;
         if($value == $input) return false;
 
-        if(!init_path($input)) {
+        if($input && !file_exists($input)) {
             $this->error = true;
             $this->input = $input;
             return false;

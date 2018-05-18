@@ -1,6 +1,8 @@
 <?php
 
 namespace dokuwiki\plugin\config\core;
+use dokuwiki\plugin\config\core\Setting\Setting;
+use dokuwiki\plugin\config\core\Setting\SettingUndefined;
 
 /**
  * Holds all the current settings and proxies the Loader and Writer
@@ -203,15 +205,17 @@ class Configuration {
         // try namespaced class first
         if($class) {
             $modern = str_replace('_', '', ucwords($class, '_'));
-            $modern = '\\dokuwiki\\plugin\\config\\core\\' . $modern;
+            $modern = '\\dokuwiki\\plugin\\config\\core\\Setting\\Setting' . $modern;
             if($modern && class_exists($modern)) return $modern;
+            // try class as given
+            if(class_exists($class)) return $class;
             // class wasn't found add to errors
             $this->errors[$key] = 'unknown class';
         } else {
             // no class given, add to errors
             $this->errors[$key] = 'no class';
         }
-        return '\\dokuwiki\\plugin\\config\\core\\Setting';
+        return '\\dokuwiki\\plugin\\config\\core\\Setting\\Setting';
     }
 
 }

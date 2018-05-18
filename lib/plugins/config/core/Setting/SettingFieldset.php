@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\plugin\config\core;
+namespace dokuwiki\plugin\config\core\Setting;
 
 /**
  * A do-nothing class used to detect the 'fieldset' type.
