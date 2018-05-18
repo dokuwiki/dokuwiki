@@ -78,19 +78,19 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
         $this->setupLocale(true);
 
-        print $this->locale_xhtml('intro');
+        echo $this->locale_xhtml('intro');
 
-        ptln('<div id="config__manager">');
+        echo '<div id="config__manager">';
 
         if($this->configuration->isLocked()) {
-            ptln('<div class="info">' . $this->getLang('locked') . '</div>');
+            echo '<div class="info">' . $this->getLang('locked') . '</div>';
         }
 
         // POST to script() instead of wl($ID) so config manager still works if
         // rewrite config is broken. Add $ID as hidden field to remember
         // current ID in most cases.
-        ptln('<form action="' . script() . '" method="post">');
-        ptln('<div class="no"><input type="hidden" name="id" value="' . $ID . '" /></div>');
+        echo '<form action="' . script() . '" method="post">';
+        echo '<div class="no"><input type="hidden" name="id" value="' . $ID . '" /></div>';
         formSecurityToken();
         $this->printH1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));
 
@@ -103,9 +103,9 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             } else if(is_a($setting, settingFieldset::class)) {
                 // config setting group
                 if($in_fieldset) {
-                    ptln('  </table>');
-                    ptln('  </div>');
-                    ptln('  </fieldset>');
+                    echo '</table>';
+                    echo '</div>';
+                    echo '</fieldset>';
                 } else {
                     $in_fieldset = true;
                 }
@@ -117,10 +117,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                     $this->printH1('template_settings', $this->getLang('_header_template'));
                     $first_template_fieldset = false;
                 }
-                ptln('  <fieldset id="' . $setting->getKey() . '">');
-                ptln('  <legend>' . $setting->prompt($this) . '</legend>');
-                ptln('  <div class="table">');
-                ptln('  <table class="inline">');
+                echo '<fieldset id="' . $setting->getKey() . '">';
+                echo '<legend>' . $setting->prompt($this) . '</legend>';
+                echo '<div class="table">';
+                echo '<table class="inline">';
             } else {
                 // config settings
                 list($label, $input) = $setting->html($this, $this->hasErrors);
@@ -136,20 +136,20 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                     'alt="' . $setting->caution() . '" title="' . $this->getLang($setting->caution()) . '" />'
                     : '';
 
-                ptln('    <tr' . $class . '>');
-                ptln('      <td class="label">');
-                ptln('        <span class="outkey">' . $setting->getPrettyKey() . '</span>');
-                ptln('        ' . $icon . $label);
-                ptln('      </td>');
-                ptln('      <td' . $error . '>' . $input . '</td>');
-                ptln('    </tr>');
+                echo '<tr' . $class . '>';
+                echo '<td class="label">';
+                echo '<span class="outkey">' . $setting->getPrettyKey() . '</span>';
+                echo $icon . $label;
+                echo '</td>';
+                echo '<td' . $error . '>' . $input . '</td>';
+                echo '</tr>';
             }
         }
 
-        ptln('  </table>');
-        ptln('  </div>');
+        echo '</table>';
+        echo '</div>';
         if($in_fieldset) {
-            ptln('  </fieldset>');
+            echo '</fieldset>';
         }
 
         // show undefined settings list
@@ -168,9 +168,9 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
             usort($undefined_settings, 'settingNaturalComparison');
             $this->printH1('undefined_settings', $this->getLang('_header_undefined'));
-            ptln('<fieldset>');
-            ptln('<div class="table">');
-            ptln('<table class="inline">');
+            echo '<fieldset>';
+            echo '<div class="table">';
+            echo '<table class="inline">';
             $undefined_setting_match = array();
             foreach($undefined_settings as $setting) {
                 if(
@@ -184,34 +184,34 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 } else {
                     $undefined_setting_key = $setting->getKey();
                 }
-                ptln('  <tr>');
-                ptln(
-                    '    <td class="label"><span title="$meta[\'' . $undefined_setting_key . '\']">$' .
+                echo '<tr>';
+                echo
+                    '<td class="label"><span title="$meta[\'' . $undefined_setting_key . '\']">$' .
                     'conf' . '[\'' . $setting->getArrayKey() . '\']</span></td>'
-                );
-                ptln('    <td>' . $this->getLang('_msg_' . get_class($setting)) . '</td>');
-                ptln('  </tr>');
+                ;
+                echo '<td>' . $this->getLang('_msg_' . get_class($setting)) . '</td>';
+                echo '</tr>';
             }
-            ptln('</table>');
-            ptln('</div>');
-            ptln('</fieldset>');
+            echo '</table>';
+            echo '</div>';
+            echo '</fieldset>';
         }
 
         // finish up form
-        ptln('<p>');
-        ptln('  <input type="hidden" name="do"     value="admin" />');
-        ptln('  <input type="hidden" name="page"   value="config" />');
+        echo '<p>';
+        echo '<input type="hidden" name="do"     value="admin" />';
+        echo '<input type="hidden" name="page"   value="config" />';
 
         if(!$this->configuration->isLocked()) {
-            ptln('  <input type="hidden" name="save"   value="1" />');
-            ptln('  <button type="submit" name="submit" accesskey="s">' . $lang['btn_save'] . '</button>');
-            ptln('  <button type="reset">' . $lang['btn_reset'] . '</button>');
+            echo '<input type="hidden" name="save"   value="1" />';
+            echo '<button type="submit" name="submit" accesskey="s">' . $lang['btn_save'] . '</button>';
+            echo '<button type="reset">' . $lang['btn_reset'] . '</button>';
         }
 
-        ptln('</p>');
+        echo '</p>';
 
-        ptln('</form>');
-        ptln('</div>');
+        echo '</form>';
+        echo '</div>';
     }
 
     /**
@@ -281,7 +281,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      * @param string $text
      */
     protected function printH1($id, $text) {
-        ptln('<h1 id="' . $id . '">' . $text . '</h1>');
+        echo '<h1 id="' . $id . '">' . $text . '</h1>';
     }
 
     /**
