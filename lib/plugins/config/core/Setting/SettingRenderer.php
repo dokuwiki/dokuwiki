@@ -15,7 +15,7 @@ class SettingRenderer extends SettingMultichoice {
     protected $format = null;
 
     /** @inheritdoc */
-    public function initialize($default, $local, $protected) {
+    public function initialize($default = null, $local = null, $protected = null) {
         $format = $this->format;
 
         foreach(plugin_list('renderer') as $plugin) {

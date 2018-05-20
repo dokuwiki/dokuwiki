@@ -8,7 +8,7 @@ namespace dokuwiki\plugin\config\core\Setting;
 class SettingAuthtype extends SettingMultichoice {
 
     /** @inheritdoc */
-    public function initialize($default, $local, $protected) {
+    public function initialize($default = null, $local = null, $protected = null) {
         /** @var $plugin_controller \Doku_Plugin_Controller */
         global $plugin_controller;
 

@@ -31,6 +31,8 @@ class Setting {
      *
      * The given parameters will be set up as class properties
      *
+     * @see initialize() to set the actual value of the setting
+     *
      * @param string $key
      * @param array|null $params array with metadata of setting
      */
@@ -46,16 +48,44 @@ class Setting {
     }
 
     /**
-     * Receives current values for the setting $key
+     * Set the current values for the setting $key
      *
+     * This is used to initialize the setting with the data read form the config files.
+     *
+     * @see update() to set a new value
      * @param mixed $default default setting value
      * @param mixed $local local setting value
      * @param mixed $protected protected setting value
      */
-    public function initialize($default, $local, $protected) {
-        if(isset($default)) $this->default = $default;
-        if(isset($local)) $this->local = $local;
-        if(isset($protected)) $this->protected = $protected;
+    public function initialize($default = null, $local = null, $protected = null) {
+        $this->default = $default;
+        $this->local = $local;
+        $this->protected = $protected;
+    }
+
+    /**
+     * update changed setting with user provided value $input
+     * - if changed value fails error check, save it to $this->_input (to allow echoing later)
+     * - if changed value passes error check, set $this->_local to the new value
+     *
+     * @param  mixed $input the new value
+     * @return boolean          true if changed, false otherwise (also on error)
+     */
+    public function update($input) {
+        if(is_null($input)) return false;
+        if($this->isProtected()) return false;
+
+        $value = is_null($this->local) ? $this->default : $this->local;
+        if($value == $input) return false;
+
+        if($this->pattern && !preg_match($this->pattern, $input)) {
+            $this->error = true;
+            $this->input = $input;
+            return false;
+        }
+
+        $this->local = $input;
+        return true;
     }
 
     /**
@@ -125,31 +155,6 @@ class Setting {
         } else {
             return 'conf';
         }
-    }
-
-    /**
-     * update changed setting with user provided value $input
-     * - if changed value fails error check, save it to $this->_input (to allow echoing later)
-     * - if changed value passes error check, set $this->_local to the new value
-     *
-     * @param  mixed $input the new value
-     * @return boolean          true if changed, false otherwise (also on error)
-     */
-    public function update($input) {
-        if(is_null($input)) return false;
-        if($this->isProtected()) return false;
-
-        $value = is_null($this->local) ? $this->default : $this->local;
-        if($value == $input) return false;
-
-        if($this->pattern && !preg_match($this->pattern, $input)) {
-            $this->error = true;
-            $this->input = $input;
-            return false;
-        }
-
-        $this->local = $input;
-        return true;
     }
 
     /**

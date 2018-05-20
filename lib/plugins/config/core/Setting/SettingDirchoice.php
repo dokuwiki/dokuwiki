@@ -10,7 +10,7 @@ class SettingDirchoice extends SettingMultichoice {
     protected $dir = '';
 
     /** @inheritdoc */
-    public function initialize($default, $local, $protected) {
+    public function initialize($default = null, $local = null, $protected = null) {
 
         // populate $this->_choices with a list of directories
         $list = array();

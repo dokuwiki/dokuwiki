@@ -10,7 +10,7 @@ class SettingLicense extends SettingMultichoice {
     protected $choices = array('');      // none choosen
 
     /** @inheritdoc */
-    public function initialize($default, $local, $protected) {
+    public function initialize($default = null, $local = null, $protected = null) {
         global $license;
 
         foreach($license as $key => $data) {
