@@ -72,17 +72,10 @@ class SettingArray extends Setting {
 
     /** @inheritdoc */
     public function out($var, $fmt = 'php') {
+        if($fmt != 'php') return '';
 
-        if($this->isProtected()) return '';
-        if(is_null($this->local) || ($this->default == $this->local)) return '';
-
-        $out = '';
-
-        if($fmt == 'php') {
-            $vals = array_map(array($this, 'escape'), $this->local);
-            $out = '$' . $var . "['" . $this->getArrayKey() . "'] = array(" . join(', ', $vals) . ");\n";
-        }
-
+        $vals = array_map(array($this, 'escape'), $this->local);
+        $out = '$' . $var . "['" . $this->getArrayKey() . "'] = array(" . join(', ', $vals) . ");\n";
         return $out;
     }
 

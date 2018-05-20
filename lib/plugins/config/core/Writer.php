@@ -44,7 +44,9 @@ class Writer {
 
         $out = $this->getHeader();
         foreach($settings as $setting) {
-            $out .= $setting->out('conf', 'php');
+            if($setting->shouldBeSaved()) {
+                $out .= $setting->out('conf', 'php');
+            }
         }
 
         fwrite($fh, $out);

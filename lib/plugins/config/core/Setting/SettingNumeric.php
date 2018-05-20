@@ -32,16 +32,10 @@ class SettingNumeric extends SettingString {
 
     /** @inheritdoc */
     public function out($var, $fmt = 'php') {
+        if($fmt != 'php') return '';
 
-        if($this->isProtected()) return '';
-        if(is_null($this->local) || ($this->default == $this->local)) return '';
-
-        $out = '';
-
-        if($fmt == 'php') {
-            $local = $this->local === '' ? "''" : $this->local;
-            $out .= '$' . $var . "['" . $this->getArrayKey() . "'] = " . $local . ";\n";
-        }
+        $local = $this->local === '' ? "''" : $this->local;
+        $out = '$' . $var . "['" . $this->getArrayKey() . "'] = " . $local . ";\n";
 
         return $out;
     }

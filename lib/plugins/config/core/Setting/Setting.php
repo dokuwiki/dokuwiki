@@ -183,24 +183,31 @@ class Setting {
     }
 
     /**
-     * Generate string to save setting value to file according to $fmt
+     * Should the current local value be saved?
      *
+     * @see out() to run when this returns true
+     * @return bool
+     */
+    public function shouldBeSaved() {
+        if($this->isProtected()) return false;
+        if($this->local === null) return false;
+        if($this->default == $this->local) return false;
+        return true;
+    }
+
+    /**
+     * Generate string to save local setting value to file according to $fmt
+     *
+     * @see shouldBeSaved() to check if this should be called
      * @param string $var name of variable
      * @param string $fmt save format
      * @return string
      */
     public function out($var, $fmt = 'php') {
+        if($fmt != 'php') return '';
 
-        if($this->isProtected()) return '';
-        if(is_null($this->local) || ($this->default == $this->local)) return '';
-
-        $out = '';
-
-        if($fmt == 'php') {
-            $tr = array("\\" => '\\\\', "'" => '\\\'');
-
-            $out = '$' . $var . "['" . $this->getArrayKey() . "'] = '" . strtr(cleanText($this->local), $tr) . "';\n";
-        }
+        $tr = array("\\" => '\\\\', "'" => '\\\''); // escape the value
+        $out = '$' . $var . "['" . $this->getArrayKey() . "'] = '" . strtr(cleanText($this->local), $tr) . "';\n";
 
         return $out;
     }
