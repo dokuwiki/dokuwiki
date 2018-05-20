@@ -33,8 +33,7 @@ class SettingTest extends AbstractSettingTest {
      */
     public function testOut($in, $out) {
         /** @var Setting $setting */
-        #$setting = new $this->class('test');
-        $setting = new Setting('test');
+        $setting = new $this->class('test');
         $setting->initialize('ignore', $in);
 
         $this->assertEquals($out, $setting->out('conf'));
