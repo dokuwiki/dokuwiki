@@ -1,7 +1,7 @@
 <?php
 
-
 namespace dokuwiki\plugin\config\core\Setting;
+
 use dokuwiki\plugin\config\core\Configuration;
 
 /**
@@ -264,11 +264,9 @@ class Setting {
     public function caution() {
         if(!empty($this->caution)) {
             if(!in_array($this->caution, Setting::$validCautions)) {
-                trigger_error(
-                    'Invalid caution string (' . $this->caution . ') in metadata for setting "' . $this->key . '"',
-                    E_USER_WARNING
+                throw new \RuntimeException(
+                    'Invalid caution string (' . $this->caution . ') in metadata for setting "' . $this->key . '"'
                 );
-                return false;
             }
             return $this->caution;
         }
