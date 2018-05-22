@@ -104,6 +104,27 @@ class helper_plugin_struct extends DokuWiki_Plugin {
     }
 
     /**
+     * Save data row for a lookup schema
+     *
+     * @param string $tablename the name of the lookup schema into which to save the data
+     * @param array  $data data to be saved in the form of [columnName => 'data']
+     */
+    public function saveLookupData($tablename, $data)
+    {
+        $access = AccessTable::byTableName($tablename, 0, 0);
+        if(!$access->getSchema()->isEditable()) {
+            throw new StructException('lookup save error: no permission for schema');
+        }
+        $validator = $access->getValidator($data);
+        if(!$validator->validate()) {
+            throw new StructException("Validation failed:\n%s", implode("\n", $validator->getErrors()));
+        }
+        if(!$validator->saveData()) {
+            throw new StructException('No data saved');
+        }
+    }
+
+    /**
      * Creates a new page revision with the same page content as before
      *
      * @param string $page
