@@ -104,7 +104,7 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
     if (!$wasRemoved) {
         $oldmeta = p_read_metadata($id);
         $meta    = array();
-        if ($wasCreated && empty($oldmeta['persistent']['date']['created'])){ // newly created
+        if ($wasCreated && (empty($oldmeta['persistent']['date']['created']) || $oldmeta['persistent']['date']['created'] === $created)){ // newly created
             $meta['date']['created'] = $created;
             if ($user){
                 $meta['creator'] = $INFO['userinfo']['name'];
