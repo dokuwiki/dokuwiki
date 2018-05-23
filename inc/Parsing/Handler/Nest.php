@@ -20,7 +20,7 @@ class Nest implements ReWriterInterface
     /**
      * @inheritdoc
      *
-     * @param  CallWriterInterface $CallWriter     the renderers current call writer
+     * @param  CallWriterInterface $CallWriter     the parser's current call writer, i.e. the one above us in the chain
      * @param  string     $close          closing instruction name, this is required to properly terminate the
      *                                    syntax mode if the document ends without a closing pattern
      */
