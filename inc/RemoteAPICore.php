@@ -66,6 +66,10 @@ class RemoteAPICore {
                 'args' => array('string', 'string', 'array'),
                 'return' => 'bool',
                 'doc' => 'Append text to a wiki page.'
+            ), 'dokuwiki.deleteUsers' => array(
+                'args' => array('array'),
+                'return' => 'bool',
+                'doc' => 'Remove one or more users from the list of registered users.'
             ),  'wiki.getPage' => array(
                 'args' => array('string'),
                 'return' => 'string',
@@ -547,6 +551,23 @@ class RemoteAPICore {
             return $currentpage;
         }
         return $this->putPage($id, $currentpage.$text, $params);
+    }
+
+    /**
+     * Remove one or more users from the list of registered users
+     *
+     * @param string[] $usernames List of usernames to remove
+     *
+     * @return bool
+     */
+    public function deleteUsers($usernames)
+    {
+        if (!auth_isadmin()) {
+            return false;
+        }
+        /** @var DokuWiki_Auth_Plugin $auth */
+        global $auth;
+        return (bool)$auth->triggerUserMod('deleteUsers', $usernames);
     }
 
     /**
