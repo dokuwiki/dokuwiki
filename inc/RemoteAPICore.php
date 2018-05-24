@@ -559,11 +559,13 @@ class RemoteAPICore {
      * @param string[] $usernames List of usernames to remove
      *
      * @return bool
+     *
+     * @throws RemoteAccessDeniedException
      */
     public function deleteUsers($usernames)
     {
         if (!auth_isadmin()) {
-            return false;
+            throw new RemoteAccessDeniedException('Only admins are allowed to delete users', 114);
         }
         /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
