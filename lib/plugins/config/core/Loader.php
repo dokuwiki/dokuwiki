@@ -20,12 +20,15 @@ class Loader {
     /**
      * Loader constructor.
      * @param ConfigParser $parser
+     * @triggers PLUGIN_CONFIG_PLUGINLIST
      */
     public function __construct(ConfigParser $parser) {
         global $conf;
         $this->parser = $parser;
         $this->plugins = plugin_list();
         $this->template = $conf['template'];
+        // allow plugins to remove configurable plugins
+        trigger_event('PLUGIN_CONFIG_PLUGINLIST', $list);
     }
 
     /**
