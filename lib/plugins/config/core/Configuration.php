@@ -186,10 +186,10 @@ class Configuration {
             $param = $this->metadata[$key];
             $class = $this->determineClassName(array_shift($param), $key); // first param is class
             $obj = new $class($key, $param);
-            $this->settings[] = $obj;
+            $this->settings[$key] = $obj;
         } else {
             $obj = new SettingUndefined($key);
-            $this->undefined[] = $obj;
+            $this->undefined[$key] = $obj;
         }
         return $obj;
     }
