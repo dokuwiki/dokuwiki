@@ -257,7 +257,7 @@ class Loader {
         }
 
         // add fieldset key
-        $strings[$prefix . $type . '_settings_name'] = ucwords(str_replace('_', ' ', $type));
+        $strings[$prefix . $type . '_settings_name'] = ucwords(str_replace('_', ' ', $extname));
 
         return $strings;
     }

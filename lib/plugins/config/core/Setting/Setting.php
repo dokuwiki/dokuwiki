@@ -143,7 +143,7 @@ class Setting {
      *
      * 'plugin' for plugin configuration
      * 'template' for template configuration
-     * 'conf' for core configuration
+     * 'dokuwiki' for core configuration
      *
      * @return string
      */
@@ -153,7 +153,7 @@ class Setting {
         } else if(substr($this->getKey(), 0, 7) == 'tpl' . Configuration::KEYMARKER) {
             return 'template';
         } else {
-            return 'conf';
+            return 'dokuwiki';
         }
     }
 

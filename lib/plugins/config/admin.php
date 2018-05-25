@@ -187,8 +187,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 echo '<tr>';
                 echo
                     '<td class="label"><span title="$meta[\'' . $undefined_setting_key . '\']">$' .
-                    'conf' . '[\'' . $setting->getArrayKey() . '\']</span></td>'
-                ;
+                    'conf' . '[\'' . $setting->getArrayKey() . '\']</span></td>';
                 echo '<td>' . $this->getLang('_msg_' . get_class($setting)) . '</td>';
                 echo '</tr>';
             }
@@ -220,7 +219,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
     public function setupLocale($prompts = false) {
         parent::setupLocale();
         if(!$prompts || $this->promptsLocalized) return;
-        $this->configuration->getLangs();
+        $this->lang = array_merge($this->lang, $this->configuration->getLangs());
         $this->promptsLocalized = true;
     }
 
@@ -235,45 +234,46 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         $this->setupLocale(true);
 
         $allow_debug = $GLOBALS['conf']['allowdebug']; // avoid global $conf; here.
+        $toc = array();
+        $check = false;
 
         // gather settings data into three sub arrays
-        $toc = array('conf' => array(), 'plugin' => array(), 'template' => null);
+        $labels = ['dokuwiki' => [], 'plugin' => [], 'template' => []];
         foreach($this->configuration->getSettings() as $setting) {
-            if(is_a($setting, 'setting_fieldset')) {
-                $toc[$setting->getType()][] = $setting;
+            if(is_a($setting, SettingFieldset::class)) {
+                $labels[$setting->getType()][] = $setting;
             }
         }
 
-        // build toc
-        $t = array();
-
-        $check = false;
+        // top header
         $title = $this->getLang('_configuration_manager');
-        $t[] = html_mktocitem(sectionID($title, $check), $title, 1);
-        $t[] = html_mktocitem('dokuwiki_settings', $this->getLang('_header_dokuwiki'), 1);
-        /** @var Setting $setting */
-        foreach($toc['conf'] as $setting) {
-            $name = $setting->prompt($this);
-            $t[] = html_mktocitem($setting->getKey(), $name, 2);
-        }
-        if(!empty($toc['plugin'])) {
-            $t[] = html_mktocitem('plugin_settings', $this->getLang('_header_plugin'), 1);
-        }
-        foreach($toc['plugin'] as $setting) {
-            $name = $setting->prompt($this);
-            $t[] = html_mktocitem($setting->getKey(), $name, 2);
-        }
-        if(isset($toc['template'])) {
-            $t[] = html_mktocitem('template_settings', $this->getLang('_header_template'), 1);
-            $setting = $toc['template'];
-            $name = $setting->prompt($this);
-            $t[] = html_mktocitem($setting->getKey(), $name, 2);
-        }
-        if(count($this->configuration->getUndefined()) && $allow_debug) {
-            $t[] = html_mktocitem('undefined_settings', $this->getLang('_header_undefined'), 1);
+        $toc[] = html_mktocitem(sectionID($title, $check), $title, 1);
+
+        // main entries
+        foreach(['dokuwiki', 'plugin', 'template'] as $section) {
+            if(empty($labels[$section])) continue; // no entries, skip
+
+            // create main header
+            $toc[] = html_mktocitem(
+                $section . '_settings',
+                $this->getLang('_header_'.$section),
+                1
+            );
+
+            // create sub headers
+            foreach($labels[$section] as $setting) {
+                /** @var SettingFieldset $setting */
+                $name = $setting->prompt($this);
+                $toc[] = html_mktocitem($setting->getKey(), $name, 2);
+            }
         }
 
-        return $t;
+        // undefined settings if allowed
+        if(count($this->configuration->getUndefined()) && $allow_debug) {
+            $toc[] = html_mktocitem('undefined_settings', $this->getLang('_header_undefined'), 1);
+        }
+
+        return $toc;
     }
 
     /**

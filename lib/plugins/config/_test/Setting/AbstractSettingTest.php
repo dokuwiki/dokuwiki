@@ -64,10 +64,10 @@ class AbstractSettingTest extends \DokuWikiTest {
     public function testType() {
         /** @var Setting $setting */
         $setting = new $this->class('test');
-        $this->assertEquals('conf', $setting->getType());
+        $this->assertEquals('dokuwiki', $setting->getType());
 
         $setting = new $this->class('test_foo');
-        $this->assertEquals('conf', $setting->getType());
+        $this->assertEquals('dokuwiki', $setting->getType());
 
         $setting = new $this->class('plugin____test');
         $this->assertEquals('plugin', $setting->getType());

@@ -68,6 +68,8 @@ class LoaderTest extends \DokuWikiTest {
         $this->assertArrayNotHasKey('title', $lang);
 
         // plugin strings
+        $this->assertArrayHasKey('plugin____testing____plugin_settings_name', $lang);
+        $this->assertEquals('Testing', $lang['plugin____testing____plugin_settings_name']);
         $this->assertArrayHasKey('plugin____testing____schnibble', $lang);
         $this->assertEquals(
             'Turns on the schnibble before the frobble is used',
