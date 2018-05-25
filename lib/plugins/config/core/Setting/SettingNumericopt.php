@@ -15,6 +15,8 @@ class SettingNumericopt extends SettingNumeric {
      */
     public function update($input) {
         if($input === '') {
+            if($input == $this->local) return false;
+            $this->local = $input;
             return true;
         }
 
