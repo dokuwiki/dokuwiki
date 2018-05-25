@@ -42,10 +42,10 @@ class Loader {
 
         // plugins
         foreach($this->plugins as $plugin) {
-            array_merge(
+            $meta = array_merge(
                 $meta,
                 $this->loadExtensionMeta(
-                    DOKU_PLUGIN . $plugin . '/conf/settings.php',
+                    DOKU_PLUGIN . $plugin . '/conf/metadata.php',
                     'plugin',
                     $plugin
                 )
@@ -53,10 +53,10 @@ class Loader {
         }
 
         // current template
-        array_merge(
+        $meta = array_merge(
             $meta,
             $this->loadExtensionMeta(
-                tpl_incdir() . '/conf/settings.php',
+                tpl_incdir() . '/conf/metadata.php',
                 'tpl',
                 $this->template
             )
@@ -79,7 +79,7 @@ class Loader {
 
         // plugins
         foreach($this->plugins as $plugin) {
-            array_merge(
+            $conf = array_merge(
                 $conf,
                 $this->loadExtensionConf(
                     DOKU_PLUGIN . $plugin . '/conf/default.php',
@@ -90,7 +90,7 @@ class Loader {
         }
 
         // current template
-        array_merge(
+        $conf = array_merge(
             $conf,
             $this->loadExtensionConf(
                 tpl_incdir() . '/conf/default.php',
@@ -114,7 +114,7 @@ class Loader {
 
         // plugins
         foreach($this->plugins as $plugin) {
-            array_merge(
+            $lang = array_merge(
                 $lang,
                 $this->loadExtensionLang(
                     DOKU_PLUGIN . $plugin . '/',
@@ -125,9 +125,9 @@ class Loader {
         }
 
         // current template
-        array_merge(
+        $lang = array_merge(
             $lang,
-            $this->loadExtensionConf(
+            $this->loadExtensionLang(
                 tpl_incdir() . '/',
                 'tpl',
                 $this->template
