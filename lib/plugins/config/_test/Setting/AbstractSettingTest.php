@@ -4,7 +4,7 @@ namespace dokuwiki\plugin\config\test\Setting;
 
 use dokuwiki\plugin\config\core\Setting\Setting;
 
-class AbstractSettingTest extends \DokuWikiTest {
+abstract class AbstractSettingTest extends \DokuWikiTest {
 
     /** @var string the class to test */
     protected $class;
