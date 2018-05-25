@@ -30,7 +30,7 @@ class Lexer
     /** @var \Doku_Handler */
     protected $handler;
     /** @var StateStack */
-    protected $mode;
+    protected $modeStack;
     /** @var array mode "rewrites" */
     protected $mode_handlers;
     /** @var bool case sensitive? */
@@ -48,7 +48,7 @@ class Lexer
         $this->case = $case;
         $this->regexes = array();
         $this->handler = $handler;
-        $this->mode = new StateStack($start);
+        $this->modeStack = new StateStack($start);
         $this->mode_handlers = array();
     }
 
@@ -179,7 +179,7 @@ class Lexer
      * @param int $matchPos Current byte index location in raw doc thats being parsed
      * @return boolean             False if there was any error from the parser.
      */
-    protected function dispatchTokens($unmatched, $matched, $mode = false, $initialPos, $matchPos)
+    protected function dispatchTokens($unmatched, $matched, $mode, $initialPos, $matchPos)
     {
         if (! $this->invokeHandler($unmatched, DOKU_LEXER_UNMATCHED, $initialPos)) {
             return false;
@@ -188,17 +188,17 @@ class Lexer
             if (! $this->invokeHandler($matched, DOKU_LEXER_EXIT, $matchPos)) {
                 return false;
             }
-            return $this->mode->leave();
+            return $this->modeStack->leave();
         }
         if ($this->isSpecialMode($mode)) {
-            $this->mode->enter($this->decodeSpecial($mode));
+            $this->modeStack->enter($this->decodeSpecial($mode));
             if (! $this->invokeHandler($matched, DOKU_LEXER_SPECIAL, $matchPos)) {
                 return false;
             }
-            return $this->mode->leave();
+            return $this->modeStack->leave();
         }
         if (is_string($mode)) {
-            $this->mode->enter($mode);
+            $this->modeStack->enter($mode);
             return $this->invokeHandler($matched, DOKU_LEXER_ENTER, $matchPos);
         }
         return $this->invokeHandler($matched, DOKU_LEXER_MATCHED, $matchPos);
@@ -256,7 +256,7 @@ class Lexer
         if (($content === "") || ($content === false)) {
             return true;
         }
-        $handler = $this->mode->getCurrent();
+        $handler = $this->modeStack->getCurrent();
         if (isset($this->mode_handlers[$handler])) {
             $handler = $this->mode_handlers[$handler];
         }
@@ -282,13 +282,13 @@ class Lexer
      */
     protected function reduce(&$raw)
     {
-        if (! isset($this->regexes[$this->mode->getCurrent()])) {
+        if (! isset($this->regexes[$this->modeStack->getCurrent()])) {
             return false;
         }
         if ($raw === "") {
             return true;
         }
-        if ($action = $this->regexes[$this->mode->getCurrent()]->split($raw, $split)) {
+        if ($action = $this->regexes[$this->modeStack->getCurrent()]->split($raw, $split)) {
             list($unparsed, $match, $raw) = $split;
             return array($unparsed, $match, $action);
         }

@@ -47,7 +47,7 @@ class StateStack
     /**
      * Leaves the current state and reverts
      * to the previous one.
-     * @return boolean    False if we drop off the bottom of the list.
+     * @return boolean    false if we attempt to drop off the bottom of the list.
      */
     public function leave()
     {
