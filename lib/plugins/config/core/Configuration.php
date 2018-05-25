@@ -122,10 +122,13 @@ class Configuration {
     /**
      * Save the settings
      *
+     * This save the current state as defined in this object, including the
+     * undefined settings
+     *
      * @throws \Exception
      */
     public function save() {
-        $this->writer->save($this->settings);
+        $this->writer->save(array_merge($this->settings, $this->undefined));
     }
 
     /**
