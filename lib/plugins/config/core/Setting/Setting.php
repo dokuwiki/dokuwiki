@@ -64,12 +64,12 @@ class Setting {
     }
 
     /**
-     * update changed setting with user provided value $input
-     * - if changed value fails error check, save it to $this->_input (to allow echoing later)
-     * - if changed value passes error check, set $this->_local to the new value
+     * update changed setting with validated user provided value $input
+     * - if changed value fails validation check, save it to $this->input (to allow echoing later)
+     * - if changed value passes validation check, set $this->local to the new value
      *
      * @param  mixed $input the new value
-     * @return boolean          true if changed, false otherwise (also on error)
+     * @return boolean          true if changed, false otherwise
      */
     public function update($input) {
         if(is_null($input)) return false;
@@ -79,13 +79,17 @@ class Setting {
         $value = is_null($this->local) ? $this->default : $this->local;
         if($value == $input) return false;
 
+        // validate new value
         if($this->pattern && !preg_match($this->pattern, $input)) {
             $this->error = true;
             $this->input = $input;
             return false;
         }
 
+        // update local copy of this setting with new value
         $this->local = $input;
+
+        // setting ready for update
         return true;
     }
 
