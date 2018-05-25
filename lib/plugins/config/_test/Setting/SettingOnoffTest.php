@@ -15,7 +15,30 @@ class SettingOnoffTest extends SettingTest {
         return [
             [1, "\$conf['test'] = 1;\n"],
             [0, "\$conf['test'] = 0;\n"],
-            // FIXME we probably want to handle other values better
+
+            ['1', "\$conf['test'] = 1;\n"],
+            ['0', "\$conf['test'] = 0;\n"],
+
+            ['on', "\$conf['test'] = 1;\n"],
+            ['off', "\$conf['test'] = 0;\n"],
+
+            ['true', "\$conf['test'] = 1;\n"],
+            ['false', "\$conf['test'] = 0;\n"],
+
+            ['On', "\$conf['test'] = 1;\n"],
+            ['Off', "\$conf['test'] = 0;\n"],
+
+            ['True', "\$conf['test'] = 1;\n"],
+            ['False', "\$conf['test'] = 0;\n"],
+
+            [true, "\$conf['test'] = 1;\n"],
+            [false, "\$conf['test'] = 0;\n"],
+
+            [3, "\$conf['test'] = 1;\n"],
+            ['3', "\$conf['test'] = 1;\n"],
+
+            ['', "\$conf['test'] = 0;\n"],
+            ['   ', "\$conf['test'] = 0;\n"],
         ];
     }
 

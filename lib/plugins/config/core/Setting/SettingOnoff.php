@@ -6,6 +6,23 @@ namespace dokuwiki\plugin\config\core\Setting;
  * Class setting_onoff
  */
 class SettingOnoff extends SettingNumeric {
+
+    /**
+     * We treat the strings 'false' and 'off' as false
+     * @inheritdoc
+     */
+    protected function cleanValue($value) {
+        if($value === null) return null;
+
+        if(is_string($value)) {
+            if(strtolower($value) === 'false') return 0;
+            if(strtolower($value) === 'off') return 0;
+            if(trim($value) === '') return 0;
+        }
+
+        return (int) (bool) $value;
+    }
+
     /** @inheritdoc */
     public function html(\admin_plugin_config $plugin, $echo = false) {
         $disable = '';

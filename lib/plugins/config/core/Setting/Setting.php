@@ -58,9 +58,9 @@ class Setting {
      * @param mixed $protected protected setting value
      */
     public function initialize($default = null, $local = null, $protected = null) {
-        $this->default = $default;
-        $this->local = $local;
-        $this->protected = $protected;
+        $this->default = $this->cleanValue($default);
+        $this->local = $this->cleanValue($local);
+        $this->protected = $this->cleanValue($protected);
     }
 
     /**
@@ -74,6 +74,7 @@ class Setting {
     public function update($input) {
         if(is_null($input)) return false;
         if($this->isProtected()) return false;
+        $input = $this->cleanValue($input);
 
         $value = is_null($this->local) ? $this->default : $this->local;
         if($value == $input) return false;
@@ -86,6 +87,21 @@ class Setting {
 
         $this->local = $input;
         return true;
+    }
+
+    /**
+     * Clean a value read from a config before using it internally
+     *
+     * Default implementation returns $value as is. Subclasses can override.
+     * Note: null should always be returned as null!
+     *
+     * This is applied in initialize() and update()
+     *
+     * @param mixed $value
+     * @return mixed
+     */
+    protected function cleanValue($value) {
+        return $value;
     }
 
     /**
