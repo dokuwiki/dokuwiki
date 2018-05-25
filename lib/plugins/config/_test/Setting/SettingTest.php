@@ -13,7 +13,7 @@ use dokuwiki\plugin\config\core\Setting\Setting;
 class SettingTest extends AbstractSettingTest {
 
     /**
-     * Dataprovider for test out
+     * Dataprovider for testOut()
      *
      * @return array
      */
@@ -38,4 +38,33 @@ class SettingTest extends AbstractSettingTest {
 
         $this->assertEquals($out, $setting->out('conf'));
     }
+
+    /**
+     * DataProvider for testShouldBeSaved()
+     *
+     * @return array
+     */
+    public function dataShouldBeSaved() {
+        return [
+            ['default', null, false],
+            ['default', 'default', false],
+            ['default', 'new', true],
+        ];
+    }
+
+    /**
+     * Check if shouldBeSaved works as expected
+     *
+     * @dataProvider dataShouldBeSaved
+     * @param mixed $default The default value
+     * @param mixed $local The current local value
+     * @param bool $expect The expected outcome
+     */
+    public function testShouldBeSaved($default, $local, $expect) {
+        /** @var Setting $setting */
+        $setting = new $this->class('test');
+        $setting->initialize($default, $local, null);
+        $this->assertSame($expect, $setting->shouldBeSaved());
+    }
+
 }
