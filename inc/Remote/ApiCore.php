@@ -77,7 +77,11 @@ class ApiCore
                 'args' => array('string', 'string', 'array'),
                 'return' => 'bool',
                 'doc' => 'Append text to a wiki page.'
-            ), 'wiki.getPage' => array(
+            ), 'dokuwiki.deleteUsers' => array(
+                'args' => array('array'),
+                'return' => 'bool',
+                'doc' => 'Remove one or more users from the list of registered users.'
+            ),  'wiki.getPage' => array(
                 'args' => array('string'),
                 'return' => 'string',
                 'doc' => 'Get the raw Wiki text of page, latest version.',
@@ -574,6 +578,25 @@ class ApiCore
             return $currentpage;
         }
         return $this->putPage($id, $currentpage . $text, $params);
+    }
+
+    /**
+     * Remove one or more users from the list of registered users
+     *
+     * @param string[] $usernames List of usernames to remove
+     *
+     * @return bool
+     *
+     * @throws AccessDeniedException
+     */
+    public function deleteUsers($usernames)
+    {
+        if (!auth_isadmin()) {
+            throw new AccessDeniedException('Only admins are allowed to delete users', 114);
+        }
+        /** @var DokuWiki_Auth_Plugin $auth */
+        global $auth;
+        return (bool)$auth->triggerUserMod('deleteUsers', $usernames);
     }
 
     /**
