@@ -28,7 +28,7 @@ class Loader {
         $this->plugins = plugin_list();
         $this->template = $conf['template'];
         // allow plugins to remove configurable plugins
-        trigger_event('PLUGIN_CONFIG_PLUGINLIST', $list);
+        trigger_event('PLUGIN_CONFIG_PLUGINLIST', $this->plugins);
     }
 
     /**
