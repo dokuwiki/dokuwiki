@@ -12,21 +12,9 @@ namespace dokuwiki\plugin\config\core;
  */
 class ConfigParser {
     /** @var string variable to parse from the file */
-    protected $varname;
+    protected $varname = 'conf';
     /** @var string the key to mark sub arrays */
-    protected $keymarker;
-
-    /**
-     * ConfigParser constructor.
-     *
-     * @param string $varname variable to parse from the file
-     * @param string $keymarker the key to mark sub arrays
-     * @fixme let's skip the parameters
-     */
-    public function __construct($varname = 'conf', $keymarker = '____') {
-        $this->varname = $varname;
-        $this->keymarker = $keymarker;
-    }
+    protected $keymarker = Configuration::KEYMARKER;
 
     /**
      * Parse the given PHP file into an array
