@@ -106,19 +106,12 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
         $data = $INPUT->arr('entry');
         action_plugin_struct_inline::checkCSRF();
 
-        $access = AccessTable::byTableName($tablename, 0, 0);
-        if(!$access->getSchema()->isEditable()) {
-            throw new StructException('lookup save error: no permission for schema');
-        }
-        $validator = $access->getValidator($data);
-        if(!$validator->validate()) {
-            throw new StructException("Validation failed:\n%s", join("\n", $validator->getErrors()));
-        }
-        if(!$validator->saveData()) {
-            throw new StructException('No data saved');
-        }
+        /** @var helper_plugin_struct $helper */
+        $helper = plugin_load('helper', 'struct');
+        $helper->saveLookupData($tablename, $data);
 
         // create a new row based on the original aggregation config for the new pid
+        $access = AccessTable::byTableName($tablename, 0, 0);
         $pid = $access->getPid();
         $config = json_decode($INPUT->str('searchconf'), true);
         $config['filter'] = array(array('%rowid%', '=', $pid, 'AND'));

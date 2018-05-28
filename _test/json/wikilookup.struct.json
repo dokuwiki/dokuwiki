@@ -1,0 +1,84 @@
+{
+    "structversion": "2018-04-24",
+    "schema": "wikilookup",
+    "id": "5",
+    "user": "admin",
+    "config": {
+        "allowed editors": "",
+        "label": {
+            "en": ""
+        }
+    },
+    "columns": [
+        {
+            "colref": 1,
+            "ismulti": false,
+            "isenabled": true,
+            "sort": 10,
+            "label": "FirstFieldText",
+            "class": "Text",
+            "config": {
+                "visibility": {
+                    "inpage": true,
+                    "ineditor": true
+                },
+                "prefix": "",
+                "postfix": "",
+                "label": {
+                    "en": ""
+                },
+                "hint": {
+                    "en": ""
+                }
+            }
+        },
+        {
+            "colref": 2,
+            "ismulti": false,
+            "isenabled": true,
+            "sort": 20,
+            "label": "SecondFieldLongText",
+            "class": "LongText",
+            "config": {
+                "visibility": {
+                    "inpage": true,
+                    "ineditor": true
+                },
+                "prefix": "",
+                "postfix": "",
+                "rows": "5",
+                "cols": "50",
+                "label": {
+                    "en": ""
+                },
+                "hint": {
+                    "en": ""
+                }
+            }
+        },
+        {
+            "colref": 3,
+            "ismulti": false,
+            "isenabled": true,
+            "sort": 30,
+            "label": "ThirdFieldWiki",
+            "class": "Wiki",
+            "config": {
+                "visibility": {
+                    "inpage": true,
+                    "ineditor": true
+                },
+                "prefix": "",
+                "postfix": "",
+                "rows": "5",
+                "cols": "50",
+                "label": {
+                    "en": ""
+                },
+                "hint": {
+                    "en": ""
+                }
+            }
+        }
+    ]
+}
