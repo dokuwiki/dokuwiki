@@ -282,23 +282,13 @@ class Setting {
      * @return false|string caution string, otherwise false for invalid caution
      */
     public function caution() {
-        if(!empty($this->caution)) {
-            if(!in_array($this->caution, Setting::$validCautions)) {
-                throw new \RuntimeException(
-                    'Invalid caution string (' . $this->caution . ') in metadata for setting "' . $this->key . '"'
-                );
-            }
-            return $this->caution;
+        if(empty($this->caution)) return false;
+        if(!in_array($this->caution, Setting::$validCautions)) {
+            throw new \RuntimeException(
+                'Invalid caution string (' . $this->caution . ') in metadata for setting "' . $this->key . '"'
+            );
         }
-        // compatibility with previous cautionList
-        // TODO: check if any plugins use; remove
-        if(!empty($this->cautionList[$this->key])) {
-            $this->caution = $this->cautionList[$this->key];
-            unset($this->cautionList);
-
-            return $this->caution();
-        }
-        return false;
+        return $this->caution;
     }
 
 }
