@@ -109,7 +109,6 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 } else {
                     $in_fieldset = true;
                 }
-                // fixme this should probably be a function in setting:
                 if($first_plugin_fieldset && $setting->getType() == 'plugin') {
                     $this->printH1('plugin_settings', $this->getLang('_header_plugin'));
                     $first_plugin_fieldset = false;
