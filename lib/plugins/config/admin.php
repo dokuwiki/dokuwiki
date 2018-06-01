@@ -170,24 +170,11 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             echo '<fieldset>';
             echo '<div class="table">';
             echo '<table class="inline">';
-            $undefined_setting_match = array();
             foreach($undefined_settings as $setting) {
-                if(
-                preg_match(
-                    '/^(?:plugin|tpl)' . Configuration::KEYMARKER . '.*?' . Configuration::KEYMARKER . '(.*)$/',
-                    $setting->getKey(),
-                    $undefined_setting_match
-                )
-                ) {
-                    $undefined_setting_key = $undefined_setting_match[1];
-                } else {
-                    $undefined_setting_key = $setting->getKey();
-                }
+                list($label, $input) = $setting->html($this);
                 echo '<tr>';
-                echo
-                    '<td class="label"><span title="$meta[\'' . $undefined_setting_key . '\']">$' .
-                    'conf' . '[\'' . $setting->getArrayKey() . '\']</span></td>';
-                echo '<td>' . $this->getLang('_msg_' . get_class($setting)) . '</td>';
+                echo '<td class="label">' . $label . '</td>';
+                echo '<td>' . $input . '</td>';
                 echo '</tr>';
             }
             echo '</table>';
@@ -255,7 +242,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             // create main header
             $toc[] = html_mktocitem(
                 $section . '_settings',
-                $this->getLang('_header_'.$section),
+                $this->getLang('_header_' . $section),
                 1
             );
 
