@@ -29,18 +29,15 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
     /** @var bool have the settings translations been loaded? */
     protected $promptsLocalized = false;
 
-    /**
-     * admin_plugin_config constructor.
-     */
-    public function __construct() {
-        $this->configuration = new Configuration();
-    }
 
     /**
      * handle user request
      */
     public function handle() {
         global $ID, $INPUT;
+
+        // always initialize the configuration
+        $this->configuration = new Configuration();
 
         if(!$INPUT->bool('save') || !checkSecurityToken()) {
             return;
