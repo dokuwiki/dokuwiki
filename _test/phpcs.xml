@@ -72,8 +72,11 @@
         <exclude-pattern>*/inc/parser/*</exclude-pattern>
     </rule>
 
-    <!-- we define and call the CLI class for our clie scripts -->
+    <!-- for now we mix declarations and execution here FIXME -->
     <rule ref="PSR1.Files.SideEffects">
+        <exclude-pattern>*/doku.php</exclude-pattern>
+        <exclude-pattern>*/install.php</exclude-pattern>
+        <exclude-pattern>*/feed.php</exclude-pattern>
         <exclude-pattern>*/bin/*.php</exclude-pattern>
     </rule>
 
