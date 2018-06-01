@@ -87,8 +87,7 @@ class PluginCLI extends CLI {
      * @param string $name
      * @return DokuWiki_CLI_Plugin|null
      */
-    protected
-    function loadPlugin($name) {
+    protected function loadPlugin($name) {
         // execute the plugin CLI
         $class = "cli_plugin_$name";
         if(class_exists($class)) {
