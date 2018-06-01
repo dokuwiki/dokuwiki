@@ -201,7 +201,7 @@ class Configuration {
      */
     protected function determineClassName($class, $key) {
         // try namespaced class first
-        if($class) {
+        if(is_string($class)) {
             $modern = str_replace('_', '', ucwords($class, '_'));
             $modern = '\\dokuwiki\\plugin\\config\\core\\Setting\\Setting' . $modern;
             if($modern && class_exists($modern)) return $modern;
