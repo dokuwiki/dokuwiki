@@ -46,6 +46,7 @@ $lang['_network'] = 'Network';
 /* --- Undefined Setting Messages --- */
 $lang['_msg_setting_undefined'] = 'No setting metadata.';
 $lang['_msg_setting_no_class'] = 'No setting class.';
+$lang['_msg_setting_no_known_class'] = 'Setting class not available.';
 $lang['_msg_setting_no_default'] = 'No default value.';
 
 /* -------------------- Config Options --------------------------- */

@@ -1,7 +1,11 @@
 <?php
 
 namespace dokuwiki\plugin\config\core;
+
 use dokuwiki\plugin\config\core\Setting\Setting;
+use dokuwiki\plugin\config\core\Setting\SettingNoClass;
+use dokuwiki\plugin\config\core\Setting\SettingNoDefault;
+use dokuwiki\plugin\config\core\Setting\SettingNoKnownClass;
 use dokuwiki\plugin\config\core\Setting\SettingUndefined;
 
 /**
@@ -17,9 +21,7 @@ class Configuration {
 
     /** @var Setting[] metadata as array of Settings objects */
     protected $settings = array();
-    /** @var array problematic keys */
-    protected $errors;
-    /** @var Setting[] undefined settings */
+    /** @var Setting[] undefined and problematic settings */
     protected $undefined = array();
 
     /** @var array all metadata */
@@ -64,21 +66,12 @@ class Configuration {
     }
 
     /**
-     * Get all unknown settings
+     * Get all unknown or problematic settings
      *
      * @return Setting[]
      */
     public function getUndefined() {
         return $this->undefined;
-    }
-
-    /**
-     * Get the settings that had some kind of setup problem
-     *
-     * @return array associative error, key is the setting, value the error
-     */
-    public function getErrors() {
-        return $this->errors;
     }
 
     /**
@@ -128,7 +121,9 @@ class Configuration {
      * @throws \Exception
      */
     public function save() {
-        $this->writer->save(array_merge($this->settings, $this->undefined));
+        // only save the undefined settings that have not been handled in settings
+        $undefined = array_diff_key($this->undefined, $this->settings);
+        $this->writer->save(array_merge($this->settings, $undefined));
     }
 
     /**
@@ -165,7 +160,7 @@ class Configuration {
             $obj = $this->instantiateClass($key);
 
             if($obj->shouldHaveDefault() && !isset($this->default[$key])) {
-                $this->errors[$key] = 'no default';
+                $this->undefined[$key] = new SettingNoDefault($key);
             }
 
             $d = isset($this->default[$key]) ? $this->default[$key] : null;
@@ -213,10 +208,10 @@ class Configuration {
             // try class as given
             if(class_exists($class)) return $class;
             // class wasn't found add to errors
-            $this->errors[$key] = 'unknown class';
+            $this->undefined[$key] = new SettingNoKnownClass($key);
         } else {
             // no class given, add to errors
-            $this->errors[$key] = 'no class';
+            $this->undefined[$key] = new SettingNoClass($key);
         }
         return '\\dokuwiki\\plugin\\config\\core\\Setting\\Setting';
     }
