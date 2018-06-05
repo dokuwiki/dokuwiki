@@ -234,6 +234,24 @@ class Doku_Event_Handler {
             }
         }
     }
+
+    /**
+     * Check if an event has any registered handlers
+     *
+     * When $advise is empty, both BEFORE and AFTER events will be considered,
+     * otherwise only the given advisory is checked
+     *
+     * @param string $name Name of the event
+     * @param string $advise BEFORE, AFTER or empty
+     * @return bool
+     */
+    public function hasHandlerForEvent($name, $advise = '') {
+        if($advise) {
+            return isset($this->_hooks[$name . '_' . $advise]);
+        } else {
+            return isset($this->_hooks[$name . '_BEFORE']) || isset($this->_hooks[$name . '_AFTER']);
+        }
+    }
 }
 
 /**
