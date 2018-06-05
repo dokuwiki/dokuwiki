@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
  * @author Hideaki SAWADA <chuno@live.jp>
  */
 $lang['menu']                  = 'Struct スキーマ編集';
@@ -32,6 +33,10 @@ $lang['del_ok']                = 'スキーマは削除されました';
 $lang['btn_delete']            = '削除';
 $lang['js']['confirmAssignmentsDelete'] = '"{0}" スキーマの "{1}" ページ・名前空間への割当てを本当に削除しますか？';
 $lang['js']['lookup_delete']   = '登録の削除';
+$lang['clear_confirm']         = '消去確認のため、スキーマの名前を入力して下さい';
+$lang['clear_fail']            = 'スキーマの名前が一致しませんでした。データは消去されませんでした';
+$lang['clear_ok']              = 'スキーマのデータが消去されました';
+$lang['btn_clear']             = '消去';
 $lang['tab_edit']              = 'スキーマ編集';
 $lang['tab_export']            = '入力・出力';
 $lang['tab_delete']            = '削除';
@@ -68,6 +73,8 @@ $lang['Exception nolookupmix'] = '複数の検索を集約したり、ページ�
 $lang['Exception nolookupassign'] = '検索スキーマはページに割当てできません';
 $lang['Exception No data saved'] = '保存されるデータはありません';
 $lang['Exception no sqlite']   = 'Struct プラグインには Sqlite プラグインが必要です。インストールして有効にしてください。';
+$lang['Exception column not in table'] = 'スキーマ %s 内にコラム %s がありません。';
+$lang['Warning: no filters for cloud'] = '構造クラウドでは、フィルターはサポートされていません。';
 $lang['sort']                  = 'この項目でソート';
 $lang['next']                  = '次ページ';
 $lang['prev']                  = '前ページ';
@@ -82,3 +89,4 @@ $lang['tableresetfilter']      = '全て表示（抽出・ソートを解除）'
 $lang['Exception schema missing'] = '%s スキーマは存在しません！';
 $lang['no_lookup_for_page']    = 'ページスキーマで検索編集を使用できません！';
 $lang['lookup new entry']      = '新規登録の作成';
+$lang['bureaucracy_action_struct_lookup_thanks'] = 'エントリーが保存されました。<a href="%s">別のエントリーを追加して下さい</a>。';
