@@ -1416,6 +1416,51 @@ function saveOldRevision($id) {
 }
 
 /**
+ * Save a draft of a current edit session
+ *
+ * The draft will not be saved if
+ *   - drafts are deactivated in the config
+ *   - or the editarea is empty and there are no event handlers registered
+ *   - or the event is prevented
+ *
+ * @triggers COMMON_DRAFT_SAVE
+ *
+ * @return bool whether has the draft been saved
+ */
+function saveDraft()
+{
+    global $INPUT, $ID, $INFO, $EVENT_HANDLER, $conf;
+
+    if (!$conf['usedraft']) {
+        return false;
+    }
+    if (!$INPUT->post->has('wikitext') &&
+        !$EVENT_HANDLER->hasHandlerForEvent('COMMON_DRAFT_SAVE')) {
+        return false;
+    }
+
+    $draft = array(
+        'id' => $ID,
+        'prefix' => substr($INPUT->post->str('prefix'), 0, -1),
+        'text' => $INPUT->post->str('wikitext'),
+        'suffix' => $INPUT->post->str('suffix'),
+        'date' => $INPUT->post->int('date'),
+        'client' => $INFO['client'],
+        'cname' => getCacheName($INFO['client'] . $ID, '.draft'),
+    );
+    $event = new \Doku_Event('COMMON_DRAFT_SAVE', $draft);
+    if ($event->advise_before()) {
+        if (io_saveFile($draft['cname'], serialize($draft))) {
+            $draft['hasBeenSaved'] = true;
+            $INFO['draft'] = $draft['cname'];
+        }
+    }
+
+    $event->advise_after();
+    return (bool)$draft['hasBeenSaved'];
+}
+
+/**
  * Sends a notify mail on page change or registration
  *
  * @param string     $id       The changed page

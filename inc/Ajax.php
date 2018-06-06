@@ -140,22 +140,8 @@ class Ajax {
             echo 1;
         }
 
-        if($conf['usedraft'] && $INPUT->post->str('wikitext')) {
-            $client = $_SERVER['REMOTE_USER'];
-            if(!$client) $client = clientIP(true);
-
-            $draft = array(
-                'id' => $ID,
-                'prefix' => substr($INPUT->post->str('prefix'), 0, -1),
-                'text' => $INPUT->post->str('wikitext'),
-                'suffix' => $INPUT->post->str('suffix'),
-                'date' => $INPUT->post->int('date'),
-                'client' => $client,
-            );
-            $cname = getCacheName($draft['client'] . $ID, '.draft');
-            if(io_saveFile($cname, serialize($draft))) {
-                echo $lang['draftdate'] . ' ' . dformat();
-            }
+        if (saveDraft()) {
+            echo $lang['draftdate'] . ' ' . dformat();
         }
 
     }
