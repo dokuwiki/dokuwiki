@@ -1833,16 +1833,16 @@ function html_edit(){
     <div class="editBox" role="application">
 
     <div class="toolbar group">
-        <div id="draft__status" class="draft__status">
-            <?php
-                $draft = new \dokuwiki\Draft($ID, $INFO['client']);
-                if ($draft->isDraftAvailable()) {
-                    echo $draft->getDraftMessage();
-                }
-            ?>
-        </div>
         <div id="tool__bar" class="tool__bar"><?php if ($wr && $data['media_manager']){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
             target="_blank"><?php echo $lang['mediaselect'] ?></a><?php }?></div>
+    </div>
+    <div id="draft__status" class="draft__status">
+        <?php
+        $draft = new \dokuwiki\Draft($ID, $INFO['client']);
+        if ($draft->isDraftAvailable()) {
+            echo $draft->getDraftMessage();
+        }
+        ?>
     </div>
     <?php
 
