@@ -1450,10 +1450,12 @@ function saveDraft()
     );
     $event = new \Doku_Event('COMMON_DRAFT_SAVE', $draft);
     if ($event->advise_before()) {
-        if (io_saveFile($draft['cname'], serialize($draft))) {
-            $draft['hasBeenSaved'] = true;
+        $draft['hasBeenSaved'] = io_saveFile($draft['cname'], serialize($draft));
+        if ($draft['hasBeenSaved']) {
             $INFO['draft'] = $draft['cname'];
         }
+    } else {
+        $draft['hasBeenSaved'] = false;
     }
 
     $event->advise_after();
