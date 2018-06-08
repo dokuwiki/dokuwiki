@@ -119,7 +119,6 @@ class Ajax {
      * Andreas Gohr <andi@splitbrain.org>
      */
     protected function call_lock() {
-        global $lang;
         global $ID;
         global $INFO;
         global $INPUT;
@@ -129,20 +128,29 @@ class Ajax {
 
         $INFO = pageinfo();
 
+        $response = [
+            'errors' => [],
+            'lock' => '0',
+            'draft' => '',
+        ];
         if(!$INFO['writable']) {
-            echo 'Permission denied';
+            $response['errors'][] = 'Permission to write this page has been denied.';
+            echo json_encode($response);
             return;
         }
 
         if(!checklock($ID)) {
             lock($ID);
-            echo 1;
+            $response['lock'] = '1';
         }
 
         $draft = new Draft($ID, $INFO['client']);
         if ($draft->saveDraft()) {
-            echo $draft->getDraftMessage();
+            $response['draft'] = $draft->getDraftMessage();
+        } else {
+            $response['errors'] = array_merge($response['errors'], $draft->getErrors());
         }
+        echo json_encode($response);
     }
 
     /**
