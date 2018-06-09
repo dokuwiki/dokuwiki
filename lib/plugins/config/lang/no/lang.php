@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Christian McKenna <mckchr@banenor.no>
  * @author Thomas Nygreen <nygreen@gmail.com>
  * @author Arild Burud <arildb@met.no>
  * @author Torkill Bruland <torkar-b@online.no>
@@ -12,12 +13,10 @@
  * @author Knut Staring <knutst@gmail.com>
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
- * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
- * @author Rune Rasmussen syntaxerror.no@gmail.com
+ * @author Rune Rasmussen <syntaxerror.no@gmail.com>
  * @author Jon Bøe <jonmagneboe@hotmail.com>
  * @author Egil Hansen <egil@rosetta.no>
  * @author Arne Hanssen <arne.hanssen@getmail.no>
- * @author Arne Hanssen <arnehans@getmail.no>
  * @author Patrick Sletvold <patricksletvold@hotmail.com>
  */
 $lang['menu']                  = 'Konfigurasjonsinnstillinger';
