@@ -15,6 +15,12 @@ class Draft
     protected $id;
     protected $client;
 
+    /**
+     * Draft constructor.
+     *
+     * @param string $ID the page id for this draft
+     * @param string $client the client identification (username or ip or similar) for this draft
+     */
     public function __construct($ID, $client)
     {
         $this->id = $ID;
