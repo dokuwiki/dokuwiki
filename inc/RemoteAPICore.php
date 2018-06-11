@@ -569,7 +569,7 @@ class RemoteAPICore {
         }
         /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
-        return (bool)$auth->triggerUserMod('deleteUsers', $usernames);
+        return (bool)$auth->triggerUserMod('delete', array($usernames));
     }
 
     /**
