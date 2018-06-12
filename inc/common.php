@@ -1887,6 +1887,7 @@ function license_img($type) {
 function is_mem_available($mem, $bytes = 1048576) {
     $limit = trim(ini_get('memory_limit'));
     if(empty($limit)) return true; // no limit set!
+    if($limit == -1) return true; // unlimited
 
     // parse limit to bytes
     $limit = php_to_byte($limit);
