@@ -19,16 +19,18 @@ class Draftdel extends AbstractAction {
     }
 
     /**
-     * Delete an existing draft if any
+     * Delete an existing draft for the current page and user if any
      *
-     * Reads draft information from $INFO. Redirects to show, afterwards.
+     * Redirects to show, afterwards.
      *
      * @throws ActionAbort
      */
     public function preProcess() {
-        global $INFO;
-        @unlink($INFO['draft']);
-        $INFO['draft'] = null;
+        global $INFO, $ID;
+        $draft = new \dokuwiki\Draft($ID, $INFO['client']);
+        if ($draft->isDraftAvailable()) {
+            $draft->deleteDraft();
+        }
 
         throw new ActionAbort('redirect');
     }
