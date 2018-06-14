@@ -152,4 +152,14 @@ class Draft
     {
         return $this->errors;
     }
+
+    /**
+     * Get the timestamp when this draft was saved
+     *
+     * @return int
+     */
+    public function getDraftDate()
+    {
+        return filemtime($this->cname);
+    }
 }
