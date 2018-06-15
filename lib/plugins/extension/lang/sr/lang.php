@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Марко М. Костић <marko.m.kostic@gmail.com>
+ * @author Марко Костић (Marko Kostic) <marko.m.kostic@gmail.com>
  */
 $lang['menu']                  = 'Управник проширења';
 $lang['tab_plugins']           = 'Инсталирани прикључци';
@@ -31,6 +31,7 @@ $lang['js']['display_disabled'] = 'онемогућено';
 $lang['js']['display_updatable'] = 'могуће ажурирати';
 $lang['search_for']            = 'Претражи проширење:';
 $lang['search']                = 'Претрага';
+$lang['extensionby']           = '<strong>%s</strong>, творац %s';
 $lang['screenshot']            = 'Снимак екрана од %s';
 $lang['popularity']            = 'Популарност: %s%%';
 $lang['homepage_link']         = 'Документа';
@@ -64,3 +65,18 @@ $lang['status_template']       = 'шаблон';
 $lang['status_bundled']        = 'упаковано';
 $lang['msg_enabled']           = 'Прикључак %s је омогућен';
 $lang['msg_disabled']          = 'Прикључак %s је онемогућен';
+$lang['msg_delete_success']    = 'Проширење %s је деинсталирано';
+$lang['msg_delete_failed']     = 'Неуспех при деинсталирању проширења %s';
+$lang['msg_template_install_success'] = 'Шаблон %s је инсталиран успешно';
+$lang['msg_template_update_success'] = 'Шаблон %s је ажуриран успешно';
+$lang['msg_plugin_install_success'] = 'Прикључак %s је инсталиран успешно';
+$lang['msg_plugin_update_success'] = 'Прикључак %s је ажуриран успешно';
+$lang['msg_upload_failed']     = 'Отпремање датотеке није успело';
+$lang['missing_dependency']    = '<strong>Онемогућена или недостајућа зависност:</strong> %s';
+$lang['security_issue']        = '<strong>Безбедносни проблем:</strong> %s';
+$lang['security_warning']      = '<strong>Безбедносно упозорење:</strong> %s';
+$lang['update_available']      = '<strong>Ажурирање:</strong> ново издање за %s је доступно.';
+$lang['wrong_folder']          = '<strong>Прикључак је инсталиран неисправно:</strong> преименујте фасциклу прикључка из "%s" у "%s".';
+$lang['error_badurl']          = 'URL-ови морају почињати са http или https';
+$lang['error_dircreate']       = 'Не могу да направим привремену фасциклу за пријем преузимања';
+$lang['error_download']        = 'Не могу да преузмем датотеку: %s';
