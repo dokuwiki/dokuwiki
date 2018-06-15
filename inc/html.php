@@ -314,10 +314,10 @@ function html_draft(){
     html_diff($text, false);
     $form = new Doku_Form(array('id' => 'dw__editform'));
     $form->addHidden('id', $ID);
-    $form->addHidden('date', $draft['date']);
+    $form->addHidden('date', $draft->getDraftDate());
     $form->addHidden('wikitext', $text);
     $form->addElement(form_makeOpenTag('div', array('id'=>'draft__status')));
-    $form->addElement($lang['draftdate'].' '. dformat(filemtime($INFO['draft'])));
+    $form->addElement($draft->getDraftMessage());
     $form->addElement(form_makeCloseTag('div'));
     $form->addElement(form_makeButton('submit', 'recover', $lang['btn_recover'], array('tabindex'=>'1')));
     $form->addElement(form_makeButton('submit', 'draftdel', $lang['btn_draftdel'], array('tabindex'=>'2')));
