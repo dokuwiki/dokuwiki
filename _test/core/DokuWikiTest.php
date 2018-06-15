@@ -50,15 +50,8 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
         if(!defined('TMP_DIR')) die('no temporary directory');
         if(!defined('DOKU_TMP_DATA')) die('no temporary data directory');
 
-        // remove any leftovers from the last run
-        if(is_dir(DOKU_TMP_DATA)){
-            // clear indexer data and cache
-            idx_get_indexer()->clear();
-            TestUtils::rdelete(DOKU_TMP_DATA);
-        }
-
-        // populate default dirs
-        TestUtils::rcopy(TMP_DIR, dirname(__FILE__).'/../data/');
+        self::setupDataDir();
+        self::setupConfDir();
     }
 
     /**
@@ -148,6 +141,56 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
         global $INPUT;
         $INPUT = new Input();
+    }
+
+    /**
+     * Reinitialize the data directory for this class run
+     */
+    public static function setupDataDir() {
+        // remove any leftovers from the last run
+        if(is_dir(DOKU_TMP_DATA)) {
+            // clear indexer data and cache
+            idx_get_indexer()->clear();
+            TestUtils::rdelete(DOKU_TMP_DATA);
+        }
+
+        // populate default dirs
+        TestUtils::rcopy(TMP_DIR, __DIR__ . '/../data/');
+    }
+
+    /**
+     * Reinitialize the conf directory for this class run
+     */
+    public static function setupConfDir() {
+        $defaults = [
+            'acronyms.conf',
+            'dokuwiki.php',
+            'entities.conf',
+            'interwiki.conf',
+            'license.php',
+            'manifest.json',
+            'mediameta.php',
+            'mime.conf',
+            'plugins.php',
+            'plugins.required.php',
+            'scheme.conf',
+            'smileys.conf',
+            'wordblock.conf'
+        ];
+
+        // clear any leftovers
+        if(is_dir(DOKU_CONF)) {
+            TestUtils::rdelete(DOKU_CONF);
+        }
+        mkdir(DOKU_CONF);
+
+        // copy defaults
+        foreach($defaults as $file) {
+            copy(DOKU_INC . '/conf/' . $file, DOKU_CONF . $file);
+        }
+
+        // copy test files
+        TestUtils::rcopy(TMP_DIR, __DIR__ . '/../conf');
     }
 
     /**
