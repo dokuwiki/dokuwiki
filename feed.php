@@ -179,7 +179,7 @@ function rss_parseOptions() {
     $eventData = array(
         'opt' => &$opt,
     );
-    trigger_event('FEED_OPTS_POSTPROCESS', $eventData);
+    Event::createAndTrigger('FEED_OPTS_POSTPROCESS', $eventData);
     return $opt;
 }
 

@@ -6,6 +6,8 @@
  * @author     Chris Smith <chris@jalakai.co.uk>
  */
 
+use dokuwiki\Extension\Event;
+
 /**
  * Generic handling of caching
  */
@@ -48,7 +50,7 @@ class cache {
         $this->_addDependencies();
 
         if ($this->_event) {
-            return $this->_stats(trigger_event($this->_event, $this, array($this,'_useCache')));
+            return $this->_stats(Event::createAndTrigger($this->_event, $this, array($this, '_useCache')));
         } else {
             return $this->_stats($this->_useCache());
         }

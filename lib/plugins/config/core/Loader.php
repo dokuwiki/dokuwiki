@@ -2,6 +2,8 @@
 
 namespace dokuwiki\plugin\config\core;
 
+use dokuwiki\Extension\Event;
+
 /**
  * Configuration loader
  *
@@ -28,7 +30,7 @@ class Loader {
         $this->plugins = plugin_list();
         $this->template = $conf['template'];
         // allow plugins to remove configurable plugins
-        trigger_event('PLUGIN_CONFIG_PLUGINLIST', $this->plugins);
+        Event::createAndTrigger('PLUGIN_CONFIG_PLUGINLIST', $this->plugins);
     }
 
     /**

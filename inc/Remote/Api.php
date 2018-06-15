@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Remote;
 
+use dokuwiki\Extension\Event;
 use dokuwiki\Extension\RemotePlugin;
 use Input;
 
@@ -142,7 +143,7 @@ class Api
     {
         if ($this->pluginCustomCalls === null) {
             $data = array();
-            trigger_event('RPC_CALL_ADD', $data);
+            Event::createAndTrigger('RPC_CALL_ADD', $data);
             $this->pluginCustomCalls = $data;
         }
         return $this->pluginCustomCalls;

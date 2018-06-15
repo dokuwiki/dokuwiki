@@ -482,7 +482,7 @@ function media_save($file, $id, $ow, $auth, $move) {
     $data[5] = $move;
 
     // trigger event
-    return trigger_event('MEDIA_UPLOAD_FINISH', $data, '_media_upload_action', true);
+    return Event::createAndTrigger('MEDIA_UPLOAD_FINISH', $data, '_media_upload_action', true);
 }
 
 /**
@@ -1273,7 +1273,7 @@ function media_diff($image, $ns, $auth, $fromajax = false) {
     $data[5] = $fromajax;
 
     // trigger event
-    return trigger_event('MEDIA_DIFF', $data, '_media_file_diff', true);
+    return Event::createAndTrigger('MEDIA_DIFF', $data, '_media_file_diff', true);
 }
 
 /**

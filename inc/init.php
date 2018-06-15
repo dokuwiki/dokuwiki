@@ -3,6 +3,7 @@
  * Initialize some defaults needed for DokuWiki
  */
 
+use dokuwiki\Extension\Event;
 use dokuwiki\Extension\EventHandler;
 
 /**
@@ -212,7 +213,7 @@ global $EVENT_HANDLER;
 $EVENT_HANDLER = new EventHandler();
 
 $local = $conf['lang'];
-trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
+Event::createAndTrigger('INIT_LANG_LOAD', $local, 'init_lang', true);
 
 
 // setup authentication system

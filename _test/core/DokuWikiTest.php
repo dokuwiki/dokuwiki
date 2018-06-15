@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\Extension\Event;
 use dokuwiki\Extension\EventHandler;
 
 if(!class_exists('PHPUnit_Framework_TestCase')) {
@@ -140,7 +141,7 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
         // reload language
         $local = $conf['lang'];
-        trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
+        Event::createAndTrigger('INIT_LANG_LOAD', $local, 'init_lang', true);
 
         global $INPUT;
         $INPUT = new Input();
