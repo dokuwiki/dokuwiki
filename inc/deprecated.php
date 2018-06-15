@@ -77,3 +77,29 @@ class setting_string extends \dokuwiki\plugin\config\core\Setting\SettingString 
         parent::__construct($key, $params);
     }
 }
+
+/**
+ * @inheritdoc
+ * @deprecated 2018-06-15
+ */
+class PageChangelog extends \dokuwiki\ChangeLog\PageChangeLog {
+    /** @inheritdoc */
+    public function __construct($id, $chunk_size = 8192)
+    {
+        dbg_deprecated(\dokuwiki\ChangeLog\PageChangeLog::class);
+        parent::__construct($id, $chunk_size);
+    }
+}
+
+/**
+ * @inheritdoc
+ * @deprecated 2018-06-15
+ */
+class MediaChangelog extends \dokuwiki\ChangeLog\MediaChangeLog {
+    /** @inheritdoc */
+    public function __construct($id, $chunk_size = 8192)
+    {
+        dbg_deprecated(\dokuwiki\ChangeLog\MediaChangeLog::class);
+        parent::__construct($id, $chunk_size);
+    }
+}

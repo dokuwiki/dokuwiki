@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\ChangeLog\PageChangeLog;
+
 class common_saveWikiText_test extends DokuWikiTest {
     /** Delay writes of old revisions by a second. */
     public function handle_write(Doku_Event $event, $param) {

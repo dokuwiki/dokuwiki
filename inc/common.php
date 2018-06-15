@@ -6,6 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\ChangeLog\PageChangeLog;
+
 /**
  * These constants are used with the recents function
  */

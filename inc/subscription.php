@@ -1,4 +1,7 @@
 <?php
+
+use dokuwiki\ChangeLog\PageChangeLog;
+
 /**
  * Class for handling (email) subscriptions
  *

@@ -3,9 +3,9 @@
 namespace dokuwiki\Remote;
 
 use Doku_Renderer_xhtml;
+use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\ChangeLog\PageChangeLog;
 use DokuWiki_Auth_Plugin;
-use MediaChangeLog;
-use PageChangeLog;
 
 define('DOKU_API_VERSION', 10);
 

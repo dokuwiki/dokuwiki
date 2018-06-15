@@ -6,6 +6,9 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\ChangeLog\PageChangeLog;
+
 if (!defined('SEC_EDIT_PATTERN')) {
     define('SEC_EDIT_PATTERN', '#<!-- EDIT({.*?}) -->#');
 }

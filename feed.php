@@ -9,6 +9,9 @@
  * @global Input $INPUT
  */
 
+use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\ChangeLog\PageChangeLog;
+
 if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/');
 require_once(DOKU_INC.'inc/init.php');
 

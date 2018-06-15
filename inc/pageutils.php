@@ -7,6 +7,9 @@
  * @todo       Combine similar functions like {wiki,media,meta}FN()
  */
 
+use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\ChangeLog\PageChangeLog;
+
 /**
  * Fetch the an ID from request
  *

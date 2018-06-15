@@ -6,6 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\ChangeLog\MediaChangeLog;
+
 /**
  * Lists pages which currently use a media file selected for deletion
  *

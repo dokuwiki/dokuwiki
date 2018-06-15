@@ -1,4 +1,7 @@
 <?php
+
+use dokuwiki\ChangeLog\MediaChangeLog;
+
 /**
  * Renderer for XHTML output
  *

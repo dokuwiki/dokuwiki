@@ -1,4 +1,7 @@
 <?php
+
+use dokuwiki\ChangeLog\PageChangeLog;
+
 /**
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
