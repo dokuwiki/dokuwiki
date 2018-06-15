@@ -6,6 +6,8 @@
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Extension\PluginController;
+
 /**
  * Class helper_plugin_extension_list takes care of the overall GUI
  */
@@ -33,7 +35,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
      */
     public function tabPlugins()
     {
-        /* @var Doku_Plugin_Controller $plugin_controller */
+        /* @var PluginController $plugin_controller */
         global $plugin_controller;
 
         echo '<div class="panelHeader">';

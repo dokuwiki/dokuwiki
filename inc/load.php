@@ -67,7 +67,6 @@ function load_autoload($name){
         'IXR_Client'            => DOKU_INC.'inc/IXR_Library.php',
         'IXR_Error'             => DOKU_INC.'inc/IXR_Library.php',
         'IXR_IntrospectionServer' => DOKU_INC.'inc/IXR_Library.php',
-        'Doku_Plugin_Controller'=> DOKU_INC.'inc/plugincontroller.class.php',
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
         'Sitemapper'            => DOKU_INC.'inc/Sitemapper.php',
         'Mailer'                => DOKU_INC.'inc/Mailer.class.php',

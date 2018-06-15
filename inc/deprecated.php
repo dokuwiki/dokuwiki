@@ -335,3 +335,16 @@ function trigger_event($name, &$data, $action=null, $canPreventDefault=true) {
     dbg_deprecated('\dokuwiki\Extension\Event::createAndTrigger');
     return \dokuwiki\Extension\Event::createAndTrigger($name, $data, $action, $canPreventDefault);
 }
+
+/**
+ * @inheritdoc
+ * @deprecated 2018-06-15
+ */
+class Doku_Plugin_Controller extends \dokuwiki\Extension\PluginController {
+    /** @inheritdoc */
+    public function __construct()
+    {
+        dbg_deprecated(\dokuwiki\Extension\PluginController::class);
+        parent::__construct();
+    }
+}

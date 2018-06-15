@@ -12,6 +12,7 @@
 // some ACL level defines
 use dokuwiki\PassHash;
 use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\PluginController;
 use dokuwiki\Extension\Event;
 
 define('AUTH_NONE', 0);
@@ -42,7 +43,7 @@ function auth_setup() {
     global $INPUT;
     global $AUTH_ACL;
     global $lang;
-    /* @var Doku_Plugin_Controller $plugin_controller */
+    /* @var PluginController $plugin_controller */
     global $plugin_controller;
     $AUTH_ACL = array();
 

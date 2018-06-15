@@ -10,6 +10,7 @@
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Extension\PluginController;
 use dokuwiki\Extension\Event;
 use dokuwiki\Parsing\Parser;
 
@@ -692,7 +693,7 @@ function p_render($mode,$instructions,&$info,$date_at=''){
  * @author Christopher Smith <chris@jalakai.co.uk>
  */
 function p_get_renderer($mode) {
-    /** @var Doku_Plugin_Controller $plugin_controller */
+    /** @var PluginController $plugin_controller */
     global $conf, $plugin_controller;
 
     $rname = !empty($conf['renderer_'.$mode]) ? $conf['renderer_'.$mode] : $mode;
