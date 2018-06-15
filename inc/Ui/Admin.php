@@ -35,7 +35,7 @@ class Admin extends Ui {
      * Display the standard admin tasks
      */
     protected function showAdminMenu() {
-        /** @var \DokuWiki_Auth_Plugin $auth */
+        /** @var \dokuwiki\Extension\AuthPlugin $auth */
         global $auth;
         global $INFO;
 
@@ -144,7 +144,7 @@ class Admin extends Ui {
         $pluginlist = plugin_list('admin');
         $menu = array();
         foreach($pluginlist as $p) {
-            /** @var \DokuWiki_Admin_Plugin $obj */
+            /** @var \dokuwiki\Extension\AdminPlugin $obj */
             if(($obj = plugin_load('admin', $p)) === null) continue;
 
             // check permissions

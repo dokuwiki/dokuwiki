@@ -7,6 +7,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Extension\Event;
+use dokuwiki\Extension\SyntaxPlugin;
 use dokuwiki\Parsing\Parser;
 
 /**
@@ -483,7 +485,7 @@ function p_render_metadata($id, $orig){
 
     // add an extra key for the event - to tell event handlers the page whose metadata this is
     $orig['page'] = $id;
-    $evt = new Doku_Event('PARSER_METADATA_RENDER', $orig);
+    $evt = new Event('PARSER_METADATA_RENDER', $orig);
     if ($evt->advise_before()) {
 
         // get instructions
@@ -544,7 +546,7 @@ function p_get_parsermodes(){
         global $PARSER_MODES;
         $obj = null;
         foreach($pluginlist as $p){
-            /** @var DokuWiki_Syntax_Plugin $obj */
+            /** @var \dokuwiki\Extension\SyntaxPlugin $obj */
             if(!$obj = plugin_load('syntax',$p)) continue; //attempt to load plugin into $obj
             $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
             //add to modes

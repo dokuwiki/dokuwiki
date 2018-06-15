@@ -1,6 +1,8 @@
 <?php
 
-class Mock_Auth_Plugin extends DokuWiki_Auth_Plugin {
+use dokuwiki\Extension\AuthPlugin;
+
+class Mock_Auth_Plugin extends AuthPlugin {
 
 	public $loggedOff = false;
 
@@ -27,7 +29,7 @@ class auth_deleteprofile_test extends DokuWikiTest {
     /*
      * Tests:
      *
-     * 1.   It works and the user is logged off 
+     * 1.   It works and the user is logged off
      * 2.   Password matches when config requires it
      * 3,4. Auth plugin can prevent & wiki config can prevent
      * 5.  Any of invalid security token, missing/not set 'delete' flag, missing/unchecked 'confirm_delete'

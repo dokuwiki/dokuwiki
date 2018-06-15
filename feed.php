@@ -11,6 +11,8 @@
 
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\Event;
 
 if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/');
 require_once(DOKU_INC.'inc/init.php');
@@ -79,7 +81,7 @@ if(isset($modes[$opt['feed_mode']])) {
         'opt'  => &$opt,
         'data' => &$data,
     );
-    $event     = new Doku_Event('FEED_MODE_UNKNOWN', $eventData);
+    $event     = new Event('FEED_MODE_UNKNOWN', $eventData);
     if($event->advise_before(true)) {
         echo sprintf('<error>Unknown feed mode %s</error>', hsc($opt['feed_mode']));
         exit;
@@ -192,7 +194,7 @@ function rss_parseOptions() {
 function rss_buildItems(&$rss, &$data, $opt) {
     global $conf;
     global $lang;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
 
     $eventData = array(
@@ -200,7 +202,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
         'data' => &$data,
         'opt'  => &$opt,
     );
-    $event     = new Doku_Event('FEED_DATA_PROCESS', $eventData);
+    $event     = new Event('FEED_DATA_PROCESS', $eventData);
     if($event->advise_before(false)) {
         foreach($data as $ditem) {
             if(!is_array($ditem)) {
@@ -446,7 +448,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 'ditem' => &$ditem,
                 'rss'   => &$rss
             );
-            $evt    = new Doku_Event('FEED_ITEM_ADD', $evdata);
+            $evt    = new Event('FEED_ITEM_ADD', $evdata);
             if($evt->advise_before()) {
                 $rss->addItem($item);
             }

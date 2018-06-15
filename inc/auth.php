@@ -10,6 +10,9 @@
  */
 
 // some ACL level defines
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\Event;
+
 define('AUTH_NONE', 0);
 define('AUTH_READ', 1);
 define('AUTH_EDIT', 2);
@@ -32,7 +35,7 @@ define('AUTH_ADMIN', 255);
  */
 function auth_setup() {
     global $conf;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -209,7 +212,7 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
     global $USERINFO;
     global $conf;
     global $lang;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -405,7 +408,7 @@ function auth_decrypt($ciphertext, $secret) {
 function auth_logoff($keepbc = false) {
     global $conf;
     global $USERINFO;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -449,7 +452,7 @@ function auth_logoff($keepbc = false) {
 function auth_ismanager($user = null, $groups = null, $adminonly = false) {
     global $conf;
     global $USERINFO;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -506,7 +509,7 @@ function auth_isadmin($user = null, $groups = null) {
  * @return bool       true for membership acknowledged
  */
 function auth_isMember($memberlist, $user, array $groups) {
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     if(!$auth) return false;
 
@@ -599,7 +602,7 @@ function auth_aclcheck_cb($data) {
 
     global $conf;
     global $AUTH_ACL;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
 
     // if no ACL is used always return upload rights
@@ -776,7 +779,7 @@ function auth_pwgen($foruser = '') {
         'foruser'  => $foruser
     );
 
-    $evt = new Doku_Event('AUTH_PASSWORD_GENERATE', $data);
+    $evt = new Event('AUTH_PASSWORD_GENERATE', $data);
     if($evt->advise_before(true)) {
         $c = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones
         $v = 'aeiou'; //vowels
@@ -808,7 +811,7 @@ function auth_pwgen($foruser = '') {
  */
 function auth_sendPassword($user, $password) {
     global $lang;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     if(!$auth) return false;
 
@@ -843,7 +846,7 @@ function auth_sendPassword($user, $password) {
 function register() {
     global $lang;
     global $conf;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var \dokuwiki\Extension\AuthPlugin $auth */
     global $auth;
     global $INPUT;
 
@@ -912,7 +915,7 @@ function register() {
 function updateprofile() {
     global $conf;
     global $lang;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -1001,7 +1004,7 @@ function updateprofile() {
 function auth_deleteprofile(){
     global $conf;
     global $lang;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var \dokuwiki\Extension\AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -1055,7 +1058,7 @@ function auth_deleteprofile(){
 function act_resendpwd() {
     global $lang;
     global $conf;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -1223,7 +1226,7 @@ function auth_verifyPassword($clear, $crypt) {
  */
 function auth_setCookie($user, $pass, $sticky) {
     global $conf;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     global $USERINFO;
 

@@ -7,6 +7,8 @@
  */
 
 // plugin related constants
+use dokuwiki\Extension\PluginInterface;
+
 if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 
 class Doku_Plugin_Controller {
@@ -68,7 +70,7 @@ class Doku_Plugin_Controller {
      * @param  $name     string name of the plugin to load
      * @param  $new      bool   true to return a new instance of the plugin, false to use an already loaded instance
      * @param  $disabled bool   true to load even disabled plugins
-     * @return DokuWiki_PluginInterface|null  the plugin object or null on failure
+     * @return PluginInterface|null  the plugin object or null on failure
      */
     public function load($type,$name,$new=false,$disabled=false){
 

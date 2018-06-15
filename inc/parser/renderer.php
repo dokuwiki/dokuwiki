@@ -6,6 +6,9 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Extension\Plugin;
+use dokuwiki\Extension\SyntaxPlugin;
+
 /**
  * Allowed chars in $language for code highlighting
  * @see GeSHi::set_language()
@@ -15,7 +18,7 @@ define('PREG_PATTERN_VALID_LANGUAGE', '#[^a-zA-Z0-9\-_]#');
 /**
  * An empty renderer, produces no output
  *
- * Inherits from DokuWiki_Plugin for giving additional functions to render plugins
+ * Inherits from dokuwiki\Plugin\DokuWiki_Plugin for giving additional functions to render plugins
  *
  * The renderer transforms the syntax instructions created by the parser and handler into the
  * desired output format. For each instruction a corresponding method defined in this class will
@@ -23,7 +26,7 @@ define('PREG_PATTERN_VALID_LANGUAGE', '#[^a-zA-Z0-9\-_]#');
  * $doc field. When all instructions are processed, the $doc field contents will be cached by
  * DokuWiki and sent to the user.
  */
-abstract class Doku_Renderer extends DokuWiki_Plugin {
+abstract class Doku_Renderer extends Plugin {
     /** @var array Settings, control the behavior of the renderer */
     public $info = array(
         'cache' => true, // may the rendered result cached?
@@ -105,7 +108,7 @@ abstract class Doku_Renderer extends DokuWiki_Plugin {
      * @param string $match raw matched syntax
      */
     public function plugin($name, $data, $state = '', $match = '') {
-        /** @var DokuWiki_Syntax_Plugin $plugin */
+        /** @var SyntaxPlugin $plugin */
         $plugin = plugin_load('syntax', $name);
         if($plugin != null) {
             $plugin->render($this->getFormat(), $this, $data);

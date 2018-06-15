@@ -1,4 +1,7 @@
 <?php
+
+use dokuwiki\Extension\EventHandler;
+
 if(!class_exists('PHPUnit_Framework_TestCase')) {
     /**
      * phpunit 5/6 compatibility
@@ -133,7 +136,7 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
         // reset event handler
         global $EVENT_HANDLER;
-        $EVENT_HANDLER = new Doku_Event_Handler();
+        $EVENT_HANDLER = new EventHandler();
 
         // reload language
         $local = $conf['lang'];

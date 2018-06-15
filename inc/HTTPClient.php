@@ -6,6 +6,7 @@
  * @author     Andreas Goetz <cpuidle@gmx.de>
  */
 
+use dokuwiki\Extension\Event;
 
 define('HTTP_NL',"\r\n");
 
@@ -940,7 +941,7 @@ class DokuHTTPClient extends HTTPClient {
         $httpdata = array('url'    => $url,
                           'data'   => $data,
                           'method' => $method);
-        $evt = new Doku_Event('HTTPCLIENT_REQUEST_SEND',$httpdata);
+        $evt = new Event('HTTPCLIENT_REQUEST_SEND',$httpdata);
         if($evt->advise_before()){
             $url    = $httpdata['url'];
             $data   = $httpdata['data'];

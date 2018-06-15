@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-if(!defined('DOKU_MESSAGEURL')){
+use dokuwiki\Extension\Event;if(!defined('DOKU_MESSAGEURL')){
     if(in_array('ssl', stream_get_transports())) {
         define('DOKU_MESSAGEURL','https://update.dokuwiki.org/check/');
     }else{
@@ -468,7 +468,7 @@ function dbg_deprecated($alternative = '') {
         'line' => $call['line'],
     ];
 
-    $event = new Doku_Event('INFO_DEPRECATION_LOG', $data);
+    $event = new Event('INFO_DEPRECATION_LOG', $data);
     if($event->advise_before()) {
         $msg = $event->data['called'] . ' is deprecated. It was called from ';
         $msg .= $event->data['caller'] . ' in ' . $event->data['file'] . ':' . $event->data['line'];

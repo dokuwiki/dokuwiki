@@ -3,6 +3,7 @@
  * Initialize some defaults needed for DokuWiki
  */
 
+use dokuwiki\Extension\EventHandler;
 
 /**
  * timing Dokuwiki execution
@@ -208,7 +209,7 @@ $plugin_controller = new $plugin_controller_class();
 
 // initialize the event handler
 global $EVENT_HANDLER;
-$EVENT_HANDLER = new Doku_Event_Handler();
+$EVENT_HANDLER = new EventHandler();
 
 $local = $conf['lang'];
 trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);

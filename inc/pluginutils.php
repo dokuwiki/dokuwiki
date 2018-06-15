@@ -7,6 +7,9 @@
  */
 
 // plugin related constants
+use dokuwiki\Extension\AdminPlugin;
+use dokuwiki\Extension\PluginInterface;
+
 if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 // note that only [a-z0-9]+ is officially supported,
 // this is only to support plugins that don't follow these conventions, too
@@ -38,7 +41,7 @@ function plugin_list($type='',$all=false) {
  * @param  $name     string name of the plugin to load
  * @param  $new      bool   true to return a new instance of the plugin, false to use an already loaded instance
  * @param  $disabled bool   true to load even disabled plugins
- * @return DokuWiki_PluginInterface|null  the plugin object or null on failure
+ * @return PluginInterface|null  the plugin object or null on failure
  */
 function plugin_load($type,$name,$new=false,$disabled=false) {
     /** @var $plugin_controller Doku_Plugin_Controller */
@@ -121,7 +124,7 @@ function plugin_getRequestAdminPlugin(){
             $pluginlist = plugin_list('admin');
             if (in_array($page, $pluginlist)) {
                 // attempt to load the plugin
-                /** @var $admin_plugin DokuWiki_Admin_Plugin */
+                /** @var $admin_plugin AdminPlugin */
                 $admin_plugin = plugin_load('admin', $page);
                 // verify
                 if ($admin_plugin && $admin_plugin->forAdminOnly() && !$INFO['isadmin']) {

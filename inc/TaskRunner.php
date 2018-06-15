@@ -2,7 +2,7 @@
 
 namespace dokuwiki;
 
-use Doku_Event;
+use dokuwiki\Extension\Event;
 use dokuwiki\Sitemap\Mapper;
 use Subscription;
 
@@ -44,7 +44,7 @@ class TaskRunner
 
         // run one of the jobs
         $tmp = []; // No event data
-        $evt = new Doku_Event('INDEXER_TASKS_RUN', $tmp);
+        $evt = new Event('INDEXER_TASKS_RUN', $tmp);
         if ($evt->advise_before()) {
             $this->runIndexer() or
             $this->runSitemapper() or
