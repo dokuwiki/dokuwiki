@@ -1,5 +1,5 @@
 <?php
-
+// phpcs:ignoreFile -- this file violates PSR2 by definition
 /**
  * These classes and functions are deprecated and will be removed in future releases
  */

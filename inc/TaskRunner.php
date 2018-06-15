@@ -185,7 +185,6 @@ class TaskRunner
     protected function runIndexer()
     {
         global $ID;
-        global $conf;
         print 'runIndexer(): started' . NL;
 
         if (!$ID) {
@@ -221,7 +220,6 @@ class TaskRunner
      */
     protected function sendDigest()
     {
-        global $conf;
         global $ID;
 
         echo 'sendDigest(): started' . NL;

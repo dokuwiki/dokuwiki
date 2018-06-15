@@ -8,6 +8,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Anika Henke <anika@selfthinker.org>
  */
+// phpcs:disable PSR1.Files.SideEffects
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',1);
 require_once(DOKU_INC.'inc/init.php');
@@ -44,8 +45,6 @@ require_once(DOKU_INC.'inc/init.php');
 <body>
 <?php
 // get merged style.ini
-define('SIMPLE_TEST', true); // hack to prevent css output and headers
-require_once(DOKU_INC.'lib/exe/css.php');
 $styleUtils = new \dokuwiki\StyleUtils();
 $ini = $styleUtils->cssStyleini($conf['template']);
 

@@ -78,6 +78,7 @@
         <exclude-pattern>*/install.php</exclude-pattern>
         <exclude-pattern>*/feed.php</exclude-pattern>
         <exclude-pattern>*/bin/*.php</exclude-pattern>
+        <exclude-pattern>*/lib/exe/*.php</exclude-pattern>
     </rule>
 
 </ruleset>
