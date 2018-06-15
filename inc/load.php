@@ -15,7 +15,6 @@ require_once(DOKU_INC.'inc/changelog.php');
 require_once(DOKU_INC.'inc/common.php');
 require_once(DOKU_INC.'inc/confutils.php');
 require_once(DOKU_INC.'inc/pluginutils.php');
-require_once(DOKU_INC.'inc/events.php');
 require_once(DOKU_INC.'inc/form.php');
 require_once(DOKU_INC.'inc/fulltext.php');
 require_once(DOKU_INC.'inc/html.php');
