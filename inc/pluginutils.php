@@ -8,6 +8,7 @@
 
 // plugin related constants
 use dokuwiki\Extension\AdminPlugin;
+use dokuwiki\Extension\PluginController;
 use dokuwiki\Extension\PluginInterface;
 
 if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
@@ -27,7 +28,7 @@ if(!defined('DOKU_PLUGIN_NAME_REGEX')) define('DOKU_PLUGIN_NAME_REGEX', '[a-zA-Z
  * @return array with plugin names or plugin component names
  */
 function plugin_list($type='',$all=false) {
-    /** @var $plugin_controller Doku_Plugin_Controller */
+    /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->getList($type,$all);
 }
@@ -44,7 +45,7 @@ function plugin_list($type='',$all=false) {
  * @return PluginInterface|null  the plugin object or null on failure
  */
 function plugin_load($type,$name,$new=false,$disabled=false) {
-    /** @var $plugin_controller Doku_Plugin_Controller */
+    /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->load($type,$name,$new,$disabled);
 }
@@ -56,7 +57,7 @@ function plugin_load($type,$name,$new=false,$disabled=false) {
  * @return bool true disabled, false enabled
  */
 function plugin_isdisabled($plugin) {
-    /** @var $plugin_controller Doku_Plugin_Controller */
+    /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->isdisabled($plugin);
 }
@@ -68,7 +69,7 @@ function plugin_isdisabled($plugin) {
  * @return bool true saving succeed, false saving failed
  */
 function plugin_enable($plugin) {
-    /** @var $plugin_controller Doku_Plugin_Controller */
+    /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->enable($plugin);
 }
@@ -80,7 +81,7 @@ function plugin_enable($plugin) {
  * @return bool  true saving succeed, false saving failed
  */
 function plugin_disable($plugin) {
-    /** @var $plugin_controller Doku_Plugin_Controller */
+    /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->disable($plugin);
 }
@@ -92,7 +93,7 @@ function plugin_disable($plugin) {
  * @return string name of directory
  */
 function plugin_directory($plugin) {
-    /** @var $plugin_controller Doku_Plugin_Controller */
+    /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->get_directory($plugin);
 }
@@ -103,7 +104,7 @@ function plugin_directory($plugin) {
  * @return array with arrays of plugin configs
  */
 function plugin_getcascade() {
-    /** @var $plugin_controller Doku_Plugin_Controller */
+    /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->getCascade();
 }

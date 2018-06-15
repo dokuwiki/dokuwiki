@@ -6,6 +6,8 @@
  * @author  Michael Hamann <michael@content-space.de>
  */
 
+use dokuwiki\Extension\PluginController;
+
 /**
  * Class helper_plugin_extension_repository provides access to the extension repository on dokuwiki.org
  */
@@ -22,7 +24,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
      */
     public function init()
     {
-        /* @var Doku_Plugin_Controller $plugin_controller */
+        /* @var PluginController $plugin_controller */
         global $plugin_controller;
         if ($this->hasAccess()) {
             $list = $plugin_controller->getList('', true);

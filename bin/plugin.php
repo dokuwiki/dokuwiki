@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 
-use dokuwiki\Extension\CLIPlugin;
+use dokuwiki\Extension\PluginController;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Colors;
 use splitbrain\phpcli\Options;
@@ -52,7 +52,7 @@ class PluginCLI extends CLI {
      * List available plugins
      */
     protected function listPlugins() {
-        /** @var Doku_Plugin_Controller $plugin_controller */
+        /** @var PluginController $plugin_controller */
         global $plugin_controller;
 
         echo "\n";
