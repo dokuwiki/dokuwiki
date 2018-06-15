@@ -81,9 +81,9 @@ function tpl_content($prependTOC = true) {
     $INFO['prependTOC'] = $prependTOC;
 
     ob_start();
-    trigger_event('TPL_ACT_RENDER', $ACT, 'tpl_content_core');
+    Event::createAndTrigger('TPL_ACT_RENDER', $ACT, 'tpl_content_core');
     $html_output = ob_get_clean();
-    trigger_event('TPL_CONTENT_DISPLAY', $html_output, 'ptln');
+    Event::createAndTrigger('TPL_CONTENT_DISPLAY', $html_output, 'ptln');
 
     return !empty($html_output);
 }
@@ -150,7 +150,7 @@ function tpl_toc($return = false) {
         }
     }
 
-    trigger_event('TPL_TOC_RENDER', $toc, null, false);
+    Event::createAndTrigger('TPL_TOC_RENDER', $toc, null, false);
     $html = html_TOC($toc);
     if($return) return $html;
     echo $html;
@@ -359,7 +359,7 @@ function tpl_metaheaders($alt = true) {
     );
 
     // trigger event here
-    trigger_event('TPL_METAHEADER_OUTPUT', $head, '_tpl_metaheaders_action', true);
+    Event::createAndTrigger('TPL_METAHEADER_OUTPUT', $head, '_tpl_metaheaders_action', true);
     return true;
 }
 
@@ -703,7 +703,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
         $searchForm->addTagClose('div');
     }
     $searchForm->addTagClose('div');
-    trigger_event('FORM_QUICKSEARCH_OUTPUT', $searchForm);
+    Event::createAndTrigger('FORM_QUICKSEARCH_OUTPUT', $searchForm);
 
     echo $searchForm->toHTML();
 
@@ -1139,7 +1139,7 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     $p['src'] = $src;
 
     $data = array('url'=> ($link ? $url : null), 'params'=> $p);
-    return trigger_event('TPL_IMG_DISPLAY', $data, '_tpl_img_action', true);
+    return Event::createAndTrigger('TPL_IMG_DISPLAY', $data, '_tpl_img_action', true);
 }
 
 /**

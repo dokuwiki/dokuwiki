@@ -108,7 +108,7 @@ function auth_setup() {
             'sticky'   => $INPUT->bool('r'),
             'silent'   => $INPUT->bool('http_credentials')
         );
-        trigger_event('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
+        Event::createAndTrigger('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
     }
 
     //load ACL into a global array XXX
@@ -583,7 +583,7 @@ function auth_aclcheck($id, $user, $groups) {
         'groups' => $groups
     );
 
-    return trigger_event('AUTH_ACL_CHECK', $data, 'auth_aclcheck_cb');
+    return Event::createAndTrigger('AUTH_ACL_CHECK', $data, 'auth_aclcheck_cb');
 }
 
 /**

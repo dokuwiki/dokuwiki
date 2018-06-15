@@ -3,6 +3,7 @@
 namespace dokuwiki\Cache;
 
 use \dokuwiki\Debug\PropertyDeprecationHelper;
+use dokuwiki\Extension\Event;
 
 /**
  * Generic handling of caching
@@ -54,9 +55,9 @@ class Cache
         return $this->_event;
     }
 
-    public function setEvent($_event)
+    public function setEvent($event)
     {
-        $this->_event = $_event;
+        $this->_event = $event;
     }
 
     /**
@@ -78,7 +79,7 @@ class Cache
         $this->addDependencies();
 
         if ($this->_event) {
-            return $this->stats(trigger_event($this->_event, $this, array($this, 'makeDefaultCacheDecision')));
+            return $this->stats(Event::createAndTrigger($this->_event, $this, array($this, 'makeDefaultCacheDecision')));
         } else {
             return $this->stats($this->makeDefaultCacheDecision());
         }

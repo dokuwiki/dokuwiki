@@ -7,8 +7,9 @@
  */
 
 use dokuwiki\Cache\Cache;
+use dokuwiki\Extension\Event;
 
-if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
+if(!defined('DOKU_INC')) define('DOKU_INC', __DIR__ .'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 if(!defined('NL')) define('NL',"\n");
 if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
@@ -75,7 +76,7 @@ function js_out(){
     }
 
     // Let plugins decide to either put more scripts here or to remove some
-    trigger_event('JS_SCRIPT_LIST', $files);
+    Event::createAndTrigger('JS_SCRIPT_LIST', $files);
 
     // The generated script depends on some dynamic options
     $cache = new Cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].md5(serialize($files)),'.js');

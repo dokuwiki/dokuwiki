@@ -6,6 +6,7 @@ use Doku_Renderer_xhtml;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\Event;
 
 define('DOKU_API_VERSION', 10);
 
@@ -981,7 +982,7 @@ class ApiCore
                 'sticky' => false,
                 'silent' => true,
             );
-            $ok = trigger_event('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
+            $ok = Event::createAndTrigger('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
         }
         session_write_close(); // we're done with the session
 

@@ -39,7 +39,7 @@ function ft_pageSearch($query,&$highlight, $sort = null, $after = null, $before 
     ];
     $data['highlight'] =& $highlight;
 
-    return trigger_event('SEARCH_QUERY_FULLPAGE', $data, '_ft_pageSearch');
+    return Event::createAndTrigger('SEARCH_QUERY_FULLPAGE', $data, '_ft_pageSearch');
 }
 
 /**
@@ -244,7 +244,7 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $befor
         'before' => $before
     ];
     $data['has_titles'] = true; // for plugin backward compatibility check
-    return trigger_event('SEARCH_QUERY_PAGELOOKUP', $data, '_ft_pageLookup');
+    return Event::createAndTrigger('SEARCH_QUERY_PAGELOOKUP', $data, '_ft_pageLookup');
 }
 
 /**

@@ -161,4 +161,23 @@ class Event
     {
         return $this->_default;
     }
+
+    /**
+     * Convenience method to trigger an event
+     *
+     * Creates, triggers and destroys an event in one go
+     *
+     * @param  string   $name               name for the event
+     * @param  mixed    $data               event data
+     * @param  callable $action             (optional, default=NULL) default action, a php callback function
+     * @param  bool     $canPreventDefault  (optional, default=true) can hooks prevent the default action
+     *
+     * @return mixed                        the event results value after all event processing is complete
+     *                                      by default this is the return value of the default action however
+     *                                      it can be set or modified by event handler hooks
+     */
+    static public function createAndTrigger($name, &$data, $action=null, $canPreventDefault=true) {
+        $evt = new Event($name, $data);
+        return $evt->trigger($action, $canPreventDefault);
+    }
 }

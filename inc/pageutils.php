@@ -636,7 +636,7 @@ function isHiddenPage($id){
         'id' => $id,
         'hidden' => false
     );
-    trigger_event('PAGEUTILS_ID_HIDEPAGE', $data, '_isHiddenPage');
+    \dokuwiki\Extension\Event::createAndTrigger('PAGEUTILS_ID_HIDEPAGE', $data, '_isHiddenPage');
     return $data['hidden'];
 }
 

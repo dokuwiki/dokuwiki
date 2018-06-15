@@ -10,13 +10,11 @@ use dokuwiki\Debug\DebugHelper;
  */
 class cache extends \dokuwiki\Cache\Cache
 {
-
     public function __construct($key, $ext)
     {
         DebugHelper::dbgDeprecatedFunction(dokuwiki\Cache\Cache::class);
         parent::__construct($key, $ext);
     }
-
 }
 
 /**

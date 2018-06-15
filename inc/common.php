@@ -757,7 +757,7 @@ function checkwordblock($text = '') {
             $callback = function () {
                 return true;
             };
-            return trigger_event('COMMON_WORDBLOCK_BLOCKED', $data, $callback, true);
+            return Event::createAndTrigger('COMMON_WORDBLOCK_BLOCKED', $data, $callback, true);
         }
     }
     return false;
@@ -1380,7 +1380,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     if($svdta['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
         // Send "update" event with empty data, so plugins can react to page deletion
         $data = array(array($svdta['file'], '', false), getNS($id), noNS($id), false);
-        trigger_event('IO_WIKIPAGE_WRITE', $data);
+        Event::createAndTrigger('IO_WIKIPAGE_WRITE', $data);
         // pre-save deleted revision
         @touch($svdta['file']);
         clearstatcache();
@@ -1478,7 +1478,7 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
         if(!actionOK('subscribe')) return false; //subscribers enabled?
         if($conf['useacl'] && $INPUT->server->str('REMOTE_USER') && $minor) return false; //skip minors
         $data = array('id' => $id, 'addresslist' => '', 'self' => false, 'replacements' => $replace);
-        trigger_event(
+        Event::createAndTrigger(
             'COMMON_NOTIFY_ADDRESSLIST', $data,
             array(new Subscription(), 'notifyaddresses')
         );

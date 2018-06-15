@@ -69,7 +69,7 @@ function idx_get_version(){
 
         // DokuWiki version is included for the convenience of plugins
         $data = array('dokuwiki'=>$version);
-        trigger_event('INDEXER_VERSION_GET', $data, null, false);
+        Event::createAndTrigger('INDEXER_VERSION_GET', $data, null, false);
         unset($data['dokuwiki']); // this needs to be first
         ksort($data);
         foreach ($data as $plugin=>$vers)

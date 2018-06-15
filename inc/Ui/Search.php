@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 class Search extends Ui
@@ -86,7 +87,7 @@ class Search extends Ui
 
         $searchForm->addFieldsetClose();
 
-        trigger_event('FORM_SEARCH_OUTPUT', $searchForm);
+        Event::createAndTrigger('FORM_SEARCH_OUTPUT', $searchForm);
 
         return $searchForm->toHTML();
     }
@@ -538,7 +539,7 @@ class Search extends Ui
                 'listItemContent' => [$link],
                 'page' => $id,
             ];
-            trigger_event('SEARCH_RESULT_PAGELOOKUP', $eventData);
+            Event::createAndTrigger('SEARCH_RESULT_PAGELOOKUP', $eventData);
             $html .= '<li>' . implode('', $eventData['listItemContent']) . '</li>';
         }
         $html .= '</ul> ';
@@ -606,7 +607,7 @@ class Search extends Ui
                 'page' => $id,
                 'position' => $position,
             ];
-            trigger_event('SEARCH_RESULT_FULLPAGE', $eventData);
+            Event::createAndTrigger('SEARCH_RESULT_FULLPAGE', $eventData);
             $html .= '<div class="search_fullpage_result">';
             $html .= '<dt>' . implode(' ', $eventData['resultHeader']) . '</dt>';
             foreach ($eventData['resultBody'] as $class => $htmlContent) {

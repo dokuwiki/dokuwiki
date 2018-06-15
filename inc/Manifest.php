@@ -2,6 +2,8 @@
 
 namespace dokuwiki;
 
+use dokuwiki\Extension\Event;
+
 class Manifest
 {
     public function sendManifest()
@@ -74,7 +76,7 @@ class Manifest
             }
         }
 
-        trigger_event('MANIFEST_SEND', $manifest);
+        Event::createAndTrigger('MANIFEST_SEND', $manifest);
 
         header('Content-Type: application/manifest+json');
         echo json_encode($manifest);
