@@ -7,8 +7,9 @@
  */
 
 use dokuwiki\Cache\Cache;
+use dokuwiki\Extension\Event;
 
-if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
+if(!defined('DOKU_INC')) define('DOKU_INC', __DIR__ .'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
 if(!defined('NL')) define('NL',"\n");
@@ -87,7 +88,7 @@ function css_out(){
 
         // Let plugins decide to either put more styles here or to remove some
         $media_files[$mediatype] = css_filewrapper($mediatype, $files);
-        $CSSEvt = new Doku_Event('CSS_STYLES_INCLUDED', $media_files[$mediatype]);
+        $CSSEvt = new Event('CSS_STYLES_INCLUDED', $media_files[$mediatype]);
 
         // Make it preventable.
         if ( $CSSEvt->advise_before() ) {

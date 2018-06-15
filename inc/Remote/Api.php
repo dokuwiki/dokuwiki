@@ -2,8 +2,7 @@
 
 namespace dokuwiki\Remote;
 
-use DokuWiki_Remote_Plugin;
-use dokuwiki\Input\Input;
+use dokuwiki\Extension\RemotePlugin;
 
 /**
  * This class provides information about remote access to the wiki.
@@ -290,10 +289,10 @@ class Api
             $plugins = plugin_list('remote');
 
             foreach ($plugins as $pluginName) {
-                /** @var DokuWiki_Remote_Plugin $plugin */
+                /** @var RemotePlugin $plugin */
                 $plugin = plugin_load('remote', $pluginName);
-                if (!is_subclass_of($plugin, 'DokuWiki_Remote_Plugin')) {
-                    throw new RemoteException("Plugin $pluginName does not implement DokuWiki_Remote_Plugin");
+                if (!is_subclass_of($plugin, 'dokuwiki\Extension\RemotePlugin')) {
+                    throw new RemoteException("Plugin $pluginName does not implement dokuwiki\Plugin\DokuWiki_Remote_Plugin");
                 }
 
                 try {

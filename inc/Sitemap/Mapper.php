@@ -64,7 +64,7 @@ class Mapper {
         }
 
         $eventData = array('items' => &$items, 'sitemap' => &$sitemap);
-        $event = new \Doku_Event('SITEMAP_GENERATE', $eventData);
+        $event = new \dokuwiki\Extension\Event('SITEMAP_GENERATE', $eventData);
         if ($event->advise_before(true)) {
             //save the new sitemap
             $event->result = io_saveFile($sitemap, Mapper::getXML($items));
@@ -147,7 +147,7 @@ class Mapper {
         $data = array('ping_urls' => $ping_urls,
                             'encoded_sitemap_url' => $encoded_sitemap_url
         );
-        $event = new \Doku_Event('SITEMAP_PING', $data);
+        $event = new \dokuwiki\Extension\Event('SITEMAP_PING', $data);
         if ($event->advise_before(true)) {
             foreach ($data['ping_urls'] as $name => $url) {
                 dbglog("Sitemapper::PingSearchEngines(): pinging $name");

@@ -119,8 +119,8 @@ class Admin extends Ui {
         $menu = ['admin' => [], 'manager' => [], 'other' => []];
 
         foreach($pluginlist as $p) {
-            /** @var \DokuWiki_Admin_Plugin $obj */
-            if (($obj = plugin_load('admin', $p)) === null) continue;
+            /** @var \dokuwiki\Extension\AdminPlugin $obj */
+            if(($obj = plugin_load('admin', $p)) === null) continue;
 
             // check permissions
             if (!$obj->isAccessibleByCurrentUser()) continue;

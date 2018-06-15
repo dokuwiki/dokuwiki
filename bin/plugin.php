@@ -1,6 +1,7 @@
 #!/usr/bin/php
 <?php
 
+use dokuwiki\Extension\CLIPlugin;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Colors;
 use splitbrain\phpcli\Options;
@@ -85,7 +86,7 @@ class PluginCLI extends CLI {
      * Instantiate a CLI plugin
      *
      * @param string $name
-     * @return DokuWiki_CLI_Plugin|null
+     * @return \dokuwiki\Extension\CLIPlugin|null
      */
     protected function loadPlugin($name) {
         // execute the plugin CLI

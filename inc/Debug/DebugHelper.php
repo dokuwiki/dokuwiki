@@ -4,6 +4,7 @@
 namespace dokuwiki\Debug;
 
 use Doku_Event;
+use dokuwiki\Extension\EventHandler;
 
 class DebugHelper
 {
@@ -20,6 +21,7 @@ class DebugHelper
     public static function dbgDeprecatedFunction($alternative = '', $callerOffset = 1)
     {
         global $conf;
+        /** @var EventHandler $EVENT_HANDLER */
         global $EVENT_HANDLER;
         if (!$conf['allowdebug'] && !$EVENT_HANDLER->hasHandlerForEvent(self::INFO_DEPRECATION_LOG_EVENT)) {
             // avoid any work if no one cares

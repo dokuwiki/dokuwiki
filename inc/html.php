@@ -8,6 +8,7 @@
 
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Extension\AuthPlugin;
 
 if (!defined('SEC_EDIT_PATTERN')) {
     define('SEC_EDIT_PATTERN', '#<!-- EDIT({.*?}) -->#');
@@ -1723,7 +1724,7 @@ function html_updateprofile(){
     global $conf;
     global $INPUT;
     global $INFO;
-    /** @var DokuWiki_Auth_Plugin $auth */
+    /** @var AuthPlugin $auth */
     global $auth;
 
     print p_locale_xhtml('updateprofile');
@@ -2016,7 +2017,7 @@ function html_minoredit(){
 function html_debug(){
     global $conf;
     global $lang;
-    /** @var DokuWiki_Auth_Plugin $auth */
+    /** @var AuthPlugin $auth */
     global $auth;
     global $INFO;
 

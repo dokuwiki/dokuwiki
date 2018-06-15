@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\test\mock\DokuWiki_Auth_Plugin;
+use dokuwiki\test\mock\AuthPlugin;
 
 class pageutils_findnearest_test extends DokuWikiTest {
 
@@ -15,7 +15,7 @@ class pageutils_findnearest_test extends DokuWikiTest {
         $conf['useacl']    = 1;
 
         $this->oldAuthAcl = $AUTH_ACL;
-        $auth = new DokuWiki_Auth_Plugin();
+        $auth = new AuthPlugin();
 
         $AUTH_ACL = array(
             '*           @ALL           1',

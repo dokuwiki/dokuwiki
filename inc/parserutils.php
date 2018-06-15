@@ -9,6 +9,8 @@
 
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
+use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Extension\Event;
 use dokuwiki\Parsing\Parser;
 
 /**
@@ -86,7 +88,7 @@ function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
             $ret = p_cached_output($file,'xhtml',$id);
         }elseif($excuse){
             //check if the page once existed
-            $changelog = new PageChangelog($id);
+            $changelog = new PageChangeLog($id);
             if($changelog->hasRevisions()) {
                 $ret = p_locale_xhtml('onceexisted');
             } else {
@@ -307,10 +309,10 @@ function p_get_metadata($id, $key='', $render=METADATA_RENDER_USING_CACHE){
  *
  * @see http://www.dokuwiki.org/devel:metadata#functions_to_get_and_set_metadata
  *
- * @param String  $id         is the ID of a wiki page
- * @param Array   $data       is an array with key ⇒ value pairs to be set in the metadata
- * @param Boolean $render     whether or not the page metadata should be generated with the renderer
- * @param Boolean $persistent indicates whether or not the particular metadata value will persist through
+ * @param string  $id         is the ID of a wiki page
+ * @param array   $data       is an array with key ⇒ value pairs to be set in the metadata
+ * @param boolean $render     whether or not the page metadata should be generated with the renderer
+ * @param boolean $persistent indicates whether or not the particular metadata value will persist through
  *                            the next metadata rendering.
  * @return boolean true on success
  *
@@ -491,7 +493,7 @@ function p_render_metadata($id, $orig){
 
     // add an extra key for the event - to tell event handlers the page whose metadata this is
     $orig['page'] = $id;
-    $evt = new Doku_Event('PARSER_METADATA_RENDER', $orig);
+    $evt = new Event('PARSER_METADATA_RENDER', $orig);
     if ($evt->advise_before()) {
 
         // get instructions
@@ -552,7 +554,7 @@ function p_get_parsermodes(){
         global $PARSER_MODES;
         $obj = null;
         foreach($pluginlist as $p){
-            /** @var DokuWiki_Syntax_Plugin $obj */
+            /** @var \dokuwiki\Extension\SyntaxPlugin $obj */
             if(!$obj = plugin_load('syntax',$p)) continue; //attempt to load plugin into $obj
             $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
             //add to modes

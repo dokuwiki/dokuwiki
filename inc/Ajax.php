@@ -20,7 +20,7 @@ class Ajax {
         if(method_exists($this, $callfn)) {
             $this->$callfn();
         } else {
-            $evt = new \Doku_Event('AJAX_CALL_UNKNOWN', $call);
+            $evt = new Extension\Event('AJAX_CALL_UNKNOWN', $call);
             if($evt->advise_before()) {
                 print "AJAX call '" . hsc($call) . "' unknown!\n";
             } else {

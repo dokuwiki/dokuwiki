@@ -9,6 +9,8 @@
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\Event;
 
 /**
  * These constants are used with the recents function
@@ -1082,7 +1084,7 @@ function pageTemplate($id) {
         'doreplace' => true // should wildcard replacements be done on the text?
     );
 
-    $evt = new Doku_Event('COMMON_PAGETPL_LOAD', $data);
+    $evt = new Event('COMMON_PAGETPL_LOAD', $data);
     if($evt->advise_before(true)) {
         // the before event might have loaded the content already
         if(empty($data['tpl'])) {
@@ -1359,7 +1361,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         $svdta['changeType'] = DOKU_CHANGE_TYPE_MINOR_EDIT;
     }
 
-    $event = new Doku_Event('COMMON_WIKIPAGE_SAVE', $svdta);
+    $event = new Event('COMMON_WIKIPAGE_SAVE', $svdta);
     if(!$event->advise_before()) return;
 
     // if the content has not been changed, no save happens (plugins may override this)
@@ -1776,7 +1778,7 @@ function editorinfo($username, $textonly = false) {
  */
 function userlink($username = null, $textonly = false) {
     global $conf, $INFO;
-    /** @var DokuWiki_Auth_Plugin $auth */
+    /** @var AuthPlugin $auth */
     global $auth;
     /** @var Input $INPUT */
     global $INPUT;
@@ -1808,7 +1810,7 @@ function userlink($username = null, $textonly = false) {
         }
     }
 
-    $evt = new Doku_Event('COMMON_USER_LINK', $data);
+    $evt = new Event('COMMON_USER_LINK', $data);
     if($evt->advise_before(true)) {
         if(empty($data['name'])) {
             if($auth) $info = $auth->getUserData($username);

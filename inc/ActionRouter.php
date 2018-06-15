@@ -76,7 +76,7 @@ class ActionRouter {
 
         try {
             // give plugins an opportunity to process the actionname
-            $evt = new \Doku_Event('ACTION_ACT_PREPROCESS', $actionname);
+            $evt = new Extension\Event('ACTION_ACT_PREPROCESS', $actionname);
             if ($evt->advise_before()) {
                 $this->action = $this->loadAction($actionname);
                 $this->checkAction($this->action);
