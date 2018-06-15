@@ -3,7 +3,7 @@
 namespace dokuwiki;
 
 use Doku_Event;
-use Sitemapper;
+use dokuwiki\Sitemap\Mapper;
 use Subscription;
 
 /**
@@ -208,7 +208,7 @@ class TaskRunner
     protected function runSitemapper()
     {
         print 'runSitemapper(): started' . NL;
-        $result = Sitemapper::generate() && Sitemapper::pingSearchEngines();
+        $result = Mapper::generate() && Mapper::pingSearchEngines();
         print 'runSitemapper(): finished' . NL;
         return $result;
     }

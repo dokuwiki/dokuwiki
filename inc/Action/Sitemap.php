@@ -32,8 +32,8 @@ class Sitemap extends AbstractAction {
             throw new FatalException(404, 'Sitemap generation is disabled');
         }
 
-        $sitemap = \Sitemapper::getFilePath();
-        if(\Sitemapper::sitemapIsCompressed()) {
+        $sitemap = Sitemap::getFilePath();
+        if(Sitemap::sitemapIsCompressed()) {
             $mime = 'application/x-gzip';
         } else {
             $mime = 'application/xml; charset=utf-8';
@@ -41,7 +41,7 @@ class Sitemap extends AbstractAction {
 
         // Check if sitemap file exists, otherwise create it
         if(!is_readable($sitemap)) {
-            \Sitemapper::generate();
+            Sitemap::generate();
         }
 
         if(is_readable($sitemap)) {
