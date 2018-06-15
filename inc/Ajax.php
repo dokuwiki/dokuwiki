@@ -119,8 +119,6 @@ class Ajax {
      * Andreas Gohr <andi@splitbrain.org>
      */
     protected function call_lock() {
-        global $conf;
-        global $lang;
         global $ID;
         global $INFO;
         global $INPUT;
@@ -130,34 +128,29 @@ class Ajax {
 
         $INFO = pageinfo();
 
+        $response = [
+            'errors' => [],
+            'lock' => '0',
+            'draft' => '',
+        ];
         if(!$INFO['writable']) {
-            echo 'Permission denied';
+            $response['errors'][] = 'Permission to write this page has been denied.';
+            echo json_encode($response);
             return;
         }
 
         if(!checklock($ID)) {
             lock($ID);
-            echo 1;
+            $response['lock'] = '1';
         }
 
-        if($conf['usedraft'] && $INPUT->post->str('wikitext')) {
-            $client = $_SERVER['REMOTE_USER'];
-            if(!$client) $client = clientIP(true);
-
-            $draft = array(
-                'id' => $ID,
-                'prefix' => substr($INPUT->post->str('prefix'), 0, -1),
-                'text' => $INPUT->post->str('wikitext'),
-                'suffix' => $INPUT->post->str('suffix'),
-                'date' => $INPUT->post->int('date'),
-                'client' => $client,
-            );
-            $cname = getCacheName($draft['client'] . $ID, '.draft');
-            if(io_saveFile($cname, serialize($draft))) {
-                echo $lang['draftdate'] . ' ' . dformat();
-            }
+        $draft = new Draft($ID, $INFO['client']);
+        if ($draft->saveDraft()) {
+            $response['draft'] = $draft->getDraftMessage();
+        } else {
+            $response['errors'] = array_merge($response['errors'], $draft->getErrors());
         }
-
+        echo json_encode($response);
     }
 
     /**
