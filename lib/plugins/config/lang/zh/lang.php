@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Tientao Chou <teatall@foxmail.com>
  * @author lempel <riverlempel@hotmail.com>
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
@@ -158,6 +159,10 @@ $lang['xsendfile']             = '使用 X-Sendfile 头让服务器发送状态�
 $lang['renderer_xhtml']        = '主维基页面 (xhtml) 输出使用的渲染';
 $lang['renderer__core']        = '%s（DokuWiki 内核）';
 $lang['renderer__plugin']      = '%s（插件）';
+$lang['search_fragment_o_exact'] = '完全匹配';
+$lang['search_fragment_o_starts_with'] = '以此开头';
+$lang['search_fragment_o_ends_with'] = '以此结尾';
+$lang['search_fragment_o_contains'] = '包含';
 $lang['dnslookups']            = 'DokuWiki 将会查询用户编辑页面的远程 IP 地址的主机名。如果您的 DNS 服务器比较缓慢或者不工作，或者您不想要这个功能，请禁用此选项。';
 $lang['jquerycdn']             = 'jQuery和jQuery UI脚本文件应该从CDN加载吗?
 这会增加额外的HTTP请求，但文件加载可能会更快，且用户可能已经缓存过。';
