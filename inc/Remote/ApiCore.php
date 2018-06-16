@@ -5,7 +5,6 @@ namespace dokuwiki\Remote;
 use Doku_Renderer_xhtml;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 
 define('DOKU_API_VERSION', 10);
@@ -595,7 +594,7 @@ class ApiCore
         if (!auth_isadmin()) {
             throw new AccessDeniedException('Only admins are allowed to delete users', 114);
         }
-        /** @var \dokuwiki\Plugin\\dokuwiki\Extension\AuthPlugin $auth */
+        /** @var \dokuwiki\Extension\AuthPlugin $auth */
         global $auth;
         return (bool)$auth->triggerUserMod('delete', array($usernames));
     }
@@ -672,7 +671,7 @@ class ApiCore
      */
     public function aclCheck($id, $user = null, $groups = null)
     {
-        /** @var \dokuwiki\Plugin\\dokuwiki\Extension\AuthPlugin $auth */
+        /** @var \dokuwiki\Extension\AuthPlugin $auth */
         global $auth;
 
         $id = $this->resolvePageId($id);
@@ -966,7 +965,7 @@ class ApiCore
     public function login($user, $pass)
     {
         global $conf;
-        /** @var \dokuwiki\Plugin\\dokuwiki\Extension\AuthPlugin $auth */
+        /** @var \dokuwiki\Extension\AuthPlugin $auth */
         global $auth;
 
         if (!$conf['useacl']) return 0;
