@@ -153,6 +153,35 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
 
+    function testExternalWWWLinkStartOfLine() {
+        // Regression test for issue #2399
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('externallink',array('http://www.google.com', 'www.google.com')),
+            array('cdata',array(' Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $instructions = p_get_instructions("www.google.com Bar");
+        $this->assertEquals(array_map('stripByteIndex',$instructions),$calls);
+    }
+
+    function testExternalWWWLinkInRoundBrackets() {
+        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->parse("Foo (www.google.com) Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo (')),
+            array('externallink',array('http://www.google.com', 'www.google.com')),
+            array('cdata',array(') Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
     function testExternalWWWLinkInPath() {
         $this->P->addMode('externallink',new Externallink());
         // See issue #936. Should NOT generate a link!
