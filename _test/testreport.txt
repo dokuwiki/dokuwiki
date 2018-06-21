@@ -1,0 +1,2746 @@
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+conf_title_test
+ [ ] Title
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  6.25% (7/112)    [0m
+[37;41m  Methods:  0.00% (0/843)    [0m
+[37;41m  Lines:    0.00% (0/17772)  [0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+PageUtilsIsHiddenPage
+ [x] Hidden off
+ [x] Hidden off admin
+ [x] Hidden on match
+ [x] Hidden on no match
+ [x] Event handler before
+ [x] Event handler before and prevent
+ [x] Event handler after
+ [x] Event handler after hide
+ [x] Event handler after show
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.39% (603/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+PassHash_test
+ [x] test hmac
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  2.43% (21/865)   [0m
+[37;41m  Lines:    3.34% (600/17976)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+auth_acl_test
+ [x] test restricted
+ [x] test restricted ropage
+ [x] test aclexample
+ [x] test multiadmin restricted
+ [x] test multiadmin restricted ropage
+ [x] test wildcards
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  3.20% (27/843)   [0m
+[37;41m  Lines:    4.32% (768/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+auth_acl_caseinsensitive_test
+ [x] test multiadmin restricted ropage
+ [x] test restricted allread
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.85% (24/843)   [0m
+[37;41m  Lines:    4.01% (712/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+auth_admin_test
+ [x] test ismanager insensitive
+ [x] test isadmin insensitive
+ [x] test ismanager sensitive
+ [x] test isadmin sensitive
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.97% (25/843)   [0m
+[37;41m  Lines:    3.49% (621/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+auth_browseruid_test
+ [x] I e 9 js vs default
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.61% (22/843)   [0m
+[37;41m  Lines:    3.54% (630/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+auth_deleteprofile_test
+ [ ] test success
+ [ ] test confirmation required
+ [ ] test authconfig prevents
+ [ ] test wikiconfig prevents
+ [x] test basic parameters
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.96% (9/113)    [0m
+[37;41m  Methods:  3.01% (26/865)   [0m
+[37;41m  Lines:    4.25% (764/17976)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+auth_encryption_test
+ [x] De encrypt
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  6.96% (8/115)    [0m
+[37;41m  Methods:  2.96% (26/879)   [0m
+[37;41m  Lines:    4.07% (765/18811)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+auth_loadacl_test
+ [x] test simple
+ [x] test user substitution
+ [x] test group substitution
+ [x] test both substitution
+ [x] test standardtestacls
+ [x] test FS2867
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.73% (23/843)   [0m
+[37;41m  Lines:    3.71% (659/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+auth_nameencode_test
+ [x] test simple
+ [x] test quote
+ [x] test apostrophe
+ [x] test backslash
+ [x] test complex
+ [x] test complexutf8
+ [x] test groupskipon
+ [x] test groupskipoff
+ [x] test hebrew
+ [x] test devanagiri
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.38% (600/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+auth_password_test
+ [x] test cryptPassword
+ [x] test verifyPassword
+ [x] test verifySelf
+ [x] test bcrypt self
+ [x] test verifyPassword fixedbcrypt
+ [x] test verifyPassword nohash
+ [x] test verifyPassword fixedpmd5
+ [x] test veryPassword mediawiki
+ [x] test verifyPassword pmd5Exception
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  4.28% (37/865)   [0m
+[37;41m  Lines:    4.45% (800/17976)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+auth_random_test
+ [x] Random range
+ [x] Large randoms
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.42% (607/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+blowfish_test
+ [x] Encrypt decrypt numbers
+ [x] Encrypt decrypt chars
+ [x] Encrypt decrypt binary
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  8.04% (9/112)    [0m
+[37;41m  Methods:  3.08% (26/843)   [0m
+[37;41m  Lines:    3.94% (700/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+cache_stalecheck_test
+ [x] test staleness
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes: 28.57% (34/119)    [0m
+[37;41m  Methods: 16.88% (156/924)   [0m
+[37;41m  Lines:   10.18% (1864/18314)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+cache_use_test
+ [x] test use
+ [x] test purge
+ [x] test filedependency
+ [x] test age
+ [x] test confnocaching
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes: 28.57% (34/119)    [0m
+[37;41m  Methods: 16.34% (151/924)   [0m
+[37;41m  Lines:    9.92% (1817/18314)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+changelog_getrevisionsaround_test
+ [x] test changemetadatanotexists
+ [x] test request overlapping
+ [x] test request non overlapping
+ [x] test request first last
+ [x] test request wholelog
+ [x] test request wrong order revs
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  3.20% (27/843)   [0m
+[37;41m  Lines:    4.51% (801/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+changelog_getrelativerevision_test
+ [x] test changemetadatanotexists
+ [x] test nodirection
+ [x] test startatexactcurrentrev
+ [x] test startatexactlastrev
+ [x] test requestlastrevisions
+ [x] test requestrev checkcache
+ [x] test requestnextrev
+ [x] test requestnextrev chuncked
+ [x] test requestnextrev chunkshorterthanlines
+ [x] test requestnextfifthrev
+ [x] test requestnextfifthrev chuncked
+ [x] test requestprevrev
+ [x] test requestprevrev chuncked
+ [x] test requestrecentestlogline next
+ [x] test requestrecentestlogline next chuncked
+ [x] test requestrecentestlogline prev
+ [x] test requestrecentestlogline prev chuncked
+ [x] test negativerev posdir
+ [x] test negativerev negdir
+ [x] test startatnotexistingrev next
+ [x] test startatnotexistingrev prev
+ [x] test iscurrentpagerevision
+ [x] test isnotcurrentpagerevision
+ [x] test notexistingcurrentpage
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  8.04% (9/112)    [0m
+[37;41m  Methods:  3.44% (29/843)   [0m
+[37;41m  Lines:    4.41% (783/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+changelog_getrevisionsinfo_test
+ [x] test changemetadatanotexists
+ [x] test requestrev
+ [x] test requestrev chuncked
+ [x] test requestrev chunckedsmallerthanlinelength
+ [x] test requestrecentestlogline
+ [x] test requestrecentestlogline chuncked
+ [x] test negativerev
+ [x] test notexistingrev
+ [x] test chuncksizetrue
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  3.08% (26/843)   [0m
+[37;41m  Lines:    4.06% (721/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+changelog_getrevisions_test
+ [x] test changemetadatanotexists
+ [x] test requestlastrev
+ [x] test requestonebutlastrev
+ [x] test requestrevswithoffset
+ [x] test requestrecentestlogline
+ [x] test wholefile
+ [x] test negativenum
+ [x] test negativennumoffset
+ [x] test zeronum
+ [x] test requestlargeoffset
+ [x] test requesttoolargenumberrevs
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  8.04% (9/112)    [0m
+[37;41m  Methods:  3.08% (26/843)   [0m
+[37;41m  Lines:    4.10% (729/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+common_infofunctions_test
+ [x] test basicinfo
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  3.08% (26/843)   [0m
+[37;41m  Lines:    4.39% (780/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+common_cleanText_test
+ [x] test unix
+ [x] test win
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.31% (589/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+common_clientIP_test
+ [x] test simple all
+ [x] test proxy1 all
+ [x] test proxy2 all
+ [x] test proxyhops all
+ [x] test simple single
+ [x] test proxy1 single
+ [x] test proxy2 single
+ [x] test proxyhops single
+ [x] test local all
+ [x] test local1 single
+ [x] test local2 single
+ [x] test local3 single
+ [x] test local4 single
+ [x] test garbage all
+ [x] test garbage single
+ [x] test garbageonly all
+ [x] test garbageonly single
+ [x] test malicious
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.61% (22/843)   [0m
+[37;41m  Lines:    3.54% (629/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+common_basicinfo_test
+ [x] test mediainfo
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  3.08% (26/843)   [0m
+[37;41m  Lines:    3.96% (703/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+common_ml_test
+ [x] test ml empty
+ [x] test ml args array
+ [x] test ml args string
+ [x] test ml args comma string
+ [x] test ml imgresize array
+ [x] test ml imgresize string
+ [x] test ml imgresize array rootid
+ [x] test ml img external
+ [x] test ml imgresize array external
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  2.43% (21/865)   [0m
+[37;41m  Lines:    4.19% (753/17976)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+common_obfuscate_test
+ [x] test none
+ [x] test hex
+ [x] test visible
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.35% (596/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+common_pageinfo_test
+ [x] test basic nonexistentpage
+ [x] test basic existingpage
+ [x] test anonymoususer
+ [x] test rev
+ [ ] test range
+ [x] test editor and externaledits
+ [x] test draft
+ [x] test ismobile
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes: 30.25% (36/119)    [0m
+[37;41m  Methods: 26.19% (242/924)   [0m
+[37;41m  Lines:   16.12% (2953/18315)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+common_pagetemplate_test
+ [x] test none
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.66% (650/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+common_stripsourcemaps_test
+ [x] test all
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.28% (583/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+common_wl_test
+ [x] test wl empty
+ [x] test wl empty rewrite1
+ [x] test wl empty rewrite2
+ [x] test wl id
+ [x] test wl id ns
+ [x] test wl id ns start
+ [x] test wl args array
+ [x] test wl args string
+ [x] test wl args comma string
+ [x] test wl abs
+ [x] test wl sep
+ [x] test wl useslash
+ [x] test wl useslash rewrite1
+ [x] test wl useslash rewrite1 sub page
+ [x] test wl useslash rewrite2
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.53% (627/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+events_nested_test
+ [x] test nested events
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.34% (594/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+form_test
+ [x] test form print
+ [x] test get element at
+ [x] test find element by type
+ [x] test find element by id
+ [x] test find element by attribute
+ [x] test close fieldset
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  3.35% (29/865)   [0m
+[37;41m  Lines:    4.27% (768/17976)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+fulltext_backlinks_test
+ [x] test internallink
+ [x] test links in footnotes
+ [x] test links in hidden pages
+ [x] test links in protected pages
+ [x] test links in deleted pages
+ [x] test parameters
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes: 28.57% (34/119)    [0m
+[37;41m  Methods: 17.97% (166/924)   [0m
+[37;41m  Lines:   13.85% (2536/18316)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+fultext_mediause_test
+ [x] test internalmedia
+ [x] test media in links
+ [x] test media in local links
+ [x] test media in footnotes
+ [x] test media in hidden pages
+ [x] test media in protected pages
+ [x] test media in deleted pages
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes: 28.57% (34/119)    [0m
+[37;41m  Methods: 18.61% (172/924)   [0m
+[37;41m  Lines:   14.30% (2619/18315)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+html_hilight_test
+ [x] Highlight one word
+ [x] Highlight two words
+ [x] Highlight two words html
+ [x] No match html
+ [x] Wildcard right
+ [x] Wildcard left
+ [x] Wildcard both
+ [x] No highlight
+ [x] Match attribute
+ [x] Match attribute word
+ [x] Regex injection
+ [x] Regex injection slash
+ [x] M b
+ [x] M bright
+ [x] M bleft
+ [x] M bboth
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.51% (623/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+httpclient_http_test
+ [x] test simpleget
+ [x] test dget
+ [x] test gzip
+ [x] test simplepost
+ [x] test redirect
+ [x] test relredirect
+ [x] test redirectfail
+ [x] test cookies
+ [x] test teapot
+ [x] test maxbody
+ [x] test maxbodyok
+ [x] test basicauth
+ [x] test basicauthfail
+ [x] test timeout
+ [x] test headers
+ [x] test chunked
+ [x] test wikimatrix
+ [x] test postencode
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  3.56% (30/843)   [0m
+[37;41m  Lines:    4.94% (878/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+httpclient_http_proxy_test
+ [x] test simpleget
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  3.08% (26/843)   [0m
+[37;41m  Lines:    4.38% (778/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+httpclient_https_test
+ [x] test simpleget
+ [x] test dget
+ [x] test gzip
+ [x] test simplepost
+ [x] test redirect
+ [x] test relredirect
+ [x] test redirectfail
+ [x] test cookies
+ [x] test teapot
+ [x] test maxbody
+ [x] test maxbodyok
+ [x] test basicauth
+ [x] test basicauthfail
+ [x] test timeout
+ [x] test headers
+ [x] test chunked
+ [x] test wikimatrix
+ [x] test postencode
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  3.56% (30/843)   [0m
+[37;41m  Lines:    4.92% (875/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+httpclient_https_proxy_test
+ [x] test connectfail
+ [x] test simpleget
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  3.08% (26/843)   [0m
+[37;41m  Lines:    4.53% (805/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+indexer_histogram_test
+ [x] test minlength
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  3.20% (27/843)   [0m
+[37;41m  Lines:    4.29% (763/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+indexer_indexing_test
+ [x] test words
+ [x] test numerically identical words
+ [x] test meta
+ [x] test numerically identical meta values
+ [x] test numeric twice
+ [x] test numeric twice meta
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes: 28.57% (34/119)    [0m
+[37;41m  Methods: 17.21% (159/924)   [0m
+[37;41m  Lines:   12.34% (2260/18314)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+indexer_pid_test
+ [x] test pid
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  3.08% (26/843)   [0m
+[37;41m  Lines:    3.62% (644/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+indexer_rename_test
+ [x] test rename to new page
+ [x] test rename to existing page
+ [x] test meta rename to new value
+ [x] test meta rename to existing value
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes: 28.57% (34/119)    [0m
+[37;41m  Methods: 17.21% (159/924)   [0m
+[37;41m  Lines:   12.97% (2375/18314)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+init_fullpath_test
+ [x] test unix paths
+ [x] test windows paths
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.35% (596/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+init_getBaseURL_test
+ [x]  1
+ [x]  2
+ [x]  3
+ [x]  4
+ [x]  5
+ [x]  6
+ [x]  7
+ [x]  8
+ [x]  9
+ [x]  10
+ [x]  11
+ [x]  12
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.49% (620/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+input_test
+ [x] test str
+ [x] test int
+ [x] test arr
+ [x] test bool
+ [x] test remove
+ [x] test set
+ [x] test ref
+ [x] test valid
+ [x] test extract
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  8.93% (10/112)   [0m
+[37;41m  Methods:  3.68% (31/843)   [0m
+[37;41m  Lines:    3.58% (636/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+io_rmdir_test
+ [x] test nopes
+ [x] test empty single
+ [x] test empty hierarchy
+ [x] test full single
+ [x] test full hierarchy
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.48% (618/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+ixr_library_date_test
+ [x] test parseIso
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.73% (23/843)   [0m
+[37;41m  Lines:    3.34% (594/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+ixr_library_ixr_message_test
+ [x] test untypedvalue1
+ [x] test untypedvalue2
+ [x] test stringvalue1
+ [x] test stringvalue2
+ [x] test emptyvalue1
+ [x] test emptyvalue2
+ [x] test struct
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.73% (23/843)   [0m
+[37;41m  Lines:    3.72% (662/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+JSON_EncDec_TestCase
+ [x] test to JSON
+ [x] test from JSON
+ [x] test to then from JSON
+ [x] test from then to JSON
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  2.82% (24/850)   [0m
+[37;41m  Lines:    4.35% (786/18050)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+JSON_AssocArray_TestCase
+ [x] test type
+ [x] test to JSON
+ [x] test to then from JSON
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  2.82% (24/850)   [0m
+[37;41m  Lines:    4.06% (733/18050)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+JSON_NestedArray_TestCase
+ [x] test type
+ [x] test from JSON
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  2.71% (23/850)   [0m
+[37;41m  Lines:    3.87% (698/18050)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+JSON_Object_TestCase
+ [x] test type
+ [x] test to JSON
+ [x] test from then to JSON
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  2.82% (24/850)   [0m
+[37;41m  Lines:    4.12% (744/18050)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+JSON_Spaces_Comments_TestCase
+ [x] test spaces
+ [x] test comments
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  2.71% (23/850)   [0m
+[37;41m  Lines:    3.92% (708/18050)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+JSON_Empties_TestCase
+ [x] test type
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  2.71% (23/850)   [0m
+[37;41m  Lines:    3.48% (628/18050)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+JSON_UnquotedKeys_TestCase
+ [x] test from JSON
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  2.71% (23/850)   [0m
+[37;41m  Lines:    3.86% (697/18050)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+mail_isvalid
+ [x]  1
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  2.72% (23/847)   [0m
+[37;41m  Lines:    3.71% (662/17849)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+mail_quotedprintable_encode
+ [x] test simple
+ [x] test spaceend
+ [x] test german utf8
+ [x] test wrap
+ [x] test nowrap
+ [x] test russian utf8
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.42% (607/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+mailer_test
+ [x] test userheader
+ [x] test setHeader
+ [x] test addresses
+ [x] test simplemail
+ [x] test replacements
+ [x] test emptyBCCorCC
+ [x] test nullTOorCCorBCC
+ [ ] test lint
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  3.66% (31/847)   [0m
+[37;41m  Lines:    5.01% (894/17849)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+media_get_from_url_test
+ [x] test cache
+ [x] test nocache
+ [x] test recache
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  8.04% (9/112)    [0m
+[37;41m  Methods:  3.32% (28/843)   [0m
+[37;41m  Lines:    4.79% (851/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+media_isexternal_test
+ [x] test external
+ [x] test internal
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.28% (583/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+media_ispublic_test
+ [x] test external
+ [x] test internal
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.73% (23/843)   [0m
+[37;41m  Lines:    4.10% (729/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+init_clean_id_test
+ [x] test default
+ [x] test sepchar
+ [x] test deaccent keep
+ [x] test deaccent romanize
+ [x] test deaccent ascii
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.54% (630/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+pageutils_findnearest_test
+ [x] No sidebar
+ [x] Existing sidebars
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.97% (25/843)   [0m
+[37;41m  Lines:    5.28% (938/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+init_getID_test
+ [x]  1
+ [x]  2
+ [x]  3
+ [x]  4
+ [x]  5
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.61% (22/843)   [0m
+[37;41m  Lines:    3.69% (656/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+init_resolve_id_test
+ [x]  1
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.61% (641/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+init_resolve_pageid_test
+ [x]  1
+ [x] test resolve pageid empty homepage
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.89% (691/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfLexerParallelRegex
+ [x] No patterns
+ [x] No subject
+ [x] Match all
+ [x] Case sensitive
+ [x] Case insensitive
+ [x] Match multiple
+ [x] Pattern labels
+ [x] Match multiple with lookahead not
+ [x] Match set option caseless
+ [x] Match set option ungreedy
+ [x] Match lookahead equal
+ [x] Match lookahead not
+ [x] Match lookbehind equal
+ [x] Match lookbehind not
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.97% (25/843)   [0m
+[37;41m  Lines:    3.58% (636/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfLexerStateStack
+ [x] Start state
+ [x] Exhaustion
+ [x] State moves
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  8.04% (9/112)    [0m
+[37;41m  Methods:  2.97% (25/843)   [0m
+[37;41m  Lines:    3.32% (590/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfLexerParallelRegex
+ [x] No patterns
+ [x] No subject
+ [x] Match all
+ [x] Case sensitive
+ [x] Case insensitive
+ [x] Match multiple
+ [x] Pattern labels
+ [x] Match multiple with lookahead not
+ [x] Match set option caseless
+ [x] Match set option ungreedy
+ [x] Match lookahead equal
+ [x] Match lookahead not
+ [x] Match lookbehind equal
+ [x] Match lookbehind not
+
+OfLexerStateStack
+ [x] Start state
+ [x] Exhaustion
+ [x] State moves
+
+OfLexer
+ [x] No patterns
+ [x] Empty page
+ [x] Single pattern
+ [x] Multiple pattern
+
+OfLexerModes
+ [x] Isolated pattern
+ [x] Mode change
+ [x] Nesting
+ [x] Singular
+ [x] Unwind too far
+
+OfLexerHandlers
+ [x] Mode mapping
+
+OfLexerByteIndices
+ [x] Index
+ [x] Index lookahead equal
+ [x] Index lookahead not equal
+ [x] Index lookbehind equal
+ [x] Index lookbehind not equal
+ [x] Index select correct match
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  8.04% (9/112)    [0m
+[37;41m  Methods:  4.74% (40/843)   [0m
+[37;41m  Lines:    4.16% (740/17773)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfLexerModes
+ [x] Isolated pattern
+ [x] Mode change
+ [x] Nesting
+ [x] Singular
+ [x] Unwind too far
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  8.04% (9/112)    [0m
+[37;41m  Methods:  3.91% (33/843)   [0m
+[37;41m  Lines:    4.00% (711/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfLexerHandlers
+ [x] Mode mapping
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  3.80% (32/843)   [0m
+[37;41m  Lines:    3.97% (706/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfLexerByteIndices
+ [x] Index
+ [x] Index lookahead equal
+ [x] Index lookahead not equal
+ [x] Index lookbehind equal
+ [x] Index lookbehind not equal
+ [x] Index select correct match
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  4.15% (35/843)   [0m
+[37;41m  Lines:    4.05% (719/17773)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfDoku_Parser_Code
+ [x] Code
+ [x] Code bash
+ [x] Code download
+ [x] Code token
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  5.46% (46/843)   [0m
+[37;41m  Lines:    4.71% (837/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfDoku_Parser_Eol
+ [x] Eol
+ [x] Eol multiple
+ [x] Win eol
+ [x] Linebreak
+ [x] Linebreak plus eol
+ [x] Linebreak invalid
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  5.46% (46/843)   [0m
+[37;41m  Lines:    4.69% (833/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfDoku_Parser_File
+ [x] File
+ [x] File highlight download
+ [x] File token
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  5.58% (47/843)   [0m
+[37;41m  Lines:    4.70% (836/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfDoku_Parser_Footnote
+ [x] Footnote
+ [x] Not a footnote
+ [x] Footnote linefeed
+ [x] Footnote nested
+ [x] Footnote eol
+ [x] Footnote strong
+ [x] Footnote hr
+ [x] Footnote code
+ [x] Footnote preformatted
+ [x] Footnote preformatted eol
+ [x] Footnote unformatted
+ [x] Footnote not header
+ [x] Footnote table
+ [x] Footnote list
+ [x] Footnote quote
+ [x] Footnote nesting
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes:  7.14% (8/112)     [0m
+[37;41m  Methods: 11.51% (97/843)    [0m
+[37;41m  Lines:    7.77% (1381/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfDoku_Parser_Headers
+ [x] Header 1
+ [x] Header 2
+ [x] Header 3
+ [x] Header 4
+ [x] Header 5
+ [x] Header 2 uneven smaller
+ [x] Header 2 uneven bigger
+ [x] Header large
+ [x] Header small
+ [x] Header 1 mixed
+ [x] Header 5 mixed
+ [x] Header multiline
+ [x] Header 1 eol
+ [x] Header multi 2
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  5.69% (48/843)   [0m
+[37;41m  Lines:    4.83% (858/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfDoku_Parser_i18n
+ [x] Formatting
+ [x] Header
+ [x] Table
+ [x] Acronym
+ [x] Interwiki
+ [x] Internal link
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes:  8.04% (9/112)     [0m
+[37;41m  Methods:  8.78% (74/843)    [0m
+[37;41m  Lines:    6.63% (1179/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfDoku_Parser_Links
+ [x] External link simple
+ [x] External link case
+ [x] External i pv 4
+ [x] External i pv 6
+ [x] External multi
+ [x] External link javascript
+ [x] External w w w link
+ [x] External f t p link
+ [x] Email
+ [x] Email r f c 2822
+ [x] Email case
+ [x] Internal link one char
+ [x] Internal link no char
+ [x] Internal link namespace no title
+ [x] Internal link namespace
+ [x] Internal link section ref
+ [x] External in internal link
+ [x] Interwiki link
+ [x] Interwiki link case
+ [x] Interwiki pedia
+ [x] Camel case
+ [x] File link
+ [x] File link internal
+ [x] Windows share link
+ [x] Windows share link hyphen
+ [x] Windows share link internal
+ [x] Media internal
+ [x] Media internal link only
+ [x] Media not image
+ [x] Media internal l align
+ [x] Media internal r align
+ [x] Media internal center
+ [x] Media internal params
+ [x] Media internal title
+ [x] Media external
+ [x] Media external params
+ [x] Media external title
+ [x] Media in internal link
+ [x] Media no image in internal link
+ [x] Media in email link
+ [x] Nested media
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  6.88% (58/843)   [0m
+[37;41m  Lines:    5.59% (994/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfDoku_Parser_Lists
+ [x] Unordered list
+ [x] Ordered list
+ [x] Mixed list
+ [x] Unordered list win e o l
+ [x] Ordered list win e o l
+ [x] Not a list
+ [x] Unordered list paragraph
+ [x] Unordered list strong
+ [x] Unordered list unformatted
+ [x] Unordered list linebreak
+ [x] Unordered list footnote
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes:  8.04% (9/112)     [0m
+[37;41m  Methods:  9.13% (77/843)    [0m
+[37;41m  Lines:    6.14% (1092/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfDoku_Parser_Preformatted
+ [x] File
+ [x] Code
+ [x] Code whitespace
+ [x] Code lang
+ [x] Preformatted
+ [x] Preformatted win e o l
+ [x] Preformatted tab
+ [x] Preformatted tab win e o l
+ [x] Preformatted list
+ [x] P h p
+ [x] H t m l
+ [x] Preformatted plus header and eol
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes:  8.04% (9/112)     [0m
+[37;41m  Methods:  9.25% (78/843)    [0m
+[37;41m  Lines:    5.90% (1048/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfDoku_Parser_Quote
+ [x] Quote
+ [x] Quote win cr
+ [x] Quote minumum context
+ [x] Quote eol
+
+OfDoku_Parser_Quotes
+ [x] Single quote opening
+ [x] Single quote opening special
+ [x] Single quote closing
+ [x] Single quote closing special
+ [x] Single quotes
+ [x] Apostrophe
+ [x] Single quotes special
+ [x] Double quote opening
+ [x] Double quote opening special
+ [x] Double quote closing
+ [x] Double quote closing special
+ [x] Double quotes
+ [x] Double quotes special
+ [x] Double quotes enclosing brackets
+ [x] Double quotes enclosing link
+ [x] All quotes
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  8.04% (9/112)    [0m
+[37;41m  Methods:  7.35% (62/843)   [0m
+[37;41m  Lines:    5.42% (964/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfDoku_Parser_Quotes
+ [x] Single quote opening
+ [x] Single quote opening special
+ [x] Single quote closing
+ [x] Single quote closing special
+ [x] Single quotes
+ [x] Apostrophe
+ [x] Single quotes special
+ [x] Double quote opening
+ [x] Double quote opening special
+ [x] Double quote closing
+ [x] Double quote closing special
+ [x] Double quotes
+ [x] Double quotes special
+ [x] Double quotes enclosing brackets
+ [x] Double quotes enclosing link
+ [x] All quotes
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  5.69% (48/843)   [0m
+[37;41m  Lines:    4.77% (847/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfDoku_Parser_Replacements
+ [x] Single acronym
+ [x] Almost an acronym
+ [x] Pick acronym correctly
+ [x] Multiple acronyms
+ [x] Multiple acronyms with subset 1
+ [x] Multiple acronyms with subset 2
+ [x] Single smiley fail
+ [x] Single smiley
+ [x] Multiple smileys fail
+ [x] Multiple smileys
+ [x] Backslash smiley fail
+ [x] Backslash smiley
+ [x] Single wordblock
+ [x] Wordblock case
+ [x] Multiple wordblock
+ [x] Single entity
+ [x] Multiple entities
+ [x] Multiply entity
+ [x] Multiply entity hex
+ [x] H r
+ [x] H r eol
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  7.47% (63/843)   [0m
+[37;41m  Lines:    5.25% (933/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfDoku_Parser_Table
+ [x] Table
+ [x] Table win e o l
+ [x] Empty table
+ [x] Table headers
+ [x] Table head
+ [x] Table head one row table
+ [x] Table head multiline
+ [x] Cell alignment
+ [x] Cell span
+ [x] Cell row span
+ [x] Cell row span first row
+ [x] Row span table head
+ [x] Row span across table head boundary
+ [x] Cell alignment formatting
+ [x] Table eol
+ [x] Table strong
+ [x] Table unformatted
+ [x] Table linebreak
+ [x] Table footnote
+ [x] testTable FS1833
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes:  8.04% (9/112)     [0m
+[37;41m  Methods:  8.90% (75/843)    [0m
+[37;41m  Lines:    6.86% (1219/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+OfDoku_Parser_Unformatted
+ [x] Nowiki
+ [x] Double percent
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  5.46% (46/843)   [0m
+[37;41m  Lines:    4.68% (831/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+_resolveInterwiki
+ [x] Defaults
+ [x] Nonexisting
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.61% (22/843)   [0m
+[37;41m  Lines:    4.07% (723/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+parserutils_get_renderer_test
+ [x] test p get renderer normal
+ [x] test p get renderer plugin
+ [x] test p get renderer fallback
+ [ ] test p get renderer fallback fail
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.85% (24/843)   [0m
+[37;41m  Lines:    3.68% (654/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+parserutils_set_metadata_during_rendering_test
+ [x] test p set metadata during rendering
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes: 28.57% (34/119)    [0m
+[37;41m  Methods: 16.34% (151/924)   [0m
+[37;41m  Lines:   10.41% (1907/18315)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+remote_test
+ [x] test pluginMethods
+ [x] test hasAccessSuccess
+ [x] test hasAccessFail
+ [x] test hasAccessFailAcl
+ [x] test hasAccessSuccessAclEmptyRemoteUser
+ [x] test hasAccessSuccessAcl
+ [ ] test forceAccessSuccess
+ [x] test forceAccessFail
+ [x] test generalCoreFunctionWithoutArguments
+ [x] test generalCoreFunctionOnArgumentMismatch
+ [x] test generalCoreFunctionWithArguments
+ [x] test pluginCallMethods
+ [x] test notExistingCall
+ [x] test publicCallCore
+ [x] test publicCallPlugin
+ [x] test publicCallCoreDeny
+ [x] test publicCallPluginDeny
+ [x] test pluginCallCustomPath
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  8.62% (10/116)   [0m
+[37;41m  Methods:  4.03% (36/893)   [0m
+[37;41m  Lines:    4.47% (819/18312)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+safeFN_test
+ [x]  1
+ [x]  2
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  2.94% (25/849)   [0m
+[37;41m  Lines:    3.86% (688/17812)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+search_test
+ [x] test search allpages
+ [x] test search index
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.73% (23/843)   [0m
+[37;41m  Lines:    4.69% (833/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+subscription_test
+ [x] test regexp
+ [x] test addremove
+ [x] test bulkdigest
+ [x] test bulklist
+ [x] test overwrite
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes:  8.04% (9/112)     [0m
+[37;41m  Methods:  4.74% (40/843)    [0m
+[37;41m  Lines:    7.51% (1335/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+Tar_TestCase
+ [ ] test ext zlib
+ [ ] test ext bz2
+ [x] test createdynamic
+ [x] test createfile
+ [x] test tarcontent
+ [x] test tarextract
+ [x] test compstripextract
+ [x] test prefixstripextract
+ [x] test includeextract
+ [x] test excludeextract
+ [x] test filetype
+ [x] test createlongfile
+ [x] test createlongpathustar
+ [x] test createlongpathgnu
+ [x] test zerofile
+ [x] test zerodata
+ [x] test blockfile
+ [x] test blockdata
+ [x] test cleanPath
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  8.70% (10/115)   [0m
+[37;41m  Methods:  3.72% (32/860)   [0m
+[37;41m  Lines:    4.63% (835/18038)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+template_include_page_test
+ [x] No sidebar
+ [x] Existing sidebars
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes: 29.41% (35/119)    [0m
+[37;41m  Methods: 17.10% (158/924)   [0m
+[37;41m  Lines:   10.48% (1919/18314)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+utf8_basename_test
+ [x]  1
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.31% (589/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+utf8_correctidx_test
+ [x] test singlebyte
+ [x] test twobyte
+ [x] test threebyte
+ [x] test bounds
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.31% (589/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+utf8_html_test
+ [x] test from 1byte
+ [x] test from 2byte
+ [x] test from 3byte
+ [x] test from 4byte
+ [x] test to 1byte
+ [x] test to 2byte
+ [x] test to 3byte
+ [x] test to 4byte
+ [x] test without entities
+ [x] test with entities
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.73% (23/843)   [0m
+[37;41m  Lines:    3.89% (691/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+utf8_romanize_test
+ [x] test japanese
+ [x] test deaccented
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.29% (585/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+utf8_stripspecials
+ [x]  1
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.29% (585/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+utf8_strtolower_test
+ [x] test givens
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.27% (582/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+utf8_substr_test
+ [x]  1
+ [x] test2 bug891
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.29% (585/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+utf8_unicode_test
+ [x] test from 1byte
+ [x] test from 2byte
+ [x] test from 3byte
+ [x] test from 4byte
+ [x] test to 1byte
+ [x] test to 2byte
+ [x] test to 3byte
+ [x] test to 4byte
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.69% (655/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+utf8_utf16be_test
+ [x] test to16be
+ [x] test from16be
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.40% (604/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+css_at_import_less_test
+ [x] test basic
+ [x] test subdirectory
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes:  7.69% (9/117)     [0m
+[37;41m  Methods:  4.55% (44/968)    [0m
+[37;41m  Lines:    5.74% (1135/19767)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+css_css_compress_test
+ [x] test mlcom1
+ [x] test mlcom2
+ [x] test slcom1
+ [x] test slcom2
+ [x] test slcom3
+ [x] test slcom4
+ [x] test slcom5
+ [x] test hack
+ [x] test nl1
+ [x] test shortening
+ [x] test data
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.46% (615/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+css_css_loadfile_test
+ [x] test url relative
+ [x] test url absolute
+ [x] test url with protocol
+ [x] test import relative
+ [x] test import absolute
+ [x] test import with protocol
+ [x] test less basic
+ [x] test less subdirectories
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  0.47% (4/843)    [0m
+[37;41m  Lines:    0.46% (81/17445) [0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+fetch_imagetoken_test
+ [ ] test valid token
+ [ ] test invalid token
+ [ ] test missing token
+ [ ] test no token required
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  6.25% (7/112)    [0m
+[37;41m  Methods:  0.00% (0/843)    [0m
+[37;41m  Lines:    0.00% (0/17445)  [0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+fetch_statuscodes_external_test
+ [ ] test valid token
+ [ ] test invalid token
+ [ ] test missing token
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  6.25% (7/112)    [0m
+[37;41m  Methods:  0.00% (0/843)    [0m
+[37;41m  Lines:    0.00% (0/17445)  [0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+js_js_compress_test
+ [x] test mlcom1
+ [x] test mlcom2
+ [x] test mlcomcond
+ [x] test slcom1
+ [x] test slcom2
+ [x] test slcom3
+ [x] test regex1
+ [x] test regex in array
+ [x] test regex in hash
+ [x] test regex preceded by spaces caracters
+ [x] test dquot1
+ [x] test dquot2
+ [x] test dquotrunaway
+ [x] test squot1
+ [x] test squotrunaway
+ [x] test nl1
+ [x] test lws1
+ [x] test tws1
+ [x] test shortcond
+ [x] test complexminified
+ [x] test multilinestring
+ [x] test nocompress
+ [x] test original
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.76% (668/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+InttestsBasic
+ [ ] Simple run
+ [ ] Post
+ [ ] Post get
+ [ ] Get
+ [ ] Scripts
+ [ ] Headers
+ [x] Get header
+ [x] Get status
+ [ ] I n p u t
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.49% (21/843)   [0m
+[37;41m  Lines:    3.24% (575/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+InttestsGlobals
+ [ ] First run
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  6.25% (7/112)    [0m
+[37;41m  Methods:  0.00% (0/843)    [0m
+[37;41m  Lines:    0.00% (0/17772)  [0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+InttestsHooks
+ [ ] Hook triggering
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  6.25% (7/112)    [0m
+[37;41m  Methods:  0.00% (0/843)    [0m
+[37;41m  Lines:    0.00% (0/17772)  [0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+InttestsPHPQuery
+ [ ] Simple run
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  6.25% (7/112)    [0m
+[37;41m  Methods:  0.00% (0/843)    [0m
+[37;41m  Lines:    0.00% (0/17772)  [0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+InttestsPlugins
+ [ ] Testing plugin enabled
+
+InttestsPluginsDefault
+ [ ] Testing plugin disabled default
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  6.19% (7/113)    [0m
+[37;41m  Methods:  0.00% (0/845)    [0m
+[37;41m  Lines:    0.00% (0/17778)  [0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+InttestsPluginsDefault
+ [ ] Testing plugin disabled default
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  6.25% (7/112)    [0m
+[37;41m  Methods:  0.00% (0/843)    [0m
+[37;41m  Lines:    0.00% (0/17772)  [0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+InttestsScope
+ [ ] First run
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  6.25% (7/112)    [0m
+[37;41m  Methods:  0.00% (0/843)    [0m
+[37;41m  Lines:    0.00% (0/17772)  [0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+InttestsReset
+ [ ] First run
+ [ ] Multiple requests
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  6.25% (7/112)    [0m
+[37;41m  Methods:  0.00% (0/843)    [0m
+[37;41m  Lines:    0.00% (0/17772)  [0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+syntax_plugin_bureaucracy_action_template_test
+ [x] Prepare language placeholder no translate
+ [ ] Prepare language placeholder translate default n s
+ [ ] Prepare language placeholder translate language n s
+ [x] Process fields
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  6.72% (8/119)    [0m
+[37;41m  Methods:  3.11% (28/899)   [0m
+[37;41m  Lines:    3.64% (669/18367)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+syntax_plugin_bureaucracy_test
+ [x] test generalFormOutput
+ [x] test HTMLinclusion
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes: 26.36% (34/129)    [0m
+[37;41m  Methods: 18.41% (174/945)   [0m
+[37;41m  Lines:   10.23% (1920/18772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+plugin_config_configuration_test
+ [x] test readconfig
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.14% (8/112)    [0m
+[37;41m  Methods:  2.97% (25/843)   [0m
+[37;41m  Lines:    3.97% (705/17772)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+plugin_definitionlist_syntax_test
+ [x] test basic singleline
+ [x] test basic multiline
+ [x] test multiple definitions
+ [x] test newline in definition
+ [x] test newline in definition with following para
+ [x] test basic with following preformatted
+ [x] test nonfancy
+ [x] test custom class name
+ [x] test two dlists with blank line between
+ [x] test dd with ul
+ [x] test dd with ul followed by ordered list
+ [x] test dd with ul followed by 2nd dl
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes: 29.57% (34/115)    [0m
+[37;41m  Methods: 19.89% (173/870)   [0m
+[37;41m  Lines:    8.87% (1603/18062)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+edittable_test_inverse
+ [x] 
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes: 28.95% (33/114)    [0m
+[37;41m  Methods: 15.58% (134/860)   [0m
+[37;41m  Lines:    7.40% (1329/17958)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+helper_plugin_extension_extension_test
+ [ ] Extension parameters
+ [x] Find folders plugins
+ [x] Find folders templates
+ [x] Find folders templates autodetect
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.69% (9/117)    [0m
+[37;41m  Methods:  4.98% (43/864)   [0m
+[37;41m  Lines:    5.08% (913/17987)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+ingDummyPluginIntegration
+ [ ] Testing plugin enabled
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  6.19% (7/113)    [0m
+[37;41m  Methods:  0.00% (0/845)    [0m
+[37;41m  Lines:    0.00% (0/17778)  [0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+ingDummyPluginIntegration
+ [ ] Testing plugin enabled
+
+ingDummyPlugin
+ [x] Nothing
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  7.08% (8/113)    [0m
+[37;41m  Methods:  2.49% (21/845)   [0m
+[37;41m  Lines:    3.27% (581/17778)[0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+plugin_usermanager_csv_export_test
+ [ ] test export
+ [ ] test export withlocale
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary:[0m
+[37;41m  Classes:  6.25% (7/112)    [0m
+[37;41m  Methods:  0.00% (0/843)    [0m
+[37;41m  Lines:    0.00% (0/17890)  [0m
+
+PHPUnit 4.1.0 by Sebastian Bergmann.
+
+Configuration read from /Volumes/ShimmerToo/Users/chris/workspace/dokuwiki/_test/phpunit.xml
+
+plugin_usermanager_csv_import_test
+ [x] test cantImport
+ [ ] test import
+ [ ] test importExisting
+ [ ] test importUtf8
+ [ ] test importIso8859
+ [x] test getcsvcompatibility
+
+
+Generating code coverage report in Clover XML format ... done
+
+
+[1;37;40mCode Coverage Report Summary: [0m
+[37;41m  Classes:  7.02% (8/114)     [0m
+[37;41m  Methods:  4.37% (38/869)    [0m
+[37;41m  Lines:    5.80% (1051/18112)[0m
+
