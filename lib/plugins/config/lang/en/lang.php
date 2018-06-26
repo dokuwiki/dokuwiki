@@ -202,14 +202,6 @@ $lang['proxy____pass']    = 'Proxy password';
 $lang['proxy____ssl']     = 'Use SSL to connect to proxy';
 $lang['proxy____except']  = 'Regular expression to match URLs for which the proxy should be skipped.';
 
-/* Safemode Hack */
-$lang['safemodehack'] = 'Enable safemode hack';
-$lang['ftp____host'] = 'FTP server for safemode hack';
-$lang['ftp____port'] = 'FTP port for safemode hack';
-$lang['ftp____user'] = 'FTP user name for safemode hack';
-$lang['ftp____pass'] = 'FTP password for safemode hack';
-$lang['ftp____root'] = 'FTP root directory for safemode hack';
-
 /* License Options */
 $lang['license_o_'] = 'None chosen';
 
