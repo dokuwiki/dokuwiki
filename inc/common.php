@@ -356,16 +356,16 @@ function buildURLparams($params, $sep = '&amp;') {
  *
  * @author Andreas Gohr
  *
- * @param array $params    array with (attribute name-attribute value) pairs
- * @param bool  $skipempty skip empty string values?
+ * @param array $params           array with (attribute name-attribute value) pairs
+ * @param bool  $skipEmptyStrings skip empty string values?
  * @return string
  */
-function buildAttributes($params, $skipempty = false) {
+function buildAttributes($params, $skipEmptyStrings = false) {
     $url   = '';
     $white = false;
     foreach($params as $key => $val) {
         if($key{0} == '_') continue;
-        if($val === '' && $skipempty) continue;
+        if($val === '' && $skipEmptyStrings) continue;
         if($white) $url .= ' ';
 
         $url .= $key.'="';
