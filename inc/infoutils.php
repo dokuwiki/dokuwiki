@@ -76,6 +76,25 @@ function getVersionData(){
 
         if ($date = shell_exec("git log -1 --pretty=format:'%cd' --date=short")) {
             $version['date'] = hsc($date);
+        } else if (file_exists(DOKU_INC . '.git/HEAD')) {
+            // we cannot use git on the shell -- let's do it manually!
+            $headCommit = trim(file_get_contents(DOKU_INC . '.git/HEAD'));
+            if (strpos($headCommit, 'ref: ') === 0) {
+                // it is something like `ref: refs/heads/master`
+                $pathToHead = substr($headCommit, 5);
+                $headCommit = trim(file_get_contents(DOKU_INC . '.git/' . $pathToHead));
+            }
+            $subDir = substr($headCommit, 0, 2);
+            $fileName = substr($headCommit, 2);
+            $getCommitObject = DOKU_INC . ".git/objects/$subDir/$fileName";
+            $commit = zlib_decode(file_get_contents($getCommitObject));
+            $committerLine = explode("\n", $commit)[3];
+            $committerData = explode(' ', $committerLine);
+            end($committerData);
+            $ts = prev($committerData);
+            if ($ts && $date = date('Y-m-d', $ts)) {
+                $version['date'] = $date;
+            }
         }
     }else{
         global $updateVersion;
