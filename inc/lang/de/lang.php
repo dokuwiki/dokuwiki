@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Sebastian Engel <mail@engel-s.de>
+ * @author Gunnar Lindenblatt <gunnar.lindenblatt@gmail.com>
  * @author Karl_de_Hall <Karl.Grohmueller@sonnenhof-sha.de>
  * @author Michael Bohn <mjbohn@gmail.com>
  * @author Joel Strasser <strasser999@gmail.com>
@@ -140,15 +140,15 @@ $lang['js']['media_done_btn']  = 'Fertig';
 $lang['js']['media_drop']      = 'Dateien hier hinziehen um sie hochzuladen';
 $lang['js']['media_cancel']    = 'Entfernen';
 $lang['js']['media_overwrt']   = 'Existierende Dateien überschreiben';
-$lang['search_exact_match']    = 'Genaue Treffer';
-$lang['search_starts_with']    = 'Beginnt mit';
-$lang['search_ends_with']      = 'Endet mit';
-$lang['search_contains']       = 'Enthält';
-$lang['search_custom_match']   = 'Angepasst ';
-$lang['search_any_ns']         = 'Alle Namensräume';
-$lang['search_any_time']       = 'Jederzeit';
-$lang['search_past_7_days']    = 'Letzte Woche';
-$lang['search_past_month']     = 'Letzter Monat';
+$lang['search_exact_match']    = 'genaue Treffer';
+$lang['search_starts_with']    = 'beginnt mit';
+$lang['search_ends_with']      = 'endet mit';
+$lang['search_contains']       = 'enthält';
+$lang['search_custom_match']   = 'angepasst ';
+$lang['search_any_ns']         = 'alle Kategorien';
+$lang['search_any_time']       = 'jederzeit';
+$lang['search_past_7_days']    = 'letzte Woche';
+$lang['search_past_month']     = 'letzter Monat';
 $lang['search_past_year']      = 'letztes Jahr';
 $lang['search_sort_by_hits']   = 'Sortiere nach Treffer';
 $lang['search_sort_by_mtime']  = 'Sortiere nach letzter Änderung';
