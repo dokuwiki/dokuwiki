@@ -100,8 +100,7 @@ class PluginController
         if (!class_exists($class, true)) {
 
             # the plugin might be in the wrong directory
-            $dir = $this->get_directory($plugin);
-            $inf = confToHash(DOKU_PLUGIN . "$dir/plugin.info.txt");
+            $inf = confToHash(DOKU_PLUGIN . "$plugin/plugin.info.txt");
             if ($inf['base'] && $inf['base'] != $plugin) {
                 msg(
                     sprintf(
@@ -162,17 +161,6 @@ class PluginController
         if (array_key_exists($plugin, $this->plugin_cascade['protected'])) return false;
         $this->tmp_plugins[$plugin] = 1;
         return $this->saveList();
-    }
-
-    /**
-     * Returns directory name of plugin
-     *
-     * @param string $plugin name of plugin
-     * @return string name of directory
-     */
-    public function get_directory($plugin)
-    {
-        return $plugin;
     }
 
     /**
@@ -335,13 +323,12 @@ class PluginController
 
         foreach ($master_list as $plugin) {
 
-            $basedir = $this->get_directory($plugin);
-            if (file_exists(DOKU_PLUGIN . "$basedir/$type.php")) {
+            if (file_exists(DOKU_PLUGIN . "$plugin/$type.php")) {
                 $plugins[] = $plugin;
                 continue;
             }
 
-            $typedir = DOKU_PLUGIN . "$basedir/$type/";
+            $typedir = DOKU_PLUGIN . "$plugin/$type/";
             if (is_dir($typedir)) {
                 if ($dp = opendir($typedir)) {
                     while (false !== ($component = readdir($dp))) {
