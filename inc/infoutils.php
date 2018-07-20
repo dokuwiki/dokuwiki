@@ -449,7 +449,10 @@ function dbglog($msg,$header=''){
 function dbg_deprecated($alternative = '') {
     global $conf;
     global $EVENT_HANDLER;
-    if(!$conf['allowdebug'] && !$EVENT_HANDLER->hasHandlerForEvent('INFO_DEPRECATION_LOG')) {
+    if(
+        !$conf['allowdebug'] &&
+        ($EVENT_HANDLER === null || !$EVENT_HANDLER->hasHandlerForEvent('INFO_DEPRECATION_LOG'))
+    ) {
         // avoid any work if no one cares
         return;
     }
