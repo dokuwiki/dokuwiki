@@ -91,11 +91,11 @@ function plugin_disable($plugin) {
  *
  * @param string $plugin name of plugin
  * @return string name of directory
+ * @deprecated 2018-07-20
  */
 function plugin_directory($plugin) {
-    /** @var $plugin_controller PluginController */
-    global $plugin_controller;
-    return $plugin_controller->get_directory($plugin);
+    dbg_deprecated('$plugin directly');
+    return $plugin;
 }
 
 /**
