@@ -25,10 +25,10 @@ class EventHandler
         // load action plugins
         /** @var ActionPlugin $plugin */
         $plugin = null;
-        $pluginlist = plugin_list('action');
+        $pluginlist = (PluginController::getInstance())->getList('action');
 
         foreach ($pluginlist as $plugin_name) {
-            $plugin = plugin_load('action', $plugin_name);
+            $plugin = (PluginController::getInstance())->load('action', $plugin_name);
 
             if ($plugin !== null) $plugin->register($this);
         }

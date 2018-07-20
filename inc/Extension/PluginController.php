@@ -104,7 +104,7 @@ class PluginController
         list($plugin, /* $component */) = $this->_splitName($name);
 
         // check if disabled
-        if (!$disabled && $this->isdisabled($plugin)) {
+        if (!$disabled && !$this->isEnabled($plugin)) {
             return null;
         }
 

@@ -46,7 +46,7 @@ trait PluginTrait
      */
     public function loadHelper($name, $msg = true)
     {
-        $obj = plugin_load('helper', $name);
+        $obj = (PluginController::getInstance())->load('helper', $name);
         if (is_null($obj) && $msg) msg("Helper plugin $name is not available or invalid.", -1);
         return $obj;
     }
