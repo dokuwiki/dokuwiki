@@ -131,10 +131,23 @@ class PluginController
      *
      * @param string $plugin name of plugin
      * @return bool  true disabled, false enabled
+     * @deprecated in favor of the more sensible isEnabled where the return value matches the enabled state
      */
-    public function isdisabled($plugin)
+    public function isDisabled($plugin)
     {
-        return empty($this->tmp_plugins[$plugin]);
+        dbg_deprecated('isEnabled()');
+        return !$this->isEnabled($plugin);
+    }
+
+    /**
+     * Check whether plugin is disabled
+     *
+     * @param string $plugin name of plugin
+     * @return bool  true enabled, false disabled
+     */
+    public function isEnabled($plugin)
+    {
+        return !empty($this->tmp_plugins[$plugin]);
     }
 
     /**
