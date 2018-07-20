@@ -771,11 +771,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         if (is_readable($infopath)) {
             $this->localInfo = confToHash($infopath);
         } elseif (!$this->isTemplate() && $this->isEnabled()) {
-            global $plugin_types;
             $path       = $this->getInstallDir().'/';
             $plugin     = null;
 
-            foreach ($plugin_types as $type) {
+            foreach (PluginController::PLUGIN_TYPES as $type) {
                 if (file_exists($path.$type.'.php')) {
                     $plugin = plugin_load($type, $this->base);
                     if ($plugin) break;

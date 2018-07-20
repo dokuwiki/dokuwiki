@@ -1,15 +1,19 @@
 <?php
+namespace dokuwiki\Extension;
+
 /**
  * Class to encapsulate access to dokuwiki plugins
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
  */
-
-namespace dokuwiki\Extension;
-
 class PluginController
 {
+    /** @var PluginController */
+    protected static $instance;
+
+    /** The different types of plugins DokuWiki supports */
+    const PLUGIN_TYPES = array('auth', 'admin','syntax','action','renderer', 'helper','remote');
 
     protected $list_bytype = array();
     protected $tmp_plugins = array();
@@ -18,11 +22,30 @@ class PluginController
 
     /**
      * Populates the master list of plugins
+     * @param bool $usedGetInstance temporary to find deprecated uses
+     * @deprecated 2018-06-16 This constructor will be made private
      */
-    public function __construct()
+    public function __construct($usedGetInstance=false)
     {
+        if(!$usedGetInstance) {
+            dbg_deprecated('\dokuwiki\Extension\PluginController::getInstance');
+        }
         $this->loadConfig();
         $this->_populateMasterList();
+    }
+
+    /**
+     * Get the singleton instance of the Plugin Controller
+     *
+     * @param bool $init force a reload of the controller
+     * @return PluginController
+     */
+    public static function getInstance($init=false) {
+        if(self::$instance === null || $init) {
+            self::$instance = new PluginController(true);
+        }
+
+        return self::$instance;
     }
 
     /**

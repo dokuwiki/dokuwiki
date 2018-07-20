@@ -107,9 +107,9 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
         init_files();
 
         // reset loaded plugins
-        global $plugin_controller_class, $plugin_controller;
+        global $plugin_controller;
         /** @var PluginController $plugin_controller */
-        $plugin_controller = new $plugin_controller_class();
+        $plugin_controller = PluginController::getInstance(true);
 
         // disable all non-default plugins
         global $default_plugins;

@@ -182,11 +182,6 @@ init_creationmodes();
 init_paths();
 init_files();
 
-// setup plugin controller class (can be overwritten in preload.php)
-$plugin_types = array('auth', 'admin','syntax','action','renderer', 'helper','remote');
-global $plugin_controller_class, $plugin_controller;
-if (empty($plugin_controller_class)) $plugin_controller_class = 'dokuwiki\Extension\PluginController';
-
 // load libraries
 require_once(DOKU_INC.'vendor/autoload.php');
 require_once(DOKU_INC.'inc/load.php');
@@ -206,7 +201,8 @@ global $INPUT;
 $INPUT = new Input();
 
 // initialize plugin controller
-$plugin_controller = new $plugin_controller_class();
+global $plugin_controller; // @deprecated 2018-07-20
+$plugin_controller = dokuwiki\Extension\PluginController::getInstance();
 
 // initialize the event handler
 global $EVENT_HANDLER;
