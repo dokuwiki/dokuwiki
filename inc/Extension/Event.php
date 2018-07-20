@@ -65,7 +65,11 @@ class Event
         global $EVENT_HANDLER;
 
         $this->canPreventDefault = $enablePreventDefault;
-        $EVENT_HANDLER->process_event($this, 'BEFORE');
+        if($EVENT_HANDLER !== null) {
+            $EVENT_HANDLER->process_event($this, 'BEFORE');
+        } else {
+            dbglog($this->name.':BEFORE event triggered before event system was initialized');
+        }
 
         return (!$enablePreventDefault || $this->_default);
     }
@@ -75,7 +79,12 @@ class Event
         global $EVENT_HANDLER;
 
         $this->_continue = true;
-        $EVENT_HANDLER->process_event($this, 'AFTER');
+
+        if($EVENT_HANDLER !== null) {
+            $EVENT_HANDLER->process_event($this, 'AFTER');
+        } else {
+            dbglog($this->name.':AFTER event triggered before event system was initialized');
+        }
     }
 
     /**
