@@ -264,7 +264,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
      * @param array  $opts  option array as given to search()
      * @return bool
      */
-    protected function searchCountCallback(&$data, $base, $file, $type, $lvl, $opts)
+    public function searchCountCallback(&$data, $base, $file, $type, $lvl, $opts)
     {
         // traverse
         if ($type == 'd') {
