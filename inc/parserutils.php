@@ -7,6 +7,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Extension\PluginController;
+use dokuwiki\Extension\Event;
 use dokuwiki\Parsing\Parser;
 
 /**
@@ -201,7 +203,7 @@ function p_get_instructions($text){
     }
 
     // Do the parsing
-    trigger_event('PARSER_WIKITEXT_PREPROCESS', $text);
+    Event::createAndTrigger('PARSER_WIKITEXT_PREPROCESS', $text);
     $p = $Parser->parse($text);
     //  dbg($p);
     return $p;
@@ -483,7 +485,7 @@ function p_render_metadata($id, $orig){
 
     // add an extra key for the event - to tell event handlers the page whose metadata this is
     $orig['page'] = $id;
-    $evt = new Doku_Event('PARSER_METADATA_RENDER', $orig);
+    $evt = new Event('PARSER_METADATA_RENDER', $orig);
     if ($evt->advise_before()) {
 
         // get instructions
@@ -544,7 +546,7 @@ function p_get_parsermodes(){
         global $PARSER_MODES;
         $obj = null;
         foreach($pluginlist as $p){
-            /** @var DokuWiki_Syntax_Plugin $obj */
+            /** @var \dokuwiki\Extension\SyntaxPlugin $obj */
             if(!$obj = plugin_load('syntax',$p)) continue; //attempt to load plugin into $obj
             $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
             //add to modes
@@ -668,7 +670,7 @@ function p_render($mode,$instructions,&$info,$date_at=''){
 
     // Post process and return the output
     $data = array($mode,& $Renderer->doc);
-    trigger_event('RENDERER_CONTENT_POSTPROCESS',$data);
+    Event::createAndTrigger('RENDERER_CONTENT_POSTPROCESS',$data);
     return $Renderer->doc;
 }
 
@@ -682,7 +684,7 @@ function p_render($mode,$instructions,&$info,$date_at=''){
  * @author Christopher Smith <chris@jalakai.co.uk>
  */
 function p_get_renderer($mode) {
-    /** @var Doku_Plugin_Controller $plugin_controller */
+    /** @var PluginController $plugin_controller */
     global $conf, $plugin_controller;
 
     $rname = !empty($conf['renderer_'.$mode]) ? $conf['renderer_'.$mode] : $mode;

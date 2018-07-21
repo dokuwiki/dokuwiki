@@ -15,7 +15,6 @@ require_once(DOKU_INC.'inc/changelog.php');
 require_once(DOKU_INC.'inc/common.php');
 require_once(DOKU_INC.'inc/confutils.php');
 require_once(DOKU_INC.'inc/pluginutils.php');
-require_once(DOKU_INC.'inc/events.php');
 require_once(DOKU_INC.'inc/form.php');
 require_once(DOKU_INC.'inc/fulltext.php');
 require_once(DOKU_INC.'inc/html.php');
@@ -35,6 +34,7 @@ require_once(DOKU_INC.'inc/utf8.php');
 require_once(DOKU_INC.'inc/auth.php');
 require_once(DOKU_INC.'inc/compatibility.php');
 require_once(DOKU_INC.'inc/deprecated.php');
+require_once(DOKU_INC.'inc/legacy.php');
 
 /**
  * spl_autoload_register callback
@@ -62,8 +62,6 @@ function load_autoload($name){
         'cache_parser'          => DOKU_INC.'inc/cache.php',
         'cache_instructions'    => DOKU_INC.'inc/cache.php',
         'cache_renderer'        => DOKU_INC.'inc/cache.php',
-        'Doku_Event'            => DOKU_INC.'inc/events.php',
-        'Doku_Event_Handler'    => DOKU_INC.'inc/events.php',
         'Input'                 => DOKU_INC.'inc/Input.class.php',
         'JpegMeta'              => DOKU_INC.'inc/JpegMeta.php',
         'SimplePie'             => DOKU_INC.'inc/SimplePie.php',
@@ -72,24 +70,11 @@ function load_autoload($name){
         'IXR_Client'            => DOKU_INC.'inc/IXR_Library.php',
         'IXR_Error'             => DOKU_INC.'inc/IXR_Library.php',
         'IXR_IntrospectionServer' => DOKU_INC.'inc/IXR_Library.php',
-        'Doku_Plugin_Controller'=> DOKU_INC.'inc/plugincontroller.class.php',
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
         'Sitemapper'            => DOKU_INC.'inc/Sitemapper.php',
         'PassHash'              => DOKU_INC.'inc/PassHash.class.php',
         'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
         'Subscription'          => DOKU_INC.'inc/subscription.php',
-
-        'DokuWiki_PluginInterface' => DOKU_INC.'inc/PluginInterface.php',
-        'DokuWiki_PluginTrait'     => DOKU_INC.'inc/PluginTrait.php',
-        'DokuWiki_Plugin'          => DOKU_INC.'inc/Plugin.php',
-
-
-        'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
-        'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
-        'DokuWiki_Syntax_Plugin' => DOKU_PLUGIN.'syntax.php',
-        'DokuWiki_Remote_Plugin' => DOKU_PLUGIN.'remote.php',
-        'DokuWiki_Auth_Plugin'   => DOKU_PLUGIN.'auth.php',
-        'DokuWiki_CLI_Plugin'    => DOKU_PLUGIN.'cli.php',
 
         'Doku_Handler'          => DOKU_INC.'inc/parser/handler.php',
         'Doku_Renderer'          => DOKU_INC.'inc/parser/renderer.php',

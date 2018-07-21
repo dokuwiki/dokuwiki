@@ -1,14 +1,18 @@
 <?php
+
+namespace dokuwiki\Extension;
+
 /**
  * DokuWiki Plugin Interface
  *
  * Defines the public contract all DokuWiki plugins will adhere to. The actual code
- * to do so is defined in DokuWiki_PluginTrait
+ * to do so is defined in dokuwiki\Extension\PluginTrait
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
  */
-interface DokuWiki_PluginInterface {
+interface PluginInterface
+{
     /**
      * General Info
      *
@@ -107,7 +111,7 @@ interface DokuWiki_PluginInterface {
      *
      * @param   string $name name of plugin to load
      * @param   bool $msg if a message should be displayed in case the plugin is not available
-     * @return  DokuWiki_PluginInterface|null helper plugin object
+     * @return  PluginInterface|null helper plugin object
      */
     public function loadHelper($name, $msg = true);
 

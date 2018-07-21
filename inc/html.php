@@ -8,6 +8,8 @@
 
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\Event;
 
 if (!defined('SEC_EDIT_PATTERN')) {
     define('SEC_EDIT_PATTERN', '#<!-- EDIT({.*?}) -->#');
@@ -133,7 +135,7 @@ function html_secedit_button($matches){
     $data ['target'] = strtolower($data['target']);
     $data ['hid'] = strtolower($data['hid']);
 
-    return trigger_event('HTML_SECEDIT_BUTTON', $data,
+    return Event::createAndTrigger('HTML_SECEDIT_BUTTON', $data,
                          'html_secedit_get_button');
 }
 
@@ -298,7 +300,7 @@ function html_show($txt=null){
     }else{
         if ($REV||$DATE_AT){
             $data = array('rev' => &$REV, 'date_at' => &$DATE_AT);
-            trigger_event('HTML_SHOWREV_OUTPUT', $data, 'html_showrev');
+            Event::createAndTrigger('HTML_SHOWREV_OUTPUT', $data, 'html_showrev');
         }
         $html = p_wiki_xhtml($ID,$REV,true,$DATE_AT);
         $html = html_secedit($html,$secedit);
@@ -1723,7 +1725,7 @@ function html_updateprofile(){
     global $conf;
     global $INPUT;
     global $INFO;
-    /** @var DokuWiki_Auth_Plugin $auth */
+    /** @var AuthPlugin $auth */
     global $auth;
 
     print p_locale_xhtml('updateprofile');
@@ -1872,7 +1874,7 @@ function html_edit(){
     if ($data['target'] !== 'section') {
         // Only emit event if page is writable, section edit data is valid and
         // edit target is not section.
-        trigger_event('HTML_EDIT_FORMSELECTION', $data, 'html_edit_form', true);
+        Event::createAndTrigger('HTML_EDIT_FORMSELECTION', $data, 'html_edit_form', true);
     } else {
         html_edit_form($data);
     }
@@ -2016,7 +2018,7 @@ function html_minoredit(){
 function html_debug(){
     global $conf;
     global $lang;
-    /** @var DokuWiki_Auth_Plugin $auth */
+    /** @var AuthPlugin $auth */
     global $auth;
     global $INFO;
 
@@ -2221,7 +2223,7 @@ function html_mktocitem($link, $text, $level, $hash='#'){
 function html_form($name, &$form) {
     // Safety check in case the caller forgets.
     $form->endFieldset();
-    trigger_event('HTML_'.strtoupper($name).'FORM_OUTPUT', $form, 'html_form_output', false);
+    Event::createAndTrigger('HTML_'.strtoupper($name).'FORM_OUTPUT', $form, 'html_form_output', false);
 }
 
 /**

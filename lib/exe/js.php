@@ -6,6 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Extension\Event;
+
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 if(!defined('NL')) define('NL',"\n");
@@ -73,7 +75,7 @@ function js_out(){
     }
 
     // Let plugins decide to either put more scripts here or to remove some
-    trigger_event('JS_SCRIPT_LIST', $files);
+    Event::createAndTrigger('JS_SCRIPT_LIST', $files);
 
     // The generated script depends on some dynamic options
     $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].md5(serialize($files)),'.js');

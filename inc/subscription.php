@@ -1,6 +1,7 @@
 <?php
 
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Extension\AuthPlugin;
 
 /**
  * Class for handling (email) subscriptions
@@ -293,7 +294,7 @@ class Subscription {
     public function send_bulk($page) {
         if(!$this->isenabled()) return 0;
 
-        /** @var DokuWiki_Auth_Plugin $auth */
+        /** @var \dokuwiki\Extension\AuthPlugin $auth */
         global $auth;
         global $conf;
         global $USERINFO;
@@ -663,7 +664,7 @@ class Subscription {
     public function notifyaddresses(&$data) {
         if(!$this->isenabled()) return;
 
-        /** @var DokuWiki_Auth_Plugin $auth */
+        /** @var \dokuwiki\Extension\AuthPlugin $auth */
         global $auth;
         global $conf;
         /** @var Input $INPUT */

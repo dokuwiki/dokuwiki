@@ -4,6 +4,7 @@ namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionDisabledException;
+use dokuwiki\Extension\Event;
 
 /**
  * Class Subscribe
@@ -67,7 +68,7 @@ class Subscribe extends AbstractUserAction {
         if(empty($params['action']) || !checkSecurityToken()) return;
 
         // Handle POST data, may throw exception.
-        trigger_event('ACTION_HANDLE_SUBSCRIBE', $params, array($this, 'handlePostData'));
+        Event::createAndTrigger('ACTION_HANDLE_SUBSCRIBE', $params, array($this, 'handlePostData'));
 
         $target = $params['target'];
         $style = $params['style'];

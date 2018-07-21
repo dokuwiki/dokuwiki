@@ -3,6 +3,7 @@
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
+use dokuwiki\Extension\Event;
 
 /**
  * Class Export
@@ -96,7 +97,7 @@ class Export extends AbstractAction {
         $data['headers'] = $headers;
         $data['output'] =& $output;
 
-        trigger_event('ACTION_EXPORT_POSTPROCESS', $data);
+        Event::createAndTrigger('ACTION_EXPORT_POSTPROCESS', $data);
 
         if(!empty($data['output'])) {
             if(is_array($data['headers'])) foreach($data['headers'] as $key => $val) {

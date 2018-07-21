@@ -8,6 +8,8 @@
 
 // end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
 // think different
+use dokuwiki\Extension\Event;
+
 if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");
 #define('MAILHEADER_ASCIIONLY',1);
 
@@ -103,7 +105,7 @@ function mail_setup(){
 function mail_send($to, $subject, $body, $from='', $cc='', $bcc='', $headers=null, $params=null){
     dbg_deprecated('class Mailer::');
     $message = compact('to','subject','body','from','cc','bcc','headers','params');
-    return trigger_event('MAIL_MESSAGE_SEND',$message,'_mail_send_action');
+    return Event::createAndTrigger('MAIL_MESSAGE_SEND',$message,'_mail_send_action');
 }
 
 /**

@@ -39,7 +39,7 @@ class Admin extends AbstractUserAction {
 
         // retrieve admin plugin name from $_REQUEST['page']
         if(($page = $INPUT->str('page', '', true)) != '') {
-            /** @var $plugin \DokuWiki_Admin_Plugin */
+            /** @var $plugin \dokuwiki\Extension\AdminPlugin */
             if($plugin = plugin_getRequestAdminPlugin()) { // FIXME this method does also permission checking
                 if($plugin->forAdminOnly() && !$INFO['isadmin']) {
                     throw new ActionException('denied');

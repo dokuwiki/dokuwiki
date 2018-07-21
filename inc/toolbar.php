@@ -4,7 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
- */
+ */use dokuwiki\Extension\Event;
 
 /**
  * Prepares and prints an JavaScript array with all toolbar buttons
@@ -18,7 +18,7 @@ function toolbar_JSdefines($varname){
 
     $menu = array();
 
-    $evt = new Doku_Event('TOOLBAR_DEFINE', $menu);
+    $evt = new Event('TOOLBAR_DEFINE', $menu);
     if ($evt->advise_before()){
 
         // build button array

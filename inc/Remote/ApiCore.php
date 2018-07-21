@@ -5,7 +5,7 @@ namespace dokuwiki\Remote;
 use Doku_Renderer_xhtml;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
-use DokuWiki_Auth_Plugin;
+use dokuwiki\Extension\Event;
 
 define('DOKU_API_VERSION', 10);
 
@@ -594,7 +594,7 @@ class ApiCore
         if (!auth_isadmin()) {
             throw new AccessDeniedException('Only admins are allowed to delete users', 114);
         }
-        /** @var DokuWiki_Auth_Plugin $auth */
+        /** @var \dokuwiki\Extension\AuthPlugin $auth */
         global $auth;
         return (bool)$auth->triggerUserMod('delete', array($usernames));
     }
@@ -671,7 +671,7 @@ class ApiCore
      */
     public function aclCheck($id, $user = null, $groups = null)
     {
-        /** @var DokuWiki_Auth_Plugin $auth */
+        /** @var \dokuwiki\Extension\AuthPlugin $auth */
         global $auth;
 
         $id = $this->resolvePageId($id);
@@ -965,7 +965,7 @@ class ApiCore
     public function login($user, $pass)
     {
         global $conf;
-        /** @var DokuWiki_Auth_Plugin $auth */
+        /** @var \dokuwiki\Extension\AuthPlugin $auth */
         global $auth;
 
         if (!$conf['useacl']) return 0;
@@ -981,7 +981,7 @@ class ApiCore
                 'sticky' => false,
                 'silent' => true,
             );
-            $ok = trigger_event('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
+            $ok = Event::createAndTrigger('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
         }
         session_write_close(); // we're done with the session
 
