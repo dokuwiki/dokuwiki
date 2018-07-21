@@ -79,61 +79,12 @@ class RemoteAPICoreTest {
 
 }
 
-class remote_plugin_testplugin extends RemotePlugin {
-    function _getMethods() {
-        return array(
-            'method1' => array(
-                'args' => array(),
-                'return' => 'void'
-            ), 'methodString' => array(
-                'args' => array(),
-                'return' => 'string'
-            ), 'method2' => array(
-                'args' => array('string', 'int'),
-                'return' => 'array',
-                'name' => 'method2',
-            ), 'method2ext' => array(
-                'args' => array('string', 'int', 'bool'),
-                'return' => 'array',
-                'name' => 'method2',
-            ), 'publicCall' => array(
-                'args' => array(),
-                'return' => 'boolean',
-                'doc' => 'testing for public access',
-                'name' => 'publicCall',
-                'public' => 1
-            )
-        );
-    }
-
-    function method1() { return null; }
-    function methodString() { return 'success'; }
-    function method2($str, $int, $bool = false) { return array($str, $int, $bool); }
-    function publicCall() {return true;}
-}
-
-class remote_plugin_testplugin2 extends RemotePlugin {
-    /**
-     * This is a dummy method
-     *
-     * @param string $str some more parameter description
-     * @param int $int
-     * @param bool $bool
-     * @param Object $unknown
-     * @return array
-     */
-    public function commented($str, $int, $bool, $unknown) { return array($str, $int, $bool); }
-
-    private function privateMethod() {return true;}
-    protected function protectedMethod() {return true;}
-    public function _underscore() {return true;}
-}
-
-
 
 class remote_test extends DokuWikiTest {
 
     protected $userinfo;
+
+    protected $pluginsEnabled = ['testing'];
 
     /** @var  Api */
     protected $remote;
@@ -146,20 +97,6 @@ class remote_test extends DokuWikiTest {
         global $auth;
 
         parent::setUp();
-
-        // mock plugin controller to return our test plugins
-        $pluginManager = $this->createMock('dokuwiki\Extension\PluginController');
-        $pluginManager->method('getList')->willReturn(array('testplugin', 'testplugin2'));
-        $pluginManager->method('load')->willReturnCallback(
-            function($type, $plugin) {
-                if($plugin == 'testplugin2') {
-                    return new remote_plugin_testplugin2();
-                } else {
-                    return new remote_plugin_testplugin();
-                }
-            }
-        );
-        $plugin_controller = $pluginManager;
 
         $conf['remote'] = 1;
         $conf['remoteuser'] = '!!not set!!';
@@ -180,27 +117,27 @@ class remote_test extends DokuWikiTest {
     function test_pluginMethods() {
         $methods = $this->remote->getPluginMethods();
         $actual = array_keys($methods);
-        sort($actual);
         $expect = array(
-            'plugin.testplugin.method1',
-            'plugin.testplugin.method2',
-            'plugin.testplugin.methodString',
-            'plugin.testplugin.method2ext',
-            'plugin.testplugin.publicCall',
+            'plugin.testing_manual.method1',
+            'plugin.testing_manual.method2',
+            'plugin.testing_manual.methodString',
+            'plugin.testing_manual.method2ext',
+            'plugin.testing_manual.publicCall',
 
-            'plugin.testplugin2.commented'
+            'plugin.testing_auto.commented'
         );
-        sort($expect);
-        $this->assertEquals($expect,$actual);
+        foreach($expect as $e) {
+            $this->assertContains($e, $actual);
+        }
     }
 
     function test_pluginDescriptors() {
         $methods = $this->remote->getPluginMethods();
-        $this->assertEquals(array('string','int','bool','string'), $methods['plugin.testplugin2.commented']['args']);
-        $this->assertEquals('array', $methods['plugin.testplugin2.commented']['return']);
-        $this->assertEquals(0, $methods['plugin.testplugin2.commented']['public']);
-        $this->assertContains('This is a dummy method', $methods['plugin.testplugin2.commented']['doc']);
-        $this->assertContains('string $str some more parameter description', $methods['plugin.testplugin2.commented']['doc']);
+        $this->assertEquals(array('string','int','bool','string'), $methods['plugin.testing_auto.commented']['args']);
+        $this->assertEquals('array', $methods['plugin.testing_auto.commented']['return']);
+        $this->assertEquals(0, $methods['plugin.testing_auto.commented']['public']);
+        $this->assertContains('This is a dummy method', $methods['plugin.testing_auto.commented']['doc']);
+        $this->assertContains('string $str some more parameter description', $methods['plugin.testing_auto.commented']['doc']);
     }
 
     function test_hasAccessSuccess() {
@@ -326,10 +263,10 @@ class remote_test extends DokuWikiTest {
         $conf['useacl'] = 1;
 
         $remoteApi = new Api();
-        $this->assertEquals($remoteApi->call('plugin.testplugin.method1'), null);
-        $this->assertEquals($remoteApi->call('plugin.testplugin.method2', array('string', 7)), array('string', 7, false));
-        $this->assertEquals($remoteApi->call('plugin.testplugin.method2ext', array('string', 7, true)), array('string', 7, true));
-        $this->assertEquals($remoteApi->call('plugin.testplugin.methodString'), 'success');
+        $this->assertEquals($remoteApi->call('plugin.testing_manual.method1'), null);
+        $this->assertEquals($remoteApi->call('plugin.testing_manual.method2', array('string', 7)), array('string', 7, false));
+        $this->assertEquals($remoteApi->call('plugin.testing_manual.method2ext', array('string', 7, true)), array('string', 7, true));
+        $this->assertEquals($remoteApi->call('plugin.testing_manual.methodString'), 'success');
     }
 
     /**
@@ -355,7 +292,7 @@ class remote_test extends DokuWikiTest {
         global $conf;
         $conf['useacl'] = 1;
         $remoteApi = new Api();
-        $this->assertTrue($remoteApi->call('plugin.testplugin.publicCall'));
+        $this->assertTrue($remoteApi->call('plugin.testing_manual.publicCall'));
     }
 
     /**
@@ -376,7 +313,7 @@ class remote_test extends DokuWikiTest {
         global $conf;
         $conf['useacl'] = 1;
         $remoteApi = new Api();
-        $remoteApi->call('plugin.testplugin.methodString');
+        $remoteApi->call('plugin.testing_manual.methodString');
     }
 
     function test_pluginCallCustomPath() {
@@ -394,6 +331,6 @@ class remote_test extends DokuWikiTest {
     }
 
     function pluginCallCustomPathRegister(&$event, $param) {
-        $event->data['custom.path'] = array('testplugin', 'methodString');
+        $event->data['custom.path'] = array('testing_manual', 'methodString');
     }
 }
