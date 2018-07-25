@@ -1,0 +1,1 @@
+**AVERTISSEMENT :** Ceci effacera **toutes** les données qui ont jamais été enregistrées pour ce schéma. Cette opération est irréversible !

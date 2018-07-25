@@ -1,8 +1,8 @@
 ====== Struct - Assignement de schémas ======
 
-Cette page vous permet d'assigner automatiquement des schémas à des pages ou à des namespaces entiers. Dès qu'une page est ciblée par un //pattern//, le schéma correspondant est affiché dans cette page.
+Cette page vous permet d'assigner automatiquement des schémas à des pages ou à des catégories entieres. Dès qu'une page est ciblée par un patron, le schéma correspondant est affiché dans cette page.
 
-  * Pour cibler un namespace sans ses sous-namespaces, utilisez le //pattern// ''<nowiki>namespace:*</nowiki>''.
-  * Pour cibler un namespace et tous ses sous-namespaces, utilisez ''<nowiki>namespace:**</nowiki>''.
+  * Pour cibler une catégorie sans ses sous-catégories, utilisez le patron ''<nowiki>catégorie:*</nowiki>''.
+  * Pour cibler une catégorie et toutes ses sous-catégories, utilisez ''<nowiki>catégorie:**</nowiki>''.
   * Pour cibler une page, indiquez son identifiant complet, par exemple ''<nowiki>ma:page</nowiki>''.
   * Vous pouvez aussi utiliser les expressions régulières en les entourant d'un ''/''. Elles seront comparées avec l'identifiant complet d'une page, préfixé de '':''.
