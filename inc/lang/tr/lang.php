@@ -3,16 +3,16 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author mahir <mahirtakak@gmail.com>
  * @author Selim Farsakoğlu <farsakogluselim@yahoo.de>
  * @author Aydın Coşkuner <aydinweb@gmail.com>
  * @author Cihan Kahveci <kahvecicihan@gmail.com>
  * @author Yavuz Selim <yavuzselim@gmail.com>
  * @author Caleb Maclennan <caleb@alerque.com>
- * @author farukerdemoncel@gmail.com
+ * @author farukerdemoncel <farukerdemoncel@gmail.com>
  * @author Mustafa Aslan <maslan@hotmail.com>
  * @author huseyin can <huseyincan73@gmail.com>
  * @author ilker rifat kapaç <irifat@gmail.com>
- * @author İlker R. Kapaç <irifat@gmail.com>
  * @author Mete Cuma <mcumax@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -74,44 +74,6 @@ $lang['badpassconfirm']        = 'Üzgünüz, parolanız yanlış';
 $lang['minoredit']             = 'Küçük Değişiklikler';
 $lang['draftdate']             = 'Taslak şu saatte otomatik kaydedildi:';
 $lang['nosecedit']             = 'Sayfa yakın zamanda değiştirilmiştir, bölüm bilgisi eski kalmıştır. Bunun için bölüm yerine tüm sayfa yüklenmiştir.';
-$lang['regmissing']            = 'Üzgünüz, tüm alanları doldurmalısınız.';
-$lang['reguexists']            = 'Üzgünüz, bu isime sahip bir kullanıcı zaten mevcut.';
-$lang['regsuccess']            = 'Kullanıcı oluşturuldu ve şifre e-posta adresine gönderildi.';
-$lang['regsuccess2']           = 'Kullanıcı oluşturuldu.';
-$lang['regfail']               = 'Kullanıcı oluşturulamadı.';
-$lang['regmailfail']           = 'Şifrenizi e-posta ile gönderirken bir hata oluşmuş gibi görünüyor. Lütfen yönetici ile temasa geçiniz!';
-$lang['regbadmail']            = 'Verilen e-posta adresi geçersiz gibi görünüyor - bunun bir hata olduğunu düşünüyorsanız yönetici ile temasa geçiniz.';
-$lang['regbadpass']            = 'Girilen parolalar aynı değil. Lütfen tekrar deneyiniz.';
-$lang['regpwmail']             = 'DokuWiki parolanız';
-$lang['reghere']               = 'Daha hesabınız yok mu? Hemen bir tane açtırın!';
-$lang['profna']                = 'Bu wiki kullanıcı bilgilerini değiştirmeyi desteklememektedir';
-$lang['profnochange']          = 'Değişiklik yok, birşey yapılmadı.';
-$lang['profnoempty']           = 'Boş isim veya e-posta adresine izin verilmiyor.';
-$lang['profchanged']           = 'Kullanıcı bilgileri başarıyla değiştirildi.';
-$lang['profnodelete']          = 'Bu wiki kullanıcı silmeyi desteklemiyor';
-$lang['profdeleteuser']        = 'Hesabı Sil';
-$lang['profdeleted']           = 'Bu wiki\'den hesabınız silindi';
-$lang['profconfdelete']        = 'Bu wiki\'den hesabımı silmek istiyorum. <br/>Bu işlem geri alınamaz';
-$lang['profconfdeletemissing'] = 'Onay kutusu işaretlenmedi';
-$lang['proffail']              = 'Kullanıcı bilgileri güncellenmedi.';
-$lang['pwdforget']             = 'Parolanızı mı unuttunuz? Yeni bir parola alın';
-$lang['resendna']              = 'Bu wiki parolayı tekrar göndermeyi desteklememektedir.';
-$lang['resendpwd']             = 'İçin yeni şifre belirle';
-$lang['resendpwdmissing']      = 'Üzgünüz, tüm alanları doldurmalısınız.';
-$lang['resendpwdnouser']       = 'Üzgünüz,  veritabanımızda bu kullanıcıyı bulamadık.';
-$lang['resendpwdbadauth']      = 'Üzgünüz, bu doğrulama kodu doğru değil. Doğrulama linkini tam olarak kullandığınıza emin olun.';
-$lang['resendpwdconfirm']      = 'Doğrulama linki e-posta adresinize gönderildi.';
-$lang['resendpwdsuccess']      = 'Yeni parolanız e-posta adresinize gönderildi.';
-$lang['license']               = 'Aksi belirtilmediği halde, bu wikinin içeriğinin telif hakları şu lisans ile korunmaktadır:';
-$lang['licenseok']             = 'Not: Bu sayfayı değiştirerek yazınızın şu lisans ile yayınlanmasını kabul etmiş olacaksınız:';
-$lang['searchmedia']           = 'Dosya Adı Ara:';
-$lang['searchmedia_in']        = '%s içinde ara';
-$lang['txt_upload']            = 'Yüklenecek dosyayı seç:';
-$lang['txt_filename']          = 'Dosya adı (zorunlu değil):';
-$lang['txt_overwrt']           = 'Mevcut dosyanın üstüne yaz';
-$lang['maxuploadsize']         = 'Yükleme dosya başına en fazla %s';
-$lang['lockedby']              = 'Şu an şunun tarafından kilitli:';
-$lang['lockexpire']            = 'Kilitin açılma tarihi:';
 $lang['js']['willexpire']      = 'Bu sayfayı değiştirme kilidinin süresi yaklaşık bir dakika içinde geçecek.\nÇakışmaları önlemek için önizleme tuşunu kullanarak kilit sayacını sıfırla.';
 $lang['js']['notsavedyet']     = 'Kaydedilmemiş değişiklikler kaybolacak.
 Devam etmek istiyor musunuz?';
@@ -152,6 +114,44 @@ $lang['js']['media_done_btn']  = 'Bitti';
 $lang['js']['media_drop']      = 'Yüklemek istediğiniz dosyaları buraya bırakın';
 $lang['js']['media_cancel']    = 'kaldır';
 $lang['js']['media_overwrt']   = 'Var olan dosyaların üzerine yaz';
+$lang['regmissing']            = 'Üzgünüz, tüm alanları doldurmalısınız.';
+$lang['reguexists']            = 'Üzgünüz, bu isime sahip bir kullanıcı zaten mevcut.';
+$lang['regsuccess']            = 'Kullanıcı oluşturuldu ve şifre e-posta adresine gönderildi.';
+$lang['regsuccess2']           = 'Kullanıcı oluşturuldu.';
+$lang['regfail']               = 'Kullanıcı oluşturulamadı.';
+$lang['regmailfail']           = 'Şifrenizi e-posta ile gönderirken bir hata oluşmuş gibi görünüyor. Lütfen yönetici ile temasa geçiniz!';
+$lang['regbadmail']            = 'Verilen e-posta adresi geçersiz gibi görünüyor - bunun bir hata olduğunu düşünüyorsanız yönetici ile temasa geçiniz.';
+$lang['regbadpass']            = 'Girilen parolalar aynı değil. Lütfen tekrar deneyiniz.';
+$lang['regpwmail']             = 'DokuWiki parolanız';
+$lang['reghere']               = 'Daha hesabınız yok mu? Hemen bir tane açtırın!';
+$lang['profna']                = 'Bu wiki kullanıcı bilgilerini değiştirmeyi desteklememektedir';
+$lang['profnochange']          = 'Değişiklik yok, birşey yapılmadı.';
+$lang['profnoempty']           = 'Boş isim veya e-posta adresine izin verilmiyor.';
+$lang['profchanged']           = 'Kullanıcı bilgileri başarıyla değiştirildi.';
+$lang['profnodelete']          = 'Bu wiki kullanıcı silmeyi desteklemiyor';
+$lang['profdeleteuser']        = 'Hesabı Sil';
+$lang['profdeleted']           = 'Bu wiki\'den hesabınız silindi';
+$lang['profconfdelete']        = 'Bu wiki\'den hesabımı silmek istiyorum. <br/>Bu işlem geri alınamaz';
+$lang['profconfdeletemissing'] = 'Onay kutusu işaretlenmedi';
+$lang['proffail']              = 'Kullanıcı bilgileri güncellenmedi.';
+$lang['pwdforget']             = 'Parolanızı mı unuttunuz? Yeni bir parola alın';
+$lang['resendna']              = 'Bu wiki parolayı tekrar göndermeyi desteklememektedir.';
+$lang['resendpwd']             = 'İçin yeni şifre belirle';
+$lang['resendpwdmissing']      = 'Üzgünüz, tüm alanları doldurmalısınız.';
+$lang['resendpwdnouser']       = 'Üzgünüz,  veritabanımızda bu kullanıcıyı bulamadık.';
+$lang['resendpwdbadauth']      = 'Üzgünüz, bu doğrulama kodu doğru değil. Doğrulama linkini tam olarak kullandığınıza emin olun.';
+$lang['resendpwdconfirm']      = 'Doğrulama linki e-posta adresinize gönderildi.';
+$lang['resendpwdsuccess']      = 'Yeni parolanız e-posta adresinize gönderildi.';
+$lang['license']               = 'Aksi belirtilmediği halde, bu wikinin içeriğinin telif hakları şu lisans ile korunmaktadır:';
+$lang['licenseok']             = 'Not: Bu sayfayı değiştirerek yazınızın şu lisans ile yayınlanmasını kabul etmiş olacaksınız:';
+$lang['searchmedia']           = 'Dosya Adı Ara:';
+$lang['searchmedia_in']        = '%s içinde ara';
+$lang['txt_upload']            = 'Yüklenecek dosyayı seç:';
+$lang['txt_filename']          = 'Dosya adı (zorunlu değil):';
+$lang['txt_overwrt']           = 'Mevcut dosyanın üstüne yaz';
+$lang['maxuploadsize']         = 'Yükleme dosya başına en fazla %s';
+$lang['lockedby']              = 'Şu an şunun tarafından kilitli:';
+$lang['lockexpire']            = 'Kilitin açılma tarihi:';
 $lang['rssfailed']             = 'Bu beslemeyi çekerken hata oluştu: ';
 $lang['nothingfound']          = 'Hiçbir şey yok.';
 $lang['mediaselect']           = 'Çokluortam dosyası seçimi';
@@ -338,5 +338,5 @@ $lang['currentns']             = 'Geçerli isimalanı';
 $lang['searchresult']          = 'Arama Sonucu';
 $lang['plainhtml']             = 'Yalın HTML';
 $lang['wikimarkup']            = 'Wiki Biçimlendirmesi';
-$lang['email_signature_text'] = 'Bu e-posta aşağıdaki DokuWiki tarafından otomatik olarak oluşturulmuştur
+$lang['email_signature_text']  = 'Bu e-posta aşağıdaki DokuWiki tarafından otomatik olarak oluşturulmuştur
 @DOKUWIKIURL@';
