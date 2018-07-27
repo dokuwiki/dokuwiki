@@ -90,11 +90,10 @@ function js_out(){
     // start output buffering and build the script
     ob_start();
 
-    $json = new JSON();
     // add some global variables
     print "var DOKU_BASE   = '".DOKU_BASE."';";
     print "var DOKU_TPL    = '".tpl_basedir($tpl)."';";
-    print "var DOKU_COOKIE_PARAM = " . $json->encode(
+    print "var DOKU_COOKIE_PARAM = " . json_encode(
             array(
                  'path' => empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'],
                  'secure' => $conf['securecookie'] && is_ssl()
@@ -113,7 +112,7 @@ function js_out(){
     if(!empty($templatestrings)) {
         $lang['js']['template'] = $templatestrings;
     }
-    echo 'LANG = '.$json->encode($lang['js']).";\n";
+    echo 'LANG = '.json_encode($lang['js']).";\n";
 
     // load toolbar
     toolbar_JSdefines('toolbar');

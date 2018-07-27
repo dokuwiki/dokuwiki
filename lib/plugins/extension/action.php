@@ -56,7 +56,6 @@ class action_plugin_extension extends DokuWiki_Action_Plugin
         switch ($act) {
             case 'enable':
             case 'disable':
-                $json = new JSON();
                 $extension->$act(); //enables/disables
 
                 $reverse = ($act == 'disable') ? 'enable' : 'disable';
@@ -68,7 +67,7 @@ class action_plugin_extension extends DokuWiki_Action_Plugin
                 );
 
                 header('Content-Type: application/json');
-                echo $json->encode($return);
+                json_encode($return);
                 break;
 
             case 'info':

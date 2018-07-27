@@ -107,10 +107,9 @@ class Ajax {
             array(), // no description
             array()  // no urls
         );
-        $json = new \JSON();
 
         header('Content-Type: application/x-suggestions+json');
-        print $json->encode($suggestions);
+        print json_encode($suggestions);
     }
 
     /**
@@ -299,9 +298,9 @@ class Ajax {
                 'ns' => $NS
             );
         }
-        $json = new \JSON;
+
         header('Content-Type: application/json');
-        echo $json->encode($result);
+        echo json_encode($result);
     }
 
     /**

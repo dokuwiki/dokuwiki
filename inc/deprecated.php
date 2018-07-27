@@ -8,9 +8,11 @@
  * @inheritdoc
  * @deprecated 2018-05-07
  */
-class RemoteAccessDeniedException extends \dokuwiki\Remote\AccessDeniedException {
+class RemoteAccessDeniedException extends \dokuwiki\Remote\AccessDeniedException
+{
     /** @inheritdoc */
-    public function __construct($message = "", $code = 0, Throwable $previous = null) {
+    public function __construct($message = "", $code = 0, Throwable $previous = null)
+    {
         dbg_deprecated(\dokuwiki\Remote\AccessDeniedException::class);
         parent::__construct($message, $code, $previous);
     }
@@ -21,9 +23,11 @@ class RemoteAccessDeniedException extends \dokuwiki\Remote\AccessDeniedException
  * @inheritdoc
  * @deprecated 2018-05-07
  */
-class RemoteException extends \dokuwiki\Remote\RemoteException {
+class RemoteException extends \dokuwiki\Remote\RemoteException
+{
     /** @inheritdoc */
-    public function __construct($message = "", $code = 0, Throwable $previous = null) {
+    public function __construct($message = "", $code = 0, Throwable $previous = null)
+    {
         dbg_deprecated(\dokuwiki\Remote\RemoteException::class);
         parent::__construct($message, $code, $previous);
     }
@@ -37,7 +41,8 @@ class RemoteException extends \dokuwiki\Remote\RemoteException {
  * @return string
  * @deprecated 2018-05-04
  */
-function Doku_Lexer_Escape($str) {
+function Doku_Lexer_Escape($str)
+{
     dbg_deprecated('\\dokuwiki\\Parsing\\Lexer\\Lexer::escape()');
     return \dokuwiki\Parsing\Lexer\Lexer::escape($str);
 }
@@ -46,9 +51,11 @@ function Doku_Lexer_Escape($str) {
  * @inheritdoc
  * @deprecated 2018-06-01
  */
-class setting extends \dokuwiki\plugin\config\core\Setting\Setting {
+class setting extends \dokuwiki\plugin\config\core\Setting\Setting
+{
     /** @inheritdoc */
-    public function __construct($key, array $params = null) {
+    public function __construct($key, array $params = null)
+    {
         dbg_deprecated(\dokuwiki\plugin\config\core\Setting\Setting::class);
         parent::__construct($key, $params);
     }
@@ -58,9 +65,11 @@ class setting extends \dokuwiki\plugin\config\core\Setting\Setting {
  * @inheritdoc
  * @deprecated 2018-06-01
  */
-class setting_authtype extends \dokuwiki\plugin\config\core\Setting\SettingAuthtype {
+class setting_authtype extends \dokuwiki\plugin\config\core\Setting\SettingAuthtype
+{
     /** @inheritdoc */
-    public function __construct($key, array $params = null) {
+    public function __construct($key, array $params = null)
+    {
         dbg_deprecated(\dokuwiki\plugin\config\core\Setting\SettingAuthtype::class);
         parent::__construct($key, $params);
     }
@@ -70,9 +79,11 @@ class setting_authtype extends \dokuwiki\plugin\config\core\Setting\SettingAutht
  * @inheritdoc
  * @deprecated 2018-06-01
  */
-class setting_string extends \dokuwiki\plugin\config\core\Setting\SettingString {
+class setting_string extends \dokuwiki\plugin\config\core\Setting\SettingString
+{
     /** @inheritdoc */
-    public function __construct($key, array $params = null) {
+    public function __construct($key, array $params = null)
+    {
         dbg_deprecated(\dokuwiki\plugin\config\core\Setting\SettingString::class);
         parent::__construct($key, $params);
     }
@@ -82,7 +93,8 @@ class setting_string extends \dokuwiki\plugin\config\core\Setting\SettingString 
  * @inheritdoc
  * @deprecated 2018-06-15
  */
-class PageChangelog extends \dokuwiki\ChangeLog\PageChangeLog {
+class PageChangelog extends \dokuwiki\ChangeLog\PageChangeLog
+{
     /** @inheritdoc */
     public function __construct($id, $chunk_size = 8192)
     {
@@ -95,11 +107,83 @@ class PageChangelog extends \dokuwiki\ChangeLog\PageChangeLog {
  * @inheritdoc
  * @deprecated 2018-06-15
  */
-class MediaChangelog extends \dokuwiki\ChangeLog\MediaChangeLog {
+class MediaChangelog extends \dokuwiki\ChangeLog\MediaChangeLog
+{
     /** @inheritdoc */
     public function __construct($id, $chunk_size = 8192)
     {
         dbg_deprecated(\dokuwiki\ChangeLog\MediaChangeLog::class);
         parent::__construct($id, $chunk_size);
+    }
+}
+
+/** Behavior switch for JSON::decode() */
+define('JSON_LOOSE_TYPE', 16);
+
+/** Behavior switch for JSON::decode() */
+define('JSON_STRICT_TYPE', 0);
+
+/**
+ * Encode/Decode JSON
+ * @deprecated 2018-07-27
+ */
+class JSON
+{
+    protected $use = 0;
+
+    /**
+     * @param int $use JSON_*_TYPE flag
+     * @deprecated  2018-07-27
+     */
+    public function __construct($use = JSON_STRICT_TYPE)
+    {
+        $this->use = $use;
+    }
+
+    /**
+     * Encode given structure to JSON
+     *
+     * @param mixed $var
+     * @return string
+     * @deprecated  2018-07-27
+     */
+    public function encode($var)
+    {
+        dbg_deprecated('json_encode');
+        return json_encode($var);
+    }
+
+    /**
+     * Alias for encode()
+     * @param $var
+     * @return string
+     * @deprecated  2018-07-27
+     */
+    public function enc($var) {
+        return $this->encode($var);
+    }
+
+    /**
+     * Decode given string from JSON
+     *
+     * @param string $str
+     * @return mixed
+     * @deprecated  2018-07-27
+     */
+    public function decode($str)
+    {
+        dbg_deprecated('json_encode');
+        return json_decode($str, ($this->use == JSON_LOOSE_TYPE));
+    }
+
+    /**
+     * Alias for decode
+     *
+     * @param $str
+     * @return mixed
+     * @deprecated  2018-07-27
+     */
+    public function dec($str) {
+        return $this->decode($str);
     }
 }
