@@ -14,6 +14,8 @@
 
 class JSON_EncDec_TestCase extends DokuWikiTest {
 
+    protected $json;
+
     function setUp() {
         parent::setUp();
 

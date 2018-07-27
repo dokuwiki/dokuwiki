@@ -169,12 +169,3 @@ $conf['proxy']['user']    = '';
 $conf['proxy']['pass']    = '';
 $conf['proxy']['ssl']     = 0;
 $conf['proxy']['except']  = '';
-// Safemode Hack - read http://www.dokuwiki.org/config:safemodehack !
-$conf['safemodehack'] = 0;
-$conf['ftp']['host'] = 'localhost';
-$conf['ftp']['port'] = '21';
-$conf['ftp']['user'] = 'user';
-$conf['ftp']['pass'] = 'password';
-$conf['ftp']['root'] = '/home/user/htdocs';
-
-
