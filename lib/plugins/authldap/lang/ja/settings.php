@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author TEST <klapinklapin@gmail.com>
  * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  * @author Hideaki SAWADA <sawadakun@live.jp>
