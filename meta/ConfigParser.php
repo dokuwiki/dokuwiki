@@ -32,6 +32,7 @@ class ConfigParser {
             'target' => '',
             'align' => array(),
             'headers' => array(),
+            'cols' => array(),
             'widths' => array(),
             'filter' => array(),
             'schemas' => array(),
