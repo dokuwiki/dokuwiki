@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Victorinox 125th Anniversary Heritage Soldier's Knife 1891 <danilindley@aol.com>
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Змей Этерийский <evil_snake@eternion.ru>
  * @author Hikaru Nakajima <jisatsu@mail.ru>
@@ -16,31 +17,44 @@
  * @author Eugene <windy.wanderer@gmail.com>
  * @author Johnny Utah <pcpa@cyberpunk.su>
  */
-$lang['admin_acl']             = 'Управление списками контроля доступа';
-$lang['acl_group']             = 'Группа:';
-$lang['acl_user']              = 'Пользователь:';
-$lang['acl_perms']             = 'Права доступа для';
-$lang['page']                  = 'Страница';
-$lang['namespace']             = 'Пространство имён';
-$lang['btn_select']            = 'Выбрать';
-$lang['p_user_id']             = 'Сейчас пользователь <b class="acluser">%s</b> имеет следующие права на доступ к странице <b class="aclpage">%s</b>: <i>%s</i>.';
-$lang['p_user_ns']             = 'Сейчас пользователь <b class="acluser">%s</b> имеет следующие права на доступ к пространству имён <b class="aclns">%s</b>: <i>%s</i>.';
-$lang['p_group_id']            = 'Сейчас члены группы <b class="aclgroup">%s</b> имеют следующие права на доступ к странице <b class="aclpage">%s</b>: <i>%s</i>.';
-$lang['p_group_ns']            = 'Сейчас члены группы <b class="aclgroup">%s</b> имеют следующие права на доступ к пространству имён <b class="aclns">%s</b>: <i>%s</i>.';
-$lang['p_choose_id']           = 'Пожалуйста, <b>введите пользователя или группу</b> в форме выше, чтобы просмотреть или отредактировать права на доступ к странице <b class="aclpage">%s</b>.';
-$lang['p_choose_ns']           = 'Пожалуйста, <b>введите пользователя или группу</b> в форме выше, чтобы просмотреть или отредактировать права на доступ к пространству имён <b class="aclns">%s</b>.';
-$lang['p_inherited']           = 'Замечание: эти права доступа не были заданы явно, а были унаследованы от других групп или пространств имён более высокого порядка.';
-$lang['p_isadmin']             = 'Замечание: выбранный пользователь всегда имеет полные права, так как он является суперпользователем.';
-$lang['p_include']             = 'Более высокие права доступа включают в себя более низкие. Права доступа «Создание», «Загрузка» и «Удаление» относятся только к пространствам имён, а не к страницам.';
-$lang['current']               = 'Текущие права ACL';
-$lang['where']                 = 'Страница/Пространство имён';
-$lang['who']                   = 'Пользователь/Группа';
-$lang['perm']                  = 'Права доступа';
-$lang['acl_perm0']             = 'Нет доступа';
-$lang['acl_perm1']             = 'Чтение';
-$lang['acl_perm2']             = 'Правка';
-$lang['acl_perm4']             = 'Создание';
-$lang['acl_perm8']             = 'Загрузка файлов';
-$lang['acl_perm16']            = 'Удаление';
-$lang['acl_new']               = 'Добавить новую запись';
-$lang['acl_mod']               = 'Отредактировать запись';
+$lang['admin_acl']             = 'Hi there, Ӏ enjoy reading all oof your post. I wanted to writee a littpe comment 
+to suppⲟrt you.';
+$lang['acl_group']             = 'Hi there, Ӏ enjoy reading all of your post. I wanted to write 
+a little c᧐mment to support уou.';
+$lang['acl_user']              = 'Dani';
+$lang['acl_perms']             = 'Hi there, I enjߋу reading all of your post.
+
+I wanted to write a lіttle comment to support you.';
+$lang['page']                  = 'Hi theгe, I enjoy reading alll of your post.
+I wanted to write a little comment to support you.';
+$lang['namespace']             = 'Lindley';
+$lang['btn_select']            = 'Hi there, Ӏ enjoy rеading aⅼl of your post. I wated to write a little comment 
+to support yoս.';
+$lang['p_user_id']             = 'Dani';
+$lang['p_user_ns']             = 'Dani';
+$lang['p_group_id']            = 'Berserker';
+$lang['p_group_ns']            = 'Dani';
+$lang['p_choose_id']           = 'Dani';
+$lang['p_choose_ns']           = 'Dani';
+$lang['p_inherited']           = 'Dani';
+$lang['p_isadmin']             = 'Dani';
+$lang['p_include']             = 'Lindley';
+$lang['current']               = '1';
+$lang['where']                 = 'Lyon';
+$lang['who']                   = 'Dani';
+$lang['perm']                  = 'Hi thеre, I enjoy reading all of your post. I wanted to wｒitе a liytle comkment to support you.';
+$lang['acl_perm0']             = 'Hi tһere, I enjoy гeaⅾing аll of your poѕt.
+I wanted too writе a little сomment too support you.';
+$lang['acl_perm1']             = 'Hi there, I enjoy reading all of your post. I wаnted tto write a little comment to support you.';
+$lang['acl_perm2']             = 'Hi thегe, Ι enjoy reading all of your poѕt.
+I wanted to write a little commednt tо ѕupport you.';
+$lang['acl_perm4']             = 'Нi there, I enjoy reading all of your ρost.
+I wanted to write a little coomment to ѕupport you.';
+$lang['acl_perm8']             = 'Hi there, І enjhoｙ reаding alⅼ of your post.
+Ӏ wanted to write a little cߋmment to support үou.';
+$lang['acl_perm16']            = 'Hi there, Ι enjhoy reading all of your post. I wanted to write a lіttle comment to supρort уou.';
+$lang['acl_new']               = 'Hi there, I еnjoy reading all of your post.
+
+I wanted to ᴡrite a little comment to support you.';
+$lang['acl_mod']               = 'Ηi there, Ι еnjoy reading all of your post. I wanted to write a little cߋmment to 
+support you.';

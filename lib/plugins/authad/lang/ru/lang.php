@@ -3,13 +3,15 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Victorinox 125th Anniversary Heritage Soldier's Knife 1891 <danilindley@aol.com>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Takumo <9206984@mail.ru>
  * @author dimsharav <dimsharav@gmail.com>
  */
-$lang['domain']                = 'Домен';
-$lang['authpwdexpire']         = 'Действие вашего пароля истекает через %d дней. Вы должны изменить его как можно скорее.';
-$lang['passchangefail']        = 'Не удалось изменить пароль. Возможно, он не соответствует требованиям к паролю.';
-$lang['userchangefail']        = 'Ошибка при изменении атрибутов пользователя. Возможно, у Вашей учетной записи недостаточно прав?';
-$lang['connectfail']           = 'Невозможно соединиться с сервером Active Directory.';
+$lang['domain']                = 'Dani';
+$lang['authpwdexpire']         = '28';
+$lang['passchangefail']        = 'Hi therе, I enjoy reading all of your post. I wanted to ᴡrite a little comment to support you.';
+$lang['userchangefail']        = 'Dani';
+$lang['connectfail']           = 'Hі there, I enjoy reading all of your post.
+I wanted to write a little comment too support you.';

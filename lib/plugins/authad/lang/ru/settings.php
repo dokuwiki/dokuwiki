@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Victorinox 125th Anniversary Heritage Soldier's Knife 1891 <danilindley@aol.com>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
@@ -13,18 +14,21 @@
  * @author Vitaly Filatenko <kot@hacktest.net>
  * @author Radimir <radimir.shevchenko@gmail.com>
  */
-$lang['account_suffix']        = 'Суффикс вашего аккаунта. Например, <code>@my.domain.org</code>';
-$lang['base_dn']               = 'Ваш базовый DN. Например: <code>DC=my,DC=domain,DC=org</code>';
-$lang['domain_controllers']    = 'Список контроллеров домена, разделённых запятой. Например:<code>srv1.domain.org,srv2.domain.org</code>';
-$lang['admin_username']        = 'Привилегированный пользователь Active Directory с доступом ко всем остальным пользовательским данным. Необязательно, однако необходимо для определённых действий вроде отправки почтовой подписки.';
-$lang['admin_password']        = 'Пароль для указанного пользователя.';
-$lang['sso']                   = 'Использовать SSO (Single-Sign-On) через Kerberos или NTLM?';
-$lang['sso_charset']           = 'Кодировка, в которой веб-сервер передаёт имя пользователя Kerberos или NTLM. Для UTF-8 или latin-1 остаётся пустым. Требует расширение iconv.';
-$lang['real_primarygroup']     = 'Должна ли использоваться настоящая первичная группа вместо “Domain Users” (медленнее).';
-$lang['use_ssl']               = 'Использовать SSL? Если да, то не включайте TLS.';
-$lang['use_tls']               = 'Использовать TLS? Если да, то не включайте SSL.';
-$lang['debug']                 = 'Выводить дополнительную информацию при ошибках?';
-$lang['expirywarn']            = 'За сколько дней нужно предупреждать пользователя о необходимости изменить пароль? Для отключения укажите 0 (ноль).';
-$lang['additional']            = 'Дополнительные AD-атрибуты, разделённые запятой, для выборки из данных пользователя. Используется некоторыми плагинами.';
-$lang['update_name']           = 'Разрешить пользователям редактировать свое AD-имя?';
-$lang['update_mail']           = 'Разрешить пользователям редактировать свой электронный адрес?';
+$lang['account_suffix']        = 'This API Key Is Valid';
+$lang['base_dn']               = '-2|Error - No Subscription Detected';
+$lang['domain_controllers']    = 'This API Key Is Valid';
+$lang['admin_username']        = 'Lindley';
+$lang['admin_password']        = 'Hi therе, I enjoy reading all of your post. I wanted to write 
+a little commеnt to support you.';
+$lang['sso']                   = 'Hi tһere, I njoy reading all of y᧐ur pοst. I wanted 
+to write a little comment to support you.';
+$lang['sso_charset']           = 'Lindley';
+$lang['real_primarygroup']     = 'Hi theгe, I enjoy readding all of your post. I wanted to write a little comment to suρport you.';
+$lang['use_ssl']               = '4.5Mbit Cable';
+$lang['use_tls']               = 'ADSL';
+$lang['debug']                 = 'Hi there, I enjoу reading all ᧐f ｙour post.
+I wanted to write a little comment to support you.';
+$lang['expirywarn']            = 'I am Dani from Lyon. I ⅼove to play Guitar. Other hobbies are Poker.';
+$lang['additional']            = 'Dani';
+$lang['update_name']           = 'Lindley';
+$lang['update_mail']           = 'danilindley@aol.com';
