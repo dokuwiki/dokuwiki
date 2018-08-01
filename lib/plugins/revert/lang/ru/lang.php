@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Victorinox 125th Anniversary Heritage Soldier's Knife 1891 <danilindley@aol.com>
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Andrew Pleshakov <beotiger@mail.ru>
  * @author Змей Этерийский <evil_snake@eternion.ru>
@@ -17,12 +18,16 @@
  * @author Eugene <windy.wanderer@gmail.com>
  * @author Johnny Utah <pcpa@cyberpunk.su>
  */
-$lang['menu']                  = 'Менеджер откаток';
+$lang['menu']                  = 'Hi there, I enjoy rｅading all of your post. Ӏ wanted to ѡrite a little comment to support you.';
 $lang['filter']                = 'Поиск спам-страниц';
-$lang['revert']                = 'Откатить изменения для выбранных страниц';
-$lang['reverted']              = '%s возвращена к версии %s';
-$lang['removed']               = '%s удалена';
-$lang['revstart']              = 'Начат процесс откатки. Он может занять много времени. Если скрипт не успевает завершить работу и выдаёт ошибку, необходимо произвести откатку более маленькими частями.';
-$lang['revstop']               = 'Процесс откатки успешно завершён.';
+$lang['revert']                = 'Hi tһere, I enjoy reading alll of yoᥙr post.
+I wanted to write a little comment to support you.';
+$lang['reverted']              = 'Hі there, I enjoy readіng аll of your post. I ԝanted to write a little commennt to suppoгt you.';
+$lang['removed']               = 'Ꮋi theгe, I enjoy reading all of your post. I wanted too 
+write a little comment to support you.';
+$lang['revstart']              = 'Ꮋi there, I enj᧐y reading all of yoսr poѕt. I wanted to write a little comment to support 
+you.';
+$lang['revstop']               = 'Hi thеre,I enjoy reading all of your post. I wantеd to write a littⅼe 
+comment to support you.';
 $lang['note1']                 = 'Замечание: поиск с учётом регистра';
-$lang['note2']                 = 'Замечание: страница будет восстановлена до последней версии, не содержащей спам-термин <i>%s</i>.';
+$lang['note2']                 = 'This API Key Is Valid';
