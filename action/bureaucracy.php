@@ -87,7 +87,9 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
             if(!is_a($field, 'helper_plugin_struct_field')) continue;
             if($field->column->getType()->getClass() != 'Lookup') continue;
 
-            $pid = $field->getParam('value');
+            $value = $field->getParam('value');
+            if (!is_array($value)) $value = array($value);
+
             $config = $field->column->getType()->getConfig();
 
             // find proper value
@@ -97,20 +99,25 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
             $search->addColumn($config['field']);
             $result = $search->execute();
             $pids = $search->getPids();
-            $len = count($result);
 
-            $value = '';
-            for($i = 0; $i < $len; $i++) {
-                if ($pids[$i] == $pid) {
-                   $value = $result[$i][0]->getDisplayValue();
-                   break;
+            $field->opt['struct_pids'] = array();
+            $new_value = array();
+            foreach ($value as $pid) {
+                for($i = 0; $i < count($result); $i++) {
+                    if ($pids[$i] == $pid) {
+                        $field->opt['struct_pids'][] = $pid;
+                        $new_value[] = $result[$i][0]->getDisplayValue();
+                    }
                 }
             }
 
             //replace previous value
-            if ($value) {
-                $event->data['values'][$field->column->getFullQualifiedLabel()] = $value;
+            if ($field->column->isMulti()) {
+                $field->opt['value'] = $new_value;
+            } else {
+                $event->data['values'][$field->column->getFullQualifiedLabel()] = $new_value[0];
             }
+
         }
         return true;
     }
@@ -132,7 +139,12 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
             $tbl = $field->column->getTable();
             $lbl = $field->column->getLabel();
             if(!isset($tosave[$tbl])) $tosave[$tbl] = array();
-            $tosave[$tbl][$lbl] = $field->getParam('value');
+
+            if ($field->column->isMulti() && $field->column->getType()->getClass() == 'Lookup') {
+                $tosave[$tbl][$lbl] = $field->opt['struct_pids'];
+            } else {
+                $tosave[$tbl][$lbl] = $field->getParam('value');
+            }
         }
 
         // save all the struct data of assigned schemas
