@@ -6,6 +6,7 @@ use dokuwiki\plugin\struct\meta\QueryBuilder;
 use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 use dokuwiki\plugin\struct\meta\Schema;
 use dokuwiki\plugin\struct\meta\Search;
+use dokuwiki\plugin\struct\meta\SummaryColumn;
 use dokuwiki\plugin\struct\meta\Value;
 use dokuwiki\plugin\struct\meta\PageColumn;
 use dokuwiki\plugin\struct\meta\RevisionColumn;
@@ -83,6 +84,9 @@ class Lookup extends Dropdown {
                 }
                 if ($infield == '%lasteditor%') {
                     $column = new UserColumn(0, new User(), $table);
+                }
+                if ($infield == '%lastsummary%') {
+                    return new SummaryColumn(0, new Summary(), $table);
                 }
             } else {
                 if($infield == '%rowid%') {

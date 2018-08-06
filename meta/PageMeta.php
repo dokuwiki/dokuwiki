@@ -11,6 +11,7 @@ class PageMeta {
     protected $title = null;
     protected $lasteditor = null;
     protected $lastrev = null;
+    protected $lastsummary = null;
 
     protected $saveNeeded = false;
 
@@ -34,8 +35,8 @@ class PageMeta {
      * Save title, last editor and revision timestamp to database
      */
     public function savePageData() {
-        $sql = "REPLACE INTO titles (pid, title, lasteditor, lastrev) VALUES (?,?,?,?)";
-        $this->sqlite->query($sql, array($this->pid, $this->title, $this->lasteditor, $this->lastrev));
+        $sql = "REPLACE INTO titles (pid, title, lasteditor, lastrev, lastsummary) VALUES (?,?,?,?,?)";
+        $this->sqlite->query($sql, array($this->pid, $this->title, $this->lasteditor, $this->lastrev, $this->lastsummary));
         $this->saveNeeded = false;
     }
 
@@ -78,6 +79,20 @@ class PageMeta {
         }
 
         $this->lastrev = $lastrev;
+        $this->saveNeeded = true;
+    }
+
+    /**
+     * Sets the last summary
+     *
+     * @param int|null $lastsummary
+     */
+    public function setLastSummary($lastsummary) {
+        if($lastsummary === null) {
+            $lastsummary = '';
+        }
+
+        $this->lastsummary = $lastsummary;
         $this->saveNeeded = true;
     }
 
