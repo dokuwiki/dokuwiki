@@ -2,6 +2,8 @@
 
 namespace dokuwiki\plugin\struct\test;
 
+use dokuwiki\plugin\struct\meta\ConfigParser;
+
 /**
  * Testing the CSV exports of aggregations
  *
@@ -31,19 +33,17 @@ class AggregationExportCSV extends StructTest
     {
         global $INPUT;
 
-        // This hash has to be adjusted whenever the $syntax below changes!
-        $INPUT->set('hash', '01210d2574d13978f06d85106582a251');
-
-        $syntax = '
----- struct table ----
-schema: wikilookup
-cols: *
-----
-';
+        $syntaxPrefix = ['---- struct table ----'];
+        $syntaxConfig = ['schema: wikilookup', 'cols: *'];
+        $syntaxPostFix = ['----'];
+        $syntax = implode("\n", array_merge($syntaxPrefix, $syntaxConfig, $syntaxPostFix));
         $expectedCSV = '"FirstFieldText","SecondFieldLongText","ThirdFieldWiki"
 "abc def","abc
 def","  * hi
   * ho"';
+
+        $configParser = new ConfigParser($syntaxConfig);
+        $INPUT->set('hash', md5(var_export($configParser->getConfig(), true)));
 
         $ins = p_get_instructions($syntax);
         $renderedCSV = p_render('struct_csv', $ins, $info);
