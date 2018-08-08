@@ -1,12 +1,12 @@
 您的 DokuWiki 中有一个页面被添加或更改了。以下是详细资料：
 
-日期        : @DATE@
-浏览器      : @BROWSER@
-IP 地址     : @IPADDRESS@
-机器名称    : @HOSTNAME@
-修订记录    : @OLDPAGE@
-最新修订    : @NEWPAGE@
-编辑摘要    : @SUMMARY@
-用户        : @USER@
+|  日期  |  @DATE@  |
+|  浏览器  |  @BROWSER@  |
+|  IP 地址  |  @IPADDRESS@  |
+|  机器名称  |  @HOSTNAME@  |
+|  修订记录  |  @OLDPAGE@  |
+|  最新修订  |  @NEWPAGE@  |
+|  编辑摘要  |  @SUMMARY@  |
+|  用户  |  @USER@  |
 
 @DIFF@
