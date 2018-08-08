@@ -1,11 +1,11 @@
 Um arquivo foi enviado para o seu DokuWiki. Os detalhes são:
 
-|  Arquivo  |  @MEDIA@  |
-|  Revisão antiga  |  @OLD@  |
-|  Data  |  @DATE@  |
-|  Navegador  |  @BROWSER@  |
-|  Endereço IP  |  @IPADDRESS@  |
-|  Nome do host  |  @HOSTNAME@  |
-|  Tamanho  |  @SIZE@  |
-|  Tipo MIME  |  @MIME@  |
-|  Usuário  |  @USER@  |
+Arquivo: @MEDIA@
+Revisão antiga: @OLD@
+Data: @DATE@
+Navegador: @BROWSER@
+Endereço IP: @IPADDRESS@
+Nome do host: @HOSTNAME@
+Tamanho: @SIZE@
+Tipo MIME: @MIME@
+Usuário: @USER@

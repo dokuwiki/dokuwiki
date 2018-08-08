@@ -1,12 +1,12 @@
 Salutare, @FULLNAME@! A fost adăugată sau modificată o pagină. Aici sunt detaliile:
 
-|  Dată  |  @DATE@  |
-|  Browser  |  @BROWSER@  |
-|  Adresă IP  |  @IPADDRESS@  |
-|  Hostname  |  @HOSTNAME@  |
-|  Versiune anterioară  |  @OLDPAGE@  |
-|  Versiune curentă  |  @NEWPAGE@  |
-|  Sumar editare  |  @SUMMARY@  |
-|  Utilizator  |  @USER@  |
+Dată: @DATE@
+Browser: @BROWSER@
+Adresă IP: @IPADDRESS@
+Hostname: @HOSTNAME@
+Versiune anterioară: @OLDPAGE@
+Versiune curentă: @NEWPAGE@
+Sumar editare: @SUMMARY@
+Utilizator: @USER@
 
 @DIFF@

@@ -1,10 +1,10 @@
 Был зарегистрирован новый пользователь. Подробности:
 
-|  Логин  |  @NEWUSER@  |
-|  Полное имя  |  @NEWNAME@  |
-|  Эл. адрес  |  @NEWEMAIL@  |
+Логин: @NEWUSER@
+Полное имя: @NEWNAME@
+Эл. адрес: @NEWEMAIL@
 
-|  Дата  |  @DATE@  |
-|  Браузер  |  @BROWSER@  |
-|  Адрес IP  |  @IPADDRESS@  |
-|  Хост  |  @HOSTNAME@  |
+Дата: @DATE@
+Браузер: @BROWSER@
+Адрес IP: @IPADDRESS@
+Хост: @HOSTNAME@

@@ -1,10 +1,10 @@
 En ny bruker har registrert seg, her er detaljene:
 
-|  Brukernavn  |  @NEWUSER@  |
-|  Fult navn  |  @NEWNAME@  |
-|  E-post  |  @NEWEMAIL@  |
+Brukernavn: @NEWUSER@
+Fult navn: @NEWNAME@
+E-post: @NEWEMAIL@
 
-|  Dato  |  @DATE@  |
-|  Nettleser  |  @BROWSER@  |
-|  IP-adresse  |  @IPADDRESS@  |
-|  Tjener  |  @HOSTNAME@  |
+Dato: @DATE@
+Nettleser: @BROWSER@
+IP-adresse: @IPADDRESS@
+Tjener: @HOSTNAME@

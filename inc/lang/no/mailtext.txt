@@ -1,12 +1,12 @@
 En side i din DokuWiki har blitt lagt til eller blitt endret. Informasjon om endringen:
 
-|  Dato  |  @DATE@  |
-|  Nettleser  |  @BROWSER@  |
-|  IP-adresse  |  @IPADDRESS@  |
-|  Vertsnavn  |  @HOSTNAME@  |
-|  Tidligere versjon  |  @OLDPAGE@  |
-|  Aktuell versjon  |  @NEWPAGE@  |
-|  Redigeringskommentar  |  @SUMMARY@  |
-|  Bruker  |  @USER@  |
+Dato: @DATE@
+Nettleser: @BROWSER@
+IP-adresse: @IPADDRESS@
+Vertsnavn: @HOSTNAME@
+Tidligere versjon: @OLDPAGE@
+Aktuell versjon: @NEWPAGE@
+Redigeringskommentar: @SUMMARY@
+Bruker: @USER@
 
 @DIFF@

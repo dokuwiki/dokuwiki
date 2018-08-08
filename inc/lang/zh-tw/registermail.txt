@@ -1,10 +1,10 @@
 有新的使用者註冊。詳細資料如下：
 
-|  帳號  |  @NEWUSER@  |
-|  姓名  |  @NEWNAME@  |
-|  電郵  |  @NEWEMAIL@  |
+帳號: @NEWUSER@
+姓名: @NEWNAME@
+電郵: @NEWEMAIL@
 
-|  日期  |  @DATE@  |
-|  瀏覽器  |  @BROWSER@  |
-|  IP 位址  |  @IPADDRESS@  |
-|  主機名稱  |  @HOSTNAME@  |
+日期: @DATE@
+瀏覽器: @BROWSER@
+IP 位址: @IPADDRESS@
+主機名稱: @HOSTNAME@

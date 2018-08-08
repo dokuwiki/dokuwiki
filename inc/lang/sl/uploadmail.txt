@@ -1,11 +1,11 @@
 Datoteka je bila uspešno naložena na DokuWiki spletišče. Podrobnosti o datoteki:
 
-|  Datoteka  |  @MEDIA@  |
-|  Stari revizija  |  @OLD@  |
-|  Datum  |  @DATE@  |
-|  Brskalnik  |  @BROWSER@  |
-|  Naslov IP  |  @IPADDRESS@  |
-|  Ponudnik  |  @HOSTNAME@  |
-|  Velikost  |  @SIZE@  |
-|  Vrsta MIME  |  @MIME@  |
-|  Uporabnik  |  @USER@  |
+Datoteka: @MEDIA@
+Stari revizija: @OLD@
+Datum: @DATE@
+Brskalnik: @BROWSER@
+Naslov IP: @IPADDRESS@
+Ponudnik: @HOSTNAME@
+Velikost: @SIZE@
+Vrsta MIME: @MIME@
+Uporabnik: @USER@

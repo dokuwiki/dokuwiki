@@ -1,12 +1,12 @@
 Stran na vašem DokuWiki je bila dodana ali spremenjena. Podrobnosti:
 
-|  Datum  |  @DATE@  |
-|  Brskalnik  |  @BROWSER@  |
-|  Naslov IP  |  @IPADDRESS@  |
-|  Ime gostitelja  |  @HOSTNAME@  |
-|  Stara različica  |  @OLDPAGE@  |
-|  Nova različica  |  @NEWPAGE@  |
-|  Povzetek urejanja  |  @SUMMARY@  |
-|  Uporabnik  |  @USER@  |
+Datum: @DATE@
+Brskalnik: @BROWSER@
+Naslov IP: @IPADDRESS@
+Ime gostitelja: @HOSTNAME@
+Stara različica: @OLDPAGE@
+Nova različica: @NEWPAGE@
+Povzetek urejanja: @SUMMARY@
+Uporabnik: @USER@
 
 @DIFF@

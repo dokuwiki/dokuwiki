@@ -1,12 +1,12 @@
 Một trang trên DokuWiki của bạn vừa được bổ sung hoặc thay đổi. Sau đây là chi tiết:
 
-|  Date  |  @DATE@  |
-|  Browser  |  @BROWSER@  |
-|  IP-Address  |  @IPADDRESS@  |
-|  Hostname  |  @HOSTNAME@  |
-|  Old Revision  |  @OLDPAGE@  |
-|  New Revision  |  @NEWPAGE@  |
-|  Edit Summary  |  @SUMMARY@  |
-|  User  |  @USER@  |
+Date: @DATE@
+Browser: @BROWSER@
+IP-Address: @IPADDRESS@
+Hostname: @HOSTNAME@
+Old Revision: @OLDPAGE@
+New Revision: @NEWPAGE@
+Edit Summary: @SUMMARY@
+User: @USER@
 
 @DIFF@
