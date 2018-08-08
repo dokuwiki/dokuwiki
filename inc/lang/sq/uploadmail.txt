@@ -1,10 +1,11 @@
 Një skedar u ngarkua në DokuWiki-n tënd. Detajet janë:
 
-Skedar: @MEDIA@
-Data: @DATE@
-Shfletuesi: @BROWSER@
-Adresa IP: @IPADDRESS@
-Emri Hostit: @HOSTNAME@
-Madhësia: @SIZE@
-Tipi MIME: @MIME@
-Përdoruesi: @USER@
+|  Skedar  |  @MEDIA@  |
+|  Vjetër rishikimi  |  @OLD@  |
+|  Data  |  @DATE@  |
+|  Shfletuesi  |  @BROWSER@  |
+|  Adresa IP  |  @IPADDRESS@  |
+|  Emri Hostit  |  @HOSTNAME@  |
+|  Madhësia  |  @SIZE@  |
+|  Tipi MIME  |  @MIME@  |
+|  Përdoruesi  |  @USER@  |
