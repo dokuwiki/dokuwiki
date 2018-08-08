@@ -1,0 +1,3 @@
+====== SPAM bloqueado ======
+
+Sus cambios **no se han** guardado, ya que contienen una o más palabras prohibidas. Si has intentado agregar spam a Wiki ... ¡ay, ay, ay!  Si cree que es un error, póngase en contacto con el administrador de wiki.

@@ -1,12 +1,12 @@
 Sinu lehte DokuWiki-s on muudetud. Alljärgnevalt detailid:
 
-Kuupäev           : @DATE@
-Brauser           : @BROWSER@
-IP-Aadress        : @IPADDRESS@
-Arvuti nimi       : @HOSTNAME@
-Eelnev versioon   : @OLDPAGE@
-Uus versioon      : @NEWPAGE@
-Toimeta kokkuvõtet: @SUMMARY@
-Kasutaja          : @USER@
+|  Kuupäev  |  @DATE@  |
+|  Brauser  |  @BROWSER@  |
+|  IP-Aadress  |  @IPADDRESS@  |
+|  Arvuti nimi  |  @HOSTNAME@  |
+|  Eelnev versioon  |  @OLDPAGE@  |
+|  Uus versioon  |  @NEWPAGE@  |
+|  Toimeta kokkuvõtet  |  @SUMMARY@  |
+|  Kasutaja  |  @USER@  |
 
 @DIFF@
