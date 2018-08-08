@@ -1,10 +1,10 @@
 Reģistrēts jauns lietotājs. Tā dati:
 
-Lietotājvārds : @NEWUSER@
-Pilns vārds   : @NEWNAME@
-E-pasts       : @NEWEMAIL@
+|  Lietotājvārds  |  @NEWUSER@  |
+|  Pilns vārds  |  @NEWNAME@  |
+|  E-pasts  |  @NEWEMAIL@  |
 
-Datums      : @DATE@
-Pārlūks     : @BROWSER@
-IP aderese  : @IPADDRESS@
-Datora vārds: @HOSTNAME@
+|  Datums  |  @DATE@  |
+|  Pārlūks  |  @BROWSER@  |
+|  IP aderese  |  @IPADDRESS@  |
+|  Datora vārds  |  @HOSTNAME@  |
