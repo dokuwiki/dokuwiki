@@ -1,0 +1,3 @@
+====== SPAM bloccato ======
+
+Le modifiche **non sono** salvati, in quanto contengono una o più parole proibite. Se Si è tentato di aggiungere spam nella Wiki -- ay, ay, ay! Se Si pensa che questo tipo di errore, contattare l'amministratore di wiki.
