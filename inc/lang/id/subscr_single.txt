@@ -1,11 +1,15 @@
 Hei!
 
-Halaman @PAGE@ di wiki @TITLE@ telah disunting. Berikut perubahannya:
+Halaman @PAGE@ di wiki @TITLE@ telah disunting.
+Berikut perubahannya:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
+Tanggal: @DATE@
+Dikirim oleh: @USER@
+Catatan: @SUMMARY@
 Revisi lama: @OLDPAGE@
 Revisi baru: @NEWPAGE@
 

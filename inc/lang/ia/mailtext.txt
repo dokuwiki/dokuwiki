@@ -1,12 +1,12 @@
 Un pagina in tu DokuWiki ha essite addite o modificate. Ecce le detalios:
 
-Data : @DATE@
-Navigator : @BROWSER@
-Adresse IP : @IPADDRESS@
-Nomine host : @HOSTNAME@
-Version ancian: @OLDPAGE@
-Version nove: @NEWPAGE@
-Summario: @SUMMARY@
-Usator : @USER@
+|  Data  |  @DATE@  |
+|  Navigator  |  @BROWSER@  |
+|  Adresse IP  |  @IPADDRESS@  |
+|  Nomine host  |  @HOSTNAME@  |
+|  Version ancian  |  @OLDPAGE@  |
+|  Version nove  |  @NEWPAGE@  |
+|  Summario  |  @SUMMARY@  |
+|  Usator  |  @USER@  |
 
 @DIFF@
