@@ -1,11 +1,11 @@
 Качен е файл на вашето DokuWiki. Ето детайлите
 
-|  Файл  |  @MEDIA@  |
-|  Старата версия  |  @OLD@  |
-|  Дата  |  @DATE@  |
-|  Браузър  |  @BROWSER@  |
-|  IP адрес  |  @IPADDRESS@  |
-|  Име на хоста  |  @HOSTNAME@  |
-|  Размер  |  @SIZE@  |
-|  MIME тип  |  @MIME@  |
-|  Потребител  |  @USER@  |
+Файл: @MEDIA@
+Старата версия: @OLD@
+Дата: @DATE@
+Браузър: @BROWSER@
+IP адрес: @IPADDRESS@
+Име на хоста: @HOSTNAME@
+Размер: @SIZE@
+MIME тип: @MIME@
+Потребител: @USER@

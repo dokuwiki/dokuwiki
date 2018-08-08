@@ -1,10 +1,10 @@
 Nova uzanto registriĝis. Jen la detaloj:
 
-|  Uzantonomo  |  @NEWUSER@  |
-|  Kompleta nomo  |  @NEWNAME@  |
-|  Retadreso  |  @NEWEMAIL@  |
+Uzantonomo: @NEWUSER@
+Kompleta nomo: @NEWNAME@
+Retadreso: @NEWEMAIL@
 
-|  Dato  |  @DATE@  |
-|  Foliumilo  |  @BROWSER@  |
-|  IP-Adreso  |  @IPADDRESS@  |
-|  Provizanto  |  @HOSTNAME@  |
+Dato: @DATE@
+Foliumilo: @BROWSER@
+IP-Adreso: @IPADDRESS@
+Provizanto: @HOSTNAME@

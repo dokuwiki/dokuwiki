@@ -1,10 +1,10 @@
 Быў зарэгістраваны новы карыстальнік. Падрабязнасці:
 
-|  Лагін  |  @NEWUSER@  |
-|  Поўнае імя  |  @NEWNAME@  |
-|  Эл. адрас  |  @NEWEMAIL@  |
+Лагін: @NEWUSER@
+Поўнае імя: @NEWNAME@
+Эл. адрас: @NEWEMAIL@
 
-|  Дата  |  @DATE@  |
-|  Браўзэр  |  @BROWSER@  |
-|  Адрас IP  |  @IPADDRESS@  |
-|  Хост  |  @HOSTNAME@  |
+Дата: @DATE@
+Браўзэр: @BROWSER@
+Адрас IP: @IPADDRESS@
+Хост: @HOSTNAME@

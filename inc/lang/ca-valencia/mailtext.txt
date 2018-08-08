@@ -1,12 +1,12 @@
 S'ha afegit o modificat una pàgina en el seu DokuWiki. Les senyes són:
 
-|  Data  |  @DATE@  |
-|  Navegador  |  @BROWSER@  |
-|  Direcció IP  |  @IPADDRESS@  |
-|  Nom de la màquina  |  @HOSTNAME@  |
-|  Revisió anterior  |  @OLDPAGE@  |
-|  Nova revisió  |  @NEWPAGE@  |
-|  Resum  |  @SUMMARY@  |
-|  Usuari  |  @USER@  |
+Data: @DATE@
+Navegador: @BROWSER@
+Direcció IP: @IPADDRESS@
+Nom de la màquina: @HOSTNAME@
+Revisió anterior: @OLDPAGE@
+Nova revisió: @NEWPAGE@
+Resum: @SUMMARY@
+Usuari: @USER@
 
 @DIFF@

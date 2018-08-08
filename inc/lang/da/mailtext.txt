@@ -1,12 +1,12 @@
 Et dokument i din DokuWiki blev ændret eller tilføjet. Her er detajlerne:
 
-|  Dato  |  @DATE@  |
-|  Browser  |  @BROWSER@  |
-|  IP-adresse  |  @IPADDRESS@  |
-|  Hostnavn  |  @HOSTNAME@  |
-|  Gammel udgave  |  @OLDPAGE@  |
-|  Ny udgave  |  @NEWPAGE@  |
-|  Redigerings resumé  |  @SUMMARY@  |
-|  Bruger  |  @USER@  |
+Dato: @DATE@
+Browser: @BROWSER@
+IP-adresse: @IPADDRESS@
+Hostnavn: @HOSTNAME@
+Gammel udgave: @OLDPAGE@
+Ny udgave: @NEWPAGE@
+Redigerings resumé: @SUMMARY@
+Bruger: @USER@
 
 @DIFF@

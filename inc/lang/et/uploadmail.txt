@@ -1,11 +1,11 @@
 Sinu DokuWiki-sse lisati fail. Lähemalt:
 
-|  Fail  |  @MEDIA@  |
-|  Endine  |  @OLD@  |
-|  Kuupäev  |  @DATE@  |
-|  Veebilehitseja  |  @BROWSER@  |
-|  IP-aadress  |  @IPADDRESS@  |
-|  Hostinimi  |  @HOSTNAME@  |
-|  Suurus  |  @SIZE@  |
-|  MIME liik  |  @MIME@  |
-|  Kasutaja  |  @ USER@  |
+Fail: @MEDIA@
+Endine: @OLD@
+Kuupäev: @DATE@
+Veebilehitseja: @BROWSER@
+IP-aadress: @IPADDRESS@
+Hostinimi: @HOSTNAME@
+Suurus: @SIZE@
+MIME liik: @MIME@
+Kasutaja: @ USER@

@@ -1,12 +1,12 @@
 DokuWiki-Eskuliburuetan orriren bat aldatu edo gehitu da. Hemen dituzu xehetasunak
 
-|  Data  |  @DATE@  |
-|  Nabigatzailea  |  @BROWSER@  |
-|  IP-Helbidea  |  @IPADDRESS@  |
-|  Host izena  |  @HOSTNAME@  |
-|  Bertsio zaharra  |  @OLDPAGE@  |
-|  Bertsio berria  |  @NEWPAGE@  |
-|  Aldatu laburpena  |  @SUMMARY@  |
-|  Erabiltzailea  |  @USER@  |
+Data: @DATE@
+Nabigatzailea: @BROWSER@
+IP-Helbidea: @IPADDRESS@
+Host izena: @HOSTNAME@
+Bertsio zaharra: @OLDPAGE@
+Bertsio berria: @NEWPAGE@
+Aldatu laburpena: @SUMMARY@
+Erabiltzailea: @USER@
 
 @DIFF@
