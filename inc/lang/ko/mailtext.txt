@@ -1,12 +1,12 @@
 도쿠위키 문서가 추가되거나 바뀌었습니다. 자세한 내용은 다음과 같습니다:
 
-날짜: @DATE@
-브라우저: @BROWSER@
-IP 주소: @IPADDRESS@
-호스트 이름: @HOSTNAME@
-이전 판: @OLDPAGE@
-새 판: @NEWPAGE@
-편집 요약: @SUMMARY@
-사용자: @USER@
+|  날짜  |  @DATE@  |
+|  브라우저  |  @BROWSER@  |
+|  IP 주소  |  @IPADDRESS@  |
+|  호스트 이름  |  @HOSTNAME@  |
+|  이전 판  |  @OLDPAGE@  |
+|  새 판  |  @NEWPAGE@  |
+|  편집 요약  |  @SUMMARY@  |
+|  사용자  |  @USER@  |
 
 @DIFF@
