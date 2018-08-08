@@ -1,10 +1,11 @@
 Fájlfeltöltés történt a DokuWikidben. Részletek:
 
-Állomány: @MEDIA@
-Dátum: @DATE@
-Böngésző: @BROWSER@
-IP-cím: @IPADDRESS@
-Gépnév: @HOSTNAME@
-Méret: @SIZE@
-MIME-típus: @MIME@
-Felhasználó: @USER@
+|  Állomány  |  @MEDIA@  |
+|  Régi felülvizsgálat  |  @OLD@  |
+|  Dátum  |  @DATE@  |
+|  Böngésző  |  @BROWSER@  |
+|  IP-cím  |  @IPADDRESS@  |
+|  Gépnév  |  @HOSTNAME@  |
+|  Méret  |  @SIZE@  |
+|  MIME-típus  |  @MIME@  |
+|  Felhasználó  |  @USER@  |

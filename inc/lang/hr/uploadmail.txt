@@ -1,11 +1,11 @@
 Datoteka je učitana na Vaš DokuWiki. Ovdje su detalji:
 
-Datoteka     : @MEDIA@
-Stara izmjena: @OLD@
-Datum        : @DATE@
-Preglednik   : @BROWSER@
-IP-Adresa    : @IPADDRESS@
-Računalo     : @HOSTNAME@
-Veličina     : @SIZE@
-MIME Tip     : @MIME@
-Korisnik     : @USER@
+|  Datoteka  |  @MEDIA@  |
+|  Stara izmjena  |  @OLD@  |
+|  Datum  |  @DATE@  |
+|  Preglednik  |  @BROWSER@  |
+|  IP-Adresa  |  @IPADDRESS@  |
+|  Računalo  |  @HOSTNAME@  |
+|  Veličina  |  @SIZE@  |
+|  MIME Tip  |  @MIME@  |
+|  Korisnik  |  @USER@  |

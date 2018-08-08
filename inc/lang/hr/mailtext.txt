@@ -1,12 +1,12 @@
 Dokument na Vašem wiki-ju je promijenjen ili dodan:
 
-Datum             : @DATE@
-Preglednik        : @BROWSER@
-IP-Adresa         : @IPADDRESS@
-Host              : @HOSTNAME@
-Prijašnja izmjena : @OLDPAGE@
-Nova izmjena      : @NEWPAGE@
-Opis izmjene      : @SUMMARY@
-Korisnik          : @USER@
+|  Datum  |  @DATE@  |
+|  Preglednik  |  @BROWSER@  |
+|  IP-Adresa  |  @IPADDRESS@  |
+|  Host  |  @HOSTNAME@  |
+|  Prijašnja izmjena  |  @OLDPAGE@  |
+|  Nova izmjena  |  @NEWPAGE@  |
+|  Opis izmjene  |  @SUMMARY@  |
+|  Korisnik  |  @USER@  |
 
 @DIFF@
