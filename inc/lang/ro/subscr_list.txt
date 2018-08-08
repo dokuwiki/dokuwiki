@@ -1,13 +1,9 @@
 Salutare, @FULLNAME@!
 
-Paginile din spațiul de nume @PAGE@ al @TITLE@ wiki au fost modificate.
-Modificările sunt următoarele:
+Paginile din spațiul de nume @PAGE@ al @TITLE@ wiki au fost modificate. Modificările sunt următoarele:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Pentru a anula notificarea paginii, autentificcă-te pe wiki la
-@DOKUWIKIURL@ apoi accesează
-@SUBSCRIBE@
-și dezabonează-te de la pagină și/sau modificările spațiului de nume.
+Pentru a anula notificarea paginii, autentificcă-te pe wiki la @DOKUWIKIURL@ apoi accesează @SUBSCRIBE@ și dezabonează-te de la pagină și/sau modificările spațiului de nume.

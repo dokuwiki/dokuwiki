@@ -13,7 +13,4 @@ Sumário : @SUMMARY@
 Revisão antiga:@OLDPAGE@
 Nova Revisão:@NEWPAGE@
 
-Para cancelar as notificações de mudanças, entre em
-@DOKUWIKIURL@, vá até @NEWPAGE@
-e cancele o monitoramento da página e/ou do espaço de
-nomes.
+Para cancelar as notificações de mudanças, entre em @DOKUWIKIURL@, vá até @NEWPAGE@ e cancele o monitoramento da página e/ou do espaço de nomes.
