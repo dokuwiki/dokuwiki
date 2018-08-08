@@ -1,11 +1,11 @@
 Un file è stato caricato sul tuo DokuWiki. Seguono i dettagli:
 
-|  File  |  @MEDIA@  |
-|  Vecchio revisione  |  @VECCHIO@  |
-|  Data  |  @DATE@  |
-|  Browser  |  @BROWSER@  |
-|  Indirizzo IP  |  @IPADDRESS@  |
-|  Hostname  |  @HOSTNAME@  |
-|  Dimensione  |  @SIZE@  |
-|  Tipo MIME  |  @MIME@  |
-|  Utente  |  @USER@  |
+File: @MEDIA@
+Vecchio revisione: @VECCHIO@
+Data: @DATE@
+Browser: @BROWSER@
+Indirizzo IP: @IPADDRESS@
+Hostname: @HOSTNAME@
+Dimensione: @SIZE@
+Tipo MIME: @MIME@
+Utente: @USER@

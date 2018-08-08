@@ -1,12 +1,12 @@
 Une page dans votre wiki a été ajoutée ou modifiée. Voici les détails:
 
-|  Date  |  @DATE@  |
-|  Navigateur  |  @BROWSER@  |
-|  Adresse IP  |  @IPADDRESS@  |
-|  Nom d'hôte  |  @HOSTNAME@  |
-|  Ancienne révision  |  @OLDPAGE@  |
-|  Nouvelle révision  |  @NEWPAGE@  |
-|  Résumé  |  @SUMMARY@  |
-|  Utilisateur  |  @USER@  |
+Date: @DATE@
+Navigateur: @BROWSER@
+Adresse IP: @IPADDRESS@
+Nom d'hôte: @HOSTNAME@
+Ancienne révision: @OLDPAGE@
+Nouvelle révision: @NEWPAGE@
+Résumé: @SUMMARY@
+Utilisateur: @USER@
 
 @DIFF@

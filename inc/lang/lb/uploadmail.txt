@@ -1,11 +1,11 @@
 Eng Datei gouf op däin DokuWiki eropgelueden. Hei sinn d'Deteiler:
 
-|  Datei  |  @MEDIA@  |
-|  Al revision  |  @OLD@  |
-|  Datum  |  @DATE@  |
-|  Browser  |  @BROWSER@  |
-|  IP-Adress  |  @IPADDRESS@  |
-|  Hostnumm  |  @HOSTNAME@  |
-|  Gréisst  |  @SIZE@  |
-|  MIME Typ  |  @MIME@  |
-|  Benotzer  |  @USER@  |
+Datei: @MEDIA@
+Al revision: @OLD@
+Datum: @DATE@
+Browser: @BROWSER@
+IP-Adress: @IPADDRESS@
+Hostnumm: @HOSTNAME@
+Gréisst: @SIZE@
+MIME Typ: @MIME@
+Benotzer: @USER@

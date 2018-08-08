@@ -1,12 +1,12 @@
 Pagina in uice addita uel mutata. Hae singulae res sunt:
 
-|  Dies  |  @DATE@  |
-|  IP-Numerus  |  @IPADDRESS@  |
-|  Hospes situs  |  @HOSTNAME@  |
-|  Host nomen  |  @HOSTNAME@  |
-|  Vetus recensio  |  @OLDPAGE@  |
-|  Noua recensio  |  @NEWPAGE@  |
-|  Summa recensere  |  @SUMMARY@  |
-|  Sodalis  |  @USER@  |
+Dies: @DATE@
+IP-Numerus: @IPADDRESS@
+Hospes situs: @HOSTNAME@
+Host nomen: @HOSTNAME@
+Vetus recensio: @OLDPAGE@
+Noua recensio: @NEWPAGE@
+Summa recensere: @SUMMARY@
+Sodalis: @USER@
 
 @DIFF@

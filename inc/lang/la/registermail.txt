@@ -1,10 +1,10 @@
 Nouos\a Sodalis est. Hae suae res:
 
-|  Sodalis nomen  |  @NEWUSER@  |
-|  Nomen uerum  |  @NEWNAME@  |
-|  Cursus interretialis  |  @NEWEMAIL@  |
+Sodalis nomen: @NEWUSER@
+Nomen uerum: @NEWNAME@
+Cursus interretialis: @NEWEMAIL@
 
-|  Dies  |  @DATE@  |
-|  Machina interretis  |  @BROWSER@  |
-|  IP-numerus  |  @IPADDRESS@  |
-|  Hostname  |  @HOSTNAME@  |
+Dies: @DATE@
+Machina interretis: @BROWSER@
+IP-numerus: @IPADDRESS@
+Hostname: @HOSTNAME@

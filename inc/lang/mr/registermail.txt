@@ -1,10 +1,10 @@
 एक नवीन सदस्याची नोंदणी झाली आहे. त्याची माहीत पुढीलप्रमाणे:
 
-|  सदस्य नाम  |   @NEWUSER@  |
-|  पूर्ण नाव  |  @NEWNAME@  |
-|  ईमेल  |  @NEWEMAIL@  |
+सदस्य नाम:  @NEWUSER@
+पूर्ण नाव: @NEWNAME@
+ईमेल: @NEWEMAIL@
 
-|  दिनांक  |  @DATE@  |
-|  ब्राउजर  |  @BROWSER@  |
-|  IP-पत्ता  |  @IPADDRESS@  |
-|  होस्ट नाम  |  @HOSTNAME@  |
+दिनांक: @DATE@
+ब्राउजर: @BROWSER@
+IP-पत्ता: @IPADDRESS@
+होस्ट नाम: @HOSTNAME@

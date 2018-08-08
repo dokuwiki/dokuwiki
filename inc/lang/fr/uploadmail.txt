@@ -1,11 +1,11 @@
 Un fichier a été envoyé dans votre wiki. Voici les détails :
 
-|  Fichier  |  @MEDIA@  |
-|  Ancienne révision  |  @OLD@  |
-|  Date  |  @DATE@  |
-|  Navigateur  |  @BROWSER@  |
-|  Adresse IP  |  @IPADDRESS@  |
-|  Nom d'hôte  |  @HOSTNAME@  |
-|  Taille  |  @SIZE@  |
-|  Type MIME  |  @MIME@  |
-|  Utilisateur  |  @USER@  |
+Fichier: @MEDIA@
+Ancienne révision: @OLD@
+Date: @DATE@
+Navigateur: @BROWSER@
+Adresse IP: @IPADDRESS@
+Nom d'hôte: @HOSTNAME@
+Taille: @SIZE@
+Type MIME: @MIME@
+Utilisateur: @USER@

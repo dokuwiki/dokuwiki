@@ -1,11 +1,11 @@
 Documentum nouatum est. Hae mutatione sunt:
 
-|  Documentum  |  @MEDIA@  |
-|  Vetus revision  |  @OLD@  |
-|  Dies  |  @DATE@  |
-|  Machina interretis  |  @BROWSER@  |
-|  IP-Numerus  |  @IPADDRESS@  |
-|  Hospes situs  |  @HOSTNAME@  |
-|  Pondus  |  @SIZE@  |
-|  MIME Genus  |  @MIME@  |
-|  Sodalis  |  @USER@  |
+Documentum: @MEDIA@
+Vetus revision: @OLD@
+Dies: @DATE@
+Machina interretis: @BROWSER@
+IP-Numerus: @IPADDRESS@
+Hospes situs: @HOSTNAME@
+Pondus: @SIZE@
+MIME Genus: @MIME@
+Sodalis: @USER@

@@ -1,11 +1,11 @@
 도쿠위키가 파일을 올렸습니다. 자세한 정보는 다음과 같습니다:
 
-|  파일  |  @MEDIA@  |
-|  이전 판  |  @OLD@  |
-|  날짜  |  @DATE@  |
-|  브라우저  |  @BROWSER@  |
-|  IP 주소  |  @IPADDRESS@  |
-|  호스트 이름  |  @HOSTNAME@  |
-|  크기  |  @SIZE@  |
-|  MIME 유형  |  @MIME@  |
-|  사용자  |  @USER@  |
+파일: @MEDIA@
+이전 판: @OLD@
+날짜: @DATE@
+브라우저: @BROWSER@
+IP 주소: @IPADDRESS@
+호스트 이름: @HOSTNAME@
+크기: @SIZE@
+MIME 유형: @MIME@
+사용자: @USER@

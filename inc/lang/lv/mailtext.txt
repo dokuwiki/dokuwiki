@@ -1,12 +1,12 @@
 Tavā DokuWiki pievienota vai labota lapa. Šeit ir sīkākas ziņas:
 
-|  Datums  |  @DATE@  |
-|  Pārlūks  |  @BROWSER@  |
-|  IP adrese  |  @IPADDRESS@  |
-|  Dators  |  @HOSTNAME@  |
-|  Vecā versija  |  @OLDPAGE@  |
-|  Jaunā versija  |  @NEWPAGE@  |
-|  Anotācija  |  @SUMMARY@  |
-|  Lietotājs  |  @USER@  |
+Datums: @DATE@
+Pārlūks: @BROWSER@
+IP adrese: @IPADDRESS@
+Dators: @HOSTNAME@
+Vecā versija: @OLDPAGE@
+Jaunā versija: @NEWPAGE@
+Anotācija: @SUMMARY@
+Lietotājs: @USER@
 
 @DIFF@

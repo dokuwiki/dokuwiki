@@ -1,10 +1,10 @@
 Een nieuwe gebruiker heeft zich geregistreerd. Dit zijn de details:
 
-|  Gebruikersnaam  |  @NEWUSER@  |
-|  Volledige naam  |  @NEWNAME@  |
-|  E-mail  |  @NEWEMAIL@  |
+Gebruikersnaam: @NEWUSER@
+Volledige naam: @NEWNAME@
+E-mail: @NEWEMAIL@
 
-|  Datum  |  @DATE@  |
-|  Browser  |  @BROWSER@  |
-|  IP-adres  |  @IPADDRESS@  |
-|  Hostname  |  @HOSTNAME@  |
+Datum: @DATE@
+Browser: @BROWSER@
+IP-adres: @IPADDRESS@
+Hostname: @HOSTNAME@
