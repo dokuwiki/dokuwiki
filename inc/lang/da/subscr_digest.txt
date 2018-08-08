@@ -1,7 +1,6 @@
-Hej,
+Hej!
 
-Siden @PAGE@ i @TITLE@ wikien er blevet ændret.
-Her er ændringerne:
+Siden @PAGE@ i @TITLE@ wikien er blevet ændret. Her er ændringerne:
 
 --------------------------------------------------------
 @DIFF@
@@ -10,7 +9,4 @@ Her er ændringerne:
 Gammel Revision: @OLDPAGE@
 Ny Revision: @NEWPAGE@
 
-For at stoppe notifikationer om sideændringer, login på wikien på
-@DOKUWIKIURL@ og besøg så
-@SUBSCRIBE@
-for at afmelde side og/eller navneområde ændringer.
+For at stoppe notifikationer om sideændringer, login på wikien på @DOKUWIKIURL@ og besøg så @SUBSCRIBE@ for at afmelde side og/eller navneområde ændringer.

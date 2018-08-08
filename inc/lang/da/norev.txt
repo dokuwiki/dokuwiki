@@ -1,4 +1,3 @@
 ====== Den valgte udgave findes ikke ======
 
 Den valgte udgave af dokumentet findes ikke! Tryk på knappen **''[Gamle udgaver]''** for at se en liste af gamle udgaver af dette dokument.
-
