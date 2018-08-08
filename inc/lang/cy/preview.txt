@@ -1,4 +1,3 @@
 ====== Rhagolwg ======
 
-Dyma ragolwg o sut fydd eich testun yn edrych. Cofiwch: 'Dyw e **heb ei gadw** 'to!
-
+Dyma ragolwg o sut fydd eich testun yn edrych. **Cofiwch: 'Dyw e heb ei gadw 'to**!
