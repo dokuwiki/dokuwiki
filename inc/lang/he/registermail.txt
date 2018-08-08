@@ -1,10 +1,10 @@
 משתמש חדש נרשם. להלן הפרטים:
 
-שם משתמש   : @NEWUSER@
-שם מלא     : @NEWNAME@
-דוא״ל      : @NEWEMAIL@
+|  שם משתמש  |  @NEWUSER@  |
+|  שם מלא  |  @NEWNAME@  |
+|  דוא״ל  |  @NEWEMAIL@  |
 
-תאריך      : @DATE@
-דפדפן      : @BROWSER@
-כתובת IP&#8207;  : @IPADDRESS@
-שם המארח   : @HOSTNAME@
+|  תאריך  |  @DATE@  |
+|  דפדפן  |  @BROWSER@  |
+|  כתובת IP&#8207;  |  @IPADDRESS@  |
+|  שם המארח  |  @HOSTNAME@  |
