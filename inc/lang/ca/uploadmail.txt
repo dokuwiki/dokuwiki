@@ -1,10 +1,11 @@
 S'ha penjat un fitxer al vostre DokuWiki. Heus ací els detalls:
 
-Fitxer: @MEDIA@
-Data: @DATE@
-Navegador: @BROWSER@
-Adreça IP: @IPADDRESS@
-Ordinador: @HOSTNAME@
-Mida: @SIZE@
-Tipus MIME: @MIME@
-Usuari: @USER@
+|  Fitxer  |  @MEDIA@  |
+|  Revisió antiga  |  @OLD@  |
+|  Data  |  @DATE@  |
+|  Navegador  |  @BROWSER@  |
+|  Adreça IP  |  @IPADDRESS@  |
+|  Ordinador  |  @HOSTNAME@  |
+|  Mida  |  @SIZE@  |
+|  Tipus MIME  |  @MIME@  |
+|  Usuari  |  @USER@  |

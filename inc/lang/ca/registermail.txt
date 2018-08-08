@@ -1,10 +1,10 @@
 S'ha registrat un nou usuari. Heus ací els detalls:
 
-Nom d'usuari: @NEWUSER@
-Nom complet:  @NEWNAME@
-E-mail: @NEWEMAIL@
+|  Nom d'usuari  |  @NEWUSER@  |
+|  Nom complet  |   @NEWNAME@  |
+|  E-mail  |  @NEWEMAIL@  |
 
-Data: @DATE@
-Navegador: @BROWSER@
-Adreça IP: @IPADDRESS@
-Ordinador: @HOSTNAME@
+|  Data  |  @DATE@  |
+|  Navegador  |  @BROWSER@  |
+|  Adreça IP  |  @IPADDRESS@  |
+|  Ordinador  |  @HOSTNAME@  |
