@@ -1,10 +1,10 @@
 سجل مستخدم جديد. هذه هي التفاصيل:
 
-اسم المستخدم : @NEWUSER@
-الاسم الكامل : @NEWNAME@
-البريد: @NEWEMAIL@
+|  اسم المستخدم  |  @NEWUSER@  |
+|  الاسم الكامل  |  @NEWNAME@  |
+|  البريد  |  @NEWEMAIL@  |
 
-التاريخ : @DATE@
-المتصفح : @BROWSER@
-عنوان-IP: @IPADDRESS@
-اسم المضيف: @HOSTNAME@
+|  التاريخ  |  @DATE@  |
+|  المتصفح  |  @BROWSER@  |
+|  عنوان-IP  |  @IPADDRESS@  |
+|  اسم المضيف  |  @HOSTNAME@  |
