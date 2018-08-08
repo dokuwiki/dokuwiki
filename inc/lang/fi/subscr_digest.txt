@@ -1,7 +1,6 @@
 Hei!
 
-Sivu @PAGE@ wikissä @TITLE@ on muuttunut.
-Tässä ovat muutokset:
+Sivu @PAGE@ wikissä @TITLE@ on muuttunut. Tässä ovat muutokset:
 
 --------------------------------------------------------
 @DIFF@
@@ -10,7 +9,4 @@ Tässä ovat muutokset:
 Vanha versio: @OLDPAGE@
 Uusi versio: @NEWPAGE@
 
-Peruttaaksesi sivuilmoitukset kirjaudu wikiin osoitteessa
-@DOKUWIKIURL@ , jonka jälkeen katso
-@SUBSCRIBE@
-ja peruuta tilauksesi sivun ja/tai nimiavaruuden muutoksista.
+Peruttaaksesi sivuilmoitukset kirjaudu wikiin osoitteessa @DOKUWIKIURL@, jonka jälkeen katso @SUBSCRIBE@ ja peruuta tilauksesi sivun ja/tai nimiavaruuden muutoksista.
