@@ -1,10 +1,11 @@
 Dosiero alŝutiĝis al via DokuVikio. Jen detaloj:
 
-Dosiero: @MEDIA@
-Dato: @DATE@
-Foliumilo: @BROWSER@
-IP-Adreso: @IPADDRESS@
-Ret-nodo: @HOSTNAME@
-Grandeco: @SIZE@
-Dosier-tipo: @MIME@
-Uzanto: @USER@
+|  Dosiero  |  @MEDIA@  |
+|  Malnova revizio  |  @OLD@  |
+|  Dato  |  @DATE@  |
+|  Foliumilo  |  @BROWSER@  |
+|  IP-Adreso  |  @IPADDRESS@  |
+|  Ret-nodo  |  @HOSTNAME@  |
+|  Grandeco  |  @SIZE@  |
+|  Dosier-tipo  |  @MIME@  |
+|  Uzanto  |  @USER@  |
