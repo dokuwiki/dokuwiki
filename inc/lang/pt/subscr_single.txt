@@ -13,7 +13,4 @@ Sumário de Edição: @SUMMARY@
 Revisão Antiga: @OLDPAGE@
 Revisão Nova: @NEWPAGE@
 
-Para cancelar as notificações de página, inicie sessão no wiki em
-@DOKUWIKIURL@, visite
-@SUBSCRIBE@
-e des-subscreva às alterações de página e/ou espaço de nome.
+Para cancelar as notificações de página, inicie sessão no wiki em @DOKUWIKIURL@, visite @SUBSCRIBE@ e des-subscreva às alterações de página e/ou espaço de nome.

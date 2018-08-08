@@ -1,13 +1,12 @@
-Strona w Twoim DokuWiki została dodana lub zmieniona.
-Szczegółowe informacje:
+Strona w Twoim DokuWiki została dodana lub zmieniona. Szczegółowe informacje:
 
-Data         : @DATE@
-Przeglądarka : @BROWSER@
-Adres IP     : @IPADDRESS@
-Nazwa DNS    : @HOSTNAME@
-Stara wersja : @OLDPAGE@
-Nowa wersja  : @NEWPAGE@
-Opis zmian   : @SUMMARY@
-Użytkownik   : @USER@
+|  Data  |  @DATE@  |
+|  Przeglądarka  |  @BROWSER@  |
+|  Adres IP  |  @IPADDRESS@  |
+|  Nazwa DNS  |  @HOSTNAME@  |
+|  Stara wersja  |  @OLDPAGE@  |
+|  Nowa wersja  |  @NEWPAGE@  |
+|  Opis zmian  |  @SUMMARY@  |
+|  Użytkownik  |  @USER@  |
 
 @DIFF@

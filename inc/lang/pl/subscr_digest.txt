@@ -1,7 +1,6 @@
 Witaj!
 
-Treść strony @PAGE@ na wiki @TITLE@ uległa
-następującym zmianom:
+Treść strony @PAGE@ na wiki @TITLE@ uległa następującym zmianom:
 
 --------------------------------------------------------
 @DIFF@
@@ -10,8 +9,4 @@ następującym zmianom:
 Stara wersja: @OLDPAGE@
 Nowa wersja: @NEWPAGE@
 
-Aby zrezygnować z powiadomień o zmianach zaloguj się do wiki na
-@DOKUWIKIURL@, a następnie odwiedź
-@SUBSCRIBE@
-i anuluj otrzymywanie powiadomień o zmianach na stronach i/lub
-katalogach.
+Aby zrezygnować z powiadomień o zmianach zaloguj się do wiki na @DOKUWIKIURL@, a następnie odwiedź @SUBSCRIBE@ i anuluj otrzymywanie powiadomień o zmianach na stronach i/lub katalogach.

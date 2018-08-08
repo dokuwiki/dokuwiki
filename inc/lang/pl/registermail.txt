@@ -1,11 +1,10 @@
-Zarejestrował się nowy użytkownik.
-Szczegółowe informacje:
+Zarejestrował się nowy użytkownik. Szczegółowe informacje:
 
-Użytkownik      : @NEWUSER@
-Imię i nazwisko : @NEWNAME@
-E-mail          : @NEWEMAIL@
+|  Użytkownik  |  @NEWUSER@  |
+|  Imię i nazwisko  |  @NEWNAME@  |
+|  E-mail  |  @NEWEMAIL@  |
 
-Data            : @DATE@
-Przeglądarka    : @BROWSER@
-Adres IP        : @IPADDRESS@
-Nazwa DNS       : @HOSTNAME@
+|  Data  |  @DATE@  |
+|  Przeglądarka  |  @BROWSER@  |
+|  Adres IP  |  @IPADDRESS@  |
+|  Nazwa DNS  |  @HOSTNAME@  |
