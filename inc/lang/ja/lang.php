@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author lempel <riverlempel@hotmail.com>
  * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Ikuo Obataya <i.obataya@gmail.com>
@@ -113,6 +114,9 @@ $lang['js']['media_done_btn']  = '完了';
 $lang['js']['media_drop']      = 'ここにファイルをドロップするとアップロードします';
 $lang['js']['media_cancel']    = '削除';
 $lang['js']['media_overwrt']   = '既存のファイルを上書きする';
+$lang['search_past_7_days']    = '先週';
+$lang['search_past_month']     = '先月';
+$lang['search_past_year']      = '去年';
 $lang['regmissing']            = '全ての項目を入力してください。';
 $lang['reguexists']            = 'このユーザー名は既に存在しています。';
 $lang['regsuccess']            = '新しいユーザーが作成されました。パスワードは登録したメールアドレス宛てに送付されます。';
