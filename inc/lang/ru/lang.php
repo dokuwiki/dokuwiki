@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Павел <support@oktane.ru>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Zhassulan <zyesmukanov@gmail.com>
