@@ -50,7 +50,10 @@ $showSidebar = $hasSidebar && ($ACT=='show');
             <div id="dokuwiki__content"><div class="pad group">
                 <?php html_msgarea() ?>
 
+            <!-- edit: do not show the path and pagename on the upper right corner -->
+            <?php if ( $conf['showPageId'] != '1' ) { print "<!--"; } ?>
                 <div class="pageId"><span><?php echo hsc($ID) ?></span></div>
+            <?php if ( $conf['showPageId'] != '1' ) { print "-->"; } ?>
 
                 <div class="page group">
                     <?php tpl_flush() ?>
@@ -61,7 +64,10 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                     <?php tpl_includeFile('pagefooter.html') ?>
                 </div>
 
+            <!-- edit: do not show the "last modified" line except explicit declared -->
+            <?php if ( $conf['showLastEdit'] != '1' ) { print "<!--"; } ?>
                 <div class="docInfo"><?php tpl_pageinfo() ?></div>
+            <?php if ( $conf['showLastEdit'] != '1' ) { print "-->"; } ?>
 
                 <?php tpl_flush() ?>
             </div></div><!-- /content -->
