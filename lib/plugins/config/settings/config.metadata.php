@@ -132,6 +132,8 @@ $meta['deaccent']    = array('multichoice','_choices' => array(0,1,2),'_caution'
 $meta['useheading']  = array('multichoice','_choices' => array(0,'navigation','content',1));
 $meta['sneaky_index'] = array('onoff');
 $meta['hidepages']   = array('regex');
+$meta['showPageId']  = array('onoff');
+$meta['showLastEdit'] = array('onoff');
 
 $meta['_authentication'] = array('fieldset');
 $meta['useacl']      = array('onoff','_caution' => 'danger');
