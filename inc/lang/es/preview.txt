@@ -1,4 +1,3 @@
 ====== Previsualización ======
 
-Esto es una previsualización de cómo aparecerá tu texto. Recuerda: **no está guardado** todavía!
-
+Esto es una previsualización de cómo aparecerá tu texto. **Recuerda: no está guardado todavía**!

@@ -13,7 +13,4 @@ Aldaketaren Laburpena: @SUMMARY@
 Berrikuste Zaharra: @OLDPAGE@
 Berrikuste Berria: @NEWPAGE@
 
-Orri jakinarazpenak ezeztatzeko, sartu wikian
-@DOKUWIKIURL@ helbidean, bisitatu
-@SUBSCRIBE@
-eta ezabatu orri eta/edo izen-espazio aldaketen harpidetza.
+Orri jakinarazpenak ezeztatzeko, sartu wikian @DOKUWIKIURL@ helbidean, bisitatu @SUBSCRIBE@ eta ezabatu orri eta/edo izen-espazio aldaketen harpidetza.

@@ -3,4 +3,3 @@
 Sellest dokumendist, mis Sa toimetasid on tegelikult juba olemas ka uuem versioon. Selline asi juhtub siis kui sel ajal kui Sina vaikselt oma dokumendi kallal nokitsesid tegi keegi juba kähku omad Muutused sealsamas dokumendis ära.
 
 Vaata hoolikalt allpool näidatud erinevusi ja siis otsusta millise versiooni alles jätad. Kui Sa peaks valima ''salvesta'', siis juhtubki selline lugu, et Sinu versioon salvestatakse. kui Sa aga peaks klõpsama ''katkesta'' säilib hetkel kehtiv versioon.
-

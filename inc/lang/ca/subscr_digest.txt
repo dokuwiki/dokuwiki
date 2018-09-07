@@ -1,7 +1,6 @@
 Hola!
 
-La pàgina @PAGE@ al wiki @TITLE@ ha canviat.
-A continuació podeu veure els canvis:
+La pàgina @PAGE@ al wiki @TITLE@ ha canviat. A continuació podeu veure els canvis:
 
 --------------------------------------------------------
 @DIFF@
@@ -10,7 +9,4 @@ A continuació podeu veure els canvis:
 Versió anterior: @OLDPAGE@
 Nova versió: @NEWPAGE@
 
-Si voleu cancel·lar les notificacions per a la pàgina, accediu al wiki a
-@DOKUWIKIURL@, visiteu
-@SUBSCRIBE@
-i doneu-vos de baixa dels canvis de la pàgina o de l'espai.
+Si voleu cancel·lar les notificacions per a la pàgina, accediu al wiki a @DOKUWIKIURL@, visiteu @SUBSCRIBE@ i doneu-vos de baixa dels canvis de la pàgina o de l'espai.

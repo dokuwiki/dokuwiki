@@ -3,4 +3,3 @@
 Değiştirdiğiniz dökümanın daha yeni bir versiyonu mevcut. Bu durum, siz dökümanı değiştirirken başka bir kullanıcının da aynı dökümanı değiştirmesi halinde olur.
 
 Aşağıda gösterilen farkları dikkatlice inceleyin, daha sonra hangi versiyonun korunacağına karar verin. Eğer ''Kaydet''i seçerseniz, sizin sürümünüz kaydedilir. Mevcut sürümü korumak için ''İptal''e tıklayın.
-

@@ -1,9 +1,11 @@
 एउटा फाइल तपाईको DokuWiki मा भरण गरिएको छ। थप जानकारी निम्न रहेका छन् :
-फाइल : @MEDIA@
-मिति : @DATE@
-ब्राउजर : @BROWSER@
-आइपि ठगाना  : @IPADDRESS@
-होस्टनाम : @HOSTNAME@
-आकार : @SIZE@
-MIME प्रकार : @MIME@
-प्रयोगकर्ता : @USER@
+
+फाइल: @MEDIA@
+पुरानो संशोधन: @OLD@
+मिति: @DATE@
+ब्राउजर: @BROWSER@
+आइपि ठगाना: @IPADDRESS@
+होस्टनाम: @HOSTNAME@
+आकार: @SIZE@
+MIME प्रकार: @MIME@
+प्रयोगकर्ता: @USER@

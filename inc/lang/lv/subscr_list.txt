@@ -6,7 +6,4 @@ Labdien!
 @DIFF@
 --------------------------------------------------------
 
-Lai atceltu izmaiņu paziņošanu, ielogojieties
-@DOKUWIKIURL@, apmeklējiet
-@SUBSCRIBE@
-un atsakieties no lapas vai nodaļas izmaiņu paziņojumiem .
+Lai atceltu izmaiņu paziņošanu, ielogojieties @DOKUWIKIURL@, apmeklējiet @SUBSCRIBE@ un atsakieties no lapas vai nodaļas izmaiņu paziņojumiem .

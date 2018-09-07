@@ -1,5 +1,3 @@
 ====== Upravit profil vašeho účtu ======
 
 Vyplňte pouze pole, která chcete změnit. Nemůžete ale změnit své uživatelské jméno.
-
-

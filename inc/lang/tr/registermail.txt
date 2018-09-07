@@ -1,10 +1,10 @@
 Yeni bir kullanıcı kayıt oldu. Ayrıntıları aşağıda listelenmiştir:
 
-Kullanıcı adı : @NEWUSER@
-İsim : @NEWNAME@
-E-posta : @NEWEMAIL@
+Kullanıcı adı: @NEWUSER@
+İsim: @NEWNAME@
+E-posta: @NEWEMAIL@
 
-Tarih : @DATE@
-Tarayıcı : @BROWSER@
-IP Numarası : @IPADDRESS@
-Host : @HOSTNAME@
+Tarih: @DATE@
+Tarayıcı: @BROWSER@
+IP Numarası: @IPADDRESS@
+Host: @HOSTNAME@

@@ -1,12 +1,12 @@
 Et gouf eng Säit an dengem DokuWiki g'ännert oder nei erstallt. Hei sinn d'Detailer:
 
-Datum          : @DATE@
-Browser        : @BROWSER@
-IP-Address     : @IPADDRESS@
-Hostname       : @HOSTNAME@
-Al Versioun    : @OLDPAGE@
-Nei Versioun   : @NEWPAGE@
+Datum: @DATE@
+Browser: @BROWSER@
+IP-Address: @IPADDRESS@
+Hostname: @HOSTNAME@
+Al Versioun: @OLDPAGE@
+Nei Versioun: @NEWPAGE@
 Zesummefaassung: @SUMMARY@
-Benotzer       : @USER@
+Benotzer: @USER@
 
 @DIFF@

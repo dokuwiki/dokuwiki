@@ -1,7 +1,6 @@
 Salutare, @FULLNAME@!
 
-Cineva a cerut o parolă nouă pentru @TITLE@ pentru conectarea la
-@DOKUWIKIURL@.
+Cineva a cerut o parolă nouă pentru @TITLE@ pentru conectarea la @DOKUWIKIURL@.
 
 Dacă nu ai solicitat o parolă nouă, ignoră acest e-mail.
 

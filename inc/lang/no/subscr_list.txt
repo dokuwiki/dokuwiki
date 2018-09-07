@@ -1,13 +1,9 @@
 Hei!
 
-Sider i navnerommet @PAGE@ på wikien @TITLE@ har blitt endra.
-Her er endringene:
+Sider i navnerommet @PAGE@ på wikien @TITLE@ har blitt endra. Her er endringene:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-For å avslutte varslinga, logg inn på
-@DOKUWIKIURL@ og gå til
-@SUBSCRIBE@
-og avslutt abonnementet på endringer av sida eller i navnerommet.
+For å avslutte varslinga, logg inn på @DOKUWIKIURL@ og gå til @SUBSCRIBE@ og avslutt abonnementet på endringer av sida eller i navnerommet.

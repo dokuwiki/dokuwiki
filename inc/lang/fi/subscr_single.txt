@@ -13,7 +13,4 @@ Yhteenveto: @SUMMARY@
 Vanha versio: @OLDPAGE@
 Uusi versio: @NEWPAGE@
 
-Peruttaaksesi sivuilmoitukset kirjaudu wikiin osoitteessa
-@DOKUWIKIURL@ , jonka jälkeen katso
-@SUBSCRIBE@
-ja peruuta tilauksesi sivun ja/tai nimiavaruuden muutoksista.
+Peruttaaksesi sivuilmoitukset kirjaudu wikiin osoitteessa @DOKUWIKIURL@, jonka jälkeen katso @SUBSCRIBE@ ja peruuta tilauksesi sivun ja/tai nimiavaruuden muutoksista.

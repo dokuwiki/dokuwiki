@@ -1,7 +1,6 @@
-Szia,
+Szia!
 
-A @PAGE@ névtérhez tartozó oldalak megváltoztak a @TITLE wikiben.
-A módosított oldalak a következők:
+A @PAGE@ névtérhez tartozó oldalak megváltoztak a @TITLE wikiben. A módosított oldalak a következők:
 
 --------------------------------------------------------
 @DIFF@

@@ -1,4 +1,3 @@
 ====== Nu există versiunea paginii ======
 
-Versiunea indicată nu există. Folosește butonul ''Versiuni anterioare'' pentru
-o listă a versiunilor acestei pagini.
+Versiunea indicată nu există. Folosește butonul ''Versiuni anterioare'' pentru o listă a versiunilor acestei pagini.

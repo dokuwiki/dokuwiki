@@ -1,7 +1,6 @@
 Hej @FULLNAME@!
 
-Nogen har bedt om et nyt password til dit @TITLE@
-login på @DOKUWIKIURL@
+Nogen har bedt om et nyt password til dit @TITLE@ login på @DOKUWIKIURL@
 
 Hvis du ikke bad om dette, så ignorer venligst denne email.
 
