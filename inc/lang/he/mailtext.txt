@@ -1,12 +1,12 @@
 דף בDokuWiki נוסף או שונה. להלן הפרטים:
 
-תאריך: @DATE@
-דפדפן: @BROWSER@
-כתובת ה־IP&#8207;: @IPADDRESS@
-שם המארח: @HOSTNAME@
+תאריך        : @DATE@
+דפדפן     : @BROWSER@
+כתובת ה־IP&#8207;  : @IPADDRESS@
+שם המארח    : @HOSTNAME@
 המהדורה הישנה: @OLDPAGE@
 המהדורה החדשה: @NEWPAGE@
 תקציר העריכה: @SUMMARY@
-משתמש: @USER@
+משתמש        : @USER@
 
 @DIFF@

@@ -1,7 +1,6 @@
 Um arquivo foi enviado para o seu DokuWiki. Os detalhes são:
 
 Arquivo: @MEDIA@
-Revisão antiga: @OLD@
 Data: @DATE@
 Navegador: @BROWSER@
 Endereço IP: @IPADDRESS@

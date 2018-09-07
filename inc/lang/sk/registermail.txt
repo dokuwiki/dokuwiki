@@ -1,10 +1,10 @@
 Nový používateľ bol registrovaný. Tu sú detaily:
 
-Používateľské meno: @NEWUSER@
-Celé meno: @NEWNAME@
-E-Mail: @NEWEMAIL@
+Používateľské meno : @NEWUSER@
+Celé meno        : @NEWNAME@
+E-Mail           : @NEWEMAIL@
 
-Dátum: @DATE@
-Prehliadač: @BROWSER@
-IP adresa: @IPADDRESS@
-Meno servera: @HOSTNAME@
+Dátum            : @DATE@
+Prehliadač       : @BROWSER@
+IP adresa        : @IPADDRESS@
+Meno servera     : @HOSTNAME@

@@ -10,3 +10,7 @@ Përmbledhja redaktimit: @SUMMARY@
 Përdoruesi: @USER@
 
 @DIFF@
+
+---
+Ky email u gjenerua nga DokuWiki në
+@DOKUWIKIURL@

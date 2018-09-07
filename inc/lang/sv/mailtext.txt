@@ -1,12 +1,12 @@
 En sida i din DokuWiki har lagts till eller ändrats. Här är detaljerna:
 
-Datum: @DATE@
-Webbläsare: @BROWSER@
-IP-adress: @IPADDRESS@
-Datornamn: @HOSTNAME@
-Tidigare version: @OLDPAGE@
-Aktuell version: @NEWPAGE@
-Redigeringskommentar: @SUMMARY@
-Användare: @USER@
+Datum                : @DATE@
+Webbläsare           : @BROWSER@
+IP-adress            : @IPADDRESS@
+Datornamn            : @HOSTNAME@
+Tidigare version     : @OLDPAGE@
+Aktuell version      : @NEWPAGE@
+Redigeringskommentar : @SUMMARY@
+Användare            : @USER@
 
 @DIFF@

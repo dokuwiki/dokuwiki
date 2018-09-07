@@ -1,11 +1,12 @@
+Salutare, @FULLNAME@!
+
 Un fișier a fost încărcat în DokuWiki. Iată detaliile:
 
-Fișier: @MEDIA@
-Vechi de revizuire: @OLD@
-Dată: @DATE@
-Browser: @BROWSER@
-Adresă IP: @IPADDRESS@
-Hostname: @HOSTNAME@
-Dimensiune: @SIZE@
-MIME Type: @MIME@
-Utilizator: @USER@
+Fișier : @MEDIA@
+Dată : @DATE@
+Browser : @BROWSER@
+Adresă IP : @IPADDRESS@
+Hostname : @HOSTNAME@
+Dimensiune : @SIZE@
+MIME Type : @MIME@
+Utilizator : @USER@

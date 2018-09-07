@@ -1,12 +1,12 @@
 Nisy pejy niova tao amin'ny wiky. Ireto ny antsipiriany:
 
-Date: @DATE@
-Browser: @BROWSER@
-Adiresy IP: @IPADDRESS@
-Hostname: @HOSTNAME@
-Taloha: @OLDPAGE@
-Vaovao: @NEWPAGE@
-Fiovana: @SUMMARY@
-Novain'i: @USER@
+Date        : @DATE@
+Browser     : @BROWSER@
+Adiresy IP  : @IPADDRESS@
+Hostname    : @HOSTNAME@
+Taloha      : @OLDPAGE@
+Vaovao      : @NEWPAGE@
+Fiovana     : @SUMMARY@
+Novain'i    : @USER@
 
 @DIFF@

@@ -1,11 +1,10 @@
 Yeni dosya yüklendi. Ayrıntıları aşağıda listelenmiştir:
 
-Dosya: @MEDIA@
-Eski revizyon: @OLD@
-Tarih: @DATE@
-Tarayıcı: @BROWSER@
-IP Adresi: @IPADDRESS@
-Host: @HOSTNAME@
-Boyut: @SIZE@
-MIME Type: @MIME@
-Kullanıcı: @USER@
+Dosya : @MEDIA@
+Tarih : @DATE@
+Tarayıcı : @BROWSER@
+IP Adresi : @IPADDRESS@
+Host : @HOSTNAME@
+Boyut : @SIZE@
+MIME Type : @MIME@
+Kullanıcı : @USER@

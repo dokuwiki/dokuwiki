@@ -1,11 +1,10 @@
 En fil har laddats upp till din DokuWiki. Här är detaljerna:
 
-Fil: @MEDIA@
-Gammal revision: @OLD@
-Datum: @DATE@
-Webbläsare: @BROWSER@
-IP-adress: @IPADDRESS@
-Datornamn: @HOSTNAME@
-Storlek: @SIZE@
-MIME-typ: @MIME@
-Användare: @USER@
+Fil         : @MEDIA@
+Datum       : @DATE@
+Webbläsare  : @BROWSER@
+IP-adress   : @IPADDRESS@
+Datornamn   : @HOSTNAME@
+Storlek     : @SIZE@
+MIME-typ    : @MIME@
+Användare   : @USER@

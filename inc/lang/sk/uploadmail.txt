@@ -1,11 +1,10 @@
 Súbor bol nahraný do DokuWiki. Tu sú podrobnosti:
 
-Súbor: @MEDIA@
-Staré revízie: @OLD@
-Dátum: @DATE@
-Prehliadač: @BROWSER@
-IP adresa: @IPADDRESS@
-Názov hostiteľa: @HOSTNAME@
-Veľkosť: @SIZE@
-MIME Typ: @MIME@
-Užívateľ: @USER@
+Súbor : @MEDIA@
+Dátum : @DATE@
+Prehliadač : @BROWSER@
+IP adresa : @IPADDRESS@
+Názov hostiteľa : @HOSTNAME@
+Veľkosť : @SIZE@
+MIME Typ : @MIME@
+Užívateľ : @USER@

@@ -1,12 +1,12 @@
 您的 DokuWiki 有個新增或變動的頁面。詳細資料如下：
 
-日期: @DATE@
-瀏覽器: @BROWSER@
-IP 位址: @IPADDRESS@
-主機名稱: @HOSTNAME@
-舊版本: @OLDPAGE@
-新版本: @NEWPAGE@
-編輯摘要: @SUMMARY@
-使用者: @USER@
+日期     : @DATE@
+瀏覽器   : @BROWSER@
+IP 位址   : @IPADDRESS@
+主機名稱 : @HOSTNAME@
+舊版本   : @OLDPAGE@
+新版本   : @NEWPAGE@
+編輯摘要 : @SUMMARY@
+使用者   : @USER@
 
 @DIFF@

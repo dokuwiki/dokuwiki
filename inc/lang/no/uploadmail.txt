@@ -1,11 +1,11 @@
 En fil ble lastet opp på din DokuWiki. Her er detaljene:
 
-Fil: @MEDIA@
+Fil : @MEDIA@
 Gammel versjon: @OLD@
-Dato: @DATE@
-Nettleser: @BROWSER@
-IP-adresse: @IPADDRESS@
-Vertnavn: @HOSTNAME@
-Størrelse: @SIZE@
-MIME-type: @MIME@
-Bruker: @USER@
+Dato : @DATE@
+Nettleser : @BROWSER@
+IP-adresse : @IPADDRESS@
+Vertnavn : @HOSTNAME@
+Størrelse : @SIZE@
+MIME-type : @MIME@
+Bruker : @USER@

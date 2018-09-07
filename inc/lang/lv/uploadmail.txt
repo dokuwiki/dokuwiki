@@ -1,11 +1,10 @@
 Fails augšupielādēts DokuWiki. Sīkākas ziņas:
 
-Fails: @MEDIA@
-Veco pārskatīšana: @OLD@
-Datums: @DATE@
-Pārlūks: @BROWSER@
-IP adrese: @IPADDRESS@
-Datora vārds: @HOSTNAME@
-Izmērs: @SIZE@
-MIME tips: @MIME@
-Lietotājs: @USER@
+Fails         : @MEDIA@
+Datums        : @DATE@
+Pārlūks       : @BROWSER@
+IP adrese     : @IPADDRESS@
+Datora vārds  : @HOSTNAME@
+Izmērs        : @SIZE@
+MIME tips     : @MIME@
+Lietotājs     : @USER@

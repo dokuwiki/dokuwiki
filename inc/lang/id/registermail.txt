@@ -1,10 +1,10 @@
 User baru telah mendaftar. Berikut detailnya:
 
-User name: @NEWUSER@
-Full name: @NEWNAME@
-E-mail: @NEWEMAIL@
+User name : @NEWUSER@
+Full name : @NEWNAME@
+E-mail : @NEWEMAIL@
 
-Date: @DATE@
-Browser: @BROWSER@
-IP-Address: @IPADDRESS@
-Hostname: @HOSTNAME@
+Date : @DATE@
+Browser : @BROWSER@
+IP-Address : @IPADDRESS@
+Hostname : @HOSTNAME@

@@ -1,10 +1,11 @@
+Salutare, @FULLNAME@!
+
 Un nou utilizator s-a înregistrat. Iată detaliile:
 
-Nume de utilizator: @NEWUSER@
-Nume complet: @NEWNAME@
-E-mail: @NEWEMAIL@
-
-Dată: @DATE@
-Browser: @BROWSER@
-Adresă IP: @IPADDRESS@
-Hostname: @HOSTNAME@
+Nume de utilizator : @NEWUSER@
+Nume complet : @NEWNAME@
+E-mail : @NEWEMAIL@
+Dată : @DATE@
+Browser : @BROWSER@
+Adresă IP : @IPADDRESS@
+Hostname : @HOSTNAME@

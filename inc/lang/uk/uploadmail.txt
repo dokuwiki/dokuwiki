@@ -1,11 +1,10 @@
 На вашу ДокуВікі завантажено файл. Деталі:
 
-Файл: @MEDIA@
-Стара редакція: @OLD@
-Дата: @DATE@
-Браузер: @BROWSER@
-IP-адрес: @IPADDRESS@
-Назва вузла: @HOSTNAME@
-Розмір: @SIZE@
-Тип MIME: @MIME@
-Користувач: @USER@
+Файл : @MEDIA@
+Дата : @DATE@
+Браузер : @BROWSER@
+IP-Адреса : @IPADDRESS@
+Назва вузла : @HOSTNAME@
+Розмір : @SIZE@
+Тип MIME : @MIME@
+Користувач : @USER@

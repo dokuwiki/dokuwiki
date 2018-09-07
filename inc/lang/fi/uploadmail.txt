@@ -1,11 +1,10 @@
 Tiedosto ladattiin DokuWikillesi. Tässä yksityiskohtaiset tiedot:
 
-Tiedosto: @MEDIA@
-Vanha tarkistus: @OLD@
-PVM: @DATE@
-Selain: @BROWSER@
-IP-Osoite: @IPADDRESS@
-Hostname: @HOSTNAME@
-Koko: @SIZE@
-MIME Type: @MIME@
-Käyttäjä: @USER@
+Tiedosto : @MEDIA@
+PVM : @DATE@
+Selain : @BROWSER@
+IP-Osoite : @IPADDRESS@
+Hostname : @HOSTNAME@
+Koko : @SIZE@
+MIME Type : @MIME@
+Käyttäjä : @USER@

@@ -1,7 +1,6 @@
 Një skedar u ngarkua në DokuWiki-n tënd. Detajet janë:
 
 Skedar: @MEDIA@
-Vjetër rishikimi: @OLD@
 Data: @DATE@
 Shfletuesi: @BROWSER@
 Adresa IP: @IPADDRESS@

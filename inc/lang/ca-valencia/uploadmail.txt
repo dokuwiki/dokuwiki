@@ -1,7 +1,6 @@
 S'ha enviat un archiu al seu DokuWiki. Les senyes:
 
 Arxiu: @MEDIA@
-Revisió anterior: @OLD@
 Data: @DATE@
 Navegador: @BROWSER@
 Direcció IP: @IPADDRESS@

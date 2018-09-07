@@ -1,11 +1,10 @@
 Sebuah file telah diupload di DokuWiki Anda. Berikut detailnya:
 
-File: @MEDIA@
-Revisi lama: @OLD@
-Tanggal: @DATE@
-Browser: @BROWSER@
-IP-Address: @IPADDRESS@
-Nama Host: @HOSTNAME@
-Ukuran: @SIZE@
-MIME Lihat: @MIME@
-Pengguna: @USER@
+File : @MEDIA@
+Date : @DATE@
+Browser : @BROWSER@
+IP-Address : @IPADDRESS@
+Hostname : @HOSTNAME@
+Size : @SIZE@
+MIME Type : @MIME@
+User : @USER@

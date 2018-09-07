@@ -1,11 +1,10 @@
 Sizin DokuWiki-yə fayl yuklənildi. Ətraflı məlumat:
 
-Fayl: @MEDIA@
-Köhnə redaksiya: @OLD@
-Tarix: @DATE@
-Brauzer: @BROWSER@
-IP Adres: @IPADDRESS@
-Host: @HOSTNAME@
-Həcm: @SIZE@
-MIME Növ: @MIME@
-İstifadəçi: @USER@
+Fayl        : @MEDIA@
+Tarix       : @DATE@
+Brauzer     : @BROWSER@
+IP Adres    : @IPADDRESS@
+Host        : @HOSTNAME@
+Həcm        : @SIZE@
+MIME Növ    : @MIME@
+İstifadəçi  : @USER@

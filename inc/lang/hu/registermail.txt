@@ -6,5 +6,5 @@ E-mail: @NEWEMAIL@
 
 Dátum: @DATE@
 Böngésző: @BROWSER@
-IP-cím: @IPADDRESS@
+IP-cím : @IPADDRESS@
 Gép neve: @HOSTNAME@
