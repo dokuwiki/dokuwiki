@@ -1,11 +1,12 @@
 S'ha afegit o modificat una pàgina en el vostre wiki. Ací teniu més detalls:
 
-Data           : @DATE@
-Navegador      : @BROWSER@
-IP             : @IPADDRESS@
-Rev. anterior  : @OLDPAGE@
-Rev. actual    : @NEWPAGE@
-Resum d'edició : @SUMMARY@
-Usuari         : @USER@
+Data: @DATE@
+Navegador: @BROWSER@
+IP: @IPADDRESS@
+Nom de la màquina: @HOSTNAME@
+Rev. anterior: @OLDPAGE@
+Rev. actual: @NEWPAGE@
+Resum d'edició: @SUMMARY@
+Usuari: @USER@
 
 @DIFF@

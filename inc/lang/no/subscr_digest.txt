@@ -1,7 +1,6 @@
 Hei!
 
-Siden @PAGE@ på wikien @TITLE@ har blitt endret.
-Her er endringene:
+Siden @PAGE@ på wikien @TITLE@ har blitt endret. Her er endringene:
 
 --------------------------------------------------------
 @DIFF@
@@ -10,7 +9,4 @@ Her er endringene:
 Gammel versjon : @OLDPAGE@
 Ny versjon: @NEWPAGE@
 
-For å avslutte varslingen, logg inn på
-@DOKUWIKIURL@ og gå til
-@SUBSCRIBE@
-og avslutt abonnementet på endringer av siden eller i navnerommet.
+For å avslutte varslingen, logg inn på @DOKUWIKIURL@ og gå til @SUBSCRIBE@ og avslutt abonnementet på endringer av siden eller i navnerommet.

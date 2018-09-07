@@ -1,12 +1,11 @@
-Umieszczono nowy plik.
+Umieszczono nowy plik. Szczegóły:
 
-Szczegóły:
-
-Plik         : @MEDIA@
-Data         : @DATE@
-Przeglądarka : @BROWSER@
-Adres IP     : @IPADDRESS@
-Nazwa DNS    : @HOSTNAME@
-Rozmiar      : @SIZE@
-Typ MIME     : @MIME@
-Użytkownik   : @USER@
+Plik: @MEDIA@
+Stara wersja: @OLD@
+Dane: @DATE@
+Przeglądarka: @BROWSER@
+Adres IP: @IPADDRESS@
+Nazwa DNS: @HOSTNAME@
+Rozmiar: @SIZE@
+Typ MIME: @MIME@
+Użytkownik: @USER@

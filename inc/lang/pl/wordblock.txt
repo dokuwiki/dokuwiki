@@ -1,0 +1,3 @@
+====== SPAM jest zablokowany ======
+
+Twoje zmiany **nie zostały** zapisane, ponieważ zawierają jedno lub więcej słów zakazanych. Jeśli próbowałeś dodać spam w Wiki -- ajajaj! Jeśli uważasz, że to jakiś błąd, skontaktuj się z administratorem wiki.

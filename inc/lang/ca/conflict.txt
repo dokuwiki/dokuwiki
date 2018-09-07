@@ -3,4 +3,3 @@
 Existeix una versió més recent del document que heu editat. Això passa quan un altre usuari canvia el document mentre l'estàveu editant.
 
 Examineu detingudament les diferències que es mostren més avall i després decidiu quina versió voleu mantenir. Si trieu ''desa'', es desarà la vostra versió. Si trieu ''cancel·la'' es mantindrà la versió actual.
-

@@ -1,4 +1,3 @@
 ====== Gestion de subscriptiones ======
 
 Iste pagina permitte gerer tu subscriptiones pro le pagina e spatio de nomines actual.
-	

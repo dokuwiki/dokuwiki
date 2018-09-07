@@ -1,10 +1,10 @@
 Yeni istifadəçi qeydiyyatdan keçdi. Ətraflı məlumat:
 
-İstifadəçi adı       : @NEWUSER@
-Tam adı  : @NEWNAME@
-E-mail      : @NEWEMAIL@
+İstifadəçi adı: @NEWUSER@
+Tam adı: @NEWNAME@
+E-mail: @NEWEMAIL@
 
-Tarix        : @DATE@
-Brauzer     : @BROWSER@
-IP adres    : @IPADDRESS@
-Host        : @HOSTNAME@
+Tarix: @DATE@
+Brauzer: @BROWSER@
+IP adres: @IPADDRESS@
+Host: @HOSTNAME@

@@ -1,7 +1,6 @@
 Kaixo!
 
-@TITLE@ wikiko @PAGE@ orria aldatu egin da.
-Hemen aldaketak:
+@TITLE@ wikiko @PAGE@ orria aldatu egin da. Hemen aldaketak:
 
 --------------------------------------------------------
 @DIFF@
@@ -10,7 +9,4 @@ Hemen aldaketak:
 Berrikuste zaharra: @OLDPAGE@
 Berrikuste berria: @NEWPAGE@
 
-Orri jakinarazpenak ezeztatzeko, sartu wikian
-@DOKUWIKIURL@ helbidean, bisitatu
-@SUBSCRIBE@
-eta ezabatu orri eta/edo izen-espazio aldaketen harpidetza.
+Orri jakinarazpenak ezeztatzeko, sartu wikian @DOKUWIKIURL@ helbidean, bisitatu @SUBSCRIBE@ eta ezabatu orri eta/edo izen-espazio aldaketen harpidetza.

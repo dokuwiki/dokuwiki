@@ -1,6 +1,7 @@
-Bonjour,
+Bonjour!
 
-La page « @PAGE@ » dans le wiki « @TITLE@ » a été modifiée. Voici les modifications :
+La page « @PAGE@ » dans le wiki « @TITLE@ » a été modifiée.
+Voici les modifications:
 
 --------------------------------------------------------
 @DIFF@
@@ -12,7 +13,4 @@ Résumé : @SUMMARY@
 Révision précédente : @OLDPAGE@
 Nouvelle révision : @NEWPAGE@
 
-Pour annuler les notifications de page, connectez-vous au wiki à l'adresse
-@DOKUWIKIURL@ puis visitez
-@SUBSCRIBE@
-et désabonnez-vous de la page ou de la catégorie.
+Pour annuler les notifications de page, connectez-vous au wiki à l'adresse @DOKUWIKIURL@ puis visitez @SUBSCRIBE@ et désabonnez-vous de la page ou de la catégorie.

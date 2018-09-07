@@ -1,11 +1,10 @@
-Nov uporabniški račun je uspešno vpisan.
-Podatki računa:
+Nov uporabniški račun je uspešno vpisan. Podatki računa:
 
-Uporabniško ime   : @NEWUSER@
-Polno ime         : @NEWNAME@
+Uporabniško ime: @NEWUSER@
+Polno ime: @NEWNAME@
 Elektronski naslov: @NEWEMAIL@
 
-Datum             : @DATE@
-Brskalnik         : @BROWSER@
-Naslov IP         : @IPADDRESS@
-Ime gostitelja    : @HOSTNAME@
+Datum: @DATE@
+Brskalnik: @BROWSER@
+Naslov IP: @IPADDRESS@
+Ime gostitelja: @HOSTNAME@

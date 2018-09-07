@@ -1,6 +1,7 @@
 S'ha penjat un fitxer al vostre DokuWiki. Heus ací els detalls:
 
 Fitxer: @MEDIA@
+Revisió antiga: @OLD@
 Data: @DATE@
 Navegador: @BROWSER@
 Adreça IP: @IPADDRESS@

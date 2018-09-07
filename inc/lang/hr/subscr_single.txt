@@ -13,6 +13,4 @@ Sažetak izmjena: @SUMMARY@
 Stara izmjena: @OLDPAGE@
 Nova izmjena : @NEWPAGE@
 
-Da poništite obavijesti o izmjenama prijavite se na wiki @DOKUWIKIURL@ i zatim posjetite
-@SUBSCRIBE@
-i odjavite se s promjena na stranici i/ili imeničkom prostoru.
+Da poništite obavijesti o izmjenama prijavite se na wiki @DOKUWIKIURL@ i zatim posjetite @SUBSCRIBE@ i odjavite se s promjena na stranici i/ili imeničkom prostoru.

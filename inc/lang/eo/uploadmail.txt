@@ -1,6 +1,7 @@
 Dosiero alŝutiĝis al via DokuVikio. Jen detaloj:
 
 Dosiero: @MEDIA@
+Malnova revizio: @OLD@
 Dato: @DATE@
 Foliumilo: @BROWSER@
 IP-Adreso: @IPADDRESS@

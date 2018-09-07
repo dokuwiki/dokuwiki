@@ -1,6 +1,7 @@
 Fájlfeltöltés történt a DokuWikidben. Részletek:
 
 Állomány: @MEDIA@
+Régi felülvizsgálat: @OLD@
 Dátum: @DATE@
 Böngésző: @BROWSER@
 IP-cím: @IPADDRESS@

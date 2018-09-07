@@ -1,12 +1,12 @@
 Stránka vo vašej DokuWiki bola zmenená. Tu sú podrobnosti:
 
-Dátum : @DATE@
-Prehliadač : @BROWSER@
-IP adresa : @IPADDRESS@
-Adresa : @HOSTNAME@
-Stará verzia : @OLDPAGE@
-Nová verzia : @NEWPAGE@
-Komentár : @SUMMARY@
-User : @USER@
+Dátum: @DATE@
+Prehliadač: @BROWSER@
+IP adresa: @IPADDRESS@
+Adresa: @HOSTNAME@
+Stará verzia: @OLDPAGE@
+Nová verzia: @NEWPAGE@
+Komentár: @SUMMARY@
+User: @USER@
 
 @DIFF@

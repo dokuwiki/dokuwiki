@@ -13,7 +13,4 @@ Povzetek urejanja: @SUMMARY@
 Stara različica  : @OLDPAGE@
 Nova različica   : @NEWPAGE@
 
-Preklic obveščanja o spremembah strani je mogoče določiti
-na Wiki naslovu @DOKUWIKIURL@ in z obiskom @NEWPAGE@,
-kjer se je mogoče odjaviti od spremljanja strani ali
-imenskega prostora.
+Preklic obveščanja o spremembah strani je mogoče določiti na Wiki naslovu @DOKUWIKIURL@ in z obiskom @NEWPAGE@, kjer se je mogoče odjaviti od spremljanja strani ali imenskega prostora.

@@ -1,0 +1,9 @@
+Hei!
+
+Halaman dalam @PAGE@ namespace di @TITLE@ wiki yang telah dimodifikasi. Daftar berubah halaman:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Untuk menonaktifkan pemberitahuan ini, masuk ke wiki di @DOKUWIKIURL@ kemudian kunjungi @SUBSCRIBE@ dan halaman batal berlangganan dan/atau namespace yang diubah.

@@ -1,0 +1,3 @@
+====== Le SPAM est bloqué ======
+
+Vos modifications **n'ont pas été** enregistrées car elles contiennent un ou plusieurs mots interdits. Si vous avez essayé d'ajouter du spam au Wiki -- aïe-aïe-aïe! Si vous pensez que c'est une erreur, contactez l'administrateur wiki.

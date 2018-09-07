@@ -1,7 +1,6 @@
-Szia,
+Szia!
 
-A @PAGE@ oldal a @TITLE wikiben megváltozott.
-Itt vannak az eltérések:
+A @PAGE@ oldal a @TITLE wikiben megváltozott. Itt vannak az eltérések:
 
 --------------------------------------------------------
 @DIFF@

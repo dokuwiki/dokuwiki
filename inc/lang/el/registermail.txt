@@ -1,10 +1,10 @@
 Ένας νέος χρήστης εγγράφηκε. Ορίστε οι λεπτομέρειες:
 
-Χρήστης         : @NEWUSER@
-Όνομα           : @NEWNAME@
-e-mail          : @NEWEMAIL@
+Χρήστης: @NEWUSER@
+Όνομα: @NEWNAME@
+e-mail: @NEWEMAIL@
 
-Ημερομηνία      : @DATE@
-Φυλλομετρητής   : @BROWSER@
-IP-Διεύθυνση    : @IPADDRESS@
+Ημερομηνία: @DATE@
+Φυλλομετρητής: @BROWSER@
+IP-Διεύθυνση: @IPADDRESS@
 Όνομα υπολογιστή: @HOSTNAME@

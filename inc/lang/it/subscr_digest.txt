@@ -1,7 +1,6 @@
 Ciao!
 
-La pagina @PAGE@ nel wiki @TITLE@ è cambiata.
-Queste sono le modifiche:
+La pagina @PAGE@ nel wiki @TITLE@ è cambiata. Queste sono le modifiche:
 
 --------------------------------------------------------
 @DIFF@
@@ -10,7 +9,4 @@ Queste sono le modifiche:
 Vecchia revisione: @OLDPAGE@
 Nuova revisione: @NEWPAGE@
 
-Per non ricevere più queste notifiche collegati al
-wiki @DOKUWIKIURL@ e poi visita @SUBSCRIBE@
-e rimuovi la sottoscrizione alle modifiche delle
-pagine e/o categorie.
+Per non ricevere più queste notifiche collegati al wiki @DOKUWIKIURL@ e poi visita @SUBSCRIBE@ e rimuovi la sottoscrizione alle modifiche delle pagine e/o categorie.

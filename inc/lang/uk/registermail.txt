@@ -1,10 +1,10 @@
 Зареєстровано нового користувача. Перегляньте деталі:
 
-Користувач  : @NEWUSER@
-Повне ім'я  : @NEWNAME@
-E-Mail      : @NEWEMAIL@
+Користувач: @NEWUSER@
+Повне ім'я: @NEWNAME@
+E-Mail: @NEWEMAIL@
 
-Дата        : @DATE@
-Браузер     : @BROWSER@
-Адреса IP   : @IPADDRESS@
-Назва хосту : @HOSTNAME@
+Дата: @DATE@
+Браузер: @BROWSER@
+Адреса IP: @IPADDRESS@
+Назва хосту: @HOSTNAME@

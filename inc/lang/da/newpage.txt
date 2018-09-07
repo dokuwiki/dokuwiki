@@ -1,3 +1,3 @@
 ====== Dette dokument eksisterer ikke (endnu) ======
 
-Du har fulgt en henvisning til et dokument der ikke eksisterer (endnu). Du kan oprette dokumentet ved at trykke på knappen **''[Opret dette dokument]''**.
+Du har fulgt en henvisning til et dokument der ikke eksisterer (endnu). Du kan oprette dokumentet ved at trykke på knappen **Opret dette dokument**.

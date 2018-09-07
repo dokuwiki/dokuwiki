@@ -1,11 +1,11 @@
 Ένα αρχείο φορτώθηκε στο DokuWiki σας.
 Αυτά είναι τα αντίστοιχα στοιχεία:
 
-Αρχείο          : @MEDIA@
-Ημερομηνία      : @DATE@
-Φυλλομετρητής   : @BROWSER@
-IP-Διεύθυνση    : @IPADDRESS@
+Αρχείο: @MEDIA@
+Ημερομηνία: @DATE@
+Φυλλομετρητής: @BROWSER@
+IP-Διεύθυνση: @IPADDRESS@
 Όνομα υπολογιστή: @HOSTNAME@
-Μέγεθος         : @SIZE@
-MIME Type       : @MIME@
-Χρήστης         : @USER@
+Μέγεθος: @SIZE@
+MIME Type: @MIME@
+Χρήστης: @USER@
