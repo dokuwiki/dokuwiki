@@ -1,5 +1,3 @@
 ====== Hivatkozások ======
 
 Ez azoknak az oldalaknak a listája, amelyek erre az oldalra "visszamutatnak" (hivatkoznak).
-
-

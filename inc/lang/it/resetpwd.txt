@@ -1,1 +1,3 @@
+====== Impostare la nuova password ======
+
 Inserisci perfavore una nuova password per il tuo account su questo wiki.

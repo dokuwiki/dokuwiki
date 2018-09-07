@@ -1,4 +1,1 @@
-Seite Bearbeiten und **''[Speichern]''** drücken. Siehe [[wiki:syntax]] zur Wiki-Syntax.
-Bitte nur editieren, falls das Dokument tatsächlich **verbessert** werden kann.
-Zum Testen bitte erst im [[playground:playground|Spielplatz]] üben.
-
+Seite Bearbeiten und **''[Speichern]''** drücken. Siehe [[wiki:syntax]] zur Wiki-Syntax. Bitte nur editieren, falls das Dokument tatsächlich **verbessert** werden kann. Zum Testen bitte erst im [[playground:playground|Spielplatz]] üben.

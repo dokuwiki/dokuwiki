@@ -1,4 +1,3 @@
 ====== Meklēšana ======
 
 Te vari redzēt meklēšanas rezultātus. @CREATEPAGEINFO@
-

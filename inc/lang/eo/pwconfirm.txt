@@ -1,7 +1,6 @@
 Saluton, @FULLNAME@!
 
-Iu petis novan pasvorton por via @TITLE@
-ensalutnomo ĉe @DOKUWIKIURL@
+Iu petis novan pasvorton por via @TITLE@ ensalutnomo ĉe @DOKUWIKIURL@
 
 Se ne vi petis tion, ignoru tiun ĉi mesaĝon.
 
