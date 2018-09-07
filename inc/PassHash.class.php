@@ -22,6 +22,24 @@ class PassHash {
      * @return  bool
      */
     function verify_hash($clear, $hash) {
+        list($method, $salt, $magic) = $this->detect_hash_method($hash);
+
+        //crypt and compare
+        $call = 'hash_'.$method;
+        $newhash = $this->$call($clear, $salt, $magic);
+        if(\hash_equals($newhash, $hash)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Detect a hash method of a given crypted hash
+     *
+     * @param string $hash Crypted hash to detect
+     * @return array as array(hash method, salt, magic)
+     */
+    public function detect_hash_method($hash) {
         $method = '';
         $salt   = '';
         $magic  = '';
@@ -88,13 +106,7 @@ class PassHash {
             $salt   = substr($hash, 0, 2);
         }
 
-        //crypt and compare
-        $call = 'hash_'.$method;
-        $newhash = $this->$call($clear, $salt, $magic);
-        if(\hash_equals($newhash, $hash)) {
-            return true;
-        }
-        return false;
+        return array($method, $salt, $magic);
     }
 
     /**

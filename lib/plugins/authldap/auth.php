@@ -660,70 +660,25 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @return  string|false  The crypted password
      */
     public function ldapCryptPassword($clear, $method = '', $salt = null) {
-        $pass = auth_cryptPassword($clear, $method, $salt);
+        $hash = auth_cryptPassword($clear, $method, $salt);
         if($method == '') {
-            $method = $this->_detectHashMethod($pass);
+            $pass = new PassHash();
+            list($method) = $pass->detect_hash_method($hash);
         }
 
         if(in_array($method, ['smd5', 'crypt', 'bcrypt', 'sha512'])) {
-            $ldap_pass = '{CRYPT}' . $pass;
+            $ldap_hash = '{CRYPT}' . $hash;
         } elseif(in_array($method, ['sha1'])) {
-            $ldap_pass = '{SHA}' . $pass;
+            $ldap_hash = '{SHA}' . $hash;
         } elseif(in_array($method, ['md5'])) {
-            $ldap_pass = '{MD5}' . $pass;
+            $ldap_hash = '{MD5}' . $hash;
         } elseif(in_array($method, ['ssha', 'lsmd5'])) {
-            $ldap_pass = $pass;
+            $ldap_hash = $hash;
         } else {
             return false;
         }
 
-        return $ldap_pass;
-    }
-
-    /**
-     * Detect the hash method of PassHash from encrypted password
-     *
-     * @param string $hash A crypted password
-     * @return string The hashing method
-     */
-    protected function _detectHashMethod($hash) {
-        $len = strlen($hash);
-        if(preg_match('/^\$1\$([^\$]{0,8})\$/', $hash)) {
-            return 'smd5';
-        } elseif(preg_match('/^\$apr1\$([^\$]{0,8})\$/', $hash)) {
-            return 'apr1';
-        } elseif(preg_match('/^\$P\$(.{31})$/', $hash)) {
-            return 'pmd5';
-        } elseif(preg_match('/^\$H\$(.{31})$/', $hash)) {
-            return 'pmd5';
-        } elseif(preg_match('/^pbkdf2_(\w+?)\$(\d+)\$(.{12})\$/', $hash)) {
-            return 'djangopbkdf2';
-        } elseif(preg_match('/^sha1\$(.{5})\$/', $hash)) {
-            return 'djangosha1';
-        } elseif(preg_match('/^md5\$(.{5})\$/', $hash)) {
-            return 'djangomd5';
-        } elseif(preg_match('/^\$2(a|y)\$(.{2})\$/', $hash)) {
-            return 'bcrypt';
-        } elseif(substr($hash, 0, 6) == '{SSHA}') {
-            return 'ssha';
-        } elseif(substr($hash, 0, 6) == '{SMD5}') {
-            return 'lsmd5';
-        } elseif(preg_match('/^:B:(.+?):.{32}$/', $hash)) {
-            return 'mediawiki';
-        } elseif(preg_match('/^\$6\$(.+?)\$/', $hash)) {
-            return 'sha512';
-        } elseif($len == 32) {
-            return 'md5';
-        } elseif($len == 40) {
-            return 'sha1';
-        } elseif($len == 16) {
-            return 'mysql';
-        } elseif($len == 41 && $hash[0] == '*') {
-            return 'my411';
-        } elseif($len == 34) {
-            return 'kmd5';
-        }
-        return 'crypt';
+        return $ldap_hash;
     }
 
 }

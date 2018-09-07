@@ -1,11 +1,20 @@
 <?php
 
+require_once (__DIR__ . '/auth_password.test.php');
+
 /**
  * Class PassHash_test
  *
  * most tests are in auth_password.test.php
  */
 class PassHash_test extends DokuWikiTest {
+
+    /**
+     * @return array as array(hash method, hash)
+     */
+    function hashes() {
+        return (new auth_password_test())->hashes();
+    }
 
     function test_hmac(){
         // known hashes taken from https://code.google.com/p/yii/issues/detail?id=1942
@@ -35,6 +44,21 @@ class PassHash_test extends DokuWikiTest {
         );
         foreach($knownpasses as $known) {
             $this->assertTrue($ph->verify_hash('P4zzW0rd!', $known));
+        }
+    }
+
+    /**
+     * @dataProvider hashes
+     * @param $method
+     * @param $hash
+     */
+    function test_detectHashMethod($method, $hash) {
+        $ph = new PassHash();
+        if (in_array($method, ['djangopbkdf2_sha256', 'djangopbkdf2_sha1'])) {
+            list($detectedMethod, $detectedSalt, $detectedMagic) = $ph->detect_hash_method($hash);
+            $this->assertEquals($method, $detectedMethod . '_' . $detectedMagic['algo']);
+        } else {
+            $this->assertEquals($method, $ph->detect_hash_method($hash)[0]);
         }
     }
 }
