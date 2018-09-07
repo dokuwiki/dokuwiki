@@ -13,4 +13,7 @@ Modifa resumo: @SUMMARY@
 Malnova versio: @OLDPAGE@
 Nova versio: @NEWPAGE@
 
-Por nuligi la paĝinformojn, ensalutu la vikion ĉe @DOKUWIKIURL@, poste iru al @SUBSCRIBE@ kaj malabonu la paĝajn kaj/aŭ nomspacajn ŝanĝojn.
+Por nuligi la paĝinformojn, ensalutu la vikion ĉe
+@DOKUWIKIURL@, poste iru al
+@SUBSCRIBE@
+kaj malabonu la paĝajn kaj/aŭ nomspacajn ŝanĝojn.

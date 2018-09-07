@@ -1,6 +1,7 @@
 Ola.
 
-Houbo mudanzas na páxina @PAGE@ do wiki @TITLE@. Estes son os trocos:
+Houbo mudanzas na páxina @PAGE@ do wiki @TITLE@.
+Estes son os trocos:
 
 --------------------------------------------------------
 @DIFF@
@@ -9,4 +10,7 @@ Houbo mudanzas na páxina @PAGE@ do wiki @TITLE@. Estes son os trocos:
 Revisión Antiga: @OLDPAGE@
 Revisión Nova: @NEWPAGE@
 
-Para cancelares as notificacións da páxina inicia sesión no wiki en @DOKUWIKIURL@ e logo visita @SUBSCRIBE@ e desubscríbete do seguimento dos trocos da páxina e/ou nome de espazo.
+Para cancelares as notificacións da páxina inicia sesión no wiki en
+@DOKUWIKIURL@ e logo visita
+@SUBSCRIBE@
+e desubscríbete do seguimento dos trocos da páxina e/ou nome de espazo.

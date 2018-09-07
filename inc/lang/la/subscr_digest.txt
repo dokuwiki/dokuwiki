@@ -1,6 +1,7 @@
 Aue!
 
-Pagina @PAGE@ in @TITLE@ uici mutata. Haec mutationes sunt:
+Pagina @PAGE@ in @TITLE@ uici mutata.
+Haec mutationes sunt:
 
 --------------------------------------------------------
 @DIFF@
@@ -9,4 +10,7 @@ Pagina @PAGE@ in @TITLE@ uici mutata. Haec mutationes sunt:
 Vetus recensio: @OLDPAGE@
 Noua recensio: @NEWPAGE@
 
-Ut paginae adnotationes deleas, in uicem ineas in @DOKUWIKIURL@, deinde uideas @SUBSCRIBE@ et paginarum generum optiones mutes.
+Ut paginae adnotationes deleas, in uicem ineas in
+@DOKUWIKIURL@, deinde uideas
+@SUBSCRIBE@
+et paginarum generum optiones mutes.

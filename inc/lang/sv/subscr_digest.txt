@@ -1,6 +1,7 @@
-Hej!
+Hej
 
-Sidan @PAGE@ med @TITLE@ har ändrats. Här är ändringarna:
+Sidan @PAGE@ med @TITLE@ har ändrats.
+Här är ändringarna:
 
 -----------------------------
 @DIFF@
@@ -9,4 +10,6 @@ Sidan @PAGE@ med @TITLE@ har ändrats. Här är ändringarna:
 Äldre versionen: @OLDPAGE@
 Ny version: @NEWPAGE@
 
-För att avbryta meddelanden om sidändringar logga in till wikin @DOKUWIKIURL@, besök sedan @SUBSCRIBE@ och avbeställ ändringar av sidor och/eller namespace.
+För att avbryta meddelanden om sidändringar logga in till wikin @DOKUWIKIURL@, besök sedan
+@SUBSCRIBE@
+och avbeställ ändringar av sidor och/eller namespace.

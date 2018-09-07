@@ -1,9 +1,14 @@
 Ciao!
 
-Le pagine nella categoria @PAGE@ del wiki @TITLE@ sono cambiate. Queste sono le pagine modificate:
+Le pagine nella categoria @PAGE@ del wiki @TITLE@ sono
+cambiate.
+Queste sono le pagine modificate:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Per non ricevere più queste notifiche collegati al wiki @DOKUWIKIURL@ e poi visita @SUBSCRIBE@ e rimuovi la sottoscrizione alle modifiche delle pagine e/o categorie.
+Per non ricevere più queste notifiche collegati al
+wiki @DOKUWIKIURL@ e poi visita @SUBSCRIBE@
+e rimuovi la sottoscrizione alle modifiche delle
+pagine e/o categorie.

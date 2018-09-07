@@ -13,4 +13,7 @@ Användare: @USER@
 Gammal version: @OLDPAGE@
 Ny version: @NEWPAGE@
 
-För att avsluta noteringar om sidor, logga in på wikin vid @DOKUWIKIURL@ gå sedan till @SUBSCRIBE@ och avsluta prenumerationen av sida och/eller namnrymd ändringar.
+För att avsluta noteringar om sidor, logga in på wikin vid
+@DOKUWIKIURL@ gå sedan till
+@SUBSCRIBE@
+och avsluta prenumerationen av sida och/eller namnrymd ändringar.
