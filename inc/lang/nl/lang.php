@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Andy <astolker@icloud.com>
  * @author Harriet Neitz <harrietneitz@gmail.com>
  * @author mark prins <mprins@users.sf.net>
  * @author François Kooman <fkooman.tuxed.net>
