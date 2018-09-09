@@ -87,13 +87,15 @@ function getVersionData(){
             $subDir = substr($headCommit, 0, 2);
             $fileName = substr($headCommit, 2);
             $gitCommitObject = DOKU_INC . ".git/objects/$subDir/$fileName";
-            $commit = zlib_decode(file_get_contents($gitCommitObject));
-            $committerLine = explode("\n", $commit)[3];
-            $committerData = explode(' ', $committerLine);
-            end($committerData);
-            $ts = prev($committerData);
-            if ($ts && $date = date('Y-m-d', $ts)) {
-                $version['date'] = $date;
+            if (file_exists($gitCommitObject) && method_exists(zlib_decode)) {
+                $commit = zlib_decode(file_get_contents($gitCommitObject));
+                $committerLine = explode("\n", $commit)[3];
+                $committerData = explode(' ', $committerLine);
+                end($committerData);
+                $ts = prev($committerData);
+                if ($ts && $date = date('Y-m-d', $ts)) {
+                    $version['date'] = $date;
+                }
             }
         }
     }else{
