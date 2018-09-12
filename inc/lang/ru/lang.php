@@ -3,9 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Vyacheslav Strenadko <vyacheslav.strenadko@gmail.com>
  * @author Wolterhon <hotmottot.1@gmail.com>
- * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Zhassulan <zyesmukanov@gmail.com>
  * @author Yuri Pimenov <up@ftpsearch.lv>
@@ -42,11 +42,11 @@
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '“';
-$lang['doublequoteclosing']    = '”';
-$lang['singlequoteopening']    = '‘';
-$lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '’';
+$lang['doublequoteopening']    = '«';
+$lang['doublequoteclosing']    = '»';
+$lang['singlequoteopening']    = '„';
+$lang['singlequoteclosing']    = '“';
+$lang['apostrophe']            = '“';
 $lang['btn_edit']              = 'Править страницу';
 $lang['btn_source']            = 'Показать исходный текст';
 $lang['btn_show']              = 'Показать страницу';
