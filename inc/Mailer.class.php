@@ -322,13 +322,36 @@ class Mailer {
     }
 
     /**
+     * Return a clean name which can be safely used in mail address
+     * fields. That means the name will be enclosed in '"' if it includes
+     * a '"' or a ','. Also a '"' will be escaped as '\"'.
+     *
+     * @param string $name the name to clean-up
+     * @see cleanAddress
+     */
+    public function getCleanName($name) {
+        $name = trim($name, ' \t"');
+        $name = str_replace('"', '\"', $name, $count);
+        if ($count > 0 || strpos($name, ',') !== false) {
+            $name = '"'.$name.'"';
+        }
+        return $name;
+    }
+
+    /**
      * Sets an email address header with correct encoding
      *
      * Unicode characters will be deaccented and encoded base64
      * for headers. Addresses may not contain Non-ASCII data!
      *
+     * If @$addresses is a string then it will be split into multiple
+     * addresses. Addresses must be separated by a comma. If the display
+     * name includes a comma then it MUST be properly enclosed by '"' to
+     * prevent spliting at the wrong point.
+     * 
      * Example:
      *   cc("föö <foo@bar.com>, me@somewhere.com","TBcc");
+     *   to("foo, Dr." <foo@bar.com>, me@somewhere.com");
      *
      * @param string|string[]  $addresses Multiple adresses separated by commas or as array
      * @return false|string  the prepared header (can contain multiple lines)
@@ -336,7 +359,11 @@ class Mailer {
     public function cleanAddress($addresses) {
         $headers = '';
         if(!is_array($addresses)){
-            $addresses = explode(',', $addresses);
+            preg_match_all('/\s*(?:("[^"]*"[^,]+),*)|([^,]+)\s*,*/', $addresses, $matches, PREG_SET_ORDER);
+            $addresses = array();
+            foreach ($matches as $match) {
+                array_push($addresses, $match[0]);
+            }
         }
 
         foreach($addresses as $part) {
