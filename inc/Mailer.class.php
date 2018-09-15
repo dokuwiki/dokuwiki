@@ -360,8 +360,8 @@ class Mailer {
         $headers = '';
         if(!is_array($addresses)){
             $count = preg_match_all('/\s*(?:("[^"]*"[^,]+),*)|([^,]+)\s*,*/', $addresses, $matches, PREG_SET_ORDER);
+            $addresses = array();
             if ($count !== false && is_array($matches)) {
-                $addresses = array();
                 foreach ($matches as $match) {
                     array_push($addresses, $match[0]);
                 }
