@@ -359,10 +359,12 @@ class Mailer {
     public function cleanAddress($addresses) {
         $headers = '';
         if(!is_array($addresses)){
-            preg_match_all('/\s*(?:("[^"]*"[^,]+),*)|([^,]+)\s*,*/', $addresses, $matches, PREG_SET_ORDER);
-            $addresses = array();
-            foreach ($matches as $match) {
-                array_push($addresses, $match[0]);
+            $count = preg_match_all('/\s*(?:("[^"]*"[^,]+),*)|([^,]+)\s*,*/', $addresses, $matches, PREG_SET_ORDER);
+            if ($count !== false && is_array($matches)) {
+                $addresses = array();
+                foreach ($matches as $match) {
+                    array_push($addresses, $match[0]);
+                }
             }
         }
 
