@@ -221,7 +221,7 @@ function getRecents($first,$num,$ns='',$flags=0){
     $media_lines_position = 0;
     $media_lines = array();
 
-    if ($flags & RECENTS_MEDIA_PAGES_MIXED) {
+    if (($flags & RECENTS_MEDIA_PAGES_MIXED) && file_exists($conf['media_changelog'])) {
         $media_lines = @file($conf['media_changelog']);
         $media_lines_position = count($media_lines)-1;
     }
