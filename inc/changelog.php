@@ -743,6 +743,15 @@ abstract class ChangeLog {
 
         return array(array_reverse($revs1), array_reverse($revs2));
     }
+    
+    /**
+     * Checks if the ID has old revisons
+     * @return boolean
+     */
+    public function hasRevisions() {
+        $file = $this->getChangelogFilename();
+        return file_exists($file);
+    }
 
     /**
      * Returns lines from changelog.

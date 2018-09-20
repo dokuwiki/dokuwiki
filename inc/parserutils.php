@@ -82,7 +82,13 @@ function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
         if(file_exists($file)){
             $ret = p_cached_output($file,'xhtml',$id);
         }elseif($excuse){
-            $ret = p_locale_xhtml('newpage');
+            //check if the page once existed
+            $changelog = new PageChangelog($id);
+            if($changelog->hasRevisions()) {
+                $ret = p_locale_xhtml('onceexisted');
+            } else {
+                $ret = p_locale_xhtml('newpage');
+            }
         }
     }
 
