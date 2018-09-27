@@ -82,7 +82,7 @@ function html_login($svg = false){
 function html_denied() {
     print p_locale_xhtml('denied');
 
-    if(empty($_SERVER['REMOTE_USER'])){
+    if(empty($_SERVER['REMOTE_USER']) && actionOK('login')){
         html_login();
     }
 }
