@@ -7,7 +7,8 @@
 div.error,
 div.info,
 div.success,
-div.notify {
+div.notify,
+div.security {
     color: #000;
     background-repeat: no-repeat;
     background-position: 8px 50%;
@@ -20,10 +21,19 @@ div.notify {
     border-radius: 5px;
 }
 
+div.error p,
+div.info p,
+div.success p,
+div.notify p,
+div.security p {
+    margin: 0 0 0 0;
+}
+
 [dir=rtl] div.error,
 [dir=rtl] div.info,
 [dir=rtl] div.success,
-[dir=rtl] div.notify {
+[dir=rtl] div.notify,
+[dir=rtl] div.security {
     background-position: 99% 50%;
     padding-left: .4em;
     padding-right: 32px;
@@ -52,6 +62,13 @@ div.notify {
     background-image: url(../images/notify.png);
     border-color: #eeb;
 }
+
+div.security {
+    background-color: #ffc;
+    background-image: url(../images/admin/acl.png);
+    border-color: #eeb;
+}
+
 
 /* modal windows */
 .JSpopup,
