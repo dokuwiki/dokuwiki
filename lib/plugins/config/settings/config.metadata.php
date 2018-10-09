@@ -189,6 +189,7 @@ $meta['subscribe_time'] = array('numeric');
 $meta['notify']         = array('email', '_multiple' => true);
 $meta['registernotify'] = array('email', '_multiple' => true);
 $meta['mailfrom']       = array('email', '_placeholders' => true);
+$meta['mailreturnpath']       = array('email', '_placeholders' => true);
 $meta['mailprefix']     = array('string');
 $meta['htmlmail']       = array('onoff');
 
@@ -218,6 +219,8 @@ $meta['broken_iua']  = array('onoff');
 $meta['xsendfile']   = array('multichoice','_choices' => array(0,1,2,3),'_caution' => 'warning');
 $meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => array('xhtml'),'_caution' => 'warning');
 $meta['readdircache'] = array('numeric');
+$meta['search_nslimit'] = array('numeric', '_min' => 0);
+$meta['search_fragment'] = array('multichoice','_choices' => array('exact', 'starts_with', 'ends_with', 'contains'),);
 
 $meta['_network']    = array('fieldset');
 $meta['dnslookups']  = array('onoff');
@@ -228,10 +231,4 @@ $meta['proxy____user'] = array('string');
 $meta['proxy____pass'] = array('password','_code' => 'base64');
 $meta['proxy____ssl']  = array('onoff');
 $meta['proxy____except'] = array('string');
-$meta['safemodehack'] = array('onoff');
-$meta['ftp____host']  = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
-$meta['ftp____port']  = array('numericopt');
-$meta['ftp____user']  = array('string');
-$meta['ftp____pass']  = array('password','_code' => 'base64');
-$meta['ftp____root']  = array('string');
 

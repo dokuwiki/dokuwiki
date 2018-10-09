@@ -3,13 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Seungheon Song <esketch@gmail.com>
  * @author jk Lee
- * @author dongnak@gmail.com
+ * @author dongnak <dongnak@gmail.com>
  * @author Song Younghwan <purluno@gmail.com>
  * @author Seung-Chul Yoo <dryoo@live.com>
- * @author erial2@gmail.com
+ * @author erial2 <erial2@gmail.com>
  * @author Myeongjin <aranet100@gmail.com>
- * @author Erial <erial2@gmail.com>
  * @author S.H. Lee <tuders@naver.com>
  */
 $lang['menu']                  = '환경 설정';
@@ -119,6 +119,7 @@ $lang['subscribe_time']        = '구독 목록과 요약이 보내질 경과 �
 $lang['notify']                = '항상 이 이메일 주소로 바뀜 알림을 보냄';
 $lang['registernotify']        = '항상 이 이메일 주소로 새로 등록한 사용자의 정보를 보냄';
 $lang['mailfrom']              = '자동으로 보내는 메일에 사용할 보내는 사람 이메일 주소';
+$lang['mailreturnpath']        = '배달 불가 안내를 위한 수신자 메일 주소';
 $lang['mailprefix']            = '자동으로 보내는 메일에 사용할 이메일 제목 접두어. 위키 제목을 사용하려면 비워 두세요';
 $lang['htmlmail']              = '보기에는 더 좋지만 크키가 조금 더 큰 HTML 태그가 포함된 이메일을 보내기. 일반 텍스트만으로 된 메일을 보내려면 비활성화하세요.';
 $lang['sitemap']               = 'Google 사이트맵 생성 날짜 빈도 (일). 비활성화하려면 0';
@@ -128,6 +129,9 @@ $lang['rss_content']           = 'XML 피드 항목에 보여주는 내용은 �
 $lang['rss_update']            = 'XML 피드 업데이트 간격 (초)';
 $lang['rss_show_summary']      = 'XML 피드의 제목에서 요악 보여주기';
 $lang['rss_media']             = '어떤 규격으로 XML 피드에 바뀜을 나열해야 합니까?';
+$lang['rss_media_o_both']      = '양방향';
+$lang['rss_media_o_pages']     = '쪽';
+$lang['rss_media_o_media']     = '미디어';
 $lang['updatecheck']           = '업데이트와 보안 경고를 검사할까요? 도쿠위키는 이 기능을 위해 update.dokuwiki.org에 연결이 필요합니다.';
 $lang['userewrite']            = '멋진 URL 사용';
 $lang['useslash']              = 'URL에서 이름공간 구분자로 슬래시 사용';
@@ -156,12 +160,6 @@ $lang['proxy____user']         = '프록시 사용자 이름';
 $lang['proxy____pass']         = '프록시 비밀번호';
 $lang['proxy____ssl']          = '프록시로 연결하는 데 SSL 사용';
 $lang['proxy____except']       = '프록시가 건너뛰어야 할 일치하는 URL의 정규 표현식.';
-$lang['safemodehack']          = 'safemode hack 활성화';
-$lang['ftp____host']           = 'safemode hack의 FTP 서버';
-$lang['ftp____port']           = 'safemode hack의 FTP 포트';
-$lang['ftp____user']           = 'safemode hack의 FTP 사용자 이름';
-$lang['ftp____pass']           = 'safemode hack의 FTP 비밀번호';
-$lang['ftp____root']           = 'safemode hack의 FTP 루트 디렉터리';
 $lang['license_o_']            = '선택하지 않음';
 $lang['typography_o_0']        = '없음';
 $lang['typography_o_1']        = '작은따옴표를 제외';

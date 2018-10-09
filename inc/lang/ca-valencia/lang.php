@@ -59,7 +59,6 @@ $lang['badlogin']              = 'Disculpe, pero el nom d\'usuari o la contrasen
 $lang['minoredit']             = 'Canvis menors';
 $lang['draftdate']             = 'Borrador gravat el';
 $lang['nosecedit']             = 'La pàgina ha canviat mentres tant, l\'informació de la secció no estava al dia, s\'ha carregat la pàgina sancera.';
-$lang['searchcreatepage']      = 'Si no ha trobat lo que buscava pot crear o editar una pàgina en el mateix nom que el text que ha buscat utilisant el botó corresponent.';
 $lang['regmissing']            = 'Disculpe, pero deu omplir tots els camps.';
 $lang['reguexists']            = 'Disculpe, pero ya existix un usuari en este nom.';
 $lang['regsuccess']            = 'S\'ha creat l\'usuari i se li ha enviat la contrasenya per correu electrònic.';

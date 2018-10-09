@@ -2,13 +2,12 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Dejan Levec <webphp@gmail.com>
  * @author Boštjan Seničar <senicar@gmail.com>
  * @author Gregor Skumavc (grega.skumavc@gmail.com)
  * @author Matej Urbančič (mateju@svn.gnome.org)
  * @author Matej Urbančič <mateju@svn.gnome.org>
- * @author matej <mateju@svn.gnome.org>
  */
 $lang['menu']                  = 'Upravljanje uporabnikov';
 $lang['noauth']                = '(overjanje istovetnosti uporabnikov ni na voljo)';

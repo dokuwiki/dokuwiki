@@ -1,10 +1,9 @@
 <?php
 
 /**
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- *
+ * @author Kenneth Schack Banner <kescba@gmail.com>
  * @author Jon Theil Nielsen <jontheil@gmail.com>
  * @author koeppe <koeppe@kazur.dk>
  * @author Jon Bendtsen <bendtsen@diku.dk>
@@ -14,7 +13,7 @@
  * @author Harith <haj@berlingske.dk>
  * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
- * @author rasmus@kinnerup.com
+ * @author rasmus <rasmus@kinnerup.com>
  * @author Mikael Lyngvig <mikael@lyngvig.org>
  * @author Soren Birk <soer9648@hotmail.com>
  * @author Jens Hyllegaard <jens.hyllegaard@gmail.com>
@@ -81,7 +80,6 @@ $lang['badpassconfirm']        = 'Adgangkode var desværre forkert';
 $lang['minoredit']             = 'Mindre ændringer';
 $lang['draftdate']             = 'Kladde automatisk gemt d.';
 $lang['nosecedit']             = 'Siden blev ændret i mellemtiden, sektions information var for gammel, hentede hele siden i stedet.';
-$lang['searchcreatepage']      = 'Hvis resultaterne ikke indeholder det du søgte efter kan du oprette et nyt dokument med samme navn som søgningen ved at trykke på knappen **\'\'[Opret dette dokument]\'\'**.';
 $lang['regmissing']            = 'Du skal udfylde alle felter.';
 $lang['reguexists']            = 'Dette brugernavn er allerede i brug.';
 $lang['regsuccess']            = 'Du er nu oprettet som bruger. Dit adgangskode bliver sendt til dig i en e-mail.';

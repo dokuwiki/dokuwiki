@@ -1,3 +1,3 @@
 ====== فهرس ======
 
-هذا فهرس لجميع الصفحات مرتبة حسب [[doku>namespaces|namespaces]].
+هذا فهرس لجميع الصفحات مرتبة حسب [[doku>ar:namespaces|namespaces]].

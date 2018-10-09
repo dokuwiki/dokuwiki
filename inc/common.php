@@ -287,17 +287,29 @@ function pageinfo() {
     }
 
     // draft
-    $draft = getCacheName($info['client'].$ID, '.draft');
-    if(file_exists($draft)) {
-        if(@filemtime($draft) < @filemtime(wikiFN($ID))) {
-            // remove stale draft
-            @unlink($draft);
-        } else {
-            $info['draft'] = $draft;
-        }
+    $draft = new \dokuwiki\Draft($ID, $info['client']);
+    if ($draft->isDraftAvailable()) {
+        $info['draft'] = $draft->getDraftFilename();
     }
 
     return $info;
+}
+
+/**
+ * Initialize and/or fill global $JSINFO with some basic info to be given to javascript
+ */
+function jsinfo() {
+    global $JSINFO, $ID, $INFO, $ACT;
+
+    if (!is_array($JSINFO)) {
+        $JSINFO = [];
+    }
+    //export minimal info to JS, plugins can add more
+    $JSINFO['id']                    = $ID;
+    $JSINFO['namespace']             = (string) $INFO['namespace'];
+    $JSINFO['ACT']                   = act_clean($ACT);
+    $JSINFO['useHeadingNavigation']  = (int) useHeading('navigation');
+    $JSINFO['useHeadingContent']     = (int) useHeading('content');
 }
 
 /**
@@ -382,9 +394,9 @@ function breadcrumbs() {
 
     //first visit?
     $crumbs = isset($_SESSION[DOKU_COOKIE]['bc']) ? $_SESSION[DOKU_COOKIE]['bc'] : array();
-    //we only save on show and existing wiki documents
+    //we only save on show and existing visible wiki documents
     $file = wikiFN($ID);
-    if($ACT != 'show' || !file_exists($file)) {
+    if($ACT != 'show' || isHiddenPage($ID) || !file_exists($file)) {
         $_SESSION[DOKU_COOKIE]['bc'] = $crumbs;
         return $crumbs;
     }
@@ -1870,6 +1882,7 @@ function license_img($type) {
 function is_mem_available($mem, $bytes = 1048576) {
     $limit = trim(ini_get('memory_limit'));
     if(empty($limit)) return true; // no limit set!
+    if($limit == -1) return true; // unlimited
 
     // parse limit to bytes
     $limit = php_to_byte($limit);

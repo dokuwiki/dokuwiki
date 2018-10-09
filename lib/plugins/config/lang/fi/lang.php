@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author otto@valjakko.net
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
@@ -148,12 +148,6 @@ $lang['proxy____user']         = 'Proxy käyttäjän nimi';
 $lang['proxy____pass']         = 'Proxy salasana';
 $lang['proxy____ssl']          = 'Käytä ssl-yhteyttä kytkeytyäksesi proxy-palvelimeen';
 $lang['proxy____except']       = 'Säännönmukainen lause, URLiin, jolle proxy ohitetaan.';
-$lang['safemodehack']          = 'Käytä safemode kiertoa';
-$lang['ftp____host']           = 'FTP-palvelin safemode kiertoa varten';
-$lang['ftp____port']           = 'FTP-portti safemode kiertoa varten';
-$lang['ftp____user']           = 'FTP-käyttäjä safemode kiertoa varten';
-$lang['ftp____pass']           = 'FTP-salasana safemode kiertoa varten';
-$lang['ftp____root']           = 'FTP-juurihakemisto safemode kiertoa varten';
 $lang['license_o_']            = 'ei mitään valittuna';
 $lang['typography_o_0']        = 'ei mitään';
 $lang['typography_o_1']        = 'ilman yksinkertaisia lainausmerkkejä';

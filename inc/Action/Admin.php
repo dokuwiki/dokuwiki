@@ -24,8 +24,8 @@ class Admin extends AbstractUserAction {
         }
     }
 
-    public function checkPermissions() {
-        parent::checkPermissions();
+    public function checkPreconditions() {
+        parent::checkPreconditions();
 
         global $INFO;
         if(!$INFO['ismanager']) {

@@ -6,9 +6,9 @@ class html_scedit_pattern_test extends DokuWikiTest {
     public function dataProviderForTestSecEditPattern() {
         return [
             [
-                '<!-- EDIT5 SECTION "Plugins" "plugins" [1406-] -->',
+                '<!-- EDIT{"target":"SECTION","name":"Plugins","hid":"plugins","codeblockOffset":0,"secid":5,"range":"1406-"} -->',
                 [
-                    'secid' => '5',
+                    'secid' => 5,
                     'target' => 'SECTION',
                     'name' => 'Plugins',
                     'hid' => 'plugins',
@@ -17,9 +17,9 @@ class html_scedit_pattern_test extends DokuWikiTest {
                 'basic section edit',
             ],
             [
-                '<!-- EDIT10 TABLE "" "table4" [11908-14014] -->',
+                '<!-- EDIT{"target":"TABLE","name":"","hid":"table4","codeblockOffset":0,"secid":10,"range":"11908-14014"} -->',
                 [
-                    'secid' => '10',
+                    'secid' => 10,
                     'target' => 'TABLE',
                     'name' => '',
                     'hid' => 'table4',
@@ -28,9 +28,9 @@ class html_scedit_pattern_test extends DokuWikiTest {
                 'table edit'
             ],
             [
-                '<!-- EDIT2 PLUGIN_DATA [27-432] -->',
+                '<!-- EDIT{"target":"PLUGIN_DATA","name":"","hid":"","codeblockOffset":0,"secid":2,"range":"27-432"} -->',
                 [
-                    'secid' => '2',
+                    'secid' => 2,
                     'target' => 'PLUGIN_DATA',
                     'name' => '',
                     'hid' => '',
@@ -50,9 +50,21 @@ class html_scedit_pattern_test extends DokuWikiTest {
      */
     public function testSecEditPattern($text, $expectedMatches, $msg) {
         preg_match(SEC_EDIT_PATTERN, $text, $matches);
+        $data = json_decode($matches[1], true);
         foreach ($expectedMatches as $key => $expected_value) {
-            $this->assertSame($expected_value, $matches[$key], $msg);
+            $this->assertSame($expected_value, $data[$key], $msg);
         }
     }
 
+    public function testSecEditHTMLInjection() {
+        $ins = p_get_instructions("====== Foo ======\n\n===== } --> <script> =====\n\n===== Bar =====\n");
+        $info = array();
+        $xhtml = p_render('xhtml', $ins, $info);
+
+        $this->assertNotNull($xhtml);
+
+        $xhtml_without_secedit = html_secedit($xhtml, false);
+
+        $this->assertFalse(strpos($xhtml_without_secedit, '<script>'), 'Plain <script> tag found in output - HTML/JS injection might be possible!');
+    }
 }

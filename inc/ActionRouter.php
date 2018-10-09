@@ -204,7 +204,7 @@ class ActionRouter {
             throw new ActionDisabledException();
         }
 
-        $action->checkPermissions();
+        $action->checkPreconditions();
 
         if(isset($INFO)) {
             $perm = $INFO['perm'];

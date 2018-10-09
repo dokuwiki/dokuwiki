@@ -1,9 +1,7 @@
 <?php
 
 /**
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
  *
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
  * @author Kalle Sommer Nielsen <kalle@php.net>
@@ -11,7 +9,7 @@
  * @author Harith <haj@berlingske.dk>
  * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
- * @author rasmus@kinnerup.com
+ * @author rasmus <rasmus@kinnerup.com>
  * @author Mikael Lyngvig <mikael@lyngvig.org>
  * @author soer9648 <soer9648@eucl.dk>
  */

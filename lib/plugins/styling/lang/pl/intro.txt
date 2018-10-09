@@ -1,0 +1,1 @@
+To narzędzie umożliwia zmianę niektórych ustawień stylów aktualnie wybranego szablonu. Wszystkie zmiany są przechowywane w lokalnym pliku konfiguracyjnym i są bezpieczne dla aktualizacji.

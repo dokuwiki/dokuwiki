@@ -2,7 +2,8 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Salif Mehmed <salif13mehmed@gmail.com>
  * @author Nikolay Vladimirov <nikolay@vladimiroff.com>
  * @author Viktor Usunov <usun0v@mail.bg>
  * @author Kiril <neohidra@gmail.com>
@@ -145,12 +146,6 @@ $lang['proxy____user']         = 'Потребител за проксито';
 $lang['proxy____pass']         = 'Парола за проксито';
 $lang['proxy____ssl']          = 'Ползване на SSL при свързване с проксито';
 $lang['proxy____except']       = 'Регулярен израз определящ за кои URL адреси да не се ползва прокси сървър.';
-$lang['safemodehack']          = 'Ползване на хака safemode';
-$lang['ftp____host']           = 'FTP сървър за хака safemode';
-$lang['ftp____port']           = 'FTP порт за хака safemode';
-$lang['ftp____user']           = 'FTP потребител за хака safemode';
-$lang['ftp____pass']           = 'FTP парола за хака safemode';
-$lang['ftp____root']           = 'FTP главна директория за хака safemode';
 $lang['license_o_']            = 'Нищо не е избрано';
 $lang['typography_o_0']        = 'без';
 $lang['typography_o_1']        = 'с изключение на единични кавички';

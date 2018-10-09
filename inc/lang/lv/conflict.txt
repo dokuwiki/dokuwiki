@@ -3,6 +3,3 @@
 Tevis labotajam dokumentam jau ir jaunāka versija. Tā gadās, ja cits lietotājs tavas labošanas laikā ir paguvis veikt savus labojumus.
 
 Rūpīgi pārlūko šeit parādītās atšķirības un tad izlem, kuru variantu paturēt. Ja nospiedīsi  ''Saglabāt'', saglabāsies tavs teksts. Ja nospiedīsi ''Atlikt'' paliks pašreizējais variants.
-
-
-

@@ -4,7 +4,6 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Felix Müller-Donath <j.felix@mueller-donath.de>
- * @author F. Mueller-Donath <j.felix@mueller-donath.de>
  */
 $lang['menu']                  = 'Einstellungen fürs Template-Design';
 $lang['js']['loader']          = 'Vorschau lädt...<br />Falls diese Nachricht nicht verschwindet, könnten deine Werte fehlerhaft sein';

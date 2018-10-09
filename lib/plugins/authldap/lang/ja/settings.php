@@ -3,9 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author lempel <riverlempel@hotmail.com>
+ * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  * @author Hideaki SAWADA <sawadakun@live.jp>
- * @author Hideaki SAWADA <chuno@live.jp>
  * @author PzF_X <jp_minecraft@yahoo.co.jp>
  * @author Ikuo Obataya <i.obataya@gmail.com>
  */

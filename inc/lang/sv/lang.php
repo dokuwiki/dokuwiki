@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Joaquim Homrighausen <joho@webbplatsen.se>
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
@@ -10,18 +11,13 @@
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
  * @author Tormod Johansson <tormod.otter.johansson@gmail.com>
- * @author emil@sys.nu
  * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
- * @author mikael@mallander.net
- * @author Smorkster Andersson smorkster@gmail.com
  * @author Henrik <henrik@idealis.se>
- * @author Tor Härnqvist <tor.harnqvist@gmail.com>
  * @author Hans Iwan Bratt <hibratt@gmail.com>
  * @author Mikael Bergström <krank23@gmail.com>
- * @author Tor Härnqvist <tor@harnqvist.se>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -82,7 +78,6 @@ $lang['badpassconfirm']        = 'Ledsen, lösenordet var felaktigt';
 $lang['minoredit']             = 'Små ändringar';
 $lang['draftdate']             = 'Utkast automatiskt sparat';
 $lang['nosecedit']             = 'Sidan ändrades medan du skrev, sektionsinformationen var inte uppdaterad. Laddar hela sidan istället.';
-$lang['searchcreatepage']      = 'Om du inte hittar det du letar efter, så kan du skapa eller redigera sidan med någon av knapparna.';
 $lang['regmissing']            = 'Du måste fylla i alla fälten.';
 $lang['reguexists']            = 'Det finns redan en användare med det användarnamnet.';
 $lang['regsuccess']            = 'Användarkontot skapat, lösenordet har skickats via e-post.';

@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Robert Bogenschneider <bogi@uea.org>
  */
 $lang['account_suffix']        = 'Via konto-aldonaĵo, ekz. <code>@mia.domajno.lando</code>';

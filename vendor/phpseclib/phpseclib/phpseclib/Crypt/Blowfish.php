@@ -294,7 +294,7 @@ class Blowfish extends Base
     function setKeyLength($length)
     {
         if ($length < 32) {
-            $this->key_length = 7;
+            $this->key_length = 4;
         } elseif ($length > 448) {
             $this->key_length = 56;
         } else {
@@ -408,16 +408,14 @@ class Blowfish extends Base
 
         for ($i = 0; $i < 16; $i+= 2) {
             $l^= $p[$i];
-            $r^= ($sb_0[$l >> 24 & 0xff]  +
-                  $sb_1[$l >> 16 & 0xff]  ^
+            $r^= $this->safe_intval(($this->safe_intval($sb_0[$l >> 24 & 0xff]  + $sb_1[$l >> 16 & 0xff]) ^
                   $sb_2[$l >>  8 & 0xff]) +
-                  $sb_3[$l       & 0xff];
+                  $sb_3[$l       & 0xff]);
 
             $r^= $p[$i + 1];
-            $l^= ($sb_0[$r >> 24 & 0xff]  +
-                  $sb_1[$r >> 16 & 0xff]  ^
+            $l^= $this->safe_intval(($this->safe_intval($sb_0[$r >> 24 & 0xff]  + $sb_1[$r >> 16 & 0xff]) ^
                   $sb_2[$r >>  8 & 0xff]) +
-                  $sb_3[$r       & 0xff];
+                  $sb_3[$r       & 0xff]);
         }
         return pack("N*", $r ^ $p[17], $l ^ $p[16]);
     }
@@ -443,16 +441,14 @@ class Blowfish extends Base
 
         for ($i = 17; $i > 2; $i-= 2) {
             $l^= $p[$i];
-            $r^= ($sb_0[$l >> 24 & 0xff]  +
-                  $sb_1[$l >> 16 & 0xff]  ^
+            $r^= $this->safe_intval(($this->safe_intval($sb_0[$l >> 24 & 0xff] + $sb_1[$l >> 16 & 0xff]) ^
                   $sb_2[$l >>  8 & 0xff]) +
-                  $sb_3[$l       & 0xff];
+                  $sb_3[$l       & 0xff]);
 
             $r^= $p[$i - 1];
-            $l^= ($sb_0[$r >> 24 & 0xff]  +
-                  $sb_1[$r >> 16 & 0xff]  ^
+            $l^= $this->safe_intval(($this->safe_intval($sb_0[$r >> 24 & 0xff] + $sb_1[$r >> 16 & 0xff]) ^
                   $sb_2[$r >>  8 & 0xff]) +
-                  $sb_3[$r       & 0xff];
+                  $sb_3[$r       & 0xff]);
         }
         return pack("N*", $r ^ $p[0], $l ^ $p[1]);
     }
@@ -477,6 +473,8 @@ class Blowfish extends Base
         if ($gen_hi_opt_code) {
             $code_hash = str_pad($code_hash, 32) . $this->_hashInlineCryptFunction($this->key);
         }
+
+        $safeint = $this->safe_intval_inline();
 
         if (!isset($lambda_functions[$code_hash])) {
             switch (true) {
@@ -513,16 +511,14 @@ class Blowfish extends Base
             for ($i = 0; $i < 16; $i+= 2) {
                 $encrypt_block.= '
                     $l^= ' . $p[$i] . ';
-                    $r^= ($sb_0[$l >> 24 & 0xff]  +
-                          $sb_1[$l >> 16 & 0xff]  ^
+                    $r^= ' . sprintf($safeint, '(' . sprintf($safeint, '$sb_0[$l >> 24 & 0xff] + $sb_1[$l >> 16 & 0xff]') . ' ^
                           $sb_2[$l >>  8 & 0xff]) +
-                          $sb_3[$l       & 0xff];
+                          $sb_3[$l       & 0xff]') . ';
 
                     $r^= ' . $p[$i + 1] . ';
-                    $l^= ($sb_0[$r >> 24 & 0xff]  +
-                          $sb_1[$r >> 16 & 0xff]  ^
+                    $l^= ' . sprintf($safeint, '(' . sprintf($safeint, '$sb_0[$r >> 24 & 0xff] + $sb_1[$r >> 16 & 0xff]') . '  ^
                           $sb_2[$r >>  8 & 0xff]) +
-                          $sb_3[$r       & 0xff];
+                          $sb_3[$r       & 0xff]') . ';
                 ';
             }
             $encrypt_block.= '
@@ -542,16 +538,14 @@ class Blowfish extends Base
             for ($i = 17; $i > 2; $i-= 2) {
                 $decrypt_block.= '
                     $l^= ' . $p[$i] . ';
-                    $r^= ($sb_0[$l >> 24 & 0xff]  +
-                          $sb_1[$l >> 16 & 0xff]  ^
+                    $r^= ' . sprintf($safeint, '(' . sprintf($safeint, '$sb_0[$l >> 24 & 0xff] + $sb_1[$l >> 16 & 0xff]') . ' ^
                           $sb_2[$l >>  8 & 0xff]) +
-                          $sb_3[$l       & 0xff];
+                          $sb_3[$l       & 0xff]') . ';
 
                     $r^= ' . $p[$i - 1] . ';
-                    $l^= ($sb_0[$r >> 24 & 0xff]  +
-                          $sb_1[$r >> 16 & 0xff]  ^
+                    $l^= ' . sprintf($safeint, '(' . sprintf($safeint, '$sb_0[$r >> 24 & 0xff] + $sb_1[$r >> 16 & 0xff]') . ' ^
                           $sb_2[$r >>  8 & 0xff]) +
-                          $sb_3[$r       & 0xff];
+                          $sb_3[$r       & 0xff]') . ';
                 ';
             }
 

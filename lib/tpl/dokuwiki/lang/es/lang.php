@@ -13,3 +13,4 @@ $lang['__site_width__']        = 'El ancho de la página completa (puede ser cua
 $lang['__sidebar_width__']     = 'El ancho de la barra lateral (puede ser cualquier unidad de longitud: %, px, em, ...)';
 $lang['__tablet_width__']      = 'Para tamaños de pantalla por debajo de esta anchura, el sitio cambia al modo tableta';
 $lang['__phone_width__']       = 'Para tamaños de pantalla por debajo de esta anchura, el sitio cambia al modo teléfono';
+$lang['__theme_color__']       = 'Color del tema de la aplicación web';

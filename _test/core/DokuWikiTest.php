@@ -1,12 +1,12 @@
 <?php
-
-
 if(!class_exists('PHPUnit_Framework_TestCase')) {
     /**
      * phpunit 5/6 compatibility
      */
     class PHPUnit_Framework_TestCase extends PHPUnit\Framework\TestCase {
         /**
+         * setExpectedException is deprecated in PHPUnit 6
+         *
          * @param string $class
          * @param null|string $message
          */
@@ -19,10 +19,10 @@ if(!class_exists('PHPUnit_Framework_TestCase')) {
     }
 }
 
-
-
 /**
  * Helper class to provide basic functionality for tests
+ *
+ * @uses PHPUnit_Framework_TestCase and thus PHPUnit 5.7+ is required
  */
 abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
@@ -50,15 +50,8 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
         if(!defined('TMP_DIR')) die('no temporary directory');
         if(!defined('DOKU_TMP_DATA')) die('no temporary data directory');
 
-        // remove any leftovers from the last run
-        if(is_dir(DOKU_TMP_DATA)){
-            // clear indexer data and cache
-            idx_get_indexer()->clear();
-            TestUtils::rdelete(DOKU_TMP_DATA);
-        }
-
-        // populate default dirs
-        TestUtils::rcopy(TMP_DIR, dirname(__FILE__).'/../data/');
+        self::setupDataDir();
+        self::setupConfDir();
     }
 
     /**
@@ -151,32 +144,53 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Compatibility for older PHPUnit versions
-     *
-     * @param string $originalClassName
-     * @return PHPUnit_Framework_MockObject_MockObject
+     * Reinitialize the data directory for this class run
      */
-    protected function createMock($originalClassName) {
-        if(is_callable(array('parent', 'createMock'))) {
-            return parent::createMock($originalClassName);
-        } else {
-            return $this->getMock($originalClassName);
+    public static function setupDataDir() {
+        // remove any leftovers from the last run
+        if(is_dir(DOKU_TMP_DATA)) {
+            // clear indexer data and cache
+            idx_get_indexer()->clear();
+            TestUtils::rdelete(DOKU_TMP_DATA);
         }
+
+        // populate default dirs
+        TestUtils::rcopy(TMP_DIR, __DIR__ . '/../data/');
     }
 
     /**
-     * Compatibility for older PHPUnit versions
-     *
-     * @param string $originalClassName
-     * @param array $methods
-     * @return PHPUnit_Framework_MockObject_MockObject
+     * Reinitialize the conf directory for this class run
      */
-    protected function createPartialMock($originalClassName, array $methods) {
-        if(is_callable(array('parent', 'createPartialMock'))) {
-            return parent::createPartialMock($originalClassName, $methods);
-        } else {
-            return $this->getMock($originalClassName, $methods);
+    public static function setupConfDir() {
+        $defaults = [
+            'acronyms.conf',
+            'dokuwiki.php',
+            'entities.conf',
+            'interwiki.conf',
+            'license.php',
+            'manifest.json',
+            'mediameta.php',
+            'mime.conf',
+            'plugins.php',
+            'plugins.required.php',
+            'scheme.conf',
+            'smileys.conf',
+            'wordblock.conf'
+        ];
+
+        // clear any leftovers
+        if(is_dir(DOKU_CONF)) {
+            TestUtils::rdelete(DOKU_CONF);
         }
+        mkdir(DOKU_CONF);
+
+        // copy defaults
+        foreach($defaults as $file) {
+            copy(DOKU_INC . '/conf/' . $file, DOKU_CONF . $file);
+        }
+
+        // copy test files
+        TestUtils::rcopy(TMP_DIR, __DIR__ . '/../conf');
     }
 
     /**
@@ -199,5 +213,25 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
         }
         $last = $now;
         return $now;
+    }
+
+    /**
+     * Allow for testing inaccessible methods (private or protected)
+     *
+     * This makes it easier to test protected methods without needing to create intermediate
+     * classes inheriting and changing the access.
+     *
+     * @link https://stackoverflow.com/a/8702347/172068
+     * @param object $obj Object in which to call the method
+     * @param string $func The method to call
+     * @param array $args The arguments to call the method with
+     * @return mixed
+     * @throws ReflectionException when the given obj/func does not exist
+     */
+    protected static function callInaccessibleMethod($obj, $func, array $args) {
+        $class = new \ReflectionClass($obj);
+        $method = $class->getMethod($func);
+        $method->setAccessible(true);
+        return $method->invokeArgs($obj, $args);
     }
 }

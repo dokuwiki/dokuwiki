@@ -19,6 +19,7 @@ class Locked extends AbstractAction {
     /** @inheritdoc */
     public function tplContent() {
         html_locked();
+        html_edit();
     }
 
 }

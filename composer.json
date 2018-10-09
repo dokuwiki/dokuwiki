@@ -13,7 +13,8 @@
         "geshi/geshi": "^1.0",
         "openpsa/universalfeedcreator": "^1.8",
         "aziraphale/email-address-validator": "^2",
-        "marcusschwarz/lesserphp": "^0.5.1"
+        "marcusschwarz/lesserphp": "^0.5.1",
+        "splitbrain/php-cli": "^1.1"
     },
     "config": {
         "platform": {

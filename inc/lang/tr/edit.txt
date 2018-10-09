@@ -1,2 +1,1 @@
 Sayfayı değiştirin ve ''Kaydete'' basın. Wiki sözdizimi için [[wiki:syntax]]'a bakınız. Lütfen sayfayı sadece eğer **geliştirebiliyorsanız** değiştirin. Eğer testler yapmak istiyorsanız, [[playground:playground|playground]] adresini kullanın.
-
