@@ -3,21 +3,18 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Luis Fernando Enciso <lfenciso@certto.com.br>
  * @author Alauton/Loug
- * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Lucien Raven <lucienraven@yahoo.com.br>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Flávio Veras <flaviove@gmail.com>
  * @author Jeferson Propheta <jeferson.propheta@gmail.com>
- * @author jair.henrique@gmail.com
+ * @author jair.henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luis@dantas.com>
- * @author Luis Dantas <luisdantas@gmail.com>
- * @author Jair Henrique <jair.henrique@gmail.com>
  * @author Sergio Motta <sergio@cisne.com.br>
  * @author Isaias Masiero Filho <masiero@masiero.org>
- * @author Frederico Guimarães <frederico@teia.bio.br>
  * @author Balaco Baco <balacobaco@imap.cc>
  * @author Victor Westmann <victor.westmann@gmail.com>
  * @author Leone Lisboa Magevski <leone1983@gmail.com>
@@ -87,7 +84,6 @@ $lang['badpassconfirm']        = 'Desculpe, mas a senha está errada ';
 $lang['minoredit']             = 'Alterações mínimas';
 $lang['draftdate']             = 'O rascunho foi salvo automaticamente em';
 $lang['nosecedit']             = 'A página foi modificada nesse intervalo de tempo. Como a informação da seção estava desatualizada, foi carregada a página inteira.';
-$lang['searchcreatepage']      = 'Se você não encontrou o que está procurando, pode criar ou editar a página com o nome que você especificou, usando o botão apropriado.';
 $lang['regmissing']            = 'Desculpe, mas você precisa preencher todos os campos.';
 $lang['reguexists']            = 'Desculpe, mas já existe um usuário com esse nome.';
 $lang['regsuccess']            = 'O usuário foi criado e a senha enviada para seu e-mail.';

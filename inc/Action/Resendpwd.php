@@ -20,8 +20,8 @@ class Resendpwd extends AbstractAclAction {
     }
 
     /** @inheritdoc */
-    public function checkPermissions() {
-        parent::checkPermissions();
+    public function checkPreconditions() {
+        parent::checkPreconditions();
 
         /** @var \DokuWiki_Auth_Plugin $auth */
         global $auth;
@@ -35,6 +35,11 @@ class Resendpwd extends AbstractAclAction {
         if($this->resendpwd()) {
             throw new ActionAbort('login');
         }
+    }
+
+    /** @inheritdoc */
+    public function tplContent() {
+        html_resendpwd();
     }
 
     /**

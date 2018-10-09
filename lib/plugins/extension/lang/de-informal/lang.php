@@ -4,8 +4,6 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Felix <j.felix@mueller-donath.de>
- * @author Felix Müller-Donath <j.felix@mueller-donath.de>
- * @author F. Mueller-Donath <j.felix@mueller-donath.de>
  */
 $lang['menu']                  = 'Erweiterungen verwalten';
 $lang['tab_plugins']           = 'Installierte Plugins';

@@ -9,77 +9,6 @@
 
 define('HTTP_NL',"\r\n");
 
-
-/**
- * Adds DokuWiki specific configs to the HTTP client
- *
- * @author Andreas Goetz <cpuidle@gmx.de>
- */
-class DokuHTTPClient extends HTTPClient {
-
-    /**
-     * Constructor.
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     */
-    function __construct(){
-        global $conf;
-
-        // call parent constructor
-        parent::__construct();
-
-        // set some values from the config
-        $this->proxy_host   = $conf['proxy']['host'];
-        $this->proxy_port   = $conf['proxy']['port'];
-        $this->proxy_user   = $conf['proxy']['user'];
-        $this->proxy_pass   = conf_decodeString($conf['proxy']['pass']);
-        $this->proxy_ssl    = $conf['proxy']['ssl'];
-        $this->proxy_except = $conf['proxy']['except'];
-
-        // allow enabling debugging via URL parameter (if debugging allowed)
-        if($conf['allowdebug']) {
-            if(
-                isset($_REQUEST['httpdebug']) ||
-                (
-                    isset($_SERVER['HTTP_REFERER']) &&
-                    strpos($_SERVER['HTTP_REFERER'], 'httpdebug') !== false
-                )
-            ) {
-                $this->debug = true;
-            }
-        }
-    }
-
-
-    /**
-     * Wraps an event around the parent function
-     *
-     * @triggers HTTPCLIENT_REQUEST_SEND
-     * @author   Andreas Gohr <andi@splitbrain.org>
-     */
-    /**
-     * @param string $url
-     * @param string|array $data the post data either as array or raw data
-     * @param string $method
-     * @return bool
-     */
-    function sendRequest($url,$data='',$method='GET'){
-        $httpdata = array('url'    => $url,
-                          'data'   => $data,
-                          'method' => $method);
-        $evt = new Doku_Event('HTTPCLIENT_REQUEST_SEND',$httpdata);
-        if($evt->advise_before()){
-            $url    = $httpdata['url'];
-            $data   = $httpdata['data'];
-            $method = $httpdata['method'];
-        }
-        $evt->advise_after();
-        unset($evt);
-        return parent::sendRequest($url,$data,$method);
-    }
-
-}
-
 /**
  * Class HTTPClientException
  */
@@ -505,22 +434,24 @@ class HTTPClient {
                 // read up to the content-length or max_bodysize
                 // for keep alive we need to read the whole message to clean up the socket for the next read
                 if(!$this->keep_alive && $this->max_bodysize && $this->max_bodysize < $this->resp_headers['content-length']){
-                    $length = $this->max_bodysize;
+                    $length = $this->max_bodysize+1;
                 }else{
                     $length = $this->resp_headers['content-length'];
                 }
 
                 $r_body = $this->_readData($socket, $length, 'response (content-length limited)', true);
             }elseif( !isset($this->resp_headers['transfer-encoding']) && $this->max_bodysize && !$this->keep_alive){
-                $r_body = $this->_readData($socket, $this->max_bodysize, 'response (content-length limited)', true);
-            }else{
+                $r_body = $this->_readData($socket, $this->max_bodysize+1, 'response (content-length limited)', true);
+            } elseif ((int)$this->status === 204) {
+                // request has no content
+            } else{
                 // read entire socket
                 while (!feof($socket)) {
                     $r_body .= $this->_readData($socket, 4096, 'response (unlimited)', true);
                 }
             }
 
-            // recheck body size, we might had to read the whole body, so we abort late or trim here
+            // recheck body size, we might have read max_bodysize+1 or even the whole body, so we abort late here
             if($this->max_bodysize){
                 if(strlen($r_body) > $this->max_bodysize){
                     if ($this->max_bodysize_abort) {
@@ -936,6 +867,77 @@ class HTTPClient {
     function _uniqueConnectionId($server, $port) {
         return "$server:$port";
     }
+}
+
+
+/**
+ * Adds DokuWiki specific configs to the HTTP client
+ *
+ * @author Andreas Goetz <cpuidle@gmx.de>
+ */
+class DokuHTTPClient extends HTTPClient {
+
+    /**
+     * Constructor.
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function __construct(){
+        global $conf;
+
+        // call parent constructor
+        parent::__construct();
+
+        // set some values from the config
+        $this->proxy_host   = $conf['proxy']['host'];
+        $this->proxy_port   = $conf['proxy']['port'];
+        $this->proxy_user   = $conf['proxy']['user'];
+        $this->proxy_pass   = conf_decodeString($conf['proxy']['pass']);
+        $this->proxy_ssl    = $conf['proxy']['ssl'];
+        $this->proxy_except = $conf['proxy']['except'];
+
+        // allow enabling debugging via URL parameter (if debugging allowed)
+        if($conf['allowdebug']) {
+            if(
+                isset($_REQUEST['httpdebug']) ||
+                (
+                    isset($_SERVER['HTTP_REFERER']) &&
+                    strpos($_SERVER['HTTP_REFERER'], 'httpdebug') !== false
+                )
+            ) {
+                $this->debug = true;
+            }
+        }
+    }
+
+
+    /**
+     * Wraps an event around the parent function
+     *
+     * @triggers HTTPCLIENT_REQUEST_SEND
+     * @author   Andreas Gohr <andi@splitbrain.org>
+     */
+    /**
+     * @param string $url
+     * @param string|array $data the post data either as array or raw data
+     * @param string $method
+     * @return bool
+     */
+    function sendRequest($url,$data='',$method='GET'){
+        $httpdata = array('url'    => $url,
+                          'data'   => $data,
+                          'method' => $method);
+        $evt = new Doku_Event('HTTPCLIENT_REQUEST_SEND',$httpdata);
+        if($evt->advise_before()){
+            $url    = $httpdata['url'];
+            $data   = $httpdata['data'];
+            $method = $httpdata['method'];
+        }
+        $evt->advise_after();
+        unset($evt);
+        return parent::sendRequest($url,$data,$method);
+    }
+
 }
 
 //Setup VIM: ex: et ts=4 :

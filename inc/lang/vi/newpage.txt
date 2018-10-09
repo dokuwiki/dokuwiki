@@ -1,3 +1,3 @@
 ====== Chưa có đề tài này ======
 
-Bạn kết nối vào một đề tài chưa có. Bạn có tạo đề tài này bằng cách bấm vào nút ''Tạo trang này'' ở góc trên, bên trái cửa sổ này. Nếu bạn không thấy nút này, thay vào đó là nút ''Xem mã nguồn'' chứng tỏ bạn không có quyền biên tập trang này, hãy đăng nhập thử xem bạn có quyền biên tập trang không. Nếu bạn nghĩ đây là một lỗi, hãy báo cho người quản trị.
+Bạn kết nối vào một đề tài chưa có. Bạn có tạo đề tài này bằng cách bấm vào nút **Tạo trang này** ở góc trên, bên trái cửa sổ này. Nếu bạn không thấy nút này, thay vào đó là nút **Xem mã nguồn** chứng tỏ bạn không có quyền biên tập trang này, hãy đăng nhập thử xem bạn có quyền biên tập trang không. Nếu bạn nghĩ đây là một lỗi, hãy báo cho người quản trị.

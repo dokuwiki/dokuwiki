@@ -44,12 +44,12 @@ abstract class AbstractAction {
     abstract public function minimumPermission();
 
     /**
-     * Check permissions are correct to run this action
+     * Check conditions are met to run this action
      *
      * @throws ActionException
      * @return void
      */
-    public function checkPermissions() {
+    public function checkPreconditions() {
     }
 
     /**

@@ -85,4 +85,8 @@ vendor/marcusschwarz/lesserphp/package.sh
 vendor/marcusschwarz/lesserphp/lessify*
 vendor/marcusschwarz/lesserphp/Makefile
 vendor/marcusschwarz/lesserphp/plessc
+vendor/splitbrain/php-cli/examples/*
+vendor/splitbrain/php-cli/screenshot*
+vendor/splitbrain/php-cli/generate-api.sh
+vendor/splitbrain/php-cli/apigen.neon
 

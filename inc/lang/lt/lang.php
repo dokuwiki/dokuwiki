@@ -61,7 +61,6 @@ $lang['badlogin']              = 'Nurodėte blogą vartotojo vardą arba slapta�
 $lang['minoredit']             = 'Nedidelis pataisymas';
 $lang['draftdate']             = 'Juodraštis automatiškai išsaugotas';
 $lang['nosecedit']             = 'Puslapis buvo kažkieno pataisytas, teksto dalies informacija tapo pasenusi, todėl pakrautas visas puslapis.';
-$lang['searchcreatepage']      = 'Jeigu neradote to, ko ieškojote, galite sukurti naują puslapį šiuo pavadinimu paspausdami "Redaguoti šį puslapį".';
 $lang['regmissing']            = 'Turite užpildyti visus laukus.';
 $lang['reguexists']            = 'Vartotojas su pasirinktu prisijungimo vardu jau egzistuoja.';
 $lang['regsuccess']            = 'Vartotojas sukurtas, slaptažodis išsiųstas el. paštu.';

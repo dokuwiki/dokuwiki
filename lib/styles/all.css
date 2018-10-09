@@ -54,6 +54,9 @@ div.no {
 .leftalign   { text-align: left;   }
 .centeralign { text-align: center; }
 .rightalign  { text-align: right;  }
+[dir=rtl] .leftalign   { text-align: left;   }
+[dir=rtl] .centeralign { text-align: center; }
+[dir=rtl] .rightalign  { text-align: right;  }
 
 /* underline */
 em.u {

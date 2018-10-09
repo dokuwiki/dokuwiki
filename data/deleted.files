@@ -2,6 +2,19 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# removed in 2018-04-22
+data/security.png
+data/security.xcf
+inc/EmailAddressValidator.php
+inc/blowfish.php
+inc/feedcreator.class.php
+inc/lessc.inc.php
+inc/plugin.php
+lib/images/loading.gif
+lib/tpl/dokuwiki/css/_search.css
+vendor/easybook/geshi
+vendor/phpseclib/phpseclib/composer.lock
+
 # remove in 2017-02-19
 inc/SimplePie.php
 inc/Tar.class.php

@@ -25,8 +25,8 @@ class Draft extends AbstractAction {
     }
 
     /** @inheritdoc */
-    public function checkPermissions() {
-        parent::checkPermissions();
+    public function checkPreconditions() {
+        parent::checkPreconditions();
         global $INFO;
         if(!file_exists($INFO['draft'])) throw new ActionException('edit');
     }

@@ -68,7 +68,6 @@ $lang['badpassconfirm']        = 'Pasahitz okerra';
 $lang['minoredit']             = 'Aldaketa Txikiak';
 $lang['draftdate']             = 'Zirriborroa automatikoki gorde da hemen:';
 $lang['nosecedit']             = 'Orria aldatua izan da bitartean, info atala zaharkituta geratu da, orri osoa kargatu da horren ordez.';
-$lang['searchcreatepage']      = 'Bilatzen zabiltzana aurkitu ez baduzu, zuk zeuk sortu dezakezu orri berri bat bilaketa ostean \'\'Sortu orri hau\'\' erabiliz.';
 $lang['regmissing']            = 'Barkatu, hutsune guztiak bete behar dituzu.';
 $lang['reguexists']            = 'Barkatu, izen bereko erabiltzailea existitzen da.';
 $lang['regsuccess']            = 'Erabiltzailea sortu da. Pasahitza mailez bidaliko zaizu.';

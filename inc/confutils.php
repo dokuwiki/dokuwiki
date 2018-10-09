@@ -256,6 +256,25 @@ function confToHash($file,$lower=false) {
 }
 
 /**
+ * Read a json config file into an array
+ *
+ * @param string $file
+ * @return array
+ */
+function jsonToArray($file)
+{
+    $json = file_get_contents($file);
+
+    $conf = json_decode($json, true);
+
+    if ($conf === null) {
+        return [];
+    }
+
+    return $conf;
+}
+
+/**
  * Retrieve the requested configuration information
  *
  * @author Chris Smith <chris@jalakai.co.uk>

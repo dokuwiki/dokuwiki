@@ -1,9 +1,7 @@
 <?php
 
 /**
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
  *
  * @author Jon Theil Nielsen <jontheil@gmail.com>
  * @author Jens Hyllegaard <jens.hyllegaard@gmail.com>

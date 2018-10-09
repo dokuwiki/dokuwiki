@@ -242,6 +242,17 @@ function tpl_metaheaders($alt = true) {
         );
     }
 
+    if (actionOK('manifest')) {
+        $head['link'][] = array('rel'=> 'manifest', 'href'=> DOKU_BASE.'lib/exe/manifest.php');
+    }
+
+    $styleUtil = new \dokuwiki\StyleUtils();
+    $styleIni = $styleUtil->cssStyleini($conf['template']);
+    $replacements = $styleIni['replacements'];
+    if (!empty($replacements['__theme_color__'])) {
+        $head['meta'][] = array('name' => 'theme-color', 'content' => $replacements['__theme_color__']);
+    }
+
     if($alt) {
         if(actionOK('rss')) {
             $head['link'][] = array(
@@ -289,7 +300,7 @@ function tpl_metaheaders($alt = true) {
     if(($ACT == 'show' || $ACT == 'export_xhtml') && !$REV) {
         if($INFO['exists']) {
             //delay indexing:
-            if((time() - $INFO['lastmod']) >= $conf['indexdelay']) {
+            if((time() - $INFO['lastmod']) >= $conf['indexdelay'] && !isHiddenPage($ID) ) {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'index,follow');
             } else {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,nofollow');
@@ -324,13 +335,12 @@ function tpl_metaheaders($alt = true) {
         'href'=> DOKU_BASE.'lib/exe/css.php?t='.rawurlencode($conf['template']).'&tseed='.$tseed
     );
 
-    // make $INFO and other vars available to JavaScripts
-    $json   = new JSON();
     $script = "var NS='".$INFO['namespace']."';";
     if($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
         $script .= "var SIG='".toolbar_signature()."';";
     }
-    $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
+    jsinfo();
+    $script .= 'var JSINFO = ' . json_encode($JSINFO).';';
     $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
 
     // load jquery
@@ -423,10 +433,13 @@ function tpl_link($url, $name, $more = '', $return = false) {
  *
  * @param string      $id   page id
  * @param string|null $name the name of the link
- * @return bool true
+ * @param bool        $return
+ * @return true|string
  */
-function tpl_pagelink($id, $name = null) {
-    print '<bdi>'.html_wikilink($id, $name).'</bdi>';
+function tpl_pagelink($id, $name = null, $return = false) {
+    $out = '<bdi>'.html_wikilink($id, $name).'</bdi>';
+    if($return) return $out;
+    print $out;
     return true;
 }
 
@@ -653,20 +666,46 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     global $lang;
     global $ACT;
     global $QUERY;
+    global $ID;
 
     // don't print the search form if search action has been disabled
     if(!actionOK('search')) return false;
 
-    print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search" method="get" role="search"><div class="no">';
-    print '<input type="hidden" name="do" value="search" />';
-    print '<input type="text" ';
-    if($ACT == 'search') print 'value="'.htmlspecialchars($QUERY).'" ';
-    print 'placeholder="'.$lang['btn_search'].'" ';
-    if(!$autocomplete) print 'autocomplete="off" ';
-    print 'id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" />';
-    print '<button type="submit" title="'.$lang['btn_search'].'">'.$lang['btn_search'].'</button>';
-    if($ajax) print '<div id="qsearch__out" class="ajax_qsearch JSpopup"></div>';
-    print '</div></form>';
+    $searchForm = new dokuwiki\Form\Form([
+        'action' => wl(),
+        'method' => 'get',
+        'role' => 'search',
+        'class' => 'search',
+        'id' => 'dw__search',
+    ], true);
+    $searchForm->addTagOpen('div')->addClass('no');
+    $searchForm->setHiddenField('do', 'search');
+    $searchForm->setHiddenField('id', $ID);
+    $searchForm->addTextInput('q')
+        ->addClass('edit')
+        ->attrs([
+            'title' => '[F]',
+            'accesskey' => 'f',
+            'placeholder' => $lang['btn_search'],
+            'autocomplete' => $autocomplete ? 'on' : 'off',
+        ])
+        ->id('qsearch__in')
+        ->val($ACT === 'search' ? $QUERY : '')
+        ->useInput(false)
+    ;
+    $searchForm->addButton('', $lang['btn_search'])->attrs([
+        'type' => 'submit',
+        'title' => $lang['btn_search'],
+    ]);
+    if ($ajax) {
+        $searchForm->addTagOpen('div')->id('qsearch__out')->addClass('ajax_qsearch JSpopup');
+        $searchForm->addTagClose('div');
+    }
+    $searchForm->addTagClose('div');
+    trigger_event('FORM_QUICKSEARCH_OUTPUT', $searchForm);
+
+    echo $searchForm->toHTML();
+
     return true;
 }
 
@@ -676,33 +715,39 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $sep Separator between entries
- * @return bool
+ * @param bool   $return return or print
+ * @return bool|string
  */
-function tpl_breadcrumbs($sep = '•') {
+function tpl_breadcrumbs($sep = null, $return = false) {
     global $lang;
     global $conf;
 
     //check if enabled
     if(!$conf['breadcrumbs']) return false;
 
+    //set default
+    if(is_null($sep)) $sep = '•';
+
+    $out='';
+
     $crumbs = breadcrumbs(); //setup crumb trace
 
     $crumbs_sep = ' <span class="bcsep">'.$sep.'</span> ';
 
     //render crumbs, highlight the last one
-    print '<span class="bchead">'.$lang['breadcrumb'].'</span>';
+    $out .= '<span class="bchead">'.$lang['breadcrumb'].'</span>';
     $last = count($crumbs);
     $i    = 0;
     foreach($crumbs as $id => $name) {
         $i++;
-        echo $crumbs_sep;
-        if($i == $last) print '<span class="curid">';
-        print '<bdi>';
-        tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="'.$id.'"');
-        print '</bdi>';
-        if($i == $last) print '</span>';
+        $out .= $crumbs_sep;
+        if($i == $last) $out .= '<span class="curid">';
+        $out .= '<bdi>' . tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="'.$id.'"', true) .  '</bdi>';
+        if($i == $last) $out .= '</span>';
     }
-    return true;
+    if($return) return $out;
+    print $out;
+    return $out ? true : false;
 }
 
 /**
@@ -718,9 +763,10 @@ function tpl_breadcrumbs($sep = '•') {
  * @todo   May behave strangely in RTL languages
  *
  * @param string $sep Separator between entries
- * @return bool
+ * @param bool   $return return or print
+ * @return bool|string
  */
-function tpl_youarehere($sep = ' » ') {
+function tpl_youarehere($sep = null, $return = false) {
     global $conf;
     global $ID;
     global $lang;
@@ -728,15 +774,18 @@ function tpl_youarehere($sep = ' » ') {
     // check if enabled
     if(!$conf['youarehere']) return false;
 
+    //set default
+    if(is_null($sep)) $sep = ' » ';
+
+    $out = '';
+
     $parts = explode(':', $ID);
     $count = count($parts);
 
-    echo '<span class="bchead">'.$lang['youarehere'].' </span>';
+    $out .= '<span class="bchead">'.$lang['youarehere'].' </span>';
 
     // always print the startpage
-    echo '<span class="home">';
-    tpl_pagelink(':'.$conf['start']);
-    echo '</span>';
+    $out .= '<span class="home">' . tpl_pagelink(':'.$conf['start'], null, true) . '</span>';
 
     // print intermediate namespace links
     $part = '';
@@ -746,18 +795,27 @@ function tpl_youarehere($sep = ' » ') {
         if($page == $conf['start']) continue; // Skip startpage
 
         // output
-        echo $sep;
-        tpl_pagelink($page);
+        $out .= $sep . tpl_pagelink($page, null, true);
     }
 
     // print current page, skipping start page, skipping for namespace index
     resolve_pageid('', $page, $exists);
-    if(isset($page) && $page == $part.$parts[$i]) return true;
+    if (isset($page) && $page == $part.$parts[$i]) {
+        if($return) return $out;
+        print $out;
+        return true;
+    }
     $page = $part.$parts[$i];
-    if($page == $conf['start']) return true;
-    echo $sep;
-    tpl_pagelink($page);
-    return true;
+    if($page == $conf['start']) {
+        if($return) return $out;
+        print $out;
+        return true;
+    }
+    $out .= $sep;
+    $out .= tpl_pagelink($page, null, true);
+    if($return) return $out;
+    print $out;
+    return $out ? true : false;
 }
 
 /**
@@ -1111,7 +1169,7 @@ function tpl_indexerWebBug() {
     global $ID;
 
     $p           = array();
-    $p['src']    = DOKU_BASE.'lib/exe/indexer.php?id='.rawurlencode($ID).
+    $p['src']    = DOKU_BASE.'lib/exe/taskrunner.php?id='.rawurlencode($ID).
         '&'.time();
     $p['width']  = 2; //no more 1x1 px image because we live in times of ad blockers...
     $p['height'] = 1;

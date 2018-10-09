@@ -1,0 +1,1 @@
+W tej zakładka znajdziesz wszystkie wtyczki i szablony przygotowane dla DokuWiki przez osoby trzecie. Należy pamiętać, że instalacja kodu zewnętrznego może stwarzać ** zagrożenie bezpieczeństwa **. Koniecznie przeczytaj o [[doku>security#plugin_security|bezpieczeństwie wtyczek]].

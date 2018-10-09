@@ -14,8 +14,8 @@ use dokuwiki\Action\Exception\ActionUserRequiredException;
 abstract class AbstractUserAction extends AbstractAclAction {
 
     /** @inheritdoc */
-    public function checkPermissions() {
-        parent::checkPermissions();
+    public function checkPreconditions() {
+        parent::checkPreconditions();
         global $INPUT;
         if(!$INPUT->server->str('REMOTE_USER')) {
             throw new ActionUserRequiredException();

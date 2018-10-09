@@ -20,8 +20,8 @@ class Logout extends AbstractUserAction {
     }
 
     /** @inheritdoc */
-    public function checkPermissions() {
-        parent::checkPermissions();
+    public function checkPreconditions() {
+        parent::checkPreconditions();
 
         /** @var \DokuWiki_Auth_Plugin $auth */
         global $auth;

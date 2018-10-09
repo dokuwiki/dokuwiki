@@ -276,13 +276,13 @@ class httpclient_http_test extends DokuWikiTest {
      */
     function test_chunked(){
         $http = new HTTPMockClient();
-        $data = $http->get('http://whoopdedo.org/cgi-bin/chunked/2550');
+        $data = $http->get($this->server.'/stream-bytes/5000?chunk_size=250');
         if($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
             return;
         }
         $this->assertFalse($data === false, $http->errorInfo());
-        $this->assertEquals(2550,strlen($data));
+        $this->assertEquals(5000,strlen($data));
     }
 
     /**

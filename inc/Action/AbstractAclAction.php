@@ -14,8 +14,8 @@ use dokuwiki\Action\Exception\ActionAclRequiredException;
 abstract class AbstractAclAction extends AbstractAction {
 
     /** @inheritdoc */
-    public function checkPermissions() {
-        parent::checkPermissions();
+    public function checkPreconditions() {
+        parent::checkPreconditions();
         global $conf;
         global $auth;
         if(!$conf['useacl']) throw new ActionAclRequiredException();

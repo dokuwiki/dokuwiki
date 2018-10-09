@@ -3,16 +3,16 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Martin Hořínek <hev@hev.cz>
+ * @author Jonáš Dyba <jonas.dyba@gmail.com>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
- * @author tomas@valenta.cz
+ * @author tomas <tomas@valenta.cz>
  * @author Marek Sacha <sachamar@fel.cvut.cz>
  * @author Lefty <lefty@multihost.cz>
  * @author Vojta Beran <xmamut@email.cz>
- * @author zbynek.krivka@seznam.cz
- * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  * @author Jakub A. Těšínský (j@kub.cz)
- * @author mkucera66@seznam.cz
+ * @author mkucera66 <mkucera66@seznam.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Turkislav <turkislav@blabla.com>
  * @author Daniel Slováček <danslo@danslo.cz>
@@ -142,6 +142,8 @@ $lang['rss_content']           = 'Co zobrazovat v položkách XML kanálu?';
 $lang['rss_update']            = 'Interval aktualizace XML kanálu (v sekundách)';
 $lang['rss_show_summary']      = 'XML kanál ukazuje souhrn v titulku';
 $lang['rss_media']             = 'Jaký typ změn má být uveden v kanálu XML';
+$lang['rss_media_o_pages']     = 'stránky';
+$lang['rss_media_o_media']     = 'média';
 $lang['updatecheck']           = 'Kontrolovat aktualizace a bezpečnostní varování? DokuWiki potřebuje pro tuto funkci přístup k update.dokuwiki.org';
 $lang['userewrite']            = 'Používat "pěkná" URL';
 $lang['useslash']              = 'Používat lomítko jako oddělovač jmenných prostorů v URL';
@@ -159,6 +161,10 @@ $lang['xsendfile']             = 'Používat X-Sendfile hlavničky pro download 
 $lang['renderer_xhtml']        = 'Vykreslovací jádro pro hlavní (xhtml) výstup wiki';
 $lang['renderer__core']        = '%s (jádro DokuWiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_nslimit']        = 'Omezit vyhledávání na současných X jmenných prostorů. Když je vyhledávání provedeno ze stránky zanořeného jmenného prostoru, bude jako filtr přidáno prvních X jmenných prostorů.';
+$lang['search_fragment_o_starts_with'] = 'začíná s';
+$lang['search_fragment_o_ends_with'] = 'končí s';
+$lang['search_fragment_o_contains'] = 'obsahuje';
 $lang['dnslookups']            = 'DokuWiki zjišťuje DNS jména pro vzdálené IP adresy uživatelů, kteří editují stránky. Pokud máte pomalý, nebo nefunkční DNS server, nebo nepotřebujete tuto funkci, tak tuto volbu zrušte.';
 $lang['jquerycdn']             = 'Mají být skripty jQuery a jQuery UI načítány z CDN?
 Vzniknou tím další HTTP dotazy, ale soubory se mohou načíst rychleji a uživatelé je už mohou mít ve vyrovnávací paměti.';
@@ -171,12 +177,6 @@ $lang['proxy____user']         = 'Proxy uživatelské jméno';
 $lang['proxy____pass']         = 'Proxy heslo';
 $lang['proxy____ssl']          = 'Použít SSL při připojení k proxy';
 $lang['proxy____except']       = 'Regulární výrazy pro URL, pro které bude přeskočena proxy.';
-$lang['safemodehack']          = 'Zapnout safemode hack';
-$lang['ftp____host']           = 'FTP server pro safemode hack';
-$lang['ftp____port']           = 'FTP port pro safemode hack';
-$lang['ftp____user']           = 'FTP uživatelské jméno pro safemode hack';
-$lang['ftp____pass']           = 'FTP heslo pro safemode hack';
-$lang['ftp____root']           = 'FTP kořenový adresář pro safemode hack';
 $lang['license_o_']            = 'Nic nevybráno';
 $lang['typography_o_0']        = 'vypnuto';
 $lang['typography_o_1']        = 'Pouze uvozovky';

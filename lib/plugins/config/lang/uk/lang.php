@@ -3,13 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Oleksii <alexey.furashev@gmail.com>
+ * @author Vitaly <vitaly.balashov@smuzzy.com.ua>
  * @author Oleksiy Voronin <ovoronin@gmail.com>
- * @author serg_stetsuk@ukr.net
- * @author okunia@gmail.com
+ * @author serg_stetsuk <serg_stetsuk@ukr.net>
  * @author Oleksandr Kunytsia <okunia@gmail.com>
- * @author Uko uko@uar.net
- * @author Ulrikhe Lukoie  <lukoie@gmail>.com
- * @author Kate Arzamastseva pshns@ukr.net
  * @author Maksim <nikropol@yandex.ru>
  * @author Nina Zolotova <nina-z@i.ua>
  * @author Roman <vsmemorial@gmail.com>
@@ -141,12 +139,6 @@ $lang['proxy____user']         = 'Користувач Proxy';
 $lang['proxy____pass']         = 'Пароль Proxy';
 $lang['proxy____ssl']          = 'Використовувати ssl для з\'єднання з Proxy';
 $lang['proxy____except']       = 'Регулярний вираз для веб-адреси, яку проксі-сервер пропустить.';
-$lang['safemodehack']          = 'Увімкнути хак safemode';
-$lang['ftp____host']           = 'FTP-сервер для хаку safemode';
-$lang['ftp____port']           = 'FTP-порт для хаку safemode';
-$lang['ftp____user']           = 'Користувач FTP для хаку safemode';
-$lang['ftp____pass']           = 'Пароль FTP для хаку safemode';
-$lang['ftp____root']           = 'Коренева папка FTP для хаку safemode';
 $lang['license_o_']            = 'не вибрано';
 $lang['typography_o_0']        = 'жодного';
 $lang['typography_o_1']        = 'Лише подвійні лапки';

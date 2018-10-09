@@ -1,7 +1,3 @@
 ====== Karoka ======
 
-Ireto ambany ireto ny valin'ny fikarohanao.
-
-@CREATEPAGEINFO@
-
-===== Vokatry ny fikarohana =====
+Ireto ambany ireto ny valin'ny fikarohanao.  @CREATEPAGEINFO@

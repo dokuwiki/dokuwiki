@@ -44,8 +44,9 @@ function css_out(){
     $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
     if(!$tpl) $tpl = $conf['template'];
 
-    // load styl.ini
-    $styleini = css_styleini($tpl, $INPUT->bool('preview'));
+    // load style.ini
+    $styleUtil = new \dokuwiki\StyleUtils();
+    $styleini = $styleUtil->cssStyleini($tpl, $INPUT->bool('preview'));
 
     // cache influencers
     $tplinc = tpl_incdir($tpl);
@@ -84,7 +85,7 @@ function css_out(){
         // Let plugins decide to either put more styles here or to remove some
         $media_files[$mediatype] = css_filewrapper($mediatype, $files);
         $CSSEvt = new Doku_Event('CSS_STYLES_INCLUDED', $media_files[$mediatype]);
-    
+
         // Make it preventable.
         if ( $CSSEvt->advise_before() ) {
             $cache_files = array_merge($cache_files, array_keys($media_files[$mediatype]['files']));
@@ -92,7 +93,7 @@ function css_out(){
             // unset if prevented. Nothing will be printed for this mediatype.
             unset($media_files[$mediatype]);
         }
-        
+
         // finish event.
         $CSSEvt->advise_after();
     }
@@ -108,7 +109,7 @@ function css_out(){
 
     // start output buffering
     ob_start();
-    
+
     // Fire CSS_STYLES_INCLUDED for one last time to let the
     // plugins decide whether to include the DW default styles.
     // This can be done by preventing the Default.
@@ -124,19 +125,19 @@ function css_out(){
         }
 
         $cssData = $media_files[$mediatype];
-        
+
         // Print the styles.
         print NL;
         if ( $cssData['encapsulate'] === true ) print $cssData['encapsulationPrefix'] . ' {';
         print '/* START '.$cssData['mediatype'].' styles */'.NL;
-    
+
         // load files
         foreach($cssData['files'] as $file => $location){
             $display = str_replace(fullpath(DOKU_INC), '', fullpath($file));
             print "\n/* XXXXXXXXX $display XXXXXXXXX */\n";
             print css_loadfile($file, $location);
         }
-        
+
         print NL;
         if ( $cssData['encapsulate'] === true ) print '} /* /@media ';
         else print '/*';
@@ -262,95 +263,6 @@ function css_applystyle($css, $replacements) {
     // now prepend the list of LESS variables as the very first thing
     $css = $less.$css;
     return $css;
-}
-
-/**
- * Load style ini contents
- *
- * Loads and merges style.ini files from template and config and prepares
- * the stylesheet modes
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param string $tpl the used template
- * @param bool   $preview load preview replacements
- * @return array with keys 'stylesheets' and 'replacements'
- */
-function css_styleini($tpl, $preview=false) {
-    global $conf;
-
-    $stylesheets = array(); // mode, file => base
-    $replacements = array(); // placeholder => value
-
-    // load template's style.ini
-    $incbase = tpl_incdir($tpl);
-    $webbase = tpl_basedir($tpl);
-    $ini = $incbase.'style.ini';
-    if(file_exists($ini)){
-        $data = parse_ini_file($ini, true);
-
-        // stylesheets
-        if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
-            $stylesheets[$mode][$incbase.$file] = $webbase;
-        }
-
-        // replacements
-        if(is_array($data['replacements'])){
-            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
-        }
-    }
-
-    // load configs's style.ini
-    $webbase = DOKU_BASE;
-    $ini = DOKU_CONF."tpl/$tpl/style.ini";
-    $incbase = dirname($ini).'/';
-    if(file_exists($ini)){
-        $data = parse_ini_file($ini, true);
-
-        // stylesheets
-        if(isset($data['stylesheets']) && is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
-            $stylesheets[$mode][$incbase.$file] = $webbase;
-        }
-
-        // replacements
-        if(isset($data['replacements']) && is_array($data['replacements'])){
-            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
-        }
-    }
-
-    // allow replacement overwrites in preview mode
-    if($preview) {
-        $webbase = DOKU_BASE;
-        $ini     = $conf['cachedir'].'/preview.ini';
-        if(file_exists($ini)) {
-            $data = parse_ini_file($ini, true);
-            // replacements
-            if(is_array($data['replacements'])) {
-                $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'], $webbase));
-            }
-        }
-    }
-
-    return array(
-        'stylesheets' => $stylesheets,
-        'replacements' => $replacements
-    );
-}
-
-/**
- * Amend paths used in replacement relative urls, refer FS#2879
- *
- * @author Chris Smith <chris@jalakai.co.uk>
- *
- * @param array $replacements with key-value pairs
- * @param string $location
- * @return array
- */
-function css_fixreplacementurls($replacements, $location) {
-    foreach($replacements as $key => $value) {
-        $replacements[$key] = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$value);
-    }
-    return $replacements;
 }
 
 /**

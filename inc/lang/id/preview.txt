@@ -1,4 +1,3 @@
 ====== Preview ======
 
-Ini adalah preview tentang bagimana tulisan Anda akan ditampilkan. Ingat: tulisan ini **belum disimpan**!
-
+Ini adalah preview tentang bagimana tulisan Anda akan ditampilkan. **Ingat: tulisan ini belum disimpan**!

@@ -3,13 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Simon <sbx@protonmail.ch>
  * @author Jaka Kranjc <lynxlupodian@hotmail.com>
  * @author Boštjan Seničar <senicar@gmail.com>
  * @author Dejan Levec <webphp@gmail.com>
  * @author Gregor Skumavc (grega.skumavc@gmail.com)
  * @author Matej Urbančič (mateju@svn.gnome.org)
  * @author Matej Urbančič <mateju@svn.gnome.org>
- * @author matej <mateju@svn.gnome.org>
  * @author Jernej Vidmar <jernej.vidmar@vidmarboehm.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -50,7 +50,7 @@ $lang['btn_draft']             = 'Uredi osnutek';
 $lang['btn_recover']           = 'Obnovi osnutek';
 $lang['btn_draftdel']          = 'Izbriši osnutek';
 $lang['btn_revert']            = 'Povrni';
-$lang['btn_register']          = 'Prijava';
+$lang['btn_register']          = 'Registracija';
 $lang['btn_apply']             = 'Uveljavi';
 $lang['btn_media']             = 'Urejevalnik predstavnih vsebin';
 $lang['btn_deleteuser']        = 'Odstrani račun';
@@ -71,7 +71,6 @@ $lang['badpassconfirm']        = 'Napaka! Geslo ni pravo.';
 $lang['minoredit']             = 'Manjše spremembe';
 $lang['draftdate']             = 'Samodejno shranjevanje osnutka je omogočeno';
 $lang['nosecedit']             = 'Stran je bila v vmesnem času spremenjena. Podatki strani so bili zastareli, zato se je celotna vsebina naložila znova.';
-$lang['searchcreatepage']      = "V kolikor rezultati niso skladni z zahtevami iskanja, je mogoče ustvariti  novo stran z nazivom vaše poizvedbe preko povezave ''Uredi stran''.";
 $lang['regmissing']            = 'Izpolniti je treba vsa polja.';
 $lang['reguexists']            = 'Uporabnik s tem imenom že obstaja.';
 $lang['regsuccess']            = 'Uporabniški račun je uspešno ustvarjen. Geslo je bilo poslano na naveden elektronski naslov.';
@@ -331,5 +330,5 @@ $lang['currentns']             = 'Trenutni imenski prostor';
 $lang['searchresult']          = 'Rezultati iskanja';
 $lang['plainhtml']             = 'Zapis HTML';
 $lang['wikimarkup']            = 'Oblikovni jezik Wiki';
-$lang['email_signature_text'] = 'Sporočilo je samodejno ustvarjeno na spletišču
+$lang['email_signature_text']  = 'Sporočilo je samodejno ustvarjeno na spletišču
 @DOKUWIKIURL@';

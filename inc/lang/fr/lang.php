@@ -3,6 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Damien Regad <dregad@mantisbt.org>
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
+ * @author Michael Bohn <mjbohn@gmail.com>
  * @author Sébastien Bauer <sebastien.bauer@advalvas.be>
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
@@ -12,7 +15,7 @@
  * @author Stéphane Chamberland <stephane.chamberland@ec.gc.ca>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
- * @author stephane.gully@gmail.com
+ * @author stephane.gully <stephane.gully@gmail.com>
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author olivier duperray <duperray.olivier@laposte.net>
@@ -21,8 +24,6 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz <samuel.dorsaz@novelion.net>
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
- * @author schplurtz@laposte.net
- * @author skimpax@gmail.com
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
@@ -33,7 +34,6 @@
  * @author ggallon <gwenael.gallon@mac.com>
  * @author David VANTYGHEM <david.vantyghem@free.fr>
  * @author Caillot <remicaillot5@gmail.com>
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author YoBoY <yoboy@ubuntu-fr.org>
  * @author james <j.mccann@celcat.com>
  * @author Pietroni <pietroni@informatique.univ-paris-diderot.fr>
@@ -100,45 +100,9 @@ $lang['badpassconfirm']        = 'Désolé, le mot de passe est erroné';
 $lang['minoredit']             = 'Modification mineure';
 $lang['draftdate']             = 'Brouillon enregistré automatiquement le';
 $lang['nosecedit']             = 'La page a changé entre temps, les informations de la section sont obsolètes ; la page complète a été chargée à la place.';
-$lang['searchcreatepage']      = 'Si vous n\'avez pas trouvé ce que vous cherchiez, vous pouvez créer ou modifier la page correspondant à votre requête en cliquant sur le bouton approprié.';
-$lang['regmissing']            = 'Désolé, vous devez remplir tous les champs.';
-$lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà pris.';
-$lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
-$lang['regsuccess2']           = 'L\'utilisateur a été créé.';
-$lang['regfail']               = 'L\'utilisateur n\'a pu être crée.';
-$lang['regmailfail']           = 'On dirait qu\'il y a eu une erreur lors de l\'envoi du mot de passe de messagerie. Veuillez contacter l\'administrateur !';
-$lang['regbadmail']            = 'L\'adresse de courriel semble incorrecte. Si vous pensez que c\'est une erreur, contactez l\'administrateur.';
-$lang['regbadpass']            = 'Les deux mots de passe fournis sont différents, veuillez recommencez.';
-$lang['regpwmail']             = 'Votre mot de passe DokuWiki';
-$lang['reghere']               = 'Vous n\'avez pas encore de compte ? Inscrivez-vous';
-$lang['profna']                = 'Ce wiki ne permet pas de modifier les profils';
-$lang['profnochange']          = 'Pas de modification, rien à faire.';
-$lang['profnoempty']           = 'Un nom ou une adresse de courriel vide n\'est pas permis.';
-$lang['profchanged']           = 'Mise à jour du profil réussie.';
-$lang['profnodelete']          = 'Ce wiki ne permet pas la suppression des utilisateurs';
-$lang['profdeleteuser']        = 'Supprimer le compte';
-$lang['profdeleted']           = 'Votre compte utilisateur a été supprimé de ce wiki';
-$lang['profconfdelete']        = 'Je veux supprimer mon compte sur ce wiki. </br> Cette action est irréversible.';
-$lang['profconfdeletemissing'] = 'La case de confirmation n\'est pas cochée';
-$lang['proffail']              = 'Le profil utilisateur n\'a pas été mis à jour.';
-$lang['pwdforget']             = 'Mot de passe oublié ? Obtenez-en un nouveau';
-$lang['resendna']              = 'Ce wiki ne permet pas le renvoi de mot de passe.';
-$lang['resendpwd']             = 'Définir un nouveau mot de passe pour';
-$lang['resendpwdmissing']      = 'Désolé, vous devez remplir tous les champs.';
-$lang['resendpwdnouser']       = 'Désolé, cet utilisateur n\'existe pas dans notre base de données.';
-$lang['resendpwdbadauth']      = 'Désolé, ce code d\'authentification est invalide. Assurez-vous d\'avoir utilisé le lien de confirmation intégral.';
-$lang['resendpwdconfirm']      = 'Un lien de confirmation vous a été expédié par courriel.';
-$lang['resendpwdsuccess']      = 'Votre nouveau mot de passe vous a été expédié par courriel.';
-$lang['license']               = 'Sauf mention contraire, le contenu de ce wiki est placé sous les termes de la licence suivante :';
-$lang['licenseok']             = 'Note : En modifiant cette page, vous acceptez que le contenu soit placé sous les termes de la licence suivante :';
-$lang['searchmedia']           = 'Chercher le nom de fichier :';
-$lang['searchmedia_in']        = 'Chercher dans %s';
-$lang['txt_upload']            = 'Sélectionnez un fichier à envoyer:';
-$lang['txt_filename']          = 'Envoyer en tant que (optionnel):';
-$lang['txt_overwrt']           = 'Écraser le fichier cible (s\'il existe)';
-$lang['maxuploadsize']         = 'Taille d\'envoi maximale : %s par fichier';
-$lang['lockedby']              = 'Actuellement bloqué par:';
-$lang['lockexpire']            = 'Le blocage expire à:';
+$lang['searchcreatepage']      = 'Si vous ne trouvez pas ce que vous cherchiez, vous pouvez créer ou éditer la page %s, nommée selon les termes de votre recherche.';
+$lang['search_fullresults']    = 'Résultats plein texte';
+$lang['js']['search_toggle_tools'] = '(dé)activer les outils de recherche';
 $lang['js']['willexpire']      = 'Votre blocage pour la modification de cette page expire dans une minute.\nPour éviter les conflits, utilisez le bouton « Aperçu » pour réinitialiser le minuteur.';
 $lang['js']['notsavedyet']     = 'Les modifications non enregistrées seront perdues. Voulez-vous vraiment continuer ?';
 $lang['js']['searchmedia']     = 'Chercher des fichiers';
@@ -180,6 +144,56 @@ $lang['js']['media_done_btn']  = 'Terminé';
 $lang['js']['media_drop']      = 'Déposez des fichiers ici pour les envoyer';
 $lang['js']['media_cancel']    = 'supprimer';
 $lang['js']['media_overwrt']   = 'Écraser les fichiers existants';
+$lang['search_exact_match']    = 'Correspondance exacte';
+$lang['search_starts_with']    = 'Commence par';
+$lang['search_ends_with']      = 'Se termine par';
+$lang['search_contains']       = 'Contient';
+$lang['search_custom_match']   = 'personnalisé';
+$lang['search_any_ns']         = 'toute catégorie';
+$lang['search_any_time']       = 'toute date';
+$lang['search_past_7_days']    = 'la semaine dernière';
+$lang['search_past_month']     = 'le mois dernier';
+$lang['search_past_year']      = 'l\'année dernière';
+$lang['search_sort_by_hits']   = 'Trier par nombre de résultats';
+$lang['search_sort_by_mtime']  = 'Trier par date de modification';
+$lang['regmissing']            = 'Désolé, vous devez remplir tous les champs.';
+$lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà pris.';
+$lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
+$lang['regsuccess2']           = 'L\'utilisateur a été créé.';
+$lang['regfail']               = 'L\'utilisateur n\'a pu être crée.';
+$lang['regmailfail']           = 'On dirait qu\'il y a eu une erreur lors de l\'envoi du mot de passe de messagerie. Veuillez contacter l\'administrateur !';
+$lang['regbadmail']            = 'L\'adresse de courriel semble incorrecte. Si vous pensez que c\'est une erreur, contactez l\'administrateur.';
+$lang['regbadpass']            = 'Les deux mots de passe fournis sont différents, veuillez recommencez.';
+$lang['regpwmail']             = 'Votre mot de passe DokuWiki';
+$lang['reghere']               = 'Vous n\'avez pas encore de compte ? Inscrivez-vous';
+$lang['profna']                = 'Ce wiki ne permet pas de modifier les profils';
+$lang['profnochange']          = 'Pas de modification, rien à faire.';
+$lang['profnoempty']           = 'Un nom ou une adresse de courriel vide n\'est pas permis.';
+$lang['profchanged']           = 'Mise à jour du profil réussie.';
+$lang['profnodelete']          = 'Ce wiki ne permet pas la suppression des utilisateurs';
+$lang['profdeleteuser']        = 'Supprimer le compte';
+$lang['profdeleted']           = 'Votre compte utilisateur a été supprimé de ce wiki';
+$lang['profconfdelete']        = 'Je veux supprimer mon compte sur ce wiki. </br> Cette action est irréversible.';
+$lang['profconfdeletemissing'] = 'La case de confirmation n\'est pas cochée';
+$lang['proffail']              = 'Le profil utilisateur n\'a pas été mis à jour.';
+$lang['pwdforget']             = 'Mot de passe oublié ? Obtenez-en un nouveau';
+$lang['resendna']              = 'Ce wiki ne permet pas le renvoi de mot de passe.';
+$lang['resendpwd']             = 'Définir un nouveau mot de passe pour';
+$lang['resendpwdmissing']      = 'Désolé, vous devez remplir tous les champs.';
+$lang['resendpwdnouser']       = 'Désolé, cet utilisateur n\'existe pas dans notre base de données.';
+$lang['resendpwdbadauth']      = 'Désolé, ce code d\'authentification est invalide. Assurez-vous d\'avoir utilisé le lien de confirmation intégral.';
+$lang['resendpwdconfirm']      = 'Un lien de confirmation vous a été expédié par courriel.';
+$lang['resendpwdsuccess']      = 'Votre nouveau mot de passe vous a été expédié par courriel.';
+$lang['license']               = 'Sauf mention contraire, le contenu de ce wiki est placé sous les termes de la licence suivante :';
+$lang['licenseok']             = 'Note : En modifiant cette page, vous acceptez que le contenu soit placé sous les termes de la licence suivante :';
+$lang['searchmedia']           = 'Chercher le nom de fichier :';
+$lang['searchmedia_in']        = 'Chercher dans %s';
+$lang['txt_upload']            = 'Sélectionnez un fichier à envoyer:';
+$lang['txt_filename']          = 'Envoyer en tant que (optionnel):';
+$lang['txt_overwrt']           = 'Écraser le fichier cible (s\'il existe)';
+$lang['maxuploadsize']         = 'Taille d\'envoi maximale : %s par fichier';
+$lang['lockedby']              = 'Actuellement bloqué par:';
+$lang['lockexpire']            = 'Le blocage expire à:';
 $lang['rssfailed']             = 'Une erreur s\'est produite en récupérant ce flux : ';
 $lang['nothingfound']          = 'Pas de réponse.';
 $lang['mediaselect']           = 'Sélection de fichiers';

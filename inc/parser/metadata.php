@@ -47,6 +47,9 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     /** @var string keeps the first image reference */
     protected $firstimage = '';
 
+    /** @var bool whether or not data is being captured for the abstract, public to be accessible by plugins */
+    public $capturing = true;
+
     /** @var bool determines if enough data for the abstract was collected, yet */
     public $capture = true;
 
@@ -123,7 +126,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param $text
      */
     function cdata($text) {
-        if(!$this->capture) return;
+        if(!$this->capture || !$this->capturing) return;
 
         $this->doc .= $text;
 
@@ -211,23 +214,29 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      */
     function footnote_open() {
         if($this->capture) {
-            // move current content to store and record footnote
+            // move current content to store
+            // this is required to ensure safe behaviour of plugins accessed within footnotes
             $this->store = $this->doc;
             $this->doc   = '';
+
+            // disable capturing
+            $this->capturing = false;
         }
     }
 
     /**
      * Callback for footnote end syntax
      *
-     * All rendered content is moved to the $footnotes array and the old
-     * content is restored from $store again
+     * All content rendered whilst within footnote syntax mode is discarded,
+     * the previously rendered content is restored and capturing is re-enabled.
      *
      * @author Andreas Gohr
      */
     function footnote_close() {
         if($this->capture) {
-            // restore old content
+            // re-enable capturing
+            $this->capturing = true;
+            // restore previously rendered content
             $this->doc   = $this->store;
             $this->store = '';
         }
