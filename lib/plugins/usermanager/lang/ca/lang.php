@@ -3,11 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Adolfo Jayme Barrientos <fito@libreoffice.org>
  * @author Carles Bellver <carles.bellver@gmail.com>
- * @author carles.bellver@gmail.com
- * @author carles.bellver@cent.uji.es
- * @author Carles Bellver <carles.bellver@cent.uji.es>
- * @author daniel@6temes.cat
+ * @author carles.bellver <carles.bellver@cent.uji.es>
+ * @author daniel <daniel@6temes.cat>
  */
 $lang['menu']                  = 'Gestió d\'usuaris';
 $lang['noauth']                = '(l\'autenticació d\'usuaris no està disponible)';
@@ -30,6 +29,11 @@ $lang['search']                = 'Cerca';
 $lang['search_prompt']         = 'Fes la cerca';
 $lang['clear']                 = 'Reinicia el filtre de cerca';
 $lang['filter']                = 'Filtre';
+$lang['export_all']            = 'Exporta tots els usuaris (CSV)';
+$lang['export_filtered']       = 'Exporta la llista filtrada d’usuaris (CSV)';
+$lang['import']                = 'Importa usuaris nous';
+$lang['line']                  = 'Línia nro.';
+$lang['error']                 = 'Missatge d’error';
 $lang['summary']               = 'Visualització d\'usuaris %1$d-%2$d de %3$d trobats. %4$d usuaris en total.';
 $lang['nonefound']             = 'No s\'han trobat usuaris. %d usuaris en total.';
 $lang['delete_ok']             = 'S\'han suprimit %d usuaris';
@@ -50,3 +54,9 @@ $lang['add_ok']                = 'L\'usuari s\'ha afegit amb èxit';
 $lang['add_fail']              = 'No s\'ha pogut afegir l\'usuari';
 $lang['notify_ok']             = 'S\'ha enviat el correu de notificació';
 $lang['notify_fail']           = 'No s\'ha pogut enviar el correu de notificació';
+$lang['import_userlistcsv']    = 'Fitxer de llista d’usuaris (CSV):';
+$lang['import_error_badname']  = 'Nom incorrecte';
+$lang['import_error_badmail']  = 'Adreça electrònica incorrecta';
+$lang['import_error_create']   = 'No es pot crear l’usuari';
+$lang['addUser_error_pass_not_identical'] = 'Les contrasenyes introduïdes no són idèntiques.';
+$lang['addUser_error_name_missing'] = 'Introduïu un nom per a l’usuari nou.';
