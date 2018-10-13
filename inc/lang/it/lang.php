@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Riccardo <riccardo.furlato@gmail.com>
  * @author Stefano <stefano.stefano@gmail.com>
  * @author damiano <damiano@spagnuolo.eu>
  * @author Torpedo <dgtorpedo@gmail.com>
@@ -22,7 +23,6 @@
  * @author Francesco <francesco.cavalli@hotmail.com>
  * @author Fabio <fabioslurp@yahoo.it>
  * @author Maurizio <mcannavo@katamail.com>
- * @author Riccardo <riccardofila@gmail.com>
  * @author Paolo <paolopoz12@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
