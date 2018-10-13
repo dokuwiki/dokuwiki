@@ -20,7 +20,7 @@
  * @author sam01 <m.sajad079@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
-$lang['direction']             = 'ltr';
+$lang['direction']             = 'rtl';
 $lang['doublequoteopening']    = '«';
 $lang['doublequoteclosing']    = '»';
 $lang['singlequoteopening']    = '‘';
