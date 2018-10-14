@@ -5,6 +5,7 @@
  *
  * @author Dmytro Marchenko <dmytro.marchenko1989@gmail.com>
  */
+$lang['menu']                  = 'Менеджер розширень';
 $lang['tab_plugins']           = 'Встановлені плагіни';
 $lang['tab_templates']         = 'Встановлені шаблони';
 $lang['tab_search']            = 'Пошук та встановлення';
