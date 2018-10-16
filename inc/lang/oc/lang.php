@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Quenti <mozilla@quentino.fr>
+ * @author Quenti <pages_quentin@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['btn_edit']              = 'Modificar aquesta pagina';
@@ -20,6 +20,7 @@ $lang['btn_revs']              = 'Ancianas versions';
 $lang['btn_recent']            = 'Cambiaments recents';
 $lang['btn_upload']            = 'Actualizar';
 $lang['btn_cancel']            = 'Anullar';
+$lang['btn_index']             = 'Plan del site';
 $lang['btn_secedit']           = 'Modificar';
 $lang['btn_login']             = 'Connexion';
 $lang['btn_logout']            = 'Desconnexion';
@@ -30,22 +31,33 @@ $lang['btn_back']              = 'Tornar';
 $lang['btn_subscribe']         = 'Gerir los abonaments';
 $lang['btn_profile']           = 'Actualizar lo perfil';
 $lang['btn_reset']             = 'Reïnicializar';
+$lang['btn_resendpwd']         = 'Definir un novèl senhal';
 $lang['btn_revert']            = 'Restablir';
 $lang['btn_register']          = 'Se marcar';
 $lang['btn_apply']             = 'Aplicar';
 $lang['btn_media']             = 'Gestion dels mèdias';
 $lang['btn_deleteuser']        = 'Tirar mon compte';
 $lang['btn_img_backto']        = 'Tornar a %s';
+$lang['btn_mediaManager']      = 'Veire dins lo gestionari de mèdias';
 $lang['loggedinas']            = 'Session a';
 $lang['user']                  = 'Nom d\'utilizaire';
 $lang['pass']                  = 'Senhal';
 $lang['newpass']               = 'Noù senhal';
+$lang['oldpass']               = 'Confirmatz lo senhal actual';
 $lang['passchk']               = 'tornamai';
+$lang['remember']              = 'Se remembrar de ieu';
+$lang['fullname']              = 'Nom vertadièr';
+$lang['email']                 = 'Corrièl';
+$lang['profile']               = 'Perfil d\'utilizaire';
+$lang['badlogin']              = 'Lo nom d\'utilizaire o lo senhal es incorrècte.';
+$lang['badpassconfirm']        = 'Lo senhal es incorrècte';
+$lang['minoredit']             = 'Cambiaments minors';
 $lang['js']['searchmedia']     = 'Cercar de fichièrs';
 $lang['js']['hidedetails']     = 'Rescondre los detalhs';
 $lang['js']['mediatitle']      = 'Paramètres del ligam';
 $lang['js']['mediadisplay']    = 'Tipe de ligam';
 $lang['js']['mediasize']       = 'Talha de l\'imatge';
+$lang['js']['mediatarget']     = 'Cibla del ligam';
 $lang['js']['mediaclose']      = 'Tampar';
 $lang['js']['mediainsert']     = 'Inserir';
 $lang['js']['mediadisplayimg'] = 'Mostrar l\'imatge.';
@@ -54,10 +66,17 @@ $lang['js']['mediasmall']      = 'Version pichona';
 $lang['js']['mediamedium']     = 'Version mejana';
 $lang['js']['medialarge']      = 'Version bèla';
 $lang['js']['mediaoriginal']   = 'Version originala';
+$lang['js']['medialnk']        = 'Ligam cap a la pagina de detalhs';
+$lang['js']['mediadirect']     = 'Ligam dirècte a l\'originala';
 $lang['js']['medianolnk']      = 'Cap de ligam';
+$lang['js']['medianolink']     = 'Ligar pas l\'imatge';
+$lang['js']['linkto']          = 'Ligam cap a :';
 $lang['js']['media_diff']      = 'Veire las diferéncias :';
+$lang['js']['media_select']    = 'Seleccionar de fichièrs...';
+$lang['js']['media_upload_btn'] = 'Enviar';
 $lang['js']['media_done_btn']  = 'Fach';
 $lang['js']['media_cancel']    = 'levar';
+$lang['js']['media_overwrt']   = 'Remplaçar los fichièrs existents';
 $lang['search_starts_with']    = 'Comença amb';
 $lang['search_ends_with']      = 'Termina amb';
 $lang['search_contains']       = 'Conten';
@@ -65,3 +84,5 @@ $lang['search_past_7_days']    = 'La setmana passada';
 $lang['search_past_month']     = 'Lo mes passat';
 $lang['search_past_year']      = 'L\'an passat';
 $lang['profdeleteuser']        = 'Suprimir lo compte';
+$lang['mediaselect']           = 'Fichièrs mèdias';
+$lang['uploadsucc']            = 'Corrèctament enviat';
