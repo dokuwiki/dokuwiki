@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Damien Regad <dregad@mantisbt.org>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Damien Regad <dregad@mantisbt.org>
  * @author Yves Grandvalet <Yves.Grandvalet@laposte.net>
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
  * @author Nicolas Friedli <nicolas@theologique.ch>
@@ -43,11 +43,11 @@ $lang['bugs_features']         = 'Bogues';
 $lang['tags']                  = 'Étiquettes :';
 $lang['author_hint']           = 'Chercher les extensions de cet auteur';
 $lang['installed']             = 'Installés :';
-$lang['downloadurl']           = 'URL de téléchargement :';
+$lang['downloadurl']           = 'Téléchargement :';
 $lang['repository']            = 'Dépôt : ';
 $lang['unknown']               = '<em>inconnu</em>';
 $lang['installed_version']     = 'Version installée :';
-$lang['install_date']          = 'Votre dernière mise à jour :';
+$lang['install_date']          = 'Dernière mise à jour :';
 $lang['available_version']     = 'Version disponible :';
 $lang['compatible']            = 'Compatible avec :';
 $lang['depends']               = 'Dépend de :';
