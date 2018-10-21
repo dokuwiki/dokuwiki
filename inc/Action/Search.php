@@ -39,8 +39,8 @@ class Search extends AbstractAction {
         if ($ID !== $conf['start'] && !$INPUT->has('q')) {
             parse_str($INPUT->server->str('QUERY_STRING'), $urlParts);
             $urlParts['q'] = $urlParts['id'];
-            $urlParts['id'] = $conf['start'];
-            $url = DOKU_URL . DOKU_SCRIPT . '?' . http_build_query($urlParts, null, '&');
+            unset($urlParts['id']);
+            $url = wl() . '?' . http_build_query($urlParts, null, '&');
             send_redirect($url);
         }
 
