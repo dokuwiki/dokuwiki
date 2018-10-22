@@ -40,7 +40,7 @@ class Search extends AbstractAction {
             parse_str($INPUT->server->str('QUERY_STRING'), $urlParts);
             $urlParts['q'] = $urlParts['id'];
             unset($urlParts['id']);
-            $url = wl() . '?' . http_build_query($urlParts, null, '&');
+            $url = wl($ID, $urlParts, true, '&');
             send_redirect($url);
         }
 
