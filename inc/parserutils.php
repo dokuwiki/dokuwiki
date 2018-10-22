@@ -197,11 +197,18 @@ function p_get_instructions($text){
 
     $modes = p_get_parsermodes();
 
+    // Backup old lexers to allow nested parsing
+    $backups = array();
+    foreach($modes as $mode){
+        $backups[] = array($mode['obj'], $mode['obj']->Lexer);
+    }
+
     // Create the parser
     $Parser = new Doku_Parser();
 
     // Add the Handler
     $Parser->Handler = new Doku_Handler();
+    $Parser->Handler->Parser = $Parser;
 
     //add modes to parser
     foreach($modes as $mode){
@@ -212,6 +219,10 @@ function p_get_instructions($text){
     trigger_event('PARSER_WIKITEXT_PREPROCESS', $text);
     $p = $Parser->parse($text);
     //  dbg($p);
+    foreach($backups as $backup){
+        list($obj, $Lexer) = $backup;
+        $obj->Lexer = $Lexer;
+    }
     return $p;
 }
 
