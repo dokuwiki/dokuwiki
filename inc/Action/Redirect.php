@@ -55,7 +55,7 @@ class Redirect extends AbstractAliasAction {
      * @param array $opts id and fragment for the redirect and the preact
      */
     public function redirect($opts) {
-        $go = wl($opts['id'], '', true);
+        $go = wl($opts['id'], '', true, '&');
         if(isset($opts['fragment'])) $go .= '#' . $opts['fragment'];
 
         //show it
