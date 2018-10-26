@@ -535,8 +535,8 @@ function p_get_parsermodes(){
     global $conf;
 
     //reuse old data
-    static $modes = null;
-    if($modes != null && !defined('DOKU_UNITTEST')){
+    static $modes = array();
+    if(!empty($modes) && !defined('DOKU_UNITTEST')){
         return $modes;
     }
 
