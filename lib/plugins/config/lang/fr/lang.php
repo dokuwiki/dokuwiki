@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Thierry <thule06@hotmail.fr>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Damien Regad <dregad@mantisbt.org>
  * @author Michael Bohn <mjbohn@gmail.com>
