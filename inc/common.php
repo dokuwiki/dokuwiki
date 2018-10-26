@@ -22,6 +22,7 @@ define('RECENTS_SKIP_MINORS', 4);
 define('RECENTS_SKIP_SUBSPACES', 8);
 define('RECENTS_MEDIA_CHANGES', 16);
 define('RECENTS_MEDIA_PAGES_MIXED', 32);
+define('RECENTS_ONLY_NEW_PAGES', 64);
 
 /**
  * Wrapper around htmlspecialchars()

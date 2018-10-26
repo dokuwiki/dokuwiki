@@ -133,6 +133,8 @@ function rss_parseOptions() {
                 'items'        => array('int', 'num', $conf['recent']),
                 // Boolean, only used in rc mode
                 'show_minor'   => array('bool', 'minor', false),
+                // Boolean, only used in rc mode
+                'only_new'     => array('bool', 'onlynewpages', false),
                 // String, only used in list mode
                 'sort'         => array('str', 'sort', 'natural'),
                 // String, only used in search mode
@@ -146,6 +148,7 @@ function rss_parseOptions() {
 
     $opt['items']      = max(0, (int) $opt['items']);
     $opt['show_minor'] = (bool) $opt['show_minor'];
+    $opt['only_new']   = (bool) $opt['only_new'];
     $opt['sort'] = valid_input_set('sort', array('default' => 'natural', 'date'), $opt);
 
     $opt['guardmail'] = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
@@ -469,6 +472,7 @@ function rssRecentChanges($opt) {
     $flags = 0;
     if(!$conf['rss_show_deleted']) $flags += RECENTS_SKIP_DELETED;
     if(!$opt['show_minor']) $flags += RECENTS_SKIP_MINORS;
+    if($opt['only_new']) $flags += RECENTS_ONLY_NEW_PAGES;
     if($opt['content_type'] == 'media' && $conf['mediarevisions']) $flags += RECENTS_MEDIA_CHANGES;
     if($opt['content_type'] == 'both' && $conf['mediarevisions']) $flags += RECENTS_MEDIA_PAGES_MIXED;
 
