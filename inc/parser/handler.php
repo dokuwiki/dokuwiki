@@ -761,7 +761,7 @@ function Doku_Handler_Parse_Media($match) {
     }
 
     //parse width and height
-    if(preg_match('#(\d+)(x(\d+))?#i',$param,$size)){
+    if(preg_match('#(\d+%?)(x(\d+%?))?#i',$param,$size)){
         !empty($size[1]) ? $w = $size[1] : $w = null;
         !empty($size[3]) ? $h = $size[3] : $h = null;
     } else {

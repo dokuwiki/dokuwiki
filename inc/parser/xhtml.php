@@ -1640,10 +1640,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $ret .= ' alt=""';
             }
 
-            if(!is_null($width))
+            if(!is_null($width) && strpos($width, '%') === false)
                 $ret .= ' width="'.$this->_xmlEntities($width).'"';
 
-            if(!is_null($height))
+                if(!is_null($height) && strpos($height, '%') === false)
                 $ret .= ' height="'.$this->_xmlEntities($height).'"';
 
             $ret .= ' />';

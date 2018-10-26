@@ -2023,6 +2023,16 @@ function media_resize_image($file, $ext, $w, $h=0){
     $info = @getimagesize($file); //get original size
     if($info == false) return $file; // that's no image - it's a spaceship!
 
+    if($w && strpos($w,'%') !== false){
+        $scale = intval(substr($w, 0, -1));
+        $w = ceil($info[0] * $scale / 100);
+    }
+
+    if($h && strpos($h,'%') !== false){
+        $scale = intval(substr($h, 0, -1));
+        $h = ceil($info[1] * $scale / 100);
+    }
+
     if(!$h) $h = round(($w * $info[1]) / $info[0]);
     if(!$w) $w = round(($h * $info[0]) / $info[1]);
 
@@ -2068,6 +2078,16 @@ function media_crop_image($file, $ext, $w, $h=0){
     if(!$h) $h = $w;
     $info = @getimagesize($file); //get original size
     if($info == false) return $file; // that's no image - it's a spaceship!
+
+    if(strpos($w,'%') !== false){
+        $scale = intval(substr($w, 0, -1));
+        $w = ceil($info[0] * $scale / 100);
+    }
+    
+    if(strpos($h,'%') !== false){
+        $scale = intval(substr($h, 0, -1));
+        $h = ceil($info[1] * $scale / 100);
+    }
 
     // calculate crop size
     $fr = $info[0]/$info[1];
@@ -2133,7 +2153,6 @@ function media_get_token($id,$w,$h){
         $token = $id;
         if ($w) $token .= '.'.$w;
         if ($h) $token .= '.'.$h;
-
         return substr(PassHash::hmac('md5', $token, auth_cookiesalt()),0,6);
     }
 

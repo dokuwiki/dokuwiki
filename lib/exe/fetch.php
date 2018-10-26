@@ -23,8 +23,8 @@ if (defined('SIMPLE_TEST')) {
     //get input
     $MEDIA  = stripctl(getID('media', false)); // no cleaning except control chars - maybe external
     $CACHE  = calc_cache($INPUT->str('cache'));
-    $WIDTH  = $INPUT->int('w');
-    $HEIGHT = $INPUT->int('h');
+    $WIDTH  = $INPUT->str('w');
+    $HEIGHT = $INPUT->str('h');
     $REV    = & $INPUT->ref('rev');
     //sanitize revision
     $REV = preg_replace('/[^0-9]/', '', $REV);
