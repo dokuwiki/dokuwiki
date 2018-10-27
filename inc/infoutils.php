@@ -132,16 +132,22 @@ function check(){
             msg('Your PHP version is too old',-1);
         }
     }
-
-    $mem = (int) php_to_byte(ini_get('memory_limit'));
+    $limit = ini_get('memory_limit');
+    if($limit == -1) {
+        $mem = -1; // unlimited
+    } else {
+        $mem = (int) php_to_byte($limit);
+    }
     if($mem){
-        if($mem < 16777216){
+        if($mem == -1) {
+            msg('PHP memory is unlimited', 1);
+        } else if($mem < 16777216){
             msg('PHP is limited to less than 16MB RAM ('.$mem.' bytes). Increase memory_limit in php.ini',-1);
-        }elseif($mem < 20971520){
+        } else if($mem < 20971520){
             msg('PHP is limited to less than 20MB RAM ('.$mem.' bytes), you might encounter problems with bigger pages. Increase memory_limit in php.ini',-1);
-        }elseif($mem < 33554432){
+        } else if($mem < 33554432){
             msg('PHP is limited to less than 32MB RAM ('.$mem.' bytes), but that should be enough in most cases. If not, increase memory_limit in php.ini',0);
-        }else{
+        } else {
             msg('More than 32MB RAM ('.$mem.' bytes) available.',1);
         }
     }
