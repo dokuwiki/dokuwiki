@@ -36,7 +36,9 @@ class action_plugin_extension extends DokuWiki_Action_Plugin {
         $event->preventDefault();
         $event->stopPropagation();
 
-        if(empty($_SERVER['REMOTE_USER']) || !auth_isadmin($_SERVER['REMOTE_USER'], $USERINFO['grps'])) {
+        /** @var admin_plugin_extension $admin */
+        $admin = plugin_load('admin', 'extension');
+        if(!$admin->isAccessibleByCurrentUser()) {
             http_status(403);
             echo 'Forbidden';
             exit;

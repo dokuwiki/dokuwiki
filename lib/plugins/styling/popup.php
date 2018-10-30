@@ -8,7 +8,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
 /** @var admin_plugin_styling $plugin */
 $plugin = plugin_load('admin', 'styling');
-if(!auth_isadmin()) die('only admins allowed');
+if(!$plugin->isAccessibleByCurrentUser()) die('only admins allowed');
 $plugin->ispopup = true;
 
 // handle posts

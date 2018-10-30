@@ -34,7 +34,7 @@ class action_plugin_acl extends DokuWiki_Action_Plugin {
      * @return void
      */
 
-    public function handle_ajax_call_acl(Doku_Event &$event, $param) {
+    public function handle_ajax_call_acl(Doku_Event $event, $param) {
         if($event->data !== 'plugin_acl') {
             return;
         }
@@ -44,7 +44,10 @@ class action_plugin_acl extends DokuWiki_Action_Plugin {
         global $ID;
         global $INPUT;
 
-        if(!auth_isadmin()) {
+        /** @var $acl admin_plugin_acl */
+        $acl = plugin_load('admin', 'acl');
+
+        if(!$acl->isAccessibleByCurrentUser()) {
             echo 'for admins only';
             return;
         }
@@ -54,9 +57,6 @@ class action_plugin_acl extends DokuWiki_Action_Plugin {
         }
 
         $ID = getID();
-
-        /** @var $acl admin_plugin_acl */
-        $acl = plugin_load('admin', 'acl');
         $acl->handle();
 
         $ajax = $INPUT->str('ajax');
