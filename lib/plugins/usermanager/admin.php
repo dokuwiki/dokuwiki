@@ -298,6 +298,24 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     }
 
     /**
+     * User Manager is only available if the auth backend supports it
+     *
+     * @inheritdoc
+     * @return bool
+     */
+    public function isAccessibleByCurrentUser()
+    {
+        /** @var DokuWiki_Auth_Plugin $auth */
+        global $auth;
+        if(!$auth || !$auth->canDo('getUsers') ) {
+            return false;
+        }
+
+        return parent::isAccessibleByCurrentUser();
+    }
+
+
+    /**
      * Display form to add or modify a user
      *
      * @param string $cmd 'add' or 'modify'
