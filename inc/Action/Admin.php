@@ -15,22 +15,11 @@ class Admin extends AbstractUserAction {
 
     /** @inheritdoc */
     public function minimumPermission() {
-        global $INFO;
-
-        if($INFO['ismanager']) {
-            return AUTH_READ; // let in check later
-        } else {
-            return AUTH_ADMIN;
-        }
+        return AUTH_READ; // let in check later
     }
 
     public function checkPreconditions() {
         parent::checkPreconditions();
-
-        global $INFO;
-        if(!$INFO['ismanager']) {
-            throw new ActionException('denied');
-        }
     }
 
     public function preProcess() {
