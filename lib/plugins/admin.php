@@ -80,6 +80,7 @@ class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
     public function isAccessibleByCurrentUser() {
         global $INFO;
 
+        $data['instance'] = $this;
         $data['hasAccess'] = false;
 
         $event = new Doku_Event('ADMINPLUGIN_ACCESS_CHECK', $data);
