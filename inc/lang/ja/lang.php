@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author lempel <riverlempel@hotmail.com>
  * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
+ * @author lempel <riverlempel@hotmail.com>
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Ikuo Obataya <i.obataya@gmail.com>
  * @author Daniel Dupriest <kououken@gmail.com>
@@ -73,6 +73,9 @@ $lang['badpassconfirm']        = 'パスワードが間違っています。';
 $lang['minoredit']             = '小変更';
 $lang['draftdate']             = 'ドラフト保存日時：';
 $lang['nosecedit']             = 'ページ内容が変更されていますがセクション情報が古いため、代わりにページ全体をロードしました。';
+$lang['searchcreatepage']      = 'もしお探しの内容が見つからなければ、あなたの検索クエリに因んだ「%s」という名前のページを作成・編集出来ます。';
+$lang['search_fullresults']    = '全文検索';
+$lang['js']['search_toggle_tools'] = 'トグル検索ツール';
 $lang['js']['willexpire']      = '編集中の文書はロック期限を過ぎようとしています。このままロックする場合は、一度文書の確認を行って期限をリセットしてください。';
 $lang['js']['notsavedyet']     = '変更は保存されません。このまま処理を続けてよろしいですか？';
 $lang['js']['searchmedia']     = 'ファイル検索';
@@ -114,9 +117,18 @@ $lang['js']['media_done_btn']  = '完了';
 $lang['js']['media_drop']      = 'ここにファイルをドロップするとアップロードします';
 $lang['js']['media_cancel']    = '削除';
 $lang['js']['media_overwrt']   = '既存のファイルを上書きする';
+$lang['search_exact_match']    = '完全一致';
+$lang['search_starts_with']    = '前方一致';
+$lang['search_ends_with']      = '後方一致';
+$lang['search_contains']       = '部分一致';
+$lang['search_custom_match']   = 'カスタム';
+$lang['search_any_ns']         = '全ての名前空間';
+$lang['search_any_time']       = '全期間';
 $lang['search_past_7_days']    = '先週';
 $lang['search_past_month']     = '先月';
 $lang['search_past_year']      = '去年';
+$lang['search_sort_by_hits']   = 'ヒット数順に並べる';
+$lang['search_sort_by_mtime']  = '最終更新順に並べる';
 $lang['regmissing']            = '全ての項目を入力してください。';
 $lang['reguexists']            = 'このユーザー名は既に存在しています。';
 $lang['regsuccess']            = '新しいユーザーが作成されました。パスワードは登録したメールアドレス宛てに送付されます。';

@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author lempel <riverlempel@hotmail.com>
  * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
+ * @author lempel <riverlempel@hotmail.com>
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Ikuo Obataya <i.obataya@gmail.com>
@@ -121,6 +121,7 @@ $lang['subscribe_time']        = '購読リストと概要を送信する期間�
 $lang['notify']                = '変更を通知するメールアドレス';
 $lang['registernotify']        = '新規ユーザー登録を通知するメールアドレス';
 $lang['mailfrom']              = 'メール送信時の送信元アドレス';
+$lang['mailreturnpath']        = '不届き通知を受け取るメールアドレス';
 $lang['mailprefix']            = '自動メールの題名に使用する接頭語';
 $lang['htmlmail']              = 'メールをテキスト形式ではなく、HTML形式で送信する。';
 $lang['sitemap']               = 'Googleサイトマップ作成頻度（日数）';
@@ -130,6 +131,9 @@ $lang['rss_content']           = 'XMLフィードに何を表示させますか�
 $lang['rss_update']            = 'RSSフィードの更新間隔（秒）';
 $lang['rss_show_summary']      = 'フィードのタイトルにサマリーを表示';
 $lang['rss_media']             = 'XMLフィードで、どんな種類の変更を記載するか';
+$lang['rss_media_o_both']      = '両方';
+$lang['rss_media_o_pages']     = 'ページ';
+$lang['rss_media_o_media']     = 'メディア';
 $lang['updatecheck']           = 'DokuWikiの更新とセキュリティに関する情報をチェックしますか？ この機能は update.dokuwiki.org への接続が必要です。';
 $lang['userewrite']            = 'URLの書き換え';
 $lang['useslash']              = 'URL上の名前空間の区切りにスラッシュを使用';
