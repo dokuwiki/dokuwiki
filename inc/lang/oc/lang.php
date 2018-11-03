@@ -3,9 +3,15 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author En Matt <heartattack@free.fr>
  * @author Quenti <pages_quentin@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
+$lang['doublequoteopening']    = '«';
+$lang['doublequoteclosing']    = '»';
+$lang['singlequoteopening']    = '’';
+$lang['singlequoteclosing']    = '’';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Modificar aquesta pagina';
 $lang['btn_source']            = 'Mostrar lo còdi font';
 $lang['btn_show']              = 'Mostrar la pagina';
@@ -32,6 +38,9 @@ $lang['btn_subscribe']         = 'Gerir los abonaments';
 $lang['btn_profile']           = 'Actualizar lo perfil';
 $lang['btn_reset']             = 'Reïnicializar';
 $lang['btn_resendpwd']         = 'Definir un novèl senhal';
+$lang['btn_draft']             = 'Modificar lo borrolhon';
+$lang['btn_recover']           = 'Restablir lo borrolhon';
+$lang['btn_draftdel']          = 'Suprimir lo borrolhon';
 $lang['btn_revert']            = 'Restablir';
 $lang['btn_register']          = 'Se marcar';
 $lang['btn_apply']             = 'Aplicar';
@@ -52,10 +61,17 @@ $lang['profile']               = 'Perfil d\'utilizaire';
 $lang['badlogin']              = 'Lo nom d\'utilizaire o lo senhal es incorrècte.';
 $lang['badpassconfirm']        = 'Lo senhal es incorrècte';
 $lang['minoredit']             = 'Cambiaments minors';
+$lang['draftdate']             = 'Salvagarda auto del borrolhon activada';
+$lang['nosecedit']             = 'Aquesta pagina a cambiat d’aquel temps, la seccion info èra pas a jorn, pagina complèta cargada allòc.';
+$lang['search_fullresults']    = 'Resultats tèxte brut';
+$lang['js']['search_toggle_tools'] = 'Mostrar/Amagar las aisinas de recèrca';
+$lang['js']['notsavedyet']     = 'Los cambiaments pas enregistrats seràn perduts.';
 $lang['js']['searchmedia']     = 'Cercar de fichièrs';
+$lang['js']['keepopen']        = 'Gardar la fenèstra dobèrta sus la selecion';
 $lang['js']['hidedetails']     = 'Rescondre los detalhs';
 $lang['js']['mediatitle']      = 'Paramètres del ligam';
 $lang['js']['mediadisplay']    = 'Tipe de ligam';
+$lang['js']['mediaalign']      = 'Alinhament';
 $lang['js']['mediasize']       = 'Talha de l\'imatge';
 $lang['js']['mediatarget']     = 'Cibla del ligam';
 $lang['js']['mediaclose']      = 'Tampar';
@@ -70,7 +86,14 @@ $lang['js']['medialnk']        = 'Ligam cap a la pagina de detalhs';
 $lang['js']['mediadirect']     = 'Ligam dirècte a l\'originala';
 $lang['js']['medianolnk']      = 'Cap de ligam';
 $lang['js']['medianolink']     = 'Ligar pas l\'imatge';
+$lang['js']['medialeft']       = 'Alinhar los imatges a man drecha';
+$lang['js']['mediaright']      = 'Alinhar los imatges a man esquèrra.';
+$lang['js']['mediacenter']     = 'Alinhar los imatges al centre.';
+$lang['js']['medianoalign']    = 'Cap d’alinament.';
+$lang['js']['linkwiz']         = 'Assistent pels ligams';
 $lang['js']['linkto']          = 'Ligam cap a :';
+$lang['js']['del_confirm']     = 'Volètz vertadièrament suprimir lo(s) item(s) seleccionat(s) ?';
+$lang['js']['restore_confirm'] = 'Volètz vertadièrament restaurar aquesta version ?';
 $lang['js']['media_diff']      = 'Veire las diferéncias :';
 $lang['js']['media_select']    = 'Seleccionar de fichièrs...';
 $lang['js']['media_upload_btn'] = 'Enviar';
