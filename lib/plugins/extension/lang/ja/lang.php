@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
  * @author Hideaki SAWADA <chuno@live.jp>
  * @author PzF_X <jp_minecraft@yahoo.co.jp>
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
@@ -20,7 +21,7 @@ $lang['alreadydisabled']       = 'この拡張機能は無効です。';
 $lang['pluginlistsaveerror']   = 'プラグイン一覧の保存中にエラーが発生しました。';
 $lang['unknownauthor']         = '作者不明';
 $lang['unknownversion']        = 'バージョン不明';
-$lang['btn_info']              = '詳細情報を表示する。';
+$lang['btn_info']              = '詳細情報を表示する';
 $lang['btn_update']            = '更新';
 $lang['btn_uninstall']         = 'アンインストール';
 $lang['btn_enable']            = '有効化';
@@ -48,14 +49,14 @@ $lang['unknown']               = '<em>不明</em>';
 $lang['installed_version']     = 'インストール済バージョン：';
 $lang['install_date']          = '最終更新日：';
 $lang['available_version']     = '利用可能バージョン：';
-$lang['compatible']            = '互換：';
-$lang['depends']               = '依存：';
-$lang['similar']               = '類似：';
-$lang['conflicts']             = '競合：';
-$lang['donate']                = 'お気に入り？';
+$lang['compatible']            = '互換性のあるバージョン：';
+$lang['depends']               = '必須プラグイン：';
+$lang['similar']               = '類似しているプラグイン：';
+$lang['conflicts']             = '競合するプラグイン：';
+$lang['donate']                = '気に入りましたか？';
 $lang['donate_action']         = '寄付先';
 $lang['repo_retry']            = '再実行';
-$lang['provides']              = '提供：';
+$lang['provides']              = '機能：';
 $lang['status']                = '状態：';
 $lang['status_installed']      = 'インストール済';
 $lang['status_not_installed']  = '未インストール';
@@ -95,4 +96,4 @@ $lang['auth']                  = 'この認証プラグインは設定管理画�
 $lang['install_url']           = 'URL からインストール：';
 $lang['install_upload']        = '拡張機能をアップロード：';
 $lang['repo_error']            = 'プラグインのリポジトリに接続できません。サーバーが www.dokuwiki.org に接続できることやプロキシの設定を確認して下さい。';
-$lang['nossl']                 = 'PHP機能がSSLをサポートしていないため、拡張機能のダウンロードが正常に動作しません。';
+$lang['nossl']                 = 'お使いのPHP機能がSSLをサポートしていないため、拡張機能のダウンロードが正常に動作しません。';

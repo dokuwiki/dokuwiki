@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Chris Smith <chris@jalakai.co.uk>
  * @author Ikuo Obataya <i.obataya@gmail.com>
@@ -38,8 +39,8 @@ $lang['export_filtered']       = '抽出したユーザー一覧のエクスポ�
 $lang['import']                = '新規ユーザーのインポート';
 $lang['line']                  = '行番号';
 $lang['error']                 = 'エラーメッセージ';
-$lang['summary']               = 'ユーザー %1$d-%2$d / %3$d, 総ユーザー数 %4$d';
-$lang['nonefound']             = 'ユーザーが見つかりません, 総ユーザー数 %d';
+$lang['summary']               = '見つかったユーザー %1$d-%2$d / %3$d を表示しています。総ユーザー数 %4$d';
+$lang['nonefound']             = 'ユーザーが見つかりません。総ユーザー数 %d';
 $lang['delete_ok']             = '%d ユーザーが削除されました';
 $lang['delete_fail']           = '%d ユーザーの削除に失敗しました';
 $lang['update_ok']             = 'ユーザーは更新されました';
@@ -72,7 +73,7 @@ $lang['import_error_create']   = 'ユーザーが作成できません。';
 $lang['import_notify_fail']    = '通知メッセージがインポートされたユーザー（%s）・電子メールアドレス（%s）に送信できませんでした。';
 $lang['import_downloadfailures'] = '修正用に失敗を CSVファイルとしてダウンロードする。';
 $lang['addUser_error_missing_pass'] = 'パスワードを設定するかパスワードの自動生成できるようにユーザーへの通知を有効にして下さい。';
-$lang['addUser_error_pass_not_identical'] = '入力されたパスワードは同一ではありません。';
+$lang['addUser_error_pass_not_identical'] = '確認用のパスワードが違います。';
 $lang['addUser_error_modPass_disabled'] = 'パスワードの変更は現在無効になっています。';
 $lang['addUser_error_name_missing'] = '新規ユーザーのフルネームを入力してください。';
 $lang['addUser_error_modName_disabled'] = 'フルネームの変更は現在無効になっています。';
