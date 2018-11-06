@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Laurent Ponthieu <contact@coopindus.fr>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Damien Regad <dregad@mantisbt.org>
  * @author Michael Bohn <mjbohn@gmail.com>
