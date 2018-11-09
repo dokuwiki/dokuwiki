@@ -12,7 +12,7 @@
  * @author phy25 <git@phy25.com>
  */
 $lang['menu']                  = '扩展管理器';
-$lang['tab_plugins']           = '安装插件';
+$lang['tab_plugins']           = '已装插件';
 $lang['tab_templates']         = '安装模板';
 $lang['tab_search']            = '搜索和安装';
 $lang['tab_install']           = '手动安装';
