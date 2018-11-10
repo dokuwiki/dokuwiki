@@ -15,8 +15,8 @@
 $lang['menu']                  = '扩展管理器';
 $lang['tab_plugins']           = '现有插件';
 $lang['tab_templates']         = '现有模板';
-$lang['tab_search']            = '在线安装';
-$lang['tab_install']           = '上传安装';
+$lang['tab_search']            = '搜索安装';
+$lang['tab_install']           = '手动安装';
 $lang['notimplemented']        = '未实现的特性';
 $lang['notinstalled']          = '该扩展未安装';
 $lang['alreadyenabled']        = '该扩展已激活';
