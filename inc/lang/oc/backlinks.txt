@@ -1,0 +1,2 @@
+====== Ligams de retorn ======
+Aquò es una lista de las paginas que semblan menar a la pagina actuala.
