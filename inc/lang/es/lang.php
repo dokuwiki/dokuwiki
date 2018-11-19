@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Alex Cachinero <anarres@protonmail.com>
  * @author WIRESLINKEA <wireslinkea@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  * @author Zigor Astarbe <zigor@astarbe.com>
