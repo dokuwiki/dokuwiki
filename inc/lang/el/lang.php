@@ -355,6 +355,12 @@ $lang['media_perm_read']       = 'Συγνώμη, δεν έχετε επαρκή
 $lang['media_perm_upload']     = 'Συγνώμη, δεν έχετε επαρκή διακαιώματα για να φορτώσετε αυτά τα αρχεία.';
 $lang['media_update']          = 'Φόρτωση νέας έκδοσης';
 $lang['media_restore']         = 'Επαναφορά αυτή της έκδοσης';
+$lang['media_acl_warning']     = 'Αυτή η λίστα πιθανόν να μην είναι πλήρης λόγω του ACL, περιορισμούς και κρυμμένες σελίδες.';
+$lang['currentns']             = 'Χώρος για όνομα';
 $lang['searchresult']          = 'Αποτέλεσμα έρευνας';
+$lang['plainhtml']             = 'Απλό HTML';
+$lang['wikimarkup']            = 'Wiki Markup';
+$lang['page_nonexist_rev']     = 'Δεν υπήρξε σελίδα στο %s. Δημιουργήθηκε στη συνέχεια στο <a href=\'\'%s\'\'>%s,</a>.';
+$lang['unable_to_parse_date']  = 'Δεν μπόρεσε να περάσει στην παράμετρο \'\'%s\'\'.';
 $lang['email_signature_text']  = 'Αυτό το e-mail δημιουργήθηκε αυτόματα από την εφαρμογή DokuWiki στην διεύθυνση
 @DOKUWIKIURL@';
