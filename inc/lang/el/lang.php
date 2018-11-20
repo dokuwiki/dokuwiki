@@ -3,12 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Katerina Katapodi <extragold1234@hotmail.com>
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
  * @author Konstantinos Koryllos <koryllos@gmail.com>
  * @author George Petsagourakis <petsagouris@gmail.com>
  * @author Petros Vidalis <pvidalis@gmail.com>
- * @author Vasileios Karavasilis vasileioskaravasilis@gmail.com
+ * @author Vasileios Karavasilis <vasileioskaravasilis@gmail.com>
  * @author Constantinos Xanthopoulos <conx@xanthopoulos.info>
  * @author chris taklis <ctaklis@gmail.com>
  * @author cross <cross1962@gmail.com>
@@ -73,44 +74,6 @@ $lang['badpassconfirm']        = 'Ο κωδικός που εισάγατε εί
 $lang['minoredit']             = 'Ασήμαντες αλλαγές';
 $lang['draftdate']             = 'Αυτόματη αποθήκευση πρόχειρης σελίδας στις';
 $lang['nosecedit']             = 'Η σελίδα τροποποιήθηκε στο μεταξύ και τα στοιχεία της ενότητας δεν ήταν συγχρονισμένα, οπότε φορτώθηκε η πλήρης σελίδα.  ';
-$lang['regmissing']            = 'Πρέπει να συμπληρώσετε όλα τα πεδία.';
-$lang['reguexists']            = 'Αυτός ο λογαριασμός υπάρχει ήδη.';
-$lang['regsuccess']            = 'Ο λογαριασμός δημιουργήθηκε και ο κωδικός εστάλει με e-mail.';
-$lang['regsuccess2']           = 'Ο λογαριασμός δημιουργήθηκε.';
-$lang['regfail']               = 'Δεν έγινε η δημιουργία χρήστη.';
-$lang['regmailfail']           = 'Φαίνεται να υπάρχει πρόβλημα με την αποστολή του κωδικού μέσω e-mail. Παρακαλούμε επικοινωνήστε μαζί μας!';
-$lang['regbadmail']            = 'Η διεύθυνση e-mail δεν είναι έγκυρη - εάν πιστεύετε ότι αυτό είναι λάθος, επικοινωνήστε μαζί μας';
-$lang['regbadpass']            = 'Οι δύο κωδικοί δεν είναι ίδιοι, προσπαθήστε ξανά.';
-$lang['regpwmail']             = 'Ο κωδικός σας';
-$lang['reghere']               = 'Δεν έχετε λογαριασμό ακόμη? Δημιουργήστε έναν';
-$lang['profna']                = 'Αυτό το wiki δεν υποστηρίζει την επεξεργασία προφίλ.';
-$lang['profnochange']          = 'Καμία αλλαγή.';
-$lang['profnoempty']           = 'Δεν επιτρέπεται κενό όνομα χρήστη η κενή διεύθυνση email.';
-$lang['profchanged']           = 'Το προφίλ χρήστη τροποποιήθηκε επιτυχώς.';
-$lang['profnodelete']          = 'Το wiki δεν υποστηρίζει την διαγραφή χρηστών';
-$lang['profdeleteuser']        = 'Διαγραφή λογαριασμού';
-$lang['profdeleted']           = 'Ο λογαριασμός διαγράφηκε από αυτό το wiki';
-$lang['profconfdelete']        = 'Επιθυμώ να διαγράψω τον λογαριασμό μου από αυτό το wiki. <br/> Αυτή η επιλογή δεν μπορεί να αναιρεθεί.';
-$lang['profconfdeletemissing'] = 'Το κουμπί επιβεβαίωσης δεν πατήθηκε';
-$lang['proffail']              = 'Δεν ενημερώθηκε το προφίλ του χρήστη.';
-$lang['pwdforget']             = 'Ξεχάσατε το κωδικό σας; Αποκτήστε νέο.';
-$lang['resendna']              = 'Αυτό το wiki δεν υποστηρίζει την εκ\' νέου αποστολή κωδικών.';
-$lang['resendpwd']             = 'Εισαγωγή νέου ωδικού για';
-$lang['resendpwdmissing']      = 'Πρέπει να συμπληρώσετε όλα τα πεδία.';
-$lang['resendpwdnouser']       = 'Αυτός ο χρήστης δεν υπάρχει στα αρχεία μας.';
-$lang['resendpwdbadauth']      = 'Αυτός ο κωδικός ενεργοποίησης δεν είναι έγκυρος.';
-$lang['resendpwdconfirm']      = 'Ο σύνδεσμος προς την σελίδα ενεργοποίησης εστάλει με e-mail.';
-$lang['resendpwdsuccess']      = 'Ο νέος σας κωδικός εστάλη με e-mail.';
-$lang['license']               = 'Εκτός εάν αναφέρεται διαφορετικά, το περιεχόμενο σε αυτο το wiki διέπεται από την ακόλουθη άδεια:';
-$lang['licenseok']             = 'Σημείωση: Τροποποιώντας αυτή την σελίδα αποδέχεστε την διάθεση του υλικού σας σύμφωνα με την ακόλουθη άδεια:';
-$lang['searchmedia']           = 'Αναζήτηση αρχείου:';
-$lang['searchmedia_in']        = 'Αναζήτηση σε %s';
-$lang['txt_upload']            = 'Επιλέξτε αρχείο για φόρτωση:';
-$lang['txt_filename']          = 'Επιλέξτε νέο όνομα αρχείου (προαιρετικό):';
-$lang['txt_overwrt']           = 'Αντικατάσταση υπάρχοντος αρχείου';
-$lang['maxuploadsize']         = 'Μέγιστο μέγεθος αρχείου: %s.';
-$lang['lockedby']              = 'Προσωρινά κλειδωμένο από:';
-$lang['lockexpire']            = 'Το κλείδωμα λήγει στις:';
 $lang['js']['willexpire']      = 'Το κλείδωμά σας για την επεξεργασία αυτής της σελίδας θα λήξει σε ένα λεπτό.\n Για να το ανανεώσετε χρησιμοποιήστε την Προεπισκόπηση.';
 $lang['js']['notsavedyet']     = 'Οι μη αποθηκευμένες αλλαγές θα χαθούν.
 Θέλετε να συνεχίσετε;';
@@ -154,6 +117,44 @@ $lang['js']['media_done_btn']  = 'Ολοκλήρωση';
 $lang['js']['media_drop']      = 'Ρίξτε αρχεία εδώ για να τα φορτώσετε';
 $lang['js']['media_cancel']    = 'αφαίρεση';
 $lang['js']['media_overwrt']   = 'Αντικατάσταση υπάρχοντων αρχείων';
+$lang['regmissing']            = 'Πρέπει να συμπληρώσετε όλα τα πεδία.';
+$lang['reguexists']            = 'Αυτός ο λογαριασμός υπάρχει ήδη.';
+$lang['regsuccess']            = 'Ο λογαριασμός δημιουργήθηκε και ο κωδικός εστάλει με e-mail.';
+$lang['regsuccess2']           = 'Ο λογαριασμός δημιουργήθηκε.';
+$lang['regfail']               = 'Δεν έγινε η δημιουργία χρήστη.';
+$lang['regmailfail']           = 'Φαίνεται να υπάρχει πρόβλημα με την αποστολή του κωδικού μέσω e-mail. Παρακαλούμε επικοινωνήστε μαζί μας!';
+$lang['regbadmail']            = 'Η διεύθυνση e-mail δεν είναι έγκυρη - εάν πιστεύετε ότι αυτό είναι λάθος, επικοινωνήστε μαζί μας';
+$lang['regbadpass']            = 'Οι δύο κωδικοί δεν είναι ίδιοι, προσπαθήστε ξανά.';
+$lang['regpwmail']             = 'Ο κωδικός σας';
+$lang['reghere']               = 'Δεν έχετε λογαριασμό ακόμη? Δημιουργήστε έναν';
+$lang['profna']                = 'Αυτό το wiki δεν υποστηρίζει την επεξεργασία προφίλ.';
+$lang['profnochange']          = 'Καμία αλλαγή.';
+$lang['profnoempty']           = 'Δεν επιτρέπεται κενό όνομα χρήστη η κενή διεύθυνση email.';
+$lang['profchanged']           = 'Το προφίλ χρήστη τροποποιήθηκε επιτυχώς.';
+$lang['profnodelete']          = 'Το wiki δεν υποστηρίζει την διαγραφή χρηστών';
+$lang['profdeleteuser']        = 'Διαγραφή λογαριασμού';
+$lang['profdeleted']           = 'Ο λογαριασμός διαγράφηκε από αυτό το wiki';
+$lang['profconfdelete']        = 'Επιθυμώ να διαγράψω τον λογαριασμό μου από αυτό το wiki. <br/> Αυτή η επιλογή δεν μπορεί να αναιρεθεί.';
+$lang['profconfdeletemissing'] = 'Το κουμπί επιβεβαίωσης δεν πατήθηκε';
+$lang['proffail']              = 'Δεν ενημερώθηκε το προφίλ του χρήστη.';
+$lang['pwdforget']             = 'Ξεχάσατε το κωδικό σας; Αποκτήστε νέο.';
+$lang['resendna']              = 'Αυτό το wiki δεν υποστηρίζει την εκ\' νέου αποστολή κωδικών.';
+$lang['resendpwd']             = 'Εισαγωγή νέου ωδικού για';
+$lang['resendpwdmissing']      = 'Πρέπει να συμπληρώσετε όλα τα πεδία.';
+$lang['resendpwdnouser']       = 'Αυτός ο χρήστης δεν υπάρχει στα αρχεία μας.';
+$lang['resendpwdbadauth']      = 'Αυτός ο κωδικός ενεργοποίησης δεν είναι έγκυρος.';
+$lang['resendpwdconfirm']      = 'Ο σύνδεσμος προς την σελίδα ενεργοποίησης εστάλει με e-mail.';
+$lang['resendpwdsuccess']      = 'Ο νέος σας κωδικός εστάλη με e-mail.';
+$lang['license']               = 'Εκτός εάν αναφέρεται διαφορετικά, το περιεχόμενο σε αυτο το wiki διέπεται από την ακόλουθη άδεια:';
+$lang['licenseok']             = 'Σημείωση: Τροποποιώντας αυτή την σελίδα αποδέχεστε την διάθεση του υλικού σας σύμφωνα με την ακόλουθη άδεια:';
+$lang['searchmedia']           = 'Αναζήτηση αρχείου:';
+$lang['searchmedia_in']        = 'Αναζήτηση σε %s';
+$lang['txt_upload']            = 'Επιλέξτε αρχείο για φόρτωση:';
+$lang['txt_filename']          = 'Επιλέξτε νέο όνομα αρχείου (προαιρετικό):';
+$lang['txt_overwrt']           = 'Αντικατάσταση υπάρχοντος αρχείου';
+$lang['maxuploadsize']         = 'Μέγιστο μέγεθος αρχείου: %s.';
+$lang['lockedby']              = 'Προσωρινά κλειδωμένο από:';
+$lang['lockexpire']            = 'Το κλείδωμα λήγει στις:';
 $lang['rssfailed']             = 'Παρουσιάστηκε κάποιο σφάλμα κατά την ανάγνωση αυτού του feed: ';
 $lang['nothingfound']          = 'Δεν βρέθηκαν σχετικά αποτελέσματα.';
 $lang['mediaselect']           = 'Επιλογή Αρχείων';
