@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Jürgen Fredriksson <jfriedrich@gmx.at>
  * @author Sebastian Engel <mail@engel-s.de>
  * @author Karl_de_Hall <Karl.Grohmueller@sonnenhof-sha.de>
  * @author Michael Bohn <mjbohn@gmail.com>
