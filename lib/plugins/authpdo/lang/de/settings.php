@@ -6,7 +6,7 @@
  * @author Jürgen Fredriksson <jfriedrich@gmx.at>
  */
 $lang['debug']                 = 'Zeige detaillierte Fehlermeldungen. Diese sollten nach dem Setup deaktiviert werden.';
-$lang['dsn']                   = 'Der DSN zur Verbindung mit der Datenbank';
+$lang['dsn']                   = 'Der DSN(Data Source Name) zur Verbindung mit der Datenbank';
 $lang['user']                  = 'Der Benutzer für die obige Datenbankverbindung (leer lassen für SQLite)';
 $lang['pass']                  = 'Das Passwort für die obige Datenbankverbindung (leer lassen für SQLite)';
 $lang['select-user']           = 'SQL Anweisung um einen Benutzer abzufragen';
