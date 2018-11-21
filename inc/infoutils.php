@@ -132,16 +132,22 @@ function check(){
             msg('Your PHP version is too old',-1);
         }
     }
-
-    $mem = (int) php_to_byte(ini_get('memory_limit'));
+    $limit = ini_get('memory_limit');
+    if($limit == -1) {
+        $mem = -1; // unlimited
+    } else {
+        $mem = (int) php_to_byte($limit);
+    }
     if($mem){
-        if($mem < 16777216){
+        if($mem == -1) {
+            msg('PHP memory is unlimited', 1);
+        } else if($mem < 16777216){
             msg('PHP is limited to less than 16MB RAM ('.$mem.' bytes). Increase memory_limit in php.ini',-1);
-        }elseif($mem < 20971520){
+        } else if($mem < 20971520){
             msg('PHP is limited to less than 20MB RAM ('.$mem.' bytes), you might encounter problems with bigger pages. Increase memory_limit in php.ini',-1);
-        }elseif($mem < 33554432){
+        } else if($mem < 33554432){
             msg('PHP is limited to less than 32MB RAM ('.$mem.' bytes), but that should be enough in most cases. If not, increase memory_limit in php.ini',0);
-        }else{
+        } else {
             msg('More than 32MB RAM ('.$mem.' bytes) available.',1);
         }
     }
@@ -441,26 +447,40 @@ function dbglog($msg,$header=''){
  * Log accesses to deprecated fucntions to the debug log
  *
  * @param string $alternative The function or method that should be used instead
+ * @triggers INFO_DEPRECATION_LOG
  */
 function dbg_deprecated($alternative = '') {
     global $conf;
-    if(!$conf['allowdebug']) return;
+    global $EVENT_HANDLER;
+    if(!$conf['allowdebug'] && !$EVENT_HANDLER->hasHandlerForEvent('INFO_DEPRECATION_LOG')) {
+        // avoid any work if no one cares
+        return;
+    }
 
     $backtrace = debug_backtrace();
     array_shift($backtrace);
-    $self = array_shift($backtrace);
-    $call = array_shift($backtrace);
+    $self = $backtrace[0];
+    $call = $backtrace[1];
 
-    $called = trim($self['class'].'::'.$self['function'].'()', ':');
-    $caller = trim($call['class'].'::'.$call['function'].'()', ':');
+    $data = [
+        'trace' => $backtrace,
+        'alternative' => $alternative,
+        'called' => trim($self['class'] . '::' . $self['function'] . '()', ':'),
+        'caller' => trim($call['class'] . '::' . $call['function'] . '()', ':'),
+        'file' => $call['file'],
+        'line' => $call['line'],
+    ];
 
-    $msg = $called.' is deprecated. It was called from ';
-    $msg .= $caller.' in '.$call['file'].':'.$call['line'];
-    if($alternative) {
-        $msg .= ' '.$alternative.' should be used instead!';
+    $event = new Doku_Event('INFO_DEPRECATION_LOG', $data);
+    if($event->advise_before()) {
+        $msg = $event->data['called'] . ' is deprecated. It was called from ';
+        $msg .= $event->data['caller'] . ' in ' . $event->data['file'] . ':' . $event->data['line'];
+        if($event->data['alternative']) {
+            $msg .= ' ' . $event->data['alternative'] . ' should be used instead!';
+        }
+        dbglog($msg);
     }
-
-    dbglog($msg);
+    $event->advise_after();
 }
 
 /**

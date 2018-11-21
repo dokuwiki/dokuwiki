@@ -445,6 +445,20 @@ You can use up to five different levels of',
         $this->assertEquals(0, count($versions));
     }
 
+    public function test_deleteUser()
+    {
+        global $conf, $auth;
+        $auth = new Mock_Auth_Plugin();
+        $conf['remote'] = 1;
+        $conf['remoteuser'] = 'testuser';
+        $_SERVER['REMOTE_USER'] = 'testuser';
+        $params = [
+            ['testuser']
+        ];
+        $actualCallResult = $this->remote->call('dokuwiki.deleteUsers', $params);
+        $this->assertTrue($actualCallResult);
+    }
+
     public function test_aclCheck() {
         $id = 'aclpage';
 

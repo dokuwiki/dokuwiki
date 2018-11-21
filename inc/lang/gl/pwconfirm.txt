@@ -1,11 +1,9 @@
 Ola @FULLNAME@!
 
-Alguén solicitou un novo contrasinal para o teu inicio de sesión
-@TITLE@ en @DOKUWIKIURL@
+Alguén solicitou un novo contrasinal para o teu inicio de sesión @TITLE@ en @DOKUWIKIURL@
 
 Se non fuches ti quen o fixo podes ignorar este correo-e.
 
-Para confirmares que esta solicitude foi realmente enviada por ti,
-por favor, visita a seguinte ligazón.
+Para confirmares que esta solicitude foi realmente enviada por ti, por favor, visita a seguinte ligazón.
 
 @CONFIRM@

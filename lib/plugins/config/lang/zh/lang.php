@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aaron Zhou <iradio@163.com>
  * @author lempel <riverlempel@hotmail.com>
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
@@ -170,12 +171,6 @@ $lang['proxy____user']         = '代理服务器的用户名';
 $lang['proxy____pass']         = '代理服务器的密码';
 $lang['proxy____ssl']          = '使用 SSL 连接到代理服务器';
 $lang['proxy____except']       = '用来匹配代理应跳过的地址的正则表达式。';
-$lang['safemodehack']          = '启用 Safemode Hack';
-$lang['ftp____host']           = 'Safemode Hack 的 FTP 服务器';
-$lang['ftp____port']           = 'Safemode Hack 的 FTP 端口';
-$lang['ftp____user']           = 'Safemode Hack 的 FTP 用户名';
-$lang['ftp____pass']           = 'Safemode Hack 的 FTP 密码';
-$lang['ftp____root']           = 'Safemode Hack 的 FTP 根路径';
 $lang['license_o_']            = '什么都没有选';
 $lang['typography_o_0']        = '无';
 $lang['typography_o_1']        = '仅限双引号';

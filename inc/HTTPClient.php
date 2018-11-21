@@ -434,14 +434,14 @@ class HTTPClient {
                 // read up to the content-length or max_bodysize
                 // for keep alive we need to read the whole message to clean up the socket for the next read
                 if(!$this->keep_alive && $this->max_bodysize && $this->max_bodysize < $this->resp_headers['content-length']){
-                    $length = $this->max_bodysize;
+                    $length = $this->max_bodysize+1;
                 }else{
                     $length = $this->resp_headers['content-length'];
                 }
 
                 $r_body = $this->_readData($socket, $length, 'response (content-length limited)', true);
             }elseif( !isset($this->resp_headers['transfer-encoding']) && $this->max_bodysize && !$this->keep_alive){
-                $r_body = $this->_readData($socket, $this->max_bodysize, 'response (content-length limited)', true);
+                $r_body = $this->_readData($socket, $this->max_bodysize+1, 'response (content-length limited)', true);
             } elseif ((int)$this->status === 204) {
                 // request has no content
             } else{
@@ -451,7 +451,7 @@ class HTTPClient {
                 }
             }
 
-            // recheck body size, we might had to read the whole body, so we abort late or trim here
+            // recheck body size, we might have read max_bodysize+1 or even the whole body, so we abort late here
             if($this->max_bodysize){
                 if(strlen($r_body) > $this->max_bodysize){
                     if ($this->max_bodysize_abort) {

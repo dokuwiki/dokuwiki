@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
  * @author Omid Mottaghi <omidmr@gmail.com>
@@ -16,7 +17,6 @@
  * @author Mohammad Sadegh <msdn2013@gmail.com>
  * @author Omid Hezaveh <hezpublic@gmail.com>
  * @author Mohmmad Razavi <sepent@gmail.com>
- * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  * @author sam01 <m.sajad079@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -78,44 +78,9 @@ $lang['badpassconfirm']        = 'متاسفم، رمز عبور اشتباه ا
 $lang['minoredit']             = 'ویرایش‌های خُرد';
 $lang['draftdate']             = 'ذخیره خودکار پیش‌نویس در';
 $lang['nosecedit']             = 'این صفحه در این میان تغییر کرده است، اطلاعات بخش قدیمی شده است، در عوض محتوای کل نمایش داده می‌شود.';
-$lang['regmissing']            = 'متاسفم، شما باید همه قسمت‌ها را پر کنید.';
-$lang['reguexists']            = 'نام کاربری‌ای که وارد کردید قبلن استفاده شده است.';
-$lang['regsuccess']            = 'کاربر ساخته شد و گذرواژه به صورت ایمیل ارسال گردید.';
-$lang['regsuccess2']           = 'حساب ایجاد شد.';
-$lang['regfail']               = 'ایجاد کاربر ممکن نیست.';
-$lang['regmailfail']           = 'مشکلی در ارسال ایمیل رمز عبور پیش آمده است، با مدیر تماس بگیرید!';
-$lang['regbadmail']            = 'نشانی واردشدهٔ ایمیل قابل‌قبول نیست، چرا که دارای ساختار نامعتبری است. اگر فکر می‌کنید این یک ایراد سایت است با مدیر تماس بگیرید';
-$lang['regbadpass']            = 'گذرواژه‌هایی که وارد کردید یکسان نیستند، لطفاً یکبار دیگر تلاش کنید.';
-$lang['regpwmail']             = 'گذرواژه‌ی DokuWiki شما';
-$lang['reghere']               = 'شما هنوز حسابی در اینجا ندارید؟ یکی ایجاد کنید';
-$lang['profna']                = 'این ویکی اجازه ویرایش پروفایل را نمی‌دهد';
-$lang['profnochange']          = 'تغییری صورت نگرفت.';
-$lang['profnoempty']           = 'نام و آدرس ایمیل باید پر شود.';
-$lang['profchanged']           = 'پروفایل کاربر با موفقیت به روز شد.';
-$lang['profnodelete']          = 'این ویکی از حذف کاربران پشتیبانی نمی‌کند';
-$lang['profdeleteuser']        = 'حذف حساب کاربری';
-$lang['profdeleted']           = 'حساب کاربری شما از این ویکی حذف گردیده است';
-$lang['profconfdelete']        = 'می‌خواهم حساب کاربری من از این ویکی حذف شود. <br/> این عمل قابل برگشت نیست.';
-$lang['profconfdeletemissing'] = 'جعبهٔ تأیید تیک نخورده است';
-$lang['proffail']              = 'بروزرسانی پروفایل کاربری انجام نشد.';
-$lang['pwdforget']             = 'گذرواژه‌ی خود را فراموش کرده‌اید؟ گذرواژه‌ی جدید دریافت کنید';
-$lang['resendna']              = 'این ویکی ارسال مجدد گذرواژه را پشتیبانی نمی‌کند';
-$lang['resendpwd']             = 'تعیین کلمه عبور جدید برای ';
-$lang['resendpwdmissing']      = 'متاسفم، شما باید تمام قسمت‌ها را پر کنید.';
-$lang['resendpwdnouser']       = 'متاسفم، ما نتوانستیم این نام کاربری را در پایگاه دادهٔ خود پیدا کنیم.';
-$lang['resendpwdbadauth']      = 'متاسفم، کد شناسایی معتبر نیست. از صحت لینک تاییدیه اطمینان حاصل کنید.';
-$lang['resendpwdconfirm']      = 'یک لینک تاییدیه آدرس از طریق ایمیل ارسال شد.';
-$lang['resendpwdsuccess']      = 'گذرواژه‌ی جدید شما توسط ایمیل ارسال شد.';
-$lang['license']               = 'به جز مواردی که ذکر می‌شود، مابقی محتویات ویکی تحت مجوز زیر می‌باشند:';
-$lang['licenseok']             = 'توجه: با ویرایش این صفحه، شما مجوز زیر را تایید می‌کنید:';
-$lang['searchmedia']           = 'نام فایل برای جستجو:';
-$lang['searchmedia_in']        = 'جستجو در %s';
-$lang['txt_upload']            = 'فایل را برای آپلود انتخاب کنید:';
-$lang['txt_filename']          = 'ارسال به صورت (اختیاری):';
-$lang['txt_overwrt']           = 'بر روی فایل موجود بنویس';
-$lang['maxuploadsize']         = 'حداکثر %s برای هر فایل مجاز است.';
-$lang['lockedby']              = 'در حال حاضر قفل شده است:';
-$lang['lockexpire']            = 'قفل منقضی می‌شود در:';
+$lang['searchcreatepage']      = 'اگر آن چیزی که می‌خواهید را پیدا نکردید، می‌توانید صفحهٔ %s را که هم‌نام درخواست شماست بسازید یا ویرایش کنید.';
+$lang['search_fullresults']    = 'متن کامل نتایج';
+$lang['js']['search_toggle_tools'] = 'فعال یا عدم فعال‌سازی ابزارهای جستجو';
 $lang['js']['willexpire']      = 'حالت قفل شما مدتی است منقضی شده است \n برای جلوگیری از تداخل دکمه‌ی پیش‌نمایش را برای صفر شدن ساعت قفل بزنید.';
 $lang['js']['notsavedyet']     = 'تغییرات ذخیره نشده از بین خواهد رفت.';
 $lang['js']['searchmedia']     = 'جستجو برای فایل‌ها';
@@ -158,6 +123,56 @@ $lang['js']['media_done_btn']  = 'انجام شد';
 $lang['js']['media_drop']      = 'فایل‌ها را در اینجا قرار دهید تا آپلود شود';
 $lang['js']['media_cancel']    = 'حذف';
 $lang['js']['media_overwrt']   = 'جاینوشت فایل‌های موجود';
+$lang['search_exact_match']    = 'دقیقا برابر';
+$lang['search_starts_with']    = 'شروع بشود با';
+$lang['search_ends_with']      = 'پایان یابد با';
+$lang['search_contains']       = 'شامل';
+$lang['search_custom_match']   = 'دلخواه';
+$lang['search_any_ns']         = 'هر فضای نام';
+$lang['search_any_time']       = 'هر زمان';
+$lang['search_past_7_days']    = 'هفتهٔ قبل';
+$lang['search_past_month']     = 'ماه قبل';
+$lang['search_past_year']      = 'سال قبل';
+$lang['search_sort_by_hits']   = 'مرتب کردن برحسب تعداد بازدید';
+$lang['search_sort_by_mtime']  = 'مرتب کردن برحسب آخرین ویرایش';
+$lang['regmissing']            = 'متاسفم، شما باید همه قسمت‌ها را پر کنید.';
+$lang['reguexists']            = 'نام کاربری‌ای که وارد کردید قبلن استفاده شده است.';
+$lang['regsuccess']            = 'کاربر ساخته شد و گذرواژه به صورت ایمیل ارسال گردید.';
+$lang['regsuccess2']           = 'حساب ایجاد شد.';
+$lang['regfail']               = 'ایجاد کاربر ممکن نیست.';
+$lang['regmailfail']           = 'مشکلی در ارسال ایمیل رمز عبور پیش آمده است، با مدیر تماس بگیرید!';
+$lang['regbadmail']            = 'نشانی واردشدهٔ ایمیل قابل‌قبول نیست، چرا که دارای ساختار نامعتبری است. اگر فکر می‌کنید این یک ایراد سایت است با مدیر تماس بگیرید';
+$lang['regbadpass']            = 'گذرواژه‌هایی که وارد کردید یکسان نیستند، لطفاً یکبار دیگر تلاش کنید.';
+$lang['regpwmail']             = 'گذرواژه‌ی DokuWiki شما';
+$lang['reghere']               = 'شما هنوز حسابی در اینجا ندارید؟ یکی ایجاد کنید';
+$lang['profna']                = 'این ویکی اجازه ویرایش پروفایل را نمی‌دهد';
+$lang['profnochange']          = 'تغییری صورت نگرفت.';
+$lang['profnoempty']           = 'نام و آدرس ایمیل باید پر شود.';
+$lang['profchanged']           = 'پروفایل کاربر با موفقیت به روز شد.';
+$lang['profnodelete']          = 'این ویکی از حذف کاربران پشتیبانی نمی‌کند';
+$lang['profdeleteuser']        = 'حذف حساب کاربری';
+$lang['profdeleted']           = 'حساب کاربری شما از این ویکی حذف گردیده است';
+$lang['profconfdelete']        = 'می‌خواهم حساب کاربری من از این ویکی حذف شود. <br/> این عمل قابل برگشت نیست.';
+$lang['profconfdeletemissing'] = 'جعبهٔ تأیید تیک نخورده است';
+$lang['proffail']              = 'بروزرسانی پروفایل کاربری انجام نشد.';
+$lang['pwdforget']             = 'گذرواژه‌ی خود را فراموش کرده‌اید؟ گذرواژه‌ی جدید دریافت کنید';
+$lang['resendna']              = 'این ویکی ارسال مجدد گذرواژه را پشتیبانی نمی‌کند';
+$lang['resendpwd']             = 'تعیین کلمه عبور جدید برای ';
+$lang['resendpwdmissing']      = 'متاسفم، شما باید تمام قسمت‌ها را پر کنید.';
+$lang['resendpwdnouser']       = 'متاسفم، ما نتوانستیم این نام کاربری را در پایگاه دادهٔ خود پیدا کنیم.';
+$lang['resendpwdbadauth']      = 'متاسفم، کد شناسایی معتبر نیست. از صحت لینک تاییدیه اطمینان حاصل کنید.';
+$lang['resendpwdconfirm']      = 'یک لینک تاییدیه آدرس از طریق ایمیل ارسال شد.';
+$lang['resendpwdsuccess']      = 'گذرواژه‌ی جدید شما توسط ایمیل ارسال شد.';
+$lang['license']               = 'به جز مواردی که ذکر می‌شود، مابقی محتویات ویکی تحت مجوز زیر می‌باشند:';
+$lang['licenseok']             = 'توجه: با ویرایش این صفحه، شما مجوز زیر را تایید می‌کنید:';
+$lang['searchmedia']           = 'نام فایل برای جستجو:';
+$lang['searchmedia_in']        = 'جستجو در %s';
+$lang['txt_upload']            = 'فایل را برای آپلود انتخاب کنید:';
+$lang['txt_filename']          = 'ارسال به صورت (اختیاری):';
+$lang['txt_overwrt']           = 'بر روی فایل موجود بنویس';
+$lang['maxuploadsize']         = 'حداکثر %s برای هر فایل مجاز است.';
+$lang['lockedby']              = 'در حال حاضر قفل شده است:';
+$lang['lockexpire']            = 'قفل منقضی می‌شود در:';
 $lang['rssfailed']             = 'بروز خطا در هنگام واکشی این فید:';
 $lang['nothingfound']          = 'چیزی پیدا نشد.';
 $lang['mediaselect']           = 'فایل‌ها';

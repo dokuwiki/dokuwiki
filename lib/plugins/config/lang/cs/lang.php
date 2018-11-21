@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Martin Hořínek <hev@hev.cz>
  * @author Jonáš Dyba <jonas.dyba@gmail.com>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
@@ -160,6 +161,7 @@ $lang['xsendfile']             = 'Používat X-Sendfile hlavničky pro download 
 $lang['renderer_xhtml']        = 'Vykreslovací jádro pro hlavní (xhtml) výstup wiki';
 $lang['renderer__core']        = '%s (jádro DokuWiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_nslimit']        = 'Omezit vyhledávání na současných X jmenných prostorů. Když je vyhledávání provedeno ze stránky zanořeného jmenného prostoru, bude jako filtr přidáno prvních X jmenných prostorů.';
 $lang['search_fragment_o_starts_with'] = 'začíná s';
 $lang['search_fragment_o_ends_with'] = 'končí s';
 $lang['search_fragment_o_contains'] = 'obsahuje';
@@ -175,12 +177,6 @@ $lang['proxy____user']         = 'Proxy uživatelské jméno';
 $lang['proxy____pass']         = 'Proxy heslo';
 $lang['proxy____ssl']          = 'Použít SSL při připojení k proxy';
 $lang['proxy____except']       = 'Regulární výrazy pro URL, pro které bude přeskočena proxy.';
-$lang['safemodehack']          = 'Zapnout safemode hack';
-$lang['ftp____host']           = 'FTP server pro safemode hack';
-$lang['ftp____port']           = 'FTP port pro safemode hack';
-$lang['ftp____user']           = 'FTP uživatelské jméno pro safemode hack';
-$lang['ftp____pass']           = 'FTP heslo pro safemode hack';
-$lang['ftp____root']           = 'FTP kořenový adresář pro safemode hack';
 $lang['license_o_']            = 'Nic nevybráno';
 $lang['typography_o_0']        = 'vypnuto';
 $lang['typography_o_1']        = 'Pouze uvozovky';

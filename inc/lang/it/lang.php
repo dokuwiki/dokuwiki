@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Riccardo <riccardo.furlato@gmail.com>
+ * @author Stefano <stefano.stefano@gmail.com>
  * @author damiano <damiano@spagnuolo.eu>
  * @author Torpedo <dgtorpedo@gmail.com>
  * @author Giorgio Vecchiocattivi <giorgio@vecchio.it>
@@ -21,7 +23,6 @@
  * @author Francesco <francesco.cavalli@hotmail.com>
  * @author Fabio <fabioslurp@yahoo.it>
  * @author Maurizio <mcannavo@katamail.com>
- * @author Riccardo <riccardofila@gmail.com>
  * @author Paolo <paolopoz12@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -135,6 +136,11 @@ $lang['search_contains']       = 'Contiene';
 $lang['search_custom_match']   = 'Personalizza';
 $lang['search_any_ns']         = 'Qualsiasi spazio dei nomi';
 $lang['search_any_time']       = 'Ogni volta';
+$lang['search_past_7_days']    = 'scorsa settimana';
+$lang['search_past_month']     = 'scorso mese';
+$lang['search_past_year']      = 'scorso anno';
+$lang['search_sort_by_hits']   = 'ordinato per selezione';
+$lang['search_sort_by_mtime']  = 'ordinato per ultima modifica';
 $lang['regmissing']            = 'Devi riempire tutti i campi.';
 $lang['reguexists']            = 'Il nome utente inserito esiste già.';
 $lang['regsuccess']            = 'L\'utente è stato creato. La password è stata spedita via email.';

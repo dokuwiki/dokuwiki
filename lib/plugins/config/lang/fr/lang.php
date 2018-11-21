@@ -3,8 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Laurent Ponthieu <contact@coopindus.fr>
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Damien Regad <dregad@mantisbt.org>
- * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Michael Bohn <mjbohn@gmail.com>
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
@@ -182,12 +183,6 @@ $lang['proxy____user']         = 'Mandataire - Identifiant';
 $lang['proxy____pass']         = 'Mandataire - Mot de passe';
 $lang['proxy____ssl']          = 'Mandataire - Utilisation de SSL';
 $lang['proxy____except']       = 'Mandataire - Expression régulière de test des URLs pour lesquelles le mandataire (proxy) ne doit pas être utilisé.';
-$lang['safemodehack']          = 'Activer l\'option Mode sans échec';
-$lang['ftp____host']           = 'FTP / Mode sans échec - Serveur hôte';
-$lang['ftp____port']           = 'FTP / Mode sans échec - Port';
-$lang['ftp____user']           = 'FTP / Mode sans échec - Identifiant';
-$lang['ftp____pass']           = 'FTP / Mode sans échec - Mot de passe';
-$lang['ftp____root']           = 'FTP / Mode sans échec - Répertoire racine';
 $lang['license_o_']            = 'Aucune choisie';
 $lang['typography_o_0']        = 'aucun';
 $lang['typography_o_1']        = 'guillemets uniquement';

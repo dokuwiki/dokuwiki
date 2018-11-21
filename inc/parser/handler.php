@@ -1549,7 +1549,7 @@ class Doku_Handler_Table implements Doku_Handler_CallWriter_Interface {
                             // an empty one to avoid broken tables
                             $this->tableCalls[$key][0] = 'cdata';
                             $this->tableCalls[$key][1][0] = '';
-                            continue;
+                            break;
                         }
                         $this->tableCalls[$cellKey[$spanning_cell][$lastCell]][1][2]++;
 

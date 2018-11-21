@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Jürgen Fredriksson <jfriedrich@gmx.at>
  * @author Michael Bohn <mjbohn@gmail.com>
  * @author Joel Strasser <strasser999@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -159,6 +160,7 @@ $lang['xsendfile']             = 'Den X-Sendfile-Header nutzen, um Dateien direk
 $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wiki-Ausgabe.';
 $lang['renderer__core']        = '%s (DokuWiki Kern)';
 $lang['renderer__plugin']      = '%s (Plugin)';
+$lang['search_fragment']       = 'Spezifiziere das vorgegebenen Fragment-Suchverhalten';
 $lang['search_fragment_o_exact'] = 'genaue Treffer';
 $lang['search_fragment_o_starts_with'] = 'beginnt mit';
 $lang['search_fragment_o_ends_with'] = 'endet mit';
@@ -174,12 +176,6 @@ $lang['proxy____user']         = 'Proxy Benutzername';
 $lang['proxy____pass']         = 'Proxy Passwort';
 $lang['proxy____ssl']          = 'SSL bei Verbindung zum Proxy verwenden';
 $lang['proxy____except']       = 'Regulärer Ausdruck für URLs, bei denen kein Proxy verwendet werden soll';
-$lang['safemodehack']          = 'Safemodehack verwenden';
-$lang['ftp____host']           = 'FTP-Host für Safemodehack';
-$lang['ftp____port']           = 'FTP-Port für Safemodehack';
-$lang['ftp____user']           = 'FTP Benutzername für Safemodehack';
-$lang['ftp____pass']           = 'FTP Passwort für Safemodehack';
-$lang['ftp____root']           = 'FTP Wurzelverzeichnis für Safemodehack';
 $lang['license_o_']            = 'Keine gewählt';
 $lang['typography_o_0']        = 'keine';
 $lang['typography_o_1']        = 'ohne einfache Anführungszeichen';

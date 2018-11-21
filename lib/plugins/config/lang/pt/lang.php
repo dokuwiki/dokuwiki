@@ -3,11 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author José Vieira <jmsv63@gmail.com>
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
  * @author André Neves <drakferion@gmail.com>
- * @author José Campos zecarlosdecampos@gmail.com
+ * @author José Campos <zecarlosdecampos@gmail.com>
  * @author Paulo Carmino <contato@paulocarmino.com>
  * @author Alfredo Silva <alfredo.silva@sky.com>
  * @author Guilherme Sá <guilherme.sa@hotmail.com>
@@ -143,12 +144,6 @@ $lang['proxy____user']         = 'Nome de utilizador Proxy';
 $lang['proxy____pass']         = 'Password de Proxy ';
 $lang['proxy____ssl']          = 'Usar SSL para conectar ao proxy';
 $lang['proxy____except']       = 'Expressão regular para condizer URLs para os quais o proxy deve ser saltado.';
-$lang['safemodehack']          = 'Habilitar modo de segurança';
-$lang['ftp____host']           = 'Servidor FTP para o modo de segurança';
-$lang['ftp____port']           = 'Porta de FTP para o modo de segurança';
-$lang['ftp____user']           = 'Nome do utilizador FTP para o modo de segurança';
-$lang['ftp____pass']           = 'Senha do utilizador FTP para o modo de segurança';
-$lang['ftp____root']           = 'Directoria raiz do FTP para o modo de segurança';
 $lang['license_o_']            = 'Nenhuma escolha';
 $lang['typography_o_0']        = 'nenhum';
 $lang['typography_o_1']        = 'Apenas entre aspas';

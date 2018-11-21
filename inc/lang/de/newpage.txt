@@ -1,5 +1,3 @@
 ====== Dieses Thema existiert noch nicht ======
 
-Sie sind einem Link zu einer Seite gefolgt, die noch nicht existiert. Sie können die Seite mit dem Knopf **"[Seite anlegen]"** selbst anlegen und mit Inhalt füllen.
-
-
+Sie sind einem Link zu einer Seite gefolgt, die noch nicht existiert. Sie können die Seite mit dem Knopf **Seite anlegen** selbst anlegen und mit Inhalt füllen.

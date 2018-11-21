@@ -1,4 +1,3 @@
 ====== Áttekintő (index) ======
 
-Az összes elérhető oldal áttekintése [[doku>namespaces|névterek]] szerint rendezve.
-
+Az összes elérhető oldal áttekintése [[doku>hu:namespaces|névterek]] szerint rendezve.

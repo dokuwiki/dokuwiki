@@ -3,13 +3,14 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Katerina Katapodi <extragold1234@hotmail.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
  * @author Konstantinos Koryllos <koryllos@gmail.com>
  * @author George Petsagourakis <petsagouris@gmail.com>
  * @author Petros Vidalis <pvidalis@gmail.com>
- * @author Vasileios Karavasilis vasileioskaravasilis@gmail.com
+ * @author Vasileios Karavasilis <vasileioskaravasilis@gmail.com>
  * @author Zacharias Sdregas <zsdregas@sch.gr>
  */
 $lang['menu']                  = 'Ρυθμίσεις';
@@ -85,7 +86,9 @@ $lang['disableactions']        = 'Απενεργοποίηση λειτουργ�
 $lang['disableactions_check']  = 'Έλεγχος';
 $lang['disableactions_subscription'] = 'Εγγραφή/Διαγραφή χρήστη';
 $lang['disableactions_wikicode'] = 'Προβολή κώδικα σελίδας';
+$lang['disableactions_profile_delete'] = 'Διαγραφή Λογαριασμού ';
 $lang['disableactions_other']  = 'Άλλες λειτουργίες (διαχωρίστε τις με κόμμα)';
+$lang['disableactions_rss']    = 'XML Ομαδοποίηση (RSS)';
 $lang['auth_security_timeout'] = 'Διάρκεια χρόνου για ασφάλεια πιστοποίησης (δευτερόλεπτα)';
 $lang['securecookie']          = 'Τα cookies που έχουν οριστεί μέσω HTTPS πρέπει επίσης να αποστέλλονται μόνο μέσω HTTPS από τον φυλλομετρητή? Απενεργοποιήστε αυτή την επιλογή όταν μόνο η είσοδος στο wiki σας διασφαλίζεται μέσω SSL αλλά η περιήγηση γίνεται και χωρίς αυτό.';
 $lang['remote']                = 'Ενεργοποίησης απομακρυσμένης προγραμματιστικής διεπαφής εφαρμογών (API). Με αυτό τον τρόπο επιτρέπεται η πρόσβαση στο wiki με το XML-RPC ή με άλλα πρωτόκολλα επικοινωνίας.';
@@ -116,6 +119,7 @@ $lang['subscribe_time']        = 'Χρόνος μετά τον οποίο οι �
 $lang['notify']                = 'Αποστολή ενημέρωσης για αλλαγές σε αυτή την e-mail διεύθυνση';
 $lang['registernotify']        = 'Αποστολή ενημερωτικών μηνυμάτων σε αυτή την e-mail διεύθυνση κατά την εγγραφή νέων χρηστών';
 $lang['mailfrom']              = 'e-mail διεύθυνση αποστολέα για μηνύματα από την εφαρμογή';
+$lang['mailreturnpath']        = 'Διεύθυνση ηλεκτρονικού ταχυδρομείου λήπτη για μηνύματα που δεν έλαβε';
 $lang['mailprefix']            = 'Πρόθεμα θέματος που να χρησιμοποιείται για τα αυτόματα μηνύματα ηλεκτρονικού ταχυδρομείου.';
 $lang['htmlmail']              = 'Αποστολή οπτικά καλύτερου, αλλά μεγαλύτερου σε μέγεθος email με χρήση HTML. Απενεργοποιήστε το για αποστέλλονται μόνο email απλού κειμένου.';
 $lang['sitemap']               = 'Δημιουργία Google sitemap (ημέρες)';
@@ -125,6 +129,9 @@ $lang['rss_content']           = 'Τι να εμφανίζεται στα XML fe
 $lang['rss_update']            = 'Χρόνος ανανέωσης XML feed (sec)';
 $lang['rss_show_summary']      = 'Να εμφανίζεται σύνοψη του XML feed στον τίτλο';
 $lang['rss_media']             = 'Τι είδους αλλαγές πρέπει να εμφανίζονται στο XLM feed;';
+$lang['rss_media_o_both']      = 'αμφότεροι';
+$lang['rss_media_o_pages']     = 'σελίδες';
+$lang['rss_media_o_media']     = 'μέσα ενημέρωσης ';
 $lang['updatecheck']           = 'Έλεγχος για ύπαρξη νέων εκδόσεων και ενημερώσεων ασφαλείας της εφαρμογής? Απαιτείται η σύνδεση με το update.dokuwiki.org για να λειτουργήσει σωστά αυτή η επιλογή.';
 $lang['userewrite']            = 'Χρήση ωραίων URLs';
 $lang['useslash']              = 'Χρήση slash σαν διαχωριστικό φακέλων στα URLs';
@@ -149,12 +156,6 @@ $lang['proxy____user']         = 'Όνομα χρήστη Proxy';
 $lang['proxy____pass']         = 'Κωδικός χρήστη Proxy';
 $lang['proxy____ssl']          = 'Χρήση ssl για σύνδεση με διακομιστή Proxy';
 $lang['proxy____except']       = 'Regular expression για να πιάνει τα URLs για τα οποία θα παρακάμπτεται το proxy.';
-$lang['safemodehack']          = 'Ενεργοποίηση safemode hack';
-$lang['ftp____host']           = 'Διακομιστής FTP για safemode hack';
-$lang['ftp____port']           = 'Θύρα FTP για safemode hack';
-$lang['ftp____user']           = 'Όνομα χρήστη FTP για safemode hack';
-$lang['ftp____pass']           = 'Κωδικός χρήστη FTP για safemode hack';
-$lang['ftp____root']           = 'Αρχικός φάκελος FTP για safemode hack';
 $lang['license_o_']            = 'Δεν επελέγει άδεια';
 $lang['typography_o_0']        = 'κανένα';
 $lang['typography_o_1']        = 'μόνο διπλά εισαγωγικά';

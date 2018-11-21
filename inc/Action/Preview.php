@@ -29,29 +29,13 @@ class Preview extends Edit {
      * Saves a draft on preview
      */
     protected function savedraft() {
-        global $INFO;
-        global $ID;
-        global $INPUT;
-        global $conf;
-
-        if(!$conf['usedraft']) return;
-        if(!$INPUT->post->has('wikitext')) return;
-
-        // ensure environment (safeguard when used via AJAX)
-        assert(isset($INFO['client']), 'INFO.client should have been set');
-        assert(isset($ID), 'ID should have been set');
-
-        $draft = array(
-            'id' => $ID,
-            'prefix' => substr($INPUT->post->str('prefix'), 0, -1),
-            'text' => $INPUT->post->str('wikitext'),
-            'suffix' => $INPUT->post->str('suffix'),
-            'date' => $INPUT->post->int('date'),
-            'client' => $INFO['client'],
-        );
-        $cname = getCacheName($draft['client'] . $ID, '.draft');
-        if(io_saveFile($cname, serialize($draft))) {
-            $INFO['draft'] = $cname;
+        global $ID, $INFO;
+        $draft = new \dokuwiki\Draft($ID, $INFO['client']);
+        if (!$draft->saveDraft()) {
+            $errors = $draft->getErrors();
+            foreach ($errors as $error) {
+                msg(hsc($error), -1);
+            }
         }
     }
 

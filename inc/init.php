@@ -114,13 +114,21 @@ if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5(DOKU_REL.(($conf['se
 // define main script
 if(!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT','doku.php');
 
-// DEPRECATED, use tpl_basedir() instead
-if(!defined('DOKU_TPL')) define('DOKU_TPL',
-        DOKU_BASE.'lib/tpl/'.$conf['template'].'/');
+if(!defined('DOKU_TPL')) {
+    /**
+     * @deprecated 2012-10-13 replaced by more dynamic method
+     * @see tpl_basedir()
+     */
+    define('DOKU_TPL', DOKU_BASE.'lib/tpl/'.$conf['template'].'/');
+}
 
-// DEPRECATED, use tpl_incdir() instead
-if(!defined('DOKU_TPLINC')) define('DOKU_TPLINC',
-        DOKU_INC.'lib/tpl/'.$conf['template'].'/');
+if(!defined('DOKU_TPLINC')) {
+    /**
+     * @deprecated 2012-10-13 replaced by more dynamic method
+     * @see tpl_incdir()
+     */
+    define('DOKU_TPLINC', DOKU_INC.'lib/tpl/'.$conf['template'].'/');
+}
 
 // make session rewrites XHTML compliant
 @ini_set('arg_separator.output', '&amp;');
@@ -551,7 +559,7 @@ EOT;
 function fullpath($path,$exists=false){
     static $run = 0;
     $root  = '';
-    $iswin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' || @$GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS']);
+    $iswin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' || !empty($GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS']));
 
     // find the (indestructable) root of the path - keeps windows stuff intact
     if($path{0} == '/'){
