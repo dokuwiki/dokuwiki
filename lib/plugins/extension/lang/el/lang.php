@@ -5,6 +5,36 @@
  *
  * @author Katerina Katapodi <extragold1234@hotmail.com>
  */
+$lang['unknownversion']        = 'Άγνωστη εκδοχή ';
+$lang['btn_info']              = 'Προβάλλετε περισσότερες πληροφορίες';
+$lang['btn_update']            = 'Ενημέρωση';
+$lang['btn_uninstall']         = 'Ακύρωση εγκατάστασης';
+$lang['btn_enable']            = 'Ενεργοποίηση';
+$lang['btn_disable']           = 'Απενεργοποίηση';
+$lang['btn_install']           = 'Ρύθμιση, εγκατάσταση';
+$lang['btn_reinstall']         = 'Εγκαταστήστε ξανά';
+$lang['js']['reallydel']       = 'Θέλετε οπωσδήποτε να ακυρώσετε αυτήν την προέκταση?';
+$lang['js']['display_viewoptions'] = 'Επιλογές:';
+$lang['js']['display_enabled'] = 'ενεργοποίηση';
+$lang['js']['display_disabled'] = 'απενεργοποίηση';
+$lang['js']['display_updatable'] = 'πρέπει να ενημερωθεί';
+$lang['search_for']            = 'Προέκταση Αναζήτησης';
+$lang['search']                = 'Αναζήτηση';
+$lang['extensionby']           = '<strong>%s</strong> από %s	';
+$lang['screenshot']            = 'Εικονίδιο %s	';
+$lang['popularity']            = 'Φήμη: %s%%';
+$lang['homepage_link']         = 'Έγγραφα ';
+$lang['bugs_features']         = 'Λάθη';
+$lang['tags']                  = 'Tags ';
+$lang['author_hint']           = 'Αναζητήστε περαιτέρω από αυτόν τον συγγραφέα';
+$lang['installed']             = 'Εγκατάσταση:';
+$lang['downloadurl']           = 'Κατεβάστε URL:';
+$lang['repository']            = 'Χώρος αρχείων';
+$lang['unknown']               = '<em>άγνωστο</em>	';
+$lang['installed_version']     = 'Μορφή εγκατάστασης:';
+$lang['install_date']          = 'Η τελευταία σας ενημέρωση:';
+$lang['available_version']     = 'Διαθέσιμη μορφή;';
+$lang['compatible']            = 'Συμβατό με:';
 $lang['depends']               = 'Εξαρτάται από:';
 $lang['similar']               = 'Όμοιο με : ';
 $lang['conflicts']             = 'Αντιτίθεται στο:';
