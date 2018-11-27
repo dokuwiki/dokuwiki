@@ -29,7 +29,7 @@ class Sitemap extends AbstractAction {
         global $conf;
 
         if($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) {
-            throw new FatalException(404, 'Sitemap generation is disabled');
+            throw new FatalException('Sitemap generation is disabled', 404);
         }
 
         $sitemap = \Sitemapper::getFilePath();
@@ -59,7 +59,7 @@ class Sitemap extends AbstractAction {
             exit;
         }
 
-        throw new FatalException(500, 'Could not read the sitemap file - bad permissions?');
+        throw new FatalException('Could not read the sitemap file - bad permissions?');
     }
 
 }
