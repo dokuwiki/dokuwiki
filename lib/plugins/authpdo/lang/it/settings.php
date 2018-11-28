@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eddy <eddy@mail.it>
  * @author Riccardo <riccardo.furlato@gmail.com>
  */
 $lang['debug']                 = 'Stampa messaggi di errore dettagliati. Dovrebbe essere disabilitato dopo l\'installazione.';
@@ -22,3 +23,4 @@ $lang['update-user-pass']      = 'Istruzione SQL per aggiornare la password di u
 $lang['insert-group']          = 'Istruzione SQL per inserire un nuovo gruppo nel database';
 $lang['join-group']            = 'Istruzione SQL per aggiungere un utente ad un gruppo esistente';
 $lang['leave-group']           = 'Istruzione SQL per rimuovere un utente da un gruppo';
+$lang['check-pass']            = 'Istruzione SQL per cercare la password di un utente. Può essere omessa se l\'informazioni sulla password è recuperate dalla selezione utente.';
