@@ -333,7 +333,7 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
 
     $item = array();
     $item['id']   = pathID($file);
-    if(isset($opts['skipacl']) && !$opts['skipacl'] && auth_quickaclcheck($item['id']) < AUTH_READ){
+    if(empty($opts['skipacl']) && auth_quickaclcheck($item['id']) < AUTH_READ){
         return false;
     }
 
