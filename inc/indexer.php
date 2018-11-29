@@ -567,6 +567,28 @@ class Doku_Indexer {
     }
 
     /**
+     * Clear the given key from the index.
+     *
+     * @param string $key The metadata key
+     * @return bool If the key has been cleared successfully
+     */
+    public function clearMetaKey($key) {
+        global $conf;
+
+        $keyidx = array_diff($this->getIndex('metadata', ''), array($key));
+        $this->saveIndex('metadata', '', $keyidx);
+
+        if (!$this->lock()) return false;
+
+        @unlink($conf['indexdir'].'/'.$key.'_i.idx');
+        @unlink($conf['indexdir'].'/'.$key.'_p.idx');
+        @unlink($conf['indexdir'].'/'.$key.'_w.idx');
+
+        $this->unlock();
+        return true;
+    }
+
+    /**
      * Split the text into words for fulltext search
      *
      * TODO: does this also need &$stopwords ?
