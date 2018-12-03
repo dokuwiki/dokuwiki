@@ -686,7 +686,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
         $data = array();
         search($data,$conf['mediadir'],'search_media',
                 array('showmsg'=>true,'depth'=>1),$dir,1,$sort);
-        // How many items to list per page
+		// How many items to list per page
 		$nItemsPerPage = 50;
 		// amount of files
 		$item_count = count($data);
@@ -705,8 +705,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
             if ($fullscreenview) {
                 echo '<ul class="' . _media_get_list_type() . '">';
             }
-            
-            foreach( array_slice( $data, $nItemsPerPage*($page-1), $nItemsPerPage) as $item){
+			foreach( array_slice( $data, $nItemsPerPage*($page-1), $nItemsPerPage) as $item){
                 if (!$fullscreenview) {
                     media_printfile($item,$auth,$jump);
                 } else {
@@ -714,8 +713,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
                 }
             }
             if ($fullscreenview) echo '</ul>'.NL;
-            
-            // Previous Button
+			// Previous Button
 			$previous  = '';
 			$previous  .= '<div>';
 			if($_GET['page'] > 1)
