@@ -737,7 +737,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
 			$next .= '</a>';
 			// Files Amount
 			$file_amount  = '';
-			$file_amount .= '<span> ' .count($data).' Files</span>';
+			$file_amount .= '<span> ' .$item_count.' Files</span>';
 			// Page Amount
 			$page_amount  = '';
 			$page_amount .= '<span> ' .$max_pages.' Pages</span></div>';
