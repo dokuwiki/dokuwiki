@@ -715,25 +715,34 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
 		if ($fullscreenview) echo '</ul>'.NL;
 			// Previous Button
 			$previous  = '';
-			if($_GET['page'] > 1)
-			if (!($INPUT->str('do') == 'media'))
-			$previous .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.$ns.'&page='.($_GET['page']-1).'">';
-			else $previous .= '<a href="'.media_managerURL(array('ns' => idfilter($ns, false), 'tab_files' => 'files', 'page' => ($_GET['page']-1))).'">';
+			if($_GET['page'] > 1){
+				if (!($INPUT->str('do') == 'media')){
+				$previous .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.$ns.'&page='.($_GET['page']-1).'">';
+				}else{
+				$previous .= '<a href="'.media_managerURL(array('ns' => idfilter($ns, false), 'tab_files' => 'files', 'page' => ($_GET['page']-1))).'">';
+				}
 			$previous .= 'Previous';
 			$previous .= '</a>';
+			}
 			// Next Button
 			$next  = '';
-			if($_GET['page'] < $max_pages)
-			if($_GET['page'] == 0) // the page=1 url doesn't show up at first so need to count from 2 at the beginning.
-			if (!($INPUT->str('do') == 'media'))
-			$next .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.$ns.'&page='. ($_GET['page']+2).'">';
-			else $next .= '<a href="'.media_managerURL(array('ns' => idfilter($ns, false), 'tab_files' => 'files', 'page' => ($_GET['page']+2))).'">';
-			else
-			if (!($INPUT->str('do') == 'media'))
-			$next .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.$ns.'&page='. ($_GET['page']+1).'" class="idx_dir">';
-			else $next .= '<a href="'.media_managerURL(array('ns' => idfilter($ns, false), 'tab_files' => 'files', 'page' => ($_GET['page']+1))).'"">';
+			if($_GET['page'] < $max_pages){
+			if($_GET['page'] == 0){ // the page=1 url doesn't show up at first so need to count from 2 at the beginning.
+				if (!($INPUT->str('do') == 'media')){
+				$next .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.$ns.'&page='. ($_GET['page']+2).'">';
+				}else{
+				$next .= '<a href="'.media_managerURL(array('ns' => idfilter($ns, false), 'tab_files' => 'files', 'page' => ($_GET['page']+2))).'">';
+				}
+			}else{
+				if (!($INPUT->str('do') == 'media')){
+				$next .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.$ns.'&page='. ($_GET['page']+1).'" class="idx_dir">';
+				}else{ 
+				$next .= '<a href="'.media_managerURL(array('ns' => idfilter($ns, false), 'tab_files' => 'files', 'page' => ($_GET['page']+1))).'"">';
+				}
+			}
 			$next .= ' Next';
 			$next .= '</a>';
+			}
 			// Files Amount
 			$file_amount  = '';
 			$file_amount .= '<span> ' .$item_count.' Files</span>';
