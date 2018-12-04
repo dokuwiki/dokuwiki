@@ -719,7 +719,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
 			if($_GET['page'] > 1)
 			if (!($INPUT->str('do') == 'media'))
 			$previous .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.$ns.'&page='.($_GET['page']-1).'" class="idx_dir">';
-			else $previous .= '<a href="'.media_managerURL(array('ns' => idfilter($ns, false), 'tab_files' => 'files', 'page' => ($_GET['page']+1))).'" class="idx_dir">';
+			else $previous .= '<a href="'.media_managerURL(array('ns' => idfilter($ns, false), 'tab_files' => 'files', 'page' => ($_GET['page']-1))).'" class="idx_dir">';
 			$previous .= 'Previous';
 			$previous .= '</a>';
 			// Next Button
@@ -741,7 +741,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
 			// Page Amount
 			$page_amount  = '';
 			$page_amount .= '<span> ' .$max_pages.' Pages</span></div>';
-			// Call the data
+			// Call the data 
 			echo $previous;
 			echo $next;
 			echo $file_amount;
