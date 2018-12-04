@@ -685,8 +685,6 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
         $dir = utf8_encodeFN(str_replace(':','/',$ns));
         $data = array();
         search($data,$conf['mediadir'],'search_media',
-			 array('showmsg'=>true,'depth'=>1),$dir,1,$sort);
-				if(!count($data)){
                 array('showmsg'=>true,'depth'=>1),$dir,1,$sort);		
 		// How many items to list per page
 		$nItemsPerPage = 50;
@@ -701,7 +699,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
             'min_range' => 1,
 			),
 		)));
-        if(!$count($data)){
+        if(!$item_count){
             echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
         }else {
             if ($fullscreenview) {
