@@ -688,7 +688,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
                 array('showmsg'=>true,'depth'=>1),$dir,1,$sort);		
 		// How many items to list per page
 		$nItemsPerPage = 50;
-		// amount of comments made
+		// amount of files.
 		$item_count = empty($data) ? 0 : count($data);
 		// How many pages will there be
 		$max_pages = ceil($item_count / $nItemsPerPage);
@@ -712,6 +712,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
                     media_printfile_thumbs($item,$auth,$jump);
                 }
             }
+		if ($fullscreenview) echo '</ul>'.NL;
 			// Previous Button
 			$previous  = '';
 			if($_GET['page'] > 1)
