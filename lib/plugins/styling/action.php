@@ -41,7 +41,9 @@ class action_plugin_styling extends DokuWiki_Action_Plugin {
         global $ACT;
         global $INPUT;
         if($ACT != 'admin' || $INPUT->str('page') != 'styling') return;
-        if(!auth_isadmin()) return;
+        /** @var admin_plugin_styling $admin */
+        $admin = plugin_load('admin', 'styling');
+        if(!$admin->isAccessibleByCurrentUser()) return;
 
         // set preview
         $len = count($event->data['link']);

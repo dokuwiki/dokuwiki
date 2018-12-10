@@ -32,7 +32,9 @@ class template_pagetitle_test extends DokuWikiTest {
     }
 
     function test_adminPluginTitle() {
-        global $ID,$ACT,$INPUT,$conf;
+        global $ID,$ACT,$INPUT,$conf,$INFO;
+        $INFO['isadmin'] = true;
+        $INFO['ismanager'] = true;
 
         if (!plugin_load('admin','revert')) {
             $this->markTestSkipped('Revert plugin not found, unable to test admin plugin titles');
