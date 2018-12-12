@@ -76,7 +76,7 @@ function css_out(){
             $files = array_merge($files, $styleini['stylesheets'][$mediatype]);
         }
         // load user styles
-        if(is_array($config_cascade['userstyle'][$mediatype]) && count($config_cascade['userstyle'][$mediatype])>0) {
+        if(is_array($config_cascade['userstyle'][$mediatype])) {
             foreach($config_cascade['userstyle'][$mediatype] as $userstyle) {
                 $files[$userstyle] = DOKU_BASE;
             }
