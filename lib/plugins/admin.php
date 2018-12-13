@@ -78,8 +78,6 @@ class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
      * @return bool true if the current user may access this admin plugin
      */
     public function isAccessibleByCurrentUser() {
-        global $INFO;
-
         $data = [];
         $data['instance'] = $this;
         $data['hasAccess'] = false;
@@ -87,9 +85,9 @@ class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
         $event = new Doku_Event('ADMINPLUGIN_ACCESS_CHECK', $data);
         if($event->advise_before()) {
             if ($this->forAdminOnly()) {
-                $data['hasAccess'] = $INFO['isadmin'];
+                $data['hasAccess'] = auth_isadmin();
             } else {
-                $data['hasAccess'] = $INFO['ismanager'];
+                $data['hasAccess'] = auth_ismanager();
             }
         }
         $event->advise_after();
