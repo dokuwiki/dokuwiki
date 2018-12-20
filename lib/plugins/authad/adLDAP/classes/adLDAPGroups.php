@@ -427,6 +427,13 @@ class adLDAPGroups {
         $sr = ldap_search($this->adldap->getLdapConnection(), $this->adldap->getBaseDn(), $filter, $fields);
         $entries = ldap_get_entries($this->adldap->getLdapConnection(), $sr);
 
+       // search for groups in the given group controller as well
+        if($this->adldap->getLdapGroupBind()) {
+            $srGroup = ldap_search($this->adldap->getLdapGroupConnection(), $this->adldap->getGroupBaseDn(), $filter, $fields);
+            $groupEntries = ldap_get_entries($this->adldap->getLdapGroupConnection(), $srGroup);
+            $entries = array_merge($groupEntries, $entries);
+        }
+
         return $entries;
     }
     

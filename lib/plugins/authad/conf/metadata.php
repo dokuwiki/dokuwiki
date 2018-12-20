@@ -1,8 +1,12 @@
 <?php
 
 $meta['account_suffix']     = array('string','_caution' => 'danger');
+$meta["admin_account_prefix"] = array('string','_caution' => 'danger');
+$meta["admin_account_suffix"] = array('string','_caution' => 'danger');
 $meta['base_dn']            = array('string','_caution' => 'danger');
 $meta['domain_controllers'] = array('string','_caution' => 'danger');
+$meta['groups_base_dn']            = array('string','_caution' => 'danger');
+$meta['groups_domain_controllers'] = array('string','_caution' => 'danger');
 $meta['sso']                = array('onoff','_caution' => 'danger');
 $meta['sso_charset']        = array('string','_caution' => 'danger');
 $meta['admin_username']     = array('string','_caution' => 'danger');
@@ -15,3 +19,12 @@ $meta['expirywarn']         = array('numeric', '_min'=>0,'_caution' => 'danger')
 $meta['additional']         = array('string','_caution' => 'danger');
 $meta['update_name']        = array('onoff','_caution' => 'danger');
 $meta['update_mail']        = array('onoff','_caution' => 'danger');
+$meta['option_deref']       = array('numeric', '_min'=>0,'_caution' => 'danger');
+$meta['option_sizelimit']   = array('numeric', '_min'=>0,'_caution' => 'danger');
+$meta['option_timelimit']   = array('numeric', '_min'=>0,'_caution' => 'danger');
+$meta['option_network_timeout'] = array('numeric', '_min'=>0,'_caution' => 'danger');
+$meta['option_error_number'] = array('numeric', '_min'=>0,'_caution' => 'danger');
+$meta['option_restart']     = array('onoff','_caution' => 'danger');
+$meta['option_hostname']    = array('string','_caution' => 'danger');
+$meta['option_error_string'] = array('string','_caution' => 'danger');
+$meta['option_matched_dn']  = array('string','_caution' => 'danger');

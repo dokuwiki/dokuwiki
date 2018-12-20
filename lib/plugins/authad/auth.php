@@ -21,6 +21,10 @@ require_once(DOKU_PLUGIN.'authad/adLDAP/classes/adLDAPUtils.php');
  *   $conf['plugin']['authad']['domain_controllers'] = 'srv1.domain.org,srv2.domain.org';
  *
  *   //optional:
+ *   $conf['plugin']['authad']["admin_account_prefix"] = '';
+ *   $conf['plugin']['authad']["admin_account_suffix"] = '';
+ *   $conf['plugin']['authad']["groups_domain_controllers"] = 'srv1.domain.org,srv2.domain.org';
+ *   $conf['plugin']['authad']['groups_base_dn']            = 'DC=my,DC=domain,DC=org';
  *   $conf['plugin']['authad']['sso']                = 1;
  *   $conf['plugin']['authad']['admin_username']     = 'root';
  *   $conf['plugin']['authad']['admin_password']     = 'pass';
@@ -639,6 +643,12 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $opts['domain_controllers'] = array_map('trim', $opts['domain_controllers']);
         $opts['domain_controllers'] = array_filter($opts['domain_controllers']);
 
+        // handle multiple AD Group search servers
+        if($opts['groups_domain_controllers']) {
+            $opts['groups_domain_controllers'] = explode(',', $opts['groups_domain_controllers']);
+            $opts['groups_domain_controllers'] = array_map('trim', $opts['groups_domain_controllers']);
+            $opts['groups_domain_controllers'] = array_filter($opts['groups_domain_controllers']);
+        }
         // compatibility with old option name
         if(empty($opts['admin_username']) && !empty($opts['ad_username'])) $opts['admin_username'] = $opts['ad_username'];
         if(empty($opts['admin_password']) && !empty($opts['ad_password'])) $opts['admin_password'] = $opts['ad_password'];
