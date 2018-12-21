@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Royalcellyt anthem full gameplay <jamikafaircloth@yahoo.de>
  * @author Alex Cachinero <anarres@protonmail.com>
  * @author WIRESLINKEA <wireslinkea@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
@@ -47,111 +48,213 @@
  * @author David Roy <davidroyapp@gmail.com>
  * @author Enny Rodriguez <aquilez.4@gmail.com>
  */
-$lang['encoding']              = 'utf-8';
-$lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '“';
-$lang['doublequoteclosing']    = '”';
-$lang['singlequoteopening']    = '‘';
-$lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '’';
-$lang['btn_edit']              = 'Editar esta página';
-$lang['btn_source']            = 'Ver la fuente de esta página';
-$lang['btn_show']              = 'Ver página';
-$lang['btn_create']            = 'Crear esta página';
+$lang['encoding']              = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists of nice 
+information.';
+$lang['direction']             = 'Hi there to every , because I am in fact eager of 
+reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['doublequoteopening']    = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['doublequoteclosing']    = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a 
+regular basis. It consists of nice information.';
+$lang['singlequoteopening']    = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice information.';
+$lang['singlequoteclosing']    = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['apostrophe']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['btn_edit']              = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['btn_source']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['btn_show']              = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['btn_create']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
 $lang['btn_search']            = 'Buscar';
-$lang['btn_save']              = 'Guardar';
-$lang['btn_preview']           = 'Previsualización';
-$lang['btn_top']               = 'Volver arriba';
-$lang['btn_newer']             = '<< más reciente';
-$lang['btn_older']             = 'menos reciente >>';
-$lang['btn_revs']              = 'Revisiones antiguas';
-$lang['btn_recent']            = 'Cambios recientes';
-$lang['btn_upload']            = 'Cargar';
-$lang['btn_cancel']            = 'Cancelar';
-$lang['btn_index']             = 'Índice';
-$lang['btn_secedit']           = 'Editar';
-$lang['btn_login']             = 'Conectarse';
-$lang['btn_logout']            = 'Desconectarse';
-$lang['btn_admin']             = 'Administrar';
-$lang['btn_update']            = 'Actualizar';
-$lang['btn_delete']            = 'Borrar';
-$lang['btn_back']              = 'Atrás';
-$lang['btn_backlink']          = 'Enlaces a esta página';
-$lang['btn_subscribe']         = 'Suscribirse a cambios de la página';
-$lang['btn_profile']           = 'Actualizar perfil';
-$lang['btn_reset']             = 'Restablecer';
-$lang['btn_resendpwd']         = 'Establecer nueva contraseña';
-$lang['btn_draft']             = 'Editar borrador';
-$lang['btn_recover']           = 'Recuperar borrador';
-$lang['btn_draftdel']          = 'Eliminar borrador';
-$lang['btn_revert']            = 'Restaurar';
-$lang['btn_register']          = 'Registrarse';
-$lang['btn_apply']             = 'Aplicar';
-$lang['btn_media']             = 'Administrador de Ficheros';
-$lang['btn_deleteuser']        = 'Elimina Mi Cuenta';
-$lang['btn_img_backto']        = 'Volver a %s';
-$lang['btn_mediaManager']      = 'Ver en el administrador de ficheros';
-$lang['loggedinas']            = 'Conectado como:';
-$lang['user']                  = 'Usuario';
-$lang['pass']                  = 'Contraseña';
-$lang['newpass']               = 'Nueva contraseña';
-$lang['oldpass']               = 'Confirma tu contraseña actual';
-$lang['passchk']               = 'otra vez';
-$lang['remember']              = 'Recordarme';
-$lang['fullname']              = 'Nombre real';
-$lang['email']                 = 'E-Mail';
-$lang['profile']               = 'Perfil del usuario';
-$lang['badlogin']              = 'Lo siento, el usuario o la contraseña es incorrecto.';
-$lang['badpassconfirm']        = 'Lo siento, la contraseña es errónea';
-$lang['minoredit']             = 'Cambios menores';
-$lang['draftdate']             = 'Borrador guardado automáticamente:';
-$lang['nosecedit']             = 'La página ha cambiado en el lapso, la información de sección estaba anticuada, en su lugar se cargó la página completa.';
+$lang['btn_save']              = '1';
+$lang['btn_preview']           = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice information.';
+$lang['btn_top']               = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of 
+nice information.';
+$lang['btn_newer']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['btn_older']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['btn_revs']              = 'Hi there to every , because I am in fact eager 
+of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['btn_recent']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['btn_upload']            = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice information.';
+$lang['btn_cancel']            = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice information.';
+$lang['btn_index']             = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists of 
+nice information.';
+$lang['btn_secedit']           = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis. It consists of nice information.';
+$lang['btn_login']             = 'Jamika';
+$lang['btn_logout']            = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice information.';
+$lang['btn_admin']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['btn_update']            = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice 
+information.';
+$lang['btn_delete']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice 
+information.';
+$lang['btn_back']              = 'Hi there to every , because I am in fact eager 
+of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['btn_backlink']          = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis. It consists of nice information.';
+$lang['btn_subscribe']         = '0';
+$lang['btn_profile']           = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['btn_reset']             = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['btn_resendpwd']         = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists 
+of nice information.';
+$lang['btn_draft']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a 
+regular basis. It consists of nice information.';
+$lang['btn_recover']           = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['btn_draftdel']          = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['btn_revert']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['btn_register']          = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['btn_apply']             = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice information.';
+$lang['btn_media']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated 
+on a regular basis. It consists of nice information.';
+$lang['btn_deleteuser']        = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['btn_img_backto']        = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['btn_mediaManager']      = 'Hi there to every , because I am in fact eager 
+of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['loggedinas']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['user']                  = 'Royalcellyt anthem full gameplay';
+$lang['pass']                  = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be 
+updated on a regular basis. It consists of nice information.';
+$lang['newpass']               = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['oldpass']               = 'Hi there to every , because I am in fact eager of 
+reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['passchk']               = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a 
+regular basis. It consists of nice information.';
+$lang['remember']              = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['fullname']              = 'Jamika Faircloth';
+$lang['email']                 = 'jamikafaircloth@yahoo.de';
+$lang['profile']               = 'Jamika';
+$lang['badlogin']              = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of 
+nice information.';
+$lang['badpassconfirm']        = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['minoredit']             = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It 
+consists of nice information.';
+$lang['draftdate']             = '1';
+$lang['nosecedit']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
 $lang['searchcreatepage']      = 'Si no encontró lo que estaba buscando, puede crear o editar la página %s, nombrada después de su consulta.';
 $lang['search_fullresults']    = 'Resultados de texto completo';
 $lang['js']['search_toggle_tools'] = 'Alternar herramientas de búsqueda';
-$lang['js']['willexpire']      = 'El bloqueo para la edición de esta página expira en un minuto.\nPAra prevenir conflictos uso el botón Previsualizar para restaurar el contador de bloqueo.';
-$lang['js']['notsavedyet']     = 'Los cambios que no se han guardado se perderán.
-¿Realmente quieres continuar?';
+$lang['js']['willexpire']      = 'I\'m Jamika and I live in a seaside city in northern United States, Burr Ridge. I\'m 31 and I\'m will soon finish my study at Latin American Studies.';
+$lang['js']['notsavedyet']     = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists of nice information.';
 $lang['js']['searchmedia']     = 'Buscar archivos';
-$lang['js']['keepopen']        = 'Mantener la ventana abierta luego de seleccionar';
-$lang['js']['hidedetails']     = 'Ocultar detalles';
-$lang['js']['mediatitle']      = 'Configuración del vínculo';
-$lang['js']['mediadisplay']    = 'Tipo de vínculo';
-$lang['js']['mediaalign']      = 'Alineación';
-$lang['js']['mediasize']       = 'Tamaño de la imagen';
-$lang['js']['mediatarget']     = 'Destino del vínculo';
-$lang['js']['mediaclose']      = 'Cerrar';
-$lang['js']['mediainsert']     = 'Insertar';
+$lang['js']['keepopen']        = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated 
+on a regular basis. It consists of nice 
+information.';
+$lang['js']['hidedetails']     = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['js']['mediatitle']      = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['js']['mediadisplay']    = 'Comment-Contextual/Anchor text';
+$lang['js']['mediaalign']      = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be 
+updated on a regular basis. It consists of nice information.';
+$lang['js']['mediasize']       = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice information.';
+$lang['js']['mediatarget']     = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['js']['mediaclose']      = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists of nice information.';
+$lang['js']['mediainsert']     = 'Hi there to every , because I am in fact eager 
+of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
 $lang['js']['mediadisplayimg'] = 'Mostrar la imagen.';
-$lang['js']['mediadisplaylnk'] = 'Mostrar solo el vínculo.';
-$lang['js']['mediasmall']      = 'Versión en tamaño pequeño';
-$lang['js']['mediamedium']     = 'Versión en tamaño medio';
-$lang['js']['medialarge']      = 'Versión en tamaño grande';
-$lang['js']['mediaoriginal']   = 'Versión original';
-$lang['js']['medialnk']        = 'Vínculo a la pagina de descripción';
-$lang['js']['mediadirect']     = 'Vínculo al original';
-$lang['js']['medianolnk']      = 'Sin vínculo';
-$lang['js']['medianolink']     = 'No vincular la imagen';
-$lang['js']['medialeft']       = 'Alinear imagen a la izquierda';
-$lang['js']['mediaright']      = 'Alinear imagen a la derecha.';
-$lang['js']['mediacenter']     = 'Alinear imagen en el centro.';
-$lang['js']['medianoalign']    = 'No use alineación.';
-$lang['js']['nosmblinks']      = 'El enlace a recursos compartidos de Windows sólo funciona en Microsoft Internet Explorer.
-Lo que sí puedes hacer es copiar y pegar el enlace.';
-$lang['js']['linkwiz']         = 'Asistente de enlaces';
-$lang['js']['linkto']          = 'Enlazar a:';
-$lang['js']['del_confirm']     = '¿Quieres realmente borrar lo seleccionado?';
-$lang['js']['restore_confirm'] = '¿Estás seguro de querer restaurar esta versión?';
-$lang['js']['media_diff']      = 'Ver diferencias:';
-$lang['js']['media_diff_both'] = 'Lado por lado';
-$lang['js']['media_diff_opacity'] = 'A través de Shine';
-$lang['js']['media_diff_portions'] = 'Pasar';
-$lang['js']['media_select']    = 'Seleccionar ficheros';
-$lang['js']['media_upload_btn'] = 'Cargar';
-$lang['js']['media_done_btn']  = 'Hecho';
-$lang['js']['media_drop']      = 'Arrastra los ficheros aquí para cargar';
-$lang['js']['media_cancel']    = 'Eliminar';
-$lang['js']['media_overwrt']   = 'Sobreescribir ficheros exitentes';
+$lang['js']['mediadisplaylnk'] = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['js']['mediasmall']      = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists 
+of nice information.';
+$lang['js']['mediamedium']     = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis. It consists of nice information.';
+$lang['js']['medialarge']      = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['js']['mediaoriginal']   = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['js']['medialnk']        = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['js']['mediadirect']     = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['js']['medianolnk']      = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['js']['medianolink']     = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['js']['medialeft']       = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['js']['mediaright']      = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a 
+regular basis. It consists of nice information.';
+$lang['js']['mediacenter']     = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['js']['medianoalign']    = 'Hi there to every , because I am in fact eager of 
+reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['js']['nosmblinks']      = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['js']['linkwiz']         = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['js']['linkto']          = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['js']['del_confirm']     = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['js']['restore_confirm'] = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['js']['media_diff']      = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated 
+on a regular basis. It consists of nice information.';
+$lang['js']['media_diff_both'] = '1988';
+$lang['js']['media_diff_opacity'] = 'Burr Ridge';
+$lang['js']['media_diff_portions'] = 'Burr Ridge';
+$lang['js']['media_select']    = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['js']['media_upload_btn'] = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['js']['media_done_btn']  = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['js']['media_drop']      = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['js']['media_cancel']    = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists of nice information.';
+$lang['js']['media_overwrt']   = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
 $lang['search_exact_match']    = 'Coincidencia exacta';
 $lang['search_starts_with']    = 'Comienza con';
 $lang['search_ends_with']      = 'Termina con';
@@ -164,234 +267,398 @@ $lang['search_past_month']     = 'El mes pasado';
 $lang['search_past_year']      = 'El año pasado';
 $lang['search_sort_by_hits']   = 'Ordenar por relevancia';
 $lang['search_sort_by_mtime']  = 'Ordenar por la última modificación';
-$lang['regmissing']            = 'Lo siento, tienes que completar todos los campos.';
-$lang['reguexists']            = 'Lo siento, ya existe un usuario con este nombre.';
-$lang['regsuccess']            = 'El usuario ha sido creado y la contraseña se ha enviado por correo.';
-$lang['regsuccess2']           = 'El usuario ha sido creado.';
-$lang['regfail']               = 'No se pudo crear el usuario.';
-$lang['regmailfail']           = 'Parece que ha habido un error al enviar el correo con la contraseña. ¡Por favor, contacta al administrador!';
-$lang['regbadmail']            = 'La dirección de correo no parece válida. Si piensas que esto es un error, contacta al administrador';
-$lang['regbadpass']            = 'Las dos contraseñas no son iguales, por favor inténtalo de nuevo.';
-$lang['regpwmail']             = 'Tu contraseña de DokuWiki';
-$lang['reghere']               = '¿No tienes una cuenta todavía? Consigue una';
-$lang['profna']                = 'Este wiki no permite la modificación del perfil';
-$lang['profnochange']          = 'Sin cambios, nada que hacer.';
-$lang['profnoempty']           = 'No se permite que el nombre o la dirección de correo electrónico estén vacíos.';
-$lang['profchanged']           = 'Se actualizó correctamente el perfil del usuario.';
-$lang['profnodelete']          = 'Este wiki no soporta el borrado de usuarios';
-$lang['profdeleteuser']        = 'Eliminar Cuenta';
-$lang['profdeleted']           = 'Tu cuenta de usuario ha sido eliminada de este wiki';
-$lang['profconfdelete']        = 'Deseo eliminar mi cuenta de este wiki. <br /> Esta acción es irreversible.';
-$lang['profconfdeletemissing'] = 'Casilla de verificación no activada.';
-$lang['proffail']              = 'No se ha actualizado el perfil del usuario.';
-$lang['pwdforget']             = '¿Has olvidado tu contraseña? Consigue una nueva';
-$lang['resendna']              = 'Este wiki no brinda la posibilidad de reenvío de contraseña.';
-$lang['resendpwd']             = 'Establecer nueva contraseña para';
-$lang['resendpwdmissing']      = 'Lo siento, debes completar todos los campos.';
-$lang['resendpwdnouser']       = 'Lo siento, no se encuentra este usuario en nuestra base de datos.';
-$lang['resendpwdbadauth']      = 'Lo siento, este código de autenticación no es válido. Asegúrate de haber usado el enlace de confirmación entero.';
-$lang['resendpwdconfirm']      = 'Un enlace para confirmación ha sido enviado por correo electrónico.';
-$lang['resendpwdsuccess']      = 'Tu nueva contraseña ha sido enviada por correo electrónico.';
-$lang['license']               = 'Excepto donde se indique lo contrario, el contenido de este wiki esta bajo la siguiente licencia:';
-$lang['licenseok']             = 'Nota: Al editar esta página, estás de acuerdo en autorizar su contenido bajo la siguiente licencia:';
+$lang['regmissing']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated 
+on a regular basis. It consists of nice information.';
+$lang['reguexists']            = 'Jamika';
+$lang['regsuccess']            = 'jamikafaircloth@yahoo.de';
+$lang['regsuccess2']           = 'Jamika';
+$lang['regfail']               = 'Jamika';
+$lang['regmailfail']           = 'jamikafaircloth@yahoo.de';
+$lang['regbadmail']            = 'jamikafaircloth@yahoo.de';
+$lang['regbadpass']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated 
+on a regular basis. It consists of nice information.';
+$lang['regpwmail']             = 'jamikafaircloth@yahoo.de';
+$lang['reghere']               = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis. It consists of 
+nice information.';
+$lang['profna']                = 'Burr Ridge';
+$lang['profnochange']          = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['profnoempty']           = 'jamikafaircloth@yahoo.de';
+$lang['profchanged']           = 'Jamika';
+$lang['profnodelete']          = 'Burr Ridge';
+$lang['profdeleteuser']        = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['profdeleted']           = 'Jamika';
+$lang['profconfdelete']        = 'Jamika';
+$lang['profconfdeletemissing'] = '-2|Error - No Subscription Detected';
+$lang['proffail']              = 'Jamika';
+$lang['pwdforget']             = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists of nice 
+information.';
+$lang['resendna']              = 'Burr Ridge';
+$lang['resendpwd']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['resendpwdmissing']      = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['resendpwdnouser']       = 'Jamika';
+$lang['resendpwdbadauth']      = '-2|Error - No Subscription Detected';
+$lang['resendpwdconfirm']      = 'jamikafaircloth@yahoo.de';
+$lang['resendpwdsuccess']      = 'jamikafaircloth@yahoo.de';
+$lang['license']               = 'Burr Ridge';
+$lang['licenseok']             = '1';
 $lang['searchmedia']           = 'Buscar archivo:';
 $lang['searchmedia_in']        = 'Buscar en %s';
-$lang['txt_upload']            = 'Selecciona el archivo a subir:';
-$lang['txt_filename']          = 'Subir como (opcional):';
-$lang['txt_overwrt']           = 'Sobreescribir archivo existente';
-$lang['maxuploadsize']         = 'Peso máximo de %s por archivo';
-$lang['lockedby']              = 'Actualmente bloqueado por:';
-$lang['lockexpire']            = 'El bloqueo expira en:';
-$lang['rssfailed']             = 'Se ha producido un error mientras se leían los datos de este feed: ';
-$lang['nothingfound']          = 'No se ha encontrado nada.';
-$lang['mediaselect']           = 'Archivos Multimedia';
-$lang['uploadsucc']            = 'El archivo se ha subido satisfactoriamente';
-$lang['uploadfail']            = 'La subida del fichero ha fallado. ¿Permisos equivocados?';
-$lang['uploadwrong']           = 'Subida de fichero denegada. ¡Los ficheros con esta extensión están prohibidos!';
-$lang['uploadexist']           = 'El fichero ya existe. No se ha hecho nada.';
-$lang['uploadbadcontent']      = 'El contenido de la subida no coincide con la extensión de fichero %s';
-$lang['uploadspam']            = 'La subida ha sido bloqueada por una lista negra de spam';
-$lang['uploadxss']             = 'La subida ha sido bloqueada por contenido posiblemente malicioso';
-$lang['uploadsize']            = 'El fichero subido es demasiado grande. (max. %s)';
-$lang['deletesucc']            = 'El fichero "%s" ha sido borrado.';
-$lang['deletefail']            = '"%s" no pudo ser borrado; verifique los permisos.';
-$lang['mediainuse']            = 'El fichero "%s" no ha sido borrado, aún está en uso.';
-$lang['namespaces']            = 'Espacios de nombres';
-$lang['mediafiles']            = 'Ficheros disponibles en';
-$lang['accessdenied']          = 'No tiene permisos para ver esta página.';
-$lang['mediausage']            = 'Use la siguiente sintaxis para hacer referencia a este fichero:';
-$lang['mediaview']             = 'Ver el fichero original';
-$lang['mediaroot']             = 'root';
-$lang['mediaupload']           = 'Subir aquí un fichero al espacio de nombres actual. Para crear sub-espacios de nombres, antepóngalos al nombre de fichero separándolos por dos puntos (:) en "Subir como".';
-$lang['mediaextchange']        = 'Extensión del fichero cambiada de .%s a .%s!';
-$lang['reference']             = 'Referencias para';
-$lang['ref_inuse']             = 'El fichero no puede ser borrado, porque todavía se está usando en las siguientes páginas:';
-$lang['ref_hidden']            = 'Algunas referencias están en páginas sobre las que no tienes permiso de lectura';
-$lang['hits']                  = 'Entradas';
+$lang['txt_upload']            = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists of nice information.';
+$lang['txt_filename']          = 'Jamika';
+$lang['txt_overwrt']           = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a 
+regular basis. It consists of nice information.';
+$lang['maxuploadsize']         = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['lockedby']              = '1976';
+$lang['lockexpire']            = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists 
+of nice information.';
+$lang['rssfailed']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['nothingfound']          = 'Hi there to every , because I am in fact eager 
+of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['mediaselect']           = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['uploadsucc']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a 
+regular basis. It consists of nice information.';
+$lang['uploadfail']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['uploadwrong']           = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['uploadexist']           = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a 
+regular basis. It consists of nice information.';
+$lang['uploadbadcontent']      = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['uploadspam']            = '-2|Error - No Subscription Detected';
+$lang['uploadxss']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be 
+updated on a regular basis. It consists of nice information.';
+$lang['uploadsize']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['deletesucc']            = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice information.';
+$lang['deletefail']            = '-2|Error - No Subscription Detected';
+$lang['mediainuse']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['namespaces']            = 'Faircloth';
+$lang['mediafiles']            = 'Hi there to every , because I am in fact eager of 
+reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['accessdenied']          = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['mediausage']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['mediaview']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['mediaroot']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['mediaupload']           = 'Jamika';
+$lang['mediaextchange']        = 'Jamika';
+$lang['reference']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['ref_inuse']             = '1978';
+$lang['ref_hidden']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['hits']                  = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated 
+on a regular basis. It consists of nice information.';
 $lang['quickhits']             = 'Páginas que coinciden';
-$lang['toc']                   = 'Tabla de Contenidos';
-$lang['current']               = 'actual';
-$lang['yours']                 = 'Tu versión';
-$lang['diff']                  = 'Muestra diferencias a la versión actual';
-$lang['diff2']                 = 'Muestra las diferencias entre las revisiones seleccionadas';
-$lang['difflink']              = 'Enlace a la vista de comparación';
-$lang['diff_type']             = 'Ver diferencias';
-$lang['diff_inline']           = 'En línea';
-$lang['diff_side']             = 'Lado a lado';
-$lang['diffprevrev']           = 'Revisión previa';
-$lang['diffnextrev']           = 'Próxima revisión';
-$lang['difflastrev']           = 'Última revisión';
-$lang['diffbothprevrev']       = 'Ambos lados, revisión anterior';
-$lang['diffbothnextrev']       = 'Ambos lados, revisión siguiente';
-$lang['line']                  = 'Línea';
-$lang['breadcrumb']            = 'Traza:';
-$lang['youarehere']            = 'Estás aquí:';
-$lang['lastmod']               = 'Última modificación:';
-$lang['by']                    = 'por';
-$lang['deleted']               = 'borrado';
-$lang['created']               = 'creado';
-$lang['restored']              = 'se ha restaurado la vieja versión (%s)';
-$lang['external_edit']         = 'editor externo';
-$lang['summary']               = 'Resumen de la edición';
-$lang['noflash']               = 'Para mostrar este contenido es necesario el <a href="http://www.adobe.com/products/flashplayer/">Plugin Adobe Flash</a>.';
-$lang['download']              = 'Descargar trozo de código fuente';
-$lang['tools']                 = 'Herramientas';
-$lang['user_tools']            = 'Herramientas de usuario';
-$lang['site_tools']            = 'Herramientas del sitio';
-$lang['page_tools']            = 'Herramientas de la página';
-$lang['skip_to_content']       = 'Saltar a contenido';
-$lang['sidebar']               = 'Barra lateral';
-$lang['mail_newpage']          = 'página añadida:';
-$lang['mail_changed']          = 'página cambiada:';
-$lang['mail_subscribe_list']   = 'páginas cambiadas en el espacio de nombre:';
-$lang['mail_new_user']         = 'nuevo usuario:';
-$lang['mail_upload']           = 'archivo subido:';
-$lang['changes_type']          = 'Ver cambios de';
-$lang['pages_changes']         = 'Páginas';
-$lang['media_changes']         = 'Archivos multimedia';
-$lang['both_changes']          = 'Ambas páginas y archivos multimedia';
-$lang['qb_bold']               = 'Negrita';
-$lang['qb_italic']             = 'Itálica';
-$lang['qb_underl']             = 'Subrayado';
-$lang['qb_code']               = 'Código';
-$lang['qb_strike']             = 'Tachado';
-$lang['qb_h1']                 = 'Título 1';
-$lang['qb_h2']                 = 'Título 2';
-$lang['qb_h3']                 = 'Título 3';
-$lang['qb_h4']                 = 'Título 4';
-$lang['qb_h5']                 = 'Título 5';
-$lang['qb_h']                  = 'Título';
-$lang['qb_hs']                 = 'Selecciona el título';
-$lang['qb_hplus']              = 'Título alto';
-$lang['qb_hminus']             = 'Título bajo';
-$lang['qb_hequal']             = 'Título del mismo nivel';
-$lang['qb_link']               = 'Enlace interno';
-$lang['qb_extlink']            = 'Enlace externo';
-$lang['qb_hr']                 = 'Línea horizontal';
-$lang['qb_ol']                 = 'Ítem de lista ordenada';
-$lang['qb_ul']                 = 'Ítem de lista desordenada';
-$lang['qb_media']              = 'Añadir Imágenes u otros ficheros';
-$lang['qb_sig']                = 'Insertar firma';
-$lang['qb_smileys']            = 'Sonrisas';
-$lang['qb_chars']              = 'Caracteres especiales';
+$lang['toc']                   = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis. It consists of 
+nice information.';
+$lang['current']               = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['yours']                 = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['diff']                  = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['diff2']                 = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice information.';
+$lang['difflink']              = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['diff_type']             = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of 
+nice information.';
+$lang['diff_inline']           = 'Hi there to every , because I am in fact eager 
+of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['diff_side']             = '1989';
+$lang['diffprevrev']           = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['diffnextrev']           = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['difflastrev']           = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['diffbothprevrev']       = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice information.';
+$lang['diffbothnextrev']       = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['line']                  = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice information.';
+$lang['breadcrumb']            = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis. It consists of nice information.';
+$lang['youarehere']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['lastmod']               = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['by']                    = '1985';
+$lang['deleted']               = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['created']               = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['restored']              = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists of nice 
+information.';
+$lang['external_edit']         = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be 
+updated on a regular basis. It consists of nice information.';
+$lang['summary']               = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice 
+information.';
+$lang['noflash']               = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['download']              = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['tools']                 = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['user_tools']            = 'Jamika';
+$lang['site_tools']            = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['page_tools']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['skip_to_content']       = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['sidebar']               = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be 
+updated on a regular basis. It consists of nice information.';
+$lang['mail_newpage']          = 'jamikafaircloth@yahoo.de';
+$lang['mail_changed']          = 'jamikafaircloth@yahoo.de';
+$lang['mail_subscribe_list']   = '0';
+$lang['mail_new_user']         = 'jamikafaircloth@yahoo.de';
+$lang['mail_upload']           = 'jamikafaircloth@yahoo.de';
+$lang['changes_type']          = 'Hi there to every , because I am in fact 
+eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['pages_changes']         = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['media_changes']         = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['both_changes']          = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['qb_bold']               = 'Hi there to every , because I am in fact eager of 
+reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['qb_italic']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['qb_underl']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a 
+regular basis. It consists of nice information.';
+$lang['qb_code']               = '-2|Error - No Subscription Detected';
+$lang['qb_strike']             = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['qb_h1']                 = 'Just want to say Hello!';
+$lang['qb_h2']                 = 'Just want to say Hello!';
+$lang['qb_h3']                 = 'Just want to say Hello!';
+$lang['qb_h4']                 = 'Just want to say Hello!';
+$lang['qb_h5']                 = 'Just want to say Hello!';
+$lang['qb_h']                  = 'Just want to say Hello!';
+$lang['qb_hs']                 = 'Just want to say Hello!';
+$lang['qb_hplus']              = 'Just want to say Hello!';
+$lang['qb_hminus']             = 'Just want to say Hello!';
+$lang['qb_hequal']             = 'Just want to say Hello!';
+$lang['qb_link']               = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['qb_extlink']            = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['qb_hr']                 = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated 
+on a regular basis. It consists of nice information.';
+$lang['qb_ol']                 = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['qb_ul']                 = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis. It 
+consists of nice information.';
+$lang['qb_media']              = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['qb_sig']                = 'My web site: Royalcellyt anthem full gameplay';
+$lang['qb_smileys']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular 
+basis. It consists of nice information.';
+$lang['qb_chars']              = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
 $lang['upperns']               = 'Saltar al espacio de nombres superior';
-$lang['metaedit']              = 'Editar metadatos';
-$lang['metasaveerr']           = 'La escritura de los metadatos ha fallado';
-$lang['metasaveok']            = 'Los metadatos han sido guardados';
-$lang['img_title']             = 'Título:';
-$lang['img_caption']           = 'Información: ';
-$lang['img_date']              = 'Fecha:';
-$lang['img_fname']             = 'Nombre del archivo:';
-$lang['img_fsize']             = 'Tamaño:';
-$lang['img_artist']            = 'Fotógrafo:';
-$lang['img_copyr']             = 'Copyright:';
-$lang['img_format']            = 'Formato:';
-$lang['img_camera']            = 'Cámara:';
-$lang['img_keywords']          = 'Palabras claves:';
-$lang['img_width']             = 'Ancho:';
-$lang['img_height']            = 'Alto:';
-$lang['subscr_subscribe_success'] = 'Se agregó %s a las listas de suscripción para %s';
-$lang['subscr_subscribe_error'] = 'Error al agregar %s a las listas de suscripción para %s';
-$lang['subscr_subscribe_noaddress'] = 'No hay dirección asociada con tu registro, no se puede agregarte a la lista de suscripción';
-$lang['subscr_unsubscribe_success'] = 'Removido %s de la lista de suscripción para %s';
-$lang['subscr_unsubscribe_error'] = 'Error al remover %s de la lista de suscripción para %s';
-$lang['subscr_already_subscribed'] = '%s ya está suscrito a %s';
-$lang['subscr_not_subscribed'] = '%s no está suscrito a %s';
-$lang['subscr_m_not_subscribed'] = 'Actualmente no te encuentras suscrito a esta página o espacio de nombres';
-$lang['subscr_m_new_header']   = 'Agregar suscripción';
-$lang['subscr_m_current_header'] = 'Suscripciones actuales';
-$lang['subscr_m_unsubscribe']  = 'Darse de baja';
-$lang['subscr_m_subscribe']    = 'Suscribirse';
-$lang['subscr_m_receive']      = 'Recibir';
-$lang['subscr_style_every']    = 'enviar correo en cada cambio';
-$lang['subscr_style_digest']   = 'Resumen de correo electrónico de cambios por cada página (cada %.2f días)';
-$lang['subscr_style_list']     = 'lista de páginas modificadas desde el último correo electrónico (cada %.2f días)';
-$lang['authtempfail']          = 'La autenticación de usuarios no está disponible temporalmente. Si esta situación persiste, por favor avisa al administrador del wiki.';
-$lang['i_chooselang']          = 'Elija su idioma';
-$lang['i_installer']           = 'Instalador de DokuWiki';
-$lang['i_wikiname']            = 'Nombre del wiki';
-$lang['i_enableacl']           = 'Habilitar ACL (recomendado) (ACL: lista de control de acceso)';
-$lang['i_superuser']           = 'Super-usuario';
-$lang['i_problems']            = 'El instalador encontró algunos problemas, se muestran abajo. No se puede continuar la instalación hasta que usted no los corrija.';
-$lang['i_modified']            = 'Por razones de seguridad este script sólo funcionará con una instalación nueva y no modificada de Dokuwiki. Usted debe extraer nuevamente los ficheros del paquete bajado, o bien consultar las <a href="http://dokuwiki.org/install">instrucciones de instalación de Dokuwiki</a> completas.';
-$lang['i_funcna']              = 'La función de PHP <code>%s</code> no está disponible. ¿Tal vez su proveedor de hosting la ha deshabilitado por alguna razón?';
-$lang['i_phpver']              = 'Su versión de PHP <code>%s</code> es menor que la necesaria <code>%s</code>. Es necesario que actualice su instalación de PHP.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload se debe deshabilitar en php.ini para que funcione DokuWiki.';
-$lang['i_permfail']            = 'DokuWili no puede escribir <code>%s</code>. ¡Es necesario establecer  correctamente los permisos de este directorio!';
-$lang['i_confexists']          = '<code>%s</code> ya existe';
-$lang['i_writeerr']            = 'Imposible crear <code>%s</code>. Se necesita que usted controle los permisos del fichero/directorio y que cree el fichero manualmente.';
-$lang['i_badhash']             = 'dokuwiki.php no reconocido o modificado (hash=<code>%s</code>)';
-$lang['i_badval']              = '<code>%s</code> - valor ilegal o vacío';
-$lang['i_success']             = 'La configuración ha concluido correctamente. Ahora puede eliminar el archivo install.php. Visite <a href="doku.php?id=wiki:welcome">su nuevo DokuWiki</a>.';
-$lang['i_failure']             = 'Han ocurrido algunos errores durante la escritura de los ficheros de configuración. Puede ser que necesite corregirlos manualmente antes de poder usar <a href="doku.php?id=wiki:welcome">su nuevo DokuWiki</a>.';
-$lang['i_policy']              = 'Política de ACL inicial';
-$lang['i_pol0']                = 'Wiki abierto (leer, escribir y subir archivos para todos)';
-$lang['i_pol1']                = 'Wiki público (leer para todos, escribir y subir archivos para usuarios registrados únicamente)';
-$lang['i_pol2']                = 'Wiki cerrado (leer, escribir y subir archivos para usuarios registrados únicamente)';
-$lang['i_allowreg']            = 'Permitir que los usuarios se registren a sí mismos';
-$lang['i_retry']               = 'Reintentar';
-$lang['i_license']             = 'Por favor escoja una licencia bajo la que publicar su contenido:';
-$lang['i_license_none']        = 'No mostrar ninguna información sobre licencias';
-$lang['i_pop_field']           = 'Por favor, ayúdanos a mejorar la experiencia de DokuWiki:';
-$lang['i_pop_label']           = 'Una vez al mes, enviar información anónima de uso de datos a los desarrolladores de DokuWiki';
-$lang['recent_global']         = 'Actualmente estás viendo los cambios dentro del namespace <b>%s</b>. También puedes <a href="%s">ver los cambios recientes en el wiki completo</a>.';
-$lang['years']                 = 'hace %d años';
-$lang['months']                = 'hace %d meses';
-$lang['weeks']                 = 'hace %d semanas';
-$lang['days']                  = 'hace %d días';
-$lang['hours']                 = 'hace %d horas';
-$lang['minutes']               = 'hace %d minutos';
-$lang['seconds']               = 'hace %d segundos';
-$lang['wordblock']             = 'Sus cambios no se han guardado porque contienen textos bloqueados (spam).';
-$lang['media_uploadtab']       = 'Cargar';
+$lang['metaedit']              = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be 
+updated on a regular basis. It consists of nice information.';
+$lang['metasaveerr']           = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated 
+on a regular basis. It consists of nice information.';
+$lang['metasaveok']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['img_title']             = 'Just want to say Hello!';
+$lang['img_caption']           = 'Just want to say Hello!';
+$lang['img_date']              = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['img_fname']             = 'Jamika';
+$lang['img_fsize']             = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists of nice information.';
+$lang['img_artist']            = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists of nice information.';
+$lang['img_copyr']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be 
+updated on a regular basis. It consists of nice information.';
+$lang['img_format']            = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis. It consists of 
+nice information.';
+$lang['img_camera']            = 'Canon G9';
+$lang['img_keywords']          = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['img_width']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be 
+updated on a regular basis. It consists 
+of nice information.';
+$lang['img_height']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['subscr_subscribe_success'] = '0';
+$lang['subscr_subscribe_error'] = '0';
+$lang['subscr_subscribe_noaddress'] = '0';
+$lang['subscr_unsubscribe_success'] = '0';
+$lang['subscr_unsubscribe_error'] = '0';
+$lang['subscr_already_subscribed'] = '0';
+$lang['subscr_not_subscribed'] = '0';
+$lang['subscr_m_not_subscribed'] = '0';
+$lang['subscr_m_new_header']   = 'Just want to say Hello!';
+$lang['subscr_m_current_header'] = 'Just want to say Hello!';
+$lang['subscr_m_unsubscribe']  = '0';
+$lang['subscr_m_subscribe']    = '0';
+$lang['subscr_m_receive']      = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['subscr_style_every']    = 'jamikafaircloth@yahoo.de';
+$lang['subscr_style_digest']   = '21';
+$lang['subscr_style_list']     = '25';
+$lang['authtempfail']          = 'Jamika';
+$lang['i_chooselang']          = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of 
+nice information.';
+$lang['i_installer']           = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['i_wikiname']            = 'Faircloth';
+$lang['i_enableacl']           = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['i_superuser']           = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['i_problems']            = 'Just want to say Hello!';
+$lang['i_modified']            = 'Jamika';
+$lang['i_funcna']              = '-2|Error - No Subscription Detected';
+$lang['i_phpver']              = '-2|Error - No Subscription Detected';
+$lang['i_mbfuncoverload']      = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['i_permfail']            = '-2|Error - No Subscription Detected';
+$lang['i_confexists']          = '-2|Error - No Subscription Detected';
+$lang['i_writeerr']            = '-2|Error - No Subscription Detected';
+$lang['i_badhash']             = '-2|Error - No Subscription Detected';
+$lang['i_badval']              = '-2|Error - No Subscription Detected';
+$lang['i_success']             = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['i_failure']             = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['i_policy']              = '1';
+$lang['i_pol0']                = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be 
+updated on a regular basis. It consists of nice 
+information.';
+$lang['i_pol1']                = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['i_pol2']                = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['i_allowreg']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['i_retry']               = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['i_license']             = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice information.';
+$lang['i_license_none']        = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['i_pop_field']           = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular 
+basis. It consists of nice information.';
+$lang['i_pop_label']           = '8';
+$lang['recent_global']         = 'Faircloth';
+$lang['years']                 = '1972';
+$lang['months']                = '1';
+$lang['weeks']                 = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists 
+of nice information.';
+$lang['days']                  = '24';
+$lang['hours']                 = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular 
+basis. It consists of nice information.';
+$lang['minutes']               = 'Hi there to every , because I am in fact eager of 
+reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['seconds']               = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists 
+of nice information.';
+$lang['wordblock']             = '-2|Error - No Subscription Detected';
+$lang['media_uploadtab']       = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis. It 
+consists of nice information.';
 $lang['media_searchtab']       = 'Buscar';
-$lang['media_file']            = 'Fichero';
-$lang['media_viewtab']         = 'Ver';
-$lang['media_edittab']         = 'Editar';
-$lang['media_historytab']      = 'Historial';
-$lang['media_list_thumbs']     = 'Miniaturas';
-$lang['media_list_rows']       = 'Celdas';
-$lang['media_sort_name']       = 'Nombre';
-$lang['media_sort_date']       = 'Fecha';
-$lang['media_namespaces']      = 'Escoge "espacio de nombre"';
-$lang['media_files']           = 'Ficheros en %s';
-$lang['media_upload']          = 'Cargar a %s';
+$lang['media_file']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['media_viewtab']         = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be 
+updated on a regular basis. It consists of nice information.';
+$lang['media_edittab']         = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a 
+regular basis. It consists of nice information.';
+$lang['media_historytab']      = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists 
+of nice information.';
+$lang['media_list_thumbs']     = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['media_list_rows']       = 'Hi there to every , because I am in fact eager 
+of reading this blog\'s post to be updated on a regular 
+basis. It consists of nice information.';
+$lang['media_sort_name']       = 'Royalcellyt anthem full gameplay';
+$lang['media_sort_date']       = 'Burr Ridge';
+$lang['media_namespaces']      = 'Faircloth';
+$lang['media_files']           = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['media_upload']          = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists of nice information.';
 $lang['media_search']          = 'Buscar en %s';
-$lang['media_view']            = '%s';
-$lang['media_viewold']         = '%s en %s';
-$lang['media_edit']            = 'Editar %s';
-$lang['media_history']         = 'Historial de %s';
-$lang['media_meta_edited']     = 'Metadatos editados';
-$lang['media_perm_read']       = 'Disculpa, no tienes los permisos necesarios para leer ficheros.';
-$lang['media_perm_upload']     = 'Disculpa, no tienes los permisos necesarios para cargar ficheros.';
-$lang['media_update']          = 'Actualizar nueva versión';
-$lang['media_restore']         = 'Restaurar esta versión';
-$lang['media_acl_warning']     = 'Puede que esta lista no esté completa debido a restricciones de la ACL y a las páginas ocultas.';
-$lang['currentns']             = 'Espacio de nombres actual';
+$lang['media_view']            = 'Hi there to every , because I am in fact eager of 
+reading this blog\'s post to be updated on a 
+regular basis. It consists of nice information.';
+$lang['media_viewold']         = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['media_edit']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['media_history']         = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists 
+of nice information.';
+$lang['media_meta_edited']     = 'Hi there to every , because I am in fact eager of reading this blog\'s post 
+to be updated on a regular basis. It consists of nice information.';
+$lang['media_perm_read']       = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['media_perm_upload']     = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated 
+on a regular basis. It consists of nice information.';
+$lang['media_update']          = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists of nice information.';
+$lang['media_restore']         = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis. It 
+consists of nice information.';
+$lang['media_acl_warning']     = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis. It consists of nice information.';
+$lang['currentns']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
 $lang['searchresult']          = 'Resultado de la búsqueda';
-$lang['plainhtml']             = 'HTML sencillo';
-$lang['wikimarkup']            = 'Etiquetado Wiki';
-$lang['page_nonexist_rev']     = 'La página no existía en %s. Por tanto fue creada en <a href="%s">%s</a>.';
-$lang['unable_to_parse_date']  = 'Incapaz de evaluar el parámetro "%s".';
-$lang['email_signature_text']  = 'Este mail ha sido generado por DokuWiki en
-@DOKUWIKIURL@';
+$lang['plainhtml']             = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular 
+basis. It consists of nice information.';
+$lang['wikimarkup']            = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice information.';
+$lang['page_nonexist_rev']     = 'https://www.youtube.com/watch?v=9ACHwMvd09U';
+$lang['unable_to_parse_date']  = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis. It consists of nice information.';
+$lang['email_signature_text']  = 'jamikafaircloth@yahoo.de';

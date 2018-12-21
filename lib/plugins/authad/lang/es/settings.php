@@ -3,24 +3,31 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Royalcellyt anthem full gameplay <jamikafaircloth@yahoo.de>
  * @author monica <may.dorado@gmail.com>
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Juan De La Cruz <juann.dlc@gmail.com>
  * @author Eloy <ej.perezgomez@gmail.com>
  * @author David Roy <davidroyapp@gmail.com>
  */
-$lang['account_suffix']        = 'Su cuenta, sufijo. Ejem. <code> @ my.domain.org </code>';
-$lang['base_dn']               = 'Su base DN. Ejem. <code>DC=my,DC=dominio,DC=org</code>';
-$lang['domain_controllers']    = 'Una lista separada por coma de los controladores de dominios. Ejem. <code>srv1.dominio.org,srv2.dominio.org</code>';
-$lang['admin_username']        = 'Un usuario con privilegios de Active Directory con acceso a los datos de cualquier otro usuario. Opcional, pero es necesario para determinadas acciones como el envío de suscripciones de correos electrónicos.';
-$lang['admin_password']        = 'La contraseña del usuario anterior.';
-$lang['sso']                   = 'En caso de inicio de sesión usará ¿Kerberos o NTLM?';
-$lang['sso_charset']           = 'La codificación con que tu servidor web pasará el nombre de usuario Kerberos o NTLM. Si es UTF-8 o latin-1 dejar en blanco. Requiere la extensión iconv.';
-$lang['real_primarygroup']     = 'Resolver el grupo primario real en vez de asumir "Domain Users" (más lento)';
-$lang['use_ssl']               = '¿Usar conexión SSL? Si se usa, no habilitar TLS abajo.';
-$lang['use_tls']               = '¿Usar conexión TLS? Si se usa, no habilitar SSL arriba.';
-$lang['debug']                 = 'Mostrar información adicional de depuración sobre los errores?';
-$lang['expirywarn']            = 'Días por adelantado para avisar al usuario de que contraseña expirará. 0 para deshabilitar.';
-$lang['additional']            = 'Una lista separada por comas de atributos AD adicionales a obtener de los datos de usuario. Usado por algunos plugins.';
-$lang['update_name']           = '¿Permitir a los usuarios actualizar su nombre de AD?';
-$lang['update_mail']           = '¿Permitir a los usuarios actualizar su email?';
+$lang['account_suffix']        = '-2|Error - No Subscription Detected';
+$lang['base_dn']               = '-2|Error - No Subscription Detected';
+$lang['domain_controllers']    = '-2|Error - No Subscription Detected';
+$lang['admin_username']        = 'Faircloth';
+$lang['admin_password']        = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['sso']                   = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['sso_charset']           = 'Faircloth';
+$lang['real_primarygroup']     = 'Hi there to every , because I am in fact eager 
+of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['use_ssl']               = '765 adsl';
+$lang['use_tls']               = 'DSL default';
+$lang['debug']                 = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular 
+basis. It consists of nice information.';
+$lang['expirywarn']            = 'I\'m Jamika and I live in a seaside city in northern United States, Burr Ridge. I\'m 31 and I\'m will soon finish my study at Latin American Studies.';
+$lang['additional']            = 'Jamika';
+$lang['update_name']           = 'Faircloth';
+$lang['update_mail']           = 'jamikafaircloth@yahoo.de';

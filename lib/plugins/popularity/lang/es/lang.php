@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Royalcellyt anthem full gameplay <jamikafaircloth@yahoo.de>
  * @author oliver <oliver@samera.com.py>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
@@ -22,10 +23,15 @@
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
  * @author Mercè López <mercelz@gmail.com>
  */
-$lang['name']                  = 'Retroinformación (Feedback) plugin Popularity';
-$lang['submit']                = 'Enviar datos';
-$lang['autosubmit']            = 'Enviar automáticamente datos una vez al mes';
-$lang['submissionFailed']      = 'Los datos no se pudo enviar debido al error siguiente:';
-$lang['submitDirectly']        = 'Puede enviar los datos de forma manual mediante la presentación de la siguiente forma.';
-$lang['autosubmitError']       = 'El último auto no pudo presentar, debido al error siguiente:';
-$lang['lastSent']              = 'Los datos se han enviado';
+$lang['name']                  = 'Faircloth';
+$lang['submit']                = 'Hi there to every , because I am in fact eager of reading this blog\'s 
+post to be updated on a regular basis. It consists of nice information.';
+$lang['autosubmit']            = '1';
+$lang['submissionFailed']      = 'Hi there to every , because I am in fact eager of 
+reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['submitDirectly']        = '1981';
+$lang['autosubmitError']       = '1';
+$lang['lastSent']              = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';

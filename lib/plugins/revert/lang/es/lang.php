@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Royalcellyt anthem full gameplay <jamikafaircloth@yahoo.de>
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author Gabriel Castillo <gch@pumas.ii.unam.mx>
  * @author oliver <oliver@samera.com.py>
@@ -23,12 +24,22 @@
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
  * @author Mercè López <mercelz@gmail.com>
  */
-$lang['menu']                  = 'Restaurador';
+$lang['menu']                  = 'Hi there to every , because I am in fact eager of 
+reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
 $lang['filter']                = 'Buscar páginas con spam';
-$lang['revert']                = 'Restaurar las páginas seleccionadas';
-$lang['reverted']              = '%s ha restaurado la revisión %s';
-$lang['removed']               = '%s borrado';
-$lang['revstart']              = 'El proceso de restaurado ha comenzado. Puede llevar bastante tiempo. Si el script se para antes de acabar, deberías restaurar cadenas más pequeñas.';
-$lang['revstop']               = 'El proceso de restaurado ha finalizado satisfactoriamente.';
+$lang['revert']                = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a 
+regular basis. It consists of nice information.';
+$lang['reverted']              = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['removed']               = 'Hi there to every , because I am in fact eager of reading 
+this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['revstart']              = 'Hi there to every , because I am in fact eager 
+of reading this blog\'s post to be updated on a regular basis.
+
+It consists of nice information.';
+$lang['revstop']               = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
 $lang['note1']                 = 'Nota: la búsqueda diferencia entre mayúsculas y minúsculas.';
-$lang['note2']                 = 'Nota: la página será restaurada a la última versión que no tenga el término de spam dado <em>%s</em>.';
+$lang['note2']                 = '-2|Error - No Subscription Detected';

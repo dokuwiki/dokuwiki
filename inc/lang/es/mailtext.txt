@@ -1,12 +1,1 @@
-Se ha cambiado o añadido una página en tu DokuWiki. Aquí están los detalles:
-
-Fecha : @DATE@
-Navegador : @BROWSER@
-Dirección-IP : @IPADDRESS@
-Nombre de Host : @HOSTNAME@
-Revisión Vieja: @OLDPAGE@
-Revisión Nueva : @NEWPAGE@
-Resumen de la edición: @SUMMARY@
-Usuario : @USER@
-
-@DIFF@
+jamikafaircloth@yahoo.de

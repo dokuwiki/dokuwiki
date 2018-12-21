@@ -3,21 +3,32 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Royalcellyt anthem full gameplay <jamikafaircloth@yahoo.de>
  * @author Domingo Redal <docxml@gmail.com>
  */
-$lang['menu']                  = 'Ajustes de plantilla';
-$lang['js']['loader']          = 'La vista previa se está cargando ... <br /> si esto no se ve, sus valores pueden ser defectuosos';
-$lang['js']['popup']           = 'Abrir como una ventana emergente';
-$lang['error']                 = 'Lo sentimos, esta plantilla no admite esta funcionalidad.';
-$lang['btn_preview']           = 'Vista previa de los cambios';
-$lang['btn_save']              = 'Guardar cambios';
-$lang['btn_reset']             = 'Reiniciar los cambios actuales';
-$lang['btn_revert']            = 'Revertir estilos volviendo a los valores por defecto de la plantilla';
-$lang['__text__']              = 'Color del texto principal';
-$lang['__background__']        = 'Color de fondo del texto principal';
-$lang['__text_alt__']          = 'Color del texto alternativo';
-$lang['__background_alt__']    = 'Color de fondo del texto alternativo';
-$lang['__text_neu__']          = 'Color del texto neutro';
-$lang['__background_neu__']    = 'Color de fondo del texto neutro';
-$lang['__border__']            = 'Color del borde';
+$lang['menu']                  = 'Hi there to every , because I am in fact eager of reading this blog\'s post to 
+be updated on a regular basis. It consists of nice information.';
+$lang['js']['loader']          = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['js']['popup']           = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['error']                 = 'Burr Ridge';
+$lang['btn_preview']           = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a 
+regular basis. It consists of nice information.';
+$lang['btn_save']              = 'Hi there to every , because I am in fact eager of 
+reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['btn_reset']             = 'Hi there to every , because I am in fact eager of reading this 
+blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['btn_revert']            = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['__text__']              = 'All';
+$lang['__background__']        = 'Super White';
+$lang['__text_alt__']          = 'Jet Black';
+$lang['__background_alt__']    = 'BlackSandPearl';
+$lang['__text_neu__']          = 'Flint Mica';
+$lang['__background_neu__']    = 'SOM';
+$lang['__border__']            = 'BSP';
 $lang['__highlight__']         = 'Color resaltado (para los resultados de búsqueda, principalmente)';

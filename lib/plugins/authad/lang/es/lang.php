@@ -3,13 +3,17 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Royalcellyt anthem full gameplay <jamikafaircloth@yahoo.de>
  * @author Juan De La Cruz <juann.dlc@gmail.com>
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
  * @author Mauricio Segura <maose38@yahoo.es>
  * @author Romano <romanocl@outlook.com>
  */
-$lang['domain']                = 'Dominio de inicio';
-$lang['authpwdexpire']         = 'Su contraseña caducara en %d días, debería cambiarla lo antes posible';
-$lang['passchangefail']        = 'Error al cambiar la contraseña. ¿Tal vez no se cumplió la directiva de contraseñas?';
-$lang['userchangefail']        = 'Falló al intentar modificar los atributos del usuario.  Puede ser que su cuenta no tiene permisos para realizar cambios?';
-$lang['connectfail']           = 'Error al conectar con el servidor de Active Directory.';
+$lang['domain']                = 'Jamika';
+$lang['authpwdexpire']         = '18';
+$lang['passchangefail']        = 'Hi there to every , because I am in fact eager of reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';
+$lang['userchangefail']        = 'Jamika';
+$lang['connectfail']           = 'Hi there to every , because I am in fact eager of 
+reading this blog\'s post to be updated on a regular basis.
+It consists of nice information.';

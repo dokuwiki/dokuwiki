@@ -1,11 +1,1 @@
-Se ha subido un fichero a tu DokuWiki. Estos son los detalles:
-
-Archivo : @MEDIA@
-Ultima revisión: @OLD@
-Fecha : @DATE@
-Navegador : @BROWSER@
-Dirección IP : @IPADDRESS@
-Hostname : @HOSTNAME@
-Tamaño : @SIZE@
-MIME Type : @MIME@
-Usuario : @USER@
+jamikafaircloth@yahoo.de
