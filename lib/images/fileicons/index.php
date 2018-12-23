@@ -37,21 +37,21 @@ foreach (glob('32x32/*.png') as $img) {
     $fi_list32 .= '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
 }
 echo '<div class="white box">
-'.$filist.'
+'.$fi_list.'
 </div>
 
 <div class="black box">
-'.$filist.'
+'.$fi_list.'
 </div>
 
 <br style="clear: left" />
 
 <div class="white box">
-'.$filist32.'
+'.$fi_list32.'
 </div>
 
 <div class="black box">
-'.$filist32;
+'.$fi_list32;
 ?>
 </div>
 
