@@ -52,6 +52,9 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * completely reset the state of the renderer to be reused for a new document
      */
     function reset() {
+        $this->doc           = '';
+        $this->info['cache'] = true;
+        $this->info['toc']   = true;
     }
 
     /**
