@@ -1,0 +1,1 @@
+Denne fane giver dig adgang til alle tredje-parts [[doku>plugins|udvidelser]] og [[doku>template|temaer]] til DokuWiki. Vær opmærksom på at installation af tredje-parts kode kan være en **sikkerhedsrisiko**. Overvej at læse dokumentation af [[doku>security#plugin_security|sikkerhed vedr. udvidelser]] først.

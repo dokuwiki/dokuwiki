@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Jacob Palm <mail@jacobpalm.dk>
  * @author koeppe <koeppe@kazur.dk>
  * @author Jon Bendtsen <bendtsen@diku.dk>
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
@@ -38,7 +39,7 @@ $lang['acl_perm0']             = 'Ingen';
 $lang['acl_perm1']             = 'Læs';
 $lang['acl_perm2']             = 'Skriv';
 $lang['acl_perm4']             = 'Opret';
-$lang['acl_perm8']             = 'Overføre';
+$lang['acl_perm8']             = 'Overfør';
 $lang['acl_perm16']            = 'Slet';
 $lang['acl_new']               = 'Tilføj ny post';
-$lang['acl_mod']               = 'Ændre post';
+$lang['acl_mod']               = 'Redigér post';
