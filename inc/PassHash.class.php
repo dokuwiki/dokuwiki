@@ -562,7 +562,7 @@ class PassHash {
             throw new Exception('This PHP installation has no SHA512 support');
         }
         $this->init_salt($salt, 8, false);
-		if(is_null($magic)) {
+		if(empty($magic)) {
 			return crypt($clear, '$6$'.$salt.'$');
 		}else{
 			return crypt($clear, '$6$'.$magic.'$'.$salt.'$');

@@ -110,4 +110,15 @@ class auth_password_test extends DokuWikiTest {
         $this->assertTrue($except);
     }
 
+    /**
+     * issue #2629, support PHP's crypt() format (with rounds=0 parameter)
+     */
+    function test_verifyPassword_sha512_crypt() {
+        if(defined('CRYPT_SHA512') && CRYPT_SHA512 == 1) {
+            $this->assertTrue(auth_verifyPassword('Qwerty123', '$6$rounds=3000$9in6UciYPFG6ydsJ$YBjypQ7XoRqvJoX1a2.spSysSVHcdreVXi1Xh5SyOxo2yNSxDjlUCun2YXrwk9.YP6vmRvCWrhp0fbPgSOT7..'));
+        } else {
+            $this->markTestSkipped('SHA512 not available in this PHP environment');
+        }
+    }
+
 }
