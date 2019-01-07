@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author ThorPrestboen <thor.erling.prestboen@gmail.com>
  * @author Christian McKenna <mckchr@banenor.no>
  * @author Reidar Mosvold <Reidar.Mosvold@hit.no>
  * @author Jorge Barrera Grandon <jorge@digitalwolves.org>
@@ -130,6 +131,11 @@ $lang['js']['media_done_btn']  = 'Ferdig';
 $lang['js']['media_drop']      = 'Dra filer hit for å laste dem opp';
 $lang['js']['media_cancel']    = 'fjern';
 $lang['js']['media_overwrt']   = 'Erstatt eksisterende filer';
+$lang['search_contains']       = 'Inneholder';
+$lang['search_past_7_days']    = 'Sist uke';
+$lang['search_past_month']     = 'Siste måned';
+$lang['search_past_year']      = 'Siste år';
+$lang['search_sort_by_hits']   = 'Sorter etter treff';
 $lang['regmissing']            = 'Vennligst fyll ut alle felt.';
 $lang['reguexists']            = 'Det finnes allerede en konto med dette brukernavnet.';
 $lang['regsuccess']            = 'Brukerkonto har blitt laget og passord har blitt sendt via e-post.';

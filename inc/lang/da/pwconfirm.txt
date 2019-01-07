@@ -4,6 +4,6 @@ Nogen har bedt om et nyt password til dit @TITLE@ login på @DOKUWIKIURL@
 
 Hvis du ikke bad om dette, så ignorer venligst denne email.
 
-For at bekræfte at det var dig der bad om dette, benyt venligst det følgende henvisning.
+For at bekræfte at det var dig der bad om dette, benyt venligst den følgende henvisning.
 
 @CONFIRM@

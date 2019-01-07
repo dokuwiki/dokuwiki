@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Márcio Gomes Gonçalves <gomes@metha.com.br>
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
+ * @author Márcio Gomes Gonçalves <gomes@metha.com.br>
  * @author Luis Fernando Enciso <lfenciso@certto.com.br>
  * @author Alauton/Loug
  * @author Felipe Castro <fefcas@gmail.com>
@@ -85,6 +85,9 @@ $lang['badpassconfirm']        = 'Desculpe, mas a senha está errada ';
 $lang['minoredit']             = 'Alterações mínimas';
 $lang['draftdate']             = 'O rascunho foi salvo automaticamente em';
 $lang['nosecedit']             = 'A página foi modificada nesse intervalo de tempo. Como a informação da seção estava desatualizada, foi carregada a página inteira.';
+$lang['searchcreatepage']      = 'Caso você não encontre o que está procurando, você pode criar ou editar a página %s, que recebeu esse nome após a sua pesquisa.';
+$lang['search_fullresults']    = 'Resultados de texto inteiro';
+$lang['js']['search_toggle_tools'] = 'Alternar as ferramentas de pesquisa';
 $lang['js']['willexpire']      = 'O seu bloqueio de edição deste página irá expirar em um minuto.\nPara evitar conflitos de edição, clique no botão de visualização para reiniciar o temporizador de bloqueio.';
 $lang['js']['notsavedyet']     = 'As alterações não salvas serão perdidas.
 Deseja realmente continuar?';
@@ -128,13 +131,17 @@ $lang['js']['media_done_btn']  = 'Concluído';
 $lang['js']['media_drop']      = 'Arraste os arquivos até aqui para enviar';
 $lang['js']['media_cancel']    = 'remover';
 $lang['js']['media_overwrt']   = 'Sobrescrever arquivos existentes';
+$lang['search_exact_match']    = 'Correspondência exata';
 $lang['search_starts_with']    = 'Começa com';
 $lang['search_ends_with']      = 'Termina com';
 $lang['search_contains']       = 'Contém';
+$lang['search_custom_match']   = 'Personalizar';
+$lang['search_any_ns']         = 'Qualquer espaço de nomes';
 $lang['search_any_time']       = 'Qualquer hora';
 $lang['search_past_7_days']    = 'Semana passada';
 $lang['search_past_month']     = 'Mês passado';
 $lang['search_past_year']      = 'Ano passado';
+$lang['search_sort_by_hits']   = 'Ordenar pelos acertos';
 $lang['search_sort_by_mtime']  = 'Ordenar por última modificação';
 $lang['regmissing']            = 'Desculpe, mas você precisa preencher todos os campos.';
 $lang['reguexists']            = 'Desculpe, mas já existe um usuário com esse nome.';
