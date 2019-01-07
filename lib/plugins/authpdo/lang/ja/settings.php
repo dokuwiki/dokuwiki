@@ -6,7 +6,7 @@
  * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
  */
 $lang['debug']                 = '詳細なエラーメッセージを出力する（セットアップ後、このオプションはオフにすべきです）';
-$lang['dsn']                   = 'データベースにアクセスする為のDSN';
+$lang['dsn']                   = 'データベースにアクセスするDSN';
 $lang['user']                  = '上記データベースに接続するユーザー名（sqliteの場合は空欄にしておいて下さい）';
 $lang['pass']                  = '上記データベースに接続するパスワード（sqliteの場合は空欄にしておいて下さい）';
 $lang['select-user']           = '個々のユーザーのデータを選ぶSQL命令文';
