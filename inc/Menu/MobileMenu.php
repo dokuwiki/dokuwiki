@@ -70,14 +70,16 @@ class MobileMenu implements MenuInterface {
         $html .= '<option value="">' . $empty . '</option>';
 
         foreach($this->getGroupedItems() as $tools => $items) {
-            $html .= '<optgroup label="' . $lang[$tools . '_tools'] . '">';
-            foreach($items as $item) {
-                $params = $item->getParams();
-                $html .= '<option value="' . $params['do'] . '">';
-                $html .= hsc($item->getLabel());
-                $html .= '</option>';
+            if (count($items)) {
+                $html .= '<optgroup label="' . $lang[$tools . '_tools'] . '">';
+                foreach($items as $item) {
+                    $params = $item->getParams();
+                    $html .= '<option value="' . $params['do'] . '">';
+                    $html .= hsc($item->getLabel());
+                    $html .= '</option>';
+                }
+                $html .= '</optgroup>';
             }
-            $html .= '</optgroup>';
         }
 
         $html .= '</select>';
