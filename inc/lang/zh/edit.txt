@@ -1,1 +1,1 @@
-编辑本页后请点击“保存”。请参阅 [[wiki:syntax]] 了解维基语法。只有在您能 **改进** 该页面的前提下才编辑它。如果您想尝试一些东西，请先到 [[playground:playground|playground]] 热身。
+编辑本页后请点击“保存”。请参阅 [[wiki:syntax]] 了解维基语法。只有在您能 **改进** 该页面的前提下才编辑它。如果您想尝试语法，请先到 [[playground:playground|playground]] 里热身。
