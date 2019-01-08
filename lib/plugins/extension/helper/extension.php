@@ -813,6 +813,59 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     }
 
     /**
+     * downloads a file from the net and saves it
+     *
+     * - $file is the directory where the file should be saved
+     * - if successful will return the name used for the saved file, false otherwise
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @author Chris Smith <chris@jalakai.co.uk>
+     *
+     * @param string $url           url to download
+     * @param string $file          path to file or directory where to save
+     * @param string $defaultName   fallback for name of download
+     * @return bool|string          if failed false, otherwise true or the name of the file in the given dir
+     */
+    protected function downloadToFile($url,$file,$defaultName=''){
+        global $conf;
+        $http = new DokuHTTPClient();
+        $http->max_bodysize = 0;
+        $http->timeout = 25; //max. 25 sec
+        $http->keep_alive = false; // we do single ops here, no need for keep-alive
+        $http->agent = 'DokuWiki HTTP Client (Extension Manager)';
+
+        $data = $http->get($url);
+        if ($data === false) return false;
+
+        $name = '';
+        if (isset($http->resp_headers['content-disposition'])) {
+            $content_disposition = $http->resp_headers['content-disposition'];
+            $match=array();
+            if (is_string($content_disposition) &&
+                    preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)) {
+
+                $name = utf8_basename($match[1]);
+            }
+
+        }
+
+        if (!$name) {
+            if (!$defaultName) return false;
+            $name = $defaultName;
+        }
+
+        $file = $file.$name;
+
+        $fileexists = file_exists($file);
+        $fp = @fopen($file,"w");
+        if(!$fp) return false;
+        fwrite($fp,$data);
+        fclose($fp);
+        if(!$fileexists and $conf['fperm']) chmod($file, $conf['fperm']);
+        return $name;
+    }
+
+    /**
      * Download an archive to a protected path
      *
      * @param string $url  The url to get the archive from
@@ -839,7 +892,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         }
 
         // download
-        if(!$file = io_download($url, $tmp.'/', true, $file, 0)) {
+        if(!$file = $this->downloadToFile($url, $tmp.'/', $file)) {
             io_rmdir($tmp, true);
             throw new Exception(sprintf($this->getLang('error_download'), '<bdi>'.hsc($url).'</bdi>'));
         }
