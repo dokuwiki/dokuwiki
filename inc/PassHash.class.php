@@ -69,9 +69,10 @@ class PassHash {
         } elseif(preg_match('/^:B:(.+?):.{32}$/', $hash, $m)) {
             $method = 'mediawiki';
             $salt   = $m[1];
-        } elseif(preg_match('/^\$6\$(.+?)\$/', $hash, $m)) {
+        } elseif(preg_match('/^\$6\$(rounds=\d+)?\$?(.+?)\$/', $hash, $m)) {
             $method = 'sha512';
-            $salt   = $m[1];
+            $salt   = $m[2];
+			$magic  = $m[1];
         } elseif($len == 32) {
             $method = 'md5';
         } elseif($len == 40) {
@@ -552,15 +553,20 @@ class PassHash {
      *
      * @param string $clear The clear text to hash
      * @param string $salt  The salt to use, null for random
+	 * @param string $magic The rounds for sha512 (for example "rounds=3000"), null for default value
      * @return string Hashed password
      * @throws Exception
      */
-    public function hash_sha512($clear, $salt = null) {
+    public function hash_sha512($clear, $salt = null, $magic = null) {
         if(!defined('CRYPT_SHA512') || CRYPT_SHA512 != 1) {
             throw new Exception('This PHP installation has no SHA512 support');
         }
         $this->init_salt($salt, 8, false);
-        return crypt($clear, '$6$'.$salt.'$');
+		if(empty($magic)) {
+			return crypt($clear, '$6$'.$salt.'$');
+		}else{
+			return crypt($clear, '$6$'.$magic.'$'.$salt.'$');
+		}
     }
 
     /**
