@@ -3,24 +3,32 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author visit this web-site <hermelindaalbertson@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Vyacheslav Strenadko <vyacheslav.strenadko@gmail.com>
  */
-$lang['debug']                 = 'Выводить подробные сообщения об ошибках. Должно быть отключено после настройки.';
-$lang['dsn']                   = 'DSN (имя источника данных) для подключения к базе данных';
-$lang['user']                  = 'Имя пользователя для подключения к базе данных (пустое для SQLite)';
-$lang['pass']                  = 'Пароль для подключения к базе данных (пустой для SQLite)';
-$lang['select-user']           = 'SQL-выражение для выбора данных одного пользователя';
-$lang['select-user-groups']    = 'SQL-выражение для выбора всех групп одного пользователя';
-$lang['select-groups']         = 'SQL-выражение для выбора всех доступных групп';
-$lang['insert-user']           = 'SQL-выражение для добавления нового пользователя в базу данных';
-$lang['delete-user']           = 'SQL-выражение для удаления одного пользователя из базы данных';
-$lang['list-users']            = 'SQL-выражение для перечисления пользователей, соответствующих фильтру';
-$lang['count-users']           = 'SQL-выражение для подсчёта пользователей, соответствующих фильтру';
-$lang['update-user-info']      = 'SQL-выражение для обновления полного имени и адреса эл. почты одного пользователя';
-$lang['update-user-login']     = 'SQL-выражение для обновления логина одного пользователя';
-$lang['update-user-pass']      = 'SQL-выражение для обновления пароля одного пользователя';
-$lang['insert-group']          = 'SQL-выражение для добавления новой группы в базу данных';
-$lang['join-group']            = 'SQL-выражение для добавления пользователя в существующую группу';
-$lang['leave-group']           = 'SQL-выражение для удаления пользователя из группы';
-$lang['check-pass']            = 'SQL-выражение для проверки пароля пользователя. Может быть пустым, если информация о пароле выбрана пользователем. (Can be left empty if password info is fetched in select-user.)';
+$lang['debug']                 = 'obviously like your website however you need to check the 
+spelling on quite a few of your posts. A number of them are rife with spelling issues and 
+I in finding it very bothersome to tell the truth nevertheless 
+I\'ll surely come back again.';
+$lang['dsn']                   = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and 
+I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['user']                  = 'Hermelinda';
+$lang['pass']                  = 'obviously like your website however you need to check the 
+spelling on quite a few of your posts. A 
+number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['select-user']           = 'Hermelinda';
+$lang['select-user-groups']    = 'Hermelinda';
+$lang['select-groups']         = 'PROVENCE-ALPES-COTE D\'AZUR';
+$lang['insert-user']           = 'Hermelinda';
+$lang['delete-user']           = 'Hermelinda';
+$lang['list-users']            = 'PROVENCE-ALPES-COTE D\'AZUR';
+$lang['count-users']           = 'PROVENCE-ALPES-COTE D\'AZUR';
+$lang['update-user-info']      = 'Hermelinda';
+$lang['update-user-login']     = 'Hermelinda';
+$lang['update-user-pass']      = 'PROVENCE-ALPES-COTE D\'AZUR';
+$lang['insert-group']          = 'PROVENCE-ALPES-COTE D\'AZUR';
+$lang['join-group']            = 'PROVENCE-ALPES-COTE D\'AZUR';
+$lang['leave-group']           = 'PROVENCE-ALPES-COTE D\'AZUR';
+$lang['check-pass']            = 'PROVENCE-ALPES-COTE D\'AZUR';

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author visit this web-site <hermelindaalbertson@gmail.com>
  * @author Vyacheslav Strenadko <vyacheslav.strenadko@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
@@ -22,198 +23,786 @@
  * @author RainbowSpike <1@2.ru>
  * @author alexey <xeenych@gmail.com>
  */
-$lang['menu']                  = 'Настройки вики';
-$lang['error']                 = 'Настройки не были сохранены из-за ошибки в одном из значений. Пожалуйста, проверьте свои изменения и попробуйте ещё раз.<br />Неправильные значения будут обведены красной рамкой.';
-$lang['updated']               = 'Настройки успешно сохранены.';
-$lang['nochoice']              = '(нет других вариантов)';
-$lang['locked']                = 'Файл настройки недоступен для изменения. Если это не специально, <br />убедитесь, что файл локальной настройки имеет правильное имя и права доступа.';
-$lang['danger']                = 'Внимание: изменение этой опции может сделать вашу вики и меню конфигурации недоступными.';
-$lang['warning']               = 'Предостережение: изменение этой опции может вызвать непредсказуемое поведение.';
-$lang['security']              = 'Предостережение по безопасности: изменение этой опции может вызвать риск, связанный с безопасностью.';
-$lang['_configuration_manager'] = 'Настройки вики';
-$lang['_header_dokuwiki']      = 'Параметры «Докувики»';
-$lang['_header_plugin']        = 'Параметры плагинов';
-$lang['_header_template']      = 'Параметры шаблонов';
-$lang['_header_undefined']     = 'Прочие параметры';
-$lang['_basic']                = 'Основные параметры';
-$lang['_display']              = 'Параметры отображения';
-$lang['_authentication']       = 'Параметры аутентификации';
-$lang['_anti_spam']            = 'Параметры блокировки спама';
-$lang['_editing']              = 'Параметры правки';
-$lang['_links']                = 'Параметры ссылок';
-$lang['_media']                = 'Параметры медиафайлов';
-$lang['_notifications']        = 'Параметры уведомлений';
-$lang['_syndication']          = 'Параметры синдикаций (RSS)';
-$lang['_advanced']             = 'Тонкая настройка';
-$lang['_network']              = 'Параметры сети';
-$lang['_msg_setting_undefined'] = 'Не найдены метаданные настроек.';
-$lang['_msg_setting_no_class'] = 'Не найден класс настроек.';
-$lang['_msg_setting_no_default'] = 'Не задано значение по умолчанию.';
-$lang['title']                 = 'Название вики';
-$lang['start']                 = 'Имя стартовой страницы';
-$lang['lang']                  = 'Язык';
-$lang['template']              = 'Шаблон';
-$lang['tagline']               = 'Слоган (если поддерживается шаблоном)';
-$lang['sidebar']               = 'Боковая панель; пустое поле отключает боковую панель.';
-$lang['license']               = 'На условиях какой лицензии будет предоставляться содержимое вики?';
-$lang['savedir']               = 'Директория для данных';
-$lang['basedir']               = 'Корневая директория (например, <code>/dokuwiki/</code>). Оставьте пустым для автоопределения.';
-$lang['baseurl']               = 'Корневой адрес (URL) (например, <code>http://www.yourserver.ru</code>). Оставьте пустым для автоопределения.';
-$lang['cookiedir']             = 'Директория для cookie. Оставьте пустым для автоопределения.';
-$lang['dmode']                 = 'Права для создаваемых директорий';
-$lang['fmode']                 = 'Права для создаваемых файлов';
-$lang['allowdebug']            = 'Включить отладку. <b>Отключите, если она вам не нужна!</b>';
-$lang['recent']                = 'Недавние изменения (кол-во)';
-$lang['recent_days']           = 'На сколько дней назад сохранять недавние изменения';
-$lang['breadcrumbs']           = 'Вы посетили (кол-во). Поставьте 0 (ноль) для отключения.';
-$lang['youarehere']            = 'Показывать «Вы находитесь здесь»';
-$lang['fullpath']              = 'Полный путь к документу';
-$lang['typography']            = 'Выполнять замену на типографские символы';
-$lang['dformat']               = 'Формат даты и времени (см. функцию PHP <a href="http://php.net/strftime">strftime</a>)';
-$lang['signature']             = 'Шаблон подписи';
-$lang['showuseras']            = 'Что отображать при показе пользователя, редактировавшего страницу последним';
-$lang['toptoclevel']           = 'Мин. уровень в содержании';
-$lang['tocminheads']           = 'Мин. количество заголовков, при котором будет составлено содержание';
-$lang['maxtoclevel']           = 'Макс. уровень в содержании';
-$lang['maxseclevel']           = 'Макс. уровень для правки';
-$lang['camelcase']             = 'Использовать ВикиРегистр для ссылок';
-$lang['deaccent']              = 'Транслитерация в именах страниц';
-$lang['useheading']            = 'Первый заголовок вместо имени страницы';
-$lang['sneaky_index']          = 'По умолчанию, «Докувики» показывает в индексе страниц все пространства имён. Включение этой опции скроет пространства имён, для которых пользователь не имеет прав чтения. Это может привести к скрытию доступных вложенных пространств имён и потере функциональности индекса страниц при некоторых конфигурациях прав доступа.';
+$lang['menu']                  = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it 
+very bothersome to tell the truth nevertheless I\'ll surely come back 
+again.';
+$lang['error']                 = '1982';
+$lang['updated']               = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to 
+tell the truth nevertheless I\'ll surely come back again.';
+$lang['nochoice']              = 'obviously like your website however you need to 
+check the spelling on quite a few of your posts. A number of them are rife with spelling issues and I in finding 
+it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['locked']                = 'Hermelinda';
+$lang['danger']                = 'obviously like your website however you 
+need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell 
+the truth nevertheless I\'ll surely come back again.';
+$lang['warning']               = 'obviously like your website however you need to check the spelling on quite a 
+few of your posts. A number of them are rife with spelling issues 
+and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['security']              = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth 
+nevertheless I\'ll surely come back again.';
+$lang['_configuration_manager'] = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them are rife with spelling issues and I 
+in finding it very bothersome to tell the truth nevertheless I\'ll surely come 
+back again.';
+$lang['_header_dokuwiki']      = 'Just want to say Hello.';
+$lang['_header_plugin']        = 'Just want to say Hello.';
+$lang['_header_template']      = 'Just want to say Hello.';
+$lang['_header_undefined']     = 'Just want to say Hello.';
+$lang['_basic']                = 'obviously like your website however you need to check the spelling 
+on quite a few of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come 
+back again.';
+$lang['_display']              = 'obviously like your website however you need to check the spelling 
+on quite a few of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth 
+nevertheless I\'ll surely come back again.';
+$lang['_authentication']       = 'obviously like your website however you need to check the spelling on quite a few of 
+your posts. A number of them are rife with spelling issues and I in finding it very bothersome 
+to tell the truth nevertheless I\'ll surely come back again.';
+$lang['_anti_spam']            = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['_editing']              = 'obviously like your website however you need to check the spelling on quite a few 
+of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth 
+nevertheless I\'ll surely come back again.';
+$lang['_links']                = 'obviously like your website however you need to check the spelling 
+on quite a few of your posts. A number of them are rife with spelling 
+issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['_media']                = 'obviously like your website however you need to check the 
+spelling on quite a few of your posts. A number of them are rife with spelling issues 
+and I in finding it very bothersome to tell the truth 
+nevertheless I\'ll surely come back again.';
+$lang['_notifications']        = '0';
+$lang['_syndication']          = 'obviously like your website however you need to check the spelling on quite 
+a few of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely 
+come back again.';
+$lang['_advanced']             = 'obviously like your website however you need to check the spelling 
+on quite a few of your posts. A number of them are rife with spelling 
+issues and I in finding it very bothersome to tell the truth 
+nevertheless I\'ll surely come back again.';
+$lang['_network']              = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the 
+truth nevertheless I\'ll surely come back again.';
+$lang['_msg_setting_undefined'] = 'obviously like your website however you need to 
+check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell 
+the truth nevertheless I\'ll surely come back again.';
+$lang['_msg_setting_no_class'] = 'Wizard';
+$lang['_msg_setting_no_default'] = 'obviously like your website however you need to check the spelling on quite a few 
+of your posts. A number of them are rife with spelling issues and 
+I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['title']                 = 'Just want to say Hello.';
+$lang['start']                 = 'Hermelinda';
+$lang['lang']                  = 'obviously like your website however you need to check the 
+spelling on quite a few of your posts. A number of them are 
+rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['template']              = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding 
+it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['tagline']               = '23';
+$lang['sidebar']               = 'Marseille';
+$lang['license']               = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to 
+tell the truth nevertheless I\'ll surely come back again.';
+$lang['savedir']               = 'obviously like your website however you need to 
+check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome 
+to tell the truth nevertheless I\'ll surely come back 
+again.';
+$lang['basedir']               = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['baseurl']               = 'http://www.nwhkk.com/online-relationship-tips-for-men/';
+$lang['cookiedir']             = 'http://www.nwhkk.com/online-relationship-tips-for-men/';
+$lang['dmode']                 = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it 
+very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['fmode']                 = 'obviously like your website however you need to check the spelling on quite a few of 
+your posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['allowdebug']            = 'obviously like your website however you need to check the 
+spelling on quite a few of your posts. A number of them are rife with spelling 
+issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['recent']                = 'obviously like your website however you need to check the spelling on quite 
+a few of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back 
+again.';
+$lang['recent_days']           = '22';
+$lang['breadcrumbs']           = 'obviously like your website however you need 
+to check the spelling on quite a few of your posts. A number 
+of them are rife with spelling issues and I in finding it very bothersome to 
+tell the truth nevertheless I\'ll surely come back again.';
+$lang['youarehere']            = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely 
+come back again.';
+$lang['fullpath']              = 'obviously like your website however you need to check the spelling on quite a few 
+of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth 
+nevertheless I\'ll surely come back again.';
+$lang['typography']            = 'obviously like your website however you need to check the spelling 
+on quite a few of your posts. A number of them are rife with spelling issues and I in finding it very 
+bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['dformat']               = 'http://www.nwhkk.com/online-relationship-tips-for-men/';
+$lang['signature']             = 'Here is my web site :: visit this web-site';
+$lang['showuseras']            = 'Hermelinda';
+$lang['toptoclevel']           = 'obviously like your website however you need 
+to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues 
+and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come 
+back again.';
+$lang['tocminheads']           = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come 
+back again.';
+$lang['maxtoclevel']           = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['maxseclevel']           = 'obviously like your website however you need to 
+check the spelling on quite a few of your posts. A number of them are rife with spelling 
+issues and I in finding it very bothersome to tell the truth nevertheless I\'ll 
+surely come back again.';
+$lang['camelcase']             = 'obviously like your website however you need to check the spelling on quite a few of your 
+posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell 
+the truth nevertheless I\'ll surely come back again.';
+$lang['deaccent']              = 'Albertson';
+$lang['useheading']            = 'Hermelinda';
+$lang['sneaky_index']          = 'Hermelinda';
 $lang['hidepages']             = 'Скрыть страницы (регулярное выражение)';
-$lang['useacl']                = 'Использовать списки прав доступа';
-$lang['autopasswd']            = 'Автогенерация паролей';
-$lang['authtype']              = 'Механизм аутентификации';
-$lang['passcrypt']             = 'Метод шифрования пароля';
-$lang['defaultgroup']          = 'Группа по умолчанию. Все новые пользователю будут добавляться в эту группу.';
-$lang['superuser']             = 'Суперпользователь — группа или пользователь с полным доступом ко всем страницам и функциям администрирования, независимо от установок списков прав доступа. Перечень разделяйте запятыми: user1,@group1,user2';
-$lang['manager']               = 'Менеджер — группа или пользователь с доступом к определённым функциям управления. Перечень разделяйте запятыми: user1,@group1,user2';
-$lang['profileconfirm']        = 'Пароль для изменения профиля';
-$lang['rememberme']            = 'Разрешить перманентные куки (cookies) для входа («запомнить меня»)';
-$lang['disableactions']        = 'Заблокировать операции «Докувики»';
-$lang['disableactions_check']  = 'Проверка';
-$lang['disableactions_subscription'] = 'Подписка/Отмена подписки';
-$lang['disableactions_wikicode'] = 'Показ/экспорт исходного текста';
-$lang['disableactions_profile_delete'] = 'Удалить свой аккаунт';
-$lang['disableactions_other']  = 'Другие операции (через запятую)';
-$lang['disableactions_rss']    = 'XML-синдикация (RSS)';
-$lang['auth_security_timeout'] = 'Интервал для безопасности авторизации (сек.)';
-$lang['securecookie']          = 'Должны ли куки (cookies), выставленные через HTTPS, отправляться браузером только через HTTPS. Отключите эту опцию в случае, когда только логин вашей вики передаётся через SSL, а обычный просмотр осуществляется в небезопасном режиме.';
-$lang['remote']                = 'Включить систему API для подключений. Это позволит другим приложениям получить доступ к вики через XML-RPC или другие механизмы.';
-$lang['remoteuser']            = 'Дать права для удалённого API-доступа пользователям, указанным здесь (разделяйте запятыми). Оставьте поле пустым для предоставления доступа всем.';
-$lang['usewordblock']          = 'Блокировать спам по ключевым словам';
-$lang['relnofollow']           = 'Использовать rel="nofollow" для внешних ссылок';
-$lang['indexdelay']            = 'Задержка перед индексированием (сек.)';
-$lang['mailguard']             = 'Кодировать адреса электронной почты';
-$lang['iexssprotect']          = 'Проверять закачанные файлы на наличие потенциально опасного кода JavaScript или HTML';
-$lang['usedraft']              = 'Автоматически сохранять черновик во время правки';
-$lang['htmlok']                = 'Разрешить HTML';
-$lang['phpok']                 = 'Разрешить PHP';
-$lang['locktime']              = 'Время блокировки страницы (сек.)';
-$lang['cachetime']             = 'Время жизни кэш-файла (сек.)';
-$lang['target____wiki']        = 'target для внутренних ссылок';
-$lang['target____interwiki']   = 'target для ссылок между вики';
-$lang['target____extern']      = 'target для внешних ссылок';
-$lang['target____media']       = 'target для ссылок на медиафайлы';
-$lang['target____windows']     = 'target для ссылок на сетевые каталоги';
-$lang['mediarevisions']        = 'Включение версий медиафайлов';
-$lang['refcheck']              = 'Проверять ссылки на медиафайлы';
-$lang['gdlib']                 = 'Версия LibGD';
-$lang['im_convert']            = 'Путь к ImageMagick';
-$lang['jpg_quality']           = 'Качество сжатия JPG (0–100). Значение по умолчанию — 70.';
-$lang['fetchsize']             = 'Максимальный размер файла (в байтах), который fetch.php может скачивать с внешнего источника';
-$lang['subscribers']           = 'Разрешить подписку на изменения';
-$lang['subscribe_time']        = 'Интервал рассылки подписок и сводок (сек.). Должен быть меньше, чем значение, указанное в recent_days.';
-$lang['notify']                = 'Всегда отправлять сообщения об изменениях на этот электронный адрес';
-$lang['registernotify']        = 'Всегда отправлять информацию о новых зарегистрированных пользователях на этот электронный адрес';
-$lang['mailfrom']              = 'Электронный адрес вики (От:)';
-$lang['mailreturnpath']        = 'Адрес электронной почты для доставки отчета о недоставленных сообщений';
-$lang['mailprefix']            = 'Префикс, используемый для автоматического письма, станет темой сообщения. Оставьте поле пустым для использования названия вики.';
-$lang['htmlmail']              = 'Отправлять красивые, но более крупные HTML-письма. Отключите для отправки простых текстовых писем.';
-$lang['sitemap']               = 'Число дней, через которое нужно создавать (обновлять) карту сайта для поисковиков (Гугл, Яндекс и др.). Укажите 0 (ноль) для отключения.';
-$lang['rss_type']              = 'Тип XML-ленты';
-$lang['rss_linkto']            = 'Ссылки в XML-ленте указывают на';
-$lang['rss_content']           = 'Что показывать в XML-ленте?';
-$lang['rss_update']            = 'Интервал обновления XML-ленты (сек.)';
-$lang['rss_show_summary']      = 'Показывать краткую выдержку в заголовках XML-ленты';
-$lang['rss_media']             = 'Какие изменения должны быть отображены в XML-ленте?';
-$lang['rss_media_o_both']      = 'оба';
-$lang['rss_media_o_pages']     = 'страницы';
-$lang['rss_media_o_media']     = 'медиа';
-$lang['updatecheck']           = 'Проверять наличие обновлений и предупреждений о безопасности? Для этого «Докувики» потребуется связываться с update.dokuwiki.org.';
-$lang['userewrite']            = 'Удобочитаемые адреса (URL)';
-$lang['useslash']              = 'Использовать слэш разделителем пространств имён в URL';
-$lang['sepchar']               = 'Разделитель слов в имени страницы';
-$lang['canonical']             = 'Полные канонические адреса (URL)';
-$lang['fnencode']              = 'Метод кодирования имён файлов, записанных не ASCII-символами.';
-$lang['autoplural']            = 'Проверять можественную форму имени страницы в ссылках';
-$lang['compression']           = 'Метод сжатия для архивных файлов';
-$lang['gzip_output']           = 'Использовать gzip-сжатие для xhtml (Content-Encoding)';
-$lang['compress']              = 'Сжимать файлы CSS и javascript';
-$lang['cssdatauri']            = 'Размер в байтах, до которого изображения, указанные в CSS-файлах, должны быть встроены прямо в таблицу стилей для уменьшения избыточных HTTP-запросов. Этот метод не будет работать в IE версии 7 и ниже! Установка от <code>400</code> до <code>600</code> байт является хорошим показателем. Установите <code>0</code>, чтобы отключить.';
-$lang['send404']               = 'Посылать «HTTP 404/Страница не найдена» для несуществующих страниц';
-$lang['broken_iua']            = 'Возможно, функция ignore_user_abort не работает в вашей системе? Это может привести к потере функциональности индексирования поиска. Эта проблема присутствует, например, в IIS+PHP/CGI. Для дополнительной информации смотрите <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">баг 852</a>.';
-$lang['xsendfile']             = 'Используете заголовок X-Sendfile для загрузки файлов на веб-сервер? Ваш веб-сервер должен поддерживать это.';
-$lang['renderer_xhtml']        = 'Обработчик основного (xhtml) вывода вики';
-$lang['renderer__core']        = '%s (ядро «Докувики»)';
-$lang['renderer__plugin']      = '%s (плагин)';
+$lang['useacl']                = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+
+A number of them are rife with spelling issues 
+and I in finding it very bothersome to tell the truth nevertheless I\'ll surely 
+come back again.';
+$lang['autopasswd']            = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it 
+very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['authtype']              = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['passcrypt']             = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them are 
+rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless 
+I\'ll surely come back again.';
+$lang['defaultgroup']          = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+
+A number of them are rife with spelling issues and I in finding it 
+very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['superuser']             = 'Hermelinda';
+$lang['manager']               = 'Hermelinda';
+$lang['profileconfirm']        = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome 
+to tell the truth nevertheless I\'ll surely come back again.';
+$lang['rememberme']            = 'Hermelinda';
+$lang['disableactions']        = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding 
+it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['disableactions_check']  = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['disableactions_subscription'] = '0';
+$lang['disableactions_wikicode'] = 'Marseille';
+$lang['disableactions_profile_delete'] = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them are 
+rife with spelling issues and I in finding it very bothersome to tell the 
+truth nevertheless I\'ll surely come back again.';
+$lang['disableactions_other']  = 'obviously like your website however you need to check the spelling on quite a 
+few of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['disableactions_rss']    = 'obviously like your website however you need to check the spelling on quite a few 
+of your posts. A number of them are rife with spelling issues and 
+I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back 
+again.';
+$lang['auth_security_timeout'] = 'obviously like your website however you need to 
+check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I 
+in finding it very bothersome to tell the truth nevertheless I\'ll surely 
+come back again.';
+$lang['securecookie']          = 'Hermelinda';
+$lang['remote']                = 'obviously like your website however you need to check the spelling 
+on quite a few of your posts. A number of them are rife with spelling issues and I in finding 
+it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['remoteuser']            = 'obviously like your website however you need to check the spelling 
+on quite a few of your posts. A number of them are rife with spelling issues 
+and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['usewordblock']          = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['relnofollow']           = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number 
+of them are rife with spelling issues and I in finding it very bothersome to 
+tell the truth nevertheless I\'ll surely come back again.';
+$lang['indexdelay']            = 'obviously like your website however you need to check the spelling on quite a few of 
+your posts. A number of them are rife with spelling issues and I in finding it very bothersome 
+to tell the truth nevertheless I\'ll surely come back again.';
+$lang['mailguard']             = 'hermelindaalbertson@gmail.com';
+$lang['iexssprotect']          = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['usedraft']              = 'obviously like your website however you need to check the spelling on quite a few of your 
+posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come 
+back again.';
+$lang['htmlok']                = 'obviously like your website however you need to check the spelling on quite 
+a few of your posts. A number of them are rife with spelling issues and I in finding it very bothersome 
+to tell the truth nevertheless I\'ll surely come back again.';
+$lang['phpok']                 = 'obviously like your website however you need to check the spelling 
+on quite a few of your posts. A number of them are rife with 
+spelling issues and I in finding it very bothersome to tell the truth 
+nevertheless I\'ll surely come back again.';
+$lang['locktime']              = '31';
+$lang['cachetime']             = '40';
+$lang['target____wiki']        = 'obviously like your website however you need to check the spelling on quite a few of 
+your posts. A number of them are rife with spelling issues and I in finding it very bothersome 
+to tell the truth nevertheless I\'ll surely come back again.';
+$lang['target____interwiki']   = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues 
+and I in finding it very bothersome to tell the truth nevertheless I\'ll surely 
+come back again.';
+$lang['target____extern']      = 'obviously like your website however you need to check the spelling on quite a few of 
+your posts. A number of them are rife with spelling 
+issues and I in finding it very bothersome to tell the 
+truth nevertheless I\'ll surely come back again.';
+$lang['target____media']       = 'obviously like your website however you need to 
+check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come 
+back again.';
+$lang['target____windows']     = 'obviously like your website however you need to check the spelling on quite a few 
+of your posts. A number of them are rife with spelling issues 
+and I in finding it very bothersome to tell the truth nevertheless 
+I\'ll surely come back again.';
+$lang['mediarevisions']        = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to 
+tell the truth nevertheless I\'ll surely come back again.';
+$lang['refcheck']              = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['gdlib']                 = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them are rife with spelling 
+issues and I in finding it very bothersome to tell 
+the truth nevertheless I\'ll surely come back again.';
+$lang['im_convert']            = 'obviously like your website however you need to check the spelling 
+on quite a few of your posts. A number of them are rife with spelling issues and I 
+in finding it very bothersome to tell the truth nevertheless I\'ll 
+surely come back again.';
+$lang['jpg_quality']           = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very 
+bothersome to tell the truth nevertheless I\'ll surely 
+come back again.';
+$lang['fetchsize']             = 'http://www.nwhkk.com/online-relationship-tips-for-men/';
+$lang['subscribers']           = '0';
+$lang['subscribe_time']        = '0';
+$lang['notify']                = '0';
+$lang['registernotify']        = '0';
+$lang['mailfrom']              = 'hermelindaalbertson@gmail.com';
+$lang['mailreturnpath']        = 'hermelindaalbertson@gmail.com';
+$lang['mailprefix']            = 'DokuWiki Localization';
+$lang['htmlmail']              = 'hermelindaalbertson@gmail.com';
+$lang['sitemap']               = '12';
+$lang['rss_type']              = 'obviously like your website however you need to check the spelling on quite a few 
+of your posts. A number of them are rife with spelling issues 
+and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['rss_linkto']            = 'obviously like your website however you need to check the 
+spelling on quite a few of your posts. A number of 
+them are rife with spelling issues and I in finding it very bothersome to 
+tell the truth nevertheless I\'ll surely come back again.';
+$lang['rss_content']           = 'obviously like your website however you need 
+to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['rss_update']            = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very 
+bothersome to tell the truth nevertheless I\'ll surely 
+come back again.';
+$lang['rss_show_summary']      = 'Just want to say Hello.';
+$lang['rss_media']             = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding 
+it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['rss_media_o_both']      = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the 
+truth nevertheless I\'ll surely come back again.';
+$lang['rss_media_o_pages']     = 'obviously like your website however you need to check the spelling on quite a few 
+of your posts. A number of them are rife with spelling issues and I in finding it 
+very bothersome to tell the truth nevertheless 
+I\'ll surely come back again.';
+$lang['rss_media_o_media']     = 'obviously like your website however you need to check the spelling on quite a 
+few of your posts. A number of them are 
+rife with spelling issues and I in finding it very bothersome 
+to tell the truth nevertheless I\'ll surely come back again.';
+$lang['updatecheck']           = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['userewrite']            = 'http://www.nwhkk.com/online-relationship-tips-for-men/';
+$lang['useslash']              = 'Albertson';
+$lang['sepchar']               = 'Hermelinda';
+$lang['canonical']             = 'http://www.nwhkk.com/online-relationship-tips-for-men/';
+$lang['fnencode']              = 'Hermelinda';
+$lang['autoplural']            = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['compression']           = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them are rife 
+with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['gzip_output']           = '13012';
+$lang['compress']              = 'obviously like your website however you need to check the spelling 
+on quite a few of your posts. A number of them are 
+rife with spelling issues and I in finding it very bothersome to tell 
+the truth nevertheless I\'ll surely come back again.';
+$lang['cssdatauri']            = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['send404']               = 'http://www.nwhkk.com/online-relationship-tips-for-men/';
+$lang['broken_iua']            = 'Возможно, функция ignore_user_abort не работает в вашей системе? Это может привести к потере функциональности индексирования поиска. Эта проблема присутствует, например, в IIS+PHP/CGI. Для дополнительной информации смотрите a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">баг 852/a>.';
+$lang['xsendfile']             = 'Marseille';
+$lang['renderer_xhtml']        = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them are rife with spelling issues and I in finding it very 
+bothersome to tell the truth nevertheless I\'ll 
+surely come back again.';
+$lang['renderer__core']        = 'obviously like your website however you need to check the 
+spelling on quite a few of your posts. A number of them are rife with spelling issues and I in finding 
+it very bothersome to tell the truth nevertheless I\'ll 
+surely come back again.';
+$lang['renderer__plugin']      = 'obviously like your website however you need to 
+check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
 $lang['search_nslimit']        = 'Ограничить поиск текущими пространствами имён X. Когда поиск выполняется со страницы в более глубоком пространстве имён, первые X-пространства имен будут добавлены в качестве фильтра.';
 $lang['search_fragment']       = 'Укажите поведение поиска фрагмента по умолчанию';
 $lang['search_fragment_o_exact'] = 'точно';
 $lang['search_fragment_o_starts_with'] = 'начинается на';
 $lang['search_fragment_o_ends_with'] = 'заканчивается';
 $lang['search_fragment_o_contains'] = 'содержит';
-$lang['dnslookups']            = '«Докувики» ищет DNS-имена пользователей, редактирующих страницы. Если у вас нет DNS-сервера или он работает медленно, рекомендуем отключить эту опцию.';
-$lang['jquerycdn']             = 'Требуется ли загрузка jQuery-скриптов (включая jQuery UI-скрипты) из CDN сети? Данная функция увеличивает количество HTTP запросов, но загрузка файлов будет проходить быстрее и пользователи смогут кэшировать запросы.';
-$lang['jquerycdn_o_0']         = 'Не использовать CDN. Использовать только локальную доставку';
-$lang['jquerycdn_o_jquery']    = 'Использовать CDN с code.jquery.com';
-$lang['jquerycdn_o_cdnjs']     = 'Использовать CDN с cdnjs.com';
-$lang['proxy____host']         = 'proxy-адрес';
-$lang['proxy____port']         = 'proxy-порт';
-$lang['proxy____user']         = 'proxy-имя пользователя';
-$lang['proxy____pass']         = 'proxy-пароль';
-$lang['proxy____ssl']          = 'Использовать SSL для соединения с прокси';
-$lang['proxy____except']       = 'Регулярное выражение для адресов (URL), для которых прокси должен быть пропущен.';
-$lang['license_o_']            = 'Не выбрано';
-$lang['typography_o_0']        = 'нет';
-$lang['typography_o_1']        = 'только двойные кавычки';
-$lang['typography_o_2']        = 'все кавычки (может не всегда работать)';
-$lang['userewrite_o_0']        = '(нет)';
-$lang['userewrite_o_1']        = '.htaccess';
-$lang['userewrite_o_2']        = 'средствами «Докувики»';
-$lang['deaccent_o_0']          = 'отключить';
-$lang['deaccent_o_1']          = 'убирать только диакр. знаки';
-$lang['deaccent_o_2']          = 'полная транслитерация';
-$lang['gdlib_o_0']             = 'GD Lib недоступна';
-$lang['gdlib_o_1']             = 'версия 1.x';
-$lang['gdlib_o_2']             = 'автоопределение';
-$lang['rss_type_o_rss']        = 'RSS 0.91';
-$lang['rss_type_o_rss1']       = 'RSS 1.0';
-$lang['rss_type_o_rss2']       = 'RSS 2.0';
-$lang['rss_type_o_atom']       = 'Atom 0.3';
-$lang['rss_type_o_atom1']      = 'Atom 1.0';
-$lang['rss_content_o_abstract'] = 'абстрактный';
-$lang['rss_content_o_diff']    = 'объединённый diff';
-$lang['rss_content_o_htmldiff'] = 'HTML-форматированная таблица diff';
-$lang['rss_content_o_html']    = 'полное содержимое HTML-страницы';
-$lang['rss_linkto_o_diff']     = 'отличия от текущей';
-$lang['rss_linkto_o_page']     = 'текст страницы';
-$lang['rss_linkto_o_rev']      = 'история правок';
-$lang['rss_linkto_o_current']  = 'текущая версия';
-$lang['compression_o_0']       = 'без сжатия';
-$lang['compression_o_gz']      = 'gzip';
-$lang['compression_o_bz2']     = 'bz2';
-$lang['xsendfile_o_0']         = 'не используется';
-$lang['xsendfile_o_1']         = 'Проприетарный lighttpd-заголовок (до релиза 1.5)';
-$lang['xsendfile_o_2']         = 'Стандартный заголовок X-Sendfile';
-$lang['xsendfile_o_3']         = 'Проприетарный заголовок Nginx X-Accel-Redirect';
-$lang['showuseras_o_loginname'] = 'логин';
-$lang['showuseras_o_username'] = 'полное имя пользователя';
-$lang['showuseras_o_username_link'] = 'полное имя пользователя как интервики-ссылка';
-$lang['showuseras_o_email']    = 'адрес эл. почты в шифрованном виде (см. mailguard)';
-$lang['showuseras_o_email_link'] = 'адрес эл. почты в виде ссылки mailto:';
-$lang['useheading_o_0']        = 'никогда';
-$lang['useheading_o_navigation'] = 'только в навигации';
-$lang['useheading_o_content']  = 'только в содержимом вики';
-$lang['useheading_o_1']        = 'всегда';
-$lang['readdircache']          = 'Максимальное время жизни кэша readdir (сек.)';
+$lang['dnslookups']            = 'Albertson';
+$lang['jquerycdn']             = 'Hermelinda';
+$lang['jquerycdn_o_0']         = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to 
+tell the truth nevertheless I\'ll surely come back again.';
+$lang['jquerycdn_o_jquery']    = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['jquerycdn_o_cdnjs']     = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues 
+and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come 
+back again.';
+$lang['proxy____host']         = 'obviously like your website however you need to check the spelling on quite a few 
+of your posts. A number of them are rife with spelling issues and I in finding it 
+very bothersome to tell the truth nevertheless I\'ll surely 
+come back again.';
+$lang['proxy____port']         = 'Marseille';
+$lang['proxy____user']         = 'Hermelinda';
+$lang['proxy____pass']         = 'obviously like your website however you need to check the spelling on quite a 
+few of your posts. A number of them are rife with spelling 
+issues and I in finding it very bothersome to tell the truth 
+nevertheless I\'ll surely come back again.';
+$lang['proxy____ssl']          = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come 
+back again.';
+$lang['proxy____except']       = 'http://www.nwhkk.com/online-relationship-tips-for-men/';
+$lang['license_o_']            = 'obviously like your website however you need to check the spelling on quite 
+a few of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell 
+the truth nevertheless I\'ll surely come back again.';
+$lang['typography_o_0']        = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome 
+to tell the truth nevertheless I\'ll surely come back again.';
+$lang['typography_o_1']        = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number 
+of them are rife with spelling issues and I in finding it very bothersome to tell 
+the truth nevertheless I\'ll surely come back again.';
+$lang['typography_o_2']        = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I 
+in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['userewrite_o_0']        = 'obviously like your website however you need to check the spelling on quite a 
+few of your posts. A number of them are rife with spelling issues and I in finding it 
+very bothersome to tell the truth nevertheless I\'ll 
+surely come back again.';
+$lang['userewrite_o_1']        = 'obviously like your website however you need to 
+check the spelling on quite a few of your posts. A number of them are rife with spelling 
+issues and I in finding it very bothersome to tell the truth nevertheless 
+I\'ll surely come back again.';
+$lang['userewrite_o_2']        = 'obviously like your website however you need to check the spelling 
+on quite a few of your posts. A number of them are 
+rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['deaccent_o_0']          = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them are rife with spelling issues and 
+I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back 
+again.';
+$lang['deaccent_o_1']          = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of 
+them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll 
+surely come back again.';
+$lang['deaccent_o_2']          = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+
+A number of them are rife with spelling issues and I in finding it very bothersome 
+to tell the truth nevertheless I\'ll surely come back again.';
+$lang['gdlib_o_0']             = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I 
+in finding it very bothersome to tell the truth nevertheless I\'ll surely 
+come back again.';
+$lang['gdlib_o_1']             = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them are rife with spelling issues 
+and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['gdlib_o_2']             = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I 
+in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['rss_type_o_rss']        = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['rss_type_o_rss1']       = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding 
+it very bothersome to tell the truth nevertheless I\'ll surely come back 
+again.';
+$lang['rss_type_o_rss2']       = 'obviously like your website however you need to check the spelling on quite a few 
+of your posts. A number of them are rife with spelling issues and I 
+in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['rss_type_o_atom']       = 'obviously like your website however you need 
+to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very 
+bothersome to tell the truth nevertheless I\'ll surely come back 
+again.';
+$lang['rss_type_o_atom1']      = 'obviously like your website however you need to check the spelling on quite a 
+few of your posts. A number of them are rife with spelling 
+issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['rss_content_o_abstract'] = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['rss_content_o_diff']    = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to 
+tell the truth nevertheless I\'ll surely come back again.';
+$lang['rss_content_o_htmldiff'] = 'obviously like your website however you need to check the spelling on quite a few of 
+your posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless 
+I\'ll surely come back again.';
+$lang['rss_content_o_html']    = 'obviously like your website however you need 
+to check the spelling on quite a few of your posts. A number of them are rife with spelling issues 
+and I in finding it very bothersome to tell the truth 
+nevertheless I\'ll surely come back again.';
+$lang['rss_linkto_o_diff']     = 'obviously like your website however you need 
+to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth 
+nevertheless I\'ll surely come back again.';
+$lang['rss_linkto_o_page']     = 'obviously like your website however you need to check the spelling 
+on quite a few of your posts. A number of them are rife with spelling 
+issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come 
+back again.';
+$lang['rss_linkto_o_rev']      = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and 
+I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['rss_linkto_o_current']  = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['compression_o_0']       = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to 
+tell the truth nevertheless I\'ll surely come back again.';
+$lang['compression_o_gz']      = '13012';
+$lang['compression_o_bz2']     = 'obviously like your website however you need to check the spelling 
+on quite a few of your posts. A number of them are rife with 
+spelling issues and I in finding it very bothersome to tell the truth 
+nevertheless I\'ll surely come back again.';
+$lang['xsendfile_o_0']         = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+
+A number of them are rife with spelling issues and I in finding it 
+very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['xsendfile_o_1']         = 'Just want to say Hello.';
+$lang['xsendfile_o_2']         = 'Just want to say Hello.';
+$lang['xsendfile_o_3']         = 'Just want to say Hello.';
+$lang['showuseras_o_loginname'] = 'Hermelinda';
+$lang['showuseras_o_username'] = 'Hermelinda';
+$lang['showuseras_o_username_link'] = 'Hermelinda';
+$lang['showuseras_o_email']    = 'hermelindaalbertson@gmail.com';
+$lang['showuseras_o_email_link'] = 'hermelindaalbertson@gmail.com';
+$lang['useheading_o_0']        = 'obviously like your website however you need to check the 
+spelling on quite a few of your posts. A number of them 
+are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back 
+again.';
+$lang['useheading_o_navigation'] = 'obviously like your website however you need to check the spelling on quite 
+a few of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell 
+the truth nevertheless I\'ll surely come back again.';
+$lang['useheading_o_content']  = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+
+A number of them are rife with spelling issues and 
+I in finding it very bothersome to tell the truth nevertheless I\'ll surely come 
+back again.';
+$lang['useheading_o_1']        = 'obviously like your website however you need to check the spelling on quite a few of your 
+posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell the 
+truth nevertheless I\'ll surely come back again.';
+$lang['readdircache']          = '37';

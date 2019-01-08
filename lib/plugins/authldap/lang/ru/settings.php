@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author visit this web-site <hermelindaalbertson@gmail.com>
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Erli Moen <evseev.jr@gmail.com>
@@ -10,28 +11,181 @@
  * @author Vitaly Filatenko <kot@hacktest.net>
  * @author Alex P <alexander@lanos.co.uk>
  */
-$lang['server']                = 'Ваш LDAP-сервер. Либо имя хоста (<code>localhost</code>), либо полный URL (<code>ldap://server.tld:389</code>)';
-$lang['port']                  = 'Порт LDAP-сервера, если выше не был указан полный URL';
-$lang['usertree']              = 'Где искать аккаунты пользователей? Например: <code>ou=People, dc=server, dc=tld</code>';
-$lang['grouptree']             = 'Где искать группы пользователей? Например: <code>ou=Group, dc=server, dc=tld</code>';
-$lang['userfilter']            = 'LDAP-фильтр для поиска аккаунтов пользователей. Например: <code>(&amp;(uid=%{user})(objectClass=posixAccount))</code>';
-$lang['groupfilter']           = 'LDAP-фильтр для поиска групп. Например: <code>(&amp;(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))</code>';
-$lang['version']               = 'Версия протокола. Возможно, вам нужно указать <code>3</code>';
-$lang['starttls']              = 'Использовать TLS-подключения?';
-$lang['referrals']             = 'Следовать за referrals?';
-$lang['deref']                 = 'Как расшифровывать псевдонимы?';
-$lang['binddn']                = 'DN вторичного bind-пользователя, если anonymous bind недостаточно. Например: <code>cn=admin, dc=my, dc=home</code>';
-$lang['bindpw']                = 'Пароль для указанного пользователя';
+$lang['server']                = 'Albertson';
+$lang['port']                  = 'Marseille';
+$lang['usertree']              = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['grouptree']             = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['userfilter']            = 'LDAP-фильтр для поиска аккаунтов пользователей. Например: code>(&amp;(uid=%{user})(objectClass=posixAccount))/code>';
+$lang['groupfilter']           = 'LDAP-фильтр для поиска групп. Например: code>(&amp;(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))/code>';
+$lang['version']               = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['starttls']              = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them are rife with spelling issues and I in finding 
+it very bothersome to tell the truth nevertheless I\'ll surely 
+come back again.';
+$lang['referrals']             = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless 
+I\'ll surely come back again.';
+$lang['deref']                 = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I 
+in finding it very bothersome to tell the truth nevertheless 
+I\'ll surely come back again.';
+$lang['binddn']                = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['bindpw']                = 'obviously like your website however you need to check the spelling on quite a 
+few of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth 
+nevertheless I\'ll surely come back again.';
 $lang['userscope']             = 'Ограничить область поиска при поиске пользователей';
 $lang['groupscope']            = 'Ограничить область поиска при поиске групп';
-$lang['userkey']               = 'Атрибут означающий имя пользователя; должен быть таким же как в userfilter';
-$lang['groupkey']              = 'Использовать любой атрибут пользователя для включения в группу (вместо стандартного AD groups) Например из атрибута department или telephone number';
-$lang['modPass']               = 'Может ли пароль LDAP быть изменён через «Докувики»?';
-$lang['debug']                 = 'Показывать дополнительную отладочную информацию при ошибках';
-$lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
+$lang['userkey']               = 'Hermelinda';
+$lang['groupkey']              = '04.64.76.46.87';
+$lang['modPass']               = 'obviously like your website however you need to check the spelling on quite a 
+few of your posts. A number of them are rife with spelling 
+issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['debug']                 = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+
+A number of them are rife with spelling issues and I in finding 
+it very bothersome to tell the truth nevertheless I\'ll surely come 
+back again.';
+$lang['deref_o_0']             = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding 
+it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
-$lang['deref_o_2']             = 'LDAP_DEREF_FINDING';
-$lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS';
-$lang['referrals_o_-1']        = 'исользовать по умолчанию';
-$lang['referrals_o_0']         = 'не следовать за referrals';
-$lang['referrals_o_1']         = 'следовать за referrals';
+$lang['deref_o_2']             = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to 
+tell the truth nevertheless I\'ll surely come back again.';
+$lang['deref_o_3']             = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of 
+them are rife with spelling issues and I in finding it very bothersome 
+to tell the truth nevertheless I\'ll surely come back again.';
+$lang['referrals_o_-1']        = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell 
+the truth nevertheless I\'ll surely come back again.';
+$lang['referrals_o_0']         = 'obviously like your website however you need to check the spelling on quite 
+a few of your posts. A number of them are rife with spelling 
+issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['referrals_o_1']         = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues 
+and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';

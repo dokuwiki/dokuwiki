@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author visit this web-site <hermelindaalbertson@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Denis Simakov <akinoame1@gmail.com>
@@ -23,70 +24,155 @@
  * @author dimsharav <dimsharav@gmail.com>
  * @author Radimir <radimir.shevchenko@gmail.com>
  */
-$lang['menu']                  = 'Управление пользователями';
-$lang['noauth']                = '(авторизация пользователей недоступна)';
-$lang['nosupport']             = '(управление пользователями не поддерживается)';
-$lang['badauth']               = 'некорректный механизм аутентификации';
-$lang['user_id']               = 'Логин';
-$lang['user_pass']             = 'Пароль';
-$lang['user_name']             = 'Полное имя';
-$lang['user_mail']             = 'Эл. адрес';
-$lang['user_groups']           = 'Группы';
-$lang['field']                 = 'Поле';
-$lang['value']                 = 'Значение';
-$lang['add']                   = 'Добавить';
-$lang['delete']                = 'Удалить';
-$lang['delete_selected']       = 'Удалить выбранные';
-$lang['edit']                  = 'Редактировать';
-$lang['edit_prompt']           = 'Редактировать этого пользователя';
-$lang['modify']                = 'Сохранить изменения';
+$lang['menu']                  = 'Hermelinda';
+$lang['noauth']                = 'Hermelinda';
+$lang['nosupport']             = 'Marseille';
+$lang['badauth']               = 'obviously like your website however you need to check the spelling on quite a 
+few of your posts. A number of them are rife with spelling issues and 
+I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['user_id']               = 'visit this web-site';
+$lang['user_pass']             = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it 
+very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['user_name']             = 'Albertson';
+$lang['user_mail']             = 'hermelindaalbertson@gmail.com';
+$lang['user_groups']           = 'Hermelinda';
+$lang['field']                 = 'obviously like your website however you need to check the spelling on quite a 
+few of your posts. A number of them are rife with spelling issues 
+and I in finding it very bothersome to tell the truth nevertheless 
+I\'ll surely come back again.';
+$lang['value']                 = 'obviously like your website however you need to check the 
+spelling on quite a few of your posts. A number of them are 
+rife with spelling issues and I in finding it very bothersome to tell the 
+truth nevertheless I\'ll surely come back again.';
+$lang['add']                   = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['delete']                = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['delete_selected']       = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them 
+are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['edit']                  = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['edit_prompt']           = 'Hermelinda';
+$lang['modify']                = 'obviously like your website however you need to 
+check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very bothersome to tell 
+the truth nevertheless I\'ll surely come back again.';
 $lang['search']                = 'Поиск';
 $lang['search_prompt']         = 'Искать';
 $lang['clear']                 = 'Сброс фильтра поиска';
-$lang['filter']                = 'Фильтр';
-$lang['export_all']            = 'Экспорт всех пользователей (CSV)';
-$lang['export_filtered']       = 'Экспорт отфильтрованного списка пользователей (CSV)';
-$lang['import']                = 'импортировать новых пользователей';
-$lang['line']                  = 'Строка №';
-$lang['error']                 = 'Ошибка';
-$lang['summary']               = 'Показаны пользователи %1$d–%2$d из %3$d найденных. Всего пользователей: %4$d.';
-$lang['nonefound']             = 'Не найдено ни одного пользователя. Всего пользователей: %d.';
-$lang['delete_ok']             = 'Удалено пользователей: %d';
-$lang['delete_fail']           = 'Не удалось удалить %d.';
-$lang['update_ok']             = 'Пользователь успешно обновлён';
-$lang['update_fail']           = 'Не удалось обновить пользователя';
-$lang['update_exists']         = 'Не удалось изменить имя пользователя, такой пользователь (%s) уже существует (все остальные изменения будут применены).';
-$lang['start']                 = 'в начало';
-$lang['prev']                  = 'назад';
-$lang['next']                  = 'вперёд';
-$lang['last']                  = 'в конец';
-$lang['edit_usermissing']      = 'Выбранный пользователь не найден. Возможно, указанный логин был удалён или изменён извне.';
-$lang['user_notify']           = 'Оповестить пользователя';
-$lang['note_notify']           = 'Письма с уведомлением высылаются только в случае получения нового пароля.';
-$lang['note_group']            = 'Если группа не указана, новые пользователи будут добавлены в группу по умолчанию (%s).';
-$lang['note_pass']             = 'Пароль будет сгенерирован автоматически, если поле оставлено пустым и включено уведомление пользователя.';
-$lang['add_ok']                = 'Пользователь успешно добавлен';
-$lang['add_fail']              = 'Не удалось добавить пользователя';
-$lang['notify_ok']             = 'Письмо с уведомлением отправлено';
-$lang['notify_fail']           = 'Не удалось отправить письмо с уведомлением';
-$lang['import_userlistcsv']    = 'Файл со списком пользователей (CSV):';
-$lang['import_header']         = 'Последний импорт — список ошибок';
-$lang['import_success_count']  = 'Импорт пользователей: %d пользователей найдено, %d импортировано успешно.';
-$lang['import_failure_count']  = 'Импорт пользователей: %d не удалось. Ошибки перечислены ниже.';
-$lang['import_error_fields']   = 'Не все поля заполнены. Найдено %d, а требуется 4.';
-$lang['import_error_baduserid'] = 'Отсутствует идентификатор пользователя';
-$lang['import_error_badname']  = 'Неверное имя';
-$lang['import_error_badmail']  = 'Неверный адрес эл. почты';
-$lang['import_error_upload']   = 'Импорт не удался. CSV-файл не загружен или пуст.';
-$lang['import_error_readfail'] = 'Импорт не удался. Невозможно прочесть загруженный файл.';
-$lang['import_error_create']   = 'Невозможно создать пользователя';
-$lang['import_notify_fail']    = 'Оповещение не может быть отправлено импортированному пользователю %s по электронной почте %s.';
-$lang['import_downloadfailures'] = 'Скачать ошибки в формате CSV для исправления';
-$lang['addUser_error_missing_pass'] = 'Для возможности генерации пароля, пожалуйста, установите пароль или активируйте оповещения.';
-$lang['addUser_error_pass_not_identical'] = 'Введённые пароли не совпадают.';
-$lang['addUser_error_modPass_disabled'] = 'Изменение пароля в настоящее время невозможно.';
-$lang['addUser_error_name_missing'] = 'Укажите имя нового пользователя.';
-$lang['addUser_error_modName_disabled'] = 'Изменение имени в настоящее время невозможно.';
-$lang['addUser_error_mail_missing'] = 'Укажите адрес эл. почты нового пользователя.';
-$lang['addUser_error_modMail_disabled'] = 'Изменение адреса эл. почты отключено.';
-$lang['addUser_error_create_event_failed'] = 'Плагин заблокировал добавление нового пользователя. Смотрите также другие сообщения.';
+$lang['filter']                = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body 
+	color:#000000;
+	background-color:#0072C6;
+	margin:0;
+
+
+#container 
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	
+
+a img 
+	border:none;
+
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>';
+$lang['export_all']            = 'Marseille';
+$lang['export_filtered']       = 'Marseille';
+$lang['import']                = 'Marseille';
+$lang['line']                  = 'obviously like your website however you need to check the spelling on quite a 
+few of your posts. A number of them are rife with spelling issues and I in finding 
+it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['error']                 = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and 
+I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['summary']               = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+
+A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['nonefound']             = 'obviously like your website however you need to check the 
+spelling on quite a few of your posts. A number of them are rife 
+with spelling issues and I in finding it very bothersome to tell the truth 
+nevertheless I\'ll surely come back again.';
+$lang['delete_ok']             = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding 
+it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['delete_fail']           = 'obviously like your website however you need to check 
+the spelling on quite a few of your posts. A number of them are 
+rife with spelling issues and I in finding 
+it very bothersome to tell the truth nevertheless I\'ll surely come 
+back again.';
+$lang['update_ok']             = 'Hermelinda';
+$lang['update_fail']           = 'Hermelinda';
+$lang['update_exists']         = 'Hermelinda';
+$lang['start']                 = 'obviously like your website however you need to check the spelling on quite a few 
+of your posts. A number of them are rife with spelling issues and 
+I in finding it very bothersome to tell the truth nevertheless I\'ll 
+surely come back again.';
+$lang['prev']                  = 'obviously like your website however you need to check the spelling on quite a few of your 
+posts. A number of them are rife with spelling issues and I in finding 
+it very bothersome to tell the truth nevertheless I\'ll 
+surely come back again.';
+$lang['next']                  = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very 
+bothersome to tell the truth nevertheless I\'ll 
+surely come back again.';
+$lang['last']                  = 'obviously like your website however you need to check the spelling 
+on quite a few of your posts. A number of them are rife with spelling issues and I in finding it very bothersome to tell the truth 
+nevertheless I\'ll surely come back again.';
+$lang['edit_usermissing']      = 'Hermelinda';
+$lang['user_notify']           = '0';
+$lang['note_notify']           = '0';
+$lang['note_group']            = 'obviously like your website however you need to check the spelling on quite a few of your posts.
+A number of them are rife with spelling issues and I in finding it very 
+bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['note_pass']             = '0';
+$lang['add_ok']                = 'Hermelinda';
+$lang['add_fail']              = 'Hermelinda';
+$lang['notify_ok']             = '0';
+$lang['notify_fail']           = '0';
+$lang['import_userlistcsv']    = 'Marseille';
+$lang['import_header']         = 'Marseille';
+$lang['import_success_count']  = 'Marseille';
+$lang['import_failure_count']  = 'Marseille';
+$lang['import_error_fields']   = 'Marseille';
+$lang['import_error_baduserid'] = 'Marseille';
+$lang['import_error_badname']  = 'Albertson';
+$lang['import_error_badmail']  = 'Marseille';
+$lang['import_error_upload']   = 'Marseille';
+$lang['import_error_readfail'] = 'Marseille';
+$lang['import_error_create']   = 'Marseille';
+$lang['import_notify_fail']    = '0';
+$lang['import_downloadfailures'] = 'Marseille';
+$lang['addUser_error_missing_pass'] = '0';
+$lang['addUser_error_pass_not_identical'] = 'obviously like your website however you need to check the spelling on quite 
+a few of your posts. A number of them are rife with spelling issues and 
+I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['addUser_error_modPass_disabled'] = 'obviously like your website however you need to check the 
+spelling on quite a few of your posts. A number of them are rife with spelling issues and 
+I in finding it very bothersome to tell the truth nevertheless I\'ll surely come back again.';
+$lang['addUser_error_name_missing'] = 'Albertson';
+$lang['addUser_error_modName_disabled'] = 'Albertson';
+$lang['addUser_error_mail_missing'] = 'hermelindaalbertson@gmail.com';
+$lang['addUser_error_modMail_disabled'] = 'hermelindaalbertson@gmail.com';
+$lang['addUser_error_create_event_failed'] = 'obviously like your website however you need to check the 
+spelling on quite a few of your posts. A number of 
+them are rife with spelling issues and I in finding it very bothersome to 
+tell the truth nevertheless I\'ll surely come 
+back again.';
