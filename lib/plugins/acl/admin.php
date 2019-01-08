@@ -193,7 +193,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
 
         echo '<div class="footnotes"><div class="fn">'.NL;
         echo '<sup><a id="fn__1" class="fn_bot" href="#fnt__1">1)</a></sup>'.NL;
-        echo $this->getLang('p_include');
+        echo '<div class="content">'.$this->getLang('p_include').'</div>';
         echo '</div></div>';
 
         echo '</div>'.NL;
