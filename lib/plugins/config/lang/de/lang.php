@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Alex Beck <alex@4becks.com>
  * @author Jürgen Fredriksson <jfriedrich@gmx.at>
  * @author Michael Bohn <mjbohn@gmail.com>
  * @author Joel Strasser <strasser999@gmail.com>
@@ -160,6 +161,7 @@ $lang['xsendfile']             = 'Den X-Sendfile-Header nutzen, um Dateien direk
 $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wiki-Ausgabe.';
 $lang['renderer__core']        = '%s (DokuWiki Kern)';
 $lang['renderer__plugin']      = '%s (Plugin)';
+$lang['search_nslimit']        = 'Beschränke die Suche auf die jetzigen X Namensräume. Wenn eine Suche von einer Seite in einem tieferen Namensraum aus ausgeführt wird, werden die ersten X Namensräume als Filter hinzugefügt';
 $lang['search_fragment']       = 'Spezifiziere das vorgegebenen Fragment-Suchverhalten';
 $lang['search_fragment_o_exact'] = 'genaue Treffer';
 $lang['search_fragment_o_starts_with'] = 'beginnt mit';
