@@ -207,10 +207,10 @@ class io_rmdir_test extends DokuWikiTest {
         $this->assertTrue(is_dir($dir));
         $this->assertTrue(is_dir($top));
         // PR #2562
-        $this->assertFileExists("$dir/foooo/testfile.txt");
-        $this->assertTrue(is_dir("$dir/foooo"));
-        $this->assertFalse(is_dir("$dir/foooo/bar"));
-        $this->assertFalse(is_dir("$dir/foooo/bar/baz"));
+        $this->assertFileExists("$dir/foooo/testfile.txt", "files should never be deleted");
+        $this->assertTrue(is_dir("$dir/foooo", "folders with files should never be deleted"));
+        $this->assertFalse(is_dir("$dir/foooo/bar", "empty folder bar should be removed"));
+        $this->assertFalse(is_dir("$dir/foooo/bar/baz", "empty folder baz should be removed"));
 
         // delete successfully
         $this->assertTrue(io_rmdir($dir, true));
