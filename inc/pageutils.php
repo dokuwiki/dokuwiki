@@ -86,7 +86,7 @@ function getID($param='id',$clean=true){
             if (isset($urlParameters['id'])) {
                 unset($urlParameters['id']);
             }
-            send_redirect(wl($id,$urlParameters,true));
+            send_redirect(wl($id, $urlParameters, true, '&'));
         }
     }
 
