@@ -95,6 +95,22 @@ class Search_createPagenameFromQuery extends DokuWikiTest
             ],
             [
                 [
+                    'query' => 'WiKi:Foo',
+                    'parsed_str' => '((W+:wiki)AND(W+:foo))',
+                    'parsed_ary' => [0 => 'W+:wiki', 1 => 'W+:foo', 2 => 'AND',],
+                    'words' => [0 => 'wiki', 1 => 'foo',],
+                    'highlight' => [0 => 'wiki', 1 => 'foo',],
+                    'and' => [0 => 'wiki', 1 => 'foo',],
+                    'phrases' => [],
+                    'ns' => [],
+                    'notns' => [],
+                    'not' => [],
+                ],
+                ':wiki:foo',
+                'uppercased pageid with colons should result in clean pageid',
+            ],
+            [
+                [
                     'query' => '"wiki:foo"',
                     'parsed_str' => '((W_:wiki)AND(W_:foo)AND(P+:wiki:foo))',
                     'parsed_ary' => [0 => 'W_:wiki', 1 => 'W_:foo', 2 => 'AND', 3 => 'P+:wiki:foo', 4 => 'AND',],
