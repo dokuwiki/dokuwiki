@@ -74,7 +74,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             // save state & force a page reload to get the new settings to take effect
             $_SESSION['PLUGIN_CONFIG'] = array('state' => 'updated', 'time' => time());
             $this->_close_session();
-            send_redirect(wl($ID, array('do'=>'admin','page'=>'config'), true, '&'));
+            send_redirect(wl($ID,array('do'=>'admin','page'=>'config'),true,'&'));
             exit();
         } elseif(!$this->_error) {
             $this->_config->touch_settings(); // just touch to refresh cache
@@ -108,7 +108,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         // POST to script() instead of wl($ID) so config manager still works if
         // rewrite config is broken. Add $ID as hidden field to remember
         // current ID in most cases.
-        ptln('<form action="'.script().'" method="post">');
+        ptln('<form id="dw__configform" action="'.script().'" method="post">');
         ptln('<div class="no"><input type="hidden" name="id" value="'.$ID.'" /></div>');
         formSecurityToken();
         $this->_print_h1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));
