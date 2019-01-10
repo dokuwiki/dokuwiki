@@ -543,10 +543,20 @@ function css_pluginstyles($mediatype='screen'){
  * @return string
  */
 function css_compress($css){
-    //strip comments through a callback
+    // replace quoted strings with placeholder
+    $quote_storage = [];
+
+    $quote_cb = function ($match) use (&$quote_storage) {
+        $quote_storage[] = $match[0];
+        return 'STR'.(count($quote_storage)-1);
+    };
+
+    $css = preg_replace_callback('/(([\'"]).*?(?<!\\\\)\2)|(STR\d+)/', $quote_cb, $css);
+
+    // strip comments through a callback
     $css = preg_replace_callback('#(/\*)(.*?)(\*/)#s','css_comment_cb',$css);
 
-    //strip (incorrect but common) one line comments
+    // strip (incorrect but common) one line comments
     $css = preg_replace_callback('/^.*\/\/.*$/m','css_onelinecomment_cb',$css);
 
     // strip whitespaces
@@ -600,6 +610,13 @@ function css_compress($css){
         $css
     );
 
+    // replace back protected strings
+    $quote_back_cb = function ($match) use (&$quote_storage) {
+        return $quote_storage[$match[1]];
+    };
+
+    $css = preg_replace_callback('/STR(\d+)/', $quote_back_cb, $css);
+
     return $css;
 }
 
@@ -640,23 +657,6 @@ function css_onelinecomment_cb($matches) {
             // no more comments, we're done
             $i = $len;
             break;
-        }
-
-        // keep any quoted string that starts before a comment
-        $nextsqt = strpos($line, "'", $i);
-        $nextdqt = strpos($line, '"', $i);
-        if(min($nextsqt, $nextdqt) < $nextcom) {
-            $skipto = false;
-            if($nextsqt !== false && ($nextdqt === false || $nextsqt < $nextdqt)) {
-                $skipto = strpos($line, "'", $nextsqt+1) +1;
-            } else if ($nextdqt !== false) {
-                $skipto = strpos($line, '"', $nextdqt+1) +1;
-            }
-
-            if($skipto !== false) {
-                $i = $skipto;
-                continue;
-            }
         }
 
         if($nexturl === false || $nextcom < $nexturl) {
