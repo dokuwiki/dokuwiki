@@ -71,7 +71,7 @@ class css_css_compress_test extends DokuWikiTest {
     function test_hack(){
         $text = '/* Mac IE will not see this and continue with inline-block */
                  /* \\*/
-                 display: inline; 
+                 display: inline;
                  /* */';
         $this->assertEquals('/* \\*/display:inline;/* */', css_compress($text));
     }
@@ -134,6 +134,13 @@ class css_css_compress_test extends DokuWikiTest {
     function test_data() {
         $input  = 'list-style-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);';
         $expect = 'list-style-image:url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);';
+
+        $this->assertEquals($expect, css_compress($input));
+    }
+
+    function test_quotes() {
+        $input  = '/* "1" */content: "/* 1 : 2 */ 1 : 2";';
+        $expect = 'content:"/* 1 : 2 */ 1 : 2";';
 
         $this->assertEquals($expect, css_compress($input));
     }
