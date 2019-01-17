@@ -5,6 +5,7 @@
  * auth.class language support 
  * installer strings 
  *
+ * @author Samana Johann <samana.johann@sangham.net>
  * @author no credits taken <someone@cambodia.kh>
  * @author Ratana Lim <aerorat@yahoo.com>
  */
