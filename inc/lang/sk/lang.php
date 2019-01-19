@@ -1,20 +1,22 @@
 <?php
-
 /**
- * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * slovak language file
  *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Martin Michalek <michalek.dev@gmail.com>
  * @author Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik <exusik@gmail.com>
+ * @author Tibor Repček <tiborepcek@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '„';
-$lang['doublequoteclosing']    = '“';
-$lang['singlequoteopening']    = '‚';
-$lang['singlequoteclosing']    = '‘';
-$lang['apostrophe']            = '’';
+$lang['doublequoteopening']    = '“'; //&ldquo;
+$lang['doublequoteclosing']    = '”'; //&rdquo;
+$lang['singlequoteopening']    = '‘'; //&lsquo;
+$lang['singlequoteclosing']    = '’'; //&rsquo;
+$lang['apostrophe']            = '’'; //&rsquo;
+
 $lang['btn_edit']              = 'Upraviť stránku';
 $lang['btn_source']            = 'Zobraziť zdroj stránky';
 $lang['btn_show']              = 'Zobraziť stránku';
@@ -52,6 +54,7 @@ $lang['btn_media']             = 'Správa médií';
 $lang['btn_deleteuser']        = 'Zrušiť môj účet';
 $lang['btn_img_backto']        = 'Späť na %s';
 $lang['btn_mediaManager']      = 'Prezrieť v správcovi médií';
+
 $lang['loggedinas']            = 'Prihlásený(á) ako:';
 $lang['user']                  = 'Používateľské meno';
 $lang['pass']                  = 'Heslo';
@@ -65,8 +68,25 @@ $lang['profile']               = 'Používateľský profil';
 $lang['badlogin']              = 'Zadané používateľské meno a heslo nie je správne.';
 $lang['badpassconfirm']        = 'Ľutujem, heslo bolo nesprávne.';
 $lang['minoredit']             = 'Menšie zmeny';
-$lang['draftdate']             = 'Koncept automaticky uložený';
+$lang['draftdate']             = 'Koncept automaticky uložený'; // full dformat date will be added
 $lang['nosecedit']             = 'Stránka bola medzičasom zmenená, informácie o sekcii sú zastaralé a z tohto dôvodu bola nahraná celá stránka.';
+$lang['searchcreatepage']      = 'Ak ste nenašli, čo ste hľadali, môžete vytvoriť alebo upraviť stránku %s, ktorá bola nazvaná podľa vášho dopytu.';
+
+$lang['search_fullresults']    = 'Fulltextové výsledky';
+$lang['js']['search_toggle_tools']   = 'Zobraziť/Skryť vyhľadávacie nástroje';
+$lang['search_exact_match']    = 'Presná zhoda';
+$lang['search_starts_with']    = 'Začín na';
+$lang['search_ends_with']      = 'Končí na';
+$lang['search_contains']       = 'Obsahuje';
+$lang['search_custom_match']   = 'Vlastný';
+$lang['search_any_ns']         = 'Akýkoľvek menný priestor';
+$lang['search_any_time']       = 'Kedykoľvek';
+$lang['search_past_7_days']    = 'Posledný týždeň';
+$lang['search_past_month']     = 'Posledný mesiac';
+$lang['search_past_year']      = 'Posledný  rok';
+$lang['search_sort_by_hits']   = 'Zoradiť podľa počtu návštev';
+$lang['search_sort_by_mtime']  = 'Zoradiť podľa posledných úprav';
+
 $lang['regmissing']            = 'Musíte vyplniť všetky údaje.';
 $lang['reguexists']            = 'Používateľ s rovnakým menom je už zaregistrovaný.';
 $lang['regsuccess']            = 'Používateľský účet bol vytvorený a heslo zaslané emailom.';
@@ -77,6 +97,7 @@ $lang['regbadmail']            = 'Zadaná emailová adresa nie je platná. Pokia
 $lang['regbadpass']            = 'Zadané heslá nie sú rovnaké, zadajte ich prosím znovu.';
 $lang['regpwmail']             = 'Vaše heslo do systému DokuWiki';
 $lang['reghere']               = 'Nemáte používateľský účet? Vytvorte si ho';
+
 $lang['profna']                = 'Táto wiki nepodporuje zmenu profilu';
 $lang['profnochange']          = 'Žiadne zmeny, nie je čo robiť.';
 $lang['profnoempty']           = 'Prázdne meno alebo mailová adresa nie sú povolené.';
@@ -87,6 +108,7 @@ $lang['profdeleted']           = 'Váš účet bol zrušený v tejto wiki.';
 $lang['profconfdelete']        = 'Chcem odstrániť môj účet z tejto wiki. <br/> Táto operácia je nevratná.';
 $lang['profconfdeletemissing'] = 'Nebolo zavolené potvrdzovacie políčko';
 $lang['proffail']              = 'Profil používateľa nebol aktualizovaný.';
+
 $lang['pwdforget']             = 'Zabudli ste heslo? Získajte nové!';
 $lang['resendna']              = 'Táto wiki nepodporuje opätovné zasielanie hesla.';
 $lang['resendpwd']             = 'Nastaviť nové heslo pre';
@@ -95,8 +117,10 @@ $lang['resendpwdnouser']       = 'Prepáčte, nemôžeme nájsť zadaného použ
 $lang['resendpwdbadauth']      = 'Prepáčte, tento autorizačný kód nie je platný. Uistite sa, či ste použili celý autorizačný odkaz.';
 $lang['resendpwdconfirm']      = 'Autorizačný odkaz bol zaslaný na e-mail.';
 $lang['resendpwdsuccess']      = 'Vaše nové heslo bolo zaslané na e-mail.';
+
 $lang['license']               = 'Ak nie je uvedené inak, obsah tejto wiki je uverejnený pod nasledujúcou licenciou:';
 $lang['licenseok']             = 'Poznámka: Zmenou tejto stránky súhlasíte s uverejnením obsahu pod nasledujúcou licenciou:';
+
 $lang['searchmedia']           = 'Hľadať meno súboru:';
 $lang['searchmedia_in']        = 'Hľadať v %s';
 $lang['txt_upload']            = 'Vyberte súbor ako prílohu:';
@@ -105,6 +129,7 @@ $lang['txt_overwrt']           = 'Prepísať existujúci súbor';
 $lang['maxuploadsize']         = 'Obmedzenie max. %s na súbor.';
 $lang['lockedby']              = 'Práve zamknuté:';
 $lang['lockexpire']            = 'Zámok stratí platnosť:';
+
 $lang['js']['willexpire']      = 'Váš zámok pre editáciu za chvíľu stratí platnosť.\nAby ste predišli konfliktom, stlačte tlačítko Náhľad a zámok sa predĺži.';
 $lang['js']['notsavedyet']     = 'Neuložené zmeny budú stratené.
 Chcete naozaj pokračovať?';
@@ -132,8 +157,7 @@ $lang['js']['medialeft']       = 'Zarovnať obrázok vľavo.';
 $lang['js']['mediaright']      = 'Zarovnať obrázok vpravo.';
 $lang['js']['mediacenter']     = 'Zarovnať obrázok na stred.';
 $lang['js']['medianoalign']    = 'Nepoužívať zarovnanie.';
-$lang['js']['nosmblinks']      = 'Odkazovanie na zdieľané prostriedky Windows funguje len v Internet Exploreri.
-Aj napriek tomu tento odkaz môžete skopírovať a vložiť inde.';
+$lang['js']['nosmblinks']      = 'Odkazovanie na zdieľané prostriedky Windows funguje len v Internet Exploreri.\nAj napriek tomu tento odkaz môžete skopírovať a vložiť inde.';
 $lang['js']['linkwiz']         = 'Sprievodca odkazmi';
 $lang['js']['linkto']          = 'Odkaz na:';
 $lang['js']['del_confirm']     = 'Zmazať túto položku?';
@@ -148,8 +172,10 @@ $lang['js']['media_done_btn']  = 'Hotovo';
 $lang['js']['media_drop']      = 'Pridajte súbory potiahnutím myšou';
 $lang['js']['media_cancel']    = 'odstrániť';
 $lang['js']['media_overwrt']   = 'Prepísať existujúce súbory';
+
 $lang['rssfailed']             = 'Nastala chyba pri vytváraní tohto RSS: ';
 $lang['nothingfound']          = 'Nič nenájdené.';
+
 $lang['mediaselect']           = 'Výber súboru';
 $lang['uploadsucc']            = 'Prenos prebehol v poriadku';
 $lang['uploadfail']            = 'Chyba pri nahrávaní. Možno kvôli zle nastaveným právam?';
@@ -173,6 +199,7 @@ $lang['mediaextchange']        = 'Prípona súboru bola zmenená z .%s na .%s!';
 $lang['reference']             = 'Referencie pre';
 $lang['ref_inuse']             = 'Súbor nemôže byť zmazaný, pretože je stále používaný nasledujúcimi stránkami:';
 $lang['ref_hidden']            = 'Niektoré referencie sú na stránky, pre ktoré nemáte právo na čítanie';
+
 $lang['hits']                  = '- počet výskytov';
 $lang['quickhits']             = 'Zodpovedajúce stránky';
 $lang['toc']                   = 'Obsah';
@@ -187,8 +214,10 @@ $lang['diff_side']             = 'Vedľa seba';
 $lang['diffprevrev']           = 'Predchádzajúca revízia';
 $lang['diffnextrev']           = 'Nasledujúca revízia';
 $lang['difflastrev']           = 'Posledná revízia';
+$lang['diffbothprevrev']       = 'Obojstranná predošlá revízia';
+$lang['diffbothnextrev']       = 'Obojstranná nasledujúca revízia';
 $lang['line']                  = 'Riadok';
-$lang['breadcrumb']            = 'História:';
+$lang['breadcrumb']            = 'Cesta:';
 $lang['youarehere']            = 'Nachádzate sa:';
 $lang['lastmod']               = 'Posledná úprava:';
 $lang['by']                    = 'od';
@@ -205,15 +234,18 @@ $lang['site_tools']            = 'Nástoje správy stránok';
 $lang['page_tools']            = 'Nástoje stránky';
 $lang['skip_to_content']       = 'skok na obsah';
 $lang['sidebar']               = 'Bočný panel';
+
 $lang['mail_newpage']          = 'stránka pridaná:';
 $lang['mail_changed']          = 'stránka zmenená:';
 $lang['mail_subscribe_list']   = 'stránky zmenené v mennom priestore:';
 $lang['mail_new_user']         = 'nový používateľ:';
 $lang['mail_upload']           = 'nahraný súbor:';
+
 $lang['changes_type']          = 'Prehľad zmien';
 $lang['pages_changes']         = 'Stránok';
 $lang['media_changes']         = 'Súbory';
 $lang['both_changes']          = 'Stránok spolu s média súbormi';
+
 $lang['qb_bold']               = 'Tučné';
 $lang['qb_italic']             = 'Kurzíva';
 $lang['qb_underl']             = 'Podčiarknutie';
@@ -238,7 +270,9 @@ $lang['qb_media']              = 'Vložiť obrázky alebo iné súbory';
 $lang['qb_sig']                = 'Vložiť podpis';
 $lang['qb_smileys']            = 'Smajlíky';
 $lang['qb_chars']              = 'Špeciálne znaky';
+
 $lang['upperns']               = 'návrat do nadradeného menného priestoru';
+
 $lang['metaedit']              = 'Upraviť metainformácie';
 $lang['metasaveerr']           = 'Zápis metainformácií zlyhal';
 $lang['metasaveok']            = 'Metainformácie uložené';
@@ -254,13 +288,14 @@ $lang['img_camera']            = 'Fotoaparát:';
 $lang['img_keywords']          = 'Kľúčové slová:';
 $lang['img_width']             = 'Šírka:';
 $lang['img_height']            = 'Výška:';
+
 $lang['subscr_subscribe_success'] = 'Používateľ %s bol pridaný do zoznamu hlásení o zmenách %s';
 $lang['subscr_subscribe_error'] = 'Chyba pri pridaní používateľa %s do zoznamu hlásení o zmenách %s';
 $lang['subscr_subscribe_noaddress'] = 'Vaše prihlasovacie meno nemá priradenú žiadnu email adresu, nemôžete byť pridaný do zoznamu hlásení o zmenách';
 $lang['subscr_unsubscribe_success'] = 'Používateľ %s bol odstránený zo zoznamu hlásení o zmenách %s';
 $lang['subscr_unsubscribe_error'] = 'Chyba pri odstránení používateľa %s zo zoznamu hlásení o zmenách %s';
 $lang['subscr_already_subscribed'] = 'Používateľ %s už je v zozname hlásení o zmenách %s';
-$lang['subscr_not_subscribed'] = 'Používateľ %s nie je v zozname hlásení o zmenách %s';
+$lang['subscr_not_subscribed'] = 'Používateľ %s nie je v zozname hlásení o zmenách %s'; // Manage page for subscriptions
 $lang['subscr_m_not_subscribed'] = 'Momentálne nesledujete zmeny aktuálnej stránky alebo menného priestoru.';
 $lang['subscr_m_new_header']   = 'Pridať sledovanie zmien';
 $lang['subscr_m_current_header'] = 'Aktuálne sledované zmeny';
@@ -270,7 +305,11 @@ $lang['subscr_m_receive']      = 'Dostávať';
 $lang['subscr_style_every']    = 'email pri každej zmene';
 $lang['subscr_style_digest']   = 'email so zhrnutím zmien pre každú stránku (perióda %.2f dňa)';
 $lang['subscr_style_list']     = 'zoznam zmenených stránok od posledného emailu (perióda %.2f dňa)';
+
+/* auth.class language support */
 $lang['authtempfail']          = 'Používateľská autentifikácia je dočasne nedostupná. Ak táto situácia pretrváva, prosím informujte správcu systému.';
+
+/* installer strings */
 $lang['i_chooselang']          = 'Zvoľte váš jazyk';
 $lang['i_installer']           = 'DokuWiki inštalátor';
 $lang['i_wikiname']            = 'Názov Wiki';
@@ -298,6 +337,7 @@ $lang['i_license']             = 'Vyberte licenciu, pod ktorou chcete uložiť v
 $lang['i_license_none']        = 'Nezobrazovať žiadne licenčné informácie';
 $lang['i_pop_field']           = 'Prosím pomôžte nám zlepšiť prácu s DokuWiki:';
 $lang['i_pop_label']           = 'Raz mesačne zaslať anonymné údaje vývojárom DokuWiki';
+
 $lang['recent_global']         = 'Práve prehliadate zmeny v mennom priestore <b>%s</b>. Môžete si tiež pozrieť <a href="%s">aktuálne zmeny celej wiki</a>.';
 $lang['years']                 = 'pred %d rokmi';
 $lang['months']                = 'pred %d mesiacmi';
@@ -306,7 +346,9 @@ $lang['days']                  = 'pred %d dňami';
 $lang['hours']                 = 'pred %d hodinami';
 $lang['minutes']               = 'pred %d minútami';
 $lang['seconds']               = 'pred %d sekundami';
+
 $lang['wordblock']             = 'Vaše zmeny neboli uložené, pretože obsahovali nepovolený text (spam).';
+
 $lang['media_uploadtab']       = 'Nahrať';
 $lang['media_searchtab']       = 'Hľadať';
 $lang['media_file']            = 'Súbor';
@@ -331,10 +373,14 @@ $lang['media_perm_upload']     = 'Prepáčte, ale nemáte dostatočné oprávnen
 $lang['media_update']          = 'Nahrať novú verziu';
 $lang['media_restore']         = 'Obnoviť túto verziu';
 $lang['media_acl_warning']     = 'Tento zoznam nemusí byť úplný z dôvodu ACL obmedzení alebo skratých stránok.';
+
 $lang['currentns']             = 'Aktuálny menný priestor';
 $lang['searchresult']          = 'Výsledky hľadania';
 $lang['plainhtml']             = 'Jednoduché HTML';
 $lang['wikimarkup']            = 'Wiki formát';
+$lang['page_nonexist_rev']     = 'Stránka %s neexistovala. Bola vytvorená dodatočne <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Nie je možné spracovať parameter "%s".';
 $lang['email_signature_text']  = 'Táto správa bola zaslaná DokuWiki
 @DOKUWIKIURL@';
+#$lang['email_signature_html'] = ''; # the empty default will copy the text signature, you can override it in a local lang file
+
