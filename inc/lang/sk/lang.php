@@ -3,6 +3,7 @@
  * slovak language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * @author Martin Michalek <michalek.dev@gmail.com>
  * @author Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
  * @author Michal Mesko <michal.mesko@gmail.com>
@@ -73,63 +74,7 @@ $lang['nosecedit']             = 'Stránka bola medzičasom zmenená, informáci
 $lang['searchcreatepage']      = 'Ak ste nenašli, čo ste hľadali, môžete vytvoriť alebo upraviť stránku %s, ktorá bola nazvaná podľa vášho dopytu.';
 
 $lang['search_fullresults']    = 'Fulltextové výsledky';
-$lang['js']['search_toggle_tools']   = 'Zobraziť/Skryť vyhľadávacie nástroje';
-$lang['search_exact_match']    = 'Presná zhoda';
-$lang['search_starts_with']    = 'Začín na';
-$lang['search_ends_with']      = 'Končí na';
-$lang['search_contains']       = 'Obsahuje';
-$lang['search_custom_match']   = 'Vlastný';
-$lang['search_any_ns']         = 'Akýkoľvek menný priestor';
-$lang['search_any_time']       = 'Kedykoľvek';
-$lang['search_past_7_days']    = 'Posledný týždeň';
-$lang['search_past_month']     = 'Posledný mesiac';
-$lang['search_past_year']      = 'Posledný  rok';
-$lang['search_sort_by_hits']   = 'Zoradiť podľa počtu návštev';
-$lang['search_sort_by_mtime']  = 'Zoradiť podľa posledných úprav';
-
-$lang['regmissing']            = 'Musíte vyplniť všetky údaje.';
-$lang['reguexists']            = 'Používateľ s rovnakým menom je už zaregistrovaný.';
-$lang['regsuccess']            = 'Používateľský účet bol vytvorený a heslo zaslané emailom.';
-$lang['regsuccess2']           = 'Používateľský účet bol vytvorený.';
-$lang['regfail']               = 'Používateľský účet nemôže byť vytvorený.';
-$lang['regmailfail']           = 'Zdá sa, že nastala chyba pri posielaní mailu s heslom. Skúste kontaktovať správcu.';
-$lang['regbadmail']            = 'Zadaná emailová adresa nie je platná. Pokiaľ si myslíte, že to je zle, skúste kontaktovať správcu.';
-$lang['regbadpass']            = 'Zadané heslá nie sú rovnaké, zadajte ich prosím znovu.';
-$lang['regpwmail']             = 'Vaše heslo do systému DokuWiki';
-$lang['reghere']               = 'Nemáte používateľský účet? Vytvorte si ho';
-
-$lang['profna']                = 'Táto wiki nepodporuje zmenu profilu';
-$lang['profnochange']          = 'Žiadne zmeny, nie je čo robiť.';
-$lang['profnoempty']           = 'Prázdne meno alebo mailová adresa nie sú povolené.';
-$lang['profchanged']           = 'Profil požívateľa bol úspešne zmenený.';
-$lang['profnodelete']          = 'Táto wiki neumožňuje zrušenie používateľov.';
-$lang['profdeleteuser']        = 'Zrušiť účet';
-$lang['profdeleted']           = 'Váš účet bol zrušený v tejto wiki.';
-$lang['profconfdelete']        = 'Chcem odstrániť môj účet z tejto wiki. <br/> Táto operácia je nevratná.';
-$lang['profconfdeletemissing'] = 'Nebolo zavolené potvrdzovacie políčko';
-$lang['proffail']              = 'Profil používateľa nebol aktualizovaný.';
-
-$lang['pwdforget']             = 'Zabudli ste heslo? Získajte nové!';
-$lang['resendna']              = 'Táto wiki nepodporuje opätovné zasielanie hesla.';
-$lang['resendpwd']             = 'Nastaviť nové heslo pre';
-$lang['resendpwdmissing']      = 'Prepáčte, musíte vyplniť všetky polia.';
-$lang['resendpwdnouser']       = 'Prepáčte, nemôžeme nájsť zadaného používateľa v databáze.';
-$lang['resendpwdbadauth']      = 'Prepáčte, tento autorizačný kód nie je platný. Uistite sa, či ste použili celý autorizačný odkaz.';
-$lang['resendpwdconfirm']      = 'Autorizačný odkaz bol zaslaný na e-mail.';
-$lang['resendpwdsuccess']      = 'Vaše nové heslo bolo zaslané na e-mail.';
-
-$lang['license']               = 'Ak nie je uvedené inak, obsah tejto wiki je uverejnený pod nasledujúcou licenciou:';
-$lang['licenseok']             = 'Poznámka: Zmenou tejto stránky súhlasíte s uverejnením obsahu pod nasledujúcou licenciou:';
-
-$lang['searchmedia']           = 'Hľadať meno súboru:';
-$lang['searchmedia_in']        = 'Hľadať v %s';
-$lang['txt_upload']            = 'Vyberte súbor ako prílohu:';
-$lang['txt_filename']          = 'Uložiť ako (voliteľné):';
-$lang['txt_overwrt']           = 'Prepísať existujúci súbor';
-$lang['maxuploadsize']         = 'Obmedzenie max. %s na súbor.';
-$lang['lockedby']              = 'Práve zamknuté:';
-$lang['lockexpire']            = 'Zámok stratí platnosť:';
-
+$lang['js']['search_toggle_tools'] = 'Zobraziť/Skryť vyhľadávacie nástroje';
 $lang['js']['willexpire']      = 'Váš zámok pre editáciu za chvíľu stratí platnosť.\nAby ste predišli konfliktom, stlačte tlačítko Náhľad a zámok sa predĺži.';
 $lang['js']['notsavedyet']     = 'Neuložené zmeny budú stratené.
 Chcete naozaj pokračovať?';
@@ -173,6 +118,56 @@ $lang['js']['media_drop']      = 'Pridajte súbory potiahnutím myšou';
 $lang['js']['media_cancel']    = 'odstrániť';
 $lang['js']['media_overwrt']   = 'Prepísať existujúce súbory';
 
+$lang['search_exact_match']    = 'Presná zhoda';
+$lang['search_starts_with']    = 'Začín na';
+$lang['search_ends_with']      = 'Končí na';
+$lang['search_contains']       = 'Obsahuje';
+$lang['search_custom_match']   = 'Vlastný';
+$lang['search_any_ns']         = 'Akýkoľvek menný priestor';
+$lang['search_any_time']       = 'Kedykoľvek';
+$lang['search_past_7_days']    = 'Posledný týždeň';
+$lang['search_past_month']     = 'Posledný mesiac';
+$lang['search_past_year']      = 'Posledný  rok';
+$lang['search_sort_by_hits']   = 'Zoradiť podľa počtu návštev';
+$lang['search_sort_by_mtime']  = 'Zoradiť podľa posledných úprav';
+$lang['regmissing']            = 'Musíte vyplniť všetky údaje.';
+$lang['reguexists']            = 'Používateľ s rovnakým menom je už zaregistrovaný.';
+$lang['regsuccess']            = 'Používateľský účet bol vytvorený a heslo zaslané emailom.';
+$lang['regsuccess2']           = 'Používateľský účet bol vytvorený.';
+$lang['regfail']               = 'Používateľský účet nemôže byť vytvorený.';
+$lang['regmailfail']           = 'Zdá sa, že nastala chyba pri posielaní mailu s heslom. Skúste kontaktovať správcu.';
+$lang['regbadmail']            = 'Zadaná emailová adresa nie je platná. Pokiaľ si myslíte, že to je zle, skúste kontaktovať správcu.';
+$lang['regbadpass']            = 'Zadané heslá nie sú rovnaké, zadajte ich prosím znovu.';
+$lang['regpwmail']             = 'Vaše heslo do systému DokuWiki';
+$lang['reghere']               = 'Nemáte používateľský účet? Vytvorte si ho';
+$lang['profna']                = 'Táto wiki nepodporuje zmenu profilu';
+$lang['profnochange']          = 'Žiadne zmeny, nie je čo robiť.';
+$lang['profnoempty']           = 'Prázdne meno alebo mailová adresa nie sú povolené.';
+$lang['profchanged']           = 'Profil požívateľa bol úspešne zmenený.';
+$lang['profnodelete']          = 'Táto wiki neumožňuje zrušenie používateľov.';
+$lang['profdeleteuser']        = 'Zrušiť účet';
+$lang['profdeleted']           = 'Váš účet bol zrušený v tejto wiki.';
+$lang['profconfdelete']        = 'Chcem odstrániť môj účet z tejto wiki. <br/> Táto operácia je nevratná.';
+$lang['profconfdeletemissing'] = 'Nebolo zavolené potvrdzovacie políčko';
+$lang['proffail']              = 'Profil používateľa nebol aktualizovaný.';
+$lang['pwdforget']             = 'Zabudli ste heslo? Získajte nové!';
+$lang['resendna']              = 'Táto wiki nepodporuje opätovné zasielanie hesla.';
+$lang['resendpwd']             = 'Nastaviť nové heslo pre';
+$lang['resendpwdmissing']      = 'Prepáčte, musíte vyplniť všetky polia.';
+$lang['resendpwdnouser']       = 'Prepáčte, nemôžeme nájsť zadaného používateľa v databáze.';
+$lang['resendpwdbadauth']      = 'Prepáčte, tento autorizačný kód nie je platný. Uistite sa, či ste použili celý autorizačný odkaz.';
+$lang['resendpwdconfirm']      = 'Autorizačný odkaz bol zaslaný na e-mail.';
+$lang['resendpwdsuccess']      = 'Vaše nové heslo bolo zaslané na e-mail.';
+$lang['license']               = 'Ak nie je uvedené inak, obsah tejto wiki je uverejnený pod nasledujúcou licenciou:';
+$lang['licenseok']             = 'Poznámka: Zmenou tejto stránky súhlasíte s uverejnením obsahu pod nasledujúcou licenciou:';
+$lang['searchmedia']           = 'Hľadať meno súboru:';
+$lang['searchmedia_in']        = 'Hľadať v %s';
+$lang['txt_upload']            = 'Vyberte súbor ako prílohu:';
+$lang['txt_filename']          = 'Uložiť ako (voliteľné):';
+$lang['txt_overwrt']           = 'Prepísať existujúci súbor';
+$lang['maxuploadsize']         = 'Obmedzenie max. %s na súbor.';
+$lang['lockedby']              = 'Práve zamknuté:';
+$lang['lockexpire']            = 'Zámok stratí platnosť:';
 $lang['rssfailed']             = 'Nastala chyba pri vytváraní tohto RSS: ';
 $lang['nothingfound']          = 'Nič nenájdené.';
 
