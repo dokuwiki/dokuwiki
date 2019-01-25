@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author علیرضا ایوز <info@alirezaivaz.ir>
  * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
@@ -38,16 +39,16 @@ $lang['btn_newer']             = 'نتایج بیشتر »';
 $lang['btn_older']             = '« نتایج کمتر';
 $lang['btn_revs']              = 'نگارش‌های پیشین';
 $lang['btn_recent']            = 'تغییرات اخیر';
-$lang['btn_upload']            = 'ارسال';
+$lang['btn_upload']            = 'بارگذاری';
 $lang['btn_cancel']            = 'لغو';
 $lang['btn_index']             = 'فهرست';
 $lang['btn_secedit']           = 'ویرایش';
-$lang['btn_login']             = 'ورود به سیستم';
-$lang['btn_logout']            = 'خروج از سیستم';
+$lang['btn_login']             = 'ورود به سامانه';
+$lang['btn_logout']            = 'خروج از سامانه';
 $lang['btn_admin']             = 'مدیر';
 $lang['btn_update']            = 'به‌روزرسانی';
 $lang['btn_delete']            = 'حذف';
-$lang['btn_back']              = 'عقب';
+$lang['btn_back']              = 'برگشت';
 $lang['btn_backlink']          = 'پیوندهای به این صفحه';
 $lang['btn_subscribe']         = 'عضویت در تغییرات صفحه';
 $lang['btn_profile']           = 'به‌روزرسانی پروفایل';
@@ -57,7 +58,7 @@ $lang['btn_draft']             = 'ویرایش پیش‌نویس';
 $lang['btn_recover']           = 'بازیابی پیش‌نویس';
 $lang['btn_draftdel']          = 'حذف پیش‌نویس';
 $lang['btn_revert']            = 'بازیابی';
-$lang['btn_register']          = 'ثبت نام';
+$lang['btn_register']          = 'نام‌نویسی';
 $lang['btn_apply']             = 'اعمال';
 $lang['btn_media']             = 'مدیریت رسانه‌ها';
 $lang['btn_deleteuser']        = 'حساب کاربری مرا حذف کن';
@@ -71,7 +72,7 @@ $lang['oldpass']               = 'گذرواژه‌ی فعلی را تایید �
 $lang['passchk']               = 'یک بار دیگر';
 $lang['remember']              = 'مرا به خاطر بسپار';
 $lang['fullname']              = 'نام واقعی شما';
-$lang['email']                 = 'ایمیل';
+$lang['email']                 = 'رایانامه';
 $lang['profile']               = 'پروفایل کاربر';
 $lang['badlogin']              = 'متاسفم، نام کاربری یا رمز عبور اشتباه است.';
 $lang['badpassconfirm']        = 'متاسفم، رمز عبور اشتباه است';
@@ -92,7 +93,7 @@ $lang['js']['mediaalign']      = 'هم‌ترازی';
 $lang['js']['mediasize']       = 'اندازه تصویر';
 $lang['js']['mediatarget']     = 'هدف پیوند';
 $lang['js']['mediaclose']      = 'بستن';
-$lang['js']['mediainsert']     = 'درج کردن';
+$lang['js']['mediainsert']     = 'درج‌کردن';
 $lang['js']['mediadisplayimg'] = 'نمایش تصویر.';
 $lang['js']['mediadisplaylnk'] = 'فقط پیوند را نمایش بده.';
 $lang['js']['mediasmall']      = 'نگارش کوچک';
@@ -117,8 +118,8 @@ $lang['js']['media_diff']      = 'تفاوت ها را ببینید: ';
 $lang['js']['media_diff_both'] = 'پهلو به پهلو';
 $lang['js']['media_diff_opacity'] = 'درخشش از';
 $lang['js']['media_diff_portions'] = 'کش رفتن';
-$lang['js']['media_select']    = 'انتخاب فایل‌ها...';
-$lang['js']['media_upload_btn'] = 'آپلود';
+$lang['js']['media_select']    = 'انتخاب پرونده‌ها...';
+$lang['js']['media_upload_btn'] = 'بارگذاری';
 $lang['js']['media_done_btn']  = 'انجام شد';
 $lang['js']['media_drop']      = 'فایل‌ها را در اینجا قرار دهید تا آپلود شود';
 $lang['js']['media_cancel']    = 'حذف';

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author علیرضا ایوز <info@alirezaivaz.ir>
  * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  * @author Mohammad Sadegh <msdn2013@gmail.com>
  * @author Omid Hezaveh <hezpublic@gmail.com>
