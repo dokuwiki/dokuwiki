@@ -1698,6 +1698,9 @@ function tpl_getMediaFile($search, $abs = false, &$imginfo = null) {
         if(file_exists($file)) break;
     }
 
+    // stop process if file doesn't exist
+    if(!file_exists($file)) { return false; }
+
     // fetch image data if requested
     if(!is_null($imginfo)) {
         $imginfo = getimagesize($file);
