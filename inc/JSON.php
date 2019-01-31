@@ -502,8 +502,8 @@ class JSON
     */
     function decode($str)
     {
-        if (!$this->skipnative && function_exists('json_encode')){
-            return json_encode($str);
+        if (!$this->skipnative && function_exists('json_decode')){
+            return json_decode($str,($this->use == JSON_LOOSE_TYPE));
         }
 
         $str = $this->reduce_string($str);
