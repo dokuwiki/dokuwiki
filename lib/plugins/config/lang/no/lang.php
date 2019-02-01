@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Torgeir Blesvik <bletor@banenor.no>
  * @author ThorPrestboen <thor.erling.prestboen@gmail.com>
  * @author Christian McKenna <mckchr@banenor.no>
  * @author Thomas Nygreen <nygreen@gmail.com>
