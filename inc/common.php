@@ -6,6 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Cache\CacheInstructions;
+use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
 
 /**
@@ -1293,7 +1295,7 @@ function detectExternalEdit($id) {
                 $sizechange
             );
             // remove soon to be stale instructions
-            $cache = new cache_instructions($id, $fileLastMod);
+            $cache = new CacheInstructions($id, $fileLastMod);
             $cache->removeCache();
         }
     }
@@ -1423,7 +1425,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     if(useHeading('content')) {
         $pages = ft_backlinks($id, true);
         foreach($pages as $page) {
-            $cache = new cache_renderer($page, wikiFN($page), 'xhtml');
+            $cache = new CacheRenderer($page, wikiFN($page), 'xhtml');
             $cache->removeCache();
         }
     }

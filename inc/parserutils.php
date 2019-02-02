@@ -7,6 +7,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Cache\CacheInstructions;
+use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\Parsing\Parser;
 
 /**
@@ -121,7 +123,7 @@ function p_locale_xhtml($id){
 function p_cached_output($file, $format='xhtml', $id='') {
     global $conf;
 
-    $cache = new cache_renderer($id, $file, $format);
+    $cache = new CacheRenderer($id, $file, $format);
     if ($cache->useCache()) {
         $parsed = $cache->retrieveCache(false);
         if($conf['allowdebug'] && $format=='xhtml') {
@@ -161,7 +163,7 @@ function p_cached_instructions($file,$cacheonly=false,$id='') {
     static $run = null;
     if(is_null($run)) $run = array();
 
-    $cache = new cache_instructions($id, $file);
+    $cache = new CacheInstructions($id, $file);
 
     if ($cacheonly || $cache->useCache() || (isset($run[$file]) && !defined('DOKU_UNITTEST'))) {
         return $cache->retrieveCache();
@@ -248,7 +250,7 @@ function p_get_metadata($id, $key='', $render=METADATA_RENDER_USING_CACHE){
     if (!$recursion && $render != METADATA_DONT_RENDER && !isset($rendered_pages[$id])&& page_exists($id)){
         $recursion = true;
 
-        $cachefile = new cache_renderer($id, wikiFN($id), 'metadata');
+        $cachefile = new CacheRenderer($id, wikiFN($id), 'metadata');
 
         $do_render = false;
         if ($render & METADATA_RENDER_UNLIMITED || $render_count < P_GET_METADATA_RENDER_LIMIT) {

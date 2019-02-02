@@ -6,6 +6,8 @@
  * @author  Michael Hamann <michael@content-space.de>
  */
 
+use dokuwiki\Cache\Cache;
+
 /**
  * Class helper_plugin_extension_repository provides access to the extension repository on dokuwiki.org
  */
@@ -29,7 +31,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
             $request_data = array('fmt' => 'php');
             $request_needed = false;
             foreach ($list as $name) {
-                $cache = new cache('##extension_manager##'.$name, '.repo');
+                $cache = new Cache('##extension_manager##'.$name, '.repo');
 
                 if (!isset($this->loaded_extensions[$name]) &&
                     $this->hasAccess() &&
@@ -47,7 +49,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
                 if ($data !== false) {
                     $extensions = unserialize($data);
                     foreach ($extensions as $extension) {
-                        $cache = new cache('##extension_manager##'.$extension['plugin'], '.repo');
+                        $cache = new Cache('##extension_manager##'.$extension['plugin'], '.repo');
                         $cache->storeCache(serialize($extension));
                     }
                 } else {
@@ -65,7 +67,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
     public function hasAccess()
     {
         if ($this->has_access === null) {
-            $cache = new cache('##extension_manager###hasAccess', '.repo');
+            $cache = new Cache('##extension_manager###hasAccess', '.repo');
 
             if (!$cache->useCache(array('age' => 3600 * 24, 'purge'=>1))) {
                 $httpclient = new DokuHTTPClient();
@@ -93,7 +95,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
      */
     public function getData($name)
     {
-        $cache = new cache('##extension_manager##'.$name, '.repo');
+        $cache = new Cache('##extension_manager##'.$name, '.repo');
 
         if (!isset($this->loaded_extensions[$name]) &&
             $this->hasAccess() &&
@@ -137,7 +139,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
         // store cache info for each extension
         foreach ($result as $ext) {
             $name = $ext['plugin'];
-            $cache = new cache('##extension_manager##'.$name, '.repo');
+            $cache = new Cache('##extension_manager##'.$name, '.repo');
             $cache->storeCache(serialize($ext));
             $ids[] = $name;
         }
