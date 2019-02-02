@@ -44,12 +44,12 @@ class Cache
     public function useCache($depends = array())
     {
         $this->depends = $depends;
-        $this->_addDependencies();
+        $this->addDependencies();
 
         if ($this->_event) {
-            return $this->_stats(trigger_event($this->_event, $this, array($this, '_useCache')));
+            return $this->stats(trigger_event($this->_event, $this, array($this, 'makdeDefaultCacheDecision')));
         } else {
-            return $this->_stats($this->_useCache());
+            return $this->stats($this->makdeDefaultCacheDecision());
         }
     }
 
@@ -65,9 +65,11 @@ class Cache
      *
      * can be overridden
      *
+     * @internal This method may only be called by the event handler! Call \dokuwiki\Cache\Cache::useCache instead!
+     *
      * @return bool               see useCache()
      */
-    public function _useCache()
+    public function makdeDefaultCacheDecision()
     {
 
         if ($this->_nocache) {
@@ -103,7 +105,7 @@ class Cache
      * it should not remove any existing dependencies and
      * it should only overwrite a dependency when the new value is more stringent than the old
      */
-    protected function _addDependencies()
+    protected function addDependencies()
     {
         global $INPUT;
         if ($INPUT->has('purge')) {
@@ -152,7 +154,7 @@ class Cache
      * @param    bool $success result of this cache use attempt
      * @return   bool              pass-thru $success value
      */
-    protected function _stats($success)
+    protected function stats($success)
     {
         global $conf;
         static $stats = null;

@@ -13,11 +13,11 @@ class CacheRenderer extends CacheParser
      *
      * @return bool               see useCache()
      */
-    public function _useCache()
+    public function makdeDefaultCacheDecision()
     {
         global $conf;
 
-        if (!parent::_useCache()) {
+        if (!parent::makdeDefaultCacheDecision()) {
             return false;
         }
 
@@ -54,7 +54,7 @@ class CacheRenderer extends CacheParser
         return true;
     }
 
-    protected function _addDependencies()
+    protected function addDependencies()
     {
         global $conf;
 
@@ -89,6 +89,6 @@ class CacheRenderer extends CacheParser
             array_merge($files, $this->depends['files']) :
             $files;
 
-        parent::_addDependencies();
+        parent::addDependencies();
     }
 }

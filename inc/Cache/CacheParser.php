@@ -36,16 +36,16 @@ class CacheParser extends Cache
      *
      * @return bool               see useCache()
      */
-    public function _useCache()
+    public function makdeDefaultCacheDecision()
     {
 
         if (!file_exists($this->file)) {
             return false;
         }                   // source exists?
-        return parent::_useCache();
+        return parent::makdeDefaultCacheDecision();
     }
 
-    protected function _addDependencies()
+    protected function addDependencies()
     {
 
         // parser cache file dependencies ...
@@ -59,7 +59,7 @@ class CacheParser extends Cache
         $this->depends['files'] = !empty($this->depends['files']) ?
             array_merge($files, $this->depends['files']) :
             $files;
-        parent::_addDependencies();
+        parent::addDependencies();
     }
 
 }
