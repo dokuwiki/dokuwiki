@@ -54,7 +54,7 @@ class Cache
     }
 
     /**
-     * private method containing cache use decision logic
+     * internal method containing cache use decision logic
      *
      * this function processes the following keys in the depends array
      *   purge - force a purge on any non empty value
