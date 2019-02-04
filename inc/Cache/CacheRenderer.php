@@ -13,11 +13,11 @@ class CacheRenderer extends CacheParser
      *
      * @return bool               see useCache()
      */
-    public function makdeDefaultCacheDecision()
+    public function makeDefaultCacheDecision()
     {
         global $conf;
 
-        if (!parent::makdeDefaultCacheDecision()) {
+        if (!parent::makeDefaultCacheDecision()) {
             return false;
         }
 

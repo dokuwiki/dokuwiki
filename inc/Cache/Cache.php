@@ -11,7 +11,7 @@ class Cache
     public $ext = '';          // file ext for cache data, secondary identifier for this item
     public $cache = '';        // cache file name
     public $depends = array(); // array containing cache dependency information,
-    //   used by _useCache to determine cache validity
+    //   used by makeDefaultCacheDecision to determine cache validity
 
     public $_event = '';       // event to be triggered during useCache
     public $_time;
@@ -32,7 +32,7 @@ class Cache
      * public method to determine whether the cache can be used
      *
      * to assist in centralisation of event triggering and calculation of cache statistics,
-     * don't override this function override _useCache()
+     * don't override this function override makeDefaultCacheDecision()
      *
      * @param  array $depends array of cache dependencies, support dependecies:
      *                            'age'   => max age of the cache in seconds
@@ -47,9 +47,9 @@ class Cache
         $this->addDependencies();
 
         if ($this->_event) {
-            return $this->stats(trigger_event($this->_event, $this, array($this, 'makdeDefaultCacheDecision')));
+            return $this->stats(trigger_event($this->_event, $this, array($this, 'makeDefaultCacheDecision')));
         } else {
-            return $this->stats($this->makdeDefaultCacheDecision());
+            return $this->stats($this->makeDefaultCacheDecision());
         }
     }
 
@@ -69,7 +69,7 @@ class Cache
      *
      * @return bool               see useCache()
      */
-    public function makdeDefaultCacheDecision()
+    public function makeDefaultCacheDecision()
     {
 
         if ($this->_nocache) {

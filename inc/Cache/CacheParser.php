@@ -36,13 +36,13 @@ class CacheParser extends Cache
      *
      * @return bool               see useCache()
      */
-    public function makdeDefaultCacheDecision()
+    public function makeDefaultCacheDecision()
     {
 
         if (!file_exists($this->file)) {
             return false;
         }                   // source exists?
-        return parent::makdeDefaultCacheDecision();
+        return parent::makeDefaultCacheDecision();
     }
 
     protected function addDependencies()
