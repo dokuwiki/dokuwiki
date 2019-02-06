@@ -1752,7 +1752,15 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             if(useHeading($linktype) && $id) {
                 $heading = p_get_first_heading($id);
                 if(!blank($heading)) {
-                    return $this->_xmlEntities($heading);
+                    $mHeading = $heading;
+                    if(mb_strtoupper(mb_substr($default, 0, 1)) != mb_substr($default, 0, 1)) {
+                        //first char used in reference was lowercase
+                        $mHeading = mb_strtolower(mb_substr($heading, 0, 1)) . mb_substr($heading, 1);
+                    } elseif (mb_strtolower(mb_substr($default, 0, 1)) != mb_substr($default, 0, 1)) {
+                        //first char used in reference was uppercase
+                        $mHeading = mb_strtoupper(mb_substr($heading, 0, 1)) . mb_substr($heading, 1);
+                    }
+                    return $this->_xmlEntities($mHeading);
                 }
             }
             return $this->_xmlEntities($default);
