@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author velmyshanovnyi <velmyshanovnyi@gmail.com>
  * @author Dmytro Marchenko <dmytro.marchenko1989@gmail.com>
  * @author Oleksii <alexey.furashev@gmail.com>
  * @author Vitaly <vitaly.balashov@smuzzy.com.ua>
