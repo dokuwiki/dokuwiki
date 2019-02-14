@@ -38,6 +38,7 @@ class Cache
                 '\dokuwiki\Cache\Cache::_event is deprecated since 2019-02-02. Use \dokuwiki\Cache\Cache::getEvent()',
                 E_USER_DEPRECATED
             );
+            dbg_deprecated('\dokuwiki\Cache\Cache::getEvent()');
             return $this->getEvent();
         }
 
@@ -46,6 +47,7 @@ class Cache
                 '\dokuwiki\Cache\Cache::_time is deprecated since 2019-02-02. Use \dokuwiki\Cache\Cache::getTime()',
                 E_USER_DEPRECATED
             );
+            dbg_deprecated('\dokuwiki\Cache\Cache::getTime()');
             return $this->getTime();
         }
         return $this->$$key;
@@ -58,6 +60,7 @@ class Cache
                 '\dokuwiki\Cache\Cache::_event is deprecated since 2019-02-02. Use \dokuwiki\Cache\Cache::getEvent()',
                 E_USER_DEPRECATED
             );
+            dbg_deprecated('\dokuwiki\Cache\Cache::getEvent()');
             $this->setEvent($value);
         }
         $this->$$name = $value;

@@ -13,6 +13,7 @@ class cache extends \dokuwiki\Cache\Cache
             'cache is deprecated since 2019-02-02. Use \dokuwiki\Cache\Cache instead',
             E_USER_DEPRECATED
         );
+        dbg_deprecated('\dokuwiki\Cache\Cache');
         parent::__construct($key, $ext);
     }
 
@@ -30,6 +31,7 @@ class cache_parser extends \dokuwiki\Cache\CacheParser
             'cache_parser is deprecated since 2019-02-02. Use \dokuwiki\Cache\CacheParser instead',
             E_USER_DEPRECATED
         );
+        dbg_deprecated('\dokuwiki\Cache\CacheParser');
         parent::__construct($id, $file, $mode);
     }
 
@@ -47,6 +49,7 @@ class cache_renderer extends \dokuwiki\Cache\CacheRenderer
             'cache_renderer is deprecated since 2019-02-02. Use \dokuwiki\Cache\CacheRenderer instead',
             E_USER_DEPRECATED
         );
+        dbg_deprecated('\dokuwiki\Cache\CacheRenderer');
         parent::__construct($id, $file, $mode);
     }
 }
@@ -62,6 +65,7 @@ class cache_instructions extends \dokuwiki\Cache\CacheInstructions
             'cache_instructions is deprecated since 2019-02-02. Use \dokuwiki\Cache\CacheInstructions instead',
             E_USER_DEPRECATED
         );
+        dbg_deprecated('\dokuwiki\Cache\CacheInstructions');
         parent::__construct($id, $file);
     }
 }
