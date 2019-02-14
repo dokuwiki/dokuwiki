@@ -12,7 +12,7 @@ class CacheParser extends Cache
     public $mode = '';       // input mode (represents the processing the input file will undergo)
     public $page = '';
 
-    public $_event = 'PARSER_CACHE_USE';
+    public $event = 'PARSER_CACHE_USE';
 
     /**
      *

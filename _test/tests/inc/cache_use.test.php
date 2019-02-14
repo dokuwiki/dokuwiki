@@ -78,6 +78,6 @@ class cache_use_test extends DokuWikiTest {
         $conf['cachetime'] = -1;   // disables renderer caching
 
         $this->assertFalse($this->cache->useCache());
-        $this->assertNotEmpty($this->cache->_nocache);
+        $this->assertNotEmpty($this->cache->isNoCache());
     }
 }

@@ -26,14 +26,14 @@ class CacheRenderer extends CacheParser
         }
 
         // meta cache older than file it depends on?
-        if ($this->_time < @filemtime(metaFN($this->page, '.meta'))) {
+        if ($this->time < @filemtime(metaFN($this->page, '.meta'))) {
             return false;
         }
 
         // check current link existence is consistent with cache version
         // first check the purgefile
         // - if the cache is more recent than the purgefile we know no links can have been updated
-        if ($this->_time >= @filemtime($conf['cachedir'] . '/purgefile')) {
+        if ($this->time >= @filemtime($conf['cachedir'] . '/purgefile')) {
             return true;
         }
 
@@ -62,7 +62,7 @@ class CacheRenderer extends CacheParser
         //    -1 : do not cache (should not be overridden)
         //    0  : cache never expires (can be overridden) - no need to set depends['age']
         if ($conf['cachetime'] == -1) {
-            $this->_nocache = true;
+            $this->nocache = true;
             return;
         } elseif ($conf['cachetime'] > 0) {
             $this->depends['age'] = isset($this->depends['age']) ?

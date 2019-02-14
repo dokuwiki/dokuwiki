@@ -46,7 +46,7 @@ header('Pragma: public');
 header('Content-Type: application/xml; charset=utf-8');
 header('X-Robots-Tag: noindex');
 if($cache->useCache($depends)) {
-    http_conditionalRequest($cache->_time);
+    http_conditionalRequest($cache->getTime());
     if($conf['allowdebug']) header("X-CacheUsed: $cache->cache");
     print $cache->retrieveCache();
     exit;
