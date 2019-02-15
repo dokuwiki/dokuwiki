@@ -1,4 +1,3 @@
 ====== Különbségek ======
 
 A kiválasztott változat és az aktuális verzió közötti különbségek a következők.
-

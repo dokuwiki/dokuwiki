@@ -1,12 +1,9 @@
 Hallo @FULLNAME@!
 
-Jemand hat ein neues Passwort für deinen @TITLE@
-Login auf @DOKUWIKIURL@ angefordert.
+Jemand hat ein neues Passwort für deinen @TITLE@ Login auf @DOKUWIKIURL@ angefordert.
 
-Wenn du diese Änderung nicht angefordert hast, ignoriere diese
-E-Mail einfach.
+Wenn du diese Änderung nicht angefordert hast, ignoriere diese E-Mail einfach.
 
-Um die Anforderung zu bestätigen, folge bitte dem unten angegebenen
-Bestätigungslink.
+Um die Anforderung zu bestätigen, folge bitte dem unten angegebenen Bestätigungslink.
 
 @CONFIRM@

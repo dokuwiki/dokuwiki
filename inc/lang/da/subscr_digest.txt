@@ -7,10 +7,8 @@ Her er ændringerne:
 @DIFF@
 --------------------------------------------------------
 
-Gammel Revision: @OLDPAGE@
-Ny Revision: @NEWPAGE@
+Gammel revision: @OLDPAGE@
+Ny revision: @NEWPAGE@
 
-For at stoppe notifikationer om sideændringer, login på wikien på
-@DOKUWIKIURL@ og besøg så
-@SUBSCRIBE@
-for at afmelde side og/eller navneområde ændringer.
+For at stoppe notifikationer om sideændringer, log ind på wikien på
+@DOKUWIKIURL@ og besøg @SUBSCRIBE@ for at afmelde side og/eller navneområde ændringer.

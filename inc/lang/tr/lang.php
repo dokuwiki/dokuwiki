@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Hakan <hakandursun2009@gmail.com>
  * @author mahir <mahirtakak@gmail.com>
  * @author Selim Farsakoğlu <farsakogluselim@yahoo.de>
  * @author Aydın Coşkuner <aydinweb@gmail.com>
@@ -75,6 +76,8 @@ $lang['minoredit']             = 'Küçük Değişiklikler';
 $lang['draftdate']             = 'Taslak şu saatte otomatik kaydedildi:';
 $lang['nosecedit']             = 'Sayfa yakın zamanda değiştirilmiştir, bölüm bilgisi eski kalmıştır. Bunun için bölüm yerine tüm sayfa yüklenmiştir.';
 $lang['searchcreatepage']      = 'Eğer aradığınızı bulamadıysanız, %s sayfasını yaratabilir veya düzenleyebilirsiniz. ';
+$lang['search_fullresults']    = 'Tam Metin sonuçları';
+$lang['js']['search_toggle_tools'] = 'Arama Araçlarını Değiştir';
 $lang['js']['willexpire']      = 'Bu sayfayı değiştirme kilidinin süresi yaklaşık bir dakika içinde geçecek.\nÇakışmaları önlemek için önizleme tuşunu kullanarak kilit sayacını sıfırla.';
 $lang['js']['notsavedyet']     = 'Kaydedilmemiş değişiklikler kaybolacak.
 Devam etmek istiyor musunuz?';
@@ -121,6 +124,7 @@ $lang['search_starts_with']    = 'Bununla başlar';
 $lang['search_ends_with']      = 'Bununla biter';
 $lang['search_contains']       = 'İçerir';
 $lang['search_custom_match']   = 'Özel';
+$lang['search_any_ns']         = 'Herhangi bir isim';
 $lang['search_any_time']       = 'Herhangi bir zaman';
 $lang['search_past_7_days']    = 'Geçen hafta';
 $lang['search_past_month']     = 'Geçen ay';
@@ -287,6 +291,7 @@ $lang['subscr_m_unsubscribe']  = 'Üyelik iptali';
 $lang['subscr_m_subscribe']    = 'Kayıt ol';
 $lang['subscr_m_receive']      = 'Al';
 $lang['subscr_style_every']    = 'her değişiklikte e-posta gönder';
+$lang['subscr_style_digest']   = 'Her sayfa için değişikliklerin özet e-postası (her %.2f gün)';
 $lang['subscr_style_list']     = 'Son e-postadan bu yana değiştirilen sayfaların listesi (her %.2f gün)';
 $lang['authtempfail']          = 'Kullanıcı doğrulama geçici olarak yapılamıyor. Eğer bu durum devam ederse lütfen Wiki yöneticine haber veriniz.';
 $lang['i_chooselang']          = 'Dili seçiniz';

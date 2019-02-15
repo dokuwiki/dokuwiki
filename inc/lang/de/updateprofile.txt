@@ -1,5 +1,3 @@
 ====== Benutzerprofil ändern ======
 
 Nur die Felder, die Sie ändern, werden aktualisiert. Alle anderen bleiben, wie sie sind. Ihren Benutzernamen können Sie jedoch nicht ändern.
-
-

@@ -15,22 +15,11 @@ class Admin extends AbstractUserAction {
 
     /** @inheritdoc */
     public function minimumPermission() {
-        global $INFO;
-
-        if($INFO['ismanager']) {
-            return AUTH_READ; // let in check later
-        } else {
-            return AUTH_ADMIN;
-        }
+        return AUTH_READ; // let in check later
     }
 
     public function checkPreconditions() {
         parent::checkPreconditions();
-
-        global $INFO;
-        if(!$INFO['ismanager']) {
-            throw new ActionException('denied');
-        }
     }
 
     public function preProcess() {
@@ -41,7 +30,7 @@ class Admin extends AbstractUserAction {
         if(($page = $INPUT->str('page', '', true)) != '') {
             /** @var $plugin \DokuWiki_Admin_Plugin */
             if($plugin = plugin_getRequestAdminPlugin()) { // FIXME this method does also permission checking
-                if($plugin->forAdminOnly() && !$INFO['isadmin']) {
+                if(!$plugin->isAccessibleByCurrentUser()) {
                     throw new ActionException('denied');
                 }
                 $plugin->handle();

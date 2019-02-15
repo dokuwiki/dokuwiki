@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eddy <eddy@mail.it>
+ * @author Riccardo <riccardo.furlato@gmail.com>
  * @author Stefano <stefano.stefano@gmail.com>
  * @author damiano <damiano@spagnuolo.eu>
  * @author Torpedo <dgtorpedo@gmail.com>
@@ -13,7 +15,6 @@
  * @author robocap <robocap1@gmail.com>
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  * @author Matteo Pasotti <matteo@xquiet.eu>
- * @author Riccardo <riccardofila@gmail.com>
  * @author Paolo <paolopoz12@gmail.com>
  */
 $lang['menu']                  = 'Configurazione Wiki';
@@ -154,8 +155,7 @@ $lang['renderer_xhtml']        = 'Renderer da usare per la visualizzazione del w
 $lang['renderer__core']        = '%s (dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
 $lang['search_nslimit']        = 'Limita la ricerca agli attuali spazi dei nomi X. Quando una ricerca viene eseguita da una pagina all\'interno di uno spazio dei nomi più profondo, i primi spazi dei nomi X verranno aggiunti come filtro';
-$lang['search_fragment']       = '
-Specificare il comportamento di ricerca del frammento predefinito';
+$lang['search_fragment']       = 'Specificare il comportamento di ricerca del frammento predefinito';
 $lang['search_fragment_o_exact'] = 'esatto';
 $lang['search_fragment_o_starts_with'] = 'inizia con';
 $lang['search_fragment_o_ends_with'] = 'finisce con';

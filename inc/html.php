@@ -89,7 +89,7 @@ function html_login($svg = false){
 function html_denied() {
     print p_locale_xhtml('denied');
 
-    if(empty($_SERVER['REMOTE_USER'])){
+    if(empty($_SERVER['REMOTE_USER']) && actionOK('login')){
         html_login();
     }
 }
@@ -1587,7 +1587,7 @@ function html_softbreak_callback($match){
 
     // its a long string without a breaking character,
     // make certain characters into breaking characters by inserting a
-    // breaking character (zero length space, U+200B / #8203) in front them.
+    // word break opportunity (<wbr> tag) in front of them.
     $regex = <<< REGEX
 (?(?=              # start a conditional expression with a positive look ahead ...
 &\#?\\w{1,6};)     # ... for html entities - we don't want to split them (ok to catch some invalid combinations)
@@ -1597,7 +1597,7 @@ function html_softbreak_callback($match){
 )+                 # end conditional expression
 REGEX;
 
-    return preg_replace('<'.$regex.'>xu','\0&#8203;',$match[0]);
+    return preg_replace('<'.$regex.'>xu','\0<wbr>',$match[0]);
 }
 
 /**

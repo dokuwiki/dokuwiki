@@ -2,10 +2,10 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Khalid <khalid.aljahil@gmail.com>
  * @author Yaman Hokan <always.smile.yh@hotmail.com>
  * @author Usama Akkad <uahello@gmail.com>
- * @author uahello@gmail.com
  * @author Ahmad Abd-Elghany <tolpa1@gmail.com>
  * @author alhajr <alhajr300@gmail.com>
  * @author Mohamed Belhsine <b.mohamed897@gmail.com>

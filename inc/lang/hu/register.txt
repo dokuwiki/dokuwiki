@@ -1,4 +1,3 @@
 ====== Új felhasználó regisztrálása ======
 
-Töltsd ki az összes alábbi adatot az új Wiki felhasználói azonosítód létrehozásához. Győződj meg róla, hogy **érvényes e-mail címet** adtál meg, mivel az új jelszavad erre a címre küldjük el. Az azonosítód érvényes [[doku>pagename|oldalnév]] kell legyen.
-
+Töltsd ki az összes alábbi adatot az új Wiki felhasználói azonosítód létrehozásához. Győződj meg róla, hogy **érvényes e-mail címet** adtál meg, mivel az új jelszavad erre a címre küldjük el. Az azonosítód érvényes [[doku>hu:pagename|oldalnév]] kell legyen.

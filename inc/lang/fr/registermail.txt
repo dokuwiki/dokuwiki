@@ -1,10 +1,10 @@
 Un nouvel utilisateur s'est enregistré. Voici les détails :
 
-Utilisateur         : @NEWUSER@
+Utilisateur : @NEWUSER@
 Nom         : @NEWNAME@
-Courriel : @NEWEMAIL@
+Courriel    : @NEWEMAIL@
 
-Date                : @DATE@
-Navigateur internet         : @BROWSER@
-Adresse IP          : @IPADDRESS@
-Nom d'hôte          : @HOSTNAME@
+Date        : @DATE@
+Navigateur  : @BROWSER@
+Adresse IP  : @IPADDRESS@
+Nom d'hôte  : @HOSTNAME@

@@ -1,4 +1,3 @@
 ====== Forskelle ======
 
 Dette viser forskellene mellem den valgte og den nuværende udgave af dokumentet. Gul er linjer der findes i den gamle udgave, og grøn er linjer der findes i den nuværende.
-

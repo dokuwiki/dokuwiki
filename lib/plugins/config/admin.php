@@ -86,7 +86,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         // POST to script() instead of wl($ID) so config manager still works if
         // rewrite config is broken. Add $ID as hidden field to remember
         // current ID in most cases.
-        echo '<form action="' . script() . '" method="post">';
+        echo '<form id="dw__configform" action="' . script() . '" method="post">';
         echo '<div class="no"><input type="hidden" name="id" value="' . $ID . '" /></div>';
         formSecurityToken();
         $this->printH1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));

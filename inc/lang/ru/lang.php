@@ -4,6 +4,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Vyacheslav Strenadko <vyacheslav.strenadko@gmail.com>
+ * @author Wolterhon <hotmottot.1@gmail.com>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Zhassulan <zyesmukanov@gmail.com>
  * @author Yuri Pimenov <up@ftpsearch.lv>
@@ -44,7 +46,7 @@ $lang['doublequoteopening']    = '«';
 $lang['doublequoteclosing']    = '»';
 $lang['singlequoteopening']    = '„';
 $lang['singlequoteclosing']    = '“';
-$lang['apostrophe']            = '’';
+$lang['apostrophe']            = '“';
 $lang['btn_edit']              = 'Править страницу';
 $lang['btn_source']            = 'Показать исходный текст';
 $lang['btn_show']              = 'Показать страницу';
@@ -158,7 +160,7 @@ $lang['reguexists']            = 'Извините, пользователь с 
 $lang['regsuccess']            = 'Пользователь создан; пароль выслан на адрес электронной почты.';
 $lang['regsuccess2']           = 'Пользователь создан.';
 $lang['regfail']               = 'Пользователь не может быть создан.';
-$lang['regmailfail']           = 'Похоже есть проблема с отправкой пароля по почте. Пожалуйста, сообщите об этом администратору!';
+$lang['regmailfail']           = 'Похоже, есть проблема с отправкой пароля по почте. Пожалуйста, сообщите об этом администратору!';
 $lang['regbadmail']            = 'Данный вами адрес электронной почты выглядит неправильным. Если вы считаете это ошибкой, сообщите администратору.';
 $lang['regbadpass']            = 'Два введённых пароля не совпадают. Пожалуйста, попробуйте ещё раз.';
 $lang['regpwmail']             = 'Ваш пароль для системы «Докувики»';
