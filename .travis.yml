@@ -2,6 +2,7 @@ language: php
 sudo: false
 php:
   - "nightly"
+  - "7.3"
   - "7.2"
   - "7.1"
   - "7.0"
@@ -39,12 +40,18 @@ notifications:
     on_success: change
     on_failure: change
 install:
-  - wget -O ~/.phpenv/versions/hhvm/bin/phpunit https://phar.phpunit.de/phpunit-5.7.phar
-  - chmod 755 ~/.phpenv/versions/hhvm/bin/phpunit
+  - if [[ $TRAVIS_PHP_VERSION = hhv* ]]; then wget -O ~/.phpenv/versions/hhvm/bin/phpunit https://phar.phpunit.de/phpunit-5.7.phar; fi
+  - if [[ $TRAVIS_PHP_VERSION = hhv* ]]; then chmod 755 ~/.phpenv/versions/hhvm/bin/phpunit; fi
+  - if [[ $TRAVIS_PHP_VERSION > '7.1' || $TRAVIS_PHP_VERSION = nightly ]]; then wget -O ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit https://phar.phpunit.de/phpunit-7.phar; fi
+  - if [[ $TRAVIS_PHP_VERSION > '7.1' || $TRAVIS_PHP_VERSION = nightly ]]; then chmod 755 ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit; fi
+  # Force PHPUnit 7 #2693
 before_script:
   # Disable the HHVM JIT for faster Unit Testing
   - if [[ $TRAVIS_PHP_VERSION = hhv* ]]; then echo 'hhvm.jit = 0' >> /etc/hhvm/php.ini; fi
   - if [[ $TRAVIS_PHP_VERSION != hhv* ]]; then test -z "$DISABLE_FUNCTIONS" || echo "disable_functions=$DISABLE_FUNCTIONS" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi
   - cp _test/mysql.conf.php.dist _test/mysql.conf.php
   - cp _test/pgsql.conf.php.dist _test/pgsql.conf.php
-script: cd _test && phpunit --verbose --stderr
+  - php -v
+  - phpunit --version
+script:
+  - cd _test && phpunit --verbose --stderr
