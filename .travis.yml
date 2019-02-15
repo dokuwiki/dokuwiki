@@ -40,7 +40,7 @@ notifications:
     on_success: change
     on_failure: change
 install:
-  - if [[ $TRAVIS_PHP_VERSION = hhv* ]]; then wget -O ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit https://phar.phpunit.de/phpunit-5.7.phar; fi
+  - if [[ $TRAVIS_PHP_VERSION = hhv* ]]; then wget -O ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit https://phar.phpunit.de/phpunit-5.6.phar; fi
   - if [[ $TRAVIS_PHP_VERSION = hhv* ]]; then chmod 755 ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit; fi
   - if [[ $TRAVIS_PHP_VERSION > '7.1' && $TRAVIS_PHP_VERSION != hhv* ]]; then wget -O ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit https://phar.phpunit.de/phpunit-7.phar; fi
   - if [[ $TRAVIS_PHP_VERSION > '7.1' && $TRAVIS_PHP_VERSION != hhv* ]]; then chmod 755 ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit; fi
