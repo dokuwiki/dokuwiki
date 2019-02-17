@@ -96,10 +96,8 @@ function auth_setup() {
         $INPUT->set('p', stripctl($INPUT->str('p')));
     }
 
-    if(!is_null($auth) && $auth->canDo('external')) {
-        // external trust mechanism in place
-        $auth->trustExternal($INPUT->str('u'), $INPUT->str('p'), $INPUT->bool('r'));
-    } else {
+    if(!(!is_null($auth) && $auth->canDo('external')
+         && $auth->trustExternal($INPUT->str('u'), $INPUT->str('p'), $INPUT->bool('r')))) {
         $evdata = array(
             'user'     => $INPUT->str('u'),
             'password' => $INPUT->str('p'),
