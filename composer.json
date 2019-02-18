@@ -23,7 +23,7 @@
     },
     "suggest": {
         "squizlabs/php_codesniffer": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
-        "phpunit/phpunit": "Allows automated tests to be run without system-wide install."
+        "phpunit/phpunit": "Allows automated tests to be run without system-wide install (only version 4-7 are supported)."
     },
     "prefer-stable": true
 }

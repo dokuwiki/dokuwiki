@@ -2,6 +2,7 @@ language: php
 sudo: false
 php:
   - "nightly"
+  - "7.3"
   - "7.2"
   - "7.1"
   - "7.0"
@@ -11,27 +12,8 @@ env:
   - DISABLE_FUNCTIONS="gzopen"
 matrix:
   fast_finish: true
-  include:
-    - php: hhvm
-      sudo: true
-      dist: trusty
-      group: edge # until the next update
-      addons:
-        apt:
-          packages:
-            - mysql-server-5.6
-            - mysql-client-core-5.6
-            - mysql-client-5.6
-      services:
-        - mysql
-        - postgresql
-      env: DISABLE_FUNCTIONS=
   allow_failures:
-    - php: "hhvm"
     - php: "nightly"
-  exclude:
-    - php: "hhvm"
-      env: DISABLE_FUNCTIONS="gzopen"
 notifications:
   irc:
     channels:
@@ -39,12 +21,13 @@ notifications:
     on_success: change
     on_failure: change
 install:
-  - wget -O ~/.phpenv/versions/hhvm/bin/phpunit https://phar.phpunit.de/phpunit-5.7.phar
-  - chmod 755 ~/.phpenv/versions/hhvm/bin/phpunit
+  - if [[ $TRAVIS_PHP_VERSION > '7.1' ]]; then wget -O ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit https://phar.phpunit.de/phpunit-7.phar; fi
+  - if [[ $TRAVIS_PHP_VERSION > '7.1' ]]; then chmod 755 ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit; fi
+  # Force PHPUnit 7 #2693; nightly will match $TRAVIS_PHP_VERSION > '7.1' rule
 before_script:
-  # Disable the HHVM JIT for faster Unit Testing
-  - if [[ $TRAVIS_PHP_VERSION = hhv* ]]; then echo 'hhvm.jit = 0' >> /etc/hhvm/php.ini; fi
-  - if [[ $TRAVIS_PHP_VERSION != hhv* ]]; then test -z "$DISABLE_FUNCTIONS" || echo "disable_functions=$DISABLE_FUNCTIONS" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi
+  - test -z "$DISABLE_FUNCTIONS" || echo "disable_functions=$DISABLE_FUNCTIONS" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - cp _test/mysql.conf.php.dist _test/mysql.conf.php
   - cp _test/pgsql.conf.php.dist _test/pgsql.conf.php
-script: cd _test && phpunit --verbose --stderr
+  - phpunit --version
+script:
+  - cd _test && phpunit --verbose --stderr
