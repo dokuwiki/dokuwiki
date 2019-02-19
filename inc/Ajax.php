@@ -16,7 +16,7 @@ class Ajax {
      * @param string $call name of the ajax call
      */
     public function __construct($call) {
-        $callfn = 'call_' . $call;
+        $callfn = 'call' . ucfirst($call);
         if(method_exists($this, $callfn)) {
             $this->$callfn();
         } else {
@@ -35,7 +35,7 @@ class Ajax {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    protected function call_qsearch() {
+    protected function callQsearch() {
         global $lang;
         global $INPUT;
 
@@ -82,7 +82,7 @@ class Ajax {
      * @link   http://www.opensearch.org/Specifications/OpenSearch/Extensions/Suggestions/1.0
      * @author Mike Frysinger <vapier@gentoo.org>
      */
-    protected function call_suggestions() {
+    protected function callSuggestions() {
         global $INPUT;
 
         $query = cleanID($INPUT->post->str('q'));
@@ -117,7 +117,7 @@ class Ajax {
      *
      * Andreas Gohr <andi@splitbrain.org>
      */
-    protected function call_lock() {
+    protected function callLock() {
         global $ID;
         global $INFO;
         global $INPUT;
@@ -157,7 +157,7 @@ class Ajax {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    protected function call_draftdel() {
+    protected function callDraftdel() {
         global $INPUT;
         $id = cleanID($INPUT->str('id'));
         if(empty($id)) return;
@@ -174,7 +174,7 @@ class Ajax {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    protected function call_medians() {
+    protected function callMedians() {
         global $conf;
         global $INPUT;
 
@@ -197,7 +197,7 @@ class Ajax {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    protected function call_medialist() {
+    protected function callMedialist() {
         global $NS;
         global $INPUT;
 
@@ -216,7 +216,7 @@ class Ajax {
      *
      * @author Kate Arzamastseva <pshns@ukr.net>
      */
-    protected function call_mediadetails() {
+    protected function callMediadetails() {
         global $IMG, $JUMPTO, $REV, $fullscreen, $INPUT;
         $fullscreen = true;
         require_once(DOKU_INC . 'lib/exe/mediamanager.php');
@@ -237,7 +237,7 @@ class Ajax {
      *
      * @author Kate Arzamastseva <pshns@ukr.net>
      */
-    protected function call_mediadiff() {
+    protected function callMediadiff() {
         global $NS;
         global $INPUT;
 
@@ -253,7 +253,7 @@ class Ajax {
      *
      * @author Kate Arzamastseva <pshns@ukr.net>
      */
-    protected function call_mediaupload() {
+    protected function callMediaupload() {
         global $NS, $MSG, $INPUT;
 
         $id = '';
@@ -308,7 +308,7 @@ class Ajax {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    protected function call_index() {
+    protected function callIndex() {
         global $conf;
         global $INPUT;
 
@@ -331,7 +331,7 @@ class Ajax {
      *
      * @author Andreas Gohr <gohr@cosmocode.de>
      */
-    protected function call_linkwiz() {
+    protected function callLinkwiz() {
         global $conf;
         global $lang;
         global $INPUT;
