@@ -187,3 +187,67 @@ class JSON
         return $this->decode($str);
     }
 }
+
+/**
+ * @inheritdoc
+ * @deprecated 2019-02-19
+ */
+class Input extends \dokuwiki\Input\Input {
+    /**
+     * @inheritdoc
+     * @deprecated 2019-02-19
+     */
+    public function __construct()
+    {
+        dbg_deprecated(\dokuwiki\Input\Input::class);
+        parent::__construct();
+    }
+}
+
+/**
+ * @inheritdoc
+ * @deprecated 2019-02-19
+ */
+class PostInput extends \dokuwiki\Input\Post {
+    /**
+     * @inheritdoc
+     * @deprecated 2019-02-19
+     */
+    public function __construct()
+    {
+        dbg_deprecated(\dokuwiki\Input\Post::class);
+        parent::__construct();
+    }
+}
+
+/**
+ * @inheritdoc
+ * @deprecated 2019-02-19
+ */
+class GetInput extends \dokuwiki\Input\Get {
+    /**
+     * @inheritdoc
+     * @deprecated 2019-02-19
+     */
+    public function __construct()
+    {
+        dbg_deprecated(\dokuwiki\Input\Get::class);
+        parent::__construct();
+    }
+}
+
+/**
+ * @inheritdoc
+ * @deprecated 2019-02-19
+ */
+class ServerInput extends \dokuwiki\Input\Server {
+    /**
+     * @inheritdoc
+     * @deprecated 2019-02-19
+     */
+    public function __construct()
+    {
+        dbg_deprecated(\dokuwiki\Input\Server::class);
+        parent::__construct();
+    }
+}

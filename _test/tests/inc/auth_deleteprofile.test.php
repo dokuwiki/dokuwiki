@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Input\Input;
+
 class Mock_Auth_Plugin extends DokuWiki_Auth_Plugin {
 
 	public $loggedOff = false;

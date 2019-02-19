@@ -3,7 +3,6 @@
  * Initialize some defaults needed for DokuWiki
  */
 
-
 /**
  * timing Dokuwiki execution
  *
@@ -209,7 +208,7 @@ if($conf['compression'] == 'gz' && !DOKU_HAS_GZIP) {
 
 // input handle class
 global $INPUT;
-$INPUT = new Input();
+$INPUT = new \dokuwiki\Input\Input();
 
 // initialize plugin controller
 $plugin_controller = new $plugin_controller_class();

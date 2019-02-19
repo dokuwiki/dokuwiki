@@ -3,7 +3,7 @@
 namespace dokuwiki\Remote;
 
 use DokuWiki_Remote_Plugin;
-use Input;
+use dokuwiki\Input\Input;
 
 /**
  * This class provides information about remote access to the wiki.
@@ -245,7 +245,7 @@ class Api
     {
         global $conf;
         global $USERINFO;
-        /** @var Input $INPUT */
+        /** @var \dokuwiki\Input\Input $INPUT */
         global $INPUT;
 
         if (!$conf['remote']) {

@@ -14,7 +14,7 @@ session_write_close(); //close session
 require_once(DOKU_INC.'inc/fetch.functions.php');
 
 if (defined('SIMPLE_TEST')) {
-    $INPUT = new Input();
+    $INPUT = new \dokuwiki\Input\Input();
 }
 
 // BEGIN main

@@ -140,7 +140,7 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
         trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
 
         global $INPUT;
-        $INPUT = new Input();
+        $INPUT = new \dokuwiki\Input\Input();
     }
 
     /**
