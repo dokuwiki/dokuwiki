@@ -67,6 +67,29 @@ abstract class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
     abstract public function html();
 
     /**
+     * Checks if access should be granted to this admin plugin
+     *
+     * @return bool true if the current user may access this admin plugin
+     */
+    public function isAccessibleByCurrentUser() {
+        $data = [];
+        $data['instance'] = $this;
+        $data['hasAccess'] = false;
+
+        $event = new Doku_Event('ADMINPLUGIN_ACCESS_CHECK', $data);
+        if($event->advise_before()) {
+            if ($this->forAdminOnly()) {
+                $data['hasAccess'] = auth_isadmin();
+            } else {
+                $data['hasAccess'] = auth_ismanager();
+            }
+        }
+        $event->advise_after();
+
+        return $data['hasAccess'];
+    }
+
+    /**
      * Return true for access only by admins (config:superuser) or false if managers are allowed as well
      *
      * @return bool

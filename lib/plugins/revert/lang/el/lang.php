@@ -8,7 +8,7 @@
  * @author Konstantinos Koryllos <koryllos@gmail.com>
  * @author George Petsagourakis <petsagouris@gmail.com>
  * @author Petros Vidalis <pvidalis@gmail.com>
- * @author Vasileios Karavasilis vasileioskaravasilis@gmail.com
+ * @author Vasileios Karavasilis <vasileioskaravasilis@gmail.com>
  */
 $lang['menu']                  = 'Αποκατάσταση κακόβουλων αλλαγών σελίδων';
 $lang['filter']                = 'Αναζήτηση σελίδων που περιέχουν spam';

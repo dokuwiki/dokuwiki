@@ -1,4 +1,3 @@
 ====== Az oldal zárolva ======
 
 Ezt az oldalt épp szerkeszti egy másik felhasználó. Várnod kell, amíg a másik felhasználó befejezi, vagy amíg a zárolási ideje le nem jár.
-

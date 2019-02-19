@@ -4,10 +4,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Carles Bellver <carles.bellver@gmail.com>
- * @author carles.bellver@gmail.com
- * @author carles.bellver@cent.uji.es
- * @author Carles Bellver <carles.bellver@cent.uji.es>
- * @author daniel@6temes.cat
+ * @author carles.bellver <carles.bellver@cent.uji.es>
+ * @author daniel <daniel@6temes.cat>
  */
 $lang['menu']                  = 'Gestió de reversions';
 $lang['filter']                = 'Cerca pàgines brossa';

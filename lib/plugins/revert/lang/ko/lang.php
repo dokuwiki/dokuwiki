@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Traend <Traend@ruu.kr>
  * @author Seungheon Song <esketch@gmail.com>
  * @author jk Lee
  * @author dongnak <dongnak@gmail.com>

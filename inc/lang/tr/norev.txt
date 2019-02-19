@@ -1,4 +1,3 @@
 ====== Böyle bir sürüm yok ======
 
 Belirtilen sürüm mevcut değil. Bu dökümanın eski sürümlerinin bir listesine ulaşmak için ''Eski sürümler'' tuşunu kullanın.
-

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Vyacheslav Strenadko <vyacheslav.strenadko@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Zhassulan <zyesmukanov@gmail.com>
@@ -157,6 +158,7 @@ $lang['renderer_xhtml']        = 'Обработчик основного (xhtml
 $lang['renderer__core']        = '%s (ядро «Докувики»)';
 $lang['renderer__plugin']      = '%s (плагин)';
 $lang['search_nslimit']        = 'Ограничить поиск текущими пространствами имён X. Когда поиск выполняется со страницы в более глубоком пространстве имён, первые X-пространства имен будут добавлены в качестве фильтра.';
+$lang['search_fragment']       = 'Укажите поведение поиска фрагмента по умолчанию';
 $lang['search_fragment_o_exact'] = 'точно';
 $lang['search_fragment_o_starts_with'] = 'начинается на';
 $lang['search_fragment_o_ends_with'] = 'заканчивается';

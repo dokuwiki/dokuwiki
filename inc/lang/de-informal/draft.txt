@@ -3,4 +3,3 @@
 Deine letzte Bearbeitungssitzung wurde nicht ordnungsgemäß abgeschlossen. DokuWiki hat während deiner Arbeit automatisch einen Zwischenentwurf gespeichert, den du jetzt nutzen kannst, um deine Arbeit fortzusetzen. Unten siehst du die Daten, die bei deiner letzten Sitzung gespeichert wurden.
 
 Bitte entscheide dich, ob du den Entwurf //wiederherstellen// oder //löschen// willst oder ob du die Bearbeitung abbrechen möchtest.
-

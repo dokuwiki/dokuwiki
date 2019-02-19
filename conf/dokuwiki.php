@@ -8,7 +8,7 @@
  * This is a piece of PHP code so PHP syntax applies!
  *
  * For help with the configuration and a more detailed explanation of the various options
- * see http://www.dokuwiki.org/config
+ * see https://www.dokuwiki.org/config
  */
 
 
@@ -65,7 +65,7 @@ $conf['disableactions'] = '';            //comma separated list of actions to di
 $conf['auth_security_timeout'] = 900;    //time (seconds) auth data is considered valid, set to 0 to recheck on every page view
 $conf['securecookie'] = 1;               //never send HTTPS cookies via HTTP
 $conf['remote']      = 0;                //Enable/disable remote interfaces
-$conf['remoteuser']  = '!!not set!!';    //user/groups that have access to remote interface (comma separated)
+$conf['remoteuser']  = '!!not set!!';    //user/groups that have access to remote interface (comma separated). leave empty to allow all users
 
 /* Antispam Features */
 $conf['usewordblock']= 1;                //block spam based on words? 0|1
