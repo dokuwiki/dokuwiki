@@ -7,6 +7,8 @@
     <arg value="sp"/>
     <arg name="extensions" value="php"/>
 
+    <ini name="memory_limit" value="-1" />
+
     <!-- where to look -->
     <file>../inc</file>
     <file>../lib</file>
