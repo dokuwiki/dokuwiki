@@ -57,7 +57,7 @@ class StyleUtils
      */
     protected function mergeStyleInis() {
         static $combined = [];
-        if (!$combined || $this->reinit) {
+        if (empty($combined) || $this->reinit) {
             global $conf;
             global $config_cascade;
             $stylesheets = array(); // mode, file => base

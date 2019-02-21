@@ -49,7 +49,7 @@ require_once(DOKU_INC.'lib/exe/css.php');
 $styleUtils = new \dokuwiki\StyleUtils($conf['template']);
 $ini = $styleUtils->cssStyleini();
 
-if ($ini) {
+if (!empty($ini)) {
     echo '<table>';
     echo "<caption>".hsc($conf['template'])."'s style.ini</caption>";
     foreach($ini['replacements'] as $key => $val){
