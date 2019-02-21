@@ -247,7 +247,7 @@ function tpl_metaheaders($alt = true) {
     }
 
     $styleUtil = new \dokuwiki\StyleUtils();
-    $styleIni = $styleUtil->cssStyleini($conf['template']);
+    $styleIni = $styleUtil->cssStyleini();
     $replacements = $styleIni['replacements'];
     if (!empty($replacements['__theme_color__'])) {
         $head['meta'][] = array('name' => 'theme-color', 'content' => $replacements['__theme_color__']);

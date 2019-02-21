@@ -46,8 +46,8 @@ require_once(DOKU_INC.'inc/init.php');
 // get merged style.ini
 define('SIMPLE_TEST', true); // hack to prevent css output and headers
 require_once(DOKU_INC.'lib/exe/css.php');
-$styleUtils = new \dokuwiki\StyleUtils();
-$ini = $styleUtils->cssStyleini($conf['template']);
+$styleUtils = new \dokuwiki\StyleUtils($conf['template']);
+$ini = $styleUtils->cssStyleini();
 
 if ($ini) {
     echo '<table>';
