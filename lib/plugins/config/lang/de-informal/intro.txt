@@ -1,7 +1,10 @@
-===== Konfigurations-Manager =====
+Hello there,
 
-Benutze diese Seite zur Kontrolle der Einstellungen deiner DokuWiki-Installation. Für Hilfe zu individuellen Einstellungen gehe zu [[doku>config]]. Für mehr Details über diese Erweiterungen siehe [[doku>plugin:config]].
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
 
-Einstellungen die mit einem hellroten Hintergrund angezeigt werden, können mit dieser Erweiterung nicht verändert werden. Einstellungen mit einem blauen Hintergrund sind Standardwerte und Einstellungen mit einem weißen Hintergrund wurden lokal gesetzt für diese Installation. Sowohl blaue als auch weiße Einstellungen können angepasst werden.
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
 
-Denke dran **Speichern** zu drücken bevor du die Seite verlässt, andernfalls werden deine Änderungen nicht übernommen.
+Thanks,
+Aly

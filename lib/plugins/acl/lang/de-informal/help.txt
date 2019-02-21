@@ -1,11 +1,10 @@
-=== Schnellhilfe ===
+Hello there,
 
-Auf dieser Seite kannst Du Rechte für Namensräume und Seiten in deinem Wiki hinzufügen oder entfernen.
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
 
-Der linke Bereich zeigt alle Namensräume und Seiten.
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
 
-Das obere Formular zeigt die die Rechte der ausgewählten Gruppe bzw. Benutzers.
-
-In der Tabelle unten werden alle momentan gesetzten Zugriffsregeln gezeigt. Hier kannst Du schnell mehrere Regeln löschen oder ändern.
-
-Das Lesen von [[doku>acl|official documentation on ACL]] kann Dir helfen zu verstehen, wie die Zugriffskontrole in DokuWiki funktioniert.
+Thanks,
+Aly

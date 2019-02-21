@@ -1,7 +1,10 @@
-===== Massenimport von Benutzern =====
+Hello there,
 
-Dieser Import benötigt eine CSV-Datei mit mindestens vier Spalten. Diese Spalten müssen die folgenden Daten (in dieser Reihenfolge) enthalten: Benutzername, Name, E-Mailadresse und Gruppenzugehörigkeit.
-Die CSV-Felder müssen durch ein Komma (,) getrennt sein. Die Zeichenfolgen müssen von Anführungszeichen (%%""%%) umgeben sein. Ein Backslash (\) kann zum Maskieren benutzt werden.
-Für eine Beispieldatei kannst Du die "Benutzer exportieren"-Funktion oben benutzen. Doppelte Benutzername werden ignoriert.
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
 
-Ein Passwort wird generiert und den einzelnen, erfolgreich importierten Benutzern zugemailt.
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly

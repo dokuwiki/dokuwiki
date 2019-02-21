@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aly Chiman <aly1@alychidesigns.com>
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
@@ -14,189 +15,2148 @@
  * @author Volker Bödker <volker@boedker.de>
  * @author rnck <dokuwiki@rnck.de>
  */
-$lang['menu']                  = 'Konfiguration';
-$lang['error']                 = 'Konfiguration wurde nicht aktualisiert auf Grund eines ungültigen Wertes. Bitte überprüfe deine Änderungen und versuche es erneut.<br />Die/der ungültige(n) Wert(e) werden durch eine rote Umrandung hervorgehoben.';
-$lang['updated']               = 'Konfiguration erfolgreich aktualisiert.';
-$lang['nochoice']              = '(keine andere Option möglich)';
-$lang['locked']                = 'Die Konfigurationsdatei kann nicht aktualisiert werden. Wenn dies unbeabsichtigt ist stelle sicher, dass der Name und die Zugriffsrechte der Konfigurationsdatei richtig sind.';
-$lang['danger']                = '**Achtung**: Eine Änderung dieser Einstellung kann dein Wiki und das Einstellungsmenü unerreichbar machen.';
-$lang['warning']               = 'Achtung: Eine Änderungen dieser Option kann zu unbeabsichtigtem Verhalten führen.';
-$lang['security']              = 'Sicherheitswarnung: Eine Änderungen dieser Option können ein Sicherheitsrisiko bedeuten.';
-$lang['_configuration_manager'] = 'Konfigurations-Manager';
-$lang['_header_dokuwiki']      = 'DokuWiki';
-$lang['_header_plugin']        = 'Plugin';
-$lang['_header_template']      = 'Template';
-$lang['_header_undefined']     = 'Unbekannte Werte';
-$lang['_basic']                = 'Basis';
-$lang['_display']              = 'Darstellung';
-$lang['_authentication']       = 'Authentifizierung';
-$lang['_anti_spam']            = 'Anti-Spam';
-$lang['_editing']              = 'Bearbeitung';
-$lang['_links']                = 'Links';
-$lang['_media']                = 'Medien';
-$lang['_notifications']        = 'Benachrichtigung';
-$lang['_syndication']          = 'Syndication (RSS)';
-$lang['_advanced']             = 'Erweitert';
-$lang['_network']              = 'Netzwerk';
-$lang['_msg_setting_undefined'] = 'Keine Konfigurationsmetadaten.';
-$lang['_msg_setting_no_class'] = 'Keine Konfigurationsklasse.';
-$lang['_msg_setting_no_default'] = 'Kein Standardwert.';
-$lang['title']                 = 'Wiki Titel';
-$lang['start']                 = 'Name der Startseite';
-$lang['lang']                  = 'Sprache';
-$lang['template']              = 'Vorlage';
-$lang['tagline']               = 'Tag-Linie (nur, wenn vom Template unterstützt)';
-$lang['sidebar']               = 'Name der Sidebar-Seite (nur, wenn vom Template unterstützt), ein leeres Feld deaktiviert die Sidebar';
-$lang['license']               = 'Unter welcher Lizenz sollte Ihr Inhalt veröffentlicht werden?';
-$lang['savedir']               = 'Ordner zum Speichern von Daten';
-$lang['basedir']               = 'Installationsverzeichnis';
-$lang['baseurl']               = 'Installationspfad (URL)';
-$lang['cookiedir']             = 'Cookie Pfad. Leer lassen, um die Standard-Url zu belassen.';
-$lang['dmode']                 = 'Zugriffsrechte bei Verzeichniserstellung';
-$lang['fmode']                 = 'Zugriffsrechte bei Dateierstellung';
-$lang['allowdebug']            = 'Debug-Ausgaben erlauben <b>Abschalten wenn nicht benötigt!</b>';
-$lang['recent']                = 'letzte Änderungen';
-$lang['recent_days']           = 'Wie viele Änderungen sollen vorgehalten werden? (Tage)';
-$lang['breadcrumbs']           = 'Anzahl der Einträge im "Krümelpfad"';
-$lang['youarehere']            = 'Hierarchische Pfadnavigation verwenden';
-$lang['fullpath']              = 'Zeige vollen Pfad der Datei in Fußzeile an';
-$lang['typography']            = 'Mach drucktechnische Ersetzungen';
-$lang['dformat']               = 'Datumsformat (siehe PHPs <a href="http://php.net/strftime">strftime</a> Funktion)';
-$lang['signature']             = 'Signatur';
-$lang['showuseras']            = 'Was angezeigt werden soll, wenn der Benutzer, der zuletzt eine Seite bearbeitet hat, angezeigt wird';
-$lang['toptoclevel']           = 'Inhaltsverzeichnis bei dieser Überschriftengröße beginnen';
-$lang['tocminheads']           = 'Mindestanzahl der Überschriften die entscheidet, ob ein Inhaltsverzeichnis erscheinen soll';
-$lang['maxtoclevel']           = 'Maximale Überschriftengröße für Inhaltsverzeichnis';
-$lang['maxseclevel']           = 'Abschnitte bis zu dieser Stufe einzeln editierbar machen';
-$lang['camelcase']             = 'CamelCase-Verlinkungen verwenden';
-$lang['deaccent']              = 'Seitennamen bereinigen';
-$lang['useheading']            = 'Erste Überschrift als Seitennamen verwenden';
-$lang['sneaky_index']          = 'Standardmäßig zeigt DokuWiki alle Namensräume in der Indexansicht an. Bei Aktivierung dieser Einstellung werden alle Namensräume versteckt, in welchen der Benutzer keine Leserechte hat. Dies könnte dazu führen, dass lesbare Unternamensräume versteckt werden. Dies kann die Indexansicht bei bestimmten Zugangskontrolleinstellungen unbenutzbar machen.';
-$lang['hidepages']             = 'Seiten verstecken (Regulärer Ausdruck)';
-$lang['useacl']                = 'Benutze Zugangskontrollliste';
-$lang['autopasswd']            = 'Automatisch erzeugte Passwörter';
-$lang['authtype']              = 'Authentifizierungsmethode';
-$lang['passcrypt']             = 'Passwortverschlüsselungsmethode';
-$lang['defaultgroup']          = 'Standardgruppe';
-$lang['superuser']             = 'Administrator - Eine Gruppe oder Benutzer mit vollem Zugriff auf alle Seiten und Administrationswerkzeuge.';
-$lang['manager']               = 'Manager - Eine Gruppe oder Benutzer mit Zugriff auf einige Administrationswerkzeuge.';
-$lang['profileconfirm']        = 'Änderungen am Benutzerprofil mit Passwort bestätigen';
-$lang['rememberme']            = 'Permanente Login-Cookies erlauben (Auf diesem Computer eingeloggt bleiben)';
-$lang['disableactions']        = 'Deaktiviere DokuWiki\'s Zugriffe';
-$lang['disableactions_check']  = 'Check';
-$lang['disableactions_subscription'] = 'Bestellen/Abbestellen';
-$lang['disableactions_wikicode'] = 'Zeige Quelle/Exportiere Rohdaten';
-$lang['disableactions_profile_delete'] = 'Eigenes Benutzerprofil löschen';
-$lang['disableactions_other']  = 'Weitere Aktionen (durch Komma getrennt)';
-$lang['disableactions_rss']    = 'XML Syndication (RSS)';
-$lang['auth_security_timeout'] = 'Zeitüberschreitung bei der Authentifizierung (Sekunden)';
-$lang['securecookie']          = 'Sollen Cookies, die via HTTPS gesetzt wurden nur per HTTPS versendet werden? Deaktiviere diese Option, wenn nur der Login deines Wikis mit SSL gesichert ist, aber das Betrachten des Wikis ungesichert geschieht.';
-$lang['remote']                = 'Aktiviert den externen API-Zugang. Diese Option erlaubt es externen Anwendungen von außen auf die XML-RPC-Schnittstelle oder anderweitigen Schnittstellen zuzugreifen.';
-$lang['remoteuser']            = 'Zugriff auf die externen Schnittstellen durch kommaseparierte Angabe von Benutzern oder Gruppen einschränken. Ein leeres Feld erlaubt Zugriff für jeden.';
-$lang['usewordblock']          = 'Blockiere Spam basierend auf der Wortliste';
-$lang['relnofollow']           = 'rel="nofollow" verwenden';
-$lang['indexdelay']            = 'Zeit bevor Suchmaschinenindexierung erlaubt ist';
-$lang['mailguard']             = 'E-Mail-Adressen schützen';
-$lang['iexssprotect']          = 'Hochgeladene Dateien auf bösartigen JavaScript- und HTML-Code untersuchen';
-$lang['usedraft']              = 'Speichere automatisch Entwürfe während der Bearbeitung';
-$lang['htmlok']                = 'Erlaube eingebettetes HTML';
-$lang['phpok']                 = 'Erlaube eingebettetes PHP';
-$lang['locktime']              = 'Maximales Alter für Seitensperren (Sekunden)';
-$lang['cachetime']             = 'Maximale Cachespeicherung (Sekunden)';
-$lang['target____wiki']        = 'Zielfenstername für interne Links';
-$lang['target____interwiki']   = 'Zielfenstername für InterWiki-Links';
-$lang['target____extern']      = 'Zielfenstername für externe Links';
-$lang['target____media']       = 'Zielfenstername für Medienlinks';
-$lang['target____windows']     = 'Zielfenstername für Windows-Freigaben-Links';
-$lang['mediarevisions']        = 'Media-Revisionen (ältere Versionen) aktivieren?';
-$lang['refcheck']              = 'Auf Verwendung beim Löschen von Media-Dateien testen';
-$lang['gdlib']                 = 'GD Lib Version';
-$lang['im_convert']            = 'Pfad zu ImageMagicks-Konvertierwerkzeug';
-$lang['jpg_quality']           = 'JPEG Kompressionsqualität (0-100)';
-$lang['fetchsize']             = 'Maximale Größe (in Bytes), die fetch.php von extern herunterladen darf';
-$lang['subscribers']           = 'E-Mail-Abos zulassen';
-$lang['subscribe_time']        = 'Zeit nach der Zusammenfassungs- und Änderungslisten-E-Mails verschickt werden; Dieser Wert sollte kleiner als die in recent_days konfigurierte Zeit sein.';
-$lang['notify']                = 'Sende Änderungsbenachrichtigungen an diese E-Mail-Adresse.';
-$lang['registernotify']        = 'Sende Information bei neu registrierten Benutzern an diese E-Mail-Adresse.';
-$lang['mailfrom']              = 'Absenderadresse für automatisch erzeugte E-Mails';
-$lang['mailreturnpath']        = 'Empfänger-E-Mail-Adresse für Unzustellbarkeitsnachricht';
-$lang['mailprefix']            = 'Präfix für E-Mail-Betreff beim automatischen Versand von Benachrichtigungen';
-$lang['htmlmail']              = 'Versendet optisch angenehmere, aber größere E-Mails im HTML-Format (multipart). Deaktivieren, um Text-Mails zu versenden.';
-$lang['sitemap']               = 'Erzeuge Google Sitemaps (Tage)';
-$lang['rss_type']              = 'XML-Feed-Format';
-$lang['rss_linkto']            = 'XML-Feed verlinken auf';
-$lang['rss_content']           = 'Was soll in XML-Feedinhalten angezeigt werden?';
-$lang['rss_update']            = 'Aktualisierungsintervall für XML-Feeds (Sekunden)';
-$lang['rss_show_summary']      = 'Bearbeitungs-Zusammenfassung im XML-Feed anzeigen';
-$lang['rss_media']             = 'Welche Änderungen sollen im XML-Feed angezeigt werden?';
-$lang['updatecheck']           = 'Automatisch auf Updates und Sicherheitswarnungen prüfen? DokuWiki muss sich dafür mit update.dokuwiki.org verbinden.';
-$lang['userewrite']            = 'Benutze schöne URLs';
-$lang['useslash']              = 'Benutze Schrägstrich als Namensraumtrenner in URLs';
-$lang['sepchar']               = 'Worttrenner für Seitennamen in URLs';
-$lang['canonical']             = 'Immer Links mit vollständigen URLs erzeugen';
-$lang['fnencode']              = 'Methode um nicht-ASCII Dateinamen zu kodieren.';
-$lang['autoplural']            = 'Bei Links automatisch nach vorhandenen Pluralformen suchen';
-$lang['compression']           = 'Komprimierungsmethode für alte Seitenrevisionen';
-$lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
-$lang['compress']              = 'JavaScript und Stylesheets komprimieren';
-$lang['cssdatauri']            = 'Größe in Bytes, bis zu der Bilder in css-Dateien referenziert werden können, um HTTP-Anfragen zu minimieren. <code>400</code> bis <code>600</code> Bytes sind gute Werte. Setze <code>0</code> für inaktive Funktion.';
-$lang['send404']               = 'Sende "HTTP 404/Seite nicht gefunden" für nicht existierende Seiten';
-$lang['broken_iua']            = 'Falls die Funktion ignore_user_abort auf deinem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür. Siehe auch <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
-$lang['xsendfile']             = 'Den X-Sendfile-Header nutzen, um Dateien direkt vom Webserver ausliefern zu lassen? Dein Webserver muss dies unterstützen!';
-$lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wiki-Ausgabe.';
-$lang['renderer__core']        = '%s (DokuWiki Kern)';
-$lang['renderer__plugin']      = '%s (Erweiterung)';
-$lang['dnslookups']            = 'DokuWiki löst die IP-Adressen von Benutzern zu deren Hostnamen auf. Wenn du einen langsamen, unbrauchbaren DNS-Server verwendest oder die Funktion nicht benötigst, dann sollte diese Option deaktivert sein.';
-$lang['jquerycdn']             = 'Sollen die jQuery und jQuery UI Skriptdateien von einem CDN geladen werden? Das verursacht zusätzliche HTTP Anfragen, aber die Dateien werden möglicherweise schneller geladen und Nutzer haben sie vielleicht bereits im Cache.';
-$lang['jquerycdn_o_0']         = 'Kein CDN, nur lokale Auslieferung';
-$lang['jquerycdn_o_jquery']    = 'CDN bei code.jquery.com';
-$lang['jquerycdn_o_cdnjs']     = 'CDN bei cdnjs.com';
-$lang['proxy____host']         = 'Proxyadresse';
-$lang['proxy____port']         = 'Proxyport';
-$lang['proxy____user']         = 'Benutzername für den Proxy';
-$lang['proxy____pass']         = 'Passwort von dem Proxybenutzer';
-$lang['proxy____ssl']          = 'SSL verwenden um auf den Proxy zu zugreifen';
-$lang['proxy____except']       = 'Regulärer Ausdruck um Adressen zu beschreiben, für die kein Proxy verwendet werden soll';
-$lang['license_o_']            = 'Nichts ausgewählt';
-$lang['typography_o_0']        = 'nichts';
-$lang['typography_o_1']        = 'ohne einfache Anführungszeichen';
-$lang['typography_o_2']        = 'mit einfachen Anführungszeichen (funktioniert nicht immer)';
-$lang['userewrite_o_0']        = 'nichts';
-$lang['userewrite_o_1']        = '.htaccess';
-$lang['userewrite_o_2']        = 'DokuWiki intern';
-$lang['deaccent_o_0']          = 'aus';
-$lang['deaccent_o_1']          = 'Entferne Akzente';
-$lang['deaccent_o_2']          = 'romanisieren';
-$lang['gdlib_o_0']             = 'GD lib ist nicht verfügbar';
-$lang['gdlib_o_1']             = 'Version 1.x';
-$lang['gdlib_o_2']             = 'Autoerkennung';
-$lang['rss_type_o_rss']        = 'RSS 0.91';
-$lang['rss_type_o_rss1']       = 'RSS 1.0';
-$lang['rss_type_o_rss2']       = 'RSS 2.0';
-$lang['rss_type_o_atom']       = 'Atom 0.3';
-$lang['rss_type_o_atom1']      = 'Atom 1.0';
-$lang['rss_content_o_abstract'] = 'Zusammenfassung';
-$lang['rss_content_o_diff']    = 'Vereinigtes Diff';
-$lang['rss_content_o_htmldiff'] = 'HTML formatierte Diff-Tabelle';
-$lang['rss_content_o_html']    = 'Vollständiger HTML-Inhalt';
-$lang['rss_linkto_o_diff']     = 'Ansicht der Unterschiede';
-$lang['rss_linkto_o_page']     = 'geänderte Seite';
-$lang['rss_linkto_o_rev']      = 'Liste der Revisionen';
-$lang['rss_linkto_o_current']  = 'Die aktuelle Seite';
-$lang['compression_o_0']       = 'nichts';
-$lang['compression_o_gz']      = 'gzip';
-$lang['compression_o_bz2']     = 'bz2';
-$lang['xsendfile_o_0']         = 'Nicht benutzen';
-$lang['xsendfile_o_1']         = 'Proprietärer lighttpd-Header (vor Release 1.5)';
-$lang['xsendfile_o_2']         = 'Standard X-Sendfile-Header';
-$lang['xsendfile_o_3']         = 'Proprietärer Nginx X-Accel-Redirect-Header';
-$lang['showuseras_o_loginname'] = 'Login-Name';
-$lang['showuseras_o_username'] = 'Voller Name des Benutzers';
-$lang['showuseras_o_username_link'] = 'Kompletter Name des Benutzers als Interwiki-Link';
-$lang['showuseras_o_email']    = 'E-Mail-Adresse des Benutzers (je nach Mailguard-Einstellung verschleiert)';
-$lang['showuseras_o_email_link'] = 'E-Mail-Adresse des Benutzers als mailto:-Link';
-$lang['useheading_o_0']        = 'Niemals';
-$lang['useheading_o_navigation'] = 'Nur Navigation';
-$lang['useheading_o_content']  = 'Nur Wiki-Inhalt';
-$lang['useheading_o_1']        = 'Immer';
-$lang['readdircache']          = 'Maximales Alter des readdir-Caches (Sekunden)';
+$lang['menu']                  = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['error']                 = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['updated']               = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['nochoice']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['locked']                = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['danger']                = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['warning']               = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['security']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_configuration_manager'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_header_dokuwiki']      = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_header_plugin']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_header_template']      = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_header_undefined']     = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_basic']                = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_display']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_authentication']       = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_anti_spam']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_editing']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_links']                = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_media']                = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_notifications']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_syndication']          = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_advanced']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_network']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_msg_setting_undefined'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_msg_setting_no_class'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['_msg_setting_no_default'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['title']                 = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['start']                 = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['lang']                  = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['template']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['tagline']               = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['sidebar']               = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['license']               = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['savedir']               = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['basedir']               = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['baseurl']               = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['cookiedir']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['dmode']                 = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['fmode']                 = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['allowdebug']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['recent']                = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['recent_days']           = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['breadcrumbs']           = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['youarehere']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['fullpath']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['typography']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['dformat']               = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['signature']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['showuseras']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['toptoclevel']           = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['tocminheads']           = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['maxtoclevel']           = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['maxseclevel']           = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['camelcase']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['deaccent']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['useheading']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['sneaky_index']          = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['hidepages']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['useacl']                = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['autopasswd']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['authtype']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['passcrypt']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['defaultgroup']          = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['superuser']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['manager']               = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['profileconfirm']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rememberme']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['disableactions']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['disableactions_check']  = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['disableactions_subscription'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['disableactions_wikicode'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['disableactions_profile_delete'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['disableactions_other']  = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['disableactions_rss']    = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['auth_security_timeout'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['securecookie']          = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['remote']                = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['remoteuser']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['usewordblock']          = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['relnofollow']           = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['indexdelay']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['mailguard']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['iexssprotect']          = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['usedraft']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['htmlok']                = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['phpok']                 = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['locktime']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['cachetime']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['target____wiki']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['target____interwiki']   = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['target____extern']      = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['target____media']       = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['target____windows']     = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['mediarevisions']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['refcheck']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['gdlib']                 = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['im_convert']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['jpg_quality']           = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['fetchsize']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['subscribers']           = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['subscribe_time']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['notify']                = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['registernotify']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['mailfrom']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['mailreturnpath']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['mailprefix']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['htmlmail']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['sitemap']               = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_type']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_linkto']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_content']           = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_update']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_show_summary']      = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_media']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_media_o_both']      = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_media_o_pages']     = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_media_o_media']     = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['updatecheck']           = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['userewrite']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['useslash']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['sepchar']               = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['canonical']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['fnencode']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['autoplural']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['compression']           = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['gzip_output']           = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['compress']              = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['cssdatauri']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['send404']               = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['broken_iua']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['xsendfile']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['renderer_xhtml']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['renderer__core']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['renderer__plugin']      = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['search_nslimit']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['search_fragment']       = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['search_fragment_o_exact'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['search_fragment_o_starts_with'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['search_fragment_o_ends_with'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['search_fragment_o_contains'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['dnslookups']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['jquerycdn']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['jquerycdn_o_0']         = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['jquerycdn_o_jquery']    = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['jquerycdn_o_cdnjs']     = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['proxy____host']         = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['proxy____port']         = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['proxy____user']         = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['proxy____pass']         = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['proxy____ssl']          = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['proxy____except']       = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['license_o_']            = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['typography_o_0']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['typography_o_1']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['typography_o_2']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['userewrite_o_0']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['userewrite_o_1']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['userewrite_o_2']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['deaccent_o_0']          = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['deaccent_o_1']          = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['deaccent_o_2']          = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['gdlib_o_0']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['gdlib_o_1']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['gdlib_o_2']             = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_type_o_rss']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_type_o_rss1']       = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_type_o_rss2']       = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_type_o_atom']       = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_type_o_atom1']      = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_content_o_abstract'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_content_o_diff']    = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_content_o_htmldiff'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_content_o_html']    = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_linkto_o_diff']     = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_linkto_o_page']     = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_linkto_o_rev']      = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['rss_linkto_o_current']  = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['compression_o_0']       = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['compression_o_gz']      = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['compression_o_bz2']     = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['xsendfile_o_0']         = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['xsendfile_o_1']         = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['xsendfile_o_2']         = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['xsendfile_o_3']         = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['showuseras_o_loginname'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['showuseras_o_username'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['showuseras_o_username_link'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['showuseras_o_email']    = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['showuseras_o_email_link'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['useheading_o_0']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['useheading_o_navigation'] = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['useheading_o_content']  = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['useheading_o_1']        = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';
+$lang['readdircache']          = 'Hello there,
+
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
+
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
+
+Thanks,
+Aly
+';

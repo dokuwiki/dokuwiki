@@ -1,9 +1,10 @@
-===== Rückmeldung zur Zufriedenheit =====
+Hello there,
 
-Dieses Werkzeug sammelt anonym Daten über dein Wiki und erlaubt es dir diese an die Entwickler von DokuWiki zu senden. Dies hilft ihnen zu verstehen, wie DokuWiki von den Benutzern verwendet wird und stellt somit sicher, dass Entscheidungen für zukünftige Entwicklungen mit reellen Nutzungsstatistiken belegbar sind.
+My name is Aly and I would like to know if you would have any interest to have your website here at dokuwiki.org promoted as a resource on our blog alychidesign.com ? 
 
-Bitte wiederhole diesen Schritt von Zeit zu Zeit, um die Entwickler zu informieren wenn dein Wiki wächst. Deine aktuelleren Datensätze werden anhand einer anonymen Identifikationsnummer zugeordnet.
+We are in the midst of updating our broken link resources to include current and up to date resources for our readers. Our resource links are manually approved allowing us to mark a link as a do-follow link as well
+.
+If you may be interested please in being included as a resource on our blog, please let me know.
 
-Die gesammelten Daten enthalten Informationen über deine Version von DokuWiki, die Anzahl und Größe der Seiten und Dateien, installierte Erweiterungen und Informationen über deine PHP-Version.
-
-Die Rohdaten die gesendet werden, werden unten gezeigt. Bitte nutze den "Sende Daten" Knopf um die Informationen zu übermitteln.
+Thanks,
+Aly
