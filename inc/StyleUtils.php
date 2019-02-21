@@ -5,93 +5,30 @@ namespace dokuwiki;
 class StyleUtils
 {
 
+    /** @var string current template */
+    protected $tpl;
+    /** @var bool reinitialize styles config */
+    protected $reinit;
+    /** @var bool $preview preview mode */
+    protected $preview;
 
-
-
-    public function cssStyleiniOld($tpl, $preview=false) {
-        global $conf;
-
-        $stylesheets = array(); // mode, file => base
-        // guaranteed placeholder => value
-        $replacements = array(
-            '__text__' => "#000",
-            '__background__' => "#fff",
-            '__text_alt__' => "#999",
-            '__background_alt__' => "#eee",
-            '__text_neu__' => "#666",
-            '__background_neu__' => "#ddd",
-            '__border__' => "#ccc",
-            '__highlight__' => "#ff9",
-            '__link__' => "#00f",
-        );
-
-        // load template's style.ini
-        $incbase = tpl_incdir($tpl);
-        $webbase = tpl_basedir($tpl);
-        $ini = $incbase.'style.ini';
-        if(file_exists($ini)){
-            $data = parse_ini_file($ini, true);
-
-            // stylesheets
-            if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
-                if (!file_exists($incbase . $file)) {
-                    list($extension, $basename) = array_map('strrev', explode('.', strrev($file), 2));
-                    $newExtension = $extension === 'css' ? 'less' : 'css';
-                    if (file_exists($incbase . $basename . '.' . $newExtension)) {
-                        $stylesheets[$mode][$incbase . $basename . '.' . $newExtension] = $webbase;
-                        if ($conf['allowdebug']) {
-                            msg("Stylesheet $file not found, using $basename.$newExtension instead. Please contact developer of \"{$conf['template']}\" template.", 2);
-                        }
-                        continue;
-                    }
-                }
-                $stylesheets[$mode][$incbase . $file] = $webbase;
-            }
-
-            // replacements
-            if(is_array($data['replacements'])){
-                $replacements = array_merge($replacements, $this->cssFixreplacementurls($data['replacements'],$webbase));
-            }
+    /**
+     * StyleUtils constructor.
+     * @link https://codesearch.dokuwiki.org/search?project=dokuwiki&project=plugin&project=template&q=cssStyleini&defs=&refs=&path=&hist=&type=
+     * @param string $tpl template name
+     * @param bool $preview
+     * @param bool $reinit whether static style conf should be reinitialized
+     */
+    public function __construct($tpl = '', $preview = false, $reinit = false)
+    {
+        if (!$tpl) {
+            global $conf;
+            $tpl = $conf['conf'];
         }
-
-        // load configs's style.ini
-        $webbase = DOKU_BASE;
-        $ini = DOKU_CONF."tpl/$tpl/style.ini";
-        $incbase = dirname($ini).'/';
-        if(file_exists($ini)){
-            $data = parse_ini_file($ini, true);
-
-            // stylesheets
-            if(isset($data['stylesheets']) && is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
-                $stylesheets[$mode][$incbase.$file] = $webbase;
-            }
-
-            // replacements
-            if(isset($data['replacements']) && is_array($data['replacements'])){
-                $replacements = array_merge($replacements, $this->cssFixreplacementurls($data['replacements'],$webbase));
-            }
-        }
-
-        // allow replacement overwrites in preview mode
-        if($preview) {
-            $webbase = DOKU_BASE;
-            $ini     = $conf['cachedir'].'/preview.ini';
-            if(file_exists($ini)) {
-                $data = parse_ini_file($ini, true);
-                // replacements
-                if(is_array($data['replacements'])) {
-                    $replacements = array_merge($replacements, $this->cssFixreplacementurls($data['replacements'], $webbase));
-                }
-            }
-        }
-
-        return array(
-            'stylesheets' => $stylesheets,
-            'replacements' => $replacements
-        );
+        $this->tpl = $tpl;
+        $this->reinit = $reinit;
+        $this->preview = $preview;
     }
-
-
 
     /**
      * Load style ini contents
@@ -100,32 +37,14 @@ class StyleUtils
      * the stylesheet modes
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     * @author Anna Dabrowska <info@cosmocode.de>
      *
-     * @param string $tpl the used template
-     * @param bool   $preview load preview replacements
      * @return array with keys 'stylesheets' and 'replacements'
      */
-    public function cssStyleini($tpl, $preview=false) {
+    public function cssStyleini() {
         global $conf;
 
-        $mergedinis = $this->getStyleIni();
-
-        // allow replacement overwrites in preview mode
-        if($preview) {
-            $webbase = DOKU_BASE;
-            $ini     = $conf['cachedir'].'/preview.ini';
-            if(file_exists($ini)) {
-                $data = parse_ini_file($ini, true);
-                // FIXME does preview mode affect replacements only, or stylesheets too?
-                // replacements
-                if(is_array($data['replacements'])) {
-                    $mergedinis['replacements'] = array_merge(
-                        $mergedinis['replacements'],
-                        $this->cssFixreplacementurls($data['replacements'], $webbase)
-                    );
-                }
-            }
-        }
+        $mergedinis = $this->mergeStyleInis();
 
         return array(
             'stylesheets' => $mergedinis['stylesheets'],
@@ -133,87 +52,84 @@ class StyleUtils
         );
     }
 
-    protected function getStyleIni() {
-        static $inis = null;
-        if ( !$inis ) {
-            $inis = $this->retrieveStyles('styleini','parse_ini_file', array(true));
+    /**
+     * @return array
+     */
+    protected function mergeStyleInis() {
+        static $combined = [];
+        if (!$combined || $this->reinit) {
+            global $conf;
+            global $config_cascade;
+            $stylesheets = array(); // mode, file => base
+            $incbase = tpl_incdir($this->tpl);
 
-            // FIXME is this trim filter still necessary?
-            foreach ($inis as $key => &$section) {
-                if ($section !== 'replacements') {
-                    continue;
-                }
-                $section = array_map('trim', $section);
-                $section = preg_replace('/^#.*/', '', $section);
-                $section = array_filter($section);
+            // guaranteed placeholder => value
+            $replacements = array(
+                '__text__' => "#000",
+                '__background__' => "#fff",
+                '__text_alt__' => "#999",
+                '__background_alt__' => "#eee",
+                '__text_neu__' => "#666",
+                '__background_neu__' => "#ddd",
+                '__border__' => "#ccc",
+                '__highlight__' => "#ff9",
+                '__link__' => "#00f",
+            );
+
+            // merge all styles from config cascade
+            if (!is_array($config_cascade['styleini'])) {
+                trigger_error('Missing config cascade for styleini',E_USER_WARNING);
             }
-        }
-        return $inis;
-    }
 
-    protected function retrieveStyles($type, $fn, $params = array()) {
-        global $conf;
-        global $config_cascade;
-        $incbase = tpl_incdir();
-        $stylesheets = array(); // mode, file => base
+            // allow replacement overwrites in preview mode
+            if($this->preview) {
+                $config_cascade['styleini']['local'][] = $conf['cachedir'].'/preview.ini';
+            }
 
-        // guaranteed placeholder => value
-        $replacements = array(
-            '__text__' => "#000",
-            '__background__' => "#fff",
-            '__text_alt__' => "#999",
-            '__background_alt__' => "#eee",
-            '__text_neu__' => "#666",
-            '__background_neu__' => "#ddd",
-            '__border__' => "#ccc",
-            '__highlight__' => "#ff9",
-            '__link__' => "#00f",
-        );
+            foreach (array('default','local','protected') as $config_group) {
+                if (empty($config_cascade['styleini'][$config_group])) continue;
 
-        $combined = [];
+                // set proper server dirs
+                $webbase = $this->getServerPath($config_group);
 
-        if (!is_array($config_cascade[$type])) {
-            trigger_error('Missing config cascade for "'.$type.'"',E_USER_WARNING);
-        }
+                foreach ($config_cascade['styleini'][$config_group] as $file) {
+                    // replace the placeholder with the name of the current template
+                    $file = str_replace('%TEMPLATE%', $this->tpl, $file);
 
-        foreach (array('default','local','protected') as $config_group) {
+                    if (file_exists($file)) {
+                        $config = call_user_func_array('parse_ini_file', array_merge(array($file), array(true)));
 
-            if (empty($config_cascade[$type][$config_group])) continue;
+                        if (is_array($config['stylesheets'])) {
+                            foreach($config['stylesheets'] as $file => $mode) {
 
-            foreach ($config_cascade[$type][$config_group] as $file) {
-                // replace the placeholder with the name of the current template
-                $file = str_replace('TPL_PLACEHOLDER', $conf['template'], $file);
+                                // validate and include style files
+                                $stylesheets = array_merge($stylesheets, $this->getValidatedStyles($stylesheets, $file, $mode, $incbase, $webbase));
+                                $combined['stylesheets'] = is_array($combined['stylesheets']) ? array_merge($combined['stylesheets'], $stylesheets) : $stylesheets;
+                            }
+                        }
 
-                if (file_exists($file)) {
-                    $config = call_user_func_array($fn, array_merge(array($file), $params));
-
-                    if (is_array($config['stylesheets'])) {
-                        foreach($config['stylesheets'] as $file => $mode) {
-
-                            // set proper server dirs
-                            $webbase = $this->getServerPath($config_group);
-
-                            // validate and include style files
-                            $stylesheets = array_merge($stylesheets, $this->getValidatedStyles($stylesheets, $file, $mode, $incbase, $webbase));
-
-                            // FIXME do we also need to fix paths as in the replacements section below?
-                            $combined['stylesheets'] = is_array($combined['stylesheets']) ? array_merge($combined['stylesheets'], $stylesheets) : $stylesheets;
+                        if (is_array($config['replacements'])) {
+                            $replacements = array_replace($replacements, $this->cssFixreplacementurls($config['replacements'], $webbase));
+                            $combined['replacements'] = array_merge($replacements, $config['replacements']);
                         }
                     }
-
-                    if (is_array($config['replacements'])) {
-                        $replacements = array_replace($replacements, $this->cssFixreplacementurls($config['replacements'], $webbase));
-                        $combined['replacements'] = array_merge($replacements, $config['replacements']);
-
-                    }
                 }
             }
-        }
 
+        }
         return $combined;
     }
 
-
+    /**
+     * Checks if configured style files exist and, if necessary, adjusts file extensions in config
+     *
+     * @param array $stylesheets
+     * @param string $file
+     * @param string $mode
+     * @param string $incbase
+     * @param string $webbase
+     * @return mixed
+     */
     protected function getValidatedStyles($stylesheets, $file, $mode, $incbase, $webbase) {
         global $conf;
         if (!file_exists($incbase . $file)) {
@@ -230,9 +146,15 @@ class StyleUtils
         return $stylesheets;
     }
 
+    /**
+     * Returns the server path for the given level/group in config cascade
+     *
+     * @param string $config_group
+     * @return string
+     */
     protected function getServerPath($config_group) {
         if ($config_group === 'default') {
-            return tpl_basedir();
+            return tpl_basedir($this->tpl);
         } else {
             return DOKU_BASE;
         }
