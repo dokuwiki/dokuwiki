@@ -498,8 +498,8 @@ class Search extends Ui
      */
     public function createPagenameFromQuery($parsedQuery)
     {
-        $cleanedQuery = cleanID($parsedQuery['query']);
-        if (strtolower($cleanedQuery) === strtolower($parsedQuery['query'])) {
+        $cleanedQuery = cleanID($parsedQuery['query']); // already strtolowered
+        if ($cleanedQuery === utf8_strtolower($parsedQuery['query'])) {
             return ':' . $cleanedQuery;
         }
         $pagename = '';
