@@ -111,6 +111,22 @@ class Search_createPagenameFromQuery extends DokuWikiTest
             ],
             [
                 [
+                    'query' => 'Бб:Гг:Rr',
+                    'parsed_str' => '((W+:бб)AND(W+:гг)AND(W+:rr))',
+                    'parsed_ary' => ['W+:бб', 'AND', 'W+:гг', 'AND', 'W+:rr', 'AND'],
+                    'words' => ["бб", "гг", "rr"],
+                    'highlight' => ["бб", "гг", "rr"],
+                    'and' => ["бб", "гг", "rr"],
+                    'phrases' => [],
+                    'ns' => [],
+                    'notns' => [],
+                    'not' => [],
+                ],
+                ':бб:гг:rr',
+                'uppercased utf-8 pageid with colons should result in clean pageid',
+            ],
+            [
+                [
                     'query' => '"wiki:foo"',
                     'parsed_str' => '((W_:wiki)AND(W_:foo)AND(P+:wiki:foo))',
                     'parsed_ary' => [0 => 'W_:wiki', 1 => 'W_:foo', 2 => 'AND', 3 => 'P+:wiki:foo', 4 => 'AND',],
