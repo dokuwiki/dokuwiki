@@ -12,8 +12,6 @@ class CacheParser extends Cache
     public $mode = '';       // input mode (represents the processing the input file will undergo)
     public $page = '';
 
-    public $event = 'PARSER_CACHE_USE';
-
     /**
      *
      * @param string $id page id
@@ -28,6 +26,7 @@ class CacheParser extends Cache
         $this->file = $file;
         $this->mode = $mode;
 
+        $this->_event = 'PARSER_CACHE_USE';
         parent::__construct($file . $_SERVER['HTTP_HOST'] . $_SERVER['SERVER_PORT'], '.' . $mode);
     }
 

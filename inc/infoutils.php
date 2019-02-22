@@ -444,9 +444,10 @@ function dbglog($msg,$header=''){
  * Log accesses to deprecated fucntions to the debug log
  *
  * @param string $alternative The function or method that should be used instead
+ * @param string|null $deprecatedThing What is deprecated if not the current method
  * @triggers INFO_DEPRECATION_LOG
  */
-function dbg_deprecated($alternative = '') {
+function dbg_deprecated($alternative = '', $deprecatedThing = null) {
     global $conf;
     global $EVENT_HANDLER;
     if(!$conf['allowdebug'] && !$EVENT_HANDLER->hasHandlerForEvent('INFO_DEPRECATION_LOG')) {
@@ -459,10 +460,14 @@ function dbg_deprecated($alternative = '') {
     $self = $backtrace[0];
     $call = $backtrace[1];
 
+    if ($deprecatedThing === null) {
+        $deprecatedThing = trim($self['class'] . '::' . $self['function'] . '()', ':');
+    }
+
     $data = [
         'trace' => $backtrace,
         'alternative' => $alternative,
-        'called' => trim($self['class'] . '::' . $self['function'] . '()', ':'),
+        'called' => $deprecatedThing,
         'caller' => trim($call['class'] . '::' . $call['function'] . '()', ':'),
         'file' => $call['file'],
         'line' => $call['line'],

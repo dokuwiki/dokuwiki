@@ -2,20 +2,29 @@
 
 namespace dokuwiki\Cache;
 
+use \dokuwiki\Debug\PropertyDeprecationHelper;
+
 /**
  * Generic handling of caching
  */
 class Cache
 {
+    use PropertyDeprecationHelper;
+
     public $key = '';          // primary identifier for this item
     public $ext = '';          // file ext for cache data, secondary identifier for this item
     public $cache = '';        // cache file name
     public $depends = array(); // array containing cache dependency information,
     //   used by makeDefaultCacheDecision to determine cache validity
 
-    protected $event = '';       // event to be triggered during useCache
-    protected $time;
-    protected $nocache = false;  // if set to true, cache will not be used or stored
+    // phpcs:disable
+    /**
+     * @deprecated since 2019-02-02 use the respective getters instead!
+     */
+    protected $_event = '';       // event to be triggered during useCache
+    protected $_time;
+    protected $_nocache = false;  // if set to true, cache will not be used or stored
+    // phpcs:enable
 
     /**
      * @param string $key primary identifier
@@ -26,59 +35,28 @@ class Cache
         $this->key = $key;
         $this->ext = $ext;
         $this->cache = getCacheName($key, $ext);
-    }
 
-    /**
-     * @deprecated since 2019-02-02 use the respective getters instead!
-     */
-    public function __get($key)
-    {
-        if ($key === '_event') {
-            trigger_error(
-                '\dokuwiki\Cache\Cache::_event is deprecated since 2019-02-02. Use \dokuwiki\Cache\Cache::getEvent()',
-                E_USER_DEPRECATED
-            );
-            dbg_deprecated('\dokuwiki\Cache\Cache::getEvent()');
-            return $this->getEvent();
-        }
-
-        if ($key === '_time') {
-            trigger_error(
-                '\dokuwiki\Cache\Cache::_time is deprecated since 2019-02-02. Use \dokuwiki\Cache\Cache::getTime()',
-                E_USER_DEPRECATED
-            );
-            dbg_deprecated('\dokuwiki\Cache\Cache::getTime()');
-            return $this->getTime();
-        }
-        return $this->$$key;
-    }
-
-    public function __set($name, $value)
-    {
-        if ($name === '_event') {
-            trigger_error(
-                '\dokuwiki\Cache\Cache::_event is deprecated since 2019-02-02. Use \dokuwiki\Cache\Cache::getEvent()',
-                E_USER_DEPRECATED
-            );
-            dbg_deprecated('\dokuwiki\Cache\Cache::getEvent()');
-            $this->setEvent($value);
-        }
-        $this->$$name = $value;
+        /**
+         * @deprecated since 2019-02-02 use the respective getters instead!
+         */
+        $this->deprecatePublicProperty('_event');
+        $this->deprecatePublicProperty('_time');
+        $this->deprecatePublicProperty('_nocache');
     }
 
     public function getTime()
     {
-        return $this->time;
+        return $this->_time;
     }
 
     public function getEvent()
     {
-        return $this->event;
+        return $this->_event;
     }
 
-    public function setEvent($event)
+    public function setEvent($_event)
     {
-        $this->event = $event;
+        $this->_event = $_event;
     }
 
     /**
@@ -99,8 +77,8 @@ class Cache
         $this->depends = $depends;
         $this->addDependencies();
 
-        if ($this->event) {
-            return $this->stats(trigger_event($this->event, $this, array($this, 'makeDefaultCacheDecision')));
+        if ($this->_event) {
+            return $this->stats(trigger_event($this->_event, $this, array($this, 'makeDefaultCacheDecision')));
         } else {
             return $this->stats($this->makeDefaultCacheDecision());
         }
@@ -125,24 +103,24 @@ class Cache
     public function makeDefaultCacheDecision()
     {
 
-        if ($this->nocache) {
+        if ($this->_nocache) {
             return false;
         }                              // caching turned off
         if (!empty($this->depends['purge'])) {
             return false;
         }              // purge requested?
-        if (!($this->time = @filemtime($this->cache))) {
+        if (!($this->_time = @filemtime($this->cache))) {
             return false;
         }   // cache exists?
 
         // cache too old?
-        if (!empty($this->depends['age']) && ((time() - $this->time) > $this->depends['age'])) {
+        if (!empty($this->depends['age']) && ((time() - $this->_time) > $this->depends['age'])) {
             return false;
         }
 
         if (!empty($this->depends['files'])) {
             foreach ($this->depends['files'] as $file) {
-                if ($this->time <= @filemtime($file)) {
+                if ($this->_time <= @filemtime($file)) {
                     return false;
                 }         // cache older than files it depends on?
             }
@@ -185,7 +163,7 @@ class Cache
      */
     public function storeCache($data)
     {
-        if ($this->nocache) {
+        if ($this->_nocache) {
             return false;
         }
 
@@ -251,6 +229,6 @@ class Cache
      */
     public function isNoCache()
     {
-        return $this->nocache;
+        return $this->_nocache;
     }
 }

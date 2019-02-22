@@ -37,7 +37,7 @@ class CacheInstructions extends \dokuwiki\Cache\CacheParser
      */
     public function storeCache($instructions)
     {
-        if ($this->nocache) {
+        if ($this->_nocache) {
             return false;
         }
 
