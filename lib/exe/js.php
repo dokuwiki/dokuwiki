@@ -79,7 +79,7 @@ function js_out(){
 
     // The generated script depends on some dynamic options
     $cache = new Cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].md5(serialize($files)),'.js');
-    $cache->_event = 'JS_CACHE_USE';
+    $cache->setEvent('JS_CACHE_USE');
 
     $cache_files = array_merge($files, getConfigFiles('main'));
     $cache_files[] = __FILE__;

@@ -112,7 +112,7 @@ function css_out(){
         $type,
         '.css'
     );
-    $cache->_event = 'CSS_CACHE_USE';
+    $cache->setEvent('CSS_CACHE_USE');
 
     // check cache age & handle conditional request
     // This may exit if a cache can be used
