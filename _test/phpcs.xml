@@ -30,6 +30,9 @@
     <exclude-pattern>*/inc/JpegMeta.php</exclude-pattern>
     <exclude-pattern>*/lib/plugins/authad/adLDAP</exclude-pattern>
 
+    <!-- deprecated files to be removed soon -->
+    <exclude-pattern>*/inc/cli.php</exclude-pattern>
+
     <!-- rules on top of PSR-2 -->
     <rule ref="PSR2">
         <!-- the following rule is not in PSR-2 and breaks the guardian pattern -->
@@ -45,6 +48,7 @@
 
         <exclude-pattern>*/inc/Plugin.php</exclude-pattern>
         <exclude-pattern>*/inc/PluginInterface.php</exclude-pattern>
+        <exclude-pattern>*/inc/PluginTrait.php</exclude-pattern>
 
         <exclude-pattern>*/lib/plugins/*.php</exclude-pattern>
         <exclude-pattern>*/lib/plugins/*/action.php</exclude-pattern>
