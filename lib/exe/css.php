@@ -464,18 +464,13 @@ class DokuCssFile {
      */
     public function replacements($match) {
 
-        // not a relative url? - no adjustment required
-        if (preg_match('#^(/|data:|https?://)#',$match[3])) {
+        if (preg_match('#^(/|data:|https?://)#', $match[3])) { // not a relative url? - no adjustment required
             return $match[0];
-        }
-        // a less file import? - requires a file system location
-        else if (substr($match[3],-5) == '.less') {
+        } elseif (substr($match[3], -5) == '.less') { // a less file import? - requires a file system location
             if ($match[3]{0} != '/') {
                 $match[3] = $this->getRelativePath() . '/' . $match[3];
             }
-        }
-        // everything else requires a url adjustment
-        else {
+        } else { // everything else requires a url adjustment
             $match[3] = $this->location . $match[3];
         }
 

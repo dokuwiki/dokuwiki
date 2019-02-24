@@ -209,8 +209,7 @@ abstract class ChangeLog
                 // next chunk
                 if ($finger == 0) {
                     break;
-                } // already read all the lines
-                else {
+                } else { // already read all the lines
                     $tail = $finger;
                     $finger = max($tail - $this->chunk_size, 0);
                 }

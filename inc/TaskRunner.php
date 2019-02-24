@@ -122,12 +122,15 @@ class TaskRunner
             for ($i = 0; $i < count($lines); $i++) {
                 $log = parseChangelogLine($lines[$i]);
                 if ($log === false) {
-                    continue;
-                }                      // discard junk
+                    continue; // discard junk
+                }
+
                 if ($log['date'] < $trim_time) {
-                    $old_lines[$log['date'] . ".$i"] = $lines[$i];     // keep old lines for now (append .$i to prevent key collisions)
+                    // keep old lines for now (append .$i to prevent key collisions)
+                    $old_lines[$log['date'] . ".$i"] = $lines[$i];
                 } else {
-                    $out_lines[$log['date'] . ".$i"] = $lines[$i];     // definitely keep these lines
+                    // definitely keep these lines
+                    $out_lines[$log['date'] . ".$i"] = $lines[$i];
                 }
             }
 

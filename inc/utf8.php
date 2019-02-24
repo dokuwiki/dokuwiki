@@ -322,7 +322,7 @@ if(!function_exists('utf8_rtrim')){
      * @param  string $charlist
      * @return string
      */
-    function  utf8_rtrim($str,$charlist=''){
+    function utf8_rtrim($str,$charlist=''){
         if($charlist == '') return rtrim($str);
 
         //quote charlist for use in a characterclass
@@ -343,7 +343,7 @@ if(!function_exists('utf8_trim')){
      * @param  string $charlist
      * @return string
      */
-    function  utf8_trim($str,$charlist='') {
+    function utf8_trim($str,$charlist='') {
         if($charlist == '') return trim($str);
 
         return utf8_ltrim(utf8_rtrim($str,$charlist),$charlist);
@@ -571,7 +571,7 @@ if(!function_exists('utf8_tohtml')){
      * @param string $str
      * @return string
      */
-    function utf8_tohtml ($str) {
+    function utf8_tohtml($str) {
         $ret = '';
         foreach (utf8_to_unicode($str) as $cp) {
             if ($cp < 0x80)

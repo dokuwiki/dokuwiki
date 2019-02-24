@@ -158,7 +158,7 @@ class Admin extends Ui {
      * @param array $b
      * @return int
      */
-    protected function menuSort ($a, $b) {
+    protected function menuSort($a, $b) {
         $strcmp = strcasecmp($a['prompt'], $b['prompt']);
         if($strcmp != 0) return $strcmp;
         if($a['sort'] === $b['sort']) return 0;
