@@ -13,10 +13,6 @@ class cache extends \dokuwiki\Cache\Cache
 
     public function __construct($key, $ext)
     {
-        trigger_error(
-            'cache is deprecated since 2019-02-02. Use \dokuwiki\Cache\Cache instead',
-            E_USER_DEPRECATED
-        );
         DebugHelper::dbgDeprecatedFunction(dokuwiki\Cache\Cache::class);
         parent::__construct($key, $ext);
     }
@@ -31,10 +27,6 @@ class cache_parser extends \dokuwiki\Cache\CacheParser
 
     public function __construct($id, $file, $mode)
     {
-        trigger_error(
-            'cache_parser is deprecated since 2019-02-02. Use \dokuwiki\Cache\CacheParser instead',
-            E_USER_DEPRECATED
-        );
         DebugHelper::dbgDeprecatedFunction(CacheParser::class);
         parent::__construct($id, $file, $mode);
     }
@@ -49,10 +41,6 @@ class cache_renderer extends \dokuwiki\Cache\CacheRenderer
 
     public function __construct($id, $file, $mode)
     {
-        trigger_error(
-            'cache_renderer is deprecated since 2019-02-02. Use \dokuwiki\Cache\CacheRenderer instead',
-            E_USER_DEPRECATED
-        );
         DebugHelper::dbgDeprecatedFunction(CacheRenderer::class);
         parent::__construct($id, $file, $mode);
     }
@@ -65,10 +53,6 @@ class cache_instructions extends \dokuwiki\Cache\CacheInstructions
 {
     public function __construct($id, $file)
     {
-        trigger_error(
-            'cache_instructions is deprecated since 2019-02-02. Use \dokuwiki\Cache\CacheInstructions instead',
-            E_USER_DEPRECATED
-        );
         DebugHelper::dbgDeprecatedFunction(CacheInstructions::class);
         parent::__construct($id, $file);
     }
