@@ -48,7 +48,7 @@ trait PropertyDeprecationHelper
      *
      * @param string $property The name of the property.
      * @param null $class name of the class defining the property
-     * @see dbg_deprecated()
+     * @see DebugHelper::dbgDeprecatedProperty
      */
     protected function deprecatePublicProperty(
         $property,
@@ -61,8 +61,7 @@ trait PropertyDeprecationHelper
     {
         if (isset($this->deprecatedPublicProperties[$name])) {
             $class = $this->deprecatedPublicProperties[$name];
-            $qualifiedName = $class . '::$' . $name;
-            dbg_deprecated('', $qualifiedName);
+            DebugHelper::dbgDeprecatedProperty($class, $name);
             return $this->$name;
         }
 
@@ -81,8 +80,7 @@ trait PropertyDeprecationHelper
     {
         if (isset($this->deprecatedPublicProperties[$name])) {
             $class = $this->deprecatedPublicProperties[$name];
-            $qualifiedName = $class . '::$' . $name;
-            dbg_deprecated('', $qualifiedName);
+            DebugHelper::dbgDeprecatedProperty($class, $name);
             $this->$name = $value;
             return;
         }
@@ -133,5 +131,4 @@ trait PropertyDeprecationHelper
         }
         return false;
     }
-
 }
