@@ -9,6 +9,7 @@
  * @global Input $INPUT
  */
 
+use dokuwiki\Cache\Cache;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
 
@@ -31,7 +32,7 @@ $opt = rss_parseOptions();
 // the feed is dynamic - we need a cache for each combo
 // (but most people just use the default feed so it's still effective)
 $key   = join('', array_values($opt)).'$'.$_SERVER['REMOTE_USER'].'$'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'];
-$cache = new cache($key, '.feed');
+$cache = new Cache($key, '.feed');
 
 // prepare cache depends
 $depends['files'] = getConfigFiles('main');
@@ -45,7 +46,7 @@ header('Pragma: public');
 header('Content-Type: application/xml; charset=utf-8');
 header('X-Robots-Tag: noindex');
 if($cache->useCache($depends)) {
-    http_conditionalRequest($cache->_time);
+    http_conditionalRequest($cache->getTime());
     if($conf['allowdebug']) header("X-CacheUsed: $cache->cache");
     print $cache->retrieveCache();
     exit;

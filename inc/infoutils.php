@@ -450,40 +450,11 @@ function dbglog($msg,$header=''){
  * Log accesses to deprecated fucntions to the debug log
  *
  * @param string $alternative The function or method that should be used instead
+ * @param string|null $deprecatedThing What is deprecated if not the current method
  * @triggers INFO_DEPRECATION_LOG
  */
 function dbg_deprecated($alternative = '') {
-    global $conf;
-    global $EVENT_HANDLER;
-    if(!$conf['allowdebug'] && !$EVENT_HANDLER->hasHandlerForEvent('INFO_DEPRECATION_LOG')) {
-        // avoid any work if no one cares
-        return;
-    }
-
-    $backtrace = debug_backtrace();
-    array_shift($backtrace);
-    $self = $backtrace[0];
-    $call = $backtrace[1];
-
-    $data = [
-        'trace' => $backtrace,
-        'alternative' => $alternative,
-        'called' => trim($self['class'] . '::' . $self['function'] . '()', ':'),
-        'caller' => trim($call['class'] . '::' . $call['function'] . '()', ':'),
-        'file' => $call['file'],
-        'line' => $call['line'],
-    ];
-
-    $event = new Doku_Event('INFO_DEPRECATION_LOG', $data);
-    if($event->advise_before()) {
-        $msg = $event->data['called'] . ' is deprecated. It was called from ';
-        $msg .= $event->data['caller'] . ' in ' . $event->data['file'] . ':' . $event->data['line'];
-        if($event->data['alternative']) {
-            $msg .= ' ' . $event->data['alternative'] . ' should be used instead!';
-        }
-        dbglog($msg);
-    }
-    $event->advise_after();
+    \dokuwiki\Debug\DebugHelper::dbgDeprecatedFunction($alternative, 2);
 }
 
 /**

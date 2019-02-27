@@ -6,6 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Cache\Cache;
+
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
@@ -100,7 +102,7 @@ function css_out(){
     }
 
     // The generated script depends on some dynamic options
-    $cache = new cache(
+    $cache = new Cache(
         'styles' .
         $_SERVER['HTTP_HOST'] .
         $_SERVER['SERVER_PORT'] .
@@ -110,7 +112,7 @@ function css_out(){
         $type,
         '.css'
     );
-    $cache->_event = 'CSS_CACHE_USE';
+    $cache->setEvent('CSS_CACHE_USE');
 
     // check cache age & handle conditional request
     // This may exit if a cache can be used

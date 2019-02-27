@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Cache\Cache;
+
 if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/../../');
 if(!defined('NOSESSION')) define('NOSESSION', true); // we do not use a session or authentication here (better caching)
 if(!defined('NL')) define('NL', "\n");
@@ -19,7 +21,7 @@ jquery_out();
  * uses cache or fills it
  */
 function jquery_out() {
-    $cache = new cache('jquery', '.js');
+    $cache = new Cache('jquery', '.js');
     $files = array(
         DOKU_INC . 'lib/scripts/jquery/jquery.min.js',
         DOKU_INC . 'lib/scripts/jquery/jquery-ui.min.js',
