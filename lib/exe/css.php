@@ -45,8 +45,8 @@ function css_out(){
     if(!$tpl) $tpl = $conf['template'];
 
     // load style.ini
-    $styleUtil = new \dokuwiki\StyleUtils();
-    $styleini = $styleUtil->cssStyleini($tpl, $INPUT->bool('preview'));
+    $styleUtil = new \dokuwiki\StyleUtils($tpl, $INPUT->bool('preview'));
+    $styleini = $styleUtil->cssStyleini();
 
     // cache influencers
     $tplinc = tpl_incdir($tpl);

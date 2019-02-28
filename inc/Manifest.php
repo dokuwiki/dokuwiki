@@ -29,7 +29,7 @@ class Manifest
         }
 
         $styleUtil = new \dokuwiki\StyleUtils();
-        $styleIni = $styleUtil->cssStyleini($conf['template']);
+        $styleIni = $styleUtil->cssStyleini();
         $replacements = $styleIni['replacements'];
 
         if (empty($manifest['background_color'])) {
