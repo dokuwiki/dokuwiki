@@ -1,5 +1,8 @@
 <?php
+
 /**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * Icelandic language file
  *
  * @author Hrannar Baldursson <hrannar.baldursson@gmail.com>
@@ -13,24 +16,24 @@ $lang['nochoice']              = '(engir aðrir valmöguleikar fyrir hendi)';
 $lang['_display']              = 'Skjástillingar';
 $lang['_anti_spam']            = 'Stillingar gegn ruslpósti';
 $lang['_editing']              = 'Útgáfastillingar';
-$lang['lang']                  = 'Tungumál';
 $lang['title']                 = 'Heiti wikis';
+$lang['lang']                  = 'Tungumál';
 $lang['template']              = 'Mát';
 $lang['recent']                = 'Nýlegar breytingar';
 $lang['breadcrumbs']           = 'Fjöldi brauðmolar';
 $lang['youarehere']            = 'Stigveldisá brauðmolar';
 $lang['typography']            = 'Gera stað fyrir leturgerðir';
-$lang['htmlok']                = 'Fella HTML inn';
-$lang['phpok']                 = 'Fella PHP inn';
 $lang['dformat']               = 'Dagsetningarsnið (sjá PHP-aðgerð <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Undirskrift';
 $lang['passcrypt']             = 'Dulritunaraðferð aðgangsorðs';
 $lang['defaultgroup']          = 'Sjálfgefinn hópur';
 $lang['superuser']             = 'Hópur kerfisstjóra ';
 $lang['profileconfirm']        = 'Staðfestu breytingar með aðgangsorði';
-$lang['mailfrom']              = 'Rafpóstfang fyrir sjálfvirkar póstsendingar';
+$lang['htmlok']                = 'Fella HTML inn';
+$lang['phpok']                 = 'Fella PHP inn';
 $lang['gdlib']                 = 'Útgáfa af GD Lib';
 $lang['jpg_quality']           = 'JPG gæðastilling (0-100)';
+$lang['mailfrom']              = 'Rafpóstfang fyrir sjálfvirkar póstsendingar';
 $lang['proxy____host']         = 'Heiti staðgengilsþjóns';
 $lang['proxy____port']         = 'Staðgengilstengi';
 $lang['proxy____user']         = 'Staðgengill notendanafn';
