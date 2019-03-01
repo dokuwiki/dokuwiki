@@ -147,6 +147,15 @@ function auth_loadACL() {
             $rest = str_replace('%USER%',auth_nameencode($INPUT->server->str('REMOTE_USER')),$rest);
         }
 
+        // substitute user NAME wildcard 
+        if(strstr($line, '%NAME%')){
+            // if user is not logged in, this ACL line is meaningless - skip it
+            if (!$INPUT->server->has('REMOTE_USER')) continue;
+
+            $id   = str_replace('%USER%',cleanID($USERINFO['name']),$id);
+        }
+
+        
         // substitute group wildcard (its 1:m)
         if(strstr($line, '%GROUP%')){
             // if user is not logged in, grps is empty, no output will be added (i.e. skipped)
