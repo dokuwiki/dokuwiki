@@ -45,10 +45,10 @@ require_once(DOKU_INC.'inc/init.php');
 <body>
 <?php
 // get merged style.ini
-$styleUtils = new \dokuwiki\StyleUtils();
-$ini = $styleUtils->cssStyleini($conf['template']);
+$styleUtils = new \dokuwiki\StyleUtils($conf['template']);
+$ini = $styleUtils->cssStyleini();
 
-if ($ini) {
+if (!empty($ini)) {
     echo '<table>';
     echo "<caption>".hsc($conf['template'])."'s style.ini</caption>";
     foreach($ini['replacements'] as $key => $val){
