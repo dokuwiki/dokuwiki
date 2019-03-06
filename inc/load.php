@@ -73,7 +73,6 @@ function load_autoload($name){
         'Doku_Plugin_Controller'=> DOKU_INC.'inc/plugincontroller.class.php',
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
         'Sitemapper'            => DOKU_INC.'inc/Sitemapper.php',
-        'PassHash'              => DOKU_INC.'inc/PassHash.class.php',
         'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
         'Subscription'          => DOKU_INC.'inc/subscription.php',
 

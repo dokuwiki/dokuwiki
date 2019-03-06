@@ -102,7 +102,7 @@ function getSecurityToken() {
 
     // CSRF checks are only for logged in users - do not generate for anonymous
     if(trim($user) == '' || trim($session) == '') return '';
-    return PassHash::hmac('md5', $session.$user, auth_cookiesalt());
+    return \dokuwiki\PassHash::hmac('md5', $session.$user, auth_cookiesalt());
 }
 
 /**

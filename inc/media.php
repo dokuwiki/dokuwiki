@@ -2173,7 +2173,7 @@ function media_get_token($id,$w,$h){
         if ($w) $token .= '.'.$w;
         if ($h) $token .= '.'.$h;
 
-        return substr(PassHash::hmac('md5', $token, auth_cookiesalt()),0,6);
+        return substr(\dokuwiki\PassHash::hmac('md5', $token, auth_cookiesalt()),0,6);
     }
 
     return '';

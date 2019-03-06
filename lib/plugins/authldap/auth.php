@@ -358,7 +358,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
         }
 
         // Generate the salted hashed password for LDAP
-        $phash = new PassHash();
+        $phash = new \dokuwiki\PassHash();
         $hash = $phash->hash_ssha($changes['pass']);
 
         // change the password

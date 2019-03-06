@@ -10,6 +10,8 @@
  */
 
 // some ACL level defines
+use dokuwiki\PassHash;
+
 define('AUTH_NONE', 0);
 define('AUTH_READ', 1);
 define('AUTH_EDIT', 2);

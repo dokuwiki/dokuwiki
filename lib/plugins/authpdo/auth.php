@@ -175,7 +175,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
         // we do password checking on our own
         if (isset($userdata['hash'])) {
             // hashed password
-            $passhash = new PassHash();
+            $passhash = new \dokuwiki\PassHash();
             return $passhash->verify_hash($pass, $userdata['hash']);
         } else {
             // clear text password in the database O_o

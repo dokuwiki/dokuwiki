@@ -1,4 +1,8 @@
 <?php
+// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
+
+namespace dokuwiki;
+
 /**
  * Password Hashing Class
  *
@@ -72,7 +76,7 @@ class PassHash {
         } elseif(preg_match('/^\$6\$(rounds=\d+)?\$?(.+?)\$/', $hash, $m)) {
             $method = 'sha512';
             $salt   = $m[2];
-			$magic  = $m[1];
+            $magic  = $m[1];
         } elseif($len == 32) {
             $method = 'md5';
         } elseif($len == 40) {
@@ -354,7 +358,7 @@ class PassHash {
      * @param string $salt    The salt to use, null for random
      * @param string $magic   The hash identifier (P or H)
      * @param int    $compute The iteration count for new passwords
-     * @throws Exception
+     * @throws \Exception
      * @return string Hashed password
      */
     public function hash_pmd5($clear, $salt = null, $magic = 'P', $compute = 8) {
@@ -367,7 +371,7 @@ class PassHash {
         $iter  = strpos($itoa64, $iterc);
 
         if($iter > 30) {
-            throw new Exception("Too high iteration count ($iter) in ".
+            throw new \Exception("Too high iteration count ($iter) in ".
                                     __CLASS__.'::'.__FUNCTION__);
         }
 
@@ -412,6 +416,7 @@ class PassHash {
      * @param int $compute
      *
      * @return string
+     * @throws \Exception
      */
     public function hash_hmd5($clear, $salt = null, $magic = 'H', $compute = 8) {
         return $this->hash_pmd5($clear, $salt, $magic, $compute);
@@ -461,7 +466,7 @@ class PassHash {
      * @param string $salt  The salt to use, null for random
      * @param array $opts ('algo' => hash algorithm, 'iter' => iterations)
      * @return string Hashed password
-     * @throws Exception when PHP is missing support for the method/algo
+     * @throws \Exception when PHP is missing support for the method/algo
      */
     public function hash_djangopbkdf2($clear, $salt=null, $opts=array()) {
         $this->init_salt($salt, 12);
@@ -476,10 +481,10 @@ class PassHash {
             $iter = (int) $opts['iter'];
         }
         if(!function_exists('hash_pbkdf2')) {
-            throw new Exception('This PHP installation has no PBKDF2 support');
+            throw new \Exception('This PHP installation has no PBKDF2 support');
         }
         if(!in_array($algo, hash_algos())) {
-            throw new Exception("This PHP installation has no $algo support");
+            throw new \Exception("This PHP installation has no $algo support");
         }
 
         $hash = base64_encode(hash_pbkdf2($algo, $clear, $salt, $iter, 0, true));
@@ -493,7 +498,7 @@ class PassHash {
      * @param string $salt  The salt to use, null for random
      * @param array $opts ('iter' => iterations)
      * @return string Hashed password
-     * @throws Exception when PHP is missing support for the method/algo
+     * @throws \Exception when PHP is missing support for the method/algo
      */
     public function hash_djangopbkdf2_sha256($clear, $salt=null, $opts=array()) {
         $opts['algo'] = 'sha256';
@@ -507,7 +512,7 @@ class PassHash {
      * @param string $salt  The salt to use, null for random
      * @param array $opts ('iter' => iterations)
      * @return string Hashed password
-     * @throws Exception when PHP is missing support for the method/algo
+     * @throws \Exception when PHP is missing support for the method/algo
      */
     public function hash_djangopbkdf2_sha1($clear, $salt=null, $opts=array()) {
         $opts['algo'] = 'sha1';
@@ -528,12 +533,12 @@ class PassHash {
      * @param string $clear   The clear text to hash
      * @param string $salt    The salt to use, null for random
      * @param int    $compute The iteration count (between 4 and 31)
-     * @throws Exception
+     * @throws \Exception
      * @return string Hashed password
      */
     public function hash_bcrypt($clear, $salt = null, $compute = 10) {
         if(!defined('CRYPT_BLOWFISH') || CRYPT_BLOWFISH != 1) {
-            throw new Exception('This PHP installation has no bcrypt support');
+            throw new \Exception('This PHP installation has no bcrypt support');
         }
 
         if(is_null($salt)) {
@@ -553,20 +558,20 @@ class PassHash {
      *
      * @param string $clear The clear text to hash
      * @param string $salt  The salt to use, null for random
-	 * @param string $magic The rounds for sha512 (for example "rounds=3000"), null for default value
+     * @param string $magic The rounds for sha512 (for example "rounds=3000"), null for default value
      * @return string Hashed password
-     * @throws Exception
+     * @throws \Exception
      */
     public function hash_sha512($clear, $salt = null, $magic = null) {
         if(!defined('CRYPT_SHA512') || CRYPT_SHA512 != 1) {
-            throw new Exception('This PHP installation has no SHA512 support');
+            throw new \Exception('This PHP installation has no SHA512 support');
         }
         $this->init_salt($salt, 8, false);
-		if(empty($magic)) {
-			return crypt($clear, '$6$'.$salt.'$');
-		}else{
-			return crypt($clear, '$6$'.$magic.'$'.$salt.'$');
-		}
+        if(empty($magic)) {
+            return crypt($clear, '$6$'.$salt.'$');
+        }else{
+            return crypt($clear, '$6$'.$magic.'$'.$salt.'$');
+        }
     }
 
     /**
@@ -633,13 +638,19 @@ class PassHash {
     }
 
     /**
-     * Use DokuWiki's secure random generator if available
+     * Use a secure random generator
      *
      * @param int $min
      * @param int $max
      * @return int
      */
     protected function random($min, $max){
-        return random_int($min, $max);
+        try {
+            return random_int($min, $max);
+        } catch (\Exception $e) {
+            // availability of random source is checked elsewhere in DokuWiki
+            // we demote this to an unchecked runtime exception here
+            throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 }

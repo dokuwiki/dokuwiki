@@ -251,3 +251,18 @@ class ServerInput extends \dokuwiki\Input\Server {
         parent::__construct();
     }
 }
+
+/**
+ * @inheritdoc
+ * @deprecated 2019-03-06
+ */
+class PassHash extends \dokuwiki\PassHash {
+    /**
+     * @inheritdoc
+     * @deprecated 2019-03-06
+     */
+    public function __construct()
+    {
+        dbg_deprecated(\dokuwiki\PassHash::class);
+    }
+}
