@@ -15,3 +15,4 @@ $lang['expirywarn']         = 'Days in advance to warn user about expiring passw
 $lang['additional']         = 'A comma separated list of additional AD attributes to fetch from user data. Used by some plugins.';
 $lang['update_name']        = 'Allow users to update their AD display name?';
 $lang['update_mail']        = 'Allow users to update their email address?';
+$lang['recursive_groups']   = 'Resolve nested groups to their respective members (slower).';
