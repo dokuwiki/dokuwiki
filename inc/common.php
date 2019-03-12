@@ -2038,7 +2038,11 @@ function set_doku_pref($pref, $val) {
 
     if (!empty($cookieVal)) {
         $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
-        setcookie('DOKU_PREFS', $cookieVal, time()+365*24*3600, $cookieDir, '', ($conf['securecookie'] && is_ssl()));
+        if(defined('DOKU_UNITTEST')) {
+            $_COOKIE['DOKU_PREFS'] = $cookieVal;
+        }else{
+            setcookie('DOKU_PREFS', $cookieVal, time()+365*24*3600, $cookieDir, '', ($conf['securecookie'] && is_ssl()));
+        }
     }
 }
 
