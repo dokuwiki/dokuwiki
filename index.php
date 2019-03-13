@@ -14,8 +14,10 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 if(php_sapi_name() != 'cli-server') {
-    header("Location: doku.php");
-    exit;
+    if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/');
+    require_once(DOKU_INC.'inc/init.php');
+
+    send_redirect(DOKU_URL.'doku.php');
 }
 
 # ROUTER starts below
