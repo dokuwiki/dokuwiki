@@ -20,9 +20,9 @@ error_reporting(DOKU_E_LEVEL);
 set_time_limit(0);
 ini_set('memory_limit','2048M');
 
-// prepare temporary directories
-define('DOKU_INC', dirname(dirname(__FILE__)).'/');
-define('TMP_DIR', sys_get_temp_dir().'/dwtests-'.microtime(true));
+// prepare temporary directories; str_replace is for WIN
+define('DOKU_INC', str_replace('\\', '/', dirname(dirname(__FILE__))) . '/');
+define('TMP_DIR', str_replace('\\', '/', sys_get_temp_dir()) . '/dwtests-'.microtime(true));
 define('DOKU_CONF', TMP_DIR.'/conf/');
 define('DOKU_TMP_DATA', TMP_DIR.'/data/');
 
