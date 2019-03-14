@@ -38,6 +38,15 @@ class common_wl_test extends DokuWikiTest {
         $this->assertEquals($expect, wl('some'));
     }
 
+    function test_wl_id_zero() {
+        global $conf;
+        $conf['useslash'] = 0;
+        $conf['userewrite'] = 0;
+
+        $expect = DOKU_BASE . DOKU_SCRIPT . '?id=0';
+        $this->assertEquals($expect, wl('0'));
+    }
+
     function test_wl_id_ns() {
         global $conf;
         $conf['useslash'] = 0;
@@ -142,7 +151,7 @@ class common_wl_test extends DokuWikiTest {
         $expect = DOKU_BASE . DOKU_SCRIPT . '/some/one?a=b&c=d';
         $this->assertEquals($expect, wl('some:one', 'a=b,c=d', false, '&'));
     }
-    
+
     function test_wl_empty_rev() {
         global $conf;
         $conf['useslash'] = 0;
