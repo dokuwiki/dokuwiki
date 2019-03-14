@@ -506,7 +506,7 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
     } elseif($conf['userewrite']) {
         $xlink .= $id;
         if($urlParameters) $xlink .= '?'.$urlParameters;
-    } elseif($id) {
+    } elseif($id !== '') {
         $xlink .= DOKU_SCRIPT.'?id='.$id;
         if($urlParameters) $xlink .= $separator.$urlParameters;
     } else {

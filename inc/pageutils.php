@@ -89,9 +89,8 @@ function getID($param='id',$clean=true){
             send_redirect(wl($id, $urlParameters, true, '&'));
         }
     }
-
     if($clean) $id = cleanID($id);
-    if(empty($id) && $param=='id') $id = $conf['start'];
+    if($id === '' && $param=='id') $id = $conf['start'];
 
     return $id;
 }
