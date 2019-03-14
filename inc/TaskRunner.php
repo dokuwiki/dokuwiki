@@ -188,7 +188,7 @@ class TaskRunner
         global $conf;
         print 'runIndexer(): started' . NL;
 
-        if (!$ID) {
+        if ((string) $ID === '') {
             return false;
         }
 
