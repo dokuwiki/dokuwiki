@@ -758,7 +758,7 @@ function utf8_decodeFN($file){
  * @return false|string the full page id of the found page, false if any
  */
 function page_findnearest($page, $useacl = true){
-    if (!$page) return false;
+    if ((string) $page === '') return false;
     global $ID;
 
     $ns = $ID;
@@ -768,7 +768,7 @@ function page_findnearest($page, $useacl = true){
         if(page_exists($pageid) && (!$useacl || auth_quickaclcheck($pageid) >= AUTH_READ)){
             return $pageid;
         }
-    } while($ns);
+    } while($ns !== false);
 
     return false;
 }
