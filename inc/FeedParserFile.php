@@ -2,6 +2,8 @@
 
 namespace dokuwiki;
 
+use dokuwiki\HTTPClient\DokuHTTPClient;
+
 /**
  * Fetch an URL using our own HTTPClient
  *
@@ -28,7 +30,7 @@ class FeedParserFile extends \SimplePie_File
         $force_fsockopen = false,
         $curl_options = array()
     ) {
-        $this->http = new \DokuHTTPClient();
+        $this->http = new DokuHTTPClient();
         $this->success = $this->http->sendRequest($url);
 
         $this->headers = $this->http->resp_headers;

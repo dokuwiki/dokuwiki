@@ -8,6 +8,8 @@
 
 namespace dokuwiki\Sitemap;
 
+use dokuwiki\HTTPClient\DokuHTTPClient;
+
 /**
  * A class for building sitemaps and pinging search engines with the sitemap URL.
  *
@@ -132,7 +134,7 @@ class Mapper {
      */
     public static function pingSearchEngines() {
         //ping search engines...
-        $http = new \DokuHTTPClient();
+        $http = new DokuHTTPClient();
         $http->timeout = 8;
 
         $encoded_sitemap_url = urlencode(wl('', array('do' => 'sitemap'), true, '&'));

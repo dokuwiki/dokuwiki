@@ -1,4 +1,7 @@
 <?php
+
+use dokuwiki\HTTPClient\HTTPClient;
+
 /**
  * Class HTTPMockClient
  *

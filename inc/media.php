@@ -7,6 +7,7 @@
  */
 
 use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\HTTPClient\DokuHTTPClient;
 
 /**
  * Lists pages which currently use a media file selected for deletion

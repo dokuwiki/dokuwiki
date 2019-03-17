@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\HTTPClient\HTTPClient;
+
 /**
  * Extends the mailer class to expose internal variables for testing
  */

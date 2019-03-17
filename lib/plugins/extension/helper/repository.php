@@ -7,6 +7,7 @@
  */
 
 use dokuwiki\Cache\Cache;
+use dokuwiki\HTTPClient\DokuHTTPClient;
 
 /**
  * Class helper_plugin_extension_repository provides access to the extension repository on dokuwiki.org

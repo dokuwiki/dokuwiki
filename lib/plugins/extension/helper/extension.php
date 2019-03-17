@@ -6,6 +6,8 @@
  * @author  Michael Hamann <michael@content-space.de>
  */
 
+use dokuwiki\HTTPClient\DokuHTTPClient;
+
 /**
  * Class helper_plugin_extension_extension represents a single extension (plugin or template)
  */
