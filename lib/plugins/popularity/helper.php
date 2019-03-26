@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\HTTPClient\DokuHTTPClient;
+use dokuwiki\HTTP\DokuHTTPClient;
 
 /**
  * Popularity Feedback Plugin

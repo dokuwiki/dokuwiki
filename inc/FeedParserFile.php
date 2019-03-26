@@ -2,7 +2,7 @@
 
 namespace dokuwiki;
 
-use dokuwiki\HTTPClient\DokuHTTPClient;
+use dokuwiki\HTTP\DokuHTTPClient;
 
 /**
  * Fetch an URL using our own HTTPClient

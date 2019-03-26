@@ -1,7 +1,7 @@
 <?php
 
 
-namespace dokuwiki\HTTPClient;
+namespace dokuwiki\HTTP;
 
 
 

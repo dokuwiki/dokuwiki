@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\HTTPClient;
+namespace dokuwiki\HTTP;
 
 use Exception;
 

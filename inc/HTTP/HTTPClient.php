@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\HTTPClient;
+namespace dokuwiki\HTTP;
 
 define('HTTP_NL',"\r\n");
 

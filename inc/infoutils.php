@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\HTTPClient\DokuHTTPClient;
+use dokuwiki\HTTP\DokuHTTPClient;
 
 if(!defined('DOKU_MESSAGEURL')){
     if(in_array('ssl', stream_get_transports())) {

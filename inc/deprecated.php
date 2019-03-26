@@ -268,9 +268,9 @@ class PassHash extends \dokuwiki\PassHash {
 }
 
 /**
- * @deprecated since 2019-03-17 use \dokuwiki\HTTPClient\HTTPClientException instead!
+ * @deprecated since 2019-03-17 use \dokuwiki\HTTP\HTTPClientException instead!
  */
-class HTTPClientException extends \dokuwiki\HTTPClient\HTTPClientException {
+class HTTPClientException extends \dokuwiki\HTTP\HTTPClientException {
 
     /**
      * @inheritdoc
@@ -278,15 +278,15 @@ class HTTPClientException extends \dokuwiki\HTTPClient\HTTPClientException {
      */
     public function __construct($message = '', $code = 0, $previous = null)
     {
-        DebugHelper::dbgDeprecatedFunction(dokuwiki\HTTPClient\HTTPClientException::class);
+        DebugHelper::dbgDeprecatedFunction(dokuwiki\HTTP\HTTPClientException::class);
         parent::__construct($message, $code, $previous);
     }
 }
 
 /**
- * @deprecated since 2019-03-17 use \dokuwiki\HTTPClient\HTTPClient instead!
+ * @deprecated since 2019-03-17 use \dokuwiki\HTTP\HTTPClient instead!
  */
-class HTTPClient extends \dokuwiki\HTTPClient\HTTPClient {
+class HTTPClient extends \dokuwiki\HTTP\HTTPClient {
 
     /**
      * @inheritdoc
@@ -294,15 +294,15 @@ class HTTPClient extends \dokuwiki\HTTPClient\HTTPClient {
      */
     public function __construct()
     {
-        DebugHelper::dbgDeprecatedFunction(dokuwiki\HTTPClient\HTTPClient::class);
+        DebugHelper::dbgDeprecatedFunction(dokuwiki\HTTP\HTTPClient::class);
         parent::__construct();
     }
 }
 
 /**
- * @deprecated since 2019-03-17 use \dokuwiki\HTTPClient\DokuHTTPClient instead!
+ * @deprecated since 2019-03-17 use \dokuwiki\HTTP\DokuHTTPClient instead!
  */
-class DokuHTTPClient extends \dokuwiki\HTTPClient\DokuHTTPClient {
+class DokuHTTPClient extends \dokuwiki\HTTP\DokuHTTPClient {
 
     /**
      * @inheritdoc
@@ -310,7 +310,7 @@ class DokuHTTPClient extends \dokuwiki\HTTPClient\DokuHTTPClient {
      */
     public function __construct()
     {
-        DebugHelper::dbgDeprecatedFunction(dokuwiki\HTTPClient\DokuHTTPClient::class);
+        DebugHelper::dbgDeprecatedFunction(dokuwiki\HTTP\DokuHTTPClient::class);
         parent::__construct();
     }
 

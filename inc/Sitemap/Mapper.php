@@ -8,7 +8,7 @@
 
 namespace dokuwiki\Sitemap;
 
-use dokuwiki\HTTPClient\DokuHTTPClient;
+use dokuwiki\HTTP\DokuHTTPClient;
 
 /**
  * A class for building sitemaps and pinging search engines with the sitemap URL.

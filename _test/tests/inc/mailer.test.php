@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\HTTPClient\HTTPClient;
+use dokuwiki\HTTP\HTTPClient;
 
 /**
  * Extends the mailer class to expose internal variables for testing
