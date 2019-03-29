@@ -319,6 +319,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
                     $status .= 'd';
                 }
             } else {
+                $ecolor = null;
                 $date = $ext->getLastUpdate();
                 $vcolor = null;
             }
