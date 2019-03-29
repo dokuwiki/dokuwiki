@@ -49,7 +49,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
         /* @var helper_plugin_extension_repository $repository */
         $repository = $this->loadHelper('extension_repository');
 
-        if(!$repository->hasAccess()) {
+        if(!$repository->hasAccess(!$INPUT->bool('purge'))) {
             $url = $this->gui->tabURL('', array('purge' => 1));
             msg($this->getLang('repo_error').' [<a href="'.$url.'">'.$this->getLang('repo_retry').'</a>]', -1);
         }

@@ -59,13 +59,14 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin {
     /**
      * If repository access is available
      *
+     * @param bool $usecache use cached result if still valid
      * @return bool If repository access is available
      */
-    public function hasAccess() {
+    public function hasAccess($usecache = true) {
         if ($this->has_access === null) {
             $cache = new cache('##extension_manager###hasAccess', '.repo');
 
-            if (!$cache->useCache(array('age' => 3600 * 24, 'purge'=>1))) {
+            if (!$cache->useCache(array('age' => 60*10, 'purge' => !$usecache))) {
                 $httpclient = new DokuHTTPClient();
                 $httpclient->timeout = 5;
                 $data = $httpclient->get(EXTENSION_REPOSITORY_API.'?cmd=ping');
