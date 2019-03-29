@@ -53,6 +53,12 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
     /** @inheritdoc */
     protected function main(\splitbrain\phpcli\Options $options)
     {
+        /** @var helper_plugin_extension_repository $repo */
+        $repo = plugin_load('helper', 'extension_repository');
+        if(!$repo->hasAccess(false)) {
+            $this->warning('Extension Repository API is not accessible, no remote info available!');
+        }
+
         switch ($options->getCmd()) {
             case 'list':
                 $ret = $this->cmdList($options->getOpt('verbose'));
