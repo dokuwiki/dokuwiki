@@ -306,16 +306,21 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
                 $avail = $ext->getLastUpdate();
                 $status = 'i';
                 if ($avail && $avail > $date) {
-                    $color = Colors::C_RED;
+                    $vcolor = Colors::C_RED;
                 } else {
-                    $color = Colors::C_GREEN;
+                    $vcolor = Colors::C_GREEN;
                 }
                 if ($ext->isGitControlled()) $status = 'g';
                 if ($ext->isBundled()) $status = 'b';
-                if (!$ext->isEnabled()) $status .= 'd';
+                if ($ext->isEnabled()) {
+                    $ecolor = Colors::C_BROWN;
+                } else {
+                    $ecolor = Colors::C_DARKGRAY;
+                    $status .= 'd';
+                }
             } else {
                 $date = $ext->getLastUpdate();
-                $color = null;
+                $vcolor = null;
             }
 
 
@@ -332,9 +337,9 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
                     )
                 ],
                 [
-                    Colors::C_BROWN,
+                    $ecolor,
                     Colors::C_YELLOW,
-                    $color,
+                    $vcolor,
                     null,
                 ]
             );
