@@ -320,6 +320,9 @@ function check_data(&$d){
                 $error[] = sprintf($lang['i_badval'],$lang['email']);
                 $ok      = false;
             }
+        }else{
+            // Since default = 1, browser won't send acl=0 when user untick acl
+            $d['acl'] = '0';
         }
     }
     $d = array_merge($form_default, $d);

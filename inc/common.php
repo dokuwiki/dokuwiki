@@ -510,7 +510,7 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
     } elseif($conf['userewrite']) {
         $xlink .= $id;
         if($urlParameters) $xlink .= '?'.$urlParameters;
-    } elseif($id) {
+    } elseif($id !== '') {
         $xlink .= DOKU_SCRIPT.'?id='.$id;
         if($urlParameters) $xlink .= $separator.$urlParameters;
     } else {
@@ -2033,7 +2033,10 @@ function get_doku_pref($pref, $default) {
     if(isset($_COOKIE['DOKU_PREFS']) && strpos($_COOKIE['DOKU_PREFS'], $enc_pref) !== false) {
         $parts = explode('#', $_COOKIE['DOKU_PREFS']);
         $cnt   = count($parts);
-        for($i = 0; $i < $cnt; $i += 2) {
+
+        // due to #2721 there might be duplicate entries,
+        // so we read from the end
+        for($i = $cnt-2; $i >= 0; $i -= 2) {
             if($parts[$i] == $enc_pref) {
                 return urldecode($parts[$i + 1]);
             }
@@ -2055,30 +2058,39 @@ function set_doku_pref($pref, $val) {
     $orig = get_doku_pref($pref, false);
     $cookieVal = '';
 
-    if($orig && ($orig != $val)) {
+    if($orig !== false && ($orig !== $val)) {
         $parts = explode('#', $_COOKIE['DOKU_PREFS']);
         $cnt   = count($parts);
         // urlencode $pref for the comparison
         $enc_pref = rawurlencode($pref);
-        for($i = 0; $i < $cnt; $i += 2) {
-            if($parts[$i] == $enc_pref) {
-                if ($val !== false) {
-                    $parts[$i + 1] = rawurlencode($val);
+        $seen = false;
+        for ($i = 0; $i < $cnt; $i += 2) {
+            if ($parts[$i] == $enc_pref) {
+                if (!$seen){
+                    if ($val !== false) {
+                        $parts[$i + 1] = rawurlencode($val);
+                    } else {
+                        unset($parts[$i]);
+                        unset($parts[$i + 1]);
+                    }
+                    $seen = true;
                 } else {
+                    // no break because we want to remove duplicate entries
                     unset($parts[$i]);
                     unset($parts[$i + 1]);
                 }
-                break;
             }
         }
         $cookieVal = implode('#', $parts);
-    } else if (!$orig && $val !== false) {
-        $cookieVal = ($_COOKIE['DOKU_PREFS'] ? $_COOKIE['DOKU_PREFS'].'#' : '').
-            rawurlencode($pref).'#'.rawurlencode($val);
+    } else if ($orig === false && $val !== false) {
+        $cookieVal = ($_COOKIE['DOKU_PREFS'] ? $_COOKIE['DOKU_PREFS'] . '#' : '') .
+            rawurlencode($pref) . '#' . rawurlencode($val);
     }
 
-    if (!empty($cookieVal)) {
-        $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
+    $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
+    if(defined('DOKU_UNITTEST')) {
+        $_COOKIE['DOKU_PREFS'] = $cookieVal;
+    }else{
         setcookie('DOKU_PREFS', $cookieVal, time()+365*24*3600, $cookieDir, '', ($conf['securecookie'] && is_ssl()));
     }
 }

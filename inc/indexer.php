@@ -293,7 +293,7 @@ class Doku_Indexer {
             if (!is_array($values)) $values = array($values);
 
             $val_idx = $this->getIndexKey($metaname.'_p', '', $pid);
-            if ($val_idx != '') {
+            if ($val_idx !== '') {
                 $val_idx = explode(':', $val_idx);
                 // -1 means remove, 0 keep, 1 add
                 $val_idx = array_combine($val_idx, array_fill(0, count($val_idx), -1));
@@ -1284,7 +1284,7 @@ class Doku_Indexer {
             list($key, $cnt) = explode('*', $tuple);
             if (!$cnt) continue;
             $key = $keys[$key];
-            if (!$key) continue;
+            if ($key === false || is_null($key)) continue;
             $result[$key] = $cnt;
         }
         return $result;

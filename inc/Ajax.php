@@ -414,7 +414,7 @@ class Ajax {
         foreach($data as $item) {
             $even *= -1; //zebra
 
-            if(($item['type'] == 'd' || $item['type'] == 'u') && $item['id']) $item['id'] .= ':';
+            if(($item['type'] == 'd' || $item['type'] == 'u') && $item['id'] !== '') $item['id'] .= ':';
             $link = wl($item['id']);
 
             echo '<div class="' . (($even > 0) ? 'even' : 'odd') . ' type_' . $item['type'] . '">';

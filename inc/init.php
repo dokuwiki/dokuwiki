@@ -108,11 +108,11 @@ if(!defined('DOKU_LF')) define ('DOKU_LF',"\n");
 if(!defined('DOKU_TAB')) define ('DOKU_TAB',"\t");
 
 // define cookie and session id, append server port when securecookie is configured FS#1664
-if(!defined('DOKU_COOKIE')) define(
-    'DOKU_COOKIE',
-    'DW' . md5(DOKU_REL . (($conf['securecookie']) ? $_SERVER['SERVER_PORT'] : ''))
-);
-
+if (!defined('DOKU_COOKIE')) {
+    $serverPort = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : '';
+    define('DOKU_COOKIE', 'DW' . md5(DOKU_REL . (($conf['securecookie']) ? $serverPort : '')));
+    unset($serverPort);
+}
 
 // define main script
 if(!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT','doku.php');
@@ -143,7 +143,8 @@ if(!defined('DOKU_TPLINC')) {
 @ini_set('pcre.backtrack_limit', '20971520');
 
 // enable gzip compression if supported
-$conf['gzip_output'] &= (strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip') !== false);
+$httpAcceptEncoding = isset($_SERVER['HTTP_ACCEPT_ENCODING']) ? $_SERVER['HTTP_ACCEPT_ENCODING'] : '';
+$conf['gzip_output'] &= (strpos($httpAcceptEncoding, 'gzip') !== false);
 global $ACT;
 if ($conf['gzip_output'] &&
         !defined('DOKU_DISABLE_GZIP_OUTPUT') &&

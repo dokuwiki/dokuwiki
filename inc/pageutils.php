@@ -92,9 +92,8 @@ function getID($param='id',$clean=true){
             send_redirect(wl($id, $urlParameters, true, '&'));
         }
     }
-
     if($clean) $id = cleanID($id);
-    if(empty($id) && $param=='id') $id = $conf['start'];
+    if($id === '' && $param=='id') $id = $conf['start'];
 
     return $id;
 }
@@ -762,7 +761,7 @@ function utf8_decodeFN($file){
  * @return false|string the full page id of the found page, false if any
  */
 function page_findnearest($page, $useacl = true){
-    if (!$page) return false;
+    if ((string) $page === '') return false;
     global $ID;
 
     $ns = $ID;
@@ -772,7 +771,7 @@ function page_findnearest($page, $useacl = true){
         if(page_exists($pageid) && (!$useacl || auth_quickaclcheck($pageid) >= AUTH_READ)){
             return $pageid;
         }
-    } while($ns);
+    } while($ns !== false);
 
     return false;
 }

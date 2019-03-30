@@ -190,7 +190,7 @@ class TaskRunner
         global $ID;
         print 'runIndexer(): started' . NL;
 
-        if (!$ID) {
+        if ((string) $ID === '') {
             return false;
         }
 
