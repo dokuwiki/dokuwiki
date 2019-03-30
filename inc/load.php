@@ -52,8 +52,6 @@ require_once(DOKU_INC.'inc/deprecated.php');
 function load_autoload($name){
     static $classes = null;
     if(is_null($classes)) $classes = array(
-        'DokuHTTPClient'        => DOKU_INC.'inc/HTTPClient.php',
-        'HTTPClient'            => DOKU_INC.'inc/HTTPClient.php',
         'Diff'                  => DOKU_INC.'inc/DifferenceEngine.php',
         'UnifiedDiffFormatter'  => DOKU_INC.'inc/DifferenceEngine.php',
         'TableDiffFormatter'    => DOKU_INC.'inc/DifferenceEngine.php',

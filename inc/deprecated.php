@@ -266,3 +266,52 @@ class PassHash extends \dokuwiki\PassHash {
         dbg_deprecated(\dokuwiki\PassHash::class);
     }
 }
+
+/**
+ * @deprecated since 2019-03-17 use \dokuwiki\HTTP\HTTPClientException instead!
+ */
+class HTTPClientException extends \dokuwiki\HTTP\HTTPClientException {
+
+    /**
+     * @inheritdoc
+     * @deprecated 2019-03-17
+     */
+    public function __construct($message = '', $code = 0, $previous = null)
+    {
+        DebugHelper::dbgDeprecatedFunction(dokuwiki\HTTP\HTTPClientException::class);
+        parent::__construct($message, $code, $previous);
+    }
+}
+
+/**
+ * @deprecated since 2019-03-17 use \dokuwiki\HTTP\HTTPClient instead!
+ */
+class HTTPClient extends \dokuwiki\HTTP\HTTPClient {
+
+    /**
+     * @inheritdoc
+     * @deprecated 2019-03-17
+     */
+    public function __construct()
+    {
+        DebugHelper::dbgDeprecatedFunction(dokuwiki\HTTP\HTTPClient::class);
+        parent::__construct();
+    }
+}
+
+/**
+ * @deprecated since 2019-03-17 use \dokuwiki\HTTP\DokuHTTPClient instead!
+ */
+class DokuHTTPClient extends \dokuwiki\HTTP\DokuHTTPClient {
+
+    /**
+     * @inheritdoc
+     * @deprecated 2019-03-17
+     */
+    public function __construct()
+    {
+        DebugHelper::dbgDeprecatedFunction(dokuwiki\HTTP\DokuHTTPClient::class);
+        parent::__construct();
+    }
+
+}

@@ -315,7 +315,7 @@ class httpclient_http_test extends DokuWikiTest {
         );
         $this->assertEquals(
             '%C3%B6%C3%A4%3F=%C3%B6%C3%A4%3F&foo=bang',
-            $this->callInaccessibleMethod($http, '_postEncode', [$data]),
+            $this->callInaccessibleMethod($http, 'postEncode', [$data]),
             'simple'
         );
 
@@ -326,7 +326,7 @@ class httpclient_http_test extends DokuWikiTest {
         );
         $this->assertEquals(
             'foo=bang&%C3%A4rr%5B0%5D=%C3%B6&%C3%A4rr%5B1%5D=b&%C3%A4rr%5B2%5D=c',
-            $this->callInaccessibleMethod($http, '_postEncode', [$data]),
+            $this->callInaccessibleMethod($http, 'postEncode', [$data]),
             'onelevelnum'
         );
 
@@ -337,7 +337,7 @@ class httpclient_http_test extends DokuWikiTest {
         );
         $this->assertEquals(
             'foo=bang&%C3%A4rr%5B%C3%B6%5D=%C3%A4&%C3%A4rr%5Bb%5D=c',
-            $this->callInaccessibleMethod($http, '_postEncode', [$data]),
+            $this->callInaccessibleMethod($http, 'postEncode', [$data]),
             'onelevelassoc'
         );
 
@@ -349,7 +349,7 @@ class httpclient_http_test extends DokuWikiTest {
         );
         $this->assertEquals(
             'foo=bang&%C3%A4rr%5B%C3%B6%5D=%C3%A4&%C3%A4rr%5B%C3%A4%5D%5B%C3%B6%5D=%C3%A4',
-            $this->callInaccessibleMethod($http, '_postEncode', [$data]),
+            $this->callInaccessibleMethod($http, 'postEncode', [$data]),
             'twolevelassoc'
         );
     }

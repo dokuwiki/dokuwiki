@@ -6,6 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\HTTP\DokuHTTPClient;
+
 /**
  * Removes empty directories
  *
