@@ -1690,22 +1690,27 @@ function php_to_byte($v) {
     $ret = substr($v, 0, -1);
     switch(strtoupper($l)) {
         /** @noinspection PhpMissingBreakStatementInspection */
+        // no-break
         case 'P':
             $ret *= 1024;
         /** @noinspection PhpMissingBreakStatementInspection */
+        // no-break
         case 'T':
             $ret *= 1024;
         /** @noinspection PhpMissingBreakStatementInspection */
+        // no-break
         case 'G':
             $ret *= 1024;
         /** @noinspection PhpMissingBreakStatementInspection */
+        // no-break
         case 'M':
             $ret *= 1024;
         /** @noinspection PhpMissingBreakStatementInspection */
+        // no-break
         case 'K':
             $ret *= 1024;
             break;
-        default;
+        default:
             $ret *= 10;
             break;
     }
