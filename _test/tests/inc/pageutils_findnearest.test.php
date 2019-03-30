@@ -36,6 +36,25 @@ class pageutils_findnearest_test extends DokuWikiTest {
         $this->assertEquals(false, $sidebar);
     }
 
+    function testZeroID() {
+        global $ID;
+
+        saveWikiText('sidebar', 'topsidebar-test', '');
+        saveWikiText('0', 'zero-test', '');
+        saveWikiText('0:0:0', 'zero-test', '');
+
+        $ID = '0:0:0';
+        $sidebar = page_findnearest('sidebar');
+        $this->assertEquals('sidebar', $sidebar);
+
+        $sidebar = page_findnearest('0');
+        $this->assertEquals('0:0:0', $sidebar);
+
+        $ID = '0';
+        $sidebar = page_findnearest('0');
+        $this->assertEquals('0', $sidebar);
+    }
+
     function testExistingSidebars() {
         global $ID;
 
