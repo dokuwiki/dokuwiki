@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Maykon Oliveira <maykonoliveira850@gmail.com>
  * @author André Neves <drakferion@gmail.com>
  * @author Murilo <muriloricci@hotmail.com>
  * @author Paulo Silva <paulotsilva@yahoo.com>
@@ -22,4 +23,6 @@ $lang['use_tls']               = 'Usar ligação TLS? Se usada, não ative SSL a
 $lang['debug']                 = 'Deve-se mostrar saída adicional de depuração de erros?';
 $lang['expirywarn']            = 'Número de dias de avanço para avisar o utilizador da expiração da senha. 0 para desativar.';
 $lang['additional']            = 'Uma lista separada por vírgula de atributos adicionais de AD para buscar a partir de dados do usuário. Usado por alguns plugins.';
+$lang['update_name']           = 'Permitir que os usuários atualizem seu nome de exibição do AD?';
 $lang['update_mail']           = 'Permitir que usuários atualizem seus endereços de e-mail?';
+$lang['recursive_groups']      = 'Resolve grupos aninhados para seus respectivos membros (mais lentos).';
