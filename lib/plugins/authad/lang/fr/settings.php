@@ -3,9 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author Momo50 <c.brothelande@gmail.com>
- * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  */
 $lang['account_suffix']        = 'Le suffixe de votre compte. Ex.: <code>@mon.domaine.org</code>';
 $lang['base_dn']               = 'Votre nom de domaine de base. <code>DC=mon,DC=domaine,DC=org</code>';
@@ -22,3 +22,4 @@ $lang['expirywarn']            = 'Jours d\'avance pour l\'avertissement envoyé 
 $lang['additional']            = 'Une liste séparée par des virgules d\'attributs AD supplémentaires à récupérer dans les données utilisateur. Utilisée par certains modules.';
 $lang['update_name']           = 'Autoriser les utilisateurs à modifier leur nom affiché de l\'AD ?';
 $lang['update_mail']           = 'Autoriser les utilisateurs à modifier leur adresse de courriel ?';
+$lang['recursive_groups']      = 'Résoudre les groupes imbriqués à leur membres respectifs (plus lent).';
