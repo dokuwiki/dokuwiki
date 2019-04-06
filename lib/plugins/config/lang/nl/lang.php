@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Harriet Neitz <harrietneitz@gmail.com>
  * @author mark prins <mprins@users.sf.net>
  * @author Pieter van der Meulen <pieter@vdmeulen.net>
@@ -14,7 +15,6 @@
  * @author Marijn Hofstra <hofstra.m@gmail.com>
  * @author Timon Van Overveldt <timonvo@gmail.com>
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
- * @author Gerrit <klapinklapin@gmail.com>
  * @author Hugo Smet <hugo.smet@scarlet.be>
  */
 $lang['menu']                  = 'Configuratie-instellingen';
@@ -153,6 +153,7 @@ $lang['renderer_xhtml']        = 'Weergavesysteem voor de standaard (xhtml) wiki
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';
 $lang['search_nslimit']        = 'Beperk het zoeken tot de huidige X namespaces. Wanneer het zoeken wordt uitgevoerd vanaf een pagina binnen een diepere namespace, worden de eerste X aantal namespaces toegevoegd als filter';
+$lang['search_fragment']       = 'Specifeer het standaard zoekgedrag voor fragmenten';
 $lang['search_fragment_o_exact'] = 'exact';
 $lang['search_fragment_o_starts_with'] = 'begint met';
 $lang['search_fragment_o_ends_with'] = 'eindigt op';
