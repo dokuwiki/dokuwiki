@@ -1,6 +1,6 @@
 Bonjour,
 
-La page « @PAGE@ » dans le wiki « @TITLE@ » a été modifiée.
+La page « @PAGE@ » dans le wiki « @TITLE@ » a changé.
 Voici les modifications :
 
 --------------------------------------------------------
