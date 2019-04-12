@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Giuseppe Di Terlizzi <giuseppe.diterlizzi@gmail.com>
  * @author Eddy <eddy@mail.it>
  * @author Riccardo <riccardo.furlato@gmail.com>
  * @author Stefano <stefano.stefano@gmail.com>
