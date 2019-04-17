@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author HaoNan <haonan@zhuoming.info>
  * @author Phy <dokuwiki@phy25.com>
  * @author Aaron Zhou <iradio@163.com>
  * @author lempel <riverlempel@hotmail.com>
