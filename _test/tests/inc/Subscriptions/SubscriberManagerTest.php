@@ -1,6 +1,5 @@
 <?php
 
-
 namespace tests\inc\Subscriptions;
 
 use dokuwiki\Subscriptions\SubscriberManager;
@@ -8,7 +7,6 @@ use DokuWikiTest;
 
 class SubscriberManagerTest extends DokuWikiTest
 {
-
     private $originalSubscriptionConfig;
 
     public function setUp()
@@ -26,13 +24,14 @@ class SubscriberManagerTest extends DokuWikiTest
         parent::tearDown();
     }
 
-    public function testAddremove() {
+    public function testAddremove()
+    {
         $sub = new SubscriberManager();
 
         // no subscriptions
         $this->assertArrayNotHasKey(
             'wiki:dokuwiki',
-            $sub->subscribers('wiki:dokuwiki', null, array('every', 'list', 'digest'))
+            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
         );
 
         // add page subscription
@@ -41,7 +40,7 @@ class SubscriberManagerTest extends DokuWikiTest
         // one subscription
         $this->assertArrayHasKey(
             'wiki:dokuwiki',
-            $sub->subscribers('wiki:dokuwiki', null, array('every', 'list', 'digest'))
+            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
         );
 
         // remove page subscription
@@ -50,7 +49,7 @@ class SubscriberManagerTest extends DokuWikiTest
         // no subscription
         $this->assertArrayNotHasKey(
             'wiki:dokuwiki',
-            $sub->subscribers('wiki:dokuwiki', null, array('every', 'list', 'digest'))
+            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
         );
 
         // add namespace subscription
@@ -59,7 +58,7 @@ class SubscriberManagerTest extends DokuWikiTest
         // one subscription
         $this->assertArrayHasKey(
             'wiki:',
-            $sub->subscribers('wiki:dokuwiki', null, array('every', 'list', 'digest'))
+            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
         );
 
         // remove (non existing) page subscription
@@ -68,7 +67,7 @@ class SubscriberManagerTest extends DokuWikiTest
         // still one subscription
         $this->assertArrayHasKey(
             'wiki:',
-            $sub->subscribers('wiki:dokuwiki', null, array('every', 'list', 'digest'))
+            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
         );
 
         // change namespace subscription
@@ -77,13 +76,13 @@ class SubscriberManagerTest extends DokuWikiTest
         // still one subscription
         $this->assertArrayHasKey(
             'wiki:',
-            $sub->subscribers('wiki:dokuwiki', null, array('every', 'list', 'digest'))
+            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
         );
 
         // check contents
         $this->assertEquals(
-            array('wiki:' => array('testuser' => array('digest', '1234567'))),
-            $sub->subscribers('wiki:dokuwiki', null, array('every', 'list', 'digest'))
+            ['wiki:' => ['testuser' => ['digest', '1234567']]],
+            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
         );
 
         // change subscription data
@@ -92,13 +91,13 @@ class SubscriberManagerTest extends DokuWikiTest
         // still one subscription
         $this->assertArrayHasKey(
             'wiki:',
-            $sub->subscribers('wiki:dokuwiki', null, array('every', 'list', 'digest'))
+            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
         );
 
         // check contents
         $this->assertEquals(
-            array('wiki:' => array('testuser' => array('digest', '7654321'))),
-            $sub->subscribers('wiki:dokuwiki', null, array('every', 'list', 'digest'))
+            ['wiki:' => ['testuser' => ['digest', '7654321']]],
+            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
         );
     }
 
@@ -106,7 +105,8 @@ class SubscriberManagerTest extends DokuWikiTest
      * Tests, if overwriting subscriptions works even when subscriptions for the same
      * user exist for two nested namespaces, this is a test for the bug described in FS#2580
      */
-    public function testOverwrite() {
+    public function testOverwrite()
+    {
         $sub = new SubscriberManager();
 
         $sub->add(':', 'admin', 'digest', '123456789');
@@ -116,8 +116,16 @@ class SubscriberManagerTest extends DokuWikiTest
 
         $subscriptions = $sub->subscribers(':wiki:', 'admin');
 
-        $this->assertCount(1, $subscriptions[':'], 'More than one subscription saved for the root namespace even though the old one should have been overwritten.');
-        $this->assertCount(1, $subscriptions[':wiki:'], 'More than one subscription saved for the wiki namespace even though the old one should have been overwritten.');
+        $this->assertCount(
+            1,
+            $subscriptions[':'],
+            'More than one subscription saved for the root namespace even though the old one should have been overwritten.'
+        );
+        $this->assertCount(
+            1,
+            $subscriptions[':wiki:'],
+            'More than one subscription saved for the wiki namespace even though the old one should have been overwritten.'
+        );
         $this->assertCount(2, $subscriptions, 'Didn\'t find the expected two subscriptions');
     }
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace dokuwiki\Subscriptions;
-
 
 use Exception;
 
@@ -12,19 +10,21 @@ class SubscriberRegexBuilder
     /**
      * Construct a regular expression for parsing a subscription definition line
      *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     *
      * @param string|array $user
      * @param string|array $style
      * @param string|array $data
+     *
      * @return string complete regexp including delimiters
      * @throws Exception when no data is passed
+     * @author Andreas Gohr <andi@splitbrain.org>
+     *
      */
-    public function buildRegex($user = null, $style = null, $data = null) {
+    public function buildRegex($user = null, $style = null, $data = null)
+    {
         // always work with arrays
-        $user = (array) $user;
-        $style = (array) $style;
-        $data = (array) $data;
+        $user = (array)$user;
+        $style = (array)$style;
+        $data = (array)$data;
 
         // clean
         $user = array_filter(array_map('trim', $user));
@@ -45,19 +45,21 @@ class SubscriberRegexBuilder
         $data = join('|', $data);
 
         // any data at all?
-        if($user.$style.$data === '') throw new Exception('no data passed');
+        if ($user . $style . $data === '') {
+            throw new Exception('no data passed');
+        }
 
         // replace empty values, set which ones are optional
         $sopt = '';
         $dopt = '';
-        if($user === '') {
+        if ($user === '') {
             $user = '\S+';
         }
-        if($style === '') {
+        if ($style === '') {
             $style = '\S+';
             $sopt = '?';
         }
-        if($data === '') {
+        if ($data === '') {
             $data = '\S+';
             $dopt = '?';
         }
