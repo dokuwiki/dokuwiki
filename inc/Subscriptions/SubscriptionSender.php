@@ -7,6 +7,15 @@ use Mailer;
 
 abstract class SubscriptionSender
 {
+    private $mailer;
+
+    public function __construct(Mailer $mailer = null)
+    {
+        if ($mailer === null) {
+            $mailer = new Mailer();
+        }
+        $this->mailer = $mailer;
+    }
 
 
     /**
@@ -32,7 +41,7 @@ abstract class SubscriptionSender
 
         $text = rawLocale($template);
         $subject = $lang['mail_'.$subject].' '.$context;
-        $mail = new Mailer();
+        $mail = $this->mailer;
         $mail->bcc($subscriber_mail);
         $mail->subject($subject);
         $mail->setBody($text, $trep, $hrep);
