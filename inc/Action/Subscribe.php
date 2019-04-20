@@ -4,6 +4,7 @@ namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionDisabledException;
+use dokuwiki\Subscriptions\SubscriberManager;
 
 /**
  * Class Subscribe
@@ -74,11 +75,11 @@ class Subscribe extends AbstractUserAction {
         $action = $params['action'];
 
         // Perform action.
-        $sub = new \Subscription();
+        $subManager = new SubscriberManager();
         if($action == 'unsubscribe') {
-            $ok = $sub->remove($target, $INPUT->server->str('REMOTE_USER'), $style);
+            $ok = $subManager->remove($target, $INPUT->server->str('REMOTE_USER'), $style);
         } else {
-            $ok = $sub->add($target, $INPUT->server->str('REMOTE_USER'), $style);
+            $ok = $subManager->add($target, $INPUT->server->str('REMOTE_USER'), $style);
         }
 
         if($ok) {
