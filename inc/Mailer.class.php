@@ -43,12 +43,12 @@ class Mailer {
         global $INPUT;
 
         $server = parse_url(DOKU_URL, PHP_URL_HOST);
-        if(strpos($server,'.') === false) $server = $server.'.localhost';
+        if(strpos($server,'.') === false) $server .= '.localhost';
 
-        $this->partid   = substr(md5(uniqid(rand(), true)),0, 8).'@'.$server;
-        $this->boundary = '__________'.md5(uniqid(rand(), true));
+        $this->partid   = substr(md5(uniqid(mt_rand(), true)),0, 8).'@'.$server;
+        $this->boundary = '__________'.md5(uniqid(mt_rand(), true));
 
-        $listid = join('.', array_reverse(explode('/', DOKU_BASE))).$server;
+        $listid = implode('.', array_reverse(explode('/', DOKU_BASE))).$server;
         $listid = strtolower(trim($listid, '.'));
 
         $this->allowhtml = (bool)$conf['htmlmail'];
@@ -117,7 +117,7 @@ class Mailer {
      * @param array $matches
      * @return string placeholder
      */
-    protected function autoembed_cb($matches) {
+    protected function autoEmbedCallBack($matches) {
         static $embeds = 0;
         $embeds++;
 
@@ -196,17 +196,17 @@ class Mailer {
         $textrep = (array)$textrep;
 
         // create HTML from text if not given
-        if(is_null($html)) {
+        if($html === null) {
             $html = $text;
             $html = hsc($html);
             $html = preg_replace('/^----+$/m', '<hr >', $html);
             $html = nl2br($html);
         }
         if($wrap) {
-            $wrap = rawLocale('mailwrap', 'html');
+            $wrapper = rawLocale('mailwrap', 'html');
             $html = preg_replace('/\n-- <br \/>.*$/s', '', $html); //strip signature
             $html = str_replace('@EMAILSIGNATURE@', '', $html); //strip @EMAILSIGNATURE@
-            $html = str_replace('@HTMLBODY@', $html, $wrap);
+            $html = str_replace('@HTMLBODY@', $html, $wrapper);
         }
 
         if(strpos($text, '@EMAILSIGNATURE@') === false) {
@@ -226,7 +226,7 @@ class Mailer {
         // embed media from templates
         $html = preg_replace_callback(
             '/@MEDIA\(([^\)]+)\)@/',
-            array($this, 'autoembed_cb'), $html
+            array($this, 'autoEmbedCallBack'), $html
         );
 
         // add default token replacements
@@ -566,7 +566,7 @@ class Mailer {
     protected function prepareHeaders() {
         $headers = '';
         foreach($this->headers as $key => $val) {
-            if ($val === '' || is_null($val)) continue;
+            if ($val === '' || $val === null) continue;
             $headers .= $this->wrappedHeaderLine($key, $val);
         }
         return $headers;
@@ -721,7 +721,7 @@ class Mailer {
             }
 
             // send the thing
-            if(is_null($this->sendparam)) {
+            if($this->sendparam === null) {
                 $success = @mail($to, $subject, $body, $headers);
             } else {
                 $success = @mail($to, $subject, $body, $headers, $this->sendparam);
