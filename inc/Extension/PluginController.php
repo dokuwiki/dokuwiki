@@ -10,10 +10,12 @@ namespace dokuwiki\Extension;
 
 class PluginController
 {
+    /** @var array the types of plugins DokuWiki supports */
+    const PLUGIN_TYPES = ['auth', 'admin', 'syntax', 'action', 'renderer', 'helper', 'remote', 'cli'];
 
-    protected $list_bytype = array();
-    protected $tmp_plugins = array();
-    protected $plugin_cascade = array('default' => array(), 'local' => array(), 'protected' => array());
+    protected $list_bytype = [];
+    protected $tmp_plugins = [];
+    protected $plugin_cascade = ['default' => [], 'local' => [], 'protected' => []];
     protected $last_local_config_file = '';
 
     /**

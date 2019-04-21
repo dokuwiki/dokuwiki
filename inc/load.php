@@ -5,6 +5,8 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Extension\PluginController;
+
 // setup class autoloader
 spl_autoload_register('load_autoload');
 
@@ -133,7 +135,7 @@ function load_autoload($name){
 
     // Plugin loading
     if(preg_match(
-        '/^(auth|helper|syntax|action|admin|renderer|remote|cli)_plugin_(' .
+        '/^(' . implode('|', PluginController::PLUGIN_TYPES) . ')_plugin_(' .
         DOKU_PLUGIN_NAME_REGEX .
         ')(?:_([^_]+))?$/',
         $name,
