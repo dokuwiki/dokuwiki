@@ -8,7 +8,7 @@
 
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\HTTP\DokuHTTPClient;
-use dokuwiki\Subscriptions\ChangesSubscriptionSender;
+use dokuwiki\Subscriptions\MediaSubscriptionSender;
 
 /**
  * Lists pages which currently use a media file selected for deletion
@@ -675,7 +675,7 @@ function media_notify($id,$file,$mime,$old_rev=false){
     global $conf;
     if(empty($conf['notify'])) return false; //notify enabled?
 
-    $subscription = new ChangesSubscriptionSender();
+    $subscription = new MediaSubscriptionSender();
     return $subscription->sendMediaDiff($conf['notify'], 'uploadmail', $id, $old_rev);
 }
 

@@ -2,7 +2,9 @@
 
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Debug\DebugHelper;
-use dokuwiki\Subscriptions\ChangesSubscriptionSender;
+use dokuwiki\Subscriptions\BulkSubscriptionSender;
+use dokuwiki\Subscriptions\MediaSubscriptionSender;
+use dokuwiki\Subscriptions\PageSubscriptionSender;
 use dokuwiki\Subscriptions\SubscriberManager;
 use dokuwiki\Subscriptions\RegistrationSubscriptionSender;
 
@@ -124,11 +126,11 @@ class Subscription {
      * @param string $page
      * @return int number of sent mails
      *
-     * @deprecated 2019-04-20 \dokuwiki\Subscriptions\ChangesSubscriptionSender::sendBulk
+     * @deprecated 2019-04-20 \dokuwiki\Subscriptions\BulkSubscriptionSender::sendBulk
      */
     public function send_bulk($page) {
-        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\ChangesSubscriptionSender::sendBulk');
-        $subscriptionSender = new ChangesSubscriptionSender();
+        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\BulkSubscriptionSender::sendBulk');
+        $subscriptionSender = new BulkSubscriptionSender();
         return $subscriptionSender->sendBulk($page);
     }
 
@@ -142,11 +144,11 @@ class Subscription {
      * @param string   $summary         Change summary if any
      * @return bool                     true if successfully sent
      *
-     * @deprecated 2019-04-20 \dokuwiki\Subscriptions\ChangesSubscriptionSender::sendPageDiff
+     * @deprecated 2019-04-20 \dokuwiki\Subscriptions\PageSubscriptionSender::sendPageDiff
      */
     public function send_diff($subscriber_mail, $template, $id, $rev = null, $summary = '') {
-        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\ChangesSubscriptionSender::sendPageDiff');
-        $subscriptionSender = new ChangesSubscriptionSender();
+        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\PageSubscriptionSender::sendPageDiff');
+        $subscriptionSender = new PageSubscriptionSender();
         return $subscriptionSender->sendPageDiff($subscriber_mail, $template, $id, $rev, $summary);
     }
 
@@ -160,11 +162,11 @@ class Subscription {
      * @param string   $id              Media file for which the notification is
      * @param int|bool $rev             Old revision if any
      *
-     * @deprecated 2019-04-20 \dokuwiki\Subscriptions\ChangesSubscriptionSender::sendMediaDiff
+     * @deprecated 2019-04-20 \dokuwiki\Subscriptions\MediaSubscriptionSender::sendMediaDiff
      */
     public function send_media_diff($subscriber_mail, $template, $id, $rev = false) {
-        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\ChangesSubscriptionSender::sendMediaDiff');
-        $subscriptionSender = new ChangesSubscriptionSender();
+        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\MediaSubscriptionSender::sendMediaDiff');
+        $subscriptionSender = new MediaSubscriptionSender();
         return $subscriptionSender->sendMediaDiff($subscriber_mail, $template, $id, $rev);
     }
 

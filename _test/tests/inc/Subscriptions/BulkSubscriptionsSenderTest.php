@@ -2,12 +2,12 @@
 
 namespace tests\inc\Subscriptions;
 
-use dokuwiki\Subscriptions\ChangesSubscriptionSender;
+use dokuwiki\Subscriptions\BulkSubscriptionSender;
 use dokuwiki\Subscriptions\SubscriberManager;
 use dokuwiki\test\mock\MailerMock;
 use DokuWikiTest;
 
-class ChangesSubscriptionsSenderTest extends DokuWikiTest
+class BulkSubscriptionsSenderTest extends DokuWikiTest
 {
 
     private $originalSubscriptionConfig;
@@ -30,7 +30,7 @@ class ChangesSubscriptionsSenderTest extends DokuWikiTest
     public function testBulkdigest()
     {
         $mailerMock = new MailerMock();
-        $sub = new ChangesSubscriptionSender($mailerMock);
+        $sub = new BulkSubscriptionSender($mailerMock);
         $manager = new SubscriberManager();
 
         // let's start with nothing
@@ -72,7 +72,7 @@ class ChangesSubscriptionsSenderTest extends DokuWikiTest
     public function testBulklist()
     {
         $mailerMock = new MailerMock();
-        $sub = new ChangesSubscriptionSender($mailerMock);
+        $sub = new BulkSubscriptionSender($mailerMock);
         $manager = new SubscriberManager();
 
         // let's start with nothing

@@ -4,7 +4,7 @@ namespace dokuwiki;
 
 use Doku_Event;
 use dokuwiki\Sitemap\Mapper;
-use dokuwiki\Subscriptions\ChangesSubscriptionSender;
+use dokuwiki\Subscriptions\BulkSubscriptionSender;
 use Subscription;
 
 /**
@@ -231,7 +231,7 @@ class TaskRunner
             echo 'sendDigest(): disabled' . NL;
             return false;
         }
-        $sub = new ChangesSubscriptionSender();
+        $sub = new BulkSubscriptionSender();
         $sent = $sub->sendBulk($ID);
 
         echo "sendDigest(): sent $sent mails" . NL;

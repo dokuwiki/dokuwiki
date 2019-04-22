@@ -1,15 +1,14 @@
 <?php
 
+
 namespace dokuwiki\Subscriptions;
 
-use Diff;
+
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Input\Input;
 use DokuWiki_Auth_Plugin;
-use InlineDiffFormatter;
-use UnifiedDiffFormatter;
 
-class ChangesSubscriptionSender extends SubscriptionSender
+class BulkSubscriptionSender extends SubscriptionSender
 {
 
     /**
@@ -131,141 +130,6 @@ class ChangesSubscriptionSender extends SubscriptionSender
     }
 
     /**
-     * Send the diff for some page change
-     *
-     * @param string   $subscriber_mail The target mail address
-     * @param string   $template        Mail template ('subscr_digest', 'subscr_single', 'mailtext', ...)
-     * @param string   $id              Page for which the notification is
-     * @param int|null $rev             Old revision if any
-     * @param string   $summary         Change summary if any
-     *
-     * @return bool                     true if successfully sent
-     */
-    public function sendPageDiff($subscriber_mail, $template, $id, $rev = null, $summary = '')
-    {
-        global $DIFF_INLINESTYLES;
-
-        // prepare replacements (keys not set in hrep will be taken from trep)
-        $trep = [
-            'PAGE' => $id,
-            'NEWPAGE' => wl($id, '', true, '&'),
-            'SUMMARY' => $summary,
-            'SUBSCRIBE' => wl($id, ['do' => 'subscribe'], true, '&'),
-        ];
-        $hrep = [];
-
-        if ($rev) {
-            $subject = 'changed';
-            $trep['OLDPAGE'] = wl($id, "rev=$rev", true, '&');
-
-            $old_content = rawWiki($id, $rev);
-            $new_content = rawWiki($id);
-
-            $df = new Diff(
-                explode("\n", $old_content),
-                explode("\n", $new_content)
-            );
-            $dformat = new UnifiedDiffFormatter();
-            $tdiff = $dformat->format($df);
-
-            $DIFF_INLINESTYLES = true;
-            $df = new Diff(
-                explode("\n", $old_content),
-                explode("\n", $new_content)
-            );
-            $dformat = new InlineDiffFormatter();
-            $hdiff = $dformat->format($df);
-            $hdiff = '<table>' . $hdiff . '</table>';
-            $DIFF_INLINESTYLES = false;
-        } else {
-            $subject = 'newpage';
-            $trep['OLDPAGE'] = '---';
-            $tdiff = rawWiki($id);
-            $hdiff = nl2br(hsc($tdiff));
-        }
-
-        $trep['DIFF'] = $tdiff;
-        $hrep['DIFF'] = $hdiff;
-
-        $headers = ['Message-Id' => $this->getMessageID($id)];
-        if ($rev) {
-            $headers['In-Reply-To'] = $this->getMessageID($id, $rev);
-        }
-
-        return $this->send(
-            $subscriber_mail,
-            $subject,
-            $id,
-            $template,
-            $trep,
-            $hrep,
-            $headers
-        );
-    }
-
-    /**
-     * Send the diff for some media change
-     *
-     * @fixme this should embed thumbnails of images in HTML version
-     *
-     * @param string   $subscriber_mail The target mail address
-     * @param string   $template        Mail template ('uploadmail', ...)
-     * @param string   $id              Media file for which the notification is
-     * @param int|bool $rev             Old revision if any
-     */
-    public function sendMediaDiff($subscriber_mail, $template, $id, $rev = false)
-    {
-        global $conf;
-
-        $file = mediaFN($id);
-        list($mime, /* $ext */) = mimetype($id);
-
-        $trep = [
-            'MIME' => $mime,
-            'MEDIA' => ml($id, '', true, '&', true),
-            'SIZE' => filesize_h(filesize($file)),
-        ];
-
-        if ($rev && $conf['mediarevisions']) {
-            $trep['OLD'] = ml($id, "rev=$rev", true, '&', true);
-        } else {
-            $trep['OLD'] = '---';
-        }
-
-        $headers = ['Message-Id' => $this->getMessageID($id, @filemtime($file))];
-        if ($rev) {
-            $headers['In-Reply-To'] = $this->getMessageID($id, $rev);
-        }
-
-        $this->send($subscriber_mail, 'upload', $id, $template, $trep, null, $headers);
-    }
-
-    /**
-     * Get a valid message id for a certain $id and revision (or the current revision)
-     *
-     * @param string $id  The id of the page (or media file) the message id should be for
-     * @param string $rev The revision of the page, set to the current revision of the page $id if not set
-     *
-     * @return string
-     */
-    protected function getMessageID($id, $rev = null)
-    {
-        static $listid = null;
-        if (is_null($listid)) {
-            $server = parse_url(DOKU_URL, PHP_URL_HOST);
-            $listid = join('.', array_reverse(explode('/', DOKU_BASE))) . $server;
-            $listid = urlencode($listid);
-            $listid = strtolower(trim($listid, '.'));
-        }
-
-        if (is_null($rev)) {
-            $rev = @filemtime(wikiFN($id));
-        }
-
-        return "<$id?rev=$rev@$listid>";
-    }
-
-    /**
      * Lock subscription info
      *
      * We don't use io_lock() her because we do not wait for the lock and use a larger stale time
@@ -317,7 +181,7 @@ class ChangesSubscriptionSender extends SubscriptionSender
     /**
      * Send a digest mail
      *
-     * Sends a digest mail showing a bunch of changes of a single page. Basically the same as send_diff()
+     * Sends a digest mail showing a bunch of changes of a single page. Basically the same as sendPageDiff()
      * but determines the last known revision first
      *
      * @param string $subscriber_mail The target mail address
@@ -337,7 +201,9 @@ class ChangesSubscriptionSender extends SubscriptionSender
             $rev = (count($rev) > 0) ? $rev[0] : null;
         } while (!is_null($rev) && $rev > $lastupdate);
 
-        return $this->sendPageDiff(
+        // TODO I'm not happy with the following line and passing $this->mailer around. Not sure how to solve it better
+        $pageSubSender = new PageSubscriptionSender($this->mailer);
+        return $pageSubSender->sendPageDiff(
             $subscriber_mail,
             'subscr_digest',
             $id,

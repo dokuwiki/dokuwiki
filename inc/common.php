@@ -9,7 +9,7 @@
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\Subscriptions\ChangesSubscriptionSender;
+use dokuwiki\Subscriptions\PageSubscriptionSender;
 use dokuwiki\Subscriptions\SubscriberManager;
 
 /**
@@ -1490,7 +1490,7 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
     }
 
     // prepare content
-    $subscription = new ChangesSubscriptionSender();
+    $subscription = new PageSubscriptionSender();
     return $subscription->sendPageDiff($to, $tpl, $id, $rev, $summary);
 }
 
