@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 
 namespace dokuwiki\Extension;
 
@@ -7,18 +8,23 @@ namespace dokuwiki\Extension;
  */
 class Event
 {
+    /** @var string READONLY  event name, objects must register against this name to see the event */
+    public $name = '';
+    /** @var mixed|null READWRITE data relevant to the event, no standardised format, refer to event docs */
+    public $data = null;
+    /**
+     * @var mixed|null READWRITE the results of the event action, only relevant in "_AFTER" advise
+     *                 event handlers may modify this if they are preventing the default action
+     *                 to provide the after event handlers with event results
+     */
+    public $result = null;
+    /** @var bool READONLY  if true, event handlers can prevent the events default action */
+    public $canPreventDefault = true;
 
-    // public properties
-    public $name = '';                // READONLY  event name, objects must register against this name to see the event
-    public $data = null;              // READWRITE data relevant to the event, no standardised format (YET!)
-    public $result = null;            // READWRITE the results of the event action, only relevant in "_AFTER" advise
-    //    event handlers may modify this if they are preventing the default action
-    //    to provide the after event handlers with event results
-    public $canPreventDefault = true; // READONLY  if true, event handlers can prevent the events default action
-
-    // private properties, event handlers can effect these through the provided methods
-    protected $_default = true;     // whether or not to carry out the default action associated with the event
-    protected $_continue = true;    // whether or not to continue propagating the event to other handlers
+    /** @var bool whether or not to carry out the default action associated with the event */
+    protected $runDefault = true;
+    /** @var bool whether or not to continue propagating the event to other handlers */
+    protected $mayContinue = true;
 
     /**
      * event constructor
@@ -31,7 +37,6 @@ class Event
 
         $this->name = $name;
         $this->data =& $data;
-
     }
 
     /**
@@ -43,9 +48,7 @@ class Event
     }
 
     /**
-     * advise functions
-     *
-     * advise all registered handlers of this event
+     * advise all registered BEFORE handlers of this event
      *
      * if these methods are used by functions outside of this object, they must
      * properly handle correct processing of any default action and issue an
@@ -58,32 +61,38 @@ class Event
      *    unset($evt);
      *
      * @param bool $enablePreventDefault
-     * @return bool results of processing the event, usually $this->_default
+     * @return bool results of processing the event, usually $this->runDefault
      */
     public function advise_before($enablePreventDefault = true)
     {
         global $EVENT_HANDLER;
 
         $this->canPreventDefault = $enablePreventDefault;
-        if($EVENT_HANDLER !== null) {
+        if ($EVENT_HANDLER !== null) {
             $EVENT_HANDLER->process_event($this, 'BEFORE');
         } else {
-            dbglog($this->name.':BEFORE event triggered before event system was initialized');
+            dbglog($this->name . ':BEFORE event triggered before event system was initialized');
         }
 
-        return (!$enablePreventDefault || $this->_default);
+        return (!$enablePreventDefault || $this->runDefault);
     }
 
+    /**
+     * advise all registered AFTER handlers of this event
+     *
+     * @param bool $enablePreventDefault
+     * @see advise_before() for details
+     */
     public function advise_after()
     {
         global $EVENT_HANDLER;
 
-        $this->_continue = true;
+        $this->mayContinue = true;
 
-        if($EVENT_HANDLER !== null) {
+        if ($EVENT_HANDLER !== null) {
             $EVENT_HANDLER->process_event($this, 'AFTER');
         } else {
-            dbglog($this->name.':AFTER event triggered before event system was initialized');
+            dbglog($this->name . ':AFTER event triggered before event system was initialized');
         }
     }
 
@@ -107,7 +116,7 @@ class Event
 
         if (!is_callable($action)) {
             $enablePrevent = false;
-            if (!is_null($action)) {
+            if ($action !== null) {
                 trigger_error(
                     'The default action of ' . $this .
                     ' is not null but also not callable. Maybe the method is not public?',
@@ -138,7 +147,7 @@ class Event
      */
     public function stopPropagation()
     {
-        $this->_continue = false;
+        $this->mayContinue = false;
     }
 
     /**
@@ -148,7 +157,7 @@ class Event
      */
     public function mayPropagate()
     {
-        return $this->_continue;
+        return $this->mayContinue;
     }
 
     /**
@@ -158,7 +167,7 @@ class Event
      */
     public function preventDefault()
     {
-        $this->_default = false;
+        $this->runDefault = false;
     }
 
     /**
@@ -168,7 +177,7 @@ class Event
      */
     public function mayRunDefault()
     {
-        return $this->_default;
+        return $this->runDefault;
     }
 
     /**
@@ -176,16 +185,17 @@ class Event
      *
      * Creates, triggers and destroys an event in one go
      *
-     * @param  string   $name               name for the event
-     * @param  mixed    $data               event data
-     * @param  callable $action             (optional, default=NULL) default action, a php callback function
-     * @param  bool     $canPreventDefault  (optional, default=true) can hooks prevent the default action
+     * @param string $name name for the event
+     * @param mixed $data event data
+     * @param callable $action (optional, default=NULL) default action, a php callback function
+     * @param bool $canPreventDefault (optional, default=true) can hooks prevent the default action
      *
      * @return mixed                        the event results value after all event processing is complete
      *                                      by default this is the return value of the default action however
      *                                      it can be set or modified by event handler hooks
      */
-    static public function createAndTrigger($name, &$data, $action=null, $canPreventDefault=true) {
+    static public function createAndTrigger($name, &$data, $action = null, $canPreventDefault = true)
+    {
         $evt = new Event($name, $data);
         return $evt->trigger($action, $canPreventDefault);
     }
