@@ -75,7 +75,7 @@ class EventHandler
                 foreach ($sequenced_hooks as $hook) {
                     list($obj, $method, $param) = $hook;
 
-                    if (is_null($obj)) {
+                    if ($obj === null) {
                         $method($event, $param);
                     } else {
                         $obj->$method($event, $param);
@@ -101,8 +101,8 @@ class EventHandler
     {
         if ($advise) {
             return isset($this->hooks[$name . '_' . $advise]);
-        } else {
-            return isset($this->hooks[$name . '_BEFORE']) || isset($this->hooks[$name . '_AFTER']);
         }
+
+        return isset($this->hooks[$name . '_BEFORE']) || isset($this->hooks[$name . '_AFTER']);
     }
 }
