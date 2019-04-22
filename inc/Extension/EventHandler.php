@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 
 namespace dokuwiki\Extension;
 
@@ -11,7 +12,7 @@ class EventHandler
     // public properties:  none
 
     // private properties
-    protected $_hooks = array();          // array of events and their registered handlers
+    protected $hooks = array();          // array of events and their registered handlers
 
     /**
      * event_handler
@@ -50,11 +51,11 @@ class EventHandler
     public function register_hook($event, $advise, $obj, $method, $param = null, $seq = 0)
     {
         $seq = (int)$seq;
-        $doSort = !isset($this->_hooks[$event . '_' . $advise][$seq]);
-        $this->_hooks[$event . '_' . $advise][$seq][] = array($obj, $method, $param);
+        $doSort = !isset($this->hooks[$event . '_' . $advise][$seq]);
+        $this->hooks[$event . '_' . $advise][$seq][] = array($obj, $method, $param);
 
         if ($doSort) {
-            ksort($this->_hooks[$event . '_' . $advise]);
+            ksort($this->hooks[$event . '_' . $advise]);
         }
     }
 
@@ -69,8 +70,8 @@ class EventHandler
 
         $evt_name = $event->name . ($advise ? '_' . $advise : '_BEFORE');
 
-        if (!empty($this->_hooks[$evt_name])) {
-            foreach ($this->_hooks[$evt_name] as $sequenced_hooks) {
+        if (!empty($this->hooks[$evt_name])) {
+            foreach ($this->hooks[$evt_name] as $sequenced_hooks) {
                 foreach ($sequenced_hooks as $hook) {
                     list($obj, $method, $param) = $hook;
 
@@ -99,9 +100,9 @@ class EventHandler
     public function hasHandlerForEvent($name, $advise = '')
     {
         if ($advise) {
-            return isset($this->_hooks[$name . '_' . $advise]);
+            return isset($this->hooks[$name . '_' . $advise]);
         } else {
-            return isset($this->_hooks[$name . '_BEFORE']) || isset($this->_hooks[$name . '_AFTER']);
+            return isset($this->hooks[$name . '_BEFORE']) || isset($this->hooks[$name . '_AFTER']);
         }
     }
 }
