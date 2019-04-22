@@ -349,7 +349,7 @@ class PluginController
             if (is_dir($typedir)) {
                 if ($dp = opendir($typedir)) {
                     while (false !== ($component = readdir($dp))) {
-                        if (substr($component, 0, 1) == '.' || strtolower(substr($component, -4)) != ".php") continue;
+                        if (strpos($component, '.') === 0 || strtolower(substr($component, -4)) !== '.php') continue;
                         if (is_file($typedir . $component)) {
                             $plugins[] = $plugin . '_' . substr($component, 0, -4);
                         }
@@ -373,7 +373,7 @@ class PluginController
      */
     protected function splitName($name)
     {
-        if (array_search($name, array_keys($this->tmp_plugins)) === false) {
+        if (!isset($this->masterList[$name])) {
             return explode('_', $name, 2);
         }
 
