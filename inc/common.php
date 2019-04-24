@@ -1649,7 +1649,7 @@ function unslash($string, $char = "'") {
  * @return int
  */
 function php_to_byte($value) {
-    switch (strtoupper($value[-1])) {
+    switch (strtoupper(substr($value,-1))) {
         case 'G':
             $ret = intval(substr($value, 0, -1)) * 1024 * 1024 * 1024;
             break;
