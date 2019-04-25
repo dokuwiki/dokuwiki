@@ -1,11 +1,13 @@
 <?php
+
 /**
  * valencian language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author Klapin <klapinklapin@gmail.com>
  * @author Bernat Arlandis i Mañó <berarma@ya.com>
  * @author Bernat Arlandis <berarma@llenguaitecnologia.com>
- * 
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -40,11 +42,13 @@ $lang['btn_backlink']          = 'Vínculs remitents';
 $lang['btn_subscribe']         = 'Subscriure\'s a la pàgina';
 $lang['btn_profile']           = 'Actualitzar perfil';
 $lang['btn_reset']             = 'Reiniciar';
+$lang['btn_resendpwd']         = 'TEST';
 $lang['btn_draft']             = 'Editar borrador';
 $lang['btn_recover']           = 'Recuperar borrador';
 $lang['btn_draftdel']          = 'Borrar borrador';
 $lang['btn_revert']            = 'Recuperar';
 $lang['btn_register']          = 'Registrar-se';
+$lang['btn_img_backto']        = 'Tornar a %s';
 $lang['loggedinas']            = 'Sessió de:';
 $lang['user']                  = 'Nom d\'usuari';
 $lang['pass']                  = 'Contrasenya';
@@ -59,6 +63,15 @@ $lang['badlogin']              = 'Disculpe, pero el nom d\'usuari o la contrasen
 $lang['minoredit']             = 'Canvis menors';
 $lang['draftdate']             = 'Borrador gravat el';
 $lang['nosecedit']             = 'La pàgina ha canviat mentres tant, l\'informació de la secció no estava al dia, s\'ha carregat la pàgina sancera.';
+$lang['js']['willexpire']      = 'El seu bloqueig per a editar esta pàgina vencerà en un minut.\nPer a evitar conflictes utilise el botó de vista prèvia i reiniciarà el contador.';
+$lang['js']['notsavedyet']     = 'Els canvis no guardats es perdran.\n¿Segur que vol continuar?';
+$lang['js']['searchmedia']     = 'Buscar archius';
+$lang['js']['keepopen']        = 'Mantindre la finestra oberta al seleccionar';
+$lang['js']['hidedetails']     = 'Ocultar detalls';
+$lang['js']['nosmblinks']      = 'Els vínculs a recursos compartits de Windows només funcionen en Microsoft Internet Explorer. No obstant, es poden copiar i apegar.';
+$lang['js']['linkwiz']         = 'Assistent de vínculs';
+$lang['js']['linkto']          = 'Vincular a:';
+$lang['js']['del_confirm']     = '¿Realment vol borrar el(s) ítem(s) seleccionat(s)?';
 $lang['regmissing']            = 'Disculpe, pero deu omplir tots els camps.';
 $lang['reguexists']            = 'Disculpe, pero ya existix un usuari en este nom.';
 $lang['regsuccess']            = 'S\'ha creat l\'usuari i se li ha enviat la contrasenya per correu electrònic.';
@@ -88,8 +101,6 @@ $lang['txt_filename']          = 'Enviar com (opcional):';
 $lang['txt_overwrt']           = 'Sobreescriure archius existents';
 $lang['lockedby']              = 'Actualment bloquejat per:';
 $lang['lockexpire']            = 'El bloqueig venç a les:';
-$lang['js']['willexpire']            = 'El seu bloqueig per a editar esta pàgina vencerà en un minut.\nPer a evitar conflictes utilise el botó de vista prèvia i reiniciarà el contador.';
-$lang['js']['notsavedyet']     = 'Els canvis no guardats es perdran.\n¿Segur que vol continuar?';
 $lang['rssfailed']             = 'Ha ocorregut un erro al solicitar este canal: ';
 $lang['nothingfound']          = 'No s\'ha trobat res.';
 $lang['mediaselect']           = 'Arxius de mijos';
@@ -106,13 +117,6 @@ $lang['deletefail']            = 'No s\'ha pogut borrar "%s" - comprove els perm
 $lang['mediainuse']            = 'L\'arxiu "%s" no s\'ha borrat - encara s\'està utilisant.';
 $lang['namespaces']            = 'Espais de noms';
 $lang['mediafiles']            = 'Archius disponibles en';
-$lang['js']['searchmedia']     = 'Buscar archius';
-$lang['js']['keepopen']        = 'Mantindre la finestra oberta al seleccionar';
-$lang['js']['hidedetails']     = 'Ocultar detalls';
-$lang['js']['nosmblinks']      = 'Els vínculs a recursos compartits de Windows només funcionen en Microsoft Internet Explorer. No obstant, es poden copiar i apegar.';
-$lang['js']['linkwiz']         = 'Assistent de vínculs';
-$lang['js']['linkto']          = 'Vincular a:';
-$lang['js']['del_confirm']     = '¿Realment vol borrar el(s) ítem(s) seleccionat(s)?';
 $lang['mediausage']            = 'Utilize la següent sintaxis per a referenciar est archiu:';
 $lang['mediaview']             = 'Vore l\'archiu original';
 $lang['mediaroot']             = 'base';
@@ -172,7 +176,6 @@ $lang['upperns']               = 'anar a l\'espai de noms superior';
 $lang['metaedit']              = 'Editar meta-senyes';
 $lang['metasaveerr']           = 'Error escrivint meta-senyes';
 $lang['metasaveok']            = 'Meta-senyes guardades';
-$lang['btn_img_backto']        = 'Tornar a %s';
 $lang['img_title']             = 'Títol:';
 $lang['img_caption']           = 'Subtítol:';
 $lang['img_date']              = 'Data:';
@@ -218,6 +221,5 @@ $lang['days']                  = 'fa %d dies';
 $lang['hours']                 = 'fa %d hores';
 $lang['minutes']               = 'fa %d minuts';
 $lang['seconds']               = 'fa %d segons';
-$lang['email_signature_text'] = 'Este correu ha segut generat per DokuWiki en
+$lang['email_signature_text']  = 'Este correu ha segut generat per DokuWiki en
 @DOKUWIKIURL@';
-

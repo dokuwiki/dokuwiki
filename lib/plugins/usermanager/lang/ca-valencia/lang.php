@@ -1,9 +1,11 @@
 <?php
+
 /**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * Valencian language file
  *
  * @author Bernat Arlandis i Mañó <berarma@ya.com>
- * @author Bernat Arlandis <berarma@ya.com>
  * @author Bernat Arlandis <berarma@llenguaitecnologia.com>
  */
 $lang['menu']                  = 'Gestor d\'usuaris';

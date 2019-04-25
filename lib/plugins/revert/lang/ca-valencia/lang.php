@@ -1,8 +1,11 @@
 <?php
+
 /**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * valencian language file
+ *
  * @author Bernat Arlandis <berarma@ya.com>
- * @author Bernat Arlandis <berarma@llenguaitecnologia.com>
  */
 $lang['menu']                  = 'Gestor de reversions';
 $lang['filter']                = 'Buscar pàgines en spam';
