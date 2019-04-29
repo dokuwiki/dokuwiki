@@ -21,9 +21,10 @@ if(!defined('DOKU_INC')) die('meh.');
  * @param   string    $dir  Current directory beyond $base
  * @param   int       $lvl  Recursion Level
  * @param   mixed     $sort 'natural' to use natural order sorting (default); 'date' to sort by filemtime; leave empty to skip sorting.
+ * @param   int	      $limit limit the result size of the results $data array
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
+function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural',$limit=-1){
     $dirs   = array();
     $files  = array();
     $filepaths = array();
@@ -57,13 +58,19 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
 
     //give directories to userfunction then recurse
     foreach($dirs as $dir){
+	if ($limit > -1 && sizeOf($data) >= $limit) {
+	    break;
+	}
         if (call_user_func_array($func, array(&$data,$base,$dir,'d',$lvl,$opts))){
             search($data,$base,$func,$opts,$dir,$lvl+1,$sort);
         }
     }
     //now handle the files
     foreach($files as $file){
-        call_user_func_array($func, array(&$data,$base,$file,'f',$lvl,$opts));
+	if ($limit > -1 && sizeOf($data) >= $limit) {
+	    break;
+	}
+	call_user_func_array($func, array(&$data,$base,$file,'f',$lvl,$opts));
     }
 }
 

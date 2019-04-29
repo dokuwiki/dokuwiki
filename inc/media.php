@@ -684,7 +684,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
         $dir = utf8_encodeFN(str_replace(':','/',$ns));
         $data = array();
         search($data,$conf['mediadir'],'search_media',
-                array('showmsg'=>true,'depth'=>1),$dir,1,$sort);
+                array('showmsg'=>true,'depth'=>1),$dir,1,$sort,$conf['displayed_media_limit']);
 
         if(!count($data)){
             echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
@@ -1504,7 +1504,8 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
                     array('showmsg'=>false,'pattern'=>$pattern),
                     $dir,
                     1,
-                    $sort);
+		    $sort,
+		    $conf['displayed_media_limit']);
         }
         $evt->advise_after();
         unset($evt);
