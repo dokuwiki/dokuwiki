@@ -148,18 +148,32 @@ abstract class AbstractItem {
      *
      * Wraps around the label and SVG image
      *
-     * @param string|false $classprefix create a class from type with this prefix, false for no class
+     * Instead of a classprefix, you can also supply a tgemplate to use. The template may contain
+     * the substitution strings %type%, %scv% and %label% where you want the respecrtive parts
+     * to appear. The string must begin with a '<' character. Example for the writr template:
+     * <span class="icon">%svg%</span> <span class="a11y">%label%</span>
+     *
+     * @param string|false $classprefix create a class from type with this prefix, or html, false for no class
      * @param bool $svg add SVG icon to the link
      * @return string
+     * <span class="icon">%svg%</span> <span class="a11y">%label%</span>
      */
     public function asHtmlLink($classprefix = 'menuitem ', $svg = true) {
-        $attr = buildAttributes($this->getLinkAttributes($classprefix));
+        $isHtml = (strlen($classprefix) && $classprefix[0] === '<');
+        $attr = buildAttributes($this->getLinkAttributes($isHtml ? "menuitem " : $classprefix));
         $html = "<a $attr>";
-        if($svg) {
-            $html .= '<span>' . hsc($this->getLabel()) . '</span>';
+        $label = hsc($this->getLabel());
+        if ($isHtml) {
+            $html .= str_replace(
+                ['%type%', '%svg%', '%label%'],
+                [$this->getType(), $svg ? inlineSVG($this->getSvg()) : '', $label],
+                $classprefix);
+        }
+        else if($svg) {
+            $html .= '<span>' . $label . '</span>';
             $html .= inlineSVG($this->getSvg());
         } else {
-            $html .= hsc($this->getLabel());
+            $html .= $label;
         }
         $html .= "</a>";
 

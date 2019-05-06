@@ -34,6 +34,7 @@ abstract class AbstractMenu implements MenuInterface {
     /**
      * Get the list of action items in this menu
      *
+     * @param array $template template array
      * @return AbstractItem[]
      * @triggers MENU_ITEMS_ASSEMBLY
      */
@@ -71,23 +72,33 @@ abstract class AbstractMenu implements MenuInterface {
      *
      * This is a convenience method for template authors. If you need more fine control over the
      * output, use getItems() and build the HTML yourself
+     * 
+     * Instead of a classprefix, you can also supply a tgemplate to use. The template may contain
+     * the substitution strings %type%, %scv% and %label% where you want the respecrtive parts
+     * to appear. The string must begin with a '<' character. Example for the writr template:
+     * <span class="icon">%svg%</span> <span class="a11y">%label%</span>
      *
-     * @param string|false $classprefix create a class from type with this prefix, false for no class
+     * @param string|false $classprefix create a class from type with this prefix, or html, false for no class
      * @param bool $svg add the SVG link
      * @return string
      */
     public function getListItems($classprefix = '', $svg = true) {
         $html = '';
         foreach($this->getItems() as $item) {
-            if($classprefix !== false) {
-                $class = ' class="' . $classprefix . $item->getType() . '"';
-            } else {
-                $class = '';
+            if (strlen($classprefix) && $classprefix[0] === '<') {
+                $html .= '<li>'.$item->asHtmlLink($classprefix, $svg).'</li>';
             }
+            else {
+                if($classprefix !== false) {
+                    $class = ' class="' . $classprefix . $item->getType() . '"';
+                } else {
+                    $class = '';
+                }
 
-            $html .= "<li$class>";
-            $html .= $item->asHtmlLink(false, $svg);
-            $html .= '</li>';
+                $html .= "<li$class>";
+                $html .= $item->asHtmlLink(false, $svg);
+                $html .= '</li>';
+            }
         }
         return $html;
     }
