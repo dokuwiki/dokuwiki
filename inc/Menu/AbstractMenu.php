@@ -73,9 +73,9 @@ abstract class AbstractMenu implements MenuInterface {
      * This is a convenience method for template authors. If you need more fine control over the
      * output, use getItems() and build the HTML yourself
      * 
-     * Instead of a classprefix, you can also supply a tgemplate to use. The template may contain
-     * the substitution strings %type%, %scv% and %label% where you want the respecrtive parts
-     * to appear. The string must begin with a '<' character. Example for the writr template:
+     * Instead of a classprefix, you can also supply a template to use. The template may contain
+     * the substitution strings %type%, %scv% and %label% where you want the respective parts
+     * to appear. The string must begin with a '<' character. Example for the "writr" template:
      * <span class="icon">%svg%</span> <span class="a11y">%label%</span>
      *
      * @param string|false $classprefix create a class from type with this prefix, or html, false for no class
