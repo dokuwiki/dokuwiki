@@ -73,9 +73,9 @@ abstract class AbstractMenu implements MenuInterface {
      * output, use getItems() and build the HTML yourself
      * 
      * Instead of a classprefix, you can also supply a template to use. The template may contain
-     * the substitution strings %type%, %svg% and %label% where you want the respective parts
+     * the substitution strings %TYPE%, %SVG% and %LABEL% where you want the respective parts
      * to appear. The string must begin with a '<' character. Example for the "writr" template:
-     * <span class="icon">%svg%</span> <span class="a11y">%label%</span>
+     * <span class="icon">%SVG%</span> <span class="a11y">%LABEL%</span>
      *
      * @param string|false $classprefix create a class from type with this prefix, or html, false for no class
      * @param bool $svg add the SVG link
