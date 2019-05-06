@@ -46,6 +46,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
             }
             $this->cando['getUsers']     = true;
             $this->cando['getUserCount'] = true;
+            $this->cando['getGroups']    = true;
         }
 
         $this->_pregsplit_safe = version_compare(PCRE_VERSION,'6.7','>=');
@@ -302,6 +303,29 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
         }
 
         return $out;
+    }
+
+    /**
+     * Retrieves groups.
+     * Loads complete user data into memory before searching for groups.
+     *
+     * @param   int   $start index of first group to be returned
+     * @param   int   $limit max number of groups to be returned
+     * @return  array
+     */
+    public function retrieveGroups($start = 0, $limit = 0)
+    {
+        $groups = [];
+
+        if ($this->users === null) $this->_loadUserData();
+        foreach($this->users as $user => $info) {
+            $groups = array_merge($groups, array_diff($info['grps'], $groups));
+        }
+
+        if($limit > 0) {
+            return array_splice($groups, $start, $limit);
+        }
+        return array_splice($groups, $start);
     }
 
     /**
