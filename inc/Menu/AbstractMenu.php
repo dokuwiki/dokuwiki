@@ -34,7 +34,6 @@ abstract class AbstractMenu implements MenuInterface {
     /**
      * Get the list of action items in this menu
      *
-     * @param array $template template array
      * @return AbstractItem[]
      * @triggers MENU_ITEMS_ASSEMBLY
      */
@@ -74,7 +73,7 @@ abstract class AbstractMenu implements MenuInterface {
      * output, use getItems() and build the HTML yourself
      * 
      * Instead of a classprefix, you can also supply a template to use. The template may contain
-     * the substitution strings %type%, %scv% and %label% where you want the respective parts
+     * the substitution strings %type%, %svg% and %label% where you want the respective parts
      * to appear. The string must begin with a '<' character. Example for the "writr" template:
      * <span class="icon">%svg%</span> <span class="a11y">%label%</span>
      *
