@@ -1530,7 +1530,7 @@ function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
             'difftype' => $difftype,
         );
     }
-    return  '<a class="' . $linktype . '" href="' . wl($ID, $urlparam) . '" title="' . $lang[$linktype] . '">' .
+    return  '<a class="' . $linktype . '" href="' . urldecode(wl($ID, $urlparam)) . '" title="' . $lang[$linktype] . '">' .
                 '<span>' . $lang[$linktype] . '</span>' .
             '</a>' . "\n";
 }
