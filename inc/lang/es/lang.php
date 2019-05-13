@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Francisco Reina <fjreina@dominicanatours.com>
  * @author Liliana <lilianasaidon@gmail.com>
  * @author Alex Cachinero <anarres@protonmail.com>
  * @author WIRESLINKEA <wireslinkea@gmail.com>
