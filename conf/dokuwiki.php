@@ -158,6 +158,10 @@ $conf['renderer_xhtml'] = 'xhtml';       //renderer to use for main page generat
 $conf['readdircache'] = 0;               //time cache in second for the readdir operation, 0 to deactivate.
 $conf['search_nslimit'] = 0;             //limit the search to the current X namespaces
 $conf['search_fragment'] = 'exact';      //specify the default fragment search behavior
+$conf['rev_handle'] = 'normal';          //when displaying an old page revision:
+                                         //  'normal': parese as normal wiki page
+                                         //  'only_media': parse links as in normal wiki page, medias as in "&at="
+                                         //  'at': use "&at=" instead of "&rev=" in "Old revisions" list
 
 /* Network Settings */
 $conf['dnslookups'] = 1;                 //disable to disallow IP to hostname lookups

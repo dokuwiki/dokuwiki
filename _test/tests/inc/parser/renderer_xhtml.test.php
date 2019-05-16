@@ -270,4 +270,165 @@ class renderer_xhtml_test extends DokuWikiTest {
         $expected = '<a href="/./doku.php?id='.$id.'" class="wikilink1" title="'.$id.'">0</a>';
         $this->assertEquals($expected, trim($this->R->doc));
     }
+
+    public function test_internallink_exists() {
+        global $conf;
+        $id = 'mailinglist';
+
+        $conf['rev_handle'] = 'normal';
+
+        $this->R->internallink($id);
+        $expected = '<a href="/./doku.php?id='.$id.'" class="wikilink1" title="'.$id.'">'.$id.'</a>';
+        $this->assertEquals($expected, trim($this->R->doc));
+    }
+
+    public function test_internallink_no_exists() {
+        global $conf;
+        $id = 'mailinglist_no_exists';
+
+        $conf['rev_handle'] = 'normal';
+
+        $this->R->internallink($id);
+        $expected = '<a href="/./doku.php?id='.$id.'" class="wikilink2" title="'.$id.'" rel="nofollow">'.$id.'</a>';
+        $this->assertEquals($expected, trim($this->R->doc));
+    }
+
+    public function test_internallink_date_at_exists() {
+        global $conf;
+        $id = 'mailinglist';
+        $rev = @filemtime(wikiFN($id));
+
+        $conf['rev_handle'] = 'normal';
+
+        $this->R->date_at = $rev;
+        $this->R->internallink($id);
+        $expected = '<a href="/./doku.php?id='.$id.'&amp;at='.$this->R->date_at .
+            '" class="wikilink1" title="'.$id.'">'.$id.'</a>';
+        $this->assertEquals($expected, trim($this->R->doc));
+    }
+
+    public function test_internallink_date_at_no_exists() {
+        global $conf;
+        $id = 'mailinglist';
+        $rev = 1; //some no existing revision
+
+        $conf['rev_handle'] = 'normal';
+
+        $this->R->date_at = $rev;
+        $this->R->internallink($id);
+        $expected = '<a href="/./doku.php?id='.$id.'&amp;at='.$this->R->date_at .
+            '" class="wikilink2" title="'.$id.'" rel="nofollow">'.$id.'</a>';
+        $this->assertEquals($expected, trim($this->R->doc));
+    }
+
+    public function test_internallink_date_at_rev_handling_only_media() {
+        global $conf;
+        $id = 'mailinglist';
+        $rev = @filemtime(wikiFN($id));
+
+        $conf['rev_handle'] = 'only_media';
+
+        $this->R->date_at = $rev;
+        $this->R->internallink($id);
+        $expected = '<a href="/./doku.php?id='.$id.'" class="wikilink1" title="'.$id.'">'.$id.'</a>';
+        $this->assertEquals($expected, trim($this->R->doc));
+    }
+
+    public function test_internalmedia_exists() {
+        global $conf;
+        $id = 'wiki:kind_zu_katze.png';
+
+        $conf['rev_handle'] = 'normal';
+        $this->R->internalmedia($id);
+        $expected = '<a href="/./lib/exe/detail.php?id=&amp;cache=&amp;media='.$id . '" class="media" title="'.$id .
+            '"><img src="/./lib/exe/fetch.php?cache=&amp;media='.$id.'" class="media" alt="" /></a>';
+        $this->assertEquals($expected, trim($this->R->doc));
+
+    }
+
+    public function test_internalmedia_no_exists() {
+        global $conf;
+        $id = 'wiki:kind_zu_katze_no_exists.png';
+
+        $conf['rev_handle'] = 'normal';
+        $this->R->internalmedia($id);
+        $expected = '<a href="/./lib/exe/detail.php?id=&amp;cache=&amp;media='.$id.'" class="media wikilink2" title="'.$id .
+            '"><img src="/./lib/exe/fetch.php?cache=&amp;media='.$id.'" class="media" alt="" /></a>';
+        $this->assertEquals($expected, trim($this->R->doc));
+
+    }
+
+    public function test_internalmedia_date_at_revision_equal_media_revision() {
+        global $conf;
+        $media_id = 'internalmedia_date_at.png';
+        $ftmp = mediaFN($media_id);
+
+        //upload initial version
+        media_save(array('name' => mediaFN('wiki:dokuwiki-128.png')), $media_id, true, AUTH_UPLOAD, 'copy');
+        $rev = @filemtime($ftmp);
+
+        $this->waitForTick(true);
+        //upload new vesion
+        $stat = media_save(array('name' => mediaFN('wiki:kind_zu_katze.png')), $media_id, true, AUTH_UPLOAD, 'copy');
+
+        $conf['rev_handle'] = 'normal';
+
+        $this->R->date_at = $rev;
+        $this->R->internalmedia($media_id);
+        $expected = '<a href="/./lib/exe/detail.php?id=&amp;cache=&amp;rev='.$rev.'&amp;media='.$media_id . '" class="media" title="'.$media_id .
+            '"><img src="/./lib/exe/fetch.php?cache=&amp;rev='.$rev.'&amp;media='.$media_id.'" class="media" alt="" /></a>';
+        $this->assertEquals($expected, trim($this->R->doc));
+
+    }
+
+    public function test_internalmedia_date_at_revision_younger_than_media_revision() {
+        global $conf;
+        $media_id = 'internalmedia_date_at.png';
+        $ftmp = mediaFN($media_id);
+
+        //upload initial version
+        media_save(array('name' => mediaFN('wiki:dokuwiki-128.png')), $media_id, true, AUTH_UPLOAD, 'copy');
+        $rev = @filemtime($ftmp);
+
+        //wait two ticks
+        $this->waitForTick(true);
+        $this->waitForTick();
+
+        //upload new vesion
+        $stat = media_save(array('name' => mediaFN('wiki:kind_zu_katze.png')), $media_id, true, AUTH_UPLOAD, 'copy');
+
+        $conf['rev_handle'] = 'normal';
+
+        //younger than actual rev
+        $rev -= 1;
+        $this->R->date_at = $rev;
+        $this->R->internalmedia($media_id);
+        $expected = '<a href="/./lib/exe/detail.php?id=&amp;cache=&amp;rev='.$rev.'&amp;media='.$media_id . '" class="media" title="'.$media_id .
+            '"><img src="/./lib/exe/fetch.php?cache=&amp;rev='.$rev.'&amp;media='.$media_id.'" class="media" alt="" /></a>';
+        $this->assertEquals($expected, trim($this->R->doc));
+
+    }
+
+    public function test_internalmedia_date_at_rev_handle_media_only() {
+        global $conf;
+        $media_id = 'internalmedia_date_at.png';
+        $ftmp = mediaFN($media_id);
+
+        //upload initial version
+        media_save(array('name' => mediaFN('wiki:dokuwiki-128.png')), $media_id, true, AUTH_UPLOAD, 'copy');
+        $rev = @filemtime($ftmp);
+
+        $this->waitForTick(true);
+        //upload new vesion
+        $stat = media_save(array('name' => mediaFN('wiki:kind_zu_katze.png')), $media_id, true, AUTH_UPLOAD, 'copy');
+
+        $conf['rev_handle'] = 'media_only';
+
+        $this->R->date_at = $rev;
+        $this->R->internalmedia($media_id);
+        $expected = '<a href="/./lib/exe/detail.php?id=&amp;cache=&amp;rev='.$rev.'&amp;media='.$media_id . '" class="media" title="'.$media_id .
+            '"><img src="/./lib/exe/fetch.php?cache=&amp;rev='.$rev.'&amp;media='.$media_id.'" class="media" alt="" /></a>';
+        $this->assertEquals($expected, trim($this->R->doc));
+
+    }
 }

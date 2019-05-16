@@ -248,7 +248,7 @@ function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label
 /**
  * show a revision warning
  *
- * @author Szymon Olewniczak <dokuwiki@imz.re>
+ * @author Szymon Olewniczak <solewniczak@rid.pl>
  */
 function html_showrev() {
     print p_locale_xhtml('showrev');
@@ -387,6 +387,40 @@ function html_locked(){
 }
 
 /**
+ * Return the link to old page or media revision
+ *
+ * @author Szymon Olewniczak <solewniczak@rid.pl>
+ *
+ * @param $id
+ * @param $rev
+ * @param $separator
+ * @param $func may be "wl" or "ml"
+ * @return string
+ */
+function html_revision_link($id, $rev, $func='wl', $separator='&amp;') {
+    global $conf;
+
+    if ($func !== 'wl' && $func !== 'ml') {
+        msg('html_revision_link: $func should be "wl" or "ml". falling back to "wl"', -1);
+        $func = 'wl';
+    }
+
+    $rev_var = 'rev';
+    if ($conf['rev_handle'] != 'normal') {
+        $rev_var = 'at';
+    }
+
+    $urlParameters = "$rev_var=$rev";
+    if ($func === 'wl') {
+        //function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp;')
+        return wl($id, $urlParameters, false, $separator);
+    } elseif ($func == 'ml') {
+        //functin ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
+        return ml($id, $urlParameters, true, $separator, false);
+    }
+}
+
+/**
  * list old revisions
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -478,7 +512,7 @@ function html_revisions($first=0, $media_id = false){
             $pagelog = new PageChangeLog($ID);
             $latestrev = $pagelog->getRevisions(-1, 1);
             $latestrev = array_pop($latestrev);
-            $href = wl($id,"rev=$latestrev",false,'&');
+            $href = html_revision_link($id, $latestrev, 'wl', '&');
             $summary = $INFO['sum'];
             $editor = $INFO['editor'];
         }
@@ -571,7 +605,7 @@ function html_revisions($first=0, $media_id = false){
             $form->addElement(form_makeCloseTag('a'));
 
             if (!$media_id) {
-                $href = wl($id,"rev=$rev",false,'&');
+                $href = html_revision_link($id, $rev, 'wl','&');
             } else {
                 $href = media_managerURL(array('image' => $id, 'tab_details' => 'view', 'rev' => $rev), '&');
             }
@@ -1109,7 +1143,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
         if ($l_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $l_minor = 'class="minor"';
 
         $l_head_title = ($media) ? dformat($l_rev) : $id.' ['.dformat($l_rev).']';
-        $l_head = '<bdi><a class="wikilink1" href="'.$ml_or_wl($id,"rev=$l_rev").'">'.
+        $l_head = '<bdi><a class="wikilink1" href="'.html_revision_link($id, $l_rev, $ml_or_wl).'">'.
         $l_head_title.'</a></bdi>'.
         $head_separator.$l_user.' '.$l_sum;
     }
@@ -1127,7 +1161,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
         if ($r_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
 
         $r_head_title = ($media) ? dformat($r_rev) : $id.' ['.dformat($r_rev).']';
-        $r_head = '<bdi><a class="wikilink1" href="'.$ml_or_wl($id,"rev=$r_rev").'">'.
+        $r_head = '<bdi><a class="wikilink1" href="'.html_revision_link($id, $r_rev, $ml_or_wl).'">'.
         $r_head_title.'</a></bdi>'.
         $head_separator.$r_user.' '.$r_sum;
     }elseif($_rev = @filemtime($media_or_wikiFN($id))){

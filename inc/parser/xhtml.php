@@ -894,7 +894,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $default = $this->_simpleTitle($id);
 
         // now first resolve and clean up the $id
-        resolve_pageid(getNS($ID), $id, $exists, $this->date_at, true);
+        if ($conf['rev_handle'] == 'only_media') {
+            $date_at = '';
+        } else {
+            $date_at = $this->date_at;
+        }
+        resolve_pageid(getNS($ID), $id, $exists, $date_at, true);
 
         $link = array();
         $name = $this->_getLinkTitle($name, $default, $isImage, $id, $linktype);
@@ -925,7 +930,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
         $link['more']   = '';
         $link['class']  = $class;
-        if($this->date_at) {
+        if($this->date_at && $conf['rev_handle'] != 'only_media') {
             $params = $params.'&at='.rawurlencode($this->date_at);
         }
         $link['url']    = wl($id, $params);

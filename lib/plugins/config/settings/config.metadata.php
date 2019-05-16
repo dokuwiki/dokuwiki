@@ -221,6 +221,7 @@ $meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => ar
 $meta['readdircache'] = array('numeric');
 $meta['search_nslimit'] = array('numeric', '_min' => 0);
 $meta['search_fragment'] = array('multichoice','_choices' => array('exact', 'starts_with', 'ends_with', 'contains'),);
+$meta['rev_handle']   = array('multichoice','_choices' => array('normal','only_media','at'));
 
 $meta['_network']    = array('fieldset');
 $meta['dnslookups']  = array('onoff');
