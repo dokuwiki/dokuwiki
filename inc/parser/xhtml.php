@@ -933,7 +933,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if($this->date_at && $conf['rev_handle'] != 'only_media') {
             $params = $params.'&at='.rawurlencode($this->date_at);
         }
-        $link['url']    = wl($id, $params);
+        $link['url']    = wl($id, ltrim($params,'&'));
         $link['name']   = $name;
         $link['title']  = $id;
         //add search string
