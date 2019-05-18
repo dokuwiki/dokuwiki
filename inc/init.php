@@ -373,7 +373,7 @@ function init_path($path,$required=null){
     // check readability
     if(!@is_readable($p)){
         if($required !== NULL) {
-            nice_die("$self_help_path is not readable. Check your permissions. $self_help_link");
+            nice_die("$self_help_path is not readable. Check your permissions. ".DOKU_SETUP_SELFHELP_LINK);
         }
         return '';
     }
@@ -381,7 +381,7 @@ function init_path($path,$required=null){
     // check writability
     if(!@is_writable($p)){
         if($required !== NULL) {
-            nice_die("$self_help_path is not writable. Check your permissions. $self_help_link");
+            nice_die("$self_help_path is not writable. Check your permissions. ".DOKU_SETUP_SELFHELP_LINK);
         }
         return '';
     }
@@ -389,7 +389,7 @@ function init_path($path,$required=null){
     // check accessability (execute bit) for directories
     if(@is_dir($p) && !file_exists("$p/.")){
         if($required !== NULL) {
-            nice_die("$self_help_path directory is not executable/listable. Check your permissions. $self_help_link");
+            nice_die("$self_help_path directory is not executable/listable. Check your permissions. ".DOKU_SETUP_SELFHELP_LINK);
         }
         return '';
     }
