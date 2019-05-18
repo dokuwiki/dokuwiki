@@ -133,6 +133,10 @@ if(!defined('DOKU_TPLINC')) {
     define('DOKU_TPLINC', DOKU_INC.'lib/tpl/'.$conf['template'].'/');
 }
 
+// Self-help URL for DokuWiki Setup Error page
+define('DOKU_SETUP_SELFHELP_URL', "https://www.dokuwiki.org/install:permissions");
+define('DOKU_SETUP_SELFHELP_LINK',"<hr />See <a href=\"$self_help_url\">https://www.dokuwiki.org/install:permissions</a>");
+
 // make session rewrites XHTML compliant
 @ini_set('arg_separator.output', '&amp;');
 
@@ -271,7 +275,7 @@ function init_paths(){
 
     foreach($paths as $c => $p) {
         $path = empty($conf[$c]) ? $conf['savedir'].'/'.$p : $conf[$c];
-        $conf[$c] = init_path($path);
+        $conf[$c] = init_path($path,TRUE);
         if(empty($conf[$c]))
             nice_die("The $c ('$p') at $path is not found, isn't accessible or writable.
                 You should check your config and permission settings.
@@ -332,7 +336,7 @@ function init_files(){
                 fclose($fh);
                 if(!empty($conf['fperm'])) chmod($file, $conf['fperm']);
             }else{
-                nice_die("$file is not writable. Check your permissions settings!");
+                nice_die("$file could not be opened for append. Check your permissions. ".DOKU_SETUP_SELFHELP_LINK);
             }
         }
     }
@@ -350,23 +354,43 @@ function init_files(){
  *
  * @return bool|string
  */
-function init_path($path){
+function init_path($path,$required=null){
     // check existence
     $p = fullpath($path);
+
+    $self_help_path = preg_replace("/^\.?/","&lt;DOKUWIKI&gt;", $path);
+
     if(!file_exists($p)){
         $p = fullpath(DOKU_INC.$path);
         if(!file_exists($p)){
+            if($required !== NULL) {
+                nice_die("$self_help_path does not exist. Check your permissions. ".DOKU_SETUP_SELFHELP_LINK);
+            }
             return '';
         }
     }
 
+    // check readability
+    if(!@is_readable($p)){
+        if($required !== NULL) {
+            nice_die("$self_help_path is not readable. Check your permissions. $self_help_link");
+        }
+        return '';
+    }
+
     // check writability
     if(!@is_writable($p)){
+        if($required !== NULL) {
+            nice_die("$self_help_path is not writable. Check your permissions. $self_help_link");
+        }
         return '';
     }
 
     // check accessability (execute bit) for directories
     if(@is_dir($p) && !file_exists("$p/.")){
+        if($required !== NULL) {
+            nice_die("$self_help_path directory is not executable/listable. Check your permissions. $self_help_link");
+        }
         return '';
     }
 
