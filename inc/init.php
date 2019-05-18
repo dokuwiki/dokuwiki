@@ -135,7 +135,7 @@ if(!defined('DOKU_TPLINC')) {
 
 // Self-help URL for DokuWiki Setup Error page
 define('DOKU_SETUP_SELFHELP_URL', "https://www.dokuwiki.org/install:permissions");
-define('DOKU_SETUP_SELFHELP_LINK',"<hr />See <a href=\"$self_help_url\">https://www.dokuwiki.org/install:permissions</a>");
+define('DOKU_SETUP_SELFHELP_LINK',"<hr />You may wish to:<ul><li>Run the <a href=\"install.php\">DokuWiki installer</a></li><li>Review <a href=\"$self_help_url\">https://www.dokuwiki.org/install:permissions</a></li></ul>");
 
 // make session rewrites XHTML compliant
 @ini_set('arg_separator.output', '&amp;');
