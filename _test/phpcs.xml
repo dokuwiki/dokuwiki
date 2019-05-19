@@ -69,12 +69,15 @@
 
     <!-- underscore skips exposing public methods to remote api -->
     <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
-        <exclude-pattern>*/lib/plugins/remote.php</exclude-pattern>
+        <exclude-pattern>*/inc/Extension/RemotePlugin.php</exclude-pattern>
         <exclude-pattern>*/lib/plugins/*/remote.php</exclude-pattern>
         <exclude-pattern>*/lib/plugins/*/remote/*.php</exclude-pattern>
     </rule>
 
     <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+        <exclude-pattern>*/inc/Extension/PluginInterface.php</exclude-pattern>
+        <exclude-pattern>*/inc/Extension/PluginTrait.php</exclude-pattern>
+
         <exclude-pattern>*/inc/parser/*</exclude-pattern>
     </rule>
 
