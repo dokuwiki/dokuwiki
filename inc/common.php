@@ -1646,34 +1646,27 @@ function unslash($string, $char = "'") {
 /**
  * Convert php.ini shorthands to byte
  *
- * @author <gilthans dot NO dot SPAM at gmail dot com>
- * @link   http://php.net/manual/en/ini.core.php#79564
+ * On 32 bit systems values >= 2GB will fail!
  *
- * @param string $v shorthands
- * @return int|string
+ * -1 (infinite size) will be reported as -1
+ *
+ * @link   https://www.php.net/manual/en/faq.using.php#faq.using.shorthandbytes
+ * @param string $value PHP size shorthand
+ * @return int
  */
-function php_to_byte($v) {
-    $l   = substr($v, -1);
-    $ret = substr($v, 0, -1);
-    switch(strtoupper($l)) {
-        /** @noinspection PhpMissingBreakStatementInspection */
-        case 'P':
-            $ret *= 1024;
-        /** @noinspection PhpMissingBreakStatementInspection */
-        case 'T':
-            $ret *= 1024;
-        /** @noinspection PhpMissingBreakStatementInspection */
+function php_to_byte($value) {
+    switch (strtoupper(substr($value,-1))) {
         case 'G':
-            $ret *= 1024;
-        /** @noinspection PhpMissingBreakStatementInspection */
+            $ret = intval(substr($value, 0, -1)) * 1024 * 1024 * 1024;
+            break;
         case 'M':
-            $ret *= 1024;
-        /** @noinspection PhpMissingBreakStatementInspection */
+            $ret = intval(substr($value, 0, -1)) * 1024 * 1024;
+            break;
         case 'K':
-            $ret *= 1024;
+            $ret = intval(substr($value, 0, -1)) * 1024;
             break;
         default;
-            $ret *= 10;
+            $ret = intval($value);
             break;
     }
     return $ret;
