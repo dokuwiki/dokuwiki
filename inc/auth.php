@@ -11,6 +11,7 @@
 
 // some ACL level defines
 use dokuwiki\PassHash;
+use dokuwiki\Subscriptions\RegistrationSubscriptionSender;
 
 define('AUTH_NONE', 0);
 define('AUTH_READ', 1);
@@ -887,8 +888,8 @@ function register() {
     }
 
     // send notification about the new user
-    $subscription = new Subscription();
-    $subscription->send_register($login, $fullname, $email);
+    $subscription = new RegistrationSubscriptionSender();
+    $subscription->sendRegister($login, $fullname, $email);
 
     // are we done?
     if(!$conf['autopasswd']) {

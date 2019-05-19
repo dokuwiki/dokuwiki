@@ -72,7 +72,6 @@ function load_autoload($name){
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
         'Sitemapper'            => DOKU_INC.'inc/Sitemapper.php',
         'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
-        'Subscription'          => DOKU_INC.'inc/subscription.php',
 
         'DokuWiki_PluginInterface' => DOKU_INC.'inc/PluginInterface.php',
         'DokuWiki_PluginTrait'     => DOKU_INC.'inc/PluginTrait.php',

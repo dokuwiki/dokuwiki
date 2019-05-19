@@ -9,6 +9,8 @@
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Subscriptions\PageSubscriptionSender;
+use dokuwiki\Subscriptions\SubscriberManager;
 
 /**
  * These constants are used with the recents function
@@ -214,8 +216,8 @@ function pageinfo() {
     $info['rev'] = $REV;
 
     if($INPUT->server->has('REMOTE_USER')) {
-        $sub = new Subscription();
-        $info['subscribed'] = $sub->user_subscription();
+        $subManager = new SubscriberManager();
+        $info['subscribed'] = $subManager->userSubscription();
     } else {
         $info['subscribed'] = false;
     }
@@ -1488,8 +1490,8 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
     }
 
     // prepare content
-    $subscription = new Subscription();
-    return $subscription->send_diff($to, $tpl, $id, $rev, $summary);
+    $subscription = new PageSubscriptionSender();
+    return $subscription->sendPageDiff($to, $tpl, $id, $rev, $summary);
 }
 
 /**
