@@ -135,7 +135,7 @@ function check(){
 
     $mem = (int) php_to_byte(ini_get('memory_limit'));
     if($mem){
-        if($mem == -1) {
+        if($mem === -1) {
             msg('PHP memory is unlimited', 1);
         } else if($mem < 16777216){
             msg('PHP is limited to less than 16MB RAM ('.filesize_h($mem).'). Increase memory_limit in php.ini',-1);
