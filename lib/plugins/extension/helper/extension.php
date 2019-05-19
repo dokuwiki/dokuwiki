@@ -7,6 +7,7 @@
  */
 
 use dokuwiki\HTTP\DokuHTTPClient;
+use dokuwiki\Extension\PluginController;
 
 /**
  * Class helper_plugin_extension_extension represents a single extension (plugin or template)
@@ -144,7 +145,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         global $conf;
         if ($this->id == $conf['authtype']) return true;
 
-        /** @var Doku_Plugin_Controller $plugin_controller */
+        /** @var PluginController $plugin_controller */
         global $plugin_controller;
         $cascade = $plugin_controller->getCascade();
         return (isset($cascade['protected'][$this->id]) && $cascade['protected'][$this->id]);
@@ -172,7 +173,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
             return ($conf['template'] == $this->getBase());
         }
 
-        /* @var Doku_Plugin_Controller $plugin_controller */
+        /* @var PluginController $plugin_controller */
         global $plugin_controller;
         return !$plugin_controller->isdisabled($this->base);
     }
@@ -360,7 +361,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getMissingDependencies()
     {
-        /* @var Doku_Plugin_Controller $plugin_controller */
+        /* @var PluginController $plugin_controller */
         global $plugin_controller;
         $dependencies = $this->getDependencies();
         $missing_dependencies = array();
@@ -714,7 +715,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         if (!$this->isInstalled()) return $this->getLang('notinstalled');
         if ($this->isEnabled()) return $this->getLang('alreadyenabled');
 
-        /* @var Doku_Plugin_Controller $plugin_controller */
+        /* @var PluginController $plugin_controller */
         global $plugin_controller;
         if ($plugin_controller->enable($this->base)) {
             $this->purgeCache();
@@ -733,7 +734,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     {
         if ($this->isTemplate()) return $this->getLang('notimplemented');
 
-        /* @var Doku_Plugin_Controller $plugin_controller */
+        /* @var PluginController $plugin_controller */
         global $plugin_controller;
         if (!$this->isInstalled()) return $this->getLang('notinstalled');
         if (!$this->isEnabled()) return $this->getLang('alreadydisabled');
@@ -771,11 +772,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         if (is_readable($infopath)) {
             $this->localInfo = confToHash($infopath);
         } elseif (!$this->isTemplate() && $this->isEnabled()) {
-            global $plugin_types;
             $path       = $this->getInstallDir().'/';
             $plugin     = null;
 
-            foreach ($plugin_types as $type) {
+            foreach (PluginController::PLUGIN_TYPES as $type) {
                 if (file_exists($path.$type.'.php')) {
                     $plugin = plugin_load($type, $this->base);
                     if ($plugin) break;

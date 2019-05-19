@@ -165,7 +165,6 @@ class HTTPClient {
         $this->start  = $this->time();
         $this->error  = '';
         $this->status = 0;
-        $this->status = 0;
         $this->resp_body = '';
         $this->resp_headers = array();
 

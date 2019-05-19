@@ -11,6 +11,9 @@
  * (scheme.conf & stopwords.conf), e.g.
  * !gopher
  */
+
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\Event;
 const DOKU_CONF_NEGATION = '!';
 
 /**
@@ -145,7 +148,7 @@ function getCdnUrls() {
         'versions' => $versions,
         'src' => &$src
     );
-    $event = new Doku_Event('CONFUTIL_CDN_SELECT', $data);
+    $event = new Event('CONFUTIL_CDN_SELECT', $data);
     if($event->advise_before()) {
         if(!$conf['jquerycdn']) {
             $jqmod = md5(join('-', $versions));
@@ -350,7 +353,7 @@ function actionOK($action){
     static $disabled = null;
     if(is_null($disabled) || defined('SIMPLE_TEST')){
         global $conf;
-        /** @var DokuWiki_Auth_Plugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
 
         // prepare disabled actions array and handle legacy options

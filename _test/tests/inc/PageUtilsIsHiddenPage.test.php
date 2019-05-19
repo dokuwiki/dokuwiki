@@ -41,7 +41,7 @@ class PageUtilsIsHiddenPageTest extends DokuWikiTest {
         $this->assertTrue(isHiddenPage('another'));
     }
 
-    function alwaysHide(Doku_Event &$event, $params) {
+    function alwaysHide(Doku_Event $event, $params) {
         $event->data['hidden'] = true;
     }
 
@@ -53,7 +53,7 @@ class PageUtilsIsHiddenPageTest extends DokuWikiTest {
         $this->assertFalse(isHiddenPage('test'));
     }
 
-    function showBefore(Doku_Event &$event, $params) {
+    function showBefore(Doku_Event $event, $params) {
         $event->data['hidden'] = false;
         $event->preventDefault();
         $event->stopPropagation();
@@ -75,7 +75,7 @@ class PageUtilsIsHiddenPageTest extends DokuWikiTest {
         $this->assertTrue(isHiddenPage('another'));
     }
 
-    function hideBeforeWithoutPrevent(Doku_Event &$event, $params) {
+    function hideBeforeWithoutPrevent(Doku_Event $event, $params) {
         $event->data['hidden'] = true;
     }
 
@@ -87,7 +87,7 @@ class PageUtilsIsHiddenPageTest extends DokuWikiTest {
         $this->assertFalse(isHiddenPage('test'));
     }
 
-    function showAfter(Doku_Event &$event, $params) {
+    function showAfter(Doku_Event $event, $params) {
         $event->data['hidden'] = false;
     }
 

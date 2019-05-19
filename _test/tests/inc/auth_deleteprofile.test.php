@@ -1,13 +1,14 @@
 <?php
 
 use dokuwiki\Input\Input;
+use dokuwiki\Extension\AuthPlugin;
 
-class Mock_Auth_Plugin extends DokuWiki_Auth_Plugin {
+class Mock_Auth_Plugin extends AuthPlugin {
 
-	public $loggedOff = false;
+    public $loggedOff = false;
 
     public function __construct($canDeleteUser = true) {
-		$this->cando['delUser'] = $canDeleteUser;
+        $this->cando['delUser'] = $canDeleteUser;
     }
 
     public function checkPass($user, $pass) {
@@ -15,11 +16,11 @@ class Mock_Auth_Plugin extends DokuWiki_Auth_Plugin {
     }
 
     public function deleteUsers($users) {
-    	return in_array($_SERVER['REMOTE_USER'], $users);
+        return in_array($_SERVER['REMOTE_USER'], $users);
     }
 
     public function logoff() {
-    	$this->loggedOff = true;
+        $this->loggedOff = true;
     }
 
 }
@@ -29,7 +30,7 @@ class auth_deleteprofile_test extends DokuWikiTest {
     /*
      * Tests:
      *
-     * 1.   It works and the user is logged off 
+     * 1.   It works and the user is logged off
      * 2.   Password matches when config requires it
      * 3,4. Auth plugin can prevent & wiki config can prevent
      * 5.  Any of invalid security token, missing/not set 'delete' flag, missing/unchecked 'confirm_delete'

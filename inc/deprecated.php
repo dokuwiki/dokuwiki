@@ -309,7 +309,8 @@ class HTTPClient extends \dokuwiki\HTTP\HTTPClient {
 /**
  * @deprecated since 2019-03-17 use \dokuwiki\HTTP\DokuHTTPClient instead!
  */
-class DokuHTTPClient extends \dokuwiki\HTTP\DokuHTTPClient {
+class DokuHTTPClient extends \dokuwiki\HTTP\DokuHTTPClient
+{
 
     /**
      * @inheritdoc
@@ -320,7 +321,37 @@ class DokuHTTPClient extends \dokuwiki\HTTP\DokuHTTPClient {
         DebugHelper::dbgDeprecatedFunction(dokuwiki\HTTP\DokuHTTPClient::class);
         parent::__construct();
     }
+}
 
+/**
+ * function wrapper to process (create, trigger and destroy) an event
+ *
+ * @param  string   $name               name for the event
+ * @param  mixed    $data               event data
+ * @param  callback $action             (optional, default=NULL) default action, a php callback function
+ * @param  bool     $canPreventDefault  (optional, default=true) can hooks prevent the default action
+ *
+ * @return mixed                        the event results value after all event processing is complete
+ *                                      by default this is the return value of the default action however
+ *                                      it can be set or modified by event handler hooks
+ * @deprecated 2018-06-15
+ */
+function trigger_event($name, &$data, $action=null, $canPreventDefault=true) {
+    dbg_deprecated('\dokuwiki\Extension\Event::createAndTrigger');
+    return \dokuwiki\Extension\Event::createAndTrigger($name, $data, $action, $canPreventDefault);
+}
+
+/**
+ * @inheritdoc
+ * @deprecated 2018-06-15
+ */
+class Doku_Plugin_Controller extends \dokuwiki\Extension\PluginController {
+    /** @inheritdoc */
+    public function __construct()
+    {
+        dbg_deprecated(\dokuwiki\Extension\PluginController::class);
+        parent::__construct();
+    }
 }
 
 

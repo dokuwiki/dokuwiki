@@ -1,8 +1,10 @@
 <?php
 
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\RemotePlugin;
 use dokuwiki\Remote\Api;
 
-class MockAuth extends DokuWiki_Auth_Plugin {
+class MockAuth extends AuthPlugin {
     function isCaseSensitive() { return true; }
 }
 
@@ -77,7 +79,7 @@ class RemoteAPICoreTest {
 
 }
 
-class remote_plugin_testplugin extends DokuWiki_Remote_Plugin {
+class remote_plugin_testplugin extends RemotePlugin {
     function _getMethods() {
         return array(
             'method1' => array(
@@ -110,7 +112,7 @@ class remote_plugin_testplugin extends DokuWiki_Remote_Plugin {
     function publicCall() {return true;}
 }
 
-class remote_plugin_testplugin2 extends DokuWiki_Remote_Plugin {
+class remote_plugin_testplugin2 extends RemotePlugin {
     /**
      * This is a dummy method
      *
@@ -146,7 +148,7 @@ class remote_test extends DokuWikiTest {
         parent::setUp();
 
         // mock plugin controller to return our test plugins
-        $pluginManager = $this->createMock('Doku_Plugin_Controller');
+        $pluginManager = $this->createMock('dokuwiki\Extension\PluginController');
         $pluginManager->method('getList')->willReturn(array('testplugin', 'testplugin2'));
         $pluginManager->method('load')->willReturnCallback(
             function($type, $plugin) {

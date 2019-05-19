@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Extension\Event;
+use dokuwiki\Extension\SyntaxPlugin;
 use dokuwiki\Parsing\Handler\Block;
 use dokuwiki\Parsing\Handler\CallWriter;
 use dokuwiki\Parsing\Handler\CallWriterInterface;
@@ -82,7 +84,7 @@ class Doku_Handler {
             $this->calls = $B->process($this->calls);
         }
 
-        trigger_event('PARSER_HANDLER_DONE',$this);
+        Event::createAndTrigger('PARSER_HANDLER_DONE',$this);
 
         array_unshift($this->calls,array('document_start',array(),0));
         $last_call = end($this->calls);
@@ -226,7 +228,7 @@ class Doku_Handler {
      */
     public function plugin($match, $state, $pos, $pluginname){
         $data = array($match);
-        /** @var DokuWiki_Syntax_Plugin $plugin */
+        /** @var SyntaxPlugin $plugin */
         $plugin = plugin_load('syntax',$pluginname);
         if($plugin != null){
             $data = $plugin->handle($match, $state, $pos, $this);

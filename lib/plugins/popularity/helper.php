@@ -1,13 +1,13 @@
 <?php
 
 use dokuwiki\HTTP\DokuHTTPClient;
+use dokuwiki\Extension\Event;
 
 /**
  * Popularity Feedback Plugin
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
-
 class helper_plugin_popularity extends Dokuwiki_Plugin
 {
     /**
@@ -244,7 +244,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
     protected function addPluginUsageData(&$data)
     {
         $pluginsData = array();
-        trigger_event('PLUGIN_POPULARITY_DATA_SETUP', $pluginsData);
+        Event::createAndTrigger('PLUGIN_POPULARITY_DATA_SETUP', $pluginsData);
         foreach ($pluginsData as $plugin => $d) {
             if (is_array($d)) {
                 foreach ($d as $key => $value) {

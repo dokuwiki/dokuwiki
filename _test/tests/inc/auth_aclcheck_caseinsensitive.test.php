@@ -1,6 +1,8 @@
 <?php
 
-class auth_acl_caseinsensitive_auth extends DokuWiki_Auth_Plugin {
+use dokuwiki\Extension\AuthPlugin;
+
+class auth_acl_caseinsensitive_auth extends AuthPlugin {
     function isCaseSensitive() {
         return false;
     }

@@ -23,7 +23,7 @@ class Resendpwd extends AbstractAclAction {
     public function checkPreconditions() {
         parent::checkPreconditions();
 
-        /** @var \DokuWiki_Auth_Plugin $auth */
+        /** @var \dokuwiki\Extension\AuthPlugin $auth */
         global $auth;
         global $conf;
         if(isset($conf['resendpasswd']) && !$conf['resendpasswd']) throw new ActionDisabledException(); //legacy option
@@ -59,7 +59,7 @@ class Resendpwd extends AbstractAclAction {
     protected function resendpwd() {
         global $lang;
         global $conf;
-        /* @var \DokuWiki_Auth_Plugin $auth */
+        /* @var \dokuwiki\Extension\AuthPlugin $auth */
         global $auth;
         global $INPUT;
 

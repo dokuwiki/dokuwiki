@@ -1,8 +1,8 @@
 <?php
 
-use dokuwiki\test\mock\DokuWiki_Auth_Plugin;
+use dokuwiki\test\mock\AuthPlugin;
 
-class auth_admin_test_AuthInSensitive extends DokuWiki_Auth_Plugin {
+class auth_admin_test_AuthInSensitive extends AuthPlugin {
     function isCaseSensitive(){
         return false;
     }
@@ -20,7 +20,7 @@ class auth_admin_test extends DokuWikiTest {
 
     function setSensitive() {
         global $auth;
-        $auth = new DokuWiki_Auth_Plugin();
+        $auth = new AuthPlugin();
     }
 
     function setInSensitive() {

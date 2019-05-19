@@ -7,6 +7,7 @@
  */
 
 use dokuwiki\HTTP\DokuHTTPClient;
+use dokuwiki\Extension\Event;
 
 /**
  * Removes empty directories
@@ -39,7 +40,7 @@ function io_sweepNS($id,$basedir='datadir'){
             if ($ns_type!==false) {
                 $data = array($id, $ns_type);
                 $delone = true; // we deleted at least one dir
-                trigger_event('IO_NAMESPACE_DELETED', $data);
+                Event::createAndTrigger('IO_NAMESPACE_DELETED', $data);
             }
         } else { return $delone; }
     }
@@ -69,7 +70,7 @@ function io_sweepNS($id,$basedir='datadir'){
 function io_readWikiPage($file, $id, $rev=false) {
     if (empty($rev)) { $rev = false; }
     $data = array(array($file, true), getNS($id), noNS($id), $rev);
-    return trigger_event('IO_WIKIPAGE_READ', $data, '_io_readWikiPage_action', false);
+    return Event::createAndTrigger('IO_WIKIPAGE_READ', $data, '_io_readWikiPage_action', false);
 }
 
 /**
@@ -189,7 +190,7 @@ function io_writeWikiPage($file, $content, $id, $rev=false) {
     if (empty($rev)) { $rev = false; }
     if ($rev===false) { io_createNamespace($id); } // create namespaces as needed
     $data = array(array($file, $content, false), getNS($id), noNS($id), $rev);
-    return trigger_event('IO_WIKIPAGE_WRITE', $data, '_io_writeWikiPage_action', false);
+    return Event::createAndTrigger('IO_WIKIPAGE_WRITE', $data, '_io_writeWikiPage_action', false);
 }
 
 /**
@@ -469,7 +470,7 @@ function io_createNamespace($id, $ns_type='pages') {
     $missing = array_reverse($missing); // inside out
     foreach ($missing as $ns) {
         $data = array($ns, $ns_type);
-        trigger_event('IO_NAMESPACE_CREATED', $data);
+        Event::createAndTrigger('IO_NAMESPACE_CREATED', $data);
     }
 }
 

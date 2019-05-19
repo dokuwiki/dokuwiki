@@ -5,6 +5,7 @@ namespace dokuwiki\Action;
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Subscriptions\SubscriberManager;
+use dokuwiki\Extension\Event;
 
 /**
  * Class Subscribe
@@ -68,7 +69,7 @@ class Subscribe extends AbstractUserAction {
         if(empty($params['action']) || !checkSecurityToken()) return;
 
         // Handle POST data, may throw exception.
-        trigger_event('ACTION_HANDLE_SUBSCRIBE', $params, array($this, 'handlePostData'));
+        Event::createAndTrigger('ACTION_HANDLE_SUBSCRIBE', $params, array($this, 'handlePostData'));
 
         $target = $params['target'];
         $style = $params['style'];
@@ -76,7 +77,7 @@ class Subscribe extends AbstractUserAction {
 
         // Perform action.
         $subManager = new SubscriberManager();
-        if($action == 'unsubscribe') {
+        if($action === 'unsubscribe') {
             $ok = $subManager->remove($target, $INPUT->server->str('REMOTE_USER'), $style);
         } else {
             $ok = $subManager->add($target, $INPUT->server->str('REMOTE_USER'), $style);
@@ -90,15 +91,15 @@ class Subscribe extends AbstractUserAction {
                 ), 1
             );
             throw new ActionAbort('redirect');
-        } else {
-            throw new \Exception(
-                sprintf(
-                    $lang["subscr_{$action}_error"],
-                    hsc($INFO['userinfo']['name']),
-                    prettyprint_id($target)
-                )
-            );
         }
+
+        throw new \Exception(
+            sprintf(
+                $lang["subscr_{$action}_error"],
+                hsc($INFO['userinfo']['name']),
+                prettyprint_id($target)
+            )
+        );
     }
 
     /**

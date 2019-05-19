@@ -9,6 +9,7 @@
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Subscriptions\MediaSubscriptionSender;
+use dokuwiki\Extension\Event;
 
 /**
  * Lists pages which currently use a media file selected for deletion
@@ -266,7 +267,7 @@ function media_delete($id,$auth){
 
     $data['unl'] = false;
     $data['del'] = false;
-    $evt = new Doku_Event('MEDIA_DELETE_FILE',$data);
+    $evt = new Event('MEDIA_DELETE_FILE',$data);
     if ($evt->advise_before()) {
         $old = @filemtime($file);
         if(!file_exists(mediaFN($id, $old)) && file_exists($file)) {
@@ -484,7 +485,7 @@ function media_save($file, $id, $ow, $auth, $move) {
     $data[5] = $move;
 
     // trigger event
-    return trigger_event('MEDIA_UPLOAD_FINISH', $data, '_media_upload_action', true);
+    return Event::createAndTrigger('MEDIA_UPLOAD_FINISH', $data, '_media_upload_action', true);
 }
 
 /**
@@ -1275,7 +1276,7 @@ function media_diff($image, $ns, $auth, $fromajax = false) {
     $data[5] = $fromajax;
 
     // trigger event
-    return trigger_event('MEDIA_DIFF', $data, '_media_file_diff', true);
+    return Event::createAndTrigger('MEDIA_DIFF', $data, '_media_file_diff', true);
 }
 
 /**
@@ -1513,7 +1514,7 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
         'query' => $query
     );
     if (!blank($query)) {
-        $evt = new Doku_Event('MEDIA_SEARCH', $evdata);
+        $evt = new Event('MEDIA_SEARCH', $evdata);
         if ($evt->advise_before()) {
             $dir = utf8_encodeFN(str_replace(':','/',$evdata['ns']));
             $quoted = preg_quote($evdata['query'],'/');

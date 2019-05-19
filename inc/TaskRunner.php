@@ -2,7 +2,7 @@
 
 namespace dokuwiki;
 
-use Doku_Event;
+use dokuwiki\Extension\Event;
 use dokuwiki\Sitemap\Mapper;
 use dokuwiki\Subscriptions\BulkSubscriptionSender;
 use Subscription;
@@ -45,7 +45,7 @@ class TaskRunner
 
         // run one of the jobs
         $tmp = []; // No event data
-        $evt = new Doku_Event('INDEXER_TASKS_RUN', $tmp);
+        $evt = new Event('INDEXER_TASKS_RUN', $tmp);
         if ($evt->advise_before()) {
             $this->runIndexer() or
             $this->runSitemapper() or
@@ -157,7 +157,7 @@ class TaskRunner
                 'trimmedChangelogLines' => $out_lines,
                 'removedChangelogLines' => $extra > 0 ? array_slice($old_lines, 0, -$extra) : $old_lines,
             ];
-            trigger_event('TASK_RECENTCHANGES_TRIM', $eventData);
+            Event::createAndTrigger('TASK_RECENTCHANGES_TRIM', $eventData);
             $out_lines = $eventData['trimmedChangelogLines'];
 
             // save trimmed changelog

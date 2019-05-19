@@ -4,7 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
- */
+ */use dokuwiki\Extension\Event;
 
 /**
  * create snippets for the first few results only
@@ -39,7 +39,7 @@ function ft_pageSearch($query,&$highlight, $sort = null, $after = null, $before 
     ];
     $data['highlight'] =& $highlight;
 
-    return trigger_event('SEARCH_QUERY_FULLPAGE', $data, '_ft_pageSearch');
+    return Event::createAndTrigger('SEARCH_QUERY_FULLPAGE', $data, '_ft_pageSearch');
 }
 
 /**
@@ -93,7 +93,7 @@ function _ft_pageSearch(&$data) {
                         'phrase' => $phrase,
                         'text' => rawWiki($id)
                     );
-                    $evt = new Doku_Event('FULLTEXT_PHRASE_MATCH',$evdata);
+                    $evt = new Event('FULLTEXT_PHRASE_MATCH',$evdata);
                     if ($evt->advise_before() && $evt->result !== true) {
                         $text = utf8_strtolower($evdata['text']);
                         if (strpos($text, $phrase) !== false) {
@@ -244,7 +244,7 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $befor
         'before' => $before
     ];
     $data['has_titles'] = true; // for plugin backward compatibility check
-    return trigger_event('SEARCH_QUERY_PAGELOOKUP', $data, '_ft_pageLookup');
+    return Event::createAndTrigger('SEARCH_QUERY_PAGELOOKUP', $data, '_ft_pageLookup');
 }
 
 /**
@@ -405,7 +405,7 @@ function ft_snippet($id,$highlight){
             'snippet'   => '',
             );
 
-    $evt = new Doku_Event('FULLTEXT_SNIPPET_CREATE',$evdata);
+    $evt = new Event('FULLTEXT_SNIPPET_CREATE',$evdata);
     if ($evt->advise_before()) {
         $match = array();
         $snippets = array();

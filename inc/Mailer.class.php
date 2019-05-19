@@ -9,6 +9,8 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Extension\Event;
+
 // end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
 // think different
 if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL', "\n");
@@ -682,7 +684,7 @@ class Mailer {
         );
 
         // do our thing if BEFORE hook approves
-        $evt = new Doku_Event('MAIL_MESSAGE_SEND', $data);
+        $evt = new Event('MAIL_MESSAGE_SEND', $data);
         if($evt->advise_before(true)) {
             // clean up before using the headers
             $this->cleanHeaders();

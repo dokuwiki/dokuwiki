@@ -8,7 +8,7 @@
  */
 
 // Version tag used to force rebuild on upgrade
-define('INDEXER_VERSION', 8);
+use dokuwiki\Extension\Event;define('INDEXER_VERSION', 8);
 
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
 if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
@@ -69,7 +69,7 @@ function idx_get_version(){
 
         // DokuWiki version is included for the convenience of plugins
         $data = array('dokuwiki'=>$version);
-        trigger_event('INDEXER_VERSION_GET', $data, null, false);
+        Event::createAndTrigger('INDEXER_VERSION_GET', $data, null, false);
         unset($data['dokuwiki']); // this needs to be first
         ksort($data);
         foreach ($data as $plugin=>$vers)
@@ -585,7 +585,7 @@ class Doku_Indexer {
         $stopwords =& idx_get_stopwords();
 
         // prepare the text to be tokenized
-        $evt = new Doku_Event('INDEXER_TEXT_PREPARE', $text);
+        $evt = new Event('INDEXER_TEXT_PREPARE', $text);
         if ($evt->advise_before(true)) {
             if (preg_match('/[^0-9A-Za-z ]/u', $text)) {
                 // handle asian chars as single words (may fail on older PHP version)
@@ -1423,7 +1423,7 @@ function idx_addPage($page, $verbose=false, $force=false) {
         $metadata['relation_media'] = array();
 
     $data = compact('page', 'body', 'metadata', 'pid');
-    $evt = new Doku_Event('INDEXER_PAGE_ADD', $data);
+    $evt = new Event('INDEXER_PAGE_ADD', $data);
     if ($evt->advise_before()) $data['body'] = $data['body'] . " " . rawWiki($page);
     $evt->advise_after();
     unset($evt);

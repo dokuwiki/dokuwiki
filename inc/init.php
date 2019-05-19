@@ -3,6 +3,9 @@
  * Initialize some defaults needed for DokuWiki
  */
 
+use dokuwiki\Extension\Event;
+use dokuwiki\Extension\EventHandler;
+
 /**
  * timing Dokuwiki execution
  *
@@ -189,9 +192,8 @@ init_paths();
 init_files();
 
 // setup plugin controller class (can be overwritten in preload.php)
-$plugin_types = array('auth', 'admin','syntax','action','renderer', 'helper','remote');
 global $plugin_controller_class, $plugin_controller;
-if (empty($plugin_controller_class)) $plugin_controller_class = 'Doku_Plugin_Controller';
+if (empty($plugin_controller_class)) $plugin_controller_class = dokuwiki\Extension\PluginController::class;
 
 // load libraries
 require_once(DOKU_INC.'vendor/autoload.php');
@@ -216,10 +218,10 @@ $plugin_controller = new $plugin_controller_class();
 
 // initialize the event handler
 global $EVENT_HANDLER;
-$EVENT_HANDLER = new Doku_Event_Handler();
+$EVENT_HANDLER = new EventHandler();
 
 $local = $conf['lang'];
-trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
+Event::createAndTrigger('INIT_LANG_LOAD', $local, 'init_lang', true);
 
 
 // setup authentication system

@@ -1,4 +1,9 @@
 <?php
+
+use dokuwiki\Extension\PluginController;
+use dokuwiki\Extension\Event;
+use dokuwiki\Extension\EventHandler;
+
 if(!class_exists('PHPUnit_Framework_TestCase')) {
     /**
      * phpunit 5/6 compatibility
@@ -103,7 +108,7 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
         // reset loaded plugins
         global $plugin_controller_class, $plugin_controller;
-        /** @var Doku_Plugin_Controller $plugin_controller */
+        /** @var PluginController $plugin_controller */
         $plugin_controller = new $plugin_controller_class();
 
         // disable all non-default plugins
@@ -133,11 +138,11 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
         // reset event handler
         global $EVENT_HANDLER;
-        $EVENT_HANDLER = new Doku_Event_Handler();
+        $EVENT_HANDLER = new EventHandler();
 
         // reload language
         $local = $conf['lang'];
-        trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
+        Event::createAndTrigger('INIT_LANG_LOAD', $local, 'init_lang', true);
 
         global $INPUT;
         $INPUT = new \dokuwiki\Input\Input();

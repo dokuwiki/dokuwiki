@@ -11,6 +11,8 @@ use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Subscriptions\PageSubscriptionSender;
 use dokuwiki\Subscriptions\SubscriberManager;
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\Event;
 
 /**
  * These constants are used with the recents function
@@ -757,7 +759,7 @@ function checkwordblock($text = '') {
             $callback = function () {
                 return true;
             };
-            return trigger_event('COMMON_WORDBLOCK_BLOCKED', $data, $callback, true);
+            return Event::createAndTrigger('COMMON_WORDBLOCK_BLOCKED', $data, $callback, true);
         }
     }
     return false;
@@ -1084,7 +1086,7 @@ function pageTemplate($id) {
         'doreplace' => true // should wildcard replacements be done on the text?
     );
 
-    $evt = new Doku_Event('COMMON_PAGETPL_LOAD', $data);
+    $evt = new Event('COMMON_PAGETPL_LOAD', $data);
     if($evt->advise_before(true)) {
         // the before event might have loaded the content already
         if(empty($data['tpl'])) {
@@ -1361,7 +1363,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         $svdta['changeType'] = DOKU_CHANGE_TYPE_MINOR_EDIT;
     }
 
-    $event = new Doku_Event('COMMON_WIKIPAGE_SAVE', $svdta);
+    $event = new Event('COMMON_WIKIPAGE_SAVE', $svdta);
     if(!$event->advise_before()) return;
 
     // if the content has not been changed, no save happens (plugins may override this)
@@ -1380,7 +1382,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     if($svdta['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
         // Send "update" event with empty data, so plugins can react to page deletion
         $data = array(array($svdta['file'], '', false), getNS($id), noNS($id), false);
-        trigger_event('IO_WIKIPAGE_WRITE', $data);
+        Event::createAndTrigger('IO_WIKIPAGE_WRITE', $data);
         // pre-save deleted revision
         @touch($svdta['file']);
         clearstatcache();
@@ -1478,7 +1480,7 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
         if(!actionOK('subscribe')) return false; //subscribers enabled?
         if($conf['useacl'] && $INPUT->server->str('REMOTE_USER') && $minor) return false; //skip minors
         $data = array('id' => $id, 'addresslist' => '', 'self' => false, 'replacements' => $replace);
-        trigger_event(
+        Event::createAndTrigger(
             'COMMON_NOTIFY_ADDRESSLIST', $data,
             array(new Subscription(), 'notifyaddresses')
         );
@@ -1778,7 +1780,7 @@ function editorinfo($username, $textonly = false) {
  */
 function userlink($username = null, $textonly = false) {
     global $conf, $INFO;
-    /** @var DokuWiki_Auth_Plugin $auth */
+    /** @var AuthPlugin $auth */
     global $auth;
     /** @var Input $INPUT */
     global $INPUT;
@@ -1810,7 +1812,7 @@ function userlink($username = null, $textonly = false) {
         }
     }
 
-    $evt = new Doku_Event('COMMON_USER_LINK', $data);
+    $evt = new Event('COMMON_USER_LINK', $data);
     if($evt->advise_before(true)) {
         if(empty($data['name'])) {
             if($auth) $info = $auth->getUserData($username);
