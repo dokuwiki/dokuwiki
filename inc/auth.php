@@ -827,7 +827,7 @@ function auth_sendPassword($user, $password) {
     );
 
     $mail = new Mailer();
-    $mail->to($userinfo['name'].' <'.$userinfo['mail'].'>');
+    $mail->to($mail->getCleanName($userinfo['name']).' <'.$userinfo['mail'].'>');
     $mail->subject($lang['regpwmail']);
     $mail->setBody($text, $trep);
     return $mail->send();
