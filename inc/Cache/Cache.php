@@ -79,10 +79,12 @@ class Cache
         $this->addDependencies();
 
         if ($this->_event) {
-            return $this->stats(Event::createAndTrigger($this->_event, $this, array($this, 'makeDefaultCacheDecision')));
-        } else {
-            return $this->stats($this->makeDefaultCacheDecision());
+            return $this->stats(Event::createAndTrigger(
+                $this->_event, $this, array($this, 'makeDefaultCacheDecision'))
+            );
         }
+
+        return $this->stats($this->makeDefaultCacheDecision());
     }
 
     /**

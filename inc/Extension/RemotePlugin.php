@@ -41,9 +41,13 @@ abstract class RemotePlugin extends Plugin
         foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
             // skip parent methods, only methods further down are exported
             $declaredin = $method->getDeclaringClass()->name;
-            if ($declaredin == 'dokuwiki\Extension\Plugin' || $declaredin == 'dokuwiki\Extension\RemotePlugin') continue;
+            if ($declaredin === 'dokuwiki\Extension\Plugin' || $declaredin === 'dokuwiki\Extension\RemotePlugin') {
+                continue;
+            }
             $method_name = $method->name;
-            if (substr($method_name, 0, 1) == '_') continue;
+            if (strpos($method_name, '_') === 0) {
+                continue;
+            }
 
             // strip asterisks
             $doc = $method->getDocComment();
@@ -94,10 +98,10 @@ abstract class RemotePlugin extends Plugin
     {
         $types = explode('|', $hint);
         foreach ($types as $t) {
-            if (substr($t, -2) == '[]') {
+            if (substr($t, -2) === '[]') {
                 return 'array';
             }
-            if ($t == 'boolean') {
+            if ($t === 'boolean') {
                 return 'bool';
             }
             if (in_array($t, array('array', 'string', 'int', 'double', 'bool', 'null', 'date', 'file'))) {

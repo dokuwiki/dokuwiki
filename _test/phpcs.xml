@@ -7,7 +7,7 @@
     <arg value="sp"/>
     <arg name="extensions" value="php"/>
 
-    <ini name="memory_limit" value="-1" />
+    <ini name="memory_limit" value="-1"/>
 
     <!-- where to look -->
     <file>../inc</file>
@@ -32,6 +32,7 @@
 
     <!-- deprecated files to be removed soon -->
     <exclude-pattern>*/inc/cli.php</exclude-pattern>
+    <exclude-pattern>*/inc/parser/*</exclude-pattern>
 
     <!-- rules on top of PSR-2 -->
     <rule ref="PSR2">
@@ -44,8 +45,6 @@
 
     <!-- disable some rules for certain paths, for legacy support -->
     <rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
-        <exclude-pattern>*/inc/parser/*</exclude-pattern>
-
         <exclude-pattern>*/inc/Plugin.php</exclude-pattern>
         <exclude-pattern>*/inc/PluginInterface.php</exclude-pattern>
         <exclude-pattern>*/inc/PluginTrait.php</exclude-pattern>
@@ -77,12 +76,16 @@
     <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
         <exclude-pattern>*/inc/Extension/PluginInterface.php</exclude-pattern>
         <exclude-pattern>*/inc/Extension/PluginTrait.php</exclude-pattern>
-
-        <exclude-pattern>*/inc/parser/*</exclude-pattern>
     </rule>
 
-    <!-- for now we mix declarations and execution here FIXME -->
+    <!-- for now we mix declarations and execution here (mostly for defines) -->
     <rule ref="PSR1.Files.SideEffects">
+        <exclude-pattern>*/index.php</exclude-pattern>
+        <exclude-pattern>*/inc/parserutils.php</exclude-pattern>
+        <exclude-pattern>*/inc/mail.php</exclude-pattern>
+        <exclude-pattern>*/inc/init.php</exclude-pattern>
+        <exclude-pattern>*/inc/fulltext.php</exclude-pattern>
+        <exclude-pattern>*/inc/Mailer.class.php</exclude-pattern>
         <exclude-pattern>*/doku.php</exclude-pattern>
         <exclude-pattern>*/install.php</exclude-pattern>
         <exclude-pattern>*/feed.php</exclude-pattern>
