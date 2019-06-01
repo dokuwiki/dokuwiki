@@ -354,7 +354,8 @@ function tpl_metaheaders($alt = true) {
     // load our javascript dispatcher
     $head['script'][] = array(
         'type'=> 'text/javascript', 'charset'=> 'utf-8', '_data'=> '',
-        'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed
+        'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed,
+		'defer'=> 'defer'
     );
 
     // trigger event here
