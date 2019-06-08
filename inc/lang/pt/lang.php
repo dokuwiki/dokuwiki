@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Maykon Oliveira <maykonoliveira850@gmail.com>
  * @author José Vieira <jmsv63@gmail.com>
  * @author José Carlos Monteiro <jose.c.monteiro@netcabo.pt>
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
@@ -219,7 +220,7 @@ $lang['youarehere']            = 'Está aqui:';
 $lang['lastmod']               = 'Esta página foi modificada pela última vez em:';
 $lang['by']                    = 'por';
 $lang['deleted']               = 'Documento automaticamente removido.';
-$lang['created']               = 'Criação deste novo documento.';
+$lang['created']               = 'criação';
 $lang['restored']              = 'Versão anterior restaurada (%s)';
 $lang['external_edit']         = 'Edição externa';
 $lang['summary']               = 'Sumário da Edição';
@@ -356,6 +357,7 @@ $lang['media_perm_read']       = 'Perdão, não tem permissão para ler ficheiro
 $lang['media_perm_upload']     = 'Perdão, não tem permissão para enviar ficheiros.';
 $lang['media_update']          = 'enviar nova versão';
 $lang['media_restore']         = 'Restaurar esta versão';
+$lang['media_acl_warning']     = 'Essa lista pode não estar completa devido a restrições de ACL e páginas ocultas.';
 $lang['currentns']             = 'Namespace actual';
 $lang['searchresult']          = 'Resultado da pesquisa';
 $lang['plainhtml']             = 'HTML simples';

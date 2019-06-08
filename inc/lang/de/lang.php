@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Michaelsy <github@informantum.de>
  * @author Benjamin Molitor <bmolitor@uos.de>
  * @author Alex Beck <alex@4becks.com>
  * @author Jürgen Fredriksson <jfriedrich@gmx.at>

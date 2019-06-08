@@ -39,7 +39,7 @@ class StyleUtils
     {
         if (!$tpl) {
             global $conf;
-            $tpl = $conf['conf'];
+            $tpl = $conf['template'];
         }
         $this->tpl = $tpl;
         $this->reinit = $reinit;
