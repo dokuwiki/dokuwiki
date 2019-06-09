@@ -13,12 +13,12 @@ class PhpString
      *
      * works around a bug in PHP's basename() implementation
      *
-     * @see basename()
-     * @link   https://bugs.php.net/bug.php?id=37738
-     *
      * @param string $path A path
      * @param string $suffix If the name component ends in suffix this will also be cut off
      * @return string
+     * @link   https://bugs.php.net/bug.php?id=37738
+     *
+     * @see basename()
      */
     public static function basename($path, $suffix = '')
     {
@@ -43,12 +43,12 @@ class PhpString
      * to '?', which, for the purpose of counting, is alright - It's
      * even faster than mb_strlen.
      *
-     * @author <chernyshevsky at hotmail dot com>
-     * @see    strlen()
-     * @see    utf8_decode()
-     *
      * @param string $string
      * @return int
+     * @see    utf8_decode()
+     *
+     * @author <chernyshevsky at hotmail dot com>
+     * @see    strlen()
      */
     public static function strlen($string)
     {
@@ -72,13 +72,13 @@ class PhpString
      *
      * Return part of a string given character offset (and optionally length)
      *
-     * @author Harry Fuecks <hfuecks@gmail.com>
-     * @author Chris Smith <chris@jalakai.co.uk>
-     *
      * @param string $str
      * @param int $offset number of UTF-8 characters offset (from left)
      * @param int $length (optional) length in UTF-8 characters from offset
      * @return string
+     * @author Harry Fuecks <hfuecks@gmail.com>
+     * @author Chris Smith <chris@jalakai.co.uk>
+     *
      */
     public static function substr($str, $offset, $length = null)
     {
@@ -144,7 +144,8 @@ class PhpString
 
             if ($length > 0) {
 
-                $length = min($strlen - $offset, $length);  // reduce any length that would go past the end of the string
+                // reduce any length that would go past the end of the string
+                $length = min($strlen - $offset, $length);
 
                 $Lx = (int)($length / 65535);
                 $Ly = $length % 65535;
@@ -174,9 +175,6 @@ class PhpString
     /**
      * Unicode aware replacement for substr_replace()
      *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     * @see    substr_replace()
-     *
      * @param string $string input string
      * @param string $replacement the replacement
      * @param int $start the replacing will begin at the start'th offset into string.
@@ -184,6 +182,9 @@ class PhpString
      *                            to be replaced. If length is zero then this function will have the effect of inserting
      *                            replacement into string at the given start offset.
      * @return string
+     * @see    substr_replace()
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
     public static function substr_replace($string, $replacement, $start, $length = 0)
     {
@@ -197,12 +198,12 @@ class PhpString
     /**
      * Unicode aware replacement for ltrim()
      *
-     * @author Andreas Gohr <andi@splitbrain.org>
+     * @param string $str
+     * @param string $charlist
+     * @return string
      * @see    ltrim()
      *
-     * @param  string $str
-     * @param  string $charlist
-     * @return string
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
     public static function ltrim($str, $charlist = '')
     {
@@ -217,12 +218,12 @@ class PhpString
     /**
      * Unicode aware replacement for rtrim()
      *
-     * @author Andreas Gohr <andi@splitbrain.org>
+     * @param string $str
+     * @param string $charlist
+     * @return string
      * @see    rtrim()
      *
-     * @param  string $str
-     * @param  string $charlist
-     * @return string
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
     public static function rtrim($str, $charlist = '')
     {
@@ -237,12 +238,12 @@ class PhpString
     /**
      * Unicode aware replacement for trim()
      *
-     * @author Andreas Gohr <andi@splitbrain.org>
+     * @param string $str
+     * @param string $charlist
+     * @return string
      * @see    trim()
      *
-     * @param  string $str
-     * @param  string $charlist
-     * @return string
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
     public static function trim($str, $charlist = '')
     {
@@ -256,12 +257,12 @@ class PhpString
      *
      * Uses mb_string extension if available
      *
-     * @author Leo Feyer <leo@typolight.org>
-     * @see    strtolower()
-     * @see    utf8_strtoupper()
-     *
      * @param string $string
      * @return string
+     * @see    utf8_strtoupper()
+     *
+     * @author Leo Feyer <leo@typolight.org>
+     * @see    strtolower()
      */
     public static function strtolower($string)
     {
@@ -279,12 +280,12 @@ class PhpString
      *
      * Uses mb_string extension if available
      *
-     * @author Leo Feyer <leo@typolight.org>
-     * @see    strtoupper()
-     * @see    utf8_strtoupper()
-     *
      * @param string $string
      * @return string
+     * @see    utf8_strtoupper()
+     *
+     * @author Leo Feyer <leo@typolight.org>
+     * @see    strtoupper()
      */
     public static function strtoupper($string)
     {
@@ -298,10 +299,10 @@ class PhpString
      * UTF-8 aware alternative to ucfirst
      * Make a string's first character uppercase
      *
-     * @author Harry Fuecks
-     *
      * @param string $str
      * @return string with first character as upper case (if applicable)
+     * @author Harry Fuecks
+     *
      */
     public static function ucfirst($str)
     {
@@ -320,11 +321,11 @@ class PhpString
      * UTF-8 aware alternative to ucwords
      * Uppercase the first character of each word in a string
      *
+     * @param string $str
+     * @return string with first char of each word uppercase
      * @author Harry Fuecks
      * @see http://php.net/ucwords
      *
-     * @param string $str
-     * @return string with first char of each word uppercase
      */
     public static function ucwords($str)
     {
@@ -348,13 +349,13 @@ class PhpString
     /**
      * This is an Unicode aware replacement for strpos
      *
+     * @param string $haystack
+     * @param string $needle
+     * @param integer $offset
+     * @return integer
      * @author Leo Feyer <leo@typolight.org>
      * @see    strpos()
      *
-     * @param  string $haystack
-     * @param  string $needle
-     * @param  integer $offset
-     * @return integer
      */
     public static function strpos($haystack, $needle, $offset = 0)
     {
