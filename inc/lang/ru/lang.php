@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author savinov-vv <savinov-vv@sibniiau.ru>
  * @author Alexander Kh. <001.arx@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Vyacheslav Strenadko <vyacheslav.strenadko@gmail.com>
