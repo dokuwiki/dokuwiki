@@ -331,7 +331,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
     {
         $groups = [];
 
-        if ($this->users === null) $this->_loadUserData();
+        if ($this->users === null) $this->loadUserData();
         foreach($this->users as $user => $info) {
             $groups = array_merge($groups, array_diff($info['grps'], $groups));
         }
