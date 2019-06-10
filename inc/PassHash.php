@@ -70,7 +70,7 @@ class PassHash {
         } elseif(preg_match('/^PBKDF2(SHA\d+)\$(\d+)\$([[:xdigit:]]+)\$([[:xdigit:]]+)$/', $hash, $m)) {
             $method = 'seafilepbkdf2';
             $magic = array(
-                'algo' => m[1],
+                'algo' => $m[1],
                 'iter' => $m[2],
             );
             $salt = $m[3];
