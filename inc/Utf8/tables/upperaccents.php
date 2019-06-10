@@ -6,7 +6,7 @@
  * range. This are upper case letters only.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @see    utf8_deaccent()
+ * @see    \dokuwiki\Utf8\Clean::deaccent()
  */
 return [
     'Á' => 'A',

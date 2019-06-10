@@ -259,7 +259,7 @@ class PhpString
      *
      * @param string $string
      * @return string
-     * @see    utf8_strtoupper()
+     * @see    \dokuwiki\Utf8\PhpString::strtoupper()
      *
      * @author Leo Feyer <leo@typolight.org>
      * @see    strtolower()
@@ -282,7 +282,7 @@ class PhpString
      *
      * @param string $string
      * @return string
-     * @see    utf8_strtoupper()
+     * @see    \dokuwiki\Utf8\PhpString::strtoupper()
      *
      * @author Leo Feyer <leo@typolight.org>
      * @see    strtoupper()

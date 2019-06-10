@@ -134,11 +134,11 @@ function _mail_send_action($data) {
     // end additional code to support event ... original mail_send() code from here
 
     if(defined('MAILHEADER_ASCIIONLY')){
-        $subject = utf8_deaccent($subject);
-        $subject = utf8_strip($subject);
+        $subject = \dokuwiki\Utf8\Clean::deaccent($subject);
+        $subject = \dokuwiki\Utf8\Clean::strip($subject);
     }
 
-    if(!utf8_isASCII($subject)) {
+    if(!\dokuwiki\Utf8\Clean::isASCII($subject)) {
         $enc_subj = '=?UTF-8?Q?'.mail_quotedprintable_encode($subject,0).'?=';
         // Spaces must be encoded according to rfc2047. Use the "_" shorthand
         $enc_subj = preg_replace('/ /', '_', $enc_subj);
@@ -212,7 +212,7 @@ function mail_encode_address($string,$header='',$names=true){
         }
 
         // FIXME: is there a way to encode the localpart of a emailaddress?
-        if(!utf8_isASCII($addr)){
+        if(!\dokuwiki\Utf8\Clean::isASCII($addr)){
             msg(hsc("E-Mail address <$addr> is not ASCII"),-1);
             continue;
         }
@@ -228,11 +228,11 @@ function mail_encode_address($string,$header='',$names=true){
             $addr = "<$addr>";
 
             if(defined('MAILHEADER_ASCIIONLY')){
-                $text = utf8_deaccent($text);
-                $text = utf8_strip($text);
+                $text = \dokuwiki\Utf8\Clean::deaccent($text);
+                $text = \dokuwiki\Utf8\Clean::strip($text);
             }
 
-            if(!utf8_isASCII($text)){
+            if(!\dokuwiki\Utf8\Clean::isASCII($text)){
                 // put the quotes outside as in =?UTF-8?Q?"Elan Ruusam=C3=A4e"?= vs "=?UTF-8?Q?Elan Ruusam=C3=A4e?="
                 if (preg_match('/^"(.+)"$/', $text, $matches)) {
                     $text = '"=?UTF-8?Q?'.mail_quotedprintable_encode($matches[1], 0).'?="';

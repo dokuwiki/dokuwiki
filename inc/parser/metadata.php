@@ -93,7 +93,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
             // cut off too long abstracts
             $this->doc = trim($this->doc);
             if (strlen($this->doc) > self::ABSTRACT_MAX) {
-                $this->doc = utf8_substr($this->doc, 0, self::ABSTRACT_MAX).'…';
+                $this->doc = \dokuwiki\Utf8\PhpString::substr($this->doc, 0, self::ABSTRACT_MAX).'…';
             }
             $this->meta['description']['abstract'] = $this->doc;
         }

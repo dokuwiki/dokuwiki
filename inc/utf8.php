@@ -233,7 +233,7 @@ if (!function_exists('utf8_to_unicode')) {
     /** @deprecated 2019-06-09 */
     function utf8_to_unicode($str, $strict = false)
     {
-        dbg_deprecated(Conversion::class . '::fromUtf8()');
+        dbg_deprecated(Unicode::class . '::fromUtf8()');
         return Unicode::fromUtf8($str, $strict);
     }
 }
@@ -242,7 +242,7 @@ if (!function_exists('unicode_to_utf8')) {
     /** @deprecated 2019-06-09 */
     function unicode_to_utf8($arr, $strict = false)
     {
-        dbg_deprecated(Conversion::class . '::toUtf8()');
+        dbg_deprecated(Unicode::class . '::toUtf8()');
         return Unicode::toUtf8($arr, $strict);
     }
 }

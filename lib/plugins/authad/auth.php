@@ -101,7 +101,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
             // make sure the right encoding is used
             if ($this->getConf('sso_charset')) {
                 $_SERVER['REMOTE_USER'] = iconv($this->getConf('sso_charset'), 'UTF-8', $_SERVER['REMOTE_USER']);
-            } elseif (!utf8_check($_SERVER['REMOTE_USER'])) {
+            } elseif (!\dokuwiki\Utf8\Clean::isUtf8($_SERVER['REMOTE_USER'])) {
                 $_SERVER['REMOTE_USER'] = utf8_encode($_SERVER['REMOTE_USER']);
             }
 
@@ -297,7 +297,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         $group = str_replace('\\', '', $group);
         $group = str_replace('#', '', $group);
         $group = preg_replace('[\s]', '_', $group);
-        $group = utf8_strtolower(trim($group));
+        $group = \dokuwiki\Utf8\PhpString::strtolower(trim($group));
         return $group;
     }
 
@@ -322,8 +322,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         if ($dom) $domain = $dom;
 
         // clean up both
-        $domain = utf8_strtolower(trim($domain));
-        $user   = utf8_strtolower(trim($user));
+        $domain = \dokuwiki\Utf8\PhpString::strtolower(trim($domain));
+        $user   = \dokuwiki\Utf8\PhpString::strtolower(trim($user));
 
         // is this a known, valid domain? if not discard
         if (!is_array($this->conf[$domain])) {

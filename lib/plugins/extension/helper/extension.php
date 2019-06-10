@@ -913,7 +913,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
             if (is_string($content_disposition) &&
                     preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)) {
 
-                $name = utf8_basename($match[1]);
+                $name = \dokuwiki\Utf8\PhpString::basename($match[1]);
             }
 
         }
@@ -953,7 +953,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         if (is_null($file)) {
             $file = md5($url);
         } else {
-            $file = utf8_basename($file);
+            $file = \dokuwiki\Utf8\PhpString::basename($file);
         }
 
         // create tmp directory for download

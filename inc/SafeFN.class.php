@@ -45,7 +45,7 @@ class SafeFN {
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
     public static function encode($filename) {
-        return self::unicodeToSafe(utf8_to_unicode($filename));
+        return self::unicodeToSafe(\dokuwiki\Utf8\Unicode::fromUtf8($filename));
     }
 
     /**
@@ -74,7 +74,7 @@ class SafeFN {
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
     public static function decode($filename) {
-        return unicode_to_utf8(self::safeToUnicode(strtolower($filename)));
+        return \dokuwiki\Utf8\Unicode::toUtf8(self::safeToUnicode(strtolower($filename)));
     }
 
     public static function validatePrintableUtf8($printable_utf8) {

@@ -93,7 +93,7 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
         'type'       => str_replace($strip, '', $type),
         'id'         => $id,
         'user'       => $user,
-        'sum'        => utf8_substr(str_replace($strip, '', $summary), 0, 255),
+        'sum'        => \dokuwiki\Utf8\PhpString::substr(str_replace($strip, '', $summary), 0, 255),
         'extra'      => str_replace($strip, '', $extra),
         'sizechange' => $sizechange
     );
@@ -180,7 +180,7 @@ function addMediaLogEntry(
         'type'       => str_replace($strip, '', $type),
         'id'         => $id,
         'user'       => $user,
-        'sum'        => utf8_substr(str_replace($strip, '', $summary), 0, 255),
+        'sum'        => \dokuwiki\Utf8\PhpString::substr(str_replace($strip, '', $summary), 0, 255),
         'extra'      => str_replace($strip, '', $extra),
         'sizechange' => $sizechange
     );

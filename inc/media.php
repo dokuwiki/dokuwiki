@@ -261,7 +261,7 @@ function media_delete($id,$auth){
     // trigger an event - MEDIA_DELETE_FILE
     $data = array();
     $data['id']   = $id;
-    $data['name'] = utf8_basename($file);
+    $data['name'] = \dokuwiki\Utf8\PhpString::basename($file);
     $data['path'] = $file;
     $data['size'] = (file_exists($file)) ? filesize($file) : 0;
 
@@ -1762,7 +1762,7 @@ function media_printimgdetail($item, $fullscreen=false){
     $d = $item['meta']->getField(array('IPTC.Caption','EXIF.UserComment',
                 'EXIF.TIFFImageDescription',
                 'EXIF.TIFFUserComment'));
-    if(utf8_strlen($d) > 250) $d = utf8_substr($d,0,250).'...';
+    if(\dokuwiki\Utf8\PhpString::strlen($d) > 250) $d = \dokuwiki\Utf8\PhpString::substr($d,0,250).'...';
     $k = $item['meta']->getField(array('IPTC.Keywords','IPTC.Category','xmp.dc:subject'));
 
     // print EXIF/IPTC data

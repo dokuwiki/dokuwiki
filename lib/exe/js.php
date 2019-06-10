@@ -176,7 +176,7 @@ function js_load($file){
 
         // is it a include_once?
         if($match[1]){
-            $base = utf8_basename($ifile);
+            $base = \dokuwiki\Utf8\PhpString::basename($ifile);
             if(array_key_exists($base, $loaded) && $loaded[$base] === true){
                 $data  = str_replace($match[0], '' ,$data);
                 continue;

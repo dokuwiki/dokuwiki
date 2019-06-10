@@ -21,8 +21,8 @@ class Doku_Renderer_code extends Doku_Renderer {
         if(!$language) $language = 'txt';
         $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language);
         if(!$filename) $filename = 'snippet.'.$language;
-        $filename = utf8_basename($filename);
-        $filename = utf8_stripspecials($filename, '_');
+        $filename = \dokuwiki\Utf8\PhpString::basename($filename);
+        $filename = \dokuwiki\Utf8\Clean::stripspecials($filename, '_');
 
         // send CRLF to Windows clients
         if(strpos($INPUT->server->str('HTTP_USER_AGENT'), 'Windows') !== false) {

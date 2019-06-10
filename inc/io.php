@@ -623,7 +623,7 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=20
             if (is_string($content_disposition) &&
                     preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)) {
 
-                $name = utf8_basename($match[1]);
+                $name = \dokuwiki\Utf8\PhpString::basename($match[1]);
             }
 
         }

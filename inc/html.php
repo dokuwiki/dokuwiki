@@ -355,7 +355,7 @@ function html_hilight($html,$phrases){
     $regex = join('|',$phrases);
 
     if ($regex === '') return $html;
-    if (!utf8_check($regex)) return $html;
+    if (!\dokuwiki\Utf8\Clean::isUtf8($regex)) return $html;
     $html = @preg_replace_callback("/((<[^>]*)|$regex)/ui",'html_hilight_callback',$html);
     return $html;
 }

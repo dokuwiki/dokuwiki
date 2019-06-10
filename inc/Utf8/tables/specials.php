@@ -11,7 +11,7 @@
  * These chars are _not_ in the array either:  _ (0x5f), : 0x3a, . 0x2e, - 0x2d, * 0x2a
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @see    utf8_stripspecials()
+ * @see    \dokuwiki\Utf8\Clean::stripspecials()
  */
 return [
     0x1a, // 

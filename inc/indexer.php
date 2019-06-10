@@ -605,12 +605,12 @@ class Doku_Indexer {
                        )
                      );
         if (preg_match('/[^0-9A-Za-z ]/u', $text))
-            $text = utf8_stripspecials($text, ' ', '\._\-:'.$wc);
+            $text = \dokuwiki\Utf8\Clean::stripspecials($text, ' ', '\._\-:'.$wc);
 
         $wordlist = explode(' ', $text);
         foreach ($wordlist as $i => $word) {
             $wordlist[$i] = (preg_match('/[^0-9A-Za-z]/u', $word)) ?
-                utf8_strtolower($word) : strtolower($word);
+                \dokuwiki\Utf8\PhpString::strtolower($word) : strtolower($word);
         }
 
         foreach ($wordlist as $i => $word) {
@@ -1603,7 +1603,7 @@ function idx_indexLengths($filter) {
  * @return string
  */
 function idx_cleanName($name) {
-    $name = utf8_romanize(trim((string)$name));
+    $name = \dokuwiki\Utf8\Clean::romanize(trim((string)$name));
     $name = preg_replace('#[ \./\\:-]+#', '_', $name);
     $name = preg_replace('/[^A-Za-z0-9_]/', '', $name);
     return strtolower($name);

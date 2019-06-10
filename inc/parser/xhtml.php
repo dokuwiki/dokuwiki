@@ -1639,7 +1639,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 // return the title of the picture
                 if(!$title) {
                     // just show the sourcename
-                    $title = $this->_xmlEntities(utf8_basename(noNS($src)));
+                    $title = $this->_xmlEntities(\dokuwiki\Utf8\PhpString::basename(noNS($src)));
                 }
                 return $title;
             }
@@ -1675,7 +1675,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             if(!$render) {
                 // if the file is not supposed to be rendered
                 // return the title of the file (just the sourcename if there is no title)
-                return $title ? $title : $this->_xmlEntities(utf8_basename(noNS($src)));
+                return $title ? $title : $this->_xmlEntities(\dokuwiki\Utf8\PhpString::basename(noNS($src)));
             }
 
             $att          = array();
@@ -1699,7 +1699,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 // return the title of the flash
                 if(!$title) {
                     // just show the sourcename
-                    $title = utf8_basename(noNS($src));
+                    $title = \dokuwiki\Utf8\PhpString::basename(noNS($src));
                 }
                 return $this->_xmlEntities($title);
             }
@@ -1720,7 +1720,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $ret .= $this->_xmlEntities($title);
         } else {
             // just show the sourcename
-            $ret .= $this->_xmlEntities(utf8_basename(noNS($src)));
+            $ret .= $this->_xmlEntities(\dokuwiki\Utf8\PhpString::basename(noNS($src)));
         }
 
         return $ret;
@@ -1882,7 +1882,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $url = ml($file, '', true, '&');
                 $linkType = 'internalmedia';
             }
-            $title = $atts['title'] ? $atts['title'] : $this->_xmlEntities(utf8_basename(noNS($file)));
+            $title = $atts['title'] ? $atts['title'] : $this->_xmlEntities(\dokuwiki\Utf8\PhpString::basename(noNS($file)));
 
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
             // alternative content (just a link to the file)
@@ -1949,7 +1949,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $url = ml($file, '', true, '&');
                 $linkType = 'internalmedia';
             }
-            $title = $atts['title'] ? $atts['title'] : $this->_xmlEntities(utf8_basename(noNS($file)));
+            $title = $atts['title'] ? $atts['title'] : $this->_xmlEntities(\dokuwiki\Utf8\PhpString::basename(noNS($file)));
 
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
             // alternative content (just a link to the file)
