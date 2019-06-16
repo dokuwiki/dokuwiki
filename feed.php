@@ -472,7 +472,7 @@ function rssRecentChanges($opt) {
     $flags = 0;
     if(!$conf['rss_show_deleted']) $flags += RECENTS_SKIP_DELETED;
     if(!$opt['show_minor']) $flags += RECENTS_SKIP_MINORS;
-    if($opt['only_new']) $flags += RECENTS_ONLY_NEW_PAGES;
+    if($opt['only_new']) $flags += RECENTS_ONLY_CREATION;
     if($opt['content_type'] == 'media' && $conf['mediarevisions']) $flags += RECENTS_MEDIA_CHANGES;
     if($opt['content_type'] == 'both' && $conf['mediarevisions']) $flags += RECENTS_MEDIA_PAGES_MIXED;
 
