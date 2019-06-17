@@ -93,11 +93,11 @@ class auth_password_test extends DokuWikiTest {
     }
 
     function test_verifypassword_drupal_sha512() {
-        $this->asserttrue(auth_verifypassword('drupal_sha512', '$S$D7JxIm0f7QKO3zjwVS1RH4AW8sYvmLjO0.Rn4swH0JVt6OrZ4yzZ'));
+        $this->assertTrue(auth_verifypassword('drupal_sha512', '$S$D7JxIm0f7QKO3zjwVS1RH4AW8sYvmLjO0.Rn4swH0JVt6OrZ4yzZ'));
     }
 
     function test_verifypassword_drupal_migrated_6to7() {
-        $this->asserttrue(auth_verifypassword('pouette1234', 'U$S$9c47LGZuhR6TvhRQXzymkJIQ3mXthUCc6KDEGTt4B7eOL/H9Ykuy'));
+        $this->assertTrue(auth_verifypassword('pouette1234', 'U$S$9c47LGZuhR6TvhRQXzymkJIQ3mXthUCc6KDEGTt4B7eOL/H9Ykuy'));
     }
 
     function test_verifyPassword_seafilepbkdf2() {
