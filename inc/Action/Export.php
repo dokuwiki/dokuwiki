@@ -63,7 +63,8 @@ class Export extends AbstractAction {
                 // get metaheaders
                 ob_start();
                 tpl_metaheaders();
-                $pre .= ob_get_clean();
+                $pre .= ob_get_contents();
+                ob_end_clean();
 
                 $pre .= '</head>' . DOKU_LF;
                 $pre .= '<body>' . DOKU_LF;

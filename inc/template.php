@@ -81,7 +81,8 @@ function tpl_content($prependTOC = true) {
 
     ob_start();
     trigger_event('TPL_ACT_RENDER', $ACT, 'tpl_content_core');
-    $html_output = ob_get_clean();
+    $html_output = ob_get_contents();
+    ob_end_clean();
     trigger_event('TPL_CONTENT_DISPLAY', $html_output, 'ptln');
 
     return !empty($html_output);
