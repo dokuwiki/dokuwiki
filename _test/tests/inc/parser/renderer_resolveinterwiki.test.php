@@ -47,9 +47,9 @@ class Test_resolveInterwiki extends DokuWikiTest {
         $shortcut = 'nonexisting';
         $reference = 'foo @+%/';
         $url = $Renderer->_resolveInterWiki($shortcut, $reference);
-        $expected = 'https://www.google.com/search?q=foo%20%40%2B%25%2F&amp;btnI=lucky';
 
-        $this->assertEquals($expected, $url);
+        $this->assertEquals('', $url);
+        $this->assertEquals('', $shortcut);
     }
 
 }

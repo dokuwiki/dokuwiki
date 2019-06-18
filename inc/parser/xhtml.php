@@ -1062,11 +1062,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['url']   = $url;
         $link['title'] = htmlspecialchars($link['url']);
 
-        //output formatted
+        // output formatted
         if($returnonly) {
+            if($url == '') return $link['name'];
             return $this->_formatLink($link);
         } else {
-            $this->doc .= $this->_formatLink($link);
+            if($url == '') $this->doc .= $link['name'];
+            else $this->doc .= $this->_formatLink($link);
         }
     }
 
@@ -1248,9 +1250,17 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             list($shortcut, $reference) = explode('>', $src, 2);
             $exists = null;
             $src = $this->_resolveInterWiki($shortcut, $reference, $exists);
+            if($src == '' && empty($title)){
+                // make sure at least something will be shown in this case
+                $title = $reference;
+            }
         }
         list($src, $hash) = explode('#', $src, 2);
         $noLink = false;
+        if($src == '') {
+            // only output plaintext without link if there is no src
+            $noLink = true;
+        }
         $render = ($linking == 'linkonly') ? false : true;
         $link   = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render);
 
