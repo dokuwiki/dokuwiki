@@ -224,7 +224,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
 
             try {
                 $installed = $ext->installOrUpdate();
-                foreach ($installed as $ext => $info) {
+                foreach ($installed as $name => $info) {
                     $this->success(sprintf(
                             $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
                             $info['base'])
