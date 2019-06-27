@@ -144,6 +144,34 @@ class init_getID_test extends DokuWikiTest {
         $this->_test_default_ns('/foo/bar/', 'foo:bar:'.$cleanStart);
     }
 
+    /**
+     * getID with given id in url and userewrite=2, basedir set, Apache and CGI.
+     */
+    function test_rev_default_ns(){
+        global $conf;
+        $conf['reverse_defaultns'] = '1';
+        $cleanStart = cleanID($conf['start']);
+        $conf['basedir'] = '/dw/';
+        $conf['userewrite'] = '2';
+        $conf['baseurl'] = '';
+        $conf['useslash'] = '1';
+
+        // root test
+        $this->_test_default_ns('/', $cleanStart);
+        $this->_test_default_ns('', $cleanStart);
+
+        // for "foo:bar:"
+        // order foo:bar -> foo:bar:$conf['start'] -> foo:bar:bar
+        saveWikiText('foo1:bar1:bar1', 'test1', '');
+        $this->_test_default_ns('/foo1/bar1/', 'foo1:bar1:bar1');
+
+        saveWikiText('foo1:bar1:'.$cleanStart, 'test2', '');
+        $this->_test_default_ns('/foo1/bar1/', 'foo1:bar1:'.$cleanStart);
+
+        saveWikiText('foo1:bar1', 'test3', '');
+        $this->_test_default_ns('/foo1/bar1/', 'foo1:bar1');
+    }
+
     function _test_default_ns($path, $expected){
         global $conf;
         $_SERVER['DOCUMENT_ROOT'] = '/var/www/vhosts/example.com/htdocs';

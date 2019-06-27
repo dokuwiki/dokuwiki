@@ -68,19 +68,36 @@ function getID($param='id',$clean=true){
 
     // Namespace autolinking from URL
     if(substr($id,-1) == ':' || ($conf['useslash'] && substr($id,-1) == '/')){
-        if(page_exists($id.$conf['start'])){
-            // start page inside namespace
-            $id = $id.$conf['start'];
-        }elseif(page_exists($id.noNS(cleanID($id)))){
-            // page named like the NS inside the NS
-            $id = $id.noNS(cleanID($id));
-        }elseif(page_exists($id)){
-            // page like namespace exists
-            $id = substr($id,0,-1);
+        if($conf['reverse_defaultns'] == '1'){
+            if(page_exists($id)){
+                // page like namespace exists
+                $id = substr($id,0,-1);
+            }elseif(page_exists($id.$conf['start'])){
+                // start page inside namespace
+                $id = $id.$conf['start'];
+            }elseif(page_exists($id.noNS(cleanID($id)))){
+                // page named like the NS inside the NS
+                $id = $id.noNS(cleanID($id));
+            }else{
+                // fall back to default
+                $id = $id.$conf['start'];
+            }
         }else{
-            // fall back to default
-            $id = $id.$conf['start'];
+            if(page_exists($id.$conf['start'])){
+                // start page inside namespace
+                $id = $id.$conf['start'];
+            }elseif(page_exists($id.noNS(cleanID($id)))){
+                // page named like the NS inside the NS
+                $id = $id.noNS(cleanID($id));
+            }elseif(page_exists($id)){
+                // page like namespace exists
+                $id = substr($id,0,-1);
+            }else{
+                // fall back to default
+                $id = $id.$conf['start'];
+            }
         }
+
         if (isset($ACT) && $ACT === 'show') {
             $urlParameters = $_GET;
             if (isset($urlParameters['id'])) {

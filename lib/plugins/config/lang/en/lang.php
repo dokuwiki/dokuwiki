@@ -164,6 +164,7 @@ $lang['rss_media_o_media'] = 'media';
 $lang['updatecheck'] = 'Check for updates and security warnings? DokuWiki needs to contact update.dokuwiki.org for this feature.';
 $lang['userewrite']  = 'Use nice URLs';
 $lang['useslash']    = 'Use slash as namespace separator in URLs';
+$lang['reverse_defaultns'] = 'Use new reverse default namespace behaviour. 0 is the old behaviour';
 $lang['sepchar']     = 'Page name word separator';
 $lang['canonical']   = 'Use fully canonical URLs';
 $lang['fnencode']    = 'Method for encoding non-ASCII filenames.';

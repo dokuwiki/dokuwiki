@@ -206,6 +206,7 @@ $meta['_advanced']   = array('fieldset');
 $meta['updatecheck'] = array('onoff');
 $meta['userewrite']  = array('multichoice','_choices' => array(0,1,2),'_caution' => 'danger');
 $meta['useslash']    = array('onoff');
+$meta['reverse_defaultns'] = array('onoff');
 $meta['sepchar']     = array('sepchar','_caution' => 'warning');
 $meta['canonical']   = array('onoff');
 $meta['fnencode']    = array('multichoice','_choices' => array('url','safe','utf-8'),'_caution' => 'warning');

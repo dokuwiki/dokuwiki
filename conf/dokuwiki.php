@@ -141,6 +141,9 @@ $conf['rss_show_summary'] = 1;           //Add revision summary to title? 0|1
 $conf['updatecheck'] = 1;                //automatically check for new releases?
 $conf['userewrite']  = 0;                //this makes nice URLs: 0: off 1: .htaccess 2: internal
 $conf['useslash']    = 0;                //use slash instead of colon? only when rewrite is on
+$conf['reverse_defaultns'] = 0;          //use new reverse default namespace behaviour
+                                         //  0 is the previous foo:bar:start -> foo:bar:bar -> foo:bar
+                                         //  1 is the reverse foo:bar -> foo:bar:start -> foo:bar:bar
 $conf['sepchar']     = '_';              //word separator character in page names; may be a
                                          //  letter, a digit, '_', '-', or '.'.
 $conf['canonical']   = 0;                //Should all URLs use full canonical http://... style?
