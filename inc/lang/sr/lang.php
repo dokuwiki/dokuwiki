@@ -3,11 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Жељко Тодоровић <zeljko_todorovic@mail.com>
  * @author Milan Oparnica <milan.opa@gmail.com>
  * @author Filip Brcic <brcha@users.sourceforge.net>
  * @author Иван Петровић (Ivan Petrovic) <petrovicivan@ubuntusrbija.org>
  * @author Miroslav Šolti <solti.miroslav@gmail.com>
- * @author Жељко Тодоровић <zeljko_todorovic@mail.com>
  * @author Марко М. Костић <marko.m.kostic@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -232,7 +232,7 @@ $lang['mail_upload']           = 'послата датотека:';
 $lang['changes_type']          = 'Прикажи измене';
 $lang['pages_changes']         = 'Странице';
 $lang['media_changes']         = 'датотека';
-$lang['both_changes']          = 'И страница и датотека';
+$lang['both_changes']          = 'и страница и датотека';
 $lang['qb_bold']               = 'Мастан текст';
 $lang['qb_italic']             = 'Курзивни текст';
 $lang['qb_underl']             = 'Подвучени текст';
