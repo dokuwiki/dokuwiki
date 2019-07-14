@@ -172,6 +172,7 @@ class PhpString
         return $match[1];
     }
 
+    // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     /**
      * Unicode aware replacement for substr_replace()
      *
@@ -194,6 +195,7 @@ class PhpString
         $ret .= self::substr($string, $start + $length);
         return $ret;
     }
+    // phpcs:enable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 
     /**
      * Unicode aware replacement for ltrim()
