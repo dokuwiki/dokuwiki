@@ -674,7 +674,8 @@ function ft_queryParser($Indexer, $query){
      */
     $parsed_query = '';
     $parens_level = 0;
-    $terms = preg_split('/(-?".*?")/u', \dokuwiki\Utf8\PhpString::strtolower($query), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+    $terms = preg_split('/(-?".*?")/u', \dokuwiki\Utf8\PhpString::strtolower($query),
+        -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
     foreach ($terms as $term) {
         $parsed = '';

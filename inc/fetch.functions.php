@@ -68,10 +68,14 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null) {
     }
 
     //download or display?
-    if($dl) {
-        header('Content-Disposition: attachment;'.rfc2231_encode('filename', \dokuwiki\Utf8\PhpString::basename($orig)).';');
+    if ($dl) {
+        header('Content-Disposition: attachment;' . rfc2231_encode(
+                'filename', \dokuwiki\Utf8\PhpString::basename($orig)) . ';'
+        );
     } else {
-        header('Content-Disposition: inline;'.rfc2231_encode('filename', \dokuwiki\Utf8\PhpString::basename($orig)).';');
+        header('Content-Disposition: inline;' . rfc2231_encode(
+                'filename', \dokuwiki\Utf8\PhpString::basename($orig)) . ';'
+        );
     }
 
     //use x-sendfile header to pass the delivery to compatible webservers

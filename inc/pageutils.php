@@ -44,7 +44,8 @@ function getID($param='id',$clean=true){
             if($param != 'id') {
                 $relpath = 'lib/exe/';
             }
-            $script = $conf['basedir'].$relpath.\dokuwiki\Utf8\PhpString::basename($INPUT->server->str('SCRIPT_FILENAME'));
+            $script = $conf['basedir'] . $relpath .
+                \dokuwiki\Utf8\PhpString::basename($INPUT->server->str('SCRIPT_FILENAME'));
 
         }elseif($INPUT->server->str('PATH_INFO')){
             $request = $INPUT->server->str('PATH_INFO');

@@ -1746,7 +1746,10 @@ function shorten($keep, $short, $max, $min = 9, $char = '…') {
     $len = \dokuwiki\Utf8\PhpString::strlen($short);
     if($len <= $max) return $keep.$short;
     $half = floor($max / 2);
-    return $keep.\dokuwiki\Utf8\PhpString::substr($short, 0, $half - 1).$char.\dokuwiki\Utf8\PhpString::substr($short, $len - $half);
+    return $keep .
+        \dokuwiki\Utf8\PhpString::substr($short, 0, $half - 1) .
+        $char .
+        \dokuwiki\Utf8\PhpString::substr($short, $len - $half);
 }
 
 /**
