@@ -7,46 +7,13 @@
  * @author     Tom N Harris <tnharris@whoopdedo.org>
  */
 
+use dokuwiki\Extension\Event;
+
 // Version tag used to force rebuild on upgrade
-use dokuwiki\Extension\Event;define('INDEXER_VERSION', 8);
+define('INDEXER_VERSION', 8);
 
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
 if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
-
-// Asian characters are handled as words. The following regexp defines the
-// Unicode-Ranges for Asian characters
-// Ranges taken from http://en.wikipedia.org/wiki/Unicode_block
-// I'm no language expert. If you think some ranges are wrongly chosen or
-// a range is missing, please contact me
-define('IDX_ASIAN1','[\x{0E00}-\x{0E7F}]'); // Thai
-define('IDX_ASIAN2','['.
-                   '\x{2E80}-\x{3040}'.  // CJK -> Hangul
-                   '\x{309D}-\x{30A0}'.
-                   '\x{30FD}-\x{31EF}\x{3200}-\x{D7AF}'.
-                   '\x{F900}-\x{FAFF}'.  // CJK Compatibility Ideographs
-                   '\x{FE30}-\x{FE4F}'.  // CJK Compatibility Forms
-                   "\xF0\xA0\x80\x80-\xF0\xAA\x9B\x9F". // CJK Extension B
-                   "\xF0\xAA\x9C\x80-\xF0\xAB\x9C\xBF". // CJK Extension C
-                   "\xF0\xAB\x9D\x80-\xF0\xAB\xA0\x9F". // CJK Extension D
-                   "\xF0\xAF\xA0\x80-\xF0\xAF\xAB\xBF". // CJK Compatibility Supplement
-                   ']');
-define('IDX_ASIAN3','['.                // Hiragana/Katakana (can be two characters)
-                   '\x{3042}\x{3044}\x{3046}\x{3048}'.
-                   '\x{304A}-\x{3062}\x{3064}-\x{3082}'.
-                   '\x{3084}\x{3086}\x{3088}-\x{308D}'.
-                   '\x{308F}-\x{3094}'.
-                   '\x{30A2}\x{30A4}\x{30A6}\x{30A8}'.
-                   '\x{30AA}-\x{30C2}\x{30C4}-\x{30E2}'.
-                   '\x{30E4}\x{30E6}\x{30E8}-\x{30ED}'.
-                   '\x{30EF}-\x{30F4}\x{30F7}-\x{30FA}'.
-                   ']['.
-                   '\x{3041}\x{3043}\x{3045}\x{3047}\x{3049}'.
-                   '\x{3063}\x{3083}\x{3085}\x{3087}\x{308E}\x{3095}-\x{309C}'.
-                   '\x{30A1}\x{30A3}\x{30A5}\x{30A7}\x{30A9}'.
-                   '\x{30C3}\x{30E3}\x{30E5}\x{30E7}\x{30EE}\x{30F5}\x{30F6}\x{30FB}\x{30FC}'.
-                   '\x{31F0}-\x{31FF}'.
-                   ']?');
-define('IDX_ASIAN', '(?:'.IDX_ASIAN1.'|'.IDX_ASIAN2.'|'.IDX_ASIAN3.')');
 
 /**
  * Version of the indexer taking into consideration the external tokenizer.
@@ -588,9 +555,7 @@ class Doku_Indexer {
         $evt = new Event('INDEXER_TEXT_PREPARE', $text);
         if ($evt->advise_before(true)) {
             if (preg_match('/[^0-9A-Za-z ]/u', $text)) {
-                // handle asian chars as single words (may fail on older PHP version)
-                $asia = @preg_replace('/('.IDX_ASIAN.')/u', ' \1 ', $text);
-                if (!is_null($asia)) $text = $asia; // recover from regexp falure
+                $text = \dokuwiki\Utf8\Asian::separateAsianWords($text);
             }
         }
         $evt->advise_after();

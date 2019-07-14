@@ -511,9 +511,7 @@ function ft_snippet($id,$highlight){
  */
 function ft_snippet_re_preprocess($term) {
     // do not process asian terms where word boundaries are not explicit
-    if(preg_match('/'.IDX_ASIAN.'/u',$term)){
-        return $term;
-    }
+    if(\dokuwiki\Utf8\Asian::isAsianWords($term)) return $term;
 
     if (UTF8_PROPERTYSUPPORT) {
         // unicode word boundaries
@@ -876,9 +874,9 @@ function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = f
     $parsed = '';
     if ($consider_asian) {
         // successive asian characters need to be searched as a phrase
-        $words = preg_split('/('.IDX_ASIAN.'+)/u', $term, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+        $words = \dokuwiki\Utf8\Asian::splitAsianWords($term);
         foreach ($words as $word) {
-            $phrase_mode = $phrase_mode ? true : preg_match('/'.IDX_ASIAN.'/u', $word);
+            $phrase_mode = $phrase_mode ? true : \dokuwiki\Utf8\Asian::isAsianWords($word);
             $parsed .= ft_termParser($Indexer, $word, false, $phrase_mode);
         }
     } else {
