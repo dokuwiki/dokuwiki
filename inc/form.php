@@ -6,6 +6,10 @@
  * @author     Tom N Harris <tnharris@whoopdedo.org>
  */
 
+// phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
+// phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
+
+
 /**
  * Class for creating simple HTML forms.
  *
@@ -21,6 +25,11 @@
  *
  * See the form_make* functions later in this file.
  *
+ * Please note that even though this class is technically deprecated (use dokuwiki\Form instead),
+ * it is still widely used in the core and the related form events. Until those have been rewritten,
+ * this will continue to be used
+ *
+ * @deprecated 2019-07-14
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 class Doku_Form {
