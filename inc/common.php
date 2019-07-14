@@ -1708,7 +1708,7 @@ function php_to_byte($value) {
         case 'K':
             $ret = intval(substr($value, 0, -1)) * 1024;
             break;
-        default;
+        default:
             $ret = intval($value);
             break;
     }
