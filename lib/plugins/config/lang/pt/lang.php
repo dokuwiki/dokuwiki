@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Maykon Oliveira <maykonoliveira850@gmail.com>
  * @author José Vieira <jmsv63@gmail.com>
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
@@ -121,6 +122,7 @@ $lang['rss_linkto']            = 'Links de feed XML ara';
 $lang['rss_content']           = 'O que deve ser exibido nos itens do alimentador XML?';
 $lang['rss_update']            = 'Intervalo de actualização do alimentador XML (seg)';
 $lang['rss_show_summary']      = 'Resumo de exibição do alimentador XML no título';
+$lang['rss_media_o_media']     = 'midia';
 $lang['updatecheck']           = 'Verificar por actualizações e avisos de segurança? O DokuWiki precisa contactar o "splitbrain.org" para efectuar esta verificação.';
 $lang['userewrite']            = 'Usar URLs SEO';
 $lang['useslash']              = 'Usar a barra como separador de espaços de nomes nas URLs';
@@ -138,6 +140,11 @@ $lang['xsendfile']             = 'Usar o cabeçalho "X-Sendfile" para permitir o
 $lang['renderer_xhtml']        = 'Renderizador a ser utilizado para a saída principal do wiki (xhtml)';
 $lang['renderer__core']        = '%s (núcleo dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_nslimit']        = 'Limite a pesquisa aos namespaces X atuais. Quando uma pesquisa é executada a partir de uma página em um namespace mais profundo, os primeiros namespaces X serão adicionados como filtro';
+$lang['search_fragment_o_exact'] = 'exato';
+$lang['search_fragment_o_starts_with'] = 'começa com';
+$lang['search_fragment_o_ends_with'] = 'termina com';
+$lang['search_fragment_o_contains'] = 'contém';
 $lang['proxy____host']         = 'Nome do servidor proxy';
 $lang['proxy____port']         = 'Porta de Proxy';
 $lang['proxy____user']         = 'Nome de utilizador Proxy';

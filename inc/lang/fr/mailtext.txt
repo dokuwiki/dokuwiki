@@ -1,4 +1,4 @@
-Une page dans votre wiki a été ajoutée ou modifiée. Voici les
+Une page dans votre wiki a changé ou été modifiée. Voici les
 détails :
 
 Date              : @DATE@

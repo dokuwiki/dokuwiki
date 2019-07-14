@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Maykon Oliveira <maykonoliveira850@gmail.com>
  * @author André Neves <drakferion@gmail.com>
  * @author Guido Salatino <guidorafael23@gmail.com>
  * @author Romulo Pereira <romuloccomp@gmail.com>
@@ -22,6 +23,7 @@ $lang['binddn']                = 'DN de um usuário de ligação opcional, quand
 $lang['bindpw']                = 'Senha do utilizador acima';
 $lang['userscope']             = 'Escopo de pesquisa Limite para pesquisa de usuário';
 $lang['groupscope']            = 'Escopo de pesquisa Limite para pesquisa de grupo';
+$lang['userkey']               = 'Atributo denotando o nome de usuário; deve ser consistente com o filtro do usuário.';
 $lang['groupkey']              = 'A participação no grupo a partir de qualquer atributo de usuário (em vez de AD padrão de grupos) exemplo: grupo de departamento ou número de telefone';
 $lang['modPass']               = 'Sua senha LDAP pode ser alterada via dokuwiki?';
 $lang['debug']                 = 'Mostrar informação adicional de debug aquando de erros';

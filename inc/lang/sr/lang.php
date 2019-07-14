@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Milan Oparnica <milan.opa@gmail.com>
  * @author Filip Brcic <brcha@users.sourceforge.net>
  * @author Иван Петровић (Ivan Petrovic) <petrovicivan@ubuntusrbija.org>
  * @author Miroslav Šolti <solti.miroslav@gmail.com>
@@ -68,6 +69,64 @@ $lang['badpassconfirm']        = 'Нажалост, лозинка је била
 $lang['minoredit']             = 'Мала измена';
 $lang['draftdate']             = 'Нацрт је аутоматски сачуван';
 $lang['nosecedit']             = 'Страна је у међувремену промењена, поглавље је застарело и поново се учитава цела страна.';
+$lang['searchcreatepage']      = 'Ako niste pronašli to što tražite, možete napraviti ili urediti stranicu %s, imenovanu prema zadatom upitu.';
+$lang['search_fullresults']    = 'Tekstualni rezultati';
+$lang['js']['search_toggle_tools'] = 'Uključi/isključi Alate Pretrage';
+$lang['js']['willexpire']      = 'Ваше закључавање за измену ове странице ће да истекне за један минут.\nДа би сте избегли конфликте, искористите дугме за преглед како би сте ресетовали тајмер закључавања.';
+$lang['js']['notsavedyet']     = 'Несачуване измене ће бити изгубљене.
+Да ли стварно желите да наставите?';
+$lang['js']['searchmedia']     = 'Потражи фајлове';
+$lang['js']['keepopen']        = 'Задржи отворен прозор након одабира';
+$lang['js']['hidedetails']     = 'Сакриј детаље';
+$lang['js']['mediatitle']      = 'Подешаванја везе';
+$lang['js']['mediadisplay']    = 'Тип везе';
+$lang['js']['mediaalign']      = 'Поравнање';
+$lang['js']['mediasize']       = 'Величина слике';
+$lang['js']['mediatarget']     = 'веза води ка:';
+$lang['js']['mediaclose']      = 'Затвори';
+$lang['js']['mediainsert']     = 'Убаци';
+$lang['js']['mediadisplayimg'] = 'Покажи слику';
+$lang['js']['mediadisplaylnk'] = 'Покажи само везу';
+$lang['js']['mediasmall']      = 'Мала верзија';
+$lang['js']['mediamedium']     = 'Средња верзија';
+$lang['js']['medialarge']      = 'Велика верзија';
+$lang['js']['mediaoriginal']   = 'Оригинална верзија';
+$lang['js']['medialnk']        = 'Веза ка страници са детаљима';
+$lang['js']['mediadirect']     = 'Директна веза ка оригиналу';
+$lang['js']['medianolnk']      = 'Без везе';
+$lang['js']['medianolink']     = 'Не постављај слику као везу';
+$lang['js']['medialeft']       = 'Поравнај слику на лево';
+$lang['js']['mediaright']      = 'Поравнај слику на десно';
+$lang['js']['mediacenter']     = 'Поравнај слику по средини';
+$lang['js']['medianoalign']    = 'Без поравнања';
+$lang['js']['nosmblinks']      = 'Повезивање са Windows дељеним фолдерима ради само у Мајкрософтовом Интернет Претраживачу.
+Ипак, можете да ископирате и залепите везу.';
+$lang['js']['linkwiz']         = 'Чаробњак за стварање везе';
+$lang['js']['linkto']          = 'Повежи ка:';
+$lang['js']['del_confirm']     = 'Обриши овај унос?';
+$lang['js']['restore_confirm'] = 'Заиста желите да вратите ово издање?';
+$lang['js']['media_diff']      = 'Погледај разлике:';
+$lang['js']['media_diff_both'] = 'Једно до другог';
+$lang['js']['media_diff_opacity'] = 'Prosvetl';
+$lang['js']['media_diff_portions'] = 'Prevuci';
+$lang['js']['media_select']    = 'Изабери датотеке…';
+$lang['js']['media_upload_btn'] = 'Отпреми';
+$lang['js']['media_done_btn']  = 'Готово';
+$lang['js']['media_drop']      = 'Превуците датотеке овде да бисте их отпремили';
+$lang['js']['media_cancel']    = 'уклони';
+$lang['js']['media_overwrt']   = 'Препиши постојеће датотеке';
+$lang['search_exact_match']    = 'Potpuno podudaranje';
+$lang['search_starts_with']    = 'Počinje sa';
+$lang['search_ends_with']      = 'Završava se sa';
+$lang['search_contains']       = 'Sadrži';
+$lang['search_custom_match']   = 'Prilagođen';
+$lang['search_any_ns']         = 'Svako imenovanje ';
+$lang['search_any_time']       = 'Svako vreme';
+$lang['search_past_7_days']    = 'Prošla nedelja';
+$lang['search_past_month']     = 'Prošli mesec';
+$lang['search_past_year']      = 'Prošla godina';
+$lang['search_sort_by_hits']   = 'Poređaj po pogodcima';
+$lang['search_sort_by_mtime']  = 'Poređaj po vremenu izmene';
 $lang['regmissing']            = 'Извините, морате да попуните сва поља.';
 $lang['reguexists']            = 'Извините, корисник са истим именом већ постоји.';
 $lang['regsuccess']            = 'Корисник је направљен и лозинка је послата путем е-поште.';
@@ -106,47 +165,6 @@ $lang['txt_overwrt']           = 'Препишите тренутни фајл';
 $lang['maxuploadsize']         = 'Отпреми највише %s по датотеци.';
 $lang['lockedby']              = 'Тренутно закључано од стране:';
 $lang['lockexpire']            = 'Закључавање истиче:';
-$lang['js']['willexpire']      = 'Ваше закључавање за измену ове странице ће да истекне за један минут.\nДа би сте избегли конфликте, искористите дугме за преглед како би сте ресетовали тајмер закључавања.';
-$lang['js']['notsavedyet']     = 'Несачуване измене ће бити изгубљене.
-Да ли стварно желите да наставите?';
-$lang['js']['searchmedia']     = 'Потражи фајлове';
-$lang['js']['keepopen']        = 'Задржи отворен прозор након одабира';
-$lang['js']['hidedetails']     = 'Сакриј детаље';
-$lang['js']['mediatitle']      = 'Подешаванја везе';
-$lang['js']['mediadisplay']    = 'Тип везе';
-$lang['js']['mediaalign']      = 'Поравнање';
-$lang['js']['mediasize']       = 'Величина слике';
-$lang['js']['mediatarget']     = 'веза води ка:';
-$lang['js']['mediaclose']      = 'Затвори';
-$lang['js']['mediainsert']     = 'Убаци';
-$lang['js']['mediadisplayimg'] = 'Покажи слику';
-$lang['js']['mediadisplaylnk'] = 'Покажи само везу';
-$lang['js']['mediasmall']      = 'Мала верзија';
-$lang['js']['mediamedium']     = 'Средња верзија';
-$lang['js']['medialarge']      = 'Велика верзија';
-$lang['js']['mediaoriginal']   = 'Оригинална верзија';
-$lang['js']['medialnk']        = 'Веза ка страници са детаљима';
-$lang['js']['mediadirect']     = 'Директна веза ка оригиналу';
-$lang['js']['medianolnk']      = 'Без везе';
-$lang['js']['medianolink']     = 'Не постављај слику као везу';
-$lang['js']['medialeft']       = 'Поравнај слику на лево';
-$lang['js']['mediaright']      = 'Поравнај слику на десно';
-$lang['js']['mediacenter']     = 'Поравнај слику по средини';
-$lang['js']['medianoalign']    = 'Без поравнања';
-$lang['js']['nosmblinks']      = 'Повезивање са Windows дељеним фолдерима ради само у Мајкрософтовом Интернет Претраживачу.
-Ипак, можете да ископирате и залепите везу.';
-$lang['js']['linkwiz']         = 'Чаробњак за стварање везе';
-$lang['js']['linkto']          = 'Повежи ка:';
-$lang['js']['del_confirm']     = 'Обриши овај унос?';
-$lang['js']['restore_confirm'] = 'Заиста желите да вратите ово издање?';
-$lang['js']['media_diff']      = 'Погледај разлике:';
-$lang['js']['media_diff_both'] = 'Једно до другог';
-$lang['js']['media_select']    = 'Изабери датотеке…';
-$lang['js']['media_upload_btn'] = 'Отпреми';
-$lang['js']['media_done_btn']  = 'Готово';
-$lang['js']['media_drop']      = 'Превуците датотеке овде да бисте их отпремили';
-$lang['js']['media_cancel']    = 'уклони';
-$lang['js']['media_overwrt']   = 'Препиши постојеће датотеке';
 $lang['rssfailed']             = 'Дошло је до грешке приликом преузимања овог довода: ';
 $lang['nothingfound']          = 'Ништа није нађено.';
 $lang['mediaselect']           = 'Избор медијске датотеке';

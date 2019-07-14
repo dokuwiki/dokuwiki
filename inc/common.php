@@ -1150,6 +1150,9 @@ function parsePageTemplate(&$data) {
              '@ID@',
              '@NS@',
              '@CURNS@',
+             '@!CURNS@',
+             '@!!CURNS@',
+             '@!CURNS!@',
              '@FILE@',
              '@!FILE@',
              '@!FILE!@',
@@ -1166,6 +1169,9 @@ function parsePageTemplate(&$data) {
              $id,
              getNS($id),
              curNS($id),
+             utf8_ucfirst(curNS($id)),
+             utf8_ucwords(curNS($id)),
+             utf8_strtoupper(curNS($id)),
              $file,
              utf8_ucfirst($file),
              utf8_strtoupper($file),
@@ -1683,39 +1689,27 @@ function unslash($string, $char = "'") {
 /**
  * Convert php.ini shorthands to byte
  *
- * @author <gilthans dot NO dot SPAM at gmail dot com>
- * @link   http://php.net/manual/en/ini.core.php#79564
+ * On 32 bit systems values >= 2GB will fail!
  *
- * @param string $v shorthands
- * @return int|string
+ * -1 (infinite size) will be reported as -1
+ *
+ * @link   https://www.php.net/manual/en/faq.using.php#faq.using.shorthandbytes
+ * @param string $value PHP size shorthand
+ * @return int
  */
-function php_to_byte($v) {
-    $l   = substr($v, -1);
-    $ret = substr($v, 0, -1);
-    switch(strtoupper($l)) {
-        /** @noinspection PhpMissingBreakStatementInspection */
-        // no-break
-        case 'P':
-            $ret *= 1024;
-        /** @noinspection PhpMissingBreakStatementInspection */
-        // no-break
-        case 'T':
-            $ret *= 1024;
-        /** @noinspection PhpMissingBreakStatementInspection */
-        // no-break
+function php_to_byte($value) {
+    switch (strtoupper(substr($value,-1))) {
         case 'G':
-            $ret *= 1024;
-        /** @noinspection PhpMissingBreakStatementInspection */
-        // no-break
-        case 'M':
-            $ret *= 1024;
-        /** @noinspection PhpMissingBreakStatementInspection */
-        // no-break
-        case 'K':
-            $ret *= 1024;
+            $ret = intval(substr($value, 0, -1)) * 1024 * 1024 * 1024;
             break;
-        default:
-            $ret *= 10;
+        case 'M':
+            $ret = intval(substr($value, 0, -1)) * 1024 * 1024;
+            break;
+        case 'K':
+            $ret = intval(substr($value, 0, -1)) * 1024;
+            break;
+        default;
+            $ret = intval($value);
             break;
     }
     return $ret;
