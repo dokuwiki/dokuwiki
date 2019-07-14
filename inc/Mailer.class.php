@@ -80,7 +80,7 @@ class Mailer {
      */
     public function attachFile($path, $mime, $name = '', $embed = '') {
         if(!$name) {
-            $name = utf8_basename($path);
+            $name = \dokuwiki\Utf8\PhpString::basename($path);
         }
 
         $this->attach[] = array(
@@ -387,7 +387,7 @@ class Mailer {
             }
 
             // FIXME: is there a way to encode the localpart of a emailaddress?
-            if(!utf8_isASCII($addr)) {
+            if(!\dokuwiki\Utf8\Clean::isASCII($addr)) {
                 msg(hsc("E-Mail address <$addr> is not ASCII"), -1);
                 continue;
             }
@@ -403,11 +403,11 @@ class Mailer {
                 $addr = "<$addr>";
 
                 if(defined('MAILHEADER_ASCIIONLY')) {
-                    $text = utf8_deaccent($text);
-                    $text = utf8_strip($text);
+                    $text = \dokuwiki\Utf8\Clean::deaccent($text);
+                    $text = \dokuwiki\Utf8\Clean::strip($text);
                 }
 
-                if(strpos($text, ',') !== false || !utf8_isASCII($text)) {
+                if(strpos($text, ',') !== false || !\dokuwiki\Utf8\Clean::isASCII($text)) {
                     $text = '=?UTF-8?B?'.base64_encode($text).'?=';
                 }
             } else {
@@ -553,10 +553,10 @@ class Mailer {
         if(isset($this->headers['Subject'])) {
             // add prefix to subject
             if(empty($conf['mailprefix'])) {
-                if(utf8_strlen($conf['title']) < 20) {
+                if(\dokuwiki\Utf8\PhpString::strlen($conf['title']) < 20) {
                     $prefix = '['.$conf['title'].']';
                 } else {
-                    $prefix = '['.utf8_substr($conf['title'], 0, 20).'...]';
+                    $prefix = '['.\dokuwiki\Utf8\PhpString::substr($conf['title'], 0, 20).'...]';
                 }
             } else {
                 $prefix = '['.$conf['mailprefix'].']';
@@ -568,10 +568,10 @@ class Mailer {
 
             // encode subject
             if(defined('MAILHEADER_ASCIIONLY')) {
-                $this->headers['Subject'] = utf8_deaccent($this->headers['Subject']);
-                $this->headers['Subject'] = utf8_strip($this->headers['Subject']);
+                $this->headers['Subject'] = \dokuwiki\Utf8\Clean::deaccent($this->headers['Subject']);
+                $this->headers['Subject'] = \dokuwiki\Utf8\Clean::strip($this->headers['Subject']);
             }
-            if(!utf8_isASCII($this->headers['Subject'])) {
+            if(!\dokuwiki\Utf8\Clean::isASCII($this->headers['Subject'])) {
                 $this->headers['Subject'] = '=?UTF-8?B?'.base64_encode($this->headers['Subject']).'?=';
             }
         }

@@ -88,6 +88,7 @@
         <exclude-pattern>*/inc/Mailer.class.php</exclude-pattern>
         <exclude-pattern>*/doku.php</exclude-pattern>
         <exclude-pattern>*/install.php</exclude-pattern>
+        <exclude-pattern>*/inc/utf8.php</exclude-pattern>
         <exclude-pattern>*/feed.php</exclude-pattern>
         <exclude-pattern>*/inc/load.php</exclude-pattern>
         <exclude-pattern>*/bin/*.php</exclude-pattern>

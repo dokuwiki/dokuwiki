@@ -124,7 +124,7 @@ class media_searchlist_test extends DokuWikiTest {
             $info             = array();
             $info['id']       = $this->upload_ns . ':' . $rel_id;
             $info['perm']     = auth_quickaclcheck(getNS($info['id']).':*');
-            $info['file']     = utf8_basename($file);
+            $info['file']     = \dokuwiki\Utf8\PhpString::basename($file);
             $info['size']     = filesize($file);
             $info['mtime']    = filemtime($file);
             $info['writable'] = is_writable($file);

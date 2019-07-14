@@ -1080,7 +1080,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
         $fd = fopen($_FILES['import']['tmp_name'], 'r');
         if ($fd) {
             while ($csv = fgets($fd)) {
-                if (!utf8_check($csv)) {
+                if (!\dokuwiki\Utf8\Clean::isUtf8($csv)) {
                     $csv = utf8_encode($csv);
                 }
                 $raw = str_getcsv($csv);

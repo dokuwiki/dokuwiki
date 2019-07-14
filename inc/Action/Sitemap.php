@@ -47,7 +47,7 @@ class Sitemap extends AbstractAction {
         if(is_readable($sitemap)) {
             // Send headers
             header('Content-Type: ' . $mime);
-            header('Content-Disposition: attachment; filename=' . utf8_basename($sitemap));
+            header('Content-Disposition: attachment; filename=' . \dokuwiki\Utf8\PhpString::basename($sitemap));
 
             http_conditionalRequest(filemtime($sitemap));
 

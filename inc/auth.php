@@ -518,7 +518,7 @@ function auth_isMember($memberlist, $user, array $groups) {
 
     // clean user and groups
     if(!$auth->isCaseSensitive()) {
-        $user   = utf8_strtolower($user);
+        $user   = \dokuwiki\Utf8\PhpString::strtolower($user);
         $groups = array_map('utf8_strtolower', $groups);
     }
     $user   = $auth->cleanUser($user);
@@ -533,7 +533,7 @@ function auth_isMember($memberlist, $user, array $groups) {
     // compare cleaned values
     foreach($members as $member) {
         if($member == '@ALL' ) return true;
-        if(!$auth->isCaseSensitive()) $member = utf8_strtolower($member);
+        if(!$auth->isCaseSensitive()) $member = \dokuwiki\Utf8\PhpString::strtolower($member);
         if($member[0] == '@') {
             $member = $auth->cleanGroup(substr($member, 1));
             if(in_array($member, $groups)) return true;
@@ -621,7 +621,7 @@ function auth_aclcheck_cb($data) {
     }
 
     if(!$auth->isCaseSensitive()) {
-        $user   = utf8_strtolower($user);
+        $user   = \dokuwiki\Utf8\PhpString::strtolower($user);
         $groups = array_map('utf8_strtolower', $groups);
     }
     $user   = auth_nameencode($auth->cleanUser($user));
@@ -648,7 +648,7 @@ function auth_aclcheck_cb($data) {
             $match = preg_replace('/#.*$/', '', $match); //ignore comments
             $acl   = preg_split('/[ \t]+/', $match);
             if(!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
-                $acl[1] = utf8_strtolower($acl[1]);
+                $acl[1] = \dokuwiki\Utf8\PhpString::strtolower($acl[1]);
             }
             if(!in_array($acl[1], $groups)) {
                 continue;
@@ -678,7 +678,7 @@ function auth_aclcheck_cb($data) {
                 $match = preg_replace('/#.*$/', '', $match); //ignore comments
                 $acl   = preg_split('/[ \t]+/', $match);
                 if(!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
-                    $acl[1] = utf8_strtolower($acl[1]);
+                    $acl[1] = \dokuwiki\Utf8\PhpString::strtolower($acl[1]);
                 }
                 if(!in_array($acl[1], $groups)) {
                     continue;

@@ -211,7 +211,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
         return false;
     }
 
-    $info['file']     = utf8_basename($file);
+    $info['file']     = \dokuwiki\Utf8\PhpString::basename($file);
     $info['size']     = filesize($base.'/'.$file);
     $info['mtime']    = filemtime($base.'/'.$file);
     $info['writable'] = is_writable($base.'/'.$file);
@@ -497,7 +497,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     $item['open']  = $return;
 
     if(!empty($opts['meta'])){
-        $item['file']       = utf8_basename($file);
+        $item['file']       = \dokuwiki\Utf8\PhpString::basename($file);
         $item['size']       = filesize($base.'/'.$file);
         $item['mtime']      = filemtime($base.'/'.$file);
         $item['rev']        = $item['mtime'];

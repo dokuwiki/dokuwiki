@@ -1017,7 +1017,7 @@ function cleanText($text) {
     // if the text is not valid UTF-8 we simply assume latin1
     // this won't break any worse than it breaks with the wrong encoding
     // but might actually fix the problem in many cases
-    if(!utf8_check($text)) $text = utf8_encode($text);
+    if(!\dokuwiki\Utf8\Clean::isUtf8($text)) $text = utf8_encode($text);
 
     return $text;
 }
@@ -1173,12 +1173,12 @@ function parsePageTemplate(&$data) {
              utf8_ucwords(curNS($id)),
              utf8_strtoupper(curNS($id)),
              $file,
-             utf8_ucfirst($file),
-             utf8_strtoupper($file),
+             \dokuwiki\Utf8\PhpString::ucfirst($file),
+             \dokuwiki\Utf8\PhpString::strtoupper($file),
              $page,
-             utf8_ucfirst($page),
-             utf8_ucwords($page),
-             utf8_strtoupper($page),
+             \dokuwiki\Utf8\PhpString::ucfirst($page),
+             \dokuwiki\Utf8\PhpString::ucwords($page),
+             \dokuwiki\Utf8\PhpString::strtoupper($page),
              $INPUT->server->str('REMOTE_USER'),
              $USERINFO['name'],
              $USERINFO['mail'],
@@ -1741,12 +1741,12 @@ function preg_quote_cb($string) {
  * @return string
  */
 function shorten($keep, $short, $max, $min = 9, $char = '…') {
-    $max = $max - utf8_strlen($keep);
+    $max = $max - \dokuwiki\Utf8\PhpString::strlen($keep);
     if($max < $min) return $keep;
-    $len = utf8_strlen($short);
+    $len = \dokuwiki\Utf8\PhpString::strlen($short);
     if($len <= $max) return $keep.$short;
     $half = floor($max / 2);
-    return $keep.utf8_substr($short, 0, $half - 1).$char.utf8_substr($short, $len - $half);
+    return $keep.\dokuwiki\Utf8\PhpString::substr($short, 0, $half - 1).$char.\dokuwiki\Utf8\PhpString::substr($short, $len - $half);
 }
 
 /**
