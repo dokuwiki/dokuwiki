@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Katerina Katapodi <extragold1234@hotmail.com>
+ * @author Aikaterini Katapodi <extragold1234@hotmail.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>

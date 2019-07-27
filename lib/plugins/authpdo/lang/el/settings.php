@@ -3,8 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Katerina Katapodi <extragold1234@hotmail.com>
+ * @author Aikaterini Katapodi <extragold1234@hotmail.com>
  */
+$lang['debug']                 = 'Εκτύπωση μηνυμάτων σφαλμάτων λεπτομερώς. Αυτή η ρύθμιση πρέπει μετά να απενεργοποιηθεί.';
+$lang['dsn']                   = 'Να συνδεθεί το DSN με τη βάση δεδομένων';
 $lang['insert-user']           = 'Δηλωτικό SQL για να εισάγει έναν νέο χρήστη στη βάση δεδομένων';
 $lang['delete-user']           = 'Δηλωτικό SQL για αφαίρεση χρήστη από την βάση δεδομένων';
 $lang['list-users']            = 'Δηλωτικό SQL για να ταξινομήσει τους χρήστες με προσαρμογή φίλτρου';
