@@ -3,8 +3,15 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Katerina Katapodi <extragold1234@hotmail.com>
+ * @author Aikaterini Katapodi <extragold1234@hotmail.com>
  */
+$lang['menu']                  = 'Κύρια Παράταση';
+$lang['tab_plugins']           = 'Εγκαταστημένα Επιπρόσθετα';
+$lang['tab_templates']         = 'Εγκατεστημένα μοντέλα';
+$lang['tab_search']            = 'Αναζήτηση και Εγκατάσταση';
+$lang['tab_install']           = 'Εγκατάσταση Χειροκίνητα';
+$lang['notimplemented']        = 'Αυτό το χαρακτηριστικό δεν έχει καθιερωθεί ακόμα';
+$lang['notinstalled']          = 'Αυτή η προέκταση δεν έχει εγκαταταθεί';
 $lang['unknownversion']        = 'Άγνωστη εκδοχή ';
 $lang['btn_info']              = 'Προβάλλετε περισσότερες πληροφορίες';
 $lang['btn_update']            = 'Ενημέρωση';
