@@ -23,11 +23,22 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
     /* @var array $_pattern User filter pattern */
     protected $_pattern = null;
 
+    /* @var string $gssapid GSSAPI negotiate auth ID */
+    protected $gssapiid = '';
+
+    /* @var string $ccfile holds file based credential cache for GSSAPI ldap auth */
+    protected $ccfile = '';
+
+    /* @var resource $ccobj holds a memory based krb5 credential cache object */
+    protected $ccobj = null;
+
     /**
      * Constructor
      */
     public function __construct() {
         parent::__construct();
+
+        $this->loadConfig();
 
         // ldap extension is needed
         if(!function_exists('ldap_connect')) {
@@ -36,8 +47,79 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             return;
         }
 
+        // Check if we can authenticate the user using kerberos negotiate auth. For this, the server needs to have a key in a keytab.
+        if($this->getConf('negauthkeytab')) {
+            // For this to work, we need the PECL krb5 pacakge, as of May 30th, 2017 the latest SVN release (or 1.1.3 when released)
+            if(!extension_loaded('krb5')) {
+                $this->_debug("LDAP err: negauthgssapi needs krb5 extension.", -1, __LINE__, __FILE__);
+                $this->success = false;
+                return;
+            }
+            // GSS_C_NO_NAME means that we accept any principal in the keytab. If this is run on a virtual host defined via a CNAME,
+            // put keys for HTTP/<your_cname>@<YOUR_REALM> and HTTP/<your_real_fqdn>@<YOUR_REALM> into the keytab. 
+            $auth = new KRB5NegotiateAuth($this->getConf('negauthkeytab'), GSS_C_NO_NAME);
+            try {
+                $negauthresult = $auth->doAuthentication();
+            } catch (Exception $error) {
+                $negauthresult = False;
+            }
+            if($negauthresult) {
+                // If negotiate auth succeeded, we strip the realm from the user principal and store that as gssapiid.
+                // We later use that in TrustExternal to establish that the user has already been authenticated. 
+                // We also set the external capability to true so that TrustExternal gets called in that case. 
+                $this->gssapiid = explode('@',$auth->getAuthenticatedUser())[0];
+                $this->cando['external'] = True;
+                $this->cando['logout'] = False;
+            } else {
+                // Else, we send a 401 and just the usual logon screen asking for username and password will be displayed. 
+                // For whatever reason, $conf['send404'] seems to have to be set to False for the whole thing to work.... 
+                http_response_code(401);
+            }
+        }
+
         // Add the capabilities to change the password
         $this->cando['modPass'] = $this->getConf('modPass');
+    }
+
+    /**
+     * Authenticate user (external authentication)
+     *
+     * This method is called on every page load if external authentication is
+     * used.
+     *
+     * @param   string $user   The user name (may be empty)
+     * @param   string $pass   The clear text password (may be empty)
+     * @param   bool   $sticky Whether the cookie should not expire
+     * @return  bool
+     */
+    public function trustExternal($user, $pass, $sticky = false) {
+        // This relies on information that has been obtained via negotiate auth in the constructor. 
+        global $USERINFO;
+        if (!empty($_SESSION[DOKU_COOKIE]['auth']['info'])) {
+            $USERINFO['name'] = $_SESSION[DOKU_COOKIE]['auth']['info']['user'];
+            $USERINFO['mail'] = $_SESSION[DOKU_COOKIE]['auth']['info']['mail'];
+            $USERINFO['grps'] = $_SESSION[DOKU_COOKIE]['auth']['info']['grps'];
+            $_SERVER['REMOTE_USER'] = $_SESSION[DOKU_COOKIE]['auth']['user'];
+            return true;
+        }
+
+        if((!isset($this->gssapiid)) || ($this->gssapiid == '')) {
+          return False;
+        }
+        /* Then make sure we know about the user. */
+        /* With external authentication, $USERINFO must be set on every
+           page load. */
+        $userdata = $this->_getUserData($this->gssapiid, true);
+        if($userdata) {
+            $user = $this->gssapiid;
+            $USERINFO = $userdata;
+            $_SERVER['REMOTE_USER'] = $user;
+            $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
+            $_SESSION[DOKU_COOKIE]['auth']['mail'] = $USERINFO['mail'];
+            $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -64,6 +146,24 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
                 $this->_debug('LDAP bind as superuser: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
                 return false;
             }
+            $this->bound = 2;
+        } else if($this->getConf('ldapauthkeytab')) {
+            // superuser bind using SASL and GSSAPI with credentials provided in a keytab. 
+            // get a temporary file to store the kerberos credentials
+            if(!$ccfile) $ccfile = tempnam(sys_get_temp_dir(),'ldapauthcc');
+            // create an object to store the credential cache in memory
+            if(!$ccobj) $ccobj = new KRB5CCache;
+            // initialize the credential cache with keys from the keytab. The principal name has to be provided in the the configuration. 
+            $ccobj->initKeytab($this->getConf('ldapauthprinc'),$this->getConf('ldapauthkeytab'));
+            // store credentials in temporary file for use by ldap_sasl_bind
+            $ccobj->save($ccfile);
+            putenv("KRB5CCNAME=" . $ccfile);
+            if(!@ldap_sasl_bind($this->con, NULL, NULL, "GSSAPI")) {
+                $this->_debug('LDAP SASL GSSAPI bind as superuser: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
+                return false;
+            }
+            // delete file with credentials
+            unlink($ccfile);
             $this->bound = 2;
         } else if($this->getConf('binddn') &&
             $this->getConf('usertree') &&
@@ -169,6 +269,24 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
                 $this->_debug('LDAP bind as superuser: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
                 return false;
             }
+            $this->bound = 2;
+        } elseif($this->getConf('ldapauthkeytab') && $this->bound < 2) {
+            // superuser bind using SASL and GSSAPI with credentials provided in a keytab.
+            // get a temporary file to store the kerberos credentials
+            if(!$ccfile) $ccfile = tempnam(sys_get_temp_dir(),'ldapauthcc');
+            // create an object to store the credential cache in memory
+            if(!$ccobj) $ccobj = new KRB5CCache;
+            // initialize the credential cache with keys from the keytab. The principal name has to be provided in the the configuration.
+            $ccobj->initKeytab($this->getConf('ldapauthprinc'),$this->getConf('ldapauthkeytab'));
+            // store credentials in temporary file for use by ldap_sasl_bind
+            $ccobj->save($ccfile);
+            putenv("KRB5CCNAME=" . $ccfile);
+            if(!@ldap_sasl_bind($this->con, NULL, NULL, "GSSAPI")) {
+                $this->_debug('LDAP SASL GSSAPI bind as superuser: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
+                return false;
+            }
+            // delete file with credentials
+            unlink($ccfile);
             $this->bound = 2;
         } elseif($this->bound == 0 && !$inbind) {
             // in some cases getUserData is called outside the authentication workflow
