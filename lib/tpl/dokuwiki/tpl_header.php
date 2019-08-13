@@ -60,7 +60,11 @@ if (!defined('DOKU_INC')) die();
                 <?php echo (new \dokuwiki\Menu\MobileMenu())->getDropdown($lang['tools']); ?>
             </div>
             <ul>
-                <?php echo (new \dokuwiki\Menu\SiteMenu())->getListItems('action ', false); ?>
+                <?php if (!empty($_SERVER['REMOTE_USER'])): ?>
+                    <?php echo (new \dokuwiki\Menu\SiteMenu())->getListItems('action ', false); ?>
+                <?php else: ?>
+                    <?php echo (new \dokuwiki\Menu\SiteMenuGuest())->getListItems('action ', false); ?>
+                <?php endif ?>
             </ul>
         </div>
 
