@@ -1,0 +1,1 @@
+Πατώντας στο τόξο έχετε πρόσβαση σε στοιχεία τρίτων του [[doku>plugins|plugins]] and [[doku>template|templates]]  DokuWiki. Παρακαλώ να γνωρίζετε ότι η εγκατάσταση κωδικού τρίτου μπορεί να θέσει θέμα **ρίσκου ασφάλειας**, για την οποία μπορεί να θέλετε να διαβάζετε πρώτα.you[[doku>security#plugin_security|plugin security]]
