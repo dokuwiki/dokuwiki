@@ -201,7 +201,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
         $this->_debug('LDAP user search: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
         $this->_debug('LDAP search at: '.htmlspecialchars($base.' '.$filter), 0, __LINE__, __FILE__);
-		$sr     = $this->_ldapsearch($this->con, $base, $filter, $this->getConf('userscope'));
+		$sr     = $this->_ldapsearch($this->con, $base, $filter, $this->getConf('userscope'), $this->getConf('attributes'));
 
 		$result = @ldap_get_entries($this->con, $sr);
 
