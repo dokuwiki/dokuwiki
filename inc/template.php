@@ -1658,7 +1658,7 @@ function tpl_subscribe() {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_flush() {
-    ob_flush();
+    if( ob_get_level() > 0 ) ob_flush();
     flush();
 }
 
