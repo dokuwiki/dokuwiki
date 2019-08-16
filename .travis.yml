@@ -21,6 +21,7 @@ notifications:
     on_success: change
     on_failure: change
 install:
+  - echo "Travis PHP Version: $TRAVIS_PHP_VERSION"
   - if [[ $TRAVIS_PHP_VERSION > '7.1' ]]; then wget -O ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit https://phar.phpunit.de/phpunit-7.phar; fi
   - if [[ $TRAVIS_PHP_VERSION > '7.1' ]]; then chmod 755 ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit; fi
   # Force PHPUnit 7 #2693; nightly will match $TRAVIS_PHP_VERSION > '7.1' rule
