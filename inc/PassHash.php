@@ -376,7 +376,7 @@ class PassHash {
      *
      * The actual iteration count is 2 to the power of the given count,
      * maximum is 30 (-> 2^30 = 1_073_741_824). If a higher one is given,
-     * the function throws * an exception.
+     * the function throws an exception.
      * This iteration count is expected to grow with increasing power of
      * new computers.
      *
