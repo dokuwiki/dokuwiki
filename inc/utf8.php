@@ -569,12 +569,13 @@ if(!function_exists('utf8_tohtml')){
      * @link   http://php.net/manual/en/function.utf8-decode.php
      *
      * @param string $str
+     * @param bool $all Encode non-utf8 char to HTML as well
      * @return string
      */
-    function utf8_tohtml ($str) {
+    function utf8_tohtml($str, $all = false) {
         $ret = '';
         foreach (utf8_to_unicode($str) as $cp) {
-            if ($cp < 0x80)
+            if ($cp < 0x80 && !$all)
                 $ret .= chr($cp);
             elseif ($cp < 0x100)
                 $ret .= "&#$cp;";

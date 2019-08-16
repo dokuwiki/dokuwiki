@@ -1617,12 +1617,7 @@ function obfuscate($email) {
             return strtr($email, $obfuscate);
 
         case 'hex' :
-            $encode = '';
-            $len    = strlen($email);
-            for($x = 0; $x < $len; $x++) {
-                $encode .= '&#x'.bin2hex($email{$x}).';';
-            }
-            return $encode;
+            return utf8_tohtml($email, true);
 
         case 'none' :
         default :
