@@ -5,11 +5,9 @@
  *
  * @author Belinda Rignall <info@hire-labas.pl>
  */
+$lang['connectfail']           = 'http://hire-labas.pl
+info@hire-labas.pl';
 $lang['userexists']            = 'http://hire-labas.pl
 info@hire-labas.pl';
-$lang['usernotexists']         = 'http://hire-labas.pl
-info@hire-labas.pl';
 $lang['writefail']             = 'http://hire-labas.pl
-info@hire-labas.pl';
-$lang['protected']             = 'http://hire-labas.pl
 info@hire-labas.pl';

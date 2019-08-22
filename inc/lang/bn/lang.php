@@ -3,224 +3,696 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Belinda Rignall <info@hire-labas.pl>
  * @author Foysol <ragebot1125@gmail.com>
  * @author ninetailz <ninetailz1125@gmail.com>
  * @author Khan M. B. Asad <muhammad2017@gmail.com>
- * @author Ninetailz <ninetailz1125@gmail.com>
  */
-$lang['encoding']              = 'utf-8';
-$lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '“';
-$lang['doublequoteclosing']    = '”';
-$lang['singlequoteopening']    = '‘';
-$lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '’';
-$lang['btn_edit']              = 'এই পৃষ্ঠা সম্পাদনা করুন';
-$lang['btn_source']            = 'দেখান পাতা উৎস';
-$lang['btn_show']              = 'দেখান পৃষ্ঠা';
-$lang['btn_create']            = 'এই পৃষ্ঠা তৈরি করুন';
-$lang['btn_search']            = 'অনুসন্ধান';
-$lang['btn_preview']           = 'পূর্বরূপ';
-$lang['btn_top']               = 'উপরে ফিরে যান ';
-$lang['btn_newer']             = '<< আরো সাম্প্রতিক';
-$lang['btn_older']             = 'কম সাম্প্রতিক >>';
-$lang['btn_revs']              = 'প্রাচীন সংশোধন';
-$lang['btn_recent']            = 'সাধিত পরিবর্তনসমূহ';
-$lang['btn_upload']            = 'আপলোড করুন';
-$lang['btn_cancel']            = 'বাতিল করা';
-$lang['btn_index']             = 'সাইট ম্যাপ';
-$lang['btn_secedit']           = 'সম্পাদন করা';
-$lang['btn_login']             = 'লগইন';
-$lang['btn_logout']            = 'লগ আউট';
-$lang['btn_admin']             = 'অ্যাডমিন';
-$lang['btn_update']            = 'আধুনিক করা';
-$lang['btn_delete']            = 'মুছে ফেলা';
-$lang['btn_back']              = 'পিছনে';
-$lang['btn_backlink']          = 'ব্যাকলিঙ্কগুলি';
-$lang['btn_subscribe']         = 'সাবস্ক্রিপশন পরিচালনা করুন';
-$lang['btn_profile']           = 'প্রোফাইল আপডেট করুন';
-$lang['btn_reset']             = 'রিসেট করুন';
-$lang['btn_resendpwd']         = 'সেট করুন নতুন পাসওয়ার্ড';
-$lang['btn_draft']             = 'সম্পাদনা খসড়া';
-$lang['btn_recover']           = 'খসড়া উদ্ধার';
-$lang['btn_draftdel']          = 'খসড়া মুছে দিন';
-$lang['btn_revert']            = 'পুনরূদ্ধার করা';
-$lang['btn_register']          = 'খাতা';
-$lang['btn_apply']             = 'প্রয়োগ করা';
-$lang['btn_media']             = 'মিডিয়া ম্যানেজার';
-$lang['btn_deleteuser']        = 'আমার অ্যাকাউন্ট অপসারণ করুন';
-$lang['btn_img_backto']        = 'ফিরে যান %s';
-$lang['btn_mediaManager']      = 'মিডিয়া ম্যানেজারে দেখুন';
-$lang['loggedinas']            = 'লগ ইন:';
-$lang['user']                  = 'ইউজারনেম';
-$lang['pass']                  = 'পাসওয়ার্ড';
-$lang['newpass']               = 'নতুন পাসওয়ার্ড';
-$lang['oldpass']               = 'বর্তমান পাসওয়ার্ড নিশ্চিত করুন';
-$lang['passchk']               = 'আরো একবার';
-$lang['remember']              = 'আমাকে মনে রেখো';
-$lang['fullname']              = 'আমাকে মনে রেখো';
-$lang['email']                 = 'ই মেইল';
-$lang['profile']               = 'ব্যবহারকারী প্রোফাইল';
-$lang['badlogin']              = 'দুঃখিত, ব্যবহারকারীর নাম বা পাসওয়ার্ড ভুল ছিল.';
-$lang['badpassconfirm']        = 'দুঃখিত, পাসওয়ার্ড ভুল ছিল';
-$lang['minoredit']             = 'ক্ষুদ্র পরিবর্তনসমূহ';
-$lang['draftdate']             = 'খসড়া উপর স্বতঃসংরক্ষণ';
-$lang['nosecedit']             = 'পাতা ইতিমধ্যে পরিবর্তিত হয়েছিল, অধ্যায় তথ্যের পরিবর্তে পুরো পাতা লোড তারিখ সীমার বাইরে ছিল.
-';
-$lang['regmissing']            = 'দুঃখিত, আপনি সমস্ত ক্ষেত্রগুলি পূরণ করা আবশ্যক.';
-$lang['reguexists']            = 'দুঃখিত, এই লগইন সঙ্গে একটি ব্যবহারকারী ইতিমধ্যেই বিদ্যমান.';
-$lang['regsuccess']            = 'ব্যবহারকারী তৈরি করা হয়েছে এবং পাসওয়ার্ড ইমেইল করে পাঠানো হয়েছিল.';
-$lang['regsuccess2']           = 'ব্যবহারকারী তৈরি করা হয়েছে.';
-$lang['regmailfail']           = 'একটি ত্রুটি পাসওয়ার্ড মেইল পাঠানোর নেভিগেশন ছিল মনে হচ্ছে. অ্যাডমিন যোগাযোগ করুন!';
-$lang['regbadmail']            = 'প্রদত্ত ইমেইল ঠিকানা সঠিক মনে হচ্ছে - আপনি এই একটি ত্রুটি মনে হলে, অ্যাডমিন যোগাযোগ';
-$lang['regbadpass']            = 'দুটি প্রদত্ত পাসওয়ার্ড অভিন্ন নয়, আবার চেষ্টা করুন.';
-$lang['regpwmail']             = 'আপনার DokuWiki পাসওয়ার্ড';
-$lang['reghere']               = 'যদিও তোমার কোনো একাউন্ট নেই? শুধু একটি পেতে';
-$lang['profna']                = 'এই উইকি প্রোফাইল পরিবর্তন সমর্থন করে না';
-$lang['profnochange']          = 'এমন কোন পরিবর্তন, না কিছুই.';
-$lang['profnoempty']           = 'একটি খালি নাম অথবা ইমেইল ঠিকানা অনুমোদিত নয়.';
-$lang['profchanged']           = 'ইউজার প্রোফাইল সফলভাবে আপডেট.';
-$lang['profnodelete']          = 'এই উইকি ব্যবহারকারী মুছে ফেলার সমর্থন করে না';
-$lang['profdeleteuser']        = 'একাউন্ট মুছে দিন';
-$lang['profdeleted']           = 'আপনার অ্যাকাউন্টটি এই উইকি থেকে মুছে ফেলা হয়েছে';
-$lang['profconfdelete']        = 'আমি এই উইকি থেকে আমার অ্যাকাউন্ট অপসারণ করতে ইচ্ছুক. <br/> এই ক্রিয়াটি পূর্বাবস্থায় ফেরানো যায় না.';
-$lang['profconfdeletemissing'] = 'নিশ্চিতকরণ চেক বক্স ticked না';
-$lang['pwdforget']             = 'আপনার পাসওয়ার্ড ভুলে গেছেন? একটি নতুন পান';
-$lang['resendna']              = 'এই উইকি পাসওয়ার্ড পুনরায় প্রেরণ সমর্থন করে না.';
-$lang['resendpwd']             = 'জন্য সেট করুন নতুন পাসওয়ার্ড';
-$lang['resendpwdmissing']      = 'দুঃখিত, আপনি সমস্ত ক্ষেত্রগুলি পূরণ করা আবশ্যক.';
-$lang['resendpwdnouser']       = 'দুঃখিত, আমরা আমাদের ডাটাবেসের মধ্যে ব্যবহারকারীর খুঁজে পাচ্ছি না.';
-$lang['resendpwdbadauth']      = 'দুঃখিত, এই auth কোড বৈধ নয়. আপনি সম্পূর্ণ কনফার্মেশন লিঙ্ক ব্যবহার নিশ্চিত করুন.';
-$lang['resendpwdconfirm']      = 'একটি নিশ্চায়ন লিঙ্ক ইমেলের মাধ্যমে পাঠানো হয়েছে.';
-$lang['resendpwdsuccess']      = 'আপনার নতুন পাসওয়ার্ড ইমেইলের মাধ্যমে পাঠানো হয়েছে.';
-$lang['license']               = 'অন্যথায় নোট যেখানে ছাড়া, এই উইকি নেভিগেশন কন্টেন্ট নিম্নলিখিত লাইসেন্সের আওতায় লাইসেন্সকৃত:';
-$lang['licenseok']             = 'দ্রষ্টব্য: আপনি নিম্নলিখিত লাইসেন্সের অধীনে আপনার বিষয়বস্তু লাইসেন্স সম্মত হন এই পৃষ্ঠার সম্পাদনার দ্বারা:';
-$lang['searchmedia']           = 'অনুসন্ধান ফাইলের নাম:';
-$lang['searchmedia_in']        = 'অনুসন্ধান %s -এ';
-$lang['txt_upload']            = 'আপলোড করার জন্য নির্বাচন করুন ফাইল:';
-$lang['txt_filename']          = 'হিসাবে আপলোড করুন (ঐচ্ছিক):';
-$lang['txt_overwrt']           = 'বিদ্যমান ফাইল মুছে যাবে';
-$lang['maxuploadsize']         = 'সর্বোচ্চ আপলোড করুন. %s-ফাইলের প্রতি.';
-$lang['lockedby']              = 'বর্তমানে দ্বারা লক:';
-$lang['lockexpire']            = 'তালা এ মেয়াদ শেষ:';
-$lang['js']['willexpire']      = 'এই পৃষ্ঠার সম্পাদনার জন্য আপনার লক এক মিনিটের মধ্যে মেয়াদ শেষ সম্পর্কে. \ দ্বন্দ্ব লক টাইমার রিসেট প্রিভিউ বাটন ব্যবহার এড়াতে.';
-$lang['js']['notsavedyet']     = 'অসংরক্ষিত পরিবর্তন হারিয়ে যাবে.';
-$lang['js']['searchmedia']     = 'ফাইলের জন্য অনুসন্ধান';
-$lang['js']['keepopen']        = 'নির্বাচনের উপর উইন্ডো খোলা রাখুন';
-$lang['js']['hidedetails']     = 'বিশদ আড়াল করুন';
-$lang['js']['mediatitle']      = 'লিংক সেটিংস';
-$lang['js']['mediadisplay']    = 'লিংক টাইপ';
-$lang['js']['mediaalign']      = 'শ্রেণীবিন্যাস';
-$lang['js']['mediasize']       = 'চিত্র আকার';
-$lang['js']['mediatarget']     = 'লিংক টার্গেট';
-$lang['js']['mediaclose']      = 'বন্ধ করা';
-$lang['js']['mediainsert']     = 'ঢোকান';
-$lang['js']['mediadisplayimg'] = 'ছবিটি দেখান';
-$lang['js']['mediadisplaylnk'] = 'শুধুমাত্র লিঙ্ক দেখান';
-$lang['js']['mediasmall']      = 'ক্ষুদ্র সংস্করণ';
-$lang['js']['mediamedium']     = 'মাধ্যম সংস্করণ';
-$lang['js']['medialarge']      = 'বড় সংস্করণ';
-$lang['js']['mediaoriginal']   = 'আসল সংস্করণ';
-$lang['js']['medialnk']        = 'বিস্তারিত পৃষ্ঠায় লিংক';
-$lang['js']['mediadirect']     = 'মূল সরাসরি লিঙ্ক';
-$lang['js']['medianolnk']      = 'কোনো লিঙ্ক নাই';
-$lang['js']['medianolink']     = 'ইমেজ লিঙ্ক কোরো না';
-$lang['js']['medialeft']       = 'বাম দিকে ইমেজ সারিবদ্ধ কর';
-$lang['js']['mediaright']      = 'ডান দিকে ইমেজ সারিবদ্ধ কর';
-$lang['js']['mediacenter']     = 'মাঝখানে ইমেজ সারিবদ্ধ কর';
-$lang['js']['medianoalign']    = 'কোনো সারিবদ্ধ করা প্রয়োজন নেই';
-$lang['js']['nosmblinks']      = 'উইন্ডোস শেয়ার এর সাথে সংযোগ সাধন কেবল মাইক্রোসফ্ট ইন্টারনেট এক্সপ্লোরারেই সম্ভব।\nতবে আপনি লিংকটি কপি পেস্ট করতেই পারেন।';
-$lang['js']['linkwiz']         = 'লিংক উইজার্ড';
-$lang['js']['linkto']          = 'সংযোগের লক্ষ্য:';
-$lang['js']['del_confirm']     = 'নির্বাচিত আইটেম(গুলো) আসলেই মুছে ফেলতে চান?';
-$lang['js']['restore_confirm'] = 'এই সংস্করণ সত্যিই পূর্বাবস্থায় ফিরিয়ে আনতে চান?';
-$lang['js']['media_diff']      = 'পার্থক্যগুলো দেখুন:';
-$lang['js']['media_diff_both'] = 'পাশাপাশি';
-$lang['js']['media_diff_opacity'] = 'শাইন-থ্রু';
-$lang['js']['media_diff_portions'] = 'ঝেঁটিয়ে বিদায়';
-$lang['js']['media_select']    = 'ফাইল নির্বাচন...';
-$lang['js']['media_upload_btn'] = 'আপলোড';
-$lang['js']['media_done_btn']  = 'সাধিত';
-$lang['js']['media_drop']      = 'আপলোডের জন্য এখানে ফাইল ফেলুন';
-$lang['js']['media_cancel']    = 'অপসারণ';
-$lang['js']['media_overwrt']   = 'বর্তমান ফাইল ওভাররাইট করুন';
-$lang['rssfailed']             = 'ফিডটি জোগাড় করতে গিয়ে একটি ত্রুটি ঘটেছে:';
-$lang['nothingfound']          = 'কিছু পাওয়া যায়নি।';
-$lang['mediaselect']           = 'মিডিয়া ফাইল';
-$lang['uploadsucc']            = 'আপলোড সফল';
-$lang['uploadfail']            = 'আপলোড ব্যর্থ। অনুমতি জনিত ত্রুটি কী?';
-$lang['uploadwrong']           = 'আপলোড প্রত্যাখ্যাত। এই ফাইল এক্সটেনশন অননুমোদিত।';
-$lang['uploadexist']           = 'ফাইল ইতিমধ্যেই বিরাজমান। কিছু করা হয়নি।';
-$lang['uploadbadcontent']      = 'আপলোডকৃত সামগ্রী %s ফাইল এক্সটেনশন এর সাথে মিলেনি।';
-$lang['uploadspam']            = 'স্প্যাম ব্ল্যাকলিস্ট আপলোড আটকে দিয়েছে।';
-$lang['uploadxss']             = 'সামগ্রীটি ক্ষতিকর ভেবে আপলোড আটকে দেয়া হয়েছে।';
-$lang['uploadsize']            = 'আপলোডকৃত ফাইলটি বেশি বড়ো। (সর্বোচ্চ %s)';
-$lang['deletesucc']            = '"%s" ফাইলটি মুছে ফেলা হয়েছে।';
-$lang['deletefail']            = '"%s" ডিলিট করা যায়নি - অনুমতি আছে কি না দেখুন।';
-$lang['mediainuse']            = '"%s" ফাইলটি মোছা হয়নি - এটি এখনো ব্যবহৃত হচ্ছে।';
-$lang['namespaces']            = 'নামস্থান';
-$lang['mediafiles']            = 'ফাইল পাওয়া যাবে ';
-$lang['accessdenied']          = 'আপনি এই পৃষ্ঠাটি দেখতে অনুমতি দেওয়া হয়নি';
-$lang['mediausage']            = 'এই ফাইলের উল্লেখ নিম্নলিখিত সিনট্যাক্স ব্যবহার করুন:';
-$lang['mediaview']             = 'মূল ফাইলটি দেখুন';
-$lang['mediaroot']             = 'মূল';
-$lang['mediaupload']           = 'এখানে বর্তমান নামস্থান একটি ফাইল আপলোড করুন. , Subnamespaces তৈরি আপনি ফাইল নির্বাচন পরে কোলন দ্বারা বিভাজিত আপনার ফাইলের নাম তাদের পূর্বে লিখুন করুন. কোন ফাইল এছাড়াও ড্র্যাগ এবং ড্রপ দ্বারা নির্বাচন করা সম্ভব.';
-$lang['mediaextchange']        = 'ফাইল এক্সটেনশন .%s থেকে .%s\'এ পরিবর্তন হলো !';
-$lang['reference']             = 'তথ্যসূত্রের জন্য ';
-$lang['ref_inuse']             = 'এই ফাইল মুছে ফেলা যাবে না কারণ এটি এখনও ব্যবহৃত হচ্ছে নিম্নলিখিত পাতা দ্বারা:';
-$lang['ref_hidden']            = 'এই পাতায় কিছু রেফারেন্স পড়ার আপনার আনুমতি নেই';
-$lang['hits']                  = 'সফল ';
-$lang['quickhits']             = 'পৃষ্ঠা মেলে';
-$lang['toc']                   = 'সূচীপত্র';
-$lang['current']               = 'বর্তমান';
-$lang['yours']                 = 'আপনার সংস্করণ
-';
-$lang['diff']                  = 'বর্তমান সংস্করণের পার্থক্য দেখান ';
-$lang['diff2']                 = 'নির্বাচিত সংস্করণের মধ্যে পার্থক্য দেখান ';
-$lang['diff_type']             = 'পার্থক্য দেখুন:';
-$lang['diff_inline']           = 'ইনলাইন';
-$lang['diff_side']             = 'পাশাপাশি';
-$lang['diffprevrev']           = 'পূর্ববর্তী সংস্করণ';
-$lang['diffnextrev']           = 'পরবর্তী সংস্করণ';
-$lang['difflastrev']           = 'সর্বশেষ সংস্করণ';
-$lang['diffbothprevrev']       = 'উভয় পক্ষের পূর্ববর্তী সংস্করণ';
-$lang['diffbothnextrev']       = 'উভয় পক্ষের পরবর্তী সংস্করণ';
-$lang['line']                  = 'লাইন';
-$lang['breadcrumb']            = 'ট্রেস:';
-$lang['youarehere']            = 'আপনি এখানে আছেন:';
-$lang['lastmod']               = 'শেষ বার পরিমার্জিত';
-$lang['by']                    = 'দ্বারা';
-$lang['deleted']               = 'মুছে ফেলা';
-$lang['created']               = 'তৈরি করা';
-$lang['restored']              = 'পুরানো সংস্করণের পুনঃস্থাপন (%s)';
-$lang['external_edit']         = 'বাহ্যিক সম্পাদনা';
-$lang['summary']               = 'সম্পাদনা সারাংশ';
-$lang['noflash']               = 'এ href="http://www.adobe.com/products/flashplayer/"> অ্যাডোবি ফ্ল্যাশ প্লাগইন </a> এই সামগ্রী প্রদর্শন করার জন্য প্রয়োজন হয়.';
-$lang['download']              = 'ডাউনলোড স্নিপেট ';
-$lang['tools']                 = 'সরঞ্জামসমূহ';
-$lang['user_tools']            = 'ব্যবহারকারীর সরঞ্জামসমূহ';
-$lang['site_tools']            = 'সাইটের সরঞ্জামসমূহ';
-$lang['page_tools']            = 'পৃষ্ঠার সরঞ্জামসমূহ';
-$lang['skip_to_content']       = 'বিষয়ে এড়িয়ে যান';
-$lang['sidebar']               = 'সাইডবার';
-$lang['mail_newpage']          = 'পৃষ্ঠা যোগ করা হয়েছে:';
-$lang['mail_changed']          = 'পৃষ্ঠা পরিবর্তন করা হয়েছে:';
-$lang['mail_subscribe_list']   = 'পৃষ্ঠাগুলির নামস্থান পরিবর্তন:';
-$lang['mail_new_user']         = 'নতুন ব্যবহারকারী:';
-$lang['mail_upload']           = 'ফাইল আপলোড করেছেন:';
-$lang['changes_type']          = 'দেখুন পরিবর্তনসমূহ';
-$lang['pages_changes']         = 'পৃষ্ঠাগুলি';
-$lang['media_changes']         = 'মিডিয়া ফাইলগুলি';
-$lang['both_changes']          = 'পেজ এবং মিডিয়া ফাইল উভয়েই';
-$lang['qb_bold']               = 'গাঢ় লেখা';
-$lang['qb_italic']             = 'বাঁকা লেখা';
-$lang['qb_underl']             = 'আন্ডারলাইন টেক্সট';
-$lang['qb_code']               = 'মোনোস্কেপ লেখা';
-$lang['qb_strike']             = 'স্ট্রাইক মাধ্যমে টেক্সট';
-$lang['qb_h1']                 = 'স্তর 1 শিরোনাম';
-$lang['qb_h2']                 = 'স্তর 2 শিরোনাম';
-$lang['qb_h3']                 = 'স্তর 3 শিরোনাম';
-$lang['qb_h4']                 = 'স্তর 4 শিরোনাম';
-$lang['qb_h5']                 = 'স্তর 5 শিরোনাম';
-$lang['qb_h']                  = 'শিরোনাম';
-$lang['qb_hs']                 = 'নির্বাচন করুন শিরোনাম';
+$lang['encoding']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['direction']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['doublequoteopening']    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['doublequoteclosing']    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['singlequoteopening']    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['singlequoteclosing']    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['apostrophe']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_edit']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_source']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_show']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_create']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_search']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_save']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_preview']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_top']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_newer']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_older']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_revs']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_recent']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_upload']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_cancel']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_index']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_secedit']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_login']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_logout']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_admin']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_update']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_delete']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_back']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_backlink']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_subscribe']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_profile']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_reset']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_resendpwd']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_draft']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_recover']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_draftdel']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_revert']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_register']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_apply']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_media']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_deleteuser']        = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_img_backto']        = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['btn_mediaManager']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['loggedinas']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['user']                  = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['pass']                  = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['newpass']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['oldpass']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['passchk']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['remember']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['fullname']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['email']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['profile']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['badlogin']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['badpassconfirm']        = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['minoredit']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['draftdate']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['nosecedit']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['searchcreatepage']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['search_fullresults']    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['search_toggle_tools'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['willexpire']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['notsavedyet']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['searchmedia']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['keepopen']        = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['hidedetails']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediatitle']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediadisplay']    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediaalign']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediasize']       = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediatarget']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediaclose']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediainsert']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediadisplayimg'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediadisplaylnk'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediasmall']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediamedium']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['medialarge']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediaoriginal']   = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['medialnk']        = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediadirect']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['medianolnk']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['medianolink']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['medialeft']       = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediaright']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['mediacenter']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['medianoalign']    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['nosmblinks']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['linkwiz']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['linkto']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['del_confirm']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['restore_confirm'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['media_diff']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['media_diff_both'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['media_diff_opacity'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['media_diff_portions'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['media_select']    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['media_upload_btn'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['media_done_btn']  = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['media_drop']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['media_cancel']    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['js']['media_overwrt']   = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['search_exact_match']    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['search_starts_with']    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['search_ends_with']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['search_contains']       = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['search_custom_match']   = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['search_any_ns']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['search_any_time']       = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['search_past_7_days']    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['search_past_month']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['search_past_year']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['search_sort_by_hits']   = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['search_sort_by_mtime']  = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['regmissing']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['reguexists']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['regsuccess']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['regsuccess2']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['regfail']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['regmailfail']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['regbadmail']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['regbadpass']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['regpwmail']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['reghere']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['profna']                = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['profnochange']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['profnoempty']           = 'info@hire-labas.pl';
+$lang['profchanged']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['profnodelete']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['profdeleteuser']        = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['profdeleted']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['profconfdelete']        = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['profconfdeletemissing'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['proffail']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['pwdforget']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['resendna']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['resendpwd']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['resendpwdmissing']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['resendpwdnouser']       = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['resendpwdbadauth']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['resendpwdconfirm']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['resendpwdsuccess']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['license']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['licenseok']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['searchmedia']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['searchmedia_in']        = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['txt_upload']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['txt_filename']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['txt_overwrt']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['maxuploadsize']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['lockedby']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['lockexpire']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['rssfailed']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['nothingfound']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['mediaselect']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['uploadsucc']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['uploadfail']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['uploadwrong']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['uploadexist']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['uploadbadcontent']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['uploadspam']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['uploadxss']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['uploadsize']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['deletesucc']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['deletefail']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['mediainuse']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['namespaces']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['mediafiles']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['accessdenied']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['mediausage']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['mediaview']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['mediaroot']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['mediaupload']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['mediaextchange']        = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['reference']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['ref_inuse']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['ref_hidden']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['hits']                  = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['quickhits']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['toc']                   = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['current']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['yours']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['diff']                  = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['diff2']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['difflink']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['diff_type']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['diff_inline']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['diff_side']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['diffprevrev']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['diffnextrev']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['difflastrev']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['diffbothprevrev']       = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['diffbothnextrev']       = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['line']                  = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['breadcrumb']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['youarehere']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['lastmod']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['by']                    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['deleted']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['created']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['restored']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['external_edit']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['summary']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['noflash']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['download']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['tools']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['user_tools']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['site_tools']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['page_tools']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['skip_to_content']       = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['sidebar']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['mail_newpage']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['mail_changed']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['mail_subscribe_list']   = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['mail_new_user']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['mail_upload']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['changes_type']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['pages_changes']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_changes']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['both_changes']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_bold']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_italic']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_underl']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_code']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_strike']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_h1']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_h2']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_h3']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_h4']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_h5']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_h']                  = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_hs']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_hplus']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_hminus']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_hequal']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_link']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_extlink']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_hr']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_ol']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_ul']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_media']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_sig']                = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_smileys']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['qb_chars']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['upperns']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['metaedit']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['metasaveerr']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['metasaveok']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['img_title']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['img_caption']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['img_date']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['img_fname']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['img_fsize']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['img_artist']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['img_copyr']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['img_format']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['img_camera']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['img_keywords']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['img_width']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['img_height']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_subscribe_success'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_subscribe_error'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_subscribe_noaddress'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_unsubscribe_success'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_unsubscribe_error'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_already_subscribed'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_not_subscribed'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_m_not_subscribed'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_m_new_header']   = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_m_current_header'] = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_m_unsubscribe']  = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_m_subscribe']    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_m_receive']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_style_every']    = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_style_digest']   = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['subscr_style_list']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['authtempfail']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_chooselang']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_installer']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_wikiname']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_enableacl']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_superuser']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_problems']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_modified']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_funcna']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_phpver']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_mbfuncoverload']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_permfail']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_confexists']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_writeerr']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_badhash']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_badval']              = 'info@hire-labas.pl';
+$lang['i_success']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_failure']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_policy']              = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_pol0']                = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_pol1']                = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_pol2']                = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_allowreg']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_retry']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_license']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_license_none']        = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_pop_field']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['i_pop_label']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['recent_global']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['years']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['months']                = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['weeks']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['days']                  = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['hours']                 = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['minutes']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['seconds']               = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['wordblock']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_uploadtab']       = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_searchtab']       = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_file']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_viewtab']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_edittab']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_historytab']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_list_thumbs']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_list_rows']       = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_sort_name']       = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_sort_date']       = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_namespaces']      = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_files']           = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_upload']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_search']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_view']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_viewold']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_edit']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_history']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_meta_edited']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_perm_read']       = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_perm_upload']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_update']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_restore']         = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['media_acl_warning']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['currentns']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['searchresult']          = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['plainhtml']             = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['wikimarkup']            = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['page_nonexist_rev']     = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['unable_to_parse_date']  = 'http://hire-labas.pl
+info@hire-labas.pl';
+$lang['email_signature_text']  = 'http://hire-labas.pl
+info@hire-labas.pl';
