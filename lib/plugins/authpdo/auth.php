@@ -683,10 +683,24 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
             }
 
             $sth->execute();
-            if(strtolower(substr($sql, 0, 6)) == 'select') {
-                $result = $sth->fetchAll();
-            } else {
-                $result = $sth->rowCount();
+            // only report last line's result
+            $hasnextrowset = true;
+            $currentsql = $sql;
+            while($hasnextrowset){
+                if(strtolower(substr($currentsql, 0, 6)) == 'select') {
+                    $result = $sth->fetchAll();
+                } else {
+                    $result = $sth->rowCount();
+                }
+                $semi_pos = strpos($currentsql, ';');
+                if($semi_pos){
+                    $currentsql = trim(substr($currentsql, $semi_pos+1));
+                }
+                try{
+                    $hasnextrowset = $sth->nextRowset(); // run next rowset
+                }catch(PDOException $rowset_e){
+                    $hasnextrowset = false; // driver does not support multi-rowset, should be executed in one time
+                }
             }
         } catch(Exception $e) {
             // report the caller's line
