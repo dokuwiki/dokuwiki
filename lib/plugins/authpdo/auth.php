@@ -416,12 +416,16 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         $result = $this->_query($this->getConf('list-users'), $filter);
         if(!$result) return array();
         $users = array();
-        foreach($result as $row) {
-            if(!isset($row['user'])) {
-                $this->_debug("Statement did not return 'user' attribute", -1, __LINE__);
-                return array();
+        if(is_array($result)){
+            foreach($result as $row) {
+                if(!isset($row['user'])) {
+                    $this->_debug("list-users statement did not return 'user' attribute", -1, __LINE__);
+                    return array();
+                }
+                $users[] = $this->getUserData($row['user']);
             }
-            $users[] = $this->getUserData($row['user']);
+        }else{
+            $this->_debug("list-users statement did not return a list of result", -1, __LINE__);
         }
         return $users;
     }
@@ -571,12 +575,16 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         if($result === false) return false;
 
         $groups = array($conf['defaultgroup']); // always add default config
-        foreach($result as $row) {
-            if(!isset($row['group'])) {
-                $this->_debug("No 'group' field returned in select-user-groups statement");
-                return false;
+        if(is_array($result)){
+            foreach($result as $row) {
+                if(!isset($row['group'])) {
+                    $this->_debug("No 'group' field returned in select-user-groups statement");
+                    return false;
+                }
+                $groups[] = $row['group'];
             }
-            $groups[] = $row['group'];
+        }else{
+            $this->_debug("select-user-groups statement did not return a list of result", -1, __LINE__);
         }
 
         $groups = array_unique($groups);
@@ -597,15 +605,19 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         if($result === false) return false;
 
         $groups = array();
-        foreach($result as $row) {
-            if(!isset($row['group'])) {
-                $this->_debug("No 'group' field returned from select-groups statement", -1, __LINE__);
-                return false;
-            }
+        if(is_array($result)){
+            foreach($result as $row) {
+                if(!isset($row['group'])) {
+                    $this->_debug("No 'group' field returned from select-groups statement", -1, __LINE__);
+                    return false;
+                }
 
-            // relayout result with group name as key
-            $group = $row['group'];
-            $groups[$group] = $row;
+                // relayout result with group name as key
+                $group = $row['group'];
+                $groups[$group] = $row;
+            }
+        }else{
+            $this->_debug("select-groups statement did not return a list of result", -1, __LINE__);
         }
 
         ksort($groups);
@@ -666,6 +678,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         // execute
         $params = array();
         $sth = $this->pdo->prepare($sql);
+        $result = false;
         try {
             // prepare parameters - we only use those that exist in the SQL
             foreach($arguments as $key => $value) {
@@ -709,7 +722,6 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
             $dsql = $this->_debugSQL($sql, $params, !defined('DOKU_UNITTEST'));
             $this->_debug($e, -1, $line);
             $this->_debug("SQL: <pre>$dsql</pre>", -1, $line);
-            $result = false;
         }
         $sth->closeCursor();
         $sth = null;
