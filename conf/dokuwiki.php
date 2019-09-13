@@ -69,7 +69,7 @@ $conf['remoteuser']  = '!!not set!!';    //user/groups that have access to remot
 
 /* Antispam Features */
 $conf['usewordblock']= 1;                //block spam based on words? 0|1
-$conf['relnofollow'] = 1;                //use rel="nofollow" for external links?
+$conf['relnofollow'] = 1;                //use rel="ugc nofollow" for external links?
 $conf['indexdelay']  = 60*60*24*5;       //allow indexing after this time (seconds) default is 5 days
 $conf['mailguard']   = 'hex';            //obfuscate email addresses against spam harvesters?
                                          //valid entries are:
