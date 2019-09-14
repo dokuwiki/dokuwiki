@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
- * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Erli Moen <evseev.jr@gmail.com>
  * @author Владимир <id37736@yandex.ru>
  * @author Vitaly Filatenko <kot@hacktest.net>
@@ -22,10 +22,11 @@ $lang['referrals']             = 'Следовать за referrals?';
 $lang['deref']                 = 'Как расшифровывать псевдонимы?';
 $lang['binddn']                = 'DN вторичного bind-пользователя, если anonymous bind недостаточно. Например: <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']                = 'Пароль для указанного пользователя';
+$lang['attributes']            = 'Атрибуты для извлечения с помощью поиска LDAP.';
 $lang['userscope']             = 'Ограничить область поиска при поиске пользователей';
 $lang['groupscope']            = 'Ограничить область поиска при поиске групп';
-$lang['userkey']               = 'Атрибут означающий имя пользователя; должен быть таким же как в userfilter';
-$lang['groupkey']              = 'Использовать любой атрибут пользователя для включения в группу (вместо стандартного AD groups) Например из атрибута department или telephone number';
+$lang['userkey']               = 'Атрибут, означающий имя пользователя; должен быть таким же как в userfilter';
+$lang['groupkey']              = 'Использовать любой атрибут пользователя для включения в группу (вместо стандартного AD groups). Например, из атрибута department или telephone number';
 $lang['modPass']               = 'Может ли пароль LDAP быть изменён через «Докувики»?';
 $lang['debug']                 = 'Показывать дополнительную отладочную информацию при ошибках';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
