@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Vyacheslav Strenadko <vyacheslav.strenadko@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Vyacheslav Strenadko <vyacheslav.strenadko@gmail.com>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Zhassulan <zyesmukanov@gmail.com>
  * @author Denis Simakov <akinoame1@gmail.com>
@@ -102,7 +102,7 @@ $lang['securecookie']          = 'Должны ли куки (cookies), выст
 $lang['remote']                = 'Включить систему API для подключений. Это позволит другим приложениям получить доступ к вики через XML-RPC или другие механизмы.';
 $lang['remoteuser']            = 'Дать права для удалённого API-доступа пользователям, указанным здесь (разделяйте запятыми). Оставьте поле пустым для предоставления доступа всем.';
 $lang['usewordblock']          = 'Блокировать спам по ключевым словам';
-$lang['relnofollow']           = 'Использовать rel="nofollow" для внешних ссылок';
+$lang['relnofollow']           = 'Использовать rel="ugc nofollow" для внешних ссылок';
 $lang['indexdelay']            = 'Задержка перед индексированием (сек.)';
 $lang['mailguard']             = 'Кодировать адреса электронной почты';
 $lang['iexssprotect']          = 'Проверять закачанные файлы на наличие потенциально опасного кода JavaScript или HTML';
