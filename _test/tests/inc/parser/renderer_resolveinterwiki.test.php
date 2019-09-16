@@ -43,6 +43,7 @@ class Test_resolveInterwiki extends DokuWikiTest {
     function testNonexisting() {
         $Renderer = new Doku_Renderer();
         $Renderer->interwiki = getInterwiki();
+        unset($Renderer->interwiki['default']);
 
         $shortcut = 'nonexisting';
         $reference = 'foo @+%/';
@@ -50,6 +51,19 @@ class Test_resolveInterwiki extends DokuWikiTest {
 
         $this->assertEquals('', $url);
         $this->assertEquals('', $shortcut);
+    }
+
+    function testNonexistingWithDefault() {
+        $Renderer = new Doku_Renderer();
+        $Renderer->interwiki = getInterwiki();
+        $Renderer->interwiki['default'] = 'https://en.wikipedia.org/wiki/{NAME}';
+
+        $shortcut = 'nonexisting';
+        $reference = 'foo';
+        $url = $Renderer->_resolveInterWiki($shortcut, $reference);
+
+        $this->assertEquals('https://en.wikipedia.org/wiki/foo', $url);
+        $this->assertEquals('default', $shortcut);
     }
 
 }

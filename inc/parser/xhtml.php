@@ -1647,7 +1647,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             if(!$render) {
                 // if the picture is not supposed to be rendered
                 // return the title of the picture
-                if(!$title) {
+                if($title === null || $title === "") {
                     // just show the sourcename
                     $title = $this->_xmlEntities(\dokuwiki\Utf8\PhpString::basename(noNS($src)));
                 }

@@ -845,7 +845,10 @@ abstract class Doku_Renderer extends Plugin {
         //get interwiki URL
         if(isset($this->interwiki[$shortcut])) {
             $url = $this->interwiki[$shortcut];
-        } else {
+        }elseif(isset($this->interwiki['default'])) {
+            $shortcut = 'default';
+            $url = $this->interwiki[$shortcut];
+        }else{
             // not parsable interwiki outputs '' to make sure string manipluation works
             $shortcut = '';
             $url      = '';
