@@ -548,10 +548,10 @@ function css_compress($css){
 
     $quote_cb = function ($match) use (&$quote_storage) {
         $quote_storage[] = $match[0];
-        return 'STR'.(count($quote_storage)-1);
+        return '"STR'.(count($quote_storage)-1).'"';
     };
 
-    $css = preg_replace_callback('/(([\'"]).*?(?<!\\\\)\2)|(STR\d+)/', $quote_cb, $css);
+    $css = preg_replace_callback('/(([\'"]).*?(?<!\\\\)\2)/', $quote_cb, $css);
 
     // strip comments through a callback
     $css = preg_replace_callback('#(/\*)(.*?)(\*/)#s','css_comment_cb',$css);
@@ -615,7 +615,7 @@ function css_compress($css){
         return $quote_storage[$match[1]];
     };
 
-    $css = preg_replace_callback('/STR(\d+)/', $quote_back_cb, $css);
+    $css = preg_replace_callback('/"STR(\d+)"/', $quote_back_cb, $css);
 
     return $css;
 }

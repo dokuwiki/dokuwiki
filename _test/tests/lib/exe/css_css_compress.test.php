@@ -139,8 +139,8 @@ class css_css_compress_test extends DokuWikiTest {
     }
 
     function test_quotes() {
-        $input  = '/* "1" */content: "/* 1 : 2 */ 1 : 2";';
-        $expect = 'content:"/* 1 : 2 */ 1 : 2";';
+        $input  = '/* "1" */content: "/* STR2 : STR1 */ 1 : 2";STR1:10px;STR2:"STR1";STR3:\'STR1\';';
+        $expect = 'content:"/* STR2 : STR1 */ 1 : 2";STR1:10px;STR2:"STR1";STR3:\'STR1\';';
 
         $this->assertEquals($expect, css_compress($input));
     }
