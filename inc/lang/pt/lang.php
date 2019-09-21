@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
  * @author Paulo Ricardo Schopf <pschopf@gmail.com>
  * @author Maykon Oliveira <maykonoliveira850@gmail.com>
  * @author José Vieira <jmsv63@gmail.com>
@@ -32,7 +33,7 @@ $lang['btn_source']            = 'Mostrar página fonte ';
 $lang['btn_show']              = 'Mostrar página';
 $lang['btn_create']            = 'Criar esta página';
 $lang['btn_search']            = 'Pesquisar';
-$lang['btn_save']              = 'Guardar';
+$lang['btn_save']              = 'Salvar';
 $lang['btn_preview']           = 'Pré-visualizar';
 $lang['btn_top']               = 'Voltar ao topo';
 $lang['btn_newer']             = '<< mais recente';
