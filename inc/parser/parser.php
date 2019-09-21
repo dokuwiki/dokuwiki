@@ -371,56 +371,61 @@ class Doku_Parser_Mode_hr extends Doku_Parser_Mode {
  */
 class Doku_Parser_Mode_formatting extends Doku_Parser_Mode {
     var $type;
-
-    var $formatting = array (
-        'strong' => array (
-            'entry'=>'\*\*(?=.*\*\*)',
-            'exit'=>'\*\*',
-            'sort'=>70
-            ),
-
-        'emphasis'=> array (
-            'entry'=>'//(?=[^\x00]*[^:])', //hack for bugs #384 #763 #1468
-            'exit'=>'//',
-            'sort'=>80
-            ),
-
-        'underline'=> array (
-            'entry'=>'__(?=.*__)',
-            'exit'=>'__',
-            'sort'=>90
-            ),
-
-        'monospace'=> array (
-            'entry'=>'\x27\x27(?=.*\x27\x27)',
-            'exit'=>'\x27\x27',
-            'sort'=>100
-            ),
-
-        'subscript'=> array (
-            'entry'=>'<sub>(?=.*</sub>)',
-            'exit'=>'</sub>',
-            'sort'=>110
-            ),
-
-        'superscript'=> array (
-            'entry'=>'<sup>(?=.*</sup>)',
-            'exit'=>'</sup>',
-            'sort'=>120
-            ),
-
-        'deleted'=> array (
-            'entry'=>'<del>(?=.*</del>)',
-            'exit'=>'</del>',
-            'sort'=>130
-            ),
-        );
+    var $formatting;
 
     /**
      * @param string $type
      */
     function __construct($type) {
         global $PARSER_MODES;
+        $ltrs = '\w';
+        $gunk = '/\#~:.?+=&%@!\-\[\]';
+        $punc = '.:?\-;,';
+        $any = $ltrs.$gunk.$punc;
+
+        $this->formatting = array (
+            'strong' => array (
+                'entry'=>'\*\*(?=.*\*\*)',
+                'exit'=>'\*\*',
+                'sort'=>70
+                ),
+
+            'emphasis'=> array (
+                'entry'=>'//(?=.*(?:[^:]//|//[^'.$any.']))',
+                'exit'=>'//',
+                'sort'=>80
+                ),
+
+            'underline'=> array (
+                'entry'=>'__(?=.*__)',
+                'exit'=>'__',
+                'sort'=>90
+                ),
+
+            'monospace'=> array (
+                'entry'=>'\x27\x27(?=.*\x27\x27)',
+                'exit'=>'\x27\x27',
+                'sort'=>100
+                ),
+
+            'subscript'=> array (
+                'entry'=>'<sub>(?=.*</sub>)',
+                'exit'=>'</sub>',
+                'sort'=>110
+                ),
+
+            'superscript'=> array (
+                'entry'=>'<sup>(?=.*</sup>)',
+                'exit'=>'</sup>',
+                'sort'=>120
+                ),
+
+            'deleted'=> array (
+                'entry'=>'<del>(?=.*</del>)',
+                'exit'=>'</del>',
+                'sort'=>130
+                ),
+            );
 
         if ( !array_key_exists($type, $this->formatting) ) {
             trigger_error('Invalid formatting type '.$type, E_USER_WARNING);
