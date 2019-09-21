@@ -639,7 +639,22 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function uninstall() {
         $this->purgeCache();
-        return io_rmdir($this->getInstallDir(), true);
+
+        $data = array(
+            'extension' => $this,
+            'action' => 'uninstall'
+        );
+        $trigger = new Doku_Event('PLUGIN_EXTENSION_CHANGE', $data);
+
+        if($trigger->advise_before()) {
+            if(io_rmdir($this->getInstallDir(), true)) {
+                $trigger->advise_after();
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return (bool) $trigger->result;
     }
 
     /**
@@ -651,15 +666,26 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         if ($this->isTemplate()) return $this->getLang('notimplemented');
         if (!$this->isInstalled()) return $this->getLang('notinstalled');
         if ($this->isEnabled()) return $this->getLang('alreadyenabled');
-
         /* @var Doku_Plugin_Controller $plugin_controller */
         global $plugin_controller;
-        if ($plugin_controller->enable($this->base)) {
-            $this->purgeCache();
-            return true;
-        } else {
-            return $this->getLang('pluginlistsaveerror');
+
+        $data = array(
+            'extension' => $this,
+            'action' => 'enable'
+        );
+        $trigger = new Doku_Event('PLUGIN_EXTENSION_CHANGE', $data);
+
+        if($trigger->advise_before()) {
+            if($plugin_controller->enable($this->base)) {
+                $this->purgeCache();
+                $trigger->advise_after();
+                return true;
+            } else {
+                return $this->getLang('pluginlistsaveerror');
+            }
         }
+        if($trigger->result === true) return true;
+        return (string) $trigger->result;
     }
 
     /**
@@ -669,17 +695,28 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function disable() {
         if ($this->isTemplate()) return $this->getLang('notimplemented');
-
-        /* @var Doku_Plugin_Controller $plugin_controller */
-        global $plugin_controller;
         if (!$this->isInstalled()) return $this->getLang('notinstalled');
         if (!$this->isEnabled()) return $this->getLang('alreadydisabled');
-        if ($plugin_controller->disable($this->base)) {
-            $this->purgeCache();
-            return true;
-        } else {
-            return $this->getLang('pluginlistsaveerror');
+        /* @var Doku_Plugin_Controller $plugin_controller */
+        global $plugin_controller;
+
+        $data = array(
+            'extension' => $this,
+            'action' => 'disable'
+        );
+        $trigger = new Doku_Event('PLUGIN_EXTENSION_CHANGE', $data);
+
+        if($trigger->advise_before()) {
+            if($plugin_controller->disable($this->base)) {
+                $this->purgeCache();
+                $trigger->advise_after();
+                return true;
+            } else {
+                return $this->getLang('pluginlistsaveerror');
+            }
         }
+        if($trigger->result === true) return true;
+        return (string) $trigger->result;
     }
 
     /**
@@ -969,23 +1006,38 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
                 continue;
             }
 
+            // gather info
             $action = file_exists($target) ? 'update' : 'install';
-
-            // copy action
-            if($this->dircopy($item['tmp'], $target)) {
-                // return info
-                $id = $item['base'];
-                if($item['type'] == 'template') {
-                    $id = 'template:'.$id;
-                }
-                $installed_extensions[$id] = array(
-                    'base' => $item['base'],
-                    'type' => $item['type'],
-                    'action' => $action
-                );
-            } else {
-                throw new Exception(sprintf($this->getLang('error_copy').DOKU_LF, '<bdi>'.$item['base'].'</bdi>'));
+            $extname = $item['base'];
+            if($item['type'] == 'template') {
+                $extname = 'template:'.$extname;
             }
+
+            // prepare plugin hook
+            $extension = new helper_plugin_extension_extension();
+            $extension->setExtension($extname);
+            $data = array(
+                'extension' => $extension,
+                'action' => $action,
+                'src' => $item['tmp'],
+                'dst' => $target
+            );
+
+            // execute the copy
+            $trigger = new Doku_Event('PLUGIN_EXTENSION_CHANGE', $data);
+            if($trigger->advise_before()) {
+                // copy action
+                if($this->dircopy($item['tmp'], $target)) {
+                    $installed_extensions[$extname] = array(
+                        'base' => $item['base'],
+                        'type' => $item['type'],
+                        'action' => $action
+                    );
+                } else {
+                    throw new Exception(sprintf($this->getLang('error_copy') . DOKU_LF, '<bdi>' . $item['base'] . '</bdi>'));
+                }
+            }
+            $trigger->advise_after();
         }
 
         // cleanup
@@ -1210,6 +1262,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             }
         }
     }
+
 }
 
 // vim:ts=4:sw=4:et:
