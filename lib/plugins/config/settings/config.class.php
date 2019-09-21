@@ -352,6 +352,7 @@ if (!class_exists('configuration')) {
                 // remove this plugin from the list
                 $idx = array_search('config',$list);
                 unset($list[$idx]);
+                sort($list);    // Sort plugin list alphabetically for display
 
                 trigger_event('PLUGIN_CONFIG_PLUGINLIST',$list);
                 $this->_plugin_list = $list;
