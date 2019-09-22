@@ -216,6 +216,7 @@ $meta['sepchar']     = array('sepchar','_caution' => 'warning');
 $meta['canonical']   = array('onoff');
 $meta['fnencode']    = array('multichoice','_choices' => array('url','safe','utf-8'),'_caution' => 'warning');
 $meta['autoplural']  = array('onoff');
+$meta['nsfallback']  = array('onoff');
 $meta['compress']    = array('onoff');
 $meta['cssdatauri']  = array('numeric','_pattern' => '/^\d+$/');
 $meta['gzip_output'] = array('onoff');

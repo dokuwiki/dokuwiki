@@ -72,7 +72,35 @@ class init_resolve_pageid_test extends DokuWikiTest {
 
         resolve_pageid($ns, $page, $exist);
         $this->assertEquals($page, $conf['start']);
-   }
+    }
+
+    /**
+     * nsfallback should not affect link parsing due to need for page creation
+     */
+    function test_resolve_pageid_nsfallback() {
+        global $conf;
+        $conf['nsfallback'] = '1';
+        $cleanStart = cleanID($conf['start']);
+
+        saveWikiText('foo_resolve:bar:bar', 'test1', '');
+        $ns = 'foo_resolve';
+        $page = 'bar';
+        $exist = false;
+        resolve_pageid($ns, $page, $exist);
+        $this->assertEquals('foo_resolve:bar', $page);
+
+        saveWikiText('foo_resolve:bar:'.$cleanStart, 'test2', '');
+        $page = 'bar';
+        $exist = false;
+        resolve_pageid($ns, $page, $exist);
+        $this->assertEquals('foo_resolve:bar', $page);
+
+        saveWikiText('foo_resolve:bar', 'test3', '');
+        $page = 'bar';
+        $exist = false;
+        resolve_pageid($ns, $page, $exist);
+        $this->assertEquals('foo_resolve:bar', $page);
+    }
 
 }
 //Setup VIM: ex: et ts=4 :

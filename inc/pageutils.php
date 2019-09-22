@@ -71,28 +71,50 @@ function getID($param='id',$clean=true){
     }
 
     // Namespace autolinking from URL
+    $rewrite_type = null;
+    $rewrite = $id;
     if(substr($id,-1) == ':' || ($conf['useslash'] && substr($id,-1) == '/')){
-        if(page_exists($id.$conf['start'])){
-            // start page inside namespace
-            $id = $id.$conf['start'];
-        }elseif(page_exists($id.noNS(cleanID($id)))){
-            // page named like the NS inside the NS
-            $id = $id.noNS(cleanID($id));
-        }elseif(page_exists($id)){
-            // page like namespace exists
-            $id = substr($id,0,-1);
-        }else{
-            // fall back to default
-            $id = $id.$conf['start'];
+        // default: keep defaultstart page inside namespace
+        $rewrite_type = 'all';
+        $rewrite = $id.$conf['start'];
+        if(!page_exists($rewrite)){
+            // try alternative
+            if(page_exists($id.noNS(cleanID($id)))){
+                // page named like the NS inside the NS
+                $rewrite = $id.noNS(cleanID($id));
+            }elseif(page_exists($id)){
+                // page like namespace exists
+                $rewrite = substr($id,0,-1);
+            }
+            // default
         }
-        if (isset($ACT) && $ACT === 'show') {
+    }else if(!page_exists($id) && $conf['nsfallback']){
+        $sep = $conf['useslash']?'/':':';
+        // requested page not found? try reverse fallback namespace linking
+        if(page_exists($id.$sep.$conf['start'])){
+            // start page inside namespace
+            $rewrite_type = 'show';
+            $rewrite = $id.$sep.$conf['start'];
+        }elseif(page_exists($id.$sep.noNS(cleanID($id)))){
+            // page named like the NS inside the NS
+            $rewrite_type = 'show';
+            $rewrite = $id.$sep.noNS(cleanID($id));
+        }
+        // still not found? Show error page
+    }
+
+    if($rewrite_type !== null){
+        if($rewrite_type == 'all') $id = $rewrite;
+        if(($rewrite_type == 'all' || $rewrite_type == 'show') && isset($ACT) && $ACT === 'show') {
             $urlParameters = $_GET;
             if (isset($urlParameters['id'])) {
                 unset($urlParameters['id']);
             }
-            send_redirect(wl($id, $urlParameters, true, '&'));
+            send_redirect(wl($rewrite, $urlParameters, true, '&'));
+            $id = $rewrite;// during DOKUWIKI_TEST it can still return expected id
         }
     }
+
     if($clean) $id = cleanID($id);
     if($id === '' && $param=='id') $id = $conf['start'];
 

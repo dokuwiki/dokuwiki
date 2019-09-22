@@ -169,6 +169,7 @@ $lang['sepchar']     = 'Page name word separator';
 $lang['canonical']   = 'Use fully canonical URLs';
 $lang['fnencode']    = 'Method for encoding non-ASCII filenames.';
 $lang['autoplural']  = 'Check for plural forms in links';
+$lang['nsfallback']  = 'Check namespace existence when browser requested file does not exist';
 $lang['compression'] = 'Compression method for attic files';
 $lang['gzip_output'] = 'Use gzip Content-Encoding for xhtml';
 $lang['compress']    = 'Compact CSS and javascript output';
