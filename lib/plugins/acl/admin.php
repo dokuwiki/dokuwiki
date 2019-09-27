@@ -112,7 +112,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
 
             if($cmd == 'save' && $scope && $this->who && $INPUT->has('acl')){
                 // handle additions or single modifications
-                $this->_acl_del($scope, $this->who);
                 $this->_acl_add($scope, $this->who, $INPUT->int('acl'));
             }elseif($cmd == 'del' && $scope && $this->who){
                 // handle single deletions
@@ -680,7 +679,11 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * @author  Frank Schubert <frank@schokilade.de>
      */
     function _acl_add($acl_scope, $acl_user, $acl_level){
+        // first make sure we won't end up with 2 lines matching this user and scope. See issue #1115
+        $this->_acl_del($acl_scope, $acl_user);
+
         global $config_cascade;
+
         $acl_user = auth_nameencode($acl_user,true);
 
         // max level for pagenames is edit
