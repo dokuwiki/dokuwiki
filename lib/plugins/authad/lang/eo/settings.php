@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Florian <florianmail55@gmail.com>
  * @author Robert Bogenschneider <bogi@uea.org>
  */
 $lang['account_suffix']        = 'Via konto-aldonaĵo, ekz. <code>@mia.domajno.lando</code>';
@@ -18,3 +19,4 @@ $lang['use_tls']               = 'Ĉu uzi TLS-konekton? Se jes, ne aktivigu SSL 
 $lang['debug']                 = 'Ĉu montri aldonajn informojn dum eraroj?';
 $lang['expirywarn']            = 'Tagoj da antaŭaverto pri malvalidiĝonta pasvorto. 0 por malebligi.';
 $lang['additional']            = 'Komodisigita listo de aldonaj AD-atributoj por preni el uzantaj datumoj. Uzita de iuj kromaĵoj.';
+$lang['update_mail']           = 'Ĉu permesi uzantoj ĝisdatigi siajn retardesojn?';
