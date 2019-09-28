@@ -5,6 +5,7 @@
  *
  * Esperantolanguage file
  *
+ * @author Florian <florianmail55@gmail.com>
  * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
  * @author Felipe Castro <fefcas@uol.com.br>
  * @author Felipo Kastro <fefcas@gmail.com>
