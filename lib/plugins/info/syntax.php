@@ -189,7 +189,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
                     foreach ($method['params'] as $desc => $type) {
                         $params[] = hsc($desc).'</td><td>'.hsc($type);
                     }
-                    $doc .= join($params, '</td></tr><tr><td>').'</td></tr>';
+                    $doc .= join('</td></tr><tr><td>', $params).'</td></tr>';
                 }
                 if ($method['return']) {
                     $doc .= '<tr><th>Return value</th><td>'.hsc(key($method['return'])).

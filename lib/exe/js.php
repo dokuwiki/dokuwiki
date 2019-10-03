@@ -184,7 +184,7 @@ function js_load($file){
             $loaded[$base] = true;
         }
 
-        if($ifile{0} != '/') $ifile = dirname($file).'/'.$ifile;
+        if($ifile[0] != '/') $ifile = dirname($file).'/'.$ifile;
 
         if(file_exists($ifile)){
             $idata = io_readFile($ifile);
@@ -362,13 +362,13 @@ function js_compress($s){
         // reserved word (e.g. "for", "else", "if") or a
         // variable/object/method (e.g. "foo.color")
         while ($i < $slen && (strpos($chars,$s[$i]) === false) ){
-            $result .= $s{$i};
+            $result .= $s[$i];
             $i = $i + 1;
         }
 
-        $ch = $s{$i};
+        $ch = $s[$i];
         // multiline comments (keeping IE conditionals)
-        if($ch == '/' && $s{$i+1} == '*' && $s{$i+2} != '@'){
+        if($ch == '/' && $s[$i+1] == '*' && $s[$i+2] != '@'){
             $endC = strpos($s,'*/',$i+2);
             if($endC === false) trigger_error('Found invalid /*..*/ comment', E_USER_ERROR);
 
@@ -387,7 +387,7 @@ function js_compress($s){
         }
 
         // singleline
-        if($ch == '/' && $s{$i+1} == '/'){
+        if($ch == '/' && $s[$i+1] == '/'){
             $endC = strpos($s,"\n",$i+2);
             if($endC === false) trigger_error('Invalid comment', E_USER_ERROR);
             $i = $endC;
@@ -398,15 +398,15 @@ function js_compress($s){
         if($ch == '/'){
             // rewind, skip white space
             $j = 1;
-            while(in_array($s{$i-$j}, $whitespaces_chars)){
+            while(in_array($s[$i-$j], $whitespaces_chars)){
                 $j = $j + 1;
             }
-            if( in_array($s{$i-$j}, $regex_starters) ){
+            if( in_array($s[$i-$j], $regex_starters) ){
                 // yes, this is an re
                 // now move forward and find the end of it
                 $j = 1;
-                while($s{$i+$j} != '/'){
-                    if($s{$i+$j} == '\\') $j = $j + 2;
+                while($s[$i+$j] != '/'){
+                    if($s[$i+$j] == '\\') $j = $j + 2;
                     else $j++;
                 }
                 $result .= substr($s,$i,$j+1);
@@ -418,8 +418,8 @@ function js_compress($s){
         // double quote strings
         if($ch == '"'){
             $j = 1;
-            while( $s{$i+$j} != '"' && ($i+$j < $slen)){
-                if( $s{$i+$j} == '\\' && ($s{$i+$j+1} == '"' || $s{$i+$j+1} == '\\') ){
+            while( $s[$i+$j] != '"' && ($i+$j < $slen)){
+                if( $s[$i+$j] == '\\' && ($s[$i+$j+1] == '"' || $s[$i+$j+1] == '\\') ){
                     $j += 2;
                 }else{
                     $j += 1;
@@ -436,8 +436,8 @@ function js_compress($s){
         // single quote strings
         if($ch == "'"){
             $j = 1;
-            while( $s{$i+$j} != "'" && ($i+$j < $slen)){
-                if( $s{$i+$j} == '\\' && ($s{$i+$j+1} == "'" || $s{$i+$j+1} == '\\') ){
+            while( $s[$i+$j] != "'" && ($i+$j < $slen)){
+                if( $s[$i+$j] == '\\' && ($s[$i+$j+1] == "'" || $s[$i+$j+1] == '\\') ){
                     $j += 2;
                 }else{
                     $j += 1;
