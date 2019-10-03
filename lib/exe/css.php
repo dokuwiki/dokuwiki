@@ -470,7 +470,7 @@ class DokuCssFile {
         if (preg_match('#^(/|data:|https?://)#', $match[3])) { // not a relative url? - no adjustment required
             return $match[0];
         } elseif (substr($match[3], -5) == '.less') { // a less file import? - requires a file system location
-            if ($match[3]{0} != '/') {
+            if ($match[3][0] != '/') {
                 $match[3] = $this->getRelativePath() . '/' . $match[3];
             }
         } else { // everything else requires a url adjustment
