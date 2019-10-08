@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Anonymous <anonymous@example.org>
  * @author Michaelsy <github@informantum.de>
  * @author Benjamin Molitor <bmolitor@uos.de>
  * @author Alex Beck <alex@4becks.com>
@@ -141,7 +142,7 @@ $lang['js']['media_diff_portions'] = 'Übergang';
 $lang['js']['media_select']    = 'Dateien auswählen…';
 $lang['js']['media_upload_btn'] = 'Hochladen';
 $lang['js']['media_done_btn']  = 'Fertig';
-$lang['js']['media_drop']      = 'Dateien hier hinziehen um sie hochzuladen';
+$lang['js']['media_drop']      = 'Dateien hier hinziehen, um sie hochzuladen';
 $lang['js']['media_cancel']    = 'Entfernen';
 $lang['js']['media_overwrt']   = 'Existierende Dateien überschreiben';
 $lang['search_exact_match']    = 'Genaue Treffer';
@@ -375,7 +376,7 @@ $lang['media_edit']            = '%s bearbeiten';
 $lang['media_history']         = 'Versionsverlauf von %s.';
 $lang['media_meta_edited']     = 'Meta-Informationen bearbeitet';
 $lang['media_perm_read']       = 'Sie besitzen nicht die notwendigen Berechtigungen um die Datei anzuzeigen.';
-$lang['media_perm_upload']     = 'Sie besitzen nicht die notwendigen Berechtigungen um Dateien hochzuladen.';
+$lang['media_perm_upload']     = 'Sie besitzen nicht die notwendigen Berechtigungen, um Dateien hochzuladen.';
 $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
 $lang['media_acl_warning']     = 'Diese Liste ist möglicherweise nicht vollständig. Versteckte und durch ACL gesperrte Seiten werden nicht angezeigt.';
