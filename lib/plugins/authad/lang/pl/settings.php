@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Bartek S <sadupl@gmail.com>
  * @author Przemek <p_kudriawcew@o2.pl>
  * @author Wojciech Lichota <wojciech@lichota.pl>
  * @author Max <maxrb146@gmail.com>
