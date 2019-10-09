@@ -4,7 +4,7 @@ if (!defined('DOKU_PARSER_EOL')) define('DOKU_PARSER_EOL',"\n");   // add this t
 
 class Doku_Handler {
 
-    var $Renderer = null;
+    var $Parser = null;
 
     var $CallWriter = null;
 
@@ -90,8 +90,11 @@ class Doku_Handler {
     function plugin($match, $state, $pos, $pluginname){
         $data = array($match);
         /** @var DokuWiki_Syntax_Plugin $plugin */
-        $plugin = plugin_load('syntax',$pluginname);
+        $plugin = isset($this->Parser->modes['plugin_'.$pluginname])
+            ? $this->Parser->modes['plugin_'.$pluginname]
+            : plugin_load('syntax',$pluginname); // non-singleton plugins have a null lexer
         if($plugin != null){
+            $plugin->Lexer = $this->Parser->Lexer;
             $data = $plugin->handle($match, $state, $pos, $this);
         }
         if ($data !== false) {
