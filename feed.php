@@ -9,6 +9,12 @@
  * @global Input $INPUT
  */
 
+use dokuwiki\Cache\Cache;
+use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\Event;
+
 if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/');
 require_once(DOKU_INC.'inc/init.php');
 
@@ -28,7 +34,7 @@ $opt = rss_parseOptions();
 // the feed is dynamic - we need a cache for each combo
 // (but most people just use the default feed so it's still effective)
 $key   = join('', array_values($opt)).'$'.$_SERVER['REMOTE_USER'].'$'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'];
-$cache = new cache($key, '.feed');
+$cache = new Cache($key, '.feed');
 
 // prepare cache depends
 $depends['files'] = getConfigFiles('main');
@@ -42,7 +48,7 @@ header('Pragma: public');
 header('Content-Type: application/xml; charset=utf-8');
 header('X-Robots-Tag: noindex');
 if($cache->useCache($depends)) {
-    http_conditionalRequest($cache->_time);
+    http_conditionalRequest($cache->getTime());
     if($conf['allowdebug']) header("X-CacheUsed: $cache->cache");
     print $cache->retrieveCache();
     exit;
@@ -76,7 +82,7 @@ if(isset($modes[$opt['feed_mode']])) {
         'opt'  => &$opt,
         'data' => &$data,
     );
-    $event     = new Doku_Event('FEED_MODE_UNKNOWN', $eventData);
+    $event     = new Event('FEED_MODE_UNKNOWN', $eventData);
     if($event->advise_before(true)) {
         echo sprintf('<error>Unknown feed mode %s</error>', hsc($opt['feed_mode']));
         exit;
@@ -174,7 +180,7 @@ function rss_parseOptions() {
     $eventData = array(
         'opt' => &$opt,
     );
-    trigger_event('FEED_OPTS_POSTPROCESS', $eventData);
+    Event::createAndTrigger('FEED_OPTS_POSTPROCESS', $eventData);
     return $opt;
 }
 
@@ -189,7 +195,7 @@ function rss_parseOptions() {
 function rss_buildItems(&$rss, &$data, $opt) {
     global $conf;
     global $lang;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
 
     $eventData = array(
@@ -197,7 +203,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
         'data' => &$data,
         'opt'  => &$opt,
     );
-    $event     = new Doku_Event('FEED_DATA_PROCESS', $eventData);
+    $event     = new Event('FEED_DATA_PROCESS', $eventData);
     if($event->advise_before(false)) {
         foreach($data as $ditem) {
             if(!is_array($ditem)) {
@@ -443,7 +449,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 'ditem' => &$ditem,
                 'rss'   => &$rss
             );
-            $evt    = new Doku_Event('FEED_ITEM_ADD', $evdata);
+            $evt    = new Event('FEED_ITEM_ADD', $evdata);
             if($evt->advise_before()) {
                 $rss->addItem($item);
             }

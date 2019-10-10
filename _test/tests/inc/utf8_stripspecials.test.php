@@ -19,7 +19,7 @@ class utf8_stripspecials extends DokuWikiTest {
         $tests[] = array('string with nbsps','_','\*','string_with_nbsps');
 
         foreach($tests as $test){
-            $this->assertEquals(utf8_stripspecials($test[0],$test[1],$test[2]),$test[3]);
+            $this->assertEquals(\dokuwiki\Utf8\Clean::stripspecials($test[0],$test[1],$test[2]),$test[3]);
         }
     }
 

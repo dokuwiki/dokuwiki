@@ -6,7 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
+use dokuwiki\Extension\AdminPlugin;
+use dokuwiki\Extension\Event;
 
 /**
  * Access a template file
@@ -80,9 +81,9 @@ function tpl_content($prependTOC = true) {
     $INFO['prependTOC'] = $prependTOC;
 
     ob_start();
-    trigger_event('TPL_ACT_RENDER', $ACT, 'tpl_content_core');
+    Event::createAndTrigger('TPL_ACT_RENDER', $ACT, 'tpl_content_core');
     $html_output = ob_get_clean();
-    trigger_event('TPL_CONTENT_DISPLAY', $html_output, 'ptln');
+    Event::createAndTrigger('TPL_CONTENT_DISPLAY', $html_output, 'ptln');
 
     return !empty($html_output);
 }
@@ -142,14 +143,14 @@ function tpl_toc($return = false) {
         }
     } elseif($ACT == 'admin') {
         // try to load admin plugin TOC
-        /** @var $plugin DokuWiki_Admin_Plugin */
+        /** @var $plugin AdminPlugin */
         if ($plugin = plugin_getRequestAdminPlugin()) {
             $toc = $plugin->getTOC();
             $TOC = $toc; // avoid later rebuild
         }
     }
 
-    trigger_event('TPL_TOC_RENDER', $toc, null, false);
+    Event::createAndTrigger('TPL_TOC_RENDER', $toc, null, false);
     $html = html_TOC($toc);
     if($return) return $html;
     echo $html;
@@ -175,7 +176,7 @@ function tpl_admin() {
 
         if(in_array($class, $pluginlist)) {
             // attempt to load the plugin
-            /** @var $plugin DokuWiki_Admin_Plugin */
+            /** @var $plugin AdminPlugin */
             $plugin = plugin_load('admin', $class);
         }
     }
@@ -358,7 +359,7 @@ function tpl_metaheaders($alt = true) {
     );
 
     // trigger event here
-    trigger_event('TPL_METAHEADER_OUTPUT', $head, '_tpl_metaheaders_action', true);
+    Event::createAndTrigger('TPL_METAHEADER_OUTPUT', $head, '_tpl_metaheaders_action', true);
     return true;
 }
 
@@ -603,7 +604,7 @@ function tpl_get_action($type) {
         $unknown = true;
     }
 
-    $evt = new Doku_Event('TPL_ACTION_GET', $data);
+    $evt = new Event('TPL_ACTION_GET', $data);
     if($evt->advise_before()) {
         //handle unknown types
         if($unknown) {
@@ -702,7 +703,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
         $searchForm->addTagClose('div');
     }
     $searchForm->addTagClose('div');
-    trigger_event('FORM_QUICKSEARCH_OUTPUT', $searchForm);
+    Event::createAndTrigger('FORM_QUICKSEARCH_OUTPUT', $searchForm);
 
     echo $searchForm->toHTML();
 
@@ -933,7 +934,7 @@ function tpl_pagetitle($id = null, $ret = false) {
         case 'admin' :
             $page_title = $lang['btn_admin'];
             // try to get the plugin name
-            /** @var $plugin DokuWiki_Admin_Plugin */
+            /** @var $plugin AdminPlugin */
             if ($plugin = plugin_getRequestAdminPlugin()){
                 $plugin_title = $plugin->getMenuText($conf['lang']);
                 $page_title = $plugin_title ? $plugin_title : $plugin->getPluginName();
@@ -1138,7 +1139,7 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     $p['src'] = $src;
 
     $data = array('url'=> ($link ? $url : null), 'params'=> $p);
-    return trigger_event('TPL_IMG_DISPLAY', $data, '_tpl_img_action', true);
+    return Event::createAndTrigger('TPL_IMG_DISPLAY', $data, '_tpl_img_action', true);
 }
 
 /**
@@ -1343,7 +1344,7 @@ function tpl_mediaContent($fromajax = false, $sort='natural') {
     // output the content pane, wrapped in an event.
     if(!$fromajax) ptln('<div id="media__content">');
     $data = array('do' => $do);
-    $evt  = new Doku_Event('MEDIAMANAGER_CONTENT_OUTPUT', $data);
+    $evt  = new Event('MEDIAMANAGER_CONTENT_OUTPUT', $data);
     if($evt->advise_before()) {
         $do = $data['do'];
         if($do == 'filesinuse') {
@@ -1422,7 +1423,11 @@ function tpl_mediaFileDetails($image, $rev) {
     /** @var Input $INPUT */
     global $INPUT;
 
-    $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')) && $conf['mediarevisions']);
+    $removed = (
+        !file_exists(mediaFN($image)) &&
+        file_exists(mediaMetaFN($image, '.changes')) &&
+        $conf['mediarevisions']
+    );
     if(!$image || (!file_exists(mediaFN($image)) && !$removed) || $DEL) return;
     if($rev && !file_exists(mediaFN($image, $rev))) $rev = false;
     $ns = getNS($image);
@@ -1450,7 +1455,8 @@ function tpl_mediaFileDetails($image, $rev) {
     $class    = preg_replace('/[^_\-a-z0-9]+/i', '_', $ext);
     $class    = 'select mediafile mf_'.$class;
     $attributes = $rev ? ['rev' => $rev] : [];
-    $tabTitle = '<strong><a href="'.ml($image, $attributes).'" class="'.$class.'" title="'.$lang['mediaview'].'">'.$image.'</a>'.'</strong>';
+    $tabTitle = '<strong><a href="'.ml($image, $attributes).'" class="'.$class.'" title="'.$lang['mediaview'].'">'.
+        $image.'</a>'.'</strong>';
     if($opened_tab === 'view' && $rev) {
         printf($lang['media_viewold'], $tabTitle, dformat($rev));
     } else {
@@ -1862,7 +1868,7 @@ function tpl_toolsevent($toolsname, $items, $view = 'main') {
     );
 
     $hook = 'TEMPLATE_' . strtoupper($toolsname) . '_DISPLAY';
-    $evt = new Doku_Event($hook, $data);
+    $evt = new Event($hook, $data);
     if($evt->advise_before()) {
         foreach($evt->data['items'] as $k => $html) echo $html;
     }

@@ -1,4 +1,13 @@
 <?php
+
+use dokuwiki\Parsing\ParserMode\Camelcaselink;
+use dokuwiki\Parsing\ParserMode\Emaillink;
+use dokuwiki\Parsing\ParserMode\Externallink;
+use dokuwiki\Parsing\ParserMode\Filelink;
+use dokuwiki\Parsing\ParserMode\Internallink;
+use dokuwiki\Parsing\ParserMode\Media;
+use dokuwiki\Parsing\ParserMode\Windowssharelink;
+
 require_once 'parser.inc.php';
 
 /**
@@ -9,7 +18,7 @@ require_once 'parser.inc.php';
 class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
 
     function testExternalLinkSimple() {
-        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->addMode('externallink',new Externallink());
         $this->P->parse("Foo http://www.google.com Bar");
         $calls = array (
             array('document_start',array()),
@@ -24,7 +33,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testExternalLinkCase() {
-        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->addMode('externallink',new Externallink());
         $this->P->parse("Foo HTTP://WWW.GOOGLE.COM Bar");
         $calls = array (
             array('document_start',array()),
@@ -39,7 +48,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testExternalIPv4() {
-        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->addMode('externallink',new Externallink());
         $this->P->parse("Foo http://123.123.3.21/foo Bar");
         $calls = array (
             array('document_start',array()),
@@ -54,7 +63,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testExternalIPv6() {
-        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->addMode('externallink',new Externallink());
         $this->P->parse("Foo http://[3ffe:2a00:100:7031::1]/foo Bar");
         $calls = array (
             array('document_start',array()),
@@ -96,8 +105,8 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
                     $name   = $title;
                 }
                 $this->setup();
-                $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
-                $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+                $this->P->addMode('internallink',new Internallink());
+                $this->P->addMode('externallink',new Externallink());
                 $this->P->parse("Foo $source Bar");
                 $calls = array (
                     array('document_start',array()),
@@ -117,7 +126,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testExternalLinkJavascript() {
-        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->addMode('externallink',new Externallink());
         $this->P->parse("Foo javascript:alert('XSS'); Bar");
         $calls = array (
             array('document_start',array()),
@@ -130,7 +139,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testExternalWWWLink() {
-        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->addMode('externallink',new Externallink());
         $this->P->parse("Foo www.google.com Bar");
         $calls = array (
             array('document_start',array()),
@@ -145,7 +154,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testExternalWWWLinkInPath() {
-        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->addMode('externallink',new Externallink());
         // See issue #936. Should NOT generate a link!
         $this->P->parse("Foo /home/subdir/www/www.something.de/somedir/ Bar");
         $calls = array (
@@ -159,7 +168,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testExternalWWWLinkFollowingPath() {
-        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->addMode('externallink',new Externallink());
         $this->P->parse("Foo /home/subdir/www/ www.something.de/somedir/ Bar");
         $calls = array (
             array('document_start',array()),
@@ -174,7 +183,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testExternalFTPLink() {
-        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->addMode('externallink',new Externallink());
         $this->P->parse("Foo ftp.sunsite.com Bar");
         $calls = array (
             array('document_start',array()),
@@ -189,7 +198,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testExternalFTPLinkInPath() {
-        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->addMode('externallink',new Externallink());
         // See issue #936. Should NOT generate a link!
         $this->P->parse("Foo /home/subdir/www/ftp.something.de/somedir/ Bar");
         $calls = array (
@@ -203,7 +212,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testExternalFTPLinkFollowingPath() {
-        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->addMode('externallink',new Externallink());
         $this->P->parse("Foo /home/subdir/www/ ftp.something.de/somedir/ Bar");
         $calls = array (
             array('document_start',array()),
@@ -218,7 +227,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testEmail() {
-        $this->P->addMode('emaillink',new Doku_Parser_Mode_Emaillink());
+        $this->P->addMode('emaillink',new Emaillink());
         $this->P->parse("Foo <bugs@php.net> Bar");
         $calls = array (
             array('document_start',array()),
@@ -233,7 +242,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testEmailRFC2822() {
-        $this->P->addMode('emaillink',new Doku_Parser_Mode_Emaillink());
+        $this->P->addMode('emaillink',new Emaillink());
         $this->P->parse("Foo <~fix+bug's.for/ev{e}r@php.net> Bar");
         $calls = array (
             array('document_start',array()),
@@ -248,7 +257,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testEmailCase() {
-        $this->P->addMode('emaillink',new Doku_Parser_Mode_Emaillink());
+        $this->P->addMode('emaillink',new Emaillink());
         $this->P->parse("Foo <bugs@pHp.net> Bar");
         $calls = array (
             array('document_start',array()),
@@ -264,7 +273,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
 
 
     function testInternalLinkOneChar() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[l]] Bar");
         $calls = array (
             array('document_start',array()),
@@ -279,7 +288,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testInternalLinkNoChar() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[]] Bar");
         $calls = array (
             array('document_start',array()),
@@ -294,7 +303,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testInternalLinkNamespaceNoTitle() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[foo:bar]] Bar");
         $calls = array (
             array('document_start',array()),
@@ -309,7 +318,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testInternalLinkNamespace() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[x:1:y:foo_bar:z|Test]] Bar");
         $calls = array (
             array('document_start',array()),
@@ -324,7 +333,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testInternalLinkSectionRef() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[wiki:syntax#internal|Syntax]] Bar");
         $calls = array (
             array('document_start',array()),
@@ -339,7 +348,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testInternalLinkCodeFollows() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[wiki:internal:link|Test]] Bar <code>command [arg1 [arg2 [arg3]]]</code>");
         $calls = array (
             array('document_start',array()),
@@ -354,7 +363,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testInternalLinkCodeFollows2() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[wiki:internal:link|[Square brackets in title] Test]] Bar <code>command [arg1 [arg2 [arg3]]]</code>");
         $calls = array (
             array('document_start',array()),
@@ -369,7 +378,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testExternalInInternalLink() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[http://www.google.com|Google]] Bar");
         $calls = array (
             array('document_start',array()),
@@ -384,7 +393,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testExternalInInternalLink2() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[http://www.google.com?test[]=squarebracketsinurl|Google]] Bar");
         $calls = array (
             array('document_start',array()),
@@ -399,7 +408,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testExternalInInternalLink2CodeFollows() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[http://www.google.com?test[]=squarebracketsinurl|Google]] Bar <code>command [arg1 [arg2 [arg3]]]</code>");
         $calls = array (
             array('document_start',array()),
@@ -414,7 +423,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testTwoInternalLinks() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[foo:bar|one]] and [[bar:foo|two]] Bar");
         $calls = array (
             array('document_start',array()),
@@ -432,7 +441,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
 
 
     function testInterwikiLink() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[iw>somepage|Some Page]] Bar");
         $calls = array (
             array('document_start',array()),
@@ -447,7 +456,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testInterwikiLinkCase() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[IW>somepage|Some Page]] Bar");
         $calls = array (
             array('document_start',array()),
@@ -462,7 +471,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testInterwikiPedia() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[wp>Callback_(computer_science)|callbacks]] Bar");
         $calls = array (
             array('document_start',array()),
@@ -477,7 +486,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testCamelCase() {
-        $this->P->addMode('camelcaselink',new Doku_Parser_Mode_CamelCaseLink());
+        $this->P->addMode('camelcaselink',new Camelcaselink());
         $this->P->parse("Foo FooBar Bar");
         $calls = array (
             array('document_start',array()),
@@ -492,7 +501,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testFileLink() {
-        $this->P->addMode('filelink',new Doku_Parser_Mode_FileLink());
+        $this->P->addMode('filelink',new FileLink());
         $this->P->parse('Foo file://temp/file.txt Bar');
         $calls = array (
             array('document_start',array()),
@@ -507,7 +516,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testFileLinkInternal() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse('Foo [[file://temp/file.txt|Some File]] Bar');
         $calls = array (
             array('document_start',array()),
@@ -522,7 +531,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testWindowsShareLink() {
-        $this->P->addMode('windowssharelink',new Doku_Parser_Mode_WindowsShareLink());
+        $this->P->addMode('windowssharelink',new Windowssharelink());
         $this->P->parse('Foo \\\server\share Bar');
         $calls = array (
             array('document_start',array()),
@@ -537,7 +546,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testWindowsShareLinkHyphen() {
-        $this->P->addMode('windowssharelink',new Doku_Parser_Mode_WindowsShareLink());
+        $this->P->addMode('windowssharelink',new Windowssharelink());
         $this->P->parse('Foo \\\server\share-hyphen Bar');
         $calls = array (
         array('document_start',array()),
@@ -552,7 +561,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testWindowsShareLinkInternal() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse('Foo [[\\\server\share|My Documents]] Bar');
         $calls = array (
             array('document_start',array()),
@@ -567,7 +576,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testMediaInternal() {
-        $this->P->addMode('media',new Doku_Parser_Mode_Media());
+        $this->P->addMode('media',new Media());
         $this->P->parse('Foo {{img.gif}} Bar');
         $calls = array (
             array('document_start',array()),
@@ -582,7 +591,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testMediaInternalLinkOnly() {
-        $this->P->addMode('media',new Doku_Parser_Mode_Media());
+        $this->P->addMode('media',new Media());
         $this->P->parse('Foo {{img.gif?linkonly}} Bar');
         $calls = array (
             array('document_start',array()),
@@ -597,7 +606,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testMediaNotImage() {
-        $this->P->addMode('media',new Doku_Parser_Mode_Media());
+        $this->P->addMode('media',new Media());
         $this->P->parse('Foo {{foo.txt?10x10|Some File}} Bar');
         $calls = array (
             array('document_start',array()),
@@ -612,7 +621,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testMediaInternalLAlign() {
-        $this->P->addMode('media',new Doku_Parser_Mode_Media());
+        $this->P->addMode('media',new Media());
         $this->P->parse('Foo {{img.gif }} Bar');
         $calls = array (
             array('document_start',array()),
@@ -627,7 +636,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testMediaInternalRAlign() {
-        $this->P->addMode('media',new Doku_Parser_Mode_Media());
+        $this->P->addMode('media',new Media());
         $this->P->parse('Foo {{ img.gif}} Bar');
         $calls = array (
             array('document_start',array()),
@@ -642,7 +651,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testMediaInternalCenter() {
-        $this->P->addMode('media',new Doku_Parser_Mode_Media());
+        $this->P->addMode('media',new Media());
         $this->P->parse('Foo {{ img.gif }} Bar');
         $calls = array (
             array('document_start',array()),
@@ -657,7 +666,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testMediaInternalParams() {
-        $this->P->addMode('media',new Doku_Parser_Mode_Media());
+        $this->P->addMode('media',new Media());
         $this->P->parse('Foo {{img.gif?50x100nocache}} Bar');
         $calls = array (
             array('document_start',array()),
@@ -672,7 +681,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testMediaInternalTitle() {
-        $this->P->addMode('media',new Doku_Parser_Mode_Media());
+        $this->P->addMode('media',new Media());
         $this->P->parse('Foo {{img.gif?50x100|Some Image}} Bar');
         $calls = array (
             array('document_start',array()),
@@ -687,7 +696,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testMediaExternal() {
-        $this->P->addMode('media',new Doku_Parser_Mode_Media());
+        $this->P->addMode('media',new Media());
         $this->P->parse('Foo {{http://www.google.com/img.gif}} Bar');
         $calls = array (
             array('document_start',array()),
@@ -702,7 +711,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testMediaExternalParams() {
-        $this->P->addMode('media',new Doku_Parser_Mode_Media());
+        $this->P->addMode('media',new Media());
         $this->P->parse('Foo {{http://www.google.com/img.gif?50x100nocache}} Bar');
         $calls = array (
             array('document_start',array()),
@@ -717,7 +726,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testMediaExternalTitle() {
-        $this->P->addMode('media',new Doku_Parser_Mode_Media());
+        $this->P->addMode('media',new Media());
         $this->P->parse('Foo {{http://www.google.com/img.gif?50x100|Some Image}} Bar');
         $calls = array (
             array('document_start',array()),
@@ -733,7 +742,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testMediaInInternalLink() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[x:1:y:foo_bar:z|{{img.gif?10x20nocache|Some Image}}]] Bar");
 
         $image = array(
@@ -760,7 +769,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testMediaNoImageInInternalLink() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[x:1:y:foo_bar:z|{{foo.txt?10x20nocache|Some Image}}]] Bar");
 
         $image = array(
@@ -787,7 +796,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testMediaInEmailLink() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new Internallink());
         $this->P->parse("Foo [[foo@example.com|{{img.gif?10x20nocache|Some Image}}]] Bar");
 
         $image = array(
@@ -814,7 +823,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testNestedMedia() {
-        $this->P->addMode('media',new Doku_Parser_Mode_Media());
+        $this->P->addMode('media',new Media());
         $this->P->parse('Foo {{img.gif|{{foo.gif|{{bar.gif|Bar}}}}}} Bar');
         $calls = array (
             array('document_start',array()),

@@ -1,4 +1,7 @@
 <?php
+
+use dokuwiki\Parsing\ParserMode\Quotes;
+
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
@@ -11,7 +14,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testSingleQuoteOpening() {
         $raw = "Foo 'hello Bar";
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
+        $this->P->addMode('quotes',new Quotes());
         $this->P->parse($raw);
 
         $calls = array (
@@ -29,7 +32,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testSingleQuoteOpeningSpecial() {
         $raw = "Foo said:'hello Bar";
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
+        $this->P->addMode('quotes',new Quotes());
         $this->P->parse($raw);
 
         $calls = array (
@@ -47,7 +50,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testSingleQuoteClosing() {
         $raw = "Foo hello' Bar";
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
+        $this->P->addMode('quotes',new Quotes());
         $this->P->parse($raw);
 
         $calls = array (
@@ -65,7 +68,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testSingleQuoteClosingSpecial() {
         $raw = "Foo hello') Bar";
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
+        $this->P->addMode('quotes',new Quotes());
         $this->P->parse($raw);
 
         $calls = array (
@@ -83,7 +86,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testSingleQuotes() {
         $raw = "Foo 'hello' Bar";
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
+        $this->P->addMode('quotes',new Quotes());
         $this->P->parse($raw);
 
         $calls = array (
@@ -103,7 +106,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testApostrophe() {
         $raw = "hey it's fine weather today";
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
+        $this->P->addMode('quotes',new Quotes());
         $this->P->parse($raw);
 
         $calls = array (
@@ -122,7 +125,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testSingleQuotesSpecial() {
         $raw = "Foo ('hello') Bar";
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
+        $this->P->addMode('quotes',new Quotes());
         $this->P->parse($raw);
 
         $calls = array (
@@ -142,7 +145,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testDoubleQuoteOpening() {
         $raw = 'Foo "hello Bar';
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
+        $this->P->addMode('quotes',new Quotes());
         $this->P->parse($raw);
 
         $calls = array (
@@ -160,7 +163,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testDoubleQuoteOpeningSpecial() {
         $raw = 'Foo said:"hello Bar';
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
+        $this->P->addMode('quotes',new Quotes());
         $this->P->parse($raw);
 
         $calls = array (
@@ -178,8 +181,13 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testDoubleQuoteClosing() {
         $raw = 'Foo hello" Bar';
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
-        $this->H->status['doublequote'] = 1;
+        $this->P->addMode('quotes',new Quotes());
+
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $status = $this->getInaccessibleProperty($this->H, 'status');
+        $status['doublequote'] = 1;
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->setInaccessibleProperty($this->H, 'status', $status);
         $this->P->parse($raw);
 
         $calls = array (
@@ -197,8 +205,13 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testDoubleQuoteClosingSpecial() {
         $raw = 'Foo hello") Bar';
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
-        $this->H->status['doublequote'] = 1;
+        $this->P->addMode('quotes',new Quotes());
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $status = $this->getInaccessibleProperty($this->H, 'status');
+        $status['doublequote'] = 1;
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->setInaccessibleProperty($this->H, 'status', $status);
+
         $this->P->parse($raw);
 
         $calls = array (
@@ -215,8 +228,13 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
     }
     function testDoubleQuoteClosingSpecial2() {
         $raw = 'Foo hello") Bar';
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
-        $this->H->status['doublequote'] = 0;
+        $this->P->addMode('quotes',new Quotes());
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $status = $this->getInaccessibleProperty($this->H, 'status');
+        $status['doublequote'] = 0;
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->setInaccessibleProperty($this->H, 'status', $status);
+
         $this->P->parse($raw);
 
         $calls = array (
@@ -234,7 +252,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testDoubleQuotes() {
         $raw = 'Foo "hello" Bar';
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
+        $this->P->addMode('quotes',new Quotes());
         $this->P->parse($raw);
 
         $calls = array (
@@ -254,7 +272,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testDoubleQuotesSpecial() {
         $raw = 'Foo ("hello") Bar';
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
+        $this->P->addMode('quotes',new Quotes());
         $this->P->parse($raw);
 
         $calls = array (
@@ -274,7 +292,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testDoubleQuotesEnclosingBrackets() {
         $raw = 'Foo "{hello}" Bar';
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
+        $this->P->addMode('quotes',new Quotes());
         $this->P->parse($raw);
 
         $calls = array (
@@ -294,7 +312,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testDoubleQuotesEnclosingLink() {
         $raw = 'Foo "[[www.domain.com]]" Bar';
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
+        $this->P->addMode('quotes',new Quotes());
         $this->P->parse($raw);
 
         $calls = array (
@@ -315,7 +333,7 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
     function testAllQuotes() {
         $raw = 'There was written "He thought \'It\'s a man\'s world\'".';
-        $this->P->addMode('quotes',new Doku_Parser_Mode_Quotes());
+        $this->P->addMode('quotes',new Quotes());
         $this->P->parse($raw);
 
         $calls = array (

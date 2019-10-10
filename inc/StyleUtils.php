@@ -2,6 +2,11 @@
 
 namespace dokuwiki;
 
+/**
+ * Class StyleUtils
+ *
+ * Reads and applies the template's style.ini settings
+ */
 class StyleUtils
 {
 
@@ -95,22 +100,26 @@ class StyleUtils
                     $config = parse_ini_file($inifile, true);
 
                     if (is_array($config['stylesheets'])) {
-
                         foreach ($config['stylesheets'] as $inifile => $mode) {
                             // validate and include style files
-                            $stylesheets = array_merge($stylesheets, $this->getValidatedStyles($stylesheets, $inifile, $mode, $incbase, $webbase));
+                            $stylesheets = array_merge(
+                                $stylesheets,
+                                $this->getValidatedStyles($stylesheets, $inifile, $mode, $incbase, $webbase)
+                            );
                             $combined['stylesheets'] = array_merge($combined['stylesheets'], $stylesheets);
                         }
                     }
 
                     if (is_array($config['replacements'])) {
-                        $replacements = array_replace($replacements, $this->cssFixreplacementurls($config['replacements'], $webbase));
+                        $replacements = array_replace(
+                            $replacements,
+                            $this->cssFixreplacementurls($config['replacements'], $webbase)
+                        );
                         $combined['replacements'] = array_merge($combined['replacements'], $replacements);
                     }
                 }
             }
         }
-
 
         return $combined;
     }
@@ -134,7 +143,8 @@ class StyleUtils
             if (file_exists($incbase . $basename . '.' . $newExtension)) {
                 $stylesheets[$mode][$incbase . $basename . '.' . $newExtension] = $webbase;
                 if ($conf['allowdebug']) {
-                    msg("Stylesheet $file not found, using $basename.$newExtension instead. Please contact developer of \"$this->tpl\" template.", 2);
+                    msg("Stylesheet $file not found, using $basename.$newExtension instead. " .
+                        "Please contact developer of \"$this->tpl\" template.", 2);
                 }
             } elseif ($conf['allowdebug']) {
                 msg("Stylesheet $file not found, please contact the developer of \"$this->tpl\" template.", 2);
@@ -173,7 +183,11 @@ class StyleUtils
     protected function cssFixreplacementurls($replacements, $location)
     {
         foreach ($replacements as $key => $value) {
-            $replacements[$key] = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#', '\\1' . $location, $value);
+            $replacements[$key] = preg_replace(
+                '#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#',
+                '\\1' . $location,
+                $value
+            );
         }
         return $replacements;
     }

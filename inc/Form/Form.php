@@ -84,7 +84,9 @@ class Form extends Element {
     /**
      * Get the position of the element in the form or false if it is not in the form
      *
-     * Warning: This function may return Boolean FALSE, but may also return a non-Boolean value which evaluates to FALSE. Please read the section on Booleans for more information. Use the === operator for testing the return value of this function.
+     * Warning: This function may return Boolean FALSE, but may also return a non-Boolean value which evaluates
+     * to FALSE. Please read the section on Booleans for more information. Use the === operator for testing the
+     * return value of this function.
      *
      * @param Element $element
      *
@@ -157,7 +159,9 @@ class Form extends Element {
      * @return Element
      */
     public function addElement(Element $element, $pos = -1) {
-        if(is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
+        if(is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException(
+            'You can\'t add a form to a form'
+        );
         if($pos < 0) {
             $this->elements[] = $element;
         } else {
@@ -173,7 +177,9 @@ class Form extends Element {
      * @param int $pos 0-based position of the element to replace
      */
     public function replaceElement(Element $element, $pos) {
-        if(is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
+        if(is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException(
+            'You can\'t add a form to a form'
+        );
         array_splice($this->elements, $pos, 1, array($element));
     }
 

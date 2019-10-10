@@ -2,8 +2,9 @@
 
 namespace dokuwiki;
 
-use Doku_Event;
-use Sitemapper;
+use dokuwiki\Extension\Event;
+use dokuwiki\Sitemap\Mapper;
+use dokuwiki\Subscriptions\BulkSubscriptionSender;
 use Subscription;
 
 /**
@@ -44,7 +45,7 @@ class TaskRunner
 
         // run one of the jobs
         $tmp = []; // No event data
-        $evt = new Doku_Event('INDEXER_TASKS_RUN', $tmp);
+        $evt = new Event('INDEXER_TASKS_RUN', $tmp);
         if ($evt->advise_before()) {
             $this->runIndexer() or
             $this->runSitemapper() or
@@ -122,12 +123,15 @@ class TaskRunner
             for ($i = 0; $i < count($lines); $i++) {
                 $log = parseChangelogLine($lines[$i]);
                 if ($log === false) {
-                    continue;
-                }                      // discard junk
+                    continue; // discard junk
+                }
+
                 if ($log['date'] < $trim_time) {
-                    $old_lines[$log['date'] . ".$i"] = $lines[$i];     // keep old lines for now (append .$i to prevent key collisions)
+                    // keep old lines for now (append .$i to prevent key collisions)
+                    $old_lines[$log['date'] . ".$i"] = $lines[$i];
                 } else {
-                    $out_lines[$log['date'] . ".$i"] = $lines[$i];     // definitely keep these lines
+                    // definitely keep these lines
+                    $out_lines[$log['date'] . ".$i"] = $lines[$i];
                 }
             }
 
@@ -153,7 +157,7 @@ class TaskRunner
                 'trimmedChangelogLines' => $out_lines,
                 'removedChangelogLines' => $extra > 0 ? array_slice($old_lines, 0, -$extra) : $old_lines,
             ];
-            trigger_event('TASK_RECENTCHANGES_TRIM', $eventData);
+            Event::createAndTrigger('TASK_RECENTCHANGES_TRIM', $eventData);
             $out_lines = $eventData['trimmedChangelogLines'];
 
             // save trimmed changelog
@@ -185,7 +189,6 @@ class TaskRunner
     protected function runIndexer()
     {
         global $ID;
-        global $conf;
         print 'runIndexer(): started' . NL;
 
         if ((string) $ID === '') {
@@ -208,7 +211,7 @@ class TaskRunner
     protected function runSitemapper()
     {
         print 'runSitemapper(): started' . NL;
-        $result = Sitemapper::generate() && Sitemapper::pingSearchEngines();
+        $result = Mapper::generate() && Mapper::pingSearchEngines();
         print 'runSitemapper(): finished' . NL;
         return $result;
     }
@@ -221,7 +224,6 @@ class TaskRunner
      */
     protected function sendDigest()
     {
-        global $conf;
         global $ID;
 
         echo 'sendDigest(): started' . NL;
@@ -229,8 +231,8 @@ class TaskRunner
             echo 'sendDigest(): disabled' . NL;
             return false;
         }
-        $sub = new Subscription();
-        $sent = $sub->send_bulk($ID);
+        $sub = new BulkSubscriptionSender();
+        $sent = $sub->sendBulk($ID);
 
         echo "sendDigest(): sent $sent mails" . NL;
         echo 'sendDigest(): finished' . NL;

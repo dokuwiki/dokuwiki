@@ -6,7 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
+use dokuwiki\HTTP\DokuHTTPClient;
+use dokuwiki\Extension\Event;
 
 /**
  * Removes empty directories
@@ -39,7 +40,7 @@ function io_sweepNS($id,$basedir='datadir'){
             if ($ns_type!==false) {
                 $data = array($id, $ns_type);
                 $delone = true; // we deleted at least one dir
-                trigger_event('IO_NAMESPACE_DELETED', $data);
+                Event::createAndTrigger('IO_NAMESPACE_DELETED', $data);
             }
         } else { return $delone; }
     }
@@ -69,7 +70,7 @@ function io_sweepNS($id,$basedir='datadir'){
 function io_readWikiPage($file, $id, $rev=false) {
     if (empty($rev)) { $rev = false; }
     $data = array(array($file, true), getNS($id), noNS($id), $rev);
-    return trigger_event('IO_WIKIPAGE_READ', $data, '_io_readWikiPage_action', false);
+    return Event::createAndTrigger('IO_WIKIPAGE_READ', $data, '_io_readWikiPage_action', false);
 }
 
 /**
@@ -189,7 +190,7 @@ function io_writeWikiPage($file, $content, $id, $rev=false) {
     if (empty($rev)) { $rev = false; }
     if ($rev===false) { io_createNamespace($id); } // create namespaces as needed
     $data = array(array($file, $content, false), getNS($id), noNS($id), $rev);
-    return trigger_event('IO_WIKIPAGE_WRITE', $data, '_io_writeWikiPage_action', false);
+    return Event::createAndTrigger('IO_WIKIPAGE_WRITE', $data, '_io_writeWikiPage_action', false);
 }
 
 /**
@@ -469,7 +470,7 @@ function io_createNamespace($id, $ns_type='pages') {
     $missing = array_reverse($missing); // inside out
     foreach ($missing as $ns) {
         $data = array($ns, $ns_type);
-        trigger_event('IO_NAMESPACE_CREATED', $data);
+        Event::createAndTrigger('IO_NAMESPACE_CREATED', $data);
     }
 }
 
@@ -598,7 +599,8 @@ function io_mktmpdir() {
  *
  * @param string $url           url to download
  * @param string $file          path to file or directory where to save
- * @param bool   $useAttachment if true: try to use name of download, uses otherwise $defaultName, false: uses $file as path to file
+ * @param bool   $useAttachment true: try to use name of download, uses otherwise $defaultName
+ *                              false: uses $file as path to file
  * @param string $defaultName   fallback for if using $useAttachment
  * @param int    $maxSize       maximum file size
  * @return bool|string          if failed false, otherwise true or the name of the file in the given dir
@@ -621,7 +623,7 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=20
             if (is_string($content_disposition) &&
                     preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)) {
 
-                $name = utf8_basename($match[1]);
+                $name = \dokuwiki\Utf8\PhpString::basename($match[1]);
             }
 
         }

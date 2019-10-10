@@ -32,8 +32,8 @@ class Sitemap extends AbstractAction {
             throw new FatalException('Sitemap generation is disabled', 404);
         }
 
-        $sitemap = \Sitemapper::getFilePath();
-        if(\Sitemapper::sitemapIsCompressed()) {
+        $sitemap = Sitemap::getFilePath();
+        if(Sitemap::sitemapIsCompressed()) {
             $mime = 'application/x-gzip';
         } else {
             $mime = 'application/xml; charset=utf-8';
@@ -41,13 +41,13 @@ class Sitemap extends AbstractAction {
 
         // Check if sitemap file exists, otherwise create it
         if(!is_readable($sitemap)) {
-            \Sitemapper::generate();
+            Sitemap::generate();
         }
 
         if(is_readable($sitemap)) {
             // Send headers
             header('Content-Type: ' . $mime);
-            header('Content-Disposition: attachment; filename=' . utf8_basename($sitemap));
+            header('Content-Disposition: attachment; filename=' . \dokuwiki\Utf8\PhpString::basename($sitemap));
 
             http_conditionalRequest(filemtime($sitemap));
 

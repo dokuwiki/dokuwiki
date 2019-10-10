@@ -5,43 +5,44 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
+class admin_plugin_popularity extends DokuWiki_Admin_Plugin
+{
 
-/**
- * All DokuWiki plugins to extend the admin function
- * need to inherit from this class
- */
-class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
+    /** @var helper_plugin_popularity */
+    protected $helper;
+    protected $sentStatus = null;
 
     /**
-     * @var helper_plugin_popularity
+     * admin_plugin_popularity constructor.
      */
-    var $helper;
-    var $sentStatus = null;
-
-    function __construct(){
+    public function __construct()
+    {
         $this->helper = $this->loadHelper('popularity', false);
     }
 
     /**
      * return prompt for admin menu
+     * @param $language
+     * @return string
      */
-    function getMenuText($language) {
+    public function getMenuText($language)
+    {
         return $this->getLang('name');
     }
 
     /**
      * return sort order for position in admin menu
      */
-    function getMenuSort() {
+    public function getMenuSort()
+    {
         return 2000;
     }
 
     /**
      * Accessible for managers
      */
-    function forAdminOnly() {
+    public function forAdminOnly()
+    {
         return false;
     }
 
@@ -49,18 +50,19 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
     /**
      * handle user request
      */
-    function handle() {
+    public function handle()
+    {
         global $INPUT;
 
         //Send the data
-        if ( $INPUT->has('data') ){
-            $this->sentStatus = $this->helper->sendData( $INPUT->str('data') );
-            if ( $this->sentStatus === '' ){
+        if ($INPUT->has('data')) {
+            $this->sentStatus = $this->helper->sendData($INPUT->str('data'));
+            if ($this->sentStatus === '') {
                 //Update the last time we sent the data
-                touch ( $this->helper->popularityLastSubmitFile );
+                touch($this->helper->popularityLastSubmitFile);
             }
             //Deal with the autosubmit option
-            $this->_enableAutosubmit( $INPUT->has('autosubmit') );
+            $this->enableAutosubmit($INPUT->has('autosubmit'));
         }
     }
 
@@ -68,9 +70,10 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
      * Enable or disable autosubmit
      * @param bool $enable If TRUE, it will enable autosubmit. Else, it will disable it.
      */
-    function _enableAutosubmit( $enable ){
-        if ( $enable ){
-            io_saveFile( $this->helper->autosubmitFile, ' ');
+    protected function enableAutosubmit($enable)
+    {
+        if ($enable) {
+            io_saveFile($this->helper->autosubmitFile, ' ');
         } else {
             @unlink($this->helper->autosubmitFile);
         }
@@ -79,17 +82,18 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
     /**
      * Output HTML form
      */
-    function html() {
+    public function html()
+    {
         global $INPUT;
 
-        if ( ! $INPUT->has('data') ){
+        if (! $INPUT->has('data')) {
             echo $this->locale_xhtml('intro');
 
             //If there was an error the last time we tried to autosubmit, warn the user
-            if ( $this->helper->isAutoSubmitEnabled() ){
-                if ( file_exists($this->helper->autosubmitErrorFile) ){
+            if ($this->helper->isAutoSubmitEnabled()) {
+                if (file_exists($this->helper->autosubmitErrorFile)) {
                     echo $this->getLang('autosubmitError');
-                    echo io_readFile( $this->helper->autosubmitErrorFile );
+                    echo io_readFile($this->helper->autosubmitErrorFile);
                 }
             }
 
@@ -98,12 +102,12 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
 
             //Print the last time the data was sent
             $lastSent = $this->helper->lastSentTime();
-            if ( $lastSent !== 0 ){
+            if ($lastSent !== 0) {
                 echo $this->getLang('lastSent') . ' ' . datetime_h($lastSent);
             }
         } else {
             //If we just submitted the form
-            if ( $this->sentStatus === '' ){
+            if ($this->sentStatus === '') {
                 //If we successfully sent the data
                 echo $this->locale_xhtml('submitted');
             } else {
@@ -122,9 +126,10 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
      * @param string $data   The popularity data, if it has already been computed. NULL otherwise.
      * @return string The form, as an html string
      */
-    function buildForm($submissionMode, $data = null){
+    protected function buildForm($submissionMode, $data = null)
+    {
         $url = ($submissionMode === 'browser' ? $this->helper->submitUrl : script());
-        if ( is_null($data) ){
+        if (is_null($data)) {
             $data = $this->helper->gatherAsString();
         }
 
@@ -135,7 +140,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
             .'</textarea><br />';
 
         //If we submit via the server, we give the opportunity to suscribe to the autosubmission option
-        if ( $submissionMode !== 'browser' ){
+        if ($submissionMode !== 'browser') {
             $form .= '<label for="autosubmit">'
                 .'<input type="checkbox" name="autosubmit" id="autosubmit" '
                 .($this->helper->isAutosubmitEnabled() ? 'checked' : '' )

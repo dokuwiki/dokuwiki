@@ -18,7 +18,7 @@ class utf8_romanize_test extends DokuWikiTest {
         foreach($tests as $test){
             list($jap,$rom) = explode(';',trim($test));
 
-            $chk = utf8_romanize($jap);
+            $chk = \dokuwiki\Utf8\Clean::romanize($jap);
             $this->assertEquals($rom,$chk,"$jap\t->\t$chk\t!=\t$rom\t($line)");
             $line++;
         }
@@ -31,7 +31,7 @@ class utf8_romanize_test extends DokuWikiTest {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function test_deaccented(){
-        $this->assertEquals("a A a A a o O",utf8_romanize("å Å ä Ä ä ö Ö"));
+        $this->assertEquals("a A a A a o O",\dokuwiki\Utf8\Clean::romanize("å Å ä Ä ä ö Ö"));
     }
 }
 //Setup VIM: ex: et ts=4 :

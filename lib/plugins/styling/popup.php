@@ -1,5 +1,6 @@
 <?php
-if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/../../../');
+// phpcs:disable PSR1.Files.SideEffects
+if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/../../../');
 require_once(DOKU_INC . 'inc/init.php');
 //close session
 session_write_close();
@@ -8,7 +9,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
 /** @var admin_plugin_styling $plugin */
 $plugin = plugin_load('admin', 'styling');
-if(!$plugin->isAccessibleByCurrentUser()) die('only admins allowed');
+if (!$plugin->isAccessibleByCurrentUser()) die('only admins allowed');
 $plugin->ispopup = true;
 
 // handle posts

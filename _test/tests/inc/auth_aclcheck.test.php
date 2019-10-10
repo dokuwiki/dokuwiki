@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\test\mock\AuthPlugin;
+
 class auth_acl_test extends DokuWikiTest {
 
     protected $oldAuthAcl;
@@ -9,7 +11,7 @@ class auth_acl_test extends DokuWikiTest {
         global $AUTH_ACL;
         global $auth;
         $this->oldAuthAcl = $AUTH_ACL;
-        $auth = new DokuWiki_Auth_Plugin();
+        $auth = new AuthPlugin();
     }
 
     function tearDown() {

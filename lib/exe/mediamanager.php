@@ -1,4 +1,7 @@
 <?php
+
+use dokuwiki\Extension\Event;
+
     if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
     define('DOKU_MEDIAMANAGER',1);
 
@@ -38,7 +41,7 @@
     $AUTH = $INFO['perm'];    // shortcut for historical reasons
 
     $tmp = array();
-    trigger_event('MEDIAMANAGER_STARTED', $tmp);
+    Event::createAndTrigger('MEDIAMANAGER_STARTED', $tmp);
     session_write_close();  //close session
 
     // do not display the manager if user does not have read access
