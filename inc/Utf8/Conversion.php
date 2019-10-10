@@ -16,13 +16,14 @@ class Conversion
      * @link   http://php.net/manual/en/function.utf8-decode.php
      *
      * @param string $str
+     * @param bool $all Encode non-utf8 char to HTML as well
      * @return string
      */
-    public static function toHtml($str)
+    public static function toHtml($str, $all = false)
     {
         $ret = '';
         foreach (Unicode::fromUtf8($str) as $cp) {
-            if ($cp < 0x80) {
+            if ($cp < 0x80 && !$all) {
                 $ret .= chr($cp);
             } elseif ($cp < 0x100) {
                 $ret .= "&#$cp;";

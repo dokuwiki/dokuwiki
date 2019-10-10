@@ -111,7 +111,7 @@ $lang['remoteuser']  = 'Restrict remote API access to the comma separated groups
 
 /* Anti-Spam Settings */
 $lang['usewordblock']= 'Block spam based on wordlist';
-$lang['relnofollow'] = 'Use rel="nofollow" on external links';
+$lang['relnofollow'] = 'Use rel="ugc nofollow" on external links';
 $lang['indexdelay']  = 'Time delay before indexing (sec)';
 $lang['mailguard']   = 'Obfuscate email addresses';
 $lang['iexssprotect']= 'Check uploaded files for possibly malicious JavaScript or HTML code';

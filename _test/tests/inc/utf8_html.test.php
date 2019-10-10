@@ -11,6 +11,12 @@ class utf8_html_test extends DokuWikiTest {
         $this->assertEquals(\dokuwiki\Utf8\Conversion::toHtml($in),$out);
     }
 
+    function test_from_1byte_all(){
+        $in  = 'a';
+        $out = '&#97;';
+        $this->assertEquals(utf8_tohtml($in, true),$out);
+    }
+
     function test_from_2byte(){
         $in  = "\xc3\xbc";
         $out = '&#252;';

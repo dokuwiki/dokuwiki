@@ -5,6 +5,17 @@
  *
  * @author Katerina Katapodi <extragold1234@hotmail.com>
  */
+$lang['menu']                  = 'Κύρια Παράταση';
+$lang['tab_plugins']           = 'Εγκαταστημένα Επιπρόσθετα';
+$lang['tab_templates']         = 'Εγκατεστημένα μοντέλα';
+$lang['tab_search']            = 'Αναζήτηση και Εγκατάσταση';
+$lang['tab_install']           = 'Εγκατάσταση Χειροκίνητα';
+$lang['notimplemented']        = 'Αυτό το χαρακτηριστικό δεν έχει καθιερωθεί ακόμα';
+$lang['notinstalled']          = 'Αυτή η προέκταση δεν έχει εγκαταταθεί';
+$lang['alreadyenabled']        = 'Αυτή το επιπρόσθετο έχει ήδη ενεργοποιηθεί.';
+$lang['alreadydisabled']       = 'Το επιπρόσθετο έχει ήδη απενεργοποιηθεί.';
+$lang['pluginlistsaveerror']   = 'Υπήρξε σφάλμα κατά την αποθήκευση της λίστας επιπρόσθετων.';
+$lang['unknownauthor']         = 'Άγνωστος συγγραφέας ';
 $lang['unknownversion']        = 'Άγνωστη εκδοχή ';
 $lang['btn_info']              = 'Προβάλλετε περισσότερες πληροφορίες';
 $lang['btn_update']            = 'Ενημέρωση';
@@ -66,6 +77,7 @@ $lang['security_issue']        = '<strong>Δεν είναι ασφαλές:</str
 $lang['security_warning']      = '<strong>Προειδοποίηση Ασφάλειας:</strong> %s	';
 $lang['update_available']      = '<strong>Ενημέρωση:</strong> Η νέα εκδοχή %s είναι διαθέσιμη.	';
 $lang['wrong_folder']          = '<strong>Λάθος εγκατάσταση του επιπρόσθετου:</strong> Δώστε όνομα ξανά στην λίστα διευθύνσεων του επιπρόσθετου "%s" στο "%s".	';
+$lang['url_change']            = '<strong>URL άλλαξε:</strong> Ο τρόπος κατεβάσματος του URL έχει ανοίξει μια φορά από το πρώτο κατέβασμα. Ελέγξετε αν το νέο URL ισχύει πριν την ενημέρωση της επέκτασης. (επιπρόσθετου).<br />Καινούργιο: %s<br />Παλιό: %s	';
 $lang['error_badurl']          = 'Τα URLs πρέπει να αρχίζουν με  http ή https	';
 $lang['error_dircreate']       = 'Δεν μπόρεσε να δημιουργήσει προσωρινό φάκελλο για να κατεβάσει αρχεία';
 $lang['error_download']        = 'Δεν μπόρεσε να κατεβάσει τον φάκελλο : %s';

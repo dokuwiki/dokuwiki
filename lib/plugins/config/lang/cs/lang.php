@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Robert Surý <rsurycz@seznam.cz>
  * @author Martin Hořínek <hev@hev.cz>
  * @author Jonáš Dyba <jonas.dyba@gmail.com>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
@@ -133,6 +134,7 @@ $lang['subscribe_time']        = 'Časový interval v sekundách, ve kterém jso
 $lang['notify']                = 'Posílat oznámení o změnách na následující emailovou adresu';
 $lang['registernotify']        = 'Posílat informace o nově registrovaných uživatelích na tuto mailovou adresu';
 $lang['mailfrom']              = 'E-mailová adresa, která se bude používat pro automatické maily';
+$lang['mailreturnpath']        = 'E-mailová adresa příjemce pro oznámení o nedoručení';
 $lang['mailprefix']            = 'Předpona předmětu e-mailu, která se bude používat pro automatické maily';
 $lang['htmlmail']              = 'Posílat emaily v HTML (hezčí ale větší). Při vypnutí budou posílány jen textové emaily.';
 $lang['sitemap']               = 'Generovat Google sitemap (interval ve dnech)';
@@ -142,6 +144,7 @@ $lang['rss_content']           = 'Co zobrazovat v položkách XML kanálu?';
 $lang['rss_update']            = 'Interval aktualizace XML kanálu (v sekundách)';
 $lang['rss_show_summary']      = 'XML kanál ukazuje souhrn v titulku';
 $lang['rss_media']             = 'Jaký typ změn má být uveden v kanálu XML';
+$lang['rss_media_o_both']      = 'oba';
 $lang['rss_media_o_pages']     = 'stránky';
 $lang['rss_media_o_media']     = 'média';
 $lang['updatecheck']           = 'Kontrolovat aktualizace a bezpečnostní varování? DokuWiki potřebuje pro tuto funkci přístup k update.dokuwiki.org';
@@ -162,6 +165,8 @@ $lang['renderer_xhtml']        = 'Vykreslovací jádro pro hlavní (xhtml) výst
 $lang['renderer__core']        = '%s (jádro DokuWiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
 $lang['search_nslimit']        = 'Omezit vyhledávání na současných X jmenných prostorů. Když je vyhledávání provedeno ze stránky zanořeného jmenného prostoru, bude jako filtr přidáno prvních X jmenných prostorů.';
+$lang['search_fragment']       = 'Určete výchozí chování vyhledávání fragmentů';
+$lang['search_fragment_o_exact'] = 'přesný';
 $lang['search_fragment_o_starts_with'] = 'začíná s';
 $lang['search_fragment_o_ends_with'] = 'končí s';
 $lang['search_fragment_o_contains'] = 'obsahuje';

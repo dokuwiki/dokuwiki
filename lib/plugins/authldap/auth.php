@@ -47,10 +47,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
      * plaintext password is correct by trying to bind
      * to the LDAP server
      *
-     * @author  Andreas Gohr <andi@splitbrain.org>
      * @param string $user
      * @param string $pass
      * @return  bool
+     * @author  Andreas Gohr <andi@splitbrain.org>
      */
     public function checkPass($user, $pass)
     {
@@ -137,16 +137,16 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
      * uid    string  Posix User ID
      * inbind bool    for internal use - avoid loop in binding
      *
-     * @author  Andreas Gohr <andi@splitbrain.org>
-     * @author  Trouble
-     * @author  Dan Allen <dan.j.allen@gmail.com>
+     * @param string $user
+     * @param bool $requireGroups (optional) - ignored, groups are always supplied by this plugin
+     * @return  array containing user data or false
      * @author  <evaldas.auryla@pheur.org>
      * @author  Stephane Chazelas <stephane.chazelas@emerson.com>
      * @author  Steffen Schoch <schoch@dsb.net>
      *
-     * @param   string $user
-     * @param   bool $requireGroups (optional) - ignored, groups are always supplied by this plugin
-     * @return  array containing user data or false
+     * @author  Andreas Gohr <andi@splitbrain.org>
+     * @author  Trouble
+     * @author  Dan Allen <dan.j.allen@gmail.com>
      */
     public function getUserData($user, $requireGroups = true)
     {
@@ -154,8 +154,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
     }
 
     /**
-     * @param   string $user
-     * @param   bool $inbind authldap specific, true if in bind phase
+     * @param string $user
+     * @param bool $inbind authldap specific, true if in bind phase
      * @return  array containing user data or false
      */
     protected function fetchUserData($user, $inbind = false)
@@ -201,7 +201,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
 
         $this->debug('LDAP user search: ' . hsc(ldap_error($this->con)), 0, __LINE__, __FILE__);
         $this->debug('LDAP search at: ' . hsc($base . ' ' . $filter), 0, __LINE__, __FILE__);
-        $sr = $this->ldapSearch($this->con, $base, $filter, $this->getConf('userscope'));
+        $sr = $this->ldapSearch($this->con, $base, $filter, $this->getConf('userscope'), $this->getConf('attributes'));
+
 
         $result = @ldap_get_entries($this->con, $sr);
 
@@ -309,8 +310,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
     /**
      * Definition of the function modifyUser in order to modify the password
      *
-     * @param   string $user nick of the user to be changed
-     * @param   array $changes array of field/value pairs to be changed (password will be clear text)
+     * @param string $user nick of the user to be changed
+     * @param array $changes array of field/value pairs to be changed (password will be clear text)
      * @return  bool   true on success, false on error
      */
     public function modifyUser($user, $changes)
@@ -388,11 +389,11 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
     /**
      * Bulk retrieval of user data
      *
-     * @author  Dominik Eckelmann <dokuwiki@cosmocode.de>
-     * @param   int $start index of first user to be returned
-     * @param   int $limit max number of users to be returned
-     * @param   array $filter array of field/pattern pairs, null for no filter
+     * @param int $start index of first user to be returned
+     * @param int $limit max number of users to be returned
+     * @param array $filter array of field/pattern pairs, null for no filter
      * @return  array of userinfo (refer getUserData for internal userinfo details)
+     * @author  Dominik Eckelmann <dokuwiki@cosmocode.de>
      */
     public function retrieveUsers($start = 0, $limit = 0, $filter = array())
     {
@@ -443,10 +444,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
      * Used by auth_getUserData to make the filter
      * strings for grouptree and groupfilter
      *
-     * @author  Troels Liebe Bentsen <tlb@rapanden.dk>
-     * @param   string $filter ldap search filter with placeholders
-     * @param   array $placeholders placeholders to fill in
+     * @param string $filter ldap search filter with placeholders
+     * @param array $placeholders placeholders to fill in
      * @return  string
+     * @author  Troels Liebe Bentsen <tlb@rapanden.dk>
      */
     protected function makeFilter($filter, $placeholders)
     {
@@ -468,11 +469,11 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
     /**
      * return true if $user + $info match $filter criteria, false otherwise
      *
+     * @param string $user the user's login name
+     * @param array $info the user's userinfo array
+     * @return bool
      * @author Chris Smith <chris@jalakai.co.uk>
      *
-     * @param  string $user the user's login name
-     * @param  array $info the user's userinfo array
-     * @return bool
      */
     protected function filter($user, $info)
     {
@@ -491,10 +492,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
     /**
      * Set the filter pattern
      *
-     * @author Chris Smith <chris@jalakai.co.uk>
-     *
      * @param $filter
      * @return void
+     * @author Chris Smith <chris@jalakai.co.uk>
+     *
      */
     protected function constructPattern($filter)
     {
@@ -509,9 +510,9 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
      *
      * Ported from Perl's Net::LDAP::Util escape_filter_value
      *
-     * @author Andreas Gohr
-     * @param  string $string
+     * @param string $string
      * @return string
+     * @author Andreas Gohr
      */
     protected function filterEscape($string)
     {
@@ -628,7 +629,6 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
     /**
      * Wraps around ldap_search, ldap_list or ldap_read depending on $scope
      *
-     * @author Andreas Gohr <andi@splitbrain.org>
      * @param resource $link_identifier
      * @param string $base_dn
      * @param string $filter
@@ -637,6 +637,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
      * @param int $attrsonly
      * @param int $sizelimit
      * @return resource
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
     protected function ldapSearch(
         $link_identifier,
@@ -646,7 +647,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
         $attributes = null,
         $attrsonly = 0,
         $sizelimit = 0
-    ) {
+    )
+    {
         if (is_null($attributes)) $attributes = array();
 
         if ($scope == 'base') {

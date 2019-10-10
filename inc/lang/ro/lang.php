@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Vitalie Ciubotaru <vitalie@ciubotaru.tokyo>
  * @author Victor <kvp@live.com>
  * @author Marian Banica <open@banica.eu.org>
  * @author Tiberiu Micu <tibimicu@gmx.net>
@@ -128,7 +129,7 @@ $lang['regmissing']            = 'Ne pare rău, trebuie să completezi toate cî
 $lang['reguexists']            = 'Ne pare rău, un utilizator cu acest nume este deja autentificat.';
 $lang['regsuccess']            = 'Utilizatorul a fost creat. Parola a fost trimisă prin e-mail.';
 $lang['regsuccess2']           = 'Utilizatorul a fost creat.';
-$lang['regfail']               = 'Utilizatorul nu a putu fi creat.';
+$lang['regfail']               = 'Utilizatorul nu a putut fi creat.';
 $lang['regmailfail']           = 'Se pare că a fost o eroare la trimiterea parolei prin e-mail. Contactează administratorul!';
 $lang['regbadmail']            = 'Adresa de e-mail este nevalidă - dacă ești de părere că este o eroare contactează administratorul.';
 $lang['regbadpass']            = 'Cele două parole furnizate nu sunt identice; încearcă din nou.';

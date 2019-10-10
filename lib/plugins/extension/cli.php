@@ -16,7 +16,15 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
     protected function setup(\splitbrain\phpcli\Options $options)
     {
         // general setup
-        $options->setHelp('Manage plugins and templates for this DokuWiki instance');
+        $options->setHelp(
+            "Manage plugins and templates for this DokuWiki instance\n\n" .
+            "Status codes:\n" .
+            "   i - installed\n" .
+            "   b - bundled with DokuWiki\n" .
+            "   g - installed via git\n" .
+            "   d - disabled\n" .
+            "   u - update available\n"
+        );
 
         // search
         $options->registerCommand('search', 'Search for an extension');
@@ -27,6 +35,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
         // list
         $options->registerCommand('list', 'List installed extensions');
         $options->registerOption('verbose', 'Show detailed extension information', 'v', false, 'list');
+        $options->registerOption('filter', 'Filter by this status', 'f', 'status', 'list');
 
         // upgrade
         $options->registerCommand('upgrade', 'Update all installed extensions to their latest versions');
@@ -55,13 +64,13 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
     {
         /** @var helper_plugin_extension_repository $repo */
         $repo = plugin_load('helper', 'extension_repository');
-        if(!$repo->hasAccess(false)) {
+        if (!$repo->hasAccess(false)) {
             $this->warning('Extension Repository API is not accessible, no remote info available!');
         }
 
         switch ($options->getCmd()) {
             case 'list':
-                $ret = $this->cmdList($options->getOpt('verbose'));
+                $ret = $this->cmdList($options->getOpt('verbose'), $options->getOpt('filter', ''));
                 break;
             case 'search':
                 $ret = $this->cmdSearch(
@@ -215,7 +224,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
 
             try {
                 $installed = $ext->installOrUpdate();
-                foreach ($installed as $ext => $info) {
+                foreach ($installed as $name => $info) {
                     $this->success(sprintf(
                             $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
                             $info['base'])
@@ -253,13 +262,14 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
 
     /**
      * @param bool $showdetails
+     * @param string $filter
      * @return int
      * @throws \splitbrain\phpcli\Exception
      */
-    protected function cmdList($showdetails)
+    protected function cmdList($showdetails, $filter)
     {
         $list = $this->getInstalledExtensions();
-        $this->listExtensions($list, $showdetails);
+        $this->listExtensions($list, $showdetails, $filter);
 
         return 0;
     }
@@ -288,9 +298,10 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
      *
      * @param string[] $list
      * @param bool $details display details
+     * @param string $filter filter for this status
      * @throws \splitbrain\phpcli\Exception
      */
-    protected function listExtensions($list, $details)
+    protected function listExtensions($list, $details, $filter = '')
     {
         /** @var helper_plugin_extension_extension $ext */
         $ext = $this->loadHelper('extension_extension');
@@ -307,6 +318,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
                 $status = 'i';
                 if ($avail && $avail > $date) {
                     $vcolor = Colors::C_RED;
+                    $status .= 'u';
                 } else {
                     $vcolor = Colors::C_GREEN;
                 }
@@ -324,6 +336,9 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
                 $vcolor = null;
             }
 
+            if ($filter && strpos($status, $filter) === false) {
+                continue;
+            }
 
             echo $tr->format(
                 [20, 3, 12, '*'],

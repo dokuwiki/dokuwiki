@@ -3,10 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Michael Harrison <michharri120@gmail.com>
  * @author Linas Valiukas <shirshegsm@gmail.com>
  * @author Edmondas Girkantas <eg@zemaitija.net>
  * @author Arūnas Vaitekūnas <aras@fan.lt>
- * @author audrius.klevas@gmail.com
+ * @author audrius.klevas <audrius.klevas@gmail.com>
  * @author Tomas Darius Davainis <tomasdd@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -42,10 +43,15 @@ $lang['btn_backlink']          = 'Atgalinės nuorodos';
 $lang['btn_subscribe']         = 'Užsisakyti keitimų prenumeratą';
 $lang['btn_profile']           = 'Atnaujinti profilį';
 $lang['btn_reset']             = 'Atstata';
+$lang['btn_resendpwd']         = 'Nustatykite naują slaptažodį';
 $lang['btn_draft']             = 'Redaguoti juodraštį';
 $lang['btn_recover']           = 'Atkurti juodraštį';
 $lang['btn_draftdel']          = 'Šalinti juodraštį';
+$lang['btn_revert']            = 'Atkurti';
 $lang['btn_register']          = 'Registruotis';
+$lang['btn_apply']             = 'Taikyti';
+$lang['btn_media']             = 'Žiniasklaidos vadybininkas';
+$lang['btn_deleteuser']        = 'Pašalinti mano paskyrą';
 $lang['btn_img_backto']        = 'Atgal į %s';
 $lang['loggedinas']            = 'Prisijungęs kaip:';
 $lang['user']                  = 'Vartotojo vardas';
@@ -61,6 +67,13 @@ $lang['badlogin']              = 'Nurodėte blogą vartotojo vardą arba slapta�
 $lang['minoredit']             = 'Nedidelis pataisymas';
 $lang['draftdate']             = 'Juodraštis automatiškai išsaugotas';
 $lang['nosecedit']             = 'Puslapis buvo kažkieno pataisytas, teksto dalies informacija tapo pasenusi, todėl pakrautas visas puslapis.';
+$lang['js']['willexpire']      = 'Šio puslapio redagavimo užrakto galiojimo laikas baigsis po minutės.\nNorėdami išvengti nesklandumų naudokite peržiūros mygtuką ir užraktas atsinaujins.';
+$lang['js']['notsavedyet']     = 'Pakeitimai nebus išsaugoti.\nTikrai tęsti?';
+$lang['js']['keepopen']        = 'Pažymėjus palikti langą atvertą';
+$lang['js']['hidedetails']     = 'Paslėpti Detales';
+$lang['js']['nosmblinks']      = 'Nurodos į "Windows shares" veikia tik su Microsoft Internet Explorer naršykle.
+Vis dėlto, jūs galite nukopijuoti šią nuorodą.';
+$lang['js']['del_confirm']     = 'Ar tikrai ištrinti pažymėtą(us) įrašą(us)?';
 $lang['regmissing']            = 'Turite užpildyti visus laukus.';
 $lang['reguexists']            = 'Vartotojas su pasirinktu prisijungimo vardu jau egzistuoja.';
 $lang['regsuccess']            = 'Vartotojas sukurtas, slaptažodis išsiųstas el. paštu.';
@@ -88,13 +101,6 @@ $lang['txt_filename']          = 'Įveskite wikivardą (nebūtina):';
 $lang['txt_overwrt']           = 'Perrašyti egzistuojančią bylą';
 $lang['lockedby']              = 'Užrakintas vartotojo:';
 $lang['lockexpire']            = 'Užraktas bus nuimtas:';
-$lang['js']['willexpire']      = 'Šio puslapio redagavimo užrakto galiojimo laikas baigsis po minutės.\nNorėdami išvengti nesklandumų naudokite peržiūros mygtuką ir užraktas atsinaujins.';
-$lang['js']['notsavedyet']     = 'Pakeitimai nebus išsaugoti.\nTikrai tęsti?';
-$lang['js']['keepopen']        = 'Pažymėjus palikti langą atvertą';
-$lang['js']['hidedetails']     = 'Paslėpti Detales';
-$lang['js']['nosmblinks']      = 'Nurodos į "Windows shares" veikia tik su Microsoft Internet Explorer naršykle.
-Vis dėlto, jūs galite nukopijuoti šią nuorodą.';
-$lang['js']['del_confirm']     = 'Ar tikrai ištrinti pažymėtą(us) įrašą(us)?';
 $lang['rssfailed']             = 'Siunčiant šį feed\'ą įvyko klaida: ';
 $lang['nothingfound']          = 'Paieškos rezultatų nėra.';
 $lang['mediaselect']           = 'Mediabylos išsirinkimas';
@@ -179,5 +185,5 @@ $lang['i_wikiname']            = 'Wiki vardas';
 $lang['i_enableacl']           = 'Įjungti ACL (rekomenduojama)';
 $lang['i_superuser']           = 'Supervartotojas';
 $lang['i_problems']            = 'Instaliavimo metu buvo klaidų, kurios pateiktos žemiau. Tęsti negalima, kol nebus pašalintos priežastys.';
-$lang['email_signature_text'] = 'Šis laiškas buvo sugeneruotas DokuWiki
+$lang['email_signature_text']  = 'Šis laiškas buvo sugeneruotas DokuWiki
 @DOKUWIKIURL@';

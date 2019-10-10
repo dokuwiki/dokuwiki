@@ -2699,8 +2699,8 @@ class JpegMeta {
             $tags[0x8827] = 'ISOSpeedRatings';
             $tags[0x8828] = 'OECF';
             $tags[0x9000] = 'EXIFVersion';
-            $tags[0x9003] = 'DatetimeOriginal';
-            $tags[0x9004] = 'DatetimeDigitized';
+            $tags[0x9003] = 'DateTimeOriginal';
+            $tags[0x9004] = 'DateTimeDigitized';
             $tags[0x9101] = 'ComponentsConfiguration';
             $tags[0x9102] = 'CompressedBitsPerPixel';
             $tags[0x9201] = 'ShutterSpeedValue';
@@ -2849,8 +2849,8 @@ class JpegMeta {
             $tags[0x8827] = array(3, 0); // ISOSpeedRatings -> SHORT, Any
             $tags[0x8828] = array(7, 0); // OECF -> UNDEFINED, Any
             $tags[0x9000] = array(7, 4); // EXIFVersion -> UNDEFINED, 4
-            $tags[0x9003] = array(2, 20); // DatetimeOriginal -> ASCII, 20
-            $tags[0x9004] = array(2, 20); // DatetimeDigitized -> ASCII, 20
+            $tags[0x9003] = array(2, 20); // DateTimeOriginal -> ASCII, 20
+            $tags[0x9004] = array(2, 20); // DateTimeDigitized -> ASCII, 20
             $tags[0x9101] = array(7, 4); // ComponentsConfiguration -> UNDEFINED, 4
             $tags[0x9102] = array(5, 1); // CompressedBitsPerPixel -> RATIONAL, 1
             $tags[0x9201] = array(10, 1); // ShutterSpeedValue -> SRATIONAL, 1

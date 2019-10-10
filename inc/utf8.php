@@ -213,10 +213,10 @@ if (!function_exists('utf8_strpos')) {
 
 if (!function_exists('utf8_tohtml')) {
     /** @deprecated 2019-06-09 */
-    function utf8_tohtml($str)
+    function utf8_tohtml($str, $all = false)
     {
         dbg_deprecated(Conversion::class . '::toHtml()');
-        return Conversion::toHtml($str);
+        return Conversion::toHtml($str, $all);
     }
 }
 

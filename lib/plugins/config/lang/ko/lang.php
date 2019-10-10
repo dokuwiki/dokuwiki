@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author pavement <pavement@rael.cc>
  * @author Traend <Traend@ruu.kr>
  * @author Seungheon Song <esketch@gmail.com>
  * @author jk Lee
@@ -150,6 +151,7 @@ $lang['xsendfile']             = '웹 서버가 정적 파일을 제공할 수 �
 $lang['renderer_xhtml']        = '주요 (xhtml) 위키 출력에 사용할 렌더러';
 $lang['renderer__core']        = '%s (도쿠위키 코어)';
 $lang['renderer__plugin']      = '%s (플러그인)';
+$lang['search_nslimit']        = '검색을 현재 X 네임스페이스로 제한하십시오. 더 깊은 네임스페이스 내의 페이지에서 검색을 실행하면 첫 번째 X 네임스페이스가 필터로 추가됩니다.';
 $lang['dnslookups']            = '도쿠위키가 문서를 편집하는 사용자의 원격 IP 주소에 대한 호스트 이름을 조회합니다. 서버가 느리거나 DNS 서버를 작동하지 않거나 이 기능을 원하지 않으면, 이 옵션을 비활성화하세요';
 $lang['jquerycdn']             = '제이쿼리(jQuery)와 제이쿼리UI 스크립트 파일을 컨텐츠전송네트워크(CDN)에서 불러와야만 합니까? 이것은 추가적인 HTTP요청을 합니다. 하지만 파일이 빨리 불러지고 캐쉬에 저장되게 할 수 있습니다.';
 $lang['jquerycdn_o_0']         = '컨텐츠전송네트워크(CDN) 사용 안 함. 로컬 전송만 함';

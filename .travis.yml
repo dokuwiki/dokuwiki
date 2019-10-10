@@ -14,6 +14,9 @@ matrix:
   fast_finish: true
   allow_failures:
     - php: "nightly"
+services:
+  - mysql
+  - postgresql
 notifications:
   irc:
     channels:
@@ -21,13 +24,11 @@ notifications:
     on_success: change
     on_failure: change
 install:
-  - if [[ $TRAVIS_PHP_VERSION > '7.1' ]]; then wget -O ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit https://phar.phpunit.de/phpunit-7.phar; fi
-  - if [[ $TRAVIS_PHP_VERSION > '7.1' ]]; then chmod 755 ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit; fi
-  # Force PHPUnit 7 #2693; nightly will match $TRAVIS_PHP_VERSION > '7.1' rule
+  - php _test/fetchphpunit.php
 before_script:
   - test -z "$DISABLE_FUNCTIONS" || echo "disable_functions=$DISABLE_FUNCTIONS" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - cp _test/mysql.conf.php.dist _test/mysql.conf.php
   - cp _test/pgsql.conf.php.dist _test/pgsql.conf.php
-  - phpunit --version
+  - ./_test/phpunit.phar --version
 script:
-  - cd _test && phpunit --verbose --stderr
+  - cd _test && ./phpunit.phar --verbose --stderr
