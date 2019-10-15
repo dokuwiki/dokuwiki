@@ -75,7 +75,7 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin
 
         /** @var admin_plugin_acl $apa */
         $apa = plugin_load('admin', 'acl');
-        return $apa->addACL($scope, $user, $level);
+        return $apa->addOrUpdateACL($scope, $user, $level);
     }
 
     /**
