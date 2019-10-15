@@ -2,6 +2,8 @@
 
 /**
  * Check some page output for validity
+ *
+ * @group internet
  */
 class general_html_test extends DokuWikiTest
 {
