@@ -507,7 +507,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    protected function makeTreeItem($item)
+    public function makeTreeItem($item)
     {
         $ret = '';
         // what to display
