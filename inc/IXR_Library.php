@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\HTTP\DokuHTTPClient;
+
 /**
  * IXR - The Incutio XML-RPC Library
  *

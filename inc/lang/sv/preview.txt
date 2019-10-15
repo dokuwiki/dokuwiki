@@ -1,4 +1,3 @@
 ====== Förhandsgranskning ======
 
-Detta är en förhandstitt på hur din text kommer att se ut när den visas. Kom ihåg: Den är **inte sparad** ännu!
-
+Detta är en förhandstitt på hur din text kommer att se ut när den visas. **Kom ihåg: Den är inte sparad ännu**!

@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Menu;
 
+use dokuwiki\Extension\Event;
 use dokuwiki\Menu\Item\AbstractItem;
 
 /**
@@ -42,7 +43,7 @@ abstract class AbstractMenu implements MenuInterface {
             'view' => $this->view,
             'items' => array(),
         );
-        trigger_event('MENU_ITEMS_ASSEMBLY', $data, array($this, 'loadItems'));
+        Event::createAndTrigger('MENU_ITEMS_ASSEMBLY', $data, array($this, 'loadItems'));
         return $data['items'];
     }
 

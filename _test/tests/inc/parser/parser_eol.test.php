@@ -1,10 +1,14 @@
 <?php
+
+use dokuwiki\Parsing\ParserMode\Eol;
+use dokuwiki\Parsing\ParserMode\Linebreak;
+
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
 
     function testEol() {
-        $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
+        $this->P->addMode('eol',new Eol());
         $this->P->parse("Foo\nBar");
         $calls = array (
             array('document_start',array()),
@@ -17,7 +21,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
     }
 
     function testEolMultiple() {
-        $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
+        $this->P->addMode('eol',new Eol());
         $this->P->parse("Foo\n\nbar\nFoo");
         $calls = array (
             array('document_start',array()),
@@ -33,7 +37,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
     }
 
     function testWinEol() {
-        $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
+        $this->P->addMode('eol',new Eol());
         $this->P->parse("Foo\r\nBar");
         $calls = array (
             array('document_start',array()),
@@ -46,7 +50,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
     }
 
     function testLinebreak() {
-        $this->P->addMode('linebreak',new Doku_Parser_Mode_Linebreak());
+        $this->P->addMode('linebreak',new Linebreak());
         $this->P->parse('Foo\\\\ Bar');
         $calls = array (
             array('document_start',array()),
@@ -61,8 +65,8 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
     }
 
     function testLinebreakPlusEol() {
-        $this->P->addMode('linebreak',new Doku_Parser_Mode_Linebreak());
-        $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
+        $this->P->addMode('linebreak',new Linebreak());
+        $this->P->addMode('eol',new Eol());
         $this->P->parse('Foo\\\\'."\n\n".'Bar');
 
         $calls = array (
@@ -80,7 +84,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
     }
 
     function testLinebreakInvalid() {
-        $this->P->addMode('linebreak',new Doku_Parser_Mode_Linebreak());
+        $this->P->addMode('linebreak',new Linebreak());
         $this->P->parse('Foo\\\\Bar');
         $calls = array (
             array('document_start',array()),

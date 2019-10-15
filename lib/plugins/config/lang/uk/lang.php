@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author velmyshanovnyi <velmyshanovnyi@gmail.com>
+ * @author Dmytro Marchenko <dmytro.marchenko1989@gmail.com>
  * @author Oleksii <alexey.furashev@gmail.com>
  * @author Vitaly <vitaly.balashov@smuzzy.com.ua>
  * @author Oleksiy Voronin <ovoronin@gmail.com>
@@ -117,6 +119,8 @@ $lang['rss_linkto']            = 'посилання в RSS';
 $lang['rss_content']           = 'Що відображати в пунктах XML-feed';
 $lang['rss_update']            = 'Інтервал оновлення RSS (сек)';
 $lang['rss_show_summary']      = 'Показувати підсумки змін в заголовку XML-feed';
+$lang['rss_media_o_both']      = 'обидва';
+$lang['rss_media_o_pages']     = 'сторінки';
 $lang['updatecheck']           = 'Перевірити наявність оновлень чи попереджень безпеки? Для цього ДокуВікі необхідно зв\'язатися зі update.dokuwiki.org.';
 $lang['userewrite']            = 'Красиві URL';
 $lang['useslash']              = 'Слеш, як розділювач просторів імен в URL';
@@ -133,18 +137,13 @@ $lang['xsendfile']             = 'Використовувати заголов�
 $lang['renderer_xhtml']        = 'Транслятор (Renderer) для основного виводу wiki (xhtml)';
 $lang['renderer__core']        = '%s (ядро докуВікі)';
 $lang['renderer__plugin']      = '%s (доданок)';
+$lang['search_fragment_o_exact'] = 'точно';
 $lang['proxy____host']         = 'Адреса Proxy';
 $lang['proxy____port']         = 'Порт Proxy';
 $lang['proxy____user']         = 'Користувач Proxy';
 $lang['proxy____pass']         = 'Пароль Proxy';
 $lang['proxy____ssl']          = 'Використовувати ssl для з\'єднання з Proxy';
 $lang['proxy____except']       = 'Регулярний вираз для веб-адреси, яку проксі-сервер пропустить.';
-$lang['safemodehack']          = 'Увімкнути хак safemode';
-$lang['ftp____host']           = 'FTP-сервер для хаку safemode';
-$lang['ftp____port']           = 'FTP-порт для хаку safemode';
-$lang['ftp____user']           = 'Користувач FTP для хаку safemode';
-$lang['ftp____pass']           = 'Пароль FTP для хаку safemode';
-$lang['ftp____root']           = 'Коренева папка FTP для хаку safemode';
 $lang['license_o_']            = 'не вибрано';
 $lang['typography_o_0']        = 'жодного';
 $lang['typography_o_1']        = 'Лише подвійні лапки';

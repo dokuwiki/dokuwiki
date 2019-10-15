@@ -68,10 +68,14 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null) {
     }
 
     //download or display?
-    if($dl) {
-        header('Content-Disposition: attachment;'.rfc2231_encode('filename', utf8_basename($orig)).';');
+    if ($dl) {
+        header('Content-Disposition: attachment;' . rfc2231_encode(
+                'filename', \dokuwiki\Utf8\PhpString::basename($orig)) . ';'
+        );
     } else {
-        header('Content-Disposition: inline;'.rfc2231_encode('filename', utf8_basename($orig)).';');
+        header('Content-Disposition: inline;' . rfc2231_encode(
+                'filename', \dokuwiki\Utf8\PhpString::basename($orig)) . ';'
+        );
     }
 
     //use x-sendfile header to pass the delivery to compatible webservers
@@ -104,7 +108,13 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null) {
  * @return string           in the format " name*=charset'lang'value" for values WITH special characters
  */
 function rfc2231_encode($name, $value, $charset='utf-8', $lang='en') {
-    $internal = preg_replace_callback('/[\x00-\x20*\'%()<>@,;:\\\\"\/[\]?=\x80-\xFF]/', function($match) { return rawurlencode($match[0]); }, $value);
+    $internal = preg_replace_callback(
+        '/[\x00-\x20*\'%()<>@,;:\\\\"\/[\]?=\x80-\xFF]/',
+        function ($match) {
+            return rawurlencode($match[0]);
+        },
+        $value
+    );
     if ( $value != $internal ) {
         return ' '.$name.'*='.$charset."'".$lang."'".$internal;
     } else {

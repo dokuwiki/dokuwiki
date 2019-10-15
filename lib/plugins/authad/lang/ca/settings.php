@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Adolfo Jayme Barrientos <fito@libreoffice.org>
  * @author controlonline.net <controlonline.net@gmail.com>
  * @author Àngel Pérez Beroy <aperezberoy@gmail.com>
  * @author David Surroca <david.tb303@gmail.com>

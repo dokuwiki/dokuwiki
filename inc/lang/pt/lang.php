@@ -3,12 +3,16 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
+ * @author Paulo Ricardo Schopf <pschopf@gmail.com>
+ * @author Maykon Oliveira <maykonoliveira850@gmail.com>
+ * @author José Vieira <jmsv63@gmail.com>
  * @author José Carlos Monteiro <jose.c.monteiro@netcabo.pt>
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
  * @author André Neves <drakferion@gmail.com>
- * @author José Campos zecarlosdecampos@gmail.com
+ * @author José Campos <zecarlosdecampos@gmail.com>
  * @author Murilo <muriloricci@hotmail.com>
  * @author Paulo Silva <paulotsilva@yahoo.com>
  * @author Guido Salatino <guidorafael23@gmail.com>
@@ -29,7 +33,7 @@ $lang['btn_source']            = 'Mostrar página fonte ';
 $lang['btn_show']              = 'Mostrar página';
 $lang['btn_create']            = 'Criar esta página';
 $lang['btn_search']            = 'Pesquisar';
-$lang['btn_save']              = 'Guardar';
+$lang['btn_save']              = 'Salvar';
 $lang['btn_preview']           = 'Pré-visualizar';
 $lang['btn_top']               = 'Voltar ao topo';
 $lang['btn_newer']             = '<< mais recente';
@@ -76,44 +80,9 @@ $lang['badpassconfirm']        = 'Infelizmente a palavra-passe não é a correct
 $lang['minoredit']             = 'Alterações Menores';
 $lang['draftdate']             = 'Rascunho automaticamente gravado em';
 $lang['nosecedit']             = 'A página foi modificada entretanto. Como a informação da secção estava desactualizada, foi carregada a página inteira.';
-$lang['regmissing']            = 'Por favor, preencha todos os campos.';
-$lang['reguexists']            = 'Este utilizador já está inscrito. Por favor escolha outro nome de utilizador.';
-$lang['regsuccess']            = 'O utilizador foi criado e a senha foi enviada para o endereço de correio electrónico usado na inscrição.';
-$lang['regsuccess2']           = 'O utilizador foi criado.';
-$lang['regfail']               = 'O usuário não pode ser criado.';
-$lang['regmailfail']           = 'Houve um erro no envio da senha por e-mail. Por favor, contacte o administrador!';
-$lang['regbadmail']            = 'O endereço de correio electrónico é inválido. Se o endereço está correcto, e isto é um erro, por favor, contacte o administrador!';
-$lang['regbadpass']            = 'As duas senhas não são idênticas, por favor tente de novo.';
-$lang['regpwmail']             = 'A sua senha DokuWiki';
-$lang['reghere']               = 'Para se registar, clique em';
-$lang['profna']                = 'Este Wiki não suporta modificações aos perfis.';
-$lang['profnochange']          = 'Nada alteração, nada a fazer.';
-$lang['profnoempty']           = 'Não são permitidos nomes ou endereços em branco.';
-$lang['profchanged']           = 'Perfil do utilizador actualizado com sucesso.';
-$lang['profnodelete']          = 'Esta wiki não suporta remoção de utilizadores';
-$lang['profdeleteuser']        = 'Apagar Conta';
-$lang['profdeleted']           = 'A sua conta de utilizador foi removida desta wiki';
-$lang['profconfdelete']        = 'Quero remover a minha conta desta wiki. <br/> Esta acção não pode ser anulada.';
-$lang['profconfdeletemissing'] = 'A caixa de confirmação não foi marcada';
-$lang['proffail']              = 'O perfil do usuário não foi atualizado.';
-$lang['pwdforget']             = 'Esqueceu a sua senha? Pedir nova senha';
-$lang['resendna']              = 'Este wiki não suporta reenvio de senhas.';
-$lang['resendpwd']             = 'Definir nova senha para';
-$lang['resendpwdmissing']      = 'É preciso preencher todos os campos.';
-$lang['resendpwdnouser']       = 'Não foi possível encontrar este utilizador.';
-$lang['resendpwdbadauth']      = 'O código de autenticação não é válido. Por favor, assegure-se de que o link de confirmação está completo.';
-$lang['resendpwdconfirm']      = 'O link de confirmação foi enviado por e-mail.';
-$lang['resendpwdsuccess']      = 'A nova senha foi enviada por e-mail.';
-$lang['license']               = 'Excepto menção em contrário, o conteúdo neste wiki está sob a seguinte licença:';
-$lang['licenseok']             = 'Nota: Ao editar esta página você aceita disponibilizar o seu conteúdo sob a seguinte licença:';
-$lang['searchmedia']           = 'Procurar nome de ficheiro:';
-$lang['searchmedia_in']        = 'Procurar em %s';
-$lang['txt_upload']            = 'Escolha ficheiro para carregar:';
-$lang['txt_filename']          = 'Carregar como (opcional):';
-$lang['txt_overwrt']           = 'Escrever por cima do ficheiro já existente';
-$lang['maxuploadsize']         = 'Publique max. %s por arquivo.';
-$lang['lockedby']              = 'Bloqueado por:';
-$lang['lockexpire']            = 'Expira em:';
+$lang['searchcreatepage']      = 'Se não encontrou o que estava procurando, pode criar uma nova página com o nome %s.';
+$lang['search_fullresults']    = 'O que foi encontrado nos textos';
+$lang['js']['search_toggle_tools'] = 'Mudar Ferramenta de Pesquisa';
 $lang['js']['willexpire']      = 'O bloqueio de edição para este documento irá expirar num minuto.\nPara evitar conflitos use o botão Prever para re-iniciar o temporizador de bloqueio.';
 $lang['js']['notsavedyet']     = 'Alterações não gravadas serão perdidas.';
 $lang['js']['searchmedia']     = 'Procurar por ficheiros';
@@ -156,6 +125,56 @@ $lang['js']['media_done_btn']  = 'Feito';
 $lang['js']['media_drop']      = 'Largue ficheiros aqui para enviar';
 $lang['js']['media_cancel']    = 'remover';
 $lang['js']['media_overwrt']   = 'Escrever por cima de ficheiros existentes';
+$lang['search_exact_match']    = 'Correspondência exata';
+$lang['search_starts_with']    = 'Começa por';
+$lang['search_ends_with']      = 'Termina em';
+$lang['search_contains']       = 'Contém';
+$lang['search_custom_match']   = 'Personalizado';
+$lang['search_any_ns']         = 'Qualquer local';
+$lang['search_any_time']       = 'Em qualquer momento';
+$lang['search_past_7_days']    = 'Semana passada';
+$lang['search_past_month']     = 'Mês passado';
+$lang['search_past_year']      = 'Ano passado';
+$lang['search_sort_by_hits']   = 'Ordenar por ocorrência';
+$lang['search_sort_by_mtime']  = 'Ordenar pela última alteração';
+$lang['regmissing']            = 'Por favor, preencha todos os campos.';
+$lang['reguexists']            = 'Este utilizador já está inscrito. Por favor escolha outro nome de utilizador.';
+$lang['regsuccess']            = 'O utilizador foi criado e a senha foi enviada para o endereço de correio electrónico usado na inscrição.';
+$lang['regsuccess2']           = 'O utilizador foi criado.';
+$lang['regfail']               = 'O usuário não pode ser criado.';
+$lang['regmailfail']           = 'Houve um erro no envio da senha por e-mail. Por favor, contacte o administrador!';
+$lang['regbadmail']            = 'O endereço de correio electrónico é inválido. Se o endereço está correcto, e isto é um erro, por favor, contacte o administrador!';
+$lang['regbadpass']            = 'As duas senhas não são idênticas, por favor tente de novo.';
+$lang['regpwmail']             = 'A sua senha DokuWiki';
+$lang['reghere']               = 'Para se registar, clique em';
+$lang['profna']                = 'Este Wiki não suporta modificações aos perfis.';
+$lang['profnochange']          = 'Nada alteração, nada a fazer.';
+$lang['profnoempty']           = 'Não são permitidos nomes ou endereços em branco.';
+$lang['profchanged']           = 'Perfil do utilizador actualizado com sucesso.';
+$lang['profnodelete']          = 'Esta wiki não suporta remoção de utilizadores';
+$lang['profdeleteuser']        = 'Apagar Conta';
+$lang['profdeleted']           = 'A sua conta de utilizador foi removida desta wiki';
+$lang['profconfdelete']        = 'Quero remover a minha conta desta wiki. <br/> Esta acção não pode ser anulada.';
+$lang['profconfdeletemissing'] = 'A caixa de confirmação não foi marcada';
+$lang['proffail']              = 'O perfil do usuário não foi atualizado.';
+$lang['pwdforget']             = 'Esqueceu a sua senha? Pedir nova senha';
+$lang['resendna']              = 'Este wiki não suporta reenvio de senhas.';
+$lang['resendpwd']             = 'Definir nova senha para';
+$lang['resendpwdmissing']      = 'É preciso preencher todos os campos.';
+$lang['resendpwdnouser']       = 'Não foi possível encontrar este utilizador.';
+$lang['resendpwdbadauth']      = 'O código de autenticação não é válido. Por favor, assegure-se de que o link de confirmação está completo.';
+$lang['resendpwdconfirm']      = 'O link de confirmação foi enviado por e-mail.';
+$lang['resendpwdsuccess']      = 'A nova senha foi enviada por e-mail.';
+$lang['license']               = 'Excepto menção em contrário, o conteúdo neste wiki está sob a seguinte licença:';
+$lang['licenseok']             = 'Nota: Ao editar esta página você aceita disponibilizar o seu conteúdo sob a seguinte licença:';
+$lang['searchmedia']           = 'Procurar nome de ficheiro:';
+$lang['searchmedia_in']        = 'Procurar em %s';
+$lang['txt_upload']            = 'Escolha ficheiro para carregar:';
+$lang['txt_filename']          = 'Carregar como (opcional):';
+$lang['txt_overwrt']           = 'Escrever por cima do ficheiro já existente';
+$lang['maxuploadsize']         = 'Publique max. %s por arquivo.';
+$lang['lockedby']              = 'Bloqueado por:';
+$lang['lockexpire']            = 'Expira em:';
 $lang['rssfailed']             = 'Ocorreu um erro neste canal RSS: ';
 $lang['nothingfound']          = 'Nada foi encontrado.';
 $lang['mediaselect']           = 'Selecção de ficheiros';
@@ -203,7 +222,7 @@ $lang['youarehere']            = 'Está aqui:';
 $lang['lastmod']               = 'Esta página foi modificada pela última vez em:';
 $lang['by']                    = 'por';
 $lang['deleted']               = 'Documento automaticamente removido.';
-$lang['created']               = 'Criação deste novo documento.';
+$lang['created']               = 'criação';
 $lang['restored']              = 'Versão anterior restaurada (%s)';
 $lang['external_edit']         = 'Edição externa';
 $lang['summary']               = 'Sumário da Edição';
@@ -340,6 +359,7 @@ $lang['media_perm_read']       = 'Perdão, não tem permissão para ler ficheiro
 $lang['media_perm_upload']     = 'Perdão, não tem permissão para enviar ficheiros.';
 $lang['media_update']          = 'enviar nova versão';
 $lang['media_restore']         = 'Restaurar esta versão';
+$lang['media_acl_warning']     = 'Essa lista pode não estar completa devido a restrições de ACL e páginas ocultas.';
 $lang['currentns']             = 'Namespace actual';
 $lang['searchresult']          = 'Resultado da pesquisa';
 $lang['plainhtml']             = 'HTML simples';

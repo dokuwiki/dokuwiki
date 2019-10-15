@@ -32,7 +32,7 @@ class Edit extends AbstractItem {
                     }
                 }
             } else {
-                if(!actionOK($this->type)) throw new \RuntimeException("action disabled: source");
+                if(!actionOK("source")) throw new \RuntimeException("action disabled: source");
                 $params['rev'] = $REV;
                 $this->type = 'source';
                 $this->accesskey = 'v';

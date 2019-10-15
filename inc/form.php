@@ -6,7 +6,9 @@
  * @author     Tom N Harris <tnharris@whoopdedo.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
+// phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
+// phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
+
 
 /**
  * Class for creating simple HTML forms.
@@ -23,6 +25,11 @@ if(!defined('DOKU_INC')) die('meh.');
  *
  * See the form_make* functions later in this file.
  *
+ * Please note that even though this class is technically deprecated (use dokuwiki\Form instead),
+ * it is still widely used in the core and the related form events. Until those have been rewritten,
+ * this will continue to be used
+ *
+ * @deprecated 2019-07-14
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 class Doku_Form {
@@ -55,7 +62,7 @@ class Doku_Form {
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    function __construct($params, $action=false, $method=false, $enctype=false) {
+    public function __construct($params, $action=false, $method=false, $enctype=false) {
         if(!is_array($params)) {
             $this->params = array('id' => $params);
             if ($action !== false) $this->params['action'] = $action;
@@ -88,7 +95,7 @@ class Doku_Form {
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    function startFieldset($legend) {
+    public function startFieldset($legend) {
         if ($this->_infieldset) {
             $this->addElement(array('_elem'=>'closefieldset'));
         }
@@ -101,7 +108,7 @@ class Doku_Form {
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    function endFieldset() {
+    public function endFieldset() {
         if ($this->_infieldset) {
             $this->addElement(array('_elem'=>'closefieldset'));
         }
@@ -120,7 +127,7 @@ class Doku_Form {
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    function addHidden($name, $value) {
+    public function addHidden($name, $value) {
         if (is_null($value))
             unset($this->_hidden[$name]);
         else
@@ -138,7 +145,7 @@ class Doku_Form {
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    function addElement($elem) {
+    public function addElement($elem) {
         $this->_content[] = $elem;
     }
 
@@ -152,7 +159,7 @@ class Doku_Form {
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    function insertElement($pos, $elem) {
+    public function insertElement($pos, $elem) {
         array_splice($this->_content, $pos, 0, array($elem));
     }
 
@@ -166,7 +173,7 @@ class Doku_Form {
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    function replaceElement($pos, $elem) {
+    public function replaceElement($pos, $elem) {
         $rep = array();
         if (!is_null($elem)) $rep[] = $elem;
         array_splice($this->_content, $pos, 1, $rep);
@@ -182,7 +189,7 @@ class Doku_Form {
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    function findElementByType($type) {
+    public function findElementByType($type) {
         foreach ($this->_content as $pos=>$elem) {
             if (is_array($elem) && $elem['_elem'] == $type)
                 return $pos;
@@ -200,7 +207,7 @@ class Doku_Form {
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    function findElementById($id) {
+    public function findElementById($id) {
         foreach ($this->_content as $pos=>$elem) {
             if (is_array($elem) && isset($elem['id']) && $elem['id'] == $id)
                 return $pos;
@@ -219,7 +226,7 @@ class Doku_Form {
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    function findElementByAttribute($name, $value) {
+    public function findElementByAttribute($name, $value) {
         foreach ($this->_content as $pos=>$elem) {
             if (is_array($elem) && isset($elem[$name]) && $elem[$name] == $value)
                 return $pos;
@@ -239,7 +246,7 @@ class Doku_Form {
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    function &getElementAt($pos) {
+    public function &getElementAt($pos) {
         if ($pos < 0) $pos = count($this->_content) + $pos;
         if ($pos < 0) $pos = 0;
         if ($pos >= count($this->_content)) $pos = count($this->_content) - 1;
@@ -256,7 +263,7 @@ class Doku_Form {
      *
      * @return string html of the form
      */
-    function getForm() {
+    public function getForm() {
         global $lang;
         $form = '';
         $this->params['accept-charset'] = $lang['encoding'];
@@ -286,7 +293,7 @@ class Doku_Form {
      *
      * wraps around getForm()
      */
-    function printForm(){
+    public function printForm(){
         echo $this->getForm();
     }
 
@@ -302,7 +309,7 @@ class Doku_Form {
      * @author Adrian Lang <lang@cosmocode.de>
      */
 
-    function addRadioSet($name, $entries) {
+    public function addRadioSet($name, $entries) {
         global $INPUT;
         $value = (array_key_exists($INPUT->post->str($name), $entries)) ?
                  $INPUT->str($name) : key($entries);

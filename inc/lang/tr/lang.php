@@ -3,16 +3,17 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Hakan <hakandursun2009@gmail.com>
+ * @author mahir <mahirtakak@gmail.com>
  * @author Selim Farsakoğlu <farsakogluselim@yahoo.de>
  * @author Aydın Coşkuner <aydinweb@gmail.com>
  * @author Cihan Kahveci <kahvecicihan@gmail.com>
  * @author Yavuz Selim <yavuzselim@gmail.com>
  * @author Caleb Maclennan <caleb@alerque.com>
- * @author farukerdemoncel@gmail.com
+ * @author farukerdemoncel <farukerdemoncel@gmail.com>
  * @author Mustafa Aslan <maslan@hotmail.com>
  * @author huseyin can <huseyincan73@gmail.com>
  * @author ilker rifat kapaç <irifat@gmail.com>
- * @author İlker R. Kapaç <irifat@gmail.com>
  * @author Mete Cuma <mcumax@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -74,6 +75,62 @@ $lang['badpassconfirm']        = 'Üzgünüz, parolanız yanlış';
 $lang['minoredit']             = 'Küçük Değişiklikler';
 $lang['draftdate']             = 'Taslak şu saatte otomatik kaydedildi:';
 $lang['nosecedit']             = 'Sayfa yakın zamanda değiştirilmiştir, bölüm bilgisi eski kalmıştır. Bunun için bölüm yerine tüm sayfa yüklenmiştir.';
+$lang['searchcreatepage']      = 'Eğer aradığınızı bulamadıysanız, %s sayfasını yaratabilir veya düzenleyebilirsiniz. ';
+$lang['search_fullresults']    = 'Tam Metin sonuçları';
+$lang['js']['search_toggle_tools'] = 'Arama Araçlarını Değiştir';
+$lang['js']['willexpire']      = 'Bu sayfayı değiştirme kilidinin süresi yaklaşık bir dakika içinde geçecek.\nÇakışmaları önlemek için önizleme tuşunu kullanarak kilit sayacını sıfırla.';
+$lang['js']['notsavedyet']     = 'Kaydedilmemiş değişiklikler kaybolacak.
+Devam etmek istiyor musunuz?';
+$lang['js']['searchmedia']     = 'Dosyalar için Ara';
+$lang['js']['keepopen']        = 'Seçim yapıldığında bu pencereyi açık tut';
+$lang['js']['hidedetails']     = 'Ayrıntıları gizle';
+$lang['js']['mediatitle']      = 'Bağlantı Ayarları';
+$lang['js']['mediadisplay']    = 'Bağlantı Tipi';
+$lang['js']['mediaalign']      = 'Hizalama';
+$lang['js']['mediasize']       = 'Resim büyüklüğü';
+$lang['js']['mediatarget']     = 'Bağlantı hedefi';
+$lang['js']['mediaclose']      = 'Kapat';
+$lang['js']['mediainsert']     = 'Ekle';
+$lang['js']['mediadisplayimg'] = 'Resmi görüntüle';
+$lang['js']['mediadisplaylnk'] = 'Sadece bağlantıyı görüntüle ';
+$lang['js']['mediasmall']      = 'Küçük versiyon';
+$lang['js']['mediamedium']     = 'Orta versiyon';
+$lang['js']['medialarge']      = 'Büyük versiyon';
+$lang['js']['mediaoriginal']   = 'Orjinal versiyon';
+$lang['js']['medialnk']        = 'Detay sayfasına bağlantı';
+$lang['js']['mediadirect']     = 'Orjinal sayfaya bağlantı';
+$lang['js']['medianolnk']      = 'Bağlantı yok';
+$lang['js']['medianolink']     = 'Resme bağlantı verme';
+$lang['js']['medialeft']       = 'Resmi sola hizala';
+$lang['js']['mediaright']      = 'Resmi sağa hizala';
+$lang['js']['mediacenter']     = 'Resmi ortaya hizala';
+$lang['js']['medianoalign']    = 'Hizalama kullanma';
+$lang['js']['nosmblinks']      = 'Windows paylaşımı sadece Microsoft Internet Explorer ile çalışmaktadır. Yine de hala bağlantıyı kopyalayıp yapıştırarak kullanabilirsiniz. ';
+$lang['js']['linkwiz']         = 'Bağlantı sihirbazı';
+$lang['js']['linkto']          = 'Bağlantı:';
+$lang['js']['del_confirm']     = 'Bu girişi sil?';
+$lang['js']['restore_confirm'] = 'Bu sürüme geri dönmek istediğinizden emin misiniz?';
+$lang['js']['media_diff']      = 'Farkları gör:';
+$lang['js']['media_diff_both'] = 'Yan yana';
+$lang['js']['media_diff_portions'] = 'Kaydır';
+$lang['js']['media_select']    = 'Dosyalar seç...';
+$lang['js']['media_upload_btn'] = 'Yükle';
+$lang['js']['media_done_btn']  = 'Bitti';
+$lang['js']['media_drop']      = 'Yüklemek istediğiniz dosyaları buraya bırakın';
+$lang['js']['media_cancel']    = 'kaldır';
+$lang['js']['media_overwrt']   = 'Var olan dosyaların üzerine yaz';
+$lang['search_exact_match']    = 'Tam eşleşme';
+$lang['search_starts_with']    = 'Bununla başlar';
+$lang['search_ends_with']      = 'Bununla biter';
+$lang['search_contains']       = 'İçerir';
+$lang['search_custom_match']   = 'Özel';
+$lang['search_any_ns']         = 'Herhangi bir isim';
+$lang['search_any_time']       = 'Herhangi bir zaman';
+$lang['search_past_7_days']    = 'Geçen hafta';
+$lang['search_past_month']     = 'Geçen ay';
+$lang['search_past_year']      = 'Geçen yıl';
+$lang['search_sort_by_hits']   = 'Tıklanmaya göre sırala';
+$lang['search_sort_by_mtime']  = 'Son değiştirilmeye göre sırala';
 $lang['regmissing']            = 'Üzgünüz, tüm alanları doldurmalısınız.';
 $lang['reguexists']            = 'Üzgünüz, bu isime sahip bir kullanıcı zaten mevcut.';
 $lang['regsuccess']            = 'Kullanıcı oluşturuldu ve şifre e-posta adresine gönderildi.';
@@ -112,46 +169,6 @@ $lang['txt_overwrt']           = 'Mevcut dosyanın üstüne yaz';
 $lang['maxuploadsize']         = 'Yükleme dosya başına en fazla %s';
 $lang['lockedby']              = 'Şu an şunun tarafından kilitli:';
 $lang['lockexpire']            = 'Kilitin açılma tarihi:';
-$lang['js']['willexpire']      = 'Bu sayfayı değiştirme kilidinin süresi yaklaşık bir dakika içinde geçecek.\nÇakışmaları önlemek için önizleme tuşunu kullanarak kilit sayacını sıfırla.';
-$lang['js']['notsavedyet']     = 'Kaydedilmemiş değişiklikler kaybolacak.
-Devam etmek istiyor musunuz?';
-$lang['js']['searchmedia']     = 'Dosyalar için Ara';
-$lang['js']['keepopen']        = 'Seçim yapıldığında bu pencereyi açık tut';
-$lang['js']['hidedetails']     = 'Ayrıntıları gizle';
-$lang['js']['mediatitle']      = 'Bağlantı Ayarları';
-$lang['js']['mediadisplay']    = 'Bağlantı Tipi';
-$lang['js']['mediaalign']      = 'Hizalama';
-$lang['js']['mediasize']       = 'Resim büyüklüğü';
-$lang['js']['mediatarget']     = 'Bağlantı hedefi';
-$lang['js']['mediaclose']      = 'Kapat';
-$lang['js']['mediainsert']     = 'Ekle';
-$lang['js']['mediadisplayimg'] = 'Resmi görüntüle';
-$lang['js']['mediadisplaylnk'] = 'Sadece bağlantıyı görüntüle ';
-$lang['js']['mediasmall']      = 'Küçük versiyon';
-$lang['js']['mediamedium']     = 'Orta versiyon';
-$lang['js']['medialarge']      = 'Büyük versiyon';
-$lang['js']['mediaoriginal']   = 'Orjinal versiyon';
-$lang['js']['medialnk']        = 'Detay sayfasına bağlantı';
-$lang['js']['mediadirect']     = 'Orjinal sayfaya bağlantı';
-$lang['js']['medianolnk']      = 'Bağlantı yok';
-$lang['js']['medianolink']     = 'Resme bağlantı verme';
-$lang['js']['medialeft']       = 'Resmi sola hizala';
-$lang['js']['mediaright']      = 'Resmi sağa hizala';
-$lang['js']['mediacenter']     = 'Resmi ortaya hizala';
-$lang['js']['medianoalign']    = 'Hizalama kullanma';
-$lang['js']['nosmblinks']      = 'Windows paylaşımı sadece Microsoft Internet Explorer ile çalışmaktadır. Yine de hala bağlantıyı kopyalayıp yapıştırarak kullanabilirsiniz. ';
-$lang['js']['linkwiz']         = 'Bağlantı sihirbazı';
-$lang['js']['linkto']          = 'Bağlantı:';
-$lang['js']['del_confirm']     = 'Bu girişi sil?';
-$lang['js']['restore_confirm'] = 'Bu sürüme geri dönmek istediğinizden emin misiniz?';
-$lang['js']['media_diff']      = 'Farkları gör:';
-$lang['js']['media_diff_both'] = 'Yan yana';
-$lang['js']['media_select']    = 'Dosyalar seç...';
-$lang['js']['media_upload_btn'] = 'Yükle';
-$lang['js']['media_done_btn']  = 'Bitti';
-$lang['js']['media_drop']      = 'Yüklemek istediğiniz dosyaları buraya bırakın';
-$lang['js']['media_cancel']    = 'kaldır';
-$lang['js']['media_overwrt']   = 'Var olan dosyaların üzerine yaz';
 $lang['rssfailed']             = 'Bu beslemeyi çekerken hata oluştu: ';
 $lang['nothingfound']          = 'Hiçbir şey yok.';
 $lang['mediaselect']           = 'Çokluortam dosyası seçimi';
@@ -274,6 +291,7 @@ $lang['subscr_m_unsubscribe']  = 'Üyelik iptali';
 $lang['subscr_m_subscribe']    = 'Kayıt ol';
 $lang['subscr_m_receive']      = 'Al';
 $lang['subscr_style_every']    = 'her değişiklikte e-posta gönder';
+$lang['subscr_style_digest']   = 'Her sayfa için değişikliklerin özet e-postası (her %.2f gün)';
 $lang['subscr_style_list']     = 'Son e-postadan bu yana değiştirilen sayfaların listesi (her %.2f gün)';
 $lang['authtempfail']          = 'Kullanıcı doğrulama geçici olarak yapılamıyor. Eğer bu durum devam ederse lütfen Wiki yöneticine haber veriniz.';
 $lang['i_chooselang']          = 'Dili seçiniz';
@@ -334,9 +352,10 @@ $lang['media_perm_read']       = 'Özür dileriz, dosyaları okumak için yeterl
 $lang['media_perm_upload']     = 'Üzgünüm, karşıya dosya yükleme yetkiniz yok.';
 $lang['media_update']          = 'Yeni versiyonu yükleyin';
 $lang['media_restore']         = 'Bu sürümü eski haline getir';
+$lang['media_acl_warning']     = 'Bu sayfa ACL sınırlarından ve gizli sayfalardan dolayı eksik olabilir. ';
 $lang['currentns']             = 'Geçerli isimalanı';
 $lang['searchresult']          = 'Arama Sonucu';
 $lang['plainhtml']             = 'Yalın HTML';
 $lang['wikimarkup']            = 'Wiki Biçimlendirmesi';
-$lang['email_signature_text'] = 'Bu e-posta aşağıdaki DokuWiki tarafından otomatik olarak oluşturulmuştur
+$lang['email_signature_text']  = 'Bu e-posta aşağıdaki DokuWiki tarafından otomatik olarak oluşturulmuştur
 @DOKUWIKIURL@';

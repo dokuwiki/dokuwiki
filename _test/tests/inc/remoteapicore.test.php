@@ -1,5 +1,9 @@
 <?php
 
+use dokuwiki\Remote\Api;
+use dokuwiki\Remote\ApiCore;
+use dokuwiki\test\mock\AuthPlugin;
+
 /**
  * Class remoteapicore_test
  */
@@ -7,7 +11,7 @@ class remoteapicore_test extends DokuWikiTest {
 
     protected $userinfo;
     protected $oldAuthAcl;
-    /** @var  RemoteAPI */
+    /** @var  Api */
     protected $remote;
 
     public function setUp() {
@@ -21,13 +25,13 @@ class remoteapicore_test extends DokuWikiTest {
         global $auth;
         $this->oldAuthAcl = $AUTH_ACL;
         $this->userinfo = $USERINFO;
-        $auth = new DokuWiki_Auth_Plugin();
+        $auth = new AuthPlugin();
 
         $conf['remote'] = 1;
         $conf['remoteuser'] = '@user';
         $conf['useacl'] = 0;
 
-        $this->remote = new RemoteAPI();
+        $this->remote = new Api();
     }
 
     public function tearDown() {
@@ -389,7 +393,7 @@ You can use up to five different levels of',
     }
 
     public function test_getPageVersions() {
-        /** @var $EVENT_HANDLER Doku_Event_Handler */
+        /** @var $EVENT_HANDLER \dokuwiki\Extension\EventHandler */
         global $EVENT_HANDLER;
         $EVENT_HANDLER->register_hook('IO_WIKIPAGE_WRITE', 'BEFORE', $this, 'handle_write');
         global $conf;
@@ -445,6 +449,20 @@ You can use up to five different levels of',
         $this->assertEquals(0, count($versions));
     }
 
+    public function test_deleteUser()
+    {
+        global $conf, $auth;
+        $auth = new Mock_Auth_Plugin();
+        $conf['remote'] = 1;
+        $conf['remoteuser'] = 'testuser';
+        $_SERVER['REMOTE_USER'] = 'testuser';
+        $params = [
+            ['testuser']
+        ];
+        $actualCallResult = $this->remote->call('dokuwiki.deleteUsers', $params);
+        $this->assertTrue($actualCallResult);
+    }
+
     public function test_aclCheck() {
         $id = 'aclpage';
 
@@ -466,7 +484,7 @@ You can use up to five different levels of',
     }
 
     public function test_getXMLRPCAPIVersion() {
-        $this->assertEquals(DOKU_API_VERSION, $this->remote->call('dokuwiki.getXMLRPCAPIVersion'));
+        $this->assertEquals(ApiCore::API_VERSION, $this->remote->call('dokuwiki.getXMLRPCAPIVersion'));
     }
 
     public function test_getRPCVersionSupported() {

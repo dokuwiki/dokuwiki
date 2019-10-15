@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Harriet Neitz <harrietneitz@gmail.com>
  * @author mark prins <mprins@users.sf.net>
  * @author Pieter van der Meulen <pieter@vdmeulen.net>
  * @author Wouter Schoot <wouter@schoot.org>
@@ -10,11 +12,9 @@
  * @author Niels Schoot <niels.schoot@quintiq.com>
  * @author Dion Nicolaas <dion@nicolaas.net>
  * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
- * @author Marijn Hofstra hofstra.m@gmail.com
  * @author Marijn Hofstra <hofstra.m@gmail.com>
  * @author Timon Van Overveldt <timonvo@gmail.com>
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
- * @author Gerrit <klapinklapin@gmail.com>
  * @author Hugo Smet <hugo.smet@scarlet.be>
  */
 $lang['menu']                  = 'Configuratie-instellingen';
@@ -152,6 +152,12 @@ $lang['xsendfile']             = 'Gebruik de X-Sendfile header om de webserver s
 $lang['renderer_xhtml']        = 'Weergavesysteem voor de standaard (xhtml) wiki-uitvoer';
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_nslimit']        = 'Beperk het zoeken tot de huidige X namespaces. Wanneer het zoeken wordt uitgevoerd vanaf een pagina binnen een diepere namespace, worden de eerste X aantal namespaces toegevoegd als filter';
+$lang['search_fragment']       = 'Specifeer het standaard zoekgedrag voor fragmenten';
+$lang['search_fragment_o_exact'] = 'exact';
+$lang['search_fragment_o_starts_with'] = 'begint met';
+$lang['search_fragment_o_ends_with'] = 'eindigt op';
+$lang['search_fragment_o_contains'] = 'bevat';
 $lang['dnslookups']            = 'DokuWiki zoekt de hostnamen van IP-adressen van gebruikers die pagina wijzigen op. Schakel deze optie uit als je geen of een langzame DNS server hebt.';
 $lang['jquerycdn']             = 'Moet er een CDN gebruikt worden om de jQuery en jQuery UI bestanden te laden. Dit zorgt voor extra HTTP verzoeken, maar bestanden laden mogelijk sneller en zitten misschien al in de cache van de gebruiker.';
 $lang['jquerycdn_o_0']         = 'Geen CDN gebruiken';
@@ -163,12 +169,6 @@ $lang['proxy____user']         = 'Proxy gebruikersnaam';
 $lang['proxy____pass']         = 'Proxy wachtwoord';
 $lang['proxy____ssl']          = 'Gebruik SSL om een verbinding te maken met de proxy';
 $lang['proxy____except']       = 'Reguliere expressie om URL\'s te bepalen waarvoor de proxy overgeslagen moet worden.';
-$lang['safemodehack']          = 'Safemode hack aanzetten';
-$lang['ftp____host']           = 'FTP server voor safemode hack';
-$lang['ftp____port']           = 'FTP port voor safemode hack';
-$lang['ftp____user']           = 'FTP gebruikersnaam voor safemode hack';
-$lang['ftp____pass']           = 'FTP wachtwoord voor safemode hack';
-$lang['ftp____root']           = 'FTP root directory voor safemode hack';
 $lang['license_o_']            = 'Geen gekozen';
 $lang['typography_o_0']        = 'geen';
 $lang['typography_o_1']        = 'Alleen dubbele aanhalingstekens';

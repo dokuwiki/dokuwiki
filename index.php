@@ -14,8 +14,10 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 if(php_sapi_name() != 'cli-server') {
-    header("Location: doku.php");
-    exit;
+    if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/');
+    require_once(DOKU_INC.'inc/init.php');
+
+    send_redirect(DOKU_URL.'doku.php');
 }
 
 # ROUTER starts below
@@ -34,7 +36,7 @@ if(preg_match('/^\/_media\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
     $_GET['media'] = $m[1];
     require $_SERVER['DOCUMENT_ROOT'] . '/lib/exe/detail.php';
 
-} else if(preg_match('/^\/_media\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
+} else if(preg_match('/^\/_export\/([^\/]+)\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
     # exports
     $_GET['do'] = 'export_' . $m[1];
     $_GET['id'] = $m[2];

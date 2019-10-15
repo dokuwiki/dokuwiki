@@ -3,12 +3,15 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Michael Bohn <mjbohn@gmail.com>
+ * @author PaliPalo <palipalo@hotmail.fr>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Laurent Ponthieu <contact@coopindus.fr>
+ * @author Damien Regad <dregad@mantisbt.org>
+ * @author Michael Bohn <mjbohn@gmail.com>
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
- * @author <stephane.gully@gmail.com>
+ * @author stephane.gully <stephane.gully@gmail.com>
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author olivier duperray <duperray.olivier@laposte.net>
@@ -82,7 +85,7 @@ $lang['toptoclevel']           = 'Niveau le plus haut à afficher dans la table 
 $lang['tocminheads']           = 'Nombre minimum de titres pour qu\'une table des matières soit affichée';
 $lang['maxtoclevel']           = 'Niveau maximum pour figurer dans la table des matières';
 $lang['maxseclevel']           = 'Niveau maximum pour modifier des sections';
-$lang['camelcase']             = 'Utiliser l\'affichage «CamelCase » pour les liens';
+$lang['camelcase']             = 'Les mots en CamelCase créent des liens';
 $lang['deaccent']              = 'Retirer les accents dans les noms de pages';
 $lang['useheading']            = 'Utiliser le titre de premier niveau pour le nom de la page';
 $lang['sneaky_index']          = 'Par défaut, DokuWiki affichera toutes les catégories dans la vue par index. Activer cette option permet de cacher les catégories pour lesquelles l\'utilisateur n\'a pas l\'autorisation de lecture. Il peut en résulter le masquage de sous-catégories accessibles. Ceci peut rendre l\'index inutilisable avec certains contrôles d\'accès.';
@@ -164,6 +167,12 @@ $lang['xsendfile']             = 'Utiliser l\'en-tête X-Sendfile pour permettre
 $lang['renderer_xhtml']        = 'Moteur de rendu du format de sortie principal (XHTML)';
 $lang['renderer__core']        = '%s (cœur de DokuWiki)';
 $lang['renderer__plugin']      = '%s (extension)';
+$lang['search_nslimit']        = 'Limiter la recherche aux X catégories courantes. Quand une recherche est effectuée à partir d\'une page dans une catégorie profondément imbriquée, les premières X catégories sont ajoutées comme filtre.';
+$lang['search_fragment']       = 'Spécifier le comportement de recherche fragmentaire par défaut';
+$lang['search_fragment_o_exact'] = 'exact';
+$lang['search_fragment_o_starts_with'] = 'commence par';
+$lang['search_fragment_o_ends_with'] = 'se termine par';
+$lang['search_fragment_o_contains'] = 'contient';
 $lang['dnslookups']            = 'DokuWiki effectuera une résolution du nom d\'hôte sur les adresses IP des utilisateurs modifiant des pages. Si vous ne possédez pas de serveur DNS, que ce dernier est lent ou que vous ne souhaitez pas utiliser cette fonctionnalité : désactivez-la.';
 $lang['jquerycdn']             = 'Faut-il distribuer les scripts JQuery et JQuery UI depuis un CDN ? Cela ajoute une requête HTTP, mais les fichiers peuvent se charger plus vite et les internautes les ont peut-être déjà en cache.';
 $lang['jquerycdn_o_0']         = 'Non : utilisation de votre serveur.';
@@ -175,12 +184,6 @@ $lang['proxy____user']         = 'Mandataire - Identifiant';
 $lang['proxy____pass']         = 'Mandataire - Mot de passe';
 $lang['proxy____ssl']          = 'Mandataire - Utilisation de SSL';
 $lang['proxy____except']       = 'Mandataire - Expression régulière de test des URLs pour lesquelles le mandataire (proxy) ne doit pas être utilisé.';
-$lang['safemodehack']          = 'Activer l\'option Mode sans échec';
-$lang['ftp____host']           = 'FTP / Mode sans échec - Serveur hôte';
-$lang['ftp____port']           = 'FTP / Mode sans échec - Port';
-$lang['ftp____user']           = 'FTP / Mode sans échec - Identifiant';
-$lang['ftp____pass']           = 'FTP / Mode sans échec - Mot de passe';
-$lang['ftp____root']           = 'FTP / Mode sans échec - Répertoire racine';
 $lang['license_o_']            = 'Aucune choisie';
 $lang['typography_o_0']        = 'aucun';
 $lang['typography_o_1']        = 'guillemets uniquement';

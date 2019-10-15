@@ -1,0 +1,1 @@
+Táto záložka vám dáva prístup k všetkým dostupným rozšíreniam a témam pre DokuWiki od tretích strán. Prosím, myslite na to, že inštalácia kódu od tretích strán môže predstavovať **bezpečnostné riziko**. Prečítajte si najskôr [[doku>security#plugin_security|o zabezpečení rozšírení]].

@@ -23,7 +23,7 @@ class Plugin extends AbstractAction {
      * @triggers TPL_ACT_UNKNOWN
      */
     public function tplContent() {
-        $evt = new \Doku_Event('TPL_ACT_UNKNOWN', $this->actionname);
+        $evt = new \dokuwiki\Extension\Event('TPL_ACT_UNKNOWN', $this->actionname);
         if($evt->advise_before()) {
             msg('Failed to handle action: ' . hsc($this->actionname), -1);
         }

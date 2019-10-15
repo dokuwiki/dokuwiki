@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author PaliPalo <palipalo@hotmail.fr>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author schplurtz <Schplurtz@laposte.net>
  */
@@ -18,6 +19,7 @@ $lang['referrals']             = 'Suivre les références?';
 $lang['deref']                 = 'Comment déréférencer les alias ?';
 $lang['binddn']                = 'Nom de domaine d\'un utilisateur de connexion facultatif si une connexion anonyme n\'est pas suffisante. Ex. : <code>cn=admin, dc=mon, dc=accueil</code>';
 $lang['bindpw']                = 'Mot de passe de l\'utilisateur ci-dessus.';
+$lang['attributes']            = 'Attributs à récupérer avec la recherche LDAP.';
 $lang['userscope']             = 'Limiter la portée de recherche d\'utilisateurs';
 $lang['groupscope']            = 'Limiter la portée de recherche de groupes';
 $lang['userkey']               = 'Attribut indiquant le nom d\'utilisateur. Doit être en accord avec le filtre d\'utilisateur.';

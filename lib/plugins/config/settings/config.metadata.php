@@ -2,16 +2,15 @@
 /**
  * Metadata for configuration manager plugin
  *
- * Note:  This file should be included within a function to ensure it
- *        doesn't clash with the settings it is describing.
+ * Note: This file is loaded in Loader::loadMeta().
  *
  * Format:
  *   $meta[<setting name>] = array(<handler class id>,<param name> => <param value>);
  *
  *   <handler class id>  is the handler class name without the "setting_" prefix
  *
- * Defined classes:
- *   Generic (source: settings/config.class.php)
+ * Defined classes (see core/Setting/*):
+ *   Generic
  *   -------------------------------------------
  *   ''             - default class ('setting'), textarea, minimal input validation, setting output in quotes
  *   'string'       - single line text input, minimal input validation, setting output in quotes
@@ -38,7 +37,7 @@
  *                    to see if will compile & run as a regex.  in addition to _pattern, also accepts _delimiter
  *                    (default '/') and _pregflags (default 'ui')
  *
- *  Single Setting (source: settings/extra.class.php)
+ *  Single Setting
  *  -------------------------------------------------
  *   'savedir'     - as 'setting', input tested against initpath() (inc/init.php)
  *   'sepchar'     - as multichoice, selection constructed from string of valid values
@@ -76,26 +75,10 @@
  *                   'never' as it will not discard unknown/other values.
  *                   optional for 'multicheckbox', ignored by others
  *
+ * The order of the settings influences the order in which they apppear in the config manager
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
  */
-// ---------------[ settings for settings ]------------------------------
-$config['format']  = 'php';      // format of setting files, supported formats: php
-$config['varname'] = 'conf';     // name of the config variable, sans $
-
-// this string is written at the top of the rewritten settings file,
-// !! do not include any comment indicators !!
-// this value can be overriden when calling save_settings() method
-$config['heading'] = 'Dokuwiki\'s Main Configuration File - Local Settings';
-
-// test value (FIXME, remove before publishing)
-//$meta['test']     = array('multichoice','_choices' => array(''));
-
-// --------------[ setting metadata ]------------------------------------
-// - for description of format and fields see top of file
-// - order the settings in the order you wish them to appear
-// - any settings not mentioned will come after the last setting listed and
-//   will use the default class with no parameters
 
 $meta['_basic']   = array('fieldset');
 $meta['title']    = array('string');
@@ -122,7 +105,10 @@ $meta['fullpath']    = array('onoff','_caution' => 'security');
 $meta['typography']  = array('multichoice','_choices' => array(0,1,2));
 $meta['dformat']     = array('string');
 $meta['signature']   = array('string');
-$meta['showuseras']  = array('multichoice','_choices' => array('loginname','username','username_link','email','email_link'));
+$meta['showuseras'] = array(
+    'multichoice',
+    '_choices' => array('loginname', 'username', 'username_link', 'email', 'email_link')
+);
 $meta['toptoclevel'] = array('multichoice','_choices' => array(1,2,3,4,5));   // 5 toc levels
 $meta['tocminheads'] = array('multichoice','_choices' => array(0,1,2,3,4,5,10,15,20));
 $meta['maxtoclevel'] = array('multichoice','_choices' => array(0,1,2,3,4,5));
@@ -146,9 +132,29 @@ $meta['superuser']   = array('string','_caution' => 'danger');
 $meta['manager']     = array('string');
 $meta['profileconfirm'] = array('onoff');
 $meta['rememberme'] = array('onoff');
-$meta['disableactions'] = array('disableactions',
-                                '_choices' => array('backlink','index','recent','revisions','search','subscription','register','resendpwd','profile','profile_delete','edit','wikicode','check', 'rss'),
-                                '_combine' => array('subscription' => array('subscribe','unsubscribe'), 'wikicode' => array('source','export_raw')));
+$meta['disableactions'] = array(
+    'disableactions',
+    '_choices' => array(
+        'backlink',
+        'index',
+        'recent',
+        'revisions',
+        'search',
+        'subscription',
+        'register',
+        'resendpwd',
+        'profile',
+        'profile_delete',
+        'edit',
+        'wikicode',
+        'check',
+        'rss'
+    ),
+    '_combine' => array(
+        'subscription' => array('subscribe', 'unsubscribe'),
+        'wikicode' => array('source', 'export_raw')
+    )
+);
 $meta['auth_security_timeout'] = array('numeric');
 $meta['securecookie'] = array('onoff');
 $meta['remote']       = array('onoff','_caution' => 'security');
@@ -231,10 +237,4 @@ $meta['proxy____user'] = array('string');
 $meta['proxy____pass'] = array('password','_code' => 'base64');
 $meta['proxy____ssl']  = array('onoff');
 $meta['proxy____except'] = array('string');
-$meta['safemodehack'] = array('onoff');
-$meta['ftp____host']  = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
-$meta['ftp____port']  = array('numericopt');
-$meta['ftp____user']  = array('string');
-$meta['ftp____pass']  = array('password','_code' => 'base64');
-$meta['ftp____root']  = array('string');
 

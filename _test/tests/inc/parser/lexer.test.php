@@ -5,10 +5,9 @@
 * @subpackage Tests
 */
 
-/**
-* Includes
-*/
-require_once DOKU_INC . 'inc/parser/lexer.php';
+use dokuwiki\Parsing\Lexer\Lexer;
+use dokuwiki\Parsing\Lexer\ParallelRegex;
+use dokuwiki\Parsing\Lexer\StateStack;
 
 /**
 * @package Doku
@@ -17,24 +16,24 @@ require_once DOKU_INC . 'inc/parser/lexer.php';
 class TestOfLexerParallelRegex extends DokuWikiTest {
 
     function testNoPatterns() {
-        $regex = new Doku_LexerParallelRegex(false);
+        $regex = new ParallelRegex(false);
         $this->assertFalse($regex->match("Hello", $match));
         $this->assertEquals($match, "");
     }
     function testNoSubject() {
-        $regex = new Doku_LexerParallelRegex(false);
+        $regex = new ParallelRegex(false);
         $regex->addPattern(".*");
         $this->assertTrue($regex->match("", $match));
         $this->assertEquals($match, "");
     }
     function testMatchAll() {
-        $regex = new Doku_LexerParallelRegex(false);
+        $regex = new ParallelRegex(false);
         $regex->addPattern(".*");
         $this->assertTrue($regex->match("Hello", $match));
         $this->assertEquals($match, "Hello");
     }
     function testCaseSensitive() {
-        $regex = new Doku_LexerParallelRegex(true);
+        $regex = new ParallelRegex(true);
         $regex->addPattern("abc");
         $this->assertTrue($regex->match("abcdef", $match));
         $this->assertEquals($match, "abc");
@@ -42,7 +41,7 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
         $this->assertEquals($match, "abc");
     }
     function testCaseInsensitive() {
-        $regex = new Doku_LexerParallelRegex(false);
+        $regex = new ParallelRegex(false);
         $regex->addPattern("abc");
         $this->assertTrue($regex->match("abcdef", $match));
         $this->assertEquals($match, "abc");
@@ -50,7 +49,7 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
         $this->assertEquals($match, "ABC");
     }
     function testMatchMultiple() {
-        $regex = new Doku_LexerParallelRegex(true);
+        $regex = new ParallelRegex(true);
         $regex->addPattern("abc");
         $regex->addPattern("ABC");
         $this->assertTrue($regex->match("abcdef", $match));
@@ -60,7 +59,7 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
         $this->assertFalse($regex->match("Hello", $match));
     }
     function testPatternLabels() {
-        $regex = new Doku_LexerParallelRegex(false);
+        $regex = new ParallelRegex(false);
         $regex->addPattern("abc", "letter");
         $regex->addPattern("123", "number");
         $this->assertEquals($regex->match("abcdef", $match), "letter");
@@ -69,7 +68,7 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
         $this->assertEquals($match, "123");
     }
     function testMatchMultipleWithLookaheadNot() {
-        $regex = new Doku_LexerParallelRegex(true);
+        $regex = new ParallelRegex(true);
         $regex->addPattern("abc");
         $regex->addPattern("ABC");
         $regex->addPattern("a(?!\n).{1}");
@@ -82,37 +81,37 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
         $this->assertFalse($regex->match("Hello", $match));
     }
     function testMatchSetOptionCaseless() {
-        $regex = new Doku_LexerParallelRegex(true);
+        $regex = new ParallelRegex(true);
         $regex->addPattern("a(?i)b(?i)c");
         $this->assertTrue($regex->match("aBc", $match));
         $this->assertEquals($match, "aBc");
     }
     function testMatchSetOptionUngreedy() {
-        $regex = new Doku_LexerParallelRegex(true);
+        $regex = new ParallelRegex(true);
         $regex->addPattern("(?U)\w+");
         $this->assertTrue($regex->match("aaaaaa", $match));
         $this->assertEquals($match, "a");
     }
     function testMatchLookaheadEqual() {
-        $regex = new Doku_LexerParallelRegex(true);
+        $regex = new ParallelRegex(true);
         $regex->addPattern("\w(?=c)");
         $this->assertTrue($regex->match("xbyczd", $match));
         $this->assertEquals($match, "y");
     }
     function testMatchLookaheadNot() {
-        $regex = new Doku_LexerParallelRegex(true);
+        $regex = new ParallelRegex(true);
         $regex->addPattern("\w(?!b|c)");
         $this->assertTrue($regex->match("xbyczd", $match));
         $this->assertEquals($match, "b");
     }
     function testMatchLookbehindEqual() {
-        $regex = new Doku_LexerParallelRegex(true);
+        $regex = new ParallelRegex(true);
         $regex->addPattern("(?<=c)\w");
         $this->assertTrue($regex->match("xbyczd", $match));
         $this->assertEquals($match, "z");
     }
     function testMatchLookbehindNot() {
-        $regex = new Doku_LexerParallelRegex(true);
+        $regex = new ParallelRegex(true);
         $regex->addPattern("(?<!\A|x|b)\w");
         $this->assertTrue($regex->match("xbyczd", $match));
         $this->assertEquals($match, "c");
@@ -122,15 +121,15 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
 
 class TestOfLexerStateStack extends DokuWikiTest {
     function testStartState() {
-        $stack = new Doku_LexerStateStack("one");
+        $stack = new StateStack("one");
         $this->assertEquals($stack->getCurrent(), "one");
     }
     function testExhaustion() {
-        $stack = new Doku_LexerStateStack("one");
+        $stack = new StateStack("one");
         $this->assertFalse($stack->leave());
     }
     function testStateMoves() {
-        $stack = new Doku_LexerStateStack("one");
+        $stack = new StateStack("one");
         $stack->enter("two");
         $this->assertEquals($stack->getCurrent(), "two");
         $stack->enter("three");
@@ -160,13 +159,13 @@ class TestOfLexer extends DokuWikiTest {
     function testNoPatterns() {
         $handler = $this->createMock('TestParser');
         $handler->expects($this->never())->method('accept');
-        $lexer = new Doku_Lexer($handler);
+        $lexer = new Lexer($handler);
         $this->assertFalse($lexer->parse("abcdef"));
     }
     function testEmptyPage() {
         $handler = $this->createMock('TestParser');
         $handler->expects($this->never())->method('accept');
-        $lexer = new Doku_Lexer($handler);
+        $lexer = new Lexer($handler);
         $lexer->addPattern("a+");
         $this->assertTrue($lexer->parse(""));
     }
@@ -189,7 +188,7 @@ class TestOfLexer extends DokuWikiTest {
         $handler->expects($this->at(7))->method('accept')
             ->with("z", DOKU_LEXER_UNMATCHED, 13)->will($this->returnValue(true));
 
-        $lexer = new Doku_Lexer($handler);
+        $lexer = new Lexer($handler);
         $lexer->addPattern("a+");
         $this->assertTrue($lexer->parse("aaaxayyyaxaaaz"));
     }
@@ -201,7 +200,7 @@ class TestOfLexer extends DokuWikiTest {
             $handler->expects($this->at($i))->method('accept')
                 ->with($target[$i], $this->anything(), $positions[$i])->will($this->returnValue(true));
         }
-        $lexer = new Doku_Lexer($handler);
+        $lexer = new Lexer($handler);
         $lexer->addPattern("a+");
         $lexer->addPattern("b+");
         $this->assertTrue($lexer->parse("ababbxbaxxxxxxax"));
@@ -227,7 +226,7 @@ class TestOfLexerModes extends DokuWikiTest {
             ->with("aaaa", DOKU_LEXER_MATCHED,11)->will($this->returnValue(true));
         $handler->expects($this->at(7))->method('a')
             ->with("x", DOKU_LEXER_UNMATCHED,15)->will($this->returnValue(true));
-        $lexer = new Doku_Lexer($handler, "a");
+        $lexer = new Lexer($handler, "a");
         $lexer->addPattern("a+", "a");
         $lexer->addPattern("b+", "b");
         $this->assertTrue($lexer->parse("abaabxbaaaxaaaax"));
@@ -261,7 +260,7 @@ class TestOfLexerModes extends DokuWikiTest {
         $handler->expects($this->at(12))->method('b')
             ->with("a", DOKU_LEXER_UNMATCHED,18)->will($this->returnValue(true));
 
-        $lexer = new Doku_Lexer($handler, "a");
+        $lexer = new Lexer($handler, "a");
         $lexer->addPattern("a+", "a");
         $lexer->addEntryPattern(":", "a", "b");
         $lexer->addPattern("b+", "b");
@@ -293,7 +292,7 @@ class TestOfLexerModes extends DokuWikiTest {
             ->with("b", DOKU_LEXER_UNMATCHED,15)->will($this->returnValue(true));
 
 
-        $lexer = new Doku_Lexer($handler, "a");
+        $lexer = new Lexer($handler, "a");
         $lexer->addPattern("a+", "a");
         $lexer->addEntryPattern("(", "a", "b");
         $lexer->addPattern("b+", "b");
@@ -314,7 +313,7 @@ class TestOfLexerModes extends DokuWikiTest {
             ->with("bbb", DOKU_LEXER_SPECIAL,7)->will($this->returnValue(true));
         $handler->expects($this->at(5))->method('a')
             ->with("xx", DOKU_LEXER_UNMATCHED,10)->will($this->returnValue(true));
-        $lexer = new Doku_Lexer($handler, "a");
+        $lexer = new Lexer($handler, "a");
         $lexer->addPattern("a+", "a");
         $lexer->addSpecialPattern("b+", "a", "b");
         $this->assertTrue($lexer->parse("aabaaxxbbbxx"));
@@ -326,7 +325,7 @@ class TestOfLexerModes extends DokuWikiTest {
         $handler->expects($this->at(1))->method('a')
             ->with(")", DOKU_LEXER_EXIT,2)->will($this->returnValue(true));
 
-        $lexer = new Doku_Lexer($handler, "a");
+        $lexer = new Lexer($handler, "a");
         $lexer->addPattern("a+", "a");
         $lexer->addExitPattern(")", "a");
         $this->assertFalse($lexer->parse("aa)aa"));
@@ -351,7 +350,7 @@ class TestOfLexerHandlers extends DokuWikiTest {
         $handler->expects($this->at(6))->method('a')
             ->with("b", DOKU_LEXER_UNMATCHED,9)->will($this->returnValue(true));
 
-        $lexer = new Doku_Lexer($handler, "mode_a");
+        $lexer = new Lexer($handler, "mode_a");
         $lexer->addPattern("a+", "mode_a");
         $lexer->addEntryPattern("(", "mode_a", "mode_b");
         $lexer->addPattern("b+", "mode_b");
@@ -389,7 +388,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
         $handler->expects($this->at(5))->method('caught')
             ->with("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))->will($this->returnValue(true));
 
-        $lexer = new Doku_Lexer($handler, "ignore");
+        $lexer = new Lexer($handler, "ignore");
         $lexer->addEntryPattern("<file>", "ignore", "caught");
         $lexer->addExitPattern("</file>", "caught");
         $lexer->addSpecialPattern('b','caught','special');
@@ -415,7 +414,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
         $handler->expects($this->at(5))->method('caught')
             ->with("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))->will($this->returnValue(true));
 
-        $lexer = new Doku_Lexer($handler, "ignore");
+        $lexer = new Lexer($handler, "ignore");
         $lexer->addEntryPattern('<file>(?=.*</file>)', "ignore", "caught");
         $lexer->addExitPattern("</file>", "caught");
         $lexer->addSpecialPattern('b','caught','special');
@@ -441,7 +440,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
         $handler->expects($this->at(5))->method('caught')
             ->with("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))->will($this->returnValue(true));
 
-        $lexer = new Doku_Lexer($handler, "ignore");
+        $lexer = new Lexer($handler, "ignore");
         $lexer->addEntryPattern('<file>(?!foo)', "ignore", "caught");
         $lexer->addExitPattern("</file>", "caught");
         $lexer->addSpecialPattern('b','caught','special');
@@ -467,7 +466,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
         $handler->expects($this->at(5))->method('caught')
             ->with("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))->will($this->returnValue(true));
 
-        $lexer = new Doku_Lexer($handler, "ignore");
+        $lexer = new Lexer($handler, "ignore");
         $lexer->addEntryPattern('<file>', "ignore", "caught");
         $lexer->addExitPattern("(?<=d)</file>", "caught");
         $lexer->addSpecialPattern('b','caught','special');
@@ -493,7 +492,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
         $handler->expects($this->at(5))->method('caught')
             ->with("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))->will($this->returnValue(true));
 
-        $lexer = new Doku_Lexer($handler, 'ignore');
+        $lexer = new Lexer($handler, 'ignore');
         $lexer->addEntryPattern('<file>', 'ignore', 'caught');
         $lexer->addExitPattern('(?<!c)</file>', 'caught');
         $lexer->addSpecialPattern('b','caught','special');
@@ -520,7 +519,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
         $handler->expects($this->once())->method('caught')
             ->with("FOO", DOKU_LEXER_SPECIAL, $matches[0][1])->will($this->returnValue(true));
 
-        $lexer = new Doku_Lexer($handler, "ignore");
+        $lexer = new Lexer($handler, "ignore");
         $lexer->addSpecialPattern($pattern,'ignore','caught');
 
         $this->assertTrue($lexer->parse($doc));

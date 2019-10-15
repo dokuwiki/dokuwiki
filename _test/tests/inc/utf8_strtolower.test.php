@@ -10,7 +10,7 @@ class utf8_strtolower_test extends DokuWikiTest {
         );
 
         foreach($data as $input => $expected) {
-            $this->assertEquals($expected, utf8_strtolower($input));
+            $this->assertEquals($expected, \dokuwiki\Utf8\PhpString::strtolower($input));
         }
 
         // just make sure our data was correct

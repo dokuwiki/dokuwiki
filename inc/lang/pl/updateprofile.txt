@@ -1,5 +1,3 @@
 ====== Aktualizacja profilu użytkownika ======
 
 Wystarczy, że wypełnisz tylko te pola, które chcesz zmienić. Nie możesz zmienić nazwy użytkownika.
-
-

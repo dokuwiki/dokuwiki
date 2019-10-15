@@ -1,4 +1,3 @@
 ====== Baxış ======
 
-Burda daxil elədiyiniz mətnin necə görünəcəyi göstərilir. Qeyd: mətn hələ **yadda saxlanılmayıb!**
-
+Burda daxil elədiyiniz mətnin necə görünəcəyi göstərilir. **Qeyd: mətn hələ yadda saxlanılmayıb**!

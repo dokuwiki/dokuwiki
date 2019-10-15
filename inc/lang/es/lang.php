@@ -3,6 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Liliana <lilianasaidon@gmail.com>
+ * @author Alex Cachinero <anarres@protonmail.com>
+ * @author WIRESLINKEA <wireslinkea@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  * @author Zigor Astarbe <zigor@astarbe.com>
  * @author Adrián Ariza <adrian_ariza.ciudad.com.ar>

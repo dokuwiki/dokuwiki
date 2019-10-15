@@ -1,4 +1,3 @@
 ====== Avtorizasiya ======
 
 Hazırda Siz sistemə daxil olmamısınız. Aşağıdakı formanı istifadə edib sistemə daxil olun. //Qeyd:// cookies qurlu olmalıdır.
-
