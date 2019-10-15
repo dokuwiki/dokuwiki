@@ -201,23 +201,16 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
     /**
      * Waits until a new second has passed
      *
-     * The very first call will return immeadiately, proceeding calls will return
-     * only after at least 1 second after the last call has passed.
+     * This tried to be clever about the passing of time and return early if possible. Unfortunately
+     * this never worked reliably fo unknown reasons. To avoid flaky tests, this now always simply
+     * sleeps for a full second on every call.
      *
-     * When passing $init=true it will not return immeadiately but use the current
-     * second as initialization. It might still return faster than a second.
-     *
-     * @param bool $init wait from now on, not from last time
+     * @param bool $init no longer used
      * @return int new timestamp
      */
     protected function waitForTick($init = false) {
-        static $last = 0;
-        if($init) $last = time();
-        while($last === $now = time()) {
-            usleep(100000); //recheck in a 10th of a second
-        }
-        $last = $now;
-        return $now;
+        sleep(1);
+        return time();
     }
 
     /**
