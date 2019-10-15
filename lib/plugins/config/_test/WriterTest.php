@@ -25,7 +25,7 @@ class WriterTest extends \DokuWikiTest {
 
         // before running, no backup should exist
         $this->assertFileExists($config);
-        $this->assertFileNotExists("$config.bak");
+        $this->assertFileNotExists("$config.bak.php");
         $old = filesize($config);
 
         /** @noinspection PhpUnhandledExceptionInspection */
@@ -33,8 +33,8 @@ class WriterTest extends \DokuWikiTest {
 
         // after running, both should exist
         $this->assertFileExists($config);
-        $this->assertFileExists("$config.bak");
-        $this->assertEquals($old, filesize("$config.bak"), 'backup should have size of old file');
+        $this->assertFileExists("$config.bak.php");
+        $this->assertEquals($old, filesize("$config.bak.php"), 'backup should have size of old file');
 
         // check contents
         $conf = [];
@@ -45,7 +45,7 @@ class WriterTest extends \DokuWikiTest {
 
         /** @noinspection PhpUnhandledExceptionInspection */
         $writer->save($settings);
-        $this->assertEquals(filesize($config), filesize("$config.bak"));
+        $this->assertEquals(filesize($config), filesize("$config.bak.php"));
     }
 
     public function testTouch() {

@@ -33,12 +33,12 @@ class Writer {
 
         // backup current file (remove any existing backup)
         if(file_exists($this->savefile)) {
-            if(file_exists($this->savefile . '.bak')) @unlink($this->savefile . '.bak');
-            if(!io_rename($this->savefile, $this->savefile . '.bak')) throw new \Exception('no backup');
+            if(file_exists($this->savefile . '.bak.php')) @unlink($this->savefile . '.bak.php');
+            if(!io_rename($this->savefile, $this->savefile . '.bak.php')) throw new \Exception('no backup');
         }
 
         if(!$fh = @fopen($this->savefile, 'wb')) {
-            io_rename($this->savefile . '.bak', $this->savefile); // problem opening, restore the backup
+            io_rename($this->savefile . '.bak.php', $this->savefile); // problem opening, restore the backup
             throw new \Exception('no save');
         }
 
