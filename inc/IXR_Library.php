@@ -406,7 +406,7 @@ class IXR_Server {
     /**
      * @param bool|string $data
      */
-    function serve($data = false, $test = false) {
+    function serve($data = false) {
         if(!$data) {
 
             $postData = trim(http_get_raw_post_data());
@@ -448,11 +448,7 @@ class IXR_Server {
 
 EOD;
         // Send it
-        if ($test) {
-            return $xml;
-        } else {
-            $this->output($xml);
-        }
+        $this->output($xml);
     }
 
     /**

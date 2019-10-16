@@ -2,11 +2,18 @@
 
 use dokuwiki\Remote\XmlRpcServer;
 
+class XmlRpcServerTestWrapper extends XmlRpcServer
+{
+    public $output;
+
+    public function output($xml) {
+        $this->output = $xml;
+    }
+}
 
 class XmlRpcServerTest extends DokuWikiTest
 {
     protected $server;
-
 
     function setUp()
     {
@@ -17,7 +24,7 @@ class XmlRpcServerTest extends DokuWikiTest
         $conf['remoteuser'] = '';
         $conf['useacl'] = 0;
 
-        $this->server = new XmlRpcServer(false,false,true);
+        $this->server = new XmlRpcServerTestWrapper(true);
     }
 
 
@@ -56,7 +63,7 @@ EOD;
 </methodResponse>
 EOD;
 
-        $response = $this->server->serve($request, true);
-        $this->assertEquals(trim($expected), trim($response));
+        $this->server->serve($request, true);
+        $this->assertEquals(trim($expected), trim($this->server->output));
     }
 }
