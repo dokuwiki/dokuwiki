@@ -406,7 +406,7 @@ class IXR_Server {
     /**
      * @param bool|string $data
      */
-    function serve($data = false) {
+    function serve($data = false, $test = false) {
         if(!$data) {
 
             $postData = trim(http_get_raw_post_data());
@@ -448,7 +448,11 @@ class IXR_Server {
 
 EOD;
         // Send it
-        $this->output($xml);
+        if ($test) {
+            return $xml;
+        } else {
+            $this->output($xml);
+        }
     }
 
     /**
@@ -821,6 +825,8 @@ EOD;
  * @since 1.5
  */
 class IXR_Date {
+
+    const XMLRPC_ISO8601 = 'Ymd\TH:i:s';
 
     /** @var DateTime */
     protected $date;
