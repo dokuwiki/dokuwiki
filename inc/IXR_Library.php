@@ -867,7 +867,7 @@ class IXR_Date {
      * @return string
      */
     public function getIso() {
-        return $this->date->format(DateTime::ISO8601);
+        return $this->date->format(self::XMLRPC_ISO8601);
     }
 
     /**
