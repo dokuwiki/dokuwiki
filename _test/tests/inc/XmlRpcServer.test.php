@@ -74,6 +74,5 @@ EOD;
 
         $response = $this->server->serve($request, true);
         $this->assertEquals(trim($expected), trim($response));
-        print($ixrModifiedTime);
     }
 }
