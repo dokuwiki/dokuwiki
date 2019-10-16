@@ -63,7 +63,7 @@ EOD;
 </methodResponse>
 EOD;
 
-        $this->server->serve($request, true);
+        $this->server->serve($request);
         $this->assertEquals(trim($expected), trim($this->server->output));
     }
 }
