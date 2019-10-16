@@ -33,7 +33,7 @@ class XmlRpcServerTest extends DokuWikiTest
         $pageName = ":wiki:dokuwiki";
         $file = wikiFN($pageName);
         $timestamp = filemtime($file);
-        $ixrModifiedTime = (new DateTime('@' . $timestamp))->format(IXR_Date::XMLRPC_ISO8601);
+        $ixrModifiedTime = (new DateTime('@' . $timestamp))->format(DATE_ISO8601);
 
         $request = <<<EOD
 <?xml version="1.0"?>
