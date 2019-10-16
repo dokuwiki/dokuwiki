@@ -5,8 +5,6 @@ use dokuwiki\Remote\XmlRpcServer;
 
 class XmlRpcServerTest extends DokuWikiTest
 {
-
-    protected $userinfo;
     protected $server;
 
 
@@ -14,31 +12,17 @@ class XmlRpcServerTest extends DokuWikiTest
     {
         parent::setUp();
         global $conf;
-        global $USERINFO;
-
-        parent::setUp();
-
-        // mock plugin controller to return our test plugins
-
 
         $conf['remote'] = 1;
         $conf['remoteuser'] = '';
         $conf['useacl'] = 0;
 
-        $this->userinfo = $USERINFO;
         $this->server = new XmlRpcServer(false,false,true);
-
     }
 
-    function tearDown()
-    {
-        global $USERINFO;
-        $USERINFO = $this->userinfo;
-    }
 
     function testDateFormat()
     {
-
         $pageName = ":wiki:dokuwiki";
         $file = wikiFN($pageName);
         $timestamp = filemtime($file);
