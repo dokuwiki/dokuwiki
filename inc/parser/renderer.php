@@ -58,6 +58,9 @@ abstract class Doku_Renderer extends Plugin {
      */
     public function reset(){
         $this->headers = array();
+        $this->doc           = '';
+        $this->info['cache'] = true;
+        $this->info['toc']   = true;
     }
 
     /**
