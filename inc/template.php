@@ -341,6 +341,7 @@ function tpl_metaheaders($alt = true) {
         $script .= "var SIG='".toolbar_signature()."';";
     }
     jsinfo();
+    $JSINFO['conf']['mediarevisions'] = $conf['mediarevisions'];
     $script .= 'var JSINFO = ' . json_encode($JSINFO).';';
     $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
 
@@ -1422,6 +1423,8 @@ function tpl_mediaFileDetails($image, $rev) {
     global $conf, $DEL, $lang;
     /** @var Input $INPUT */
     global $INPUT;
+
+
 
     $removed = (
         !file_exists(mediaFN($image)) &&
