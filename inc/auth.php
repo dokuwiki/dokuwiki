@@ -796,7 +796,7 @@ function auth_pwgen($foruser = '') {
             $data['password'] .= $a[auth_random(0, strlen($a) - 1)];
         }
         //... and add a nice number and special
-        $data['password'] .= auth_random(10, 99).$s[auth_random(0, strlen($s) - 1)];
+        $data['password'] .= $s[auth_random(0, strlen($s) - 1)].auth_random(10, 99);
     }
     $evt->advise_after();
 
