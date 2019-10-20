@@ -1540,6 +1540,8 @@ function getGoogleQuery() {
     $q = trim($q);
 
     if(!$q) return '';
+    // ignore if query includes a full URL
+    if(strpos($q, '//') !== false) return '';
     $q = preg_split('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/', $q, -1, PREG_SPLIT_NO_EMPTY);
     return $q;
 }
