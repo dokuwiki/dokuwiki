@@ -12,12 +12,12 @@ class XmlRpcServer extends \IXR_Server
     /**
      * Constructor. Register methods and run Server
      */
-    public function __construct()
+    public function __construct($wait=false)
     {
         $this->remote = new Api();
         $this->remote->setDateTransformation(array($this, 'toDate'));
         $this->remote->setFileTransformation(array($this, 'toFile'));
-        parent::__construct();
+        parent::__construct(false, false, $wait);
     }
 
     /**
