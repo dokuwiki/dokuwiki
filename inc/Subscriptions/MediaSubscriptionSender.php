@@ -16,8 +16,9 @@ class MediaSubscriptionSender extends SubscriptionSender
      * @param string   $template        Mail template ('uploadmail', ...)
      * @param string   $id              Media file for which the notification is
      * @param int|bool $rev             Old revision if any
+     * @param int|bool $current_rev     New revision if any
      */
-    public function sendMediaDiff($subscriber_mail, $template, $id, $rev = false)
+    public function sendMediaDiff($subscriber_mail, $template, $id, $rev = false, $current_rev = false)
     {
         global $conf;
 
@@ -26,7 +27,7 @@ class MediaSubscriptionSender extends SubscriptionSender
 
         $trep = [
             'MIME' => $mime,
-            'MEDIA' => ml($id, '', true, '&', true),
+            'MEDIA' => ml($id, $current_rev?('rev='.$current_rev):'', true, '&', true),
             'SIZE' => filesize_h(filesize($file)),
         ];
 

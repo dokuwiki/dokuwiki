@@ -9,4 +9,7 @@ New Revision: @NEWPAGE@
 Edit Summary: @SUMMARY@
 User        : @USER@
 
+There may be newer changes after this revision. If this
+happens, a message will be shown on the top of the rev page.
+
 @DIFF@

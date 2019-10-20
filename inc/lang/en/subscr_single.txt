@@ -13,6 +13,9 @@ Edit Summary: @SUMMARY@
 Old Revision: @OLDPAGE@
 New Revision: @NEWPAGE@
 
+There may be newer changes after this revision. If this
+happens, a message will be shown on the top of the rev page.
+
 To cancel the page notifications, log into the wiki at
 @DOKUWIKIURL@ then visit
 @SUBSCRIBE@
