@@ -768,9 +768,6 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre', array $options=n
     global $conf, $config_cascade, $INPUT;
     $language = strtolower($language);
 
-    // remove any leading or trailing blank lines
-    $code = preg_replace('/^\s*?\n|\s*?\n$/','',$code);
-
     $optionsmd5 = md5(serialize($options));
     $cache = getCacheName($language.$code.$optionsmd5,".code");
     $ctime = @filemtime($cache);
@@ -806,4 +803,3 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre', array $options=n
         return $highlighted_code;
     }
 }
-

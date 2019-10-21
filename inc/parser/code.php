@@ -33,7 +33,13 @@ class Doku_Renderer_code extends Doku_Renderer {
             header("Content-Type: text/plain; charset=utf-8");
             header("Content-Disposition: attachment; filename=$filename");
             header("X-Robots-Tag: noindex");
-            echo trim($text, "\r\n");
+            if($text{0} == PHP_EOL) {
+                $text = substr($text, 1);
+            }
+            if(substr($text, -1) == PHP_EOL) {
+                $text = substr($text, 0, -1);
+            }
+            echo $text;
             exit;
         }
 

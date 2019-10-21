@@ -680,10 +680,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $this->doc .= '</a></dt>'.DOKU_LF.'<dd>';
         }
 
-        if($text{0} == "\n") {
+        if($text{0} == PHP_EOL) {
             $text = substr($text, 1);
         }
-        if(substr($text, -1) == "\n") {
+        if(substr($text, -1) == PHP_EOL) {
             $text = substr($text, 0, -1);
         }
 
