@@ -397,12 +397,13 @@ function breadcrumbs() {
     global $ID;
     global $ACT;
     global $conf;
+    global $INFO;
 
     //first visit?
     $crumbs = isset($_SESSION[DOKU_COOKIE]['bc']) ? $_SESSION[DOKU_COOKIE]['bc'] : array();
-    //we only save on show and existing visible wiki documents
+    //we only save on show and existing visible readable wiki documents
     $file = wikiFN($ID);
-    if($ACT != 'show' || isHiddenPage($ID) || !file_exists($file)) {
+    if($ACT != 'show' || $INFO['perm'] < AUTH_READ || isHiddenPage($ID) || !file_exists($file)) {
         $_SESSION[DOKU_COOKIE]['bc'] = $crumbs;
         return $crumbs;
     }
