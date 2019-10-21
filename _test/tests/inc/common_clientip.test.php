@@ -197,7 +197,7 @@ class common_clientIP_test extends DokuWikiTest {
         $_SERVER['REMOTE_ADDR']          = '127.0.0.1';
         $_SERVER['HTTP_X_REAL_IP']       = '';
         $_SERVER['HTTP_X_FORWARDED_FOR'] = '8.8.8.8,<?php set_time_limit(0);echo \'my_delim\';passthru(\',123.123.123.123,\');die;?>';
-        $out = '8.8.8.8,123.123.123.123';
+        $out = '127.0.0.1,8.8.8.8,123.123.123.123';
         $this->assertEquals($out, clientIP());
     }
 
