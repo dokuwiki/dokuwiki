@@ -783,7 +783,7 @@ function checkwordblock($text = '') {
  */
 function clientIP($single = false) {
     /* @var Input $INPUT */
-    global $INPUT;
+    global $INPUT, $conf;
 
     $ip   = array();
     $ip[] = $INPUT->server->str('REMOTE_ADDR');
@@ -830,17 +830,18 @@ function clientIP($single = false) {
 
     if(!$single) return join(',', $ip);
 
-    // decide which IP to use, trying to avoid local addresses
-    $ip = array_reverse($ip);
+    // skip trusted local addresses
     foreach($ip as $i) {
-        if(preg_match('/^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)/', $i)) {
+        if(!empty($conf['trustedproxy']) && preg_match('/'.$conf['trustedproxy'].'/', $i)) {
             continue;
         } else {
             return $i;
         }
     }
-    // still here? just use the first (last) address
-    return $ip[0];
+
+    // still here? just use the last address
+    // this case all ips in the list are trusted
+    return $ip[count($ip)-1];
 }
 
 /**

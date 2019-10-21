@@ -227,6 +227,7 @@ $meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => ar
 $meta['readdircache'] = array('numeric');
 $meta['search_nslimit'] = array('numeric', '_min' => 0);
 $meta['search_fragment'] = array('multichoice','_choices' => array('exact', 'starts_with', 'ends_with', 'contains'),);
+$meta['trustedproxy'] = array('regex');
 
 $meta['_network']    = array('fieldset');
 $meta['dnslookups']  = array('onoff');
@@ -237,4 +238,3 @@ $meta['proxy____user'] = array('string');
 $meta['proxy____pass'] = array('password','_code' => 'base64');
 $meta['proxy____ssl']  = array('onoff');
 $meta['proxy____except'] = array('string');
-
