@@ -782,7 +782,7 @@ function checkwordblock($text = '') {
  */
 function clientIP($single = false) {
     /* @var Input $INPUT */
-    global $INPUT;
+    global $INPUT, $conf;
 
     $ip   = array();
     $ip[] = $INPUT->server->str('REMOTE_ADDR');
@@ -829,17 +829,18 @@ function clientIP($single = false) {
 
     if(!$single) return join(',', $ip);
 
-    // decide which IP to use, trying to avoid local addresses
-    $ip = array_reverse($ip);
+    // skip trusted local addresses
     foreach($ip as $i) {
-        if(preg_match('/^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)/', $i)) {
+        if(!empty($conf['trustedproxy']) && preg_match('/'.$conf['trustedproxy'].'/', $i)) {
             continue;
         } else {
             return $i;
         }
     }
-    // still here? just use the first (last) address
-    return $ip[0];
+
+    // still here? just use the last address
+    // this case all ips in the list are trusted
+    return $ip[count($ip)-1];
 }
 
 /**
@@ -1523,11 +1524,7 @@ function getGoogleQuery() {
     if(!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/',$url['host'])) return '';
 
     $query = array();
-    // temporary workaround against PHP bug #49733
-    // see http://bugs.php.net/bug.php?id=49733
-    if(UTF8_MBSTRING) $enc = mb_internal_encoding();
     parse_str($url['query'], $query);
-    if(UTF8_MBSTRING) mb_internal_encoding($enc);
 
     $q = '';
     if(isset($query['q'])){
@@ -1540,6 +1537,8 @@ function getGoogleQuery() {
     $q = trim($q);
 
     if(!$q) return '';
+    // ignore if query includes a full URL
+    if(strpos($q, '//') !== false) return '';
     $q = preg_split('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/', $q, -1, PREG_SPLIT_NO_EMPTY);
     return $q;
 }
