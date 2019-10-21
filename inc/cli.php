@@ -5,6 +5,7 @@
  *
  * All DokuWiki commandline scripts should inherit from this class and implement the abstract methods.
  *
+ * @deprecated 2017-11-10
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 abstract class DokuCLI {
@@ -25,6 +26,9 @@ abstract class DokuCLI {
 
         $this->options = new DokuCLI_Options();
         $this->colors  = new DokuCLI_Colors();
+
+        dbg_deprecated('use \splitbrain\phpcli\CLI instead');
+        $this->error('DokuCLI is deprecated, use \splitbrain\phpcli\CLI instead.');
     }
 
     /**

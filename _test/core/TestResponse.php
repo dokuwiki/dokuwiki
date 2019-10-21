@@ -1,33 +1,37 @@
 <?php
+
 /**
  * holds a copy of all produced outputs of a TestRequest
  */
 class TestResponse {
-    /**
-     * @var string
-     */
-    private $content;
+    /** @var string */
+    protected $content;
+
+    /** @var array */
+    protected $headers;
+
+    /** @var phpQueryObject */
+    protected $pq = null;
+
+    /** @var array */
+    protected $data = array();
 
     /**
-     * @var array
+     * Constructor
+     *
+     * @param $content string the response body
+     * @param $headers array the headers sent in the response
+     * @param array $data any optional data passed back to the test system
      */
-    private $headers;
-
-    /**
-     * @var phpQueryObject
-     */
-    private $pq = null;
-
-    /**
-     * @param $content string
-     * @param $headers array
-     */
-    function __construct($content, $headers) {
+    function __construct($content, $headers, $data = array()) {
         $this->content = $content;
         $this->headers = $headers;
+        $this->data = $data;
     }
 
     /**
+     * Returns the response body
+     *
      * @return string
      */
     public function getContent() {
@@ -35,6 +39,8 @@ class TestResponse {
     }
 
     /**
+     * Returns the headers set in the response
+     *
      * @return array
      */
     public function getHeaders() {
@@ -42,13 +48,15 @@ class TestResponse {
     }
 
     /**
+     * Return a single header
+     *
      * @param  $name   string, the name of the header without the ':', e.g. 'Content-Type', 'Pragma'
      * @return mixed   if exactly one header, the header (string); otherwise an array of headers, empty when no headers
      */
     public function getHeader($name) {
         $result = array();
-        foreach ($this->headers as $header) {
-            if (substr($header,0,strlen($name)+1) == $name.':') {
+        foreach($this->headers as $header) {
+            if(substr($header, 0, strlen($name) + 1) == $name . ':') {
                 $result[] = $header;
             }
         }
@@ -57,26 +65,28 @@ class TestResponse {
     }
 
     /**
-     * @return  int  http status code
+     * Access the http status code
      *
      * in the test environment, only status codes explicitly set by dokuwiki are likely to be returned
      * this means succcessful status codes (e.g. 200 OK) will not be present, but error codes will be
+     *
+     * @return  int  http status code
      */
     public function getStatusCode() {
         $headers = $this->getHeader('Status');
         $code = null;
 
-        if ($headers) {
+        if($headers) {
             // if there is more than one status header, use the last one
             $status = is_array($headers) ? array_pop($headers) : $headers;
             $matches = array();
-            preg_match('/^Status: ?(\d+)/',$status,$matches);
-            if ($matches){
+            preg_match('/^Status: ?(\d+)/', $status, $matches);
+            if($matches) {
                 $code = $matches[1];
             }
-         }
+        }
 
-         return $code;
+        return $code;
     }
 
     /**
@@ -86,8 +96,19 @@ class TestResponse {
      * @param $selector string
      * @return phpQueryObject
      */
-    public function queryHTML($selector){
+    public function queryHTML($selector) {
         if(is_null($this->pq)) $this->pq = phpQuery::newDocument($this->content);
         return $this->pq->find($selector);
+    }
+
+    /**
+     * Returns all collected data for the given key
+     *
+     * @param string $key
+     * @return array
+     */
+    public function getData($key) {
+        if(!isset($this->data[$key])) return array();
+        return $this->data[$key];
     }
 }

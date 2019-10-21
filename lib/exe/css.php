@@ -6,7 +6,10 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
+use dokuwiki\Cache\Cache;
+use dokuwiki\Extension\Event;
+
+if(!defined('DOKU_INC')) define('DOKU_INC', __DIR__ .'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
 if(!defined('NL')) define('NL',"\n");
@@ -44,8 +47,9 @@ function css_out(){
     $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
     if(!$tpl) $tpl = $conf['template'];
 
-    // load styl.ini
-    $styleini = css_styleini($tpl, $INPUT->bool('preview'));
+    // load style.ini
+    $styleUtil = new \dokuwiki\StyleUtils($tpl, $INPUT->bool('preview'));
+    $styleini = $styleUtil->cssStyleini();
 
     // cache influencers
     $tplinc = tpl_incdir($tpl);
@@ -66,7 +70,8 @@ function css_out(){
 
         // load jQuery-UI theme
         if ($mediatype == 'screen') {
-            $files[DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
+            $files[DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] =
+                DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
         }
         // load plugin styles
         $files = array_merge($files, css_pluginstyles($mediatype));
@@ -75,7 +80,7 @@ function css_out(){
             $files = array_merge($files, $styleini['stylesheets'][$mediatype]);
         }
         // load user styles
-        if(!empty($config_cascade['userstyle'][$mediatype])) {
+        if(is_array($config_cascade['userstyle'][$mediatype])) {
             foreach($config_cascade['userstyle'][$mediatype] as $userstyle) {
                 $files[$userstyle] = DOKU_BASE;
             }
@@ -83,8 +88,8 @@ function css_out(){
 
         // Let plugins decide to either put more styles here or to remove some
         $media_files[$mediatype] = css_filewrapper($mediatype, $files);
-        $CSSEvt = new Doku_Event('CSS_STYLES_INCLUDED', $media_files[$mediatype]);
-    
+        $CSSEvt = new Event('CSS_STYLES_INCLUDED', $media_files[$mediatype]);
+
         // Make it preventable.
         if ( $CSSEvt->advise_before() ) {
             $cache_files = array_merge($cache_files, array_keys($media_files[$mediatype]['files']));
@@ -92,14 +97,23 @@ function css_out(){
             // unset if prevented. Nothing will be printed for this mediatype.
             unset($media_files[$mediatype]);
         }
-        
+
         // finish event.
         $CSSEvt->advise_after();
     }
 
     // The generated script depends on some dynamic options
-    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].$INPUT->bool('preview').DOKU_BASE.$tpl.$type,'.css');
-    $cache->_event = 'CSS_CACHE_USE';
+    $cache = new Cache(
+        'styles' .
+        $_SERVER['HTTP_HOST'] .
+        $_SERVER['SERVER_PORT'] .
+        $INPUT->bool('preview') .
+        DOKU_BASE .
+        $tpl .
+        $type,
+        '.css'
+    );
+    $cache->setEvent('CSS_CACHE_USE');
 
     // check cache age & handle conditional request
     // This may exit if a cache can be used
@@ -108,12 +122,12 @@ function css_out(){
 
     // start output buffering
     ob_start();
-    
+
     // Fire CSS_STYLES_INCLUDED for one last time to let the
     // plugins decide whether to include the DW default styles.
     // This can be done by preventing the Default.
     $media_files['DW_DEFAULT'] = css_filewrapper('DW_DEFAULT');
-    trigger_event('CSS_STYLES_INCLUDED', $media_files['DW_DEFAULT'], 'css_defaultstyles');
+    Event::createAndTrigger('CSS_STYLES_INCLUDED', $media_files['DW_DEFAULT'], 'css_defaultstyles');
 
     // build the stylesheet
     foreach ($mediatypes as $mediatype) {
@@ -124,19 +138,19 @@ function css_out(){
         }
 
         $cssData = $media_files[$mediatype];
-        
+
         // Print the styles.
         print NL;
         if ( $cssData['encapsulate'] === true ) print $cssData['encapsulationPrefix'] . ' {';
         print '/* START '.$cssData['mediatype'].' styles */'.NL;
-    
+
         // load files
         foreach($cssData['files'] as $file => $location){
             $display = str_replace(fullpath(DOKU_INC), '', fullpath($file));
             print "\n/* XXXXXXXXX $display XXXXXXXXX */\n";
             print css_loadfile($file, $location);
         }
-        
+
         print NL;
         if ( $cssData['encapsulate'] === true ) print '} /* /@media ';
         else print '/*';
@@ -262,95 +276,6 @@ function css_applystyle($css, $replacements) {
     // now prepend the list of LESS variables as the very first thing
     $css = $less.$css;
     return $css;
-}
-
-/**
- * Load style ini contents
- *
- * Loads and merges style.ini files from template and config and prepares
- * the stylesheet modes
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param string $tpl the used template
- * @param bool   $preview load preview replacements
- * @return array with keys 'stylesheets' and 'replacements'
- */
-function css_styleini($tpl, $preview=false) {
-    global $conf;
-
-    $stylesheets = array(); // mode, file => base
-    $replacements = array(); // placeholder => value
-
-    // load template's style.ini
-    $incbase = tpl_incdir($tpl);
-    $webbase = tpl_basedir($tpl);
-    $ini = $incbase.'style.ini';
-    if(file_exists($ini)){
-        $data = parse_ini_file($ini, true);
-
-        // stylesheets
-        if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
-            $stylesheets[$mode][$incbase.$file] = $webbase;
-        }
-
-        // replacements
-        if(is_array($data['replacements'])){
-            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
-        }
-    }
-
-    // load configs's style.ini
-    $webbase = DOKU_BASE;
-    $ini = DOKU_CONF."tpl/$tpl/style.ini";
-    $incbase = dirname($ini).'/';
-    if(file_exists($ini)){
-        $data = parse_ini_file($ini, true);
-
-        // stylesheets
-        if(isset($data['stylesheets']) && is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
-            $stylesheets[$mode][$incbase.$file] = $webbase;
-        }
-
-        // replacements
-        if(isset($data['replacements']) && is_array($data['replacements'])){
-            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
-        }
-    }
-
-    // allow replacement overwrites in preview mode
-    if($preview) {
-        $webbase = DOKU_BASE;
-        $ini     = $conf['cachedir'].'/preview.ini';
-        if(file_exists($ini)) {
-            $data = parse_ini_file($ini, true);
-            // replacements
-            if(is_array($data['replacements'])) {
-                $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'], $webbase));
-            }
-        }
-    }
-
-    return array(
-        'stylesheets' => $stylesheets,
-        'replacements' => $replacements
-    );
-}
-
-/**
- * Amend paths used in replacement relative urls, refer FS#2879
- *
- * @author Chris Smith <chris@jalakai.co.uk>
- *
- * @param array $replacements with key-value pairs
- * @param string $location
- * @return array
- */
-function css_fixreplacementurls($replacements, $location) {
-    foreach($replacements as $key => $value) {
-        $replacements[$key] = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$value);
-    }
-    return $replacements;
 }
 
 /**
@@ -542,18 +467,13 @@ class DokuCssFile {
      */
     public function replacements($match) {
 
-        // not a relative url? - no adjustment required
-        if (preg_match('#^(/|data:|https?://)#',$match[3])) {
+        if (preg_match('#^(/|data:|https?://)#', $match[3])) { // not a relative url? - no adjustment required
             return $match[0];
-        }
-        // a less file import? - requires a file system location
-        else if (substr($match[3],-5) == '.less') {
+        } elseif (substr($match[3], -5) == '.less') { // a less file import? - requires a file system location
             if ($match[3]{0} != '/') {
                 $match[3] = $this->getRelativePath() . '/' . $match[3];
             }
-        }
-        // everything else requires a url adjustment
-        else {
+        } else { // everything else requires a url adjustment
             $match[3] = $this->location . $match[3];
         }
 
@@ -635,18 +555,50 @@ function css_compress($css){
     $css = preg_replace('/ ?: /',':',$css);
 
     // number compression
-    $css = preg_replace('/([: ])0+(\.\d+?)0*((?:pt|pc|in|mm|cm|em|ex|px)\b|%)(?=[^\{]*[;\}])/', '$1$2$3', $css); // "0.1em" to ".1em", "1.10em" to "1.1em"
-    $css = preg_replace('/([: ])\.(0)+((?:pt|pc|in|mm|cm|em|ex|px)\b|%)(?=[^\{]*[;\}])/', '$1$2', $css); // ".0em" to "0"
-    $css = preg_replace('/([: ]0)0*(\.0*)?((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1', $css); // "0.0em" to "0"
-    $css = preg_replace('/([: ]\d+)(\.0*)((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1$3', $css); // "1.0em" to "1em"
-    $css = preg_replace('/([: ])0+(\d+|\d*\.\d+)((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1$2$3', $css); // "001em" to "1em"
+    $css = preg_replace(
+        '/([: ])0+(\.\d+?)0*((?:pt|pc|in|mm|cm|em|ex|px)\b|%)(?=[^\{]*[;\}])/',
+        '$1$2$3',
+        $css
+    ); // "0.1em" to ".1em", "1.10em" to "1.1em"
+    $css = preg_replace(
+        '/([: ])\.(0)+((?:pt|pc|in|mm|cm|em|ex|px)\b|%)(?=[^\{]*[;\}])/',
+        '$1$2',
+        $css
+    ); // ".0em" to "0"
+    $css = preg_replace(
+        '/([: ]0)0*(\.0*)?((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/',
+        '$1',
+        $css
+    ); // "0.0em" to "0"
+    $css = preg_replace(
+        '/([: ]\d+)(\.0*)((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/',
+        '$1$3',
+        $css
+    ); // "1.0em" to "1em"
+    $css = preg_replace(
+        '/([: ])0+(\d+|\d*\.\d+)((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/',
+        '$1$2$3',
+        $css
+    ); // "001em" to "1em"
 
     // shorten attributes (1em 1em 1em 1em -> 1em)
-    $css = preg_replace('/(?<![\w\-])((?:margin|padding|border|border-(?:width|radius)):)([\w\.]+)( \2)+(?=[;\}]| !)/', '$1$2', $css); // "1em 1em 1em 1em" to "1em"
-    $css = preg_replace('/(?<![\w\-])((?:margin|padding|border|border-(?:width)):)([\w\.]+) ([\w\.]+) \2 \3(?=[;\}]| !)/', '$1$2 $3', $css); // "1em 2em 1em 2em" to "1em 2em"
+    $css = preg_replace(
+        '/(?<![\w\-])((?:margin|padding|border|border-(?:width|radius)):)([\w\.]+)( \2)+(?=[;\}]| !)/',
+        '$1$2',
+        $css
+    ); // "1em 1em 1em 1em" to "1em"
+    $css = preg_replace(
+        '/(?<![\w\-])((?:margin|padding|border|border-(?:width)):)([\w\.]+) ([\w\.]+) \2 \3(?=[;\}]| !)/',
+        '$1$2 $3',
+        $css
+    ); // "1em 2em 1em 2em" to "1em 2em"
 
     // shorten colors
-    $css = preg_replace("/#([0-9a-fA-F]{1})\\1([0-9a-fA-F]{1})\\2([0-9a-fA-F]{1})\\3(?=[^\{]*[;\}])/", "#\\1\\2\\3", $css);
+    $css = preg_replace(
+        "/#([0-9a-fA-F]{1})\\1([0-9a-fA-F]{1})\\2([0-9a-fA-F]{1})\\3(?=[^\{]*[;\}])/",
+        "#\\1\\2\\3",
+        $css
+    );
 
     return $css;
 }

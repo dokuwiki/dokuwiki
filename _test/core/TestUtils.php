@@ -6,6 +6,15 @@
 class TestUtils {
 
     /**
+     * converts path to unix-like on windows OS
+     * @param string $path UNIX-like path to be converted
+     * @return string
+     */
+    public static function w2u($path) {
+        return isWindows() ? str_replace('\\', '/', $path) : $path;
+    }
+
+    /**
      * helper for recursive copy()
      *
      * @static

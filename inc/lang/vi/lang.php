@@ -59,7 +59,6 @@ $lang['badlogin']              = 'Username hoặc password không đúng.';
 $lang['minoredit']             = 'Minor Changes';
 $lang['draftdate']             = 'Bản nháp được tự động lưu lúc';
 $lang['nosecedit']             = 'Các trang web đã được thay đổi trong khi chờ đợi, phần thông tin quá hạn đã được thay thế bằng trang đầy đủ.';
-$lang['searchcreatepage']      = "Nếu bạn không thấy được những gì bạn đang tìm, bạn có thể tạo một trang mới bằng cách bấm vào nút ''Biên soạn trang này'', khi đó bạn sẽ có 1 trang mới với tên trang chính là tuwfw khóa bạn đã tìm kiếm.";
 $lang['regmissing']            = 'Bạn cần điền vào tất cả các trường';
 $lang['reguexists']            = 'Bạn khác đã dùng username này rồi.';
 $lang['regsuccess']            = 'Đã tạo username, và đã gởi password.';

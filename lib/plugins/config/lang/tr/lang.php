@@ -2,12 +2,14 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Hakan <hakandursun2009@gmail.com>
+ * @author mahir <mahirtakak@gmail.com>
  * @author Aydın Coşkuner <aydinweb@gmail.com>
  * @author Cihan Kahveci <kahvecicihan@gmail.com>
  * @author Yavuz Selim <yavuzselim@gmail.com>
  * @author Caleb Maclennan <caleb@alerque.com>
- * @author farukerdemoncel@gmail.com
+ * @author farukerdemoncel <farukerdemoncel@gmail.com>
  * @author Mete Cuma <mcumax@gmail.com>
  */
 $lang['menu']                  = 'Site Ayarları';
@@ -93,10 +95,6 @@ $lang['proxy____host']         = 'Proxy sunucu adı';
 $lang['proxy____user']         = 'Proxy kullanıcı adı';
 $lang['proxy____pass']         = 'Proxy şifresi';
 $lang['proxy____ssl']          = 'Proxy ile bağlanırken ssl kullan';
-$lang['safemodehack']          = 'Safemod hackını etkili kıl';
-$lang['ftp____host']           = 'Safemod hackı için kullanılacak FTP suncusu';
-$lang['ftp____user']           = 'Safemod hackı için kullanılacak FTP kullanıcı adı';
-$lang['ftp____pass']           = 'Safemod hackı için kullanılacak FTP parolası';
 $lang['license_o_']            = 'Seçilmedi';
 $lang['typography_o_0']        = 'Yok';
 $lang['userewrite_o_0']        = 'hiçbiri';

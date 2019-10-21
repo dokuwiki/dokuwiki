@@ -7,6 +7,9 @@
  * @todo       Combine similar functions like {wiki,media,meta}FN()
  */
 
+use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\ChangeLog\PageChangeLog;
+
 /**
  * Fetch the an ID from request
  *
@@ -41,7 +44,8 @@ function getID($param='id',$clean=true){
             if($param != 'id') {
                 $relpath = 'lib/exe/';
             }
-            $script = $conf['basedir'].$relpath.utf8_basename($INPUT->server->str('SCRIPT_FILENAME'));
+            $script = $conf['basedir'] . $relpath .
+                \dokuwiki\Utf8\PhpString::basename($INPUT->server->str('SCRIPT_FILENAME'));
 
         }elseif($INPUT->server->str('PATH_INFO')){
             $request = $INPUT->server->str('PATH_INFO');
@@ -86,12 +90,11 @@ function getID($param='id',$clean=true){
             if (isset($urlParameters['id'])) {
                 unset($urlParameters['id']);
             }
-            send_redirect(wl($id,$urlParameters,true));
+            send_redirect(wl($id, $urlParameters, true, '&'));
         }
     }
-
     if($clean) $id = cleanID($id);
-    if(empty($id) && $param=='id') $id = $conf['start'];
+    if($id === '' && $param=='id') $id = $conf['start'];
 
     return $id;
 }
@@ -125,7 +128,7 @@ function cleanID($raw_id,$ascii=false){
         $sepcharpat = '#\\'.$sepchar.'+#';
 
     $id = trim((string)$raw_id);
-    $id = utf8_strtolower($id);
+    $id = \dokuwiki\Utf8\PhpString::strtolower($id);
 
     //alternative namespace seperator
     if($conf['useslash']){
@@ -134,13 +137,13 @@ function cleanID($raw_id,$ascii=false){
         $id = strtr($id,';/',':'.$sepchar);
     }
 
-    if($conf['deaccent'] == 2 || $ascii) $id = utf8_romanize($id);
-    if($conf['deaccent'] || $ascii) $id = utf8_deaccent($id,-1);
+    if($conf['deaccent'] == 2 || $ascii) $id = \dokuwiki\Utf8\Clean::romanize($id);
+    if($conf['deaccent'] || $ascii) $id = \dokuwiki\Utf8\Clean::deaccent($id,-1);
 
     //remove specials
-    $id = utf8_stripspecials($id,$sepchar,'\*');
+    $id = \dokuwiki\Utf8\Clean::stripspecials($id,$sepchar,'\*');
 
-    if($ascii) $id = utf8_strip($id);
+    if($ascii) $id = \dokuwiki\Utf8\Clean::strip($id);
 
     //clean up
     $id = preg_replace($sepcharpat,$sepchar,$id);
@@ -634,7 +637,7 @@ function isHiddenPage($id){
         'id' => $id,
         'hidden' => false
     );
-    trigger_event('PAGEUTILS_ID_HIDEPAGE', $data, '_isHiddenPage');
+    \dokuwiki\Extension\Event::createAndTrigger('PAGEUTILS_ID_HIDEPAGE', $data, '_isHiddenPage');
     return $data['hidden'];
 }
 
@@ -759,7 +762,7 @@ function utf8_decodeFN($file){
  * @return false|string the full page id of the found page, false if any
  */
 function page_findnearest($page, $useacl = true){
-    if (!$page) return false;
+    if ((string) $page === '') return false;
     global $ID;
 
     $ns = $ID;
@@ -769,7 +772,7 @@ function page_findnearest($page, $useacl = true){
         if(page_exists($pageid) && (!$useacl || auth_quickaclcheck($pageid) >= AUTH_READ)){
             return $pageid;
         }
-    } while($ns);
+    } while($ns !== false);
 
     return false;
 }

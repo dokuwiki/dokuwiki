@@ -3,11 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Adolfo Jayme Barrientos <fito@libreoffice.org>
  * @author Carles Bellver <carles.bellver@gmail.com>
- * @author carles.bellver@gmail.com
- * @author carles.bellver@cent.uji.es
- * @author Carles Bellver <carles.bellver@cent.uji.es>
- * @author daniel@6temes.cat
+ * @author carles.bellver <carles.bellver@cent.uji.es>
+ * @author daniel <daniel@6temes.cat>
  * @author controlonline.net <controlonline.net@gmail.com>
  * @author Pauet <pauet@gmx.com>
  * @author Àngel Pérez Beroy <aperezberoy@gmail.com>
@@ -86,6 +85,7 @@ $lang['disableactions']        = 'Inhabilita accions DokuWiki';
 $lang['disableactions_check']  = 'Revisa';
 $lang['disableactions_subscription'] = 'Subscripció/cancel·lació';
 $lang['disableactions_wikicode'] = 'Mostra/exporta font';
+$lang['disableactions_profile_delete'] = 'Suprimeix el propi compte';
 $lang['disableactions_other']  = 'Altres accions (separades per comes)';
 $lang['auth_security_timeout'] = 'Temps d\'espera de seguretat en l\'autenticació (segons)';
 $lang['securecookie']          = 'Les galetes que s\'han creat via HTTPS, només s\'han d\'enviar des del navegador per HTTPS? Inhabiliteu aquesta opció si només l\'inici de sessió del wiki es fa amb SSL i la navegació del wiki es fa sense seguretat.';
@@ -119,6 +119,7 @@ $lang['rss_linkto']            = 'Destinació dels enllaços en el canal XML';
 $lang['rss_content']           = 'Què es mostrarà en els elements del canal XML?';
 $lang['rss_update']            = 'Interval d\'actualització del canal XML (segons)';
 $lang['rss_show_summary']      = 'Mostra resum en els títols del canal XML';
+$lang['rss_media_o_pages']     = 'pàgines';
 $lang['updatecheck']           = 'Comprova actualitzacions i avisos de seguretat. DokuWiki necessitarà contactar amb update.dokuwiki.org per utilitzar aquesta característica.';
 $lang['userewrite']            = 'Utilitza URL nets';
 $lang['useslash']              = 'Utilitza la barra / com a separador d\'espais en els URL';
@@ -134,17 +135,15 @@ $lang['xsendfile']             = 'Utilitza la capçalera X-Sendfile perquè el s
 $lang['renderer_xhtml']        = 'Renderitzador que cal utilitzar per a la sortida principal (xhtml) del wiki';
 $lang['renderer__core']        = '%s (ànima del dokuwiki)';
 $lang['renderer__plugin']      = '%s (connector)';
+$lang['search_fragment_o_exact'] = 'exacte';
+$lang['search_fragment_o_starts_with'] = 'comença per';
+$lang['search_fragment_o_ends_with'] = 'termina per';
+$lang['search_fragment_o_contains'] = 'conté';
 $lang['proxy____host']         = 'Nom del servidor intermediari';
 $lang['proxy____port']         = 'Port del servidor intermediari';
 $lang['proxy____user']         = 'Nom d\'usuari del servidor intermediari';
 $lang['proxy____pass']         = 'Contrasenya del servidor intermediari';
 $lang['proxy____ssl']          = 'Utilitza SSL per connectar amb el servidor intermediari';
-$lang['safemodehack']          = 'Utilitza el hack per a safemode';
-$lang['ftp____host']           = 'Servidor FTP per al hack de safemode';
-$lang['ftp____port']           = 'Port FTP per al hack de safemode';
-$lang['ftp____user']           = 'Nom d\'usuari FTP per al hack de safemode';
-$lang['ftp____pass']           = 'Contrasenya FTP per al hack de safemode';
-$lang['ftp____root']           = 'Directori arrel FTP per al hack de safemode';
 $lang['license_o_']            = 'Cap selecció';
 $lang['typography_o_0']        = 'cap';
 $lang['typography_o_1']        = 'només cometes dobles';

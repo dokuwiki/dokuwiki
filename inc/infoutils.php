@@ -5,8 +5,16 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-if(!defined('DOKU_INC')) die('meh.');
-if(!defined('DOKU_MESSAGEURL')) define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
+
+use dokuwiki\HTTP\DokuHTTPClient;
+
+if(!defined('DOKU_MESSAGEURL')){
+    if(in_array('ssl', stream_get_transports())) {
+        define('DOKU_MESSAGEURL','https://update.dokuwiki.org/check/');
+    }else{
+        define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
+    }
+}
 
 /**
  * Check for new messages from upstream
@@ -22,11 +30,12 @@ function checkUpdateMessages(){
 
     $cf = getCacheName($updateVersion, '.updmsg');
     $lm = @filemtime($cf);
+    $is_http = substr(DOKU_MESSAGEURL, 0, 5) != 'https';
 
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
         @touch($cf);
-        dbglog("checkUpdateMessages(): downloading messages to ".$cf);
+        dbglog("checkUpdateMessages(): downloading messages to ".$cf.($is_http?' (without SSL)':' (with SSL)'));
         $http = new DokuHTTPClient();
         $http->timeout = 12;
         $resp = $http->get(DOKU_MESSAGEURL.$updateVersion);
@@ -127,14 +136,19 @@ function check(){
 
     $mem = (int) php_to_byte(ini_get('memory_limit'));
     if($mem){
-        if($mem < 16777216){
-            msg('PHP is limited to less than 16MB RAM ('.$mem.' bytes). Increase memory_limit in php.ini',-1);
-        }elseif($mem < 20971520){
-            msg('PHP is limited to less than 20MB RAM ('.$mem.' bytes), you might encounter problems with bigger pages. Increase memory_limit in php.ini',-1);
-        }elseif($mem < 33554432){
-            msg('PHP is limited to less than 32MB RAM ('.$mem.' bytes), but that should be enough in most cases. If not, increase memory_limit in php.ini',0);
-        }else{
-            msg('More than 32MB RAM ('.$mem.' bytes) available.',1);
+        if ($mem === -1) {
+            msg('PHP memory is unlimited', 1);
+        } else if ($mem < 16777216) {
+            msg('PHP is limited to less than 16MB RAM (' . filesize_h($mem) . '). 
+            Increase memory_limit in php.ini', -1);
+        } else if ($mem < 20971520) {
+            msg('PHP is limited to less than 20MB RAM (' . filesize_h($mem) . '), 
+                you might encounter problems with bigger pages. Increase memory_limit in php.ini', -1);
+        } else if ($mem < 33554432) {
+            msg('PHP is limited to less than 32MB RAM (' . filesize_h($mem) . '), 
+                but that should be enough in most cases. If not, increase memory_limit in php.ini', 0);
+        } else {
+            msg('More than 32MB RAM (' . filesize_h($mem) . ') available.', 1);
         }
     }
 
@@ -200,7 +214,8 @@ function check(){
     if(!$loc){
         msg('No valid locale is set for your PHP setup. You should fix this',-1);
     }elseif(stripos($loc,'utf') === false){
-        msg('Your locale <code>'.hsc($loc).'</code> seems not to be a UTF-8 locale, you should fix this if you encounter problems.',0);
+        msg('Your locale <code>'.hsc($loc).'</code> seems not to be a UTF-8 locale,
+             you should fix this if you encounter problems.',0);
     }else{
         msg('Valid locale '.hsc($loc).' found.', 1);
     }
@@ -280,7 +295,8 @@ function check(){
         if(abs($diff) < 4) {
             msg("Server time seems to be okay. Diff: {$diff}s", 1);
         } else {
-            msg("Your server's clock seems to be out of sync! Consider configuring a sync with a NTP server.  Diff: {$diff}s");
+            msg("Your server's clock seems to be out of sync!
+                 Consider configuring a sync with a NTP server.  Diff: {$diff}s");
         }
     }
 
@@ -326,7 +342,7 @@ function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
     $errors[1]  = 'success';
     $errors[2]  = 'notify';
 
-    if($line || $file) $message.=' ['.utf8_basename($file).':'.$line.']';
+    if($line || $file) $message.=' ['.\dokuwiki\Utf8\PhpString::basename($file).':'.$line.']';
 
     if(!isset($MSG)) $MSG = array();
     $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message, 'allow' => $allow);
@@ -370,7 +386,8 @@ function info_msg_allowed($msg){
             return $INFO['isadmin'];
 
         default:
-            trigger_error('invalid msg allow restriction.  msg="'.$msg['msg'].'" allow='.$msg['allow'].'"', E_USER_WARNING);
+            trigger_error('invalid msg allow restriction.  msg="'.$msg['msg'].'" allow='.$msg['allow'].'"',
+                          E_USER_WARNING);
             return $INFO['isadmin'];
     }
 
@@ -433,26 +450,10 @@ function dbglog($msg,$header=''){
  * Log accesses to deprecated fucntions to the debug log
  *
  * @param string $alternative The function or method that should be used instead
+ * @triggers INFO_DEPRECATION_LOG
  */
 function dbg_deprecated($alternative = '') {
-    global $conf;
-    if(!$conf['allowdebug']) return;
-
-    $backtrace = debug_backtrace();
-    array_shift($backtrace);
-    $self = array_shift($backtrace);
-    $call = array_shift($backtrace);
-
-    $called = trim($self['class'].'::'.$self['function'].'()', ':');
-    $caller = trim($call['class'].'::'.$call['function'].'()', ':');
-
-    $msg = $called.' is deprecated. It was called from ';
-    $msg .= $caller.' in '.$call['file'].':'.$call['line'];
-    if($alternative) {
-        $msg .= ' '.$alternative.' should be used instead!';
-    }
-
-    dbglog($msg);
+    \dokuwiki\Debug\DebugHelper::dbgDeprecatedFunction($alternative, 2);
 }
 
 /**

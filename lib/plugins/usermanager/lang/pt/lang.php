@@ -3,11 +3,15 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
+ * @author Paulo Ricardo Schopf <pschopf@gmail.com>
+ * @author Maykon Oliveira <maykonoliveira850@gmail.com>
+ * @author José Vieira <jmsv63@gmail.com>
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
  * @author André Neves <drakferion@gmail.com>
- * @author José Campos zecarlosdecampos@gmail.com
+ * @author José Campos <zecarlosdecampos@gmail.com>
  * @author Guido Salatino <guidorafael23@gmail.com>
  * @author Romulo Pereira <romuloccomp@gmail.com>
  * @author Paulo Carmino <contato@paulocarmino.com>
@@ -75,3 +79,11 @@ $lang['import_error_readfail'] = 'Falhou a importação. Não foi possível ler 
 $lang['import_error_create']   = 'Não foi possível criar o utilizador.';
 $lang['import_notify_fail']    = 'A mensagem de notificação não pôde ser enviada para o utilizador importado, %s com email %s.';
 $lang['import_downloadfailures'] = 'Baixe Falhas como CSV para a correção';
+$lang['addUser_error_missing_pass'] = 'Por favor, defina uma senha ou ative a notificação do usuário para ativar a geração de senha.';
+$lang['addUser_error_pass_not_identical'] = 'As senhas digitadas não são idênticas.';
+$lang['addUser_error_modPass_disabled'] = 'A alteração de senhas está desativada no momento';
+$lang['addUser_error_name_missing'] = 'Por favor, insira um nome para o novo usuário.';
+$lang['addUser_error_modName_disabled'] = 'A alteração de nomes está atualmente desativada.';
+$lang['addUser_error_mail_missing'] = 'Por favor, insira um endereço de e-mail para o novo usuário.';
+$lang['addUser_error_modMail_disabled'] = 'A modificação de endereços de e-mail está atualmente desativada.';
+$lang['addUser_error_create_event_failed'] = 'Um plugin impediu que o novo usuário fosse adicionado. Revise outras possíveis mensagens para mais informações.';

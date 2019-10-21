@@ -109,7 +109,7 @@ class io_replaceinfile_test extends DokuWikiTest {
         } else {
             $expect = 'PHPUnit_Framework_Error_Warning'; // PHPUnit 5
         }
-        $this->setExpectedException($expect);
+        $this->expectException($expect);
 
         /* The empty $oldline parameter should be caught before the file doesn't exist test. */
         $this->assertFalse(io_replaceInFile(TMP_DIR.'/not_existing_file.txt', '', '', false, 0));

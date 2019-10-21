@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\ChangeLog\PageChangeLog;
+
 class common_saveWikiText_test extends DokuWikiTest {
     /** Delay writes of old revisions by a second. */
     public function handle_write(Doku_Event $event, $param) {
@@ -166,7 +168,7 @@ class common_saveWikiText_test extends DokuWikiTest {
     function test_savesequencedeleteexternalrevision() {
         // add an additional delay when saving files to make sure
         // nobody relies on the saving happening in the same second
-        /** @var $EVENT_HANDLER Doku_Event_Handler */
+        /** @var $EVENT_HANDLER \dokuwiki\Extension\EventHandler */
         global $EVENT_HANDLER;
         $EVENT_HANDLER->register_hook('IO_WIKIPAGE_WRITE', 'BEFORE', $this, 'handle_write');
 

@@ -1,18 +1,22 @@
 <?php
 
+use dokuwiki\Parsing\Parser;
+
 require_once DOKU_INC . 'inc/parser/parser.php';
 require_once DOKU_INC . 'inc/parser/handler.php';
+if (!defined('DOKU_PARSER_EOL')) define('DOKU_PARSER_EOL', "\n");   // add this to make handling test cases simpler
 
 abstract class TestOfDoku_Parser extends DokuWikiTest {
 
-    var $P;
-    var $H;
+    /** @var  Parser */
+    protected $P;
+    /** @var  Doku_Handler */
+    protected $H;
 
     function setUp() {
         parent::setUp();
-        $this->P = new Doku_Parser();
         $this->H = new Doku_Handler();
-        $this->P->Handler = & $this->H;
+        $this->P = new Parser($this->H);
     }
 
     function tearDown() {

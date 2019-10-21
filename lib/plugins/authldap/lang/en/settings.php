@@ -11,6 +11,7 @@ $lang['referrals']   = 'Shall referrals be followed?';
 $lang['deref']       = 'How to dereference aliases?';
 $lang['binddn']      = 'DN of an optional bind user if anonymous bind is not sufficient. Eg. <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']      = 'Password of above user';
+$lang['attributes']  = 'Attributes to retrieve with the LDAP search.';
 $lang['userscope']   = 'Limit search scope for user search';
 $lang['groupscope']  = 'Limit search scope for group search';
 $lang['userkey']     = 'Attribute denoting the username; must be consistent to userfilter.';

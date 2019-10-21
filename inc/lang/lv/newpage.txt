@@ -1,5 +1,3 @@
 ====== Šķirklis vēl nav izveidots ======
 
-Tu izvēlējies saiti uz vēl neizveidotu šķirkli. Ja tiesības ļauj, vari to izveidot, uzklikšķinot uz pogas ''Izveidot lapu''.
-
-
+Tu izvēlējies saiti uz vēl neizveidotu šķirkli. Ja tiesības ļauj, vari to izveidot, uzklikšķinot uz pogas **Izveidot lapu**.

@@ -1,8 +1,11 @@
 <?php
+
 /**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * Lithuanian language file
  *
- * @author audrius.klevas@gmail.com
+ * @author audrius.klevas <audrius.klevas@gmail.com>
  * @author Arunas Vaitekunas <aras@fan.lt>
  */
 $lang['lang']                  = 'Kalba';

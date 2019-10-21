@@ -3,11 +3,15 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
+ * @author Paulo Ricardo Schopf <pschopf@gmail.com>
+ * @author Maykon Oliveira <maykonoliveira850@gmail.com>
+ * @author José Vieira <jmsv63@gmail.com>
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
  * @author André Neves <drakferion@gmail.com>
- * @author José Campos zecarlosdecampos@gmail.com
+ * @author José Campos <zecarlosdecampos@gmail.com>
  * @author Paulo Carmino <contato@paulocarmino.com>
  * @author Alfredo Silva <alfredo.silva@sky.com>
  * @author Guilherme Sá <guilherme.sa@hotmail.com>
@@ -44,10 +48,13 @@ $lang['title']                 = 'Título deste Wiki';
 $lang['start']                 = 'Nome da Página Inicial';
 $lang['lang']                  = 'Idioma';
 $lang['template']              = 'Template';
+$lang['tagline']               = 'Tagline (se o modelo for compatível)';
+$lang['sidebar']               = 'Nome da página da barra lateral (se o modelo for compatível). Um campo vazio desativará a barra lateral';
 $lang['license']               = 'Sob que licença o seu conteúdo deverá ser disponibilizado?';
 $lang['savedir']               = 'Pasta para guardar dados';
 $lang['basedir']               = 'Pasta Base';
 $lang['baseurl']               = 'URL Base';
+$lang['cookiedir']             = 'Caminho do cookie. Deixe em branco para usar a baseurl.';
 $lang['dmode']                 = 'Modo de criação de pastas.';
 $lang['fmode']                 = 'Modo de criação de ficheiros.';
 $lang['allowdebug']            = 'Permitir depuração <b>desabilite se não for necessário!</b>';
@@ -87,6 +94,8 @@ $lang['disableactions_other']  = 'Outras acções (separadas por vírgula)';
 $lang['disableactions_rss']    = 'Sindicação XML (RSS)';
 $lang['auth_security_timeout'] = 'Tempo limite de segurança para autenticações (seg)';
 $lang['securecookie']          = 'Os cookies definidos via HTTPS deverão ser enviados para o navegador somente via HTTPS? Desabilite essa opção quando somente a autenticação do seu wiki for realizada de maneira segura via SSL e a navegação de maneira insegura.';
+$lang['remote']                = 'Ative o sistema de API remota. Isso permite que outros aplicativos acessem o wiki via XML-RPC ou outros mecanismos.';
+$lang['remoteuser']            = 'Restringe o acesso remoto da API aos grupos separados por vírgula ou aos usuários fornecidos aqui. Deixe em branco para dar acesso a todos.';
 $lang['usewordblock']          = 'Bloquear spam baseado em lista de palavras (wordlist)';
 $lang['relnofollow']           = 'Usar rel="nofollow" em links externos';
 $lang['indexdelay']            = 'Tempo de espera antes da indexação (seg)';
@@ -113,13 +122,19 @@ $lang['subscribe_time']        = 'Tempo após o qual as listas de subscrição e
 $lang['notify']                = 'Enviar notificações de mudanças para este endereço de email';
 $lang['registernotify']        = 'Enviar informações de utilizadores registados para este endereço de email';
 $lang['mailfrom']              = 'Endereço de email a ser utilizado para mensagens automáticas';
+$lang['mailreturnpath']        = 'Endereço de e-mail do destinatário para notificações não entregues';
 $lang['mailprefix']            = 'Prefixo de email a ser utilizado para mensagens automáticas';
+$lang['htmlmail']              = 'Envie e-mails multipartes em HTML para uma melhor aparência, mas maiores em tamanho. Desative para mensagens somente em texto simples.';
 $lang['sitemap']               = 'Gerar Sitemap Google (dias)';
 $lang['rss_type']              = 'Tipo de feed XML';
 $lang['rss_linkto']            = 'Links de feed XML ara';
 $lang['rss_content']           = 'O que deve ser exibido nos itens do alimentador XML?';
 $lang['rss_update']            = 'Intervalo de actualização do alimentador XML (seg)';
 $lang['rss_show_summary']      = 'Resumo de exibição do alimentador XML no título';
+$lang['rss_media']             = 'Que tipo de alterações devem ser listadas no feed XML?';
+$lang['rss_media_o_both']      = 'ambos';
+$lang['rss_media_o_pages']     = 'páginas';
+$lang['rss_media_o_media']     = 'midia';
 $lang['updatecheck']           = 'Verificar por actualizações e avisos de segurança? O DokuWiki precisa contactar o "splitbrain.org" para efectuar esta verificação.';
 $lang['userewrite']            = 'Usar URLs SEO';
 $lang['useslash']              = 'Usar a barra como separador de espaços de nomes nas URLs';
@@ -137,18 +152,23 @@ $lang['xsendfile']             = 'Usar o cabeçalho "X-Sendfile" para permitir o
 $lang['renderer_xhtml']        = 'Renderizador a ser utilizado para a saída principal do wiki (xhtml)';
 $lang['renderer__core']        = '%s (núcleo dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_nslimit']        = 'Limite a pesquisa aos namespaces X atuais. Quando uma pesquisa é executada a partir de uma página em um namespace mais profundo, os primeiros namespaces X serão adicionados como filtro';
+$lang['search_fragment']       = 'Especifique o comportamento de pesquisa de fragmento padrão';
+$lang['search_fragment_o_exact'] = 'exato';
+$lang['search_fragment_o_starts_with'] = 'começa com';
+$lang['search_fragment_o_ends_with'] = 'termina com';
+$lang['search_fragment_o_contains'] = 'contém';
+$lang['dnslookups']            = 'O DokuWiki irá procurar nomes de host para endereços IP remotos de usuários editando páginas. Se você tiver um servidor DNS lento, inoperante ou não quiser esse recurso, desabilite essa opção';
+$lang['jquerycdn']             = 'Os arquivos de script jQuery e jQuery UI devem ser carregados de um CDN? Isso gera solicitações HTTP adicionais mas os arquivos são carregados mais rapidamente e os usuários já podem tê-los armazenados em cache.';
+$lang['jquerycdn_o_0']         = 'Sem CDN, somente entrega local';
+$lang['jquerycdn_o_jquery']    = 'CDN em code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'CDN em cdnjs.com';
 $lang['proxy____host']         = 'Nome do servidor proxy';
 $lang['proxy____port']         = 'Porta de Proxy';
 $lang['proxy____user']         = 'Nome de utilizador Proxy';
 $lang['proxy____pass']         = 'Password de Proxy ';
 $lang['proxy____ssl']          = 'Usar SSL para conectar ao proxy';
 $lang['proxy____except']       = 'Expressão regular para condizer URLs para os quais o proxy deve ser saltado.';
-$lang['safemodehack']          = 'Habilitar modo de segurança';
-$lang['ftp____host']           = 'Servidor FTP para o modo de segurança';
-$lang['ftp____port']           = 'Porta de FTP para o modo de segurança';
-$lang['ftp____user']           = 'Nome do utilizador FTP para o modo de segurança';
-$lang['ftp____pass']           = 'Senha do utilizador FTP para o modo de segurança';
-$lang['ftp____root']           = 'Directoria raiz do FTP para o modo de segurança';
 $lang['license_o_']            = 'Nenhuma escolha';
 $lang['typography_o_0']        = 'nenhum';
 $lang['typography_o_1']        = 'Apenas entre aspas';
@@ -184,6 +204,7 @@ $lang['xsendfile_o_2']         = 'Cabeçalho "X-Sendfile" padrão';
 $lang['xsendfile_o_3']         = 'Cabeçalho proprietário "Nginx X-Accel-Redirect"';
 $lang['showuseras_o_loginname'] = 'Nome de utilizador';
 $lang['showuseras_o_username'] = 'Nome completo do utilizador';
+$lang['showuseras_o_username_link'] = 'Nome completo do usuário como link do usuário interwiki';
 $lang['showuseras_o_email']    = 'Endereço email do utilizador (ofuscado de acordo com a configuração mailguard)';
 $lang['showuseras_o_email_link'] = 'Endereço de e-mail de usuário como um link "mailto:"';
 $lang['useheading_o_0']        = 'Nunca';

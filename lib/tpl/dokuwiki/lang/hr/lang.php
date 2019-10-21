@@ -13,3 +13,4 @@ $lang['__site_width__']        = 'Širina pune stranice (može biti bilo koja je
 $lang['__sidebar_width__']     = 'Širina bočne stranice, ako postoji (može biti bilo koja jedinica: %, px, em, ...)';
 $lang['__tablet_width__']      = 'Ispod ove širine, prebaci mod prikaza za tablete';
 $lang['__phone_width__']       = 'Ispod ove širine, prebaci mod prikaza za mobilni telefon';
+$lang['__theme_color__']       = 'Boja teme web aplikacija';

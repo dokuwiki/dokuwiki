@@ -3,4 +3,3 @@
 A túa última sesión de edición desta páxina non foi completada de xeito correcto. O DokuWiki gravou automaticamente un rascuño durante o teu traballo que agora podes usar para continuares coa edición. De seguido podes ver os datos que foron gardados da túa última sesión.
 
 Por favor, escolle se queres //Recuperar// a túa sesión de edición perdida, //Eliminar// o borrador autogardado ou //Cancelar// o proceso de edición.
-

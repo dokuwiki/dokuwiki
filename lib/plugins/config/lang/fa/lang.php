@@ -3,15 +3,15 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author علیرضا ایوز <info@alirezaivaz.ir>
+ * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
- * @author omidmr@gmail.com
- * @author Omid Mottaghi <omidmr@gmail.com>
+ * @author omidmr <omidmr@gmail.com>
  * @author Mohammad Reza Shoaei <shoaei@gmail.com>
  * @author Milad DZand <M.DastanZand@gmail.com>
  * @author AmirH Hassaneini <mytechmix@gmail.com>
  * @author Mohmmad Razavi <sepent@gmail.com>
- * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  * @author sam01 <m.sajad079@gmail.com>
  */
 $lang['menu']                  = 'تنظیمات پیکر‌بندی';
@@ -119,6 +119,7 @@ $lang['subscribe_time']        = 'زمان مورد نیاز برای ارسال
 $lang['notify']                = 'تغییرات به این ایمیل ارسال شود';
 $lang['registernotify']        = 'اطلاعات کاربران تازه وارد به این ایمیل ارسال شود';
 $lang['mailfrom']              = 'آدرس ایمیلی که برای ایمیل‌های خودکار استفاده می‌شود';
+$lang['mailreturnpath']        = 'نشانی ایمیل گیرنده برای اعلان‌های دریافت نشده';
 $lang['mailprefix']            = 'پیشوند تیتر ایمیل (جهت ایمیل های خودکار)';
 $lang['htmlmail']              = 'فرستادن با ظاهر بهتر ، امّا با اندازه بیشتر در ایمیل های چند قسمتی HTML.
 برای استفاده از ایمیل متنی ، غیر فعال کنید.';
@@ -129,6 +130,9 @@ $lang['rss_content']           = 'چه چیزی در تکه‌های خوراک 
 $lang['rss_update']            = 'زمان به روز رسانی خوراک به ثانیه';
 $lang['rss_show_summary']      = 'خوراک مختصری از مطلب را در عنوان نمایش دهد';
 $lang['rss_media']             = 'چه نوع تغییراتی باید در خوراک XML لیست شود؟';
+$lang['rss_media_o_both']      = 'هر دو';
+$lang['rss_media_o_pages']     = 'صفحات';
+$lang['rss_media_o_media']     = 'مدیا';
 $lang['updatecheck']           = 'هشدارهای به روز رسانی و امنیتی بررسی شود؟ برای این‌کار دوکوویکی با سرور update.dokuwiki.org تماس خواهد گرفت.';
 $lang['userewrite']            = 'از زیباکننده‌ی آدرس‌ها استفاده شود';
 $lang['useslash']              = 'از اسلش «/» برای جداکننده‌ی آدرس فضای‌نام‌ها استفاده شود';
@@ -146,19 +150,23 @@ $lang['xsendfile']             = 'استفاده از هدر X-Sendfile، تا �
 $lang['renderer_xhtml']        = 'مفسری که برای خروجی اصلی ویکی استفاده شود';
 $lang['renderer__core']        = '%s (هسته‌ی dokuwiki)';
 $lang['renderer__plugin']      = '%s (افزونه)';
+$lang['search_nslimit']        = 'جستجو را به فضای‌نام X محدود کن. اگر جستجو از صفحه‌ای که از فضای نام عمیق‌تری هست انجام شود اولین فضای نام X به عنوان فیلتر اضافه می‌شود.';
+$lang['search_fragment']       = 'رفتار جستجوی بخشی پیشفرض را مشخص کنید.';
+$lang['search_fragment_o_exact'] = 'دقیقا';
+$lang['search_fragment_o_starts_with'] = 'شروع شده با';
+$lang['search_fragment_o_ends_with'] = 'پایان یافته با';
+$lang['search_fragment_o_contains'] = 'شامل';
 $lang['dnslookups']            = 'دوکوویکی نام هاست ها را برای آدرسهای آی‌پی‌های صفحات ویرایشی کاربران ، جستجو می کند. اگر یک سرور DNS کند یا نا کارامد دارید یا این ویژگی را نمی خواهید ، این گزینه را غیر فعال کنید.';
+$lang['jquerycdn']             = 'آیا فایل‌های اسکریپت jQuery و jQuery UI باید از روی یک CDN باز شوند؟ این قابلیت تعداد درخواست‌های HTTP بیشتری اضافه می‌کند، اما فایل‌ها ممکن است سریع‌تر باز شوند و کاربران ممکن است آن‌ها را کش کرده باشند.';
+$lang['jquerycdn_o_0']         = 'بدون CDN فقط برای دریافت داخلی';
+$lang['jquerycdn_o_jquery']    = 'CDN در code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'CDN در cdnjs.com';
 $lang['proxy____host']         = 'آدرس سرور پروکسی';
 $lang['proxy____port']         = 'پورت پروکسی';
 $lang['proxy____user']         = 'نام کاربری پروکسی';
 $lang['proxy____pass']         = 'گذرواژهي پروکسی';
 $lang['proxy____ssl']          = 'استفاده از SSL برای اتصال به پروکسی';
 $lang['proxy____except']       = 'عبارت منظم برای تطبیق با URLها برای این‌که دریابیم که از روی  چه پروکسی‌ای باید بپریم!';
-$lang['safemodehack']          = 'فعال کردن safemode hack';
-$lang['ftp____host']           = 'آدرس FTP برای safemode hack';
-$lang['ftp____port']           = 'پورت FTP برای safemode hack';
-$lang['ftp____user']           = 'نام کاربری FTP برای safemode hack';
-$lang['ftp____pass']           = 'گذرواژه‌ی FTP برای safemode hack';
-$lang['ftp____root']           = 'شاخه‌ی FTP برای safemode hack';
 $lang['license_o_']            = 'هیچ کدام';
 $lang['typography_o_0']        = 'هیچ';
 $lang['typography_o_1']        = 'حذف کردن single-quote';

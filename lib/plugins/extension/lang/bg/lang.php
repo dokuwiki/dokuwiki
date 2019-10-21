@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Kiril <neohidra@gmail.com>
  */
 $lang['menu']                  = 'Диспечер на приставки';

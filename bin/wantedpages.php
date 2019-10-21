@@ -1,5 +1,9 @@
 #!/usr/bin/php
 <?php
+
+use splitbrain\phpcli\CLI;
+use splitbrain\phpcli\Options;
+
 if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
@@ -7,7 +11,7 @@ require_once(DOKU_INC . 'inc/init.php');
 /**
  * Find wanted pages
  */
-class WantedPagesCLI extends DokuCLI {
+class WantedPagesCLI extends CLI {
 
     const DIR_CONTINUE = 1;
     const DIR_NS = 2;
@@ -21,10 +25,10 @@ class WantedPagesCLI extends DokuCLI {
     /**
      * Register options and arguments on the given $options object
      *
-     * @param DokuCLI_Options $options
+     * @param Options $options
      * @return void
      */
-    protected function setup(DokuCLI_Options $options) {
+    protected function setup(Options $options) {
         $options->setHelp(
             'Outputs a list of wanted pages (pages that do not exist yet) and their origin pages ' .
             ' (the pages that are linkin to these missing pages).'
@@ -54,13 +58,13 @@ class WantedPagesCLI extends DokuCLI {
      *
      * Arguments and options have been parsed when this is run
      *
-     * @param DokuCLI_Options $options
+     * @param Options $options
      * @return void
      */
-    protected function main(DokuCLI_Options $options) {
-
-        if($options->args) {
-            $startdir = dirname(wikiFN($options->args[0] . ':xxx'));
+    protected function main(Options $options) {
+        $args = $options->getArgs();
+        if($args) {
+            $startdir = dirname(wikiFN($args[0] . ':xxx'));
         } else {
             $startdir = dirname(wikiFN('xxx'));
         }
@@ -70,8 +74,8 @@ class WantedPagesCLI extends DokuCLI {
 
         $this->info("searching $startdir");
 
-        foreach($this->get_pages($startdir) as $page) {
-            $this->internal_links($page);
+        foreach($this->getPages($startdir) as $page) {
+            $this->internalLinks($page);
         }
         ksort($this->result);
         foreach($this->result as $main => $subs) {
@@ -94,7 +98,7 @@ class WantedPagesCLI extends DokuCLI {
      * @param string $basepath
      * @return int
      */
-    protected function dir_filter($entry, $basepath) {
+    protected function dirFilter($entry, $basepath) {
         if($entry == '.' || $entry == '..') {
             return WantedPagesCLI::DIR_CONTINUE;
         }
@@ -117,7 +121,7 @@ class WantedPagesCLI extends DokuCLI {
      * @return array
      * @throws DokuCLI_Exception
      */
-    protected function get_pages($dir) {
+    protected function getPages($dir) {
         static $trunclen = null;
         if(!$trunclen) {
             global $conf;
@@ -131,11 +135,11 @@ class WantedPagesCLI extends DokuCLI {
         $pages = array();
         $dh = opendir($dir);
         while(false !== ($entry = readdir($dh))) {
-            $status = $this->dir_filter($entry, $dir);
+            $status = $this->dirFilter($entry, $dir);
             if($status == WantedPagesCLI::DIR_CONTINUE) {
                 continue;
             } else if($status == WantedPagesCLI::DIR_NS) {
-                $pages = array_merge($pages, $this->get_pages($dir . '/' . $entry));
+                $pages = array_merge($pages, $this->getPages($dir . '/' . $entry));
             } else {
                 $page = array(
                     'id' => pathID(substr($dir . '/' . $entry, $trunclen)),
@@ -153,7 +157,7 @@ class WantedPagesCLI extends DokuCLI {
      *
      * @param array $page array with page id and file path
      */
-    function internal_links($page) {
+    protected function internalLinks($page) {
         global $conf;
         $instructions = p_get_instructions(file_get_contents($page['file']));
         $cns = getNS($page['id']);

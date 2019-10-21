@@ -1,0 +1,6 @@
+===== Hurtowy import użytkowników =====
+
+Wymaga pliku CSV z co najmniej czterema kolumnami. Kolumny muszą zawierać, w kolejności: identyfikator użytkownika, imię i nazwisko, adres e-mail i grupy.
+Pola CSV powinny być oddzielone przecinkami (,) a łańcuchy znaków objęte znakami cudzysłowu (%%""%%). Aby ominąć znak z interpretacji należy użyć odwrotnego ukośnika (\). Za przykład pliku wypróbuj powyższą funkcję "Eksportuj użytkowników". Duplikaty identyfikatorów użytkowników będą ignorowane.
+
+Hasło zostanie wygenerowane i przesłane e-mailem do każdego pomyślnie zaimportowanego użytkownika.

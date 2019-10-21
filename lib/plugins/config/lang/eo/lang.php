@@ -1,15 +1,16 @@
 <?php
+
 /**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * Esperantolanguage file
  *
+ * @author Florian <florianmail55@gmail.com>
+ * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
  * @author Felipe Castro <fefcas@uol.com.br>
- * @author Felipe Castro <fefcas@gmail.com>
- * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
  * @author Felipo Kastro <fefcas@gmail.com>
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Erik Pedersen <erik pedersen@shaw.ca>
- * @author Erik Pedersen <erik.pedersen@shaw.ca>
- * @author Robert Bogenschneider <bogi@uea.org>
  */
 $lang['menu']                  = 'Agordaj Difinoj';
 $lang['error']                 = 'La difinoj ne estas ĝisdatigitaj pro malvalida valoro: bonvolu revizii viajn ŝanĝojn kaj resubmeti ilin.
@@ -84,6 +85,7 @@ $lang['disableactions']        = 'Malebligi DokuWiki-ajn agojn';
 $lang['disableactions_check']  = 'Kontroli';
 $lang['disableactions_subscription'] = 'Aliĝi/Malaliĝi';
 $lang['disableactions_wikicode'] = 'Rigardi vikitekston/Eksporti fontotekston';
+$lang['disableactions_profile_delete'] = 'Forigi la propran konton';
 $lang['disableactions_other']  = 'Aliaj agoj (disigita per komoj)';
 $lang['auth_security_timeout'] = 'Sekureca tempolimo por aŭtentigo (sekundoj)';
 $lang['securecookie']          = 'Ĉu kuketoj difinitaj per HTTPS sendiĝu de la foliumilo nur per HTTPS? Malebligu tiun ĉi opcion kiam nur la ensaluto al via vikio estas sekurigita per SSL, sed foliumado de la vikio estas farita malsekure.';
@@ -124,6 +126,8 @@ $lang['rss_content']           = 'Kion montri en la XML-aj novaĵ-flueroj?';
 $lang['rss_update']            = 'Intertempo por ĝisdatigi XML-an novaĵ-fluon (sek.)';
 $lang['rss_show_summary']      = 'XML-a novaĵ-fluo montras resumon en la titolo';
 $lang['rss_media']             = 'Kiaj ŝangoj estu montrataj en la XML-fluo?';
+$lang['rss_media_o_both']      = 'ambaŭ';
+$lang['rss_media_o_pages']     = 'paĝoj';
 $lang['updatecheck']           = 'Ĉu kontroli aktualigojn kaj sekurecajn avizojn? DokuWiki bezonas kontakti update.dokuwiki.org por tiu ĉi trajto.';
 $lang['userewrite']            = 'Uzi netajn URL-ojn';
 $lang['useslash']              = 'Uzi frakcistrekon kiel disigsignaĵon por nomspacoj en URL-oj';
@@ -149,12 +153,6 @@ $lang['proxy____user']         = 'Uzantonomo ĉe la "Proxy"';
 $lang['proxy____pass']         = 'Pasvorto ĉe la "Proxy"';
 $lang['proxy____ssl']          = 'Uzi SSL por konekti al la "Proxy"';
 $lang['proxy____except']       = 'Regula esprimo por URL-oj, kiujn la servilo preterrigardu.';
-$lang['safemodehack']          = 'Ebligi sekuran modon';
-$lang['ftp____host']           = 'FTP-a servilo por sekura modo';
-$lang['ftp____port']           = 'FTP-a pordo por sekura modo';
-$lang['ftp____user']           = 'FTP-a uzantonomo por sekura modo';
-$lang['ftp____pass']           = 'FTP-a pasvorto por sekura modo';
-$lang['ftp____root']           = 'FTP-a superuzanta (root) subdosierujo por sekura modo';
 $lang['license_o_']            = 'Nenio elektita';
 $lang['typography_o_0']        = 'nenio';
 $lang['typography_o_1']        = 'Nur duoblaj citiloj';

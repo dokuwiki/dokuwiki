@@ -3,16 +3,21 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author velmyshanovnyi <velmyshanovnyi@gmail.com>
+ * @author Dmytro Marchenko <dmytro.marchenko1989@gmail.com>
+ * @author Oleksii <alexey.furashev@gmail.com>
+ * @author Vitaly <vitaly.balashov@smuzzy.com.ua>
  * @author Oleksiy Voronin <ovoronin@gmail.com>
- * @author serg_stetsuk@ukr.net
+ * @author serg_stetsuk <serg_stetsuk@ukr.net>
  * @author Oleksandr Kunytsia <okunia@gmail.com>
  * @author Uko <uko@uar.net>
  * @author Ulrikhe Lukoie <lukoie@gmail.com>
- * @author Kate Arzamastseva pshns@ukr.net
  * @author Egor Smkv <egorsmkv@gmail.com>
  * @author Max Lyashuk <m_lyashuk@ukr.net>
  * @author Pavel <pavelholovko@yandex.ru>
  * @author Maksim <nikropol@yandex.ru>
+ * @author Nina Zolotova <nina-z@i.ua>
+ * @author Roman <vsmemorial@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -21,7 +26,7 @@ $lang['doublequoteclosing']    = '”';
 $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
 $lang['apostrophe']            = '’';
-$lang['btn_edit']              = 'Редагувати';
+$lang['btn_edit']              = 'Редагувати цю сторінку';
 $lang['btn_source']            = 'Показати вихідний текст';
 $lang['btn_show']              = 'Показати сторінку';
 $lang['btn_create']            = 'Створити сторінку';
@@ -29,8 +34,8 @@ $lang['btn_search']            = 'Пошук';
 $lang['btn_save']              = 'Зберегти';
 $lang['btn_preview']           = 'Перегляд';
 $lang['btn_top']               = 'Повернутися наверх';
-$lang['btn_newer']             = '<< більш нові';
-$lang['btn_older']             = 'більш старі >>';
+$lang['btn_newer']             = '<< новіші';
+$lang['btn_older']             = 'старіші >>';
 $lang['btn_revs']              = 'Старі ревізії';
 $lang['btn_recent']            = 'Останні зміни';
 $lang['btn_upload']            = 'Завантажити';
@@ -73,42 +78,9 @@ $lang['badpassconfirm']        = 'Вибачте, але пароль невір
 $lang['minoredit']             = 'Незначні зміни';
 $lang['draftdate']             = 'Чернетка збережена';
 $lang['nosecedit']             = 'Сторінку змінено, дані розділу застарілі. Завантажено сторінку повністю.';
-$lang['searchcreatepage']      = 'Якщо ви не знайшли те, що ви шукали, ви можете створити або редагувати сторінку, що має таке ж ім’я, що і пошуковий запит за допомогою відповідної кнопки.';
-$lang['regmissing']            = 'Необхідно заповнити всі поля.';
-$lang['reguexists']            = 'Користувач з таким іменем вже існує.';
-$lang['regsuccess']            = 'Користувача створено. Пароль відправлено на e-mail.';
-$lang['regsuccess2']           = 'Користувача створено.';
-$lang['regfail']               = 'Користувач не створений';
-$lang['regmailfail']           = 'При відправленні пароля сталась помилка. Зв’яжіться з адміністратором!';
-$lang['regbadmail']            = 'Схоже, що адреса e-mail невірна - якщо ви вважаєте, що це помилка, зв’яжіться з адміністратором';
-$lang['regbadpass']            = 'Надані паролі не співпадають, спробуйте ще раз.';
-$lang['regpwmail']             = 'Пароль ДокуВікі';
-$lang['reghere']               = 'Ще не маєте облікового запису? Отримайте його негайно';
-$lang['profna']                = 'Ця Вікі не підтримує зміни профілю';
-$lang['profnochange']          = 'Немає змін, немає що робити.';
-$lang['profnoempty']           = 'Ім’я або e-mail не можуть бути пустими.';
-$lang['profchanged']           = 'Профіль успішно змінено.';
-$lang['profdeleteuser']        = 'Видалити аккаунт';
-$lang['profdeleted']           = 'Ваш профіль користувача буде видалено з цієї wiki.';
-$lang['proffail']              = 'Профіль користувача не вдалося поновити.';
-$lang['pwdforget']             = 'Забули пароль? Отримайте новий';
-$lang['resendna']              = 'Ця Вікі не підтримує повторне відправлення пароля.';
-$lang['resendpwd']             = 'Встановити новий пароль для';
-$lang['resendpwdmissing']      = 'Необхідно заповнити усі поля.';
-$lang['resendpwdnouser']       = 'Такий користувач не існує.';
-$lang['resendpwdbadauth']      = 'Код автентифікації невірний. Перевірте, чи ви використали повне посилання для підтвердження.';
-$lang['resendpwdconfirm']      = 'Посилання для підтвердження відіслано на e-mail.';
-$lang['resendpwdsuccess']      = 'Новий пароль відіслано на e-mail.';
-$lang['license']               = 'Якщо не вказано інше, вміст цієї Вікі підпадає під дію такої ліцензії:';
-$lang['licenseok']             = 'Примітка. Редагуючи ці сторінку, ви погоджуєтесь на розповсюдження інформації за такою ліцензією:';
-$lang['searchmedia']           = 'Пошук файлу:';
-$lang['searchmedia_in']        = 'Шукати у %s';
-$lang['txt_upload']            = 'Виберіть файл для завантаження:';
-$lang['txt_filename']          = 'Завантажити як (не обов\'язкове):';
-$lang['txt_overwrt']           = 'Перезаписати існуючий файл';
-$lang['maxuploadsize']         = 'Відвантаження максимум %s на файл.';
-$lang['lockedby']              = 'Заблоковано:';
-$lang['lockexpire']            = 'Блокування завершується в:';
+$lang['searchcreatepage']      = 'Якщо ви не знайшли те, що шукали, ви можете створити або відредагувати сторінку  %s, названу після вашого запиту.';
+$lang['search_fullresults']    = 'Повнотекстові результати';
+$lang['js']['search_toggle_tools'] = 'Переключити інструменти пошуку';
 $lang['js']['willexpire']      = 'Блокування редагування цієї сторінки закінчується через хвилину.\n Щоб уникнути конфліктів використовуйте кнопку перегляду для продовження блокування.';
 $lang['js']['notsavedyet']     = 'Незбережені зміни будуть втрачені.
  Дійсно продовжити?';
@@ -143,6 +115,7 @@ $lang['js']['linkto']          = 'Посилання на:';
 $lang['js']['del_confirm']     = 'Дійсно знищити обрані елементи?';
 $lang['js']['restore_confirm'] = 'Дійсно відновити цю версію?';
 $lang['js']['media_diff']      = 'Переглянути різницю:';
+$lang['js']['media_diff_both'] = 'Крок за кроком';
 $lang['js']['media_diff_portions'] = 'Прогорнути';
 $lang['js']['media_select']    = 'Оберіть файли';
 $lang['js']['media_upload_btn'] = 'Завантажити';
@@ -150,6 +123,56 @@ $lang['js']['media_done_btn']  = 'Успішно';
 $lang['js']['media_drop']      = 'Перетягніть сюди файли для відвантаження';
 $lang['js']['media_cancel']    = 'видалити';
 $lang['js']['media_overwrt']   = 'Перезаписати існуючі файли';
+$lang['search_exact_match']    = 'Точна відповідність';
+$lang['search_starts_with']    = 'Починається з';
+$lang['search_ends_with']      = 'Закінчується з';
+$lang['search_contains']       = 'Містить';
+$lang['search_custom_match']   = 'Користувальницький';
+$lang['search_any_ns']         = 'Будь-який простір імен';
+$lang['search_any_time']       = 'Будь-який час';
+$lang['search_past_7_days']    = 'Минулий тиждень';
+$lang['search_past_month']     = 'Минулий місяць';
+$lang['search_past_year']      = 'Минулий рік';
+$lang['search_sort_by_hits']   = 'Сортувати за зверненнями';
+$lang['search_sort_by_mtime']  = 'Сортувати за останньою зміною';
+$lang['regmissing']            = 'Необхідно заповнити всі поля.';
+$lang['reguexists']            = 'Користувач з таким іменем вже існує.';
+$lang['regsuccess']            = 'Користувача створено. Пароль відправлено на e-mail.';
+$lang['regsuccess2']           = 'Користувача створено.';
+$lang['regfail']               = 'Користувач не створений';
+$lang['regmailfail']           = 'При відправленні пароля сталась помилка. Зв’яжіться з адміністратором!';
+$lang['regbadmail']            = 'Схоже, що адреса e-mail невірна - якщо ви вважаєте, що це помилка, зв’яжіться з адміністратором';
+$lang['regbadpass']            = 'Надані паролі не співпадають, спробуйте ще раз.';
+$lang['regpwmail']             = 'Пароль ДокуВікі';
+$lang['reghere']               = 'Ще не маєте облікового запису? Отримайте його негайно';
+$lang['profna']                = 'Ця Вікі не підтримує зміни профілю';
+$lang['profnochange']          = 'Немає змін, немає що робити.';
+$lang['profnoempty']           = 'Ім’я або e-mail не можуть бути пустими.';
+$lang['profchanged']           = 'Профіль успішно змінено.';
+$lang['profnodelete']          = 'Ця вікі не підтримує видалення користувачів.';
+$lang['profdeleteuser']        = 'Видалити аккаунт';
+$lang['profdeleted']           = 'Ваш профіль користувача буде видалено з цієї wiki.';
+$lang['profconfdelete']        = 'Я хочу видалити мій акаунт з цієї вікі.';
+$lang['profconfdeletemissing'] = 'Галочка на "Підтверджено" не поставлена';
+$lang['proffail']              = 'Профіль користувача не вдалося поновити.';
+$lang['pwdforget']             = 'Забули пароль? Отримайте новий';
+$lang['resendna']              = 'Ця Вікі не підтримує повторне відправлення пароля.';
+$lang['resendpwd']             = 'Встановити новий пароль для';
+$lang['resendpwdmissing']      = 'Необхідно заповнити усі поля.';
+$lang['resendpwdnouser']       = 'Такий користувач не існує.';
+$lang['resendpwdbadauth']      = 'Код автентифікації невірний. Перевірте, чи ви використали повне посилання для підтвердження.';
+$lang['resendpwdconfirm']      = 'Посилання для підтвердження відіслано на e-mail.';
+$lang['resendpwdsuccess']      = 'Новий пароль відіслано на e-mail.';
+$lang['license']               = 'Якщо не вказано інше, вміст цієї Вікі підпадає під дію такої ліцензії:';
+$lang['licenseok']             = 'Примітка. Редагуючи ці сторінку, ви погоджуєтесь на розповсюдження інформації за такою ліцензією:';
+$lang['searchmedia']           = 'Пошук файлу:';
+$lang['searchmedia_in']        = 'Шукати у %s';
+$lang['txt_upload']            = 'Виберіть файл для завантаження:';
+$lang['txt_filename']          = 'Завантажити як (не обов\'язкове):';
+$lang['txt_overwrt']           = 'Перезаписати існуючий файл';
+$lang['maxuploadsize']         = 'Відвантаження максимум %s на файл.';
+$lang['lockedby']              = 'Заблоковано:';
+$lang['lockexpire']            = 'Блокування завершується в:';
 $lang['rssfailed']             = 'Виникла помилка під час отримання RSS-стрічки: ';
 $lang['nothingfound']          = 'Нічого не знайдено.';
 $lang['mediaselect']           = 'Вибір медіа-файлу';
@@ -189,10 +212,13 @@ $lang['diff_side']             = 'Поряд';
 $lang['diffprevrev']           = 'Попередня ревізія';
 $lang['diffnextrev']           = 'Наступна ревізія';
 $lang['difflastrev']           = 'Остання ревізія';
+$lang['diffbothprevrev']       = 'Порівняння попередніх версій';
+$lang['diffbothnextrev']       = 'По сторонах наступні версії';
 $lang['line']                  = 'Рядок';
 $lang['breadcrumb']            = 'Відвідано:';
 $lang['youarehere']            = 'Ви тут:';
-$lang['lastmod']               = 'В останнє змінено:';
+$lang['lastmod']               = 'Востаннє змінено:';
+$lang['by']                    = 'повз';
 $lang['deleted']               = 'знищено';
 $lang['created']               = 'створено';
 $lang['restored']              = 'відновлено стару ревізію (%s)';
@@ -204,6 +230,7 @@ $lang['tools']                 = 'Налаштування';
 $lang['user_tools']            = 'Користувальницькькі налаштування';
 $lang['site_tools']            = 'Налаштування сайту';
 $lang['page_tools']            = 'Налаштування сторінки';
+$lang['skip_to_content']       = 'Перейти до змісту';
 $lang['sidebar']               = 'Сайдбар';
 $lang['mail_newpage']          = 'сторінку додано:';
 $lang['mail_changed']          = 'сторінку змінено:';
@@ -213,6 +240,7 @@ $lang['mail_upload']           = 'завантажено файл:';
 $lang['changes_type']          = 'Переглянути зміни ';
 $lang['pages_changes']         = 'Сторінок';
 $lang['media_changes']         = 'Медіа-файли';
+$lang['both_changes']          = 'Сторінки та медіа-файли';
 $lang['qb_bold']               = 'Напівжирний текст';
 $lang['qb_italic']             = 'Курсив';
 $lang['qb_underl']             = 'Підкреслений текст';
@@ -280,6 +308,7 @@ $lang['i_modified']            = 'З причин безпеки цей скри
 Вам слід або ще раз розпакувати файли із завантаженого пакету, або звернутися до повної <a href="http://dokuwiki.org/install">інструкції з установки ДокуВікі</a>';
 $lang['i_funcna']              = 'Функція PHP <code>%s</code> не доступна. Можливо, хостинг-провайдер відключив її з якихось причин?';
 $lang['i_phpver']              = 'Версія PHP <code>%s</code> менша, ніж необхідно - <code>%s</code>. Необхідно оновити PHP.';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload має бути вимкнена у php.ini щоб запустити DokuWiki.';
 $lang['i_permfail']            = 'ДокуВікі не має прав на запис <code>%s</code>. Необхідно змінити права доступа для цієї папки!';
 $lang['i_confexists']          = '<code>%s</code> вже існує';
 $lang['i_writeerr']            = 'Неможливо створити <code>%s</code>. Необхідно перевірити права доступа для файлу/папки та створити файл вручну.';
@@ -293,9 +322,12 @@ $lang['i_policy']              = 'Початкова політика ACL';
 $lang['i_pol0']                = 'Відкрита Вікі (читання, запис та завантаження файлів для всіх)';
 $lang['i_pol1']                = 'Публічна Вікі (читання для всіх, запис та завантаження для зареєстрованих користувачів)';
 $lang['i_pol2']                = 'Закрита Вікі (читання, запис та завантаження тільки для зареєстрованих користувачів)';
+$lang['i_allowreg']            = 'Дозволити користувачам реєструватися самостійно.';
 $lang['i_retry']               = 'Повторити';
 $lang['i_license']             = 'Будь ласка, виберіть тип ліцензії, під якою Ві бажаєте опублікувати матеріал:';
 $lang['i_license_none']        = 'Не показувати жодної інформації про ліцензії.';
+$lang['i_pop_field']           = 'Будь ласка, допоможіть нам покращити DokuWiki:';
+$lang['i_pop_label']           = 'Одного разу на місяць надсилати дані про використання розробникам DokuWiki.';
 $lang['recent_global']         = 'Ви переглядаєте зміни в межах простору імен <b>%s</b>. Також можна <a href="%s">переглянути зміни в межах усієї Вікі</a>.';
 $lang['years']                 = '%d років тому';
 $lang['months']                = '%d місяців тому';
@@ -305,20 +337,35 @@ $lang['hours']                 = '%d годин тому';
 $lang['minutes']               = '%d хвилин тому';
 $lang['seconds']               = '%d секунд тому';
 $lang['wordblock']             = 'Ваші зміни не збережено, тому що вони розпізнані як такі, що містять заблокований текст(спам).';
-$lang['email_signature_text']       = 'Це повідомлення було створене ДокуВікі з
-@DOKUWIKIURL@';
+$lang['media_uploadtab']       = 'Завантажити';
 $lang['media_searchtab']       = 'Пошук';
 $lang['media_file']            = 'Файл';
 $lang['media_viewtab']         = 'Огляд';
 $lang['media_edittab']         = 'Редагувати';
 $lang['media_historytab']      = 'Історія';
+$lang['media_list_thumbs']     = 'Іконки';
+$lang['media_list_rows']       = 'Рядки';
 $lang['media_sort_name']       = 'Ім’я';
 $lang['media_sort_date']       = 'Дата';
+$lang['media_namespaces']      = 'Оберіть простір назв';
+$lang['media_files']           = 'Файли у %s';
+$lang['media_upload']          = 'Завантажити до %s';
+$lang['media_search']          = 'Шукати у %s';
+$lang['media_view']            = '%s';
+$lang['media_viewold']         = '%s до %s';
+$lang['media_edit']            = 'Редагувати %s';
+$lang['media_history']         = 'Історія %s';
 $lang['media_meta_edited']     = 'метаданні відредаговано';
 $lang['media_perm_read']       = 'Вибачте, у вас не достатньо прав для читання цього файлу.';
+$lang['media_perm_upload']     = 'Вибачте, у вас недостатньо прав, щоб завантажувати файли.';
 $lang['media_update']          = 'Завантажити нову версію';
 $lang['media_restore']         = 'Відновити цю версію';
+$lang['media_acl_warning']     = 'Список може бути не повним через обмеження ACL та приховані сторінки.';
 $lang['currentns']             = 'Поточний діапазон імен';
 $lang['searchresult']          = 'Результати пошуку';
 $lang['plainhtml']             = 'Простий HTML';
 $lang['wikimarkup']            = 'Wiki розмітка';
+$lang['page_nonexist_rev']     = 'Сторінка %s відсутня. Може бути створена як <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Не можливо розібрати параметр "%s" ';
+$lang['email_signature_text']  = 'Це повідомлення було створене ДокуВікі з
+@DOKUWIKIURL@';

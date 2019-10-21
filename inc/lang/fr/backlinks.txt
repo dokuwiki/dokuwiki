@@ -1,4 +1,3 @@
 ====== Pages pointant sur la page en cours ======
 
 Ceci est la liste des pages qui semblent pointer sur la page actuelle.
-

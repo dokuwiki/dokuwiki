@@ -3,4 +3,3 @@
 Hai unha versión máis nova do documento que editaches. Isto sucede cando outro usuario mudou o documento mentres ti estabas a editalo.
 
 Examina as diferenzas amosadas embaixo polo miúdo, e logo decide que versión queres manter. Se escolleres ''Gardar'', gardarase a túa versión. Preme en ''Cancelar'' para manteres a versión actual.
-

@@ -7,7 +7,12 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
+use dokuwiki\Cache\CacheInstructions;
+use dokuwiki\Cache\CacheRenderer;
+use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Extension\PluginController;
+use dokuwiki\Extension\Event;
+use dokuwiki\Parsing\Parser;
 
 /**
  * How many pages shall be rendered for getting metadata during one request
@@ -74,7 +79,8 @@ function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
 
     if($rev || $date_at){
         if(file_exists($file)){
-            $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info,$date_at); //no caching on old revisions
+            //no caching on old revisions
+            $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info,$date_at);
         }elseif($excuse){
             $ret = p_locale_xhtml('norev');
         }
@@ -82,7 +88,13 @@ function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
         if(file_exists($file)){
             $ret = p_cached_output($file,'xhtml',$id);
         }elseif($excuse){
-            $ret = p_locale_xhtml('newpage');
+            //check if the page once existed
+            $changelog = new PageChangeLog($id);
+            if($changelog->hasRevisions()) {
+                $ret = p_locale_xhtml('onceexisted');
+            } else {
+                $ret = p_locale_xhtml('newpage');
+            }
         }
     }
 
@@ -120,7 +132,7 @@ function p_locale_xhtml($id){
 function p_cached_output($file, $format='xhtml', $id='') {
     global $conf;
 
-    $cache = new cache_renderer($id, $file, $format);
+    $cache = new CacheRenderer($id, $file, $format);
     if ($cache->useCache()) {
         $parsed = $cache->retrieveCache(false);
         if($conf['allowdebug'] && $format=='xhtml') {
@@ -160,7 +172,7 @@ function p_cached_instructions($file,$cacheonly=false,$id='') {
     static $run = null;
     if(is_null($run)) $run = array();
 
-    $cache = new cache_instructions($id, $file);
+    $cache = new CacheInstructions($id, $file);
 
     if ($cacheonly || $cache->useCache() || (isset($run[$file]) && !defined('DOKU_UNITTEST'))) {
         return $cache->retrieveCache();
@@ -191,11 +203,8 @@ function p_get_instructions($text){
 
     $modes = p_get_parsermodes();
 
-    // Create the parser
-    $Parser = new Doku_Parser();
-
-    // Add the Handler
-    $Parser->Handler = new Doku_Handler();
+    // Create the parser and handler
+    $Parser = new Parser(new Doku_Handler());
 
     //add modes to parser
     foreach($modes as $mode){
@@ -203,7 +212,7 @@ function p_get_instructions($text){
     }
 
     // Do the parsing
-    trigger_event('PARSER_WIKITEXT_PREPROCESS', $text);
+    Event::createAndTrigger('PARSER_WIKITEXT_PREPROCESS', $text);
     $p = $Parser->parse($text);
     //  dbg($p);
     return $p;
@@ -213,7 +222,8 @@ function p_get_instructions($text){
  * returns the metadata of a page
  *
  * @param string $id      The id of the page the metadata should be returned from
- * @param string $key     The key of the metdata value that shall be read (by default everything) - separate hierarchies by " " like "date created"
+ * @param string $key     The key of the metdata value that shall be read (by default everything)
+ *                        separate hierarchies by " " like "date created"
  * @param int    $render  If the page should be rendererd - possible values:
  *     METADATA_DONT_RENDER, METADATA_RENDER_USING_SIMPLE_CACHE, METADATA_RENDER_USING_CACHE
  *     METADATA_RENDER_UNLIMITED (also combined with the previous two options),
@@ -249,7 +259,7 @@ function p_get_metadata($id, $key='', $render=METADATA_RENDER_USING_CACHE){
     if (!$recursion && $render != METADATA_DONT_RENDER && !isset($rendered_pages[$id])&& page_exists($id)){
         $recursion = true;
 
-        $cachefile = new cache_renderer($id, wikiFN($id), 'metadata');
+        $cachefile = new CacheRenderer($id, wikiFN($id), 'metadata');
 
         $do_render = false;
         if ($render & METADATA_RENDER_UNLIMITED || $render_count < P_GET_METADATA_RENDER_LIMIT) {
@@ -300,10 +310,10 @@ function p_get_metadata($id, $key='', $render=METADATA_RENDER_USING_CACHE){
  *
  * @see http://www.dokuwiki.org/devel:metadata#functions_to_get_and_set_metadata
  *
- * @param String  $id         is the ID of a wiki page
- * @param Array   $data       is an array with key ⇒ value pairs to be set in the metadata
- * @param Boolean $render     whether or not the page metadata should be generated with the renderer
- * @param Boolean $persistent indicates whether or not the particular metadata value will persist through
+ * @param string  $id         is the ID of a wiki page
+ * @param array   $data       is an array with key ⇒ value pairs to be set in the metadata
+ * @param boolean $render     whether or not the page metadata should be generated with the renderer
+ * @param boolean $persistent indicates whether or not the particular metadata value will persist through
  *                            the next metadata rendering.
  * @return boolean true on success
  *
@@ -337,13 +347,16 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
 
             foreach ($value as $subkey => $subvalue){
                 if(isset($meta['current'][$key][$subkey]) && is_array($meta['current'][$key][$subkey])) {
-                    $meta['current'][$key][$subkey] = array_merge($meta['current'][$key][$subkey], (array)$subvalue);
+                    $meta['current'][$key][$subkey] = array_replace($meta['current'][$key][$subkey], (array)$subvalue);
                 } else {
                     $meta['current'][$key][$subkey] = $subvalue;
                 }
                 if($persistent) {
                     if(isset($meta['persistent'][$key][$subkey]) && is_array($meta['persistent'][$key][$subkey])) {
-                        $meta['persistent'][$key][$subkey] = array_merge($meta['persistent'][$key][$subkey], (array)$subvalue);
+                        $meta['persistent'][$key][$subkey] = array_replace(
+                            $meta['persistent'][$key][$subkey],
+                            (array) $subvalue
+                        );
                     } else {
                         $meta['persistent'][$key][$subkey] = $subvalue;
                     }
@@ -355,10 +368,14 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
 
             // these keys, must have subkeys - a legitimate value must be an array
             if (is_array($value)) {
-                $meta['current'][$key] = !empty($meta['current'][$key]) ? array_merge((array)$meta['current'][$key],$value) : $value;
+                $meta['current'][$key] = !empty($meta['current'][$key]) ?
+                    array_replace((array)$meta['current'][$key],$value) :
+                    $value;
 
                 if ($persistent) {
-                    $meta['persistent'][$key] = !empty($meta['persistent'][$key]) ? array_merge((array)$meta['persistent'][$key],$value) : $value;
+                    $meta['persistent'][$key] = !empty($meta['persistent'][$key]) ?
+                        array_replace((array)$meta['persistent'][$key],$value) :
+                        $value;
                 }
             }
 
@@ -422,7 +439,9 @@ function p_read_metadata($id,$cache=false) {
     if (isset($cache_metadata[(string)$id])) return $cache_metadata[(string)$id];
 
     $file = metaFN($id, '.meta');
-    $meta = file_exists($file) ? unserialize(io_readFile($file, false)) : array('current'=>array(),'persistent'=>array());
+    $meta = file_exists($file) ?
+        unserialize(io_readFile($file, false)) :
+        array('current'=>array(),'persistent'=>array());
 
     if ($cache) {
         $cache_metadata[(string)$id] = $meta;
@@ -475,7 +494,7 @@ function p_render_metadata($id, $orig){
 
     // add an extra key for the event - to tell event handlers the page whose metadata this is
     $orig['page'] = $id;
-    $evt = new Doku_Event('PARSER_METADATA_RENDER', $orig);
+    $evt = new Event('PARSER_METADATA_RENDER', $orig);
     if ($evt->advise_before()) {
 
         // get instructions
@@ -536,7 +555,7 @@ function p_get_parsermodes(){
         global $PARSER_MODES;
         $obj = null;
         foreach($pluginlist as $p){
-            /** @var DokuWiki_Syntax_Plugin $obj */
+            /** @var \dokuwiki\Extension\SyntaxPlugin $obj */
             if(!$obj = plugin_load('syntax',$p)) continue; //attempt to load plugin into $obj
             $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
             //add to modes
@@ -560,7 +579,7 @@ function p_get_parsermodes(){
         $std_modes[] = 'multiplyentity';
     }
     foreach($std_modes as $m){
-        $class = "Doku_Parser_Mode_$m";
+        $class = 'dokuwiki\\Parsing\\ParserMode\\'.ucfirst($m);
         $obj   = new $class();
         $modes[] = array(
                 'sort' => $obj->getSort(),
@@ -573,7 +592,7 @@ function p_get_parsermodes(){
     $fmt_modes = array('strong','emphasis','underline','monospace',
             'subscript','superscript','deleted');
     foreach($fmt_modes as $m){
-        $obj   = new Doku_Parser_Mode_formatting($m);
+        $obj   = new \dokuwiki\Parsing\ParserMode\Formatting($m);
         $modes[] = array(
                 'sort' => $obj->getSort(),
                 'mode' => $m,
@@ -582,16 +601,16 @@ function p_get_parsermodes(){
     }
 
     // add modes which need files
-    $obj     = new Doku_Parser_Mode_smiley(array_keys(getSmileys()));
+    $obj     = new \dokuwiki\Parsing\ParserMode\Smiley(array_keys(getSmileys()));
     $modes[] = array('sort' => $obj->getSort(), 'mode' => 'smiley','obj'  => $obj );
-    $obj     = new Doku_Parser_Mode_acronym(array_keys(getAcronyms()));
+    $obj     = new \dokuwiki\Parsing\ParserMode\Acronym(array_keys(getAcronyms()));
     $modes[] = array('sort' => $obj->getSort(), 'mode' => 'acronym','obj'  => $obj );
-    $obj     = new Doku_Parser_Mode_entity(array_keys(getEntities()));
+    $obj     = new \dokuwiki\Parsing\ParserMode\Entity(array_keys(getEntities()));
     $modes[] = array('sort' => $obj->getSort(), 'mode' => 'entity','obj'  => $obj );
 
     // add optional camelcase mode
     if($conf['camelcase']){
-        $obj     = new Doku_Parser_Mode_camelcaselink();
+        $obj     = new \dokuwiki\Parsing\ParserMode\Camelcaselink();
         $modes[] = array('sort' => $obj->getSort(), 'mode' => 'camelcaselink','obj'  => $obj );
     }
 
@@ -660,7 +679,7 @@ function p_render($mode,$instructions,&$info,$date_at=''){
 
     // Post process and return the output
     $data = array($mode,& $Renderer->doc);
-    trigger_event('RENDERER_CONTENT_POSTPROCESS',$data);
+    Event::createAndTrigger('RENDERER_CONTENT_POSTPROCESS',$data);
     return $Renderer->doc;
 }
 
@@ -674,7 +693,7 @@ function p_render($mode,$instructions,&$info,$date_at=''){
  * @author Christopher Smith <chris@jalakai.co.uk>
  */
 function p_get_renderer($mode) {
-    /** @var Doku_Plugin_Controller $plugin_controller */
+    /** @var PluginController $plugin_controller */
     global $conf, $plugin_controller;
 
     $rname = !empty($conf['renderer_'.$mode]) ? $conf['renderer_'.$mode] : $mode;
@@ -745,20 +764,20 @@ function p_get_first_heading($id, $render=METADATA_RENDER_USING_SIMPLE_CACHE){
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
+function p_xhtml_cached_geshi($code, $language, $wrapper='pre', array $options=null) {
     global $conf, $config_cascade, $INPUT;
     $language = strtolower($language);
 
     // remove any leading or trailing blank lines
     $code = preg_replace('/^\s*?\n|\s*?\n$/','',$code);
 
-    $cache = getCacheName($language.$code,".code");
+    $optionsmd5 = md5(serialize($options));
+    $cache = getCacheName($language.$code.$optionsmd5,".code");
     $ctime = @filemtime($cache);
     if($ctime && !$INPUT->bool('purge') &&
             $ctime > filemtime(DOKU_INC.'vendor/composer/installed.json') &&  // libraries changed
             $ctime > filemtime(reset($config_cascade['main']['default']))){ // dokuwiki changed
         $highlighted_code = io_readFile($cache, false);
-
     } else {
 
         $geshi = new GeSHi($code, $language);
@@ -766,6 +785,13 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
         $geshi->enable_classes();
         $geshi->set_header_type(GESHI_HEADER_PRE);
         $geshi->set_link_target($conf['target']['extern']);
+        if($options !== null) {
+            foreach ($options as $function => $params) {
+                if(is_callable(array($geshi, $function))) {
+                    $geshi->$function($params);
+                }
+            }
+        }
 
         // remove GeSHi's wrapper element (we'll replace it with our own later)
         // we need to use a GeSHi wrapper to avoid <BR> throughout the highlighted text

@@ -1,0 +1,2 @@
+====== Plan del site ======
+Aquò es lo plan del site de totas las paginas disponiblas, triadas per [[doku>namespaces|namespaces]].

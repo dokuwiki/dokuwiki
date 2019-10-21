@@ -11,7 +11,6 @@
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Volker Bödker <volker@boedker.de>
- * @author Matthias Schulte <dokuwiki@lupo49.de>
  */
 $lang['menu']                  = 'Seiten wiederherstellen';
 $lang['filter']                = 'Durchsuche als Spam markierte Seiten';

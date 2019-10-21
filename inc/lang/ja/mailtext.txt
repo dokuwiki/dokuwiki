@@ -6,7 +6,7 @@ IPアドレス  : @IPADDRESS@
 ホスト名    : @HOSTNAME@
 前リビジョン: @OLDPAGE@
 新リビジョン: @NEWPAGE@
-編集のサマリ: @SUMMARY@
+編集の概要: @SUMMARY@
 ユーザー名  : @USER@
 
 @DIFF@

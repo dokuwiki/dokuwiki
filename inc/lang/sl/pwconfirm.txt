@@ -3,6 +3,7 @@ Pozdravljeni, @FULLNAME@!
 S podatki vašega imena je bila poslana zahteva za pridobitev novega gesla za uporabniško ime @TITLE@ na wiki spletišču @DOKUWIKIURL@.
 
  - V kolikor novega gesla niste zahtevali, prezrite to sporočilo.
+
  - Za potrditev zahteve za pridobitev novega gesla, kliknite spodnjo povezavo.
 
 @CONFIRM@

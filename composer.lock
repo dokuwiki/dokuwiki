@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "67e5a8bb8a3d52ab872761fe66bd5f26",
+    "content-hash": "d5c15248668d2dd749de47b106049b77",
     "packages": [
         {
             "name": "aziraphale/email-address-validator",
@@ -88,6 +88,58 @@
             "time": "2017-05-05T05:51:25+00:00"
         },
         {
+            "name": "marcusschwarz/lesserphp",
+            "version": "v0.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MarcusSchwarz/lesserphp.git",
+                "reference": "e9e3d53980c0e486b07c75e12f2bae5e10bdee44"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MarcusSchwarz/lesserphp/zipball/e9e3d53980c0e486b07c75e12f2bae5e10bdee44",
+                "reference": "e9e3d53980c0e486b07c75e12f2bae5e10bdee44",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.3"
+            },
+            "bin": [
+                "plessc"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.5.1-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lessc.inc.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Leaf Corcoran",
+                    "email": "leafot@gmail.com",
+                    "homepage": "http://leafo.net"
+                },
+                {
+                    "name": "Marcus Schwarz",
+                    "email": "github@maswaba.de",
+                    "homepage": "https://www.maswaba.de"
+                }
+            ],
+            "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
+            "homepage": "http://leafo.net/lessphp/",
+            "time": "2016-09-30T11:13:18+00:00"
+        },
+        {
             "name": "openpsa/universalfeedcreator",
             "version": "v1.8.3",
             "source": {
@@ -137,16 +189,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.10",
+            "version": "v2.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d"
+                "reference": "258c89a6b97de7dfaf5b8c7607d0478e236b04fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/634bae8e911eefa89c1abfbf1b66da679ac8f54d",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/258c89a6b97de7dfaf5b8c7607d0478e236b04fb",
+                "reference": "258c89a6b97de7dfaf5b8c7607d0478e236b04fb",
                 "shasum": ""
             },
             "require": {
@@ -181,20 +233,20 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-03-13T16:27:32+00:00"
+            "time": "2018-04-04T21:24:14+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.4",
+            "version": "2.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "ab8028c93c03cc8d9c824efa75dc94f1db2369bf"
+                "reference": "7053f06f91b3de78e143d430e55a8f7889efc08b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/ab8028c93c03cc8d9c824efa75dc94f1db2369bf",
-                "reference": "ab8028c93c03cc8d9c824efa75dc94f1db2369bf",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/7053f06f91b3de78e143d430e55a8f7889efc08b",
+                "reference": "7053f06f91b3de78e143d430e55a8f7889efc08b",
                 "shasum": ""
             },
             "require": {
@@ -202,7 +254,7 @@
             },
             "require-dev": {
                 "phing/phing": "~2.7",
-                "phpunit/phpunit": "~4.0",
+                "phpunit/phpunit": "^4.8.35|^5.7|^6.0",
                 "sami/sami": "~2.0",
                 "squizlabs/php_codesniffer": "~2.0"
             },
@@ -273,20 +325,20 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2016-10-04T00:57:04+00:00"
+            "time": "2018-04-15T16:55:05+00:00"
         },
         {
             "name": "simplepie/simplepie",
-            "version": "1.4.3",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simplepie/simplepie.git",
-                "reference": "2a24b6e74aa9bf33243020f52895fe77efe94ccf"
+                "reference": "db9fff27b6d49eed3d4047cd3211ec8dba2f5d6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/2a24b6e74aa9bf33243020f52895fe77efe94ccf",
-                "reference": "2a24b6e74aa9bf33243020f52895fe77efe94ccf",
+                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/db9fff27b6d49eed3d4047cd3211ec8dba2f5d6e",
+                "reference": "db9fff27b6d49eed3d4047cd3211ec8dba2f5d6e",
                 "shasum": ""
             },
             "require": {
@@ -333,27 +385,30 @@
                 "feeds",
                 "rss"
             ],
-            "time": "2016-11-27T01:39:18+00:00"
+            "time": "2017-11-12T02:03:34+00:00"
         },
         {
             "name": "splitbrain/php-archive",
-            "version": "1.0.8",
+            "version": "1.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-archive.git",
-                "reference": "6b1c1746fa0a6f9f68f0bc832892ddeda8db905c"
+                "reference": "a46f3aaeb9f123fdb7db4e192b0600feebf7f773"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/6b1c1746fa0a6f9f68f0bc832892ddeda8db905c",
-                "reference": "6b1c1746fa0a6f9f68f0bc832892ddeda8db905c",
+                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/a46f3aaeb9f123fdb7db4e192b0600feebf7f773",
+                "reference": "a46f3aaeb9f123fdb7db4e192b0600feebf7f773",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.4"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.5.*"
+                "ext-bz2": "*",
+                "ext-zip": "*",
+                "mikey179/vfsstream": "^1.6",
+                "phpunit/phpunit": "^4.8"
             },
             "suggest": {
                 "ext-iconv": "Used for proper filename encode handling",
@@ -384,7 +439,58 @@
                 "unzip",
                 "zip"
             ],
-            "time": "2017-03-19T09:10:53+00:00"
+            "time": "2018-05-01T08:03:56+00:00"
+        },
+        {
+            "name": "splitbrain/php-cli",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/splitbrain/php-cli.git",
+                "reference": "1d6f0bf9eccbfd79d1f4d185ef27573601185c23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/1d6f0bf9eccbfd79d1f4d185ef27573601185c23",
+                "reference": "1d6f0bf9eccbfd79d1f4d185ef27573601185c23",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.5.*"
+            },
+            "suggest": {
+                "psr/log": "Allows you to make the CLI available as PSR-3 logger"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "splitbrain\\phpcli\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Gohr",
+                    "email": "andi@splitbrain.org"
+                }
+            ],
+            "description": "Easy command line scripts for PHP with opt parsing and color output. No dependencies",
+            "keywords": [
+                "argparse",
+                "cli",
+                "command line",
+                "console",
+                "getopt",
+                "optparse",
+                "terminal"
+            ],
+            "time": "2018-02-02T08:46:12+00:00"
         }
     ],
     "packages-dev": [],
@@ -396,5 +502,8 @@
     "platform": {
         "php": ">=5.6"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "platform-overrides": {
+        "php": "5.6"
+    }
 }

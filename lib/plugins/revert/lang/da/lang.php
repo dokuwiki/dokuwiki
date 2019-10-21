@@ -3,19 +3,19 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Jacob Palm <mail@jacobpalm.dk>
  * @author Kalle Sommer Nielsen <kalle@php.net>
  * @author Esben Laursen <hyber@hyber.dk>
  * @author Harith <haj@berlingske.dk>
  * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
- * @author rasmus@kinnerup.com
- * @author Michael Pedersen subben@gmail.com
+ * @author rasmus <rasmus@kinnerup.com>
  * @author Mikael Lyngvig <mikael@lyngvig.org>
  */
 $lang['menu']                  = 'Gendannelsesstyring';
 $lang['filter']                = 'Søg efter uønskede sider';
 $lang['revert']                = 'Gendan valgte sider';
-$lang['reverted']              = '%s gendannet til ændring %s';
+$lang['reverted']              = '%s gendannet til revision %s';
 $lang['removed']               = '%s fjernet';
 $lang['revstart']              = 'Gendannelsesforløbet er startet. Dette kan tage et stykke tid. Hvis kodefilen giver "time out" før processen færdiggøres, skal du gendanne i mindre dele.';
 $lang['revstop']               = 'Gendannelsesforløbet fuldført uden fejl';

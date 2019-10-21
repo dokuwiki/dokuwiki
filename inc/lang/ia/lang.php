@@ -63,7 +63,6 @@ $lang['badlogin']              = 'Le nomine de usator o le contrasigno es incorr
 $lang['minoredit']             = 'Modificationes minor';
 $lang['draftdate']             = 'Version provisori automaticamente salveguardate le';
 $lang['nosecedit']             = 'Le pagina ha essite modificate intertanto. Le informationes del section es ora obsolete, dunque le pagina complete ha essite cargate in su loco.';
-$lang['searchcreatepage']      = 'Si tu non ha trovate lo que tu cerca, tu pote crear o modificar le pagina nominate secundo tu consulta con le button appropriate.';
 $lang['regmissing']            = 'Es necessari completar tote le campos.';
 $lang['reguexists']            = 'Regrettabilemente, un usator con iste nomine ja existe.';
 $lang['regsuccess']            = 'Le conto ha essite create e le contrasigno ha essite inviate per e-mail.';

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Oskars Pakers <oskars.pakers@gmail.com>
  * @author Aivars Miška <allefm@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -64,11 +65,11 @@ $lang['badpassconfirm']        = 'Atvaino, aplama parole';
 $lang['minoredit']             = 'Sīki labojumi';
 $lang['draftdate']             = 'Melnraksts automātiski saglabāts';
 $lang['nosecedit']             = 'Lapa pa šo laiku ir mainījusies, sekcijas informācija novecojusi. Ielādēta lapas  pilnās versija.';
-$lang['searchcreatepage']      = 'Ja neatradi meklēto, nospiežot pogu "Labot lapu", vari izveidot jaunu lapu ar tevis meklētajiem atslēgvārdiem nosaukumā.';
 $lang['regmissing']            = 'Atvaino, jāaizpilda visas ailes.';
 $lang['reguexists']            = 'Atvaino, tāds lietotājs jau ir.';
 $lang['regsuccess']            = 'Lietotājs izveidots. Parole nosūtīta pa pastu.';
 $lang['regsuccess2']           = 'Lietotājs izveidots.';
+$lang['regfail']               = 'Neizdevās izveidot lietotāju.';
 $lang['regmailfail']           = 'Šķiet, ka ir problēmas nosūtīt pastu. Lūdzu sazinies ar administratoru!';
 $lang['regbadmail']            = 'Uzdotā epasta adrese izskatās aplama. Ja tas nav tiesa, sazinies ar administratoru.';
 $lang['regbadpass']            = 'Abas ierakstītās paroles nav vienādas, lūdzu atkārto.';
@@ -83,6 +84,7 @@ $lang['profdeleteuser']        = 'Dzēst kontu';
 $lang['profdeleted']           = 'Jūsu lietotāja konts ir izdzēsts';
 $lang['profconfdelete']        = 'Es vēlos dzēst savu kontu no viki. <br/> Šo darbību vairs nevarēs atsaukt.';
 $lang['profconfdeletemissing'] = 'Nav atzīmēta apstiprinājuma rūtiņa.';
+$lang['proffail']              = 'Neizdevās atjaunot profilu.';
 $lang['pwdforget']             = 'Aizmirsi paroli? Saņem jaunu';
 $lang['resendna']              = 'Paroļu izsūtīšanu nepiedāvāju.';
 $lang['resendpwd']             = 'Uzstādīt jaunu paroli lietotājam';
@@ -333,5 +335,5 @@ $lang['currentns']             = 'Pašreizējā sadaļa';
 $lang['searchresult']          = 'Meklēšanas rezultāti';
 $lang['plainhtml']             = 'Tīrs HTML';
 $lang['wikimarkup']            = 'Viki iezīmēšana valoda';
-$lang['email_signature_text'] = 'Vēstuli nosūtījusi DokuWiki programma no
+$lang['email_signature_text']  = 'Vēstuli nosūtījusi DokuWiki programma no
 @DOKUWIKIURL@';

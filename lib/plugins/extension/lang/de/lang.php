@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Benjamin Molitor <bmolitor@uos.de>
  * @author H. Richard <wanderer379@t-online.de>
  * @author Joerg <scooter22@gmx.de>
  * @author Simon <st103267@stud.uni-stuttgart.de>
@@ -46,7 +47,7 @@ $lang['bugs_features']         = 'Bugs';
 $lang['tags']                  = 'Schlagworte';
 $lang['author_hint']           = 'Suche weitere Erweiterungen dieses Autors';
 $lang['installed']             = 'Installiert:';
-$lang['downloadurl']           = 'URL zum Herunterladen:';
+$lang['downloadurl']           = 'Download-URL:';
 $lang['repository']            = 'Quelle:';
 $lang['unknown']               = '<em>unbekannt</em>';
 $lang['installed_version']     = 'Installierte Version:';

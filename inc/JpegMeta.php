@@ -1302,7 +1302,7 @@ class JpegMeta {
     function _parseFileInfo() {
         if (file_exists($this->_fileName) && is_file($this->_fileName)) {
             $this->_info['file'] = array();
-            $this->_info['file']['Name'] = utf8_decodeFN(utf8_basename($this->_fileName));
+            $this->_info['file']['Name'] = utf8_decodeFN(\dokuwiki\Utf8\PhpString::basename($this->_fileName));
             $this->_info['file']['Path'] = fullpath($this->_fileName);
             $this->_info['file']['Size'] = filesize($this->_fileName);
             if ($this->_info['file']['Size'] < 1024) {
@@ -1393,7 +1393,7 @@ class JpegMeta {
             }
         } else {
             $this->_info['file'] = array();
-            $this->_info['file']['Name'] = utf8_basename($this->_fileName);
+            $this->_info['file']['Name'] = \dokuwiki\Utf8\PhpString::basename($this->_fileName);
             $this->_info['file']['Url'] = $this->_fileName;
         }
 
@@ -2522,13 +2522,13 @@ class JpegMeta {
             $pos = 14;
 
             reset($this->_info['adobe']['raw']);
-            while (list($key) = each($this->_info['adobe']['raw'])) {
+            foreach ($this->_info['adobe']['raw'] as $value){
                 $pos = $this->_write8BIM(
                         $data,
                         $pos,
-                        $this->_info['adobe']['raw'][$key]['type'],
-                        $this->_info['adobe']['raw'][$key]['header'],
-                        $this->_info['adobe']['raw'][$key]['data'] );
+                        $value['type'],
+                        $value['header'],
+                        $value['data'] );
             }
         }
 
@@ -2699,8 +2699,8 @@ class JpegMeta {
             $tags[0x8827] = 'ISOSpeedRatings';
             $tags[0x8828] = 'OECF';
             $tags[0x9000] = 'EXIFVersion';
-            $tags[0x9003] = 'DatetimeOriginal';
-            $tags[0x9004] = 'DatetimeDigitized';
+            $tags[0x9003] = 'DateTimeOriginal';
+            $tags[0x9004] = 'DateTimeDigitized';
             $tags[0x9101] = 'ComponentsConfiguration';
             $tags[0x9102] = 'CompressedBitsPerPixel';
             $tags[0x9201] = 'ShutterSpeedValue';
@@ -2849,8 +2849,8 @@ class JpegMeta {
             $tags[0x8827] = array(3, 0); // ISOSpeedRatings -> SHORT, Any
             $tags[0x8828] = array(7, 0); // OECF -> UNDEFINED, Any
             $tags[0x9000] = array(7, 4); // EXIFVersion -> UNDEFINED, 4
-            $tags[0x9003] = array(2, 20); // DatetimeOriginal -> ASCII, 20
-            $tags[0x9004] = array(2, 20); // DatetimeDigitized -> ASCII, 20
+            $tags[0x9003] = array(2, 20); // DateTimeOriginal -> ASCII, 20
+            $tags[0x9004] = array(2, 20); // DateTimeDigitized -> ASCII, 20
             $tags[0x9101] = array(7, 4); // ComponentsConfiguration -> UNDEFINED, 4
             $tags[0x9102] = array(5, 1); // CompressedBitsPerPixel -> RATIONAL, 1
             $tags[0x9201] = array(10, 1); // ShutterSpeedValue -> SRATIONAL, 1
