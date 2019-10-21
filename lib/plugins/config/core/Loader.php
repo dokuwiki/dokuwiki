@@ -27,7 +27,8 @@ class Loader {
     public function __construct(ConfigParser $parser) {
         global $conf;
         $this->parser = $parser;
-        $this->plugins = plugin_list();
+        $this->plugins = plugin_list('', false);
+        sort($this->plugins, SORT_REGULAR);
         $this->template = $conf['template'];
         // allow plugins to remove configurable plugins
         Event::createAndTrigger('PLUGIN_CONFIG_PLUGINLIST', $this->plugins);
