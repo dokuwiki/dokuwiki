@@ -6,8 +6,6 @@
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Extension\PluginController;
-
 /**
  * Class helper_plugin_extension_list takes care of the overall GUI
  */
@@ -35,15 +33,12 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
      */
     public function tabPlugins()
     {
-        /* @var PluginController $plugin_controller */
-        global $plugin_controller;
-
         echo '<div class="panelHeader">';
         echo $this->locale_xhtml('intro_plugins');
         echo '</div>';
 
-        $pluginlist = $plugin_controller->getList('', true);
-        sort($pluginlist);
+        $pluginlist = plugin_list('', true);
+        sort($pluginlist, SORT_REGULAR);
         /* @var helper_plugin_extension_extension $extension */
         $extension = $this->loadHelper('extension_extension');
         /* @var helper_plugin_extension_list $list */
@@ -69,7 +64,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         // FIXME do we have a real way?
         $tpllist = glob(DOKU_INC.'lib/tpl/*', GLOB_ONLYDIR);
         $tpllist = array_map('basename', $tpllist);
-        sort($tpllist);
+        sort($tpllist, SORT_REGULAR);
 
         /* @var helper_plugin_extension_extension $extension */
         $extension = $this->loadHelper('extension_extension');
