@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: Adrien Friggeri (adrien@friggeri.net)
  * Copyright: (c) 2007 Adrien Friggeri (http://www.friggeri.net)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2007/05/30
  *
  * dot language file for GeSHi.

@@ -4,7 +4,7 @@
  * ----------
  * Author: José Gabriel Moya Yangüela (josemoya@gmail.com)
  * Copyright: (c) 2010 José Gabriel Moya Yangüela (http://doc.apagada.com)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2010/01/30
  *
  * GwBasic language file for GeSHi.

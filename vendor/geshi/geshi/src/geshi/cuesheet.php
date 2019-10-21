@@ -4,7 +4,7 @@
  * ----------
  * Author: Benny Baumann (benbe@geshi.org)
  * Copyright: (c) 2009 Benny Baumann (http://qbnz.com/highlighter/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2009/12/21
  *
  * Cuesheet language file for GeSHi.

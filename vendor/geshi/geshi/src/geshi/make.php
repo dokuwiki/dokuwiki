@@ -4,7 +4,7 @@
  * --------
  * Author: Neil Bird <phoenix@fnxweb.com>
  * Copyright: (c) 2008 Neil Bird
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2008/08/26
  *
  * make language file for GeSHi.

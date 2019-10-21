@@ -4,7 +4,7 @@
  * -------
  * Author: Marat Dukhan (mdukhan3.at.gatech.dot.edu)
  * Copyright: (c) Marat Dukhan (mdukhan3.at.gatech.dot.edu)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2011/10/06
  *
  * ARM Assembler language file for GeSHi.

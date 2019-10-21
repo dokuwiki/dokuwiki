@@ -4,7 +4,7 @@
  * --------
  * Author: James Rose (james.gs@stubbornroses.com)
  * Copyright: (c) 2006 Christian Lescuyer http://xtian.goelette.info
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2011/11/18
  *
  * FreeSWITCH language file for GeSHi.

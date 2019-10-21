@@ -29,15 +29,7 @@ class TableFormatter
     public function __construct(Colors $colors = null)
     {
         // try to get terminal width
-        $width = 0;
-        if (isset($_SERVER['COLUMNS'])) {
-            // from environment
-            $width = (int)$_SERVER['COLUMNS'];
-        }
-        if (!$width) {
-            // via tput command
-            $width = @exec('tput cols');
-        }
+        $width = $this->getTerminalWidth();
         if ($width) {
             $this->max = $width - 1;
         }
@@ -90,6 +82,27 @@ class TableFormatter
     public function setMaxWidth($max)
     {
         $this->max = $max;
+    }
+
+    /**
+     * Tries to figure out the width of the terminal
+     *
+     * @return int terminal width, 0 if unknown
+     */
+    protected function getTerminalWidth()
+    {
+        // from environment
+        if (isset($_SERVER['COLUMNS'])) return (int)$_SERVER['COLUMNS'];
+
+        // via tput
+        $process = proc_open('tput cols', array(
+            1 => array('pipe', 'w'),
+            2 => array('pipe', 'w'),
+        ), $pipes);
+        $width = (int)stream_get_contents($pipes[1]);
+        proc_close($process);
+
+        return $width;
     }
 
     /**

@@ -1,14 +1,4 @@
 <?php
-// your local timezone, set to "" to disable or for GMT
-if (!defined('TIME_ZONE')) {
-    define("TIME_ZONE", date("O", time()));
-}
-
-/**
- * Version string.
- */
-define("FEEDCREATOR_VERSION", "FeedCreator 1.8");
-
 /**
  * UniversalFeedCreator lets you choose during runtime which
  * format to build.
@@ -17,7 +7,6 @@ define("FEEDCREATOR_VERSION", "FeedCreator 1.8");
  *
  * @since   1.3
  * @author  Kai Blankenhorn <kaib@bitfolge.de>
- * @package de.bitfolge.feedcreator
  */
 class UniversalFeedCreator extends FeedCreator
 {

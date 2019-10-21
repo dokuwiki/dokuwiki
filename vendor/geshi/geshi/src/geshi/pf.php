@@ -4,7 +4,7 @@
  * --------
  * Author: David Berard (david@nfrance.com)
  * Copyright: (c) 2010 Benny Baumann (http://qbnz.com/highlighter/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2009/10/16
  * Based on bash.php
  *

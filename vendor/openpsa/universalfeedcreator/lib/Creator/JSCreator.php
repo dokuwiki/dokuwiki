@@ -5,7 +5,6 @@
  * location, overriding the createFeed method of the parent HTMLCreator.
  *
  * @author  Pascal Van Hecke
- * @package de.bitfolge.feedcreator
  */
 class JSCreator extends HTMLCreator
 {

@@ -4,7 +4,7 @@
  * --------
  * Author: Sjoerd van Leent (svanleent@gmail.com)
  * Copyright: (c) 2010 Sjoerd van Leent
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2010/02/15
  *
  * MagikSF language file for GeSHi.

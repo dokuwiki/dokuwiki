@@ -4,7 +4,7 @@
  * --------
  * Author: Archimmersion ( based on ruby.php by Moises Deniz )
  * Copyright: (c) 2011 Archimmersion ( http://www.archimmersion.com )
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2011/03/30
  *
  * StoneScript language file for GeSHi.
