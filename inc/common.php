@@ -1523,11 +1523,7 @@ function getGoogleQuery() {
     if(!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/',$url['host'])) return '';
 
     $query = array();
-    // temporary workaround against PHP bug #49733
-    // see http://bugs.php.net/bug.php?id=49733
-    if(UTF8_MBSTRING) $enc = mb_internal_encoding();
     parse_str($url['query'], $query);
-    if(UTF8_MBSTRING) mb_internal_encoding($enc);
 
     $q = '';
     if(isset($query['q'])){
@@ -1540,6 +1536,8 @@ function getGoogleQuery() {
     $q = trim($q);
 
     if(!$q) return '';
+    // ignore if query includes a full URL
+    if(strpos($q, '//') !== false) return '';
     $q = preg_split('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/', $q, -1, PREG_SPLIT_NO_EMPTY);
     return $q;
 }
