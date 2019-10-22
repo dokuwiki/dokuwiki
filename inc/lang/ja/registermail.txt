@@ -1,10 +1,10 @@
 新しいユーザーが登録されました。ユーザー情報は以下の通りです。
 
-ユーザー名     : @NEWUSER@
-フルネーム     : @NEWNAME@
-メールアドレス : @NEWEMAIL@
+ユーザー名　　: @NEWUSER@
+フルネーム　　: @NEWNAME@
+メールアドレス: @NEWEMAIL@
 
-登録日         : @DATE@
-ブラウザ       : @BROWSER@
-IPアドレス     : @IPADDRESS@
-ホスト名       : @HOSTNAME@
+登録日　　　　: @DATE@
+ブラウザ　　　: @BROWSER@
+IPアドレス　　: @IPADDRESS@
+ホスト名　　　: @HOSTNAME@
