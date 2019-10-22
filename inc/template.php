@@ -1424,8 +1424,6 @@ function tpl_mediaFileDetails($image, $rev) {
     /** @var Input $INPUT */
     global $INPUT;
 
-
-
     $removed = (
         !file_exists(mediaFN($image)) &&
         file_exists(mediaMetaFN($image, '.changes')) &&
