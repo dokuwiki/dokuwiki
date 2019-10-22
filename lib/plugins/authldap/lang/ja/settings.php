@@ -22,6 +22,7 @@ $lang['referrals']             = '紹介に従う';
 $lang['deref']                 = 'どのように間接参照のエイリアスにするか';
 $lang['binddn']                = '匿名バインドでは不十分な場合の、オプションバインドユーザーのDN（例：<code>cn=admin, dc=my, dc=home</code>）';
 $lang['bindpw']                = '上記ユーザーのパスワード';
+$lang['attributes']            = 'LDAP検索で取得する属性。';
 $lang['userscope']             = 'ユーザー検索の範囲を限定させる';
 $lang['groupscope']            = 'グループ検索の範囲を限定させる';
 $lang['userkey']               = 'ユーザー名を示す属性（userfilter と一致している必要があります。）';
