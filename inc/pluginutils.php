@@ -27,10 +27,13 @@ if(!defined('DOKU_PLUGIN_NAME_REGEX')) define('DOKU_PLUGIN_NAME_REGEX', '[a-zA-Z
  * @param bool $all; true to retrieve all, false to retrieve only enabled plugins
  * @return array with plugin names or plugin component names
  */
-function plugin_list($type='',$all=false) {
+public function plugin_list($type='',$all=false)
+{
     /** @var $plugin_controller PluginController */
     global $plugin_controller;
-    return $plugin_controller->getList($type,$all);
+    $plugins = $plugin_controller->getList($type,$all);
+    sort($plugins, SORT_NATURAL|SORT_FLAG_CASE);
+    return $plugins;
 }
 
 /**
@@ -44,7 +47,8 @@ function plugin_list($type='',$all=false) {
  * @param  $disabled bool   true to load even disabled plugins
  * @return PluginInterface|null  the plugin object or null on failure
  */
-function plugin_load($type,$name,$new=false,$disabled=false) {
+function plugin_load($type,$name,$new=false,$disabled=false)
+{
     /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->load($type,$name,$new,$disabled);
@@ -56,7 +60,8 @@ function plugin_load($type,$name,$new=false,$disabled=false) {
  * @param string $plugin name of plugin
  * @return bool true disabled, false enabled
  */
-function plugin_isdisabled($plugin) {
+public function plugin_isdisabled($plugin)
+{
     /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->isdisabled($plugin);
@@ -68,7 +73,8 @@ function plugin_isdisabled($plugin) {
  * @param string $plugin name of plugin
  * @return bool true saving succeed, false saving failed
  */
-function plugin_enable($plugin) {
+public function plugin_enable($plugin)
+{
     /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->enable($plugin);
@@ -80,7 +86,8 @@ function plugin_enable($plugin) {
  * @param string $plugin name of plugin
  * @return bool  true saving succeed, false saving failed
  */
-function plugin_disable($plugin) {
+public function plugin_disable($plugin)
+{
     /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->disable($plugin);
@@ -93,7 +100,8 @@ function plugin_disable($plugin) {
  * @return string name of directory
  * @deprecated 2018-07-20
  */
-function plugin_directory($plugin) {
+public function plugin_directory($plugin)
+{
     dbg_deprecated('$plugin directly');
     return $plugin;
 }
@@ -103,7 +111,8 @@ function plugin_directory($plugin) {
  *
  * @return array with arrays of plugin configs
  */
-function plugin_getcascade() {
+public function plugin_getcascade()
+{
     /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->getCascade();
@@ -116,7 +125,8 @@ function plugin_getcascade() {
  *
  * @return Doku_Plugin_Admin
  */
-function plugin_getRequestAdminPlugin(){
+public function plugin_getRequestAdminPlugin()
+{
     static $admin_plugin = false;
     global $ACT,$INPUT,$INFO;
 

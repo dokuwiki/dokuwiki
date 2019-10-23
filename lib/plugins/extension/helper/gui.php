@@ -35,15 +35,11 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
      */
     public function tabPlugins()
     {
-        /* @var PluginController $plugin_controller */
-        global $plugin_controller;
-
         echo '<div class="panelHeader">';
         echo $this->locale_xhtml('intro_plugins');
         echo '</div>';
 
-        $pluginlist = $plugin_controller->getList('', true);
-        sort($pluginlist);
+        $pluginlist = plugin_list('', true);
         /* @var helper_plugin_extension_extension $extension */
         $extension = $this->loadHelper('extension_extension');
         /* @var helper_plugin_extension_list $list */
