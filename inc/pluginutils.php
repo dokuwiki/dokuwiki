@@ -27,7 +27,7 @@ if(!defined('DOKU_PLUGIN_NAME_REGEX')) define('DOKU_PLUGIN_NAME_REGEX', '[a-zA-Z
  * @param bool $all; true to retrieve all, false to retrieve only enabled plugins
  * @return array with plugin names or plugin component names
  */
-public function plugin_list($type='',$all=false)
+function plugin_list($type='',$all=false)
 {
     /** @var $plugin_controller PluginController */
     global $plugin_controller;
@@ -60,7 +60,7 @@ function plugin_load($type,$name,$new=false,$disabled=false)
  * @param string $plugin name of plugin
  * @return bool true disabled, false enabled
  */
-public function plugin_isdisabled($plugin)
+function plugin_isdisabled($plugin)
 {
     /** @var $plugin_controller PluginController */
     global $plugin_controller;
@@ -73,7 +73,7 @@ public function plugin_isdisabled($plugin)
  * @param string $plugin name of plugin
  * @return bool true saving succeed, false saving failed
  */
-public function plugin_enable($plugin)
+function plugin_enable($plugin)
 {
     /** @var $plugin_controller PluginController */
     global $plugin_controller;
@@ -86,7 +86,7 @@ public function plugin_enable($plugin)
  * @param string $plugin name of plugin
  * @return bool  true saving succeed, false saving failed
  */
-public function plugin_disable($plugin)
+function plugin_disable($plugin)
 {
     /** @var $plugin_controller PluginController */
     global $plugin_controller;
@@ -100,7 +100,7 @@ public function plugin_disable($plugin)
  * @return string name of directory
  * @deprecated 2018-07-20
  */
-public function plugin_directory($plugin)
+function plugin_directory($plugin)
 {
     dbg_deprecated('$plugin directly');
     return $plugin;
@@ -111,7 +111,7 @@ public function plugin_directory($plugin)
  *
  * @return array with arrays of plugin configs
  */
-public function plugin_getcascade()
+function plugin_getcascade()
 {
     /** @var $plugin_controller PluginController */
     global $plugin_controller;
@@ -125,7 +125,7 @@ public function plugin_getcascade()
  *
  * @return Doku_Plugin_Admin
  */
-public function plugin_getRequestAdminPlugin()
+function plugin_getRequestAdminPlugin()
 {
     static $admin_plugin = false;
     global $ACT,$INPUT,$INFO;
