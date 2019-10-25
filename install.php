@@ -1,13 +1,4 @@
 <?php
-/*><div style="width:60%; margin: auto; background-color: #fcc;
-                border: 1px solid #faa; padding: 0.5em 1em;">
-    <h1 style="font-size: 120%">No PHP Support</h1>
-
-    It seems this server has no PHP support enabled. You will need to
-    enable PHP before you can install and run DokuWiki. Contact your hosting
-    provider if you're unsure what this means.
-
-</div>*/
 /**
  * Dokuwiki installation assistance
  *
