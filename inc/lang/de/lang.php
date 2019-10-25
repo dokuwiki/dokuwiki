@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author C!own77 <clown77@posteo.de>
  * @author Anonymous <anonymous@example.org>
  * @author Michaelsy <github@informantum.de>
  * @author Benjamin Molitor <bmolitor@uos.de>

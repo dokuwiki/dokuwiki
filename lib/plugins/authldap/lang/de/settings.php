@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author C!own77 <clown77@posteo.de>
  * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author christian studer <cstuder@existenz.ch>
  * @author Philip Knack <p.knack@stollfuss.de>
@@ -21,6 +22,7 @@ $lang['referrals']             = 'Weiterverfolgen von LDAP-Referrals (Verweise)?
 $lang['deref']                 = 'Wie sollen Aliase aufgelöst werden?';
 $lang['binddn']                = 'DN eines optionalen Benutzers, wenn der anonyme Zugriff nicht ausreichend ist. Zum Beispiel: <code>cn=admin, dc=my, dc=home</code>.';
 $lang['bindpw']                = 'Passwort des angegebenen Benutzers.';
+$lang['attributes']            = 'Attribute, die mit der LDAP-Suche abgerufen werden sollen.';
 $lang['userscope']             = 'Die Suchweite nach Benutzeraccounts.';
 $lang['groupscope']            = 'Die Suchweite nach Benutzergruppen.';
 $lang['userkey']               = 'Attribut, das den Benutzernamen enthält; muss konsistent zum userfilter sein.';
