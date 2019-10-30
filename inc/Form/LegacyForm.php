@@ -116,7 +116,7 @@ class LegacyForm extends Form {
         $control = array();
 
         foreach($legacy as $key => $val) {
-            if($key{0} == '_') {
+            if($key[0] == '_') {
                 $control[substr($key, 1)] = $val;
             } elseif($key == 'name') {
                 $control[$key] = $val;

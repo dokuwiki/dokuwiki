@@ -46,7 +46,7 @@ class Unicode
 
         for ($i = 0; $i < $len; $i++) {
 
-            $in = ord($str{$i});
+            $in = ord($str[$i]);
 
             if ($mState === 0) {
 

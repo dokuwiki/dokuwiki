@@ -370,7 +370,7 @@ function buildAttributes($params, $skipempty = false) {
     $url   = '';
     $white = false;
     foreach($params as $key => $val) {
-        if($key{0} == '_') continue;
+        if($key[0] == '_') continue;
         if($val === '' && $skipempty) continue;
         if($white) $url .= ' ';
 
