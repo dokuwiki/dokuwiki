@@ -657,7 +657,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
                 echo '</td>';
 
                 echo '<td>';
-                if($who[0] == '@') {
+                if ($who[0] == '@') {
                     echo '<span class="aclgroup">'.hsc($who).'</span>';
                 } else {
                     echo '<span class="acluser">'.hsc($who).'</span>';
