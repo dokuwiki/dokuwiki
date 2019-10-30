@@ -1,4 +1,7 @@
 <?php
+
+use dokuwiki\Parsing\ParserMode\Code;
+
 require_once 'parser.inc.php';
 
 /**
@@ -10,7 +13,7 @@ class TestOfDoku_Parser_Code extends TestOfDoku_Parser {
 
     function setUp() {
         parent::setUp();
-        $this->P->addMode('code',new Doku_Parser_Mode_Code());
+        $this->P->addMode('code',new Code());
     }
 
     function testCode() {

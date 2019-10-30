@@ -6,8 +6,11 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-if(!defined('NL')) define('NL',"\n");
+use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\Event;
+
 if (!defined('SEC_EDIT_PATTERN')) {
     define('SEC_EDIT_PATTERN', '#<!-- EDIT({.*?}) -->#');
 }
@@ -51,7 +54,13 @@ function html_login($svg = false){
     $form->startFieldset($lang['btn_login']);
     $form->addHidden('id', $ID);
     $form->addHidden('do', 'login');
-    $form->addElement(form_makeTextField('u', ((!$INPUT->bool('http_credentials')) ? $INPUT->str('u') : ''), $lang['user'], 'focus__this', 'block'));
+    $form->addElement(form_makeTextField(
+        'u',
+        ((!$INPUT->bool('http_credentials')) ? $INPUT->str('u') : ''),
+        $lang['user'],
+        'focus__this',
+        'block')
+    );
     $form->addElement(form_makePasswordField('p', $lang['pass'], '', 'block'));
     if($conf['rememberme']) {
         $form->addElement(form_makeCheckboxField('r', '1', $lang['remember'], 'remember__me', 'simple'));
@@ -126,7 +135,7 @@ function html_secedit_button($matches){
     $data ['target'] = strtolower($data['target']);
     $data ['hid'] = strtolower($data['hid']);
 
-    return trigger_event('HTML_SECEDIT_BUTTON', $data,
+    return Event::createAndTrigger('HTML_SECEDIT_BUTTON', $data,
                          'html_secedit_get_button');
 }
 
@@ -170,7 +179,10 @@ function html_secedit_get_button($data) {
 function html_topbtn(){
     global $lang;
 
-    $ret  = '<a class="nolink" href="#dokuwiki__top"><button class="button" onclick="window.scrollTo(0, 0)" title="'.$lang['btn_top'].'">'.$lang['btn_top'].'</button></a>';
+    $ret = '<a class="nolink" href="#dokuwiki__top">' .
+        '<button class="button" onclick="window.scrollTo(0, 0)" title="' . $lang['btn_top'] . '">' .
+        $lang['btn_top'] .
+        '</button></a>';
 
     return $ret;
 }
@@ -288,7 +300,7 @@ function html_show($txt=null){
     }else{
         if ($REV||$DATE_AT){
             $data = array('rev' => &$REV, 'date_at' => &$DATE_AT);
-            trigger_event('HTML_SHOWREV_OUTPUT', $data, 'html_showrev');
+            Event::createAndTrigger('HTML_SHOWREV_OUTPUT', $data, 'html_showrev');
         }
         $html = p_wiki_xhtml($ID,$REV,true,$DATE_AT);
         $html = html_secedit($html,$secedit);
@@ -343,7 +355,7 @@ function html_hilight($html,$phrases){
     $regex = join('|',$phrases);
 
     if ($regex === '') return $html;
-    if (!utf8_check($regex)) return $html;
+    if (!\dokuwiki\Utf8\Clean::isUtf8($regex)) return $html;
     $html = @preg_replace_callback("/((<[^>]*)|$regex)/ui",'html_hilight_callback',$html);
     return $html;
 }
@@ -690,7 +702,9 @@ function html_recent($first = 0, $show_changes = 'both') {
     print p_locale_xhtml('recent');
 
     if(getNS($ID) != '') {
-        print '<div class="level1"><p>' . sprintf($lang['recent_global'], getNS($ID), wl('', 'do=recent')) . '</p></div>';
+        print '<div class="level1"><p>' .
+            sprintf($lang['recent_global'], getNS($ID), wl('', 'do=recent')) .
+            '</p></div>';
     }
 
     $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET', 'class' => 'changes'));
@@ -773,7 +787,14 @@ function html_recent($first = 0, $show_changes = 'both') {
         }
 
         if(!empty($recent['media'])) {
-            $href = media_managerURL(array('tab_details' => 'history', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
+            $href = media_managerURL(
+                array(
+                    'tab_details' => 'history',
+                    'image' => $recent['id'],
+                    'ns' => getNS($recent['id'])
+                ),
+                '&'
+            );
         } else {
             $href = wl($recent['id'], "do=revisions", false, '&');
         }
@@ -790,7 +811,14 @@ function html_recent($first = 0, $show_changes = 'both') {
         $form->addElement(form_makeCloseTag('a'));
 
         if(!empty($recent['media'])) {
-            $href = media_managerURL(array('tab_details' => 'view', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
+            $href = media_managerURL(
+                array(
+                    'tab_details' => 'view',
+                    'image' => $recent['id'],
+                    'ns' => getNS($recent['id'])
+                ),
+                '&'
+            );
             $class = file_exists(mediaFN($recent['id'])) ? 'wikilink1' : 'wikilink2';
             $form->addElement(form_makeOpenTag('a', array(
                         'class' => $class,
@@ -897,14 +925,15 @@ function html_list_index($item){
     global $ID, $conf;
 
     // prevent searchbots needlessly following links
-    $nofollow = ($ID != $conf['start'] || $conf['sitemap']) ? ' rel="nofollow"' : '';
+    $nofollow = ($ID != $conf['start'] || $conf['sitemap']) ? 'rel="nofollow"' : '';
 
     $ret = '';
     $base = ':'.$item['id'];
     $base = substr($base,strrpos($base,':')+1);
     if($item['type']=='d'){
         // FS#2766, no need for search bots to follow namespace links in the index
-        $ret .= '<a href="'.wl($ID,'idx='.rawurlencode($item['id'])).'" title="' . $item['id'] . '" class="idx_dir"' . $nofollow . '><strong>';
+        $link = wl($ID, 'idx=' . rawurlencode($item['id']));
+        $ret .= '<a href="' . $link . '" title="' . $item['id'] . '" class="idx_dir" ' . $nofollow . '><strong>';
         $ret .= $base;
         $ret .= '</strong></a>';
     }else{
@@ -1562,12 +1591,12 @@ function html_softbreak_callback($match){
     // make certain characters into breaking characters by inserting a
     // word break opportunity (<wbr> tag) in front of them.
     $regex = <<< REGEX
-(?(?=                                 # start a conditional expression with a positive look ahead ...
-&\#?\\w{1,6};)                        # ... for html entities - we don't want to split them (ok to catch some invalid combinations)
-&\#?\\w{1,6};                         # yes pattern - a quicker match for the html entity, since we know we have one
+(?(?=              # start a conditional expression with a positive look ahead ...
+&\#?\\w{1,6};)     # ... for html entities - we don't want to split them (ok to catch some invalid combinations)
+&\#?\\w{1,6};      # yes pattern - a quicker match for the html entity, since we know we have one
 |
-[?/,&\#;:]                            # no pattern - any other group of 'special' characters to insert a breaking character after
-)+                                    # end conditional expression
+[?/,&\#;:]         # no pattern - any other group of 'special' characters to insert a breaking character after
+)+                 # end conditional expression
 REGEX;
 
     return preg_replace('<'.$regex.'>xu','\0<wbr>',$match[0]);
@@ -1643,13 +1672,41 @@ function html_register(){
     $form->startFieldset($lang['btn_register']);
     $form->addHidden('do', 'register');
     $form->addHidden('save', '1');
-    $form->addElement(form_makeTextField('login', $INPUT->post->str('login'), $lang['user'], '', 'block', $base_attrs));
+    $form->addElement(
+        form_makeTextField(
+            'login',
+            $INPUT->post->str('login'),
+            $lang['user'],
+            '',
+            'block',
+            $base_attrs
+        )
+    );
     if (!$conf['autopasswd']) {
         $form->addElement(form_makePasswordField('pass', $lang['pass'], '', 'block', $base_attrs));
         $form->addElement(form_makePasswordField('passchk', $lang['passchk'], '', 'block', $base_attrs));
     }
-    $form->addElement(form_makeTextField('fullname', $INPUT->post->str('fullname'), $lang['fullname'], '', 'block', $base_attrs));
-    $form->addElement(form_makeField('email','email', $INPUT->post->str('email'), $lang['email'], '', 'block', $email_attrs));
+    $form->addElement(
+        form_makeTextField(
+            'fullname',
+            $INPUT->post->str('fullname'),
+            $lang['fullname'],
+            '',
+            'block',
+            $base_attrs
+        )
+    );
+    $form->addElement(
+        form_makeField(
+            'email',
+            'email',
+            $INPUT->post->str('email'),
+            $lang['email'],
+            '',
+            'block',
+            $email_attrs
+        )
+    );
     $form->addElement(form_makeButton('submit', '', $lang['btn_register']));
     $form->endFieldset();
     html_form('register', $form);
@@ -1668,7 +1725,7 @@ function html_updateprofile(){
     global $conf;
     global $INPUT;
     global $INFO;
-    /** @var DokuWiki_Auth_Plugin $auth */
+    /** @var AuthPlugin $auth */
     global $auth;
 
     print p_locale_xhtml('updateprofile');
@@ -1680,7 +1737,16 @@ function html_updateprofile(){
     $form->startFieldset($lang['profile']);
     $form->addHidden('do', 'profile');
     $form->addHidden('save', '1');
-    $form->addElement(form_makeTextField('login', $_SERVER['REMOTE_USER'], $lang['user'], '', 'block', array('size'=>'50', 'disabled'=>'disabled')));
+    $form->addElement(
+        form_makeTextField(
+            'login',
+            $_SERVER['REMOTE_USER'],
+            $lang['user'],
+            '',
+            'block',
+            array('size' => '50', 'disabled' => 'disabled')
+        )
+    );
     $attr = array('size'=>'50');
     if (!$auth->canDo('modName')) $attr['disabled'] = 'disabled';
     $form->addElement(form_makeTextField('fullname', $fullname, $lang['fullname'], '', 'block', $attr));
@@ -1694,7 +1760,15 @@ function html_updateprofile(){
     }
     if ($conf['profileconfirm']) {
         $form->addElement(form_makeTag('br'));
-        $form->addElement(form_makePasswordField('oldpass', $lang['oldpass'], '', 'block', array('size'=>'50', 'required' => 'required')));
+        $form->addElement(
+            form_makePasswordField(
+                'oldpass',
+                $lang['oldpass'],
+                '',
+                'block',
+                array('size' => '50', 'required' => 'required')
+            )
+        );
     }
     $form->addElement(form_makeButton('submit', '', $lang['btn_save']));
     $form->addElement(form_makeButton('reset', '', $lang['btn_reset']));
@@ -1707,10 +1781,27 @@ function html_updateprofile(){
         $form_profiledelete->startFieldset($lang['profdeleteuser']);
         $form_profiledelete->addHidden('do', 'profile_delete');
         $form_profiledelete->addHidden('delete', '1');
-        $form_profiledelete->addElement(form_makeCheckboxField('confirm_delete', '1', $lang['profconfdelete'],'dw__confirmdelete','', array('required' => 'required')));
+        $form_profiledelete->addElement(
+            form_makeCheckboxField(
+                'confirm_delete',
+                '1',
+                $lang['profconfdelete'],
+                'dw__confirmdelete',
+                '',
+                array('required' => 'required')
+            )
+        );
         if ($conf['profileconfirm']) {
             $form_profiledelete->addElement(form_makeTag('br'));
-            $form_profiledelete->addElement(form_makePasswordField('oldpass', $lang['oldpass'], '', 'block', array('size'=>'50', 'required' => 'required')));
+            $form_profiledelete->addElement(
+                form_makePasswordField(
+                    'oldpass',
+                    $lang['oldpass'],
+                    '',
+                    'block',
+                    array('size' => '50', 'required' => 'required')
+                )
+            );
         }
         $form_profiledelete->addElement(form_makeButton('submit', '', $lang['btn_deleteuser']));
         $form_profiledelete->endFieldset();
@@ -1783,7 +1874,7 @@ function html_edit(){
     if ($data['target'] !== 'section') {
         // Only emit event if page is writable, section edit data is valid and
         // edit target is not section.
-        trigger_event('HTML_EDIT_FORMSELECTION', $data, 'html_edit_form', true);
+        Event::createAndTrigger('HTML_EDIT_FORMSELECTION', $data, 'html_edit_form', true);
     } else {
         html_edit_form($data);
     }
@@ -1803,12 +1894,35 @@ function html_edit(){
     $form->addElement(form_makeCloseTag('div'));
     if ($wr) {
         $form->addElement(form_makeOpenTag('div', array('class'=>'editButtons')));
-        $form->addElement(form_makeButton('submit', 'save', $lang['btn_save'], array('id'=>'edbtn__save', 'accesskey'=>'s', 'tabindex'=>'4')));
-        $form->addElement(form_makeButton('submit', 'preview', $lang['btn_preview'], array('id'=>'edbtn__preview', 'accesskey'=>'p', 'tabindex'=>'5')));
+        $form->addElement(
+            form_makeButton(
+                'submit',
+                'save',
+                $lang['btn_save'],
+                array('id' => 'edbtn__save', 'accesskey' => 's', 'tabindex' => '4')
+            )
+        );
+        $form->addElement(
+            form_makeButton(
+                'submit',
+                'preview',
+                $lang['btn_preview'],
+                array('id' => 'edbtn__preview', 'accesskey' => 'p', 'tabindex' => '5')
+            )
+        );
         $form->addElement(form_makeButton('submit', 'cancel', $lang['btn_cancel'], array('tabindex'=>'6')));
         $form->addElement(form_makeCloseTag('div'));
         $form->addElement(form_makeOpenTag('div', array('class'=>'summary')));
-        $form->addElement(form_makeTextField('summary', $SUM, $lang['summary'], 'edit__summary', 'nowrap', array('size'=>'50', 'tabindex'=>'2')));
+        $form->addElement(
+            form_makeTextField(
+                'summary',
+                $SUM,
+                $lang['summary'],
+                'edit__summary',
+                'nowrap',
+                array('size' => '50', 'tabindex' => '2')
+            )
+        );
         $elem = html_minoredit();
         if ($elem) $form->addElement($elem);
         $form->addElement(form_makeCloseTag('div'));
@@ -1833,8 +1947,12 @@ function html_edit(){
     <div class="editBox" role="application">
 
     <div class="toolbar group">
-        <div id="tool__bar" class="tool__bar"><?php if ($wr && $data['media_manager']){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
-            target="_blank"><?php echo $lang['mediaselect'] ?></a><?php }?></div>
+        <div id="tool__bar" class="tool__bar"><?php
+            if ($wr && $data['media_manager']){
+                ?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
+                target="_blank"><?php echo $lang['mediaselect'] ?></a><?php
+            }?>
+        </div>
     </div>
     <div id="draft__status" class="draft__status">
         <?php
@@ -1900,7 +2018,7 @@ function html_minoredit(){
 function html_debug(){
     global $conf;
     global $lang;
-    /** @var DokuWiki_Auth_Plugin $auth */
+    /** @var AuthPlugin $auth */
     global $auth;
     global $INFO;
 
@@ -2105,7 +2223,7 @@ function html_mktocitem($link, $text, $level, $hash='#'){
 function html_form($name, &$form) {
     // Safety check in case the caller forgets.
     $form->endFieldset();
-    trigger_event('HTML_'.strtoupper($name).'FORM_OUTPUT', $form, 'html_form_output', false);
+    Event::createAndTrigger('HTML_'.strtoupper($name).'FORM_OUTPUT', $form, 'html_form_output', false);
 }
 
 /**

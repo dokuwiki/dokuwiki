@@ -114,14 +114,14 @@ class auth_plugin_authplainharness extends auth_plugin_authplain {
      * @param boolean $bool
      */
     public function setPregsplit_safe($bool) {
-        $this->_pregsplit_safe = $bool;
+        $this->pregsplit_safe = $bool;
     }
 
     /**
      * @return bool|mixed
      */
     public function getPregsplit_safe(){
-        return $this->_pregsplit_safe;
+        return $this->pregsplit_safe;
     }
 
     /**
@@ -129,6 +129,6 @@ class auth_plugin_authplainharness extends auth_plugin_authplain {
      * @return array
      */
     public function splitUserData($line){
-        return $this->_splitUserData($line);
+        return parent::splitUserData($line);
     }
 }

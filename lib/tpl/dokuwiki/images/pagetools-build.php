@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile -- deprecated and will be removed
 /**
  * This script generates a sprite from the unprocessed pagetool icons by combining them
  * and overlaying a color layer for the active state.
@@ -10,6 +11,7 @@
  * The final sprite is optimized with optipng if available.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @deprecated 2018-06-15 we no longer use PNG based icons
  * @todo   Maybe add some more error checking
  */
 $GAMMA = 0.8;

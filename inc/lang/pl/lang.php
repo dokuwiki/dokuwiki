@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Bartek S <sadupl@gmail.com>
  * @author Przemek <p_kudriawcew@o2.pl>
  * @author Wojciech Lichota <wojciech@lichota.pl>
  * @author Max <maxrb146@gmail.com>
@@ -84,6 +85,7 @@ $lang['draftdate']             = 'Czas zachowania szkicu';
 $lang['nosecedit']             = 'Strona została zmodyfikowana, sekcje zostały zmienione. Załadowano całą stronę.';
 $lang['searchcreatepage']      = 'Jeżeli nie znalazłeś tego czego szukałeś możesz stworzyć lub edytować stronę %s, nazwaną tak jak twoja kwerenda';
 $lang['search_fullresults']    = 'Pokaż więcej wyników';
+$lang['js']['search_toggle_tools'] = 'Przełącz narzędzia wyszukiwania';
 $lang['js']['willexpire']      = 'Twoja blokada edycji tej strony wygaśnie w ciągu minuty. \nW celu uniknięcia konfliktów użyj przycisku podglądu aby odnowić blokadę.';
 $lang['js']['notsavedyet']     = 'Nie zapisane zmiany zostaną utracone.
 Czy na pewno kontynuować?';

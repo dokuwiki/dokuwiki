@@ -9,6 +9,8 @@
  */
 
 // update message version - always use a string to avoid localized floats!
+use dokuwiki\Extension\Event;
+
 $updateVersion = "51";
 
 //  xdebug_start_profiling();
@@ -111,7 +113,7 @@ if($conf['breadcrumbs']) breadcrumbs();
 checkUpdateMessages();
 
 $tmp = array(); // No event data
-trigger_event('DOKUWIKI_STARTED', $tmp);
+Event::createAndTrigger('DOKUWIKI_STARTED', $tmp);
 
 //close session
 session_write_close();
@@ -120,6 +122,6 @@ session_write_close();
 act_dispatch();
 
 $tmp = array(); // No event data
-trigger_event('DOKUWIKI_DONE', $tmp);
+Event::createAndTrigger('DOKUWIKI_DONE', $tmp);
 
 //  xdebug_dump_function_profile(1);

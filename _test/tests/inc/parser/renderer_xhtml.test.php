@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Parsing\Handler\Lists;
+
 /**
  * Class renderer_xhtml_test
  */
@@ -123,7 +125,7 @@ class renderer_xhtml_test extends DokuWikiTest {
         $this->R->document_start();
         $this->R->listo_open();
 
-        $this->R->listitem_open(1, Doku_Handler_List::NODE);
+        $this->R->listitem_open(1, Lists::NODE);
         $this->R->listcontent_open();
         $this->R->cdata('item1');
         $this->R->listcontent_close();
@@ -145,7 +147,7 @@ class renderer_xhtml_test extends DokuWikiTest {
         $this->R->listcontent_close();
         $this->R->listitem_close();
 
-        $this->R->listitem_open(1, Doku_Handler_List::NODE);
+        $this->R->listitem_open(1, Lists::NODE);
         $this->R->listcontent_open();
         $this->R->cdata('item3');
         $this->R->listcontent_close();
@@ -188,7 +190,7 @@ class renderer_xhtml_test extends DokuWikiTest {
         $this->R->document_start();
         $this->R->listu_open();
 
-        $this->R->listitem_open(1, Doku_Handler_List::NODE);
+        $this->R->listitem_open(1, Lists::NODE);
         $this->R->listcontent_open();
         $this->R->cdata('item1');
         $this->R->listcontent_close();
@@ -210,7 +212,7 @@ class renderer_xhtml_test extends DokuWikiTest {
         $this->R->listcontent_close();
         $this->R->listitem_close();
 
-        $this->R->listitem_open(1, Doku_Handler_List::NODE);
+        $this->R->listitem_open(1, Lists::NODE);
         $this->R->listcontent_open();
         $this->R->cdata('item3');
         $this->R->listcontent_close();

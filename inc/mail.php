@@ -6,10 +6,10 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 // end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
 // think different
+use dokuwiki\Extension\Event;
+
 if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");
 #define('MAILHEADER_ASCIIONLY',1);
 
@@ -27,7 +27,10 @@ if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");
  * Check if a given mail address is valid
  */
 if (!defined('RFC2822_ATEXT')) define('RFC2822_ATEXT',"0-9a-zA-Z!#$%&'*+/=?^_`{|}~-");
-if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', '['.RFC2822_ATEXT.']+(?:\.['.RFC2822_ATEXT.']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,63})');
+if (!defined('PREG_PATTERN_VALID_EMAIL')) define(
+    'PREG_PATTERN_VALID_EMAIL',
+    '['.RFC2822_ATEXT.']+(?:\.['.RFC2822_ATEXT.']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,63})'
+);
 
 /**
  * Prepare mailfrom replacement patterns
@@ -102,7 +105,7 @@ function mail_setup(){
 function mail_send($to, $subject, $body, $from='', $cc='', $bcc='', $headers=null, $params=null){
     dbg_deprecated('class Mailer::');
     $message = compact('to','subject','body','from','cc','bcc','headers','params');
-    return trigger_event('MAIL_MESSAGE_SEND',$message,'_mail_send_action');
+    return Event::createAndTrigger('MAIL_MESSAGE_SEND',$message,'_mail_send_action');
 }
 
 /**
@@ -131,11 +134,11 @@ function _mail_send_action($data) {
     // end additional code to support event ... original mail_send() code from here
 
     if(defined('MAILHEADER_ASCIIONLY')){
-        $subject = utf8_deaccent($subject);
-        $subject = utf8_strip($subject);
+        $subject = \dokuwiki\Utf8\Clean::deaccent($subject);
+        $subject = \dokuwiki\Utf8\Clean::strip($subject);
     }
 
-    if(!utf8_isASCII($subject)) {
+    if(!\dokuwiki\Utf8\Clean::isASCII($subject)) {
         $enc_subj = '=?UTF-8?Q?'.mail_quotedprintable_encode($subject,0).'?=';
         // Spaces must be encoded according to rfc2047. Use the "_" shorthand
         $enc_subj = preg_replace('/ /', '_', $enc_subj);
@@ -209,7 +212,7 @@ function mail_encode_address($string,$header='',$names=true){
         }
 
         // FIXME: is there a way to encode the localpart of a emailaddress?
-        if(!utf8_isASCII($addr)){
+        if(!\dokuwiki\Utf8\Clean::isASCII($addr)){
             msg(hsc("E-Mail address <$addr> is not ASCII"),-1);
             continue;
         }
@@ -225,11 +228,11 @@ function mail_encode_address($string,$header='',$names=true){
             $addr = "<$addr>";
 
             if(defined('MAILHEADER_ASCIIONLY')){
-                $text = utf8_deaccent($text);
-                $text = utf8_strip($text);
+                $text = \dokuwiki\Utf8\Clean::deaccent($text);
+                $text = \dokuwiki\Utf8\Clean::strip($text);
             }
 
-            if(!utf8_isASCII($text)){
+            if(!\dokuwiki\Utf8\Clean::isASCII($text)){
                 // put the quotes outside as in =?UTF-8?Q?"Elan Ruusam=C3=A4e"?= vs "=?UTF-8?Q?Elan Ruusam=C3=A4e?="
                 if (preg_match('/^"(.+)"$/', $text, $matches)) {
                     $text = '"=?UTF-8?Q?'.mail_quotedprintable_encode($matches[1], 0).'?="';

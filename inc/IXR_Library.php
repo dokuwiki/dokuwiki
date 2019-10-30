@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\HTTP\DokuHTTPClient;
+
 /**
  * IXR - The Incutio XML-RPC Library
  *
@@ -820,6 +822,7 @@ EOD;
  */
 class IXR_Date {
 
+    const XMLRPC_ISO8601 = "Ymd\TH:i:sO" ;
     /** @var DateTime */
     protected $date;
 
@@ -859,7 +862,7 @@ class IXR_Date {
      * @return string
      */
     public function getIso() {
-        return $this->date->format(DateTime::ISO8601);
+	      return $this->date->format(self::XMLRPC_ISO8601);
     }
 
     /**

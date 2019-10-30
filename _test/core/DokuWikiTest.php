@@ -1,4 +1,9 @@
 <?php
+
+use dokuwiki\Extension\PluginController;
+use dokuwiki\Extension\Event;
+use dokuwiki\Extension\EventHandler;
+
 if(!class_exists('PHPUnit_Framework_TestCase')) {
     /**
      * phpunit 5/6 compatibility
@@ -103,7 +108,7 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
         // reset loaded plugins
         global $plugin_controller_class, $plugin_controller;
-        /** @var Doku_Plugin_Controller $plugin_controller */
+        /** @var PluginController $plugin_controller */
         $plugin_controller = new $plugin_controller_class();
 
         // disable all non-default plugins
@@ -133,14 +138,14 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
         // reset event handler
         global $EVENT_HANDLER;
-        $EVENT_HANDLER = new Doku_Event_Handler();
+        $EVENT_HANDLER = new EventHandler();
 
         // reload language
         $local = $conf['lang'];
-        trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
+        Event::createAndTrigger('INIT_LANG_LOAD', $local, 'init_lang', true);
 
         global $INPUT;
-        $INPUT = new Input();
+        $INPUT = new \dokuwiki\Input\Input();
     }
 
     /**
@@ -196,23 +201,16 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
     /**
      * Waits until a new second has passed
      *
-     * The very first call will return immeadiately, proceeding calls will return
-     * only after at least 1 second after the last call has passed.
+     * This tried to be clever about the passing of time and return early if possible. Unfortunately
+     * this never worked reliably fo unknown reasons. To avoid flaky tests, this now always simply
+     * sleeps for a full second on every call.
      *
-     * When passing $init=true it will not return immeadiately but use the current
-     * second as initialization. It might still return faster than a second.
-     *
-     * @param bool $init wait from now on, not from last time
+     * @param bool $init no longer used
      * @return int new timestamp
      */
     protected function waitForTick($init = false) {
-        static $last = 0;
-        if($init) $last = time();
-        while($last === $now = time()) {
-            usleep(100000); //recheck in a 10th of a second
-        }
-        $last = $now;
-        return $now;
+        sleep(1);
+        return time();
     }
 
     /**
@@ -233,5 +231,42 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
         $method = $class->getMethod($func);
         $method->setAccessible(true);
         return $method->invokeArgs($obj, $args);
+    }
+
+    /**
+     * Allow for reading inaccessible properties (private or protected)
+     *
+     * This makes it easier to check internals of tested objects. This should generally
+     * be avoided.
+     *
+     * @param object $obj Object on which to access the property
+     * @param string $prop name of the property to access
+     * @return mixed
+     * @throws ReflectionException  when the given obj/prop does not exist
+     */
+    protected static function getInaccessibleProperty($obj, $prop) {
+        $class = new \ReflectionClass($obj);
+        $property = $class->getProperty($prop);
+        $property->setAccessible(true);
+        return $property->getValue($obj);
+    }
+
+    /**
+     * Allow for reading inaccessible properties (private or protected)
+     *
+     * This makes it easier to set internals of tested objects. This should generally
+     * be avoided.
+     *
+     * @param object $obj Object on which to access the property
+     * @param string $prop name of the property to access
+     * @param mixed $value new value to set the property to
+     * @return void
+     * @throws ReflectionException when the given obj/prop does not exist
+     */
+    protected static function setInaccessibleProperty($obj, $prop, $value) {
+        $class = new \ReflectionClass($obj);
+        $property = $class->getProperty($prop);
+        $property->setAccessible(true);
+        $property->setValue($obj, $value);
     }
 }

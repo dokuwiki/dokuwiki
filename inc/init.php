@@ -3,6 +3,8 @@
  * Initialize some defaults needed for DokuWiki
  */
 
+use dokuwiki\Extension\Event;
+use dokuwiki\Extension\EventHandler;
 
 /**
  * timing Dokuwiki execution
@@ -104,6 +106,7 @@ if(!defined('DOKU_BASE')){
 }
 
 // define whitespace
+if(!defined('NL')) define ('NL',"\n");
 if(!defined('DOKU_LF')) define ('DOKU_LF',"\n");
 if(!defined('DOKU_TAB')) define ('DOKU_TAB',"\t");
 
@@ -111,8 +114,8 @@ if(!defined('DOKU_TAB')) define ('DOKU_TAB',"\t");
 if (!defined('DOKU_COOKIE')) {
     $serverPort = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : '';
     define('DOKU_COOKIE', 'DW' . md5(DOKU_REL . (($conf['securecookie']) ? $serverPort : '')));
+    unset($serverPort);
 }
-
 
 // define main script
 if(!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT','doku.php');
@@ -189,9 +192,8 @@ init_paths();
 init_files();
 
 // setup plugin controller class (can be overwritten in preload.php)
-$plugin_types = array('auth', 'admin','syntax','action','renderer', 'helper','remote');
 global $plugin_controller_class, $plugin_controller;
-if (empty($plugin_controller_class)) $plugin_controller_class = 'Doku_Plugin_Controller';
+if (empty($plugin_controller_class)) $plugin_controller_class = dokuwiki\Extension\PluginController::class;
 
 // load libraries
 require_once(DOKU_INC.'vendor/autoload.php');
@@ -209,17 +211,17 @@ if($conf['compression'] == 'gz' && !DOKU_HAS_GZIP) {
 
 // input handle class
 global $INPUT;
-$INPUT = new Input();
+$INPUT = new \dokuwiki\Input\Input();
 
 // initialize plugin controller
 $plugin_controller = new $plugin_controller_class();
 
 // initialize the event handler
 global $EVENT_HANDLER;
-$EVENT_HANDLER = new Doku_Event_Handler();
+$EVENT_HANDLER = new EventHandler();
 
 $local = $conf['lang'];
-trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
+Event::createAndTrigger('INIT_LANG_LOAD', $local, 'init_lang', true);
 
 
 // setup authentication system
@@ -241,7 +243,13 @@ mail_setup();
 function init_session() {
     global $conf;
     session_name(DOKU_SESSION_NAME);
-    session_set_cookie_params(DOKU_SESSION_LIFETIME, DOKU_SESSION_PATH, DOKU_SESSION_DOMAIN, ($conf['securecookie'] && is_ssl()), true);
+    session_set_cookie_params(
+        DOKU_SESSION_LIFETIME,
+        DOKU_SESSION_PATH,
+        DOKU_SESSION_DOMAIN,
+        ($conf['securecookie'] && is_ssl()),
+        true
+    );
 
     // make sure the session cookie contains a valid session ID
     if(isset($_COOKIE[DOKU_SESSION_NAME]) && !preg_match('/^[-,a-zA-Z0-9]{22,256}$/', $_COOKIE[DOKU_SESSION_NAME])) {
@@ -280,7 +288,9 @@ function init_paths(){
     }
 
     // path to old changelog only needed for upgrading
-    $conf['changelog_old'] = init_path((isset($conf['changelog']))?($conf['changelog']):($conf['savedir'].'/changes.log'));
+    $conf['changelog_old'] = init_path(
+        (isset($conf['changelog'])) ? ($conf['changelog']) : ($conf['savedir'] . '/changes.log')
+    );
     if ($conf['changelog_old']=='') { unset($conf['changelog_old']); }
     // hardcoded changelog because it is now a cache that lives in meta
     $conf['changelog'] = $conf['metadir'].'/_dokuwiki.changes';
@@ -449,7 +459,7 @@ function getBaseURL($abs=null){
     //finish here for relative URLs
     if(!$abs) return $dir;
 
-    //use config option if available, trim any slash from end of baseurl to avoid multiple consecutive slashes in the path
+    //use config if available, trim any slash from end of baseurl to avoid multiple consecutive slashes in the path
     if(!empty($conf['baseurl'])) return rtrim($conf['baseurl'],'/').$dir;
 
     //split hostheader into host and port

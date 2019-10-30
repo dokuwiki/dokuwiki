@@ -77,11 +77,11 @@ class Admin extends Ui {
     protected function showSecurityCheck() {
         global $conf;
         if(substr($conf['savedir'], 0, 2) !== './') return;
+        $img = DOKU_URL . $conf['savedir'] .
+            '/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png';
         echo '<a style="border:none; float:right;"
                 href="http://www.dokuwiki.org/security#web_access_security">
-                <img src="' . DOKU_URL . $conf['savedir'] .
-                '/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png" 
-                alt="Your data directory seems to be protected properly."
+                <img src="' . $img . '" alt="Your data directory seems to be protected properly."
                 onerror="this.parentNode.style.display=\'none\'" /></a>';
     }
 
@@ -119,8 +119,8 @@ class Admin extends Ui {
         $menu = ['admin' => [], 'manager' => [], 'other' => []];
 
         foreach($pluginlist as $p) {
-            /** @var \DokuWiki_Admin_Plugin $obj */
-            if (($obj = plugin_load('admin', $p)) === null) continue;
+            /** @var \dokuwiki\Extension\AdminPlugin $obj */
+            if(($obj = plugin_load('admin', $p)) === null) continue;
 
             // check permissions
             if (!$obj->isAccessibleByCurrentUser()) continue;
@@ -158,7 +158,7 @@ class Admin extends Ui {
      * @param array $b
      * @return int
      */
-    protected function menuSort ($a, $b) {
+    protected function menuSort($a, $b) {
         $strcmp = strcasecmp($a['prompt'], $b['prompt']);
         if($strcmp != 0) return $strcmp;
         if($a['sort'] === $b['sort']) return 0;

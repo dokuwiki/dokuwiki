@@ -1,7 +1,9 @@
 <?php
 
+use dokuwiki\Input\Input;
+
 /**
- * Tests for the Input class
+ * Tests for the dokuwiki\Input\Input class
  */
 class input_test extends DokuWikiTest {
 

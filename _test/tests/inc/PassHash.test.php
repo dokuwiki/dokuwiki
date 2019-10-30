@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\PassHash;
+
 /**
  * Class PassHash_test
  *
