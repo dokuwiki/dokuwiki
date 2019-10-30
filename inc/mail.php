@@ -308,7 +308,7 @@ function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true)
         // encode x09,x20 at lineends
         {
             $iLength = strlen($sLine);
-            $iLastChar = ord($sLine{$iLength-1});
+            $iLastChar = ord($sLine[$iLength-1]);
 
             //              !!!!!!!!
             // imap_8_bit does not encode x20 at the very end of a text,
@@ -317,7 +317,7 @@ function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true)
             // or comment next line for RFC2045 conformance, if you like
             if (!($bEmulate_imap_8bit && ($i==count($aLines)-1))){
                 if (($iLastChar==0x09)||($iLastChar==0x20)) {
-                    $sLine{$iLength-1}='=';
+                    $sLine[$iLength-1]='=';
                     $sLine .= ($iLastChar==0x09)?'09':'20';
                 }
             }
