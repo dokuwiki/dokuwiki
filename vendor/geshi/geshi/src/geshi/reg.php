@@ -4,7 +4,7 @@
  * -------
  * Author: Sean Hanna (smokingrope@gmail.com)
  * Copyright: (c) 2006 Sean Hanna
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 03/15/2006
  *
  * Microsoft Registry Editor language file for GeSHi.

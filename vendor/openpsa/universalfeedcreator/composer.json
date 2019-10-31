@@ -3,7 +3,7 @@
     "type": "library",
     "description": "RSS and Atom feed generator by Kai Blankenhorn",
     "keywords": ["rss", "atom", "pie", "opml", "gpx", "georss"],
-    "license": "LGPL",
+    "license": "LGPL-2.1-or-later",
     "authors": [
         {
             "name": "Andreas Flack",
@@ -15,7 +15,8 @@
         "php": ">=5.0"
     },
     "autoload": {
-        "classmap": ["lib"]
+        "classmap": ["lib"],
+        "files": ["lib/constants.php"]
     },
     "require-dev": {
         "phpunit/phpunit": "*"

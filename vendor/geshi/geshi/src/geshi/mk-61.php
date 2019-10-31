@@ -4,7 +4,7 @@
  *
  * Author: Russkiy
  * Copyright: (c) 2014 Russkiy
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2014-03-11
  *
  *********************************************************************

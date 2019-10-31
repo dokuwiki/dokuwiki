@@ -6,7 +6,6 @@
  * @see     http://opml.scripting.com/spec
  * @author  Dirk Clemens, Kai Blankenhorn
  * @since   1.5
- * @package de.bitfolge.feedcreator
  */
 class OPMLCreator extends FeedCreator
 {

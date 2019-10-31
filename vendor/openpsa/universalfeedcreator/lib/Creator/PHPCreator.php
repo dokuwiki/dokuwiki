@@ -5,7 +5,6 @@
  *
  * @since   1.7.3
  * @author  Barry Hunter <geo@barryhunter.co.uk>
- * @package de.bitfolge.feedcreator
  */
 class PHPCreator extends FeedCreator
 {

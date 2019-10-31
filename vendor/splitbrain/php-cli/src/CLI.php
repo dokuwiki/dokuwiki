@@ -77,7 +77,8 @@ abstract class CLI
      * Execute the CLI program
      *
      * Executes the setup() routine, adds default options, initiate the options parsing and argument checking
-     * and finally executes main()
+     * and finally executes main() - Each part is split into their own protected function below, so behaviour
+     * can easily be overwritten
      *
      * @throws Exception
      */
@@ -87,8 +88,24 @@ abstract class CLI
             throw new Exception('This has to be run from the command line');
         }
 
-        // setup
         $this->setup($this->options);
+        $this->registerDefaultOptions();
+        $this->parseOptions();
+        $this->handleDefaultOptions();
+        $this->setupLogging();
+        $this->checkArgments();
+        $this->execute();
+
+        exit(0);
+    }
+
+    // region run handlers - for easier overriding
+
+    /**
+     * Add the default help, color and log options
+     */
+    protected function registerDefaultOptions()
+    {
         $this->options->registerOption(
             'help',
             'Display this help screen and exit immeadiately.',
@@ -105,11 +122,13 @@ abstract class CLI
             null,
             'level'
         );
+    }
 
-        // parse
-        $this->options->parseOptions();
-
-        // handle defaults
+    /**
+     * Handle the default options
+     */
+    protected function handleDefaultOptions()
+    {
         if ($this->options->getOpt('no-colors')) {
             $this->colors->disable();
         }
@@ -117,21 +136,46 @@ abstract class CLI
             echo $this->options->help();
             exit(0);
         }
+    }
+
+    /**
+     * Handle the logging options
+     */
+    protected function setupLogging()
+    {
         $level = $this->options->getOpt('loglevel', $this->logdefault);
         if (!isset($this->loglevel[$level])) $this->fatal('Unknown log level');
         foreach (array_keys($this->loglevel) as $l) {
             if ($l == $level) break;
             unset($this->loglevel[$l]);
         }
-
-        // check arguments
-        $this->options->checkArguments();
-
-        // execute
-        $this->main($this->options);
-
-        exit(0);
     }
+
+    /**
+     * Wrapper around the option parsing
+     */
+    protected function parseOptions()
+    {
+        $this->options->parseOptions();
+    }
+
+    /**
+     * Wrapper around the argument checking
+     */
+    protected function checkArgments()
+    {
+        $this->options->checkArguments();
+    }
+
+    /**
+     * Wrapper around main
+     */
+    protected function execute()
+    {
+        $this->main($this->options);
+    }
+
+    // endregion
 
     // region logging
 
@@ -286,7 +330,7 @@ abstract class CLI
         /** @var string $color */
         /** @var resource $channel */
         list($prefix, $color, $channel) = $this->loglevel[$level];
-        if(!$this->colors->isEnabled()) $prefix = '';
+        if (!$this->colors->isEnabled()) $prefix = '';
 
         $message = $this->interpolate($message, $context);
         $this->colors->ptln($prefix . $message, $color, $channel);

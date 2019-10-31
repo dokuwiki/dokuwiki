@@ -4,7 +4,7 @@
  * --------
  * Author: Benny Baumann (BenBE@geshi.org), Azriel Fasten (azriel.fasten@gmail.com)
  * Copyright: (c) 2010 Benny Baumann (http://qbnz.com/highlighter/), Azriel Fasten (azriel.fasten@gmail.com)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2010/10/14
  *
  * LLVM language file for GeSHi.

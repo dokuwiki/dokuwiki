@@ -28,12 +28,15 @@ class Tar extends Archive
      * Sets the compression to use
      *
      * @param int $level Compression level (0 to 9)
-     * @param int $type  Type of compression to use (use COMPRESS_* constants)
-     * @return mixed
+     * @param int $type Type of compression to use (use COMPRESS_* constants)
+     * @throws ArchiveIllegalCompressionException
      */
     public function setCompression($level = 9, $type = Archive::COMPRESS_AUTO)
     {
         $this->compressioncheck($type);
+        if ($level < -1 || $level > 9) {
+            throw new ArchiveIllegalCompressionException('Compression level should be between -1 and 9');
+        }
         $this->comptype  = $type;
         $this->complevel = $level;
         if($level == 0) $this->comptype = Archive::COMPRESS_NONE;
@@ -45,6 +48,7 @@ class Tar extends Archive
      *
      * @param string $file
      * @throws ArchiveIOException
+     * @throws ArchiveIllegalCompressionException
      */
     public function open($file)
     {
@@ -79,6 +83,7 @@ class Tar extends Archive
      * Reopen the file with open() again if you want to do additional operations
      *
      * @throws ArchiveIOException
+     * @throws ArchiveCorruptedException
      * @returns FileInfo[]
      */
     public function contents()
@@ -120,11 +125,12 @@ class Tar extends Archive
      * The archive is closed afer reading the contents, because rewinding is not possible in bzip2 streams.
      * Reopen the file with open() again if you want to do additional operations
      *
-     * @param string     $outdir  the target directory for extracting
-     * @param int|string $strip   either the number of path components or a fixed prefix to strip
-     * @param string     $exclude a regular expression of files to exclude
-     * @param string     $include a regular expression of files to include
+     * @param string $outdir the target directory for extracting
+     * @param int|string $strip either the number of path components or a fixed prefix to strip
+     * @param string $exclude a regular expression of files to exclude
+     * @param string $include a regular expression of files to include
      * @throws ArchiveIOException
+     * @throws ArchiveCorruptedException
      * @return FileInfo[]
      */
     public function extract($outdir, $strip = '', $exclude = '', $include = '')
@@ -178,12 +184,15 @@ class Tar extends Archive
                 }
 
                 fclose($fp);
-                touch($output, $fileinfo->getMtime());
-                chmod($output, $fileinfo->getMode());
+                @touch($output, $fileinfo->getMtime());
+                @chmod($output, $fileinfo->getMode());
             } else {
                 $this->skipbytes(ceil($header['size'] / 512) * 512); // the size is usually 0 for directories
             }
 
+            if(is_callable($this->callback)) {
+                call_user_func($this->callback, $fileinfo);
+            }
             $extracted[] = $fileinfo;
         }
 
@@ -198,6 +207,7 @@ class Tar extends Archive
      *
      * @param string $file
      * @throws ArchiveIOException
+     * @throws ArchiveIllegalCompressionException
      */
     public function create($file = '')
     {
@@ -234,6 +244,7 @@ class Tar extends Archive
      * @param string|FileInfo $fileinfo either the name to us in archive (string) or a FileInfo oject with all meta data, empty to take from original
      * @throws ArchiveCorruptedException when the file changes while reading it, the archive will be corrupt and should be deleted
      * @throws ArchiveIOException there was trouble reading the given file, it was not added
+     * @throws FileInfoException trouble reading file info, it was not added
      */
     public function addFile($file, $fileinfo = '')
     {
@@ -273,6 +284,10 @@ class Tar extends Archive
             $this->close();
             throw new ArchiveCorruptedException("The size of $file changed while reading, archive corrupted. read $read expected ".$fileinfo->getSize());
         }
+
+        if(is_callable($this->callback)) {
+            call_user_func($this->callback, $fileinfo);
+        }
     }
 
     /**
@@ -299,6 +314,10 @@ class Tar extends Archive
         for ($s = 0; $s < $len; $s += 512) {
             $this->writebytes(pack("a512", substr($data, $s, 512)));
         }
+
+        if (is_callable($this->callback)) {
+            call_user_func($this->callback, $fileinfo);
+        }
     }
 
     /**
@@ -311,6 +330,7 @@ class Tar extends Archive
      * consists of two 512 blocks of zero bytes"
      *
      * @link http://www.gnu.org/software/tar/manual/html_chapter/tar_8.html#SEC134
+     * @throws ArchiveIOException
      */
     public function close()
     {
@@ -346,6 +366,7 @@ class Tar extends Archive
      * Returns the created in-memory archive data
      *
      * This implicitly calls close() on the Archive
+     * @throws ArchiveIOException
      */
     public function getArchive()
     {
@@ -372,6 +393,7 @@ class Tar extends Archive
      *
      * @param string $file
      * @throws ArchiveIOException
+     * @throws ArchiveIllegalCompressionException
      */
     public function save($file)
     {
@@ -451,9 +473,10 @@ class Tar extends Archive
     }
 
     /**
-     * Write the given file metat data as header
+     * Write the given file meta data as header
      *
      * @param FileInfo $fileinfo
+     * @throws ArchiveIOException
      */
     protected function writeFileHeader(FileInfo $fileinfo)
     {
@@ -472,12 +495,13 @@ class Tar extends Archive
      * Write a file header to the stream
      *
      * @param string $name
-     * @param int    $uid
-     * @param int    $gid
-     * @param int    $perm
-     * @param int    $size
-     * @param int    $mtime
+     * @param int $uid
+     * @param int $gid
+     * @param int $perm
+     * @param int $size
+     * @param int $mtime
      * @param string $typeflag Set to '5' for directories
+     * @throws ArchiveIOException
      */
     protected function writeRawFileHeader($name, $uid, $gid, $perm, $size, $mtime, $typeflag = '')
     {
@@ -664,4 +688,5 @@ class Tar extends Archive
 
         return Archive::COMPRESS_NONE;
     }
+
 }

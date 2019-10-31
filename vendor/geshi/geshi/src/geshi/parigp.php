@@ -4,7 +4,7 @@
  * --------
  * Author: Charles R Greathouse IV (charles@crg4.com)
  * Copyright: 2011-2013 Charles R Greathouse IV (http://math.crg4.com/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2011/05/11
  *
  * PARI/GP language file for GeSHi.

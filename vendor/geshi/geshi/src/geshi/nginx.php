@@ -7,7 +7,7 @@
  * Contributors:
  *  - Deoren Moor (http://www.whyaskwhy.org/blog/)
  *  - Thomas Joiner
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2010/08/24
  *
  * nginx language file for GeSHi.
@@ -864,5 +864,10 @@ $language_data = array (
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(),
-    'HIGHLIGHT_STRICT_BLOCK' => array()
+    'HIGHLIGHT_STRICT_BLOCK' => array(),
+    'PARSER_CONTROL' => array(
+        'ENABLE_FLAGS' => array(
+            'NUMBERS' => GESHI_NEVER
+            )
+        )
 );

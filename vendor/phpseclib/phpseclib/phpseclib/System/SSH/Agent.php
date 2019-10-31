@@ -43,7 +43,7 @@ use phpseclib\System\SSH\Agent\Identity;
  *
  * @package SSH\Agent
  * @author  Jim Wigginton <terrafrost@php.net>
- * @access  internal
+ * @access  public
  */
 class Agent
 {
@@ -117,18 +117,20 @@ class Agent
      * @return \phpseclib\System\SSH\Agent
      * @access public
      */
-    function __construct()
+    function __construct($address = null)
     {
-        switch (true) {
-            case isset($_SERVER['SSH_AUTH_SOCK']):
-                $address = $_SERVER['SSH_AUTH_SOCK'];
-                break;
-            case isset($_ENV['SSH_AUTH_SOCK']):
-                $address = $_ENV['SSH_AUTH_SOCK'];
-                break;
-            default:
-                user_error('SSH_AUTH_SOCK not found');
-                return false;
+        if (!$address) {
+            switch (true) {
+                case isset($_SERVER['SSH_AUTH_SOCK']):
+                    $address = $_SERVER['SSH_AUTH_SOCK'];
+                    break;
+                case isset($_ENV['SSH_AUTH_SOCK']):
+                    $address = $_ENV['SSH_AUTH_SOCK'];
+                    break;
+                default:
+                    user_error('SSH_AUTH_SOCK not found');
+                    return false;
+            }
         }
 
         $this->fsock = fsockopen('unix://' . $address, 0, $errno, $errstr);
@@ -155,12 +157,14 @@ class Agent
         $packet = pack('NC', 1, self::SSH_AGENTC_REQUEST_IDENTITIES);
         if (strlen($packet) != fputs($this->fsock, $packet)) {
             user_error('Connection closed while requesting identities');
+            return array();
         }
 
         $length = current(unpack('N', fread($this->fsock, 4)));
         $type = ord(fread($this->fsock, 1));
         if ($type != self::SSH_AGENT_IDENTITIES_ANSWER) {
             user_error('Unable to request identities');
+            return array();
         }
 
         $identities = array();

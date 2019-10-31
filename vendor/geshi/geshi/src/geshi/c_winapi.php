@@ -7,7 +7,7 @@
  *  - Jack Lloyd (lloyd@randombit.net)
  *  - Michael Mol (mikemol@gmail.com)
  * Copyright: (c) 2012 Benny Baumann (http://qbnz.com/highlighter/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2012/08/12
  *
  * C (WinAPI) language file for GeSHi.

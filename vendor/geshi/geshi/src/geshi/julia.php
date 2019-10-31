@@ -7,7 +7,7 @@
  *   - Magnus Lie Hetland
  *   - Curtis Vogt
  * Copyright: (c) 2013 John Lynch
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2013/11/06
  *
  * Julia language file for GeSHi.

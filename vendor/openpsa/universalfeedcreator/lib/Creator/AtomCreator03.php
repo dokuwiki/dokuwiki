@@ -14,7 +14,6 @@
  * @see     FeedCreator#additionalElements
  * @since   1.6
  * @author  Kai Blankenhorn <kaib@bitfolge.de>, Scott Reynen <scott@randomchaos.com>
- * @package de.bitfolge.feedcreator
  */
 class AtomCreator03 extends FeedCreator
 {

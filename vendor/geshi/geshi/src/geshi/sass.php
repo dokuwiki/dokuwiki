@@ -4,7 +4,7 @@
  * -------
  * Author: Javier Eguiluz (javier.eguiluz@gmail.com)
  * Copyright: (c) 2014 Javier Eguiluz (javier.eguiluz@gmail.com)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2014/05/10
  *
  * SASS language file for GeSHi.

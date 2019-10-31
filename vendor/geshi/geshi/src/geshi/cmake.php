@@ -4,7 +4,7 @@
  * -------
  * Author: Daniel Nelson (danieln@eng.utah.edu)
  * Copyright: (c) 2009 Daniel Nelson
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2009/04/06
  *
  * CMake language file for GeSHi.

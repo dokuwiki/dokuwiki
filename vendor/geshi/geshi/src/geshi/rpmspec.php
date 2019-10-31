@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: Paul Grinberg (gri6507 TA unity-linux TOD org)
  * Copyright: (c) 2010 Paul Grinberg
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2010/04/27
  *
  * RPM Spec language file for GeSHi.
