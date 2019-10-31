@@ -7,6 +7,10 @@
  */
 class general_html_test extends DokuWikiTest
 {
+    /** @var string[] we consider these hits shortcomings in the validator and not errors */
+    protected $allowedErrors = [
+        'The string “ugc” is not a registered keyword.',
+    ];
 
     /**
      * List of requests to check for validity
@@ -36,7 +40,7 @@ class general_html_test extends DokuWikiTest
      */
     protected function validate($html)
     {
-        $http = new HTTPClient();
+        $http = new \dokuwiki\HTTP\DokuHTTPClient();
         $http->headers['Content-Type'] = 'text/html; charset=utf-8';
         $result = $http->post('https://validator.w3.org/nu/?out=json&level=error', $html);
 
@@ -62,11 +66,23 @@ class general_html_test extends DokuWikiTest
     {
         $errors = [];
         foreach ($result['messages'] as $msg) {
+            if ($this->isAllowedError($msg['message'])) continue;
             $errors[] = "☛ " . $msg['message'] . "\n" . $msg['extract'] . "\n";
         }
         return $errors;
     }
 
+    /**
+     * Is the given string an allowed error that should be skipped?
+     *
+     * @param string $string
+     * @return bool
+     */
+    protected function isAllowedError($string)
+    {
+        $re = join('|', array_map('preg_quote_cb', $this->allowedErrors));
+        return (bool)preg_match("/$re/", $string);
+    }
 
     /**
      * @dataProvider requestProvider
