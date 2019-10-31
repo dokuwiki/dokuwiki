@@ -64,7 +64,7 @@ class Doku_Handler {
      * @param int $pos byte position in the original source file
      * @param string $match matched syntax
      */
-    protected function addPluginCall($plugin, $args, $state, $pos, $match) {
+    public function addPluginCall($plugin, $args, $state, $pos, $match) {
         $call = array('plugin',array($plugin, $args, $state, $match), $pos);
         $this->callWriter->writeCall($call);
     }
