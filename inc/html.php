@@ -50,7 +50,7 @@ function html_login($svg = false){
 
     print p_locale_xhtml('login');
     print '<div class="centeralign">'.NL;
-    $form = new Doku_Form(array('id' => 'dw__login'));
+    $form = new Doku_Form(array('id' => 'dw__login', 'action'=>wl($ID)));
     $form->startFieldset($lang['btn_login']);
     $form->addHidden('id', $ID);
     $form->addHidden('do', 'login');
@@ -707,7 +707,7 @@ function html_recent($first = 0, $show_changes = 'both') {
             '</p></div>';
     }
 
-    $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET', 'class' => 'changes'));
+    $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET', 'class' => 'changes', 'action'=>wl($ID)));
     $form->addHidden('sectok', null);
     $form->addHidden('do', 'recent');
     $form->addHidden('id', $ID);

@@ -228,9 +228,9 @@ function getRecents($first,$num,$ns='',$flags=0){
 
     // read all recent changes. (kept short)
     if ($flags & RECENTS_MEDIA_CHANGES) {
-        $lines = @file($conf['media_changelog']);
+        $lines = @file($conf['media_changelog']) ?: [];
     } else {
-        $lines = @file($conf['changelog']);
+        $lines = @file($conf['changelog']) ?: [];
     }
     if (!is_array($lines)) {
         $lines = array();
@@ -240,7 +240,7 @@ function getRecents($first,$num,$ns='',$flags=0){
     $media_lines = array();
 
     if ($flags & RECENTS_MEDIA_PAGES_MIXED) {
-        $media_lines = @file($conf['media_changelog']);
+        $media_lines = @file($conf['media_changelog']) ?: [];
         if (!is_array($media_lines)) {
             $media_lines = array();
         }
