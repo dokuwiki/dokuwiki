@@ -254,7 +254,7 @@ function pageinfo() {
     $info['lastmod']  = @filemtime($info['filepath']);
 
     //load page meta data
-    $info['meta'] = p_get_metadata($ID);
+    $info['meta'] = p_get_metadata($ID, '', METADATA_DONT_RENDER);
 
     //who's the editor
     $pagelog = new PageChangeLog($ID, 1024);
