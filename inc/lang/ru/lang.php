@@ -3,11 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Alexander Kh. <001.arx@gmail.com>
  * @author Vyacheslav Strenadko <vyacheslav.strenadko@gmail.com>
  * @author Wolterhon <hotmottot.1@gmail.com>
- * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Zhassulan <zyesmukanov@gmail.com>
  * @author Yuri Pimenov <up@ftpsearch.lv>
  * @author Igor Tarasov <tigr@mail15.com>
