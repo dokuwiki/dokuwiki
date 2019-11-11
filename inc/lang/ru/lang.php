@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author alex <alexemel3@gmail.com>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Alexander Kh. <001.arx@gmail.com>
