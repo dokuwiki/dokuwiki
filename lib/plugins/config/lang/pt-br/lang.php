@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schopf <pschopf@gmail.com>
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Márcio Gomes Gonçalves <gomes@metha.com.br>
  * @author Felipe Castro <fefcas@gmail.com>
