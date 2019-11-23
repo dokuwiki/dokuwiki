@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schopf <pschopf@gmail.com>
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Márcio Gomes Gonçalves <gomes@metha.com.br>
  * @author Felipe Castro <fefcas@gmail.com>
@@ -47,6 +48,7 @@ $lang['_advanced']             = 'Configurações avançadas';
 $lang['_network']              = 'Configurações de rede';
 $lang['_msg_setting_undefined'] = 'Nenhum metadado configurado.';
 $lang['_msg_setting_no_class'] = 'Nenhuma classe definida.';
+$lang['_msg_setting_no_known_class'] = 'Classe de configuração não disponível.';
 $lang['_msg_setting_no_default'] = 'Nenhum valor padrão.';
 $lang['title']                 = 'Título do wiki';
 $lang['start']                 = 'Nome da página inicial';
@@ -162,6 +164,7 @@ $lang['search_fragment_o_exact'] = 'exato';
 $lang['search_fragment_o_starts_with'] = 'começa com';
 $lang['search_fragment_o_ends_with'] = 'termina com';
 $lang['search_fragment_o_contains'] = 'contém';
+$lang['trustedproxy']          = 'Confie nos proxies de encaminhamento que correspondem a essa expressão regular sobre o verdadeiro IP do cliente que eles relatam. O padrão corresponde às redes locais. Deixe em branco para não confiar em proxy.';
 $lang['dnslookups']            = 'O DokuWiki procurará pelo nome de host dos endereços IP remotos dos usuários que estão editando as páginas. Caso você tenha um DNS lento, ele não esteja funcionando ou, ainda, você não queira esse recurso, desabilite essa opção.';
 $lang['jquerycdn']             = 'Os scripts jQuery e jQuery UI devem ser carregados a partir de uma CND? Isso adiciona requisições HTTP adicionais, mas os arquivos podem carregar mais rapidamente e os usuários podem já tê-los no cache.';
 $lang['jquerycdn_o_0']         = 'Sem CDN, somente entrega local';
