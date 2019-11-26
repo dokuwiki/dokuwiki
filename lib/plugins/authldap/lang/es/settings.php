@@ -3,11 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Domingo Redal <docxml@gmail.com>
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Eloy <ej.perezgomez@gmail.com>
  * @author Alejandro Nunez <nunez.alejandro@gmail.com>
  * @author Enny Rodriguez <aquilez.4@gmail.com>
- * @author Domingo Redal <docxml@gmail.com>
  */
 $lang['server']                = 'Tu servidor LDAP. Puede ser el nombre del host  (<code>localhost</code>) o una URL completa (<code>ldap://server.tld:389</code>)';
 $lang['port']                  = 'Servidor LDAP en caso de que no se diera la URL completa anteriormente.';
@@ -21,6 +21,7 @@ $lang['referrals']             = '¿Deben ser seguidas las referencias?';
 $lang['deref']                 = '¿Cómo desreferenciar los alias?';
 $lang['binddn']                = 'DN de un usuario de enlace opcional si el enlace anónimo no es suficiente. P. ej. <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']                = 'Contraseña del usuario de arriba.';
+$lang['attributes']            = 'Atributos a recuperar de la búsqueda en LDAP.';
 $lang['userscope']             = 'Limitar ámbito de búsqueda para búsqueda de usuarios';
 $lang['groupscope']            = 'Limitar ámbito de búsqueda para búsqueda de grupos';
 $lang['userkey']               = 'Atributo que denota el nombre de usuario; debe ser coherente con el filtro.';
