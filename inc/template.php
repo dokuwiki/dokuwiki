@@ -342,19 +342,19 @@ function tpl_metaheaders($alt = true) {
     }
     jsinfo();
     $script .= 'var JSINFO = ' . json_encode($JSINFO).';';
-    $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
+    $head['script'][] = array('_data'=> $script);
 
     // load jquery
     $jquery = getCdnUrls();
     foreach($jquery as $src) {
         $head['script'][] = array(
-            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '', 'src' => $src
+            '_data' => '', 'src' => $src
         );
     }
 
     // load our javascript dispatcher
     $head['script'][] = array(
-        'type'=> 'text/javascript', 'charset'=> 'utf-8', '_data'=> '',
+        '_data'=> '',
         'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed
     );
 
