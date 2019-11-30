@@ -9,7 +9,6 @@
  */
 
 if (!defined('DOKU_INC')) die(); /* must be run from within DokuWiki */
-header('X-UA-Compatible: IE=edge,chrome=1');
 
 $hasSidebar = page_findnearest($conf['sidebar']);
 $showSidebar = $hasSidebar && ($ACT=='show');
