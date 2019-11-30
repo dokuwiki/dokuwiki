@@ -55,7 +55,7 @@ All documentation and additional information besides the [[syntax|syntax descrip
 
 ===== Copyright =====
 
-2004-2019 (c) Andreas Gohr <andi@splitbrain.org>((Please do not contact me for help and support -- use the [[doku>mailinglist]] or [[https://forum.dokuwiki.org|forum]] instead)) and the DokuWiki Community
+2004-2020 (c) Andreas Gohr <andi@splitbrain.org>((Please do not contact me for help and support -- use the [[doku>mailinglist]] or [[https://forum.dokuwiki.org|forum]] instead)) and the DokuWiki Community
 
 The DokuWiki engine is licensed under [[https://www.gnu.org/licenses/gpl.html|GNU General Public License]] Version 2. If you use DokuWiki in your company, consider [[doku>donate|donating]] a few bucks ;-).
 
