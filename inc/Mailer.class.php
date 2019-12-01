@@ -644,8 +644,8 @@ class Mailer {
             'TITLE' => $conf['title'],
             'DOKUWIKIURL' => DOKU_URL,
             'USER' => $INPUT->server->str('REMOTE_USER'),
-            'NAME' => $INFO['userinfo'] ? $INFO['userinfo']['name'] : '',
-            'MAIL' => $INFO['userinfo'] ? $INFO['userinfo']['mail'] : ''
+            'NAME' => isset($INFO) ? $INFO['userinfo']['name'] : '',
+            'MAIL' => isset($INFO) ? $INFO['userinfo']['mail'] : ''
         );
         $signature = str_replace(
             '@DOKUWIKIURL@',
