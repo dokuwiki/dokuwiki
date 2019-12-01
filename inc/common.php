@@ -280,16 +280,23 @@ function pageinfo() {
         p_set_metadata($ID, array('last_change' => $revinfo));
     }
 
-    $info['ip']   = $revinfo['ip'];
-    $info['user'] = $revinfo['user'];
-    $info['sum']  = $revinfo['sum'];
-    // See also $INFO['meta']['last_change'] which is the most recent log line for page $ID.
-    // Use $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT in place of $info['minor'].
+    if($revinfo !== false){
+        $info['ip']   = $revinfo['ip'];
+        $info['user'] = $revinfo['user'];
+        $info['sum']  = $revinfo['sum'];
+        // See also $INFO['meta']['last_change'] which is the most recent log line for page $ID.
+        // Use $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT in place of $info['minor'].
 
-    if($revinfo['user']) {
-        $info['editor'] = $revinfo['user'];
-    } else {
-        $info['editor'] = $revinfo['ip'];
+        if($revinfo['user']) {
+            $info['editor'] = $revinfo['user'];
+        } else {
+            $info['editor'] = $revinfo['ip'];
+        }
+    }else{
+        $info['ip']     = null;
+        $info['user']   = null;
+        $info['sum']    = null;
+        $info['editor'] = null;
     }
 
     // draft
