@@ -45,12 +45,12 @@ class plugin_usermanager_csv_import_test extends DokuWikiTest {
 
     function doImportTest($importCsv, $expectedResult, $expectedNewUsers, $expectedFailures) {
         global $auth;
-        $before_users = $auth->retrieveUsers();
+        $before_users = (array) $auth->retrieveUsers();
 
         io_savefile($this->importfile, $importCsv);
         $result = $this->usermanager->tryImport();
 
-        $after_users = $auth->retrieveUsers();
+        $after_users = (array) $auth->retrieveUsers();
         $import_count = count($after_users) - count($before_users);
         $new_users = array_diff_key($after_users, $before_users);
         $diff_users = array_diff_assoc($after_users, $before_users);
