@@ -1845,7 +1845,7 @@ function tpl_classes() {
         'mode_'.$ACT,
         'tpl_'.$conf['template'],
         $INPUT->server->bool('REMOTE_USER') ? 'loggedIn' : '',
-        $INFO['exists'] ? '' : 'notFound',
+        (isset($INFO) && $INFO['exists']) ? '' : 'notFound',
         ($ID == $conf['start']) ? 'home' : '',
     );
     return join(' ', $classes);
