@@ -6,7 +6,7 @@ Read the [[doku>manual|DokuWiki Manual]] to unleash the full power of DokuWiki.
 
 ===== Download =====
 
-DokuWiki is available at http://download.dokuwiki.org/
+DokuWiki is available at https://download.dokuwiki.org/
 
 
 ===== Read More =====
@@ -19,12 +19,12 @@ All documentation and additional information besides the [[syntax|syntax descrip
   * [[doku>users|Happy Users]]
   * [[doku>press|Who wrote about it]]
   * [[doku>blogroll|What Bloggers think]]
-  * [[http://www.wikimatrix.org/show/DokuWiki|Compare it with other wiki software]]
+  * [[https://www.wikimatrix.org/show/DokuWiki|Compare it with other wiki software]]
 
 **Installing DokuWiki**
 
   * [[doku>requirements|System Requirements]]
-  * [[http://download.dokuwiki.org/|Download DokuWiki]] :!:
+  * [[https://download.dokuwiki.org/|Download DokuWiki]] :!:
   * [[doku>changes|Change Log]]
   * [[doku>Install|How to install or upgrade]] :!:
   * [[doku>config|Configuration]]
@@ -35,7 +35,6 @@ All documentation and additional information besides the [[syntax|syntax descrip
   * [[doku>manual|The manual]] :!:
   * [[doku>FAQ|Frequently Asked Questions (FAQ)]]
   * [[doku>glossary|Glossary]]
-  * [[http://search.dokuwiki.org|Search for DokuWiki help and documentation]]
 
 **Customizing DokuWiki**
 
@@ -48,17 +47,16 @@ All documentation and additional information besides the [[syntax|syntax descrip
 
   * [[doku>newsletter|Subscribe to the newsletter]] :!:
   * [[doku>mailinglist|Join the mailing list]]
-  * [[http://forum.dokuwiki.org|Check out the user forum]]
+  * [[https://forum.dokuwiki.org|Check out the user forum]]
   * [[doku>irc|Talk to other users in the IRC channel]]
   * [[https://github.com/splitbrain/dokuwiki/issues|Submit bugs and feature wishes]]
-  * [[http://www.wikimatrix.org/forum/viewforum.php?id=10|Share your experiences in the WikiMatrix forum]]
   * [[doku>thanks|Some humble thanks]]
 
 
 ===== Copyright =====
 
-2004-2015 (c) Andreas Gohr <andi@splitbrain.org>((Please do not contact me for help and support -- use the [[doku>mailinglist]] or [[http://forum.dokuwiki.org|forum]] instead)) and the DokuWiki Community
+2004-2020 (c) Andreas Gohr <andi@splitbrain.org>((Please do not contact me for help and support -- use the [[doku>mailinglist]] or [[https://forum.dokuwiki.org|forum]] instead)) and the DokuWiki Community
 
-The DokuWiki engine is licensed under [[http://www.gnu.org/licenses/gpl.html|GNU General Public License]] Version 2. If you use DokuWiki in your company, consider [[doku>donate|donating]] a few bucks ;-).
+The DokuWiki engine is licensed under [[https://www.gnu.org/licenses/gpl.html|GNU General Public License]] Version 2. If you use DokuWiki in your company, consider [[doku>donate|donating]] a few bucks ;-).
 
 Not sure what this means? See the [[doku>faq:license|FAQ on the Licenses]].
