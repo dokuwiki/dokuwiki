@@ -1189,8 +1189,8 @@ function parsePageTemplate(&$data) {
              \dokuwiki\Utf8\PhpString::ucwords($page),
              \dokuwiki\Utf8\PhpString::strtoupper($page),
              $INPUT->server->str('REMOTE_USER'),
-             $USERINFO['name'],
-             $USERINFO['mail'],
+             $USERINFO ? $USERINFO['name'] : '',
+             $USERINFO ? $USERINFO['mail'] : '',
              $conf['dformat'],
         ), $tpl
     );

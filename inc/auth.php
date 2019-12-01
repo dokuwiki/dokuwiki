@@ -472,7 +472,7 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false) {
         }
     }
     if(is_null($groups)) {
-        $groups = (array) $USERINFO['grps'];
+        $groups = $USERINFO ? (array) $USERINFO['grps'] : array();
     }
 
     // check superuser match
@@ -566,7 +566,7 @@ function auth_quickaclcheck($id) {
     global $INPUT;
     # if no ACL is used always return upload rights
     if(!$conf['useacl']) return AUTH_UPLOAD;
-    return auth_aclcheck($id, $INPUT->server->str('REMOTE_USER'), $USERINFO['grps']);
+    return auth_aclcheck($id, $INPUT->server->str('REMOTE_USER'), is_array($USERINFO) ? $USERINFO['grps'] : array());
 }
 
 /**

@@ -350,7 +350,7 @@ class Mailer {
      * addresses. Addresses must be separated by a comma. If the display
      * name includes a comma then it MUST be properly enclosed by '"' to
      * prevent spliting at the wrong point.
-     * 
+     *
      * Example:
      *   cc("föö <foo@bar.com>, me@somewhere.com","TBcc");
      *   to("foo, Dr." <foo@bar.com>, me@somewhere.com");
@@ -644,8 +644,8 @@ class Mailer {
             'TITLE' => $conf['title'],
             'DOKUWIKIURL' => DOKU_URL,
             'USER' => $INPUT->server->str('REMOTE_USER'),
-            'NAME' => $INFO['userinfo']['name'],
-            'MAIL' => $INFO['userinfo']['mail']
+            'NAME' => $INFO['userinfo'] ? $INFO['userinfo']['name'] : '',
+            'MAIL' => $INFO['userinfo'] ? $INFO['userinfo']['mail'] : ''
         );
         $signature = str_replace(
             '@DOKUWIKIURL@',
