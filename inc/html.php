@@ -1940,7 +1940,7 @@ function html_edit(){
 
     if ($wr) {
         // sets changed to true when previewed
-        echo '<script type="text/javascript">/*<![CDATA[*/'. NL;
+        echo '<script>/*<![CDATA[*/'. NL;
         echo 'textChanged = ' . ($mod ? 'true' : 'false');
         echo '/*!]]>*/</script>' . NL;
     } ?>
