@@ -3,7 +3,7 @@
 <head>
     <title>Filetype icons</title>
 
-    <style type="text/css">
+    <style">
         body {
             background-color: #ccc;
             font-family: Arial;
