@@ -3,202 +3,3436 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Francesco Embling <francesco.embling73@googlemail.com>
  * @author Saroj Kumar Dhakal <lotusnagarkot@gmail.com>
- * @author Saroj Kumar Dhakal <lotusnagarkot@yahoo.com>
- * @author सरोज ढकाल <lotusnagarkot@gmail.com>
  */
-$lang['encoding']              = 'utf-8';
-$lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '“';
-$lang['doublequoteclosing']    = '”';
-$lang['singlequoteopening']    = '‘';
-$lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '’';
-$lang['btn_edit']              = 'यो पृष्ठ सम्पादन गर्नुहोस् ';
-$lang['btn_source']            = 'यो पृष्ठको स्रोत देखाउनुहोस् ';
-$lang['btn_show']              = 'पृष्ठ देखाउनुहोस् ';
-$lang['btn_create']            = 'यो पृष्ठ निर्माण गर्नुहोस्';
-$lang['btn_search']            = 'खोज्नुहोस् ';
-$lang['btn_save']              = 'वचत गर्नुहोस्';
-$lang['btn_preview']           = 'पूर्वरुप ';
-$lang['btn_top']               = 'माथि फर्कनुहोस्';
-$lang['btn_newer']             = '<< यो भन्दा पछिको';
-$lang['btn_older']             = 'यो भन्दा पहिलेको >>';
-$lang['btn_revs']              = 'पुरानो संकरण';
-$lang['btn_recent']            = 'हालैका परिवर्तनहरु ';
-$lang['btn_upload']            = 'अपलोड ';
-$lang['btn_cancel']            = 'रद्द गर्नुहोस् ';
-$lang['btn_index']             = 'सुची';
-$lang['btn_secedit']           = 'सम्पादन गर्नुहोस्';
-$lang['btn_login']             = 'प्रवेश गर्नुहोस् ';
-$lang['btn_logout']            = 'बाहिर जानुहोस् ';
-$lang['btn_admin']             = 'एड्मिन(व्यवस्थापक)';
-$lang['btn_update']            = 'अध्यावधिक गर्नुहोस्';
-$lang['btn_delete']            = 'मेटाउनुहोस् ';
-$lang['btn_back']              = 'पछाडि';
-$lang['btn_backlink']          = 'पछाडिका लिङ्कहरु ';
-$lang['btn_subscribe']         = 'पृष्ठ परिवर्तन ग्राह्य गर्नुहोस्';
-$lang['btn_profile']           = 'प्रोफाइल अध्यावधिक गर्नुहोस् ';
-$lang['btn_reset']             = 'पूर्वरुपमा फर्काउनुहोस';
-$lang['btn_resendpwd']         = 'नयाँ पासवर्ड राख्नुहोस';
-$lang['btn_draft']             = ' ड्राफ्ट सम्पादन गर्नुहोस् ';
-$lang['btn_recover']           = 'पहिलेको ड्राफ्ट हासिल गर्नुहोस ';
-$lang['btn_draftdel']          = ' ड्राफ्ट मेटाउनुहोस् ';
-$lang['btn_revert']            = 'पूर्वरूपमा फर्काउने';
-$lang['btn_register']          = 'दर्ता  गर्नुहोस्';
-$lang['btn_apply']             = 'लागु गर्ने';
-$lang['btn_media']             = 'मेडिया व्यवस्थापक';
-$lang['btn_deleteuser']        = 'खाता हटाउने';
-$lang['btn_img_backto']        = 'फिर्ता%s';
-$lang['btn_mediaManager']      = 'मेडिया व्यवस्थापकमा हेर्ने';
-$lang['loggedinas']            = 'प्रवेश गर्नुहोस् :';
-$lang['user']                  = 'प्रयोगकर्ता ';
-$lang['pass']                  = 'प्रवेशशव्द';
-$lang['newpass']               = 'नयाँ प्रवेशशव्द';
-$lang['oldpass']               = 'नयाँ प्रवेशशव्द निश्चित गर्नुहोस ';
-$lang['passchk']               = 'एकपटक पुन:';
-$lang['remember']              = 'मलाई सम्झनु';
-$lang['fullname']              = 'पूरा नाम';
-$lang['email']                 = 'इमेल';
-$lang['profile']               = 'प्रयोगकर्ताको प्रोफाइल';
-$lang['badlogin']              = 'माफ गर्नुहोस् , प्रयोगकर्तानाम वा प्रवेशशव्द गलत भयो  ';
-$lang['badpassconfirm']        = 'माफ गर्नुहोस् , पासवर्ड गलत छ ';
-$lang['minoredit']             = 'सामान्य परिवर्तन';
-$lang['draftdate']             = 'ड्राफ्ट स्वचालित रुपमा वचत भएको';
-$lang['nosecedit']             = 'यो पृष्ठ यसै बखतमा परिवर्तन भयो, खण्ड जानकारी अध्यावधिक हुन सकेन र पूरै पृष्ठ लोड भयो । ';
-$lang['regmissing']            = 'माफ गर्नुहोला , सबै ठाउमा भर्नुपर्नेछ ।';
-$lang['reguexists']            = 'यो नामको प्रयोगकर्ता पहिले देखि रहेको छ।';
-$lang['regsuccess']            = 'यो प्रयोगकर्ता बनाइएको छ र प्रवेशशव्द इमेलमा पठइएको छ।';
-$lang['regsuccess2']           = 'यो प्रयोगकर्ता बनाइएको छ ।';
-$lang['regmailfail']           = 'इमेलबाट प्रवेशशब्द पठउन गल्ति भयो । कृपया एड्मिन(व्यवस्थापक)लाई सम्पर्क गर्नुहोस्  !';
-$lang['regbadmail']            = 'दिएको इमेल ठेगाना गलत भए जस्तो देखिन्छ - यदि यो सहि हो भने एड्मिन(व्यवस्थापक)लाई सम्पर्क गर्नुहोस्  !';
-$lang['regbadpass']            = 'दिइएका  प्रवेशशव्दहरु मिल्दैनन् , पुन: प्रयास गर्नुहोस् ।';
-$lang['regpwmail']             = 'तपाईको DokuWiki प्रवेशशब्द ';
-$lang['reghere']               = 'तपाईको आफ्नै खाता छैन ? अहिल्यै एउटा बनाउनुहोस् ';
-$lang['profna']                = 'यो विकिले यो प्रोफाइल परिवर्तन समर्थन गर्दैन ।';
-$lang['profnochange']          = 'केहि  परिवर्तन छैन , केहि गर्नु छैन ।';
-$lang['profnoempty']           = 'खाली नाम वा इमेल ठेगानालाई अनुमति छैन ।';
-$lang['profchanged']           = 'प्रयोगकर्ताको प्रफाइल सफलरुपमा परिवर्तन भयो ।';
-$lang['profnodelete']          = 'यो विकिले प्रयोगकर्ताहरू हटाउन समर्थन गर्दैन';
-$lang['profdeleteuser']        = 'खाता मेट्नुहोस';
-$lang['pwdforget']             = 'आफ्नो पासवर्ड भुल्नु भयो ? नयाँ हासिल गर्नुहोस् ';
-$lang['resendna']              = 'यो विकिबाट प्रवेशशव्द पठाउन समर्थित छैन ।';
-$lang['resendpwd']             = 'नयाँ  प्रवेशशव्द पठाउनुहोस् ';
-$lang['resendpwdnouser']       = 'माफ गर्नुहोस्,  हाम्रो डेटावेसमा यो प्रयोगकर्ता भेटिएन ।';
-$lang['resendpwdbadauth']      = 'माफ गर्नुहोस् , यो अनुमति चिन्ह गलत छ। तपाईले पूरै जानकारी लिङ्क प्रयोग गर्नु पर्नेछ। ';
-$lang['resendpwdconfirm']      = 'तपाईको इमेलमा कन्फरमेशन लिङ्क पठाइएको छ। ';
-$lang['resendpwdsuccess']      = 'तपाईको प्रवेशशव्द इमेलबाट पठाइएको छ। ';
-$lang['license']               = 'खुलाइएको बाहेक, यस विकिका विषयवस्तुहरु निम्त प्रमाण द्वारा प्रमाणिक गरिएको छ।';
-$lang['licenseok']             = 'नोट: यस पृष्ठ सम्पादन गरी तपाईले आफ्नो विषयवस्तु तलको प्रमाण पत्र अन्तर्गत प्रमाणिक गर्न राजी हुनु हुनेछ ।';
-$lang['txt_upload']            = 'अपलोड गर्नलाई फाइल छा्न्नुहो्स्:';
-$lang['txt_filename']          = 'अर्को रुपमा अपलोड गर्नुहोस् (ऐच्छिक):';
-$lang['txt_overwrt']           = 'रहेको उहि नामको फाइललाई मेटाउने';
-$lang['lockedby']              = 'अहिले ताल्चा लगाइएको:';
-$lang['lockexpire']            = 'ताल्चा अवधि सकिने :';
-$lang['js']['willexpire']      = 'तपाईलले यो पृष्ठ सम्पादन गर्न लगाउनु भएको ताल्चाको अवधि एक मिनेट भित्र सकिदै छ। \n द्वन्द हुन नदिन  पूर्वरुप वा ताल्चा समय परिवर्तन गर्नुहोस् ।';
-$lang['js']['notsavedyet']     = 'तपाईले वचन गर्नु नभएको परिवर्रन हराउने छ। \n साच्चै जारी गर्नुहुन्छ ।';
-$lang['js']['keepopen']        = 'छनौटमा विन्डो खुला राख्नुहोस् ';
-$lang['js']['hidedetails']     = 'जानकारी लुकाउनु होस् ';
-$lang['js']['mediaclose']      = 'बन्द गर्ने';
-$lang['js']['nosmblinks']      = 'विन्डोहरु लिङ्क गर्दा माइक्रो सफ्ट एक्सप्लोररमामात्र  काम साझा हुन्छ । तर कपि गर्न र टास्न मिल्छ।   ';
-$lang['js']['del_confirm']     = 'साच्चै छानिएका वस्तुहरु मेट्ने हो ?';
-$lang['rssfailed']             = 'यो फिड लिइ आउदा गल्ति भयो ।';
-$lang['nothingfound']          = 'केहि पनि भेटिएन ।';
-$lang['mediaselect']           = 'मिडिया फाइलहरू ';
-$lang['uploadsucc']            = 'अपलोड सफल ';
-$lang['uploadfail']            = 'अपलोड असफल । सायद गलत अनुमति । ';
-$lang['uploadwrong']           = 'अपलोड असमर्थित । फाइल एक्सटेन्सन अमान्य।  ';
-$lang['uploadexist']           = 'फाइल पहिलेदेखि छ। केहि गरिएन ।';
-$lang['uploadbadcontent']      = 'अपलोड गरिएको वस्तु %s फाइल एक्टेन्सन अनुसार मिलेन ।';
-$lang['uploadspam']            = 'अपलोड स्प्याम कालो सुचीले रोकिएको छ। ';
-$lang['uploadxss']             = 'अपलोड सम्भवत: हानिकारक वस्तुको कारणले रोकिएको। ';
-$lang['deletesucc']            = 'फाइल  "%s"  मेटिएको छ। ';
-$lang['deletefail']            = '"%s"  मेट्न सकिएन - अनुमति हेर्नुहोस् ।';
-$lang['mediainuse']            = 'फाइल "%s" मेटिएको छैन - प्रयोगमा छ।';
-$lang['namespaces']            = 'नेमस्पेसहरु ';
-$lang['mediafiles']            = ' उपलब्ध फाइलहरु ';
-$lang['mediausage']            = 'फाइललाई रेफरेन्स गर्न निम्न सुत्र प्रयोग गर्नुहोस् :';
-$lang['mediaview']             = 'सक्कली फाइल हेर्नुहोस् ';
-$lang['mediaroot']             = 'रुट(मूख्य प्रयोगकर्ता)';
-$lang['mediaupload']           = 'अहिलेको नेमस्पेसमा यहा अपलोड गर्नुहोस् । सबनेमस्पेसहरु बनाउन "रुपमा आपलोड" छानी फाइलहरुलाई कोलोन(:) ले छुट्टयाउनुहोस् ।';
-$lang['mediaextchange']        = 'फाइल एकस्टेन्सन .%s देखि  .%s मा परिवरतित भयो ';
-$lang['reference']             = 'रेफररेन्स ';
-$lang['ref_inuse']             = 'फाइल मेट्न मिलेन , किनभने यो निम्न पृष्ठहरुद्वारा प्रयोगमा छ। ';
-$lang['ref_hidden']            = 'केहि रेफरेन्स यस्ता पृष्ठहरुमा छन् जुन हेर्न तपाईलाई अनुमति छैन ।';
-$lang['hits']                  = 'मिलेको';
-$lang['quickhits']             = 'मिलेका पृष्ठनामहरु ';
-$lang['toc']                   = 'वस्तुहरुको सुची';
-$lang['current']               = 'हालको';
-$lang['yours']                 = 'तपाईको संस्करण';
-$lang['diff']                  = 'हालको संस्करण सँगको भिन्नता';
-$lang['diff2']                 = 'रोजिएका संस्करण वीचका भिन्नताहरु ';
-$lang['line']                  = 'हरफ';
-$lang['breadcrumb']            = 'छुट्ट्याउनुहोस् :';
-$lang['youarehere']            = 'तपाई यहा हुनुहुन्छ:';
-$lang['lastmod']               = 'अन्तिम पटक सच्याइएको:';
-$lang['by']                    = 'द्वारा ';
-$lang['deleted']               = 'हटाइएको';
-$lang['created']               = 'निर्माण गरिएको';
-$lang['external_edit']         = 'बाह्य सम्पादन';
-$lang['summary']               = 'सम्पादनको बारेमा';
-$lang['mail_newpage']          = 'थपिएको पृष्ठ';
-$lang['mail_changed']          = 'परिवर्तित पृष्ठ';
-$lang['mail_new_user']         = 'नयाँ प्रयोगकर्ता ';
-$lang['mail_upload']           = 'अपलोड गरिएको फाइल';
-$lang['qb_bold']               = 'मोटो पाठ(बोल्ड)';
-$lang['qb_italic']             = 'इटालिक पाठ';
-$lang['qb_underl']             = 'निम्न रेखांकित(अन्डरलाइन) पाठ';
-$lang['qb_code']               = 'चिन्ह(कोड) पाठ';
-$lang['qb_strike']             = 'स्ट्राइकथ्रु पाठ';
-$lang['qb_h1']                 = 'पहिलो स्तरको शिर्षक(लेभल १ हेडलाइन)';
-$lang['qb_h2']                 = 'दोस्रो स्तरको  शिर्षक(लेभल २ हेडलाइन)';
-$lang['qb_h3']                 = 'तेस्रो स्तरको  शिर्षक(लेभल ३ हेडलाइन)';
-$lang['qb_h4']                 = 'चौथो स्तरको  शिर्षक(लेभल ४ हेडलाइन)';
-$lang['qb_h5']                 = 'पाचौँ स्तरको  शिर्षक(लेभल ५ हेडलाइन)';
-$lang['qb_link']               = 'आन्तरिक लिङ्क ';
-$lang['qb_extlink']            = 'वाह्य लिङ्क';
-$lang['qb_hr']                 = 'क्षितिज (होरिजोन्टल) रुल';
-$lang['qb_ol']                 = 'मिलाइएको सुची';
-$lang['qb_ul']                 = 'नमिलाइएको सुची';
-$lang['qb_media']              = 'तस्विर र अरु फाइलहरु थप्नुहोस्';
-$lang['qb_sig']                = 'हस्ताक्षर थप्नुहोस् ';
-$lang['qb_smileys']            = 'स्माइलीहरु ';
-$lang['qb_chars']              = 'विशेष वर्णहरु ';
-$lang['metaedit']              = 'मेटाडेटा सम्पादन गर्नुहोस्';
-$lang['metasaveerr']           = 'मेटाडाटा लेखन असफल';
-$lang['metasaveok']            = 'मेटाडाटा वचत भयो ';
-$lang['img_title']             = 'शिर्षक:';
-$lang['img_caption']           = 'निम्न लेख:';
-$lang['img_date']              = 'मिति:';
-$lang['img_fname']             = 'फाइलनाम:';
-$lang['img_fsize']             = 'आकार:';
-$lang['img_artist']            = 'चित्रकार:';
-$lang['img_copyr']             = 'सर्वाधिकार:';
-$lang['img_format']            = 'ढाचा:';
-$lang['img_camera']            = 'क्यामेरा:';
-$lang['img_keywords']          = 'खोज शब्द:';
-$lang['authtempfail']          = 'प्रयोगकर्ता प्रामाणिकरण अस्थाइरुपमा अनुपलब्ध छ। यदि यो समस्या रहि रहेमा तपाईको  विकि एड्मिनलाई खवर गर्नुहोला ।';
-$lang['i_chooselang']          = 'भाषा छान्नुहोस् ';
-$lang['i_installer']           = 'DokuWiki  स्थापक';
-$lang['i_wikiname']            = 'विकी नाम';
-$lang['i_enableacl']           = 'ACL लागु गर्नुहोस्( सिफारिस गरिएको)';
-$lang['i_superuser']           = 'मूख्य प्रयोगकर्ता';
-$lang['i_problems']            = 'स्थापकले तल देखाइएको त्रुटि फेला पार्‌यो ।तपाईले  यो त्रुटि नसच्याए सम्म अगि बढ्न सक्नुहुने छैन।';
-$lang['i_modified']            = 'सुरक्षाको कारणले यो स्क्रिप्ट नया तथा नसच्याइएको Dokuwiki स्थापनामा  मात्र काम गर्छ।  तपाईले कि डाउनलोड गर्नुभएको प्याकेज पुन: खोल्नुहोस्  कि <a href="http://dokuwiki.org/install">Dokuwiki स्थापना विधि</a>';
-$lang['i_funcna']              = 'PHP function <code>%s</code> उपलव्ध छैन । हुनसक्छ तपाईको होस्टिङ्ग प्रदायकले कुनै कारण वश यसलाई वन्द गरिदिएका हुनसक्छन् । ';
-$lang['i_phpver']              = 'तपाईको PHP संस्करण <code>%s</code> चाहिएको <code>%s</code> भन्दा कम छ। तपाईले आफ्नो PHP स्थापना अध्यावधिक गर्नुपर्छ ।';
-$lang['i_permfail']            = '<code>%s</code> DokuWiki द्वारा लेख्य छैन । तपाईले डाइरेक्टरीको अनुमति परिवर्तन गर्नुपर्छ !';
-$lang['i_confexists']          = '<code>%s</code> पहिले देखि नै रहेको छ।';
-$lang['i_writeerr']            = '<code>%s</code> बनाउन असमर्थ । तपाईले डाइरेक्टरी / फाइल अनुमति जाच्नु पर्छ र फाइल आफैले बनाउनु पर्छ ।';
-$lang['i_badhash']             = 'पहिचान हुन नसकेको वा परिवर्तित  okuwiki.php (hash=code>%s</code>)';
-$lang['i_badval']              = '<code>%s</code> - अवैध वा रित्तो मान ';
-$lang['i_success']             = 'स्थापना सफलरुपमा समाप्त भयो ।तपाई install.php मेट्न सक्नुहु्न्छ । <a href="doku.php?id=wiki:welcome">तपाईको नयाँ DokuWiki</a> निरन्तर गर्न सक्नुहुन्छ ।';
-$lang['i_failure']             = 'स्थापना समयमा केहि त्रुटि फेला पर्यो ।तपाईले आफैले यसलाई <a href="doku.php?id=wiki:welcome">तपाईको नयाँ DokuWiki</a> प्रयोग गर्नु अगि	सच्याउनुपर्ने  हुन्छ ।';
-$lang['i_policy']              = 'सुरुको ACL निति';
-$lang['i_pol0']                = 'खुल्ला विकि (पठन, लेखन , अपलोड ) सबैका लागि';
-$lang['i_pol1']                = 'Public विकि (पठन सवैका लागि,लेखन र अपलोड दर्ता गरिएका प्रयपगकर्ताका लागि ) ';
-$lang['i_pol2']                = 'बन्द विकि (पठन , लेखन, अपलोड ) दर्ता भएका प्रयोगकर्ताका लागि मात्र ।';
-$lang['i_retry']               = 'पुन: प्रयास गर्नुहोस् ';
-$lang['recent_global']         = 'तपाई अहिले <b>%s</b> नेमस्पेस भित्र भएका परिवर्तन हेर्दैहुनुहुन्छ। तपाई <a href="%s">पुरै विकिमा भएको परिवर्तन हेर्न सक्नुहुन्छ</a>.';
-$lang['email_signature_text'] = 'यो पत्र DokuWiki ले, मा तयार पारेको हो ।
-@DOKUWIKIURL@';
+$lang['encoding']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['direction']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['doublequoteopening']    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['doublequoteclosing']    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['singlequoteopening']    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['singlequoteclosing']    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['apostrophe']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_edit']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_source']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_show']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_create']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_search']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_save']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_preview']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_top']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_newer']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_older']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_revs']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_recent']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_upload']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_cancel']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_index']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_secedit']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_login']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_logout']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_admin']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_update']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_delete']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_back']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_backlink']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_subscribe']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_profile']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_reset']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_resendpwd']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_draft']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_recover']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_draftdel']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_revert']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_register']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_apply']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_media']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_deleteuser']        = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_img_backto']        = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['btn_mediaManager']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['loggedinas']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['user']                  = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['pass']                  = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['newpass']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['oldpass']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['passchk']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['remember']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['fullname']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['email']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['profile']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['badlogin']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['badpassconfirm']        = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['minoredit']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['draftdate']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['nosecedit']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['searchcreatepage']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['search_fullresults']    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['search_toggle_tools'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['willexpire']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['notsavedyet']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['searchmedia']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['keepopen']        = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['hidedetails']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediatitle']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediadisplay']    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediaalign']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediasize']       = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediatarget']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediaclose']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediainsert']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediadisplayimg'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediadisplaylnk'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediasmall']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediamedium']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['medialarge']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediaoriginal']   = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['medialnk']        = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediadirect']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['medianolnk']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['medianolink']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['medialeft']       = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediaright']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['mediacenter']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['medianoalign']    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['nosmblinks']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['linkwiz']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['linkto']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['del_confirm']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['restore_confirm'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['media_diff']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['media_diff_both'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['media_diff_opacity'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['media_diff_portions'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['media_select']    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['media_upload_btn'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['media_done_btn']  = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['media_drop']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['media_cancel']    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['js']['media_overwrt']   = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['search_exact_match']    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['search_starts_with']    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['search_ends_with']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['search_contains']       = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['search_custom_match']   = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['search_any_ns']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['search_any_time']       = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['search_past_7_days']    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['search_past_month']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['search_past_year']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['search_sort_by_hits']   = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['search_sort_by_mtime']  = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['regmissing']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['reguexists']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['regsuccess']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['regsuccess2']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['regfail']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['regmailfail']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['regbadmail']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['regbadpass']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['regpwmail']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['reghere']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['profna']                = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['profnochange']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['profchanged']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['profnodelete']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['profdeleteuser']        = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['profdeleted']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['profconfdelete']        = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['profconfdeletemissing'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['proffail']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['pwdforget']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['resendna']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['resendpwd']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['resendpwdmissing']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['resendpwdnouser']       = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['resendpwdbadauth']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['resendpwdconfirm']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['resendpwdsuccess']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['license']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['licenseok']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['searchmedia']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['searchmedia_in']        = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['txt_upload']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['txt_filename']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['txt_overwrt']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['maxuploadsize']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['lockedby']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['lockexpire']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['rssfailed']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['nothingfound']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['mediaselect']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['uploadsucc']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['uploadfail']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['uploadwrong']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['uploadexist']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['uploadbadcontent']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['uploadspam']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['uploadxss']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['uploadsize']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['deletesucc']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['deletefail']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['mediainuse']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['namespaces']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['mediafiles']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['accessdenied']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['mediausage']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['mediaview']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['mediaroot']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['mediaupload']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['mediaextchange']        = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['reference']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['ref_inuse']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['ref_hidden']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['hits']                  = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['quickhits']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['toc']                   = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['current']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['yours']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['diff']                  = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['diff2']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['difflink']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['diff_type']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['diff_inline']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['diff_side']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['diffprevrev']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['diffnextrev']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['difflastrev']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['diffbothprevrev']       = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['diffbothnextrev']       = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['line']                  = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['breadcrumb']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['youarehere']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['lastmod']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['by']                    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['deleted']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['created']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['restored']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['external_edit']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['summary']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['noflash']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['download']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['tools']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['user_tools']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['site_tools']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['page_tools']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['skip_to_content']       = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['sidebar']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['mail_newpage']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['mail_changed']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['mail_subscribe_list']   = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['mail_new_user']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['mail_upload']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['changes_type']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['pages_changes']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_changes']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['both_changes']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_bold']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_italic']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_underl']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_code']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_strike']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_h1']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_h2']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_h3']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_h4']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_h5']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_h']                  = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_hs']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_hplus']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_hminus']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_hequal']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_link']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_extlink']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_hr']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_ol']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_ul']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_media']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_sig']                = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_smileys']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['qb_chars']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['upperns']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['metaedit']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['metasaveerr']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['metasaveok']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['img_title']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['img_caption']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['img_date']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['img_fname']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['img_fsize']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['img_artist']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['img_copyr']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['img_format']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['img_camera']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['img_keywords']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['img_width']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['img_height']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_subscribe_success'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_subscribe_error'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_subscribe_noaddress'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_unsubscribe_success'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_unsubscribe_error'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_already_subscribed'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_not_subscribed'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_m_not_subscribed'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_m_new_header']   = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_m_current_header'] = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_m_unsubscribe']  = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_m_subscribe']    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_m_receive']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_style_every']    = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_style_digest']   = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['subscr_style_list']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['authtempfail']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_chooselang']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_installer']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_wikiname']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_enableacl']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_superuser']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_problems']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_modified']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_funcna']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_phpver']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_mbfuncoverload']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_permfail']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_confexists']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_writeerr']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_badhash']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_success']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_failure']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_policy']              = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_pol0']                = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_pol1']                = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_pol2']                = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_allowreg']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_retry']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_license']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_license_none']        = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_pop_field']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['i_pop_label']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['recent_global']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['years']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['months']                = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['weeks']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['days']                  = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['hours']                 = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['minutes']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['seconds']               = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['wordblock']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_uploadtab']       = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_searchtab']       = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_file']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_viewtab']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_edittab']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_historytab']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_list_thumbs']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_list_rows']       = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_sort_name']       = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_sort_date']       = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_namespaces']      = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_files']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_upload']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_search']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_view']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_viewold']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_edit']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_history']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_meta_edited']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_perm_read']       = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_perm_upload']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_update']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_restore']         = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['media_acl_warning']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['currentns']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['searchresult']          = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['plainhtml']             = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['wikimarkup']            = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['page_nonexist_rev']     = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['unable_to_parse_date']  = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
+$lang['email_signature_text']  = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';

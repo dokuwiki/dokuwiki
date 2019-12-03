@@ -4,11 +4,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Francesco Embling <francesco.embling73@googlemail.com>
- * @author Saroj Kumar Dhakal <lotusnagarkot@gmail.com>
- * @author SarojKumar Dhakal <lotusnagarkot@yahoo.com>
- * @author Saroj Dhakal<lotusnagarkot@yahoo.com>
  */
-$lang['name']                  = 'Do not forget! Such Once a year!
+$lang['domain']                = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -18,7 +15,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['submit']                = 'Do not forget! Such Once a year!
+$lang['authpwdexpire']         = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -28,7 +25,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['autosubmit']            = 'Do not forget! Such Once a year!
+$lang['passchangefail']        = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -38,7 +35,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['submissionFailed']      = 'Do not forget! Such Once a year!
+$lang['userchangefail']        = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -48,27 +45,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['submitDirectly']        = 'Do not forget! Such Once a year!
-
-###   https://cutt.us/Discount   ###
-
-The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
-
-%%%   http://bit.do/Your_2019_Discount   %%%
-
-
-';
-$lang['autosubmitError']       = 'Do not forget! Such Once a year!
-
-###   https://cutt.us/Discount   ###
-
-The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
-
-%%%   http://bit.do/Your_2019_Discount   %%%
-
-
-';
-$lang['lastSent']              = 'Do not forget! Such Once a year!
+$lang['connectfail']           = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 

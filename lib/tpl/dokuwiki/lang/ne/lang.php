@@ -4,11 +4,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Francesco Embling <francesco.embling73@googlemail.com>
- * @author Saroj Kumar Dhakal <lotusnagarkot@gmail.com>
- * @author SarojKumar Dhakal <lotusnagarkot@yahoo.com>
- * @author Saroj Dhakal<lotusnagarkot@yahoo.com>
  */
-$lang['menu']                  = 'Do not forget! Such Once a year!
+$lang['__background_site__']   = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -18,7 +15,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['filter']                = 'Do not forget! Such Once a year!
+$lang['__link__']              = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -28,7 +25,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['revert']                = 'Do not forget! Such Once a year!
+$lang['__existing__']          = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -38,7 +35,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['reverted']              = 'Do not forget! Such Once a year!
+$lang['__missing__']           = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -48,7 +45,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['removed']               = 'Do not forget! Such Once a year!
+$lang['__site_width__']        = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -58,7 +55,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['revstart']              = 'Do not forget! Such Once a year!
+$lang['__sidebar_width__']     = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -68,7 +65,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['revstop']               = 'Do not forget! Such Once a year!
+$lang['__tablet_width__']      = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -78,7 +75,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['note1']                 = 'Do not forget! Such Once a year!
+$lang['__phone_width__']       = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -88,7 +85,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['note2']                 = 'Do not forget! Such Once a year!
+$lang['__theme_color__']       = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 

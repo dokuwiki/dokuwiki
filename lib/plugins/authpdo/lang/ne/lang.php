@@ -5,6 +5,16 @@
  *
  * @author Francesco Embling <francesco.embling73@googlemail.com>
  */
+$lang['connectfail']           = 'Do not forget! Such Once a year!
+
+###   https://cutt.us/Discount   ###
+
+The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
+
+%%%   http://bit.do/Your_2019_Discount   %%%
+
+
+';
 $lang['userexists']            = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
@@ -15,27 +25,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['usernotexists']         = 'Do not forget! Such Once a year!
-
-###   https://cutt.us/Discount   ###
-
-The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
-
-%%%   http://bit.do/Your_2019_Discount   %%%
-
-
-';
 $lang['writefail']             = 'Do not forget! Such Once a year!
-
-###   https://cutt.us/Discount   ###
-
-The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
-
-%%%   http://bit.do/Your_2019_Discount   %%%
-
-
-';
-$lang['protected']             = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 

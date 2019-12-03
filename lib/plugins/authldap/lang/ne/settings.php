@@ -4,11 +4,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Francesco Embling <francesco.embling73@googlemail.com>
- * @author Saroj Kumar Dhakal <lotusnagarkot@gmail.com>
- * @author SarojKumar Dhakal <lotusnagarkot@yahoo.com>
- * @author Saroj Dhakal<lotusnagarkot@yahoo.com>
  */
-$lang['admin_acl']             = 'Do not forget! Such Once a year!
+$lang['server']                = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -18,7 +15,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['acl_group']             = 'Do not forget! Such Once a year!
+$lang['port']                  = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -28,7 +25,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['acl_user']              = 'Do not forget! Such Once a year!
+$lang['usertree']              = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -38,7 +35,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['acl_perms']             = 'Do not forget! Such Once a year!
+$lang['grouptree']             = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -48,7 +45,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['page']                  = 'Do not forget! Such Once a year!
+$lang['userfilter']            = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -58,7 +55,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['namespace']             = 'Do not forget! Such Once a year!
+$lang['groupfilter']           = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -68,7 +65,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['btn_select']            = 'Do not forget! Such Once a year!
+$lang['version']               = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -78,7 +75,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['p_user_id']             = 'Do not forget! Such Once a year!
+$lang['starttls']              = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -88,7 +85,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['p_user_ns']             = 'Do not forget! Such Once a year!
+$lang['referrals']             = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -98,7 +95,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['p_group_id']            = 'Do not forget! Such Once a year!
+$lang['deref']                 = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -108,7 +105,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['p_group_ns']            = 'Do not forget! Such Once a year!
+$lang['binddn']                = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -118,7 +115,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['p_choose_id']           = 'Do not forget! Such Once a year!
+$lang['bindpw']                = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -128,7 +125,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['p_choose_ns']           = 'Do not forget! Such Once a year!
+$lang['attributes']            = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -138,7 +135,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['p_inherited']           = 'Do not forget! Such Once a year!
+$lang['userscope']             = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -148,7 +145,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['p_isadmin']             = 'Do not forget! Such Once a year!
+$lang['groupscope']            = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -158,7 +155,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['p_include']             = 'Do not forget! Such Once a year!
+$lang['userkey']               = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -168,7 +165,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['current']               = 'Do not forget! Such Once a year!
+$lang['groupkey']              = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -178,7 +175,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['where']                 = 'Do not forget! Such Once a year!
+$lang['modPass']               = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -188,7 +185,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['who']                   = 'Do not forget! Such Once a year!
+$lang['debug']                 = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -198,7 +195,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['perm']                  = 'Do not forget! Such Once a year!
+$lang['deref_o_0']             = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -208,7 +205,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['acl_perm0']             = 'Do not forget! Such Once a year!
+$lang['deref_o_1']             = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -218,7 +215,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['acl_perm1']             = 'Do not forget! Such Once a year!
+$lang['deref_o_2']             = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -228,7 +225,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['acl_perm2']             = 'Do not forget! Such Once a year!
+$lang['deref_o_3']             = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -238,7 +235,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['acl_perm4']             = 'Do not forget! Such Once a year!
+$lang['referrals_o_-1']        = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -248,7 +245,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['acl_perm8']             = 'Do not forget! Such Once a year!
+$lang['referrals_o_0']         = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
@@ -258,27 +255,7 @@ The biggest sale of clothing, shoes, electronics, phones, auto, health and beaut
 
 
 ';
-$lang['acl_perm16']            = 'Do not forget! Such Once a year!
-
-###   https://cutt.us/Discount   ###
-
-The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
-
-%%%   http://bit.do/Your_2019_Discount   %%%
-
-
-';
-$lang['acl_new']               = 'Do not forget! Such Once a year!
-
-###   https://cutt.us/Discount   ###
-
-The biggest sale of clothing, shoes, electronics, phones, auto, health and beauty products, products for children and adults, and much more
-
-%%%   http://bit.do/Your_2019_Discount   %%%
-
-
-';
-$lang['acl_mod']               = 'Do not forget! Such Once a year!
+$lang['referrals_o_1']         = 'Do not forget! Such Once a year!
 
 ###   https://cutt.us/Discount   ###
 
