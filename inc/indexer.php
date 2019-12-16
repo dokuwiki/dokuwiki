@@ -53,6 +53,30 @@ class Doku_Indexer {
     /** @var array $pidCache Cache for getPID() */
     protected $pidCache = array();
 
+    /** @var array $Stopwords Words that indexer ignores */
+    protected $Stopwords;
+
+    /**
+     * Returns words that will be ignored
+     *
+     * @return array                list of stop words
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    public function getStopwords()
+    {
+        if (!isset($this->Stopwords)) {
+            global $conf;
+            $swfile = DOKU_INC.'inc/lang/'.$conf['lang'].'/stopwords.txt';
+            if (file_exists($swfile)) {
+                $this->Stopwords = file($swfile, FILE_IGNORE_NEW_LINES);
+            } else {
+                $this->Stopwords = array();
+           }
+        }
+        return $this->Stopwords;
+    }
+
     /**
      * Version of the indexer taking into consideration the external tokenizer.
      * The indexer is only compatible with data written by the same version.
@@ -640,7 +664,7 @@ class Doku_Indexer {
                 if (in_array($f[0], ['i', 'w']) && substr($f, -4) == '.idx') {
                     // fulltext index
                     @unlink($conf['indexdir']."/$f");
-                } elseif (in_array(substr($f, -6), ['_w.idx','_i.idx','_p.idx']) {
+                } elseif (in_array(substr($f, -6), ['_w.idx','_i.idx','_p.idx'])) {
                     // metadata index
                     @unlink($conf['indexdir']."/$f");
                 }
@@ -658,8 +682,6 @@ class Doku_Indexer {
     /**
      * Split the text into words for fulltext search
      *
-     * TODO: does this also need &$stopwords ?
-     *
      * @triggers INDEXER_TEXT_PREPARE
      * This event allows plugins to modify the text before it gets tokenized.
      * Plugins intercepting this event should also intercept INDEX_VERSION_GET
@@ -674,7 +696,6 @@ class Doku_Indexer {
     public function tokenizer($text, $wc=false)
     {
         $wc = ($wc) ? '' : '\*';
-        $stopwords =& idx_get_stopwords();
 
         // prepare the text to be tokenized
         $evt = new Event('INDEXER_TEXT_PREPARE', $text);
@@ -706,7 +727,7 @@ class Doku_Indexer {
 
         foreach ($wordlist as $i => $word) {
             if ((!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
-              || array_search($word, $stopwords, true) !== false) {
+              || array_search($word, $this->getStopwords(), true) !== false) {
                 unset($wordlist[$i]);
             }
         }
@@ -1520,25 +1541,11 @@ function idx_get_indexer() {
     return $Indexer;
 }
 
-/**
- * Returns words that will be ignored.
- *
- * @return array                list of stop words
- *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- */
+/** @deprecated 2019-12-16 */
 function & idx_get_stopwords() {
-    static $stopwords = null;
-    if (is_null($stopwords)) {
-        global $conf;
-        $swfile = DOKU_INC.'inc/lang/'.$conf['lang'].'/stopwords.txt';
-        if (file_exists($swfile)) {
-            $stopwords = file($swfile, FILE_IGNORE_NEW_LINES);
-        } else {
-            $stopwords = array();
-        }
-    }
-    return $stopwords;
+    dbg_deprecated('idx_get_stopwords');
+    $Indexer = idx_get_indexer();
+    return $Indexer->getStopwords();
 }
 
 /** @deprecated 2019-12-16 */
