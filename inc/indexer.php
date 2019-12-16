@@ -79,6 +79,110 @@ class Doku_Indexer {
     protected $pidCache = array();
 
     /**
+     * Adds/updates the search index for the given page
+     *
+     * Locking is handled internally.
+     *
+     * @param string        $page   name of the page to index
+     * @param boolean       $verbose    print status messages
+     * @param boolean       $force  force reindexing even when the index is up to date
+     * @return string|boolean  the function completed successfully
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    public function addPage($page, $verbose=false, $force=false)
+    {
+        $idxtag = metaFN($page,'.indexed');
+        // check if page was deleted but is still in the index
+        if (!page_exists($page)) {
+            if (!file_exists($idxtag)) {
+                if ($verbose) print("Indexer: $page does not exist, ignoring".DOKU_LF);
+                return false;
+            }
+            $result = $this->deletePage($page);
+            if ($result === 'locked') {
+                if ($verbose) print("Indexer: locked".DOKU_LF);
+                return false;
+            }
+            @unlink($idxtag);
+            return $result;
+        }
+
+        // check if indexing needed
+        if (!$force && file_exists($idxtag)) {
+            if (trim(io_readFile($idxtag)) == idx_get_version()) {
+                $last = @filemtime($idxtag);
+                if ($last > @filemtime(wikiFN($page))) {
+                    if ($verbose) print("Indexer: index for $page up to date".DOKU_LF);
+                    return false;
+                }
+            }
+        }
+
+        $indexenabled = p_get_metadata($page, 'internal index', METADATA_RENDER_UNLIMITED);
+        if ($indexenabled === false) {
+            $result = false;
+            if (file_exists($idxtag)) {
+                $result = $this->deletePage($page);
+                if ($result === 'locked') {
+                    if ($verbose) print("Indexer: locked".DOKU_LF);
+                    return false;
+                }
+                @unlink($idxtag);
+            }
+            if ($verbose) print("Indexer: index disabled for $page".DOKU_LF);
+            return $result;
+        }
+
+        $pid = $this->getPID($page);
+        if ($pid === false) {
+            if ($verbose) print("Indexer: getting the PID failed for $page".DOKU_LF);
+            return false;
+        }
+        $body = '';
+        $metadata = array();
+        $metadata['title'] = p_get_metadata($page, 'title', METADATA_RENDER_UNLIMITED);
+
+        $references = p_get_metadata($page, 'relation references', METADATA_RENDER_UNLIMITED);
+        $metadata['relation_references'] = ($references !== null) ?
+                array_keys($references) : array();
+
+        $media = p_get_metadata($page, 'relation media', METADATA_RENDER_UNLIMITED);
+        $metadata['relation_media'] = ($media !== null) ?
+                array_keys($media) : array();
+
+        $data = compact('page', 'body', 'metadata', 'pid');
+        $evt = new Event('INDEXER_PAGE_ADD', $data);
+        if ($evt->advise_before()) $data['body'] = $data['body'].' '.rawWiki($page);
+        $evt->advise_after();
+        unset($evt);
+        extract($data);
+
+        $result = $this->addPageWords($page, $body);
+        if ($result === 'locked') {
+            if ($verbose) print("Indexer: locked".DOKU_LF);
+            return false;
+        }
+
+        if ($result) {
+            $result = $this->addMetaKeys($page, $metadata);
+            if ($result === 'locked') {
+                if ($verbose) print("Indexer: locked".DOKU_LF);
+                return false;
+            }
+        }
+
+        if ($result) {
+            io_saveFile(metaFN($page,'.indexed'), idx_get_version());
+        }
+        if ($verbose) {
+            print("Indexer: finished".DOKU_LF);
+            return true;
+        }
+        return $result;
+    }
+
+    /**
      * Adds the contents of a page to the fulltext index
      *
      * The added text replaces previous words for the same page.
@@ -1429,110 +1533,11 @@ function & idx_get_stopwords() {
     return $stopwords;
 }
 
-/**
- * Adds/updates the search index for the given page
- *
- * Locking is handled internally.
- *
- * @param string        $page   name of the page to index
- * @param boolean       $verbose    print status messages
- * @param boolean       $force  force reindexing even when the index is up to date
- * @return string|boolean  the function completed successfully
- *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- */
+/** @deprecated 2019-12-16 */
 function idx_addPage($page, $verbose=false, $force=false) {
-    $idxtag = metaFN($page,'.indexed');
-    // check if page was deleted but is still in the index
-    if (!page_exists($page)) {
-        if (!file_exists($idxtag)) {
-            if ($verbose) print("Indexer: $page does not exist, ignoring".DOKU_LF);
-            return false;
-        }
-        $Indexer = idx_get_indexer();
-        $result = $Indexer->deletePage($page);
-        if ($result === "locked") {
-            if ($verbose) print("Indexer: locked".DOKU_LF);
-            return false;
-        }
-        @unlink($idxtag);
-        return $result;
-    }
-
-    // check if indexing needed
-    if (!$force && file_exists($idxtag)) {
-        if (trim(io_readFile($idxtag)) == idx_get_version()) {
-            $last = @filemtime($idxtag);
-            if ($last > @filemtime(wikiFN($page))) {
-                if ($verbose) print("Indexer: index for $page up to date".DOKU_LF);
-                return false;
-            }
-        }
-    }
-
-    $indexenabled = p_get_metadata($page, 'internal index', METADATA_RENDER_UNLIMITED);
-    if ($indexenabled === false) {
-        $result = false;
-        if (file_exists($idxtag)) {
-            $Indexer = idx_get_indexer();
-            $result = $Indexer->deletePage($page);
-            if ($result === "locked") {
-                if ($verbose) print("Indexer: locked".DOKU_LF);
-                return false;
-            }
-            @unlink($idxtag);
-        }
-        if ($verbose) print("Indexer: index disabled for $page".DOKU_LF);
-        return $result;
-    }
-
+    dbg_deprecated('idx_addPage');
     $Indexer = idx_get_indexer();
-    $pid = $Indexer->getPID($page);
-    if ($pid === false) {
-        if ($verbose) print("Indexer: getting the PID failed for $page".DOKU_LF);
-        return false;
-    }
-    $body = '';
-    $metadata = array();
-    $metadata['title'] = p_get_metadata($page, 'title', METADATA_RENDER_UNLIMITED);
-
-    $references = p_get_metadata($page, 'relation references', METADATA_RENDER_UNLIMITED);
-    $metadata['relation_references'] = ($references !== null) ?
-            array_keys($references) : array();
-
-    $media = p_get_metadata($page, 'relation media', METADATA_RENDER_UNLIMITED);
-    $metadata['relation_media'] = ($media !== null) ?
-            array_keys($media) : array();
-
-    $data = compact('page', 'body', 'metadata', 'pid');
-    $evt = new Event('INDEXER_PAGE_ADD', $data);
-    if ($evt->advise_before()) $data['body'] = $data['body'].' '.rawWiki($page);
-    $evt->advise_after();
-    unset($evt);
-    extract($data);
-
-    $result = $Indexer->addPageWords($page, $body);
-    if ($result === 'locked') {
-        if ($verbose) print("Indexer: locked".DOKU_LF);
-        return false;
-    }
-
-    if ($result) {
-        $result = $Indexer->addMetaKeys($page, $metadata);
-        if ($result === 'locked') {
-            if ($verbose) print("Indexer: locked".DOKU_LF);
-            return false;
-        }
-    }
-
-    if ($result) {
-        io_saveFile(metaFN($page,'.indexed'), idx_get_version());
-    }
-    if ($verbose) {
-        print("Indexer: finished".DOKU_LF);
-        return true;
-    }
-    return $result;
+    return $Indexer->addPage($page, $verbose, $force);
 }
 
 /** @deprecated 2019-12-16 */
