@@ -1567,20 +1567,11 @@ function idx_tokenizer($string, $wc=false) {
 
 /* For compatibility */
 
-/**
- * Read the list of words in an index (if it exists).
- *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- *
- * @param string $idx
- * @param string $suffix
- * @return array
- */
+/** @deprecated 2019-12-16 */
 function idx_getIndex($idx, $suffix) {
-    global $conf;
-    $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
-    if (!file_exists($fn)) return array();
-    return file($fn);
+    dbg_deprecated('idx_getIndex');
+    $Indexer = idx_get_indexer();
+    return $Indexer->getIndex($idx, $suffix);
 }
 
 /** @deprecated 2019-12-16 */
