@@ -29,7 +29,7 @@ if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
  *
  * @return int|string
  */
-function idx_get_version(){
+function idx_get_version() {
     static $indexer_version = null;
     if ($indexer_version == null) {
         $version = INDEXER_VERSION;
@@ -39,8 +39,9 @@ function idx_get_version(){
         Event::createAndTrigger('INDEXER_VERSION_GET', $data, null, false);
         unset($data['dokuwiki']); // this needs to be first
         ksort($data);
-        foreach ($data as $plugin=>$vers)
+        foreach ($data as $plugin=>$vers) {
             $version .= '+'.$plugin.'='.$vers;
+        }
         $indexer_version = $version;
     }
     return $indexer_version;
@@ -55,13 +56,14 @@ function idx_get_version(){
  * @param string $w
  * @return int
  */
-function wordlen($w){
+function wordlen($w) {
     $l = strlen($w);
     // If left alone, all chinese "words" will get put into w3.idx
     // So the "length" of a "word" is faked
-    if(preg_match_all('/[\xE2-\xEF]/',$w,$leadbytes)) {
-        foreach($leadbytes[0] as $b)
+    if (preg_match_all('/[\xE2-\xEF]/',$w,$leadbytes)) {
+        foreach ($leadbytes[0] as $b) {
             $l += ord($b) - 0xE1;
+        }
     }
     return $l;
 }
@@ -72,9 +74,8 @@ function wordlen($w){
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 class Doku_Indexer {
-    /**
-     * @var array $pidCache Cache for getPID()
-     */
+
+    /** @var array $pidCache Cache for getPID() */
     protected $pidCache = array();
 
     /**
@@ -90,9 +91,9 @@ class Doku_Indexer {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    public function addPageWords($page, $text) {
-        if (!$this->lock())
-            return "locked";
+    public function addPageWords($page, $text)
+    {
+        if (!$this->lock()) return 'locked';
 
         // load known documents
         $pid = $this->getPIDNoLock($page);
@@ -166,17 +167,17 @@ class Doku_Indexer {
      * @author Christopher Smith <chris@jalakai.co.uk>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function getPageWords($text) {
-
+    protected function getPageWords($text)
+    {
         $tokens = $this->tokenizer($text);
         $tokens = array_count_values($tokens);  // count the frequency of each token
 
         $words = array();
         foreach ($tokens as $w=>$c) {
             $l = wordlen($w);
-            if (isset($words[$l])){
+            if (isset($words[$l])) {
                 $words[$l][$w] = $c + (isset($words[$l][$w]) ? $words[$l][$w] : 0);
-            }else{
+            } else {
                 $words[$l] = array($w => $c);
             }
         }
@@ -194,13 +195,15 @@ class Doku_Indexer {
                     $word_idx[] = $word;
                     $word_idx_modified = true;
                 }
-                if (!isset($index[$wlen]))
+                if (!isset($index[$wlen])) {
                     $index[$wlen] = array();
+                }
                 $index[$wlen][$wid] = $freq;
             }
             // save back the word index
-            if ($word_idx_modified && !$this->saveIndex('w', $wlen, $word_idx))
+            if ($word_idx_modified && !$this->saveIndex('w', $wlen, $word_idx)) {
                 return false;
+            }
         }
 
         return $index;
@@ -222,7 +225,8 @@ class Doku_Indexer {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Michael Hamann <michael@content-space.de>
      */
-    public function addMetaKeys($page, $key, $value=null) {
+    public function addMetaKeys($page, $key, $value=null)
+    {
         if (!is_array($key)) {
             $key = array($key => $value);
         } elseif (!is_null($value)) {
@@ -230,8 +234,7 @@ class Doku_Indexer {
             trigger_error("array passed to addMetaKeys but value is not null", E_USER_WARNING);
         }
 
-        if (!$this->lock())
-            return "locked";
+        if (!$this->lock()) return 'locked';
 
         // load known documents
         $pid = $this->getPIDNoLock($page);
@@ -270,17 +273,18 @@ class Doku_Indexer {
 
             foreach ($values as $val) {
                 $val = (string)$val;
-                if ($val !== "") {
+                if ($val !== '') {
                     $id = array_search($val, $metawords, true);
                     if ($id === false) {
-                        // didn't find $val, so we'll add it to the end of metawords and create a placeholder in metaidx
+                        // didn't find $val, so we'll add it to the end of metawords
+                        // and create a placeholder in metaidx
                         $id = count($metawords);
                         $metawords[$id] = $val;
                         $metaidx[$id] = '';
                         $addwords = true;
                     }
                     // test if value is already in the index
-                    if (isset($val_idx[$id]) && $val_idx[$id] <= 0){
+                    if (isset($val_idx[$id]) && $val_idx[$id] <= 0) {
                         $val_idx[$id] = 0;
                     } else { // else add it
                         $val_idx[$id] = 1;
@@ -318,15 +322,17 @@ class Doku_Indexer {
     }
 
     /**
-     * Rename a page in the search index without changing the indexed content. This function doesn't check if the
-     * old or new name exists in the filesystem. It returns an error if the old page isn't in the page list of the
-     * indexer and it deletes all previously indexed content of the new page.
+     * Rename a page in the search index without changing the indexed content.
+     * This function doesn't check if the old or new name exists in the filesystem.
+     * It returns an error if the old page isn't in the page list of the indexer
+     * and it deletes all previously indexed content of the new page.
      *
      * @param string $oldpage The old page name
      * @param string $newpage The new page name
      * @return string|bool If the page was successfully renamed, can be a message in the case of an error
      */
-    public function renamePage($oldpage, $newpage) {
+    public function renamePage($oldpage, $newpage)
+    {
         if (!$this->lock()) return 'locked';
 
         $pages = $this->getPages();
@@ -363,15 +369,17 @@ class Doku_Indexer {
     }
 
     /**
-     * Renames a meta value in the index. This doesn't change the meta value in the pages, it assumes that all pages
-     * will be updated.
+     * Renames a meta value in the index.
+     * This doesn't change the meta value in the pages, it assumes that
+     * all pages will be updated.
      *
      * @param string $key       The metadata key of which a value shall be changed
      * @param string $oldvalue  The old value that shall be renamed
      * @param string $newvalue  The new value to which the old value shall be renamed, if exists values will be merged
      * @return bool|string      If renaming the value has been successful, false or error message on error.
      */
-    public function renameMetaValue($key, $oldvalue, $newvalue) {
+    public function renameMetaValue($key, $oldvalue, $newvalue)
+    {
         if (!$this->lock()) return 'locked';
 
         // change the relation references index
@@ -391,7 +399,7 @@ class Doku_Indexer {
                     $parts = explode(':', $indexline);
                     foreach ($parts as $part) {
                         list($id, $count) = explode('*', $part);
-                        $newindexline =  $this->updateTuple($newindexline, $id, $count);
+                        $newindexline = $this->updateTuple($newindexline, $id, $count);
 
                         $keyline = explode(':', $pagekeys[$id]);
                         // remove old meta value
@@ -430,19 +438,18 @@ class Doku_Indexer {
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function deletePage($page) {
-        if (!$this->lock())
-            return "locked";
+    public function deletePage($page)
+    {
+        if (!$this->lock()) return 'locked';
 
         $result = $this->deletePageNoLock($page);
-
         $this->unlock();
-
         return $result;
     }
 
     /**
-     * Remove a page from the index without locking the index, only use this function if the index is already locked
+     * Remove a page from the index without locking the index,
+     * only use this function if the index is already locked
      *
      * Erases entries in all known indexes.
      *
@@ -451,7 +458,8 @@ class Doku_Indexer {
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function deletePageNoLock($page) {
+    protected function deletePageNoLock($page)
+    {
         // load known documents
         $pid = $this->getPIDNoLock($page);
         if ($pid === false) {
@@ -504,7 +512,8 @@ class Doku_Indexer {
      *
      * @return bool If the index has been cleared successfully
      */
-    public function clear() {
+    public function clear()
+    {
         global $conf;
 
         if (!$this->lock()) return false;
@@ -514,12 +523,15 @@ class Doku_Indexer {
         @unlink($conf['indexdir'].'/pageword.idx');
         @unlink($conf['indexdir'].'/metadata.idx');
         $dir = @opendir($conf['indexdir']);
-        if($dir!==false){
-            while(($f = readdir($dir)) !== false){
-                if(substr($f,-4)=='.idx' &&
-                    (substr($f,0,1)=='i' || substr($f,0,1)=='w'
-                        || substr($f,-6)=='_w.idx' || substr($f,-6)=='_i.idx' || substr($f,-6)=='_p.idx'))
+        if ($dir !== false) {
+            while (($f = readdir($dir)) !== false) {
+                if (in_array($f[0], ['i', 'w']) && substr($f, -4) == '.idx') {
+                    // fulltext index
                     @unlink($conf['indexdir']."/$f");
+                } elseif (in_array(substr($f, -6), ['_w.idx','_i.idx','_p.idx']) {
+                    // metadata index
+                    @unlink($conf['indexdir']."/$f");
+                }
             }
         }
         @unlink($conf['indexdir'].'/lengths.idx');
@@ -547,7 +559,8 @@ class Doku_Indexer {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    public function tokenizer($text, $wc=false) {
+    public function tokenizer($text, $wc=false)
+    {
         $wc = ($wc) ? '' : '\*';
         $stopwords =& idx_get_stopwords();
 
@@ -569,8 +582,9 @@ class Doku_Indexer {
                            "\xC2\xAD" => '', //soft-hyphen
                        )
                      );
-        if (preg_match('/[^0-9A-Za-z ]/u', $text))
+        if (preg_match('/[^0-9A-Za-z ]/u', $text)) {
             $text = \dokuwiki\Utf8\Clean::stripspecials($text, ' ', '\._\-:'.$wc);
+        }
 
         $wordlist = explode(' ', $text);
         foreach ($wordlist as $i => $word) {
@@ -580,8 +594,9 @@ class Doku_Indexer {
 
         foreach ($wordlist as $i => $word) {
             if ((!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
-              || array_search($word, $stopwords, true) !== false)
+              || array_search($word, $stopwords, true) !== false) {
                 unset($wordlist[$i]);
+            }
         }
         return array_values($wordlist);
     }
@@ -592,12 +607,12 @@ class Doku_Indexer {
      * @param string $page The page to get the PID for
      * @return bool|int The page id on success, false on error
      */
-    public function getPID($page) {
+    public function getPID($page)
+    {
         // return PID without locking when it is in the cache
         if (isset($this->pidCache[$page])) return $this->pidCache[$page];
 
-        if (!$this->lock())
-            return false;
+        if (!$this->lock()) return false;
 
         // load known documents
         $pid = $this->getPIDNoLock($page);
@@ -617,11 +632,14 @@ class Doku_Indexer {
      * @param string $page The page to get the PID for
      * @return bool|int The page id on success, false on error
      */
-    protected function getPIDNoLock($page) {
-        // avoid expensive addIndexKey operation for the most recently requested pages by using a cache
+    protected function getPIDNoLock($page)
+    {
+        // avoid expensive addIndexKey operation for the most recently
+        // requested pages by using a cache
         if (isset($this->pidCache[$page])) return $this->pidCache[$page];
         $pid = $this->addIndexKey('page', '', $page);
-        // limit cache to 10 entries by discarding the oldest element as in DokuWiki usually only the most recently
+        // limit cache to 10 entries by discarding the oldest element
+        // as in DokuWiki usually only the most recently
         // added item will be requested again
         if (count($this->pidCache) > 10) array_shift($this->pidCache);
         $this->pidCache[$page] = $pid;
@@ -634,7 +652,8 @@ class Doku_Indexer {
      * @param int $pid The PID to get the page id for
      * @return string The page id
      */
-    public function getPageFromPID($pid) {
+    public function getPageFromPID($pid)
+    {
         return $this->getIndexKey('page', '', $pid);
     }
 
@@ -654,7 +673,8 @@ class Doku_Indexer {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    public function lookup(&$tokens) {
+    public function lookup(&$tokens)
+    {
         $result = array();
         $wids = $this->getIndexWords($tokens, $result);
         if (empty($wids)) return array();
@@ -664,9 +684,10 @@ class Doku_Indexer {
         foreach (array_keys($wids) as $wlen) {
             $wids[$wlen] = array_unique($wids[$wlen]);
             $index = $this->getIndex('i', $wlen);
-            foreach($wids[$wlen] as $ixid) {
-                if ($ixid < count($index))
+            foreach ($wids[$wlen] as $ixid) {
+                if ($ixid < count($index)) {
                     $docs["$wlen*$ixid"] = $this->parseTuples($page_idx, $index[$ixid]);
+                }
             }
         }
         // merge found pages into final result array
@@ -681,10 +702,11 @@ class Doku_Indexer {
                 foreach ($hits as $hitkey => $hitcnt) {
                     // make sure the document still exists
                     if (!page_exists($hitkey, '', false)) continue;
-                    if (!isset($final[$word][$hitkey]))
+                    if (!isset($final[$word][$hitkey])) {
                         $final[$word][$hitkey] = $hitcnt;
-                    else
+                    } else {
                         $final[$word][$hitkey] += $hitcnt;
+                    }
                 }
             }
         }
@@ -709,11 +731,13 @@ class Doku_Indexer {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Michael Hamann <michael@content-space.de>
      */
-    public function lookupKey($key, &$value, $func=null) {
-        if (!is_array($value))
+    public function lookupKey($key, &$value, $func=null)
+    {
+        if (!is_array($value)) {
             $value_array = array($value);
-        else
+        } else {
             $value_array =& $value;
+        }
 
         // the matching ids for the provided value(s)
         $value_ids = array();
@@ -730,8 +754,9 @@ class Doku_Indexer {
         if (!is_null($func)) {
             foreach ($value_array as $val) {
                 foreach ($words as $i => $word) {
-                    if (call_user_func_array($func, array($val, $word)))
+                    if (call_user_func_array($func, array($val, $word))) {
                         $value_ids[$i][] = $val;
+                    }
                 }
             }
         } else {
@@ -750,11 +775,13 @@ class Doku_Indexer {
                 }
                 if (!$caret || !$dollar) {
                     $re = $caret.preg_quote($xval, '/').$dollar;
-                    foreach(array_keys(preg_grep('/'.$re.'/', $words)) as $i)
+                    foreach (array_keys(preg_grep('/'.$re.'/', $words)) as $i) {
                         $value_ids[$i][] = $val;
+                    }
                 } else {
-                    if (($i = array_search($val, $words, true)) !== false)
+                    if (($i = array_search($val, $words, true)) !== false) {
                         $value_ids[$i][] = $val;
+                    }
                 }
             }
         }
@@ -778,12 +805,14 @@ class Doku_Indexer {
                 }
             }
         } else {
-            // load all lines and pages so the used lines can be taken and matched with the pages
+            // load all lines and pages so the used lines can be taken
+            // and matched with the pages
             $lines = $this->getIndex($metaname.'_i', '');
 
             foreach ($value_ids as $value_id => $val_list) {
-                // parse the tuples of the form page_id*1:page2_id*1 and so on, return value
-                // is an array with page_id => 1, page2_id => 1 etc. so take the keys only
+                // parse the tuples of the form page_id*1:page2_id*1 and so on,
+                // return value is an array with page_id => 1, page2_id => 1 etc.
+                // so take the keys only
                 $pages = array_keys($this->parseTuples($page_idx, $lines[$value_id]));
                 foreach ($val_list as $val) {
                     $result[$val] = array_merge($result[$val], $pages);
@@ -808,7 +837,8 @@ class Doku_Indexer {
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function getIndexWords(&$words, &$result) {
+    protected function getIndexWords(&$words, &$result)
+    {
         $tokens = array();
         $tokenlength = array();
         $tokenwild = array();
@@ -830,15 +860,18 @@ class Doku_Indexer {
                 $dollar = '';
                 $wlen -= 1;
             }
-            if ($wlen < IDX_MINWORDLENGTH && $caret && $dollar && !is_numeric($xword))
+            if ($wlen < IDX_MINWORDLENGTH && $caret && $dollar && !is_numeric($xword)) {
                 continue;
-            if (!isset($tokens[$xword]))
+            }
+            if (!isset($tokens[$xword])) {
                 $tokenlength[$wlen][] = $xword;
+            }
             if (!$caret || !$dollar) {
                 $re = $caret.preg_quote($xword, '/').$dollar;
                 $tokens[$xword][] = array($word, '/'.$re.'/');
-                if (!isset($tokenwild[$xword]))
+                if (!isset($tokenwild[$xword])) {
                     $tokenwild[$xword] = $wlen;
+                }
             } else {
                 $tokens[$xword][] = array($word, null);
             }
@@ -889,7 +922,8 @@ class Doku_Indexer {
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function getPages($key=null) {
+    public function getPages($key=null)
+    {
         $page_idx = $this->getIndex('page', '');
         if (is_null($key)) return $page_idx;
 
@@ -899,8 +933,9 @@ class Doku_Indexer {
         if ($key == 'title') {
             $title_idx = $this->getIndex('title', '');
             array_splice($page_idx, count($title_idx));
-            foreach ($title_idx as $i => $title)
+            foreach ($title_idx as $i => $title) {
                 if ($title === "") unset($page_idx[$i]);
+            }
             return array_values($page_idx);
         }
 
@@ -923,11 +958,10 @@ class Doku_Indexer {
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function histogram($min=1, $max=0, $minlen=3, $key=null) {
-        if ($min < 1)
-            $min = 1;
-        if ($max < $min)
-            $max = 0;
+    public function histogram($min=1, $max=0, $minlen=3, $key=null)
+    {
+        if ($min < 1)    $min = 1;
+        if ($max < $min) $max = 0;
 
         $result = array();
 
@@ -935,28 +969,29 @@ class Doku_Indexer {
             $index = $this->getIndex('title', '');
             $index = array_count_values($index);
             foreach ($index as $val => $cnt) {
-                if ($cnt >= $min && (!$max || $cnt <= $max) && strlen($val) >= $minlen)
+                if ($cnt >= $min && (!$max || $cnt <= $max) && strlen($val) >= $minlen) {
                     $result[$val] = $cnt;
+                }
             }
-        }
-        elseif (!is_null($key)) {
+        } elseif (!is_null($key)) {
             $metaname = idx_cleanName($key);
             $index = $this->getIndex($metaname.'_i', '');
             $val_idx = array();
             foreach ($index as $wid => $line) {
                 $freq = $this->countTuples($line);
-                if ($freq >= $min && (!$max || $freq <= $max))
+                if ($freq >= $min && (!$max || $freq <= $max)) {
                     $val_idx[$wid] = $freq;
+                }
             }
             if (!empty($val_idx)) {
                 $words = $this->getIndex($metaname.'_w', '');
                 foreach ($val_idx as $wid => $freq) {
-                    if (strlen($words[$wid]) >= $minlen)
+                    if (strlen($words[$wid]) >= $minlen) {
                         $result[$words[$wid]] = $freq;
+                    }
                 }
             }
-        }
-        else {
+        } else {
             $lengths = idx_listIndexLengths();
             foreach ($lengths as $length) {
                 if ($length < $minlen) continue;
@@ -965,8 +1000,9 @@ class Doku_Indexer {
                 foreach ($index as $wid => $line) {
                     $freq = $this->countTuples($line);
                     if ($freq >= $min && (!$max || $freq <= $max)) {
-                        if ($words === null)
+                        if ($words === null) {
                             $words = $this->getIndex('w', $length);
+                        }
                         $result[$words[$wid]] = $freq;
                     }
                 }
@@ -984,14 +1020,15 @@ class Doku_Indexer {
      *
      * @return bool|string
      */
-    protected function lock() {
+    protected function lock()
+    {
         global $conf;
         $status = true;
         $run = 0;
         $lock = $conf['lockdir'].'/_indexer.lock';
         while (!@mkdir($lock, $conf['dmode'])) {
             usleep(50);
-            if(is_dir($lock) && time()-@filemtime($lock) > 60*5){
+            if (is_dir($lock) && time() - @filemtime($lock) > 60*5) {
                 // looks like a stale lock - remove it
                 if (!@rmdir($lock)) {
                     $status = "removing the stale lock failed";
@@ -999,7 +1036,7 @@ class Doku_Indexer {
                 } else {
                     $status = "stale lock removed";
                 }
-            }elseif($run++ == 1000){
+            } elseif ($run++ == 1000) {
                 // we waited 5 seconds for that lock
                 return false;
             }
@@ -1017,7 +1054,8 @@ class Doku_Indexer {
      *
      * @return bool
      */
-    protected function unlock() {
+    protected function unlock()
+    {
         global $conf;
         @rmdir($conf['lockdir'].'/_indexer.lock');
         return true;
@@ -1026,9 +1064,8 @@ class Doku_Indexer {
     /**
      * Retrieve the entire index.
      *
-     * The $suffix argument is for an index that is split into
-     * multiple parts. Different index files should use different
-     * base names.
+     * The $suffix argument is for an index that is split into multiple parts.
+     * Different index files should use different base names.
      *
      * @param string    $idx    name of the index
      * @param string    $suffix subpart identifier
@@ -1036,7 +1073,8 @@ class Doku_Indexer {
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function getIndex($idx, $suffix) {
+    protected function getIndex($idx, $suffix)
+    {
         global $conf;
         $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
         if (!file_exists($fn)) return array();
@@ -1053,17 +1091,20 @@ class Doku_Indexer {
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function saveIndex($idx, $suffix, &$lines) {
+    protected function saveIndex($idx, $suffix, &$lines)
+    {
         global $conf;
         $fn = $conf['indexdir'].'/'.$idx.$suffix;
         $fh = @fopen($fn.'.tmp', 'w');
         if (!$fh) return false;
         fwrite($fh, join("\n", $lines));
-        if (!empty($lines))
+        if (!empty($lines)) {
             fwrite($fh, "\n");
+        }
         fclose($fh);
-        if (isset($conf['fperm']))
+        if (isset($conf['fperm'])) {
             chmod($fn.'.tmp', $conf['fperm']);
+        }
         io_rename($fn.'.tmp', $fn.'.idx');
         return true;
     }
@@ -1078,7 +1119,8 @@ class Doku_Indexer {
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function getIndexKey($idx, $suffix, $id) {
+    protected function getIndexKey($idx, $suffix, $id)
+    {
         global $conf;
         $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
         if (!file_exists($fn)) return '';
@@ -1103,10 +1145,12 @@ class Doku_Indexer {
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function saveIndexKey($idx, $suffix, $id, $line) {
+    protected function saveIndexKey($idx, $suffix, $id, $line)
+    {
         global $conf;
-        if (substr($line, -1) != "\n")
+        if (substr($line, -1) !== "\n") {
             $line .= "\n";
+        }
         $fn = $conf['indexdir'].'/'.$idx.$suffix;
         $fh = @fopen($fn.'.tmp', 'w');
         if (!$fh) return false;
@@ -1117,20 +1161,23 @@ class Doku_Indexer {
                 fwrite($fh, (++$ln == $id) ? $line : $curline);
             }
             if ($id > $ln) {
-                while ($id > ++$ln)
+                while ($id > ++$ln) {
                     fwrite($fh, "\n");
+                }
                 fwrite($fh, $line);
             }
             fclose($ih);
         } else {
             $ln = -1;
-            while ($id > ++$ln)
+            while ($id > ++$ln) {
                 fwrite($fh, "\n");
+            }
             fwrite($fh, $line);
         }
         fclose($fh);
-        if (isset($conf['fperm']))
+        if (isset($conf['fperm'])) {
             chmod($fn.'.tmp', $conf['fperm']);
+        }
         io_rename($fn.'.tmp', $fn.'.idx');
         return true;
     }
@@ -1145,7 +1192,8 @@ class Doku_Indexer {
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function addIndexKey($idx, $suffix, $value) {
+    protected function addIndexKey($idx, $suffix, $value)
+    {
         $index = $this->getIndex($idx, $suffix);
         $id = array_search($value, $index, true);
         if ($id === false) {
@@ -1169,7 +1217,8 @@ class Doku_Indexer {
      *
      * @return array
      */
-    protected function listIndexLengths() {
+    protected function listIndexLengths()
+    {
         return idx_listIndexLengths();
     }
 
@@ -1184,22 +1233,25 @@ class Doku_Indexer {
      * @param array|int $filter
      * @return array
      */
-    protected function indexLengths($filter) {
+    protected function indexLengths($filter)
+    {
         global $conf;
         $idx = array();
         if (is_array($filter)) {
             // testing if index files exist only
             $path = $conf['indexdir']."/i";
             foreach ($filter as $key => $value) {
-                if (file_exists($path.$key.'.idx'))
+                if (file_exists($path.$key.'.idx')) {
                     $idx[] = $key;
+                }
             }
         } else {
             $lengths = idx_listIndexLengths();
             foreach ($lengths as $key => $length) {
                 // keep all the values equal or superior
-                if ((int)$length >= (int)$filter)
+                if ((int)$length >= (int)$filter) {
                     $idx[] = $length;
+                }
             }
         }
         return $idx;
@@ -1215,8 +1267,9 @@ class Doku_Indexer {
      * @param int    $count
      * @return string
      */
-    protected function updateTuple($line, $id, $count) {
-        if ($line != ''){
+    protected function updateTuple($line, $id, $count)
+    {
+        if ($line != '') {
             $line = preg_replace('/(^|:)'.preg_quote($id,'/').'\*\d*/', '', $line);
         }
         $line = trim($line, ':');
@@ -1240,7 +1293,8 @@ class Doku_Indexer {
      * @param string $line
      * @return array
      */
-    protected function parseTuples(&$keys, $line) {
+    protected function parseTuples(&$keys, $line)
+    {
         $result = array();
         if ($line == '') return $result;
         $parts = explode(':', $line);
@@ -1263,7 +1317,8 @@ class Doku_Indexer {
      * @param string $line
      * @return int
      */
-    protected function countTuples($line) {
+    protected function countTuples($line)
+    {
         $freq = 0;
         $parts = explode(':', $line);
         foreach ($parts as $tuple) {
@@ -1302,9 +1357,9 @@ function & idx_get_stopwords() {
     if (is_null($stopwords)) {
         global $conf;
         $swfile = DOKU_INC.'inc/lang/'.$conf['lang'].'/stopwords.txt';
-        if(file_exists($swfile)){
+        if (file_exists($swfile)) {
             $stopwords = file($swfile, FILE_IGNORE_NEW_LINES);
-        }else{
+        } else {
             $stopwords = array();
         }
     }
@@ -1342,10 +1397,10 @@ function idx_addPage($page, $verbose=false, $force=false) {
     }
 
     // check if indexing needed
-    if(!$force && file_exists($idxtag)){
-        if(trim(io_readFile($idxtag)) == idx_get_version()){
+    if (!$force && file_exists($idxtag)) {
+        if (trim(io_readFile($idxtag)) == idx_get_version()) {
             $last = @filemtime($idxtag);
-            if($last > @filemtime(wikiFN($page))){
+            if ($last > @filemtime(wikiFN($page))) {
                 if ($verbose) print("Indexer: index for $page up to date".DOKU_LF);
                 return false;
             }
@@ -1377,39 +1432,39 @@ function idx_addPage($page, $verbose=false, $force=false) {
     $body = '';
     $metadata = array();
     $metadata['title'] = p_get_metadata($page, 'title', METADATA_RENDER_UNLIMITED);
-    if (($references = p_get_metadata($page, 'relation references', METADATA_RENDER_UNLIMITED)) !== null)
-        $metadata['relation_references'] = array_keys($references);
-    else
-        $metadata['relation_references'] = array();
 
-    if (($media = p_get_metadata($page, 'relation media', METADATA_RENDER_UNLIMITED)) !== null)
-        $metadata['relation_media'] = array_keys($media);
-    else
-        $metadata['relation_media'] = array();
+    $references = p_get_metadata($page, 'relation references', METADATA_RENDER_UNLIMITED);
+    $metadata['relation_references'] = ($references !== null) ?
+            array_keys($references) : array();
+
+    $media = p_get_metadata($page, 'relation media', METADATA_RENDER_UNLIMITED);
+    $metadata['relation_media'] = ($media !== null) ?
+            array_keys($media) : array();
 
     $data = compact('page', 'body', 'metadata', 'pid');
     $evt = new Event('INDEXER_PAGE_ADD', $data);
-    if ($evt->advise_before()) $data['body'] = $data['body'] . " " . rawWiki($page);
+    if ($evt->advise_before()) $data['body'] = $data['body'].' '.rawWiki($page);
     $evt->advise_after();
     unset($evt);
     extract($data);
 
     $result = $Indexer->addPageWords($page, $body);
-    if ($result === "locked") {
+    if ($result === 'locked') {
         if ($verbose) print("Indexer: locked".DOKU_LF);
         return false;
     }
 
     if ($result) {
         $result = $Indexer->addMetaKeys($page, $metadata);
-        if ($result === "locked") {
+        if ($result === 'locked') {
             if ($verbose) print("Indexer: locked".DOKU_LF);
             return false;
         }
     }
 
-    if ($result)
+    if ($result) {
         io_saveFile(metaFN($page,'.indexed'), idx_get_version());
+    }
     if ($verbose) {
         print("Indexer: finished".DOKU_LF);
         return true;
@@ -1482,10 +1537,12 @@ function idx_listIndexLengths() {
         $docache = false;
     } else {
         clearstatcache();
-        if (file_exists($conf['indexdir'].'/lengths.idx')
-        && (time() < @filemtime($conf['indexdir'].'/lengths.idx') + $conf['readdircache'])) {
+        $lengthsFile = $conf['indexdir'].'/lengths.idx';
+        if (file_exists($lengthsFile)
+            && (time() < @filemtime($lengthsFile) + $conf['readdircache'])
+        ) {
             if (
-                ($lengths = @file($conf['indexdir'].'/lengths.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))
+                ($lengths = @file($lengthsFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))
                 !== false
             ) {
                 $idx = array();
@@ -1500,21 +1557,19 @@ function idx_listIndexLengths() {
 
     if ($conf['readdircache'] == 0 || $docache) {
         $dir = @opendir($conf['indexdir']);
-        if ($dir === false)
-            return array();
+        if ($dir === false) return array();
         $idx = array();
         while (($f = readdir($dir)) !== false) {
             if (substr($f, 0, 1) == 'i' && substr($f, -4) == '.idx') {
                 $i = substr($f, 1, -4);
-                if (is_numeric($i))
-                    $idx[] = (int)$i;
+                if (is_numeric($i)) $idx[] = (int)$i;
             }
         }
         closedir($dir);
         sort($idx);
         // save this in a file
         if ($docache) {
-            $handle = @fopen($conf['indexdir'].'/lengths.idx', 'w');
+            $handle = @fopen($lengthsFile, 'w');
             @fwrite($handle, implode("\n", $idx));
             @fclose($handle);
         }
@@ -1540,17 +1595,19 @@ function idx_indexLengths($filter) {
     $idx = array();
     if (is_array($filter)) {
         // testing if index files exist only
-        $path = $conf['indexdir']."/i";
+        $path = $conf['indexdir'].'/i';
         foreach ($filter as $key => $value) {
-            if (file_exists($path.$key.'.idx'))
+            if (file_exists($path.$key.'.idx')) {
                 $idx[] = $key;
+            }
         }
     } else {
         $lengths = idx_listIndexLengths();
         foreach ($lengths as $key => $length) {
             // keep all the values equal or superior
-            if ((int)$length >= (int)$filter)
+            if ((int)$length >= (int)$filter) {
                 $idx[] = $length;
+            }
         }
     }
     return $idx;
