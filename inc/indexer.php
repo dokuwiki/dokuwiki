@@ -992,7 +992,7 @@ class Doku_Indexer {
                 }
             }
         } else {
-            $lengths = idx_listIndexLengths();
+            $lengths = $this->listIndexLengths();
             foreach ($lengths as $length) {
                 if ($length < $minlen) continue;
                 $index = $this->getIndex('i', $length);
@@ -1238,7 +1238,51 @@ class Doku_Indexer {
      */
     protected function listIndexLengths()
     {
-        return idx_listIndexLengths();
+        global $conf;
+        // testing what we have to do, create a cache file or not.
+        if ($conf['readdircache'] == 0) {
+            $docache = false;
+        } else {
+            clearstatcache();
+            $lengthsFile = $conf['indexdir'].'/lengths.idx';
+            if (file_exists($lengthsFile)
+                && (time() < @filemtime($lengthsFile) + $conf['readdircache'])
+            ) {
+                if (
+                    ($lengths = @file($lengthsFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))
+                    !== false
+                ) {
+                    $idx = array();
+                    foreach ($lengths as $length) {
+                        $idx[] = (int)$length;
+                    }
+                    return $idx;
+                }
+            }
+            $docache = true;
+        }
+
+        if ($conf['readdircache'] == 0 || $docache) {
+            $dir = @opendir($conf['indexdir']);
+            if ($dir === false) return array();
+            $idx = array();
+            while (($f = readdir($dir)) !== false) {
+                if (substr($f, 0, 1) == 'i' && substr($f, -4) == '.idx') {
+                    $i = substr($f, 1, -4);
+                    if (is_numeric($i)) $idx[] = (int)$i;
+                }
+            }
+            closedir($dir);
+            sort($idx);
+            // save this in a file
+            if ($docache) {
+                $handle = @fopen($lengthsFile, 'w');
+                @fwrite($handle, implode("\n", $idx));
+                @fclose($handle);
+            }
+            return $idx;
+        }
+        return array();
     }
 
     /**
@@ -1265,7 +1309,7 @@ class Doku_Indexer {
                 }
             }
         } else {
-            $lengths = idx_listIndexLengths();
+            $lengths = $this->listIndexLengths();
             foreach ($lengths as $key => $length) {
                 // keep all the values equal or superior
                 if ((int)$length >= (int)$filter) {
@@ -1539,63 +1583,11 @@ function idx_getIndex($idx, $suffix) {
     return file($fn);
 }
 
-/**
- * Get the list of lengths indexed in the wiki.
- *
- * Read the index directory or a cache file and returns
- * a sorted array of lengths of the words used in the wiki.
- *
- * @author YoBoY <yoboy.leguesh@gmail.com>
- *
- * @return array
- */
+/** @deprecated 2019-12-16 */
 function idx_listIndexLengths() {
-    global $conf;
-    // testing what we have to do, create a cache file or not.
-    if ($conf['readdircache'] == 0) {
-        $docache = false;
-    } else {
-        clearstatcache();
-        $lengthsFile = $conf['indexdir'].'/lengths.idx';
-        if (file_exists($lengthsFile)
-            && (time() < @filemtime($lengthsFile) + $conf['readdircache'])
-        ) {
-            if (
-                ($lengths = @file($lengthsFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))
-                !== false
-            ) {
-                $idx = array();
-                foreach ($lengths as $length) {
-                    $idx[] = (int)$length;
-                }
-                return $idx;
-            }
-        }
-        $docache = true;
-    }
-
-    if ($conf['readdircache'] == 0 || $docache) {
-        $dir = @opendir($conf['indexdir']);
-        if ($dir === false) return array();
-        $idx = array();
-        while (($f = readdir($dir)) !== false) {
-            if (substr($f, 0, 1) == 'i' && substr($f, -4) == '.idx') {
-                $i = substr($f, 1, -4);
-                if (is_numeric($i)) $idx[] = (int)$i;
-            }
-        }
-        closedir($dir);
-        sort($idx);
-        // save this in a file
-        if ($docache) {
-            $handle = @fopen($lengthsFile, 'w');
-            @fwrite($handle, implode("\n", $idx));
-            @fclose($handle);
-        }
-        return $idx;
-    }
-
-    return array();
+    dbg_deprecated('idx_listIndexLengths');
+    $Indexer = idx_get_indexer();
+    return $Indexer->listIndexLengths();
 }
 
 /** @deprecated 2019-12-16 */
