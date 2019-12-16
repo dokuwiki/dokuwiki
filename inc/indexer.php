@@ -15,36 +15,11 @@ define('INDEXER_VERSION', 8);
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
 if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
 
-/**
- * Version of the indexer taking into consideration the external tokenizer.
- * The indexer is only compatible with data written by the same version.
- *
- * @triggers INDEXER_VERSION_GET
- * Plugins that modify what gets indexed should hook this event and
- * add their version info to the event data like so:
- *     $data[$plugin_name] = $plugin_version;
- *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- * @author Michael Hamann <michael@content-space.de>
- *
- * @return int|string
- */
+/** @deprecated 2019-12-16 */
 function idx_get_version() {
-    static $indexer_version = null;
-    if ($indexer_version == null) {
-        $version = INDEXER_VERSION;
-
-        // DokuWiki version is included for the convenience of plugins
-        $data = array('dokuwiki'=>$version);
-        Event::createAndTrigger('INDEXER_VERSION_GET', $data, null, false);
-        unset($data['dokuwiki']); // this needs to be first
-        ksort($data);
-        foreach ($data as $plugin=>$vers) {
-            $version .= '+'.$plugin.'='.$vers;
-        }
-        $indexer_version = $version;
-    }
-    return $indexer_version;
+    dbg_deprecated('idx_get_version');
+    $Indexer = idx_get_indexer();
+    return $Indexer->getVersion();
 }
 
 /**
@@ -79,6 +54,39 @@ class Doku_Indexer {
     protected $pidCache = array();
 
     /**
+     * Version of the indexer taking into consideration the external tokenizer.
+     * The indexer is only compatible with data written by the same version.
+     *
+     * @triggers INDEXER_VERSION_GET
+     * Plugins that modify what gets indexed should hook this event and
+     * add their version info to the event data like so:
+     *     $data[$plugin_name] = $plugin_version;
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Michael Hamann <michael@content-space.de>
+     *
+     * @return int|string
+     */
+    public function getVersion()
+    {
+        static $indexer_version = null;
+        if ($indexer_version == null) {
+            $version = INDEXER_VERSION;
+
+            // DokuWiki version is included for the convenience of plugins
+            $data = array('dokuwiki'=>$version);
+            Event::createAndTrigger('INDEXER_VERSION_GET', $data, null, false);
+            unset($data['dokuwiki']); // this needs to be first
+            ksort($data);
+            foreach ($data as $plugin=>$vers) {
+                $version .= '+'.$plugin.'='.$vers;
+            }
+            $indexer_version = $version;
+        }
+        return $indexer_version;
+    }
+
+    /**
      * Adds/updates the search index for the given page
      *
      * Locking is handled internally.
@@ -110,7 +118,7 @@ class Doku_Indexer {
 
         // check if indexing needed
         if (!$force && file_exists($idxtag)) {
-            if (trim(io_readFile($idxtag)) == idx_get_version()) {
+            if (trim(io_readFile($idxtag)) == $this->getVersion()) {
                 $last = @filemtime($idxtag);
                 if ($last > @filemtime(wikiFN($page))) {
                     if ($verbose) print("Indexer: index for $page up to date".DOKU_LF);
@@ -173,7 +181,7 @@ class Doku_Indexer {
         }
 
         if ($result) {
-            io_saveFile(metaFN($page,'.indexed'), idx_get_version());
+            io_saveFile(metaFN($page,'.indexed'), $this->getVersion());
         }
         if ($verbose) {
             print("Indexer: finished".DOKU_LF);
