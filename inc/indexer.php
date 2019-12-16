@@ -1535,19 +1535,9 @@ function idx_addPage($page, $verbose=false, $force=false) {
     return $result;
 }
 
-/**
- * Find tokens in the fulltext index
- *
- * Takes an array of words and will return a list of matching
- * pages for each one.
- *
- * Important: No ACL checking is done here! All results are
- *            returned, regardless of permissions
- *
- * @param array      $words  list of words to search for
- * @return array             list of pages found, associated with the search terms
- */
+/** @deprecated 2019-12-16 */
 function idx_lookup(&$words) {
+    dbg_deprecated('idx_lookup');
     $Indexer = idx_get_indexer();
     return $Indexer->lookup($words);
 }
