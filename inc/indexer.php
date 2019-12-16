@@ -1598,38 +1598,11 @@ function idx_listIndexLengths() {
     return array();
 }
 
-/**
- * Get the word lengths that have been indexed.
- *
- * Reads the index directory and returns an array of lengths
- * that there are indices for.
- *
- * @author YoBoY <yoboy.leguesh@gmail.com>
- *
- * @param array|int $filter
- * @return array
- */
+/** @deprecated 2019-12-16 */
 function idx_indexLengths($filter) {
-    global $conf;
-    $idx = array();
-    if (is_array($filter)) {
-        // testing if index files exist only
-        $path = $conf['indexdir'].'/i';
-        foreach ($filter as $key => $value) {
-            if (file_exists($path.$key.'.idx')) {
-                $idx[] = $key;
-            }
-        }
-    } else {
-        $lengths = idx_listIndexLengths();
-        foreach ($lengths as $key => $length) {
-            // keep all the values equal or superior
-            if ((int)$length >= (int)$filter) {
-                $idx[] = $length;
-            }
-        }
-    }
-    return $idx;
+    dbg_deprecated('idx_indexLengths');
+    $Indexer = idx_get_indexer();
+    return $Indexer->indexLengths($filter);
 }
 
 /** @deprecated 2019-12-16 */
