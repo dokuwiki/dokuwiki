@@ -254,7 +254,7 @@ class Doku_Indexer {
         }
 
         foreach ($key as $name => $values) {
-            $metaname = idx_cleanName($name);
+            $metaname = $this->cleanName($name);
             $this->addIndexKey('metadata', '', $metaname);
             $metaidx = $this->getIndex($metaname.'_i', '');
             $metawords = $this->getIndex($metaname.'_w', '');
@@ -742,7 +742,7 @@ class Doku_Indexer {
         // the matching ids for the provided value(s)
         $value_ids = array();
 
-        $metaname = idx_cleanName($key);
+        $metaname = $this->cleanName($key);
 
         // get all words in order to search the matching ids
         if ($key == 'title') {
@@ -927,7 +927,7 @@ class Doku_Indexer {
         $page_idx = $this->getIndex('page', '');
         if (is_null($key)) return $page_idx;
 
-        $metaname = idx_cleanName($key);
+        $metaname = $this->cleanName($key);
 
         // Special handling for titles
         if ($key == 'title') {
@@ -974,7 +974,7 @@ class Doku_Indexer {
                 }
             }
         } elseif (!is_null($key)) {
-            $metaname = idx_cleanName($key);
+            $metaname = $this->cleanName($key);
             $index = $this->getIndex($metaname.'_i', '');
             $val_idx = array();
             foreach ($index as $wid => $line) {
@@ -1011,6 +1011,25 @@ class Doku_Indexer {
 
         arsort($result);
         return $result;
+    }
+
+    /**
+     * Clean a name of a key for use as a file name.
+     *
+     * Romanizes non-latin characters, then strips away anything that's
+     * not a letter, number, or underscore.
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function cleanName($name)
+    {
+        $name = \dokuwiki\Utf8\Clean::romanize(trim((string)$name));
+        $name = preg_replace('#[ \./\\:-]+#', '_', $name);
+        $name = preg_replace('/[^A-Za-z0-9_]/', '', $name);
+        return strtolower($name);
     }
 
     /**
@@ -1613,22 +1632,11 @@ function idx_indexLengths($filter) {
     return $idx;
 }
 
-/**
- * Clean a name of a key for use as a file name.
- *
- * Romanizes non-latin characters, then strips away anything that's
- * not a letter, number, or underscore.
- *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- *
- * @param string $name
- * @return string
- */
+/** @deprecated 2019-12-16 */
 function idx_cleanName($name) {
-    $name = \dokuwiki\Utf8\Clean::romanize(trim((string)$name));
-    $name = preg_replace('#[ \./\\:-]+#', '_', $name);
-    $name = preg_replace('/[^A-Za-z0-9_]/', '', $name);
-    return strtolower($name);
+    dbg_deprecated('idx_cleanName');
+    $Indexer = idx_get_indexer();
+    return $Indexer->cleanName($name);
 }
 
 //Setup VIM: ex: et ts=4 :
