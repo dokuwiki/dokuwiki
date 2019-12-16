@@ -1552,15 +1552,9 @@ function idx_lookup(&$words) {
     return $Indexer->lookup($words);
 }
 
-/**
- * Split a string into tokens
- *
- * @param string $string
- * @param bool $wc
- *
- * @return array
- */
+/** @deprecated 2019-12-16 */
 function idx_tokenizer($string, $wc=false) {
+    dbg_deprecated('idx_tokenizer');
     $Indexer = idx_get_indexer();
     return $Indexer->tokenizer($string, $wc);
 }
