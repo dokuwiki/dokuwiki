@@ -35,11 +35,32 @@ function wordlen($w) {
  */
 class Doku_Indexer {
 
+    /** @var Indexer */
+    protected static $instance = null;
+
     /** @var array $pidCache Cache for getPID() */
     protected $pidCache = array();
 
     /** @var array $Stopwords Words that indexer ignores */
     protected $Stopwords;
+
+    /**
+     * Indexer constructor. Singleton, thus protected!
+     */
+    final protected function __construct() {}
+
+    /**
+     * Get new or existing singleton instance of the Indexer
+     *
+     * @return Indexer
+     */
+    final public static function getInstance()
+    {
+        if (is_null(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
 
     /**
      * Returns words that will be ignored
@@ -1540,11 +1561,7 @@ class Doku_Indexer {
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function idx_get_indexer() {
-    static $Indexer;
-    if (!isset($Indexer)) {
-        $Indexer = new Doku_Indexer();
-    }
-    return $Indexer;
+    return Doku_Indexer::getInstance();
 }
 
 /** @deprecated 2019-12-16 */
