@@ -22,25 +22,10 @@ function idx_get_version() {
     return $Indexer->getVersion();
 }
 
-/**
- * Measure the length of a string.
- * Differs from strlen in handling of asian characters.
- *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- *
- * @param string $w
- * @return int
- */
+/** @deprecated 2019-12-17 */
 function wordlen($w) {
-    $l = strlen($w);
-    // If left alone, all chinese "words" will get put into w3.idx
-    // So the "length" of a "word" is faked
-    if (preg_match_all('/[\xE2-\xEF]/',$w,$leadbytes)) {
-        foreach ($leadbytes[0] as $b) {
-            $l += ord($b) - 0xE1;
-        }
-    }
-    return $l;
+    dbg_deprecated('wordlen');
+    return Doku_Indexer::wordlen($w);
 }
 
 /**
@@ -75,6 +60,27 @@ class Doku_Indexer {
            }
         }
         return $this->Stopwords;
+    }
+
+    /**
+     * Measure the length of a string.
+     * Differs from strlen in handling of asian characters.
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     *
+     * @param string $w
+     * @return int
+     */
+    public static function wordlen($w) {
+        $l = strlen($w);
+        // If left alone, all chinese "words" will get put into w3.idx
+        // So the "length" of a "word" is faked
+        if (preg_match_all('/[\xE2-\xEF]/', $w, $leadbytes)) {
+            foreach ($leadbytes[0] as $b) {
+                $l += ord($b) - 0xE1;
+            }
+        }
+        return $l;
     }
 
     /**
@@ -310,7 +316,7 @@ class Doku_Indexer {
 
         $words = array();
         foreach ($tokens as $w=>$c) {
-            $l = wordlen($w);
+            $l = static::wordlen($w);
             if (isset($words[$l])) {
                 $words[$l][$w] = $c + (isset($words[$l][$w]) ? $words[$l][$w] : 0);
             } else {
@@ -980,7 +986,7 @@ class Doku_Indexer {
             $caret = '^';
             $dollar = '$';
             $xword = $word;
-            $wlen = wordlen($word);
+            $wlen = static::wordlen($word);
 
             // check for wildcards
             if (substr($xword, 0, 1) == '*') {
