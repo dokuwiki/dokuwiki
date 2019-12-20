@@ -408,17 +408,17 @@ class FulltextSearch
 
             for ($cnt=4; $cnt--;) {
                 if (0) {
-                } else if (preg_match('/'.$re3.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
-                } else if (preg_match('/'.$re2.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
-                } else if (preg_match('/'.$re1.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
+                } elseif (preg_match('/'.$re3.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
+                } elseif (preg_match('/'.$re2.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
+                } elseif (preg_match('/'.$re1.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
                 } else {
                     break;
                 }
 
-                list($str,$idx) = $match[0];
+                list($str, $idx) = $match[0];
 
                 // convert $idx (a byte offset) into a utf8 character offset
-                $utf8_idx = \dokuwiki\Utf8\PhpString::strlen(substr($text,0,$idx));
+                $utf8_idx = \dokuwiki\Utf8\PhpString::strlen(substr($text, 0, $idx));
                 $utf8_len = \dokuwiki\Utf8\PhpString::strlen($str);
 
                 // establish context, 100 bytes surrounding the match string
@@ -429,11 +429,11 @@ class FulltextSearch
 
                 if ($pre > 50 && $post > 50) {
                     $pre = $post = 50;
-                } else if ($pre > 50) {
+                } elseif ($pre > 50) {
                     $pre = min($pre, 100 - $post);
-                } else if ($post > 50) {
+                } elseif ($post > 50) {
                     $post = min($post, 100 - $pre);
-                } else if ($offset == 0) {
+                } elseif ($offset == 0) {
                     // both are less than 50, means the context is the whole string
                     // make it so and break out of this loop - there is no need for the
                     // complex snippet calculations
@@ -501,14 +501,14 @@ class FulltextSearch
             $BR = '\b';
         }
 
-        if (substr($term,0,2) == '\\*') {
-            $term = substr($term,2);
+        if (substr($term, 0, 2) == '\\*') {
+            $term = substr($term, 2);
         } else {
             $term = $BL.$term;
         }
 
-        if (substr($term,-2,2) == '\\*') {
-            $term = substr($term,0,-2);
+        if (substr($term, -2, 2) == '\\*') {
+            $term = substr($term, 0, -2);
         } else {
             $term = $term.$BR;
         }
@@ -927,7 +927,7 @@ class FulltextSearch
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-Class MetaSearch
+class MetaSearch
 {
     /**
      *  Metadata Search constructor. prevent direct object creation
