@@ -1,11 +1,4 @@
 <?php
-/**
- * Functions to create the fulltext search index
- *
- * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Andreas Gohr <andi@splitbrain.org>
- * @author     Tom N Harris <tnharris@whoopdedo.org>
- */
 
 use dokuwiki\Extension\Event;
 
@@ -15,25 +8,15 @@ define('INDEXER_VERSION', 8);
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
 if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
 
-/** @deprecated 2019-12-16 */
-function idx_get_version() {
-    dbg_deprecated('idx_get_version');
-    $Indexer = idx_get_indexer();
-    return $Indexer->getVersion();
-}
-
-/** @deprecated 2019-12-17 */
-function wordlen($w) {
-    dbg_deprecated('wordlen');
-    return Doku_Indexer::wordlen($w);
-}
 
 /**
- * Class that encapsulates operations on the indexer database.
+ * Class DokuWIki Indexer for Fulltext Search
  *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Andreas Gohr <andi@splitbrain.org>
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-class Doku_Indexer {
+class Indexer {
 
     /** @var Indexer */
     protected static $instance = null;
@@ -47,14 +30,14 @@ class Doku_Indexer {
     /**
      * Indexer constructor. Singleton, thus protected!
      */
-    final protected function __construct() {}
+    protected function __construct() {}
 
     /**
      * Get new or existing singleton instance of the Indexer
      *
      * @return Indexer
      */
-    final public static function getInstance()
+    public static function getInstance()
     {
         if (is_null(static::$instance)) {
             static::$instance = new static();
@@ -492,7 +475,8 @@ class Doku_Indexer {
      *
      * @param string $oldpage The old page name
      * @param string $newpage The new page name
-     * @return string|bool If the page was successfully renamed, can be a message in the case of an error
+     * @return string|bool If the page was successfully renamed,
+     *                     can be a message in the case of an error
      */
     public function renamePage($oldpage, $newpage)
     {
@@ -538,8 +522,10 @@ class Doku_Indexer {
      *
      * @param string $key       The metadata key of which a value shall be changed
      * @param string $oldvalue  The old value that shall be renamed
-     * @param string $newvalue  The new value to which the old value shall be renamed, if exists values will be merged
-     * @return bool|string      If renaming the value has been successful, false or error message on error.
+     * @param string $newvalue  The new value to which the old value shall be renamed,
+     *                          if exists values will be merged
+     * @return bool|string      If renaming the value has been successful, false
+     *                          or error message on error.
      */
     public function renameMetaValue($key, $oldvalue, $newvalue)
     {
@@ -650,11 +636,11 @@ class Doku_Indexer {
             }
         }
         // Save the reverse index
-        if (!$this->saveIndexKey('pageword', '', $pid, "")) {
+        if (!$this->saveIndexKey('pageword', '', $pid, '')) {
             return false;
         }
 
-        $this->saveIndexKey('title', '', $pid, "");
+        $this->saveIndexKey('title', '', $pid, '');
         $keyidx = $this->getIndex('metadata', '');
         foreach ($keyidx as $metaname) {
             $val_idx = explode(':', $this->getIndexKey($metaname.'_p', '', $pid));
@@ -1063,7 +1049,7 @@ class Doku_Indexer {
                 if ($wlen >= $ixlen) break;
                 foreach ($tokens[$xword] as $w) {
                     if (is_null($w[1])) continue;
-                    foreach(array_keys(preg_grep($w[1], $word_idx)) as $wid) {
+                    foreach (array_keys(preg_grep($w[1], $word_idx)) as $wid) {
                         $wids[$ixlen][] = $wid;
                         $result[$w[0]][] = "$ixlen*$wid";
                     }
@@ -1094,7 +1080,7 @@ class Doku_Indexer {
             $title_idx = $this->getIndex('title', '');
             array_splice($page_idx, count($title_idx));
             foreach ($title_idx as $i => $title) {
-                if ($title === "") unset($page_idx[$i]);
+                if ($title === '') unset($page_idx[$i]);
             }
             return array_values($page_idx);
         }
@@ -1367,7 +1353,8 @@ class Doku_Indexer {
      * @param string    $idx    name of the index
      * @param string    $suffix subpart identifier
      * @param string    $value  line to find in the index
-     * @return int|bool          line number of the value in the index or false if writing the index failed
+     * @return int|bool          line number of the value in the index
+     *                           or false if writing the index failed
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -1553,6 +1540,30 @@ class Doku_Indexer {
     }
 }
 
+
+/**
+ * Class that encapsulates operations on the indexer database.
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
+ * @@deprecated 2019-12-20
+ */
+class Doku_Indexer extends \Indexer
+{
+    public function __construct()
+    {
+        dbg_deprecated(\Indexer::class);
+        parent::__construct();
+    }
+}
+
+/**
+ * Functions to create the fulltext search index
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Andreas Gohr <andi@splitbrain.org>
+ * @author     Tom N Harris <tnharris@whoopdedo.org>
+ */
+
 /**
  * Create an instance of the indexer.
  *
@@ -1561,7 +1572,20 @@ class Doku_Indexer {
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function idx_get_indexer() {
-    return Doku_Indexer::getInstance();
+    return \Indexer::getInstance();
+}
+
+/** @deprecated 2019-12-16 */
+function idx_get_version() {
+    dbg_deprecated('idx_get_version');
+    $Indexer = idx_get_indexer();
+    return $Indexer->getVersion();
+}
+
+/** @deprecated 2019-12-17 */
+function wordlen($w) {
+    dbg_deprecated('wordlen');
+    return Doku_Indexer::wordlen($w);
 }
 
 /** @deprecated 2019-12-16 */
