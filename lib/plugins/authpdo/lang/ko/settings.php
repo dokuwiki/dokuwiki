@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author n.m.z <truetree1212@naver.com>
  * @author pavement <pavement@rael.cc>
  * @author Traend <Traend@ruu.kr>
  */
