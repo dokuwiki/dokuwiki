@@ -1,6 +1,8 @@
 <?php
 namespace dokuwiki\Search;
 
+use dokuwiki\Search\Indexer;
+
 /**
  * Class DokuWiki Metadata Search
  *
@@ -25,7 +27,8 @@ class MetaSearch
      */
     public static function backlinks($id, $ignore_perms = false)
     {
-        $result = idx_get_indexer()->lookupKey('relation_references', $id);
+        $Indexer = Indexer::getInstance();
+        $result = $Indexer->lookupKey('relation_references', $id);
 
         if (!count($result)) return $result;
 
@@ -59,7 +62,8 @@ class MetaSearch
      */
     public static function mediause($id, $ignore_perms = false)
     {
-        $result = idx_get_indexer()->lookupKey('relation_media', $id);
+        $Indexer = Indexer::getInstance();
+        $result = $Indexer->lookupKey('relation_media', $id);
 
         if (!count($result)) return $result;
 

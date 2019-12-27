@@ -2,7 +2,8 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
-
+use dokuwiki\Search\Indexer;
+use dokuwiki\Utf8;
 
 /**
  * Class DokuWiki Fulltext Search
@@ -61,7 +62,7 @@ class FulltextSearch
      */
     public static function callback_pageSearch(&$data)
     {
-        $Indexer = idx_get_indexer();
+        $Indexer = Indexer::getInstance();
 
         // parse the given query
         $q = static::queryParser($Indexer, $data['query']);
@@ -104,7 +105,7 @@ class FulltextSearch
                         );
                         $evt = new Event('FULLTEXT_PHRASE_MATCH', $evdata);
                         if ($evt->advise_before() && $evt->result !== true) {
-                            $text = \dokuwiki\Utf8\PhpString::strtolower($evdata['text']);
+                            $text = Utf8\PhpString::strtolower($evdata['text']);
                             if (strpos($text, $phrase) !== false) {
                                 $evt->result = true;
                             }
@@ -212,9 +213,10 @@ class FulltextSearch
      */
     public static function callback_pageLookup(&$data)
     {
+        $Indexer = Indexer::getInstance();
+
         // split out original parameters
         $id = $data['id'];
-        $Indexer = idx_get_indexer();
         $parsedQuery = static::queryParser($Indexer, $id);
         if (count($parsedQuery['ns']) > 0) {
             $ns = cleanID($parsedQuery['ns'][0]) . ':';
@@ -225,11 +227,9 @@ class FulltextSearch
         $in_title = $data['in_title'];
         $cleaned = cleanID($id);
 
-        $Indexer = idx_get_indexer();
-        $page_idx = $Indexer->getPages();
-
         $pages = array();
         if ($id !== '' && $cleaned !== '') {
+            $page_idx = $Indexer->getPages();
             foreach ($page_idx as $p_id) {
                 if ((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) !== false)) {
                     if (!isset($pages[$p_id])) {
@@ -599,7 +599,7 @@ class FulltextSearch
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Kazutaka Miyasaka <kazmiya@gmail.com>
      *
-     * @param Doku_Indexer $Indexer
+     * @param Indexer $Indexer
      * @param string $query search query
      * @return array of search formulas
      */
@@ -843,7 +843,7 @@ class FulltextSearch
      *
      * @author Kazutaka Miyasaka <kazmiya@gmail.com>
      *
-     * @param Doku_Indexer $Indexer
+     * @param Indexer      $Indexer
      * @param string       $term
      * @param bool         $consider_asian
      * @param bool         $phrase_mode
