@@ -20,24 +20,13 @@ function idx_get_indexer() {
     return Indexer::getInstance();
 }
 
+/* For compatibility */
+
 /** @deprecated 2019-12-16 */
 function idx_get_version() {
     dbg_deprecated('idx_get_version');
     $Indexer = idx_get_indexer();
     return $Indexer->getVersion();
-}
-
-/** @deprecated 2019-12-17 */
-function wordlen($w) {
-    dbg_deprecated('wordlen');
-    return Doku_Indexer::wordlen($w);
-}
-
-/** @deprecated 2019-12-16 */
-function & idx_get_stopwords() {
-    dbg_deprecated('idx_get_stopwords');
-    $Indexer = idx_get_indexer();
-    return $Indexer->getStopwords();
 }
 
 /** @deprecated 2019-12-16 */
@@ -46,22 +35,6 @@ function idx_addPage($page, $verbose=false, $force=false) {
     $Indexer = idx_get_indexer();
     return $Indexer->addPage($page, $verbose, $force);
 }
-
-/** @deprecated 2019-12-16 */
-function idx_lookup(&$words) {
-    dbg_deprecated('idx_lookup');
-    $Indexer = idx_get_indexer();
-    return $Indexer->lookup($words);
-}
-
-/** @deprecated 2019-12-16 */
-function idx_tokenizer($string, $wc=false) {
-    dbg_deprecated('idx_tokenizer');
-    $Indexer = idx_get_indexer();
-    return $Indexer->tokenizer($string, $wc);
-}
-
-/* For compatibility */
 
 /** @deprecated 2019-12-16 */
 function idx_getIndex($idx, $suffix) {
@@ -77,19 +50,6 @@ function idx_listIndexLengths() {
     return $Indexer->listIndexLengths();
 }
 
-/** @deprecated 2019-12-16 */
-function idx_indexLengths($filter) {
-    dbg_deprecated('idx_indexLengths');
-    $Indexer = idx_get_indexer();
-    return $Indexer->indexLengths($filter);
-}
-
-/** @deprecated 2019-12-16 */
-function idx_cleanName($name) {
-    dbg_deprecated('idx_cleanName');
-    $Indexer = idx_get_indexer();
-    return $Indexer->cleanName($name);
-}
 
 /**
  * Class that encapsulates operations on the indexer database.

@@ -620,7 +620,7 @@ class Indexer {
         // Remove obsolete index entries
         $pageword_idx = $this->getIndexKey('pageword', '', $pid);
         if ($pageword_idx !== '') {
-            $delwords = explode(':',$pageword_idx);
+            $delwords = explode(':', $pageword_idx);
             $upwords = array();
             foreach ($delwords as $word) {
                 if ($word != '') {
@@ -778,7 +778,7 @@ class Indexer {
      * Only use this function when the index is already locked.
      *
      * @param string $page The page to get the PID for
-     * @return bool|int The page id on success, false on error
+     * @return int|bool The page id on success, false on error
      */
     protected function getPIDNoLock($page)
     {
