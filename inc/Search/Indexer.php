@@ -2,6 +2,7 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
+use dokuwiki\Utf8;
 
 // Version tag used to force rebuild on upgrade
 define('INDEXER_VERSION', 8);
@@ -113,7 +114,7 @@ class Indexer {
             Event::createAndTrigger('INDEXER_VERSION_GET', $data, null, false);
             unset($data['dokuwiki']); // this needs to be first
             ksort($data);
-            foreach ($data as $plugin=>$vers) {
+            foreach ($data as $plugin => $vers) {
                 $version .= '+'.$plugin.'='.$vers;
             }
             $indexer_version = $version;
@@ -320,7 +321,7 @@ class Indexer {
         $tokens = array_count_values($tokens);  // count the frequency of each token
 
         $words = array();
-        foreach ($tokens as $w=>$c) {
+        foreach ($tokens as $w => $c) {
             $l = static::wordlen($w);
             if (isset($words[$l])) {
                 $words[$l][$w] = $c + (isset($words[$l][$w]) ? $words[$l][$w] : 0);
@@ -715,7 +716,7 @@ class Indexer {
         $evt = new Event('INDEXER_TEXT_PREPARE', $text);
         if ($evt->advise_before(true)) {
             if (preg_match('/[^0-9A-Za-z ]/u', $text)) {
-                $text = \dokuwiki\Utf8\Asian::separateAsianWords($text);
+                $text = Utf8\Asian::separateAsianWords($text);
             }
         }
         $evt->advise_after();
@@ -730,13 +731,13 @@ class Indexer {
                        )
                      );
         if (preg_match('/[^0-9A-Za-z ]/u', $text)) {
-            $text = \dokuwiki\Utf8\Clean::stripspecials($text, ' ', '\._\-:'.$wc);
+            $text = Utf8\Clean::stripspecials($text, ' ', '\._\-:'.$wc);
         }
 
         $wordlist = explode(' ', $text);
         foreach ($wordlist as $i => $word) {
             $wordlist[$i] = (preg_match('/[^0-9A-Za-z]/u', $word)) ?
-                \dokuwiki\Utf8\PhpString::strtolower($word) : strtolower($word);
+                Utf8\PhpString::strtolower($word) : strtolower($word);
         }
 
         foreach ($wordlist as $i => $word) {
@@ -1173,7 +1174,7 @@ class Indexer {
      */
     protected function cleanName($name)
     {
-        $name = \dokuwiki\Utf8\Clean::romanize(trim((string)$name));
+        $name = Utf8\Clean::romanize(trim((string)$name));
         $name = preg_replace('#[ \./\\:-]+#', '_', $name);
         $name = preg_replace('/[^A-Za-z0-9_]/', '', $name);
         return strtolower($name);
@@ -1239,7 +1240,7 @@ class Indexer {
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function getIndex($idx, $suffix)
+    public function getIndex($idx, $suffix)
     {
         global $conf;
         $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
@@ -1384,15 +1385,16 @@ class Indexer {
      *
      * @return array
      */
-    protected function listIndexLengths()
+    public function listIndexLengths()
     {
         global $conf;
+        $lengthsFile = $conf['indexdir'].'/lengths.idx';
+
         // testing what we have to do, create a cache file or not.
         if ($conf['readdircache'] == 0) {
             $docache = false;
         } else {
             clearstatcache();
-            $lengthsFile = $conf['indexdir'].'/lengths.idx';
             if (file_exists($lengthsFile)
                 && (time() < @filemtime($lengthsFile) + $conf['readdircache'])
             ) {
