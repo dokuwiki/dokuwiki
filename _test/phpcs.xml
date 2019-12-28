@@ -146,7 +146,9 @@
         <exclude-pattern>*/inc/parserutils.php</exclude-pattern>
         <exclude-pattern>*/inc/mail.php</exclude-pattern>
         <exclude-pattern>*/inc/init.php</exclude-pattern>
+        <exclude-pattern>*/inc/farm.php</exclude-pattern>
         <exclude-pattern>*/inc/fulltext.php</exclude-pattern>
+        <exclude-pattern>*/inc/pluginutils.php</exclude-pattern>
         <exclude-pattern>*/inc/Mailer.class.php</exclude-pattern>
         <exclude-pattern>*/doku.php</exclude-pattern>
         <exclude-pattern>*/install.php</exclude-pattern>
