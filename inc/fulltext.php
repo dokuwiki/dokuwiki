@@ -629,8 +629,8 @@ function ft_resultComplement($args) {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  *
- * @param Doku_Indexer $Indexer
- * @param string $query search query
+ * @param dokuwiki\DokuIndexer $Indexer
+ * @param string               $query search query
  * @return array of search formulas
  */
 function ft_queryParser($Indexer, $query){
@@ -864,10 +864,10 @@ function ft_queryParser($Indexer, $query){
  *
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  *
- * @param Doku_Indexer $Indexer
- * @param string       $term
- * @param bool         $consider_asian
- * @param bool         $phrase_mode
+ * @param dokuwiki\DokuIndexer $Indexer
+ * @param string               $term
+ * @param bool                 $consider_asian
+ * @param bool                 $phrase_mode
  * @return string
  */
 function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = false) {

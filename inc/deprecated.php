@@ -563,3 +563,8 @@ class Subscription {
         $manager->notifyAddresses($data);
     }
 }
+
+/**
+ * @deprecated 2019-12-29 use \dokuwiki\DokuIndexer
+ */
+class Doku_Indexer extends \dokuwiki\DokuIndexer {};
