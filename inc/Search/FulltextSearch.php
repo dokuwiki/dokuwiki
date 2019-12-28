@@ -309,7 +309,7 @@ class FulltextSearch
      * @param string $title  title from index
      * @return bool
      */
-    public static function pageLookupTitleCompare($search, $title)
+    protected static function pageLookupTitleCompare($search, $title)
     {
         return stripos($title, $search) !== false;
     }
@@ -378,7 +378,7 @@ class FulltextSearch
             $match = array();
             $snippets = array();
             $utf8_offset = $offset = $end = 0;
-            $len = \dokuwiki\Utf8\PhpString::strlen($text);
+            $len = Utf8\PhpString::strlen($text);
 
             // build a regexp from the phrases to highlight
             $re1 = '(' .
@@ -408,8 +408,8 @@ class FulltextSearch
                 list($str, $idx) = $match[0];
 
                 // convert $idx (a byte offset) into a utf8 character offset
-                $utf8_idx = \dokuwiki\Utf8\PhpString::strlen(substr($text, 0, $idx));
-                $utf8_len = \dokuwiki\Utf8\PhpString::strlen($str);
+                $utf8_idx = Utf8\PhpString::strlen(substr($text, 0, $idx));
+                $utf8_len = Utf8\PhpString::strlen($str);
 
                 // establish context, 100 bytes surrounding the match string
                 // first look to see if we can go 100 either side,
@@ -438,9 +438,9 @@ class FulltextSearch
                 $end = $utf8_idx + $utf8_len + $post;      // now set it to the end of this context
 
                 if ($append) {
-                    $snippets[count($snippets)-1] .= \dokuwiki\Utf8\PhpString::substr($text,$append,$end-$append);
+                    $snippets[count($snippets)-1] .= Utf8\PhpString::substr($text, $append, $end-$append);
                 } else {
-                    $snippets[] = \dokuwiki\Utf8\PhpString::substr($text,$start,$end-$start);
+                    $snippets[] = Utf8\PhpString::substr($text, $start, $end-$start);
                 }
 
                 // set $offset for next match attempt
@@ -449,8 +449,8 @@ class FulltextSearch
                 // this prevents further matching of this snippet but for possible matches of length
                 // smaller than match length + context (at least 50 characters) this match is part of the context
                 $utf8_offset = $utf8_idx + $utf8_len;
-                $offset = $idx + strlen(\dokuwiki\Utf8\PhpString::substr($text,$utf8_idx,$utf8_len));
-                $offset = \dokuwiki\Utf8\Clean::correctIdx($text,$offset);
+                $offset = $idx + strlen(Utf8\PhpString::substr($text, $utf8_idx, $utf8_len));
+                $offset = Utf8\Clean::correctIdx($text, $offset);
             }
 
             $m = "\1";
@@ -478,7 +478,7 @@ class FulltextSearch
     public static function snippet_re_preprocess($term)
     {
         // do not process asian terms where word boundaries are not explicit
-        if (\dokuwiki\Utf8\Asian::isAsianWords($term)) return $term;
+        if (Utf8\Asian::isAsianWords($term)) return $term;
 
         if (UTF8_PROPERTYSUPPORT) {
             // unicode word boundaries
@@ -643,7 +643,7 @@ class FulltextSearch
          */
         $parsed_query = '';
         $parens_level = 0;
-        $terms = preg_split('/(-?".*?")/u', \dokuwiki\Utf8\PhpString::strtolower($query),
+        $terms = preg_split('/(-?".*?")/u', Utf8\PhpString::strtolower($query),
                     -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
         );
 
@@ -849,14 +849,14 @@ class FulltextSearch
      * @param bool         $phrase_mode
      * @return string
      */
-    public static function termParser($Indexer, $term, $consider_asian = true, $phrase_mode = false)
+    protected static function termParser($Indexer, $term, $consider_asian = true, $phrase_mode = false)
     {
         $parsed = '';
         if ($consider_asian) {
             // successive asian characters need to be searched as a phrase
-            $words = \dokuwiki\Utf8\Asian::splitAsianWords($term);
+            $words = Utf8\Asian::splitAsianWords($term);
             foreach ($words as $word) {
-                $phrase_mode = $phrase_mode ? true : \dokuwiki\Utf8\Asian::isAsianWords($word);
+                $phrase_mode = $phrase_mode ? true : Utf8\Asian::isAsianWords($word);
                 $parsed .= static::termParser($Indexer, $word, false, $phrase_mode);
             }
         } else {
