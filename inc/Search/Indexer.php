@@ -50,7 +50,7 @@ class Indexer {
     /**
      * Returns words that will be ignored
      *
-     * @return array  list of stop words
+     * @return array                list of stop words
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -77,8 +77,7 @@ class Indexer {
      * @param string $w
      * @return int
      */
-    public static function wordlen($w)
-    {
+    public static function wordlen($w) {
         $l = strlen($w);
         // If left alone, all chinese "words" will get put into w3.idx
         // So the "length" of a "word" is faked
@@ -128,10 +127,10 @@ class Indexer {
      *
      * Locking is handled internally.
      *
-     * @param string $page   name of the page to index
-     * @param bool $verbose  print status messages
-     * @param bool $force    force reindexing even when the index is up to date
-     * @return string|bool   the function completed successfully
+     * @param string        $page   name of the page to index
+     * @param boolean       $verbose    print status messages
+     * @param boolean       $force  force reindexing even when the index is up to date
+     * @return string|boolean  the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -233,9 +232,9 @@ class Indexer {
      * The added text replaces previous words for the same page.
      * An empty value erases the page.
      *
-     * @param string $page  a page name
-     * @param string $text  the body of the page
-     * @return string|bool  the function completed successfully
+     * @param string    $page   a page name
+     * @param string    $text   the body of the page
+     * @return string|boolean  the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
@@ -263,7 +262,7 @@ class Indexer {
             foreach (array_keys($words) as $wlen) {
                 $index = $this->getIndex('i', $wlen);
                 foreach ($words[$wlen] as $wid => $freq) {
-                    $idx = ($wid < count($index)) ? $index[$wid] : '';
+                    $idx = ($wid<count($index)) ? $index[$wid] : '';
                     $index[$wid] = $this->updateTuple($idx, $pid, $freq);
                     $pagewords[] = "$wlen*$wid";
                 }
@@ -309,8 +308,8 @@ class Indexer {
     /**
      * Split the words in a page and add them to the index.
      *
-     * @param string $text  content of the page
-     * @return array        list of word IDs and number of times used
+     * @param string    $text   content of the page
+     * @return array            list of word IDs and number of times used
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Christopher Smith <chris@jalakai.co.uk>
@@ -366,10 +365,10 @@ class Indexer {
      * The $key parameter can be an array to add multiple keys. $value will
      * not be used if $key is an array.
      *
-     * @param string $page  a page name
-     * @param mixed $key    a key string or array of key=>value pairs
-     * @param mixed $value  the value or list of values
-     * @return bool|string  the function completed successfully
+     * @param string    $page   a page name
+     * @param mixed     $key    a key string or array of key=>value pairs
+     * @param mixed     $value  the value or list of values
+     * @return boolean|string     the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Michael Hamann <michael@content-space.de>
@@ -476,10 +475,10 @@ class Indexer {
      * It returns an error if the old page isn't in the page list of the indexer
      * and it deletes all previously indexed content of the new page.
      *
-     * @param string $oldpage  The old page name
-     * @param string $newpage  The new page name
-     * @return bool|string  If the page was successfully renamed,
-     *                      can be a message in the case of an error
+     * @param string $oldpage The old page name
+     * @param string $newpage The new page name
+     * @return string|bool If the page was successfully renamed,
+     *                     can be a message in the case of an error
      */
     public function renamePage($oldpage, $newpage)
     {
@@ -551,7 +550,6 @@ class Indexer {
                     $parts = explode(':', $indexline);
                     foreach ($parts as $part) {
                         list($id, $count) = explode('*', $part);
-                        if ($id === '') continue;
                         $newindexline = $this->updateTuple($newindexline, $id, $count);
 
                         $keyline = explode(':', $pagekeys[$id]);
@@ -586,8 +584,8 @@ class Indexer {
      *
      * Erases entries in all known indexes.
      *
-     * @param string $page  a page name
-     * @return string|bool  the function completed successfully
+     * @param string    $page   a page name
+     * @return string|boolean  the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -606,8 +604,8 @@ class Indexer {
      *
      * Erases entries in all known indexes.
      *
-     * @param string $page  a page name
-     * @return bool         the function completed successfully
+     * @param string    $page   a page name
+     * @return boolean          the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -663,7 +661,7 @@ class Indexer {
     /**
      * Clear the whole index
      *
-     * @return bool  If the index has been cleared successfully
+     * @return bool If the index has been cleared successfully
      */
     public function clear()
     {
@@ -703,9 +701,9 @@ class Indexer {
      * This event allows plugins to modify the text before it gets tokenized.
      * Plugins intercepting this event should also intercept INDEX_VERSION_GET
      *
-     * @param string $text  plain text
-     * @param bool $wc      are wildcards allowed?
-     * @return array        list of words in the text
+     * @param string    $text   plain text
+     * @param boolean   $wc     are wildcards allowed?
+     * @return array            list of words in the text
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
@@ -754,8 +752,8 @@ class Indexer {
     /**
      * Get the numeric PID of a page
      *
-     * @param string $page  The page to get the PID for
-     * @return int|bool     The page id on success, false on error
+     * @param string $page The page to get the PID for
+     * @return bool|int The page id on success, false on error
      */
     public function getPID($page)
     {
@@ -779,8 +777,8 @@ class Indexer {
      * Get the numeric PID of a page without locking the index.
      * Only use this function when the index is already locked.
      *
-     * @param string $page  The page to get the PID for
-     * @return int|bool     The page id on success, false on error
+     * @param string $page The page to get the PID for
+     * @return int|bool The page id on success, false on error
      */
     protected function getPIDNoLock($page)
     {
@@ -1478,8 +1476,8 @@ class Indexer {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      *
      * @param string $line
-     * @param int $id
-     * @param int $count
+     * @param string|int $id
+     * @param int    $count
      * @return string
      */
     protected function updateTuple($line, $id, $count)
