@@ -5,10 +5,10 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Utf8;
 
 // Version tag used to force rebuild on upgrade
-define('INDEXER_VERSION', 8);
+const INDEXER_VERSION = 8;
 
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
-if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
+const MINWORDLENGTH = 2;
 
 
 /**
@@ -29,10 +29,19 @@ class Indexer {
     /** @var array $Stopwords Words that indexer ignores */
     protected $Stopwords;
 
+    /** @var int $MinWordLength  minimum token length */
+    protected $MinWordLength;
+
     /**
      * Indexer constructor. Singleton, thus protected!
      */
-    protected function __construct() {}
+    protected function __construct() {
+        // set the minimum token length to use in the index
+        // (note, this doesn't apply to numeric tokens)
+        $this->MinWordLength = (defined('IDX_MINWORDLENGTH'))
+            ? IDX_MINWORDLENGTH
+            : MINWORDLENGTH;
+    }
 
     /**
      * Get new or existing singleton instance of the Indexer
@@ -110,7 +119,7 @@ class Indexer {
             $version = INDEXER_VERSION;
 
             // DokuWiki version is included for the convenience of plugins
-            $data = array('dokuwiki'=>$version);
+            $data = array('dokuwiki' => $version);
             Event::createAndTrigger('INDEXER_VERSION_GET', $data, null, false);
             unset($data['dokuwiki']); // this needs to be first
             ksort($data);
@@ -262,7 +271,7 @@ class Indexer {
             foreach (array_keys($words) as $wlen) {
                 $index = $this->getIndex('i', $wlen);
                 foreach ($words[$wlen] as $wid => $freq) {
-                    $idx = ($wid<count($index)) ? $index[$wid] : '';
+                    $idx = ($wid < count($index)) ? $index[$wid] : '';
                     $index[$wid] = $this->updateTuple($idx, $pid, $freq);
                     $pagewords[] = "$wlen*$wid";
                 }
@@ -741,7 +750,7 @@ class Indexer {
         }
 
         foreach ($wordlist as $i => $word) {
-            if ((!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
+            if ((!is_numeric($word) && strlen($word) < $this->MinWordLength)
               || array_search($word, $this->getStopwords(), true) !== false) {
                 unset($wordlist[$i]);
             }
@@ -1008,7 +1017,7 @@ class Indexer {
                 $dollar = '';
                 $wlen -= 1;
             }
-            if ($wlen < IDX_MINWORDLENGTH && $caret && $dollar && !is_numeric($xword)) {
+            if ($wlen < $this->MinWordLength && $caret && $dollar && !is_numeric($xword)) {
                 continue;
             }
             if (!isset($tokens[$xword])) {
