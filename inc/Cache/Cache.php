@@ -2,7 +2,7 @@
 
 namespace dokuwiki\Cache;
 
-use \dokuwiki\Debug\PropertyDeprecationHelper;
+use dokuwiki\Debug\PropertyDeprecationHelper;
 use dokuwiki\Extension\Event;
 
 /**
