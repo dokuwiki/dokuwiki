@@ -35,7 +35,7 @@
     <exclude-pattern>*/inc/parser/*</exclude-pattern>
 
     <!-- rules on top of PSR-2 -->
-    <rule ref="PSR2">
+    <rule ref="PSR12">
         <!-- the following rule is not in PSR-2 and breaks the guardian pattern -->
         <exclude name="Generic.ControlStructures.InlineControlStructure.NotAllowed"/>
 
@@ -103,6 +103,19 @@
         <exclude name="PSR2.Methods.MethodDeclaration.StaticBeforeVisibility"/>
         <exclude name="PSR2.Namespaces.NamespaceDeclaration.BlankLineAfter"/>
         <exclude name="PSR2.Namespaces.UseDeclaration.SpaceAfterLastUse"/>
+
+        <exclude name="PSR12.Classes.ClassInstantiation.MissingParentheses"/>
+        <exclude name="PSR12.ControlStructures.BooleanOperatorPlacement.FoundMixed"/>
+        <exclude name="PSR12.ControlStructures.ControlStructureSpacing.FirstExpressionLine"/>
+        <exclude name="PSR12.ControlStructures.ControlStructureSpacing.CloseParenthesisLine"/>
+        <exclude name="PSR12.ControlStructures.ControlStructureSpacing.LineIndent"/>
+        <exclude name="PSR12.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
+        <exclude name="PSR12.ControlStructures.ControlStructureSpacing.SpaceBeforeCloseBrace"/>
+        <exclude name="PSR12.Files.FileHeader.SpacingAfterBlock"/>
+        <exclude name="PSR12.Operators.OperatorSpacing.NoSpaceBefore"/>
+        <exclude name="PSR12.Operators.OperatorSpacing.NoSpaceAfter"/>
+
+        <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
     </rule>
 
     <!-- disable some rules for certain paths, for legacy support -->
