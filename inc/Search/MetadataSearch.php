@@ -12,7 +12,7 @@ use dokuwiki\Search\QueryParser;
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-class MetaSearch
+class MetadataSearch
 {
     /**
      *  Metadata Search constructor. prevent direct object creation

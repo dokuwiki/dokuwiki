@@ -7,7 +7,7 @@
  */
 
 use dokuwiki\Search\FulltextSearch;
-use dokuwiki\Search\MetaSearch;
+use dokuwiki\Search\MetadataSearch;
 use dokuwiki\Search\QueryParser;
 
 
@@ -57,19 +57,19 @@ function ft_queryUnparser_simple(array $and, array $not, array $phrases, array $
 /** @deprecated 2019-12-28 */
 function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $before = null) {
     dbg_deprecated('ft_pageLookup');
-    return MetaSearch::pageLookup($id, $in_ns, $in_title, $after, $before);
+    return MetadataSearch::pageLookup($id, $in_ns, $in_title, $after, $before);
 }
 
 /** @deprecated 2019-12-28 */
 function ft_backlinks($id, $ignore_perms = false) {
     dbg_deprecated('ft_backlinks');
-    return MetaSearch::backlinks($id, $ignore_perms);
+    return MetadataSearch::backlinks($id, $ignore_perms);
 }
 
 /** @deprecated 2019-12-28 */
 function ft_mediause($id, $ignore_perms = false) {
     dbg_deprecated('ft_mediause');
-    return MetaSearch::mediause($id, $ignore_perms);
+    return MetadataSearch::mediause($id, $ignore_perms);
 }
 
 //Setup VIM: ex: et ts=4 :
