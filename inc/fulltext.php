@@ -27,12 +27,6 @@ function ft_pageSearch($query, &$highlight, $sort = null, $after = null, $before
 }
 
 /** @deprecated 2019-12-28 */
-function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $before = null) {
-    dbg_deprecated('ft_pageLookup');
-    return FulltextSearch::pageLookup($id, $in_ns, $in_title, $after, $before);
-}
-
-/** @deprecated 2019-12-28 */
 function ft_snippet($id, $highlight) {
     dbg_deprecated('ft_snippet');
     return FulltextSearch::snippet($id, $highlight);
@@ -60,6 +54,12 @@ function ft_queryUnparser_simple(array $and, array $not, array $phrases, array $
 /**
  * Functions for metadata lookups
  */
+/** @deprecated 2019-12-28 */
+function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $before = null) {
+    dbg_deprecated('ft_pageLookup');
+    return MetaSearch::pageLookup($id, $in_ns, $in_title, $after, $before);
+}
+
 /** @deprecated 2019-12-28 */
 function ft_backlinks($id, $ignore_perms = false) {
     dbg_deprecated('ft_backlinks');
