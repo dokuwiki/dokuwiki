@@ -8,6 +8,7 @@
 
 use dokuwiki\Search\FulltextSearch;
 use dokuwiki\Search\MetaSearch;
+use dokuwiki\Search\QueryParser;
 
 
 /**
@@ -46,13 +47,13 @@ function ft_snippet_re_preprocess($term) {
 /** @deprecated 2019-12-28 */
 function ft_queryParser($Indexer, $query) {
     dbg_deprecated('ft_queryParser');
-    return FulltextSearch::queryParser($Indexer, $query);
+    return QueryParser::convert($query);
 }
 
 /** @deprecated 2019-12-28 */
 function ft_queryUnparser_simple(array $and, array $not, array $phrases, array $ns, array $notns) {
     dbg_deprecated('ft_queryUnparser_simple');
-    return FulltextSearch::queryUnparser_simple($and, $not, $phrases, $ns, $notns);
+    return QueryParser::revert_simple($and, $not, $phrases, $ns, $notns);
 }
 
 
