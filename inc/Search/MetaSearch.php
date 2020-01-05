@@ -128,7 +128,7 @@ class MetaSearch
      * @param array $data  event data
      * @return string[]
      */
-    public static function callback_pageLookup(&$data)
+    public static function callback_pageLookup($data)
     {
         $Indexer = Indexer::getInstance();
 

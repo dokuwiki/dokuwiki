@@ -61,7 +61,7 @@ class FulltextSearch
      * @param array $data  event data
      * @return array       matching documents
      */
-    public static function callback_pageSearch(&$data)
+    public static function callback_pageSearch($data)
     {
         $Indexer = Indexer::getInstance();
 
