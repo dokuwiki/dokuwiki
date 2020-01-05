@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eric Haberstroh <ehaberstroh@gmail.com>
  * @author C!own77 <clown77@posteo.de>
  * @author Alex Beck <alex@4becks.com>
  * @author Jürgen Fredriksson <jfriedrich@gmx.at>
@@ -53,6 +54,7 @@ $lang['_advanced']             = 'Erweitert';
 $lang['_network']              = 'Netzwerk';
 $lang['_msg_setting_undefined'] = 'Keine Konfigurationsmetadaten.';
 $lang['_msg_setting_no_class'] = 'Keine Konfigurationsklasse.';
+$lang['_msg_setting_no_known_class'] = 'Setting-Klasse nicht verfügbar.';
 $lang['_msg_setting_no_default'] = 'Kein Standardwert.';
 $lang['title']                 = 'Titel des Wikis';
 $lang['start']                 = 'Startseitenname';
