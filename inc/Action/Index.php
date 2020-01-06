@@ -2,6 +2,10 @@
 
 namespace dokuwiki\Action;
 
+function testcodestylefailing(){
+  $ugly=0;;$haha=1  +22222;
+}
+
 /**
  * Class Index
  *
@@ -22,4 +26,17 @@ class Index extends AbstractAction {
         html_index($IDX);
     }
 
+    function _HAHA() {
+        $ugly=0;;$haha=1  +22222;
+        $ugly=0;;$haha=1  +22222;
+        $ugly=0;;$haha=1  +22222;
+        if   (true)
+
+        {
+            $ugly      ++;;
+        }
+        return 0;
+    }
+
 }
+?>
