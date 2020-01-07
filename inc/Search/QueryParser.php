@@ -1,7 +1,7 @@
 <?php
 namespace dokuwiki\Search;
 
-use dokuwiki\Search\Indexer;
+use dokuwiki\Search\PageIndex;
 use dokuwiki\Utf8;
 
 
@@ -25,7 +25,7 @@ class QueryParser
 
     public static function termParser($term, $consider_asian = true, $phrase_mode = false)
     {
-        $Indexer = Indexer::getInstance();
+        $Indexer = PageIndex::getInstance();
 
         $parsed = '';
         if ($consider_asian) {

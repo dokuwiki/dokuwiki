@@ -18,8 +18,8 @@ const MINWORDLENGTH = 2;
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-class Indexer {
-
+abstract class AbstractIndex
+{
     /** @var Indexer */
     protected static $instance = null;
 

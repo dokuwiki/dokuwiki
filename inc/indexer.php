@@ -7,7 +7,7 @@
  * @author     Tom N Harris <tnharris@whoopdedo.org>
  */
 
-use dokuwiki\Search\Indexer;
+use dokuwiki\Search\PageIndex;
 
 /**
  * Create an instance of the indexer.
@@ -17,7 +17,7 @@ use dokuwiki\Search\Indexer;
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function idx_get_indexer() {
-    return Indexer::getInstance();
+    return PageIndex::getInstance();
 }
 
 /* For compatibility */
@@ -25,29 +25,29 @@ function idx_get_indexer() {
 /** @deprecated 2019-12-16 */
 function idx_get_version() {
     dbg_deprecated('idx_get_version');
-    $Indexer = idx_get_indexer();
-    return $Indexer->getVersion();
+    $PageIndex = PageIndex::getInstance();
+    return $PageIndex->getVersion();
 }
 
 /** @deprecated 2019-12-16 */
 function idx_addPage($page, $verbose=false, $force=false) {
     dbg_deprecated('idx_addPage');
-    $Indexer = idx_get_indexer();
-    return $Indexer->addPage($page, $verbose, $force);
+    $PageIndex = PageIndex::getInstance();
+    return $PageIndex->addPage($page, $verbose, $force);
 }
 
 /** @deprecated 2019-12-16 */
 function idx_getIndex($idx, $suffix) {
     dbg_deprecated('idx_getIndex');
-    $Indexer = idx_get_indexer();
-    return $Indexer->getIndex($idx, $suffix);
+    $PageIndex = PageIndex::getInstance();
+    return $PageIndex->getIndex($idx, $suffix);
 }
 
 /** @deprecated 2019-12-16 */
 function idx_listIndexLengths() {
     dbg_deprecated('idx_listIndexLengths');
-    $Indexer = idx_get_indexer();
-    return $Indexer->listIndexLengths();
+    $PageIndex = PageIndex::getInstance();
+    return $PageIndex->listIndexLengths();
 }
 
 
@@ -57,7 +57,7 @@ function idx_listIndexLengths() {
  * @author Tom N Harris <tnharris@whoopdedo.org>
  * @@deprecated 2019-12-20
  */
-class Doku_Indexer extends \dokuwiki\Search\Indexer
+class Doku_Indexer extends \dokuwiki\Search\AbstractIndex
 {
     public function __construct()
     {
