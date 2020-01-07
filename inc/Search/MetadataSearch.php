@@ -2,7 +2,8 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
-use dokuwiki\Search\Indexer;
+use dokuwiki\Search\MetadataIndex;
+use dokuwiki\Search\PageIndex;
 use dokuwiki\Search\QueryParser;
 
 
@@ -30,7 +31,7 @@ class MetadataSearch
      */
     public static function backlinks($id, $ignore_perms = false)
     {
-        $Indexer = Indexer::getInstance();
+        $Indexer = MetadataIndex::getInstance();
         $result = $Indexer->lookupKey('relation_references', $id);
 
         if (!count($result)) return $result;
@@ -65,7 +66,7 @@ class MetadataSearch
      */
     public static function mediause($id, $ignore_perms = false)
     {
-        $Indexer = Indexer::getInstance();
+        $Indexer = MetadataIndex::getInstance();
         $result = $Indexer->lookupKey('relation_media', $id);
 
         if (!count($result)) return $result;
@@ -130,7 +131,7 @@ class MetadataSearch
      */
     public static function callback_pageLookup($data)
     {
-        $Indexer = Indexer::getInstance();
+        $Indexer = PageIndex::getInstance();
 
         // split out original parameters
         $id = $data['id'];

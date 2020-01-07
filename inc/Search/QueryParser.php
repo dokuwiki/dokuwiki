@@ -25,7 +25,7 @@ class QueryParser
 
     public static function termParser($term, $consider_asian = true, $phrase_mode = false)
     {
-        $Indexer = PageIndex::getInstance();
+        $Indexer = PagewordIndex::getInstance();
 
         $parsed = '';
         if ($consider_asian) {

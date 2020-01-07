@@ -2,7 +2,7 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
-use dokuwiki\Search\Indexer;
+use dokuwiki\Search\PageIndex;
 use dokuwiki\Search\QueryParser;
 use dokuwiki\Utf8;
 
@@ -63,7 +63,7 @@ class FulltextSearch
      */
     public static function callback_pageSearch($data)
     {
-        $Indexer = Indexer::getInstance();
+        $Indexer = PageIndex::getInstance();
 
         // parse the given query
         $q = QueryParser::convert($data['query']);
