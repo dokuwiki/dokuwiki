@@ -17,7 +17,7 @@ abstract class AbstractIndex
     protected static $instance = null;
 
     /** @var array $pidCache Cache for getPID() */
-    protected $pidCache = array();
+    protected static $pidCache = array();
 
     /**
      * AbstractIndex constructor
@@ -61,23 +61,28 @@ abstract class AbstractIndex
      * Get the numeric PID of a page
      *
      * @param string $page The page to get the PID for
+     * @param bool   $requireLock
      * @return int|bool The page id on success, false on error
      */
-    public function getPID($page)
+    protected function getPID($page, $requireLock = true)
     {
-        // return PID without locking when it is in the cache
-        if (isset($this->pidCache[$page])) return $this->pidCache[$page];
+        // return PID when it is in the cache
+        // avoid expensive addIndexKey operation for the most recently
+        // requested pages by using a cache
+        if (isset(static::$pidCache[$page])) return static::$pidCache[$page];
 
-        if (!$this->lock()) return false;
+        if ($requireLock && !$this->lock()) return false;
 
-        // load known documents
-        $pid = $this->getPIDNoLock($page);
-        if ($pid === false) {
-            $this->unlock();
-            return false;
+        $pid = $this->addIndexKey('page', '', $page);
+        if ($pid !== false) {
+            // limit cache to 10 entries by discarding the oldest element
+            // as in DokuWiki usually only the most recently
+            // added item will be requested again
+            if (count(static::$pidCache) > 10) array_shift(static::$pidCache);
+            static::$pidCache[$page] = $pid;
         }
 
-        $this->unlock();
+        if ($requireLock) $this->unlock();
         return $pid;
     }
 
@@ -88,26 +93,17 @@ abstract class AbstractIndex
      * @param string $page The page to get the PID for
      * @return int|bool The page id on success, false on error
      */
-    public function getPIDNoLock($page)
+    protected function getPIDNoLock($page)
     {
-        // avoid expensive addIndexKey operation for the most recently
-        // requested pages by using a cache
-        if (isset($this->pidCache[$page])) return $this->pidCache[$page];
-        $pid = $this->addIndexKey('page', '', $page);
-        // limit cache to 10 entries by discarding the oldest element
-        // as in DokuWiki usually only the most recently
-        // added item will be requested again
-        if (count($this->pidCache) > 10) array_shift($this->pidCache);
-        $this->pidCache[$page] = $pid;
-        return $pid;
+        return $this->getPID($page, false);
     }
 
     /**
      * Reset pidCache
      */
-    public function resetPIDCache()
+    protected function resetPIDCache()
     {
-        $this->pidCache = array();
+        static::$pidCache = array();
     }
 
     /**
@@ -116,7 +112,7 @@ abstract class AbstractIndex
      * @param int $pid The PID to get the page id for
      * @return string The page id
      */
-    public function getPageFromPID($pid)
+    protected function getPageFromPID($pid)
     {
         return $this->getIndexKey('page', '', $pid);
     }
