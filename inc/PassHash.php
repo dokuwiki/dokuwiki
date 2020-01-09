@@ -606,10 +606,9 @@ class PassHash {
      * @link  https://www.php.net/manual/de/function.password-hash.php
      *
      * @param string $clear The clear text to hash
-     * @param string $salt  not used, defaults to null
      * @return string Hashed password
      */
-    public function hash_argon2i($clear,$salt = null) {
+    public function hash_argon2i($clear) {
         if(!defined('PASSWORD_ARGON2I')) {
             throw new \Exception('This PHP installation has no ARGON2I support');
         }
@@ -625,10 +624,9 @@ class PassHash {
      * @link  https://www.php.net/manual/de/function.password-hash.php
      *
      * @param string $clear The clear text to hash
-     * @param string $salt  not used, defaults to null
      * @return string Hashed password
      */
-    public function hash_argon2id($clear,$salt = null) {
+    public function hash_argon2id($clear) {
         if(!defined('PASSWORD_ARGON2ID')) {
             throw new \Exception('This PHP installation has no ARGON2ID support');
         }
