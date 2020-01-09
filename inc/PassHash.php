@@ -77,6 +77,11 @@ class PassHash {
             $method = 'sha512';
             $salt   = $m[2];
             $magic  = $m[1];
+        } elseif(preg_match('/^\$(argon2id?)/', $hash, $m)) {
+            if(!defined('PASSWORD_'.strtoupper($m[1]))) {
+                throw new \Exception('This PHP installation has no '.strtoupper($m[1]).' support');
+            }
+            return password_verify($clear,$hash);
         } elseif($len == 32) {
             $method = 'md5';
         } elseif($len == 40) {
