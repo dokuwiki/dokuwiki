@@ -596,6 +596,45 @@ class PassHash {
         return ':B:'.$salt.':'.md5($salt.'-'.md5($clear));
     }
 
+
+    /**
+     * Password hashing method 'argon2i'
+     *
+     * Uses php's own password_hash function to create argon2i password hash
+     * Default Cost and thread options are used for now.
+     *
+     * @link  https://www.php.net/manual/de/function.password-hash.php
+     *
+     * @param string $clear The clear text to hash
+     * @param string $salt  not used, defaults to null
+     * @return string Hashed password
+     */
+    public function hash_argon2i($clear,$salt = null) {
+        if(!defined('PASSWORD_ARGON2I')) {
+            throw new \Exception('This PHP installation has no ARGON2I support');
+        }
+        return password_hash($clear,PASSWORD_ARGON2I);   
+    }
+
+    /**
+     * Password hashing method 'argon2id'
+     *
+     * Uses php's own password_hash function to create argon2id password hash
+     * Default Cost and thread options are used for now.
+     *
+     * @link  https://www.php.net/manual/de/function.password-hash.php
+     *
+     * @param string $clear The clear text to hash
+     * @param string $salt  not used, defaults to null
+     * @return string Hashed password
+     */
+    public function hash_argon2id($clear,$salt = null) {
+        if(!defined('PASSWORD_ARGON2ID')) {
+            throw new \Exception('This PHP installation has no ARGON2ID support');
+        }
+        return password_hash($clear,PASSWORD_ARGON2ID);   
+    }
+
     /**
      * Wraps around native hash_hmac() or reimplents it
      *
