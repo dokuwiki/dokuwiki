@@ -316,4 +316,31 @@ class MetadataIndex extends AbstractIndex
         return true;
     }
 
+    /**
+     * Clear the Metadata Index
+     *
+     * @param bool   $requireLock
+     * @return bool  If the index has been cleared successfully
+     */
+    public function clear($requireLock = true)
+    {
+        global $conf;
+
+        if ($requireLock && !$this->lock()) return false;
+
+        $dir = @opendir($conf['indexdir']);
+        if ($dir !== false) {
+            while (($f = readdir($dir)) !== false) {
+                if (in_array(substr($f, -6), ['_w.idx','_i.idx','_p.idx'])) {
+                    // metadata index
+                    @unlink($conf['indexdir']."/$f");
+                }
+            }
+        }
+        @unlink($conf['indexdir'].'/title.idx');
+        @unlink($conf['indexdir'].'/metadata.idx');
+
+        if ($requireLock) $this->unlock();
+        return true;
+    }
 }

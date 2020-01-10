@@ -454,37 +454,7 @@ abstract class AbstractIndex
     /**
      * Clear the whole index
      *
-     * @return bool If the index has been cleared successfully
+     * @return bool  If the index has been cleared successfully
      */
-    public function clear()
-    {
-        global $conf;
-
-        if (!$this->lock()) return false;
-
-        @unlink($conf['indexdir'].'/page.idx');
-        @unlink($conf['indexdir'].'/title.idx');
-        @unlink($conf['indexdir'].'/pageword.idx');
-        @unlink($conf['indexdir'].'/metadata.idx');
-        $dir = @opendir($conf['indexdir']);
-        if ($dir !== false) {
-            while (($f = readdir($dir)) !== false) {
-                if (in_array($f[0], ['i', 'w']) && substr($f, -4) == '.idx') {
-                    // fulltext index
-                    @unlink($conf['indexdir']."/$f");
-                } elseif (in_array(substr($f, -6), ['_w.idx','_i.idx','_p.idx'])) {
-                    // metadata index
-                    @unlink($conf['indexdir']."/$f");
-                }
-            }
-        }
-        @unlink($conf['indexdir'].'/lengths.idx');
-
-        // clear the pid cache
-        $this->resetPIDCache();
-
-        $this->unlock();
-        return true;
-    }
-
+    abstract public function clear();
 }

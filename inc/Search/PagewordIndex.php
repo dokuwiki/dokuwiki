@@ -103,7 +103,7 @@ class PagewordIndex extends AbstractIndex
      * Plugins intercepting this event should also intercept INDEX_VERSION_GET
      *
      * @param string    $text   plain text
-     * @param boolean   $wc     are wildcards allowed?
+     * @param bool      $wc     are wildcards allowed?
      * @return array            list of words in the text
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
@@ -158,7 +158,7 @@ class PagewordIndex extends AbstractIndex
      *
      * @param string    $page   a page name
      * @param string    $text   the body of the page
-     * @return string|boolean  the function completed successfully
+     * @return bool|string      the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
@@ -462,5 +462,33 @@ class PagewordIndex extends AbstractIndex
             return $idx;
         }
         return array();
+    }
+
+    /**
+     * Clear the Pageword Index
+     *
+     * @param bool   $requireLock
+     * @return bool  If the index has been cleared successfully
+     */
+    public function clear($requireLock = true)
+    {
+        global $conf;
+
+        if ($requireLock && !$this->lock()) return false;
+
+        $dir = @opendir($conf['indexdir']);
+        if ($dir !== false) {
+            while (($f = readdir($dir)) !== false) {
+                if (in_array($f[0], ['i', 'w']) && substr($f, -4) == '.idx') {
+                    // fulltext index
+                    @unlink($conf['indexdir']."/$f");
+                }
+            }
+        }
+        @unlink($conf['indexdir'].'/lengths.idx');
+        @unlink($conf['indexdir'].'/pageword.idx');
+
+        if ($requireLock) $this->unlock();
+        return true;
     }
 }

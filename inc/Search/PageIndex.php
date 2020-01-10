@@ -177,9 +177,9 @@ class PageIndex extends AbstractIndex
      * Locking is handled internally.
      *
      * @param string        $page   name of the page to index
-     * @param boolean       $verbose    print status messages
-     * @param boolean       $force  force reindexing even when the index is up to date
-     * @return string|boolean  the function completed successfully
+     * @param bool          $verbose    print status messages
+     * @param bool          $force  force reindexing even when the index is up to date
+     * @return bool|string  the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -349,7 +349,7 @@ class PageIndex extends AbstractIndex
      * Erases entries in all known indexes.
      *
      * @param string    $page   a page name
-     * @return boolean          the function completed successfully
+     * @return bool             the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -399,6 +399,33 @@ class PageIndex extends AbstractIndex
             $this->saveIndexKey($metaname.'_p', '', $pid, '');
         }
 
+        return true;
+    }
+
+    /**
+     * Clear the Page Index
+     *
+     * @param bool   $requireLock
+     * @return bool  If the index has been cleared successfully
+     */
+    public function clear($requireLock = true)
+    {
+        global $conf;
+
+        if ($requireLock && !$this->lock()) return false;
+
+        // clear Metadata Index
+        $this->MetadataIndex->clear(false);
+
+        // clear Pageword Index
+        $this->PagewordIndex->clear(false);
+
+        @unlink($conf['indexdir'].'/page.idx');
+
+        // clear the pid cache
+        $this->resetPIDCache();
+
+        if ($requireLock) $this->unlock();
         return true;
     }
 }

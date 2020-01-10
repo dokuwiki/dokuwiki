@@ -64,5 +64,6 @@ class Doku_Indexer extends \dokuwiki\Search\AbstractIndex
         dbg_deprecated(\Indexer::class);
         parent::__construct();
     }
+    public function clear() {}
 }
 //Setup VIM: ex: et ts=4 :
