@@ -348,7 +348,7 @@ function tpl_metaheaders($alt = true) {
     $jquery = getCdnUrls();
     foreach($jquery as $src) {
         $head['script'][] = array(
-            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '', 'src' => $src
+            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '', 'src' => $src, 'defer' => 'defer'
         );
     }
 
