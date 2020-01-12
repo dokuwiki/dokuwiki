@@ -19,6 +19,9 @@ abstract class AbstractIndex
     /** @var array $pidCache Cache for getPID() */
     protected static $pidCache = array();
 
+    /** @var array $errors */
+    protected static $errors = array();
+
     /**
      * AbstractIndex constructor
      * extended classes should be Singleton, prevent direct object creation
@@ -62,16 +65,16 @@ abstract class AbstractIndex
      *
      * @param string $page The page to get the PID for
      * @param bool   $requireLock
-     * @return int|bool The page id on success, false on error
+     * @return int  The page id on success, false on error
      */
-    protected function getPID($page, $requireLock = true)
+    public function getPID($page, $requireLock = true)
     {
         // return PID when it is in the cache
         // avoid expensive addIndexKey operation for the most recently
         // requested pages by using a cache
         if (isset(static::$pidCache[$page])) return static::$pidCache[$page];
 
-        if ($requireLock && !$this->lock()) return false;
+        if ($requireLock && !$this->lock()) return false;  // set $errors property
 
         $pid = $this->addIndexKey('page', '', $page);
         if ($pid !== false) {
@@ -91,7 +94,7 @@ abstract class AbstractIndex
      * Only use this function when the index is already locked.
      *
      * @param string $page The page to get the PID for
-     * @return int|bool The page id on success, false on error
+     * @return int  The page id on success, false on error
      */
     protected function getPIDNoLock($page)
     {
@@ -112,7 +115,7 @@ abstract class AbstractIndex
      * @param int $pid The PID to get the page id for
      * @return string The page id
      */
-    protected function getPageFromPID($pid)
+    public function getPageFromPID($pid)
     {
         return $this->getIndexKey('page', '', $pid);
     }
@@ -122,12 +125,12 @@ abstract class AbstractIndex
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      *
-     * @return bool|string
+     * @return bool
      */
     protected function lock()
     {
         global $conf;
-        $status = true;
+        static::$errors[] = array();
         $run = 0;
         $lock = $conf['lockdir'].'/_indexer.lock';
         while (!@mkdir($lock, $conf['dmode'])) {
@@ -135,20 +138,19 @@ abstract class AbstractIndex
             if (is_dir($lock) && time() - @filemtime($lock) > 60*5) {
                 // looks like a stale lock - remove it
                 if (!@rmdir($lock)) {
-                    $status = "removing the stale lock failed";
+                    static::$errors[] = "removing the stale lock failed";
                     return false;
-                } else {
-                    $status = "stale lock removed";
                 }
             } elseif ($run++ == 1000) {
                 // we waited 5 seconds for that lock
+                static::$errors[] = "time out to aquire lock";
                 return false;
             }
         }
         if (!empty($conf['dperm'])) {
             chmod($lock, $conf['dperm']);
         }
-        return $status;
+        return true;
     }
 
     /**
@@ -162,6 +164,7 @@ abstract class AbstractIndex
     {
         global $conf;
         @rmdir($conf['lockdir'].'/_indexer.lock');
+        static::$errors[] = array();
         return true;
     }
 
@@ -330,9 +333,9 @@ abstract class AbstractIndex
         $line = trim($line, ':');
         if ($count) {
             if ($line) {
-                return "$id*$count:".$line;
+                return "{$id}*{$count}:".$line;
             } else {
-                return "$id*$count";
+                return "{$id}*{$count}";
             }
         }
         return $line;

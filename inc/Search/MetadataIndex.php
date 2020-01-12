@@ -43,7 +43,7 @@ class MetadataIndex extends AbstractIndex
      * @param string    $page   a page name
      * @param mixed     $key    a key string or array of key=>value pairs
      * @param mixed     $value  the value or list of values
-     * @return bool|string      the function completed successfully
+     * @return bool  if the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Michael Hamann <michael@content-space.de>
@@ -57,7 +57,7 @@ class MetadataIndex extends AbstractIndex
             trigger_error("array passed to addMetaKeys but value is not null", E_USER_WARNING);
         }
 
-        if (!$this->lock()) return 'locked';
+        if (!$this->lock()) return false;  // set $errors property
 
         // load known documents
         $pid = $this->getPIDNoLock($page);
@@ -263,12 +263,11 @@ class MetadataIndex extends AbstractIndex
      * @param string $oldvalue  The old value that shall be renamed
      * @param string $newvalue  The new value to which the old value shall be renamed,
      *                          if exists values will be merged
-     * @return bool|string      If renaming the value has been successful, false
-     *                          or error message on error.
+     * @return bool  If renaming the value has been successful, false on error
      */
     public function renameMetaValue($key, $oldvalue, $newvalue)
     {
-        if (!$this->lock()) return 'locked';
+        if (!$this->lock()) return false;  // set $errors property
 
         // change the relation references index
         $metavalues = $this->getIndex($key, '_w');

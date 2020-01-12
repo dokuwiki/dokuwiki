@@ -144,7 +144,7 @@ class PageIndex extends AbstractIndex
             $index = $this->getIndex('i', $wlen);
             foreach ($wids[$wlen] as $ixid) {
                 if ($ixid < count($index)) {
-                    $docs["$wlen*$ixid"] = $this->parseTuples($page_idx, $index[$ixid]);
+                    $docs["{$wlen}*{$ixid}"] = $this->parseTuples($page_idx, $index[$ixid]);
                 }
             }
         }
@@ -179,7 +179,7 @@ class PageIndex extends AbstractIndex
      * @param string        $page   name of the page to index
      * @param bool          $verbose    print status messages
      * @param bool          $force  force reindexing even when the index is up to date
-     * @return bool|string  the function completed successfully
+     * @return bool  If the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -193,7 +193,7 @@ class PageIndex extends AbstractIndex
                 return false;
             }
             $result = $this->deletePage($page);
-            if ($result === 'locked') {
+            if (!$result && $this->errors) {
                 if ($verbose) print("Indexer: locked".DOKU_LF);
                 return false;
             }
@@ -217,7 +217,7 @@ class PageIndex extends AbstractIndex
             $result = false;
             if (file_exists($idxtag)) {
                 $result = $this->deletePage($page);
-                if ($result === 'locked') {
+                if (!$result && $this->errors) {
                     if ($verbose) print("Indexer: locked".DOKU_LF);
                     return false;
                 }
@@ -252,14 +252,14 @@ class PageIndex extends AbstractIndex
         extract($data);
 
         $result = $this->PagewordIndex->addPageWords($page, $body);
-        if ($result === 'locked') {
+        if (!$result && $this->errors) {
             if ($verbose) print("Indexer: locked".DOKU_LF);
             return false;
         }
 
         if ($result) {
             $result = $this->MetadataIndex->addMetaKeys($page, $metadata);
-            if ($result === 'locked') {
+            if (!$result && $this->errors) {
                 if ($verbose) print("Indexer: locked".DOKU_LF);
                 return false;
             }
@@ -267,11 +267,12 @@ class PageIndex extends AbstractIndex
 
         if ($result) {
             io_saveFile(metaFN($page,'.indexed'), $this->getVersion());
+            if ($verbose) {
+                print("Indexer: finished".DOKU_LF);
+                return true;
+            }
         }
-        if ($verbose) {
-            print("Indexer: finished".DOKU_LF);
-            return true;
-        }
+
         return $result;
     }
 
@@ -283,19 +284,19 @@ class PageIndex extends AbstractIndex
      *
      * @param string $oldpage The old page name
      * @param string $newpage The new page name
-     * @return bool|string If the page was successfully renamed,
-     *                     can be a message in the case of an error
+     * @return bool           If the page was successfully renamed
      */
     public function renamePage($oldpage, $newpage)
     {
-        if (!$this->lock()) return 'locked';
+        if (!$this->lock()) return false;  // set $errors property
 
         $pages = $this->getPages();
 
         $id = array_search($oldpage, $pages, true);
         if ($id === false) {
             $this->unlock();
-            return 'page is not in index';
+            static::$errors[] = 'page is not in index';
+            return false;
         }
 
         $new_id = array_search($newpage, $pages, true);
@@ -329,13 +330,13 @@ class PageIndex extends AbstractIndex
      * Erases entries in all known indexes.
      *
      * @param string    $page   a page name
-     * @return bool|string  the function completed successfully
+     * @return bool             If the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function deletePage($page)
     {
-        if (!$this->lock()) return 'locked';
+        if (!$this->lock()) return false;  // set $errors property
 
         $result = $this->deletePageNoLock($page);
         $this->unlock();
@@ -349,7 +350,7 @@ class PageIndex extends AbstractIndex
      * Erases entries in all known indexes.
      *
      * @param string    $page   a page name
-     * @return bool             the function completed successfully
+     * @return bool             If the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */

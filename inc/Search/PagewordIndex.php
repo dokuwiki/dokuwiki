@@ -158,14 +158,14 @@ class PagewordIndex extends AbstractIndex
      *
      * @param string    $page   a page name
      * @param string    $text   the body of the page
-     * @return bool|string      the function completed successfully
+     * @return bool  if the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     public function addPageWords($page, $text)
     {
-        if (!$this->lock()) return 'locked';
+        if (!$this->lock()) return false;  // set $errors property
 
         // load known documents
         $pid = $this->getPIDNoLock($page);
@@ -188,7 +188,7 @@ class PagewordIndex extends AbstractIndex
                 foreach ($words[$wlen] as $wid => $freq) {
                     $idx = ($wid < count($index)) ? $index[$wid] : '';
                     $index[$wid] = $this->updateTuple($idx, $pid, $freq);
-                    $pagewords[] = "$wlen*$wid";
+                    $pagewords[] = "{$wlen}*{$wid}";
                 }
                 if (!$this->saveIndex('i', $wlen, $index)) {
                     $this->unlock();
@@ -230,7 +230,7 @@ class PagewordIndex extends AbstractIndex
     }
 
     /**
-     * Split the words in a page and add them to the index.
+     * Split the words in a page and add them to the index
      *
      * @param string    $text   content of the page
      * @return array            list of word IDs and number of times used
@@ -352,7 +352,7 @@ class PagewordIndex extends AbstractIndex
                     if ($wid !== false) {
                         $wids[$ixlen][] = $wid;
                         foreach ($tokens[$xword] as $w)
-                            $result[$w[0]][] = "$ixlen*$wid";
+                            $result[$w[0]][] = "{$ixlen}*{$wid}";
                     }
                 }
             }
@@ -363,7 +363,7 @@ class PagewordIndex extends AbstractIndex
                     if (is_null($w[1])) continue;
                     foreach (array_keys(preg_grep($w[1], $word_idx)) as $wid) {
                         $wids[$ixlen][] = $wid;
-                        $result[$w[0]][] = "$ixlen*$wid";
+                        $result[$w[0]][] = "{$ixlen}*{$wid}";
                     }
                 }
             }
