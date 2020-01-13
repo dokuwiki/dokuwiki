@@ -8,6 +8,7 @@
  */
 
 use dokuwiki\Search\PageIndex;
+use dokuwiki\Search\PagewordIndex;
 
 
 /**
@@ -47,8 +48,8 @@ function idx_getIndex($idx, $suffix) {
 /** @deprecated 2019-12-16 */
 function idx_listIndexLengths() {
     dbg_deprecated('idx_listIndexLengths');
-    $PageIndex = PageIndex::getInstance();
-    return $PageIndex->PagewordIndex->listIndexLengths();
+    $PagewordIndex = PagewordIndex::getInstance();
+    return $PagewordIndex->listIndexLengths();
 }
 
 
