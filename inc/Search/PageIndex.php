@@ -22,10 +22,10 @@ class PageIndex extends AbstractIndex
     protected static $instance = null;
 
     /** @var MetadataIndex */
-    protected $MetadataIndex = null;
+    public $MetadataIndex = null;
 
     /** @var PagewordIndex */
-    protected $PagewordIndex = null;
+    public $PagewordIndex = null;
 
     /**
      * PageIndex constructor. Singleton, thus protected!
@@ -460,5 +460,25 @@ class PageIndex extends AbstractIndex
 
         arsort($result);
         return $result;
+    }
+
+    /**
+     * Undefined methods dispatcher
+     */
+    public function __call($name, $args)
+    {
+        trigger_error("Call to undefined method PageIndex::".$name, E_USER_WARNING);
+
+        switch ($name) {
+            case 'addPageWords':
+            case 'lookup':
+            case 'listIndexLengths':
+                return $this->PagewordIndex->{$name}(...$args);
+
+            case 'addMetaKeys':
+            case 'renameMetaValue':
+            case 'lookupKey':
+                return $this->PagewordIndex->{$name}(...$args);
+        }
     }
 }
