@@ -467,7 +467,7 @@ class PageIndex extends AbstractIndex
      */
     public function __call($name, $args)
     {
-        trigger_error("Call to undefined method PageIndex::".$name, E_USER_WARNING);
+        trigger_error("Call to undefined method PageIndex::".$name, E_USER_NOTICE);
 
         switch ($name) {
             case 'addPageWords':
@@ -478,7 +478,7 @@ class PageIndex extends AbstractIndex
             case 'addMetaKeys':
             case 'renameMetaValue':
             case 'lookupKey':
-                return $this->PagewordIndex->{$name}(...$args);
+                return $this->MetadataIndex->{$name}(...$args);
         }
     }
 }
