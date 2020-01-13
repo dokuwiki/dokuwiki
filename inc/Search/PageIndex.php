@@ -356,48 +356,16 @@ class PageIndex extends AbstractIndex
      */
     protected function deletePageNoLock($page)
     {
-        // load known documents
-        $pid = $this->getPIDNoLock($page);
-        if ($pid === false) {
+        // remove obsolete pageword index entries
+        $result = $this->PagewordIndex->deletePageWordsNoLock($page);
+        if (!$result) {
             return false;
         }
 
-        // Remove obsolete index entries
-        $pageword_idx = $this->getIndexKey('pageword', '', $pid);
-        if ($pageword_idx !== '') {
-            $delwords = explode(':', $pageword_idx);
-            $upwords = array();
-            foreach ($delwords as $word) {
-                if ($word != '') {
-                    list($wlen, $wid) = explode('*', $word);
-                    $wid = (int)$wid;
-                    $upwords[$wlen][] = $wid;
-                }
-            }
-            foreach ($upwords as $wlen => $widx) {
-                $index = $this->getIndex('i', $wlen);
-                foreach ($widx as $wid) {
-                    $index[$wid] = $this->updateTuple($index[$wid], $pid, 0);
-                }
-                $this->saveIndex('i', $wlen, $index);
-            }
-        }
-        // Save the reverse index
-        if (!$this->saveIndexKey('pageword', '', $pid, '')) {
+        // delete all keys of the page from metadata index
+        $result = $this->MetadataIndex->deleteMetaKeysNoLock($page, '');
+        if (!$result) {
             return false;
-        }
-
-        $this->saveIndexKey('title', '', $pid, '');
-        $keyidx = $this->getIndex('metadata', '');
-        foreach ($keyidx as $metaname) {
-            $val_idx = explode(':', $this->getIndexKey($metaname.'_p', '', $pid));
-            $meta_idx = $this->getIndex($metaname.'_i', '');
-            foreach ($val_idx as $id) {
-                if ($id === '') continue;
-                $meta_idx[$id] = $this->updateTuple($meta_idx[$id], $pid, 0);
-            }
-            $this->saveIndex($metaname.'_i', '', $meta_idx);
-            $this->saveIndexKey($metaname.'_p', '', $pid, '');
         }
 
         return true;

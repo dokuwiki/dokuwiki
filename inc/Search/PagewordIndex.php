@@ -282,6 +282,71 @@ class PagewordIndex extends AbstractIndex
     }
 
     /**
+     * Delete the contents of a page to the fulltext index
+     *
+     * @param string    $page   a page name
+     * @param bool      $requireLock
+     * @return bool  If renaming the value has been successful, false on error
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+     */
+    public function deletePageWords($page, $requireLock = true)
+    {
+        if ($requireLock && !$this->lock()) return false;  // set $errors property
+
+        // load known documents
+        $pid = $this->getPIDNoLock($page);
+        if ($pid === false) {
+            return false;
+        }
+
+        // remove obsolete index entries
+        $pageword_idx = $this->getIndexKey('pageword', '', $pid);
+        if ($pageword_idx !== '') {
+            $delwords = explode(':', $pageword_idx);
+            $upwords = array();
+            foreach ($delwords as $word) {
+                if ($word != '') {
+                    list($wlen, $wid) = explode('*', $word);
+                    $wid = (int)$wid;
+                    $upwords[$wlen][] = $wid;
+                }
+            }
+            foreach ($upwords as $wlen => $widx) {
+                $index = $this->getIndex('i', $wlen);
+                foreach ($widx as $wid) {
+                    $index[$wid] = $this->updateTuple($index[$wid], $pid, 0);
+                }
+                $this->saveIndex('i', $wlen, $index);
+            }
+        }
+        // save the reverse index
+        if (!$this->saveIndexKey('pageword', '', $pid, '')) {
+            return false;
+        }
+
+        if ($requireLock) $this->unlock();
+        return true;
+    }
+
+    /**
+     * Delete the contents of a page to the fulltext index without locking the index
+     * only use this function if the index is already locked
+     *
+     * @param string    $page   a page name
+     * @param bool      $requireLock
+     * @return bool  If renaming the value has been successful, false on error
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+     */
+    public function deletePageWordsNoLock($page)
+    {
+        return $this->deletePageWords($page, false);
+    }
+
+    /**
      * Find the index ID of each search term
      *
      * The query terms should only contain valid characters, with a '*' at

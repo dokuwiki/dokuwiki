@@ -33,7 +33,7 @@ class MetadataIndex extends AbstractIndex
     }
 
     /**
-     * Add/update keys to/of the metadata index.
+     * Add/update keys to/of the metadata index
      *
      * Adding new keys does not remove other keys for the page.
      * An empty value will erase the key.
@@ -142,6 +142,69 @@ class MetadataIndex extends AbstractIndex
 
         $this->unlock();
         return true;
+    }
+
+    /**
+     * Delete keys of the page from metadata index
+     *
+     * @param string    $page   a page name
+     * @param mixed     $key    a key string or array of key=>value pairs
+     * @param bool      $requireLock
+     * @return bool  If renaming the value has been successful, false on error
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+     */
+    public function deleteMetaKeys($page, $keys = [], $requireLock = true)
+    {
+        if ($requireLock && !$this->lock()) return false;  // set $errors property
+
+        // load known documents
+        $pid = $this->getPIDNoLock($page);
+        if ($pid === false) {
+            return false;
+        }
+
+        $knownKeys = $this->getIndex('metadata', '');
+        $knownKeys[] = 'title';
+
+        // remove all metadata keys of the page when $keys is empty
+        $keys = (empty($keys)) ? $knownKeys : (array)$keys;
+
+        foreach ($keys as $metaname) {
+            if ($metaname == 'title') {
+                // Special handling for titles so the index file is simpler
+                $this->saveIndexKey('title', '', $pid, '');
+            } elseif (in_array($metaname, $knownKeys)) {
+                $meta_idx = $this->getIndex($metaname.'_i', '');
+                $val_idx = explode(':', $this->getIndexKey($metaname.'_p', '', $pid));
+                foreach ($val_idx as $id) {
+                    if ($id === '') continue;
+                    $meta_idx[$id] = $this->updateTuple($meta_idx[$id], $pid, 0);
+                }
+                $this->saveIndex($metaname.'_i', '', $meta_idx);
+                $this->saveIndexKey($metaname.'_p', '', $pid, '');
+            }
+        }
+
+        if ($requireLock) $this->unlock();
+        return true;
+    }
+
+    /**
+     * Remove keys of the page from metadata index without locking the index
+     * only use this function if the index is already locked
+     *
+     * @param string    $page   a page name
+     * @param mixed     $keys   a key string or array of keys
+     * @return bool  If renaming the value has been successful, false on error
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+     */
+    public function deleteMetaKeysNoLock($page, $keys = [])
+    {
+        return $this->deleteMetaKeys($page, $keys, false);
     }
 
     /**
