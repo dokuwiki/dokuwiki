@@ -158,7 +158,7 @@ class MetadataSearch
             }
             if ($in_title) {
                 $func = static::class.'::pageLookupTitleCompare';
-                foreach ($Indexer->lookupKey('title', $id, $func) as $p_id) {
+                foreach ($Indexer->MetadataIndex->lookupKey('title', $id, $func) as $p_id) {
                     if (!isset($pages[$p_id])) {
                         $pages[$p_id] = p_get_first_heading($p_id, METADATA_DONT_RENDER);
                     }

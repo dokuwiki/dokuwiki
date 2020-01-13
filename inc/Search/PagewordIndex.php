@@ -335,7 +335,6 @@ class PagewordIndex extends AbstractIndex
      * only use this function if the index is already locked
      *
      * @param string    $page   a page name
-     * @param bool      $requireLock
      * @return bool  If renaming the value has been successful, false on error
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>

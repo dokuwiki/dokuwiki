@@ -148,7 +148,7 @@ class MetadataIndex extends AbstractIndex
      * Delete keys of the page from metadata index
      *
      * @param string    $page   a page name
-     * @param mixed     $key    a key string or array of key=>value pairs
+     * @param mixed     $keys   a key string or array of keys
      * @param bool      $requireLock
      * @return bool  If renaming the value has been successful, false on error
      *

@@ -9,6 +9,7 @@
 
 use dokuwiki\Search\PageIndex;
 
+
 /**
  * Create an instance of the indexer.
  *
@@ -47,7 +48,7 @@ function idx_getIndex($idx, $suffix) {
 function idx_listIndexLengths() {
     dbg_deprecated('idx_listIndexLengths');
     $PageIndex = PageIndex::getInstance();
-    return $PageIndex->listIndexLengths();
+    return $PageIndex->PagewordIndex->listIndexLengths();
 }
 
 

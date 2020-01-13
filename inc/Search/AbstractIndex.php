@@ -65,7 +65,7 @@ abstract class AbstractIndex
      *
      * @param string $page The page to get the PID for
      * @param bool   $requireLock
-     * @return int  The page id on success, false on error
+     * @return int|false  The page id on success, false on error
      */
     public function getPID($page, $requireLock = true)
     {
@@ -94,7 +94,7 @@ abstract class AbstractIndex
      * Only use this function when the index is already locked.
      *
      * @param string $page The page to get the PID for
-     * @return int  The page id on success, false on error
+     * @return int|false  The page id on success, false on error
      */
     protected function getPIDNoLock($page)
     {
@@ -180,7 +180,7 @@ abstract class AbstractIndex
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function getIndex($idx, $suffix)
+    public function getIndex($idx, $suffix)
     {
         global $conf;
         $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';

@@ -193,7 +193,7 @@ class PageIndex extends AbstractIndex
                 return false;
             }
             $result = $this->deletePage($page);
-            if (!$result && $this->errors) {
+            if (!$result && !empty($this->errors)) {
                 if ($verbose) print("Indexer: locked".DOKU_LF);
                 return false;
             }
@@ -217,7 +217,7 @@ class PageIndex extends AbstractIndex
             $result = false;
             if (file_exists($idxtag)) {
                 $result = $this->deletePage($page);
-                if (!$result && $this->errors) {
+                if (!$result && !empty($this->errors)) {
                     if ($verbose) print("Indexer: locked".DOKU_LF);
                     return false;
                 }
@@ -252,14 +252,14 @@ class PageIndex extends AbstractIndex
         extract($data);
 
         $result = $this->PagewordIndex->addPageWords($page, $body);
-        if (!$result && $this->errors) {
+        if (!$result && !empty($this->errors)) {
             if ($verbose) print("Indexer: locked".DOKU_LF);
             return false;
         }
 
         if ($result) {
             $result = $this->MetadataIndex->addMetaKeys($page, $metadata);
-            if (!$result && $this->errors) {
+            if (!$result && !empty($this->errors)) {
                 if ($verbose) print("Indexer: locked".DOKU_LF);
                 return false;
             }
@@ -295,7 +295,7 @@ class PageIndex extends AbstractIndex
         $id = array_search($oldpage, $pages, true);
         if ($id === false) {
             $this->unlock();
-            static::$errors[] = 'page is not in index';
+            static::$errors[] = "$oldpage is not found in index";
             return false;
         }
 
@@ -349,6 +349,23 @@ class PageIndex extends AbstractIndex
         }
 
         return true;
+    }
+
+    /**
+     * Remove a page from the index without locking the index,
+     * only use this function if the index is already locked
+     *
+     * Erases entries in all known indexes.
+     *
+     * @param string    $page   a page name
+     * @return bool             If the function completed successfully
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    protected function deletePageNoLock($page)
+    {
+        return $this->PagewordIndex->deletePageWordsNoLock($page)
+            && $this->MetadataIndex->deleteMetaKeysNoLock($page);
     }
 
     /**
