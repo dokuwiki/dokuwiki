@@ -327,7 +327,7 @@ class PageIndex extends AbstractIndex
     /**
      * Remove a page from the index
      *
-     * Erases entries in all known indexes.
+     * Erases entries in all known indexes. Locking is handled internally.
      *
      * @param string    $page   a page name
      * @return bool             If the function completed successfully
@@ -336,34 +336,14 @@ class PageIndex extends AbstractIndex
      */
     public function deletePage($page)
     {
-        if (!$this->lock()) return false;  // set $errors property
-
-        $result = $this->deletePageNoLock($page);
-        $this->unlock();
-        return $result;
-    }
-
-    /**
-     * Remove a page from the index without locking the index,
-     * only use this function if the index is already locked
-     *
-     * Erases entries in all known indexes.
-     *
-     * @param string    $page   a page name
-     * @return bool             If the function completed successfully
-     *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
-     */
-    protected function deletePageNoLock($page)
-    {
         // remove obsolete pageword index entries
-        $result = $this->PagewordIndex->deletePageWordsNoLock($page);
+        $result = $this->PagewordIndex->deletePageWords($page);
         if (!$result) {
             return false;
         }
 
         // delete all keys of the page from metadata index
-        $result = $this->MetadataIndex->deleteMetaKeysNoLock($page, '');
+        $result = $this->MetadataIndex->deleteMetaKeys($page);
         if (!$result) {
             return false;
         }
