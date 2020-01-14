@@ -7,6 +7,11 @@ use dokuwiki\Search\QueryParser;
 use dokuwiki\Utf8;
 
 /**
+ * create snippets for the first few results only
+ */
+const FT_SNIPPET_NUMBER = 15;
+
+/**
  * Class DokuWiki Fulltext Search
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)

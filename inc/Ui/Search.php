@@ -4,6 +4,10 @@ namespace dokuwiki\Ui;
 
 use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
+use dokuwiki\Search\FulltextSearch;
+use dokuwiki\Search\QueryParser;
+
+use const dokuwiki\Search\FT_SNIPPET_NUMBER;
 
 class Search extends Ui
 {
@@ -24,10 +28,9 @@ class Search extends Ui
     public function __construct(array $pageLookupResults, array $fullTextResults, $highlight)
     {
         global $QUERY;
-        $Indexer = idx_get_indexer();
 
         $this->query = $QUERY;
-        $this->parsedQuery = ft_queryParser($Indexer, $QUERY);
+        $this->parsedQuery = QueryParser::convert($QUERY);
         $this->searchState = new SearchState($this->parsedQuery);
 
         $this->pageLookupResults = $pageLookupResults;
@@ -597,7 +600,7 @@ class Search extends Ui
                 $hits = '<span class="hits">' . $cnt . ' ' . $lang['hits'] . '</span>, ';
                 $resultBody['meta'] = $hits . $resultBody['meta'];
                 if ($num <= FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
-                    $resultBody['snippet'] = ft_snippet($id, $highlight);
+                    $resultBody['snippet'] = FulltextSearch::snippet($id, $highlight);
                 }
             }
 

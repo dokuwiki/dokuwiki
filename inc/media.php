@@ -10,6 +10,7 @@ use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Subscriptions\MediaSubscriptionSender;
 use dokuwiki\Extension\Event;
+use dokuwiki\Search\MetadataSearch;
 
 /**
  * Lists pages which currently use a media file selected for deletion
@@ -219,7 +220,7 @@ function media_inuse($id) {
     global $conf;
 
     if($conf['refcheck']){
-        $mediareferences = ft_mediause($id,true);
+        $mediareferences = MetadataSearch::mediause($id,true);
         if(!count($mediareferences)) {
             return false;
         } else {
@@ -1196,7 +1197,7 @@ function media_details($image, $auth, $rev='', $meta=false) {
     echo '</dl>'.NL;
     echo '<dl>'.NL;
     echo '<dt>'.$lang['reference'].':</dt>';
-    $media_usage = ft_mediause($image,true);
+    $media_usage = MetadataSearch::mediause($image,true);
     if(count($media_usage) > 0){
         foreach($media_usage as $path){
             echo '<dd>'.html_wikilink($path).'</dd>';

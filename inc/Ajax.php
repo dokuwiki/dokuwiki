@@ -2,6 +2,8 @@
 
 namespace dokuwiki;
 
+use dokuwiki\Search\MetadataSearch;
+
 /**
  * Manage all builtin AJAX calls
  *
@@ -47,7 +49,7 @@ class Ajax {
 
         $query = urldecode($query);
 
-        $data = ft_pageLookup($query, true, useHeading('navigation'));
+        $data = MetadataSearch::pageLookup($query, true, useHeading('navigation'));
 
         if(!count($data)) return;
 
@@ -89,7 +91,7 @@ class Ajax {
         if(empty($query)) $query = cleanID($INPUT->get->str('q'));
         if(empty($query)) return;
 
-        $data = ft_pageLookup($query);
+        $data = MetadataSearch::pageLookup($query);
         if(!count($data)) return;
         $data = array_keys($data);
 
@@ -349,7 +351,7 @@ class Ajax {
         if($q && !$ns) {
 
             // use index to lookup matching pages
-            $pages = ft_pageLookup($id, true);
+            $pages = MetadataSearch::pageLookup($id, true);
 
             // result contains matches in pages and namespaces
             // we now extract the matching namespaces to show

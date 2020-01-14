@@ -10,6 +10,8 @@ use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
+use dokuwiki\Search\FulltextSearch;
+use dokuwiki\Search\MetadataSearch;
 
 if (!defined('SEC_EDIT_PATTERN')) {
     define('SEC_EDIT_PATTERN', '#<!-- EDIT({.*?}) -->#');
@@ -350,9 +352,9 @@ function html_draft(){
 function html_hilight($html,$phrases){
     $phrases = (array) $phrases;
     $phrases = array_map('preg_quote_cb', $phrases);
-    $phrases = array_map('ft_snippet_re_preprocess', $phrases);
+    $phrases = array_map(['dokuwiki\Search\FulltextSearch','snippet_re_preprocess'], $phrases);
     $phrases = array_filter($phrases);
-    $regex = join('|',$phrases);
+    $regex = implode('|',$phrases);
 
     if ($regex === '') return $html;
     if (!\dokuwiki\Utf8\Clean::isUtf8($regex)) return $html;
@@ -1082,7 +1084,7 @@ function html_backlinks(){
 
     print p_locale_xhtml('backlinks');
 
-    $data = ft_backlinks($ID);
+    $data = MetadataSearch::backlinks($ID);
 
     if(!empty($data)) {
         print '<ul class="idx">';

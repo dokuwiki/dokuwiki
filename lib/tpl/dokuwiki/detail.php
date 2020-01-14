@@ -7,6 +7,8 @@
  * @license  GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
 
+use dokuwiki\Search\MetadataSearch;
+
 // must be run from within DokuWiki
 if (!defined('DOKU_INC')) die();
 header('X-UA-Compatible: IE=edge,chrome=1');
@@ -59,7 +61,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                             <dl>
                             <?php
                             echo '<dt>'.$lang['reference'].':</dt>';
-                            $media_usage = ft_mediause($IMG,true);
+                            $media_usage = MetadataSearch::mediause($IMG, true);
                             if(count($media_usage) > 0){
                                 foreach($media_usage as $path){
                                     echo '<dd>'.html_wikilink($path).'</dd>';

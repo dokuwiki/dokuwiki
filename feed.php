@@ -14,6 +14,7 @@ use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
+use dokuwiki\Search\FulltextSearch;
 
 if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/');
 require_once(DOKU_INC.'inc/init.php');
@@ -507,7 +508,7 @@ function rssSearch($opt) {
     if(!$opt['search_query']) return array();
 
     require_once(DOKU_INC.'inc/fulltext.php');
-    $data = ft_pageSearch($opt['search_query'], $poswords);
+    $data = FulltextSearch::pageSearch($opt['search_query'], $poswords);
     $data = array_keys($data);
 
     return $data;
