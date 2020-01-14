@@ -13,9 +13,6 @@ use dokuwiki\Utf8;
  */
 abstract class AbstractIndex
 {
-    /** @var instance of an extended AbstractIndex class */
-    protected static $instance = null;
-
     /** @var array $pidCache Cache for getPID() */
     protected static $pidCache = array();
 
@@ -27,19 +24,6 @@ abstract class AbstractIndex
      * extended classes should be Singleton, prevent direct object creation
      */
     protected function __construct() {}
-
-    /**
-     * Get new or existing singleton instance of the extended AbstractIndex
-     *
-     * @return instance of an extended AbstractIndex class
-     */
-    public static function getInstance()
-    {
-        if (is_null(static::$instance)) {
-            static::$instance = new static();
-        }
-        return static::$instance;
-    }
 
     /**
      * Clean a name of a key for use as a file name.
