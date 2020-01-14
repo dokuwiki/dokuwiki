@@ -193,7 +193,7 @@ class PageIndex extends AbstractIndex
                 return false;
             }
             $result = $this->deletePage($page);
-            if (!$result && !empty($this->errors)) {
+            if (!$result && !empty(static::$errors)) {
                 if ($verbose) print("Indexer: locked".DOKU_LF);
                 return false;
             }
@@ -217,7 +217,7 @@ class PageIndex extends AbstractIndex
             $result = false;
             if (file_exists($idxtag)) {
                 $result = $this->deletePage($page);
-                if (!$result && !empty($this->errors)) {
+                if (!$result && !empty(static::$errors)) {
                     if ($verbose) print("Indexer: locked".DOKU_LF);
                     return false;
                 }
@@ -252,14 +252,14 @@ class PageIndex extends AbstractIndex
         extract($data);
 
         $result = $this->PagewordIndex->addPageWords($page, $body);
-        if (!$result && !empty($this->errors)) {
+        if (!$result && !empty(static::$errors)) {
             if ($verbose) print("Indexer: locked".DOKU_LF);
             return false;
         }
 
         if ($result) {
             $result = $this->MetadataIndex->addMetaKeys($page, $metadata);
-            if (!$result && !empty($this->errors)) {
+            if (!$result && !empty(static::$errors)) {
                 if ($verbose) print("Indexer: locked".DOKU_LF);
                 return false;
             }
