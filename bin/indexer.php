@@ -3,6 +3,7 @@
 
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
+use dokuwiki\Search\PageIndex;
 
 if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
 define('NOSESSION', 1);
@@ -79,7 +80,8 @@ class IndexerCLI extends CLI {
      */
     protected function index($id) {
         $this->quietecho("$id... ");
-        idx_addPage($id, !$this->quiet, $this->clear);
+        $Indexer = PageIndex::getInstance();
+        $Indexer->addPage($id, !$this->quiet, $this->clear);
         $this->quietecho("done.\n");
     }
 
@@ -88,7 +90,8 @@ class IndexerCLI extends CLI {
      */
     protected function clearindex() {
         $this->quietecho("Clearing index... ");
-        idx_get_indexer()->clear();
+        $Indexer = PageIndex::getInstance();
+        $Indexer->clear();
         $this->quietecho("done.\n");
     }
 

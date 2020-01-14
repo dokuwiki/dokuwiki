@@ -1,6 +1,7 @@
 <?php
 
 namespace dokuwiki\Remote;
+use dokuwiki\Search\PageIndex;
 
 use Doku_Renderer_xhtml;
 use dokuwiki\ChangeLog\MediaChangeLog;
@@ -308,7 +309,9 @@ class ApiCore
     public function listPages()
     {
         $list = array();
-        $pages = idx_get_indexer()->getPages();
+
+        $Indexer = PageIndex::getInstance();
+        $pages = $Indexer->getPages();
         $pages = array_filter(array_filter($pages, 'isVisiblePage'), 'page_exists');
 
         foreach (array_keys($pages) as $idx) {

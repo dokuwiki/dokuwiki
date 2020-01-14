@@ -3,6 +3,7 @@
 namespace dokuwiki;
 
 use dokuwiki\Extension\Event;
+use dokuwiki\Search\PageIndex;
 use dokuwiki\Sitemap\Mapper;
 use dokuwiki\Subscriptions\BulkSubscriptionSender;
 use Subscription;
@@ -196,7 +197,8 @@ class TaskRunner
         }
 
         // do the work
-        return idx_addPage($ID, true);
+        $Indexer = PageIndex::getInstance();
+        return $Indexer->addPage($ID, true);
     }
 
     /**
