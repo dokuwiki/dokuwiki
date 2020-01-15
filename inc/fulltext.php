@@ -10,13 +10,6 @@ use dokuwiki\Search\FulltextSearch;
 use dokuwiki\Search\MetadataSearch;
 use dokuwiki\Search\QueryParser;
 
-
-/**
- * create snippets for the first few results only
- */
-if(!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER',15);
-
-
 /**
  * Functions for Fulltext Search
  */
