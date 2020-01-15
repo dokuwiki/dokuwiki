@@ -12,6 +12,7 @@ use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Search\FulltextSearch;
 use dokuwiki\Search\MetadataSearch;
+use dokuwiki\Utf8;
 
 if (!defined('SEC_EDIT_PATTERN')) {
     define('SEC_EDIT_PATTERN', '#<!-- EDIT({.*?}) -->#');
@@ -349,15 +350,15 @@ function html_draft(){
  * @param array|string $phrases
  * @return string html
  */
-function html_hilight($html,$phrases){
+function html_hilight($html, $phrases) {
     $phrases = (array) $phrases;
     $phrases = array_map('preg_quote_cb', $phrases);
-    $phrases = array_map(['dokuwiki\Search\FulltextSearch','snippet_re_preprocess'], $phrases);
+    $phrases = array_map([FulltextSearch::class,'snippet_re_preprocess'], $phrases);
     $phrases = array_filter($phrases);
     $regex = implode('|',$phrases);
 
     if ($regex === '') return $html;
-    if (!\dokuwiki\Utf8\Clean::isUtf8($regex)) return $html;
+    if (!Utf8\Clean::isUtf8($regex)) return $html;
     $html = @preg_replace_callback("/((<[^>]*)|$regex)/ui",'html_hilight_callback',$html);
     return $html;
 }
