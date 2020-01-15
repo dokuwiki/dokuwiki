@@ -3,11 +3,16 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
  */
+$lang['menu']                  = 'Nastavenie typov šablón';
+$lang['js']['popup']           = 'Otvor vo vyskakovacom okne';
+$lang['error']                 = 'Táto šablóna nepodporuje túto funkciu.';
 $lang['btn_preview']           = 'Náhľad zmien';
 $lang['btn_save']              = 'Uloženie zmien';
 $lang['btn_reset']             = 'Zruš prevedené zmeny';
+$lang['btn_revert']            = 'Vrátiť späť k základnej šablóne.';
 $lang['__text__']              = 'Primárna farba textu';
 $lang['__background__']        = 'Primárna farba pozadia';
 $lang['__text_alt__']          = 'Alternatívna farba textu';
