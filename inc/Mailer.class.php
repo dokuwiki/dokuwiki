@@ -350,7 +350,7 @@ class Mailer {
      * addresses. Addresses must be separated by a comma. If the display
      * name includes a comma then it MUST be properly enclosed by '"' to
      * prevent spliting at the wrong point.
-     * 
+     *
      * Example:
      *   cc("föö <foo@bar.com>, me@somewhere.com","TBcc");
      *   to("foo, Dr." <foo@bar.com>, me@somewhere.com");
@@ -635,6 +635,8 @@ class Mailer {
 
         $ip   = clientIP();
         $cip  = gethostsbyaddrs($ip);
+        $name = isset($INFO) ? $INFO['userinfo']['name'] : '';
+        $mail = isset($INFO) ? $INFO['userinfo']['mail'] : '';
 
         $this->replacements['text'] = array(
             'DATE' => dformat(),
@@ -644,8 +646,8 @@ class Mailer {
             'TITLE' => $conf['title'],
             'DOKUWIKIURL' => DOKU_URL,
             'USER' => $INPUT->server->str('REMOTE_USER'),
-            'NAME' => $INFO['userinfo']['name'],
-            'MAIL' => $INFO['userinfo']['mail']
+            'NAME' => $name,
+            'MAIL' => $mail
         );
         $signature = str_replace(
             '@DOKUWIKIURL@',
@@ -662,9 +664,9 @@ class Mailer {
             'TITLE' => hsc($conf['title']),
             'DOKUWIKIURL' => '<a href="' . DOKU_URL . '">' . DOKU_URL . '</a>',
             'USER' => hsc($INPUT->server->str('REMOTE_USER')),
-            'NAME' => hsc($INFO['userinfo']['name']),
-            'MAIL' => '<a href="mailto:"' . hsc($INFO['userinfo']['mail']) . '">' .
-                hsc($INFO['userinfo']['mail']) . '</a>'
+            'NAME' => hsc($name),
+            'MAIL' => '<a href="mailto:"' . hsc($mail) . '">' .
+                hsc($mail) . '</a>'
         );
         $signature = $lang['email_signature_text'];
         if(!empty($lang['email_signature_html'])) {

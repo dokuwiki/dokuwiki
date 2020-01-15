@@ -1,11 +1,11 @@
 <?php
 
 class common_infofunctions_test extends DokuWikiTest {
- 
+
     function setup(){
         parent::setup();
 
-        global $USERINFO; 
+        global $USERINFO;
         $USERINFO = array(
            'pass' => '179ad45c6ce2cb97cf1029e212046e81',
            'name' => 'Arthur Dent',
@@ -15,7 +15,7 @@ class common_infofunctions_test extends DokuWikiTest {
         $_SERVER['REMOTE_USER'] = 'testuser';
         $_SERVER['REMOTE_ADDR'] = '1.2.3.4';
     }
-    
+
     function _get_info() {
         global $USERINFO;
         $info = array (
@@ -27,7 +27,7 @@ class common_infofunctions_test extends DokuWikiTest {
           'ismobile' => false,
           'client' => 'testuser',
         );
-      
+
         return $info;
     }
 
@@ -36,14 +36,15 @@ class common_infofunctions_test extends DokuWikiTest {
      * Other functions provide the values
      */
     function test_basicinfo(){
+        global $ID;
         // test with REMOTE_USER set and the user an admin user
         $info = $this->_get_info();
         $this->assertEquals(basicinfo($ID,true),$info);
-        
-        // with $httpclient parameter set to false 
+
+        // with $httpclient parameter set to false
         unset($info['ismobile']);
         $this->assertEquals(basicinfo($ID,false),$info);
-        
+
         // with anonymous user
         unset($_SERVER['REMOTE_USER']);
         global $USERINFO; $USERINFO = array();
@@ -58,7 +59,7 @@ class common_infofunctions_test extends DokuWikiTest {
         );
         $this->assertEquals(basicinfo($ID,true),$info);
     }
-    
+
 }
 
 //Setup VIM: ex: et ts=4 :

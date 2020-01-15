@@ -51,9 +51,12 @@ class plugin_usermanager_csv_import_test extends DokuWikiTest {
         $result = $this->usermanager->tryImport();
 
         $after_users = $auth->retrieveUsers();
+
+        $before_users = array_map('serialize', $before_users);
+        $after_users = array_map('serialize', $after_users);
         $import_count = count($after_users) - count($before_users);
-        $new_users = array_diff_key($after_users, $before_users);
-        $diff_users = array_diff_assoc($after_users, $before_users);
+        $new_users = array_map('unserialize', array_diff_key($after_users, $before_users));
+        $diff_users = array_map('unserialize', array_diff_assoc($after_users, $before_users));
 
         $expectedCount = count($expectedNewUsers);
 
