@@ -125,7 +125,8 @@ $meta['autopasswd']  = array('onoff');
 $meta['authtype']    = array('authtype','_caution' => 'danger');
 $meta['passcrypt']   = array('multichoice','_choices' => array(
     'smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5',
-    'mediawiki','bcrypt','djangomd5','djangosha1','djangopbkdf2_sha1','djangopbkdf2_sha256','sha512','argon2i','argon2id'
+    'mediawiki','bcrypt','djangomd5','djangosha1','djangopbkdf2_sha1','djangopbkdf2_sha256',
+    'sha512','argon2i','argon2id'
 ));
 $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string','_caution' => 'danger');
