@@ -3,7 +3,6 @@ namespace dokuwiki\Search;
 
 use dokuwiki\Utf8;
 
-
 /**
  * Abstract Class DokuWiki Index
  *
@@ -206,8 +205,8 @@ abstract class AbstractIndex
      * @param string    $idx    name of the index
      * @param string    $suffix subpart identifier
      * @param string    $value  line to find in the index
-     * @return int|bool          line number of the value in the index
-     *                           or false if writing the index failed
+     * @return int|false        line number of the value in the index
+     *                          or false if writing the index failed
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -223,7 +222,7 @@ abstract class AbstractIndex
                 return false;
             }
         }
-        return $id;
+        return (int) $id;
     }
 
     /**
