@@ -114,7 +114,7 @@ abstract class AbstractItem {
      * @return string
      */
     public function getLink() {
-        if($this->id[0] == '#') {
+        if($this->id && $this->id[0] == '#') {
             return $this->id;
         } else {
             return wl($this->id, $this->params, false, '&');

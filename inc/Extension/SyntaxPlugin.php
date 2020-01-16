@@ -2,8 +2,8 @@
 
 namespace dokuwiki\Extension;
 
-use \Doku_Handler;
-use \Doku_Renderer;
+use Doku_Handler;
+use Doku_Renderer;
 
 /**
  * Syntax Plugin Prototype

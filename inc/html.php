@@ -111,7 +111,7 @@ function html_denied() {
 function html_secedit($text,$show=true){
     global $INFO;
 
-    if(!$INFO['writable'] || !$show || $INFO['rev']){
+    if((isset($INFO) && !$INFO['writable']) || !$show || (isset($INFO) && $INFO['rev'])){
         return preg_replace(SEC_EDIT_PATTERN,'',$text);
     }
 
@@ -967,7 +967,7 @@ function html_li_index($item){
 
     if($item['type'] == "f"){
         // scroll to the current item
-        if($item['id'] == $INFO['id'] && $ACT == 'index') {
+        if(isset($INFO) && $item['id'] == $INFO['id'] && $ACT == 'index') {
             $id = ' id="scroll__here"';
             $class = ' bounce';
         }

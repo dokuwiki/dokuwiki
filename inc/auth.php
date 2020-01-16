@@ -154,10 +154,12 @@ function auth_loadACL() {
         // substitute group wildcard (its 1:m)
         if(strstr($line, '%GROUP%')){
             // if user is not logged in, grps is empty, no output will be added (i.e. skipped)
-            foreach((array) $USERINFO['grps'] as $grp){
-                $nid   = str_replace('%GROUP%',cleanID($grp),$id);
-                $nrest = str_replace('%GROUP%','@'.auth_nameencode($grp),$rest);
-                $out[] = "$nid\t$nrest";
+            if(isset($USERINFO['grps'])){
+                foreach((array) $USERINFO['grps'] as $grp){
+                    $nid   = str_replace('%GROUP%',cleanID($grp),$id);
+                    $nrest = str_replace('%GROUP%','@'.auth_nameencode($grp),$rest);
+                    $out[] = "$nid\t$nrest";
+                }
             }
         } else {
             $out[] = "$id\t$rest";
@@ -470,7 +472,7 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false) {
         }
     }
     if(is_null($groups)) {
-        $groups = (array) $USERINFO['grps'];
+        $groups = $USERINFO ? (array) $USERINFO['grps'] : array();
     }
 
     // check superuser match
@@ -564,7 +566,7 @@ function auth_quickaclcheck($id) {
     global $INPUT;
     # if no ACL is used always return upload rights
     if(!$conf['useacl']) return AUTH_UPLOAD;
-    return auth_aclcheck($id, $INPUT->server->str('REMOTE_USER'), $USERINFO['grps']);
+    return auth_aclcheck($id, $INPUT->server->str('REMOTE_USER'), is_array($USERINFO) ? $USERINFO['grps'] : array());
 }
 
 /**

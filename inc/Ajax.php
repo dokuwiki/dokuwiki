@@ -259,7 +259,7 @@ class Ajax {
         global $NS, $MSG, $INPUT;
 
         $id = '';
-        if($_FILES['qqfile']['tmp_name']) {
+        if(isset($_FILES['qqfile']['tmp_name'])) {
             $id = $INPUT->post->str('mediaid', $_FILES['qqfile']['name']);
         } elseif($INPUT->get->has('qqfile')) {
             $id = $INPUT->get->str('qqfile');
@@ -275,10 +275,10 @@ class Ajax {
             io_createNamespace("$ns:xxx", 'media');
         }
 
-        if($_FILES['qqfile']['error']) unset($_FILES['qqfile']);
+        if(isset($_FILES['qqfile']['error']) && $_FILES['qqfile']['error']) unset($_FILES['qqfile']);
 
         $res = false;
-        if($_FILES['qqfile']['tmp_name']) $res = media_upload($NS, $AUTH, $_FILES['qqfile']);
+        if(isset($_FILES['qqfile']['tmp_name'])) $res = media_upload($NS, $AUTH, $_FILES['qqfile']);
         if($INPUT->get->has('qqfile')) $res = media_upload_xhr($NS, $AUTH);
 
         if($res) {

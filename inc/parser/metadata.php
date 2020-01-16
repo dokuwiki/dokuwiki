@@ -64,7 +64,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
         $this->headers = array();
 
         // external pages are missing create date
-        if (!$this->persistent['date']['created']) {
+        if (!isset($this->persistent['date']['created']) || !$this->persistent['date']['created']) {
             $this->persistent['date']['created'] = filectime(wikiFN($ID));
         }
         if (!isset($this->persistent['user'])) {

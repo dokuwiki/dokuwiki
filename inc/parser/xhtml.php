@@ -917,7 +917,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['pre']    = '';
         $link['suf']    = '';
         // highlight link to current page
-        if($id == $INFO['id']) {
+        if(isset($INFO) && $id == $INFO['id']) {
             $link['pre'] = '<span class="curid">';
             $link['suf'] = '</span>';
         }

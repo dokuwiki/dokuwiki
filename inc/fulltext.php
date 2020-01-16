@@ -45,7 +45,15 @@ function ft_queryUnparser_simple(array $and, array $not, array $phrases, array $
 
 
 /**
- * Functions for metadata lookups
+
+ * Parses a search query and builds an array of search formulas
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Kazutaka Miyasaka <kazmiya@gmail.com>
+ *
+ * @param dokuwiki\Search\Indexer $Indexer
+ * @param string                  $query search query
+ * @return array of search formulas
  */
 /** @deprecated 2019-12-28 */
 function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $before = null) {
@@ -53,10 +61,45 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $befor
     return MetadataSearch::pageLookup($id, $in_ns, $in_title, $after, $before);
 }
 
-/** @deprecated 2019-12-28 */
-function ft_backlinks($id, $ignore_perms = false) {
-    dbg_deprecated('ft_backlinks');
-    return MetadataSearch::backlinks($id, $ignore_perms);
+/**
+ * Transforms given search term into intermediate representation
+ *
+ * This function is used in ft_queryParser() and not for general purpose use.
+ *
+ * @author Kazutaka Miyasaka <kazmiya@gmail.com>
+ *
+ * @param dokuwiki\Search\Indexer $Indexer
+ * @param string                  $term
+ * @param bool                    $consider_asian
+ * @param bool                    $phrase_mode
+ * @return string
+ */
+function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = false) {
+    $parsed = '';
+    if ($consider_asian) {
+        // successive asian characters need to be searched as a phrase
+        $words = \dokuwiki\Utf8\Asian::splitAsianWords($term);
+        foreach ($words as $word) {
+            $phrase_mode = $phrase_mode ? true : \dokuwiki\Utf8\Asian::isAsianWords($word);
+            $parsed .= ft_termParser($Indexer, $word, false, $phrase_mode);
+        }
+    } else {
+        $term_noparen = str_replace(array('(', ')'), ' ', $term);
+        $words = $Indexer->tokenizer($term_noparen, true);
+
+        // W_: no need to highlight
+        if (empty($words)) {
+            $parsed = '()'; // important: do not remove
+        } elseif ($words[0] === $term) {
+            $parsed = '(W+:'.$words[0].')';
+        } elseif ($phrase_mode) {
+            $term_encoded = str_replace(array('(', ')'), array('OP', 'CP'), $term);
+            $parsed = '((W_:'.implode(')(W_:', $words).')(P+:'.$term_encoded.'))';
+        } else {
+            $parsed = '((W+:'.implode(')(W+:', $words).'))';
+        }
+    }
+    return $parsed;
 }
 
 /** @deprecated 2019-12-28 */

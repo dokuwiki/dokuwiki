@@ -418,7 +418,7 @@ function js_compress($s){
         // double quote strings
         if($ch == '"'){
             $j = 1;
-            while( $s[$i+$j] != '"' && ($i+$j < $slen)){
+            while( ($i+$j < $slen) && $s[$i+$j] != '"' ){
                 if( $s[$i+$j] == '\\' && ($s[$i+$j+1] == '"' || $s[$i+$j+1] == '\\') ){
                     $j += 2;
                 }else{
@@ -436,7 +436,7 @@ function js_compress($s){
         // single quote strings
         if($ch == "'"){
             $j = 1;
-            while( $s[$i+$j] != "'" && ($i+$j < $slen)){
+            while( ($i+$j < $slen) && $s[$i+$j] != "'" ){
                 if( $s[$i+$j] == '\\' && ($s[$i+$j+1] == "'" || $s[$i+$j+1] == '\\') ){
                     $j += 2;
                 }else{

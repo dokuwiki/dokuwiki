@@ -496,7 +496,7 @@ class ApiCore
         $data = array(
             'name' => $id,
             'lastModified' => $this->api->toDate($rev),
-            'author' => (($info['user']) ? $info['user'] : $info['ip']),
+            'author' => is_array($info) ? (($info['user']) ? $info['user'] : $info['ip']) : null,
             'version' => $rev
         );
 
