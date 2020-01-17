@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author BIGEAULT <laurent.bigeault@ville-agde.fr>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author PaliPalo <palipalo@hotmail.fr>
  * @author Laurent Ponthieu <contact@coopindus.fr>
