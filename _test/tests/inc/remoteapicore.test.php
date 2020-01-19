@@ -2,19 +2,22 @@
 
 use dokuwiki\Remote\Api;
 use dokuwiki\Remote\ApiCore;
+use dokuwiki\Search\MetadataSearch;
+use dokuwiki\Search\PageIndex;
 use dokuwiki\test\mock\AuthPlugin;
 
 /**
  * Class remoteapicore_test
  */
-class remoteapicore_test extends DokuWikiTest {
-
+class remoteapicore_test extends DokuWikiTest
+{
     protected $userinfo;
     protected $oldAuthAcl;
     /** @var  Api */
     protected $remote;
 
-    public function setUp() {
+    public function setUp()
+    {
         // we need a clean setup before each single test:
         DokuWikiTest::setUpBeforeClass();
 
@@ -34,7 +37,8 @@ class remoteapicore_test extends DokuWikiTest {
         $this->remote = new Api();
     }
 
-    public function tearDown() {
+    public function tearDown()
+    {
         parent::tearDown();
 
         global $USERINFO;
@@ -45,17 +49,20 @@ class remoteapicore_test extends DokuWikiTest {
     }
 
     /** Delay writes of old revisions by a second. */
-    public function handle_write(Doku_Event $event, $param) {
+    public function handle_write(Doku_Event $event, $param)
+    {
         if ($event->data[3] !== false) {
             $this->waitForTick();
         }
     }
 
-    public function test_getVersion() {
+    public function test_getVersion()
+    {
         $this->assertEquals(getVersion(), $this->remote->call('dokuwiki.getVersion'));
     }
 
-    public function test_getPageList() {
+    public function test_getPageList()
+    {
         $file1 = wikiFN('wiki:dokuwiki');
         $file2 = wikiFN('wiki:syntax');
         $expected = array(
@@ -85,11 +92,13 @@ class remoteapicore_test extends DokuWikiTest {
         $this->assertEquals($expected, $this->remote->call('dokuwiki.getPagelist', $params));
     }
 
-    public function test_search() {
+    public function test_search()
+    {
         $id = 'wiki:syntax';
         $file = wikiFN($id);
 
-        idx_addPage($id); //full text search depends on index
+        $PageIndex = PageIndex::getInstance(); //full text search depends on index
+        $PageIndex->addPage($id);
         $expected = array(
             array(
                 'id' => $id,
@@ -109,13 +118,15 @@ You can use up to five different levels of',
         $this->assertEquals($expected, $this->remote->call('dokuwiki.search', $params));
     }
 
-    public function test_getTime() {
+    public function test_getTime()
+    {
         $timeexpect = time();
         $timeactual = $this->remote->call('dokuwiki.getTime');
         $this->assertTrue(($timeexpect <= $timeactual) && ($timeactual <= $timeexpect + 1));
     }
 
-    public function test_setLocks() {
+    public function test_setLocks()
+    {
         $expected = array(
             'locked' => array('wiki:dokuwiki', 'wiki:syntax', 'nonexisting'),
             'lockfail' => array(),
@@ -145,12 +156,14 @@ You can use up to five different levels of',
         $this->assertEquals($expected, $this->remote->call('dokuwiki.setLocks', $params));
     }
 
-    public function test_getTitle() {
+    public function test_getTitle()
+    {
         global $conf;
         $this->assertEquals($conf['title'], $this->remote->call('dokuwiki.getTitle'));
     }
 
-    public function test_putPage() {
+    public function test_putPage()
+    {
         $id = 'putpage';
 
         $content = "====Title====\nText";
@@ -177,7 +190,8 @@ You can use up to five different levels of',
         $this->assertFileNotExists(wikiFN($id));
     }
 
-    public function test_getPage() {
+    public function test_getPage()
+    {
         $id = 'getpage';
         $content = 'a test';
         saveWikiText($id, $content, 'test for getpage');
@@ -186,7 +200,8 @@ You can use up to five different levels of',
         $this->assertEquals($content, $this->remote->call('wiki.getPage', $params));
     }
 
-    public function test_appendPage() {
+    public function test_appendPage()
+    {
         $id = 'appendpage';
         $content = 'a test';
         $morecontent = "\nOther text";
@@ -201,7 +216,8 @@ You can use up to five different levels of',
         $this->assertEquals($content . $morecontent, rawWiki($id));
     }
 
-    public function test_getPageVersion() {
+    public function test_getPageVersion()
+    {
         $id = 'pageversion';
         $file = wikiFN($id);
 
@@ -228,7 +244,8 @@ You can use up to five different levels of',
         $this->assertEquals('', $this->remote->call('wiki.getPageVersion', $params), 'Non existing page given');
     }
 
-    public function test_getPageHTML() {
+    public function test_getPageHTML()
+    {
         $id = 'htmltest';
         $content = "====Title====\nText";
         $html = "\n<h3 class=\"sectionedit1\" id=\"title\">Title</h3>\n<div class=\"level3\">\n\n<p>\nText\n</p>\n\n</div>\n";
@@ -239,7 +256,8 @@ You can use up to five different levels of',
         $this->assertEquals($html, $this->remote->call('wiki.getPageHTML', $params));
     }
 
-    public function test_getPageHTMLVersion() {
+    public function test_getPageHTMLVersion()
+    {
         $id = 'htmltest';
         $file = wikiFN($id);
 
@@ -271,10 +289,12 @@ You can use up to five different levels of',
         $this->assertEquals('', $this->remote->call('wiki.getPageHTMLVersion', $params), 'Non existing page given');
     }
 
-    public function test_getAllPages() {
+    public function test_getAllPages()
+    {
         // all pages depends on index
-        idx_addPage('wiki:syntax');
-        idx_addPage('wiki:dokuwiki');
+        $PageIndex = PageIndex::getInstance();
+        $PageIndex->addPage('wiki:syntax');
+        $PageIndex->addPage('wiki:dokuwiki');
 
         $file1 = wikiFN('wiki:syntax');
         $file2 = wikiFN('wiki:dokuwiki');
@@ -296,19 +316,22 @@ You can use up to five different levels of',
         $this->assertEquals($expected, $this->remote->call('wiki.getAllPages'));
     }
 
-    public function test_getBacklinks() {
+    public function test_getBacklinks()
+    {
         saveWikiText('linky', '[[wiki:syntax]]', 'test');
         // backlinks need index
-        idx_addPage('wiki:syntax');
-        idx_addPage('linky');
+        $PageIndex = PageIndex::getInstance();
+        $PageIndex->addPage('wiki:syntax');
+        $PageIndex->addPage('linky');
 
         $params = array('wiki:syntax');
         $result = $this->remote->call('wiki.getBackLinks', $params);
         $this->assertTrue(count($result) > 0);
-        $this->assertEquals(ft_backlinks('wiki:syntax'), $result);
+        $this->assertEquals(MetadataSearch::backlinks('wiki:syntax'), $result);
     }
 
-    public function test_getPageInfo() {
+    public function test_getPageInfo()
+    {
         $id = 'pageinfo';
         $file = wikiFN($id);
 
@@ -324,7 +347,8 @@ You can use up to five different levels of',
         $this->assertEquals($expected, $this->remote->call('wiki.getPageInfo', $params));
     }
 
-    public function test_getPageInfoVersion() {
+    public function test_getPageInfoVersion()
+    {
         $id = 'pageinfo';
         $file = wikiFN($id);
 
@@ -363,8 +387,8 @@ You can use up to five different levels of',
         $this->assertEquals($expected, $this->remote->call('wiki.getPageInfoVersion', $params), '2nd revision given');
     }
 
-    public function test_getRecentChanges() {
-
+    public function test_getRecentChanges()
+    {
         saveWikiText('pageone', 'test', 'test');
         $rev1 = filemtime(wikiFN('pageone'));
         saveWikiText('pagetwo', 'test', 'test');
@@ -392,7 +416,8 @@ You can use up to five different levels of',
         $this->assertEquals($expected, $this->remote->call('wiki.getRecentChanges', $params));
     }
 
-    public function test_getPageVersions() {
+    public function test_getPageVersions()
+    {
         /** @var $EVENT_HANDLER \dokuwiki\Extension\EventHandler */
         global $EVENT_HANDLER;
         $EVENT_HANDLER->register_hook('IO_WIKIPAGE_WRITE', 'BEFORE', $this, 'handle_write');
@@ -402,7 +427,7 @@ You can use up to five different levels of',
         $file = wikiFN($id);
 
         $rev = array();
-        for($i = 0; $i < 6; $i++) {
+        for ($i = 0; $i < 6; $i++) {
             $this->waitForTick();
             saveWikiText($id, "rev$i", "rev$i");
             clearstatcache(false, $file);
@@ -463,7 +488,8 @@ You can use up to five different levels of',
         $this->assertTrue($actualCallResult);
     }
 
-    public function test_aclCheck() {
+    public function test_aclCheck()
+    {
         $id = 'aclpage';
 
         $params = array($id);
@@ -483,15 +509,18 @@ You can use up to five different levels of',
         $this->assertEquals(AUTH_EDIT, $this->remote->call('wiki.aclCheck', $params));
     }
 
-    public function test_getXMLRPCAPIVersion() {
+    public function test_getXMLRPCAPIVersion()
+    {
         $this->assertEquals(ApiCore::API_VERSION, $this->remote->call('dokuwiki.getXMLRPCAPIVersion'));
     }
 
-    public function test_getRPCVersionSupported() {
+    public function test_getRPCVersionSupported()
+    {
         $this->assertEquals(2, $this->remote->call('wiki.getRPCVersionSupported'));
     }
 
-    public function test_listLinks() {
+    public function test_listLinks()
+    {
         $localdoku = array(
             'type' => 'local',
             'page' => 'DokuWiki',
@@ -521,7 +550,8 @@ You can use up to five different levels of',
         $this->assertEquals($expected, $this->remote->call('wiki.listLinks', $params));
     }
 
-    public function test_coreattachments() {
+    public function test_coreattachments()
+    {
         global $conf;
         global $AUTH_ACL, $USERINFO;
 

@@ -1,18 +1,26 @@
 <?php
+
+use dokuwiki\Search\MetadataIndex;
+use dokuwiki\Search\PageIndex;
+
 /**
  * Tests the histogram function of the indexer.
  *
  * @author Michael Hamann <michael@content-space.de>
  */
-class indexer_histogram_test extends DokuWikiTest {
-    function test_minlength() {
-        $indexer = idx_get_indexer();
-        $indexer->addMetaKeys('histo1', 'testkey', array('foo', 'bar', 'foobar'));
-        $indexer->addMetaKeys('histo2', 'testkey', array('bar', 'testing'));
-        $indexer->addMetaKeys('histo3', 'testkey', array('foo', 'foobar'));
-        $histogram4 = $indexer->histogram(1, 0, 4, 'testkey');
+class indexer_histogram_test extends DokuWikiTest
+{
+    public function test_minlength()
+    {
+        $MetadataIndex = MetadataIndex::getInstance();
+        $MetadataIndex->addMetaKeys('histo1', 'testkey', array('foo', 'bar', 'foobar'));
+        $MetadataIndex->addMetaKeys('histo2', 'testkey', array('bar', 'testing'));
+        $MetadataIndex->addMetaKeys('histo3', 'testkey', array('foo', 'foobar'));
+
+        $PageIndex = PageIndex::getInstance();
+        $histogram4 = $PageIndex->histogram(1, 0, 4, 'testkey');
         $this->assertEquals(array('foobar' => 2, 'testing' => 1), $histogram4);
-        $histogram2 = $indexer->histogram(1, 0, 2, 'testkey');
+        $histogram2 = $PageIndex->histogram(1, 0, 2, 'testkey');
         $this->assertEquals(array('foobar' => 2, 'testing' => 1, 'foo' => 2, 'bar' => 2), $histogram2);
     }
 
