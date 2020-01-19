@@ -1,9 +1,9 @@
 <?php
+
 namespace dokuwiki\Search;
 
-use dokuwiki\Search\PageIndex;
+use dokuwiki\Search\PagewordIndex;
 use dokuwiki\Utf8;
-
 
 /**
  * DokuWuki QueryParser
@@ -22,7 +22,6 @@ class QueryParser
      * @param bool         $phrase_mode
      * @return string
      */
-
     public static function termParser($term, $consider_asian = true, $phrase_mode = false)
     {
         $Indexer = PagewordIndex::getInstance();
@@ -308,9 +307,8 @@ class QueryParser
      *
      * @return string
      */
-    public static function revert_simple(
-                        array $and, array $not, array $phrases, array $ns, array $notns
-    ) {
+    public static function revert(array $and, array $not, array $phrases, array $ns, array $notns)
+    {
         $query = implode(' ', $and);
 
         if (!empty($not)) {

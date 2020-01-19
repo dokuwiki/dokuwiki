@@ -1,4 +1,5 @@
 <?php
+
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
@@ -7,7 +8,6 @@ use dokuwiki\Utf8;
 // set the minimum token length to use in the index
 // (note, this doesn't apply to numeric tokens)
 const MINWORDLENGTH = 2;
-
 
 /**
  * Class DokuWiki Pageword Index (Singleton)

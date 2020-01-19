@@ -1,4 +1,5 @@
 <?php
+
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
@@ -6,9 +7,7 @@ use dokuwiki\Search\PageIndex;
 use dokuwiki\Search\QueryParser;
 use dokuwiki\Utf8;
 
-/**
- * create snippets for the first few results only
- */
+// create snippets for the first few results only
 const FT_SNIPPET_NUMBER = 15;
 
 /**
@@ -29,7 +28,7 @@ class FulltextSearch
      *
      * Returns a list of matching documents for the given query
      *
-     * refactored into ft_pageSearch(), _ft_pageSearch() and trigger_event()
+     * refactored into pageSearch(), pageSearchCallBack() and trigger_event()
      *
      * @param string     $query
      * @param array      $highlight
@@ -53,7 +52,7 @@ class FulltextSearch
             'before' => $before
         ];
         $data['highlight'] =& $highlight;
-        $action = static::class.'::callback_pageSearch';
+        $action = static::class.'::pageSearchCallBack';
         return Event::createAndTrigger('SEARCH_QUERY_FULLPAGE', $data, $action);
     }
 
@@ -66,7 +65,7 @@ class FulltextSearch
      * @param array $data  event data
      * @return array       matching documents
      */
-    public static function callback_pageSearch($data)
+    public static function pageSearchCallBack(&$data)
     {
         $Indexer = PageIndex::getInstance();
 
@@ -252,7 +251,7 @@ class FulltextSearch
                 join(
                     '|',
                     array_map(
-                        static::class.'::snippet_re_preprocess',
+                        static::class.'::snippetRePreprocess',
                         array_map(
                             'preg_quote_cb',
                             array_filter((array) $highlight)
@@ -342,7 +341,7 @@ class FulltextSearch
      * @param string $term
      * @return string
      */
-    public static function snippet_re_preprocess($term)
+    public static function snippetRePreprocess($term)
     {
         // do not process asian terms where word boundaries are not explicit
         if (Utf8\Asian::isAsianWords($term)) return $term;

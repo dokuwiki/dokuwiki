@@ -1,4 +1,5 @@
 <?php
+
 namespace dokuwiki\Search;
 
 use dokuwiki\Search\PagewordIndex;
@@ -7,7 +8,6 @@ use dokuwiki\Extension\Event;
 
 // Version tag used to force rebuild on upgrade
 const INDEXER_VERSION = 8;
-
 
 /**
  * Class DokuWiki Page Index (Singleton)

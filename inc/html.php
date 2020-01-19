@@ -353,13 +353,13 @@ function html_draft(){
 function html_hilight($html, $phrases) {
     $phrases = (array) $phrases;
     $phrases = array_map('preg_quote_cb', $phrases);
-    $phrases = array_map([FulltextSearch::class,'snippet_re_preprocess'], $phrases);
+    $phrases = array_map([FulltextSearch::class,'snippetRePreprocess'], $phrases);
     $phrases = array_filter($phrases);
-    $regex = implode('|',$phrases);
+    $regex = implode('|', $phrases);
 
     if ($regex === '') return $html;
     if (!Utf8\Clean::isUtf8($regex)) return $html;
-    $html = @preg_replace_callback("/((<[^>]*)|$regex)/ui",'html_hilight_callback',$html);
+    $html = @preg_replace_callback("/((<[^>]*)|$regex)/ui",'html_hilight_callback', $html);
     return $html;
 }
 

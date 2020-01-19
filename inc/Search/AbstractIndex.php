@@ -1,4 +1,5 @@
 <?php
+
 namespace dokuwiki\Search;
 
 use dokuwiki\Utf8;

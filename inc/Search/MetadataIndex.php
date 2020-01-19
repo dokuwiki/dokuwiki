@@ -1,6 +1,6 @@
 <?php
-namespace dokuwiki\Search;
 
+namespace dokuwiki\Search;
 
 /**
  * Class DokuWiki Metadata Index (Singleton)
