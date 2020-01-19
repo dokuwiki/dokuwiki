@@ -1,8 +1,8 @@
 <?php
 
-use dokuwiki\Search\MetadataIndex;
 use dokuwiki\Search\PageIndex;
 use dokuwiki\Search\PagewordIndex;
+use dokuwiki\Search\MetadataIndex;
 
 /**
  * Test cases for the PageIndex::renamePage and MetadataIndex::renameMetaValue methods
@@ -46,7 +46,7 @@ class indexer_rename_test extends DokuWikiTest
 
         $newid = 'existing_page';
         saveWikiText($newid, 'Existing content', 'Created page for move_to_existing_page');
-        ->addPage($newid);
+        $PageIndex->addPage($newid);
 
         $oldpid = $PageIndex->getPID($this->old_id);
         $existingpid = $PageIndex->getPID($newid);
