@@ -1,8 +1,7 @@
 <?php
 
-use dokuwiki\Search\MetadataIndex;
+use dokuwiki\Search\MetadataSearch;
 use dokuwiki\Search\PageIndex;
-use dokuwiki\Search\PagewordIndex;
 
 // must be run within Dokuwiki
 if (!defined('DOKU_INC')) die();
@@ -18,7 +17,7 @@ class fultext_mediause_test extends DokuWikiTest
     {
         saveWikiText('test:internalmedia_usage', '{{internalmedia.png}} {{..:internal media.png}}', 'Test initialization');
         $PageIndex = PageIndex::getInstance();
-        $PageIndex->_addPage('test:internalmedia_usage');
+        $PageIndex->addPage('test:internalmedia_usage');
 
         $this->assertEquals(array('test:internalmedia_usage'), MetadataSearch::mediause('internal_media.png'));
         $this->assertEquals(array('test:internalmedia_usage'), MetadataSearch::mediause('test:internalmedia.png'));

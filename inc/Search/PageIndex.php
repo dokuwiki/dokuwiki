@@ -408,26 +408,4 @@ class PageIndex extends AbstractIndex
         arsort($result);
         return $result;
     }
-
-    /**
-     * Undefined methods dispatcher
-     */
-    public function __call($name, $args)
-    {
-        trigger_error("Call to undefined method PageIndex::".$name, E_USER_NOTICE);
-
-        switch ($name) {
-            case 'addPageWords':
-            case 'lookup':
-            case 'listIndexLengths':
-                $PagewordIndex = PagewordIndex::getInstance();
-                return $PagewordIndex->{$name}(...$args);
-
-            case 'addMetaKeys':
-            case 'renameMetaValue':
-            case 'lookupKey':
-                $MetadataIndex = MetadataIndex::getInstance();
-                return $MetadataIndex->{$name}(...$args);
-        }
-    }
 }
