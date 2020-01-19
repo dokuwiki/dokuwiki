@@ -616,6 +616,7 @@ function css_compress($css){
     };
 
     $css = preg_replace_callback('/"STR(\d+)"/', $quote_back_cb, $css);
+    $css = trim($css);
 
     return $css;
 }
