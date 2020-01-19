@@ -145,6 +145,12 @@ class css_css_compress_test extends DokuWikiTest {
         $this->assertEquals($expect, css_compress($input));
     }
 
+    function test_escapedQuotes() {
+        $inputEscapedQuote = 'content:"one quote visible: \\" "; foo: bar;//"';
+        $expectedOutput = 'content:"one quote visible: \\" ";foo:bar;';
+
+        $this->assertEquals($expectedOutput, css_compress($inputEscapedQuote));
+    }
 }
 
 //Setup VIM: ex: et ts=4 :
