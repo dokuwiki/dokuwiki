@@ -7,7 +7,9 @@
  */
 
 use dokuwiki\HTTP\DokuHTTPClient;
-use dokuwiki\Search\PageIndex;
+use dokuwiki\Search\MetadataIndex;
+use dokuwiki\Search\PagewordIndex;
+use dokuwiki\Utf8;
 
 if(!defined('DOKU_MESSAGEURL')){
     if(in_array('ssl', stream_get_transports())) {
@@ -248,21 +250,21 @@ function check(){
         msg('The current page is not writable by you',0);
     }
 
-    $Indexer = PageIndex::getInstance();
-
     // Check for corrupted fulltext search index
-    $lengths = $Indexer->PagewordIndex->listIndexLengths();
+    $PagewordIndex = PagewordIndex::getInstance();
+    $lengths = $PagewordIndex->listIndexLengths();
     $index_corrupted = false;
     foreach ($lengths as $length) {
-        if (count($Indexer->getIndex('w', $length)) != count($Indexer->getIndex('i', $length))) {
+        if (count($PagewordIndex->getIndex('w', $length)) != count($PagewordIndex->getIndex('i', $length))) {
             $index_corrupted = true;
             break;
         }
     }
 
     // Check for corrupted metadata index
-    foreach ($Indexer->getIndex('metadata', '') as $name) {
-        if (count($Indexer->getIndex($name.'_w', '')) != count($Indexer->getIndex($name.'_i', ''))) {
+    $MetadataIndex = MetadataIndex::getInstance();
+    foreach ($MetadataIndex->getIndex('metadata', '') as $name) {
+        if (count($MetadataIndex->getIndex($name.'_w', '')) != count($MetadataIndex->getIndex($name.'_i', ''))) {
             $index_corrupted = true;
             break;
         }
@@ -346,7 +348,7 @@ function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
     $errors[1]  = 'success';
     $errors[2]  = 'notify';
 
-    if($line || $file) $message.=' ['.\dokuwiki\Utf8\PhpString::basename($file).':'.$line.']';
+    if($line || $file) $message.=' ['.Utf8\PhpString::basename($file).':'.$line.']';
 
     if(!isset($MSG)) $MSG = array();
     $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message, 'allow' => $allow);

@@ -24,8 +24,6 @@ class QueryParser
      */
     public static function termParser($term, $consider_asian = true, $phrase_mode = false)
     {
-        $Indexer = PagewordIndex::getInstance();
-
         $parsed = '';
         if ($consider_asian) {
             // successive asian characters need to be searched as a phrase
@@ -36,7 +34,8 @@ class QueryParser
             }
         } else {
             $term_noparen = str_replace(['(',')'], ' ', $term);
-            $words = $Indexer->tokenizer($term_noparen, true);
+            $PagewordIndex = PagewordIndex::getInstance();
+            $words = $PagewordIndex->tokenizer($term_noparen, true);
 
             // W_: no need to highlight
             if (empty($words)) {

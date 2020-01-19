@@ -21,19 +21,10 @@ class PageIndex extends AbstractIndex
     /** @var PageIndex */
     protected static $instance = null;
 
-    /** @var MetadataIndex */
-    public $MetadataIndex = null;
-
-    /** @var PagewordIndex */
-    public $PagewordIndex = null;
-
     /**
      * PageIndex constructor. Singleton, thus protected!
      */
-    protected function __construct() {
-        $this->MetadataIndex = MetadataIndex::getInstance();
-        $this->PagewordIndex = PagewordIndex::getInstance();
-    }
+    protected function __construct() {}
 
     /**
      * Get new or existing singleton instance of the PageIndex
@@ -116,62 +107,6 @@ class PageIndex extends AbstractIndex
     }
 
     /**
-     * Find pages in the fulltext index containing the words,
-     *
-     * The search words must be pre-tokenized, meaning only letters and
-     * numbers with an optional wildcard
-     *
-     * The returned array will have the original tokens as key. The values
-     * in the returned list is an array with the page names as keys and the
-     * number of times that token appears on the page as value.
-     *
-     * @param array  $tokens list of words to search for
-     * @return array         list of page names with usage counts
-     *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
-     * @author Andreas Gohr <andi@splitbrain.org>
-     */
-    public function lookup(&$tokens)
-    {
-        $result = array();
-        $wids = $this->PagewordIndex->getIndexWords($tokens, $result);
-        if (empty($wids)) return array();
-        // load known words and documents
-        $page_idx = $this->getIndex('page', '');
-        $docs = array();
-        foreach (array_keys($wids) as $wlen) {
-            $wids[$wlen] = array_unique($wids[$wlen]);
-            $index = $this->getIndex('i', $wlen);
-            foreach ($wids[$wlen] as $ixid) {
-                if ($ixid < count($index)) {
-                    $docs["{$wlen}*{$ixid}"] = $this->parseTuples($page_idx, $index[$ixid]);
-                }
-            }
-        }
-        // merge found pages into final result array
-        $final = array();
-        foreach ($result as $word => $res) {
-            $final[$word] = array();
-            foreach ($res as $wid) {
-                // handle the case when ($ixid < count($index)) has been false
-                // and thus $docs[$wid] hasn't been set.
-                if (!isset($docs[$wid])) continue;
-                $hits =& $docs[$wid];
-                foreach ($hits as $hitkey => $hitcnt) {
-                    // make sure the document still exists
-                    if (!page_exists($hitkey, '', false)) continue;
-                    if (!isset($final[$word][$hitkey])) {
-                        $final[$word][$hitkey] = $hitcnt;
-                    } else {
-                        $final[$word][$hitkey] += $hitcnt;
-                    }
-                }
-            }
-        }
-        return $final;
-    }
-
-    /**
      * Adds/updates the search index for the given page
      *
      * Locking is handled internally.
@@ -251,14 +186,18 @@ class PageIndex extends AbstractIndex
         unset($evt);
         extract($data);
 
-        $result = $this->PagewordIndex->addPageWords($page, $body);
+        // Access to Pageword Index
+        $PagewordIndex = PagewordIndex::getInstance();
+        $result = $PagewordIndex->addPageWords($page, $body);
         if (!$result && !empty(static::$errors)) {
             if ($verbose) print("Indexer: locked".DOKU_LF);
             return false;
         }
 
         if ($result) {
-            $result = $this->MetadataIndex->addMetaKeys($page, $metadata);
+            // Access to Metadata Index
+            $MetadataIndex = MetadataIndex::getInstance();
+            $result = $MetadataIndex->addMetaKeys($page, $metadata);
             if (!$result && !empty(static::$errors)) {
                 if ($verbose) print("Indexer: locked".DOKU_LF);
                 return false;
@@ -337,13 +276,15 @@ class PageIndex extends AbstractIndex
     public function deletePage($page)
     {
         // remove obsolete pageword index entries
-        $result = $this->PagewordIndex->deletePageWords($page);
+        $PagewordIndex = PagewordIndex::getInstance();
+        $result = $PagewordIndex->deletePageWords($page);
         if (!$result) {
             return false;
         }
 
         // delete all keys of the page from metadata index
-        $result = $this->MetadataIndex->deleteMetaKeys($page);
+        $MetadataIndex = MetadataIndex::getInstance();
+        $result = $MetadataIndex->deleteMetaKeys($page);
         if (!$result) {
             return false;
         }
@@ -364,8 +305,11 @@ class PageIndex extends AbstractIndex
      */
     protected function deletePageNoLock($page)
     {
-        return $this->PagewordIndex->deletePageWordsNoLock($page)
-            && $this->MetadataIndex->deleteMetaKeysNoLock($page);
+        $PagewordIndex = PagewordIndex::getInstance();
+        $MetadataIndex = MetadataIndex::getInstance();
+
+        return $PagewordIndex->deletePageWordsNoLock($page)
+            && $MetadataIndex->deleteMetaKeysNoLock($page);
     }
 
     /**
@@ -381,10 +325,12 @@ class PageIndex extends AbstractIndex
         if ($requireLock && !$this->lock()) return false;
 
         // clear Metadata Index
-        $this->MetadataIndex->clear(false);
+        $MetadataIndex = MetadataIndex::getInstance();
+        $MetadataIndex->clear(false);
 
         // clear Pageword Index
-        $this->PagewordIndex->clear(false);
+        $PagewordIndex = PagewordIndex::getInstance();
+        $PagewordIndex->clear(false);
 
         @unlink($conf['indexdir'].'/page.idx');
 
@@ -441,7 +387,8 @@ class PageIndex extends AbstractIndex
                 }
             }
         } else {
-            $lengths = $this->PagewordIndex->listIndexLengths();
+            $PagewordIndex = PagewordIndex::getInstance();
+            $lengths = $PagewordIndex->listIndexLengths();
             foreach ($lengths as $length) {
                 if ($length < $minlen) continue;
                 $index = $this->getIndex('i', $length);
@@ -473,12 +420,14 @@ class PageIndex extends AbstractIndex
             case 'addPageWords':
             case 'lookup':
             case 'listIndexLengths':
-                return $this->PagewordIndex->{$name}(...$args);
+                $PagewordIndex = PagewordIndex::getInstance();
+                return $PagewordIndex->{$name}(...$args);
 
             case 'addMetaKeys':
             case 'renameMetaValue':
             case 'lookupKey':
-                return $this->MetadataIndex->{$name}(...$args);
+                $MetadataIndex = MetadataIndex::getInstance();
+                return $MetadataIndex->{$name}(...$args);
         }
     }
 }

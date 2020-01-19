@@ -31,8 +31,8 @@ class MetadataSearch
      */
     public static function backlinks($id, $ignore_perms = false)
     {
-        $Indexer = MetadataIndex::getInstance();
-        $result = $Indexer->lookupKey('relation_references', $id);
+        $MetadataIndex = MetadataIndex::getInstance();
+        $result = $MetadataIndex->lookupKey('relation_references', $id);
 
         if (!count($result)) return $result;
 
@@ -66,8 +66,8 @@ class MetadataSearch
      */
     public static function mediause($id, $ignore_perms = false)
     {
-        $Indexer = MetadataIndex::getInstance();
-        $result = $Indexer->lookupKey('relation_media', $id);
+        $MetadataIndex = MetadataIndex::getInstance();
+        $result = $MetadataIndex->lookupKey('relation_media', $id);
 
         if (!count($result)) return $result;
 
@@ -131,7 +131,7 @@ class MetadataSearch
      */
     public static function pageLookupCallBack(&$data)
     {
-        $Indexer = PageIndex::getInstance();
+        $PageIndex = PageIndex::getInstance();
 
         // split out original parameters
         $id = $data['id'];
@@ -148,7 +148,7 @@ class MetadataSearch
 
         $pages = array();
         if ($id !== '' && $cleaned !== '') {
-            $page_idx = $Indexer->getPages();
+            $page_idx = $PageIndex->getPages();
             foreach ($page_idx as $p_id) {
                 if ((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) !== false)) {
                     if (!isset($pages[$p_id])) {
@@ -157,8 +157,9 @@ class MetadataSearch
                 }
             }
             if ($in_title) {
+                $MetadataIndex = MetadataIndex::getInstance();
                 $func = static::class.'::pageLookupTitleCompare';
-                foreach ($Indexer->MetadataIndex->lookupKey('title', $id, $func) as $p_id) {
+                foreach ($MetadataIndex->lookupKey('title', $id, $func) as $p_id) {
                     if (!isset($pages[$p_id])) {
                         $pages[$p_id] = p_get_first_heading($p_id, METADATA_DONT_RENDER);
                     }

@@ -529,6 +529,62 @@ class PagewordIndex extends AbstractIndex
     }
 
     /**
+     * Find pages in the fulltext index containing the words,
+     *
+     * The search words must be pre-tokenized, meaning only letters and
+     * numbers with an optional wildcard
+     *
+     * The returned array will have the original tokens as key. The values
+     * in the returned list is an array with the page names as keys and the
+     * number of times that token appears on the page as value.
+     *
+     * @param array  $tokens list of words to search for
+     * @return array         list of page names with usage counts
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    public function lookup(&$tokens)
+    {
+        $result = array();
+        $wids = $this->getIndexWords($tokens, $result);
+        if (empty($wids)) return array();
+        // load known words and documents
+        $page_idx = $this->getIndex('page', '');
+        $docs = array();
+        foreach (array_keys($wids) as $wlen) {
+            $wids[$wlen] = array_unique($wids[$wlen]);
+            $index = $this->getIndex('i', $wlen);
+            foreach ($wids[$wlen] as $ixid) {
+                if ($ixid < count($index)) {
+                    $docs["{$wlen}*{$ixid}"] = $this->parseTuples($page_idx, $index[$ixid]);
+                }
+            }
+        }
+        // merge found pages into final result array
+        $final = array();
+        foreach ($result as $word => $res) {
+            $final[$word] = array();
+            foreach ($res as $wid) {
+                // handle the case when ($ixid < count($index)) has been false
+                // and thus $docs[$wid] hasn't been set.
+                if (!isset($docs[$wid])) continue;
+                $hits =& $docs[$wid];
+                foreach ($hits as $hitkey => $hitcnt) {
+                    // make sure the document still exists
+                    if (!page_exists($hitkey, '', false)) continue;
+                    if (!isset($final[$word][$hitkey])) {
+                        $final[$word][$hitkey] = $hitcnt;
+                    } else {
+                        $final[$word][$hitkey] += $hitcnt;
+                    }
+                }
+            }
+        }
+        return $final;
+    }
+
+    /**
      * Clear the Pageword Index
      *
      * @param bool   $requireLock

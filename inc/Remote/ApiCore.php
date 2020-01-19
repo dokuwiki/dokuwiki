@@ -314,8 +314,8 @@ class ApiCore
     {
         $list = array();
 
-        $Indexer = PageIndex::getInstance();
-        $pages = $Indexer->getPages();
+        $PageIndex = PageIndex::getInstance();
+        $pages = $PageIndex->getPages();
         $pages = array_filter(array_filter($pages, 'isVisiblePage'), 'page_exists');
 
         foreach (array_keys($pages) as $idx) {
@@ -564,8 +564,8 @@ class ApiCore
         unlock($id);
 
         // run the indexer if page wasn't indexed yet
-        $Indexer = PageIndex::getInstance();
-        $Indexer->addPage($id);
+        $PageIndex = PageIndex::getInstance();
+        $PageIndex->addPage($id);
 
         return true;
     }

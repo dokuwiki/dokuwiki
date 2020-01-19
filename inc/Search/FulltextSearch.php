@@ -4,6 +4,7 @@ namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
 use dokuwiki\Search\PageIndex;
+use dokuwiki\Search\PagewordIndex;
 use dokuwiki\Search\QueryParser;
 use dokuwiki\Utf8;
 
@@ -67,8 +68,6 @@ class FulltextSearch
      */
     public static function pageSearchCallBack(&$data)
     {
-        $Indexer = PageIndex::getInstance();
-
         // parse the given query
         $q = QueryParser::convert($data['query']);
         $data['highlight'] = $q['highlight'];
@@ -76,11 +75,13 @@ class FulltextSearch
         if (empty($q['parsed_ary'])) return array();
 
         // lookup all words found in the query
-        $lookup = $Indexer->lookup($q['words']);
+        $PagewordIndex = PagewordIndex::getInstance();
+        $lookup = $PagewordIndex->lookup($q['words']);
 
         // get all pages in this dokuwiki site (!: includes nonexistent pages)
+        $PageIndex = PageIndex::getInstance();
         $pages_all = array();
-        foreach ($Indexer->getPages() as $id) {
+        foreach ($PageIndex->getPages() as $id) {
             $pages_all[$id] = 0; // base: 0 hit
         }
 
