@@ -2,11 +2,11 @@
 
 namespace dokuwiki\Search;
 
-use dokuwiki\Search\PagewordIndex;
+use dokuwiki\Search\Tokenizer;
 use dokuwiki\Utf8;
 
 /**
- * DokuWuki QueryParser
+ * DokuWuki QueryParser class
  */
 class QueryParser
 {
@@ -34,8 +34,8 @@ class QueryParser
             }
         } else {
             $term_noparen = str_replace(['(',')'], ' ', $term);
-            $PagewordIndex = PagewordIndex::getInstance();
-            $words = $PagewordIndex->tokenizer($term_noparen, true);
+            $Tokenizer = Tokenizer::getInstance();
+            $words = $Tokenizer->getWords($term_noparen, true);
 
             // W_: no need to highlight
             if (empty($words)) {
