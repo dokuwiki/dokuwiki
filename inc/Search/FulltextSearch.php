@@ -3,7 +3,6 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
-use dokuwiki\Search\PageIndex;
 use dokuwiki\Search\PagewordIndex;
 use dokuwiki\Search\QueryParser;
 use dokuwiki\Utf8;
@@ -79,9 +78,8 @@ class FulltextSearch
         $lookup = $PagewordIndex->lookup($q['words']);
 
         // get all pages in this dokuwiki site (!: includes nonexistent pages)
-        $PageIndex = PageIndex::getInstance();
         $pages_all = array();
-        foreach ($PageIndex->getPages() as $id) {
+        foreach ($PagewordIndex->getPages() as $id) {
             $pages_all[$id] = 0; // base: 0 hit
         }
 
@@ -109,15 +107,15 @@ class FulltextSearch
                             'phrase' => $phrase,
                             'text' => rawWiki($id)
                         );
-                        $evt = new Event('FULLTEXT_PHRASE_MATCH', $evdata);
-                        if ($evt->advise_before() && $evt->result !== true) {
+                        $event = new Event('FULLTEXT_PHRASE_MATCH', $evdata);
+                        if ($event->advise_before() && $event->result !== true) {
                             $text = Utf8\PhpString::strtolower($evdata['text']);
                             if (strpos($text, $phrase) !== false) {
-                                $evt->result = true;
+                                $event->result = true;
                             }
                         }
-                        $evt->advise_after();
-                        if ($evt->result === true) {
+                        $event->advise_after();
+                        if ($event->result === true) {
                             $pages_matched[$id] = 0; // phrase: always 0 hit
                         }
                     }

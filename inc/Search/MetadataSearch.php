@@ -4,7 +4,6 @@ namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
 use dokuwiki\Search\MetadataIndex;
-use dokuwiki\Search\PageIndex;
 use dokuwiki\Search\QueryParser;
 
 /**
@@ -131,8 +130,6 @@ class MetadataSearch
      */
     public static function pageLookupCallBack(&$data)
     {
-        $PageIndex = PageIndex::getInstance();
-
         // split out original parameters
         $id = $data['id'];
         $parsedQuery = QueryParser::convert($id);
@@ -148,7 +145,8 @@ class MetadataSearch
 
         $pages = array();
         if ($id !== '' && $cleaned !== '') {
-            $page_idx = $PageIndex->getPages();
+            $MetadataIndex = MetadataIndex::getInstance();
+            $page_idx = $MetadataIndex->getPages();
             foreach ($page_idx as $p_id) {
                 if ((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) !== false)) {
                     if (!isset($pages[$p_id])) {
@@ -157,7 +155,6 @@ class MetadataSearch
                 }
             }
             if ($in_title) {
-                $MetadataIndex = MetadataIndex::getInstance();
                 $func = static::class.'::pageLookupTitleCompare';
                 foreach ($MetadataIndex->lookupKey('title', $id, $func) as $p_id) {
                     if (!isset($pages[$p_id])) {

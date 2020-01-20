@@ -105,6 +105,17 @@ abstract class AbstractIndex
     }
 
     /**
+     * Return a list of all pages
+     * Warning: pages may not exist!
+     *
+     * @return array            list of page names
+     */
+    public function getPages()
+    {
+        return $this->getIndex('page', '');
+    }
+
+    /**
      * Lock the indexer
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>

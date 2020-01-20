@@ -73,40 +73,6 @@ class PageIndex extends AbstractIndex
     }
 
     /**
-     * Return a list of all pages
-     * Warning: pages may not exist!
-     *
-     * @param string    $key    list only pages containing the metadata key (optional)
-     * @return array            list of page names
-     *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
-     */
-    public function getPages($key = null)
-    {
-        $page_idx = $this->getIndex('page', '');
-        if (is_null($key)) return $page_idx;
-
-        $metaname = $this->cleanName($key);
-
-        // Special handling for titles
-        if ($key == 'title') {
-            $title_idx = $this->getIndex('title', '');
-            array_splice($page_idx, count($title_idx));
-            foreach ($title_idx as $i => $title) {
-                if ($title === '') unset($page_idx[$i]);
-            }
-            return array_values($page_idx);
-        }
-
-        $pages = array();
-        $lines = $this->getIndex($metaname.'_i', '');
-        foreach ($lines as $line) {
-            $pages = array_merge($pages, $this->parseTuples($page_idx, $line));
-        }
-        return array_keys($pages);
-    }
-
-    /**
      * Adds/updates the search index for the given page
      *
      * Locking is handled internally.
