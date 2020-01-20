@@ -414,7 +414,7 @@ class JpegMeta {
 
         // make sure datetimes are in correct format
         if(strlen($field) >= 8 && strtolower(substr($field, 0, 8)) == 'datetime') {
-            if(strlen($value) < 8 || $value{4} != ':' || $value{7} != ':') {
+            if(strlen($value) < 8 || $value[4] != ':' || $value[7] != ':') {
                 $value = date('Y:m:d H:i:s', strtotime($value));
             }
         }
@@ -649,8 +649,8 @@ class JpegMeta {
             $dates['ExifDateTime'] = $this->_info['exif']['DateTime'];
 
             $aux = $this->_info['exif']['DateTime'];
-            $aux{4} = "-";
-            $aux{7} = "-";
+            $aux[4] = "-";
+            $aux[7] = "-";
             $t = strtotime($aux);
 
             if ($t && $t > $latestTime) {
@@ -668,8 +668,8 @@ class JpegMeta {
             $dates['ExifDateTimeOriginal'] = $this->_info['exif']['DateTime'];
 
             $aux = $this->_info['exif']['DateTimeOriginal'];
-            $aux{4} = "-";
-            $aux{7} = "-";
+            $aux[4] = "-";
+            $aux[7] = "-";
             $t = strtotime($aux);
 
             if ($t && $t > $latestTime) {
@@ -687,8 +687,8 @@ class JpegMeta {
             $dates['ExifDateTimeDigitized'] = $this->_info['exif']['DateTime'];
 
             $aux = $this->_info['exif']['DateTimeDigitized'];
-            $aux{4} = "-";
-            $aux{7} = "-";
+            $aux[4] = "-";
+            $aux[7] = "-";
             $t = strtotime($aux);
 
             if ($t && $t > $latestTime) {
@@ -2402,7 +2402,7 @@ class JpegMeta {
             $pos += 1;
             $header = '';
             for ($i = 0; $i < $strlen; $i++) {
-                $header .= $data{$pos + $i};
+                $header .= $data[$pos + $i];
             }
             $pos += $strlen + 1 - ($strlen % 2);  // The string is padded to even length, counting the length byte itself
 
@@ -2983,7 +2983,7 @@ class JpegMeta {
      * @return int
      */
     function _getByte(&$data, $pos) {
-        return ord($data{$pos});
+        return ord($data[$pos]);
     }
 
     /*************************************************************/
@@ -2999,7 +2999,7 @@ class JpegMeta {
     function _putByte(&$data, $pos, $val) {
         $val = intval($val);
 
-        $data{$pos} = chr($val);
+        $data[$pos] = chr($val);
 
         return $pos + 1;
     }
@@ -3007,11 +3007,11 @@ class JpegMeta {
     /*************************************************************/
     function _getShort(&$data, $pos, $bigEndian = true) {
         if ($bigEndian) {
-            return (ord($data{$pos}) << 8)
-                + ord($data{$pos + 1});
+            return (ord($data[$pos]) << 8)
+                + ord($data[$pos + 1]);
         } else {
-            return ord($data{$pos})
-                + (ord($data{$pos + 1}) << 8);
+            return ord($data[$pos])
+                + (ord($data[$pos + 1]) << 8);
         }
     }
 
@@ -3020,11 +3020,11 @@ class JpegMeta {
         $val = intval($val);
 
         if ($bigEndian) {
-            $data{$pos + 0} = chr(($val & 0x0000FF00) >> 8);
-            $data{$pos + 1} = chr(($val & 0x000000FF) >> 0);
+            $data[$pos + 0] = chr(($val & 0x0000FF00) >> 8);
+            $data[$pos + 1] = chr(($val & 0x000000FF) >> 0);
         } else {
-            $data{$pos + 0} = chr(($val & 0x00FF) >> 0);
-            $data{$pos + 1} = chr(($val & 0xFF00) >> 8);
+            $data[$pos + 0] = chr(($val & 0x00FF) >> 0);
+            $data[$pos + 1] = chr(($val & 0xFF00) >> 8);
         }
 
         return $pos + 2;
@@ -3042,15 +3042,15 @@ class JpegMeta {
      */
     function _getLong(&$data, $pos, $bigEndian = true) {
         if ($bigEndian) {
-            return (ord($data{$pos}) << 24)
-                + (ord($data{$pos + 1}) << 16)
-                + (ord($data{$pos + 2}) << 8)
-                + ord($data{$pos + 3});
+            return (ord($data[$pos]) << 24)
+                + (ord($data[$pos + 1]) << 16)
+                + (ord($data[$pos + 2]) << 8)
+                + ord($data[$pos + 3]);
         } else {
-            return ord($data{$pos})
-                + (ord($data{$pos + 1}) << 8)
-                + (ord($data{$pos + 2}) << 16)
-                + (ord($data{$pos + 3}) << 24);
+            return ord($data[$pos])
+                + (ord($data[$pos + 1]) << 8)
+                + (ord($data[$pos + 2]) << 16)
+                + (ord($data[$pos + 3]) << 24);
         }
     }
 
@@ -3069,15 +3069,15 @@ class JpegMeta {
         $val = intval($val);
 
         if ($bigEndian) {
-            $data{$pos + 0} = chr(($val & 0xFF000000) >> 24);
-            $data{$pos + 1} = chr(($val & 0x00FF0000) >> 16);
-            $data{$pos + 2} = chr(($val & 0x0000FF00) >> 8);
-            $data{$pos + 3} = chr(($val & 0x000000FF) >> 0);
+            $data[$pos + 0] = chr(($val & 0xFF000000) >> 24);
+            $data[$pos + 1] = chr(($val & 0x00FF0000) >> 16);
+            $data[$pos + 2] = chr(($val & 0x0000FF00) >> 8);
+            $data[$pos + 3] = chr(($val & 0x000000FF) >> 0);
         } else {
-            $data{$pos + 0} = chr(($val & 0x000000FF) >> 0);
-            $data{$pos + 1} = chr(($val & 0x0000FF00) >> 8);
-            $data{$pos + 2} = chr(($val & 0x00FF0000) >> 16);
-            $data{$pos + 3} = chr(($val & 0xFF000000) >> 24);
+            $data[$pos + 0] = chr(($val & 0x000000FF) >> 0);
+            $data[$pos + 1] = chr(($val & 0x0000FF00) >> 8);
+            $data[$pos + 2] = chr(($val & 0x00FF0000) >> 16);
+            $data[$pos + 3] = chr(($val & 0xFF000000) >> 24);
         }
 
         return $pos + 4;
@@ -3089,10 +3089,10 @@ class JpegMeta {
         $max = strlen($data);
 
         while ($pos < $max) {
-            if (ord($data{$pos}) == 0) {
+            if (ord($data[$pos]) == 0) {
                 return $str;
             } else {
-                $str .= $data{$pos};
+                $str .= $data[$pos];
             }
             $pos++;
         }
@@ -3114,7 +3114,7 @@ class JpegMeta {
     function _putString(&$data, $pos, &$str) {
         $len = strlen($str);
         for ($i = 0; $i < $len; $i++) {
-            $data{$pos + $i} = $str{$i};
+            $data[$pos + $i] = $str[$i];
         }
 
         return $pos + $len;
@@ -3138,7 +3138,7 @@ class JpegMeta {
                 echo sprintf('%04d', $count) . ': ';
             }
 
-            $c = ord($data{$start});
+            $c = ord($data[$start]);
             $count++;
             $start++;
 

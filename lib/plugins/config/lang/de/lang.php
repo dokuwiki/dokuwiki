@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eric Haberstroh <ehaberstroh@gmail.com>
+ * @author C!own77 <clown77@posteo.de>
  * @author Alex Beck <alex@4becks.com>
  * @author Jürgen Fredriksson <jfriedrich@gmx.at>
  * @author Michael Bohn <mjbohn@gmail.com>
@@ -52,6 +54,7 @@ $lang['_advanced']             = 'Erweitert';
 $lang['_network']              = 'Netzwerk';
 $lang['_msg_setting_undefined'] = 'Keine Konfigurationsmetadaten.';
 $lang['_msg_setting_no_class'] = 'Keine Konfigurationsklasse.';
+$lang['_msg_setting_no_known_class'] = 'Setting-Klasse nicht verfügbar.';
 $lang['_msg_setting_no_default'] = 'Kein Standardwert.';
 $lang['title']                 = 'Titel des Wikis';
 $lang['start']                 = 'Startseitenname';
@@ -167,8 +170,9 @@ $lang['search_fragment_o_exact'] = 'genaue Treffer';
 $lang['search_fragment_o_starts_with'] = 'beginnt mit';
 $lang['search_fragment_o_ends_with'] = 'endet mit';
 $lang['search_fragment_o_contains'] = 'enthält';
+$lang['trustedproxy']          = 'Vertrauen Sie Weiterleitungs-Proxys, welche dem regulärem Ausdruck entsprechen, hinsichtlich der angegebenen Client-ID. Der Standardwert entspricht dem lokalem Netzwerk. Leer lassen um jedem Proxy zu vertrauen.';
 $lang['dnslookups']            = 'DokuWiki löst die IP-Adressen von Benutzern zu deren Hostnamen auf. Wenn Sie einen langsamen oder unzuverlässigen DNS-Server verwenden oder die Funktion nicht benötigen, dann sollte diese Option deaktiviert sein.';
-$lang['jquerycdn']             = 'Sollen jQuery und jQuery UI Skriptdateien von einem CDN (Contend Delivery Network) geladen werden? Dadurch entstehen zusätzliche HTTP-Anfragen, aber die Daten werden voraussichtlich schneller geladen und eventuell sind sie auch schon beim Benutzer im Cache.';
+$lang['jquerycdn']             = 'Sollen jQuery und jQuery UI Skriptdateien von einem CDN (Content Delivery Network) geladen werden? Dadurch entstehen zusätzliche HTTP-Anfragen, aber die Daten werden voraussichtlich schneller geladen und eventuell sind sie auch schon beim Benutzer im Cache.';
 $lang['jquerycdn_o_0']         = 'Kein CDN, ausschließlich lokale Auslieferung';
 $lang['jquerycdn_o_jquery']    = 'CDN von code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN von cdnjs.com';

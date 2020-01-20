@@ -44,9 +44,15 @@ class Doku_Handler {
      * @param mixed $args arguments for this call
      * @param int $pos  byte position in the original source file
      */
-    protected function addCall($handler, $args, $pos) {
+    public function addCall($handler, $args, $pos) {
         $call = array($handler,$args, $pos);
         $this->callWriter->writeCall($call);
+    }
+
+    /** @deprecated 2019-10-31 use addCall() instead */
+    public function _addCall($handler, $args, $pos) {
+        dbg_deprecated('addCall');
+        $this->addCall($handler, $args, $pos);
     }
 
     /**
@@ -58,7 +64,7 @@ class Doku_Handler {
      * @param int $pos byte position in the original source file
      * @param string $match matched syntax
      */
-    protected function addPluginCall($plugin, $args, $state, $pos, $match) {
+    public function addPluginCall($plugin, $args, $state, $pos, $match) {
         $call = array('plugin',array($plugin, $args, $state, $match), $pos);
         $this->callWriter->writeCall($call);
     }

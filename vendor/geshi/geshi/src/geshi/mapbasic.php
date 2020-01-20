@@ -4,7 +4,7 @@
  * ------
  * Author: Tomasz Berus (t.berus@gisodkuchni.pl)
  * Copyright: (c) 2009 Tomasz Berus (http://sourceforge.net/projects/mbsyntax/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2008/11/25
  *
  * MapBasic language file for GeSHi.

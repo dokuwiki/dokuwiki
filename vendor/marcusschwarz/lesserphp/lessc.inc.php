@@ -1,7 +1,7 @@
 <?php
 
 /**
- * lessphp v0.5.1
+ * lessphp v0.5.2
  * http://leafo.net/lessphp
  *
  * LESS CSS compiler, adapted from http://lesscss.org
@@ -39,7 +39,7 @@
  * handling things like indentation.
  */
 class lessc {
-	static public $VERSION = "v0.5.1";
+	static public $VERSION = "v0.5.2";
 
 	static public $TRUE = array("keyword", "true");
 	static public $FALSE = array("keyword", "false");
@@ -352,9 +352,9 @@ class lessc {
 		$other = array_merge($other, $stack);
 
 		if ($split) {
-			return array(array_merge($imports, $vars), $other);
+			return array(array_merge($vars, $imports, $vars), $other);
 		} else {
-			return array_merge($imports, $vars, $other);
+			return array_merge($vars, $imports, $vars, $other);
 		}
 	}
 

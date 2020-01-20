@@ -4,7 +4,7 @@
  * --------
  * Author: deguix (cevo_deguix@yahoo.com.br)
  * Copyright: (c) 2005 deguix
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2005/03/27
  *
  * INI language file for GeSHi.
@@ -48,7 +48,7 @@ $language_data = array (
     'COMMENT_MULTI' => array(),
     'COMMENT_REGEXP' => array(0 => '/^\s*;.*?$/m'),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-    'QUOTEMARKS' => array('"'),
+    'QUOTEMARKS' => array('"', "'"),
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
         ),

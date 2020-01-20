@@ -155,15 +155,13 @@ class SimplePie_HTTP_Parser
 		{
 			return true;
 		}
-		else
-		{
-			$this->http_version = '';
-			$this->status_code = '';
-			$this->reason = '';
-			$this->headers = array();
-			$this->body = '';
-			return false;
-		}
+
+		$this->http_version = '';
+		$this->status_code = '';
+		$this->reason = '';
+		$this->headers = array();
+		$this->body = '';
+		return false;
 	}
 
 	/**

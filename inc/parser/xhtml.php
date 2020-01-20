@@ -680,7 +680,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $this->doc .= '</a></dt>'.DOKU_LF.'<dd>';
         }
 
-        if($text{0} == "\n") {
+        if($text[0] == "\n") {
             $text = substr($text, 1);
         }
         if(substr($text, -1) == "\n") {
@@ -917,7 +917,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['pre']    = '';
         $link['suf']    = '';
         // highlight link to current page
-        if($id == $INFO['id']) {
+        if(isset($INFO) && $id == $INFO['id']) {
             $link['pre'] = '<span class="curid">';
             $link['suf'] = '</span>';
         }

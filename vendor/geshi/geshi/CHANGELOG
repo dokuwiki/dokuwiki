@@ -12,6 +12,26 @@ modified by me for consistency/bug fixing.
 Please send any bug reports to BenBE@omorphia.de, or use the bug report tracker
 at sourceforge (http://sourceforge.net/tracker/?group_id=114997&atid=670231)
 
+Version 1.0.9.1
+  -  Added language files
+     * OpenSSH config (Kevin Ernst)
+     * roff (Artur Iwicki)
+     * Wolfram (Mysterious Light)
+  -  Some minor tweaks for RFC822 email support (BenBE)
+  -  Introduce strip_language function (phy25)
+  -  Recognize additional file extensions (RealityRipple)
+  -  Code style update by avoiding create_function (cweiske)
+  -  Backported CLI tool from GeSHi 1.1 branch (cweiske)
+  -  Improvements to language files
+     * bash: Update list of keywords (apjanke)
+     * Haskell: Updated doc links and types from Prelude (Jeremy Singer)
+     * INI files: support single quotes (peterdd)
+     * Matlab: Add keywords and functions from recent Matlab releases (apjanke)
+     * MySQL: Some missing keywords (Abu3safeer)
+     * MySQL: Updated documentation links (splitbrain)
+     * R/S+: Fix broken linking of keywords (BenBE)
+     * SciLab: Fix broken linking of keywords (BenBE)
+     * SQL: Some missing keywords (peterdd)
 Version 1.0.9.0
   -  Add public/protected method & property visibility.
      THIS MAY BREAK YOUR CODE

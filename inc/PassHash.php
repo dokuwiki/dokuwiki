@@ -77,6 +77,11 @@ class PassHash {
             $method = 'sha512';
             $salt   = $m[2];
             $magic  = $m[1];
+        } elseif(preg_match('/^\$(argon2id?)/', $hash, $m)) {
+            if(!defined('PASSWORD_'.strtoupper($m[1]))) {
+                throw new \Exception('This PHP installation has no '.strtoupper($m[1]).' support');
+            }
+            return password_verify($clear,$hash);
         } elseif($len == 32) {
             $method = 'md5';
         } elseif($len == 40) {
@@ -206,7 +211,7 @@ class PassHash {
             $text .= substr($bin, 0, min(16, $i));
         }
         for($i = $len; $i > 0; $i >>= 1) {
-            $text .= ($i & 1) ? chr(0) : $clear{0};
+            $text .= ($i & 1) ? chr(0) : $clear[0];
         }
         $bin = pack("H32", md5($text));
         for($i = 0; $i < 1000; $i++) {
@@ -589,6 +594,43 @@ class PassHash {
     public function hash_mediawiki($clear, $salt = null) {
         $this->init_salt($salt, 8, false);
         return ':B:'.$salt.':'.md5($salt.'-'.md5($clear));
+    }
+
+
+    /**
+     * Password hashing method 'argon2i'
+     *
+     * Uses php's own password_hash function to create argon2i password hash
+     * Default Cost and thread options are used for now.
+     *
+     * @link  https://www.php.net/manual/de/function.password-hash.php
+     *
+     * @param string $clear The clear text to hash
+     * @return string Hashed password
+     */
+    public function hash_argon2i($clear) {
+        if(!defined('PASSWORD_ARGON2I')) {
+            throw new \Exception('This PHP installation has no ARGON2I support');
+        }
+        return password_hash($clear,PASSWORD_ARGON2I);   
+    }
+
+    /**
+     * Password hashing method 'argon2id'
+     *
+     * Uses php's own password_hash function to create argon2id password hash
+     * Default Cost and thread options are used for now.
+     *
+     * @link  https://www.php.net/manual/de/function.password-hash.php
+     *
+     * @param string $clear The clear text to hash
+     * @return string Hashed password
+     */
+    public function hash_argon2id($clear) {
+        if(!defined('PASSWORD_ARGON2ID')) {
+            throw new \Exception('This PHP installation has no ARGON2ID support');
+        }
+        return password_hash($clear,PASSWORD_ARGON2ID);   
     }
 
     /**

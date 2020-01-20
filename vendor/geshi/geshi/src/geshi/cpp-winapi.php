@@ -8,7 +8,7 @@
  *  - Jack Lloyd (lloyd@randombit.net)
  *  - Benny Baumann (BenBE@geshi.org)
  * Copyright: (c) 2004 Dennis Bayer, Nigel McNie, 2012 Benny Baumann (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2004/09/27
  *
  * C++ language file for GeSHi.

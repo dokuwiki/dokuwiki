@@ -50,7 +50,7 @@ function html_login($svg = false){
 
     print p_locale_xhtml('login');
     print '<div class="centeralign">'.NL;
-    $form = new Doku_Form(array('id' => 'dw__login'));
+    $form = new Doku_Form(array('id' => 'dw__login', 'action'=>wl($ID)));
     $form->startFieldset($lang['btn_login']);
     $form->addHidden('id', $ID);
     $form->addHidden('do', 'login');
@@ -108,7 +108,7 @@ function html_denied() {
 function html_secedit($text,$show=true){
     global $INFO;
 
-    if(!$INFO['writable'] || !$show || $INFO['rev']){
+    if((isset($INFO) && !$INFO['writable']) || !$show || (isset($INFO) && $INFO['rev'])){
         return preg_replace(SEC_EDIT_PATTERN,'',$text);
     }
 
@@ -707,7 +707,7 @@ function html_recent($first = 0, $show_changes = 'both') {
             '</p></div>';
     }
 
-    $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET', 'class' => 'changes'));
+    $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET', 'class' => 'changes', 'action'=>wl($ID)));
     $form->addHidden('sectok', null);
     $form->addHidden('do', 'recent');
     $form->addHidden('id', $ID);
@@ -964,7 +964,7 @@ function html_li_index($item){
 
     if($item['type'] == "f"){
         // scroll to the current item
-        if($item['id'] == $INFO['id'] && $ACT == 'index') {
+        if(isset($INFO) && $item['id'] == $INFO['id'] && $ACT == 'index') {
             $id = ' id="scroll__here"';
             $class = ' bounce';
         }
@@ -1585,7 +1585,7 @@ function html_insert_softbreaks($diffhtml) {
  */
 function html_softbreak_callback($match){
     // if match is an html tag, return it intact
-    if ($match[0]{0} == '<') return $match[0];
+    if ($match[0][0] == '<') return $match[0];
 
     // its a long string without a breaking character,
     // make certain characters into breaking characters by inserting a

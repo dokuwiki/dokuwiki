@@ -4,7 +4,7 @@
  * ----------
  * Author: Dennis Felsing (dennis@felsin9.de)
  * Copyright: (c) 2014 Dennis Felsing
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2014/07/15
  *
  * Nimrod language file for GeSHi.

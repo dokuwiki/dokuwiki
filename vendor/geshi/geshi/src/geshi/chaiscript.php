@@ -6,7 +6,7 @@
  * Copyright: (c) 2010 Jason Turner (lefticus@gmail.com),
  *            (c) 2009 Jonathan Turner,
  *            (c) 2004 Ben Keen (ben.keen@gmail.com), Benny Baumann (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2009/07/03
  *
  * ChaiScript language file for GeSHi.

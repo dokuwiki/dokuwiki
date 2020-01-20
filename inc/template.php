@@ -263,7 +263,7 @@ function tpl_metaheaders($alt = true) {
             $head['link'][] = array(
                 'rel'  => 'alternate', 'type'=> 'application/rss+xml',
                 'title'=> $lang['currentns'],
-                'href' => DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']
+                'href' => DOKU_BASE.'feed.php?mode=list&ns='.(isset($INFO) ? $INFO['namespace'] : '')
             );
         }
         if(($ACT == 'show' || $ACT == 'search') && $INFO['writable']) {
@@ -336,7 +336,7 @@ function tpl_metaheaders($alt = true) {
         'href'=> DOKU_BASE.'lib/exe/css.php?t='.rawurlencode($conf['template']).'&tseed='.$tseed
     );
 
-    $script = "var NS='".$INFO['namespace']."';";
+    $script = "var NS='".(isset($INFO)?$INFO['namespace']:'')."';";
     if($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
         $script .= "var SIG='".toolbar_signature()."';";
     }
@@ -1845,7 +1845,7 @@ function tpl_classes() {
         'mode_'.$ACT,
         'tpl_'.$conf['template'],
         $INPUT->server->bool('REMOTE_USER') ? 'loggedIn' : '',
-        $INFO['exists'] ? '' : 'notFound',
+        (isset($INFO) && $INFO['exists']) ? '' : 'notFound',
         ($ID == $conf['start']) ? 'home' : '',
     );
     return join(' ', $classes);

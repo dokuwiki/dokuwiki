@@ -19,17 +19,18 @@ class PageSubscriptionSender extends SubscriptionSender
      * @param string   $id              Page for which the notification is
      * @param int|null $rev             Old revision if any
      * @param string   $summary         Change summary if any
+     * @param int|null $current_rev     New revision if any
      *
      * @return bool                     true if successfully sent
      */
-    public function sendPageDiff($subscriber_mail, $template, $id, $rev = null, $summary = '')
+    public function sendPageDiff($subscriber_mail, $template, $id, $rev = null, $summary = '', $current_rev = null)
     {
         global $DIFF_INLINESTYLES;
 
         // prepare replacements (keys not set in hrep will be taken from trep)
         $trep = [
             'PAGE' => $id,
-            'NEWPAGE' => wl($id, '', true, '&'),
+            'NEWPAGE' => wl($id, $current_rev?('rev='.$current_rev):'', true, '&'),
             'SUMMARY' => $summary,
             'SUBSCRIBE' => wl($id, ['do' => 'subscribe'], true, '&'),
         ];

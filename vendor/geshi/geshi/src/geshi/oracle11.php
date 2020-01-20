@@ -6,7 +6,7 @@
  * Contributions:
  * - Updated for 11i by Simon Redhead
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2004/06/04
  *
  * Oracle 11i language file for GeSHi.

@@ -34,10 +34,13 @@ class Zip extends Archive
      *
      * @param int $level Compression level (0 to 9)
      * @param int $type  Type of compression to use ignored for ZIP
-     * @return mixed
+     * @throws ArchiveIllegalCompressionException
      */
     public function setCompression($level = 9, $type = Archive::COMPRESS_AUTO)
     {
+        if ($level < -1 || $level > 9) {
+            throw new ArchiveIllegalCompressionException('Compression level should be between -1 and 9');
+        }
         $this->complevel = $level;
     }
 
@@ -152,6 +155,9 @@ class Zip extends Archive
 
             // nothing more to do for directories
             if ($fileinfo->getIsdir()) {
+                if(is_callable($this->callback)) {
+                    call_user_func($this->callback, $fileinfo);
+                }
                 continue;
             }
 
@@ -226,8 +232,11 @@ class Zip extends Archive
                 unlink($extractto); // remove temporary gz file
             }
 
-            touch($output, $fileinfo->getMtime());
+            @touch($output, $fileinfo->getMtime());
             //FIXME what about permissions?
+            if(is_callable($this->callback)) {
+                call_user_func($this->callback, $fileinfo);
+            }
         }
 
         $this->close();
@@ -271,9 +280,10 @@ class Zip extends Archive
     /**
      * Add a file to the current archive using an existing file in the filesystem
      *
-     * @param string          $file     path to the original file
+     * @param string $file path to the original file
      * @param string|FileInfo $fileinfo either the name to use in archive (string) or a FileInfo oject with all meta data, empty to take from original
      * @throws ArchiveIOException
+     * @throws FileInfoException
      */
     public function addFile($file, $fileinfo = '')
     {
@@ -350,6 +360,10 @@ class Zip extends Archive
             $name,
             (bool) $this->complevel
         );
+
+        if(is_callable($this->callback)) {
+            call_user_func($this->callback, $fileinfo);
+        }
     }
 
     /**
@@ -357,6 +371,7 @@ class Zip extends Archive
      *
      * After a call to this function no more data can be added to the archive, for
      * read access no reading is allowed anymore
+     * @throws ArchiveIOException
      */
     public function close()
     {
@@ -400,6 +415,7 @@ class Zip extends Archive
      * Returns the created in-memory archive data
      *
      * This implicitly calls close() on the Archive
+     * @throws ArchiveIOException
      */
     public function getArchive()
     {

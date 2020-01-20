@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Petr Kajzar <petr.kajzar@lf1.cuni.cz>
  * @author mkucera66 <mkucera66@seznam.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Martin Růžička <martinr@post.cz>
@@ -19,6 +20,7 @@ $lang['referrals']             = 'Přeposílat odkazy?';
 $lang['deref']                 = 'Jak rozlišovat aliasy?';
 $lang['binddn']                = 'Doménový název DN volitelně připojeného uživatele, pokus anonymní připojení není vyhovující, tj.  <code>cn=admin, dc=muj, dc=domov</code>';
 $lang['bindpw']                = 'Heslo uživatele výše';
+$lang['attributes']            = 'Atributy k načtení pomocí vyhledávání LDAP.';
 $lang['userscope']             = 'Omezení rozsahu vyhledávání uživatele';
 $lang['groupscope']            = 'Omezení rozsahu vyhledávání skupiny';
 $lang['userkey']               = 'Atribut označující uživatelské jméno; musí být konzistetní s uživatelským filtrem.';

@@ -33,7 +33,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package SimplePie
- * @version 1.5.1
+ * @version 1.5.3
  * @copyright 2004-2017 Ryan Parman, Geoffrey Sneddon, Ryan McCue
  * @author Ryan Parman
  * @author Geoffrey Sneddon
@@ -50,7 +50,7 @@ define('SIMPLEPIE_NAME', 'SimplePie');
 /**
  * SimplePie Version
  */
-define('SIMPLEPIE_VERSION', '1.5.1');
+define('SIMPLEPIE_VERSION', '1.5.3');
 
 /**
  * SimplePie Build
@@ -648,7 +648,7 @@ class SimplePie
 	 * @access private
 	 */
 	public $enable_exceptions = false;
-	
+
 	/**
 	 * The SimplePie class contains feed level data and options
 	 *
@@ -1387,7 +1387,7 @@ class SimplePie
 
 			list($headers, $sniffed) = $fetched;
 		}
-		
+
 		// Empty response check
 		if(empty($this->raw_data)){
 			$this->error = "A feed could not be found at `$this->feed_url`. Empty body.";
@@ -1471,7 +1471,7 @@ class SimplePie
 					// Cache the file if caching is enabled
 					if ($cache && !$cache->save($this))
 					{
-						trigger_error("$this->cache_location is not writeable. Make sure you've set the correct relative or absolute path, and that the location is server-writable.", E_USER_WARNING);
+						trigger_error("$this->cache_location is not writable. Make sure you've set the correct relative or absolute path, and that the location is server-writable.", E_USER_WARNING);
 					}
 					return true;
 				}
@@ -1640,7 +1640,7 @@ class SimplePie
 		if (!$this->force_feed)
 		{
 			// Check if the supplied URL is a feed, if it isn't, look for it.
-			$locate = $this->registry->create('Locator', array(&$file, $this->timeout, $this->useragent, $this->max_checked_feeds));
+			$locate = $this->registry->create('Locator', array(&$file, $this->timeout, $this->useragent, $this->max_checked_feeds, $this->force_fsockopen, $this->curl_options));
 
 			if (!$locate->is_feed($file))
 			{
@@ -1708,7 +1708,7 @@ class SimplePie
 					$this->data = array('url' => $this->feed_url, 'feed_url' => $file->url, 'build' => SIMPLEPIE_BUILD);
 					if (!$cache->save($this))
 					{
-						trigger_error("$this->cache_location is not writeable. Make sure you've set the correct relative or absolute path, and that the location is server-writable.", E_USER_WARNING);
+						trigger_error("$this->cache_location is not writable. Make sure you've set the correct relative or absolute path, and that the location is server-writable.", E_USER_WARNING);
 					}
 					$cache = $this->registry->call('Cache', 'get_handler', array($this->cache_location, call_user_func($this->cache_name_function, $file->url), 'spc'));
 				}
@@ -1904,7 +1904,7 @@ class SimplePie
 
 	/**
 	 * Get the URL for the feed
-	 * 
+	 *
 	 * When the 'permanent' mode is enabled, returns the original feed URL,
 	 * except in the case of an `HTTP 301 Moved Permanently` status response,
 	 * in which case the location of the first redirection is returned.
@@ -2138,10 +2138,8 @@ class SimplePie
 		{
 			return $this->get_link();
 		}
-		else
-		{
-			return $this->subscribe_url();
-		}
+
+		return $this->subscribe_url();
 	}
 
 	/**
@@ -2211,10 +2209,8 @@ class SimplePie
 		{
 			return $this->sanitize($return[0]['data'], SIMPLEPIE_CONSTRUCT_TEXT);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2231,10 +2227,8 @@ class SimplePie
 		{
 			return $categories[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2296,10 +2290,8 @@ class SimplePie
 		{
 			return array_unique($categories);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2316,10 +2308,8 @@ class SimplePie
 		{
 			return $authors[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2394,10 +2384,8 @@ class SimplePie
 		{
 			return array_unique($authors);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2414,10 +2402,8 @@ class SimplePie
 		{
 			return $contributors[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2480,10 +2466,8 @@ class SimplePie
 		{
 			return array_unique($contributors);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2501,10 +2485,8 @@ class SimplePie
 		{
 			return $links[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2606,10 +2588,8 @@ class SimplePie
 		{
 			return $this->data['links'][$rel];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	public function get_all_discovered_feeds()
@@ -2664,10 +2644,8 @@ class SimplePie
 		{
 			return $this->sanitize($return[0]['data'], SIMPLEPIE_CONSTRUCT_HTML, $this->get_base($return[0]));
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2700,10 +2678,8 @@ class SimplePie
 		{
 			return $this->sanitize($return[0]['data'], SIMPLEPIE_CONSTRUCT_TEXT);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2744,10 +2720,8 @@ class SimplePie
 		{
 			return $this->sanitize($this->data['headers']['content-language'], SIMPLEPIE_CONSTRUCT_TEXT);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2773,10 +2747,8 @@ class SimplePie
 		{
 			return (float) $match[1];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2805,10 +2777,8 @@ class SimplePie
 		{
 			return (float) $match[2];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2842,10 +2812,8 @@ class SimplePie
 		{
 			return $this->sanitize($return[0]['data'], SIMPLEPIE_CONSTRUCT_TEXT);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2885,10 +2853,8 @@ class SimplePie
 		{
 			return $this->sanitize($return[0]['data'], SIMPLEPIE_CONSTRUCT_IRI, $this->get_base($return[0]));
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 
@@ -2917,10 +2883,8 @@ class SimplePie
 		{
 			return $this->sanitize($return[0]['data'], SIMPLEPIE_CONSTRUCT_IRI, $this->get_base($return[0]));
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2943,10 +2907,8 @@ class SimplePie
 		{
 			return 88.0;
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2969,10 +2931,8 @@ class SimplePie
 		{
 			return 31.0;
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2992,10 +2952,8 @@ class SimplePie
 		{
 			return $qty;
 		}
-		else
-		{
-			return ($qty > $max) ? $max : $qty;
-		}
+
+		return ($qty > $max) ? $max : $qty;
 	}
 
 	/**
@@ -3017,10 +2975,8 @@ class SimplePie
 		{
 			return $items[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -3115,10 +3071,8 @@ class SimplePie
 		{
 			return array_slice($items, $start);
 		}
-		else
-		{
-			return array_slice($items, $start, $end);
-		}
+
+		return array_slice($items, $start, $end);
 	}
 
 	/**
@@ -3241,16 +3195,12 @@ class SimplePie
 			{
 				return array_slice($items, $start);
 			}
-			else
-			{
-				return array_slice($items, $start, $end);
-			}
+
+			return array_slice($items, $start, $end);
 		}
-		else
-		{
-			trigger_error('Cannot merge zero SimplePie objects', E_USER_WARNING);
-			return array();
-		}
+
+		trigger_error('Cannot merge zero SimplePie objects', E_USER_WARNING);
+		return array();
 	}
 
 	/**

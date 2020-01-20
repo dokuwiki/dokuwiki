@@ -4,7 +4,7 @@
  * ---------
  * Author: Kodi Arfer (kodiarfer {at} warpmail {period} net); forked from perl.php 1.0.8 by Andreas Gohr (andi@splitbrain.org), Ben Keen (ben.keen@gmail.com)
  * Copyright: (c) 2009 Kodi Arfer, (c) 2004 Andreas Gohr, Ben Keen (http://www.benjaminkeen.org/), Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2009/11/07
  *
  * Perl 6 language file for GeSHi.

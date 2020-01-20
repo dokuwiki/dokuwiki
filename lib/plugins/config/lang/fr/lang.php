@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author PaliPalo <palipalo@hotmail.fr>
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Laurent Ponthieu <contact@coopindus.fr>
  * @author Damien Regad <dregad@mantisbt.org>
  * @author Michael Bohn <mjbohn@gmail.com>
@@ -57,6 +57,7 @@ $lang['_advanced']             = 'Paramètres avancés';
 $lang['_network']              = 'Paramètres réseaux';
 $lang['_msg_setting_undefined'] = 'Pas de définition de métadonnées';
 $lang['_msg_setting_no_class'] = 'Pas de définition de paramètres.';
+$lang['_msg_setting_no_known_class'] = 'Classe de réglage non disponible.';
 $lang['_msg_setting_no_default'] = 'Pas de valeur par défaut.';
 $lang['title']                 = 'Titre du wiki (nom du wiki)';
 $lang['start']                 = 'Nom de la page d\'accueil à utiliser pour toutes les catégories';
@@ -173,6 +174,7 @@ $lang['search_fragment_o_exact'] = 'exact';
 $lang['search_fragment_o_starts_with'] = 'commence par';
 $lang['search_fragment_o_ends_with'] = 'se termine par';
 $lang['search_fragment_o_contains'] = 'contient';
+$lang['trustedproxy']          = 'Faire confiance aux mandataires qui correspondent à cette expression régulière pour l\'adresse IP réelle des clients qu\'ils rapportent. La valeur par défaut correspond aux réseaux locaux. Laisser vide pour ne faire confiance à aucun mandataire.';
 $lang['dnslookups']            = 'DokuWiki effectuera une résolution du nom d\'hôte sur les adresses IP des utilisateurs modifiant des pages. Si vous ne possédez pas de serveur DNS, que ce dernier est lent ou que vous ne souhaitez pas utiliser cette fonctionnalité : désactivez-la.';
 $lang['jquerycdn']             = 'Faut-il distribuer les scripts JQuery et JQuery UI depuis un CDN ? Cela ajoute une requête HTTP, mais les fichiers peuvent se charger plus vite et les internautes les ont peut-être déjà en cache.';
 $lang['jquerycdn_o_0']         = 'Non : utilisation de votre serveur.';

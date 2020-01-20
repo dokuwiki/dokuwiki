@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author PaliPalo <palipalo@hotmail.fr>
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Laurent Ponthieu <contact@coopindus.fr>
  * @author Damien Regad <dregad@mantisbt.org>
  * @author Michael Bohn <mjbohn@gmail.com>
@@ -304,10 +304,10 @@ $lang['img_camera']            = 'Appareil photo:';
 $lang['img_keywords']          = 'Mots-clés:';
 $lang['img_width']             = 'Largeur:';
 $lang['img_height']            = 'Hauteur:';
-$lang['subscr_subscribe_success'] = '%s a été ajouté à la liste des abonnés de %s';
+$lang['subscr_subscribe_success'] = '%s a été ajouté à la liste des abonnés à %s';
 $lang['subscr_subscribe_error'] = 'Erreur à l\'ajout de %s à la liste des abonnés de %s';
 $lang['subscr_subscribe_noaddress'] = 'Il n\'y a pas d\'adresse associée à votre identifiant, vous ne pouvez pas être ajouté à la liste des abonnés.';
-$lang['subscr_unsubscribe_success'] = '%s a été supprimé de la liste des abonnés de %s';
+$lang['subscr_unsubscribe_success'] = '%s a été supprimé de la liste des abonnés à %s';
 $lang['subscr_unsubscribe_error'] = 'Erreur au retrait de %s de la liste des abonnés de %s';
 $lang['subscr_already_subscribed'] = '%s est déjà abonné à %s';
 $lang['subscr_not_subscribed'] = '%s n\'est pas abonné à %s';

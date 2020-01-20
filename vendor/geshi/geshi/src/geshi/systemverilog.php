@@ -4,7 +4,7 @@
  * -------
  * Author: Sean O'Boyle
  * Copyright: (C) 2008 IntelligentDV
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2008/06/25
  *
  * SystemVerilog IEEE 1800-2009(draft8) language file for GeSHi.

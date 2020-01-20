@@ -113,7 +113,7 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
             // newly created
             $meta['date']['created'] = $created;
             if ($user){
-                $meta['creator'] = $INFO['userinfo']['name'];
+                $meta['creator'] = isset($INFO) ? $INFO['userinfo']['name'] : null;
                 $meta['user']    = $user;
             }
         } elseif (($wasCreated || $wasReverted) && !empty($oldmeta['persistent']['date']['created'])) {
@@ -121,10 +121,10 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
             $meta['date']['created']  = $oldmeta['persistent']['date']['created'];
             $meta['date']['modified'] = $created; // use the files ctime here
             $meta['creator'] = $oldmeta['persistent']['creator'];
-            if ($user) $meta['contributor'][$user] = $INFO['userinfo']['name'];
+            if ($user) $meta['contributor'][$user] = isset($INFO) ? $INFO['userinfo']['name'] : null;
         } elseif (!$minor) {   // non-minor modification
             $meta['date']['modified'] = $date;
-            if ($user) $meta['contributor'][$user] = $INFO['userinfo']['name'];
+            if ($user) $meta['contributor'][$user] = isset($INFO) ? $INFO['userinfo']['name'] : null;
         }
         $meta['last_change'] = $logline;
         p_set_metadata($id, $meta);
@@ -228,9 +228,9 @@ function getRecents($first,$num,$ns='',$flags=0){
 
     // read all recent changes. (kept short)
     if ($flags & RECENTS_MEDIA_CHANGES) {
-        $lines = @file($conf['media_changelog']);
+        $lines = @file($conf['media_changelog']) ?: [];
     } else {
-        $lines = @file($conf['changelog']);
+        $lines = @file($conf['changelog']) ?: [];
     }
     if (!is_array($lines)) {
         $lines = array();
@@ -240,7 +240,7 @@ function getRecents($first,$num,$ns='',$flags=0){
     $media_lines = array();
 
     if ($flags & RECENTS_MEDIA_PAGES_MIXED) {
-        $media_lines = @file($conf['media_changelog']);
+        $media_lines = @file($conf['media_changelog']) ?: [];
         if (!is_array($media_lines)) {
             $media_lines = array();
         }

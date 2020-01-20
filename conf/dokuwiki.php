@@ -55,7 +55,7 @@ $conf['hidepages']   = '';                //Regexp for pages to be skipped from 
 $conf['useacl']      = 0;                //Use Access Control Lists to restrict access?
 $conf['autopasswd']  = 1;                //autogenerate passwords and email them to user
 $conf['authtype']    = 'authplain';      //which authentication backend should be used
-$conf['passcrypt']   = 'smd5';           //Used crypt method (smd5,md5,sha1,ssha,crypt,mysql,my411)
+$conf['passcrypt']   = 'bcrypt';           //Used crypt method (smd5,md5,sha1,ssha,crypt,mysql,my411,bcrypt)
 $conf['defaultgroup']= 'user';           //Default groups new Users are added to
 $conf['superuser']   = '!!not set!!';    //The admin can be user or @group or comma separated list user1,@group1,user2
 $conf['manager']     = '!!not set!!';    //The manager can be user or @group or comma separated list user1,@group1,user2
@@ -158,6 +158,9 @@ $conf['renderer_xhtml'] = 'xhtml';       //renderer to use for main page generat
 $conf['readdircache'] = 0;               //time cache in second for the readdir operation, 0 to deactivate.
 $conf['search_nslimit'] = 0;             //limit the search to the current X namespaces
 $conf['search_fragment'] = 'exact';      //specify the default fragment search behavior
+$conf['trustedproxy'] = '^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)';
+                                         //Regexp of trusted proxy address when reading IP using HTTP header
+                                         //  if blank, do not trust any proxy (including local IP)
 
 /* Network Settings */
 $conf['dnslookups'] = 1;                 //disable to disallow IP to hostname lookups

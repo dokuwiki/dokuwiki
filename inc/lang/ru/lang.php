@@ -4,10 +4,10 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Alexander Kh. <001.arx@gmail.com>
  * @author Vyacheslav Strenadko <vyacheslav.strenadko@gmail.com>
  * @author Wolterhon <hotmottot.1@gmail.com>
- * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Zhassulan <zyesmukanov@gmail.com>
  * @author Yuri Pimenov <up@ftpsearch.lv>
  * @author Igor Tarasov <tigr@mail15.com>
@@ -214,7 +214,7 @@ $lang['accessdenied']          = 'Вы не можете просмотреть 
 $lang['mediausage']            = 'Для ссылки на этот файл используйте следующий синтаксис:';
 $lang['mediaview']             = 'Посмотреть исходный файл';
 $lang['mediaroot']             = 'корень';
-$lang['mediaupload']           = 'Загрузка файла в текущее пространство имён. Для создания подпространства имён, добавьте его название перед именем файла через двоеточие. Поддерживается drag-and-drop.';
+$lang['mediaupload']           = 'Загрузка файла в текущее пространство имён. Для создания подпространства имён добавьте его название перед именем файла через двоеточие. Поддерживается drag-and-drop (перетащить-и-оставить).';
 $lang['mediaextchange']        = 'Расширение изменилось с .%s на .%s!';
 $lang['reference']             = 'Ссылки для';
 $lang['ref_inuse']             = 'Этот файл не может быть удалён, так как он используется на следующих страницах:';
@@ -257,7 +257,7 @@ $lang['mail_newpage']          = 'страница добавлена:';
 $lang['mail_changed']          = 'страница изменена:';
 $lang['mail_subscribe_list']   = 'изменились страницы в пространстве имён:';
 $lang['mail_new_user']         = 'новый пользователь:';
-$lang['mail_upload']           = 'файл закачан:';
+$lang['mail_upload']           = 'файл загружен:';
 $lang['changes_type']          = 'Посмотреть изменения';
 $lang['pages_changes']         = 'страниц';
 $lang['media_changes']         = 'медиафайлов';

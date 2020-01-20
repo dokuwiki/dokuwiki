@@ -280,16 +280,23 @@ function pageinfo() {
         p_set_metadata($ID, array('last_change' => $revinfo));
     }
 
-    $info['ip']   = $revinfo['ip'];
-    $info['user'] = $revinfo['user'];
-    $info['sum']  = $revinfo['sum'];
-    // See also $INFO['meta']['last_change'] which is the most recent log line for page $ID.
-    // Use $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT in place of $info['minor'].
+    if($revinfo !== false){
+        $info['ip']   = $revinfo['ip'];
+        $info['user'] = $revinfo['user'];
+        $info['sum']  = $revinfo['sum'];
+        // See also $INFO['meta']['last_change'] which is the most recent log line for page $ID.
+        // Use $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT in place of $info['minor'].
 
-    if($revinfo['user']) {
-        $info['editor'] = $revinfo['user'];
-    } else {
-        $info['editor'] = $revinfo['ip'];
+        if($revinfo['user']) {
+            $info['editor'] = $revinfo['user'];
+        } else {
+            $info['editor'] = $revinfo['ip'];
+        }
+    }else{
+        $info['ip']     = null;
+        $info['user']   = null;
+        $info['sum']    = null;
+        $info['editor'] = null;
     }
 
     // draft
@@ -312,7 +319,7 @@ function jsinfo() {
     }
     //export minimal info to JS, plugins can add more
     $JSINFO['id']                    = $ID;
-    $JSINFO['namespace']             = (string) $INFO['namespace'];
+    $JSINFO['namespace']             = isset($INFO) ? (string) $INFO['namespace'] : '';
     $JSINFO['ACT']                   = act_clean($ACT);
     $JSINFO['useHeadingNavigation']  = (int) useHeading('navigation');
     $JSINFO['useHeadingContent']     = (int) useHeading('content');
@@ -370,7 +377,7 @@ function buildAttributes($params, $skipempty = false) {
     $url   = '';
     $white = false;
     foreach($params as $key => $val) {
-        if($key{0} == '_') continue;
+        if($key[0] == '_') continue;
         if($val === '' && $skipempty) continue;
         if($white) $url .= ' ';
 
@@ -397,12 +404,13 @@ function breadcrumbs() {
     global $ID;
     global $ACT;
     global $conf;
+    global $INFO;
 
     //first visit?
     $crumbs = isset($_SESSION[DOKU_COOKIE]['bc']) ? $_SESSION[DOKU_COOKIE]['bc'] : array();
-    //we only save on show and existing visible wiki documents
+    //we only save on show and existing visible readable wiki documents
     $file = wikiFN($ID);
-    if($ACT != 'show' || isHiddenPage($ID) || !file_exists($file)) {
+    if($ACT != 'show' || $INFO['perm'] < AUTH_READ || isHiddenPage($ID) || !file_exists($file)) {
         $_SESSION[DOKU_COOKIE]['bc'] = $crumbs;
         return $crumbs;
     }
@@ -782,7 +790,7 @@ function checkwordblock($text = '') {
  */
 function clientIP($single = false) {
     /* @var Input $INPUT */
-    global $INPUT;
+    global $INPUT, $conf;
 
     $ip   = array();
     $ip[] = $INPUT->server->str('REMOTE_ADDR');
@@ -829,17 +837,18 @@ function clientIP($single = false) {
 
     if(!$single) return join(',', $ip);
 
-    // decide which IP to use, trying to avoid local addresses
-    $ip = array_reverse($ip);
+    // skip trusted local addresses
     foreach($ip as $i) {
-        if(preg_match('/^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)/', $i)) {
+        if(!empty($conf['trustedproxy']) && preg_match('/'.$conf['trustedproxy'].'/', $i)) {
             continue;
         } else {
             return $i;
         }
     }
-    // still here? just use the first (last) address
-    return $ip[0];
+
+    // still here? just use the last address
+    // this case all ips in the list are trusted
+    return $ip[count($ip)-1];
 }
 
 /**
@@ -1180,8 +1189,8 @@ function parsePageTemplate(&$data) {
              \dokuwiki\Utf8\PhpString::ucwords($page),
              \dokuwiki\Utf8\PhpString::strtoupper($page),
              $INPUT->server->str('REMOTE_USER'),
-             $USERINFO['name'],
-             $USERINFO['mail'],
+             $USERINFO ? $USERINFO['name'] : '',
+             $USERINFO ? $USERINFO['mail'] : '',
              $conf['dformat'],
         ), $tpl
     );
@@ -1425,8 +1434,8 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     );
 
     // send notify mails
-    notify($svdta['id'], 'admin', $svdta['oldRevision'], $svdta['summary'], $minor);
-    notify($svdta['id'], 'subscribers', $svdta['oldRevision'], $svdta['summary'], $minor);
+    notify($svdta['id'], 'admin', $svdta['oldRevision'], $svdta['summary'], $minor, $svdta['newRevision']);
+    notify($svdta['id'], 'subscribers', $svdta['oldRevision'], $svdta['summary'], $minor, $svdta['newRevision']);
 
     // update the purgefile (timestamp of the last time anything within the wiki was changed)
     io_saveFile($conf['cachedir'].'/purgefile', time());
@@ -1468,11 +1477,12 @@ function saveOldRevision($id) {
  * @param string     $summary  What changed
  * @param boolean    $minor    Is this a minor edit?
  * @param string[]   $replace  Additional string substitutions, @KEY@ to be replaced by value
+ * @param int|string $current_rev  New page revision
  * @return bool
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = array()) {
+function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = array(), $current_rev = false) {
     global $conf;
     /* @var Input $INPUT */
     global $INPUT;
@@ -1499,7 +1509,7 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
 
     // prepare content
     $subscription = new PageSubscriptionSender();
-    return $subscription->sendPageDiff($to, $tpl, $id, $rev, $summary);
+    return $subscription->sendPageDiff($to, $tpl, $id, $rev, $summary, $current_rev);
 }
 
 /**
@@ -1523,11 +1533,7 @@ function getGoogleQuery() {
     if(!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/',$url['host'])) return '';
 
     $query = array();
-    // temporary workaround against PHP bug #49733
-    // see http://bugs.php.net/bug.php?id=49733
-    if(UTF8_MBSTRING) $enc = mb_internal_encoding();
     parse_str($url['query'], $query);
-    if(UTF8_MBSTRING) mb_internal_encoding($enc);
 
     $q = '';
     if(isset($query['q'])){
@@ -1540,6 +1546,8 @@ function getGoogleQuery() {
     $q = trim($q);
 
     if(!$q) return '';
+    // ignore if query includes a full URL
+    if(strpos($q, '//') !== false) return '';
     $q = preg_split('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/', $q, -1, PREG_SPLIT_NO_EMPTY);
     return $q;
 }

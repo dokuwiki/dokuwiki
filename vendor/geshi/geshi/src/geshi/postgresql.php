@@ -5,7 +5,7 @@
  * Author: Christophe Chauvet (christophe_at_kryskool_dot_org)
  * Contributors: Leif Biberg Kristensen <leif_at_solumslekt_dot_org> 2010-05-03
  * Copyright: (c) 2007 Christophe Chauvet (http://kryskool.org/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2007/07/20
  *
  * PostgreSQL language file for GeSHi.

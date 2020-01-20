@@ -4,7 +4,7 @@
  * -------------
  * Author: Roberto Rossi
  * Copyright: (c) 2005 Roberto Rossi (http://rsoftware.altervista.org)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2005/08/19
  *
  * FreeBasic (http://www.freebasic.net/) language file for GeSHi.

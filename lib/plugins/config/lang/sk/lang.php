@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
  * @author Tibor Repček <tiborepcek@gmail.com>
  * @author Michal Mesko <michal.mesko@gmail.com>
@@ -83,6 +84,7 @@ $lang['disableactions_subscription'] = 'Povoliť/Zrušiť informovanie o zmenác
 $lang['disableactions_wikicode'] = 'Pozrieť zdroj/Exportovať zdroj';
 $lang['disableactions_profile_delete'] = 'Zrušenie vlastného účtu';
 $lang['disableactions_other']  = 'Iné akcie (oddelené čiarkou)';
+$lang['disableactions_rss']    = 'RSS';
 $lang['auth_security_timeout'] = 'Časový limit pri prihlasovaní (v sekundách)';
 $lang['securecookie']          = 'Mal by prehliadač posielať cookies nastavené cez HTTPS posielať iba cez HTTPS (bezpečné) pripojenie? Vypnite túto voľbu iba v prípade, ak je prihlasovanie do Vašej wiki zabezpečené SSL, ale prezeranie wiki je nezabezpečené.';
 $lang['remote']                = 'Povolenie vzdialeného API. Umožnuje iným aplikáciám pristupovať k wiki cez XML-RPC alebo iným spôsobom.';
@@ -122,6 +124,9 @@ $lang['rss_content']           = 'Čo zobrazovať v XML feede?';
 $lang['rss_update']            = 'Časový interval obnovy XML feedu (sek.)';
 $lang['rss_show_summary']      = 'XML zdroj ukáže prehľad v názve';
 $lang['rss_media']             = 'Aký typ zmien by mal byť zobrazený v XML feede?';
+$lang['rss_media_o_both']      = 'oboje';
+$lang['rss_media_o_pages']     = 'strany';
+$lang['rss_media_o_media']     = 'média';
 $lang['updatecheck']           = 'Kontrolovať aktualizácie a bezpečnostné upozornenia? DokuWiki potrebuje pre túto funkciu prístup k update.dokuwiki.org.';
 $lang['userewrite']            = 'Používať nice URLs';
 $lang['useslash']              = 'Používať lomku (/) ako oddeľovač v URL';

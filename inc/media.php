@@ -544,7 +544,7 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
         // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
         chmod($fn, $conf['fmode']);
         msg($lang['uploadsucc'],1);
-        media_notify($id,$fn,$imime,$old);
+        media_notify($id,$fn,$imime,$old,$new);
         // add a log entry to the media changelog
         $filesize_new = filesize($fn);
         $sizechange = $filesize_new - $filesize_old;
@@ -672,12 +672,12 @@ function media_contentcheck($file,$mime){
  * @param bool|int $old_rev revision timestamp or false
  * @return bool
  */
-function media_notify($id,$file,$mime,$old_rev=false){
+function media_notify($id,$file,$mime,$old_rev=false,$current_rev=false){
     global $conf;
     if(empty($conf['notify'])) return false; //notify enabled?
 
     $subscription = new MediaSubscriptionSender();
-    return $subscription->sendMediaDiff($conf['notify'], 'uploadmail', $id, $old_rev);
+    return $subscription->sendMediaDiff($conf['notify'], 'uploadmail', $id, $old_rev, $current_rev);
 }
 
 /**

@@ -125,7 +125,8 @@ $meta['autopasswd']  = array('onoff');
 $meta['authtype']    = array('authtype','_caution' => 'danger');
 $meta['passcrypt']   = array('multichoice','_choices' => array(
     'smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5',
-    'mediawiki','bcrypt','djangomd5','djangosha1','djangopbkdf2_sha1','djangopbkdf2_sha256','sha512'
+    'mediawiki','bcrypt','djangomd5','djangosha1','djangopbkdf2_sha1','djangopbkdf2_sha256',
+    'sha512','argon2i','argon2id'
 ));
 $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string','_caution' => 'danger');
@@ -227,6 +228,7 @@ $meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => ar
 $meta['readdircache'] = array('numeric');
 $meta['search_nslimit'] = array('numeric', '_min' => 0);
 $meta['search_fragment'] = array('multichoice','_choices' => array('exact', 'starts_with', 'ends_with', 'contains'),);
+$meta['trustedproxy'] = array('regex');
 
 $meta['_network']    = array('fieldset');
 $meta['dnslookups']  = array('onoff');
@@ -237,4 +239,3 @@ $meta['proxy____user'] = array('string');
 $meta['proxy____pass'] = array('password','_code' => 'base64');
 $meta['proxy____ssl']  = array('onoff');
 $meta['proxy____except'] = array('string');
-

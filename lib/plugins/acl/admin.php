@@ -132,7 +132,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
                 $lines = array();
                 // keep header
                 foreach ($AUTH_ACL as $line) {
-                    if ($line{0} == '#') {
+                    if ($line[0] == '#') {
                         $lines[] = $line;
                     } else {
                         break;
@@ -443,7 +443,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
         }
 
         // prepare who to check
-        if ($who{0} == '@') {
+        if ($who[0] == '@') {
             $user   = '';
             $groups = array(ltrim($who, '@'));
         } else {
@@ -657,7 +657,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
                 echo '</td>';
 
                 echo '<td>';
-                if ($who{0} == '@') {
+                if ($who[0] == '@') {
                     echo '<span class="aclgroup">'.hsc($who).'</span>';
                 } else {
                     echo '<span class="acluser">'.hsc($who).'</span>';
@@ -804,7 +804,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
         if ($this->who &&
            !in_array($this->who, $this->usersgroups) &&
            !in_array($this->who, $this->specials)) {
-            if ($this->who{0} == '@') {
+            if ($this->who[0] == '@') {
                 $gsel = ' selected="selected"';
             } else {
                 $usel = ' selected="selected"';
@@ -826,7 +826,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
                     $sel = '';
                 }
 
-                if ($ug{0} == '@') {
+                if ($ug[0] == '@') {
                         echo '  <option value="'.hsc($ug).'" class="aclgroup"'.$sel.'>'.hsc($ug).'</option>'.NL;
                 } else {
                         echo '  <option value="'.hsc($ug).'" class="acluser"'.$sel.'>'.hsc($ug).'</option>'.NL;
@@ -844,7 +844,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
                     $sel = '';
                 }
 
-                if ($ug{0} == '@') {
+                if ($ug[0] == '@') {
                         echo '  <option value="'.hsc($ug).'" class="aclgroup"'.$sel.'>'.hsc($ug).'</option>'.NL;
                 } else {
                         echo '  <option value="'.hsc($ug).'" class="acluser"'.$sel.'>'.hsc($ug).'</option>'.NL;

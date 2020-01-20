@@ -4,7 +4,7 @@
  * ----------
  * Author:          Tim Brown (tim@timb.net)
  * Copyright:   (c) 2013 Tim Brown ((https://github.com/tim-brown/geshi-racket))
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started:    2013-03-01
  *
  * Racket language file for GeSHi.

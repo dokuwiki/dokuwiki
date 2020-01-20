@@ -4,7 +4,7 @@
  * ----------
  * Author: eldesh (nephits@gmail.com)
  * Copyright: (c) 2014 eldesh (http://d.hatena.ne.jp/eldesh/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2014/02/04
  *
  * SML (StandardML'97) language file for GeSHi.

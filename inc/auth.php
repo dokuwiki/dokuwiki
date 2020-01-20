@@ -139,7 +139,7 @@ function auth_loadACL() {
     $out = array();
     foreach($acl as $line) {
         $line = trim($line);
-        if(empty($line) || ($line{0} == '#')) continue; // skip blank lines & comments
+        if(empty($line) || ($line[0] == '#')) continue; // skip blank lines & comments
         list($id,$rest) = preg_split('/[ \t]+/',$line,2);
 
         // substitute user wildcard first (its 1:1)
@@ -154,10 +154,12 @@ function auth_loadACL() {
         // substitute group wildcard (its 1:m)
         if(strstr($line, '%GROUP%')){
             // if user is not logged in, grps is empty, no output will be added (i.e. skipped)
-            foreach((array) $USERINFO['grps'] as $grp){
-                $nid   = str_replace('%GROUP%',cleanID($grp),$id);
-                $nrest = str_replace('%GROUP%','@'.auth_nameencode($grp),$rest);
-                $out[] = "$nid\t$nrest";
+            if(isset($USERINFO['grps'])){
+                foreach((array) $USERINFO['grps'] as $grp){
+                    $nid   = str_replace('%GROUP%',cleanID($grp),$id);
+                    $nrest = str_replace('%GROUP%','@'.auth_nameencode($grp),$rest);
+                    $out[] = "$nid\t$nrest";
+                }
             }
         } else {
             $out[] = "$id\t$rest";
@@ -470,7 +472,7 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false) {
         }
     }
     if(is_null($groups)) {
-        $groups = (array) $USERINFO['grps'];
+        $groups = $USERINFO ? (array) $USERINFO['grps'] : array();
     }
 
     // check superuser match
@@ -564,7 +566,7 @@ function auth_quickaclcheck($id) {
     global $INPUT;
     # if no ACL is used always return upload rights
     if(!$conf['useacl']) return AUTH_UPLOAD;
-    return auth_aclcheck($id, $INPUT->server->str('REMOTE_USER'), $USERINFO['grps']);
+    return auth_aclcheck($id, $INPUT->server->str('REMOTE_USER'), is_array($USERINFO) ? $USERINFO['grps'] : array());
 }
 
 /**
@@ -737,7 +739,7 @@ function auth_nameencode($name, $skip_group = false) {
     if($name == '%GROUP%') return $name;
 
     if(!isset($cache[$name][$skip_group])) {
-        if($skip_group && $name{0} == '@') {
+        if($skip_group && $name[0] == '@') {
             $cache[$name][$skip_group] = '@'.preg_replace_callback(
                 '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/',
                 'auth_nameencode_callback', substr($name, 1)
@@ -1076,7 +1078,7 @@ function act_resendpwd() {
     if($token) {
         // we're in token phase - get user info from token
 
-        $tfile = $conf['cachedir'].'/'.$token{0}.'/'.$token.'.pwauth';
+        $tfile = $conf['cachedir'].'/'.$token[0].'/'.$token.'.pwauth';
         if(!file_exists($tfile)) {
             msg($lang['resendpwdbadauth'], -1);
             $INPUT->remove('pwauth');
@@ -1151,7 +1153,7 @@ function act_resendpwd() {
 
         // generate auth token
         $token = md5(auth_randombytes(16)); // random secret
-        $tfile = $conf['cachedir'].'/'.$token{0}.'/'.$token.'.pwauth';
+        $tfile = $conf['cachedir'].'/'.$token[0].'/'.$token.'.pwauth';
         $url   = wl('', array('do'=> 'resendpwd', 'pwauth'=> $token), true, '&');
 
         io_saveFile($tfile, $user);
