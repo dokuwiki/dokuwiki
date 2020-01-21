@@ -19,4 +19,4 @@ jobs:
               run: wget https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
 
             - name: run PHP codesniffer
-              run: php phpcs.phar -v --standard=_test/phpcs.xml
+              run: php phpcs.phar -v --standard=_test/phpcs_MigrationAdjustments.xml
