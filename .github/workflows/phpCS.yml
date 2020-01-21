@@ -1,6 +1,6 @@
 name: PHP Code Style
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
     phpcs:
