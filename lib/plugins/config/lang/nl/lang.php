@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author PBU <pbu@xs4all.nl>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Harriet Neitz <harrietneitz@gmail.com>
  * @author mark prins <mprins@users.sf.net>
@@ -43,6 +44,7 @@ $lang['_advanced']             = 'Geavanceerde instellingen';
 $lang['_network']              = 'Netwerkinstellingen';
 $lang['_msg_setting_undefined'] = 'Geen metadata voor deze instelling.';
 $lang['_msg_setting_no_class'] = 'Geen class voor deze instelling.';
+$lang['_msg_setting_no_known_class'] = 'Setting class niet beschikbaar';
 $lang['_msg_setting_no_default'] = 'Geen standaard waarde.';
 $lang['title']                 = 'Titel van de wiki';
 $lang['start']                 = 'Naam startpagina';
@@ -158,6 +160,7 @@ $lang['search_fragment_o_exact'] = 'exact';
 $lang['search_fragment_o_starts_with'] = 'begint met';
 $lang['search_fragment_o_ends_with'] = 'eindigt op';
 $lang['search_fragment_o_contains'] = 'bevat';
+$lang['trustedproxy']          = 'Vertrouw op doorstuurproxy\'s die overeenkomen met deze reguliere expressie over het echte client-IP dat ze rapporteren. De standaard komt overeen met lokale netwerken. Laat leeg om geen proxy te vertrouwen.';
 $lang['dnslookups']            = 'DokuWiki zoekt de hostnamen van IP-adressen van gebruikers die pagina wijzigen op. Schakel deze optie uit als je geen of een langzame DNS server hebt.';
 $lang['jquerycdn']             = 'Moet er een CDN gebruikt worden om de jQuery en jQuery UI bestanden te laden. Dit zorgt voor extra HTTP verzoeken, maar bestanden laden mogelijk sneller en zitten misschien al in de cache van de gebruiker.';
 $lang['jquerycdn_o_0']         = 'Geen CDN gebruiken';

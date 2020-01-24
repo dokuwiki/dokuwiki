@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author PBU <pbu@xs4all.nl>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Andy <astolker@icloud.com>
  * @author Harriet Neitz <harrietneitz@gmail.com>
