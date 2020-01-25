@@ -14,13 +14,8 @@ use dokuwiki\Utf8;
  */
 class PagewordIndex extends AbstractIndex
 {
-    /** @var PagewordIndex */
+    /** @var PagewordIndex $instance */
     protected static $instance = null;
-
-    /**
-     * FulltextIndex constructor. Singleton, thus protected!
-     */
-    protected function __construct() {}
 
     /**
      * Get new or existing singleton instance of the PagewordIndex
@@ -508,14 +503,10 @@ class PagewordIndex extends AbstractIndex
 
         if ($requireLock && !$this->lock()) return false;
 
-        $dir = @opendir($conf['indexdir']);
-        if ($dir !== false) {
-            while (($f = readdir($dir)) !== false) {
-                if (in_array($f[0], ['i', 'w']) && substr($f, -4) == '.idx') {
-                    // fulltext index
-                    @unlink($conf['indexdir']."/$f");
-                }
-            }
+        $lengths = $this->listIndexLengths();
+        foreach ($lengths as $length) {
+            @unlink($conf['indexdir'].'/i'.$length.'.idx');
+            @unlink($conf['indexdir'].'/w'.$length.'.idx');
         }
         @unlink($conf['indexdir'].'/lengths.idx');
         @unlink($conf['indexdir'].'/pageword.idx');

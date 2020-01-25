@@ -18,13 +18,8 @@ const INDEXER_VERSION = 8;
  */
 class PageIndex extends AbstractIndex
 {
-    /** @var PageIndex */
+    /** @var PageIndex $instance */
     protected static $instance = null;
-
-    /**
-     * PageIndex constructor. Singleton, thus protected!
-     */
-    protected function __construct() {}
 
     /**
      * Get new or existing singleton instance of the PageIndex
@@ -146,10 +141,10 @@ class PageIndex extends AbstractIndex
                 array_keys($media) : array();
 
         $data = compact('page', 'body', 'metadata', 'pid');
-        $evt = new Event('INDEXER_PAGE_ADD', $data);
-        if ($evt->advise_before()) $data['body'] = $data['body'].' '.rawWiki($page);
-        $evt->advise_after();
-        unset($evt);
+        $event = new Event('INDEXER_PAGE_ADD', $data);
+        if ($event->advise_before()) $data['body'] = $data['body'].' '.rawWiki($page);
+        $event->advise_after();
+        unset($event);
         extract($data);
 
         // Access to Pageword Index

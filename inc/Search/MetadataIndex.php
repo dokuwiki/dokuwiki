@@ -11,13 +11,8 @@ namespace dokuwiki\Search;
  */
 class MetadataIndex extends AbstractIndex
 {
-    /** @var MetadataIndex */
+    /** @var MetadataIndex $instance */
     protected static $instance = null;
-
-    /**
-     * MetadataIndex constructor. Singleton, thus protected!
-     */
-    protected function __construct() {}
 
     /**
      * Get new or existing singleton instance of the MetadataIndex
@@ -423,14 +418,11 @@ class MetadataIndex extends AbstractIndex
 
         if ($requireLock && !$this->lock()) return false;
 
-        $dir = @opendir($conf['indexdir']);
-        if ($dir !== false) {
-            while (($f = readdir($dir)) !== false) {
-                if (in_array(substr($f, -6), ['_w.idx','_i.idx','_p.idx'])) {
-                    // metadata index
-                    @unlink($conf['indexdir']."/$f");
-                }
-            }
+        $knownKeys = $this->getIndex('metadata', '');
+        foreach ($knownKeys as $metaname) {
+            @unlink($conf['indexdir'].'/'.$metaname.'_w.idx');
+            @unlink($conf['indexdir'].'/'.$metaname.'_i.idx');
+            @unlink($conf['indexdir'].'/'.$metaname.'_p.idx');
         }
         @unlink($conf['indexdir'].'/title.idx');
         @unlink($conf['indexdir'].'/metadata.idx');
