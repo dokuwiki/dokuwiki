@@ -230,6 +230,9 @@ $meta['search_nslimit'] = array('numeric', '_min' => 0);
 $meta['search_fragment'] = array('multichoice','_choices' => array('exact', 'starts_with', 'ends_with', 'contains'),);
 $meta['trustedproxy'] = array('regex');
 
+$meta['_feature_flags'] = ['fieldset'];
+$meta['defer_js']       = ['onoff'];
+
 $meta['_network']    = array('fieldset');
 $meta['dnslookups']  = array('onoff');
 $meta['jquerycdn']   = array('multichoice', '_choices' => array(0,'jquery', 'cdnjs'));
