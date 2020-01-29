@@ -67,14 +67,13 @@ class PagewordIndex extends AbstractIndex
      */
     public function addPageWords($page, $text)
     {
-        if (!$this->lock()) return false;  // set $errors property
-
         // load known documents
-        $pid = $this->getPIDNoLock($page);
+        $pid = $this->getPID($page);
         if ($pid === false) {
-            $this->unlock();
             return false;
         }
+
+        if (!$this->lock()) return false;  // set $errors property
 
         $pagewords = array();
         // get word usage in page
@@ -196,13 +195,13 @@ class PagewordIndex extends AbstractIndex
      */
     public function deletePageWords($page, $requireLock = true)
     {
-        if ($requireLock && !$this->lock()) return false;  // set $errors property
-
         // load known documents
-        $pid = $this->getPIDNoLock($page);
+        $pid = $this->getPID($page);
         if ($pid === false) {
             return false;
         }
+
+        if ($requireLock && !$this->lock()) return false;  // set $errors property
 
         // remove obsolete index entries
         $pageword_idx = $this->getIndexKey('pageword', '', $pid);

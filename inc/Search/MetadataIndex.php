@@ -85,14 +85,13 @@ class MetadataIndex extends AbstractIndex
             trigger_error("array passed to addMetaKeys but value is not null", E_USER_WARNING);
         }
 
-        if (!$this->lock()) return false;  // set $errors property
-
         // load known documents
-        $pid = $this->getPIDNoLock($page);
+        $pid = $this->getPID($page);
         if ($pid === false) {
-            $this->unlock();
             return false;
         }
+
+        if (!$this->lock()) return false;  // set $errors property
 
         // Special handling for titles so the index file is simpler
         if (array_key_exists('title', $key)) {
@@ -185,13 +184,13 @@ class MetadataIndex extends AbstractIndex
      */
     public function deleteMetaKeys($page, $keys = [], $requireLock = true)
     {
-        if ($requireLock && !$this->lock()) return false;  // set $errors property
-
         // load known documents
-        $pid = $this->getPIDNoLock($page);
+        $pid = $this->getPID($page);
         if ($pid === false) {
             return false;
         }
+
+        if ($requireLock && !$this->lock()) return false;  // set $errors property
 
         $knownKeys = $this->getIndex('metadata', '');
         $knownKeys[] = 'title';

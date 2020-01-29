@@ -48,41 +48,50 @@ abstract class AbstractIndex
      * Get the numeric PID of a page
      *
      * @param string $page The page to get the PID for
-     * @param bool   $requireLock
-     * @return int|false  The page id on success, false on error
+     * @return int|false  The page id on success, false when not found in page.idx
      */
-    public function getPID($page, $requireLock = true)
+    public function getPID($page)
     {
         // return PID when it is in the cache
         // avoid expensive addIndexKey operation for the most recently
         // requested pages by using a cache
         if (isset(static::$pidCache[$page])) return static::$pidCache[$page];
 
-        if ($requireLock && !$this->lock()) return false;  // set $errors property
+        if (!$this->lock()) return false;  // set $errors property
 
-        $pid = $this->addIndexKey('page', '', $page);
+        $index = $this->getIndex('page', '');
+        $pid = array_search($page, $index, true);
         if ($pid !== false) {
-            // limit cache to 10 entries by discarding the oldest element
-            // as in DokuWiki usually only the most recently
-            // added item will be requested again
-            if (count(static::$pidCache) > 10) array_shift(static::$pidCache);
-            static::$pidCache[$page] = $pid;
+            $flagSaveIndex = false;
+        } else {
+            $flagSaveIndex = true;
+            // search old page entry that had marked as deleted
+            $pid = array_search('#deleted:'.$page, $index, true);
+            if ($pid !== false) {
+                $index[$pid] = $page;
+            } elseif (page_exists($page)) {
+                $pid = count($index);
+                $index[$pid] = $page;
+            } else {
+                // do not issue PID when the page does not exist
+                $this->unlock();
+                return false;
+            }
         }
 
-        if ($requireLock) $this->unlock();
-        return $pid;
-    }
+        if ($flagSaveIndex && !$this->saveIndex('page', '', $index)) {
+            trigger_error("Failed to write page index", E_USER_ERROR);
+            return false;
+        }
 
-    /**
-     * Get the numeric PID of a page without locking the index.
-     * Only use this function when the index is already locked.
-     *
-     * @param string $page The page to get the PID for
-     * @return int|false  The page id on success, false on error
-     */
-    protected function getPIDNoLock($page)
-    {
-        return $this->getPID($page, false);
+        // limit cache to 10 entries by discarding the oldest element
+        // as in DokuWiki usually only the most recently
+        // added item will be requested again
+        if (count(static::$pidCache) > 10) array_shift(static::$pidCache);
+        static::$pidCache[$page] = $pid;
+
+        $this->unlock();
+        return $pid;
     }
 
     /**
@@ -112,7 +121,9 @@ abstract class AbstractIndex
      */
     public function getPages()
     {
-        return $this->getIndex('page', '');
+        return array_filter($this->getIndex('page', ''),
+            function($v) { return $v[0] !== '#'; }
+        );
     }
 
     /**
@@ -230,7 +241,7 @@ abstract class AbstractIndex
             $id = count($index);
             $index[$id] = $value;
             if (!$this->saveIndex($idx, $suffix, $index)) {
-                trigger_error("Failed to write $idx index", E_USER_ERROR);
+                trigger_error("Failed to write {$idx}{$suffix} index", E_USER_ERROR);
                 return false;
             }
         }
