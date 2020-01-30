@@ -39,7 +39,7 @@ class PagewordIndex extends AbstractIndex
      * @param string $w
      * @return int
      */
-    public static function wordlen($w)
+    public function wordlen($w)
     {
         $l = strlen($w);
         // If left alone, all chinese "words" will get put into w3.idx
@@ -148,7 +148,7 @@ class PagewordIndex extends AbstractIndex
 
         $words = array();
         foreach ($tokens as $w => $c) {
-            $l = static::wordlen($w);
+            $l = $this->wordlen($w);
             if (isset($words[$l])) {
                 $words[$l][$w] = $c + (isset($words[$l][$w]) ? $words[$l][$w] : 0);
             } else {
@@ -329,7 +329,7 @@ class PagewordIndex extends AbstractIndex
             $caret = '^';
             $dollar = '$';
             $xword = $word;
-            $wlen = static::wordlen($word);
+            $wlen = $this->wordlen($word);
 
             // check for wildcards
             if (substr($xword, 0, 1) == '*') {
