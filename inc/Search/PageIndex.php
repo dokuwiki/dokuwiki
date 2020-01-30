@@ -35,6 +35,30 @@ class PageIndex extends AbstractIndex
     }
 
     /**
+     * Dispatch Indexing request for the page, called by TaskRunner::runIndexer()
+     *
+     * @param string        $page   name of the page to index
+     * @param bool          $verbose    print status messages
+     * @param bool          $force  force reindexing even when the index is up to date
+     * @return bool  If the function completed successfully
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+     */
+    public function dispatch($page, $verbose = false, $force = false)
+    {
+        // check if page was deleted but is still in the index
+        if (!page_exists($page)) {
+            $result = $this->deletePage($page, $verbose, $force);
+            return $result;
+        } else {
+            // update search index
+            $result = $this->addPage($page, $verbose, $force);
+            return $result;
+        }
+    }
+
+    /**
      * Version of the indexer taking into consideration the external tokenizer.
      * The indexer is only compatible with data written by the same version.
      *
@@ -78,57 +102,31 @@ class PageIndex extends AbstractIndex
      * @return bool  If the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      */
     public function addPage($page, $verbose = false, $force = false)
     {
+        // check if indexing needed for the existing page (full text and/or metadata indexing)
         $idxtag = metaFN($page,'.indexed');
-        // check if page was deleted but is still in the index
-        if (!page_exists($page)) {
-            if (!file_exists($idxtag)) {
-                if ($verbose) print("Indexer: $page does not exist, ignoring".DOKU_LF);
-                return false;
-            }
-            $result = $this->deletePage($page);
-            if (!$result && !empty(static::$errors)) {
-                if ($verbose) print("Indexer: locked".DOKU_LF);
-                return false;
-            }
-            @unlink($idxtag);
-            return $result;
-        }
-
-        // check if indexing needed
         if (!$force && file_exists($idxtag)) {
             if (trim(io_readFile($idxtag)) == $this->getVersion()) {
                 $last = @filemtime($idxtag);
                 if ($last > @filemtime(wikiFN($page))) {
-                    if ($verbose) print("Indexer: index for $page up to date".DOKU_LF);
-                    return false;
+                    if ($verbose) dbglog("Indexer: index for {$page} up to date");
+                    return true;
                 }
             }
         }
 
-        $indexenabled = p_get_metadata($page, 'internal index', METADATA_RENDER_UNLIMITED);
-        if ($indexenabled === false) {
-            $result = false;
-            if (file_exists($idxtag)) {
-                $result = $this->deletePage($page);
-                if (!$result && !empty(static::$errors)) {
-                    if ($verbose) print("Indexer: locked".DOKU_LF);
-                    return false;
-                }
-                @unlink($idxtag);
-            }
-            if ($verbose) print("Indexer: index disabled for $page".DOKU_LF);
-            return $result;
-        }
-
+        // register the page to the page.idx
         $pid = $this->getPID($page);
         if ($pid === false) {
-            if ($verbose) print("Indexer: getting the PID failed for $page".DOKU_LF);
+            if ($verbose) dbglog("Indexer: getting the PID failed for {$page}");
+            trigger_error("Failed to get PID for {$page}", E_USER_ERROR);
             return false;
         }
-        $body = '';
+
+        // prepare metadata indexing
         $metadata = array();
         $metadata['title'] = p_get_metadata($page, 'title', METADATA_RENDER_UNLIMITED);
 
@@ -140,39 +138,105 @@ class PageIndex extends AbstractIndex
         $metadata['relation_media'] = ($media !== null) ?
                 array_keys($media) : array();
 
+        // check if full text indexing allowed
+        $indexenabled = p_get_metadata($page, 'internal index', METADATA_RENDER_UNLIMITED);
+        if ($indexenabled !== false) $indexenabled = true;
+        $metadata['internal_index'] = $indexenabled;
+
+        $body = '';
         $data = compact('page', 'body', 'metadata', 'pid');
         $event = new Event('INDEXER_PAGE_ADD', $data);
         if ($event->advise_before()) $data['body'] = $data['body'].' '.rawWiki($page);
         $event->advise_after();
         unset($event);
         extract($data);
+        $indexenabled = $metadata['internal_index'];
+        unset($metadata['internal_index']);
 
-        // Access to Pageword Index
-        $PagewordIndex = PagewordIndex::getInstance();
-        $result = $PagewordIndex->addPageWords($page, $body);
-        if (!$result && !empty(static::$errors)) {
-            if ($verbose) print("Indexer: locked".DOKU_LF);
+        // Access to Metadata Index
+        $MetadataIndex = MetadataIndex::getInstance();
+        $result = $MetadataIndex->addMetaKeys($page, $metadata);
+        if ($verbose) dbglog("Indexer: addMetaKeys({$page}) ".($result ? 'done' : 'failed'));
+        if (!$result) {
             return false;
         }
 
-        if ($result) {
-            // Access to Metadata Index
-            $MetadataIndex = MetadataIndex::getInstance();
-            $result = $MetadataIndex->addMetaKeys($page, $metadata);
-            if (!$result && !empty(static::$errors)) {
-                if ($verbose) print("Indexer: locked".DOKU_LF);
+        // Access to Pageword Index
+        $PagewordIndex = PagewordIndex::getInstance();
+        if ($indexenabled) {
+            $result = $PagewordIndex->addPageWords($page, $body);
+            if ($verbose) dbglog("Indexer: addPageWords({$page}) ".($result ? 'done' : 'failed'));
+            if (!$result) {
+                return false;
+            }
+        } else {
+            if ($verbose) dbglog("Indexer: full text indexing disabled for {$page}");
+            // ensure the page content deleted from the pageword index
+            $result = $PagewordIndex->deletePageWords($page);
+            if ($verbose) dbglog("Indexer: deletePageWords({$page}) ".($result ? 'done' : 'failed'));
+            if (!$result) {
                 return false;
             }
         }
 
-        if ($result) {
-            io_saveFile(metaFN($page,'.indexed'), $this->getVersion());
-            if ($verbose) {
-                print("Indexer: finished".DOKU_LF);
-                return true;
-            }
+        // update index tag file
+        io_saveFile($idxtag, $this->getVersion());
+        if ($verbose) dbglog("Indexer: finished");
+
+        return $result;
+    }
+
+    /**
+     * Remove a page from the index
+     *
+     * Erases entries in all known indexes. Locking is handled internally.
+     *
+     * @param string        $page   name of the page to index
+     * @param bool          $verbose    print status messages
+     * @param bool          $force  force reindexing even when the index is up to date
+     * @return bool  If the function completed successfully
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+     */
+    public function deletePage($page, $verbose = false, $force = false)
+    {
+        $idxtag = metaFN($page,'.indexed');
+        if (!$force && !file_exists($idxtag)) {
+            if ($verbose) dbglog("Indexer: {$page}.indexed file does not exist, ignoring");
+            return true;
         }
 
+        // remove obsoleted content from pageword index
+        $PagewordIndex = PagewordIndex::getInstance();
+        $result = $PagewordIndex->deletePageWords($page);
+        if ($verbose) dbglog("Indexer: deletePageWords({$page}) ".($result ? 'done' : 'failed'));
+        if (!$result) {
+            return false;
+        }
+
+        // delete all keys of the page from metadata index
+        $MetadataIndex = MetadataIndex::getInstance();
+        $result = $MetadataIndex->deleteMetaKeys($page);
+        if ($verbose) dbglog("Indexer: deleteMetaKeys({$page}) ".($result ? 'done' : 'failed'));
+        if (!$result) {
+            return false;
+        }
+
+        // mark the page as deleted in the page.idx
+        $pid = $this->getPID($page);
+        if ($pid !== false) {
+            if (!$this->lock()) return false;  // set $errors property
+            $result = $this->saveIndexKey('page', '', $pid, '#deleted:'.$page);
+            if ($verbose) dbglog("Indexer: update page.idx  ".($result ? 'done' : 'failed'));
+            $this->unlock();
+        } else {
+            if ($verbose) dbglog("Indexer: {$page} not found in the page.idx, ignoring");
+            $resullt = true;
+        }
+
+        unset(static::$pidCache[$pid]);
+        @unlink($idxtag);
         return $result;
     }
 
@@ -188,90 +252,31 @@ class PageIndex extends AbstractIndex
      */
     public function renamePage($oldpage, $newpage)
     {
+        $index = $this->getIndex('page', '');
+        // check if oldpage found in page.idx
+        $oldPid = array_search($oldpage, $index, true);
+        if ($oldPid === false) return false;
+
+        // check if newpage found in page.idx
+        $newPid = array_search($newpage, $index, true);
+        if ($newPid !== false) {
+            $result = $this->deletePage($newpage);
+            if (!$result) return false;
+            // Note: $index is no longer valid after deletePage()!
+            unset($index);
+        }
+
+        // update page.idx
         if (!$this->lock()) return false;  // set $errors property
-
-        $pages = $this->getPages();
-
-        $id = array_search($oldpage, $pages, true);
-        if ($id === false) {
-            $this->unlock();
-            static::$errors[] = "$oldpage is not found in index";
-            return false;
-        }
-
-        $new_id = array_search($newpage, $pages, true);
-        if ($new_id !== false) {
-            // make sure the page is not in the index anymore
-            if ($this->deletePageNoLock($newpage) !== true) {
-                return false;
-            }
-
-            $pages[$new_id] = 'deleted:'.time().rand(0, 9999);
-        }
-
-        $pages[$id] = $newpage;
-
-        // update index
-        if (!$this->saveIndex('page', '', $pages)) {
-            $this->unlock();
-            return false;
-        }
+        $result = $this->saveIndexKey('page', '', $oldPid, $newpage);
+        $this->unlock();
 
         // reset the pid cache
         $this->resetPIDCache();
 
-        $this->unlock();
-        return true;
+        return $result;
     }
 
-    /**
-     * Remove a page from the index
-     *
-     * Erases entries in all known indexes. Locking is handled internally.
-     *
-     * @param string    $page   a page name
-     * @return bool             If the function completed successfully
-     *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
-     */
-    public function deletePage($page)
-    {
-        // remove obsolete pageword index entries
-        $PagewordIndex = PagewordIndex::getInstance();
-        $result = $PagewordIndex->deletePageWords($page);
-        if (!$result) {
-            return false;
-        }
-
-        // delete all keys of the page from metadata index
-        $MetadataIndex = MetadataIndex::getInstance();
-        $result = $MetadataIndex->deleteMetaKeys($page);
-        if (!$result) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Remove a page from the index without locking the index,
-     * only use this function if the index is already locked
-     *
-     * Erases entries in all known indexes.
-     *
-     * @param string    $page   a page name
-     * @return bool             If the function completed successfully
-     *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
-     */
-    protected function deletePageNoLock($page)
-    {
-        $PagewordIndex = PagewordIndex::getInstance();
-        $MetadataIndex = MetadataIndex::getInstance();
-
-        return $PagewordIndex->deletePageWordsNoLock($page)
-            && $MetadataIndex->deleteMetaKeysNoLock($page);
-    }
 
     /**
      * Clear the Page Index

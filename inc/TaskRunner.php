@@ -198,7 +198,7 @@ class TaskRunner
 
         // do the work
         $Indexer = PageIndex::getInstance();
-        return $Indexer->addPage($ID, true);
+        return $Indexer->dispatch($ID, true);
     }
 
     /**
