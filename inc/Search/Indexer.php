@@ -232,7 +232,7 @@ class Indexer extends AbstractIndex
             $this->unlock();
         } else {
             if ($verbose) dbglog("Indexer: {$page} not found in the page.idx, ignoring");
-            $resullt = true;
+            $result = true;
         }
 
         unset(static::$pidCache[$pid]);
