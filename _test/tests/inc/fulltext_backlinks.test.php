@@ -1,7 +1,7 @@
 <?php
 
+use dokuwiki\Search\Indexer;
 use dokuwiki\Search\MetadataSearch;
-use dokuwiki\Search\PageIndex;
 
 // must be run within Dokuwiki
 if (!defined('DOKU_INC')) die();
@@ -16,8 +16,8 @@ class fulltext_backlinks_test extends DokuWikiTest
     public function test_internallink()
     {
         saveWikiText('test:internallinks', '[[internälLink]] [[..:internal link]]', 'Test initialization');
-        $PageIndex = PageIndex::getInstance();
-        $PageIndex->addPage('test:internallinks');
+        $Indexer = Indexer::getInstance();
+        $Indexer->addPage('test:internallinks');
 
         $this->assertEquals(array('test:internallinks'), MetadataSearch::backlinks('internal_link'));
         $this->assertEquals(array('test:internallinks'), MetadataSearch::backlinks('test:internaellink'));
@@ -26,8 +26,8 @@ class fulltext_backlinks_test extends DokuWikiTest
     public function test_links_in_footnotes()
     {
         saveWikiText('test:link_footnotes', '(([[footnote]] [[:foÖtnotel]]))', 'Test initialization');
-        $PageIndex = PageIndex::getInstance();
-        $PageIndex->addPage('test:link_footnotes');
+        $Indexer = Indexer::getInstance();
+        $Indexer->addPage('test:link_footnotes');
 
         $this->assertEquals(array('test:link_footnotes'), MetadataSearch::backlinks('test:footnote'));
         $this->assertEquals(array('test:link_footnotes'), MetadataSearch::backlinks('fooetnotel'));
@@ -37,11 +37,11 @@ class fulltext_backlinks_test extends DokuWikiTest
     {
         global $conf;
         $conf['hidepages'] = 'hidden:.*';
-        $PageIndex = PageIndex::getInstance();
+        $Indexer = Indexer::getInstance();
         saveWikiText('hidden:links', '[[wiki:hiddenlink|linktitle]]', 'Test initialization');
-        $PageIndex->addPage('hidden:links');
+        $Indexer->addPage('hidden:links');
         saveWikiText('visible:links', '[[wiki:hiddenlink]]', 'Test initialization');
-        $PageIndex->addPage('visible:links');
+        $Indexer->addPage('visible:links');
 
         $this->assertEquals(array('visible:links'), MetadataSearch::backlinks('wiki:hiddenlink'));
         $this->assertEquals(array('visible:links'), MetadataSearch::backlinks('wiki:hiddenlink', false));
@@ -62,11 +62,11 @@ class fulltext_backlinks_test extends DokuWikiTest
 
         $_SERVER['REMOTE_USER'] = 'eve';
 
-        $PageIndex = PageIndex::getInstance();
+        $Indexer = Indexer::getInstance();
         saveWikiText('secret:links', '[[wiki:secretlink]]', 'Test initialization');
-        $PageIndex->addPage('secret:links');
+        $Indexer->addPage('secret:links');
         saveWikiText('public:links', '[[wiki:secretlink]]', 'Test initialization');
-        $PageIndex->addPage('public:links');
+        $Indexer->addPage('public:links');
 
         $this->assertEquals(array('public:links'), MetadataSearch::backlinks('wiki:secretlink'));
         $this->assertEquals(array('public:links'), MetadataSearch::backlinks('wiki:secretlink', false));
@@ -75,9 +75,9 @@ class fulltext_backlinks_test extends DokuWikiTest
 
     public function test_links_in_deleted_pages()
     {
-        $PageIndex = PageIndex::getInstance();
+        $Indexer = Indexer::getInstance();
         saveWikiText('test:internallinks', '[[internallink]] [[..:internal link]]', 'Test initialization');
-        $PageIndex->addPage('test:internallinks');
+        $Indexer->addPage('test:internallinks');
 
         $this->assertEquals(array('test:internallinks'), MetadataSearch::backlinks('test:internallink'));
         $this->assertEquals(array('test:internallinks'), MetadataSearch::backlinks('internal_link'));
@@ -90,9 +90,9 @@ class fulltext_backlinks_test extends DokuWikiTest
 
     function test_parameters()
     {
-        $PageIndex = PageIndex::getInstance();
+        $Indexer = Indexer::getInstance();
         saveWikiText('test:links', '[[wiki:syntax?do=export_raw]] [[:web:scripts:add_vhost.sh?do=export_raw]]', 'Init tests');
-        $PageIndex->addPage('test:links');
+        $Indexer->addPage('test:links');
 
         $this->assertEquals(array('test:links'), MetadataSearch::backlinks('wiki:syntax'));
         $this->assertEquals(array('test:links'), MetadataSearch::backlinks('web:scripts:add_vhost.sh'));

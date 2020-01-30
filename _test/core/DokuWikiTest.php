@@ -3,7 +3,7 @@
 use dokuwiki\Extension\PluginController;
 use dokuwiki\Extension\Event;
 use dokuwiki\Extension\EventHandler;
-use dokuwiki\Search\PageIndex;
+use dokuwiki\Search\Indexer;
 
 if (!class_exists('PHPUnit_Framework_TestCase')) {
     /**
@@ -160,8 +160,8 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase
         // remove any leftovers from the last run
         if(is_dir(DOKU_TMP_DATA)) {
             // clear indexer data and cache
-            $PageIndex = PageIndex::getInstance();
-            $PageIndex->clear();
+            $Indexer = Indexer::getInstance();
+            $Indexer->clear();
             TestUtils::rdelete(DOKU_TMP_DATA);
         }
 

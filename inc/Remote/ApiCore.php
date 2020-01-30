@@ -6,9 +6,9 @@ use Doku_Renderer_xhtml;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\Event;
+use dokuwiki\Search\Indexer;
 use dokuwiki\Search\FulltextSearch;
 use dokuwiki\Search\MetadataSearch;
-use dokuwiki\Search\PageIndex;
 
 use const dokuwiki\Search\FT_SNIPPET_NUMBER;
 
@@ -314,8 +314,8 @@ class ApiCore
     {
         $list = array();
 
-        $PageIndex = PageIndex::getInstance();
-        $pages = $PageIndex->getPages();
+        $Indexer = Indexer::getInstance();
+        $pages = $Indexer->getPages();
         $pages = array_filter(array_filter($pages, 'isVisiblePage'), 'page_exists');
 
         foreach (array_keys($pages) as $idx) {
@@ -564,8 +564,8 @@ class ApiCore
         unlock($id);
 
         // run the indexer if page wasn't indexed yet
-        $PageIndex = PageIndex::getInstance();
-        $PageIndex->addPage($id);
+        $Indexer = Indexer::getInstance();
+        $Indexer->addPage($id);
 
         return true;
     }

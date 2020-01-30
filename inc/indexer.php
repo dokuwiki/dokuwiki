@@ -7,17 +7,18 @@
  * @author     Tom N Harris <tnharris@whoopdedo.org>
  */
 
-use dokuwiki\Search\PageIndex;
+use dokuwiki\Search\Indexer;
+use dokuwiki\Search\PagewordIndex;
 
 /**
  * Create an instance of the indexer.
  *
- * @return PageIndex    an Indexer
+ * @return Indexer    an Indexer
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function idx_get_indexer() {
-    return PageIndex::getInstance();
+    return Indexer::getInstance();
 }
 
 /* For compatibility */
@@ -25,22 +26,22 @@ function idx_get_indexer() {
 /** @deprecated 2019-12-16 */
 function idx_get_version() {
     dbg_deprecated('idx_get_version');
-    $PageIndex = PageIndex::getInstance();
-    return $PageIndex->getVersion();
+    $Indexer = Indexer::getInstance();
+    return $Indexer->getVersion();
 }
 
 /** @deprecated 2019-12-16 */
 function idx_addPage($page, $verbose=false, $force=false) {
     dbg_deprecated('idx_addPage');
-    $PageIndex = PageIndex::getInstance();
-    return $PageIndex->addPage($page, $verbose, $force);
+    $Indexer = Indexer::getInstance();
+    return $Indexer->addPage($page, $verbose, $force);
 }
 
 /** @deprecated 2019-12-16 */
 function idx_getIndex($idx, $suffix) {
     dbg_deprecated('idx_getIndex');
-    $PageIndex = PageIndex::getInstance();
-    return $PageIndex->getIndex($idx, $suffix);
+    $Indexer = Indexer::getInstance();
+    return $Indexer->getIndex($idx, $suffix);
 }
 
 /** @deprecated 2019-12-16 */

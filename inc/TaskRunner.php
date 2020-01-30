@@ -3,7 +3,7 @@
 namespace dokuwiki;
 
 use dokuwiki\Extension\Event;
-use dokuwiki\Search\PageIndex;
+use dokuwiki\Search\Indexer;
 use dokuwiki\Sitemap\Mapper;
 use dokuwiki\Subscriptions\BulkSubscriptionSender;
 use Subscription;
@@ -197,7 +197,7 @@ class TaskRunner
         }
 
         // do the work
-        $Indexer = PageIndex::getInstance();
+        $Indexer = Indexer::getInstance();
         return $Indexer->dispatch($ID, true);
     }
 

@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\Search\PageIndex;
+use dokuwiki\Search\Indexer;
 use dokuwiki\Search\PagewordIndex;
 use dokuwiki\Search\MetadataIndex;
 
 /**
- * Test cases for the PageIndex::renamePage and MetadataIndex::renameMetaValue methods
+ * Test cases for the Indexer::renamePage and MetadataIndex::renameMetaValue methods
  */
 class indexer_rename_test extends DokuWikiTest
 {
@@ -14,48 +14,48 @@ class indexer_rename_test extends DokuWikiTest
     public function setUp()
     {
         parent::setUp();
-        $PageIndex = PageIndex::getInstance();
-        $PageIndex->clear();
+        $Indexer = Indexer::getInstance();
+        $Indexer->clear();
 
         saveWikiText($this->old_id, 'Old test content', 'Created old test page for indexer rename test');
-        $PageIndex->addPage($this->old_id);
+        $Indexer->addPage($this->old_id);
     }
 
     public function test_rename_to_new_page()
     {
-        $PageIndex = PageIndex::getInstance();
+        $Indexer = Indexer::getInstance();
         $PagewordIndex = PagewordIndex::getInstance();
 
         $newid = 'new_id_1';
 
-        $oldpid = $PageIndex->getPID($this->old_id);
+        $oldpid = $Indexer->getPID($this->old_id);
 
-        $this->assertTrue($PageIndex->renamePage($this->old_id, $newid), 'Renaming the page to a new id failed');
+        $this->assertTrue($Indexer->renamePage($this->old_id, $newid), 'Renaming the page to a new id failed');
         io_rename(wikiFN($this->old_id), wikiFN($newid));
 
-        $this->assertNotEquals($PageIndex->getPID($this->old_id), $oldpid, 'PID for the old page unchanged after rename.');
-        $this->assertEquals($PageIndex->getPID($newid), $oldpid, 'New page has not the old pid.');
+        $this->assertNotEquals($Indexer->getPID($this->old_id), $oldpid, 'PID for the old page unchanged after rename.');
+        $this->assertEquals($Indexer->getPID($newid), $oldpid, 'New page has not the old pid.');
         $query = array('old');
         $this->assertEquals(array('old' => array($newid => 1)), $PagewordIndex->lookup($query), '"Old" doesn\'t find the new page');
     }
 
     public function test_rename_to_existing_page()
     {
-        $PageIndex = PageIndex::getInstance();
+        $Indexer = Indexer::getInstance();
         $PagewordIndex = PagewordIndex::getInstance();
 
         $newid = 'existing_page';
         saveWikiText($newid, 'Existing content', 'Created page for move_to_existing_page');
-        $PageIndex->addPage($newid);
+        $Indexer->addPage($newid);
 
-        $oldpid = $PageIndex->getPID($this->old_id);
-        $existingpid = $PageIndex->getPID($newid);
+        $oldpid = $Indexer->getPID($this->old_id);
+        $existingpid = $Indexer->getPID($newid);
 
-        $this->assertTrue($PageIndex->renamePage($this->old_id, $newid), 'Renaming the page to an existing id failed');
+        $this->assertTrue($Indexer->renamePage($this->old_id, $newid), 'Renaming the page to an existing id failed');
 
-        $this->assertNotEquals($PageIndex->getPID($this->old_id), $oldpid, 'PID for old page unchanged after rename.');
-        $this->assertNotEquals($PageIndex->getPID($this->old_id), $existingpid, 'PID for old page is now PID of the existing page.');
-        $this->assertEquals($PageIndex->getPID($newid), $oldpid, 'New page has not the old pid.');
+        $this->assertNotEquals($Indexer->getPID($this->old_id), $oldpid, 'PID for old page unchanged after rename.');
+        $this->assertNotEquals($Indexer->getPID($this->old_id), $existingpid, 'PID for old page is now PID of the existing page.');
+        $this->assertEquals($Indexer->getPID($newid), $oldpid, 'New page has not the old pid.');
         $query = array('existing');
         $this->assertEquals(array('existing' => array()), $PagewordIndex->lookup($query), 'Existing page hasn\'t been deleted from the index.');
         $query = array('old');
@@ -77,17 +77,17 @@ class indexer_rename_test extends DokuWikiTest
 
     public function test_meta_rename_to_existing_value()
     {
-        $PageIndex = PageIndex::getInstance();
+        $Indexer = Indexer::getInstance();
         $MetadataIndex = MetadataIndex::getInstance();
 
         $MetadataIndex->addMetaKeys($this->old_id, array('mkey' => array('old_value', 'new_value')));
 
         saveWikiText('newvalue', 'Test page', '');
-        $PageIndex->addPage('newvalue');
+        $Indexer->addPage('newvalue');
         $MetadataIndex->addMetaKeys('newvalue', array('mkey' => array('new_value')));
 
         saveWikiText('oldvalue', 'Test page', '');
-        $PageIndex->addPage('oldvalue');
+        $Indexer->addPage('oldvalue');
         $MetadataIndex->addMetaKeys('oldvalue', array('mkey' => array('old_value')));
 
         $this->assertTrue($MetadataIndex->renameMetaValue('mkey', 'old_value', 'new_value'), 'Meta value rename to existing value failed');

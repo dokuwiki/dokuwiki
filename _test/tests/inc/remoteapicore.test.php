@@ -3,7 +3,7 @@
 use dokuwiki\Remote\Api;
 use dokuwiki\Remote\ApiCore;
 use dokuwiki\Search\MetadataSearch;
-use dokuwiki\Search\PageIndex;
+use dokuwiki\Search\Indexer;
 use dokuwiki\test\mock\AuthPlugin;
 
 /**
@@ -97,8 +97,8 @@ class remoteapicore_test extends DokuWikiTest
         $id = 'wiki:syntax';
         $file = wikiFN($id);
 
-        $PageIndex = PageIndex::getInstance(); //full text search depends on index
-        $PageIndex->addPage($id);
+        $Indexer = Indexer::getInstance(); //full text search depends on index
+        $Indexer->addPage($id);
         $expected = array(
             array(
                 'id' => $id,
@@ -292,9 +292,9 @@ You can use up to five different levels of',
     public function test_getAllPages()
     {
         // all pages depends on index
-        $PageIndex = PageIndex::getInstance();
-        $PageIndex->addPage('wiki:syntax');
-        $PageIndex->addPage('wiki:dokuwiki');
+        $Indexer = Indexer::getInstance();
+        $Indexer->addPage('wiki:syntax');
+        $Indexer->addPage('wiki:dokuwiki');
 
         $file1 = wikiFN('wiki:syntax');
         $file2 = wikiFN('wiki:dokuwiki');
@@ -320,9 +320,9 @@ You can use up to five different levels of',
     {
         saveWikiText('linky', '[[wiki:syntax]]', 'test');
         // backlinks need index
-        $PageIndex = PageIndex::getInstance();
-        $PageIndex->addPage('wiki:syntax');
-        $PageIndex->addPage('linky');
+        $Indexer = Indexer::getInstance();
+        $Indexer->addPage('wiki:syntax');
+        $Indexer->addPage('linky');
 
         $params = array('wiki:syntax');
         $result = $this->remote->call('wiki.getBackLinks', $params);

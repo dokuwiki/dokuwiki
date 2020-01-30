@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\Search\PageIndex;
+use dokuwiki\Search\Indexer;
 use dokuwiki\Search\PagewordIndex;
 use dokuwiki\Search\MetadataIndex;
 
@@ -16,9 +16,9 @@ class indexer_indexing_test extends DokuWikiTest
         parent::setUp();
         saveWikiText('testpage', 'Foo bar baz.', 'Test initialization');
         saveWikiText('notfound', 'Foon barn bazn.', 'Test initialization');
-        $PageIndex = PageIndex::getInstance();
-        $PageIndex->addPage('testpage');
-        $PageIndex->addPage('notfound');
+        $Indexer = Indexer::getInstance();
+        $Indexer->addPage('testpage');
+        $Indexer->addPage('notfound');
     }
 
     public function test_words()

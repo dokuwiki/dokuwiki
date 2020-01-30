@@ -10,7 +10,7 @@ namespace dokuwiki\Sitemap;
 
 use dokuwiki\Extension\Event;
 use dokuwiki\HTTP\DokuHTTPClient;
-use dokuwiki\Search\PageIndex;
+use dokuwiki\Search\Indexer;
 
 /**
  * A class for building sitemaps and pinging search engines with the sitemap URL.
@@ -53,8 +53,8 @@ class Mapper {
 
         dbglog("Sitemapper::generate(): using $sitemap");
 
-        $PageIndex = PageIndex::getInstance();
-        $pages = $PageIndex->getPages();
+        $Indexer = Indexer::getInstance();
+        $pages = $Indexer->getPages();
         dbglog('Sitemapper::generate(): creating sitemap using '.count($pages).' pages');
         $items = array();
 
