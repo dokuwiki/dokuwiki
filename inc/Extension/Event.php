@@ -126,12 +126,7 @@ class Event
         }
 
         if ($this->advise_before($enablePrevent) && is_callable($action)) {
-            if (is_array($action)) {
-                list($obj, $method) = $action;
-                $this->result = $obj->$method($this->data);
-            } else {
-                $this->result = $action($this->data);
-            }
+            $this->result = call_user_func_array($action, [&$this->data]);
         }
 
         $this->advise_after();

@@ -348,15 +348,18 @@ function tpl_metaheaders($alt = true) {
     $jquery = getCdnUrls();
     foreach($jquery as $src) {
         $head['script'][] = array(
-            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '', 'src' => $src
-        );
+            'type' => 'text/javascript',
+            'charset' => 'utf-8',
+            '_data' => '',
+            'src' => $src,
+        ) + ($conf['defer_js'] ? [ 'defer' => 'defer'] : []);
     }
 
     // load our javascript dispatcher
     $head['script'][] = array(
         'type'=> 'text/javascript', 'charset'=> 'utf-8', '_data'=> '',
-        'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed
-    );
+        'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed,
+    ) + ($conf['defer_js'] ? [ 'defer' => 'defer'] : []);
 
     // trigger event here
     Event::createAndTrigger('TPL_METAHEADER_OUTPUT', $head, '_tpl_metaheaders_action', true);

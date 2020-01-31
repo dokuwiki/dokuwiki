@@ -107,7 +107,21 @@ class Parser {
         // Normalize CRs and pad doc
         $doc = "\n" . str_replace("\r\n", "\n", $doc) . "\n";
         $this->lexer->parse($doc);
-        $this->handler->finalize();
+
+        if (!method_exists($this->handler, 'finalize')) {
+            /** @deprecated 2019-10 we have a legacy handler from a plugin, assume legacy _finalize exists */
+
+            \dokuwiki\Debug\DebugHelper::dbgCustomDeprecationEvent(
+                'finalize()',
+                get_class($this->handler) . '::_finalize()',
+                __METHOD__,
+                __FILE__,
+                __LINE__
+            );
+            $this->handler->_finalize();
+        } else {
+            $this->handler->finalize();
+        }
         return $this->handler->calls;
     }
 
