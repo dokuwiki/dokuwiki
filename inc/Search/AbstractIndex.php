@@ -16,9 +16,6 @@ abstract class AbstractIndex
     /** @var array $pidCache Cache for getPID() */
     protected static $pidCache = array();
 
-    /** @var array $errors */
-    protected static $errors = array();
-
     /**
      * AbstractIndex constructor
      * extended classes should be Singleton, prevent direct object creation
@@ -57,7 +54,7 @@ abstract class AbstractIndex
         // requested pages by using a cache
         if (isset(static::$pidCache[$page])) return static::$pidCache[$page];
 
-        if (!$this->lock()) return false;  // set $errors property
+        if (!$this->lock()) return false;
 
         $index = $this->getIndex('page', '');
         $pid = array_search($page, $index, true);
@@ -80,7 +77,7 @@ abstract class AbstractIndex
         }
 
         if ($flagSaveIndex && !$this->saveIndex('page', '', $index)) {
-            trigger_error("Failed to write page index", E_USER_ERROR);
+            trigger_error("Indexer: Failed to write page index", E_USER_ERROR);
             return false;
         }
 
@@ -136,7 +133,6 @@ abstract class AbstractIndex
     protected function lock()
     {
         global $conf;
-        static::$errors[] = array();
         $run = 0;
         $lock = $conf['lockdir'].'/_indexer.lock';
         while (!@mkdir($lock, $conf['dmode'])) {
@@ -144,12 +140,12 @@ abstract class AbstractIndex
             if (is_dir($lock) && time() - @filemtime($lock) > 60*5) {
                 // looks like a stale lock - remove it
                 if (!@rmdir($lock)) {
-                    static::$errors[] = "removing the stale lock failed";
+                    trigger_error("Indexer: removing the stale lock failed", E_USER_ERROR);
                     return false;
                 }
             } elseif ($run++ == 1000) {
                 // we waited 5 seconds for that lock
-                static::$errors[] = "time out to aquire lock";
+                trigger_error("Indexer: time out to aquire lock", E_USER_ERROR);
                 return false;
             }
         }
@@ -169,8 +165,10 @@ abstract class AbstractIndex
     protected function unlock()
     {
         global $conf;
-        @rmdir($conf['lockdir'].'/_indexer.lock');
-        static::$errors[] = array();
+        if (!@rmdir($conf['lockdir'].'/_indexer.lock')) {
+            trigger_error("Indexer: unlock failed", E_USER_WARNING);
+            return false;
+        }
         return true;
     }
 

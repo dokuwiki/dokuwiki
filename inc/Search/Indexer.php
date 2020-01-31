@@ -226,7 +226,7 @@ class Indexer extends AbstractIndex
         // mark the page as deleted in the page.idx
         $pid = $this->getPID($page);
         if ($pid !== false) {
-            if (!$this->lock()) return false;  // set $errors property
+            if (!$this->lock()) return false;
             $result = $this->saveIndexKey('page', '', $pid, '#deleted:'.$page);
             if ($verbose) dbglog("Indexer: update page.idx  ".($result ? 'done' : 'failed'));
             $this->unlock();
@@ -267,7 +267,7 @@ class Indexer extends AbstractIndex
         }
 
         // update page.idx
-        if (!$this->lock()) return false;  // set $errors property
+        if (!$this->lock()) return false;
         $result = $this->saveIndexKey('page', '', $oldPid, $newpage);
         $this->unlock();
 

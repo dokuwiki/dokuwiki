@@ -60,12 +60,13 @@ class PagewordIndex extends AbstractIndex
      *
      * @param string    $page   a page name
      * @param string    $text   the body of the page
+     * @param bool      $requireLock
      * @return bool  if the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    public function addPageWords($page, $text)
+    public function addPageWords($page, $text, $requireLock = true)
     {
         // load known documents
         $pid = $this->getPID($page);
@@ -73,7 +74,7 @@ class PagewordIndex extends AbstractIndex
             return false;
         }
 
-        if (!$this->lock()) return false;  // set $errors property
+        if ($requireLock && !$this->lock()) return false;
 
         $pagewords = array();
         // get word usage in page
@@ -122,12 +123,13 @@ class PagewordIndex extends AbstractIndex
         // Save the reverse index
         $pageword_idx = implode(':', $pagewords);
         if (!$this->saveIndexKey('pageword', '', $pid, $pageword_idx)) {
-            $this->unlock();
-            return false;
+            $result = false;
+        } else {
+            $result = true;
         }
 
-        $this->unlock();
-        return true;
+        if ($requireLock) $this->unlock();
+        return $result;
     }
 
     /**
@@ -201,7 +203,7 @@ class PagewordIndex extends AbstractIndex
             return false;
         }
 
-        if ($requireLock && !$this->lock()) return false;  // set $errors property
+        if ($requireLock && !$this->lock()) return false;
 
         // remove obsolete index entries
         $pageword_idx = $this->getIndexKey('pageword', '', $pid);
@@ -230,21 +232,6 @@ class PagewordIndex extends AbstractIndex
 
         if ($requireLock) $this->unlock();
         return true;
-    }
-
-    /**
-     * Delete the contents of a page to the fulltext index without locking the index
-     * only use this function if the index is already locked
-     *
-     * @param string    $page   a page name
-     * @return bool  If renaming the value has been successful, false on error
-     *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
-     * @author Satoshi Sahara <sahara.satoshi@gmail.com>
-     */
-    public function deletePageWordsNoLock($page)
-    {
-        return $this->deletePageWords($page, false);
     }
 
     /**

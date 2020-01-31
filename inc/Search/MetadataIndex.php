@@ -71,12 +71,13 @@ class MetadataIndex extends AbstractIndex
      * @param string    $page   a page name
      * @param mixed     $key    a key string or array of key=>value pairs
      * @param mixed     $value  the value or list of values
+     * @param bool      $requireLock
      * @return bool  if the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Michael Hamann <michael@content-space.de>
      */
-    public function addMetaKeys($page, $key, $value = null)
+    public function addMetaKeys($page, $key, $value = null, $requireLock = true)
     {
         if (!is_array($key)) {
             $key = array($key => $value);
@@ -91,7 +92,7 @@ class MetadataIndex extends AbstractIndex
             return false;
         }
 
-        if (!$this->lock()) return false;  // set $errors property
+        if ($requireLock && !$this->lock()) return false;
 
         // Special handling for titles so the index file is simpler
         if (array_key_exists('title', $key)) {
@@ -167,7 +168,7 @@ class MetadataIndex extends AbstractIndex
             unset($metawords);
         }
 
-        $this->unlock();
+        if ($requireLock) $this->unlock();
         return true;
     }
 
@@ -190,7 +191,7 @@ class MetadataIndex extends AbstractIndex
             return false;
         }
 
-        if ($requireLock && !$this->lock()) return false;  // set $errors property
+        if ($requireLock && !$this->lock()) return false;
 
         $knownKeys = $this->getIndex('metadata', '');
         $knownKeys[] = 'title';
@@ -216,22 +217,6 @@ class MetadataIndex extends AbstractIndex
 
         if ($requireLock) $this->unlock();
         return true;
-    }
-
-    /**
-     * Remove keys of the page from metadata index without locking the index
-     * only use this function if the index is already locked
-     *
-     * @param string    $page   a page name
-     * @param mixed     $keys   a key string or array of keys
-     * @return bool  If renaming the value has been successful, false on error
-     *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
-     * @author Satoshi Sahara <sahara.satoshi@gmail.com>
-     */
-    public function deleteMetaKeysNoLock($page, $keys = [])
-    {
-        return $this->deleteMetaKeys($page, $keys, false);
     }
 
     /**
@@ -357,7 +342,7 @@ class MetadataIndex extends AbstractIndex
      */
     public function renameMetaValue($key, $oldvalue, $newvalue)
     {
-        if (!$this->lock()) return false;  // set $errors property
+        if (!$this->lock()) return false;
 
         // change the relation references index
         $metavalues = $this->getIndex($key, '_w');
