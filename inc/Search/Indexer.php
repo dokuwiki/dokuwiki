@@ -187,9 +187,9 @@ class Indexer extends AbstractIndex
     }
 
     /**
-     * Remove a page from the index
+     * Remove a page from the index, erases entries in all known indexes
      *
-     * Erases entries in all known indexes. Locking is handled internally.
+     * Locking is handled internally.
      *
      * @param string        $page   name of the page to index
      * @param bool          $verbose    print status messages
@@ -318,7 +318,7 @@ class Indexer extends AbstractIndex
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function histogram($min=1, $max=0, $minlen=3, $key=null)
+    public function histogram($key = null, $min = 1, $max = 0, $minlen = 3)
     {
         if ($min < 1)    $min = 1;
         if ($max < $min) $max = 0;
