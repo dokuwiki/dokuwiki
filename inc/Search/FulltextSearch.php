@@ -3,7 +3,7 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
-use dokuwiki\Search\PagewordIndex;
+use dokuwiki\Search\FulltextIndex;
 use dokuwiki\Search\QueryParser;
 use dokuwiki\Utf8;
 
@@ -74,12 +74,12 @@ class FulltextSearch
         if (empty($q['parsed_ary'])) return array();
 
         // lookup all words found in the query
-        $PagewordIndex = PagewordIndex::getInstance();
-        $lookup = $PagewordIndex->lookup($q['words']);
+        $FulltextIndex = FulltextIndex::getInstance();
+        $lookup = $FulltextIndex->lookupWords($q['words']);
 
         // get all pages in this dokuwiki site (!: includes nonexistent pages)
         $pages_all = array();
-        foreach ($PagewordIndex->getPages() as $id) {
+        foreach ($FulltextIndex->getPages() as $id) {
             $pages_all[$id] = 0; // base: 0 hit
         }
 

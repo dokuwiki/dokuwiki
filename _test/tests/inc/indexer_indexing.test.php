@@ -1,7 +1,7 @@
 <?php
 
 use dokuwiki\Search\Indexer;
-use dokuwiki\Search\PagewordIndex;
+use dokuwiki\Search\FulltextIndex;
 use dokuwiki\Search\MetadataIndex;
 
 /**
@@ -23,18 +23,18 @@ class indexer_indexing_test extends DokuWikiTest
 
     public function test_words()
     {
-        $PagewordIndex = PagewordIndex::getInstance();
+        $FulltextIndex = FulltextIndex::getInstance();
         $query = array('baz', 'foo');
-        $this->assertEquals(array('baz' => array('testpage' => 1), 'foo' => array('testpage' => 1)), $PagewordIndex->lookup($query));
+        $this->assertEquals(array('baz' => array('testpage' => 1), 'foo' => array('testpage' => 1)), $FulltextIndex->lookupWords($query));
     }
 
     public function test_numerically_identical_words()
     {
-        $PagewordIndex = PagewordIndex::getInstance();
-        $PagewordIndex->addPageWords('testpage', '0x1 002');
-        $PagewordIndex->addPageWords('notfound', '0x2');
+        $FulltextIndex = FulltextIndex::getInstance();
+        $FulltextIndex->addPageWords('testpage', '0x1 002');
+        $FulltextIndex->addPageWords('notfound', '0x2');
         $query = array('001', '002');
-        $this->assertEquals(array('001' => array(), '002' => array('testpage' => 1)), $PagewordIndex->lookup($query));
+        $this->assertEquals(array('001' => array(), '002' => array('testpage' => 1)), $FulltextIndex->lookupWords($query));
     }
 
     public function test_meta()
@@ -57,12 +57,12 @@ class indexer_indexing_test extends DokuWikiTest
 
     public function test_numeric_twice()
     {
-        $PagewordIndex = PagewordIndex::getInstance();
-        $PagewordIndex->addPageWords('testpage', '| 1010 | Dallas |');
+        $FulltextIndex = FulltextIndex::getInstance();
+        $FulltextIndex->addPageWords('testpage', '| 1010 | Dallas |');
         $query = array('1010');
-        $this->assertEquals(array('1010' => array('testpage' => 1)), $PagewordIndex->lookup($query));
-        $PagewordIndex->addPageWords('notfound', '| 1010 | Dallas |');
-        $this->assertEquals(array('1010' => array('testpage' => 1, 'notfound' => 1)), $PagewordIndex->lookup($query));
+        $this->assertEquals(array('1010' => array('testpage' => 1)), $FulltextIndex->lookupWords($query));
+        $FulltextIndex->addPageWords('notfound', '| 1010 | Dallas |');
+        $this->assertEquals(array('1010' => array('testpage' => 1, 'notfound' => 1)), $FulltextIndex->lookupWords($query));
     }
 
     public function test_numeric_twice_meta()

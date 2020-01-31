@@ -8,7 +8,7 @@
  */
 
 use dokuwiki\Search\Indexer;
-use dokuwiki\Search\PagewordIndex;
+use dokuwiki\Search\FulltextIndex;
 
 
 /* For compatibility */
@@ -43,9 +43,9 @@ function idx_getIndex($idx, $suffix) {
 
 /** @deprecated 2019-12-16 */
 function idx_listIndexLengths() {
-    dbg_deprecated(PagewordIndex::class.'listIndexLengths()');
-    $PagewordIndex = PagewordIndex::getInstance();
-    return $PagewordIndex->listIndexLengths();
+    dbg_deprecated(FulltextIndex::class.'listIndexLengths()');
+    $FulltextIndex = FulltextIndex::getInstance();
+    return $FulltextIndex->listIndexLengths();
 }
 
 //Setup VIM: ex: et ts=4 :

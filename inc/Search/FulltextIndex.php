@@ -6,21 +6,21 @@ use dokuwiki\Search\Tokenizer;
 use dokuwiki\Utf8;
 
 /**
- * Class DokuWiki Pageword Index (Singleton)
+ * Class DokuWiki Fulltext Index (Singleton)
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-class PagewordIndex extends AbstractIndex
+class FulltextIndex extends AbstractIndex
 {
-    /** @var PagewordIndex $instance */
+    /** @var FulltextIndex $instance */
     protected static $instance = null;
 
     /**
-     * Get new or existing singleton instance of the PagewordIndex
+     * Get new or existing singleton instance of the FulltextIndex
      *
-     * @return PagewordIndex
+     * @return FulltextIndex
      */
     public static function getInstance()
     {
@@ -250,7 +250,7 @@ class PagewordIndex extends AbstractIndex
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    public function lookup(&$tokens)
+    public function lookupWords(&$tokens)
     {
         $result = array();
         $wids = $this->getIndexWords($tokens, $result);
@@ -478,7 +478,7 @@ class PagewordIndex extends AbstractIndex
     }
 
     /**
-     * Clear the Pageword Index
+     * Clear the Fulltext Index
      *
      * @param bool   $requireLock
      * @return bool  If the index has been cleared successfully

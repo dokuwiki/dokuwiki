@@ -1,7 +1,7 @@
 <?php
 
 use dokuwiki\Search\Indexer;
-use dokuwiki\Search\PagewordIndex;
+use dokuwiki\Search\FulltextIndex;
 use dokuwiki\Search\MetadataIndex;
 
 /**
@@ -24,7 +24,7 @@ class indexer_rename_test extends DokuWikiTest
     public function test_rename_to_new_page()
     {
         $Indexer = Indexer::getInstance();
-        $PagewordIndex = PagewordIndex::getInstance();
+        $FulltextIndex = FulltextIndex::getInstance();
 
         $newid = 'new_id_1';
 
@@ -36,13 +36,13 @@ class indexer_rename_test extends DokuWikiTest
         $this->assertNotEquals($Indexer->getPID($this->old_id), $oldpid, 'PID for the old page unchanged after rename.');
         $this->assertEquals($Indexer->getPID($newid), $oldpid, 'New page has not the old pid.');
         $query = array('old');
-        $this->assertEquals(array('old' => array($newid => 1)), $PagewordIndex->lookup($query), '"Old" doesn\'t find the new page');
+        $this->assertEquals(array('old' => array($newid => 1)), $FulltextIndex->lookupWords($query), '"Old" doesn\'t find the new page');
     }
 
     public function test_rename_to_existing_page()
     {
         $Indexer = Indexer::getInstance();
-        $PagewordIndex = PagewordIndex::getInstance();
+        $FulltextIndex = FulltextIndex::getInstance();
 
         $newid = 'existing_page';
         saveWikiText($newid, 'Existing content', 'Created page for move_to_existing_page');
@@ -57,9 +57,9 @@ class indexer_rename_test extends DokuWikiTest
         $this->assertNotEquals($Indexer->getPID($this->old_id), $existingpid, 'PID for old page is now PID of the existing page.');
         $this->assertEquals($Indexer->getPID($newid), $oldpid, 'New page has not the old pid.');
         $query = array('existing');
-        $this->assertEquals(array('existing' => array()), $PagewordIndex->lookup($query), 'Existing page hasn\'t been deleted from the index.');
+        $this->assertEquals(array('existing' => array()), $FulltextIndex->lookupWords($query), 'Existing page hasn\'t been deleted from the index.');
         $query = array('old');
-        $this->assertEquals(array('old' => array($newid => 1)), $PagewordIndex->lookup($query), '"Old" doesn\'t find the new page');
+        $this->assertEquals(array('old' => array($newid => 1)), $FulltextIndex->lookupWords($query), '"Old" doesn\'t find the new page');
     }
 
     public function test_meta_rename_to_new_value()

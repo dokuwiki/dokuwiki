@@ -8,7 +8,7 @@
 
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Search\MetadataIndex;
-use dokuwiki\Search\PagewordIndex;
+use dokuwiki\Search\FulltextIndex;
 use dokuwiki\Utf8;
 
 if(!defined('DOKU_MESSAGEURL')){
@@ -251,11 +251,11 @@ function check(){
     }
 
     // Check for corrupted fulltext search index
-    $PagewordIndex = PagewordIndex::getInstance();
-    $lengths = $PagewordIndex->listIndexLengths();
+    $FulltextIndex = FulltextIndex::getInstance();
+    $lengths = $FulltextIndex->listIndexLengths();
     $index_corrupted = false;
     foreach ($lengths as $length) {
-        if (count($PagewordIndex->getIndex('w', $length)) != count($PagewordIndex->getIndex('i', $length))) {
+        if (count($FulltextIndex->getIndex('w', $length)) != count($FulltextIndex->getIndex('i', $length))) {
             $index_corrupted = true;
             break;
         }

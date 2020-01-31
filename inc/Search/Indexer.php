@@ -3,7 +3,7 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
-use dokuwiki\Search\PagewordIndex;
+use dokuwiki\Search\FulltextIndex;
 use dokuwiki\Search\MetadataIndex;
 
 // Version tag used to force rebuild on upgrade
@@ -161,18 +161,18 @@ class Indexer extends AbstractIndex
             return false;
         }
 
-        // Access to Pageword Index
-        $PagewordIndex = PagewordIndex::getInstance();
+        // Access to Fulltext Index
+        $FulltextIndex = FulltextIndex::getInstance();
         if ($indexenabled) {
-            $result = $PagewordIndex->addPageWords($page, $body);
+            $result = $FulltextIndex->addPagewords($page, $body);
             if ($verbose) dbglog("Indexer: addPageWords({$page}) ".($result ? 'done' : 'failed'));
             if (!$result) {
                 return false;
             }
         } else {
             if ($verbose) dbglog("Indexer: full text indexing disabled for {$page}");
-            // ensure the page content deleted from the pageword index
-            $result = $PagewordIndex->deletePageWords($page);
+            // ensure the page content deleted from the Fulltext index
+            $result = $FulltextIndex->deletePageWords($page);
             if ($verbose) dbglog("Indexer: deletePageWords({$page}) ".($result ? 'done' : 'failed'));
             if (!$result) {
                 return false;
@@ -207,9 +207,9 @@ class Indexer extends AbstractIndex
             return true;
         }
 
-        // remove obsoleted content from pageword index
-        $PagewordIndex = PagewordIndex::getInstance();
-        $result = $PagewordIndex->deletePageWords($page);
+        // remove obsoleted content from Fulltext index
+        $FulltextIndex = FulltextIndex::getInstance();
+        $result = $FulltextIndex->deletePageWords($page);
         if ($verbose) dbglog("Indexer: deletePageWords({$page}) ".($result ? 'done' : 'failed'));
         if (!$result) {
             return false;
@@ -293,9 +293,9 @@ class Indexer extends AbstractIndex
         $MetadataIndex = MetadataIndex::getInstance();
         $MetadataIndex->clear(false);
 
-        // clear Pageword Index
-        $PagewordIndex = PagewordIndex::getInstance();
-        $PagewordIndex->clear(false);
+        // clear Fulltext Index
+        $FulltextIndex = FulltextIndex::getInstance();
+        $FulltextIndex->clear(false);
 
         @unlink($conf['indexdir'].'/page.idx');
 
@@ -352,8 +352,8 @@ class Indexer extends AbstractIndex
                 }
             }
         } else {
-            $PagewordIndex = PagewordIndex::getInstance();
-            $lengths = $PagewordIndex->listIndexLengths();
+            $FulltextIndex = FulltextIndex::getInstance();
+            $lengths = $FulltextIndex->listIndexLengths();
             foreach ($lengths as $length) {
                 if ($length < $minlen) continue;
                 $index = $this->getIndex('i', $length);

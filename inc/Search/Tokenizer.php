@@ -40,7 +40,7 @@ class Tokenizer
     /**
      * Get new or existing singleton instance of the Tokenizer
      *
-     * @return PagewordIndex
+     * @return Tokenizer
      */
     public static function getInstance()
     {
