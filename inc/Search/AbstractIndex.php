@@ -13,6 +13,9 @@ use dokuwiki\Utf8;
  */
 abstract class AbstractIndex
 {
+    /* pages will be marked as deleted in page.idx */
+    const INDEX_MARK_DELETED = '#deleted:';
+
     /** @var array $pidCache Cache for getPID() */
     protected static $pidCache = array();
 
@@ -44,6 +47,8 @@ abstract class AbstractIndex
     /**
      * Get the numeric PID of a page
      *
+     * Warning: The page may not exist in the filesystem.
+     *
      * @param string $page The page to get the PID for
      * @return int|false  The page id on success, false when not found in page.idx
      */
@@ -63,7 +68,7 @@ abstract class AbstractIndex
         } else {
             $flagSaveIndex = true;
             // search old page entry that had marked as deleted
-            $pid = array_search('#deleted:'.$page, $index, true);
+            $pid = array_search(self::INDEX_MARK_DELETED.$page, $index, true);
             if ($pid !== false) {
                 $index[$pid] = $page;
             } elseif (page_exists($page)) {
@@ -112,14 +117,14 @@ abstract class AbstractIndex
 
     /**
      * Return a list of all pages
-     * Warning: pages may not exist!
+     * Warning: pages may not exist in the filesystem.
      *
      * @return array            list of page names
      */
     public function getPages()
     {
         return array_filter($this->getIndex('page', ''),
-            function($v) { return $v[0] !== '#'; }
+            function($v) { return $v[0] !== self::INDEX_MARK_DELETED[0]; }
         );
     }
 

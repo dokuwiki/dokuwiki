@@ -227,7 +227,7 @@ class Indexer extends AbstractIndex
         $pid = $this->getPID($page);
         if ($pid !== false) {
             if (!$this->lock()) return false;
-            $result = $this->saveIndexKey('page', '', $pid, '#deleted:'.$page);
+            $result = $this->saveIndexKey('page', '', $pid, self::INDEX_MARK_DELETED.$page);
             if ($verbose) dbglog("Indexer: update page.idx  ".($result ? 'done' : 'failed'));
             $this->unlock();
         } else {
