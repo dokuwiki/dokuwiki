@@ -11,7 +11,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Search\FulltextSearch;
-use dokuwiki\Search\MetadataSearch;
+use dokuwiki\Search\MetadataIndex;
 use dokuwiki\Utf8;
 
 if (!defined('SEC_EDIT_PATTERN')) {
@@ -1085,7 +1085,8 @@ function html_backlinks(){
 
     print p_locale_xhtml('backlinks');
 
-    $data = MetadataSearch::backlinks($ID);
+    $MetadataIndex = MetadataIndex::getInstance();
+    $data = $MetadataIndex->backlinks($ID);
 
     if(!empty($data)) {
         print '<ul class="idx">';

@@ -663,12 +663,14 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $befor
 /** @deprecated 2019-12-28 */
 function ft_backlinks($id, $ignore_perms = false) {
     dbg_deprecated('\dokuwiki\Search\MetadataSearch::backlinks()');
-    return MetadataSearch::backlinks($id, $ignore_perms);
+    $MetadataIndex = \dokuwiki\Search\MetadataIndex::getInstance();
+    return $MetadataIndex->backlinks($id, $ignore_perms);
 }
 
 /** @deprecated 2019-12-28 */
 function ft_mediause($id, $ignore_perms = false) {
-    dbg_deprecated('\dokuwiki\Search\MetadataSearch::mediause()');
-    return MetadataSearch::mediause($id, $ignore_perms);
+    dbg_deprecated('\dokuwiki\Search\MetadataIndex::mediause()');
+    $MetadataIndex = \dokuwiki\Search\MetadataIndex::getInstance();
+    return $MetadataIndex->mediause($id, $ignore_perms);
 }
 

@@ -414,4 +414,71 @@ class MetadataIndex extends AbstractIndex
         if ($requireLock) $this->unlock();
         return true;
     }
+
+    /**
+     * Returns the backlinks for a given page
+     *
+     * Uses the metadata index.
+     *
+     * @param string $id           The id for which links shall be returned
+     * @param bool   $ignore_perms Ignore the fact that pages are hidden or read-protected
+     * @return array The pages that contain links to the given page
+     *
+     * @author     Andreas Gohr <andi@splitbrain.org>
+     */
+    public function backlinks($id, $ignore_perms = false)
+    {
+        $result = $this->lookupKey('relation_references', $id);
+
+        if (!count($result)) return $result;
+
+        // check ACL permissions
+        foreach (array_keys($result) as $idx) {
+            if (($ignore_perms !== true
+                && (isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_READ)
+                ) || !page_exists($result[$idx], '', false)
+            ) {
+                unset($result[$idx]);
+            }
+        }
+
+        sort($result);
+        return $result;
+    }
+
+    /**
+     * Returns the pages that use a given media file
+     *
+     * Uses the relation media metadata property and the metadata index.
+     *
+     * Note that before 2013-07-31 the second parameter was the maximum number
+     * of results and permissions were ignored. That's why the parameter is now
+     * checked to be explicitely set to true (with type bool) in order to be
+     * compatible with older uses of the function.
+     *
+     * @param string $id           The media id to look for
+     * @param bool   $ignore_perms Ignore hidden pages and acls (optional, default: false)
+     * @return array A list of pages that use the given media file
+     *
+     * @author     Andreas Gohr <andi@splitbrain.org>
+     */
+    public function mediause($id, $ignore_perms = false)
+    {
+        $result = $this->lookupKey('relation_media', $id);
+
+        if (!count($result)) return $result;
+
+        // check ACL permissions
+        foreach (array_keys($result) as $idx) {
+            if (($ignore_perms !== true
+                && (isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_READ)
+                ) || !page_exists($result[$idx], '', false)
+            ) {
+                unset($result[$idx]);
+            }
+        }
+
+        sort($result);
+        return $result;
+    }
 }

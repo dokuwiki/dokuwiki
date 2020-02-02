@@ -7,10 +7,13 @@
  * @license  GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
 
-use dokuwiki\Search\MetadataSearch;
+use dokuwiki\Search\MetadataIndex;
 
 // must be run from within DokuWiki
 if (!defined('DOKU_INC')) die();
+
+$MetadataIndex = MetadataIndex::getInstance();
+
 header('X-UA-Compatible: IE=edge,chrome=1');
 
 ?><!DOCTYPE html>
@@ -61,7 +64,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                             <dl>
                             <?php
                             echo '<dt>'.$lang['reference'].':</dt>';
-                            $media_usage = MetadataSearch::mediause($IMG, true);
+                            $media_usage = $MetadataIndex->mediause($IMG, true);
                             if(count($media_usage) > 0){
                                 foreach($media_usage as $path){
                                     echo '<dd>'.html_wikilink($path).'</dd>';

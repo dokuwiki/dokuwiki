@@ -8,7 +8,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\Event;
 use dokuwiki\Search\Indexer;
 use dokuwiki\Search\FulltextSearch;
-use dokuwiki\Search\MetadataSearch;
+use dokuwiki\Search\MetadataIndex;
 
 use const dokuwiki\Search\FT_SNIPPET_NUMBER;
 
@@ -460,7 +460,8 @@ class ApiCore
      */
     public function listBackLinks($id)
     {
-        return MetadataSearch::backlinks($this->resolvePageId($id));
+        $MetadataIndex = MetadataIndex::getInstance();
+        return $MetadataIndex->backlinks($this->resolvePageId($id));
     }
 
     /**

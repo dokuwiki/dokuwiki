@@ -2,8 +2,8 @@
 
 use dokuwiki\Remote\Api;
 use dokuwiki\Remote\ApiCore;
-use dokuwiki\Search\MetadataSearch;
 use dokuwiki\Search\Indexer;
+use dokuwiki\Search\MetadataIndex;
 use dokuwiki\test\mock\AuthPlugin;
 
 /**
@@ -323,11 +323,12 @@ You can use up to five different levels of',
         $Indexer = Indexer::getInstance();
         $Indexer->addPage('wiki:syntax');
         $Indexer->addPage('linky');
+        $MetadataIndex = MetadataIndex::getInstance();
 
         $params = array('wiki:syntax');
         $result = $this->remote->call('wiki.getBackLinks', $params);
         $this->assertTrue(count($result) > 0);
-        $this->assertEquals(MetadataSearch::backlinks('wiki:syntax'), $result);
+        $this->assertEquals($MetadataIndex->backlinks('wiki:syntax'), $result);
     }
 
     public function test_getPageInfo()
