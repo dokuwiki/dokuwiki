@@ -22,7 +22,7 @@ class QueryParser
      * @param bool         $phrase_mode
      * @return string
      */
-    public static function termParser($term, $consider_asian = true, $phrase_mode = false)
+    public function termParser($term, $consider_asian = true, $phrase_mode = false)
     {
         $parsed = '';
         if ($consider_asian) {
@@ -30,7 +30,7 @@ class QueryParser
             $words = Utf8\Asian::splitAsianWords($term);
             foreach ($words as $word) {
                 $phrase_mode = $phrase_mode ? true : Utf8\Asian::isAsianWords($word);
-                $parsed .= static::termParser($word, false, $phrase_mode);
+                $parsed .= $this->termParser($word, false, $phrase_mode);
             }
         } else {
             $term_noparen = str_replace(['(',')'], ' ', $term);
@@ -61,7 +61,7 @@ class QueryParser
      * @param string $query search query
      * @return array of search formulas
      */
-    public static function convert($query)
+    public function convert($query)
     {
         /**
          * parse a search query and transform it into intermediate representation
@@ -110,7 +110,7 @@ class QueryParser
             if (preg_match('/^(-?)"(.+)"$/u', $term, $matches)) {
                 // phrase-include and phrase-exclude
                 $not = $matches[1] ? 'NOT' : '';
-                $parsed = $not . static::termParser($matches[2], false, true);
+                $parsed = $not . $this->termParser($matches[2], false, true);
             } else {
                 // fix incomplete phrase
                 $term = str_replace('"', ' ', $term);
@@ -157,10 +157,10 @@ class QueryParser
                         $parsed .= '(N+:'.$matches[1].')';
                     } elseif (preg_match('/^-(.+)$/', $token, $matches)) {
                         // word-exclude
-                        $parsed .= 'NOT('.static::termParser($matches[1]).')';
+                        $parsed .= 'NOT('.$this->termParser($matches[1]).')';
                     } else {
                         // word-include
-                        $parsed .= static::termParser($token);
+                        $parsed .= $this->termParser($token);
                     }
                 }
             }
@@ -306,7 +306,7 @@ class QueryParser
      *
      * @return string
      */
-    public static function revert(array $and, array $not, array $phrases, array $ns, array $notns)
+    public function revert(array $and, array $not, array $phrases, array $ns, array $notns)
     {
         $query = implode(' ', $and);
 

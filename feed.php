@@ -505,10 +505,10 @@ function rssListNamespace($opt) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rssSearch($opt) {
-    if(!$opt['search_query']) return array();
+    if (!$opt['search_query']) return array();
 
-    require_once(DOKU_INC.'inc/fulltext.php');
-    $data = FulltextSearch::pageSearch($opt['search_query'], $poswords);
+    $FulltextSearch = FulltextSearch::getInstance();
+    $data = $FulltextSearch->pageSearch($opt['search_query'], $poswords);
     $data = array_keys($data);
 
     return $data;

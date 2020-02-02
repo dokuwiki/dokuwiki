@@ -20,7 +20,7 @@ class fulltext_query_test extends DokuWikiTest
     {
         $inputQuery = 'test -baz "foo bar" @abc ^def';
 
-        $actualParsedQuery = QueryParser::convert($inputQuery);
+        $actualParsedQuery = (new QueryParser)->convert($inputQuery);
 
         $expectedParsedQuery = [
             'query' => 'test -baz "foo bar" @abc ^def',
@@ -91,7 +91,7 @@ class fulltext_query_test extends DokuWikiTest
             ],
         ];
 
-        $actualQuery = QueryParser::revert(
+        $actualQuery = (new QueryParser)->revert(
             $input['and'],
             $input['not'],
             $input['phrases'],

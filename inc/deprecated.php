@@ -580,34 +580,34 @@ class Doku_Indexer extends \dokuwiki\Search\Indexer {};
 
 function idx_get_indexer() {
     dbg_deprecated('\dokuwiki\Search\Indexer::getInstance()');
-    return Indexer::getInstance();
+    return \dokuwiki\Search\Indexer::getInstance();
 }
 
 /** @deprecated 2019-12-16 */
 function idx_get_version() {
     dbg_deprecated('\dokuwiki\Search\Indexer::getVersion()');
-    $Indexer = Indexer::getInstance();
+    $Indexer = \dokuwiki\Search\Indexer::getInstance();
     return $Indexer->getVersion();
 }
 
 /** @deprecated 2019-12-16 */
 function idx_addPage($page, $verbose=false, $force=false) {
     dbg_deprecated('\dokuwiki\Search\Indexer::addPage()');
-    $Indexer = Indexer::getInstance();
+    $Indexer = \dokuwiki\Search\Indexer::getInstance();
     return $Indexer->addPage($page, $verbose, $force);
 }
 
 /** @deprecated 2019-12-16 */
 function idx_getIndex($idx, $suffix) {
     dbg_deprecated('\dokuwiki\Search\Indexer::getIndex()');
-    $Indexer = Indexer::getInstance();
+    $Indexer = \dokuwiki\Search\Indexer::getInstance();
     return $Indexer->getIndex($idx, $suffix);
 }
 
 /** @deprecated 2019-12-16 */
 function idx_listIndexLengths() {
     dbg_deprecated('\dokuwiki\Search\FulltextIndex::listIndexLengths()');
-    $FulltextIndex = FulltextIndex::getInstance();
+    $FulltextIndex = \dokuwiki\Search\FulltextIndex::getInstance();
     return $FulltextIndex->listIndexLengths();
 }
 
@@ -624,31 +624,34 @@ function idx_listIndexLengths() {
 /** @deprecated 2019-12-28 */
 function ft_pageSearch($query, &$highlight, $sort = null, $after = null, $before = null) {
     dbg_deprecated('\dokuwiki\Search\FulltextSearch::pageSearch()');
-    return FulltextSearch::pageSearch($query, $highlight, $sort, $after, $before);
+    $FulltextSearch = \dokuwiki\Search\FulltextSearch::getInstance();
+    return $FulltextSearch->pageSearch($query, $highlight, $sort, $after, $before);
 }
 
 /** @deprecated 2019-12-28 */
 function ft_snippet($id, $highlight) {
     dbg_deprecated('\dokuwiki\Search\FulltextSearch::snippet()');
-    return FulltextSearch::snippet($id, $highlight);
+    $FulltextSearch = \dokuwiki\Search\FulltextSearch::getInstance();
+    return $FulltextSearch->snippet($id, $highlight);
 }
 
 /** @deprecated 2019-12-28 */
 function ft_snippet_re_preprocess($term) {
     dbg_deprecated('\dokuwiki\Search\FulltextSearch::snippetRePreprocess()');
-    return FulltextSearch::snippetRePreprocess($term);
+    $FulltextSearch = \dokuwiki\Search\FulltextSearch::getInstance();
+    return $FulltextSearch->snippetRePreprocess($term);
 }
 
 /** @deprecated 2019-12-28 */
 function ft_queryParser($Indexer, $query) {
     dbg_deprecated('\dokuwiki\Search\QueryParser::convert()');
-    return QueryParser::convert($query);
+    return (new \dokuwiki\Search\QueryParser)->convert($query);
 }
 
 /** @deprecated 2019-12-28 */
 function ft_queryUnparser_simple(array $and, array $not, array $phrases, array $ns, array $notns) {
     dbg_deprecated('\dokuwiki\Search\QueryParser::revert()');
-    return QueryParser::revert($and, $not, $phrases, $ns, $notns);
+    return (new \dokuwiki\Search\QueryParser)->revert($and, $not, $phrases, $ns, $notns);
 }
 
 /**
@@ -657,7 +660,8 @@ function ft_queryUnparser_simple(array $and, array $not, array $phrases, array $
 /** @deprecated 2019-12-28 */
 function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $before = null) {
     dbg_deprecated('\dokuwiki\Search\MetadataSearch::pageLookup()');
-    return MetadataSearch::pageLookup($id, $in_ns, $in_title, $after, $before);
+    $MetadataSearch = \dokuwiki\Search\MetadataSearch::getInstance();
+    return $MetadataSearch->pageLookup($id, $in_ns, $in_title, $after, $before);
 }
 
 /** @deprecated 2019-12-28 */

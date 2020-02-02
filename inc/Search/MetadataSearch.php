@@ -14,6 +14,22 @@ use dokuwiki\Search\QueryParser;
  */
 class MetadataSearch
 {
+    /** @var MetadataSearch $instance */
+    protected static $instance = null;
+
+    /**
+     * Get new or existing singleton instance of the MetadataSearch
+     *
+     * @return MetadataSearch
+     */
+    public static function getInstance()
+    {
+        if (is_null(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+
     /**
      *  Metadata Search constructor. prevent direct object creation
      */
@@ -42,7 +58,7 @@ class MetadataSearch
      *
      * @return string[]
      */
-    public static function pageLookup($id, $in_ns = false, $in_title = false, $after = null, $before = null)
+    public function pageLookup($id, $in_ns = false, $in_title = false, $after = null, $before = null)
     {
         $data = [
             'id' => $id,
@@ -52,7 +68,7 @@ class MetadataSearch
             'before' => $before
         ];
         $data['has_titles'] = true; // for plugin backward compatibility check
-        $action = static::class.'::pageLookupCallBack';
+        $action = [$this, 'pageLookupCallBack'];
         return Event::createAndTrigger('SEARCH_QUERY_PAGELOOKUP', $data, $action);
     }
 
@@ -62,11 +78,11 @@ class MetadataSearch
      * @param array $data  event data
      * @return string[]
      */
-    public static function pageLookupCallBack(&$data)
+    public function pageLookupCallBack(&$data)
     {
         // split out original parameters
         $id = $data['id'];
-        $parsedQuery = QueryParser::convert($id);
+        $parsedQuery = (new QueryParser)->convert($id);
 
         if (count($parsedQuery['ns']) > 0) {
             $ns = cleanID($parsedQuery['ns'][0]) . ':';
@@ -89,7 +105,7 @@ class MetadataSearch
                 }
             }
             if ($in_title) {
-                $func = static::class.'::pageLookupTitleCompare';
+                $func = [$this, 'pageLookupTitleCompare'];
                 foreach ($MetadataIndex->lookupKey('title', $id, $func) as $p_id) {
                     if (!isset($pages[$p_id])) {
                         $pages[$p_id] = p_get_first_heading($p_id, METADATA_DONT_RENDER);
@@ -115,9 +131,9 @@ class MetadataSearch
             }
         }
 
-        $pages = static::filterResultsByTime($pages, $data['after'], $data['before']);
+        $pages = $this->filterResultsByTime($pages, $data['after'], $data['before']);
 
-        uksort($pages, static::class.'::pagesorter');
+        uksort($pages, [$this, 'pagesorter']);
         return $pages;
     }
 
@@ -130,7 +146,7 @@ class MetadataSearch
      * @param string $title  title from index
      * @return bool
      */
-    protected static function pageLookupTitleCompare($search, $title)
+    protected function pageLookupTitleCompare($search, $title)
     {
         return stripos($title, $search) !== false;
     }
@@ -145,7 +161,7 @@ class MetadataSearch
      * @return int Returns < 0 if $a is less than $b; > 0 if $a is greater than $b,
      *             and 0 if they are equal.
      */
-    protected static function pagesorter($a, $b)
+    protected function pagesorter($a, $b)
     {
         $ac = count(explode(':',$a));
         $bc = count(explode(':',$b));
@@ -166,7 +182,7 @@ class MetadataSearch
      *
      * @return array
      */
-    protected static function filterResultsByTime(array $results, $after, $before)
+    protected function filterResultsByTime(array $results, $after, $before)
     {
         if ($after || $before) {
             $after = is_int($after) ? $after : strtotime($after);

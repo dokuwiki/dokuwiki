@@ -30,7 +30,7 @@ class Search extends Ui
         global $QUERY;
 
         $this->query = $QUERY;
-        $this->parsedQuery = QueryParser::convert($QUERY);
+        $this->parsedQuery = (new QueryParser)->convert($QUERY);
         $this->searchState = new SearchState($this->parsedQuery);
 
         $this->pageLookupResults = $pageLookupResults;
@@ -575,6 +575,7 @@ class Search extends Ui
         $html .= '<dl class="search_results">';
         $num = 0;
         $position = 0;
+        $FulltextSearch = FulltextSearch::getInstance();
 
         foreach ($data as $id => $cnt) {
             $position += 1;
@@ -600,7 +601,7 @@ class Search extends Ui
                 $hits = '<span class="hits">' . $cnt . ' ' . $lang['hits'] . '</span>, ';
                 $resultBody['meta'] = $hits . $resultBody['meta'];
                 if ($num <= FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
-                    $resultBody['snippet'] = FulltextSearch::snippet($id, $highlight);
+                    $resultBody['snippet'] = $FulltextSearch->snippet($id, $highlight);
                 }
             }
 

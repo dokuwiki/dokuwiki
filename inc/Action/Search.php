@@ -69,8 +69,14 @@ class Search extends AbstractAction {
         global $INPUT, $QUERY;
         $after = $INPUT->str('min');
         $before = $INPUT->str('max');
-        $this->pageLookupResults = MetadataSearch::pageLookup($QUERY, true, useHeading('navigation'), $after, $before);
-        $this->fullTextResults = FulltextSearch::pageSearch($QUERY, $highlight, $INPUT->str('srt'), $after, $before);
+        $MetadataSearch = MetadataSearch::getInstance();
+        $this->pageLookupResults = $MetadataSearch->pageLookup(
+                $QUERY, true, useHeading('navigation'), $after, $before
+        );
+        $FulltextSearch = FulltextSearch::getInstance();
+        $this->fullTextResults = $FulltextSearch->pageSearch(
+                $QUERY, $highlight, $INPUT->str('srt'), $after, $before
+        );
         $this->highlight = $highlight;
     }
 
@@ -87,7 +93,7 @@ class Search extends AbstractAction {
             return;
         }
 
-        $parsedQuery = QueryParser::convert($QUERY);
+        $parsedQuery = (new QueryParser)->convert($QUERY);
 
         if (empty($parsedQuery['ns']) && empty($parsedQuery['notns'])) {
             if ($conf['search_nslimit'] > 0) {

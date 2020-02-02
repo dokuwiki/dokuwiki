@@ -366,7 +366,8 @@ class ApiCore
     public function search($query)
     {
         $regex = array();
-        $data = FulltextSearch::pageSearch($query, $regex);
+        $FulltextSearch = FulltextSearch::getInstance();
+        $data = $FulltextSearch->pageSearch($query, $regex);
         $pages = array();
 
         // prepare additional data
@@ -375,7 +376,7 @@ class ApiCore
             $file = wikiFN($id);
 
             if ($idx < FT_SNIPPET_NUMBER) {
-                $snippet = FulltextSearch::snippet($id, $regex);
+                $snippet = $FulltextSearch->snippet($id, $regex);
                 $idx++;
             } else {
                 $snippet = '';

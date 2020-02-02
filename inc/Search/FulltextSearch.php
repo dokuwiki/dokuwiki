@@ -18,6 +18,22 @@ const FT_SNIPPET_NUMBER = 15;
  */
 class FulltextSearch
 {
+    /** @var FulltextSearch $instance */
+    protected static $instance = null;
+
+    /**
+     * Get new or existing singleton instance of the FulltextSearch
+     *
+     * @return FulltextSearch
+     */
+    public static function getInstance()
+    {
+        if (is_null(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+
     /**
      *  Fulltext Search constructor. prevent direct object creation
      */
@@ -40,7 +56,7 @@ class FulltextSearch
      *
      * @return array
      */
-    public static function pageSearch($query, &$highlight, $sort = null, $after = null, $before = null)
+    public function pageSearch($query, &$highlight, $sort = null, $after = null, $before = null)
     {
         if ($sort === null) {
             $sort = 'hits';
@@ -52,7 +68,7 @@ class FulltextSearch
             'before' => $before
         ];
         $data['highlight'] =& $highlight;
-        $action = static::class.'::pageSearchCallBack';
+        $action = [$this, 'pageSearchCallBack'];
         return Event::createAndTrigger('SEARCH_QUERY_FULLPAGE', $data, $action);
     }
 
@@ -65,10 +81,10 @@ class FulltextSearch
      * @param array $data  event data
      * @return array       matching documents
      */
-    public static function pageSearchCallBack(&$data)
+    public function pageSearchCallBack(&$data)
     {
         // parse the given query
-        $q = QueryParser::convert($data['query']);
+        $q = (new QueryParser)->convert($data['query']);
         $data['highlight'] = $q['highlight'];
 
         if (empty($q['parsed_ary'])) return array();
@@ -134,15 +150,15 @@ class FulltextSearch
                     break;
                 case 'AND': // and operation
                     list($pages1, $pages2) = array_splice($stack, -2);
-                    $stack[] = static::resultCombine(array($pages1, $pages2));
+                    $stack[] = $this->resultCombine(array($pages1, $pages2));
                     break;
                 case 'OR':  // or operation
                     list($pages1, $pages2) = array_splice($stack, -2);
-                    $stack[] = static::resultUnite(array($pages1, $pages2));
+                    $stack[] = $this->resultUnite(array($pages1, $pages2));
                     break;
                 case 'NOT': // not operation (unary)
                     $pages   = array_pop($stack);
-                    $stack[] = static::resultComplement(array($pages_all, $pages));
+                    $stack[] = $this->resultComplement(array($pages_all, $pages));
                     break;
             }
         }
@@ -160,10 +176,10 @@ class FulltextSearch
             }
         }
 
-        $docs = static::filterResultsByTime($docs, $data['after'], $data['before']);
+        $docs = $this->filterResultsByTime($docs, $data['after'], $data['before']);
 
         if ($data['sort'] === 'mtime') {
-            uksort($docs, static::class.'::pagemtimesorter');
+            uksort($docs, [$this, 'pagemtimesorter']);
         } else {
             // sort docs by count
             arsort($docs);
@@ -181,7 +197,7 @@ class FulltextSearch
      *
      * @return array
      */
-    protected static function filterResultsByTime(array $results, $after, $before)
+    protected function filterResultsByTime(array $results, $after, $before)
     {
         if ($after || $before) {
             $after = is_int($after) ? $after : strtotime($after);
@@ -210,7 +226,7 @@ class FulltextSearch
      * @return int Returns < 0 if $a is newer than $b, > 0 if $b is newer than $a
      *             and 0 if they are of the same age
      */
-    protected static function pagemtimesorter($a, $b)
+    protected function pagemtimesorter($a, $b)
     {
         $mtimeA = filemtime(wikiFN($a));
         $mtimeB = filemtime(wikiFN($b));
@@ -227,7 +243,7 @@ class FulltextSearch
      * @param array $highlight
      * @return mixed
      */
-    public static function snippet($id, $highlight)
+    public function snippet($id, $highlight)
     {
         $text = rawWiki($id);
         $text = str_replace("\xC2\xAD",'',$text); // remove soft-hyphens
@@ -250,7 +266,7 @@ class FulltextSearch
                 join(
                     '|',
                     array_map(
-                        static::class.'::snippetRePreprocess',
+                        [$this, 'snippetRePreprocess'],
                         array_map(
                             'preg_quote_cb',
                             array_filter((array) $highlight)
@@ -340,7 +356,7 @@ class FulltextSearch
      * @param string $term
      * @return string
      */
-    public static function snippetRePreprocess($term)
+    public function snippetRePreprocess($term)
     {
         // do not process asian terms where word boundaries are not explicit
         if (Utf8\Asian::isAsianWords($term)) return $term;
@@ -385,7 +401,7 @@ class FulltextSearch
      * @param array $args An array of page arrays
      * @return array
      */
-    protected static function resultCombine($args)
+    protected function resultCombine($args)
     {
         $array_count = count($args);
         if ($array_count == 1) {
@@ -417,7 +433,7 @@ class FulltextSearch
      *
      * @author Kazutaka Miyasaka <kazmiya@gmail.com>
      */
-    protected static function resultUnite($args)
+    protected function resultUnite($args)
     {
         $array_count = count($args);
         if ($array_count === 1) {
@@ -442,7 +458,7 @@ class FulltextSearch
      *
      * @author Kazutaka Miyasaka <kazmiya@gmail.com>
      */
-    protected static function resultComplement($args)
+    protected function resultComplement($args)
     {
         $array_count = count($args);
         if ($array_count === 1) {
