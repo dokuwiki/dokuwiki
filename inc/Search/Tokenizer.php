@@ -34,7 +34,7 @@ class Tokenizer
             ? IDX_MINWORDLENGTH
             : MINWORDLENGTH;
 
-        $this->getStopwords();
+        $this->Stopwords = $this->getStopwords();
     }
 
     /**
