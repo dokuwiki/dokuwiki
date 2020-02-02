@@ -71,13 +71,9 @@ abstract class AbstractIndex
             $pid = array_search(self::INDEX_MARK_DELETED.$page, $index, true);
             if ($pid !== false) {
                 $index[$pid] = $page;
-            } elseif (page_exists($page)) {
+            } else {
                 $pid = count($index);
                 $index[$pid] = $page;
-            } else {
-                // do not issue PID when the page does not exist
-                $this->unlock();
-                return false;
             }
         }
 
@@ -124,7 +120,9 @@ abstract class AbstractIndex
     public function getPages()
     {
         return array_filter($this->getIndex('page', ''),
-            function($v) { return $v[0] !== self::INDEX_MARK_DELETED[0]; }
+            function ($v) {
+                return ($v[0] !== self::INDEX_MARK_DELETED[0]);
+            }
         );
     }
 
