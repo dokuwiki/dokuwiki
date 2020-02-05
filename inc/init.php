@@ -554,7 +554,7 @@ function fullpath($path,$exists=false){
     $iswin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' || @$GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS']);
 
     // find the (indestructable) root of the path - keeps windows stuff intact
-    if($path{0} == '/'){
+    if($path[0] == '/'){
         $root = '/';
     }elseif($iswin){
         // match drive letter and UNC paths

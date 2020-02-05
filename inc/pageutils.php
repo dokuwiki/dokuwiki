@@ -461,7 +461,7 @@ function resolve_id($ns,$id,$clean=true){
 
     // if the id starts with a dot we need to handle the
     // relative stuff
-    if($id && $id{0} == '.'){
+    if($id && $id[0] == '.'){
         // normalize initial dots without a colon
         $id = preg_replace('/^(\.+)(?=[^:\.])/','\1:',$id);
         // prepend the current namespace
@@ -616,7 +616,7 @@ function resolve_pageid($ns,&$page,&$exists,$rev='',$date_at=false ){
 function getCacheName($data,$ext=''){
     global $conf;
     $md5  = md5($data);
-    $file = $conf['cachedir'].'/'.$md5{0}.'/'.$md5.$ext;
+    $file = $conf['cachedir'].'/'.$md5[0].'/'.$md5.$ext;
     io_makeFileDir($file);
     return $file;
 }

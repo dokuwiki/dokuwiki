@@ -460,7 +460,7 @@ class DokuCssFile {
         }
         // a less file import? - requires a file system location
         else if (substr($match[3],-5) == '.less') {
-            if ($match[3]{0} != '/') {
+            if ($match[3][0] != '/') {
                 $match[3] = $this->getRelativePath() . '/' . $match[3];
             }
         }

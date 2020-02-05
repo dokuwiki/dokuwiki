@@ -1556,7 +1556,7 @@ function html_insert_softbreaks($diffhtml) {
  */
 function html_softbreak_callback($match){
     // if match is an html tag, return it intact
-    if ($match[0]{0} == '<') return $match[0];
+    if ($match[0][0] == '<') return $match[0];
 
     // its a long string without a breaking character,
     // make certain characters into breaking characters by inserting a

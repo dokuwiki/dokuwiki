@@ -369,7 +369,7 @@ function buildAttributes($params, $skipempty = false) {
     $url   = '';
     $white = false;
     foreach($params as $key => $val) {
-        if($key{0} == '_') continue;
+        if($key[0] == '_') continue;
         if($val === '' && $skipempty) continue;
         if($white) $url .= ' ';
 
@@ -1619,7 +1619,7 @@ function obfuscate($email) {
             $encode = '';
             $len    = strlen($email);
             for($x = 0; $x < $len; $x++) {
-                $encode .= '&#x'.bin2hex($email{$x}).';';
+                $encode .= '&#x'.bin2hex($email[$x]).';';
             }
             return $encode;
 

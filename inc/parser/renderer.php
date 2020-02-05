@@ -840,7 +840,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
             //use placeholders
             $url    = str_replace('{URL}', rawurlencode($reference), $url);
             //wiki names will be cleaned next, otherwise urlencode unsafe chars
-            $url    = str_replace('{NAME}', ($url{0} === ':') ? $reference :
+            $url    = str_replace('{NAME}', ($url[0] === ':') ? $reference :
                                   preg_replace_callback('/[[\\\\\]^`{|}#%]/', function($match) {
                                     return rawurlencode($match[0]);
                                   }, $reference), $url);
@@ -862,7 +862,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
             $url = $url.rawurlencode($reference);
         }
         //handle as wiki links
-        if($url{0} === ':') {
+        if($url[0] === ':') {
             $urlparam = null;
             $id = $url;
             if (strpos($url, '?') !== false) {
