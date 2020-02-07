@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author pavel <office@medialine.cc>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Alexander Kh. <001.arx@gmail.com>
@@ -26,7 +27,6 @@
  * @author Eugene <windy.wanderer@gmail.com>
  * @author Johnny Utah <pcpa@cyberpunk.su>
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
- * @author Pavel <ivanovtsk@mail.ru>
  * @author Artur <ncuxxx@gmail.com>
  * @author Erli Moen <evseev.jr@gmail.com>
  * @author Владимир <id37736@yandex.ru>
