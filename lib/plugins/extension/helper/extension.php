@@ -895,7 +895,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      * @param string $defaultName   fallback for name of download
      * @return bool|string          if failed false, otherwise true or the name of the file in the given dir
      */
-    protected function downloadToFile($url,$file,$defaultName=''){
+    protected function downloadToFile($url,$file,$defaultName='')
+    {
         global $conf;
         $http = new DokuHTTPClient();
         $http->max_bodysize = 0;
@@ -911,8 +912,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
             $content_disposition = $http->resp_headers['content-disposition'];
             $match=array();
             if (is_string($content_disposition) &&
-                    preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)) {
-
+                preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)
+            ) {
                 $name = \dokuwiki\Utf8\PhpString::basename($match[1]);
             }
 
@@ -927,10 +928,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
 
         $fileexists = file_exists($file);
         $fp = @fopen($file,"w");
-        if(!$fp) return false;
+        if (!$fp) return false;
         fwrite($fp,$data);
         fclose($fp);
-        if(!$fileexists and $conf['fperm']) chmod($file, $conf['fperm']);
+        if (!$fileexists and $conf['fperm']) chmod($file, $conf['fperm']);
         return $name;
     }
 
@@ -1187,7 +1188,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
             return true;
         }
 
-        // the only case when we don't get one of the recognized archive types is when the archive file can't be read
+        // the only case when we don't get one of the recognized archive types is
+        // when the archive file can't be read
         throw new Exception($this->getLang('error_decompress').' Couldn\'t read archive file');
     }
 
