@@ -153,9 +153,25 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
      */
     public function makeHomepageLink(helper_plugin_extension_extension $extension)
     {
-        $text = $this->getLang('homepage_link');
-        $url = hsc($extension->getURL());
-        $html = '<a href="'.$url.'" title="'.$url.'" class ="urlextern">'.$text.'</a> ';
+        global $conf;
+        $url = $extension->getURL();
+        if (strtolower(parse_url($url, PHP_URL_HOST)) == 'www.dokuwiki.org') {
+            $linktype = 'interwiki';
+        } else {
+            $linktype = 'extern';
+        }
+        $param = array(
+            'href'   => $url,
+            'title'  => $url,
+            'class'  => ($linktype == 'extern') ? 'urlextern' : 'interwiki iw_doku',
+            'target' => $conf['target'][$linktype],
+            'rel'    => ($linktype == 'extern') ? 'noopener' : '',
+        );
+        if ($linktype == 'extern' && $conf['relnofollow']) {
+            $param['rel'] = implode(' ', [$param['rel'], 'ugc nofollow']);
+        }
+        $html .= ' <a '. buildAttributes($param, true).'>'.
+            $this->getLang('homepage_link').'</a>';
         return $html;
     }
 
@@ -299,12 +315,24 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
      */
     public function makeLinkbar(helper_plugin_extension_extension $extension)
     {
+        global $conf;
         $html  = '<div class="linkbar">';
         $html .= $this->makeHomepageLink($extension);
-        if ($extension->getBugtrackerURL()) {
-            $html .= ' <a href="'.hsc($extension->getBugtrackerURL()).
-                '" title="'.hsc($extension->getBugtrackerURL()).'" class ="bugs">'.
-                $this->getLang('bugs_features').'</a>';
+
+        $bugtrackerURL = $extension->getBugtrackerURL();
+        if ($bugtrackerURL) {
+            $param = array(
+                'href'   => $bugtrackerURL,
+                'title'  => $bugtrackerURL,
+                'class'  => 'bugs',
+                'target' => $conf['target']['extern'],
+                'rel'    => $conf['target']['extern'] ? 'noopener' : '',
+            );
+            if ($conf['relnofollow']) {
+                $param['rel'] = implode(' ', [$param['rel'], 'ugc nofollow']);
+            }
+            $html .= ' <a '.buildAttributes($param, true).'>'.
+                  $this->getLang('bugs_features').'</a>';
         }
         if ($extension->getTags()) {
             $first = true;
