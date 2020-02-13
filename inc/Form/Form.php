@@ -206,6 +206,20 @@ class Form extends Element
     #region Element adding functions
 
     /**
+     * Adds a input field
+     *
+     * @param string $type
+     * @param string $name
+     * @param string $label
+     * @param int $pos
+     * @return InputElement
+     */
+    public function addInput($type, $name, $label = '', $pos = -1)
+    {
+        return $this->addElement(new InputElement($type, $name, $label), $pos);
+    }
+
+    /**
      * Adds a text input field
      *
      * @param string $name
@@ -215,7 +229,7 @@ class Form extends Element
      */
     public function addTextInput($name, $label = '', $pos = -1)
     {
-        return $this->addElement(new InputElement('text', $name, $label), $pos);
+        return $this->addInput('text', $name, $label, $pos);
     }
 
     /**
@@ -228,7 +242,7 @@ class Form extends Element
      */
     public function addPasswordInput($name, $label = '', $pos = -1)
     {
-        return $this->addElement(new InputElement('password', $name, $label), $pos);
+        return $this->addInput('password', $name, $label, $pos);
     }
 
     /**
