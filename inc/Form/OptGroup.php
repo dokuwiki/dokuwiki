@@ -3,7 +3,8 @@
 namespace dokuwiki\Form;
 
 
-class OptGroup extends Element {
+class OptGroup extends Element
+{
     protected $options = array();
     protected $value;
 
@@ -11,7 +12,8 @@ class OptGroup extends Element {
      * @param string $label The label text for this element (will be autoescaped)
      * @param array  $options The available options
      */
-    public function __construct($label, $options) {
+    public function __construct($label, $options)
+    {
         parent::__construct('optGroup', array('label' => $label));
         $this->options($options);
     }
@@ -24,7 +26,8 @@ class OptGroup extends Element {
      * @param string $value
      * @return bool true if an option with the given value exists, false otherwise
      */
-    public function storeValue($value) {
+    public function storeValue($value)
+    {
         $this->value = $value;
         return isset($this->options[$value]);
     }
@@ -45,22 +48,26 @@ class OptGroup extends Element {
      * @param null|array $options
      * @return $this|array
      */
-    public function options($options = null) {
-        if($options === null) return $this->options;
-        if(!is_array($options)) throw new \InvalidArgumentException('Options have to be an array');
+    public function options($options = null)
+    {
+        if ($options === null) return $this->options;
+        if (!is_array($options)) throw new \InvalidArgumentException('Options have to be an array');
         $this->options = array();
-        foreach($options as $key => $val) {
+        foreach ($options as $key => $val) {
             if (is_array($val)) {
                 if (!key_exists('label', $val)) throw new \InvalidArgumentException(
                     'If option is given as array, it has to have a "label"-key!'
                 );
-                if (key_exists('attrs', $val) && is_array($val['attrs']) && key_exists('selected', $val['attrs'])) {
+                if (key_exists('attrs', $val)
+                    && is_array($val['attrs'])
+                    && key_exists('selected', $val['attrs'])
+                ) {
                     throw new \InvalidArgumentException(
                         'Please use function "DropdownElement::val()" to set the selected option'
                     );
                 }
                 $this->options[$key] = $val;
-            } elseif(is_int($key)) {
+            } elseif (is_int($key)) {
                 $this->options[$val] = array('label' => (string) $val);
             } else {
                 $this->options[$key] = array('label' => (string) $val);
@@ -75,7 +82,8 @@ class OptGroup extends Element {
      *
      * @return string
      */
-    public function toHTML() {
+    public function toHTML()
+    {
         if ($this->attributes['label'] === null) {
             return $this->renderOptions();
         }
@@ -89,9 +97,10 @@ class OptGroup extends Element {
     /**
      * @return string
      */
-    protected function renderOptions() {
+    protected function renderOptions()
+    {
         $html = '';
-        foreach($this->options as $key => $val) {
+        foreach ($this->options as $key => $val) {
             $selected = ((string)$key === (string)$this->value) ? ' selected="selected"' : '';
             $attrs = '';
             if (!empty($val['attrs']) && is_array($val['attrs'])) {

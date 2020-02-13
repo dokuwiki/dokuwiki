@@ -9,13 +9,14 @@ namespace dokuwiki\Form;
  *
  * @package dokuwiki\Form
  */
-class TagCloseElement extends ValueElement {
-
+class TagCloseElement extends ValueElement
+{
     /**
      * @param string $tag
      * @param array $attributes
      */
-    public function __construct($tag, $attributes = array()) {
+    public function __construct($tag, $attributes = array())
+    {
         parent::__construct('tagclose', $tag, $attributes);
     }
 
@@ -26,7 +27,8 @@ class TagCloseElement extends ValueElement {
      * @return void
      * @throws \BadMethodCallException
      */
-    public function addClass($class) {
+    public function addClass($class)
+    {
         throw new \BadMethodCallException('You can\t add classes to closing tag');
     }
 
@@ -37,7 +39,8 @@ class TagCloseElement extends ValueElement {
      * @return string
      * @throws \BadMethodCallException
      */
-    public function id($id = null) {
+    public function id($id = null)
+    {
         if ($id === null) {
             return '';
         } else {
@@ -53,7 +56,8 @@ class TagCloseElement extends ValueElement {
      * @return string
      * @throws \BadMethodCallException
      */
-    public function attr($name, $value = null) {
+    public function attr($name, $value = null)
+    {
         if ($value === null) {
             return '';
         } else {
@@ -68,7 +72,8 @@ class TagCloseElement extends ValueElement {
      * @return array
      * @throws \BadMethodCallException
      */
-    public function attrs($attributes = null) {
+    public function attrs($attributes = null)
+    {
         if ($attributes === null) {
             return array();
         } else {
@@ -81,7 +86,8 @@ class TagCloseElement extends ValueElement {
      *
      * @return string
      */
-    public function toHTML() {
+    public function toHTML()
+    {
         return '</'.$this->val().'>';
     }
 

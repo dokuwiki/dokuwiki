@@ -8,13 +8,14 @@ namespace dokuwiki\Form;
  *
  * @package dokuwiki\Form
  */
-class FieldsetOpenElement extends TagOpenElement {
-
+class FieldsetOpenElement extends TagOpenElement
+{
     /**
      * @param string $legend
      * @param array $attributes
      */
-    public function __construct($legend='', $attributes = array()) {
+    public function __construct($legend='', $attributes = array())
+    {
         // this is a bit messy and we just do it for the nicer class hierarchy
         // the parent would expect the tag in $value but we're storing the
         // legend there, so we have to set the type manually
@@ -27,7 +28,8 @@ class FieldsetOpenElement extends TagOpenElement {
      *
      * @return string
      */
-    public function toHTML() {
+    public function toHTML()
+    {
         $html = '<fieldset '.buildAttributes($this->attrs()).'>';
         $legend = $this->val();
         if($legend) $html .= DOKU_LF.'<legend>'.hsc($legend).'</legend>';

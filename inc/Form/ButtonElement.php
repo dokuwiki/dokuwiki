@@ -8,8 +8,8 @@ namespace dokuwiki\Form;
  *
  * @package dokuwiki\Form
  */
-class ButtonElement extends Element {
-
+class ButtonElement extends Element
+{
     /** @var string HTML content */
     protected $content = '';
 
@@ -17,7 +17,8 @@ class ButtonElement extends Element {
      * @param string $name
      * @param string $content HTML content of the button. You have to escape it yourself.
      */
-    public function __construct($name, $content = '') {
+    public function __construct($name, $content = '')
+    {
         parent::__construct('button', array('name' => $name, 'value' => 1));
         $this->content = $content;
     }
@@ -27,7 +28,8 @@ class ButtonElement extends Element {
      *
      * @return string
      */
-    public function toHTML() {
+    public function toHTML()
+    {
         return '<button ' . buildAttributes($this->attrs(), true) . '>'.$this->content.'</button>';
     }
 
