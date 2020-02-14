@@ -126,11 +126,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         return in_array(
             $this->id,
             array(
-                            'authad', 'authldap', 'authmysql', 'authpdo',
-                            'authpgsql', 'authplain', 'acl', 'info', 'extension',
-                            'revert', 'popularity', 'config', 'safefnrecode', 'styling',
-                            'testing', 'template:dokuwiki'
-                        )
+                'authad', 'authldap', 'authmysql', 'authpdo', 'authpgsql', 'authplain',
+                'acl', 'info', 'extension', 'revert', 'popularity', 'config',
+                'safefnrecode', 'styling', 'testing', 'template:dokuwiki'
+            )
         );
     }
 
@@ -306,7 +305,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     public function getURL()
     {
         if (!empty($this->localInfo['url'])) return $this->localInfo['url'];
-        return 'https://www.dokuwiki.org/'.($this->isTemplate() ? 'template' : 'plugin').':'.$this->getBase();
+        return 'https://www.dokuwiki.org/'.
+            ($this->isTemplate() ? 'template' : 'plugin').':'.$this->getBase();
     }
 
     /**
@@ -772,8 +772,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         if (is_readable($infopath)) {
             $this->localInfo = confToHash($infopath);
         } elseif (!$this->isTemplate() && $this->isEnabled()) {
-            $path       = $this->getInstallDir().'/';
-            $plugin     = null;
+            $path   = $this->getInstallDir().'/';
+            $plugin = null;
 
             foreach (PluginController::PLUGIN_TYPES as $type) {
                 if (file_exists($path.$type.'.php')) {
@@ -895,7 +895,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      * @param string $defaultName   fallback for name of download
      * @return bool|string          if failed false, otherwise true or the name of the file in the given dir
      */
-    protected function downloadToFile($url,$file,$defaultName='')
+    protected function downloadToFile($url, $file, $defaultName = '')
     {
         global $conf;
         $http = new DokuHTTPClient();
@@ -910,7 +910,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         $name = '';
         if (isset($http->resp_headers['content-disposition'])) {
             $content_disposition = $http->resp_headers['content-disposition'];
-            $match=array();
+            $match = array();
             if (is_string($content_disposition) &&
                 preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)
             ) {
@@ -929,7 +929,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         $fileexists = file_exists($file);
         $fp = @fopen($file,"w");
         if (!$fp) return false;
-        fwrite($fp,$data);
+        fwrite($fp, $data);
         fclose($fp);
         if (!$fileexists and $conf['fperm']) chmod($file, $conf['fperm']);
         return $name;
@@ -965,7 +965,9 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         // download
         if (!$file = $this->downloadToFile($url, $tmp.'/', $file)) {
             io_rmdir($tmp, true);
-            throw new Exception(sprintf($this->getLang('error_download'), '<bdi>'.hsc($url).'</bdi>'));
+            throw new Exception(sprintf($this->getLang('error_download'),
+                '<bdi>'.hsc($url).'</bdi>')
+            );
         }
 
         return $tmp.'/'.$file;
@@ -1056,7 +1058,9 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
                     'action' => $action
                 );
             } else {
-                throw new Exception(sprintf($this->getLang('error_copy').DOKU_LF, '<bdi>'.$item['base'].'</bdi>'));
+                throw new Exception(sprintf($this->getLang('error_copy').DOKU_LF,
+                    '<bdi>'.$item['base'].'</bdi>')
+                );
             }
         }
 
@@ -1130,13 +1134,13 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
 
         // files where found but no info.txt - use old method
         if ($found_files) {
-            $info            = array();
-            $info['tmp']     = $this_dir;
+            $info        = array();
+            $info['tmp'] = $this_dir;
             // does this look like a template or should we use the default type?
             if ($found_template_parts >= 2) {
-                $info['type']    = 'template';
+                $info['type'] = 'template';
             } else {
-                $info['type']    = $default_type;
+                $info['type'] = $default_type;
             }
 
             $result['old'][] = $info;
