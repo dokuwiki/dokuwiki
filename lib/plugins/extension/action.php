@@ -68,7 +68,7 @@ class action_plugin_extension extends DokuWiki_Action_Plugin
                 );
 
                 header('Content-Type: application/json');
-                json_encode($return);
+                echo json_encode($return);
                 break;
 
             case 'info':
