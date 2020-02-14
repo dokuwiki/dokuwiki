@@ -6,7 +6,7 @@
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Extension\PluginController;
+use dokuwiki\Form\Form as FormWriter;
 
 /**
  * Class helper_plugin_extension_list takes care of the overall GUI
@@ -44,13 +44,19 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         $extension = $this->loadHelper('extension_extension');
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
+
+        $Form = new FormWriter([
+                'action' => '',
+                'id'  => 'extension__list',
+        ]);
         $list->startForm();
         foreach ($pluginlist as $name) {
             $extension->setExtension($name);
             $list->addRow($extension, $extension->getID() == $this->infoFor);
         }
         $list->endForm();
-        $list->render();
+        $Form->addHTML($list->render(true));
+        echo $Form->toHTML();
     }
 
     /**
@@ -71,13 +77,19 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         $extension = $this->loadHelper('extension_extension');
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
+
+        $Form = new FormWriter([
+                'action' => '',
+                'id'  => 'extension__list',
+        ]);
         $list->startForm();
         foreach ($tpllist as $name) {
             $extension->setExtension("template:$name");
             $list->addRow($extension, $extension->getID() == $this->infoFor);
         }
         $list->endForm();
-        $list->render();
+        $Form->addHTML($list->render(true));
+        echo $Form->toHTML();
     }
 
     /**
@@ -90,10 +102,18 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         echo $this->locale_xhtml('intro_search');
         echo '</div>';
 
-        $form = new Doku_Form(array('action' => $this->tabURL('', array(), '&'), 'class' => 'search'));
-        $form->addElement(form_makeTextField('q', $INPUT->str('q'), $this->getLang('search_for')));
-        $form->addElement(form_makeButton('submit', '', $this->getLang('search')));
-        $form->printForm();
+        $Form = new FormWriter([
+                'action' => $this->tabURL('', array(), '&'),
+                'class'  => 'search',
+        ]);
+        $Form->addTagOpen('div')->addClass('no');
+        $Form->addTextInput('q', $this->getLang('search_for'))
+            ->addClass('edit')
+            ->val($INPUT->str('q'));
+        $Form->addButton('submit', $this->getLang('search'))
+            ->attrs(['type' => 'submit', 'title' => $this->getLang('search')]);
+        $Form->addTagClose('div');
+        echo $Form->toHTML();
 
         if (!$INPUT->bool('q')) return;
 
@@ -105,6 +125,11 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         $extension = $this->loadHelper('extension_extension');
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
+
+        $Form = new FormWriter([
+                'action' => '',
+                'id'  => 'extension__list',
+        ]);
         $list->startForm();
         if ($result) {
             foreach ($result as $name) {
@@ -115,7 +140,8 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
             $list->nothingFound();
         }
         $list->endForm();
-        $list->render();
+        $Form->addHTML($list->render(true));
+        echo $Form->toHTML();
     }
 
     /**
@@ -127,17 +153,22 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         echo $this->locale_xhtml('intro_install');
         echo '</div>';
 
-        $form = new Doku_Form(
-            array(
+        $Form = new FormWriter([
                 'action' => $this->tabURL('', array(), '&'),
                 'enctype' => 'multipart/form-data',
-                'class' => 'install'
-            )
-        );
-        $form->addElement(form_makeTextField('installurl', '', $this->getLang('install_url'), '', 'block'));
-        $form->addElement(form_makeFileField('installfile', $this->getLang('install_upload'), '', 'block'));
-        $form->addElement(form_makeButton('submit', '', $this->getLang('btn_install')));
-        $form->printForm();
+                'class'  => 'install',
+        ]);
+        $Form->addTagOpen('div')->addClass('no');
+        $Form->addTextInput('installurl', $this->getLang('install_url'))
+            ->addClass('block')
+            ->attrs(['type' => 'url']);
+        $Form->addTextInput('installfile', $this->getLang('install_upload'))
+            ->addClass('block')
+            ->attrs(['type' => 'file']);
+        $Form->addButton('', $this->getLang('btn_install'))
+            ->attrs(['type' => 'submit', 'title' => $this->getLang('btn_install')]);
+        $Form->addTagClose('div');
+        echo $Form->toHTML();
     }
 
     /**

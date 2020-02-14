@@ -30,13 +30,6 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
      */
     public function startForm()
     {
-        $this->form .= '<form id="extension__list" accept-charset="utf-8" method="post" action="">';
-        $hidden = array(
-            'do' => 'admin',
-            'page' => 'extension',
-            'sectok' => getSecurityToken()
-        );
-        $this->addHidden($hidden);
         $this->form .= '<ul class="extensionList">';
     }
 
@@ -96,7 +89,6 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
     public function endForm()
     {
         $this->form .= '</ul>';
-        $this->form .= '</form>'.DOKU_LF;
     }
 
     /**
@@ -110,9 +102,12 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
 
     /**
      * Print the form
+     *
+     * @param bool $returnonly whether to return html or print
      */
-    public function render()
+    public function render($returnonly = false)
     {
+        if ($returnonly) return $this->form;
         echo $this->form;
     }
 
@@ -176,7 +171,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
     }
 
     /**
-     * Generate the class name for the row of the extensio
+     * Generate the class name for the row of the extension
      *
      * @param helper_plugin_extension_extension $extension The extension object
      * @return string The class name
@@ -207,13 +202,14 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
             $mailid = $extension->getEmailID();
             if ($mailid) {
                 $url = $this->gui->tabURL('search', array('q' => 'authorid:'.$mailid));
-                $html = '<bdi><a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" >'.
+                $html = '<a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" >'.
                     '<img src="//www.gravatar.com/avatar/'.$mailid.
                     '?s=20&amp;d=mm" width="20" height="20" alt="" /> '.
-                    hsc($extension->getAuthor()).'</a></bdi>';
+                    hsc($extension->getAuthor()).'</a>';
             } else {
-                $html = '<bdi><span class="author">'.hsc($extension->getAuthor()).'</span></bdi>';
+                $html = '<span class="author">'.hsc($extension->getAuthor()).'</span>';
             }
+            $html = '<bdi>'.$html.'</bdi>';
         } else {
             $html = '<em class="author">'.$this->getLang('unknown_author').'</em>'.DOKU_LF;
         }
