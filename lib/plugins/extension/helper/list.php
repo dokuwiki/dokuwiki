@@ -165,7 +165,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
         if ($linktype == 'extern' && $conf['relnofollow']) {
             $param['rel'] = implode(' ', [$param['rel'], 'ugc nofollow']);
         }
-        $html .= ' <a '. buildAttributes($param, true).'>'.
+        $html = ' <a '. buildAttributes($param, true).'>'.
             $this->getLang('homepage_link').'</a>';
         return $html;
     }

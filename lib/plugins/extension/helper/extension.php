@@ -126,9 +126,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         return in_array(
             $this->id,
             array(
-                'authad', 'authldap', 'authmysql', 'authpdo', 'authpgsql', 'authplain',
-                'acl', 'info', 'extension', 'revert', 'popularity', 'config',
-                'safefnrecode', 'styling', 'testing', 'template:dokuwiki'
+                'authad', 'authldap', 'authpdo', 'authplain',
+                'acl', 'config', 'extension', 'info', 'popularity', 'revert',
+                'safefnrecode', 'styling', 'testing', 'usermanager',
+                'template:dokuwiki',
             )
         );
     }
