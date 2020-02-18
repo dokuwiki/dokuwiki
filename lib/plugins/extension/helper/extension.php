@@ -1238,10 +1238,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
             closedir($dh);
             return $ok;
         } else {
-            $exists = file_exists($dst);
+            $existed = file_exists($dst);
 
             if (!@copy($src, $dst)) return false;
-            if (!$exists && !empty($conf['fperm'])) chmod($dst, $conf['fperm']);
+            if (!$existed && $conf['fperm']) chmod($dst, $conf['fperm']);
             @touch($dst, filemtime($src));
         }
 
