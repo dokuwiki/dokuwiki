@@ -46,7 +46,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         $list = $this->loadHelper('extension_list');
 
         $Form = new FormWriter([
-                'action' => '',
+                'action' => $this->tabURL('', [], '&'),
                 'id'  => 'extension__list',
         ]);
         $list->startForm();
@@ -79,7 +79,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         $list = $this->loadHelper('extension_list');
 
         $Form = new FormWriter([
-                'action' => '',
+                'action' => $this->tabURL('', [], '&'),
                 'id'  => 'extension__list',
         ]);
         $list->startForm();
@@ -103,7 +103,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         echo '</div>';
 
         $Form = new FormWriter([
-                'action' => $this->tabURL('', array(), '&'),
+                'action' => $this->tabURL('', [], '&'),
                 'class'  => 'search',
         ]);
         $Form->addTagOpen('div')->addClass('no');
@@ -127,7 +127,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         $list = $this->loadHelper('extension_list');
 
         $Form = new FormWriter([
-                'action' => '',
+                'action' => $this->tabURL('', [], '&'),
                 'id'  => 'extension__list',
         ]);
         $list->startForm();
@@ -154,7 +154,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         echo '</div>';
 
         $Form = new FormWriter([
-                'action' => $this->tabURL('', array(), '&'),
+                'action' => $this->tabURL('', [], '&'),
                 'enctype' => 'multipart/form-data',
                 'class'  => 'install',
         ]);
@@ -216,7 +216,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
      * @param bool   $absolute create absolute URLs?
      * @return string
      */
-    public function tabURL($tab = '', $params = array(), $sep = '&amp;', $absolute = false)
+    public function tabURL($tab = '', $params = [], $sep = '&amp;', $absolute = false)
     {
         global $ID;
         global $INPUT;
