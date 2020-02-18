@@ -405,7 +405,7 @@ function init_creationmodes(){
 
     // check what is set automatically by the system on file creation
     // and set the fperm param if it's not what we want
-    $auto_fmode = 0666 & ~$umask;
+    $auto_fmode = $conf['fmode'] & ~$umask;
     if($auto_fmode != $conf['fmode']) $conf['fperm'] = $conf['fmode'];
 
     // check what is set automatically by the system on file creation
