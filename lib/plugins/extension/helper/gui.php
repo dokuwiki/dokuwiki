@@ -162,9 +162,11 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         $Form->addTextInput('installurl', $this->getLang('install_url'))
             ->addClass('block')
             ->attrs(['type' => 'url']);
+        $Form->addTag('br');
         $Form->addTextInput('installfile', $this->getLang('install_upload'))
             ->addClass('block')
             ->attrs(['type' => 'file']);
+        $Form->addTag('br');
         $Form->addButton('', $this->getLang('btn_install'))
             ->attrs(['type' => 'submit', 'title' => $this->getLang('btn_install')]);
         $Form->addTagClose('div');
