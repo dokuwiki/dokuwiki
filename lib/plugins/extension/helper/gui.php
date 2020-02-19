@@ -215,7 +215,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
      * @param bool   $absolute create absolute URLs?
      * @return string
      */
-    public function tabURL($tab = '', $params = [], $sep = '&amp;', $absolute = false)
+    public function tabURL($tab = '', $params = [], $sep = '&', $absolute = false)
     {
         global $ID;
         global $INPUT;
