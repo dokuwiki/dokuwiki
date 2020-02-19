@@ -6,7 +6,7 @@
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Form\Form as FormWriter;
+use dokuwiki\Form\Form;
 
 /**
  * Class helper_plugin_extension_list takes care of the overall GUI
@@ -44,7 +44,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
 
-        $form = new FormWriter([
+        $form = new Form([
                 'action' => $this->tabURL('', [], '&'),
                 'id'  => 'extension__list',
         ]);
@@ -77,7 +77,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
 
-        $form = new FormWriter([
+        $form = new Form([
                 'action' => $this->tabURL('', [], '&'),
                 'id'  => 'extension__list',
         ]);
@@ -101,7 +101,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         echo $this->locale_xhtml('intro_search');
         echo '</div>';
 
-        $form = new FormWriter([
+        $form = new Form([
                 'action' => $this->tabURL('', [], '&'),
                 'class'  => 'search',
         ]);
@@ -125,7 +125,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
 
-        $form = new FormWriter([
+        $form = new Form([
                 'action' => $this->tabURL('', [], '&'),
                 'id'  => 'extension__list',
         ]);
@@ -152,7 +152,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         echo $this->locale_xhtml('intro_install');
         echo '</div>';
 
-        $form = new FormWriter([
+        $form = new Form([
                 'action' => $this->tabURL('', [], '&'),
                 'enctype' => 'multipart/form-data',
                 'class'  => 'install',
