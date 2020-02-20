@@ -478,6 +478,21 @@ class FulltextIndex extends AbstractIndex
     }
 
     /**
+     * Return a list of words sorted by number of times used
+     *
+     * @param int       $min    bottom frequency threshold
+     * @param int       $max    upper frequency limit. No limit if $max<$min
+     * @param int       $minlen minimum length of words to count
+     * @return array            list of words as the keys and frequency as value
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    public function histogram($min=1, $max=0, $minlen=3)
+    {
+        return Search\MetadataIndex::getInstance()->histogram($min, $max, $minlen);
+    }
+
+    /**
      * Clear the Fulltext Index
      *
      * @param bool   $requireLock

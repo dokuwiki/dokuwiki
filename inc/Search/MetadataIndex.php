@@ -391,6 +391,73 @@ class MetadataIndex extends AbstractIndex
     }
 
     /**
+     * Return a list of words or frequency sorted by number of times used
+     *
+     * @param int       $min    bottom frequency threshold
+     * @param int       $max    upper frequency limit. No limit if $max<$min
+     * @param int       $minlen minimum length of words to count
+     * @param string    $key    metadata key to list. Uses the fulltext index if not given
+     * @return array            list of words as the keys and frequency as values
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    public function histogram($min=1, $max=0, $minlen=3, $key=null)
+    {
+        if ($min < 1)    $min = 1;
+        if ($max < $min) $max = 0;
+
+        $result = array();
+
+        if ($key == 'title') {
+            $index = $this->getIndex('title', '');
+            $index = array_count_values($index);
+            foreach ($index as $val => $cnt) {
+                if ($cnt >= $min && (!$max || $cnt <= $max) && strlen($val) >= $minlen) {
+                    $result[$val] = $cnt;
+                }
+            }
+        } elseif (!is_null($key)) {
+            $metaname = $this->cleanName($key);
+            $index = $this->getIndex($metaname.'_i', '');
+            $val_idx = array();
+            foreach ($index as $wid => $line) {
+                $freq = $this->countTuples($line);
+                if ($freq >= $min && (!$max || $freq <= $max)) {
+                    $val_idx[$wid] = $freq;
+                }
+            }
+            if (!empty($val_idx)) {
+                $words = $this->getIndex($metaname.'_w', '');
+                foreach ($val_idx as $wid => $freq) {
+                    if (strlen($words[$wid]) >= $minlen) {
+                        $result[$words[$wid]] = $freq;
+                    }
+                }
+            }
+        } else {
+            $FulltextIndex = Search\FulltextIndex::getInstance();
+            $lengths = $FulltextIndex->listIndexLengths();
+            foreach ($lengths as $length) {
+                if ($length < $minlen) continue;
+                $index = $this->getIndex('i', $length);
+                $words = null;
+                foreach ($index as $wid => $line) {
+                    $freq = $this->countTuples($line);
+                    if ($freq >= $min && (!$max || $freq <= $max)) {
+                        if ($words === null) {
+                            $words = $this->getIndex('w', $length);
+                        }
+                        $result[$words[$wid]] = $freq;
+                    }
+                }
+            }
+        }
+
+        arsort($result);
+        return $result;
+    }
+
+    /**
      * Clear the Metadata Index
      *
      * @param bool   $requireLock
