@@ -49,13 +49,11 @@ class Indexer extends AbstractIndex
     {
         // check if page was deleted but is still in the index
         if (!page_exists($page)) {
-            $result = $this->deletePage($page, $verbose, $force);
-            return $result;
-        } else {
-            // update search index
-            $result = $this->addPage($page, $verbose, $force);
-            return $result;
+            return $this->deletePage($page, $verbose, $force);
         }
+
+        // update search index
+        return $this->addPage($page, $verbose, $force);
     }
 
     /**
