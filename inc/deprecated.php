@@ -1,5 +1,5 @@
 <?php
-// phpcs:ignoreFile -- this file violates PSR2 by definition
+// phpcs:ignoreFile -- this file violates PSR-12 by definition
 /**
  * These classes and functions are deprecated and will be removed in future releases
  */
@@ -570,18 +570,12 @@ class Subscription {
 class Doku_Indexer extends \dokuwiki\Search\Indexer {};
 
 /**
- * Functions to create the fulltext search index
+ * Functions to access the fulltext search index
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Tom N Harris <tnharris@whoopdedo.org>
  */
-/** @deprecated 2020-01-30 */
-
-function idx_get_indexer() {
-    dbg_deprecated('\dokuwiki\Search\Indexer::getInstance()');
-    return \dokuwiki\Search\Indexer::getInstance();
-}
 
 /** @deprecated 2019-12-16 */
 function idx_get_version() {
@@ -609,6 +603,20 @@ function idx_listIndexLengths() {
     dbg_deprecated('\dokuwiki\Search\FulltextIndex::listIndexLengths()');
     $FulltextIndex = \dokuwiki\Search\FulltextIndex::getInstance();
     return $FulltextIndex->listIndexLengths();
+}
+
+/**
+ * Create MetadataIndex instance, which supports following methods:
+ *    addMetaKeys($page, $key, $value=null)
+ *    lookupKey($key, &$value, $func=null)
+ *    getPages($key=null)
+ * @see also https://www.dokuwiki.org/devel:metadata#metadata_index
+ *
+ * @deprecated 2020-01-30
+ */
+function idx_get_indexer() {
+    dbg_deprecated('\dokuwiki\Search\MetadataIndex::getInstance()');
+    return \dokuwiki\Search\MetadataIndex::getInstance();
 }
 
 /**
