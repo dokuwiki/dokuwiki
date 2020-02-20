@@ -97,7 +97,7 @@ class remoteapicore_test extends DokuWikiTest
         $id = 'wiki:syntax';
         $file = wikiFN($id);
 
-        $Indexer = Indexer::getInstance(); //full text search depends on index
+        $Indexer = Indexer::getInstance();
         $Indexer->addPage($id);
         $expected = array(
             array(
