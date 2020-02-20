@@ -317,12 +317,17 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
 
         $bugtrackerURL = $extension->getBugtrackerURL();
         if ($bugtrackerURL) {
+            if (strtolower(parse_url($bugtrackerURL, PHP_URL_HOST)) == 'www.dokuwiki.org') {
+                $linktype = 'interwiki';
+            } else {
+                $linktype = 'extern';
+            }
             $param = array(
                 'href'   => $bugtrackerURL,
                 'title'  => $bugtrackerURL,
                 'class'  => 'bugs',
-                'target' => $conf['target']['extern'],
-                'rel'    => $conf['target']['extern'] ? 'noopener' : '',
+                'target' => $conf['target'][$linktype],
+                'rel'    => ($linktype == 'extern') ? 'noopener' : '',
             );
             if ($conf['relnofollow']) {
                 $param['rel'] = implode(' ', [$param['rel'], 'ugc nofollow']);
@@ -339,7 +344,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
                 } else {
                     $first = false;
                 }
-                $url = $this->gui->tabURL('search', array('q' => 'tag:'.$tag));
+                $url = $this->gui->tabURL('search', ['q' => 'tag:'.$tag]);
                 $html .= '<bdi><a href="'.$url.'">'.hsc($tag).'</a></bdi>';
             }
             $html .= '</span>';
