@@ -960,6 +960,7 @@ function tpl_pagetitle($id = null, $ret = false) {
 
         // page functions
         case 'edit' :
+        case 'preview' :
             $page_title = "✎ ".$name;
             break;
 
