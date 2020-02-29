@@ -79,8 +79,12 @@ class Cache
         $this->addDependencies();
 
         if ($this->_event) {
-            return $this->stats(Event::createAndTrigger(
-                $this->_event, $this, array($this, 'makeDefaultCacheDecision'))
+            return $this->stats(
+                Event::createAndTrigger(
+                    $this->_event,
+                    $this,
+                    array($this, 'makeDefaultCacheDecision')
+                )
             );
         }
 
@@ -105,7 +109,6 @@ class Cache
      */
     public function makeDefaultCacheDecision()
     {
-
         if ($this->_nocache) {
             return false;
         }                              // caching turned off
@@ -170,7 +173,7 @@ class Cache
             return false;
         }
 
-        return io_savefile($this->cache, $data);
+        return io_saveFile($this->cache, $data);
     }
 
     /**
