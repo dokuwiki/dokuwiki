@@ -78,10 +78,10 @@ class Cache
         $this->depends = $depends;
         $this->addDependencies();
 
-        if ($this->_event) {
+        if ($this->getEvent()) {
             return $this->stats(
                 Event::createAndTrigger(
-                    $this->_event,
+                    $this->getEvent(),
                     $this,
                     array($this, 'makeDefaultCacheDecision')
                 )
