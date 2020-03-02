@@ -15,7 +15,7 @@ class Revert extends AbstractItem {
         global $INFO;
         parent::__construct();
 
-        if(!$INFO['ismanager'] || !$REV || !$INFO['writable']) {
+        if(!$REV || !$INFO['writable']) {
             throw new \RuntimeException('revert not available');
         }
         $this->params['rev'] = $REV;
