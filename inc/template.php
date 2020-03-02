@@ -332,7 +332,7 @@ function tpl_metaheaders($alt = true) {
 
     // load stylesheets
     $head['link'][] = array(
-        'rel' => 'stylesheet', 'type'=> 'text/css',
+        'rel' => 'stylesheet',
         'href'=> DOKU_BASE.'lib/exe/css.php?t='.rawurlencode($conf['template']).'&tseed='.$tseed
     );
 
@@ -342,13 +342,12 @@ function tpl_metaheaders($alt = true) {
     }
     jsinfo();
     $script .= 'var JSINFO = ' . json_encode($JSINFO).';';
-    $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
+    $head['script'][] = array('_data'=> $script);
 
     // load jquery
     $jquery = getCdnUrls();
     foreach($jquery as $src) {
         $head['script'][] = array(
-            'type' => 'text/javascript',
             'charset' => 'utf-8',
             '_data' => '',
             'src' => $src,
@@ -357,7 +356,7 @@ function tpl_metaheaders($alt = true) {
 
     // load our javascript dispatcher
     $head['script'][] = array(
-        'type'=> 'text/javascript', 'charset'=> 'utf-8', '_data'=> '',
+        'charset'=> 'utf-8', '_data'=> '',
         'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed,
     ) + ($conf['defer_js'] ? [ 'defer' => 'defer'] : []);
 

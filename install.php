@@ -46,7 +46,7 @@ header('Content-Type: text/html; charset=utf-8');
 <head>
     <meta charset="utf-8" />
     <title><?php echo $lang['i_installer']?></title>
-    <style type="text/css">
+    <style>
         body { width: 90%; margin: 0 auto; font: 84% Verdana, Helvetica, Arial, sans-serif; }
         img { border: none }
         br.cl { clear:both; }
@@ -56,7 +56,7 @@ header('Content-Type: text/html; charset=utf-8');
         select.text, input.text { width: 30em; margin: 0 0.5em; }
         a {text-decoration: none}
     </style>
-    <script type="text/javascript">
+    <script>
         function acltoggle(){
             var cb = document.getElementById('acl');
             var fs = document.getElementById('acldep');
