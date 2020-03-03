@@ -167,9 +167,12 @@ class Api
         $this->checkAccess($methods[$method]);
         $name = $this->getMethodName($methods, $method);
         try {
+            set_error_handler(array($this, "argumentWarningHandler"), E_WARNING); // for PHP <7.1
             return call_user_func_array(array($plugin, $name), $args);
         } catch (\ArgumentCountError $th) {
             throw new RemoteException('Method does not exist - wrong parameter count.', -32603);
+        } finally {
+            restore_error_handler();
         }
     }
 
@@ -190,9 +193,12 @@ class Api
         }
         $this->checkArgumentLength($coreMethods[$method], $args);
         try {
+            set_error_handler(array($this, "argumentWarningHandler"), E_WARNING); // for PHP <7.1
             return call_user_func_array(array($this->coreMethods, $this->getMethodName($coreMethods, $method)), $args);
         } catch (\ArgumentCountError $th) {
             throw new RemoteException('Method does not exist - wrong parameter count.', -32603);
+        } finally {
+            restore_error_handler();
         }
     }
 
@@ -390,5 +396,15 @@ class Api
     public function setFileTransformation($fileTransformation)
     {
         $this->fileTransformation = $fileTransformation;
+    }
+
+    /**
+     * The error handler that catches argument-related warnings
+     */
+    public function argumentWarningHandler($errno, $errstr)
+    {
+        if (substr($errstr, 0, 17) == 'Missing argument ') {
+            throw new RemoteException('Method does not exist - wrong parameter count.', -32603);
+        }
     }
 }
