@@ -328,7 +328,7 @@ class remote_test extends DokuWikiTest {
         $remoteApi = new Api();
         $remoteApi->getCoreMethods(new RemoteAPICoreTest());
 
-        $remoteApi->call('wiki.twoArgWithDefaultArg', array());
+        @$remoteApi->call('wiki.twoArgWithDefaultArg', array());
     }
 
     function test_pluginCallMethods() {
@@ -355,7 +355,7 @@ class remote_test extends DokuWikiTest {
         $remoteApi = new Api();
         $remoteApi->getCoreMethods(new RemoteAPICoreTest());
 
-        $remoteApi->call('plugin.testplugin.method2', array());
+        @$remoteApi->call('plugin.testplugin.method2', array());
     }
 
     /**
