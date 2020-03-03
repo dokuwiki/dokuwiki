@@ -166,7 +166,11 @@ class Api
         }
         $this->checkAccess($methods[$method]);
         $name = $this->getMethodName($methods, $method);
-        return call_user_func_array(array($plugin, $name), $args);
+        try {
+            return call_user_func_array(array($plugin, $name), $args);
+        } catch (\ArgumentCountError $th) {
+            throw new RemoteException('Method does not exist - wrong parameter count.', -32603);
+        }
     }
 
     /**
@@ -185,7 +189,11 @@ class Api
             throw new RemoteException('Method does not exist', -32603);
         }
         $this->checkArgumentLength($coreMethods[$method], $args);
-        return call_user_func_array(array($this->coreMethods, $this->getMethodName($coreMethods, $method)), $args);
+        try {
+            return call_user_func_array(array($this->coreMethods, $this->getMethodName($coreMethods, $method)), $args);
+        } catch (\ArgumentCountError $th) {
+            throw new RemoteException('Method does not exist - wrong parameter count.', -32603);
+        }
     }
 
     /**
