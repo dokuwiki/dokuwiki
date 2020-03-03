@@ -3,7 +3,7 @@
 use dokuwiki\Input\Input;
 use dokuwiki\Extension\AuthPlugin;
 
-class Mock_Auth_Plugin extends AuthPlugin {
+class auth_deleteprofile_test_AuthDelete extends AuthPlugin {
 
     public $loggedOff = false;
 
@@ -56,7 +56,7 @@ class auth_deleteprofile_test extends DokuWikiTest {
         $_REQUEST = $input;
         $INPUT = new Input();
 
-        $auth = new Mock_Auth_Plugin();
+        $auth = new auth_deleteprofile_test_AuthDelete();
 
         $this->assertTrue(auth_deleteprofile());
         $this->assertTrue($auth->loggedOff);
@@ -82,7 +82,7 @@ class auth_deleteprofile_test extends DokuWikiTest {
         $_REQUEST = $input;
         $INPUT = new Input();
 
-        $auth = new Mock_Auth_Plugin();
+        $auth = new auth_deleteprofile_test_AuthDelete();
 
         // password check required - it fails, so don't delete profile
         $this->assertFalse(auth_deleteprofile());
@@ -112,7 +112,7 @@ class auth_deleteprofile_test extends DokuWikiTest {
         $_REQUEST = $input;
         $INPUT = new Input();
 
-        $auth = new Mock_Auth_Plugin(false);
+        $auth = new auth_deleteprofile_test_AuthDelete(false);
         $conf['disableactions'] = '';
         $this->assertFalse(auth_deleteprofile());
     }
@@ -136,7 +136,7 @@ class auth_deleteprofile_test extends DokuWikiTest {
         $_REQUEST = $input;
         $INPUT = new Input();
 
-        $auth = new Mock_Auth_Plugin();
+        $auth = new auth_deleteprofile_test_AuthDelete();
         $conf['disableactions'] = 'profile_delete';
 
         $this->assertFalse(actionOK('profile_delete'));
@@ -165,7 +165,7 @@ class auth_deleteprofile_test extends DokuWikiTest {
         $_REQUEST = $input;
         $input_foundation = new Input();
 
-        $auth = new Mock_Auth_Plugin();
+        $auth = new auth_deleteprofile_test_AuthDelete();
 
         $INPUT = clone $input_foundation;
         $INPUT->remove('delete');

@@ -452,7 +452,7 @@ You can use up to five different levels of',
     public function test_deleteUser()
     {
         global $conf, $auth;
-        $auth = new Mock_Auth_Plugin();
+        $auth = new auth_deleteprofile_test_AuthDelete();
         $conf['remote'] = 1;
         $conf['remoteuser'] = 'testuser';
         $_SERVER['REMOTE_USER'] = 'testuser';
