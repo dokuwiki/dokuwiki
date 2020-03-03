@@ -318,6 +318,19 @@ class remote_test extends DokuWikiTest {
         $this->assertEquals($remoteApi->call('wiki.twoArgWithDefaultArg', array('string', 'another')), array('string', 'another'));
     }
 
+    /**
+     * @expectedException dokuwiki\Remote\RemoteException
+     */
+    function test_generalCoreFunctionOnArgumentMissing() {
+        global $conf;
+        $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
+        $remoteApi = new Api();
+        $remoteApi->getCoreMethods(new RemoteAPICoreTest());
+
+        $remoteApi->call('wiki.twoArgWithDefaultArg', array());
+    }
+
     function test_pluginCallMethods() {
         global $conf;
         global $USERINFO;
@@ -330,6 +343,19 @@ class remote_test extends DokuWikiTest {
         $this->assertEquals($remoteApi->call('plugin.testplugin.method2', array('string', 7)), array('string', 7, false));
         $this->assertEquals($remoteApi->call('plugin.testplugin.method2ext', array('string', 7, true)), array('string', 7, true));
         $this->assertEquals($remoteApi->call('plugin.testplugin.methodString'), 'success');
+    }
+
+    /**
+     * @expectedException dokuwiki\Remote\RemoteException
+     */
+    function test_pluginCallMethodsOnArgumentMissing() {
+        global $conf;
+        $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
+        $remoteApi = new Api();
+        $remoteApi->getCoreMethods(new RemoteAPICoreTest());
+
+        $remoteApi->call('plugin.testplugin.method2', array());
     }
 
     /**
