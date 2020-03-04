@@ -565,6 +565,20 @@ function check_functions(){
         $ok = false;
     }
 
+    try {
+        random_bytes(1);
+    } catch (\Exception $th) {
+        // If an appropriate source of randomness cannot be found, an Exception will be thrown by PHP 7+
+        // this exception is also thrown by paragonie/random_compat for PHP 5.6 support
+        $error[] = $lang['i_urandom'];
+        $ok = false;
+    }
+
+    if(ini_get('mbstring.func_overload') != 0){
+        $error[] = $lang['i_mbfuncoverload'];
+        $ok = false;
+    }
+
     $funcs = explode(' ','addslashes call_user_func chmod copy fgets '.
                          'file file_exists fseek flush filesize ftell fopen '.
                          'glob header ignore_user_abort ini_get mail mkdir '.
