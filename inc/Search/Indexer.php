@@ -1000,7 +1000,7 @@ class Indexer {
         if (!empty($lines))
             fwrite($fh, "\n");
         fclose($fh);
-        if (isset($conf['fperm']))
+        if ($conf['fperm'])
             chmod($fn.'.tmp', $conf['fperm']);
         io_rename($fn.'.tmp', $fn.'.idx');
         return true;
@@ -1067,7 +1067,7 @@ class Indexer {
             fwrite($fh, $line);
         }
         fclose($fh);
-        if (isset($conf['fperm']))
+        if ($conf['fperm'])
             chmod($fn.'.tmp', $conf['fperm']);
         io_rename($fn.'.tmp', $fn.'.idx');
         return true;
