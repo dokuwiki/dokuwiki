@@ -41,6 +41,6 @@ class CacheInstructions extends \dokuwiki\Cache\CacheParser
             return false;
         }
 
-        return io_savefile($this->cache, serialize($instructions));
+        return io_saveFile($this->cache, serialize($instructions));
     }
 }
