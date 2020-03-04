@@ -845,10 +845,13 @@ abstract class Doku_Renderer extends Plugin {
         //get interwiki URL
         if(isset($this->interwiki[$shortcut])) {
             $url = $this->interwiki[$shortcut];
-        } else {
-            // Default to Google I'm feeling lucky
-            $url      = 'https://www.google.com/search?q={URL}&amp;btnI=lucky';
-            $shortcut = 'go';
+        }elseif(isset($this->interwiki['default'])) {
+            $shortcut = 'default';
+            $url = $this->interwiki[$shortcut];
+        }else{
+            // not parsable interwiki outputs '' to make sure string manipluation works
+            $shortcut = '';
+            $url      = '';
         }
 
         //split into hash and url part
@@ -880,8 +883,9 @@ abstract class Doku_Renderer extends Plugin {
                 '{PATH}' => $parsed['path'],
                 '{QUERY}' => $parsed['query'] ,
             ]);
-        } else {
-            //default
+        } else if($url != '') {
+            // make sure when no url is defined, we keep it null
+            // default
             $url = $url.rawurlencode($reference);
         }
         //handle as wiki links
