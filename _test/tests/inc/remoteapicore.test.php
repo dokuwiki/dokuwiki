@@ -3,6 +3,7 @@
 use dokuwiki\Remote\Api;
 use dokuwiki\Remote\ApiCore;
 use dokuwiki\test\mock\AuthPlugin;
+use dokuwiki\test\mock\AuthDeletePlugin;
 
 /**
  * Class remoteapicore_test
@@ -452,7 +453,7 @@ You can use up to five different levels of',
     public function test_deleteUser()
     {
         global $conf, $auth;
-        $auth = new auth_deleteprofile_test_AuthDelete();
+        $auth = new AuthDeletePlugin();
         $conf['remote'] = 1;
         $conf['remoteuser'] = 'testuser';
         $_SERVER['REMOTE_USER'] = 'testuser';

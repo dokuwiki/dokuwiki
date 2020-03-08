@@ -1,13 +1,9 @@
 <?php
 
-use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\test\mock\AuthPlugin;
 use dokuwiki\Extension\RemotePlugin;
 use dokuwiki\Remote\Api;
 use dokuwiki\Remote\RemoteException;
-
-class remote_test_MockAuthCase extends AuthPlugin {
-    function isCaseSensitive() { return true; }
-}
 
 class RemoteAPICoreTest {
 
@@ -169,7 +165,7 @@ class remote_test extends DokuWikiTest {
         $this->userinfo = $USERINFO;
         $this->remote = new Api();
 
-        $auth = new remote_test_MockAuthCase();
+        $auth = new AuthPlugin();
     }
 
     function tearDown() {
