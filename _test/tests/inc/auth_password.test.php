@@ -92,6 +92,20 @@ class auth_password_test extends DokuWikiTest {
         $this->assertTrue(auth_verifyPassword('test12345', '$H$9IQRaTwmfeRo7ud9Fh4E2PdI0S3r.L0'));
     }
 
+    function test_verifypassword_drupal_sha512() {
+        $this->assertTrue(auth_verifypassword('drupal_sha512', '$S$D7JxIm0f7QKO3zjwVS1RH4AW8sYvmLjO0.Rn4swH0JVt6OrZ4yzZ'));
+    }
+
+    function test_verifypassword_drupal_migrated_6to7() {
+        $this->assertTrue(auth_verifypassword('pouette1234', 'U$S$9c47LGZuhR6TvhRQXzymkJIQ3mXthUCc6KDEGTt4B7eOL/H9Ykuy'));
+    }
+
+    function test_verifyPassword_seafilepbkdf2() {
+        $hash='PBKDF2SHA256$10000$99227b6df52aa1394b5ca0aceee2733dd6c2670c85bbe26c751a2c65e79d4db7$d61dd1c4df6873c73813fe97f96d0e917792602a33966f3fab0eef154637cc84';
+        $pw='@STR0NGpassW0RD';
+        $this->assertTrue(auth_verifyPassword($pw, $hash));
+    }
+
     function test_veryPassword_mediawiki() {
         $this->assertTrue(auth_verifyPassword('password', ':B:838c83e1:e4ab7024509eef084cdabd03d8b2972c'));
     }

@@ -9,6 +9,7 @@ namespace dokuwiki;
  * This class implements various mechanisms used to hash passwords
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ * @author  Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @license LGPL2
  */
 class PassHash {
@@ -20,6 +21,7 @@ class PassHash {
      * match true is is returned else false
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
+     * @author  Schplurtz le Déboulonné <Schplurtz@laposte.net>
      *
      * @param string $clear Clear-Text password
      * @param string $hash  Hash to compare against
@@ -31,6 +33,12 @@ class PassHash {
         $magic  = '';
 
         //determine the used method and salt
+        if (substr($hash, 0, 2) == 'U$') {
+            // This may be an updated password from user_update_7000(). Such hashes
+            // have 'U' added as the first character and need an extra md5().
+            $hash = substr($hash, 1);
+            $clear = md5($clear);
+        }
         $len = strlen($hash);
         if(preg_match('/^\$1\$([^\$]{0,8})\$/', $hash, $m)) {
             $method = 'smd5';
@@ -40,6 +48,10 @@ class PassHash {
             $method = 'apr1';
             $salt   = $m[1];
             $magic  = 'apr1';
+        } elseif(preg_match('/^\$S\$(.{52})$/', $hash, $m)) {
+            $method = 'drupal_sha512';
+            $salt   = $m[1];
+            $magic  = 'S';
         } elseif(preg_match('/^\$P\$(.{31})$/', $hash, $m)) {
             $method = 'pmd5';
             $salt   = $m[1];
@@ -50,6 +62,13 @@ class PassHash {
             $magic = 'H';
         } elseif(preg_match('/^pbkdf2_(\w+?)\$(\d+)\$(.{12})\$/', $hash, $m)) {
             $method = 'djangopbkdf2';
+            $magic = array(
+                'algo' => $m[1],
+                'iter' => $m[2],
+            );
+            $salt = $m[3];
+        } elseif(preg_match('/^PBKDF2(SHA\d+)\$(\d+)\$([[:xdigit:]]+)\$([[:xdigit:]]+)$/', $hash, $m)) {
+            $method = 'seafilepbkdf2';
             $magic = array(
                 'algo' => $m[1],
                 'iter' => $m[2],
@@ -348,17 +367,24 @@ class PassHash {
     }
 
     /**
-     * Password hashing method 'pmd5'
+     * Password stretched hashing wrapper.
      *
-     * Uses salted MD5 hashs. Salt is 1+8 bytes long, 1st byte is the
-     * iteration count when given, for null salts $compute is used.
+     * Initial hash is repeatedly rehashed with same password.
+     * Any salted hash algorithm supported by PHP hash() can be used. Salt
+     * is 1+8 bytes long, 1st byte is the iteration count when given. For null
+     * salts $compute is used.
      *
-     * The actual iteration count is the given count squared, maximum is
-     * 30 (-> 1073741824). If a higher one is given, the function throws
-     * an exception.
+     * The actual iteration count is 2 to the power of the given count,
+     * maximum is 30 (-> 2^30 = 1_073_741_824). If a higher one is given,
+     * the function throws an exception.
+     * This iteration count is expected to grow with increasing power of
+     * new computers.
      *
-     * @link  http://www.openwall.com/phpass/
+     * @author  Andreas Gohr <andi@splitbrain.org>
+     * @author  Schplurtz le Déboulonné <Schplurtz@laposte.net>
+     * @link    http://www.openwall.com/phpass/
      *
+     * @param string $algo    The hash algorithm to be used
      * @param string $clear   The clear text to hash
      * @param string $salt    The salt to use, null for random
      * @param string $magic   The hash identifier (P or H)
@@ -366,13 +392,13 @@ class PassHash {
      * @throws \Exception
      * @return string Hashed password
      */
-    public function hash_pmd5($clear, $salt = null, $magic = 'P', $compute = 8) {
+    protected function stretched_hash($algo, $clear, $salt = null, $magic = 'P', $compute = 8) {
         $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         if(is_null($salt)) {
             $this->init_salt($salt);
             $salt = $itoa64[$compute].$salt; // prefix iteration count
         }
-        $iterc = $salt[0]; // pos 0 of salt is iteration count
+        $iterc = $salt[0]; // pos 0 of salt is log2(iteration count)
         $iter  = strpos($itoa64, $iterc);
 
         if($iter > 30) {
@@ -384,14 +410,14 @@ class PassHash {
         $salt = substr($salt, 1, 8);
 
         // iterate
-        $hash = md5($salt.$clear, true);
+        $hash = hash($algo, $salt . $clear, TRUE);
         do {
-            $hash = md5($hash.$clear, true);
+            $hash = hash($algo, $hash.$clear, true);
         } while(--$iter);
 
         // encode
         $output = '';
-        $count  = 16;
+        $count  = strlen($hash);
         $i      = 0;
         do {
             $value = ord($hash[$i++]);
@@ -410,6 +436,49 @@ class PassHash {
         } while($i < $count);
 
         return '$'.$magic.'$'.$iterc.$salt.$output;
+    }
+
+    /**
+     * Password hashing method 'pmd5'
+     *
+     * Repeatedly uses salted MD5 hashs. See stretched_hash() for the
+     * details.
+     *
+     *
+     * @author  Schplurtz le Déboulonné <Schplurtz@laposte.net>
+     * @link    http://www.openwall.com/phpass/
+     * @see     PassHash::stretched_hash() for the implementation details.
+     *
+     * @param string $clear   The clear text to hash
+     * @param string $salt    The salt to use, null for random
+     * @param string $magic   The hash identifier (P or H)
+     * @param int    $compute The iteration count for new passwords
+     * @throws Exception
+     * @return string Hashed password
+     */
+    public function hash_pmd5($clear, $salt = null, $magic = 'P', $compute = 8) {
+        return $this->stretched_hash('md5', $clear, $salt, $magic, $compute);
+    }
+
+    /**
+     * Password hashing method 'drupal_sha512'
+     *
+     * Implements Drupal salted sha512 hashs. Drupal truncates the hash at 55
+     * characters. See stretched_hash() for the details;
+     *
+     * @author  Schplurtz le Déboulonné <Schplurtz@laposte.net>
+     * @link    https://api.drupal.org/api/drupal/includes%21password.inc/7.x
+     * @see     PassHash::stretched_hash() for the implementation details.
+     *
+     * @param string $clear   The clear text to hash
+     * @param string $salt    The salt to use, null for random
+     * @param string $magic   The hash identifier (S)
+     * @param int    $compute The iteration count for new passwords (defautl is drupal 7's)
+     * @throws Exception
+     * @return string Hashed password
+     */
+    public function hash_drupal_sha512($clear, $salt = null, $magic = 'S', $compute = 15) {
+      return substr($this->stretched_hash('sha512', $clear, $salt, $magic, $compute), 0, 55);
     }
 
     /**
@@ -459,6 +528,47 @@ class PassHash {
     public function hash_djangomd5($clear, $salt = null) {
         $this->init_salt($salt, 5);
         return 'md5$'.$salt.'$'.md5($salt.$clear);
+    }
+
+    /**
+     * Password hashing method 'seafilepbkdf2'
+     *
+     * An algorithm and iteration count should be given in the opts array.
+     *
+     * Hash algorithm is the string that is in the password string in seafile
+     * database. It has to be converted to a php algo name.
+     *
+     * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
+     * @see https://stackoverflow.com/a/23670177
+     *
+     * @param string $clear The clear text to hash
+     * @param string $salt  The salt to use, null for random
+     * @param array $opts ('algo' => hash algorithm, 'iter' => iterations)
+     * @return string Hashed password
+     * @throws Exception when PHP is missing support for the method/algo
+     */
+    public function hash_seafilepbkdf2($clear, $salt=null, $opts=array()) {
+        $this->init_salt($salt, 64);
+        if(empty($opts['algo'])) {
+            $prefixalgo='SHA256';
+        } else {
+            $prefixalgo=$opts['algo'];
+        }
+        $algo = strtolower($prefixalgo);
+        if(empty($opts['iter'])) {
+            $iter = 10000;
+        } else {
+            $iter = (int) $opts['iter'];
+        }
+        if(!function_exists('hash_pbkdf2')) {
+            throw new Exception('This PHP installation has no PBKDF2 support');
+        }
+        if(!in_array($algo, hash_algos())) {
+            throw new Exception("This PHP installation has no $algo support");
+        }
+
+        $hash = hash_pbkdf2($algo, $clear, hex2bin($salt), $iter, 0);
+        return "PBKDF2$prefixalgo\$$iter\$$salt\$$hash";
     }
 
     /**
