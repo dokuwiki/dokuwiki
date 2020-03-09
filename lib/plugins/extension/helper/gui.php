@@ -133,6 +133,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         if ($result) {
             foreach ($result as $name) {
                 $extension->setExtension($name);
+                $extension->setForceSource('remote');
                 $list->addRow($extension, $extension->getID() == $this->infoFor);
             }
         } else {

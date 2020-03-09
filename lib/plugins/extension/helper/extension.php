@@ -19,6 +19,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     private $is_template = false;
     private $localInfo;
     private $remoteInfo;
+    /** $var string $forceSource */
+    private $forceSource = null;
     private $managerData;
     /** @var helper_plugin_extension_repository $repository */
     private $repository = null;
@@ -205,6 +207,31 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     }
 
     /**
+     * Set source (remote/local/null) that getters should be forced on
+     *
+     * @var string $source
+     * @return void
+     */
+    public function setForceSource($source)
+    {
+        $this->forceSource = $source;
+    }
+
+    /**
+     * If the source should be ignored for getters
+     *
+     * @var string $source
+     * @return bool If this extension is a template
+     */
+    public function isIgnoredSource($source)
+    {
+        if ($this->forceSource && $this->forceSource !== $source) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Get the ID of the extension
      *
      * This is the same as getName() for plugins, for templates it's getName() prefixed with 'template:'
@@ -234,7 +261,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getBase()
     {
-        if (!empty($this->localInfo['base'])) return $this->localInfo['base'];
+        if (!empty($this->localInfo['base']) && !$this->isIgnoredSource('local'))
+            return $this->localInfo['base'];
         return $this->base;
     }
 
@@ -245,8 +273,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getDisplayName()
     {
-        if (!empty($this->localInfo['name'])) return $this->localInfo['name'];
-        if (!empty($this->remoteInfo['name'])) return $this->remoteInfo['name'];
+        if (!empty($this->localInfo['name']) && !$this->isIgnoredSource('local'))
+            return $this->localInfo['name'];
+        if (!empty($this->remoteInfo['name']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['name'];
         return $this->base;
     }
 
@@ -257,8 +287,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getAuthor()
     {
-        if (!empty($this->localInfo['author'])) return $this->localInfo['author'];
-        if (!empty($this->remoteInfo['author'])) return $this->remoteInfo['author'];
+        if (!empty($this->localInfo['author']) && !$this->isIgnoredSource('local'))
+            return $this->localInfo['author'];
+        if (!empty($this->remoteInfo['author']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['author'];
         return false;
     }
 
@@ -270,7 +302,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     public function getEmail()
     {
         // email is only in the local data
-        if (!empty($this->localInfo['email'])) return $this->localInfo['email'];
+        if (!empty($this->localInfo['email']) && !$this->isIgnoredSource('local'))
+            return $this->localInfo['email'];
         return false;
     }
 
@@ -281,8 +314,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getEmailID()
     {
-        if (!empty($this->remoteInfo['emailid'])) return $this->remoteInfo['emailid'];
-        if (!empty($this->localInfo['email'])) return md5($this->localInfo['email']);
+        if (!empty($this->remoteInfo['emailid']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['emailid'];
+        if (!empty($this->localInfo['email']) && !$this->isIgnoredSource('local'))
+            return md5($this->localInfo['email']);
         return false;
     }
 
@@ -293,8 +328,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getDescription()
     {
-        if (!empty($this->localInfo['desc'])) return $this->localInfo['desc'];
-        if (!empty($this->remoteInfo['description'])) return $this->remoteInfo['description'];
+        if (!empty($this->localInfo['desc']) && !$this->isIgnoredSource('local'))
+            return $this->localInfo['desc'];
+        if (!empty($this->remoteInfo['description']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['description'];
         return '';
     }
 
@@ -305,7 +342,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getURL()
     {
-        if (!empty($this->localInfo['url'])) return $this->localInfo['url'];
+        if (!empty($this->localInfo['url']) && !$this->isIgnoredSource('local'))
+            return $this->localInfo['url'];
         return 'https://www.dokuwiki.org/'.
             ($this->isTemplate() ? 'template' : 'plugin').':'.$this->getBase();
     }
@@ -317,12 +355,13 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getInstalledVersion()
     {
-        if (!empty($this->localInfo['date'])) return $this->localInfo['date'];
+        if (!empty($this->localInfo['date']))
+            return $this->localInfo['date'];
         if ($this->isInstalled()) return $this->getLang('unknownversion');
         return false;
     }
 
-    /**
+    /*
      * Get the install date of the current version
      *
      * @return string|bool The date of the last update or false if not available
@@ -351,7 +390,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getDependencies()
     {
-        if (!empty($this->remoteInfo['dependencies'])) return $this->remoteInfo['dependencies'];
+        if (!empty($this->remoteInfo['dependencies']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['dependencies'];
         return array();
     }
 
@@ -381,7 +421,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getConflicts()
     {
-        if (!empty($this->remoteInfo['conflicts'])) return $this->remoteInfo['conflicts'];
+        if (!empty($this->remoteInfo['conflicts']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['conflicts'];
         return array();
     }
 
@@ -392,7 +433,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getSimilarExtensions()
     {
-        if (!empty($this->remoteInfo['similar'])) return $this->remoteInfo['similar'];
+        if (!empty($this->remoteInfo['similar']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['similar'];
         return array();
     }
 
@@ -403,7 +445,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getTags()
     {
-        if (!empty($this->remoteInfo['tags'])) return $this->remoteInfo['tags'];
+        if (!empty($this->remoteInfo['tags']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['tags'];
         return array();
     }
 
@@ -414,7 +457,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getPopularity()
     {
-        if (!empty($this->remoteInfo['popularity'])) return $this->remoteInfo['popularity'];
+        if (!empty($this->remoteInfo['popularity']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['popularity'];
         return false;
     }
 
@@ -426,7 +470,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getSecurityWarning()
     {
-        if (!empty($this->remoteInfo['securitywarning'])) return $this->remoteInfo['securitywarning'];
+        if (!empty($this->remoteInfo['securitywarning']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['securitywarning'];
         return false;
     }
 
@@ -437,7 +482,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getSecurityIssue()
     {
-        if (!empty($this->remoteInfo['securityissue'])) return $this->remoteInfo['securityissue'];
+        if (!empty($this->remoteInfo['securityissue']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['securityissue'];
         return false;
     }
 
@@ -448,7 +494,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getScreenshotURL()
     {
-        if (!empty($this->remoteInfo['screenshoturl'])) return $this->remoteInfo['screenshoturl'];
+        if (!empty($this->remoteInfo['screenshoturl']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['screenshoturl'];
         return false;
     }
 
@@ -459,7 +506,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getThumbnailURL()
     {
-        if (!empty($this->remoteInfo['thumbnailurl'])) return $this->remoteInfo['thumbnailurl'];
+        if (!empty($this->remoteInfo['thumbnailurl']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['thumbnailurl'];
         return false;
     }
     /**
@@ -480,7 +528,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getDownloadURL()
     {
-        if (!empty($this->remoteInfo['downloadurl'])) return $this->remoteInfo['downloadurl'];
+        if (!empty($this->remoteInfo['downloadurl']))
+            return $this->remoteInfo['downloadurl'];
         return false;
     }
 
@@ -503,7 +552,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getBugtrackerURL()
     {
-        if (!empty($this->remoteInfo['bugtracker'])) return $this->remoteInfo['bugtracker'];
+        if (!empty($this->remoteInfo['bugtracker']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['bugtracker'];
         return false;
     }
 
@@ -514,7 +564,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getSourcerepoURL()
     {
-        if (!empty($this->remoteInfo['sourcerepo'])) return $this->remoteInfo['sourcerepo'];
+        if (!empty($this->remoteInfo['sourcerepo']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['sourcerepo'];
         return false;
     }
 
@@ -525,7 +576,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getDonationURL()
     {
-        if (!empty($this->remoteInfo['donationurl'])) return $this->remoteInfo['donationurl'];
+        if (!empty($this->remoteInfo['donationurl']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['donationurl'];
         return false;
     }
 
@@ -536,7 +588,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getTypes()
     {
-        if (!empty($this->remoteInfo['types'])) return $this->remoteInfo['types'];
+        if (!empty($this->remoteInfo['types']) && !$this->isIgnoredSource('remote'))
+            return $this->remoteInfo['types'];
         if ($this->isTemplate()) return array(32 => 'template');
         return array();
     }
@@ -548,7 +601,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getCompatibleVersions()
     {
-        if (!empty($this->remoteInfo['compatible'])) return $this->remoteInfo['compatible'];
+        if (!empty($this->remoteInfo['compatible']))
+            return $this->remoteInfo['compatible'];
         return array();
     }
 
@@ -559,7 +613,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function getLastUpdate()
     {
-        if (!empty($this->remoteInfo['lastupdate'])) return $this->remoteInfo['lastupdate'];
+        if (!empty($this->remoteInfo['lastupdate']))
+            return $this->remoteInfo['lastupdate'];
         return false;
     }
 
