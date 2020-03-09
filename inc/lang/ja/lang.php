@@ -304,6 +304,7 @@ $lang['i_modified']            = 'セキュリティの理由から、新規も�
 $lang['i_funcna']              = 'PHPの関数 <code>%s</code> が使用できません。ホスティング会社が何らかの理由で無効にしている可能性があります。';
 $lang['i_phpver']              = 'PHPのバージョン <code>%s</code> が必要なバージョン <code>%s</code> より以前のものです。PHPのアップグレードが必要です。';
 $lang['i_mbfuncoverload']      = 'DokuWiki を実行する php.ini ファイルの mbstring.func_overload は無効にして下さい。';
+$lang['i_urandom']             = 'DokuWikiは、Cookieに対して暗号的に安全な番号を作成できません。<code>/dev/urandom</code>に対する適切なアクセスについて、php.iniの設定 open_basedir を確認する事をお勧めします。';
 $lang['i_permfail']            = '<code>%s</code> に書き込みできません。このディレクトリの権限を確認して下さい。';
 $lang['i_confexists']          = '<code>%s</code> は既に存在します';
 $lang['i_writeerr']            = '<code>%s</code> を作成できません。ディレクトリとファイルの権限を確認し、それらを手動で作成する必要があります。';
