@@ -3,7 +3,7 @@
 class init_resolve_id_test extends DokuWikiTest {
 
 
-    function test1(){
+    function test(){
         // we test multiple cases here
         // format: $ns, $page, $output
         $tests   = array();
@@ -23,11 +23,14 @@ class init_resolve_id_test extends DokuWikiTest {
         $tests[] = array('','..:page','page');
 
         // relative upper in namespace
-        $tests[] = array('lev1:lev2','..page','lev1:page');
-        $tests[] = array('lev1:lev2','..:page','lev1:page');
-        $tests[] = array('lev1:lev2','..:..page','page');
-        $tests[] = array('lev1:lev2','..:..:page','page');
-        $tests[] = array('lev1:lev2','..:..:..:page','page');
+        $tests[] = array('lev1:lev2:lev3','..page','lev1:lev2:page');
+        $tests[] = array('lev1:lev2:lev3','..:page','lev1:lev2:page');
+        $tests[] = array('lev1:lev2:lev3','..:..page','lev1:page');
+        $tests[] = array('lev1:lev2:lev3','..:..:page','lev1:page');
+        $tests[] = array('lev1:lev2:lev3','..:..:..page','page');
+        $tests[] = array('lev1:lev2:lev3','..:..:..:page','page');
+        $tests[] = array('lev1:lev2:lev3','..:..:..:..page','page');
+        $tests[] = array('lev1:lev2:lev3','..:..:..:..:page','page');
 
         // strange and broken ones
         $tests[] = array('lev1:lev2','....:....:page','lev1:lev2:page');
