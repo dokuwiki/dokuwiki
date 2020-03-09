@@ -25,6 +25,7 @@ class init_resolve_id_test extends DokuWikiTest {
         // relative upper in namespace
         $tests[] = array('lev1:lev2','..page','lev1:page');
         $tests[] = array('lev1:lev2','..:page','lev1:page');
+        $tests[] = array('lev1:lev2','..:..page','page');
         $tests[] = array('lev1:lev2','..:..:page','page');
         $tests[] = array('lev1:lev2','..:..:..:page','page');
 
@@ -35,7 +36,7 @@ class init_resolve_id_test extends DokuWikiTest {
         $tests[] = array('lev1:lev2','..:..:lev3:..:page:....:...','page');
 
         foreach($tests as $test){
-            $this->assertEquals(resolve_id($test[0],$test[1]),$test[2]);
+            $this->assertEquals($test[2], resolve_id($test[0],$test[1]), $test[0].' >'.$test[1]);
         }
     }
 
