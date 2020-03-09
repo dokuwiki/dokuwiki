@@ -441,6 +441,8 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
         $default = $this->getLang('unknown');
         $html = '<dl class="details">';
 
+        $html .= '<dt>'.$this->getLang('basename').'</dt>';
+        $html .= '<dd>'.$extension->getBase().'</dd>';
         $html .= '<dt>'.$this->getLang('status').'</dt>';
         $html .= '<dd>'.$this->makeStatus($extension).'</dd>';
 
