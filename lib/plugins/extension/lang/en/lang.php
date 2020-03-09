@@ -76,6 +76,7 @@ $lang['msg_template_update_success']  = 'Template %s updated successfully';
 $lang['msg_plugin_install_success']   = 'Plugin %s installed successfully';
 $lang['msg_plugin_update_success']    = 'Plugin %s updated successfully';
 $lang['msg_upload_failed']            = 'Uploading the file failed';
+$lang['msg_nooverwrite']              = 'Extension %s already exists so it is not being overwritten; to overwrite, tick the overwrite option';
 
 $lang['missing_dependency']           = '<strong>Missing or disabled dependency:</strong> %s';
 $lang['security_issue']               = '<strong>Security Issue:</strong> %s';

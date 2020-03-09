@@ -148,6 +148,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
      */
     public function tabInstall()
     {
+        global $lang;
         echo '<div class="panelHeader">';
         echo $this->locale_xhtml('intro_install');
         echo '</div>';
@@ -165,6 +166,9 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         $form->addTextInput('installfile', $this->getLang('install_upload'))
             ->addClass('block')
             ->attrs(['type' => 'file']);
+        $form->addTag('br');
+        $form->addCheckbox('overwrite', $lang['js']['media_overwrt'])
+            ->addClass('block');
         $form->addTag('br');
         $form->addButton('', $this->getLang('btn_install'))
             ->attrs(['type' => 'submit', 'title' => $this->getLang('btn_install')]);
