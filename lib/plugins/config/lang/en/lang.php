@@ -155,6 +155,7 @@ $lang['rss_linkto']        = 'XML feed links to';
 $lang['rss_content']       = 'What to display in the XML feed items?';
 $lang['rss_update']        = 'XML feed update interval (sec)';
 $lang['rss_show_summary']  = 'XML feed show summary in title';
+$lang['rss_show_deleted']  = 'XML feed Show deleted feeds';
 $lang['rss_media']         = 'What kind of changes should be listed in the XML feed?';
 $lang['rss_media_o_both']  = 'both';
 $lang['rss_media_o_pages'] = 'pages';

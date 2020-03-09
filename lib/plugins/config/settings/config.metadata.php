@@ -208,6 +208,7 @@ $meta['rss_content'] = array('multichoice','_choices' => array('abstract','diff'
 $meta['rss_media']   = array('multichoice','_choices' => array('both','pages','media'));
 $meta['rss_update']  = array('numeric');
 $meta['rss_show_summary'] = array('onoff');
+$meta['rss_show_deleted'] = array('onoff');
 
 $meta['_advanced']   = array('fieldset');
 $meta['updatecheck'] = array('onoff');
