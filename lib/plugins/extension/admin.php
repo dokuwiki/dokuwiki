@@ -127,7 +127,9 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
                 }
                 send_redirect($this->gui->tabURL('', [], '&', true));
             } elseif ($INPUT->post->str('installurl') && checkSecurityToken()) {
-                $installed = $extension->installFromURL($INPUT->post->str('installurl'), $INPUT->post->bool('overwrite'));
+                $installed = $extension->installFromURL(
+                    $INPUT->post->str('installurl'),
+                    $INPUT->post->bool('overwrite'));
                 foreach ($installed as $ext => $info) {
                     msg(sprintf(
                         $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
