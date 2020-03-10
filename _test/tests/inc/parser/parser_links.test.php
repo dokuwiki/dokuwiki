@@ -168,7 +168,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
     }
 
     function testExternalWWWLinkInRoundBrackets() {
-        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->addMode('externallink',new ExternalLink());
         $this->P->parse("Foo (www.google.com) Bar");
         $calls = array (
             array('document_start',array()),
