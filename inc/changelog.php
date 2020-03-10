@@ -205,7 +205,7 @@ function addMediaLogEntry(
  *
  * RECENTS_SKIP_DELETED   - don't include deleted pages
  * RECENTS_SKIP_MINORS    - don't include minor changes
- * RECENTS_ONLY_CREATION - only include new created pages and media
+ * RECENTS_ONLY_CREATION  - only include new created pages and media
  * RECENTS_SKIP_SUBSPACES - don't include subspaces
  * RECENTS_MEDIA_CHANGES  - return media changes instead of page changes
  * RECENTS_MEDIA_PAGES_MIXED  - return both media changes and page changes
@@ -300,7 +300,7 @@ function getRecents($first,$num,$ns='',$flags=0){
  *
  * RECENTS_SKIP_DELETED   - don't include deleted pages
  * RECENTS_SKIP_MINORS    - don't include minor changes
- * RECENTS_ONLY_CREATION - only include new created pages and media
+ * RECENTS_ONLY_CREATION  - only include new created pages and media
  * RECENTS_SKIP_SUBSPACES - don't include subspaces
  * RECENTS_MEDIA_CHANGES  - return media changes instead of page changes
  *
