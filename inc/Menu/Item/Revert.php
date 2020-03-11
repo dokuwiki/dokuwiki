@@ -19,19 +19,16 @@ class Revert extends AbstractItem
         parent::__construct();
 
         // if we are comparing with the current version then
-        // assume the other version is what we want to revert to
+        // allow reverting to the non current version
         $comparedWithCurrent = in_array('current', $INPUT->ref('rev2')) || in_array('', $INPUT->ref('rev2'));
-        if ($comparedWithCurrent) {
-            foreach ($INPUT->ref('rev2') as $revision) {
-                if ($revision !== 'current' && $revision !== '') {
-                    $REV = $revision;
-                }
-            }
-        }
 
-        if (!$INFO['ismanager'] || !$REV || !$INFO['writable']) {
+        if (
+            (!$INFO['ismanager'] || !$REV || !$INFO['writable'])
+            && !$comparedWithCurrent
+        ) {
             throw new \RuntimeException('revert not available');
         }
+
         $this->params['rev'] = $REV;
         $this->params['sectok'] = getSecurityToken();
         $this->svg = DOKU_INC . 'lib/images/menu/06-revert_replay.svg';
