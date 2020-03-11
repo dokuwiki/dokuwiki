@@ -23,8 +23,7 @@ class Revert extends AbstractItem
         $comparedWithCurrent = in_array('current', $INPUT->ref('rev2')) || in_array('', $INPUT->ref('rev2'));
 
         if (
-            (!$INFO['ismanager'] || !$REV || !$INFO['writable'])
-            && !$comparedWithCurrent
+            (!$INFO['ismanager'] || (!$REV && !$comparedWithCurrent) || !$INFO['writable'])
         ) {
             throw new \RuntimeException('revert not available');
         }
