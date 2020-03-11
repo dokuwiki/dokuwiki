@@ -131,6 +131,7 @@ $lang['rss_linkto']            = 'XMLフィード内リンク先';
 $lang['rss_content']           = 'XMLフィードに表示する内容';
 $lang['rss_update']            = 'XMLフィードの更新間隔（秒）';
 $lang['rss_show_summary']      = 'XMLフィードのタイトルにサマリーを表示';
+$lang['rss_show_deleted']      = '削除されたフィードを含める';
 $lang['rss_media']             = 'XMLフィードで、どんな種類の変更を記載するか';
 $lang['rss_media_o_both']      = '両方';
 $lang['rss_media_o_pages']     = 'ページ';
