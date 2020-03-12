@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Apostolos Tsompanopoulos <info@aptlogs.com>
  * @author Katerina Katapodi <extragold1234@hotmail.com>
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
@@ -141,7 +142,7 @@ $lang['regmailfail']           = 'Φαίνεται να υπάρχει πρόβ�
 $lang['regbadmail']            = 'Η διεύθυνση e-mail δεν είναι έγκυρη - εάν πιστεύετε ότι αυτό είναι λάθος, επικοινωνήστε μαζί μας';
 $lang['regbadpass']            = 'Οι δύο κωδικοί δεν είναι ίδιοι, προσπαθήστε ξανά.';
 $lang['regpwmail']             = 'Ο κωδικός σας';
-$lang['reghere']               = 'Δεν έχετε λογαριασμό ακόμη? Δημιουργήστε έναν';
+$lang['reghere']               = 'Δεν έχετε λογαριασμό ακόμη; Δημιουργήστε έναν';
 $lang['profna']                = 'Αυτό το wiki δεν υποστηρίζει την επεξεργασία προφίλ.';
 $lang['profnochange']          = 'Καμία αλλαγή.';
 $lang['profnoempty']           = 'Δεν επιτρέπεται κενό όνομα χρήστη η κενή διεύθυνση email.';
