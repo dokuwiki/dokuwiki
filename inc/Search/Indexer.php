@@ -278,7 +278,7 @@ class Indexer extends AbstractIndex
     /**
      * Clear the Page Index
      *
-     * @param bool   $requireLock
+     * @param bool   $requireLock  should be false only if the caller is resposible for index lock
      * @return bool  If the index has been cleared successfully
      */
     public function clear($requireLock = true)

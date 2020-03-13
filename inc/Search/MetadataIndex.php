@@ -68,10 +68,10 @@ class MetadataIndex extends AbstractIndex
      * The $key parameter can be an array to add multiple keys. $value will
      * not be used if $key is an array.
      *
-     * @param string    $page   a page name
-     * @param mixed     $key    a key string or array of key=>value pairs
-     * @param mixed     $value  the value or list of values
-     * @param bool      $requireLock
+     * @param string $page   a page name
+     * @param mixed  $key    a key string or array of key=>value pairs
+     * @param mixed  $value  the value or list of values
+     * @param bool   $requireLock  should be false only if the caller is resposible for index lock
      * @return bool  if the function completed successfully
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
@@ -175,9 +175,9 @@ class MetadataIndex extends AbstractIndex
     /**
      * Delete keys of the page from metadata index
      *
-     * @param string    $page   a page name
-     * @param mixed     $keys   a key string or array of keys
-     * @param bool      $requireLock
+     * @param string $page   a page name
+     * @param mixed  $keys   a key string or array of keys
+     * @param bool   $requireLock  should be false only if the caller is resposible for index lock
      * @return bool  If renaming the value has been successful, false on error
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
@@ -460,7 +460,7 @@ class MetadataIndex extends AbstractIndex
     /**
      * Clear the Metadata Index
      *
-     * @param bool   $requireLock
+     * @param bool   $requireLock  should be false only if the caller is resposible for index lock
      * @return bool  If the index has been cleared successfully
      */
     public function clear($requireLock = true)
