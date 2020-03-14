@@ -46,7 +46,7 @@ header('Content-Type: text/html; charset=utf-8');
 <head>
     <meta charset="utf-8" />
     <title><?php echo $lang['i_installer']?></title>
-    <style type="text/css">
+    <style>
         body { width: 90%; margin: 0 auto; font: 84% Verdana, Helvetica, Arial, sans-serif; }
         img { border: none }
         br.cl { clear:both; }
@@ -56,7 +56,7 @@ header('Content-Type: text/html; charset=utf-8');
         select.text, input.text { width: 30em; margin: 0 0.5em; }
         a {text-decoration: none}
     </style>
-    <script type="text/javascript">
+    <script>
         function acltoggle(){
             var cb = document.getElementById('acl');
             var fs = document.getElementById('acldep');
@@ -557,6 +557,20 @@ function check_functions(){
 
     if(version_compare(phpversion(),'5.6.0','<')){
         $error[] = sprintf($lang['i_phpver'],phpversion(),'5.6.0');
+        $ok = false;
+    }
+
+    if(ini_get('mbstring.func_overload') != 0){
+        $error[] = $lang['i_mbfuncoverload'];
+        $ok = false;
+    }
+
+    try {
+        random_bytes(1);
+    } catch (\Exception $th) {
+        // If an appropriate source of randomness cannot be found, an Exception will be thrown by PHP 7+
+        // this exception is also thrown by paragonie/random_compat for PHP 5.6 support
+        $error[] = $lang['i_urandom'];
         $ok = false;
     }
 

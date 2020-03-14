@@ -136,6 +136,7 @@ $conf['rss_media']   = 'both';           //what should be listed?
                                          //  'media'    - media changes only
 $conf['rss_update'] = 5*60;              //Update the RSS feed every n seconds (defaults to 5 minutes)
 $conf['rss_show_summary'] = 1;           //Add revision summary to title? 0|1
+$conf['rss_show_deleted'] = 1;           //Show deleted items 0|1
 
 /* Advanced Settings */
 $conf['updatecheck'] = 1;                //automatically check for new releases?

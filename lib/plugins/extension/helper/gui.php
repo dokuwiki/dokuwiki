@@ -6,14 +6,13 @@
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Extension\PluginController;
+use dokuwiki\Form\Form;
 
 /**
  * Class helper_plugin_extension_list takes care of the overall GUI
  */
 class helper_plugin_extension_gui extends DokuWiki_Plugin
 {
-
     protected $tabs = array('plugins', 'templates', 'search', 'install');
 
     /** @var string the extension that should have an open info window FIXME currently broken */
@@ -44,13 +43,19 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         $extension = $this->loadHelper('extension_extension');
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
+
+        $form = new Form([
+                'action' => $this->tabURL('', [], '&'),
+                'id'  => 'extension__list',
+        ]);
         $list->startForm();
         foreach ($pluginlist as $name) {
             $extension->setExtension($name);
             $list->addRow($extension, $extension->getID() == $this->infoFor);
         }
         $list->endForm();
-        $list->render();
+        $form->addHTML($list->render(true));
+        echo $form->toHTML();
     }
 
     /**
@@ -71,13 +76,19 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         $extension = $this->loadHelper('extension_extension');
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
+
+        $form = new Form([
+                'action' => $this->tabURL('', [], '&'),
+                'id'  => 'extension__list',
+        ]);
         $list->startForm();
         foreach ($tpllist as $name) {
             $extension->setExtension("template:$name");
             $list->addRow($extension, $extension->getID() == $this->infoFor);
         }
         $list->endForm();
-        $list->render();
+        $form->addHTML($list->render(true));
+        echo $form->toHTML();
     }
 
     /**
@@ -90,10 +101,18 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         echo $this->locale_xhtml('intro_search');
         echo '</div>';
 
-        $form = new Doku_Form(array('action' => $this->tabURL('', array(), '&'), 'class' => 'search'));
-        $form->addElement(form_makeTextField('q', $INPUT->str('q'), $this->getLang('search_for')));
-        $form->addElement(form_makeButton('submit', '', $this->getLang('search')));
-        $form->printForm();
+        $form = new Form([
+                'action' => $this->tabURL('', [], '&'),
+                'class'  => 'search',
+        ]);
+        $form->addTagOpen('div')->addClass('no');
+        $form->addTextInput('q', $this->getLang('search_for'))
+            ->addClass('edit')
+            ->val($INPUT->str('q'));
+        $form->addButton('submit', $this->getLang('search'))
+            ->attrs(['type' => 'submit', 'title' => $this->getLang('search')]);
+        $form->addTagClose('div');
+        echo $form->toHTML();
 
         if (!$INPUT->bool('q')) return;
 
@@ -105,6 +124,11 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         $extension = $this->loadHelper('extension_extension');
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
+
+        $form = new Form([
+                'action' => $this->tabURL('', [], '&'),
+                'id'  => 'extension__list',
+        ]);
         $list->startForm();
         if ($result) {
             foreach ($result as $name) {
@@ -115,7 +139,8 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
             $list->nothingFound();
         }
         $list->endForm();
-        $list->render();
+        $form->addHTML($list->render(true));
+        echo $form->toHTML();
     }
 
     /**
@@ -127,17 +152,24 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         echo $this->locale_xhtml('intro_install');
         echo '</div>';
 
-        $form = new Doku_Form(
-            array(
-                'action' => $this->tabURL('', array(), '&'),
+        $form = new Form([
+                'action' => $this->tabURL('', [], '&'),
                 'enctype' => 'multipart/form-data',
-                'class' => 'install'
-            )
-        );
-        $form->addElement(form_makeTextField('installurl', '', $this->getLang('install_url'), '', 'block'));
-        $form->addElement(form_makeFileField('installfile', $this->getLang('install_upload'), '', 'block'));
-        $form->addElement(form_makeButton('submit', '', $this->getLang('btn_install')));
-        $form->printForm();
+                'class'  => 'install',
+        ]);
+        $form->addTagOpen('div')->addClass('no');
+        $form->addTextInput('installurl', $this->getLang('install_url'))
+            ->addClass('block')
+            ->attrs(['type' => 'url']);
+        $form->addTag('br');
+        $form->addTextInput('installfile', $this->getLang('install_upload'))
+            ->addClass('block')
+            ->attrs(['type' => 'file']);
+        $form->addTag('br');
+        $form->addButton('', $this->getLang('btn_install'))
+            ->attrs(['type' => 'submit', 'title' => $this->getLang('btn_install')]);
+        $form->addTagClose('div');
+        echo $form->toHTML();
     }
 
     /**
@@ -183,7 +215,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
      * @param bool   $absolute create absolute URLs?
      * @return string
      */
-    public function tabURL($tab = '', $params = array(), $sep = '&amp;', $absolute = false)
+    public function tabURL($tab = '', $params = [], $sep = '&', $absolute = false)
     {
         global $ID;
         global $INPUT;

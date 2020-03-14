@@ -18,7 +18,7 @@ require_once(DOKU_INC.'inc/init.php');
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Template Replacements</title>
-    <style type="text/css">
+    <style>
         body {
             background-color: #fff;
             color: #000;

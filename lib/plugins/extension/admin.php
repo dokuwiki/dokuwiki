@@ -51,9 +51,11 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
         /* @var helper_plugin_extension_repository $repository */
         $repository = $this->loadHelper('extension_repository');
 
-        if(!$repository->hasAccess(!$INPUT->bool('purge'))) {
-            $url = $this->gui->tabURL('', array('purge' => 1));
-            msg($this->getLang('repo_error').' [<a href="'.$url.'">'.$this->getLang('repo_retry').'</a>]', -1);
+        if (!$repository->hasAccess(!$INPUT->bool('purge'))) {
+            $url = $this->gui->tabURL('', ['purge' => 1], '&');
+            msg($this->getLang('repo_error').
+                ' [<a href="'.$url.'">'.$this->getLang('repo_retry').'</a>]', -1
+            );
         }
 
         if (!in_array('ssl', stream_get_transports())) {
@@ -75,12 +77,9 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
                                 $extension->setExtension($extname);
                                 $installed = $extension->installOrUpdate();
                                 foreach ($installed as $ext => $info) {
-                                    msg(
-                                        sprintf(
-                                            $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
-                                            $info['base']
-                                        ),
-                                        1
+                                    msg(sprintf(
+                                        $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
+                                        $info['base']), 1
                                     );
                                 }
                                 break;
@@ -88,20 +87,14 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
                                 $extension->setExtension($extname);
                                 $status = $extension->uninstall();
                                 if ($status) {
-                                    msg(
-                                        sprintf(
-                                            $this->getLang('msg_delete_success'),
-                                            hsc($extension->getDisplayName())
-                                        ),
-                                        1
+                                    msg(sprintf(
+                                        $this->getLang('msg_delete_success'),
+                                        hsc($extension->getDisplayName())), 1
                                     );
                                 } else {
-                                    msg(
-                                        sprintf(
-                                            $this->getLang('msg_delete_failed'),
-                                            hsc($extension->getDisplayName())
-                                        ),
-                                        -1
+                                    msg(sprintf(
+                                        $this->getLang('msg_delete_failed'),
+                                        hsc($extension->getDisplayName())), -1
                                     );
                                 }
                                 break;
@@ -111,7 +104,10 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
                                 if ($status !== true) {
                                     msg($status, -1);
                                 } else {
-                                    msg(sprintf($this->getLang('msg_enabled'), hsc($extension->getDisplayName())), 1);
+                                    msg(sprintf(
+                                        $this->getLang('msg_enabled'),
+                                        hsc($extension->getDisplayName())), 1
+                                    );
                                 }
                                 break;
                             case 'disable':
@@ -120,29 +116,38 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
                                 if ($status !== true) {
                                     msg($status, -1);
                                 } else {
-                                    msg(sprintf($this->getLang('msg_disabled'), hsc($extension->getDisplayName())), 1);
+                                    msg(sprintf(
+                                        $this->getLang('msg_disabled'),
+                                        hsc($extension->getDisplayName())), 1
+                                    );
                                 }
                                 break;
                         }
                     }
                 }
-                send_redirect($this->gui->tabURL('', array(), '&', true));
+                send_redirect($this->gui->tabURL('', [], '&', true));
             } elseif ($INPUT->post->str('installurl') && checkSecurityToken()) {
                 $installed = $extension->installFromURL($INPUT->post->str('installurl'));
                 foreach ($installed as $ext => $info) {
-                    msg(sprintf($this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'), $info['base']), 1);
+                    msg(sprintf(
+                        $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
+                        $info['base']), 1
+                    );
                 }
-                send_redirect($this->gui->tabURL('', array(), '&', true));
+                send_redirect($this->gui->tabURL('', [], '&', true));
             } elseif (isset($_FILES['installfile']) && checkSecurityToken()) {
                 $installed = $extension->installFromUpload('installfile');
                 foreach ($installed as $ext => $info) {
-                    msg(sprintf($this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'), $info['base']), 1);
+                    msg(sprintf(
+                        $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
+                        $info['base']), 1
+                    );
                 }
-                send_redirect($this->gui->tabURL('', array(), '&', true));
+                send_redirect($this->gui->tabURL('', [], '&', true));
             }
         } catch (Exception $e) {
             msg($e->getMessage(), -1);
-            send_redirect($this->gui->tabURL('', array(), '&', true));
+            send_redirect($this->gui->tabURL('', [], '&', true));
         }
     }
 
@@ -151,8 +156,8 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
      */
     public function html()
     {
-        ptln('<h1>'.$this->getLang('menu').'</h1>');
-        ptln('<div id="extension__manager">');
+        echo '<h1>'.$this->getLang('menu').'</h1>'.DOKU_LF;
+        echo '<div id="extension__manager">'.DOKU_LF;
 
         $this->gui->tabNavigation();
 
@@ -171,7 +176,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
                 $this->gui->tabPlugins();
         }
 
-        ptln('</div>');
+        echo '</div>'.DOKU_LF;
     }
 }
 

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Apostolos Tsompanopoulos <info@aptlogs.com>
  * @author Katerina Katapodi <extragold1234@hotmail.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Thanos Massias <tm@thriasio.gr>

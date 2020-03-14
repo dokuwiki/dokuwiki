@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Rut Kristin Aanestad <dark@met.no>
  * @author Torgeir Blesvik <bletor@banenor.no>
+ * @author Rut Kristin Aanestad <dark@met.no>
  * @author ThorPrestboen <thor.erling.prestboen@gmail.com>
  * @author Christian McKenna <mckchr@banenor.no>
  * @author Reidar Mosvold <Reidar.Mosvold@hit.no>
@@ -90,6 +90,7 @@ $lang['minoredit']             = 'Mindre endringer';
 $lang['draftdate']             = 'Kladd autolagret';
 $lang['nosecedit']             = 'Siden er i mellomtiden endret, seksjonsinfo har blitt foreldet - lastet full side istedet.';
 $lang['searchcreatepage']      = 'Hvis du ikke fant det du søkte etter kan du lage eller endre siden %s.';
+$lang['js']['search_toggle_tools'] = 'Søkeverktøy';
 $lang['js']['willexpire']      = 'Din redigeringslås for dette dokumentet kommer snart til å utløpe.\nFor å unngå versjonskonflikter bør du forhåndsvise dokumentet ditt for å forlenge redigeringslåsen.';
 $lang['js']['notsavedyet']     = 'Ulagrede endringer vil gå tapt!
 Vil du fortsette?';
