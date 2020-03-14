@@ -216,7 +216,7 @@ abstract class AbstractIndex
             fwrite($fh, "\n");
         }
         fclose($fh);
-        if (isset($conf['fperm'])) {
+        if ($conf['fperm']) {
             chmod($fn.'.tmp', $conf['fperm']);
         }
         io_rename($fn.'.tmp', $fn.'.idx');
@@ -290,7 +290,7 @@ abstract class AbstractIndex
             fwrite($fh, $line);
         }
         fclose($fh);
-        if (isset($conf['fperm'])) {
+        if ($conf['fperm']) {
             chmod($fn.'.tmp', $conf['fperm']);
         }
         io_rename($fn.'.tmp', $fn.'.idx');
