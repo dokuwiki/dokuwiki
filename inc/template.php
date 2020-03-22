@@ -986,6 +986,106 @@ function tpl_pagetitle($id = null, $ret = false) {
 }
 
 /**
+ * Helper for tpl_pageNamespace.
+ *
+ * @author Marek Ištvánek <marek.istvanek@gmail.com>
+ * @param string $id page id
+ * @param string $sep namespace name separator 
+ * @param string $lastTitle last page title
+ * @return void
+ */
+function tpl_echoTitleIfDifferentThanLast($id, $sep, &$lastTitle)
+{
+    $title = tpl_pagetitle($id, true);
+    if ($lastTitle != $title) {
+        echo $sep.$title;
+    }
+    // echo '('.$title.'?'.$lastTitle.')';
+    $lastTitle = $title;
+}
+
+/**
+ * Prints the namespace name of the given page (current one if none given).
+ *
+ * @author Marek Ištvánek <marek.istvanek@gmail.com>
+ * @param string $id page id
+ * @param string $sep namespace name separator
+ * @param bool $home whether to print home page name as root namespace as well
+ * @param bool $reverse whether to reverse namespace order from lowest to root
+ * @return void
+ */
+function tpl_pageNamespace($id = null, $sep = ' | ', $home = false, $reverse = true, &$lastTitle = '') {
+    if (is_null($id)) {
+        global $ID;
+        $id = $ID;
+    }
+
+    $parts = explode(':', $id);
+    $count = count($parts);
+    global $conf;
+    $start = $conf['start'];
+    
+    // namespace names
+    if ($reverse) {
+        $part = $id;
+        for ($i = $count - 1; $i > 0; $i--) {
+            $part = str_replace(':'.$parts[$i], '', $part);
+            $page = $part.':'.$start;
+            if ($page == $id) {
+                continue;
+            }
+            tpl_echoTitleIfDifferentThanLast($page, $sep, $lastTitle);
+        }
+        if ($home) {
+            tpl_echoTitleIfDifferentThanLast($start, $sep, $lastTitle);
+        }
+    }
+    else {
+        if ($home) {
+            tpl_echoTitleIfDifferentThanLast($start, '', $lastTitle);
+        }
+        $part = '';
+        for ($i = 0; $i < $count - 1; $i++) {
+            $part .= $parts[$i].':';
+            $page = $part.$start;
+            if ($page == $id) {
+                continue;
+            }
+            $s = $sep;
+            if (!$home && $i == 0) {
+                $s = '';
+            }
+            tpl_echoTitleIfDifferentThanLast($page, $s, $lastTitle);
+        }
+        if ($home || $count > 0) {
+            echo $sep;
+        }
+    }
+}
+
+/**
+ * Prints the title and namespace name of the given page (current one if none given).
+ *
+ * @author Marek Ištvánek <marek.istvanek@gmail.com>
+ * @param string $id page id
+ * @param string $sep namespace name separator
+ * @param bool $home whether to print home page name as root namespace as well
+ * @param bool $reverse whether to reverse namespace order from lowest to root
+ * @return void
+ */
+function tpl_pageTitleAndNamespace($id = null, $sep = ' | ', $home = false, $reverse = true) {
+    $lastTitle = '';
+    if ($reverse) {
+        tpl_echoTitleIfDifferentThanLast($id, '', $lastTitle);
+        tpl_pageNamespace($id, $sep, $home, $reverse, $lastTitle);
+    }
+    else {
+        tpl_pageNamespace($id, $sep, $home, $reverse, $lastTitle);
+        tpl_echoTitleIfDifferentThanLast($id, '', $lastTitle);
+    }
+}
+
+/**
  * Returns the requested EXIF/IPTC tag from the current image
  *
  * If $tags is an array all given tags are tried until a
