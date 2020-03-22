@@ -1000,7 +1000,6 @@ function tpl_echoTitleIfDifferentThanLast($id, $sep, &$lastTitle)
     if ($lastTitle != $title) {
         echo $sep.$title;
     }
-    // echo '('.$title.'?'.$lastTitle.')';
     $lastTitle = $title;
 }
 
