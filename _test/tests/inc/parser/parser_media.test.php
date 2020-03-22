@@ -133,6 +133,17 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $this->assertEquals($rest, substr($url, $substr_start));
     }
 
+    function testVideoInternalTitle() {
+        $file = 'wiki:kind_zu_katze.ogv';
+        $title = 'Single quote: \' Ampersand: &';
+        
+        $Renderer = new Doku_Renderer_xhtml();
+        $url = $Renderer->externalmedia($file, $title, null, null, null, 'cache', 'details', true);
+        
+        // make sure the title is escaped just once
+        $this->assertEquals(htmlspecialchars($title), substr($url, 28, 32));
+    }
+
     function testSimpleLinkText() {
         $file = 'wiki:dokuwiki-128.png';
         $parser_response = p_get_instructions('{{' . $file . '|This is a simple text.}}');

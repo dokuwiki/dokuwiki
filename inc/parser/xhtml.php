@@ -1681,11 +1681,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         } elseif(media_supportedav($mime, 'video') || media_supportedav($mime, 'audio')) {
             // first get the $title
-            $title = !is_null($title) ? $this->_xmlEntities($title) : false;
+            $title = !is_null($title) ? $title : false;
             if(!$render) {
                 // if the file is not supposed to be rendered
                 // return the title of the file (just the sourcename if there is no title)
-                return $title ? $title : $this->_xmlEntities(\dokuwiki\Utf8\PhpString::basename(noNS($src)));
+                return $this->_xmlEntities($title ? $title : \dokuwiki\Utf8\PhpString::basename(noNS($src)));
             }
 
             $att          = array();
