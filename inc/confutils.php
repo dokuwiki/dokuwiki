@@ -205,7 +205,7 @@ function getSchemes() {
     return $schemes;
 }
 
-const HTML_SPACE = '&#20;';
+const HTML_SPACE = '&#32;';
 
 /**
  * Builds a hash from an array of lines
