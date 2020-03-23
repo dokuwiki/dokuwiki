@@ -1030,7 +1030,7 @@ function tpl_pageNamespace($id = null, $sep = ' | ', $home = false, $reverse = t
         for ($i = $count - 1; $i > 0; $i--) {
             $part = str_replace(':'.$parts[$i], '', $part);
             $page = $part.':'.$start;
-            if ($page == $id) {
+            if ($page === $id) {
                 continue;
             }
             tpl_echoTitleIfDifferentThanLast($page, $sep, $lastTitle);
@@ -1978,4 +1978,3 @@ function tpl_toolsevent($toolsname, $items, $view = 'main') {
 }
 
 //Setup VIM: ex: et ts=4 :
-
