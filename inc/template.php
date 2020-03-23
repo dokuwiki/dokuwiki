@@ -1047,7 +1047,7 @@ function tpl_pageNamespace($id = null, $sep = ' | ', $home = false, $reverse = t
         for ($i = 0; $i < $count - 1; $i++) {
             $part .= $parts[$i].':';
             $page = $part.$start;
-            if ($page == $id) {
+            if ($page === $id) {
                 continue;
             }
             $s = $sep;
