@@ -336,7 +336,7 @@ class ApiCore
      *    $opts['hash']    do md5 sum of content?
      * @return array
      */
-    public function readNamespace($ns, $opts)
+    public function readNamespace($ns, $opts = array())
     {
         global $conf;
 
@@ -508,7 +508,7 @@ class ApiCore
      * @throws AccessDeniedException no write access for page
      * @throws RemoteException no id, empty new page or locked
      */
-    public function putPage($id, $text, $params)
+    public function putPage($id, $text, $params = array())
     {
         global $TEXT;
         global $lang;
@@ -571,7 +571,7 @@ class ApiCore
      * @return bool|string
      * @throws RemoteException
      */
-    public function appendPage($id, $text, $params)
+    public function appendPage($id, $text, $params = array())
     {
         $currentpage = $this->rawPage($id);
         if (!is_string($currentpage)) {
@@ -610,7 +610,7 @@ class ApiCore
      * @return false|string
      * @throws RemoteException
      */
-    public function putAttachment($id, $file, $params)
+    public function putAttachment($id, $file, $params = array())
     {
         $id = cleanID($id);
         $auth = auth_quickaclcheck(getNS($id) . ':*');
@@ -836,7 +836,7 @@ class ApiCore
      * @throws AccessDeniedException no read access for page
      * @throws RemoteException empty id
      */
-    public function pageVersions($id, $first)
+    public function pageVersions($id, $first = 0)
     {
         $id = $this->resolvePageId($id);
         if (auth_quickaclcheck($id) < AUTH_READ) {

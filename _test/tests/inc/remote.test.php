@@ -1,12 +1,9 @@
 <?php
 
-use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\test\mock\AuthPlugin;
 use dokuwiki\Extension\RemotePlugin;
 use dokuwiki\Remote\Api;
-
-class MockAuth extends AuthPlugin {
-    function isCaseSensitive() { return true; }
-}
+use dokuwiki\Remote\RemoteException;
 
 class RemoteAPICoreTest {
 
@@ -168,7 +165,7 @@ class remote_test extends DokuWikiTest {
         $this->userinfo = $USERINFO;
         $this->remote = new Api();
 
-        $auth = new MockAuth();
+        $auth = new AuthPlugin();
     }
 
     function tearDown() {
@@ -263,13 +260,16 @@ class remote_test extends DokuWikiTest {
         $this->assertTrue(true); // avoid being marked as risky for having no assertion
     }
 
-    /**
-     * @expectedException dokuwiki\Remote\RemoteException
-     */
     function test_forceAccessFail() {
         global $conf;
         $conf['remote'] = 0;
-        $this->remote->forceAccess();
+
+        try {
+            $this->remote->forceAccess();
+            $this->fail('Expects RemoteException to be raised');
+        } catch (RemoteException $th) {
+            $this->assertEquals(-32604, $th->getCode());
+        }
     }
 
     function test_generalCoreFunctionWithoutArguments() {
@@ -290,16 +290,18 @@ class remote_test extends DokuWikiTest {
         $this->assertEquals($remoteApi->call('wiki.voidTestMethod'), null);
     }
 
-    /**
-     * @expectedException dokuwiki\Remote\RemoteException
-     */
     function test_generalCoreFunctionOnArgumentMismatch() {
         global $conf;
         $conf['remote'] = 1;
         $remoteApi = new Api();
         $remoteApi->getCoreMethods(new RemoteAPICoreTest());
 
-        $remoteApi->call('wiki.voidTestMethod', array('something'));
+        try {
+            $remoteApi->call('wiki.voidTestMethod', array('something'));
+            $this->fail('Expects RemoteException to be raised');
+        } catch (RemoteException $th) {
+            $this->assertEquals(-32604, $th->getCode());
+        }
     }
 
     function test_generalCoreFunctionWithArguments() {
@@ -318,6 +320,21 @@ class remote_test extends DokuWikiTest {
         $this->assertEquals($remoteApi->call('wiki.twoArgWithDefaultArg', array('string', 'another')), array('string', 'another'));
     }
 
+    function test_generalCoreFunctionOnArgumentMissing() {
+        global $conf;
+        $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
+        $remoteApi = new Api();
+        $remoteApi->getCoreMethods(new RemoteAPICoreTest());
+
+        try {
+            $remoteApi->call('wiki.twoArgWithDefaultArg', array());
+            $this->fail('Expects RemoteException to be raised');
+        } catch (RemoteException $th) {
+            $this->assertEquals(-32603, $th->getCode());
+        }
+    }
+
     function test_pluginCallMethods() {
         global $conf;
         global $USERINFO;
@@ -332,15 +349,32 @@ class remote_test extends DokuWikiTest {
         $this->assertEquals($remoteApi->call('plugin.testplugin.methodString'), 'success');
     }
 
-    /**
-     * @expectedException dokuwiki\Remote\RemoteException
-     */
+    function test_pluginCallMethodsOnArgumentMissing() {
+        global $conf;
+        $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
+        $remoteApi = new Api();
+        $remoteApi->getCoreMethods(new RemoteAPICoreTest());
+
+        try {
+            $remoteApi->call('plugin.testplugin.method2', array());
+            $this->fail('Expects RemoteException to be raised');
+        } catch (RemoteException $th) {
+            $this->assertEquals(-32603, $th->getCode());
+        }
+    }
+
     function test_notExistingCall() {
         global $conf;
         $conf['remote'] = 1;
 
         $remoteApi = new Api();
-        $remoteApi->call('dose not exist');
+        try {
+            $remoteApi->call('dose not exist');
+            $this->fail('Expects RemoteException to be raised');
+        } catch (RemoteException $th) {
+            $this->assertEquals(-32603, $th->getCode());
+        }
     }
 
     function test_publicCallCore() {

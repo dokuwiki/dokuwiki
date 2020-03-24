@@ -1,29 +1,7 @@
 <?php
 
 use dokuwiki\Input\Input;
-use dokuwiki\Extension\AuthPlugin;
-
-class Mock_Auth_Plugin extends AuthPlugin {
-
-    public $loggedOff = false;
-
-    public function __construct($canDeleteUser = true) {
-        $this->cando['delUser'] = $canDeleteUser;
-    }
-
-    public function checkPass($user, $pass) {
-        return $pass == 'password';
-    }
-
-    public function deleteUsers($users) {
-        return in_array($_SERVER['REMOTE_USER'], $users);
-    }
-
-    public function logoff() {
-        $this->loggedOff = true;
-    }
-
-}
+use dokuwiki\test\mock\AuthDeletePlugin;
 
 class auth_deleteprofile_test extends DokuWikiTest {
 
@@ -56,7 +34,7 @@ class auth_deleteprofile_test extends DokuWikiTest {
         $_REQUEST = $input;
         $INPUT = new Input();
 
-        $auth = new Mock_Auth_Plugin();
+        $auth = new AuthDeletePlugin();
 
         $this->assertTrue(auth_deleteprofile());
         $this->assertTrue($auth->loggedOff);
@@ -82,7 +60,7 @@ class auth_deleteprofile_test extends DokuWikiTest {
         $_REQUEST = $input;
         $INPUT = new Input();
 
-        $auth = new Mock_Auth_Plugin();
+        $auth = new AuthDeletePlugin();
 
         // password check required - it fails, so don't delete profile
         $this->assertFalse(auth_deleteprofile());
@@ -112,7 +90,7 @@ class auth_deleteprofile_test extends DokuWikiTest {
         $_REQUEST = $input;
         $INPUT = new Input();
 
-        $auth = new Mock_Auth_Plugin(false);
+        $auth = new AuthDeletePlugin(false);
         $conf['disableactions'] = '';
         $this->assertFalse(auth_deleteprofile());
     }
@@ -136,7 +114,7 @@ class auth_deleteprofile_test extends DokuWikiTest {
         $_REQUEST = $input;
         $INPUT = new Input();
 
-        $auth = new Mock_Auth_Plugin();
+        $auth = new AuthDeletePlugin();
         $conf['disableactions'] = 'profile_delete';
 
         $this->assertFalse(actionOK('profile_delete'));
@@ -165,7 +143,7 @@ class auth_deleteprofile_test extends DokuWikiTest {
         $_REQUEST = $input;
         $input_foundation = new Input();
 
-        $auth = new Mock_Auth_Plugin();
+        $auth = new AuthDeletePlugin();
 
         $INPUT = clone $input_foundation;
         $INPUT->remove('delete');
