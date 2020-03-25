@@ -325,8 +325,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         $domain = \dokuwiki\Utf8\PhpString::strtolower(trim($domain));
         $user   = \dokuwiki\Utf8\PhpString::strtolower(trim($user));
 
-        // is this a known, valid domain? if not discard
-        if (!is_array($this->conf[$domain])) {
+        // is this a known, valid domain or do we work without account suffix? if not discard
+        if (!is_array($this->conf[$domain]) && $this->conf['account_suffix'] !== '') {
             $domain = '';
         }
 
@@ -645,13 +645,17 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
     /**
      * Get the user part from a user
      *
+     * When an account suffix is set, we strip the domain part from the user
+     *
      * @param string $user
      * @return string
      */
     public function getUserName($user)
     {
-        list($name) = explode('@', $user, 2);
-        return $name;
+        if ($this->conf['account_suffix'] !== '') {
+            list($user) = explode('@', $user, 2);
+        }
+        return $user;
     }
 
     /**
