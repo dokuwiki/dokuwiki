@@ -158,7 +158,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $adldap = $this->_adldap($this->_userDomain($user));
         if(!$adldap) return false;
 
-        return $adldap->authenticate($this->_userName($user), $pass);
+        try {
+            return $adldap->authenticate($this->getUserName($user), $pass);
+        } catch (adLDAPException $e) {
+            return false;
+        }
     }
 
     /**
@@ -184,7 +188,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * @author  James Van Lommel <james@nosq.com>
      * @param string $user
      * @param bool $requireGroups (optional) - ignored, groups are always supplied by this plugin
-     * @return array
+     * @return array|false
      */
     public function getUserData($user, $requireGroups=true) {
         global $conf;
@@ -203,7 +207,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $fields = array_filter($fields);
 
         //get info for given user
-        $result = $adldap->user()->info($this->_userName($user), $fields);
+        $result = $adldap->user()->info($this->getUserName($user), $fields);
         if($result == false){
             return array();
         }
@@ -227,7 +231,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
 
         // handle ActiveDirectory memberOf
-        $info['grps'] = $adldap->user()->groups($this->_userName($user),(bool) $this->opts['recursive_groups']);
+        $info['grps'] = $adldap->user()->groups($this->getUserName($user),(bool) $this->opts['recursive_groups']);
 
         if(is_array($info['grps'])) {
             foreach($info['grps'] as $ndx => $group) {
@@ -312,8 +316,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $domain = utf8_strtolower(trim($domain));
         $user   = utf8_strtolower(trim($user));
 
-        // is this a known, valid domain? if not discard
-        if(!is_array($this->conf[$domain])) {
+        // is this a known, valid domain or do we work without account suffix? if not discard
+        if (!is_array($this->conf[$domain]) && $this->conf['account_suffix'] !== '') {
             $domain = '';
         }
 
@@ -462,7 +466,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * @param   int $start index of first user to be returned
      * @param   int $limit max number of users to be returned
      * @param   array $filter array of field/pattern pairs, null for no filter
-     * @return array userinfo (refer getUserData for internal userinfo details)
+     * @return array|false userinfo (refer getUserData for internal userinfo details)
      */
     public function retrieveUsers($start = 0, $limit = 0, $filter = array()) {
         $adldap = $this->_adldap(null);
@@ -530,7 +534,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         // password changing
         if(isset($changes['pass'])) {
             try {
-                $return = $adldap->user()->password($this->_userName($user),$changes['pass']);
+                $return = $adldap->user()->password($this->getUserName($user),$changes['pass']);
             } catch (adLDAPException $e) {
                 if ($this->conf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
                 $return = false;
@@ -552,7 +556,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
         if(count($adchanges)) {
             try {
-                $return = $return & $adldap->user()->modify($this->_userName($user),$adchanges);
+                $return = $return & $adldap->user()->modify($this->getUserName($user),$adchanges);
             } catch (adLDAPException $e) {
                 if ($this->conf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
                 $return = false;
@@ -585,7 +589,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         try {
             $this->adldap[$domain] = new adLDAP($this->opts);
             return $this->adldap[$domain];
-        } catch(adLDAPException $e) {
+        } catch(Exception $e) {
             if($this->conf['debug']) {
                 msg('AD Auth: '.$e->getMessage(), -1);
             }
@@ -609,12 +613,17 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     /**
      * Get the user part from a user
      *
+     * When an account suffix is set, we strip the domain part from the user
+     *
      * @param string $user
      * @return string
      */
-    public function _userName($user) {
-        list($name) = explode('@', $user, 2);
-        return $name;
+    public function getUserName($user)
+    {
+        if ($this->conf['account_suffix'] !== '') {
+            list($user) = explode('@', $user, 2);
+        }
+        return $user;
     }
 
     /**
