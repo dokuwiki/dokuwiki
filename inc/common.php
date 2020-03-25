@@ -217,12 +217,8 @@ function pageinfo() {
     $info['id']  = $ID;
     $info['rev'] = $REV;
 
-    if($INPUT->server->has('REMOTE_USER')) {
-        $subManager = new SubscriberManager();
-        $info['subscribed'] = $subManager->userSubscription();
-    } else {
-        $info['subscribed'] = false;
-    }
+    $subManager = new SubscriberManager();
+    $info['subscribed'] = $subManager->userSubscription();
 
     $info['locked']     = checklock($ID);
     $info['filepath']   = wikiFN($ID);
