@@ -68,8 +68,6 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      */
     protected $_pattern = array();
 
-    protected $_actualstart = 0;
-
     protected $_grpsusers = array();
 
     /**
@@ -437,13 +435,19 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * @param int $numberOfAdds additional number of users requested
      * @return int number of Users actually add to Array
      */
-    protected function _fillGroupUserArray($filter, $numberOfAdds){
-        $this->_grpsusers[$this->_filterToString($filter)];
-        $i = 0;
+    protected function _fillGroupUserArray($filter, $numberOfAdds)
+    {
+        if (isset($this->_grpsusers[$this->_filterToString($filter)])) {
+            $actualstart = count($this->_grpsusers[$this->_filterToString($filter)]);
+        } else {
+            $this->_grpsusers[$this->_filterToString($filter)] = [];
+            $actualstart = 0;
+        }
+
+        $i=0;
         $count = 0;
-        $this->_constructPattern($filter);
         foreach ($this->users as $user => &$info) {
-            if($i++ < $this->_actualstart) {
+            if ($i++ < $actualstart) {
                 continue;
             }
             if($info === false) {
@@ -454,7 +458,6 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                 if(($numberOfAdds > 0) && (++$count >= $numberOfAdds)) break;
             }
         }
-        $this->_actualstart = $i;
         return $count;
     }
 
@@ -472,12 +475,12 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $adldap = $this->_adldap(null);
         if(!$adldap) return false;
 
-        if(!$this->users) {
-            //get info for given user
-            $result = $adldap->user()->all(false, $this->_constructSearchString($filter));
-            if (!$result) return array();
-            $this->users = array_fill_keys($result, false);
-        }
+        //if (!$this->users) {
+        //get info for given user
+        $result = $adldap->user()->all(false, $this->_constructSearchString($filter));
+        if (!$result) return array();
+        $this->users = array_fill_keys($result, false);
+        //}
 
         $i     = 0;
         $count = 0;
@@ -500,8 +503,18 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         } else {
             $usermanager = plugin_load("admin", "usermanager", false);
             $usermanager->setLastdisabled(true);
-            if (!isset($this->_grpsusers[$this->_filterToString($filter)]) || count($this->_grpsusers[$this->_filterToString($filter)]) < ($start+$limit)) {
-                $this->_fillGroupUserArray($filter,$start+$limit - count($this->_grpsusers[$this->_filterToString($filter)]) +1);
+
+            if (!isset($this->_grpsusers[$this->_filterToString($filter)]) ||
+                count($this->_grpsusers[$this->_filterToString($filter)]) < ($start+$limit)
+            ) {
+                if(!isset($this->_grpsusers[$this->_filterToString($filter)])) {
+                    $this->_grpsusers[$this->_filterToString($filter)] = [];
+                }
+
+                $this->_fillGroupUserArray(
+                    $filter,
+                    $start+$limit - count($this->_grpsusers[$this->_filterToString($filter)]) +1
+                );
             }
             if (!$this->_grpsusers[$this->_filterToString($filter)]) return false;
             foreach($this->_grpsusers[$this->_filterToString($filter)] as $user => &$info) {
