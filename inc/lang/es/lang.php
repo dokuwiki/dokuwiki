@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Fernando <ffdguez84@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  * @author Liliana <lilianasaidon@gmail.com>
  * @author Alex Cachinero <anarres@protonmail.com>
@@ -35,7 +36,6 @@
  * @author monica <may.dorado@gmail.com>
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Juan De La Cruz <juann.dlc@gmail.com>
- * @author Fernando <fdiezala@gmail.com>
  * @author Eloy <ej.perezgomez@gmail.com>
  * @author Antonio Castilla <antoniocastilla@trazoide.com>
  * @author Jonathan Hernández <me@jhalicea.com>
