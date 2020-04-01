@@ -331,6 +331,7 @@ $lang['i_modified']            = 'Pour des raisons de sécurité, ce script ne f
 $lang['i_funcna']              = 'La fonction PHP <code>%s</code> n\'est pas disponible. Peut-être que votre hébergeur web l\'a désactivée ?';
 $lang['i_phpver']              = 'Votre version de PHP (%s) est antérieure à la version requise (%s). Vous devez mettre à jour votre installation de PHP.';
 $lang['i_mbfuncoverload']      = 'Il faut désactiver mbstring.func_overload dans php.ini pour DokuWiki';
+$lang['i_urandom']             = 'DokuWiki ne peut créer de nombres cryptographiquement sûrs pour les cookies. Vous voudrez peut-être vérifier que le réglage open_basedir dans php.ini permet l\'accès à <code>/dev/urandom</code>.';
 $lang['i_permfail']            = '<code>%s</code> n\'est pas accessible en écriture pour DokuWiki. Vous devez corriger les autorisations de ce répertoire !';
 $lang['i_confexists']          = '<code>%s</code> existe déjà';
 $lang['i_writeerr']            = 'Impossible de créer <code>%s</code>. Vous devez vérifier les autorisations des répertoires/fichiers et créer le fichier manuellement.';
