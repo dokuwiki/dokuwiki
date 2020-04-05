@@ -582,7 +582,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
-            array('internalmedia',array('img.gif',NULL,NULL,NULL,NULL,'cache','details')),
+            array('internalmedia',array('img.gif',NULL,NULL,NULL,NULL,'cache','details',NULL)),
             array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
@@ -597,7 +597,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
-            array('internalmedia',array('img.gif',NULL,NULL,NULL,NULL,'cache','linkonly')),
+            array('internalmedia',array('img.gif',NULL,NULL,NULL,NULL,'cache','linkonly',NULL)),
             array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
@@ -612,7 +612,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
-            array('internalmedia',array('foo.txt','Some File',null,10,10,'cache','details')),
+            array('internalmedia',array('foo.txt','Some File',null,10,10,'cache','details',NULL)),
             array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
@@ -627,7 +627,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
-            array('internalmedia',array('img.gif',NULL,'left',NULL,NULL,'cache','details')),
+            array('internalmedia',array('img.gif',NULL,'left',NULL,NULL,'cache','details',NULL)),
             array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
@@ -642,7 +642,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
-            array('internalmedia',array('img.gif',NULL,'right',NULL,NULL,'cache','details')),
+            array('internalmedia',array('img.gif',NULL,'right',NULL,NULL,'cache','details',NULL)),
             array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
@@ -657,7 +657,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
-            array('internalmedia',array('img.gif',NULL,'center',NULL,NULL,'cache','details')),
+            array('internalmedia',array('img.gif',NULL,'center',NULL,NULL,'cache','details',NULL)),
             array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
@@ -672,7 +672,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
-            array('internalmedia',array('img.gif',NULL,NULL,'50','100','nocache','details')),
+            array('internalmedia',array('img.gif',NULL,NULL,'50','100','nocache','details',NULL)),
             array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
@@ -687,7 +687,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
-            array('internalmedia',array('img.gif','Some Image',NULL,'50','100','cache','details')),
+            array('internalmedia',array('img.gif','Some Image',NULL,'50','100','cache','details',NULL)),
             array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
@@ -702,7 +702,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
-            array('externalmedia',array('http://www.google.com/img.gif',NULL,NULL,NULL,NULL,'cache','details')),
+            array('externalmedia',array('http://www.google.com/img.gif',NULL,NULL,NULL,NULL,'cache','details',NULL)),
             array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
@@ -717,7 +717,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('document_start',array()),
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
-            array('externalmedia',array('http://www.google.com/img.gif',NULL,NULL,'50','100','nocache','details')),
+            array('externalmedia',array('http://www.google.com/img.gif',NULL,NULL,'50','100','nocache','details',NULL)),
             array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
@@ -733,7 +733,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('externalmedia',
-            array('http://www.google.com/img.gif','Some Image',NULL,'50','100','cache','details')),
+            array('http://www.google.com/img.gif','Some Image',NULL,'50','100','cache','details',NULL)),
             array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
@@ -754,6 +754,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             'height'=>20,
             'cache'=>'nocache',
             'linking'=>'details',
+            'videoAtts'=>NULL
         );
 
         $calls = array (
@@ -781,6 +782,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             'height'=>20,
             'cache'=>'nocache',
             'linking'=>'details',
+            'videoAtts'=>NULL
         );
 
         $calls = array (
@@ -808,6 +810,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             'height'=>20,
             'cache'=>'nocache',
             'linking'=>'details',
+            'videoAtts'=> NULL
         );
 
         $calls = array (
@@ -830,7 +833,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('internalmedia',
-            array('img.gif','{{foo.gif|{{bar.gif|Bar',NULL,NULL,NULL,'cache','details')),
+            array('img.gif','{{foo.gif|{{bar.gif|Bar',NULL,NULL,NULL,'cache','details',NULL)),
             array('cdata',array('}}}} Bar')),
             array('p_close',array()),
             array('document_end',array()),

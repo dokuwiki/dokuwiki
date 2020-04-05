@@ -1124,8 +1124,10 @@ function Doku_Handler_Parse_Media($match) {
         'height'=>$h,
         'cache'=>$cache,
         'linking'=>$linking,
-		'videoAtts'=>$videoAtts
     );
+    if($linking != "linkonly") {
+        $params['videoAtts'] = $videoAtts;
+    }
 
     return $params;
 }

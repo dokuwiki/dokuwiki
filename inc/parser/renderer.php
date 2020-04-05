@@ -659,7 +659,7 @@ abstract class Doku_Renderer extends Plugin {
      * @param string $linking linkonly|detail|nolink
      */
     public function externalmedia($src, $title = null, $align = null, $width = null,
-                           $height = null, $cache = null, $linking = null) {
+                           $height = null, $cache = null, $linking = null, $videoAtts = null) {
     }
 
     /**

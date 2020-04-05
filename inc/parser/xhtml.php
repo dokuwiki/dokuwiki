@@ -1246,7 +1246,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @return void|string writes to doc attribute or returns html depends on $return
      */
     public function externalmedia($src, $title = null, $align = null, $width = null,
-                           $height = null, $cache = null, $linking = null, $return = false) {
+                           $height = null, $cache = null, $linking = null, $videoAtts = null, $return = false) {
         if(link_isinterwiki($src)){
             list($shortcut, $reference) = explode('>', $src, 2);
             $exists = null;
@@ -1263,7 +1263,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $noLink = true;
         }
         $render = ($linking == 'linkonly') ? false : true;
-        $link   = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render);
+        $link   = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render, $videoAtts);
 
         $link['url'] = ml($src, array('cache' => $cache));
 
@@ -1849,7 +1849,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param array  $atts        - additional attributes for the <video> tag
      * @return string
      */
-    public function _video($src, $width, $height, $atts = null, $videoAtts = null),  {
+    public function _video($src, $width, $height, $atts = null, $videoAtts = null)  {
         // prepare width and height
         if(is_null($atts)) $atts = array();
         $atts['width']  = (int) $width;

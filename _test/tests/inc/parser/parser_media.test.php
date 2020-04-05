@@ -20,6 +20,7 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
             array('cdata',array(null)),
             array('p_close',array()),
             array('document_end',array()),
+            array('videoAtts',array())
         );
         $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
 
