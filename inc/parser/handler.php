@@ -885,11 +885,11 @@ class Doku_Handler {
         $p = Doku_Handler_Parse_Media($match);
 
         $this->addCall(
-              $p['type'],
-              array($p['src'], $p['title'], $p['align'], $p['width'],
-                     $p['height'], $p['cache'], $p['linking']),
-              $pos
-             );
+            $p['type'],
+            array($p['src'], $p['title'], $p['align'], $p['width'],
+                   $p['height'], $p['cache'], $p['linking'], $p["videoAtts"]),
+            $pos
+           );
         return true;
     }
 
@@ -1095,6 +1095,19 @@ function Doku_Handler_Parse_Media($match) {
         $cache = 'cache';
     }
 
+    $videoAtts = array();
+    if(preg_match('/nocontrols/i',$param)){
+        $videoAtts["nocontrols"] = "1";
+    }
+    if(preg_match('/autoplay/i',$param)){
+        $videoAtts["autoplay"] = "1";
+    }
+    if(preg_match('/loop/i',$param)){
+        $videoAtts["loop"] = "1";
+    }
+    if(preg_match('/muted/i',$param)){
+        $videoAtts["muted"] = "1";
+    }
     // Check whether this is a local or remote image or interwiki
     if (media_isexternal($src) || link_isinterwiki($src)){
         $call = 'externalmedia';
@@ -1111,6 +1124,7 @@ function Doku_Handler_Parse_Media($match) {
         'height'=>$h,
         'cache'=>$cache,
         'linking'=>$linking,
+		'videoAtts'=>$videoAtts
     );
 
     return $params;
