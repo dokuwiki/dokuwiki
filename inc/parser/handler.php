@@ -1094,10 +1094,10 @@ function Doku_Handler_Parse_Media($match) {
     }else{
         $cache = 'cache';
     }
-    list($ext, $mime) = mimetype($src, false);
+    list(, $mime) = mimetype($src, false);
     $isVideo = media_supportedav($mime);
+    $videoAtts = array();
     if($isVideo) {
-        $videoAtts = array();
         $confVideoAtts = explode(',',$conf['video_settings']);
         if((in_array("controls", $confVideoAtts) || preg_match('/controls/i',$param)) && !preg_match('/nocontrols/i',$param)){
             $videoAtts["controls"] = true;
