@@ -27,14 +27,14 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $url = $Renderer->externalmedia($file,null,null,null,null,'cache','details',array('controls'=>true),true);
         //print_r("url: " . $url);
         $video = '<video class="media" controls="controls">';
-        $this->assertEquals(substr($url,0,67),$video);
+        $this->assertEquals(substr($url,0,41),$video);
         $source = '<source src="http://some.where.far/away.ogv" type="video/ogg" />';
-        $this->assertEquals(substr($url,68,64),$source);
+        $this->assertEquals(substr($url,42,64),$source);
         // work around random token
         $a_first_part = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?cache=&amp;tok=';
         $a_second_part = '&amp;media=http%3A%2F%2Fsome.where.far%2Faway.ogv" class="media mediafile mf_ogv" title="http://some.where.far/away.ogv">';
 
-        $substr_start = 133;
+        $substr_start = 107;
         $substr_len = strlen($a_first_part);
         $this->assertEquals($a_first_part, substr($url, $substr_start, $substr_len));
 
