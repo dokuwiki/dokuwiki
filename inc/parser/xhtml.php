@@ -1852,11 +1852,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     public function _video($src, $width, $height, $atts = null, $videoAtts = null)  {
         // prepare width and height
         if(is_null($atts)) $atts = array();
-        $atts['width']  = (int) $width;
-        $atts['height'] = (int) $height;
-        if(!$atts['width']) $atts['width'] = 320;
-        if(!$atts['height']) $atts['height'] = "auto";
 
+        if(!is_null($width)) $atts['width']  = (int) $width;
+        if(!is_null($height)) $atts['height']  = (int) $height;
+        
         $posterUrl = '';
         $files = array();
         $tracks = array();

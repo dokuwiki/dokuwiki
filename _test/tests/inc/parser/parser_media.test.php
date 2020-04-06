@@ -26,7 +26,7 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $Renderer = new Doku_Renderer_xhtml();
         $url = $Renderer->externalmedia($file,null,null,null,null,'cache','details',array('controls'=>true),true);
         //print_r("url: " . $url);
-        $video = '<video class="media" width="320" height="auto" controls="controls">';
+        $video = '<video class="media" controls="controls">';
         $this->assertEquals(substr($url,0,67),$video);
         $source = '<source src="http://some.where.far/away.ogv" type="video/ogg" />';
         $this->assertEquals(substr($url,68,64),$source);
