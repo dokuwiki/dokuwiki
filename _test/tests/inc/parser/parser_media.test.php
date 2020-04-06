@@ -103,7 +103,7 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $Renderer = new Doku_Renderer_xhtml();
         $url = $Renderer->externalmedia($file,null,null,null,null,'cache','details',array('controls'=>true),true);
 
-        $video = '<video class="media" width="320" height="auto" controls="controls" poster="' . DOKU_BASE . 'lib/exe/fetch.php?media=wiki:kind_zu_katze.png">';
+        $video = '<video class="media" controls="controls" poster="' . DOKU_BASE . 'lib/exe/fetch.php?media=wiki:kind_zu_katze.png">';
         $substr_start = 0;
         $substr_len = strlen($video);
         $this->assertEquals($video, substr($url, $substr_start, $substr_len));
