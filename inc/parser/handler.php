@@ -1094,20 +1094,23 @@ function Doku_Handler_Parse_Media($match) {
     }else{
         $cache = 'cache';
     }
-
-    $videoAtts = array();
-    $confVideoAtts = explode(',',$conf['video_settings']);
-    if((in_array("controls", $confVideoAtts) || preg_match('/controls/i',$param)) && !preg_match('/nocontrols/i',$param)){
-        $videoAtts["controls"] = true;
-    }
-    if(((in_array("autoplay", $confVideoAtts)) || preg_match('/autoplay/i',$param)) && !preg_match('/noautoplay/i',$param)){
-        $videoAtts["autoplay"] = true;
-    }
-    if((in_array("loop", $confVideoAtts) || preg_match('/loop/i',$param)) && !preg_match('/noloop/i',$param)){
-        $videoAtts["loop"] = true;
-    }
-    if((in_array("muted", $confVideoAtts) || preg_match('/muted/i',$param)) && !preg_match('/nomuted/i',$param)){
-        $videoAtts["muted"] = true;
+    list($ext, $mime) = mimetype($src, false);
+    $isVideo = media_supportedav($mime);
+    if($isVideo) {
+        $videoAtts = array();
+        $confVideoAtts = explode(',',$conf['video_settings']);
+        if((in_array("controls", $confVideoAtts) || preg_match('/controls/i',$param)) && !preg_match('/nocontrols/i',$param)){
+            $videoAtts["controls"] = true;
+        }
+        if(((in_array("autoplay", $confVideoAtts)) || preg_match('/autoplay/i',$param)) && !preg_match('/noautoplay/i',$param)){
+            $videoAtts["autoplay"] = true;
+        }
+        if((in_array("loop", $confVideoAtts) || preg_match('/loop/i',$param)) && !preg_match('/noloop/i',$param)){
+            $videoAtts["loop"] = true;
+        }
+        if((in_array("muted", $confVideoAtts) || preg_match('/muted/i',$param)) && !preg_match('/nomuted/i',$param)){
+            $videoAtts["muted"] = true;
+        }
     }
     // Check whether this is a local or remote image or interwiki
     if (media_isexternal($src) || link_isinterwiki($src)){
@@ -1126,7 +1129,8 @@ function Doku_Handler_Parse_Media($match) {
         'cache'=>$cache,
         'linking'=>$linking,
     );
-    if($linking != "linkonly") {
+
+    if($isVideo && $linking != "linkonly") {
         $params['videoAtts'] = $videoAtts;
     }
 
