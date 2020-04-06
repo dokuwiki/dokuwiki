@@ -1028,7 +1028,7 @@ class Doku_Handler {
 
 //------------------------------------------------------------------------
 function Doku_Handler_Parse_Media($match) {
-
+    global $conf;
     // Strip the opening and closing markup
     $link = preg_replace(array('/^\{\{/','/\}\}$/u'),'',$match);
 
@@ -1096,17 +1096,18 @@ function Doku_Handler_Parse_Media($match) {
     }
 
     $videoAtts = array();
-    if(preg_match('/nocontrols/i',$param)){
-        $videoAtts["nocontrols"] = "1";
+    $confVideoAtts = explode(',',$conf['video_settings']);
+    if((in_array("controls", $confVideoAtts) || preg_match('/controls/i',$param)) && !preg_match('/nocontrols/i',$param)){
+        $videoAtts["controls"] = true;
     }
-    if(preg_match('/autoplay/i',$param)){
-        $videoAtts["autoplay"] = "1";
+    if(((in_array("autoplay", $confVideoAtts)) || preg_match('/autoplay/i',$param)) && !preg_match('/noautoplay/i',$param)){
+        $videoAtts["autoplay"] = true;
     }
-    if(preg_match('/loop/i',$param)){
-        $videoAtts["loop"] = "1";
+    if((in_array("loop", $confVideoAtts) || preg_match('/loop/i',$param)) && !preg_match('/noloop/i',$param)){
+        $videoAtts["loop"] = true;
     }
-    if(preg_match('/muted/i',$param)){
-        $videoAtts["muted"] = "1";
+    if((in_array("muted", $confVideoAtts) || preg_match('/muted/i',$param)) && !preg_match('/nomuted/i',$param)){
+        $videoAtts["muted"] = true;
     }
     // Check whether this is a local or remote image or interwiki
     if (media_isexternal($src) || link_isinterwiki($src)){

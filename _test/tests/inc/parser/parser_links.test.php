@@ -782,7 +782,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             'height'=>20,
             'cache'=>'nocache',
             'linking'=>'details',
-            'videoAtts'=>NULL
+            'videoAtts'=>array()
         );
 
         $calls = array (
@@ -810,7 +810,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             'height'=>20,
             'cache'=>'nocache',
             'linking'=>'details',
-            'videoAtts'=> NULL
+            'videoAtts'=> array()
         );
 
         $calls = array (

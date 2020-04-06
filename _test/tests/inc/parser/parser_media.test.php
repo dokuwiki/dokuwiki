@@ -16,7 +16,7 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('externalmedia',array($file,null,null,null,null,'cache','details')),
+            array('externalmedia',array($file,null,null,null,null,'cache','details',array())),
             array('cdata',array(null)),
             array('p_close',array()),
             array('document_end',array()),
@@ -139,7 +139,7 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $title = 'Single quote: \' Ampersand: &';
         
         $Renderer = new Doku_Renderer_xhtml();
-        $url = $Renderer->externalmedia($file, $title, null, null, null, 'cache', 'details', true, array());
+        $url = $Renderer->externalmedia($file, $title, null, null, null, 'cache', 'details', array(), true);
         
         // make sure the title is escaped just once
         $this->assertEquals(htmlspecialchars($title), substr($url, 28, 32));

@@ -1880,11 +1880,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $out = '';
         // open video tag
         $out .= '<video '.buildAttributes($atts);
-        if(!$videoAtts["nocontrols"]) $out .= ' controls="controls"';
+        if($videoAtts["controls"]) $out .= ' controls="controls"';
         if($videoAtts["autoplay"]) $out .= ' autoplay="autoplay"';
         if($videoAtts["loop"]) $out .= ' loop="loop"';
         if($videoAtts["muted"]) $out .= ' muted="muted"';
-
         if($posterUrl) $out .= ' poster="'.hsc($posterUrl).'"';
         $out .= '>'.NL;
         $fallback = '';
