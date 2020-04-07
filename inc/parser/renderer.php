@@ -817,7 +817,7 @@ abstract class Doku_Renderer extends Plugin {
      * @param string $name
      * @return string
      */
-    protected function _simpleTitle($name) {
+    public function _simpleTitle($name) {
         global $conf;
 
         //if there is a hash we use the ancor name only
