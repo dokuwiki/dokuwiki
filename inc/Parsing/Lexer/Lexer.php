@@ -168,6 +168,16 @@ class Lexer
     }
 
     /**
+     * Gives plugins access to the mode stack
+     *
+     * @return StateStack
+     */
+    public function getModeStack()
+    {
+        return $this->modeStack;
+    }
+
+    /**
      * Sends the matched token and any leading unmatched
      * text to the parser changing the lexer to a new
      * mode if one is listed.
