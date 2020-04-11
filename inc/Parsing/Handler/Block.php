@@ -146,8 +146,8 @@ class Block
     public function process($calls)
     {
         // open first paragraph
-        $this->openParagraph(0);
         foreach ($calls as $key => $call) {
+            $this->openParagraph(0);
             $cname = $call[0];
             if ($cname == 'plugin') {
                 $cname='plugin_'.$call[1][0];
@@ -173,6 +173,12 @@ class Block
             /* block */
             // If it's a substition it opens and closes at the same call.
             // To make sure next paragraph is correctly started, let close go first.
+            if (in_array($cname, $this->quoteOpen) && (!$plugin || $plugin_close)) {
+                $this->openParagraph($call[2]);
+                $this->storeCall($call);
+                $this->closeParagraph($call[2]);
+            }
+
             if (in_array($cname, $this->blockClose) && (!$plugin || $plugin_close)) {
                 $this->closeParagraph($call[2]);
                 $this->storeCall($call);
