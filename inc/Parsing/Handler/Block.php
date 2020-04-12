@@ -149,6 +149,9 @@ class Block
         foreach ($calls as $key => $call) {
             $cname = $call[0];
 
+            $plugin_open = false;
+            $plugin_close = false;
+
             if ($cname == 'plugin') {
                 $cname='plugin_'.$call[1][0];
                 $plugin = true;
