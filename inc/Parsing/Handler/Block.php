@@ -43,7 +43,6 @@ class Block
         'section_close',
     );
 
-
     /**
      * Constructor. Adds loaded syntax plugins to the block and stack
      * arrays
@@ -146,9 +145,10 @@ class Block
     public function process($calls)
     {
         // open first paragraph
+        $this->openParagraph(0);
         foreach ($calls as $key => $call) {
-            $this->openParagraph(0);
             $cname = $call[0];
+
             if ($cname == 'plugin') {
                 $cname='plugin_'.$call[1][0];
                 $plugin = true;
@@ -157,11 +157,21 @@ class Block
             } else {
                 $plugin = false;
             }
+
+            /* force opening of paragraph when in cdata outside _open or _close*/
+            if ($cname === 'cdata' && rtrim($call[0], "\n\r\t") !== '' && isset($calls[$key+1]) && $calls[$key+1][0] != 'eol' && (!$plugin || $plugin_close)) {
+                if (!isset($calls[$key-1])) {
+                    $this->openParagraph($call[2]);
+                } elseif ((isset($calls[$key-1]) && !strpos($calls[$key-1][0], '_open')) && (isset($calls[$key+1]) && !strpos($calls[$key+1][0], '_close'))) {
+                    $this->openParagraph($call[2]);
+                }
+            }
+
             /* stack */
             if (in_array($cname, $this->stackClose) && (!$plugin || $plugin_close)) {
-                $this->closeParagraph($call[2]);
-                $this->storeCall($call);
-                $this->openParagraph($call[2]);
+                 $this->closeParagraph($call[2]);
+                 $this->storeCall($call);
+                 $this->openParagraph($call[2]);
                 continue;
             }
             if (in_array($cname, $this->stackOpen) && (!$plugin || $plugin_open)) {
@@ -173,12 +183,6 @@ class Block
             /* block */
             // If it's a substition it opens and closes at the same call.
             // To make sure next paragraph is correctly started, let close go first.
-            if (in_array($cname, $this->quoteOpen) && (!$plugin || $plugin_close)) {
-                $this->openParagraph($call[2]);
-                $this->storeCall($call);
-                $this->closeParagraph($call[2]);
-            }
-
             if (in_array($cname, $this->blockClose) && (!$plugin || $plugin_close)) {
                 $this->closeParagraph($call[2]);
                 $this->storeCall($call);
@@ -190,6 +194,7 @@ class Block
                 $this->storeCall($call);
                 continue;
             }
+
             /* eol */
             if ($cname == 'eol') {
                 // Check this isn't an eol instruction to skip...
