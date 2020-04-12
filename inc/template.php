@@ -405,7 +405,7 @@ function tpl_metaheaders($alt = true) {
     $json   = new JSON();
     $script = "var NS='".$INFO['namespace']."';";
     if($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
-        $script .= "var SIG='".toolbar_signature()."';";
+        $script .= "var SIG=".toolbar_signature().";";
     }
     $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
     $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
