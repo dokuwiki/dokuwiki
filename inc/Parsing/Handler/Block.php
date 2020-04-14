@@ -162,10 +162,12 @@ class Block
             }
 
             /* force opening of paragraph when in cdata outside _open or _close*/
-            if ($cname === 'cdata' && rtrim($call[0], "\n\r\t") !== '' && isset($calls[$key+1]) && $calls[$key+1][0] != 'eol' && (!$plugin || $plugin_close)) {
+            if ($cname === 'cdata' && rtrim($call[0], "\n\r\t") !== '' && isset($calls[$key+1]) &&
+                $calls[$key+1][0] != 'eol' && (!$plugin || $plugin_close)) {
                 if (!isset($calls[$key-1])) {
                     $this->openParagraph($call[2]);
-                } elseif ((isset($calls[$key-1]) && !strpos($calls[$key-1][0], '_open')) && (isset($calls[$key+1]) && !strpos($calls[$key+1][0], '_close'))) {
+                } elseif ((isset($calls[$key-1]) && !strpos($calls[$key-1][0], '_open')) &&
+                    (isset($calls[$key+1]) && !strpos($calls[$key+1][0], '_close'))) {
                     $this->openParagraph($call[2]);
                 }
             }
