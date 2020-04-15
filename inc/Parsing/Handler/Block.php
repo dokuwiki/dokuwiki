@@ -147,6 +147,8 @@ class Block
         // open first paragraph
         $this->openParagraph(0);
         foreach ($calls as $key => $call) {
+            //print_r($call);
+            //echo '<br>';
             $cname = $call[0];
 
             $plugin_open = false;
@@ -162,24 +164,25 @@ class Block
             }
 
             /* cdata */
-            // Force opening of paragraph when in cdata and not between
-            // (table/tablecell)_open or before (table/tablecell)_close
-            if ($cname === 'cdata') {
-                // Open a paragraph if not prior call
-                if (!isset($calls[$key-1])) $this->openParagraph($call[2]);
+            // Force opening of paragraph when in cdata and not between p_open or p_close
+            // and in between quote_open and quote_close
+            if (($cname === 'cdata' && rtrim($call[0], "\n\r\t") !== '' && $calls[$key][0] != 'p_open')
+                || (isset($calls[$key-1][0]) && $calls[$key-1][0] != 'p_open'
+                && $calls[$key-1][0] != 'p_close')) {
 
-                //  do not open a paragraph when data is between another open or close
-                elseif ((isset($calls[$key-1]) && !strpos($calls[$key-1][0], '_open')) &&
-                    (isset($calls[$key+1]) && !strpos($calls[$key+1][0], '_close'))) {
-                    $this->openParagraph($call[2]);
+                if ($calls[$key-1][0] == 'quote_open' || $calls[$key-1][0] == 'quote_close') {
+                    if (!$this->inParagraph) $this->openParagraph($call[2]);
+                } elseif ($this->inParagraph && ($calls[$key-1][0] == 'quote_close' ||
+                    $calls[$key+1][0] == 'p_close'))  {
+                    $this->closeParagraph($call[2]);
                 }
             }
 
             /* stack */
             if (in_array($cname, $this->stackClose) && (!$plugin || $plugin_close)) {
-                 $this->closeParagraph($call[2]);
-                 $this->storeCall($call);
-                 $this->openParagraph($call[2]);
+                $this->closeParagraph($call[2]);
+                $this->storeCall($call);
+                $this->openParagraph($call[2]);
                 continue;
             }
             if (in_array($cname, $this->stackOpen) && (!$plugin || $plugin_open)) {
