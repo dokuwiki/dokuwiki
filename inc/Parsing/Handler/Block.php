@@ -161,12 +161,15 @@ class Block
                 $plugin = false;
             }
 
-            /* force opening of paragraph when in cdata outside _open or _close*/
-            if ($cname === 'cdata' && rtrim($call[0], "\n\r\t") !== '' && isset($calls[$key+1]) &&
-                $calls[$key+1][0] != 'eol' && (!$plugin || $plugin_close)) {
-                if (!isset($calls[$key-1])) {
-                    $this->openParagraph($call[2]);
-                } elseif ((isset($calls[$key-1]) && !strpos($calls[$key-1][0], '_open')) &&
+            /* cdata */
+            // Force opening of paragraph when in cdata and not between
+            // (table/tablecell)_open or before (table/tablecell)_close
+            if ($cname === 'cdata') {
+                // Open a paragraph if not prior call
+                if (!isset($calls[$key-1])) $this->openParagraph($call[2]);
+
+                //  do not open a paragraph when data is between another open or close
+                elseif ((isset($calls[$key-1]) && !strpos($calls[$key-1][0], '_open')) &&
                     (isset($calls[$key+1]) && !strpos($calls[$key+1][0], '_close'))) {
                     $this->openParagraph($call[2]);
                 }
