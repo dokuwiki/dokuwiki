@@ -593,8 +593,8 @@ function check_functions(){
     }
 
     if(!function_exists('mail')){ 
-	    $error[] = sprintf($lang['i_funcnmail'],'mail');		
-	}
+        $error[] = sprintf($lang['i_funcnmail'],'mail');		
+    }
 	
     foreach($funcs as $func){
         if(!function_exists($func)){
