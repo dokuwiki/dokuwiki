@@ -581,7 +581,7 @@ function check_functions(){
 
     $funcs = explode(' ','addslashes call_user_func chmod copy fgets '.
                          'file file_exists fseek flush filesize ftell fopen '.
-                         'glob header ignore_user_abort ini_get mail mkdir '.
+                         'glob header ignore_user_abort ini_get mkdir '.
                          'ob_start opendir parse_ini_file readfile realpath '.
                          'rename rmdir serialize session_start unlink usleep '.
                          'preg_replace file_get_contents htmlspecialchars_decode '.
@@ -592,6 +592,10 @@ function check_functions(){
         $funcs[] = 'utf8_decode';
     }
 
+    if(!function_exists('mail')){ 
+	    $error[] = sprintf($lang['i_funcnmail'],'mail');		
+	}
+	
     foreach($funcs as $func){
         if(!function_exists($func)){
             $error[] = sprintf($lang['i_funcna'],$func);

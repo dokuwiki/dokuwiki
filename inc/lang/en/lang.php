@@ -319,6 +319,8 @@ $lang['i_modified']            = 'For security reasons this script will only wor
                                   You should either re-extract the files from the downloaded package or consult the complete
                                   <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a>';
 $lang['i_funcna']              = 'PHP function <code>%s</code> is not available. Maybe your hosting provider disabled it for some reason?';
+$lang['i_funcnmail']              = 'PHP function <code>%s</code> is not available. Maybe your hosting provider disabled it for some reason?'.
+                                 ' If it remains unavailable, install the <a href="http://dokuwiki.org/plugins/smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Your PHP version <code>%s</code> is lower than the needed <code>%s</code>. You need to upgrade your PHP install.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload must be disabled in php.ini to run DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki cannot create cryptographically secure numbers for cookies. You may want to check your open_basedir settings in php.ini for proper <code>/dev/urandom</code> access.';
