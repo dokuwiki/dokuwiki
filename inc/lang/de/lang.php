@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Andreas Gohr <andi@splitbrain.org>
  * @author Eric Haberstroh <ehaberstroh@gmail.com>
  * @author C!own77 <clown77@posteo.de>
  * @author Anonymous <anonymous@example.org>
@@ -16,7 +17,6 @@
  * @author Joel Strasser <strasser999@gmail.com>
  * @author Robert Riebisch <robert.riebisch@googlemail.com>
  * @author Joerg <scooter22@gmx.de>
- * @author Andreas Gohr <andi@splitbrain.org>
  * @author Christof <gagi@fin.de>
  * @author Anika Henke <anika@selfthinker.org>
  * @author Esther Brunner <esther@kaffeehaus.ch>
