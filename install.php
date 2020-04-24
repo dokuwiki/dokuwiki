@@ -595,13 +595,13 @@ function check_functions(){
     if(!function_exists('mail')){
         if(strpos(ini_get('disable_functions'),'mail') !== false) {
             $disabled = $lang['i_disabled'];
-		}
+        }
         else {
             $disabled = "";
-		}
-        $error[] = sprintf($lang['i_funcnmail'],$disabled);		
+        }
+        $error[] = sprintf($lang['i_funcnmail'],$disabled);
     }
-	
+
     foreach($funcs as $func){
         if(!function_exists($func)){
             $error[] = sprintf($lang['i_funcna'],$func);
