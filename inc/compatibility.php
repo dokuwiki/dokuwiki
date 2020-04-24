@@ -80,7 +80,3 @@ if(!function_exists('gztell') && function_exists('gztell64')) {
         return gztell64($zp);
     }
 }
-
-if(!function_exists('mail')) {										
-    mail(){msg('mail() does not exist: use the smtp plugin')};					  
-}

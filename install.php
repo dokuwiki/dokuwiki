@@ -592,8 +592,14 @@ function check_functions(){
         $funcs[] = 'utf8_decode';
     }
 
-    if(!function_exists('mail')){ 
-        $error[] = sprintf($lang['i_funcnmail'],'mail');		
+    if(!function_exists('mail')){
+        if(strpos(ini_get('disable_functions'),'mail') !== false) {
+            $disabled = $lang['i_disabled'];
+		}
+        else {
+            $disabled = "";
+		}
+        $error[] = sprintf($lang['i_funcnmail'],$disabled);		
     }
 	
     foreach($funcs as $func){
