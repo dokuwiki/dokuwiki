@@ -381,6 +381,7 @@ $lang['media_update']          = 'Upload new version';
 $lang['media_restore']         = 'Restore this version';
 $lang['media_acl_warning']     = 'This list might not be complete due to ACL restrictions and hidden pages.';
 
+$lang['email_fail']            = 'PHP mail() missing or disabled. The following email was not sent: ';
 $lang['currentns']             = 'Current namespace';
 $lang['searchresult']          = 'Search Result';
 $lang['plainhtml']             = 'Plain HTML';
