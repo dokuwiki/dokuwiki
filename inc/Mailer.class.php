@@ -696,7 +696,7 @@ class Mailer {
      * @return bool true if the mail was successfully passed to the MTA
      */
     public function send() {
-        global $USERINFO;
+        global $USERINFO, $lang;
         $success = false;
 
         // prepare hook data
