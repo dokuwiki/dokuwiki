@@ -2286,6 +2286,7 @@ function media_resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
     // prepare command
     $cmd  = $conf['im_convert'];
     $cmd .= ' -resize '.$to_w.'x'.$to_h.'!';
+    $cmd .= ' -orient';
     if ($ext == 'jpg' || $ext == 'jpeg') {
         $cmd .= ' -quality '.$conf['jpg_quality'];
     }
