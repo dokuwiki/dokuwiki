@@ -2428,7 +2428,7 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
 
     // rotate the image based on the EXIF data.
     if(function_exists("exif_read_data")){
-        $exif = exif_read_data($from);
+        $exif = @exif_read_data($from);
         if(!empty($exif['Orientation'])) {
             switch($exif['Orientation']) {
             case 8:
