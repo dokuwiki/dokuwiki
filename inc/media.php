@@ -2427,20 +2427,19 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
     if($image) imagedestroy($image);
 
     // rotate the image based on the EXIF data.
-    if(function_exists("exif_read_data")){
-        $exif = @exif_read_data($from);
-        if(!empty($exif['Orientation'])) {
-            switch($exif['Orientation']) {
-            case 8:
-                $newimg = imagerotate($newimg,90,0);
-                break;
-            case 3:
-                $newimg= imagerotate($newimg,180,0);
-                break;
-            case 6:
-                $newimg = imagerotate($newimg,-90,0);
-                break;
-            }
+    $meta = new JpegMeta($from);
+    $orientation = $meta->getExifField("Orientation");
+    if(!empty($orientation)) {
+        switch($orientation) {
+        case 8:
+            $newimg = imagerotate($newimg,90,0);
+            break;
+        case 3:
+            $newimg= imagerotate($newimg,180,0);
+            break;
+        case 6:
+            $newimg = imagerotate($newimg,-90,0);
+            break;
         }
     }
 
