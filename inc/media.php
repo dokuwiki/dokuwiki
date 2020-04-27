@@ -2423,6 +2423,27 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
         imagecopyresized($newimg, $image, 0, 0, $ofs_x, $ofs_y, $to_w, $to_h, $from_w, $from_h);
     }
 
+    // clean the old image up before we try to rotate the new image.
+    if($image) imagedestroy($image);
+
+    // rotate the image based on the EXIF data.
+    if(function_exists("exif_read_data")){
+        $exif = exif_read_data($from);
+        if(!empty($exif['Orientation'])) {
+            switch($exif['Orientation']) {
+            case 8:
+                $newimg = imagerotate($newimg,90,0);
+                break;
+            case 3:
+                $newimg= imagerotate($newimg,180,0);
+                break;
+            case 6:
+                $newimg = imagerotate($newimg,-90,0);
+                break;
+            }
+        }
+    }
+
     $okay = false;
     if ($ext == 'jpg' || $ext == 'jpeg'){
         if(!function_exists('imagejpeg')){
@@ -2445,7 +2466,6 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
     }
 
     // destroy GD image ressources
-    if($image) imagedestroy($image);
     if($newimg) imagedestroy($newimg);
 
     return $okay;
