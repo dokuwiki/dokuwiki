@@ -1494,7 +1494,7 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
         $data = array('id' => $id, 'addresslist' => '', 'self' => false, 'replacements' => $replace);
         Event::createAndTrigger(
             'COMMON_NOTIFY_ADDRESSLIST', $data,
-            array(new Subscription(), 'notifyaddresses')
+            array(new SubscriberManager(), 'notifyaddresses')
         );
         $to = $data['addresslist'];
         if(empty($to)) return false;
