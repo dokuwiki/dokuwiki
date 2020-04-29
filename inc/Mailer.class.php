@@ -754,13 +754,12 @@ class Mailer {
             if(trim($data['headers'])) {
                 $headers .= MAILHEADER_EOL.trim($data['headers']);
             }
+			
             if(!function_exists('mail')){
                 $emsg = $lang['email_fail'] . $subject;
                 error_log($emsg);
-                if(in_array('admin', $USERINFO['grps'])){
-                    msg($emsg);
-                }
-                // return false;
+                msg($emsg,2,"","", MSG_MANAGERS_ONLY);             
+                return false;
             }
 
             // send the thing
