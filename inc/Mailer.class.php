@@ -389,12 +389,12 @@ class Mailer {
 
             // FIXME: is there a way to encode the localpart of a emailaddress?
             if(!\dokuwiki\Utf8\Clean::isASCII($addr)) {
-                msg(hsc("E-Mail address <$addr> is not ASCII"), -1);
+                msg(hsc("E-Mail address <$addr> is not ASCII"), -1, __LINE__, __FILE__, MSG_ADMINS_ONLY);
                 continue;
             }
 
             if(!mail_isvalid($addr)) {
-                msg(hsc("E-Mail address <$addr> is not valid"), -1);
+                msg(hsc("E-Mail address <$addr> is not valid"), -1, __LINE__, __FILE__, MSG_ADMINS_ONLY);
                 continue;
             }
 
