@@ -49,9 +49,9 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
         if ($sort == 'date') {
             @array_multisort(array_map('filemtime', $filepaths), SORT_NUMERIC, SORT_DESC, $files);
         } else /* natural */ {
-            natsort($files);
+            natural_sort($files);
         }
-        natsort($dirs);
+        natural_sort($dirs);
     }
 
     //give directories to userfunction then recurse
