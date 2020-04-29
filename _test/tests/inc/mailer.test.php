@@ -104,6 +104,11 @@ class mailer_test extends DokuWikiTest {
         $headers = $mail->prop('headers');
         $this->assertEquals('"Andreas Gohr" <andi@splitbrain.org>', $headers['To']);
 
+        $mail->to('andi@splitbrain.org,foo@example.com');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('andi@splitbrain.org, foo@example.com', $headers['To']);
+
         $mail->to('Andreas Gohr <andi@splitbrain.org> , foo <foo@example.com>');
         $mail->cleanHeaders();
         $headers = $mail->prop('headers');
