@@ -365,7 +365,7 @@ class Mailer {
             $addresses = array();
             if ($count !== false && is_array($matches)) {
                 foreach ($matches as $match) {
-                    array_push($addresses, $match[0]);
+                    array_push($addresses, rtrim($match[0], ','));
                 }
             }
         }
@@ -379,6 +379,7 @@ class Mailer {
                 $text = trim($matches[1]);
                 $addr = $matches[2];
             } else {
+                $text = '';
                 $addr = $part;
             }
             // skip empty ones
