@@ -16,12 +16,7 @@ class Revert extends AbstractAction {
 
     /** @inheritdoc */
     public function minimumPermission() {
-        global $INFO;
-        if($INFO['ismanager']) {
-            return AUTH_EDIT;
-        } else {
-            return AUTH_ADMIN;
-        }
+        return AUTH_EDIT;
     }
 
     /**
