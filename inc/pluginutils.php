@@ -64,7 +64,7 @@ function plugin_isdisabled($plugin)
 {
     /** @var $plugin_controller PluginController */
     global $plugin_controller;
-    return $plugin_controller->isdisabled($plugin);
+    return !$plugin_controller->isEnabled($plugin);
 }
 
 /**

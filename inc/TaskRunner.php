@@ -5,7 +5,6 @@ namespace dokuwiki;
 use dokuwiki\Extension\Event;
 use dokuwiki\Sitemap\Mapper;
 use dokuwiki\Subscriptions\BulkSubscriptionSender;
-use Subscription;
 
 /**
  * Class TaskRunner

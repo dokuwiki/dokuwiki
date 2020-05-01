@@ -26,7 +26,7 @@ class CacheParser extends Cache
         $this->file = $file;
         $this->mode = $mode;
 
-        $this->_event = 'PARSER_CACHE_USE';
+        $this->setEvent('PARSER_CACHE_USE');
         parent::__construct($file . $_SERVER['HTTP_HOST'] . $_SERVER['SERVER_PORT'], '.' . $mode);
     }
 
