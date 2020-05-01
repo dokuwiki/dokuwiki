@@ -972,9 +972,11 @@ class ApiCore
         if (!$auth) return 0;
 
         @session_start(); // reopen session for login
+        $ok = null;
         if ($auth->canDo('external')) {
             $ok = $auth->trustExternal($user, $pass, false);
-        } else {
+        }
+        if ($ok === null){
             $evdata = array(
                 'user' => $user,
                 'password' => $pass,

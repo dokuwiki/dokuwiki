@@ -165,9 +165,11 @@ abstract class AuthPlugin extends Plugin
      *
      * If this function is implemented it will be used to
      * authenticate a user - all other DokuWiki internals
-     * will not be used for authenticating, thus
-     * implementing the checkPass() function is not needed
-     * anymore.
+     * will not be used for authenticating (except this
+     * function returns null, in which case, DokuWiki will
+     * still run auth_login as a fallback, which may call
+     * checkPass()). If this function is not returning null,
+     * implementing checkPass() is not needed here anymore.
      *
      * The function can be used to authenticate against third
      * party cookies or Apache auth mechanisms and replaces
@@ -189,7 +191,8 @@ abstract class AuthPlugin extends Plugin
      * @param   string $user Username
      * @param   string $pass Cleartext Password
      * @param   bool $sticky Cookie should not expire
-     * @return  bool             true on successful auth
+     * @return  bool         true on successful auth,
+     *                       null on unknown result (fallback to checkPass)
      */
     public function trustExternal($user, $pass, $sticky = false)
     {
