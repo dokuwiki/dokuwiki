@@ -916,12 +916,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['style']  = '';
         $link['pre']    = '';
         $link['suf']    = '';
-        // highlight link to current page
-        if(isset($INFO) && $id == $INFO['id']) {
-            $link['pre'] = '<span class="curid">';
-            $link['suf'] = '</span>';
-        }
-        $link['more']   = '';
+        $link['more']   = 'data-wiki-id="'.$id.'"'; // id is already cleaned
         $link['class']  = $class;
         if($this->date_at) {
             $params = $params.'&at='.rawurlencode($this->date_at);
