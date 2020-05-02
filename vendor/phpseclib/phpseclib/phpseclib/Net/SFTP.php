@@ -397,6 +397,9 @@ class SFTP extends SSH2
         if (!defined('NET_SFTP_QUEUE_SIZE')) {
             define('NET_SFTP_QUEUE_SIZE', 32);
         }
+        if (!defined('NET_SFTP_UPLOAD_QUEUE_SIZE')) {
+            define('NET_SFTP_UPLOAD_QUEUE_SIZE', 1024);
+        }
     }
 
     /**
@@ -409,9 +412,7 @@ class SFTP extends SSH2
      */
     function login($username)
     {
-        $args = func_get_args();
-        $this->auth[] = $args;
-        if (!call_user_func_array(array(&$this, '_login'), $args)) {
+        if (!call_user_func_array('parent::login', func_get_args())) {
             return false;
         }
 
@@ -1775,9 +1776,6 @@ class SFTP extends SSH2
         }
 
         $dir = $this->_realpath($dir);
-        // by not providing any permissions, hopefully the server will use the logged in users umask - their
-        // default permissions.
-        $attr = $mode == -1 ? "\0\0\0\0" : pack('N2', NET_SFTP_ATTR_PERMISSIONS, $mode & 07777);
 
         if ($recursive) {
             $dirs = explode('/', preg_replace('#/(?=/)|/$#', '', $dir));
@@ -1788,12 +1786,12 @@ class SFTP extends SSH2
             for ($i = 0; $i < count($dirs); $i++) {
                 $temp = array_slice($dirs, 0, $i + 1);
                 $temp = implode('/', $temp);
-                $result = $this->_mkdir_helper($temp, $attr);
+                $result = $this->_mkdir_helper($temp, $mode);
             }
             return $result;
         }
 
-        return $this->_mkdir_helper($dir, $attr);
+        return $this->_mkdir_helper($dir, $mode);
     }
 
     /**
@@ -1803,9 +1801,10 @@ class SFTP extends SSH2
      * @return bool
      * @access private
      */
-    function _mkdir_helper($dir, $attr)
+    function _mkdir_helper($dir, $mode)
     {
-        if (!$this->_send_sftp_packet(NET_SFTP_MKDIR, pack('Na*a*', strlen($dir), $dir, $attr))) {
+        // send SSH_FXP_MKDIR without any attributes (that's what the \0\0\0\0 is doing)
+        if (!$this->_send_sftp_packet(NET_SFTP_MKDIR, pack('Na*a*', strlen($dir), $dir, "\0\0\0\0"))) {
             return false;
         }
 
@@ -1822,6 +1821,10 @@ class SFTP extends SSH2
         if ($status != NET_SFTP_STATUS_OK) {
             $this->_logError($response, $status);
             return false;
+        }
+
+        if ($mode !== -1) {
+            $this->chmod($mode, $dir);
         }
 
         return true;
@@ -2018,7 +2021,7 @@ class SFTP extends SSH2
         $sftp_packet_size = 4096; // PuTTY uses 4096
         // make the SFTP packet be exactly 4096 bytes by including the bytes in the NET_SFTP_WRITE packets "header"
         $sftp_packet_size-= strlen($handle) + 25;
-        $i = 0;
+        $i = $j = 0;
         while ($dataCallback || ($size === 0 || $sent < $size)) {
             if ($dataCallback) {
                 $temp = call_user_func($dataCallback, $sftp_packet_size);
@@ -2034,7 +2037,7 @@ class SFTP extends SSH2
 
             $subtemp = $offset + $sent;
             $packet = pack('Na*N3a*', strlen($handle), $handle, $subtemp / 4294967296, $subtemp, strlen($temp), $temp);
-            if (!$this->_send_sftp_packet(NET_SFTP_WRITE, $packet)) {
+            if (!$this->_send_sftp_packet(NET_SFTP_WRITE, $packet, $j)) {
                 if ($mode & self::SOURCE_LOCAL_FILE) {
                     fclose($fp);
                 }
@@ -2046,8 +2049,9 @@ class SFTP extends SSH2
             }
 
             $i++;
+            $j++;
 
-            if ($i == NET_SFTP_QUEUE_SIZE) {
+            if ($i == NET_SFTP_UPLOAD_QUEUE_SIZE) {
                 if (!$this->_read_put_responses($i)) {
                     $i = 0;
                     break;

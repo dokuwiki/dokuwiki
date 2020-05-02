@@ -15,7 +15,6 @@ arithmetic library, fully PKCS#1 (v2.1) compliant RSA, DES, 3DES, RC4, Rijndael,
 AES, Blowfish, Twofish, SSH-1, SSH-2, SFTP, and X.509
 
 * [Browse Git](https://github.com/phpseclib/phpseclib)
-* [Code Coverage Report](https://coverage.phpseclib.org/2.0/latest/)
 
 ## Documentation
 
@@ -45,7 +44,7 @@ AES, Blowfish, Twofish, SSH-1, SSH-2, SFTP, and X.509
 * Composer compatible (PSR-0 autoloading)
 * Install using Composer: `composer require phpseclib/phpseclib:~1.0`
 * Install using PEAR: See [phpseclib PEAR Channel Documentation](http://phpseclib.sourceforge.net/pear.htm)
-* [Download 1.0.17 as ZIP](http://sourceforge.net/projects/phpseclib/files/phpseclib1.0.17.zip/download)
+* [Download 1.0.18 as ZIP](http://sourceforge.net/projects/phpseclib/files/phpseclib1.0.18.zip/download)
 
 ## Security contact information
 
