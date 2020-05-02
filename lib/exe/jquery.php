@@ -25,7 +25,6 @@ function jquery_out() {
     $files = array(
         DOKU_INC . 'lib/scripts/jquery/jquery.min.js',
         DOKU_INC . 'lib/scripts/jquery/jquery-ui.min.js',
-        DOKU_INC . 'lib/scripts/jquery/jquery-migrate.min.js',
     );
     $cache_files = $files;
     $cache_files[] = __FILE__;

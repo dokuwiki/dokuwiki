@@ -155,16 +155,11 @@ function getCdnUrls() {
             $src[] = DOKU_BASE . 'lib/exe/jquery.php' . '?tseed=' . $jqmod;
         } elseif($conf['jquerycdn'] == 'jquery') {
             $src[] = sprintf('https://code.jquery.com/jquery-%s.min.js', $versions['JQ_VERSION']);
-            $src[] = sprintf('https://code.jquery.com/jquery-migrate-%s.min.js', $versions['JQM_VERSION']);
             $src[] = sprintf('https://code.jquery.com/ui/%s/jquery-ui.min.js', $versions['JQUI_VERSION']);
         } elseif($conf['jquerycdn'] == 'cdnjs') {
             $src[] = sprintf(
                 'https://cdnjs.cloudflare.com/ajax/libs/jquery/%s/jquery.min.js',
                 $versions['JQ_VERSION']
-            );
-            $src[] = sprintf(
-                'https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/%s/jquery-migrate.min.js',
-                $versions['JQM_VERSION']
             );
             $src[] = sprintf(
                 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/%s/jquery-ui.min.js',
