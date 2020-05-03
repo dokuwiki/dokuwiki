@@ -35,7 +35,6 @@ function _init_collator(){
  * Replacement for natsort() in search.php, lines 52 and 54.
  */
 function natural_sort(&$files_or_dirs){
-    global $conf;
     global $collator;
 
 //    echo 'raw data: ' . implode(', ', $files_or_dirs) . '<br/>';
@@ -68,4 +67,17 @@ function natural_sort(&$files_or_dirs){
     }
 
 //    echo 'sorted data: ' . implode(', ', $files_or_dirs) . '<br/>';
+}
+
+/**
+ * Replacement for strcmp() in fulltext.php, line 373.
+ */
+function strcompare($first, $second){
+    global $collator;
+    _init_collator();
+
+    if(!isset($collator))
+        return strcmp($first, $second);
+    else
+        return $collator->compare($first, $second);
 }
