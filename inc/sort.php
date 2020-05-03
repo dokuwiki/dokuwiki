@@ -81,3 +81,16 @@ function strcompare($first, $second){
     else
         return $collator->compare($first, $second);
 }
+
+/**
+ * Replacement for sort() in fulltext.php, lines 183 and 214.
+ */
+function sort_pages(&$pages){
+    global $collator;
+    _init_collator();
+
+    if(!isset($collator))
+        sort($pages);
+    else
+        $collator->sort($pages);
+}

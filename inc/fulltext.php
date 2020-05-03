@@ -180,7 +180,7 @@ function ft_backlinks($id, $ignore_perms = false){
         }
     }
 
-    sort($result);
+    sort_pages($result);
     return $result;
 }
 
@@ -211,7 +211,7 @@ function ft_mediause($id, $ignore_perms = false){
         }
     }
 
-    sort($result);
+    sort_pages($result);
     return $result;
 }
 
