@@ -83,7 +83,8 @@ function strcompare($first, $second){
 }
 
 /**
- * Replacement for sort() in fulltext.php, lines 183 and 214.
+ * Replacement for sort() in fulltext.php, lines 183 and 214,
+ *                    and in Ajax.php, line 101.
  */
 function sort_pages(&$pages){
     global $collator;

@@ -98,7 +98,7 @@ class Ajax {
         $data = array_map('trim', $data);
         $data = array_map('noNS', $data);
         $data = array_unique($data);
-        sort($data);
+        sort_pages($data);
 
         /* now construct a json */
         $suggestions = array(
