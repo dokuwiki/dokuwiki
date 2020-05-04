@@ -218,10 +218,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     }
 
     /**
-     * If the source should be ignored for getters
+     * If the specified source should be ignored for attribute getters during source selection
      *
      * @var string $source
-     * @return bool If this extension is a template
+     * @return bool
      */
     public function isIgnoredSource($source)
     {
