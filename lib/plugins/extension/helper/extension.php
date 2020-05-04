@@ -175,7 +175,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
 
         /* @var PluginController $plugin_controller */
         global $plugin_controller;
-        return !$plugin_controller->isdisabled($this->base);
+        return $plugin_controller->isEnabled($this->base);
     }
 
     /**
@@ -367,7 +367,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         $dependencies = $this->getDependencies();
         $missing_dependencies = array();
         foreach ($dependencies as $dependency) {
-            if ($plugin_controller->isdisabled($dependency)) {
+            if (!$plugin_controller->isEnabled($dependency)) {
                 $missing_dependencies[] = $dependency;
             }
         }

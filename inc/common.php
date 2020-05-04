@@ -1175,9 +1175,9 @@ function parsePageTemplate(&$data) {
              $id,
              getNS($id),
              curNS($id),
-             utf8_ucfirst(curNS($id)),
-             utf8_ucwords(curNS($id)),
-             utf8_strtoupper(curNS($id)),
+             \dokuwiki\Utf8\PhpString::ucfirst(curNS($id)),
+             \dokuwiki\Utf8\PhpString::ucwords(curNS($id)),
+             \dokuwiki\Utf8\PhpString::strtoupper(curNS($id)),
              $file,
              \dokuwiki\Utf8\PhpString::ucfirst($file),
              \dokuwiki\Utf8\PhpString::strtoupper($file),
@@ -1495,7 +1495,7 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
         $data = array('id' => $id, 'addresslist' => '', 'self' => false, 'replacements' => $replace);
         Event::createAndTrigger(
             'COMMON_NOTIFY_ADDRESSLIST', $data,
-            array(new Subscription(), 'notifyaddresses')
+            array(new \dokuwiki\Subscriptions\SubscriberManager(), 'notifyAddresses')
         );
         $to = $data['addresslist'];
         if(empty($to)) return false;
@@ -1665,7 +1665,7 @@ function obfuscate($email) {
             return strtr($email, $obfuscate);
 
         case 'hex' :
-            return utf8_tohtml($email, true);
+            return \dokuwiki\Utf8\Conversion::toHtml($email, true);
 
         case 'none' :
         default :

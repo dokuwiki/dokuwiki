@@ -72,7 +72,7 @@ if($DATE_AT) {
 
 //check for existing $REV related to $DATE_AT
 if($DATE_AT) {
-    $pagelog = new PageChangeLog($ID);
+    $pagelog = new \dokuwiki\ChangeLog\PageChangeLog($ID);
     $rev_t = $pagelog->getLastRevisionAt($DATE_AT);
     if($rev_t === '') { //current revision
         $REV = null;
