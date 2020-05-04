@@ -365,7 +365,7 @@ class Mailer {
             $addresses = array();
             if ($count !== false && is_array($matches)) {
                 foreach ($matches as $match) {
-                    array_push($addresses, $match[0]);
+                    array_push($addresses, rtrim($match[0], ','));
                 }
             }
         }
@@ -379,6 +379,7 @@ class Mailer {
                 $text = trim($matches[1]);
                 $addr = $matches[2];
             } else {
+                $text = '';
                 $addr = $part;
             }
             // skip empty ones
@@ -388,12 +389,12 @@ class Mailer {
 
             // FIXME: is there a way to encode the localpart of a emailaddress?
             if(!\dokuwiki\Utf8\Clean::isASCII($addr)) {
-                msg(hsc("E-Mail address <$addr> is not ASCII"), -1);
+                msg(hsc("E-Mail address <$addr> is not ASCII"), -1, __LINE__, __FILE__, MSG_ADMINS_ONLY);
                 continue;
             }
 
             if(!mail_isvalid($addr)) {
-                msg(hsc("E-Mail address <$addr> is not valid"), -1);
+                msg(hsc("E-Mail address <$addr> is not valid"), -1, __LINE__, __FILE__, MSG_ADMINS_ONLY);
                 continue;
             }
 
