@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Xin <chenxin1034@gmail.com>
  * @author lempel <riverlempel@hotmail.com>
  * @author Cupen <Cupenoruler@foxmail.com>
  * @author xiqingongzi <Xiqingongzi@Gmail.com>
@@ -79,6 +80,7 @@ $lang['msg_template_update_success'] = '模板 %s 更新成功';
 $lang['msg_plugin_install_success'] = '插件 %s 安装成功';
 $lang['msg_plugin_update_success'] = '插件 %s 更新成功';
 $lang['msg_upload_failed']     = '上传文件失败';
+$lang['msg_nooverwrite']       = '扩展名 %s 已存在，因此不会被覆盖；要覆盖，请选中覆盖选项。';
 $lang['missing_dependency']    = '<strong>缺少或者被禁用的依赖：</strong> %s';
 $lang['security_issue']        = '<strong>安全问题：</strong> %s';
 $lang['security_warning']      = '<strong>安全警告：</strong> %s';
