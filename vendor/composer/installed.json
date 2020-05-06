@@ -527,5 +527,47 @@
             "optparse",
             "terminal"
         ]
+    },
+    {
+        "name": "splitbrain/slika",
+        "version": "1.0.3",
+        "version_normalized": "1.0.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/splitbrain/slika.git",
+            "reference": "a357f2ac6a10668c43516ef11220f60da9fab171"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/splitbrain/slika/zipball/a357f2ac6a10668c43516ef11220f60da9fab171",
+            "reference": "a357f2ac6a10668c43516ef11220f60da9fab171",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^7.0"
+        },
+        "suggest": {
+            "ext-gd": "PHP's builtin image manipulation library. Alternatively use an installation of ImageMagick"
+        },
+        "time": "2020-09-01T15:14:41+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "splitbrain\\slika\\tests\\": "tests",
+                "splitbrain\\slika\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andreas Gohr",
+                "email": "andi@splitbrain.org"
+            }
+        ],
+        "description": "Simple image resizing"
     }
 ]
