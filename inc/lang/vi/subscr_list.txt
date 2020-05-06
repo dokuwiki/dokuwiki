@@ -1,0 +1,13 @@
+Chào!
+
+Trang @PAGE@ trong wiki @TITLE@ đã được thay đổi.
+Dưới đây là những thay đổi:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Để hủy thông báo trang, đăng nhập vào wiki tại
+@DOKUWIKIURL@ sau đó truy cập
+@SUBSCRIBE@
+và hủy đăng ký trang và/hoặc thay đổi không gian tên.
