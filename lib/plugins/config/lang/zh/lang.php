@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Xin <chenxin1034@gmail.com>
  * @author HaoNan <haonan@zhuoming.info>
  * @author Phy <dokuwiki@phy25.com>
  * @author Aaron Zhou <iradio@163.com>
@@ -51,6 +52,7 @@ $lang['_advanced']             = '高级设置';
 $lang['_network']              = '网络设置';
 $lang['_msg_setting_undefined'] = '设置的元数据不存在。';
 $lang['_msg_setting_no_class'] = '设置的分类不存在。';
+$lang['_msg_setting_no_known_class'] = '设置分类不可用';
 $lang['_msg_setting_no_default'] = '设置的默认值不存在。';
 $lang['title']                 = '维基站点的标题';
 $lang['start']                 = '开始页面的名称';
@@ -167,6 +169,8 @@ $lang['search_fragment_o_exact'] = '精确';
 $lang['search_fragment_o_starts_with'] = '开头为';
 $lang['search_fragment_o_ends_with'] = '结尾为';
 $lang['search_fragment_o_contains'] = '包含';
+$lang['_feature_flags']        = '功能标志';
+$lang['defer_js']              = '推迟在页面HTML解析后执行的javascript。 提高了页面的感知速度，但可能会破坏少量插件。';
 $lang['dnslookups']            = 'DokuWiki 将会查询用户编辑页面的远程 IP 地址的主机名。如果您的 DNS 服务器比较缓慢或者不工作，或者您不想要这个功能，请禁用此选项。';
 $lang['jquerycdn']             = 'jQuery和jQuery UI脚本文件应该从CDN加载吗?
 这会增加额外的HTTP请求，但文件加载可能会更快，且用户可能已经缓存过。';

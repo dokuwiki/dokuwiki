@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Xin <chenxin1034@gmail.com>
  * @author HaoNan <haonan@zhuoming.info>
  * @author Phy <dokuwiki@phy25.com>
  * @author Aaron Zhou <iradio@163.com>
@@ -326,6 +327,7 @@ $lang['i_modified']            = '由于安全上的考虑，该脚本只能用�
 $lang['i_funcna']              = 'PHP 功能 <code>%s</code> 无法使用。也许您的服务器提供商因为某些原因禁用了它。';
 $lang['i_phpver']              = '您的 PHP 版本 <code>%s</code> 低于最低要求的 <code>%s</code>。您需要升级您的 PHP 版本。';
 $lang['i_mbfuncoverload']      = '为了运行DokuWiki，您必须在php.ini中禁用mbstring.func_overload。';
+$lang['i_urandom']             = 'DokuWiki无法为Cookie创建密码安全的数字。您可能需要检查php.ini中的open_basedir设置，以获取正确的<code> / dev / urandom </ code>访问权限。';
 $lang['i_permfail']            = 'DokuWiki 无法写入 <code>%s</code>。您需要修改该路径的权限设定！';
 $lang['i_confexists']          = '<code>%s</code> 已经存在';
 $lang['i_writeerr']            = '无法创建 <code>%s</code>。您需要检查该路径/文件的权限设定并手动创建该文件。';
