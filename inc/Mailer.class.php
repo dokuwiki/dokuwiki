@@ -759,6 +759,7 @@ class Mailer {
                 $emsg = $lang['email_fail'] . $subject;
                 error_log($emsg);
                 msg(hsc($emsg), -1, __LINE__, __FILE__, MSG_MANAGERS_ONLY);
+                $evt->advise_after();
                 return false;
             }
 
