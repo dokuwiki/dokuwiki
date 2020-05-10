@@ -758,7 +758,7 @@ class Mailer {
             if(!function_exists('mail')){
                 $emsg = $lang['email_fail'] . $subject;
                 error_log($emsg);
-                msg($emsg,-1,__LINE__, __FILE__, MSG_MANAGERS_ONLY);
+                msg(hsc($emsg), -1, __LINE__, __FILE__, MSG_MANAGERS_ONLY);
                 return false;
             }
 
