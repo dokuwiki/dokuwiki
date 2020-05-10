@@ -384,7 +384,7 @@ class Search extends Ui
             }
             $namespaces[$subtopNS] += 1;
         }
-        ksort($namespaces);
+        sort_keys($namespaces);
         arsort($namespaces);
         return $namespaces;
     }

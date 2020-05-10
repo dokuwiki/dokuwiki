@@ -95,3 +95,16 @@ function sort_pages(&$pages){
     else
         $collator->sort($pages);
 }
+
+/**
+ * Replacement for ksort() in Ui/Search.php, line 387.
+ */
+function sort_keys(&$namespaces_to_hits){
+    global $collator;
+    _init_collator();
+
+    if(!isset($collator))
+        ksort($namespaces_to_hits);
+    else
+        uksort($namespaces_to_hits, array($collator, 'compare'));
+}
