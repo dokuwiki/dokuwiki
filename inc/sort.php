@@ -71,6 +71,7 @@ function natural_sort(&$files_or_dirs){
 
 /**
  * Replacement for strcmp() in fulltext.php, line 373, where all strings are lowercase.
+ * Replacement for strcmp() in search.php, line 371, where all string would be lowercase (function not used anywhere).
  * Replacement for strcasecmp() in Ui/Admin.php, line 162.
  */
 function strcompare($first, $second){
