@@ -70,14 +70,15 @@ function natural_sort(&$files_or_dirs){
 }
 
 /**
- * Replacement for strcmp() in fulltext.php, line 373.
+ * Replacement for strcmp() in fulltext.php, line 373, where all strings are lowercase.
+ * Replacement for strcasecmp() in Ui/Admin.php, line 162.
  */
 function strcompare($first, $second){
     global $collator;
     _init_collator();
 
     if(!isset($collator))
-        return strcmp($first, $second);
+        return strcasecmp($first, $second);
     else
         return $collator->compare($first, $second);
 }
