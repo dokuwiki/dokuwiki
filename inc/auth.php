@@ -453,7 +453,7 @@ function auth_logoff($keepbc = false) {
  * @param string $user Username
  * @param array $groups List of groups the user is in
  * @param bool $adminonly when true checks if user is admin
- * @param bool $recache set to true to skip cached results
+ * @param bool $recache set to true to refresh the cache
  * @return bool
  * @see    auth_isadmin
  *
@@ -482,7 +482,7 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false, $recac
 
     // prefer cached result
     static $cache = [];
-    $cachekey = 'c-' . $user . '-' . $adminonly . '-' . join(':', $groups);
+    $cachekey = serialize([$user, $adminonly, $groups]);
     if (!isset($cache[$cachekey]) || $recache) {
         // check superuser match
         $ok = auth_isMember($conf['superuser'], $user, $groups);
@@ -507,7 +507,7 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false, $recac
  *
  * @param string $user Username
  * @param array $groups List of groups the user is in
- * @param bool $recache set to true to skip cached results
+ * @param bool $recache set to true to refresh the cache
  * @return bool
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see auth_ismanager()
