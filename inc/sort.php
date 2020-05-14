@@ -9,24 +9,22 @@
  * @author     Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
 
-// case sensitive with numeric collation (page and midia names are converted to lowercase)
-global $collator;
+$intl_extension_available = class_exists('Collator');
 $collator = null;
 
 /**
- * Initialize $collator using $conf['lang']
+ * Initialize collator using $conf['lang'].
  */
-function _init_collator(){
-    global $conf;
-    global $collator;
-    if(!isset($collator) && class_exists('Collator')){
-//        echo '$conf[\'lang\'] = ' . $conf['lang'] . '<br/>';
+function _init_collator() {
+    global $conf, $collator, $intl_extension_available;
+
+    if ($intl_extension_available && !isset($collator)) {
         $collator = Collator::create($conf['lang']);
         if (isset($collator)) {
             $collator->setAttribute(Collator::NUMERIC_COLLATION, Collator::ON);
-            // debug collator info
-//            echo 'collator valid locale: ' . $collator->getLocale(Locale::VALID_LOCALE) . '<br/>';
-//            echo 'collator actual locale: ' . $collator->getLocale(Locale::ACTUAL_LOCALE) . '<br/>';
+            dbglog('Collator created with locale "' . $conf['lang'] . '", numeric collation on');
+            dbglog('Collator valid locale: "' . $collator->getLocale(Locale::VALID_LOCALE) . '"');
+            dbglog('Collator actual locale: "' . $collator->getLocale(Locale::ACTUAL_LOCALE) . '"');
         }
     }
 }
@@ -36,8 +34,6 @@ function _init_collator(){
  */
 function natural_sort(&$files_or_dirs){
     global $collator;
-
-//    echo 'raw data: ' . implode(', ', $files_or_dirs) . '<br/>';
     _init_collator();
 
     if(!isset($collator)){
