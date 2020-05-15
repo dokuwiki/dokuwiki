@@ -59,14 +59,14 @@ function _sort_filenames_without_collator($first, $second) {
  * Replacement for strcmp() in search.php, line 371, where all string would be lowercase (function not used anywhere).
  * Replacement for strcasecmp() in Ui/Admin.php, line 162.
  */
-function strcompare($first, $second){
+function compare($first, $second) {
     global $collator;
     _init_collator();
 
-    if(!isset($collator))
-        return strcasecmp($first, $second);
-    else
+    if (isset($collator))
         return $collator->compare($first, $second);
+    else
+        return strcasecmp($first, $second);
 }
 
 /**

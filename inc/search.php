@@ -368,7 +368,7 @@ function sort_search_fulltext($a,$b){
     }elseif($a['count'] < $b['count']){
         return 1;
     }else{
-        return strcompare($a['id'],$b['id']);
+        return compare($a['id'],$b['id']);
     }
 }
 

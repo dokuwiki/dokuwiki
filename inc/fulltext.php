@@ -370,7 +370,7 @@ function ft_pagesorter($a, $b){
     }elseif($ac > $bc){
         return 1;
     }
-    return strcompare($a,$b);
+    return compare($a,$b);
 }
 
 /**
