@@ -70,17 +70,20 @@ function compare($first, $second) {
 }
 
 /**
- * Replacement for sort() in fulltext.php, lines 183 and 214,
- *                    and in Ajax.php, line 101.
+ * Replacement for sort() in fulltext.php, lines 183 and 214.
+ * Replacement for sort() in Ajax.php, line 101.
+ * Actually sort() was wrongly called in the original code, as natsort() was used elsewhere,
+ * resulting in inconsistent ordering depending on the accessed page.
+ * Here the sort without collator was fixed to use sort() with flags SORT_NATURAL and SORT_FLAG_CASE.
  */
-function sort_pages(&$pages){
+function sort_pagenames(&$pagenames) {
     global $collator;
     _init_collator();
 
-    if(!isset($collator))
-        sort($pages);
+    if (isset($collator))
+        $collator->sort($pagenames);
     else
-        $collator->sort($pages);
+        sort($pagenames, SORT_NATURAL | SORT_FLAG_CASE);
 }
 
 /**
