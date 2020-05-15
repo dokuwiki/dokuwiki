@@ -31,38 +31,27 @@ function _init_collator() {
 
 /**
  * Replacement for natsort() in search.php, lines 52 and 54.
+ * Actually natsort() was wrongly called in the original code, as file/dir names may not be equal to the page names,
+ * depending on the setting in $conf['fnencode'].
+ * So the correct behavior is to sort the page names and reflect that sorting in the array with file/dir names.
  */
-function natural_sort(&$files_or_dirs){
+function sort_filenames(&$filenames) {
     global $collator;
     _init_collator();
 
-    if(!isset($collator)){
-        natsort($files_or_dirs);
-//        echo 'natsort: ' . implode(', ', $files_or_dirs) . '<br/>';
-        return;
-    }
+    if (isset($collator))
+        return uasort($filenames, '_sort_filenames_with_collator');
+    else
+        return uasort($filenames, '_sort_filenames_without_collator');
+}
 
-    $decoded = array();
-    for($i = 0; $i < count($files_or_dirs); $i++) {
-        $decoded[$i] = utf8_decodeFN($files_or_dirs[$i]);
-    }
-//    echo 'decoded data: ' . implode(', ', $decoded) . '<br/>';
+function _sort_filenames_with_collator($first, $second) {
+    global $collator;
+    return $collator->compare(utf8_decodeFN($first), utf8_decodeFN($second));
+}
 
-    $collator->asort($decoded);
-//    echo 'collator sort: ' . implode(', ', $decoded) . '<br/>';
-    
-    $sorted_indexes = array_keys($decoded);
-//    echo 'sorted indexes: ' . implode(', ', $sorted_indexes) . '<br/>';
-    
-    $result = array();
-    for($i = 0; $i < count($sorted_indexes); $i++) {
-        $result[$i] = $files_or_dirs[$sorted_indexes[$i]];
-    }
-    for($i = 0; $i < count($files_or_dirs); $i++) {
-        $files_or_dirs[$i] = $result[$i];
-    }
-
-//    echo 'sorted data: ' . implode(', ', $files_or_dirs) . '<br/>';
+function _sort_filenames_without_collator($first, $second) {
+    return strnatcmp(utf8_decodeFN($first), utf8_decodeFN($second));
 }
 
 /**
