@@ -88,13 +88,16 @@ function sort_pagenames(&$pagenames) {
 
 /**
  * Replacement for ksort() in Ui/Search.php, line 387.
+ * Actually ksort() was wrongly called in the original code, as natsort() was used elsewhere,
+ * resulting in inconsistent ordering depending on the accessed page.
+ * Here the sort without collator was fixed to use ksort() with flags SORT_NATURAL and SORT_FLAG_CASE.
  */
-function sort_keys(&$namespaces_to_hits){
+function sort_keys(&$keys) {
     global $collator;
     _init_collator();
 
-    if(!isset($collator))
-        ksort($namespaces_to_hits);
+    if (isset($collator))
+        uksort($keys, array($collator, 'compare'));
     else
-        uksort($namespaces_to_hits, array($collator, 'compare'));
+        ksort($keys, SORT_NATURAL | SORT_FLAG_CASE);
 }
