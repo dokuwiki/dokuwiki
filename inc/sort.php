@@ -2,8 +2,12 @@
 /**
  * DokuWiki sort functions
  *
- * If PHP package "intl" is loaded, then class Collator is used.
- * Otherwise, primitive PHP functions are called (as was done by old code).
+ * When "intl" extension is available, all sorts are done using a collator.
+ * Otherwise, primitive PHP functions are called.
+ *
+ * The collator is created using the locale given in $conf['lang'].
+ * It always uses case insensitive "natural" ordering in its collation.
+ * The fallback solution uses the primitive PHP functions that return the same results.
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Moisés Braga Ribeiro <moisesbr@gmail.com>
@@ -51,12 +55,12 @@ function _sort_filenames_with_collator($first, $second) {
 }
 
 function _sort_filenames_without_collator($first, $second) {
-    return strnatcmp(utf8_decodeFN($first), utf8_decodeFN($second));
+    return strnatcasecmp(utf8_decodeFN($first), utf8_decodeFN($second));
 }
 
 /**
- * Replacement for strcmp() in fulltext.php, line 373, where all strings are lowercase.
- * Replacement for strcmp() in search.php, line 371, where all string would be lowercase (function not used anywhere).
+ * Replacement for strcmp() in fulltext.php, line 373.
+ * Replacement for strcmp() in search.php, line 371 (function not used anywhere).
  * Replacement for strcasecmp() in Ui/Admin.php, line 162.
  */
 function compare($first, $second) {
@@ -66,15 +70,12 @@ function compare($first, $second) {
     if (isset($collator))
         return $collator->compare($first, $second);
     else
-        return strcasecmp($first, $second);
+        return strnatcasecmp($first, $second);
 }
 
 /**
  * Replacement for sort() in fulltext.php, lines 183 and 214.
  * Replacement for sort() in Ajax.php, line 101.
- * Actually sort() was wrongly called in the original code, as natsort() was used elsewhere,
- * resulting in inconsistent ordering depending on the accessed page.
- * Here the sort without collator was fixed to use sort() with flags SORT_NATURAL and SORT_FLAG_CASE.
  */
 function sort_pagenames(&$pagenames) {
     global $collator;
@@ -88,9 +89,6 @@ function sort_pagenames(&$pagenames) {
 
 /**
  * Replacement for ksort() in Ui/Search.php, line 387.
- * Actually ksort() was wrongly called in the original code, as natsort() was used elsewhere,
- * resulting in inconsistent ordering depending on the accessed page.
- * Here the sort without collator was fixed to use ksort() with flags SORT_NATURAL and SORT_FLAG_CASE.
  */
 function sort_keys(&$keys) {
     global $collator;
