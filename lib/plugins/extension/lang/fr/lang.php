@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Damien Regad <dregad@mantisbt.org>
  * @author Yves Grandvalet <Yves.Grandvalet@laposte.net>
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
@@ -76,6 +76,7 @@ $lang['msg_template_update_success'] = 'Thème %s mis à jour avec succès';
 $lang['msg_plugin_install_success'] = 'Greffon %s installé avec succès';
 $lang['msg_plugin_update_success'] = 'Greffon %s mis à jour avec succès';
 $lang['msg_upload_failed']     = 'Téléversement échoué';
+$lang['msg_nooverwrite']       = 'L\'extension %s existe déjà et ne sera pas remplacée. Pour la remplacer, cocher l\'option de remplacement d\'extension.';
 $lang['missing_dependency']    = '<strong>Dépendance absente ou désactivée :</strong> %s';
 $lang['security_issue']        = '<strong>Problème de sécurité :</strong> %s';
 $lang['security_warning']      = '<strong>Avertissement de sécurité :</strong> %s';
