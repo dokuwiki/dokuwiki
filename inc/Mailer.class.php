@@ -696,6 +696,7 @@ class Mailer {
      * @return bool true if the mail was successfully passed to the MTA
      */
     public function send() {
+        global $lang;
         $success = false;
 
         // prepare hook data
@@ -752,6 +753,14 @@ class Mailer {
             // add any headers set by legacy plugins
             if(trim($data['headers'])) {
                 $headers .= MAILHEADER_EOL.trim($data['headers']);
+            }
+
+            if(!function_exists('mail')){
+                $emsg = $lang['email_fail'] . $subject;
+                error_log($emsg);
+                msg(hsc($emsg), -1, __LINE__, __FILE__, MSG_MANAGERS_ONLY);
+                $evt->advise_after();
+                return false;
             }
 
             // send the thing
