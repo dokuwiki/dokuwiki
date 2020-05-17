@@ -26,9 +26,9 @@ function _init_collator() {
         $collator = Collator::create($conf['lang']);
         if (isset($collator)) {
             $collator->setAttribute(Collator::NUMERIC_COLLATION, Collator::ON);
-            dbglog('Collator created with locale "' . $conf['lang'] . '", numeric collation on');
-            dbglog('Collator valid locale: "' . $collator->getLocale(Locale::VALID_LOCALE) . '"');
-            dbglog('Collator actual locale: "' . $collator->getLocale(Locale::ACTUAL_LOCALE) . '"');
+            dbglog('Collator created with locale "' . $conf['lang'] . '": numeric collation on, ' .
+                   'valid locale "' . $collator->getLocale(Locale::VALID_LOCALE) . '", ' .
+                   'actual locale "' . $collator->getLocale(Locale::ACTUAL_LOCALE) . '"');
         }
     }
 }
