@@ -34,31 +34,6 @@ function _init_collator() {
 }
 
 /**
- * Replacement for natsort() in search.php, lines 52 and 54.
- * Actually natsort() was wrongly called in the original code, as file/dir names may not be equal to the page names,
- * depending on the setting in $conf['fnencode'].
- * So the correct behavior is to sort the page names and reflect that sorting in the array with file/dir names.
- */
-function sort_filenames(&$filenames) {
-    global $collator;
-    _init_collator();
-
-    if (isset($collator))
-        return uasort($filenames, '_sort_filenames_with_collator');
-    else
-        return uasort($filenames, '_sort_filenames_without_collator');
-}
-
-function _sort_filenames_with_collator($first, $second) {
-    global $collator;
-    return $collator->compare(utf8_decodeFN($first), utf8_decodeFN($second));
-}
-
-function _sort_filenames_without_collator($first, $second) {
-    return strnatcasecmp(utf8_decodeFN($first), utf8_decodeFN($second));
-}
-
-/**
  * Replacement for strcmp() in fulltext.php, line 373.
  * Replacement for strcmp() in search.php, line 371 (function not used anywhere).
  * Replacement for strcasecmp() in Ui/Admin.php, line 162.
@@ -98,4 +73,29 @@ function sort_keys(&$keys) {
         uksort($keys, array($collator, 'compare'));
     else
         ksort($keys, SORT_NATURAL | SORT_FLAG_CASE);
+}
+
+/**
+ * Replacement for natsort() in search.php, lines 52 and 54.
+ * Actually natsort() was wrongly called in the original code, as file/dir names may not be equal to the page names,
+ * depending on the setting in $conf['fnencode'].
+ * So the correct behavior is to sort the page names and reflect that sorting in the array with file/dir names.
+ */
+function sort_filenames(&$filenames) {
+    global $collator;
+    _init_collator();
+
+    if (isset($collator))
+        return uasort($filenames, '_sort_filenames_with_collator');
+    else
+        return uasort($filenames, '_sort_filenames_without_collator');
+}
+
+function _sort_filenames_with_collator($first, $second) {
+    global $collator;
+    return $collator->compare(utf8_decodeFN($first), utf8_decodeFN($second));
+}
+
+function _sort_filenames_without_collator($first, $second) {
+    return strnatcasecmp(utf8_decodeFN($first), utf8_decodeFN($second));
 }
