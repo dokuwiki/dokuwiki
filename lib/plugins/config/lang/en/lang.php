@@ -86,6 +86,7 @@ $lang['deaccent']    = 'How to clean pagenames';
 $lang['useheading']  = 'Use first heading for pagenames';
 $lang['sneaky_index'] = 'By default, DokuWiki will show all namespaces in the sitemap. Enabling this option will hide those where the user doesn\'t have read permissions. This might result in hiding of accessable subnamespaces which may make the index unusable with certain ACL setups.';
 $lang['hidepages']   = 'Hide pages matching this regular expression from search, the sitemap and other automatic indexes';
+$lang['ack_page_nearest'] = 'Allow DokuWiki to acknowledge the current page as a namespace when including sidebars or other pages. For example, "wiki:sidebar" would be used as a sidebar for the "wiki" page instead of the root "sidebar" page.';
 
 /* Authentication Settings */
 $lang['useacl']      = 'Use access control lists';

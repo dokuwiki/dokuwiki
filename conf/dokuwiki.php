@@ -50,6 +50,7 @@ $conf['deaccent']    = 1;                 //deaccented chars in pagenames (1) or
 $conf['useheading']  = 0;                 //use the first heading in a page as its name
 $conf['sneaky_index']= 0;                 //check for namespace read permission in index view (0|1) (1 might cause unexpected behavior)
 $conf['hidepages']   = '';                //Regexp for pages to be skipped from RSS, Search and Recent Changes
+$conf['ack_page_nearest'] = 0;
 
 /* Authentication Settings */
 $conf['useacl']      = 0;                //Use Access Control Lists to restrict access?

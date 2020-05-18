@@ -762,17 +762,24 @@ function utf8_decodeFN($file){
  * @return false|string the full page id of the found page, false if any
  */
 function page_findnearest($page, $useacl = true){
+    global $conf;
     if ((string) $page === '') return false;
+    $ackPageAsNs = $conf['ack_page_nearest'];
     global $ID;
-
+    $prevNs = $ID;
     $ns = $ID;
     do {
-        $ns = getNS($ns);
+        if(!$ackPageAsNs) $ns = getNS($ns);
         $pageid = cleanID("$ns:$page");
         if(page_exists($pageid) && (!$useacl || auth_quickaclcheck($pageid) >= AUTH_READ)){
             return $pageid;
         }
-    } while($ns !== false);
+
+        if($ackPageAsNs) {
+            $prevNs = $ns;
+            $ns = getNS($ns);
+        }
+    } while($ackPageAsNs ? ($ns != $prevNs) : ($ns !== false));
 
     return false;
 }
