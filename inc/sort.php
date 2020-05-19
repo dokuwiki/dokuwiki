@@ -44,6 +44,7 @@ function _get_collator() {
 // strcmp()
 // inc/fulltext.php:373
 // inc/search.php:371
+// lib/plugins/acl/admin.php:307
 // strcasecmp()
 // inc/Ui/Admin.php:162
 /**
@@ -68,6 +69,9 @@ function intl_strcmp($str1, $str2) {
 // inc/Ajax.php:101
 // inc/fulltext.php:183
 // inc/fulltext.php:214
+// lib/plugins/acl/admin.php:592
+// lib/plugins/acl/admin.php:611
+
 /**
  * Drop-in replacement for sort().
  * It uses a collator-based sort, or sort() with flags SORT_NATURAL and SORT_FLAG_CASE as a fallback.
@@ -87,6 +91,7 @@ function intl_sort(&$array) {
 
 // ksort()
 // inc/Ui/Search.php:387
+// lib/plugins/acl/admin.php:612 + 613 (added)
 /**
  * Drop-in replacement for ksort().
  * It uses a collator-based sort, or ksort() with flags SORT_NATURAL and SORT_FLAG_CASE as a fallback.

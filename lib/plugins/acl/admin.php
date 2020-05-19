@@ -304,7 +304,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
         while (count($a_ids) && count($b_ids)) {
             // compare each level from upper to lower
             // until a non-equal component is found
-            $cur_result = strcmp(array_shift($a_ids), array_shift($b_ids));
+            $cur_result = intl_strcmp(array_shift($a_ids), array_shift($b_ids));
             if ($cur_result) {
                 // if one of the components is the last component and is a file
                 // and the other one is either of a deeper level or a directory,
@@ -589,7 +589,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
         }
         $this->specials = array_filter($this->specials);
         $this->specials = array_unique($this->specials);
-        sort($this->specials);
+        intl_sort($this->specials);
 
         foreach ($AUTH_ACL as $line) {
             $line = trim(preg_replace('/#.*$/', '', $line)); //ignore comments
@@ -608,8 +608,9 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
         }
 
         $usersgroups = array_unique($usersgroups);
-        sort($usersgroups);
-        ksort($acl_config);
+        intl_sort($usersgroups);
+        intl_ksort($acl_config);
+        foreach (array_keys($acl_config) as $pagename) intl_ksort($acl_config[$pagename]);
 
         $this->acl = $acl_config;
         $this->usersgroups = $usersgroups;
