@@ -41,13 +41,14 @@ function _get_collator() {
     return $collator;
 }
 
+// strcmp()
+// inc/fulltext.php:373
+// inc/search.php:371
+// strcasecmp()
+// inc/Ui/Admin.php:162
 /**
  * Drop-in replacement for strcmp(), strcasecmp(), strnatcmp() and strnatcasecmp().
  * It uses a collator-based comparison, or strnatcasecmp() as a fallback.
- *
- * Replacement for strcmp() in fulltext.php, line 373.
- * Replacement for strcmp() in search.php, line 371.
- * Replacement for strcasecmp() in Ui/Admin.php, line 162.
  *
  * @param string $str1 The first string.
  * @param string $str2 The second string.
@@ -63,12 +64,13 @@ function intl_strcmp($str1, $str2) {
         return strnatcasecmp($str1, $str2);
 }
 
+// sort()
+// inc/Ajax.php:101
+// inc/fulltext.php:183
+// inc/fulltext.php:214
 /**
  * Drop-in replacement for sort().
  * It uses a collator-based sort, or sort() with flags SORT_NATURAL and SORT_FLAG_CASE as a fallback.
- *
- * Replacement for sort() in fulltext.php, lines 183 and 214.
- * Replacement for sort() in Ajax.php, line 101.
  *
  * @param array $array The input array.
  * @return bool Returns TRUE on success or FALSE on failure.
@@ -83,11 +85,11 @@ function intl_sort(&$array) {
         return sort($array, SORT_NATURAL | SORT_FLAG_CASE);
 }
 
+// ksort()
+// inc/Ui/Search.php:387
 /**
  * Drop-in replacement for ksort().
  * It uses a collator-based sort, or ksort() with flags SORT_NATURAL and SORT_FLAG_CASE as a fallback.
- *
- * Replacement for ksort() in Ui/Search.php, line 387.
  *
  * @param array $array The input array.
  * @return bool Returns TRUE on success or FALSE on failure.
@@ -119,12 +121,13 @@ function intl_asort(&$array) {
         return asort($array, SORT_NATURAL | SORT_FLAG_CASE);
 }
 
+// natsort()
+// inc/search.php:52
+// inc/search.php:54
 /**
  * Drop-in replacement for asort(), natsort() and natcasesort() when the parameter is an array of filenames.
  * Filenames may not be equal to page names, depending on the setting in $conf['fnencode'],
  * so the correct behavior is to sort page names and reflect this sorting in the filename array.
- *
- * Replacement for natsort() in search.php, lines 52 and 54.
  *
  * @param array $array The input array.
  * @return bool Returns TRUE on success or FALSE on failure.
