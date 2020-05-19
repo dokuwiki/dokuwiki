@@ -15,18 +15,19 @@
 
 /* @var bool $intl_extension_available */
 $intl_extension_available = class_exists('Collator');
-/* @var Collator $collator */
-$collator = null;
 
 /**
- * Initialize collator using $conf['lang'].
+ * Initialize a collator using $conf['lang'] as the locale.
  * The initialization is done only once.
- * The collation takes "natural ordering" into account, so "page 2" is before "page 10".
+ * The collation takes "natural ordering" into account, that is, "page 2" is before "page 10".
+ *
+ * @return Collator Returns a configured collator or NULL if the collator cannot be created.
  *
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
-function _init_collator() {
-    global $conf, $collator, $intl_extension_available;
+function _get_collator() {
+    global $conf, $intl_extension_available;
+    static $collator = NULL;
 
     if ($intl_extension_available && !isset($collator)) {
         $collator = Collator::create($conf['lang']);
@@ -37,6 +38,7 @@ function _init_collator() {
                    'actual locale "' . $collator->getLocale(Locale::ACTUAL_LOCALE) . '"');
         }
     }
+    return $collator;
 }
 
 /**
@@ -54,9 +56,7 @@ function _init_collator() {
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
 function intl_strcmp($str1, $str2) {
-    global $collator;
-    _init_collator();
-
+    $collator = _get_collator();
     if (isset($collator))
         return $collator->compare($str1, $str2);
     else
@@ -76,9 +76,7 @@ function intl_strcmp($str1, $str2) {
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
 function intl_sort(&$array) {
-    global $collator;
-    _init_collator();
-
+    $collator = _get_collator();
     if (isset($collator))
         return $collator->sort($array);
     else
@@ -97,9 +95,7 @@ function intl_sort(&$array) {
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
 function intl_ksort(&$array) {
-    global $collator;
-    _init_collator();
-
+    $collator = _get_collator();
     if (isset($collator))
         return uksort($array, array($collator, 'compare'));
     else
@@ -116,9 +112,7 @@ function intl_ksort(&$array) {
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
 function intl_asort(&$array) {
-    global $collator;
-    _init_collator();
-
+    $collator = _get_collator();
     if (isset($collator))
         return $collator->asort($array);
     else
@@ -138,9 +132,7 @@ function intl_asort(&$array) {
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
 function intl_asortFN(&$array) {
-    global $collator;
-    _init_collator();
-
+    $collator = _get_collator();
     if (isset($collator))
         return uasort($array, '_sort_filenames_with_collator');
     else
@@ -158,7 +150,7 @@ function intl_asortFN(&$array) {
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
 function _sort_filenames_with_collator($fn1, $fn2) {
-    global $collator;
+    $collator = _get_collator();
     return $collator->compare(utf8_decodeFN($fn1), utf8_decodeFN($fn2));
 }
 
