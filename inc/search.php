@@ -49,9 +49,9 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
         if ($sort == 'date') {
             @array_multisort(array_map('filemtime', $filepaths), SORT_NUMERIC, SORT_DESC, $files);
         } else /* natural */ {
-            sort_filenames($files);
+            intl_asortFN($files);
         }
-        sort_filenames($dirs);
+        intl_asortFN($dirs);
     }
 
     //give directories to userfunction then recurse
@@ -368,7 +368,7 @@ function sort_search_fulltext($a,$b){
     }elseif($a['count'] < $b['count']){
         return 1;
     }else{
-        return compare($a['id'],$b['id']);
+        return intl_strcmp($a['id'],$b['id']);
     }
 }
 

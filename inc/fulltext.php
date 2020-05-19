@@ -180,7 +180,7 @@ function ft_backlinks($id, $ignore_perms = false){
         }
     }
 
-    sort_pagenames($result);
+    intl_sort($result);
     return $result;
 }
 
@@ -211,7 +211,7 @@ function ft_mediause($id, $ignore_perms = false){
         }
     }
 
-    sort_pagenames($result);
+    intl_sort($result);
     return $result;
 }
 
@@ -370,7 +370,7 @@ function ft_pagesorter($a, $b){
     }elseif($ac > $bc){
         return 1;
     }
-    return compare($a,$b);
+    return intl_strcmp($a,$b);
 }
 
 /**
