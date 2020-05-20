@@ -413,7 +413,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
             for ($i = 0; $i < $entries["count"]; $i++) {
                 array_push($users_array, $entries[$i][$userkey][0]);
             }
-            asort($users_array);
+            intl_asort($users_array);
             $result = $users_array;
             if (!$result) return array();
             $this->users = array_fill_keys($result, false);

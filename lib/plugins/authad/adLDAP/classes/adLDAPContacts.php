@@ -271,7 +271,7 @@ class adLDAPContacts {
             }
         }
         if ($sorted) { 
-            asort($usersArray); 
+            intl_asort($usersArray); 
         }
         return $usersArray;
     }

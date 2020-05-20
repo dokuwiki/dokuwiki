@@ -524,7 +524,7 @@ class adLDAPGroups {
             }
         }
         if ($sorted) { 
-            asort($groupsArray); 
+            intl_asort($groupsArray); 
         }
         return $groupsArray;
     }

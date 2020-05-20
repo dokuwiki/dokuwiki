@@ -72,7 +72,7 @@ function intl_strcmp($str1, $str2) {
 // inc/fulltext.php:214
 // lib/plugins/acl/admin.php:592
 // lib/plugins/acl/admin.php:611
-
+// lib/plugins/authpdo/auth.php:602
 /**
  * Drop-in replacement for sort().
  * It uses a collator-based sort, or sort() with flags SORT_NATURAL and SORT_FLAG_CASE as a fallback.
@@ -94,6 +94,9 @@ function intl_sort(&$array) {
 // bin/wantedpages.php:80
 // inc/Ui/Search.php:387
 // lib/plugins/acl/admin.php:612 + 613 (added)
+// lib/plugins/authad/auth.php:735
+// lib/plugins/authpdo/auth.php:635
+// lib/plugins/authplain/auth.php:301 + 338 (added)
 /**
  * Drop-in replacement for ksort().
  * It uses a collator-based sort, or ksort() with flags SORT_NATURAL and SORT_FLAG_CASE as a fallback.
@@ -111,6 +114,11 @@ function intl_ksort(&$array) {
         return ksort($array, SORT_NATURAL | SORT_FLAG_CASE);
 }
 
+// lib/plugins/authad/adLDAP/classes/adLDAPContacts.php:274
+// lib/plugins/authad/adLDAP/classes/adLDAPGroups.php:527
+// lib/plugins/authad/adLDAP/classes/adLDAPUsers.php:571
+// lib/plugins/authad/adLDAP/classes/adLDAPUsers.php:634
+// lib/plugins/authldap/auth.php:416
 /**
  * Drop-in replacement for asort(), natsort() and natcasesort().
  * It uses a collator-based sort, or asort() with flags SORT_NATURAL and SORT_FLAG_CASE as a fallback.

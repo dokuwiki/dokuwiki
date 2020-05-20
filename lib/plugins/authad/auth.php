@@ -732,7 +732,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
                 $domains[$key] = ltrim($val['account_suffix'], '@');
             }
         }
-        ksort($domains);
+        intl_ksort($domains);
 
         return $domains;
     }

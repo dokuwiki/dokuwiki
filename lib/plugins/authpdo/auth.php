@@ -599,7 +599,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
         }
 
         $groups = array_unique($groups);
-        sort($groups);
+        intl_sort($groups);
         return $groups;
     }
 
@@ -632,7 +632,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
             $this->debugMsg("select-groups statement did not return a list of result", -1, __LINE__);
         }
 
-        ksort($groups);
+        intl_ksort($groups);
         return $groups;
     }
 

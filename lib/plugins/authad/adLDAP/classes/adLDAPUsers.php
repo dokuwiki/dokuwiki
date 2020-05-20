@@ -568,7 +568,7 @@ class adLDAPUsers {
             }
         }
         if ($sorted) { 
-            asort($usersArray); 
+            intl_asort($usersArray); 
         }
         return $usersArray;
     }
@@ -631,7 +631,7 @@ class adLDAPUsers {
             }
         }
         if ($sorted){ 
-          asort($usersArray); 
+          intl_asort($usersArray); 
         }
         return ($usersArray);
     }
