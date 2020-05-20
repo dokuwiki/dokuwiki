@@ -768,6 +768,7 @@ function page_findnearest($page, $useacl = true){
     global $ID;
     $prevNs = $ID;
     $ns = $ID;
+
     do {
         if(!$ackPageAsNs) $ns = getNS($ns);
         $pageid = cleanID("$ns:$page");
@@ -779,7 +780,7 @@ function page_findnearest($page, $useacl = true){
             $prevNs = $ns;
             $ns = getNS($ns);
         }
-    } while($ackPageAsNs ? ($ns != $prevNs) : ($ns !== false));
+    } while($ackPageAsNs ? ($ns !== $prevNs) : ($ns !== false));
 
     return false;
 }
