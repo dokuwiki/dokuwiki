@@ -77,13 +77,13 @@ class WantedPagesCLI extends CLI {
         foreach($this->getPages($startdir) as $page) {
             $this->internalLinks($page);
         }
-        ksort($this->result);
+        intl_ksort($this->result);
         foreach($this->result as $main => $subs) {
             if($this->skip) {
                 print "$main\n";
             } else {
                 $subs = array_unique($subs);
-                sort($subs);
+                intl_sort($subs);
                 foreach($subs as $sub) {
                     printf("%-40s %s\n", $main, $sub);
                 }

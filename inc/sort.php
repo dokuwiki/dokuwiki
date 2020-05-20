@@ -66,6 +66,7 @@ function intl_strcmp($str1, $str2) {
 }
 
 // sort()
+// bin/wantedpages.php:86
 // inc/Ajax.php:101
 // inc/fulltext.php:183
 // inc/fulltext.php:214
@@ -90,6 +91,7 @@ function intl_sort(&$array) {
 }
 
 // ksort()
+// bin/wantedpages.php:80
 // inc/Ui/Search.php:387
 // lib/plugins/acl/admin.php:612 + 613 (added)
 /**
