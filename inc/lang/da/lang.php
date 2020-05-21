@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Jacob Palm <mail@jacobpalm.dk>
+ * @author Jacob Palm <jacobpalmdk@icloud.com>
  * @author Kenneth Schack Banner <kescba@gmail.com>
  * @author Jon Theil Nielsen <jontheil@gmail.com>
  * @author koeppe <koeppe@kazur.dk>
@@ -311,6 +311,7 @@ $lang['i_modified']            = 'Af sikkerheds hensyn vil dette script kun virk
 Du burde enten gen-udpakke filerne fra den hentede pakke eller tjekke den fuldstændige
 <a href="http://dokuwiki.org/install">DokuWiki installations instruktioner</a>';
 $lang['i_funcna']              = 'PHP funtionen <code>%s</code> er ikke tilgængelig. Måske har din udbyder slået det fra af en eller anden grund?';
+$lang['i_funcnmail']           = '<b>Bemærk:</b> PHP mail funktionen er ikke tilgængelig. %s Hvis den forbliver utilgængelig, kan du installere <a href="http://dokuwiki.org/plugins/smtp">SMTP udvidelsen</a>.';
 $lang['i_phpver']              = 'Din PHP version <code>%s</code> er mindre en den nødvendige <code>%s</code>. Du er nød til at opgradere din PHP installation.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload skal være deaktiveret i php.ini for at køre DokuWiki.';
 $lang['i_permfail']            = 'DokuWiki kan ikke skrive til <code>%s</code>. Du er nød til at rette tilladelses indstillingerne for denne mappe!';

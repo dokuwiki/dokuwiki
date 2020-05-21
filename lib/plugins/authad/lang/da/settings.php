@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Jacob Palm <mail@jacobpalm.dk>
+ * @author Jacob Palm <jacobpalmdk@icloud.com>
  * @author Soren Birk <soer9648@hotmail.com>
  * @author Jens Hyllegaard <jens.hyllegaard@gmail.com>
  */
@@ -22,3 +22,4 @@ $lang['expirywarn']            = 'Dage før udløb af adgangskode brugere skal a
 $lang['additional']            = 'En kommasepareret liste over yderligere AD attributter der skal hentes fra brugerdata. Brug af nogen udvidelser.';
 $lang['update_name']           = 'Tillad at brugere opdaterer deres visningnavn i AD?';
 $lang['update_mail']           = 'Tillad at brugere opdaterer deres e-mail adresse?';
+$lang['recursive_groups']      = 'Opslå nedarvede grupper til deres individuelle medlemmer (langsommere)';
