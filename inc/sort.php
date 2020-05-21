@@ -47,6 +47,8 @@ function _get_collator() {
 // lib/plugins/acl/admin.php:307
 // strcasecmp()
 // inc/Ui/Admin.php:162
+// strnatcmp()
+// inc/media.php:1986 --> 1984
 /**
  * Drop-in replacement for strcmp(), strcasecmp(), strnatcmp() and strnatcasecmp().
  * It uses a collator-based comparison, or strnatcasecmp() as a fallback.

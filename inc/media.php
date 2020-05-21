@@ -1981,10 +1981,7 @@ function media_nstree($ns){
         while ($data[$pos]['id'] != $tmp_ns) {
             if (
                 $pos >= count($data) ||
-                (
-                    $data[$pos]['level'] <= $level+1 &&
-                    strnatcmp(utf8_encodeFN($data[$pos]['id']), utf8_encodeFN($tmp_ns)) > 0
-                )
+                ($data[$pos]['level'] <= $level+1 && intl_strcmp($data[$pos]['id'], $tmp_ns) > 0)
             ) {
                 array_splice($data, $pos, 0, array(array('level' => $level+1, 'id' => $tmp_ns, 'open' => 'true')));
                 break;
