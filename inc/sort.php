@@ -94,6 +94,7 @@ function intl_sort(&$array) {
 
 // ksort()
 // bin/wantedpages.php:80
+// inc/Remote/ApiCore.php + 313 (added)
 // inc/Ui/Search.php:387
 // lib/plugins/acl/admin.php:612 + 613 (added)
 // lib/plugins/authad/auth.php:735
