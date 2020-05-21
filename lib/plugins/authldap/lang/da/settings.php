@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Jacob Palm <mail@jacobpalm.dk>
+ * @author Jacob Palm <jacobpalmdk@icloud.com>
  * @author Jon Theil Nielsen <jontheil@gmail.com>
  * @author Jens Hyllegaard <jens.hyllegaard@gmail.com>
  * @author soer9648 <soer9648@eucl.dk>
@@ -20,6 +20,7 @@ $lang['referrals']             = 'Tillad henvisninger?';
 $lang['deref']                 = 'Hvordan skal opslag renses for henvisninger?';
 $lang['binddn']                = 'DN af en valgfri bindings-bruger, hvis ikke anonym binding er tilstrækkeligt. Fx <code>cn=admin,dc=my,dc=home</code>';
 $lang['bindpw']                = 'Adgangskode til ovenstående bruger';
+$lang['attributes']            = 'Attributter der skal hentes med LDAP søgning.';
 $lang['userscope']             = 'Begræns søgekriterier for brugersøgning';
 $lang['groupscope']            = 'Begræns søgekriterier for gruppesøgning';
 $lang['userkey']               = 'Attribut der betegner brugernavnet; skal være i overensstemmelse med brugerfilteret.';

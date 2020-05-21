@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Jacob Palm <mail@jacobpalm.dk>
+ * @author Jacob Palm <jacobpalmdk@icloud.com>
  * @author Søren Birk <soer9648@eucl.dk>
  */
 $lang['menu']                  = 'Udvidelseshåndtering';
@@ -73,6 +73,7 @@ $lang['msg_template_update_success'] = 'Temaet %s blev opdateret';
 $lang['msg_plugin_install_success'] = 'Udvidelsen %s blev installeret';
 $lang['msg_plugin_update_success'] = 'Udvidelsen %s blev opdateret';
 $lang['msg_upload_failed']     = 'Kunne ikke uploade filen';
+$lang['msg_nooverwrite']       = 'Udvidelsen %s findes allerede og overskrives ikke. For at overskrive, marker indstillingen for overskrivelse';
 $lang['missing_dependency']    = '<strong>Manglende eller deaktiveret afhængighed:</strong> %s';
 $lang['security_issue']        = '<strong>Sikkerhedsproblem:</strong> %s';
 $lang['security_warning']      = '<strong>Sikkerhedsadvarsel:</strong> %s';

@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Jacob Palm <mail@jacobpalm.dk>
+ * @author Jacob Palm <jacobpalmdk@icloud.com>
  * @author Kenneth Schack Banner <kescba@gmail.com>
  * @author Jon Theil Nielsen <jontheil@gmail.com>
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
@@ -43,6 +43,7 @@ $lang['_advanced']             = 'Avancerede indstillinger';
 $lang['_network']              = 'Netværksindstillinger';
 $lang['_msg_setting_undefined'] = 'Ingen indstillingsmetadata.';
 $lang['_msg_setting_no_class'] = 'Ingen indstillingsklasse.';
+$lang['_msg_setting_no_known_class'] = 'Indstillingsklasse ikke tilgængelig.';
 $lang['_msg_setting_no_default'] = 'Ingen standardværdi.';
 $lang['title']                 = 'Wiki titel (navnet på din wiki)';
 $lang['start']                 = 'Startsidens navn (benyttes som startside i alle navnerum)';
@@ -131,6 +132,7 @@ $lang['rss_linkto']            = 'XML-feed henviser til';
 $lang['rss_content']           = 'Hvad skal der vises i XML-feed?';
 $lang['rss_update']            = 'XML-feed opdateringsinterval (sek)';
 $lang['rss_show_summary']      = 'XML-feed vis referat i overskriften';
+$lang['rss_show_deleted']      = 'XML feed Vis slettede feeds';
 $lang['rss_media']             = 'Hvilke ændringer skal vises i XML feed?';
 $lang['rss_media_o_both']      = 'begge';
 $lang['rss_media_o_pages']     = 'sider';
@@ -158,6 +160,9 @@ $lang['search_fragment_o_exact'] = 'præcis';
 $lang['search_fragment_o_starts_with'] = 'starter med';
 $lang['search_fragment_o_ends_with'] = 'slutter med';
 $lang['search_fragment_o_contains'] = 'indeholder';
+$lang['trustedproxy']          = 'Hav tillid til viderestillede proxyer som rapporterer en oprindelig IP der matcher denne regular expression. Som standard matcher lokale netværk. Efterlad blank for ikke at have tillid til nogen proxyer.';
+$lang['_feature_flags']        = 'Funktionsflag';
+$lang['defer_js']              = 'Afvent med JavaScript ekserkvering, til sidens HTML er behandlet. Dette kan få sideindlæsning til at føles hurtigere, men kan potentielt forhindre et fåtal af udvidelser i at fungere korrekt.';
 $lang['dnslookups']            = 'DokuWiki laver DNS-opslag for at finde hostnames på de IP-adresser hvorfra brugere redigerer sider. Hvis du har en langsom eller ikke-fungerende DNS-server, eller ikke ønsker denne funktion, kan du slå den fra.';
 $lang['jquerycdn']             = 'Skal jQuery og jQuery UI kode hentes fra et CDN (content delivery network)? Dette resulterer i flere HTTP-forespørgsler, men filerne indlæses muligvis hurtigere, og brugere har dem muligvis allerede i cachen.';
 $lang['jquerycdn_o_0']         = 'Intet CDN, kode hentes fra denne server';
