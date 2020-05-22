@@ -42,7 +42,7 @@ function _get_collator() {
 }
 
 // strcmp()
-// inc/fulltext.php:373
+// inc/fulltext.php:373 --> 374
 // inc/search.php:371
 // lib/plugins/acl/admin.php:307
 // strcasecmp()
@@ -70,8 +70,8 @@ function intl_strcmp($str1, $str2) {
 // sort()
 // bin/wantedpages.php:86
 // inc/Ajax.php:101
-// inc/fulltext.php:183
-// inc/fulltext.php:214
+// inc/fulltext.php:183 --> 184
+// inc/fulltext.php:214 --> 215
 // lib/plugins/acl/admin.php:592
 // lib/plugins/acl/admin.php:611
 // lib/plugins/authpdo/auth.php:602

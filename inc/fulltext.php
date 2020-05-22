@@ -151,6 +151,7 @@ function _ft_pageSearch(&$data) {
         uksort($docs, 'ft_pagemtimesorter');
     } else {
         // sort docs by count
+        uksort($docs, 'ft_pagesorter');
         arsort($docs);
     }
 
