@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Rolf Rued <rolf.rued@t-online.de>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Eric Haberstroh <ehaberstroh@gmail.com>
  * @author C!own77 <clown77@posteo.de>
