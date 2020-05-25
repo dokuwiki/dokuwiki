@@ -270,8 +270,8 @@ function toolbar_signature(){
     $sig = str_replace('@NAME@',$INFO['userinfo']['name'],$sig);
     $sig = str_replace('@MAIL@',$INFO['userinfo']['mail'],$sig);
     $sig = str_replace('@DATE@',dformat(),$sig);
-    $sig = str_replace('\\\\n','\\n',addslashes($sig));
-    return $sig;
+    $sig = str_replace('\\\\n','\\n',$sig);
+    return json_encode($sig);
 }
 
 //Setup VIM: ex: et ts=4 :

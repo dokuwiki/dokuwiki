@@ -186,7 +186,7 @@ class HTTPClient {
         if(isset($uri['pass'])) $this->pass = $uri['pass'];
 
         // proxy setup
-        if($this->proxy_host && (!$this->proxy_except || !preg_match('/'.$this->proxy_except.'/i',$url)) ){
+        if($this->useProxyForUrl($url)){
             $request_url = $url;
             $server      = $this->proxy_host;
             $port        = $this->proxy_port;
@@ -286,7 +286,7 @@ class HTTPClient {
             }
         }
 
-        if ($this->keep_alive && !$this->proxy_host) {
+        if ($this->keep_alive && !$this->useProxyForUrl($request_url)) {
             // RFC 2068, section 19.7.1: A client MUST NOT send the Keep-Alive
             // connection token to a proxy server. We still do keep the connection the
             // proxy alive (well except for CONNECT tunnels)
@@ -508,7 +508,7 @@ class HTTPClient {
      * @return bool true if a tunnel was established
      */
     protected function ssltunnel(&$socket, &$requesturl){
-        if(!$this->proxy_host) return false;
+        if(!$this->useProxyForUrl($requesturl)) return false;
         $requestinfo = parse_url($requesturl);
         if($requestinfo['scheme'] != 'https') return false;
         if(!$requestinfo['port']) $requestinfo['port'] = 443;
@@ -869,5 +869,17 @@ class HTTPClient {
      */
     protected function uniqueConnectionId($server, $port) {
         return "$server:$port";
+    }
+
+    /**
+     * Should the Proxy be used for the given URL?
+     *
+     * Checks the exceptions
+     *
+     * @param string $url
+     * @return bool
+     */
+    protected function useProxyForUrl($url) {
+        return $this->proxy_host && (!$this->proxy_except || !preg_match('/' . $this->proxy_except . '/i', $url));
     }
 }

@@ -124,6 +124,11 @@ class SubscriberManager
             $user = $INPUT->server->str('REMOTE_USER');
         }
 
+        if (empty($user)) {
+            // not logged in
+            return false;
+        }
+
         $subs = $this->subscribers($id, $user);
         if (!count($subs)) {
             return false;

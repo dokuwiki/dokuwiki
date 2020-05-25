@@ -6,7 +6,6 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Search\Indexer;
 use dokuwiki\Sitemap\Mapper;
 use dokuwiki\Subscriptions\BulkSubscriptionSender;
-use Subscription;
 
 /**
  * Class TaskRunner

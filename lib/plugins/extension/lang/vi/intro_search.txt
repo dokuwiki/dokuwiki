@@ -1,0 +1,1 @@
+Tab này cho phép bạn truy cập vào tất cả [[doku>plugins|plugins]] và [[doku>template|chủ đề]] có sẵn cho DokuWiki của các bên thứ 3. Xin lưu ý rằng việc cài đặt mã của bên thứ 3 có thể gây ra **rủi ro bảo mật**, bạn có thể muốn đọc về [[doku>security#plugin_security|bảo mật plugin]] trước.

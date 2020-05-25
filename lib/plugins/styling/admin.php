@@ -85,8 +85,8 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
 
                 echo '<tr>';
                 echo '<td><label for="tpl__'.hsc($key).'">'.$name.'</label></td>';
-                echo '<td><input type="text" name="tpl['.hsc($key).']" id="tpl__'.hsc($key).'" 
-                    value="'.hsc($value).'" '.$this->colorClass($key).' dir="ltr" /></td>';
+                echo '<td><input type="'.$this->colorType($key).'" name="tpl['.hsc($key).']" id="tpl__'.hsc($key).'"
+                    value="'.hsc($value).'" dir="ltr" /></td>';
                 echo '</tr>';
             }
             echo '</tbody></table>';
@@ -114,9 +114,12 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
     }
 
     /**
-     * set the color class attribute
+     * Decide the input type based on the key name
+     *
+     * @param string $key
+     * @return string color|text
      */
-    protected function colorClass($key)
+    protected function colorType($key)
     {
         static $colors = array(
             'text',
@@ -134,9 +137,9 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
         );
 
         if (preg_match('/colou?r/', $key) || in_array(trim($key, '_'), $colors)) {
-            return 'class="color"';
+            return 'color';
         } else {
-            return '';
+            return 'text';
         }
     }
 

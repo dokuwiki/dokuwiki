@@ -23,7 +23,7 @@ class action_general extends DokuWikiTest {
             array('Resendpwd', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
             array('Backlink', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
 
-            array('Revert', AUTH_ADMIN, array('exists' => true, 'ismanager' => false)),
+            array('Revert', AUTH_EDIT, array('exists' => true, 'ismanager' => false)),
             array('Revert', AUTH_EDIT, array('exists' => true, 'ismanager' => true)),
 
             array('Admin', AUTH_READ, array('exists' => true, 'ismanager' => false)), // let in, check later again

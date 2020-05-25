@@ -175,7 +175,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
 
         /* @var PluginController $plugin_controller */
         global $plugin_controller;
-        return !$plugin_controller->isdisabled($this->base);
+        return $plugin_controller->isEnabled($this->base);
     }
 
     /**
@@ -367,7 +367,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         $dependencies = $this->getDependencies();
         $missing_dependencies = array();
         foreach ($dependencies as $dependency) {
-            if ($plugin_controller->isdisabled($dependency)) {
+            if (!$plugin_controller->isEnabled($dependency)) {
                 $missing_dependencies[] = $dependency;
             }
         }
@@ -615,10 +615,11 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      * Install an extension from a user upload
      *
      * @param string $field name of the upload file
+     * @param boolean $overwrite overwrite folder if the extension name is the same
      * @throws Exception when something goes wrong
      * @return array The list of installed extensions
      */
-    public function installFromUpload($field)
+    public function installFromUpload($field, $overwrite = true)
     {
         if ($_FILES[$field]['error']) {
             throw new Exception($this->getLang('msg_upload_failed').' ('.$_FILES[$field]['error'].')');
@@ -637,7 +638,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         }
 
         try {
-            $installed = $this->installArchive("$tmp/upload.archive", true, $basename);
+            $installed = $this->installArchive("$tmp/upload.archive", $overwrite, $basename);
             $this->updateManagerData('', $installed);
             $this->removeDeletedfiles($installed);
             // purge cache
@@ -652,14 +653,15 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      * Install an extension from a remote URL
      *
      * @param string $url
+     * @param boolean $overwrite overwrite folder if the extension name is the same
      * @throws Exception when something goes wrong
      * @return array The list of installed extensions
      */
-    public function installFromURL($url)
+    public function installFromURL($url, $overwrite = true)
     {
         try {
             $path      = $this->download($url);
-            $installed = $this->installArchive($path, true);
+            $installed = $this->installArchive($path, $overwrite);
             $this->updateManagerData($url, $installed);
             $this->removeDeletedfiles($installed);
 
@@ -1040,7 +1042,9 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
             // check to make sure we aren't overwriting anything
             $target = $target_base_dir.$item['base'];
             if (!$overwrite && file_exists($target)) {
-                // TODO remember our settings, ask the user to confirm overwrite
+                // this info message is not being exposed via exception,
+                // so that it's not interrupting the installation
+                msg(sprintf($this->getLang('msg_nooverwrite'), $item['base']));
                 continue;
             }
 

@@ -64,8 +64,6 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
      */
     protected $pattern = array();
 
-    protected $actualstart = 0;
-
     protected $grpsusers = array();
 
     /**
@@ -325,8 +323,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         $domain = \dokuwiki\Utf8\PhpString::strtolower(trim($domain));
         $user   = \dokuwiki\Utf8\PhpString::strtolower(trim($user));
 
-        // is this a known, valid domain? if not discard
-        if (!is_array($this->conf[$domain])) {
+        // is this a known, valid domain or do we work without account suffix? if not discard
+        if (!is_array($this->conf[$domain]) && $this->conf['account_suffix'] !== '') {
             $domain = '';
         }
 
@@ -460,12 +458,18 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
      */
     protected function fillGroupUserArray($filter, $numberOfAdds)
     {
-        $this->grpsusers[$this->filterToString($filter)];
-        $i = 0;
+        if (isset($this->grpsusers[$this->filterToString($filter)])) {
+            $actualstart = count($this->grpsusers[$this->filterToString($filter)]);
+        } else {
+            $this->grpsusers[$this->filterToString($filter)] = [];
+            $actualstart = 0;
+        }
+
+        $i=0;
         $count = 0;
         $this->constructPattern($filter);
         foreach ($this->users as $user => &$info) {
-            if ($i++ < $this->actualstart) {
+            if ($i++ < $actualstart) {
                 continue;
             }
             if ($info === false) {
@@ -476,7 +480,6 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
                 if (($numberOfAdds > 0) && (++$count >= $numberOfAdds)) break;
             }
         }
-        $this->actualstart = $i;
         return $count;
     }
 
@@ -495,12 +498,12 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         $adldap = $this->initAdLdap(null);
         if (!$adldap) return array();
 
-        if (!$this->users) {
+        //if (!$this->users) {
             //get info for given user
             $result = $adldap->user()->all(false, $this->constructSearchString($filter));
             if (!$result) return array();
             $this->users = array_fill_keys($result, false);
-        }
+        //}
 
         $i     = 0;
         $count = 0;
@@ -528,6 +531,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
             if (!isset($this->grpsusers[$this->filterToString($filter)]) ||
                 count($this->grpsusers[$this->filterToString($filter)]) < ($start+$limit)
             ) {
+                if(!isset($this->grpsusers[$this->filterToString($filter)])) {
+                    $this->grpsusers[$this->filterToString($filter)] = [];
+                }
+
                 $this->fillGroupUserArray(
                     $filter,
                     $start+$limit - count($this->grpsusers[$this->filterToString($filter)]) +1
@@ -645,13 +652,17 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
     /**
      * Get the user part from a user
      *
+     * When an account suffix is set, we strip the domain part from the user
+     *
      * @param string $user
      * @return string
      */
     public function getUserName($user)
     {
-        list($name) = explode('@', $user, 2);
-        return $name;
+        if ($this->conf['account_suffix'] !== '') {
+            list($user) = explode('@', $user, 2);
+        }
+        return $user;
     }
 
     /**

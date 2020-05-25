@@ -41,8 +41,12 @@ class DebugHelper
         self::triggerDeprecationEvent(
             $backtrace,
             $alternative,
-            trim($self['class'] . '::' . $self['function'] . '()', ':'),
-            trim($call['class'] . '::' . $call['function'] . '()', ':'),
+            trim(
+                (!empty($self['class']) ? ($self['class'] . '::') : '') .
+                $self['function'] . '()', ':'),
+            trim(
+                (!empty($call['class']) ? ($call['class'] . '::') : '') .
+                $call['function'] . '()', ':'),
             $call['file'],
             $call['line']
         );

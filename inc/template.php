@@ -338,7 +338,7 @@ function tpl_metaheaders($alt = true) {
 
     $script = "var NS='".(isset($INFO)?$INFO['namespace']:'')."';";
     if($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
-        $script .= "var SIG='".toolbar_signature()."';";
+        $script .= "var SIG=".toolbar_signature().";";
     }
     jsinfo();
     $script .= 'var JSINFO = ' . json_encode($JSINFO).';';

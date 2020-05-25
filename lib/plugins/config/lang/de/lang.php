@@ -3,13 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Andreas Gohr <andi@splitbrain.org>
  * @author Eric Haberstroh <ehaberstroh@gmail.com>
  * @author C!own77 <clown77@posteo.de>
  * @author Alex Beck <alex@4becks.com>
  * @author Jürgen Fredriksson <jfriedrich@gmx.at>
  * @author Michael Bohn <mjbohn@gmail.com>
  * @author Joel Strasser <strasser999@gmail.com>
- * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
  * @author Leo Moll <leo@yeasoft.com>
  * @author Florian Anderiasch <fa@art-core.org>
@@ -171,6 +171,7 @@ $lang['search_fragment_o_starts_with'] = 'beginnt mit';
 $lang['search_fragment_o_ends_with'] = 'endet mit';
 $lang['search_fragment_o_contains'] = 'enthält';
 $lang['trustedproxy']          = 'Vertrauen Sie Weiterleitungs-Proxys, welche dem regulärem Ausdruck entsprechen, hinsichtlich der angegebenen Client-ID. Der Standardwert entspricht dem lokalem Netzwerk. Leer lassen um jedem Proxy zu vertrauen.';
+$lang['defer_js']              = 'JavaScript-Ausführung verzögern bis das HTML der gesamten Seite verarbeitet wurde. Erhöht die gefühlte Geschwindigkeit des Seitenaufbaus, kann aber mit einigen wenigen Plugins inkompatibel sein.';
 $lang['dnslookups']            = 'DokuWiki löst die IP-Adressen von Benutzern zu deren Hostnamen auf. Wenn Sie einen langsamen oder unzuverlässigen DNS-Server verwenden oder die Funktion nicht benötigen, dann sollte diese Option deaktiviert sein.';
 $lang['jquerycdn']             = 'Sollen jQuery und jQuery UI Skriptdateien von einem CDN (Content Delivery Network) geladen werden? Dadurch entstehen zusätzliche HTTP-Anfragen, aber die Daten werden voraussichtlich schneller geladen und eventuell sind sie auch schon beim Benutzer im Cache.';
 $lang['jquerycdn_o_0']         = 'Kein CDN, ausschließlich lokale Auslieferung';
