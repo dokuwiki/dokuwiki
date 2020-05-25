@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author PaliPalo <palipalo@hotmail.fr>
  * @author Laurent Ponthieu <contact@coopindus.fr>
@@ -329,6 +330,7 @@ $lang['i_superuser']           = 'Super-utilisateur';
 $lang['i_problems']            = 'L\'installateur a détecté les problèmes indiqués ci-dessous. Vous ne pouvez pas poursuivre l\'installation tant qu\'ils n\'auront pas été corrigés.';
 $lang['i_modified']            = 'Pour des raisons de sécurité, ce script ne fonctionne qu\'avec une installation neuve et non modifiée de DokuWiki. Vous devriez ré-extraire les fichiers depuis le paquet téléchargé ou consulter les <a href="http://dokuwiki.org/install">instructions d\'installation de DokuWiki</a>';
 $lang['i_funcna']              = 'La fonction PHP <code>%s</code> n\'est pas disponible. Peut-être que votre hébergeur web l\'a désactivée ?';
+$lang['i_disabled']            = 'A été désactivé par votre fournisseur d’accès.';
 $lang['i_phpver']              = 'Votre version de PHP (%s) est antérieure à la version requise (%s). Vous devez mettre à jour votre installation de PHP.';
 $lang['i_mbfuncoverload']      = 'Il faut désactiver mbstring.func_overload dans php.ini pour DokuWiki';
 $lang['i_urandom']             = 'DokuWiki ne peut créer de nombres cryptographiquement sûrs pour les cookies. Vous voudrez peut-être vérifier que le réglage open_basedir dans php.ini permet l\'accès à <code>/dev/urandom</code>.';
@@ -382,6 +384,7 @@ $lang['media_perm_upload']     = 'Désolé, vous n\'avez pas l\'autorisation d\'
 $lang['media_update']          = 'Envoyer une nouvelle version';
 $lang['media_restore']         = 'Restaurer cette version';
 $lang['media_acl_warning']     = 'En raison des restrictions dans les ACL et de pages cachées, cette liste peut ne pas être complète.';
+$lang['email_fail']            = 'La fonction PHP mail() est absente ou désactivée. Le message suivant n’a pas été envoyé:';
 $lang['currentns']             = 'Catégorie courante';
 $lang['searchresult']          = 'Résultat de la recherche';
 $lang['plainhtml']             = 'HTML brut';
