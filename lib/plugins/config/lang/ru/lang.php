@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Анатолий <anatol_m@mail.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Vyacheslav Strenadko <vyacheslav.strenadko@gmail.com>
@@ -137,6 +138,7 @@ $lang['rss_linkto']            = 'Ссылки в XML-ленте указыва
 $lang['rss_content']           = 'Что показывать в XML-ленте?';
 $lang['rss_update']            = 'Интервал обновления XML-ленты (сек.)';
 $lang['rss_show_summary']      = 'Показывать краткую выдержку в заголовках XML-ленты';
+$lang['rss_show_deleted']      = 'XML feed Показать удаленные каналы';
 $lang['rss_media']             = 'Какие изменения должны быть отображены в XML-ленте?';
 $lang['rss_media_o_both']      = 'оба';
 $lang['rss_media_o_pages']     = 'страницы';
@@ -165,6 +167,8 @@ $lang['search_fragment_o_starts_with'] = 'начинается на';
 $lang['search_fragment_o_ends_with'] = 'заканчивается';
 $lang['search_fragment_o_contains'] = 'содержит';
 $lang['trustedproxy']          = 'Доверять прокси-серверам, соответствующим этому регулярному выражению, в отношении реального IP-адреса клиента, который они сообщают. Значение по умолчанию соответствует локальным сетям. Оставьте пустым, чтобы не доверять никаким прокси-серверам.';
+$lang['_feature_flags']        = 'Флаги функций';
+$lang['defer_js']              = 'Отложено выполнение javascript после анализа HTML-кода страницы. Улучшает воспринимаемую скорость страницы, но может нарушить работу небольшого количества плагинов.';
 $lang['dnslookups']            = '«Докувики» ищет DNS-имена пользователей, редактирующих страницы. Если у вас нет DNS-сервера или он работает медленно, рекомендуем отключить эту опцию.';
 $lang['jquerycdn']             = 'Требуется ли загрузка jQuery-скриптов (включая jQuery UI-скрипты) из CDN сети? Данная функция увеличивает количество HTTP запросов, но загрузка файлов будет проходить быстрее и пользователи смогут кэшировать запросы.';
 $lang['jquerycdn_o_0']         = 'Не использовать CDN. Использовать только локальную доставку';
