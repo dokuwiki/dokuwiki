@@ -41,14 +41,6 @@ function _get_collator() {
     return $collator;
 }
 
-// strcmp()
-// inc/fulltext.php:373 --> 374
-// inc/search.php:371
-// lib/plugins/acl/admin.php:307
-// strcasecmp()
-// inc/Ui/Admin.php:162
-// strnatcmp()
-// inc/media.php:1986 --> 1984
 /**
  * Drop-in replacement for strcmp(), strcasecmp(), strnatcmp() and strnatcasecmp().
  * It uses a collator-based comparison, or strnatcasecmp() as a fallback.
@@ -67,14 +59,6 @@ function intl_strcmp($str1, $str2) {
         return strnatcasecmp($str1, $str2);
 }
 
-// sort()
-// bin/wantedpages.php:86
-// inc/Ajax.php:101
-// inc/fulltext.php:183 --> 184
-// inc/fulltext.php:214 --> 215
-// lib/plugins/acl/admin.php:592
-// lib/plugins/acl/admin.php:611
-// lib/plugins/authpdo/auth.php:602
 /**
  * Drop-in replacement for sort().
  * It uses a collator-based sort, or sort() with flags SORT_NATURAL and SORT_FLAG_CASE as a fallback.
@@ -92,14 +76,6 @@ function intl_sort(&$array) {
         return sort($array, SORT_NATURAL | SORT_FLAG_CASE);
 }
 
-// ksort()
-// bin/wantedpages.php:80
-// inc/Remote/ApiCore.php + 313 (added)
-// inc/Ui/Search.php:387
-// lib/plugins/acl/admin.php:612 + 613 (added)
-// lib/plugins/authad/auth.php:735
-// lib/plugins/authpdo/auth.php:635
-// lib/plugins/authplain/auth.php:301 + 338 (added)
 /**
  * Drop-in replacement for ksort().
  * It uses a collator-based sort, or ksort() with flags SORT_NATURAL and SORT_FLAG_CASE as a fallback.
@@ -117,11 +93,6 @@ function intl_ksort(&$array) {
         return ksort($array, SORT_NATURAL | SORT_FLAG_CASE);
 }
 
-// lib/plugins/authad/adLDAP/classes/adLDAPContacts.php:274
-// lib/plugins/authad/adLDAP/classes/adLDAPGroups.php:527
-// lib/plugins/authad/adLDAP/classes/adLDAPUsers.php:571
-// lib/plugins/authad/adLDAP/classes/adLDAPUsers.php:634
-// lib/plugins/authldap/auth.php:416
 /**
  * Drop-in replacement for asort(), natsort() and natcasesort().
  * It uses a collator-based sort, or asort() with flags SORT_NATURAL and SORT_FLAG_CASE as a fallback.
@@ -139,9 +110,6 @@ function intl_asort(&$array) {
         return asort($array, SORT_NATURAL | SORT_FLAG_CASE);
 }
 
-// natsort()
-// inc/search.php:52
-// inc/search.php:54
 /**
  * Drop-in replacement for asort(), natsort() and natcasesort() when the parameter is an array of filenames.
  * Filenames may not be equal to page names, depending on the setting in $conf['fnencode'],
