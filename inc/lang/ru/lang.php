@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Анатолий <anatol_m@mail.ru>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Анатолий <anatol_m@mail.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Alexander Kh. <001.arx@gmail.com>
  * @author Vyacheslav Strenadko <vyacheslav.strenadko@gmail.com>
@@ -331,7 +331,7 @@ $lang['i_modified']            = 'Из соображений безопасно
                                   <a href="http://www.dokuwiki.org/install">инструкции по установке «Докувики»</a>';
 $lang['i_funcna']              = 'Функция PHP <code>%s</code> недоступна. Может быть, она по какой-то причине заблокирована вашим хостером?';
 $lang['i_disabled']            = 'Отключено вашим провайдером.';
-$lang['i_funcnmail']           = '<b> Примечание. </ b> Функция PHP mail недоступна. % s Если она по-прежнему недоступна, вы можете установить <a href="http://dokuwiki.org/plugins/smtp"> плагин smtp </a>.';
+$lang['i_funcnmail']           = '<b>Примечание:</ b> PHP-функция mail недоступна. %s Если она по прежнему недоступна, вы можете установить <a href="https://www.dokuwiki.org/plugin:smtp">плагин SMTP</a>.';
 $lang['i_phpver']              = 'Ваша версия PHP (<code>%s</code>) ниже требуемой (<code>%s</code>). Вам необходимо обновить установленную версию PHP.';
 $lang['i_mbfuncoverload']      = 'Для запуска «Докувики» необходимо отключить параметр mbstring.func_overload в php.ini';
 $lang['i_urandom']             = 'DokuWiki не может создавать криптографически безопасные номера для файлов cookie. Возможно, вы захотите проверить настройки open_basedir в php.ini для правильного доступа <code> / dev / urandom </ code>.';
