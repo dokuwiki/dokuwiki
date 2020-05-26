@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Petr Kajzar <petr.kajzar@lf1.cuni.cz>
  * @author Robert Surý <rsurycz@seznam.cz>
  * @author Martin Hořínek <hev@hev.cz>
@@ -84,7 +85,7 @@ $lang['badpassconfirm']        = 'Bohužel špatné heslo';
 $lang['minoredit']             = 'Drobné změny';
 $lang['draftdate']             = 'Koncept automaticky uložen v';
 $lang['nosecedit']             = 'Stránka byla v mezičase změněna. Informace o sekci již nebylo platné, byla načtena celá stránka.';
-$lang['searchcreatepage']      = 'Pokud jste nenašli to, co jste hledali, můžete vytvořit nebo upravit stránku% s, pojmenovanou podle vašeho dotazu.';
+$lang['searchcreatepage']      = 'Pokud jste nenašli to, co jste hledali, můžete vytvořit nebo upravit stránku %s, pojmenovanou podle vašeho dotazu.';
 $lang['search_fullresults']    = 'Fulltextové výsledky';
 $lang['js']['search_toggle_tools'] = 'Zobrazit/skrýt vyhledávací nástroje';
 $lang['js']['willexpire']      = 'Váš zámek pro editaci za chvíli vyprší.\nAbyste předešli konfliktům, stiskněte tlačítko Náhled a zámek se prodlouží.';
