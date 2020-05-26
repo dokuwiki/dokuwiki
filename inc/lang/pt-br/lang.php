@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Davi Jorge <davimoises2015@hotmail.com>
  * @author Schopf <pschopf@gmail.com>
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
@@ -318,7 +319,7 @@ $lang['i_modified']            = 'Por questões de segurança, esse script funci
 Você pode extrair novamente os arquivos do pacote original ou consultar as <a href="http://dokuwiki.org/install">instruções de instalação do DokuWiki</a>.';
 $lang['i_funcna']              = 'A função PHP <code>%s</code> não está disponível. O seu host a mantém desabilitada por algum motivo?';
 $lang['i_disabled']            = 'Foi desativado pelo seu provedor.';
-$lang['i_funcnmail']           = '<b> Nota: </b> A função de correio PHP não está disponível. % s Se permanecer indisponível, você pode instalar o <a href="http://dokuwiki.org/plugins/smtp"> plugin smtp </a>.';
+$lang['i_funcnmail']           = '<b>Nota:</b> A função de correio PHP não está disponível. %s Se permanecer indisponível, você pode instalar o <a href="https://www.dokuwiki.org/plugin:smtp">plugin SMTP</a>.';
 $lang['i_phpver']              = 'A sua versão do PHP (<code>%s</code>) é inferior à necessária (<code>%s</code>). Você precisa atualizar a sua instalação do PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload precisa ser desabilitado no php.ini para executar o DokuWiki';
 $lang['i_urandom']             = 'O DokuWiki não pode criar números criptograficamente seguros para cookies. Você pode verificar as configurações do open_basedir no php.ini para obter o acesso <code> / dev / urandom </code> adequado.';
