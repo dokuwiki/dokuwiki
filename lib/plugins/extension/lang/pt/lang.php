@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Schopf <pschopf@gmail.com>
+ * @author Paulo Schopf <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
  * @author Maykon Oliveira <maykonoliveira850@gmail.com>
  * @author José Vieira <jmsv63@gmail.com>
@@ -105,6 +105,7 @@ $lang['msg_plugin_update_success'] = 'Plugin %s atualizado com sucesso
 ';
 $lang['msg_upload_failed']     = 'Enviando o arquivo falhou
 ';
+$lang['msg_nooverwrite']       = 'A extensão %s já existe e não será substituída. Para substituir, marque a opção de substituição';
 $lang['missing_dependency']    = '<strong>dependência ausente ou desabilitada:</strong> %s
 ';
 $lang['security_issue']        = '<strong> Questão de segurança:</strong> %s
