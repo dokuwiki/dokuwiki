@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Schopf <pschopf@gmail.com>
+ * @author Paulo Schopf <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
  * @author Maykon Oliveira <maykonoliveira850@gmail.com>
  * @author José Vieira <jmsv63@gmail.com>
@@ -132,6 +132,7 @@ $lang['rss_linkto']            = 'Links de feed XML ara';
 $lang['rss_content']           = 'O que deve ser exibido nos itens do alimentador XML?';
 $lang['rss_update']            = 'Intervalo de actualização do alimentador XML (seg)';
 $lang['rss_show_summary']      = 'Resumo de exibição do alimentador XML no título';
+$lang['rss_show_deleted']      = 'O feed XML mostra feeds excluídos';
 $lang['rss_media']             = 'Que tipo de alterações devem ser listadas no feed XML?';
 $lang['rss_media_o_both']      = 'ambos';
 $lang['rss_media_o_pages']     = 'páginas';
@@ -160,6 +161,8 @@ $lang['search_fragment_o_starts_with'] = 'começa com';
 $lang['search_fragment_o_ends_with'] = 'termina com';
 $lang['search_fragment_o_contains'] = 'contém';
 $lang['trustedproxy']          = 'Confie nos proxies de encaminhamento que correspondem a essa expressão regular sobre o verdadeiro IP do cliente que eles relatam. O padrão corresponde às redes locais. Deixe em branco para não confiar em proxy.';
+$lang['_feature_flags']        = 'Sinalizadores de recursos';
+$lang['defer_js']              = 'Adie a execução do javascript para depois da análise do HTML da página. Isso Melhora a velocidade da página, mas pode interromper um pequeno número de plugins.';
 $lang['dnslookups']            = 'O DokuWiki irá procurar nomes de host para endereços IP remotos de usuários editando páginas. Se você tiver um servidor DNS lento, inoperante ou não quiser esse recurso, desabilite essa opção';
 $lang['jquerycdn']             = 'Os arquivos de script jQuery e jQuery UI devem ser carregados de um CDN? Isso gera solicitações HTTP adicionais mas os arquivos são carregados mais rapidamente e os usuários já podem tê-los armazenados em cache.';
 $lang['jquerycdn_o_0']         = 'Sem CDN, somente entrega local';
