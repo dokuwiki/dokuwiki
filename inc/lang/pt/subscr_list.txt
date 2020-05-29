@@ -1,6 +1,6 @@
 Olá!
 
-Páginas no espaço de nome  @PAGE@ da wiki @TITLE@ mudaram.
+Páginas no namespace  @PAGE@ do wiki @TITLE@ mudaram.
 Eis as páginas alteradas:
 
 --------------------------------------------------------
@@ -10,4 +10,4 @@ Eis as páginas alteradas:
 Para cancelar as notificações de páginas, inicie sessão na wiki em
 @DOKUWIKIURL@, visite
 @SUBSCRIBE@
-e des-subscreva às alterações da página e/ou espaço de nome.
+e des-subscreva às alterações da página e/ou namespace.

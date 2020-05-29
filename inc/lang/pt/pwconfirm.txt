@@ -1,9 +1,9 @@
 Olá @FULLNAME@!
 
-Alguém efectuou um pedido para uma nova senha para o seu perfil @TITLE@ em @DOKUWIKIURL@
+Alguém solicitou uma nova senha para o seu perfil @TITLE@ em @DOKUWIKIURL@
 
-Se não foi você que efectuou o pedido então por favor ignore esta mensagem.
+Se não foi você que solicitou então ignore esta mensagem.
 
-Senão, para confirmar o pedido, por favor siga este link:
+Senão, para confirmar o pedido, siga este link:
 
 @CONFIRM@

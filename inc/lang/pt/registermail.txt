@@ -1,10 +1,10 @@
-Inscrição de um novo utilizador. Aqui estão os detalhes:
+Um novo usuário foi registrado. Aqui estão os detalhes:
 
-Username : @NEWUSER@
+Usuário : @NEWUSER@
 Nome Completo : @NEWNAME@
 E-mail : @NEWEMAIL@
 
 Data : @DATE@
-Browser : @BROWSER@
+Navegador : @BROWSER@
 Endereço IP : @IPADDRESS@
 Hostname : @HOSTNAME@
