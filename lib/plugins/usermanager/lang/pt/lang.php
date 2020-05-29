@@ -18,7 +18,7 @@
  * @author Alfredo Silva <alfredo.silva@sky.com>
  * @author Guilherme Sá <guilherme.sa@hotmail.com>
  */
-$lang['menu']                  = 'Gestor de Perfis';
+$lang['menu']                  = 'Gerenciamento de Perfis';
 $lang['noauth']                = '(autenticação indisponível)';
 $lang['nosupport']             = '(gestão de utilizadores não suportada)';
 $lang['badauth']               = 'Mecanismo de autenticação inválido';

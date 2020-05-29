@@ -3,13 +3,14 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Paulo Schopf <pschopf@gmail.com>
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
  * @author André Neves <drakferion@gmail.com>
  * @author José Campos <zecarlosdecampos@gmail.com>
  */
-$lang['menu']                  = 'Gestor de Reversões';
+$lang['menu']                  = 'Gerenciamento de Reversões';
 $lang['filter']                = 'Pesquisar por páginas "spammy"';
 $lang['revert']                = 'Reverter páginas seleccionadas';
 $lang['reverted']              = '%s revertida para revisão %s';
