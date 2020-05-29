@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Paulo Ricardo Schopf <pschopf@gmail.com>
+ * @author Paulo Schopf <pschopf@gmail.com>
  * @author Alfredo Silva <alfredo.silva@sky.com>
  * @author Guilherme Sá <guilherme.sa@hotmail.com>
  */
@@ -12,7 +12,7 @@ $lang['js']['loader']          = 'A pré-visualização está carregando...<br /
 $lang['js']['popup']           = 'Abrir como uma janela extra';
 $lang['error']                 = 'Desculpe, este modelo não suporta esta funcionalidade.';
 $lang['btn_preview']           = 'Pré-visualizar alterações';
-$lang['btn_save']              = 'Guardar alterações';
+$lang['btn_save']              = 'Salvar alterações';
 $lang['btn_reset']             = 'Reiniciar alterações atuais';
 $lang['btn_revert']            = 'Reverter estilos de volta ao padrão do modelo';
 $lang['__text__']              = 'Cor do texto principal';
