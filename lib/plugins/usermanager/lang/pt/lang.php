@@ -20,7 +20,7 @@
  */
 $lang['menu']                  = 'Gestor de Perfis';
 $lang['noauth']                = '(autenticação indisponível)';
-$lang['nosupport']             = '(gestão de utilizadores não suportada)';
+$lang['nosupport']             = '(gerenciamento de usuários não suportado)';
 $lang['badauth']               = 'Mecanismo de autenticação inválido';
 $lang['user_id']               = 'Utilizador';
 $lang['user_pass']             = 'Senha';
