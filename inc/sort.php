@@ -7,7 +7,8 @@
  *
  * The collator is created using the locale given in $conf['lang'].
  * It always uses case insensitive "natural" ordering in its collation.
- * The fallback solution uses the primitive PHP functions that return almost the same results.
+ * The fallback solution uses the primitive PHP functions that return almost the same results
+ * when the input is text with only [A-Za-z0-9] characters.
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Moisés Braga Ribeiro <moisesbr@gmail.com>
