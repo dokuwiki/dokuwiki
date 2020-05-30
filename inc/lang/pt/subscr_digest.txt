@@ -1,6 +1,6 @@
 Olá!
 
-A página @PAGE@ na wiki @TITLE@ mudou.
+A página @PAGE@ do wiki @TITLE@ mudou.
 Eis as mudanças:
 
 --------------------------------------------------------
