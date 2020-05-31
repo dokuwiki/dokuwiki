@@ -20,7 +20,7 @@
  */
 $lang['menu']                  = 'Gerenciador de Perfis';
 $lang['noauth']                = '(autenticação de usuário indisponível)';
-$lang['nosupport']             = '(gerenciamento de usuário não suportado)';
+$lang['nosupport']             = '(gerenciamento de usuários não suportado)';
 $lang['badauth']               = 'Mecanismo de autenticação inválido';
 $lang['user_id']               = 'Usuário';
 $lang['user_pass']             = 'Senha';
@@ -42,8 +42,7 @@ $lang['filter']                = 'Filtro';
 $lang['export_all']            = 'Exportar Todos os Usuários (CSV)';
 $lang['export_filtered']       = 'Exportar a Lista de Usuários Filtrada (CSV)';
 $lang['import']                = 'Importar Novos Usuários';
-$lang['line']                  = 'Linha nº
-';
+$lang['line']                  = 'Linha nº';
 $lang['error']                 = 'Mensagem de erro';
 $lang['summary']               = 'Mostrando usuários %1$d-%2$d de %3$d encontrados. Total de %4$d inscritos.';
 $lang['nonefound']             = 'Nenhum usuário encontrado. Total de %d inscritos.';
