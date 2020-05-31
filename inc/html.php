@@ -1878,6 +1878,11 @@ function html_edit(){
     } else {
         html_edit_form($data);
     }
+
+    if ($wr && empty($_SERVER['REMOTE_USER'])) {
+        msg(p_locale_xhtml('anon-edit-warning'), 3);
+    }
+
     if (isset($data['intro_locale'])) {
         echo p_locale_xhtml($data['intro_locale']);
     }

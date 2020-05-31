@@ -341,6 +341,7 @@ function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
     $errors[0]  = 'info';
     $errors[1]  = 'success';
     $errors[2]  = 'notify';
+    $errors[3]  = 'security';
 
     if($line || $file) $message.=' ['.\dokuwiki\Utf8\PhpString::basename($file).':'.$line.']';
 
