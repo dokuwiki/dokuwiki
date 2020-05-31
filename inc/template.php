@@ -1678,13 +1678,14 @@ function tpl_flush() {
  * file, otherwise it is assumed to be relative to the current template
  *
  * @param  string[] $search       locations to look at
- * @param  bool     $abs           if to use absolute URL
- * @param  array   &$imginfo   filled with getimagesize()
+ * @param  bool     $abs          if to use absolute URL
+ * @param  array    &$imginfo     filled with getimagesize()
+ * @param  bool     $fallback     use fallback image if target isn't found or return 'false' if potential false result is required
  * @return string
  *
  * @author Andreas  Gohr <andi@splitbrain.org>
  */
-function tpl_getMediaFile($search, $abs = false, &$imginfo = null) {
+function tpl_getMediaFile($search, $abs = false, &$imginfo = null, $fallback = true) {
     $img     = '';
     $file    = '';
     $ismedia = false;
@@ -1700,6 +1701,17 @@ function tpl_getMediaFile($search, $abs = false, &$imginfo = null) {
 
         if(file_exists($file)) break;
     }
+
+	// manage non existing target
+	if(!file_exists($file)) {
+		// give result for fallback image
+		if ($fallback === true) {
+			$file = DOKU_INC.'lib/images/blank.gif';
+		// stop process if false result is required (if $fallback is false)
+		} else {
+			return false;
+		}
+	}
 
     // fetch image data if requested
     if(!is_null($imginfo)) {
