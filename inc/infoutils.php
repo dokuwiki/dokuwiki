@@ -139,13 +139,13 @@ function check(){
         if ($mem === -1) {
             msg('PHP memory is unlimited', 1);
         } else if ($mem < 16777216) {
-            msg('PHP is limited to less than 16MB RAM (' . filesize_h($mem) . '). 
+            msg('PHP is limited to less than 16MB RAM (' . filesize_h($mem) . ').
             Increase memory_limit in php.ini', -1);
         } else if ($mem < 20971520) {
-            msg('PHP is limited to less than 20MB RAM (' . filesize_h($mem) . '), 
+            msg('PHP is limited to less than 20MB RAM (' . filesize_h($mem) . '),
                 you might encounter problems with bigger pages. Increase memory_limit in php.ini', -1);
         } else if ($mem < 33554432) {
-            msg('PHP is limited to less than 32MB RAM (' . filesize_h($mem) . '), 
+            msg('PHP is limited to less than 32MB RAM (' . filesize_h($mem) . '),
                 but that should be enough in most cases. If not, increase memory_limit in php.ini', 0);
         } else {
             msg('More than 32MB RAM (' . filesize_h($mem) . ') available.', 1);
@@ -328,6 +328,8 @@ define('MSG_ADMINS_ONLY',4);
 /**
  * Display a message to the user
  *
+ * Triggers INFOUTIL_MSG_SHOW
+ *
  * @param string $message
  * @param int    $lvl   -1 = error, 0 = info, 1 = success, 2 = notify
  * @param string $line  line number
@@ -336,24 +338,37 @@ define('MSG_ADMINS_ONLY',4);
  */
 function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
     global $MSG, $MSG_shown;
-    $errors = array();
-    $errors[-1] = 'error';
-    $errors[0]  = 'info';
-    $errors[1]  = 'success';
-    $errors[2]  = 'notify';
+    static $errors = array(-1=>'error', 0=>'info', 1=>'success', 2=>'notify');
 
-    if($line || $file) $message.=' ['.\dokuwiki\Utf8\PhpString::basename($file).':'.$line.']';
+    $msgdata = array(
+        'msg' => $message,
+        'lvl' => $lvl,
+        'allow' => $allow,
+        'line' => $line,
+        'file' => $file,
+    );
 
-    if(!isset($MSG)) $MSG = array();
-    $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message, 'allow' => $allow);
-    if(isset($MSG_shown) || headers_sent()){
-        if(function_exists('html_msgarea')){
-            html_msgarea();
-        }else{
-            print "ERROR($lvl) $message";
+    $evt = new \dokuwiki\Extension\Event('INFOUTIL_MSG_SHOW', $msgdata);
+    if ($evt->advise_before()) {
+        /* Show msg normally - event could suppress message show */
+        if($msgdata['line'] || $msgdata['file']) {
+            $basename = \dokuwiki\Utf8\PhpString::basename($msgdata['file']);
+            $msgdata['msg'] .=' ['.$basename.':'.$msgdata['line'].']';
         }
-        unset($GLOBALS['MSG']);
+
+        if(!isset($MSG)) $MSG = array();
+        $MSG[] = $msgdata;
+        if(isset($MSG_shown) || headers_sent()){
+            if(function_exists('html_msgarea')){
+                html_msgarea();
+            }else{
+                print "ERROR(".$msgdata['lvl'].") ".$msgdata['msg']."\n";
+            }
+            unset($GLOBALS['MSG']);
+        }
     }
+    $evt->advise_after();
+    unset($evt);
 }
 /**
  * Determine whether the current user is allowed to view the message
