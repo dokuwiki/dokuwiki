@@ -1,12 +1,9 @@
-Bonjour @FULLNAME@ !
+Chào @FULLNAME@!
 
-Quelqu'un a demandé un nouveau mot de passe pour votre identifiant
-@TITLE@ depuis @DOKUWIKIURL@
+Ai đó đã yêu cầu mật khẩu mới cho bạn đăng nhập @TITLE@ tại @DOKUWIKIURL@
 
-Si vous n'êtes pas à l'origine de cette requête d'un nouveau mot de
-passe, ignorez simplement ce message.
+Nếu bạn không yêu cầu mật khẩu mới thì hãy bỏ qua thư điện tử này.
 
-Pour confirmer que cette requête émane bien de vous, veuillez suivre
-le lien ci-dessous.
+Để xác nhận rằng yêu cầu đã thực sự được gửi bởi bạn, vui lòng truy cập liên kết sau.
 
 @CONFIRM@

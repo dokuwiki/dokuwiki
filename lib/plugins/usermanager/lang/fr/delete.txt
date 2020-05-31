@@ -1,1 +1,1 @@
-===== Supprimer un utilisateur =====
+===== Xóa thành viên =====

@@ -1,3 +1,3 @@
-====== Connexion ======
+====== Đăng nhập ======
 
-Vous n'êtes pas connecté ! Entrez vos identifiants ci-dessous pour vous connecter. Votre navigateur doit accepter les cookies pour pouvoir vous connecter.
+Bạn hiện chưa đăng nhập! Nhập thông tin xác thực của bạn vào bên dưới để đăng nhập. Bạn cần kích hoạt cookies để đăng nhập.

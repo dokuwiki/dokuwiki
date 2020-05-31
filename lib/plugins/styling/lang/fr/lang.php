@@ -3,23 +3,24 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Thien Hau <thienhau.9a14@gmail.com>
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  */
-$lang['menu']                  = 'Paramètres de style du thème (template)';
-$lang['js']['loader']          = 'La prévisualisation est en chargement... <br />Si rien ne se passe, les données sont peut-être erronées';
-$lang['js']['popup']           = 'Ouvrir dans une nouvelle fenêtre';
-$lang['error']                 = 'Désolé, ce thème n\'utilise pas cette fonctionnalité.';
-$lang['btn_preview']           = 'Aperçu des changements';
-$lang['btn_save']              = 'sauvegarder les changements.';
-$lang['btn_reset']             = 'Remettre les changements courants à zéro';
-$lang['btn_revert']            = 'Remettre les styles du thème aux valeurs par défaut';
-$lang['__text__']              = 'Couleur de texte principale';
-$lang['__background__']        = 'Couleur de fond principale';
-$lang['__text_alt__']          = 'Couleur de texte alternative';
-$lang['__background_alt__']    = 'Couleur de fond alternative';
-$lang['__text_neu__']          = 'Couleur de texte neutre';
-$lang['__background_neu__']    = 'Couleur de fond neutre';
-$lang['__border__']            = 'Couleur des contours';
-$lang['__highlight__']         = 'Couleur de surbrillance (utilisée pincipalement pour les résultats de recherche)';
+$lang['menu']                  = 'Cài đặt kiểu dáng chủ đề';
+$lang['js']['loader']          = 'Đang tải xem trước...<br />nếu nó không biến mất, giá trị của bạn có thể bị lỗi';
+$lang['js']['popup']           = 'Mở dưới dạng cửa sổ bật lên';
+$lang['error']                 = 'Xin lỗi, chủ đề này không hỗ trợ chức năng này.';
+$lang['btn_preview']           = 'Xem trước thay đổi';
+$lang['btn_save']              = 'Lưu thay đổi';
+$lang['btn_reset']             = 'Đặt lại các thay đổi hiện tại';
+$lang['btn_revert']            = 'Lùi sửa các kiểu dáng về mặc định của chủ đề';
+$lang['__text__']              = 'Màu văn bản chính';
+$lang['__background__']        = 'Màu nền chính';
+$lang['__text_alt__']          = 'Màu văn bản thay thế';
+$lang['__background_alt__']    = 'Màu nền thay thế';
+$lang['__text_neu__']          = 'Màu văn bản trung tính';
+$lang['__background_neu__']    = 'Màu nền trung tính';
+$lang['__border__']            = 'Màu viền';
+$lang['__highlight__']         = 'Màu phần tô lên (chủ yếu cho kết quả tìm kiếm)';

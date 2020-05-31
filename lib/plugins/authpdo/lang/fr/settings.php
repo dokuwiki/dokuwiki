@@ -3,23 +3,24 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Thien Hau <thienhau.9a14@gmail.com>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  */
-$lang['debug']                 = 'Afficher des messages d\'erreur détaillés. Devrait être désactivé passé la configuration.';
-$lang['dsn']                   = 'Le DSN de connexion à la base de données.';
-$lang['user']                  = 'L\'utilisateur pour la connexion à la base de donnée ci-dessus (vide pour sqlite)';
-$lang['pass']                  = 'Le mot de passe pour la connexion à la base de donnée ci-dessus (vide pour sqlite)';
-$lang['select-user']           = 'Instruction SQL pour sélectionner les données d\'un seul utilisateur';
-$lang['select-user-groups']    = 'Instruction SQL pour sélectionner tous les groupes d\'un utilisateur donné';
-$lang['select-groups']         = 'Instruction SQL pour sélectionner tous les groupes disponibles';
-$lang['insert-user']           = 'Instruction SQL pour insérer un nouvel utilisateur dans la base de données';
-$lang['delete-user']           = 'Instruction SQL pour retirer un utilisateur de la base de données';
-$lang['list-users']            = 'Instruction SQL pour lister les utilisateurs correspondant à un filtre';
-$lang['count-users']           = 'Instruction SQL pour compter les utilisateurs correspondant à un filtre';
-$lang['update-user-info']      = 'Instruction SQL pour mettre à jour le nom complet et l\'adresse de courriel d\'un utilisateur donné';
-$lang['update-user-login']     = 'Instruction SQL pour mettre à jour l\'identifiant d\'un utilisateur donné';
-$lang['update-user-pass']      = 'Instruction SQL pour mettre à jour le mot de passe d\'un utilisateur donné';
-$lang['insert-group']          = 'Instruction SQL pour mettre insérer un nouveau groupe dans la base de données';
-$lang['join-group']            = 'Instruction SQL pour ajouter un utilisateur à un groupe existant';
-$lang['leave-group']           = 'Instruction SQL pour retirer un utilisateur d\'un groupe';
-$lang['check-pass']            = 'Instruction SQL pour vérifier le mot de passe d\'un utilisateur. Peut être laissé vide si l\'information de mot de passe est obtenue lors de la sélection d\'un utilisateur.';
+$lang['debug']                 = 'In ra các thông báo lỗi chi tiết. Nên bị vô hiệu hóa sau khi thiết lập.';
+$lang['dsn']                   = 'DSN để kết nối với cơ sở dữ liệu.';
+$lang['user']                  = 'Thành viên cho kết nối cơ sở dữ liệu trên (trống cho sqlite)';
+$lang['pass']                  = 'Mật khẩu cho kết nối cơ sở dữ liệu trên (trống cho sqlite)';
+$lang['select-user']           = 'Câu lệnh SQL để chọn dữ liệu của một thành viên';
+$lang['select-user-groups']    = 'Câu lệnh SQL để chọn tất cả các nhóm của một thành viên';
+$lang['select-groups']         = 'Câu lệnh SQL để chọn tất cả các nhóm có sẵn';
+$lang['insert-user']           = 'Câu lệnh SQL để chèn thành viên mới vào cơ sở dữ liệu';
+$lang['delete-user']           = 'Câu lệnh SQL để xóa một thành viên khỏi cơ sở dữ liệu';
+$lang['list-users']            = 'Câu lệnh SQL để liệt kê thành viên khớp với bộ lọc';
+$lang['count-users']           = 'Câu lệnh SQL để đếm thành viên khớp với bộ lọc';
+$lang['update-user-info']      = 'Câu lệnh SQL để cập nhật tên đầy đủ và địa chỉ thư điện tử của một thành viên';
+$lang['update-user-login']     = 'Câu lệnh SQL để cập nhật tên đăng nhập của một thành viên';
+$lang['update-user-pass']      = 'Câu lệnh SQL để cập nhật mật khẩu của một thành viên';
+$lang['insert-group']          = 'Câu lệnh SQL để chèn một nhóm mới vào cơ sở dữ liệu';
+$lang['join-group']            = 'Câu lệnh SQL để thêm thành viên vào một nhóm hiện có';
+$lang['leave-group']           = 'Câu lệnh SQL để xóa thành viên khỏi một nhóm';
+$lang['check-pass']            = 'Câu lệnh SQL để kiểm tra mật khẩu của thành viên. Có thể để trống nếu thông tin mật khẩu được tìm nạp trong chọn thành viên.';

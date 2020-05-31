@@ -1,10 +1,11 @@
-Un fichier a été envoyé dans votre wiki. Voici les détails :
+Một tập tin đã được tải lên DokuWiki của bạn. Đây là những thông tin chi tiết:
 
-Fichier     : @MEDIA@
-Date        : @DATE@
-Navigateur  : @BROWSER@
-Adresse IP  : @IPADDRESS@
-Nom d'hôte  : @HOSTNAME@
-Taille      : @SIZE@
-Type MIME   : @MIME@
-Utilisateur : @USER@
+Tập tin        : @MEDIA@
+Phiên bản cũ: @OLD@
+Ngày        : @DATE@
+Trình duyệt     : @BROWSER@
+Địa chỉ IP  : @IPADDRESS@
+Tên máy chủ    : @HOSTNAME@
+Kích thức        : @SIZE@
+Kiểu MIME   : @MIME@
+Thành viên        : @USER@

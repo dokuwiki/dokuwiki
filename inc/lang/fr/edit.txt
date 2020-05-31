@@ -1,1 +1,1 @@
-Modifiez cette page et cliquez sur « Enregistrer ». Voyez le [[:wiki:syntax|guide de mise en page]] pour une aide à propos du formatage. Veuillez ne modifier cette page que si vous pouvez l'**améliorer**. Si vous souhaitez faire des tests, faites vos premiers pas dans le [[:playground:playground|bac à sable]].
+Sửa đổi trang này và nhấn ''Lưu''. Xem [[wiki:syntax]] cho cú pháp Wiki. Vui lòng chỉ sửa đổi trang nếu bạn có thể **cải thiện** nó. Nếu bạn muốn thử một số thứ, hãy học cách thực hiện những bước đầu tiên của bạn tại [[playground:playground|chỗ thử]].

@@ -1,1 +1,4 @@
-Si vous souhaitez modifier le logo, utilisez simplement le gestionnaire de médias et envoyez un fichier nommé "logo.png" dans la catégorie "wiki" ou à la racine. Il sera automatiquement utilisé. Il en est de même pour le "favicon.ico". Si vous utilisez un wiki fermé, il est recommandé de régler les ACL de la racine ou de la catégorie "wiki" pour rendre ces images visibles aux utilisateurs non connectés.
+Nếu bạn muốn điều chỉnh logo, chỉ cần sử dụng Quản lý phương tiện để tải lên ''logo.png'' vào ''wiki'' hoặc không gian tên gốc và nó
+sẽ được tự động sử dụng. Bạn cũng có thể tải lên ''favicon.ico'' ở đó. Nếu bạn sử dụng một wiki đóng
+, nên để không gian tên ''wiki'' (hoặc gốc) có thể đọc được trong cài đặt ACL hoặc
+logo của bạn không được hiển thị đối với thành viên không đăng nhập.

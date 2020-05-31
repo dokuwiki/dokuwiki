@@ -3,8 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Thien Hau <thienhau.9a14@gmail.com>
  * @author Pietroni <pietroni@informatique.univ-paris-diderot.fr>
  */
-$lang['connectfail']           = 'Impossible de se connecter à la base de données.';
-$lang['userexists']            = 'Désolé, un utilisateur avec cet identifiant existe déjà.';
-$lang['writefail']             = 'Impossible de modifier les données utilisateur. Veuillez en informer l\'administrateur du Wiki.';
+$lang['connectfail']           = 'Không thể kết nối với cơ sở dữ liệu.';
+$lang['userexists']            = 'Xin lỗi, thành viên có thông tin đăng nhập này đã tồn tại.';
+$lang['writefail']             = 'Không thể sửa đổi dữ liệu thành viên. Vui lòng thông báo cho Quản trị viên Wiki';

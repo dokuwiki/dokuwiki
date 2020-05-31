@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Thien Hau <thienhau.9a14@gmail.com>
  * @author Sébastien Bauer <sebastien.bauer@advalvas.be>
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
@@ -24,31 +25,31 @@
  * @author Anael Mobilia <contrib@anael.eu>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  */
-$lang['admin_acl']             = 'Gestion de la liste des contrôles d\'accès (ACL)';
-$lang['acl_group']             = 'Groupe:';
-$lang['acl_user']              = 'Utilisateur:';
-$lang['acl_perms']             = 'Autorisations pour';
-$lang['page']                  = 'Page';
-$lang['namespace']             = 'Catégorie';
-$lang['btn_select']            = 'Sélectionner';
-$lang['p_user_id']             = 'Autorisations actuelles de l\'utilisateur <strong class="acluser">%s</strong> sur la page <strong class="aclpage">%s</strong> : <em>%s</em>.';
-$lang['p_user_ns']             = 'Autorisations actuelles de l\'utilisateur <strong class="acluser">%s</strong> sur la catégorie <strong class="aclns">%s</strong> : <em>%s</em>.';
-$lang['p_group_id']            = 'Autorisations actuelles des membres du groupe <strong class="aclgroup">%s</strong> sur la page <strong class="aclpage">%s</strong> : <em>%s</em>.';
-$lang['p_group_ns']            = 'Autorisations actuelles des membres du groupe <strong class="aclgroup">%s</strong> sur la catégorie <strong class="aclns">%s</strong> : <em>%s</em>.';
-$lang['p_choose_id']           = 'Saisissez un <strong>nom d\'utilisateur ou de groupe</strong> dans le formulaire ci-dessous pour afficher ou éditer les autorisations relatives à la page <strong class="aclpage">%s</strong>.';
-$lang['p_choose_ns']           = 'Saisissez un <strong>nom d\'utilisateur ou de groupe</strong> dans le formulaire ci-dessous pour afficher ou éditer les autorisations relatives à la catégorie <strong class="aclns">%s</strong>.';
-$lang['p_inherited']           = 'Note : ces autorisations n\'ont pas été explicitement définies mais sont héritées de groupes ou catégories supérieurs.';
-$lang['p_isadmin']             = 'Note : le groupe ou l\'utilisateur sélectionné dispose toujours de toutes les autorisations car il est paramétré en tant que super-utilisateur.';
-$lang['p_include']             = 'Les autorisations les plus élevées incluent les plus faibles. Création, Envoyer et Effacer ne s\'appliquent qu\'aux catégories, pas aux pages.';
-$lang['current']               = 'Contrôles d\'accès actuels';
-$lang['where']                 = 'Page/Catégorie';
-$lang['who']                   = 'Utilisateur/Groupe';
-$lang['perm']                  = 'Autorisations';
-$lang['acl_perm0']             = 'Aucune';
-$lang['acl_perm1']             = 'Lecture';
-$lang['acl_perm2']             = 'Écriture';
-$lang['acl_perm4']             = 'Création';
-$lang['acl_perm8']             = 'Envoyer';
-$lang['acl_perm16']            = 'Effacer';
-$lang['acl_new']               = 'Ajouter une nouvelle entrée';
-$lang['acl_mod']               = 'Modifier l\'entrée';
+$lang['admin_acl']             = 'Quản lý danh sách quyền truy cập';
+$lang['acl_group']             = 'Nhóm:';
+$lang['acl_user']              = 'Thành viên:';
+$lang['acl_perms']             = 'Cấp quyền cho';
+$lang['page']                  = 'Trang';
+$lang['namespace']             = 'Không gian tên';
+$lang['btn_select']            = 'Chọn';
+$lang['p_user_id']             = 'Thành viên <b class="acluser">%s</b> hiện có các quyền sau trên trang <b class="aclpage">%s</b>: <i>%s</i>.';
+$lang['p_user_ns']             = 'Thành viên <b class="acluser">%s</b> hiện có các quyền sau trong không gian tên <b class="aclns">%s</b>: <i>%s</i>.';
+$lang['p_group_id']            = 'Thành viên trong nhóm <b class="aclgroup">%s</b> hiện có các quyền sau trên trang <b class="aclpage">%s</b>: <i>%s</i>.';
+$lang['p_group_ns']            = 'Thành viên trong nhóm  <b class="aclgroup">%s</b> hiện có các quyền sau trong không gian tên <b class="aclns">%s</b>: <i>%s</i>.';
+$lang['p_choose_id']           = 'Hãy <b>nhập tên thành viên hoặc nhóm</b> vào ô trên đây để xem hoặc sửa đổi quyền đã thiết đặt cho trang <b class="aclpage">%s</b>.';
+$lang['p_choose_ns']           = 'Hãy <b>nhập tên thành viên hoặc nhóm</b> vào ô trên đây để xem hoặc sửa đổi quyền đã thiết đặt cho không gian tên <b class="aclns">%s</b>.';
+$lang['p_inherited']           = 'Ghi chú: Những quyền đó không được đặt rõ ràng nhưng được kế thừa từ các nhóm hoặc không gian tên khác cao hơn.';
+$lang['p_isadmin']             = 'Ghi chú: Nhóm hoặc thành viên này luôn được cấp đủ quyền vì họ được đặt là Siêu thành viên.';
+$lang['p_include']             = 'Các quyền cao hơn bao gồm những quyền thấp hơn. Quyền Tạo, Tải lên và Xóa chỉ áp dụng cho không gian tên, không phải trang.';
+$lang['current']               = 'Quy tắc danh sách quyền truy cập hiện tại';
+$lang['where']                 = 'Trang/Không gian tên';
+$lang['who']                   = 'Thành viên/Nhóm';
+$lang['perm']                  = 'Quyền';
+$lang['acl_perm0']             = 'Không';
+$lang['acl_perm1']             = 'Đọc';
+$lang['acl_perm2']             = 'Sửa đổi';
+$lang['acl_perm4']             = 'Tạo';
+$lang['acl_perm8']             = 'Tải lên';
+$lang['acl_perm16']            = 'Xóa';
+$lang['acl_new']               = 'Thêm mục nhập mới';
+$lang['acl_mod']               = 'Sửa đổi mục nhập';

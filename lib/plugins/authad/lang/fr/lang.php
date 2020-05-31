@@ -3,13 +3,14 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Thien Hau <thienhau.9a14@gmail.com>
  * @author ggallon <gwenael.gallon@mac.com>
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Pietroni <pietroni@informatique.univ-paris-diderot.fr>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  */
-$lang['domain']                = 'Domaine de connexion';
-$lang['authpwdexpire']         = 'Votre mot de passe expirera dans %d jours, vous devriez le changer bientôt.';
-$lang['passchangefail']        = 'Impossible de changer le mot de passe. Il est possible que les règles de sécurité des mots de passe n\'aient pas été respectées.';
-$lang['userchangefail']        = 'Impossible de modifier les attributs de l\'utilisateur. Votre compte n\'a peut-être pas les permissions d\'effectuer des changements.';
-$lang['connectfail']           = 'Impossible de se connecter au serveur Active Directory.';
+$lang['domain']                = 'Đăng nhập tên miền';
+$lang['authpwdexpire']         = 'Mật khẩu của bạn sẽ hết hạn sau %d ngày, bạn nên thay đổi sớm.';
+$lang['passchangefail']        = 'Không thể thay đổi mật khẩu. Có lẽ chưa đáp ứng được chính sách mật khẩu?';
+$lang['userchangefail']        = 'Không thể thay đổi thuộc tính thành viên. Có lẽ tài khoản của bạn không có quyền thực hiện thay đổi?';
+$lang['connectfail']           = 'Không thể kết nối với máy chủ Active Directory.';

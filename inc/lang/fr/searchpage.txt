@@ -1,3 +1,3 @@
-====== Recherche ======
+====== Tìm kiếm ======
 
-Voici les résultats de votre recherche. @CREATEPAGEINFO@
+Sau đây là kết quả mà bạn đã tìm. @CREATEPAGEINFO@

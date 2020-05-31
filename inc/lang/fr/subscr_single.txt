@@ -1,19 +1,19 @@
-Bonjour,
+Chào!
 
-La page « @PAGE@ » dans le wiki « @TITLE@ » a changé.
-Voici les modifications :
+Trang @PAGE@ trong wiki @TITLE@ đã được thay đổi.
+Dưới đây là những thay đổi:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Date                : @DATE@
-Utilisateur         : @USER@
-Résumé              : @SUMMARY@
-Révision précédente : @OLDPAGE@
-Nouvelle révision   : @NEWPAGE@
+Thành viên                : @USER@
+Tóm lược sửa đổi        : @SUMMARY@
+Phiên bản cũ        : @OLDPAGE@
+Phiên bản mới        : @NEWPAGE@
+Ngày phiên bản mới: @DATE@
 
-Pour annuler les notifications de page, connectez-vous au wiki à l'adresse
-@DOKUWIKIURL@ puis visitez
+Để hủy thông báo trang, đăng nhập vào wiki tại
+@DOKUWIKIURL@ sau đó truy cập
 @SUBSCRIBE@
-et désabonnez-vous de la page ou de la catégorie.
+và hủy đăng ký trang và/hoặc thay đổi không gian tên.

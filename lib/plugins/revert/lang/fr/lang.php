@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Thien Hau <thienhau.9a14@gmail.com>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  * @author Guy Brand <gb@unistra.fr>
@@ -19,12 +20,13 @@
  * @author Anael Mobilia <contrib@anael.eu>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  */
-$lang['menu']                  = 'Gestionnaire des réversions';
-$lang['filter']                = 'Trouver les pages spammées ';
-$lang['revert']                = 'Annuler les modifications sélectionnées';
-$lang['reverted']              = '%s restauré à la révision %s';
-$lang['removed']               = '%s supprimé';
-$lang['revstart']              = 'Processus de réversion démarré. Ceci peut durer longtemps. Si le script dépasse le délai d\'exécution avant de finir, vous devrez restaurer de plus petits groupes de pages.';
-$lang['revstop']               = 'Processus de réversion terminé avec succès.';
-$lang['note1']                 = 'Note : cette recherche est sensible à la casse';
-$lang['note2']                 = 'Note : cette page sera restaurée à la dernière version ne contenant pas le terme « spam » <em>%s</em>.';
+$lang['menu']                  = 'Quản lý lùi sửa';
+$lang['filter']                = 'Tìm kiếm các trang spam';
+$lang['revert']                = 'Lùi sửa đổi các trang đã chọn';
+$lang['reverted']              = 'Đã lùi %s về phiên bản %s';
+$lang['removed']               = 'Đã xóa %s';
+$lang['revstart']              = 'Quá trình đảo ngược bắt đầu. Việc này có thể mất một thời gian. Nếu
+                     kịch bản hết thời gian trước khi hoàn thành, bạn cần lùi sửa nhỏ hơn, đơn lẻ.';
+$lang['revstop']               = 'Quá trình đảo ngược kết thúc thành công.';
+$lang['note1']                 = 'Lưu ý: tìm kiếm này là trường hợp nhạy cảm';
+$lang['note2']                 = 'Lưu ý: trang sẽ được lùi sửa về phiên bản cuối cùng không chứa thuật ngữ spam đã cho <i>%s</i>.';

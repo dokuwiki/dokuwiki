@@ -1,5 +1,5 @@
-====== Une version plus récente existe ======
+====== Có phiên bản mới hơn tồn tại ======
 
-Une version plus récente du document que vous avez modifié existe. Cela se produit lorsqu'un autre utilisateur enregistre une nouvelle version du document alors que vous le modifiez.
+Một phiên bản mới hơn của tài liệu bạn sửa đổi tồn tại. Điều này xảy ra khi một thành viên khác thay đổi tài liệu trong khi bạn đang sửa đổi nó.
 
-Examinez attentivement les différences ci-dessous et décidez quelle version conserver. Si vous choisissez « Enregistrer », votre version sera enregistrée. Cliquez sur « Annuler » pour conserver la version actuelle.
+Kiểm tra khác biệt được hiển thị dưới đây, sau đó hãy quyết định giữ phiên bản nào. Nếu bạn chọn ''Lưu'', phiên bản của bạn sẽ được lưu. Nhấn ''Hủy bỏ'' để giữ phiên bản hiện tại.

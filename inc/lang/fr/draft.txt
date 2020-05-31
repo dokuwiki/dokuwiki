@@ -1,5 +1,5 @@
-====== Un fichier brouillon existe ======
+====== Tìm thấy tập tin nháp ======
 
-La dernière modification de cette page ne s'est pas terminée correctement. DokuWiki a enregistré automatiquement un brouillon de votre travail que vous pouvez utiliser pour votre modification. Ci-dessous figurent les données enregistrées lors de votre dernière session.
+Phiên sửa đổi cuối cùng của bạn trên trang này không được hoàn thành chính xác. DokuWiki tự động lưu một bản nháp trong khi bạn đang sửa đổi mà bây giờ bạn có thể sử dụng để tiếp tục sửa đổi. Bạn có thể thấy dữ liệu dưới đây được lưu từ phiên trước của bạn.
 
-À vous de décider si vous souhaitez //récupérer// votre session de modification précédente, //supprimer// le brouillon enregistré automatiquement ou //annuler// le processus d'édition.
+Vui lòng quyết định nếu bạn muốn //khôi phục// phiên sửa đổi bị mất của bạn, //xóa// bản nháp được lưu tự động hoặc //hủy bỏ// quá trình sửa đổi.

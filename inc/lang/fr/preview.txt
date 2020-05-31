@@ -1,4 +1,3 @@
-====== Aperçu ======
+====== Xem trước ======
 
-Ceci est un aperçu de votre document. Attention : il n'est **pas encore enregistré** !
-
+Đây là một bản xem trước của văn bản của bạn sẽ trông như thế nào. **Hãy nhớ: Nó vẫn chưa được lưu**!

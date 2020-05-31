@@ -1,10 +1,9 @@
-====== Enquête de popularité ======
+====== Phản hồi độ phổ biến ======
 
-Cet [[doku>popularity|outil]] collecte des données anonymes concernant votre wiki et vous permet de les expédier aux développeurs de DokuWiki. Ceci leur permet de mieux comprendre comment DokuWiki est utilisé par ses utilisateurs et d'orienter les décisions sur les développements futurs en tenant compte des statistiques d'usage réel.
+[[doku>popularity|Công cụ này]] thu thập dữ liệu ẩn danh về wiki của bạn và cho phép bạn gửi lại cho nhà phát triển DokuWiki. Điều này giúp họ hiểu cách người dùng sử dụng DokuWiki và đảm bảo các quyết định phát triển trong tương lai được hỗ trợ bởi các thống kê sử dụng trong thế giới thực.
 
-Vous êtes encouragé à répéter cette opération de temps à autres afin de tenir informés les développeurs de l'évolution de votre wiki. L'ensemble de vos contributions seront recensées via un identifiant anonyme.
+Thỉnh thoảng bạn nên lặp lại bước này để thông báo cho các nhà phát triển khi wiki của bạn phát triển. Bộ dữ liệu lặp lại của bạn sẽ được xác định bởi một ID ẩn danh.
 
-Les données collectées contiennent des informations telles votre version de DokuWiki, le nombre et la taille de vos pages et fichiers, les extensions installées ainsi que des informations sur la version de PHP installée.
+Dữ liệu được thu thập chứa thông tin như phiên bản DokuWiki của bạn, số lượng, kích thước của các trang và tập tin của bạn, các plugin đã cài đặt và thông tin về cài đặt PHP của bạn.
 
-Les données brutes qui sont envoyées sont affichées ci dessous. Merci d'utiliser le bouton « Envoyer les données » pour expédier l'information.
-
+Dữ liệu thô sẽ được gửi được hiển thị dưới đây. Vui lòng sử dụng nút "Gửi dữ liệu" để chuyển thông tin.

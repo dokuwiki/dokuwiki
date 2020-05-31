@@ -1,10 +1,10 @@
-Un nouvel utilisateur s'est enregistré. Voici les détails :
+Một người dùng mới đã đăng ký. Đây là những thông tin chi tiết:
 
-Utilisateur : @NEWUSER@
-Nom         : @NEWNAME@
-Courriel    : @NEWEMAIL@
+Tên thành viên   : @NEWUSER@
+Tên đầy đủ   : @NEWNAME@
+Thư điện tử      : @NEWEMAIL@
 
-Date        : @DATE@
-Navigateur  : @BROWSER@
-Adresse IP  : @IPADDRESS@
-Nom d'hôte  : @HOSTNAME@
+Ngày        : @DATE@
+Trình duyệt     : @BROWSER@
+Địa chỉ IP  : @IPADDRESS@
+Tên máy chủ    : @HOSTNAME@
