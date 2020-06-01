@@ -1,31 +1,120 @@
 [
     {
-        "name": "splitbrain/php-archive",
-        "version": "1.0.7",
-        "version_normalized": "1.0.7.0",
+        "name": "geshi/geshi",
+        "version": "v1.0.9.0",
+        "version_normalized": "1.0.9.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/splitbrain/php-archive.git",
-            "reference": "c075304b44c4aadff0718af445e86bf730f331ff"
+            "url": "https://github.com/GeSHi/geshi-1.0.git",
+            "reference": "5a7b461338d322d941986a656d4d1651452e73dd"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/c075304b44c4aadff0718af445e86bf730f331ff",
-            "reference": "c075304b44c4aadff0718af445e86bf730f331ff",
+            "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/5a7b461338d322d941986a656d4d1651452e73dd",
+            "reference": "5a7b461338d322d941986a656d4d1651452e73dd",
             "shasum": ""
         },
-        "require": {
-            "php": ">=5.3.0"
-        },
         "require-dev": {
-            "phpunit/phpunit": "4.5.*"
+            "phpunit/phpunit": "^5.7"
         },
-        "time": "2015-08-12T13:24:34+00:00",
+        "time": "2017-05-05T05:51:25+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
-            "psr-4": {
-                "splitbrain\\PHPArchive\\": "src"
+            "classmap": [
+                "src/geshi/",
+                "src/geshi.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Benny Baumann",
+                "email": "BenBE@geshi.org",
+                "homepage": "http://blog.benny-baumann.de/",
+                "role": "Developer"
+            }
+        ],
+        "description": "Generic Syntax Highlighter",
+        "homepage": "http://qbnz.com/highlighter/"
+    },
+    {
+        "name": "openpsa/universalfeedcreator",
+        "version": "v1.8.3",
+        "version_normalized": "1.8.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/flack/UniversalFeedCreator.git",
+            "reference": "6261e130446d8f787bbfd229a602fb11e6816a4e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/6261e130446d8f787bbfd229a602fb11e6816a4e",
+            "reference": "6261e130446d8f787bbfd229a602fb11e6816a4e",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "*"
+        },
+        "time": "2017-05-18T08:28:48+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "lib"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL"
+        ],
+        "authors": [
+            {
+                "name": "Andreas Flack",
+                "email": "flack@contentcontrol-berlin.de",
+                "homepage": "http://www.contentcontrol-berlin.de/"
+            }
+        ],
+        "description": "RSS and Atom feed generator by Kai Blankenhorn",
+        "keywords": [
+            "atom",
+            "georss",
+            "gpx",
+            "opml",
+            "pie",
+            "rss"
+        ]
+    },
+    {
+        "name": "aziraphale/email-address-validator",
+        "version": "2.0.1",
+        "version_normalized": "2.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/aziraphale/email-address-validator.git",
+            "reference": "fa25bc22c1c0b6491657c91473fae3e40719a650"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/aziraphale/email-address-validator/zipball/fa25bc22c1c0b6491657c91473fae3e40719a650",
+            "reference": "fa25bc22c1c0b6491657c91473fae3e40719a650",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^5.7"
+        },
+        "time": "2017-05-22T14:05:57+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "EmailAddressValidator": ""
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -34,33 +123,84 @@
         ],
         "authors": [
             {
-                "name": "Andreas Gohr",
-                "email": "andi@splitbrain.org"
+                "name": "Dave Child",
+                "email": "dave@addedbytes.com"
+            },
+            {
+                "name": "Andrew Gillard",
+                "email": "andrew@lorddeath.net"
             }
         ],
-        "description": "Pure-PHP implementation to read and write TAR and ZIP archives",
-        "keywords": [
-            "archive",
-            "extract",
-            "tar",
-            "unpack",
-            "unzip",
-            "zip"
-        ]
+        "description": "Fork of AddedBytes' PHP EmailAddressValidator script, now with Composer support!",
+        "homepage": "https://github.com/aziraphale/email-address-validator"
     },
     {
-        "name": "paragonie/random_compat",
-        "version": "v2.0.4",
-        "version_normalized": "2.0.4.0",
+        "name": "marcusschwarz/lesserphp",
+        "version": "v0.5.1",
+        "version_normalized": "0.5.1.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/paragonie/random_compat.git",
-            "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e"
+            "url": "https://github.com/MarcusSchwarz/lesserphp.git",
+            "reference": "e9e3d53980c0e486b07c75e12f2bae5e10bdee44"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/paragonie/random_compat/zipball/a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
-            "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
+            "url": "https://api.github.com/repos/MarcusSchwarz/lesserphp/zipball/e9e3d53980c0e486b07c75e12f2bae5e10bdee44",
+            "reference": "e9e3d53980c0e486b07c75e12f2bae5e10bdee44",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.3"
+        },
+        "time": "2016-09-30T11:13:18+00:00",
+        "bin": [
+            "plessc"
+        ],
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.5.1-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "lessc.inc.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT",
+            "GPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Leaf Corcoran",
+                "email": "leafot@gmail.com",
+                "homepage": "http://leafo.net"
+            },
+            {
+                "name": "Marcus Schwarz",
+                "email": "github@maswaba.de",
+                "homepage": "https://www.maswaba.de"
+            }
+        ],
+        "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
+        "homepage": "http://leafo.net/lessphp/"
+    },
+    {
+        "name": "paragonie/random_compat",
+        "version": "v2.0.12",
+        "version_normalized": "2.0.12.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/paragonie/random_compat.git",
+            "reference": "258c89a6b97de7dfaf5b8c7607d0478e236b04fb"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/paragonie/random_compat/zipball/258c89a6b97de7dfaf5b8c7607d0478e236b04fb",
+            "reference": "258c89a6b97de7dfaf5b8c7607d0478e236b04fb",
             "shasum": ""
         },
         "require": {
@@ -72,7 +212,7 @@
         "suggest": {
             "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
         },
-        "time": "2016-11-07T23:38:38+00:00",
+        "time": "2018-04-04T21:24:14+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -99,66 +239,133 @@
         ]
     },
     {
-        "name": "easybook/geshi",
-        "version": "v1.0.8.18",
-        "version_normalized": "1.0.8.18",
+        "name": "simplepie/simplepie",
+        "version": "1.5.1",
+        "version_normalized": "1.5.1.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/easybook/geshi.git",
-            "reference": "4b06bfe8c6fbedd6aad0a0700d650f591386e287"
+            "url": "https://github.com/simplepie/simplepie.git",
+            "reference": "db9fff27b6d49eed3d4047cd3211ec8dba2f5d6e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/easybook/geshi/zipball/4b06bfe8c6fbedd6aad0a0700d650f591386e287",
-            "reference": "4b06bfe8c6fbedd6aad0a0700d650f591386e287",
+            "url": "https://api.github.com/repos/simplepie/simplepie/zipball/db9fff27b6d49eed3d4047cd3211ec8dba2f5d6e",
+            "reference": "db9fff27b6d49eed3d4047cd3211ec8dba2f5d6e",
             "shasum": ""
         },
         "require": {
-            "php": ">4.3.0"
+            "php": ">=5.3.0"
         },
-        "time": "2016-10-05T07:15:42+00:00",
+        "require-dev": {
+            "phpunit/phpunit": "~4 || ~5"
+        },
+        "suggest": {
+            "mf2/mf2": "Microformat module that allows for parsing HTML for microformats"
+        },
+        "time": "2017-11-12T02:03:34+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
-            "classmap": [
-                "./"
-            ]
+            "psr-0": {
+                "SimplePie": "library"
+            }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
-            "GPL-2.0"
+            "BSD-3-Clause"
         ],
         "authors": [
             {
-                "name": "Nigel McNie",
-                "email": "nigel@geshi.org"
+                "name": "Ryan Parman",
+                "homepage": "http://ryanparman.com/",
+                "role": "Creator, alumnus developer"
             },
             {
-                "name": "Benny Baumann",
-                "email": "BenBE@geshi.org"
+                "name": "Geoffrey Sneddon",
+                "homepage": "http://gsnedders.com/",
+                "role": "Alumnus developer"
+            },
+            {
+                "name": "Ryan McCue",
+                "email": "me@ryanmccue.info",
+                "homepage": "http://ryanmccue.info/",
+                "role": "Developer"
             }
         ],
-        "description": "GeSHi - Generic Syntax Highlighter. This is an unmodified port of GeSHi project code found on SourceForge.",
-        "homepage": "http://qbnz.com/highlighter",
+        "description": "A simple Atom/RSS parsing library for PHP",
+        "homepage": "http://simplepie.org/",
         "keywords": [
-            "highlight",
-            "highlighter",
-            "syntax"
+            "atom",
+            "feeds",
+            "rss"
+        ]
+    },
+    {
+        "name": "splitbrain/php-cli",
+        "version": "1.1.2",
+        "version_normalized": "1.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/splitbrain/php-cli.git",
+            "reference": "1d6f0bf9eccbfd79d1f4d185ef27573601185c23"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/1d6f0bf9eccbfd79d1f4d185ef27573601185c23",
+            "reference": "1d6f0bf9eccbfd79d1f4d185ef27573601185c23",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.5.*"
+        },
+        "suggest": {
+            "psr/log": "Allows you to make the CLI available as PSR-3 logger"
+        },
+        "time": "2018-02-02T08:46:12+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "splitbrain\\phpcli\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andreas Gohr",
+                "email": "andi@splitbrain.org"
+            }
+        ],
+        "description": "Easy command line scripts for PHP with opt parsing and color output. No dependencies",
+        "keywords": [
+            "argparse",
+            "cli",
+            "command line",
+            "console",
+            "getopt",
+            "optparse",
+            "terminal"
         ]
     },
     {
         "name": "phpseclib/phpseclib",
-        "version": "2.0.4",
-        "version_normalized": "2.0.4.0",
+        "version": "2.0.11",
+        "version_normalized": "2.0.11.0",
         "source": {
             "type": "git",
             "url": "https://github.com/phpseclib/phpseclib.git",
-            "reference": "ab8028c93c03cc8d9c824efa75dc94f1db2369bf"
+            "reference": "7053f06f91b3de78e143d430e55a8f7889efc08b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/ab8028c93c03cc8d9c824efa75dc94f1db2369bf",
-            "reference": "ab8028c93c03cc8d9c824efa75dc94f1db2369bf",
+            "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/7053f06f91b3de78e143d430e55a8f7889efc08b",
+            "reference": "7053f06f91b3de78e143d430e55a8f7889efc08b",
             "shasum": ""
         },
         "require": {
@@ -166,7 +373,7 @@
         },
         "require-dev": {
             "phing/phing": "~2.7",
-            "phpunit/phpunit": "~4.0",
+            "phpunit/phpunit": "^4.8.35|^5.7|^6.0",
             "sami/sami": "~2.0",
             "squizlabs/php_codesniffer": "~2.0"
         },
@@ -176,7 +383,7 @@
             "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
             "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
         },
-        "time": "2016-10-04T00:57:04+00:00",
+        "time": "2018-04-15T16:55:05+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -241,65 +448,59 @@
         ]
     },
     {
-        "name": "simplepie/simplepie",
-        "version": "1.4.3",
-        "version_normalized": "1.4.3.0",
+        "name": "splitbrain/php-archive",
+        "version": "1.0.10",
+        "version_normalized": "1.0.10.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/simplepie/simplepie.git",
-            "reference": "2a24b6e74aa9bf33243020f52895fe77efe94ccf"
+            "url": "https://github.com/splitbrain/php-archive.git",
+            "reference": "a46f3aaeb9f123fdb7db4e192b0600feebf7f773"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/simplepie/simplepie/zipball/2a24b6e74aa9bf33243020f52895fe77efe94ccf",
-            "reference": "2a24b6e74aa9bf33243020f52895fe77efe94ccf",
+            "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/a46f3aaeb9f123fdb7db4e192b0600feebf7f773",
+            "reference": "a46f3aaeb9f123fdb7db4e192b0600feebf7f773",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.3.0"
+            "php": ">=5.4"
         },
         "require-dev": {
-            "phpunit/phpunit": "~4 || ~5"
+            "ext-bz2": "*",
+            "ext-zip": "*",
+            "mikey179/vfsstream": "^1.6",
+            "phpunit/phpunit": "^4.8"
         },
         "suggest": {
-            "mf2/mf2": "Microformat module that allows for parsing HTML for microformats"
+            "ext-iconv": "Used for proper filename encode handling",
+            "ext-mbstring": "Can be used alternatively for handling filename encoding"
         },
-        "time": "2016-11-27T01:39:18+00:00",
+        "time": "2018-05-01T08:03:56+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
-            "psr-0": {
-                "SimplePie": "library"
+            "psr-4": {
+                "splitbrain\\PHPArchive\\": "src"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
-            "BSD-3-Clause"
+            "MIT"
         ],
         "authors": [
             {
-                "name": "Ryan Parman",
-                "homepage": "http://ryanparman.com/",
-                "role": "Creator, alumnus developer"
-            },
-            {
-                "name": "Geoffrey Sneddon",
-                "homepage": "http://gsnedders.com/",
-                "role": "Alumnus developer"
-            },
-            {
-                "name": "Ryan McCue",
-                "email": "me@ryanmccue.info",
-                "homepage": "http://ryanmccue.info/",
-                "role": "Developer"
+                "name": "Andreas Gohr",
+                "email": "andi@splitbrain.org"
             }
         ],
-        "description": "A simple Atom/RSS parsing library for PHP",
-        "homepage": "http://simplepie.org/",
+        "description": "Pure-PHP implementation to read and write TAR and ZIP archives",
         "keywords": [
-            "atom",
-            "feeds",
-            "rss"
+            "archive",
+            "extract",
+            "tar",
+            "unpack",
+            "unzip",
+            "zip"
         ]
     }
 ]

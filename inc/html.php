@@ -8,6 +8,10 @@
 
 if(!defined('DOKU_INC')) die('meh.');
 if(!defined('NL')) define('NL',"\n");
+if (!defined('SEC_EDIT_PATTERN')) {
+    define('SEC_EDIT_PATTERN', '#<!-- EDIT({.*?}) -->#');
+}
+
 
 /**
  * Convenience function to quickly build a wikilink
@@ -32,8 +36,10 @@ function html_wikilink($id,$name=null,$search=''){
  * The loginform
  *
  * @author   Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param bool $svg Whether to show svg icons in the register and resendpwd links or not
  */
-function html_login(){
+function html_login($svg = false){
     global $lang;
     global $conf;
     global $ID;
@@ -54,11 +60,13 @@ function html_login(){
     $form->endFieldset();
 
     if(actionOK('register')){
-        $form->addElement('<p>'.$lang['reghere'].': '.tpl_actionlink('register','','','',true).'</p>');
+        $registerLink = (new \dokuwiki\Menu\Item\Register())->asHtmlLink('', $svg);
+        $form->addElement('<p>'.$lang['reghere'].': '. $registerLink .'</p>');
     }
 
     if (actionOK('resendpwd')) {
-        $form->addElement('<p>'.$lang['pwdforget'].': '.tpl_actionlink('resendpwd','','','',true).'</p>');
+        $resendPwLink = (new \dokuwiki\Menu\Item\Resendpwd())->asHtmlLink('', $svg);
+        $form->addElement('<p>'.$lang['pwdforget'].': '. $resendPwLink .'</p>');
     }
 
     html_form('login', $form);
@@ -91,13 +99,11 @@ function html_denied() {
 function html_secedit($text,$show=true){
     global $INFO;
 
-    $regexp = '#<!-- EDIT(\d+) ([A-Z_]+) (?:"([^"]*)" )?\[(\d+-\d*)\] -->#';
-
     if(!$INFO['writable'] || !$show || $INFO['rev']){
-        return preg_replace($regexp,'',$text);
+        return preg_replace(SEC_EDIT_PATTERN,'',$text);
     }
 
-    return preg_replace_callback($regexp,
+    return preg_replace_callback(SEC_EDIT_PATTERN,
                 'html_secedit_button', $text);
 }
 
@@ -112,12 +118,13 @@ function html_secedit($text,$show=true){
  * @triggers HTML_SECEDIT_BUTTON
  */
 function html_secedit_button($matches){
-    $data = array('secid'  => $matches[1],
-                  'target' => strtolower($matches[2]),
-                  'range'  => $matches[count($matches) - 1]);
-    if (count($matches) === 5) {
-        $data['name'] = $matches[3];
+    $json = htmlspecialchars_decode($matches[1], ENT_QUOTES);
+    $data = json_decode($json, true);
+    if ($data == NULL) {
+        return;
     }
+    $data ['target'] = strtolower($data['target']);
+    $data ['hid'] = strtolower($data['hid']);
 
     return trigger_event('HTML_SECEDIT_BUTTON', $data,
                          'html_secedit_get_button');
@@ -163,7 +170,7 @@ function html_secedit_get_button($data) {
 function html_topbtn(){
     global $lang;
 
-    $ret  = '<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="'.$lang['btn_top'].'" onclick="window.scrollTo(0, 0)" title="'.$lang['btn_top'].'" /></a>';
+    $ret  = '<a class="nolink" href="#dokuwiki__top"><button class="button" onclick="window.scrollTo(0, 0)" title="'.$lang['btn_top'].'">'.$lang['btn_top'].'</button></a>';
 
     return $ret;
 }
@@ -181,9 +188,10 @@ function html_topbtn(){
  * @param string         $method
  * @param string         $tooltip
  * @param bool|string    $label  label text, false: lookup btn_$name in localization
+ * @param string         $svg (optional) svg code, inserted into the button
  * @return string
  */
-function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label=false){
+function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label=false, $svg=null){
     global $conf;
     global $lang;
 
@@ -208,17 +216,16 @@ function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label
     $ret .= '<form class="button btn_'.$name.'" method="'.$method.'" action="'.$script.'"><div class="no">';
 
     if(is_array($params)){
-        reset($params);
-        while (list($key, $val) = each($params)) {
+        foreach($params as $key => $val) {
             $ret .= '<input type="hidden" name="'.$key.'" ';
-            $ret .= 'value="'.htmlspecialchars($val).'" />';
+            $ret .= 'value="'.hsc($val).'" />';
         }
     }
 
     if ($tooltip!='') {
-        $tip = htmlspecialchars($tooltip);
+        $tip = hsc($tooltip);
     }else{
-        $tip = htmlspecialchars($label);
+        $tip = hsc($label);
     }
 
     $ret .= '<button type="submit" ';
@@ -227,7 +234,12 @@ function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label
         $ret .= 'accesskey="'.$akey.'" ';
     }
     $ret .= 'title="'.$tip.'">';
-    $ret .= hsc($label);
+    if ($svg) {
+        $ret .= '<span>' . hsc($label) . '</span>';
+        $ret .= inlineSVG($svg);
+    } else {
+        $ret .= hsc($label);
+    }
     $ret .= '</button>';
     $ret .= '</div></form>';
 
@@ -299,10 +311,11 @@ function html_draft(){
     $text  = cleanText(con($draft['prefix'],$draft['text'],$draft['suffix'],true));
 
     print p_locale_xhtml('draft');
+    html_diff($text, false);
     $form = new Doku_Form(array('id' => 'dw__editform'));
     $form->addHidden('id', $ID);
     $form->addHidden('date', $draft['date']);
-    $form->addElement(form_makeWikiText($text, array('readonly'=>'readonly')));
+    $form->addHidden('wikitext', $text);
     $form->addElement(form_makeOpenTag('div', array('id'=>'draft__status')));
     $form->addElement($lang['draftdate'].' '. dformat(filemtime($INFO['draft'])));
     $form->addElement(form_makeCloseTag('div'));
@@ -349,94 +362,6 @@ function html_hilight_callback($m) {
         $hlight = '<span class="search_hit">'.$hlight.'</span>';
     }
     return $hlight;
-}
-
-/**
- * Run a search and display the result
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function html_search(){
-    global $QUERY, $ID;
-    global $lang;
-
-    $intro = p_locale_xhtml('searchpage');
-    // allow use of placeholder in search intro
-    $pagecreateinfo = (auth_quickaclcheck($ID) >= AUTH_CREATE) ? $lang['searchcreatepage'] : '';
-    $intro = str_replace(
-        array('@QUERY@', '@SEARCH@', '@CREATEPAGEINFO@'),
-        array(hsc(rawurlencode($QUERY)), hsc($QUERY), $pagecreateinfo),
-        $intro
-    );
-    echo $intro;
-    flush();
-
-    //show progressbar
-    print '<div id="dw__loading">'.NL;
-    print '<script type="text/javascript">/*<![CDATA[*/'.NL;
-    print 'showLoadBar();'.NL;
-    print '/*!]]>*/</script>'.NL;
-    print '</div>'.NL;
-    flush();
-
-    //do quick pagesearch
-    $data = ft_pageLookup($QUERY,true,useHeading('navigation'));
-    if(count($data)){
-        print '<div class="search_quickresult">';
-        print '<h3>'.$lang['quickhits'].':</h3>';
-        print '<ul class="search_quickhits">';
-        foreach($data as $id => $title){
-            print '<li> ';
-            if (useHeading('navigation')) {
-                $name = $title;
-            }else{
-                $ns = getNS($id);
-                if($ns){
-                    $name = shorten(noNS($id), ' ('.$ns.')',30);
-                }else{
-                    $name = $id;
-                }
-            }
-            print html_wikilink(':'.$id,$name);
-            print '</li> ';
-        }
-        print '</ul> ';
-        //clear float (see http://www.complexspiral.com/publications/containing-floats/)
-        print '<div class="clearer"></div>';
-        print '</div>';
-    }
-    flush();
-
-    //do fulltext search
-    $data = ft_pageSearch($QUERY,$regex);
-    if(count($data)){
-        print '<dl class="search_results">';
-        $num = 1;
-        foreach($data as $id => $cnt){
-            print '<dt>';
-            print html_wikilink(':'.$id,useHeading('navigation')?null:$id,$regex);
-            if($cnt !== 0){
-                print ': '.$cnt.' '.$lang['hits'].'';
-            }
-            print '</dt>';
-            if($cnt !== 0){
-                if($num < FT_SNIPPET_NUMBER){ // create snippets for the first number of matches only
-                    print '<dd>'.ft_snippet($id,$regex).'</dd>';
-                }
-                $num++;
-            }
-            flush();
-        }
-        print '</dl>';
-    }else{
-        print '<div class="nothing">'.$lang['nothingfound'].'</div>';
-    }
-
-    //hide progressbar
-    print '<script type="text/javascript">/*<![CDATA[*/'.NL;
-    print 'hideLoadBar("dw__loading");'.NL;
-    print '/*!]]>*/</script>'.NL;
-    flush();
 }
 
 /**
@@ -582,7 +507,7 @@ function html_revisions($first=0, $media_id = false){
         if($summary) {
             $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
             if(!$media_id) $form->addElement(' – ');
-            $form->addElement('<bdi>' . htmlspecialchars($summary) . '</bdi>');
+            $form->addElement('<bdi>' . hsc($summary) . '</bdi>');
             $form->addElement(form_makeCloseTag('span'));
         }
 
@@ -665,7 +590,7 @@ function html_revisions($first=0, $media_id = false){
         if ($info['sum']) {
             $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
             if(!$media_id) $form->addElement(' – ');
-            $form->addElement('<bdi>'.htmlspecialchars($info['sum']).'</bdi>');
+            $form->addElement('<bdi>'.hsc($info['sum']).'</bdi>');
             $form->addElement(form_makeCloseTag('span'));
         }
 
@@ -876,7 +801,7 @@ function html_recent($first = 0, $show_changes = 'both') {
             $form->addElement(html_wikilink(':' . $recent['id'], useHeading('navigation') ? null : $recent['id']));
         }
         $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-        $form->addElement(' – ' . htmlspecialchars($recent['sum']));
+        $form->addElement(' – ' . hsc($recent['sum']));
         $form->addElement(form_makeCloseTag('span'));
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
@@ -949,7 +874,7 @@ function html_index($ns){
     $ns  = utf8_encodeFN(str_replace(':','/',$ns));
 
     echo p_locale_xhtml('index');
-    echo '<div id="index__tree">';
+    echo '<div id="index__tree" class="index__tree">';
 
     $data = array();
     search($data,$conf['datadir'],'search_index',array('ns' => $ns));
@@ -1062,7 +987,8 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapp
         return '';
     }
 
-    $start_level = $data[0]['level'];
+    $firstElement = reset($data);
+    $start_level = $firstElement['level'];
     $level = $start_level;
     $ret   = '';
     $open  = 0;
@@ -1866,6 +1792,12 @@ function html_edit(){
     }
 
     $form->addHidden('target', $data['target']);
+    if ($INPUT->has('hid')) {
+        $form->addHidden('hid', $INPUT->str('hid'));
+    }
+    if ($INPUT->has('codeblockOffset')) {
+        $form->addHidden('codeblockOffset', $INPUT->str('codeblockOffset'));
+    }
     $form->addElement(form_makeOpenTag('div', array('id'=>'wiki__editbar', 'class'=>'editBar')));
     $form->addElement(form_makeOpenTag('div', array('id'=>'size__ctl')));
     $form->addElement(form_makeCloseTag('div'));
@@ -1873,7 +1805,7 @@ function html_edit(){
         $form->addElement(form_makeOpenTag('div', array('class'=>'editButtons')));
         $form->addElement(form_makeButton('submit', 'save', $lang['btn_save'], array('id'=>'edbtn__save', 'accesskey'=>'s', 'tabindex'=>'4')));
         $form->addElement(form_makeButton('submit', 'preview', $lang['btn_preview'], array('id'=>'edbtn__preview', 'accesskey'=>'p', 'tabindex'=>'5')));
-        $form->addElement(form_makeButton('submit', 'draftdel', $lang['btn_cancel'], array('tabindex'=>'6')));
+        $form->addElement(form_makeButton('submit', 'cancel', $lang['btn_cancel'], array('tabindex'=>'6')));
         $form->addElement(form_makeCloseTag('div'));
         $form->addElement(form_makeOpenTag('div', array('class'=>'summary')));
         $form->addElement(form_makeTextField('summary', $SUM, $lang['summary'], 'edit__summary', 'nowrap', array('size'=>'50', 'tabindex'=>'2')));
@@ -1901,8 +1833,8 @@ function html_edit(){
     <div class="editBox" role="application">
 
     <div class="toolbar group">
-        <div id="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.dformat();?></div>
-        <div id="tool__bar"><?php if ($wr && $data['media_manager']){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
+        <div id="draft__status" class="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.dformat();?></div>
+        <div id="tool__bar" class="tool__bar"><?php if ($wr && $data['media_manager']){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
             target="_blank"><?php echo $lang['mediaselect'] ?></a><?php }?></div>
     </div>
     <?php
@@ -2109,7 +2041,7 @@ function html_TOC($toc){
     if(!count($toc)) return '';
     global $lang;
     $out  = '<!-- TOC START -->'.DOKU_LF;
-    $out .= '<div id="dw__toc">'.DOKU_LF;
+    $out .= '<div id="dw__toc" class="dw__toc">'.DOKU_LF;
     $out .= '<h3 class="toggle">';
     $out .= $lang['toc'];
     $out .= '</h3>'.DOKU_LF;

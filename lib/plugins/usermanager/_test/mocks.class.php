@@ -12,6 +12,9 @@ class admin_mock_usermanager extends admin_plugin_usermanager {
     public $mock_email_notifications = true;
     public $mock_email_notifications_sent = 0;
 
+    public $localised;
+    public $lang;
+
     public function getImportFailures() {
         return $this->_import_failures;
     }

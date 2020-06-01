@@ -3,19 +3,15 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author damiano <damiano@spagnuolo.eu>
+ * @author Torpedo <dgtorpedo@gmail.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Silvia Sargentoni <polinnia@tin.it>
- * @author Pietro Battiston toobaz@email.it
- * @author Diego Pierotto ita.translations@tiscali.it
- * @author ita.translations@tiscali.it
+ * @author Pietro Battiston <toobaz@email.it>
  * @author Lorenzo Breda <lbreda@gmail.com>
- * @author snarchio@alice.it
  * @author robocap <robocap1@gmail.com>
- * @author Osman Tekin osman.tekin93@hotmail.it
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  * @author Matteo Pasotti <matteo@xquiet.eu>
- * @author snarchio@gmail.com
- * @author Torpedo <dgtorpedo@gmail.com>
  * @author Riccardo <riccardofila@gmail.com>
  * @author Paolo <paolopoz12@gmail.com>
  */
@@ -126,6 +122,7 @@ $lang['subscribe_time']        = 'Tempo dopo il quale le liste di sottoscrizione
 $lang['notify']                = 'Invia notifiche sulle modifiche a questo indirizzo';
 $lang['registernotify']        = 'Invia informazioni sui nuovi utenti registrati a questo indirizzo email';
 $lang['mailfrom']              = 'Mittente per le mail automatiche';
+$lang['mailreturnpath']        = 'Indirizzo email destinatario per notifica di mancati recapiti';
 $lang['mailprefix']            = 'Prefisso da inserire nell\'oggetto delle mail automatiche';
 $lang['htmlmail']              = 'Invia email HTML multipart più gradevoli ma più ingombranti in dimensione. Disabilita per mail in puro testo.';
 $lang['sitemap']               = 'Genera una sitemap Google (giorni)';
@@ -135,6 +132,9 @@ $lang['rss_content']           = 'Cosa mostrare negli elementi dei feed XML?';
 $lang['rss_update']            = 'Intervallo di aggiornamento dei feed XML (sec)';
 $lang['rss_show_summary']      = 'I feed XML riportano un sommario nel titolo';
 $lang['rss_media']             = 'Quale tipo di cambiamento dovrebbe essere elencato nel feed XML?';
+$lang['rss_media_o_both']      = 'entrambi';
+$lang['rss_media_o_pages']     = 'pagine';
+$lang['rss_media_o_media']     = 'media';
 $lang['updatecheck']           = 'Controllare aggiornamenti e avvisi di sicurezza? DokuWiki deve contattare update.dokuwiki.org per questa funzione.';
 $lang['userewrite']            = 'Usa il rewrite delle URL';
 $lang['useslash']              = 'Usa la barra rovescia (slash) come separatore nelle URL';

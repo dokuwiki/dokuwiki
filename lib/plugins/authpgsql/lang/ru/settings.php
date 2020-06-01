@@ -5,7 +5,6 @@
  *
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
- * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Vitaly Filatenko <kot@hacktest.net>
  * @author Type-kun <workwork-1@yandex.ru>
  * @author Alex P <alexander@lanos.co.uk>

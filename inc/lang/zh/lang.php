@@ -3,17 +3,15 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author lempel <riverlempel@hotmail.com>
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  * @author George Sheraton <guxd@163.com>
  * @author Simon zhan <simonzhan@21cn.com>
- * @author mr.jinyi@gmail.com
  * @author ben <ben@livetom.com>
  * @author lainme <lainme993@gmail.com>
  * @author caii <zhoucaiqi@gmail.com>
  * @author Hiphen Lee <jacob.b.leung@gmail.com>
- * @author caii, patent agent in China <zhoucaiqi@gmail.com>
- * @author lainme993@gmail.com
  * @author Shuo-Ting Jian <shoting@gmail.com>
  * @author Rachel <rzhang0802@gmail.com>
  * @author Donald <donaldtcong@gmail.com>
@@ -92,7 +90,6 @@ $lang['badpassconfirm']        = '对不起，密码错误';
 $lang['minoredit']             = '细微修改';
 $lang['draftdate']             = '草稿自动保存于';
 $lang['nosecedit']             = '在您编辑期间本页刚被他人修改过，局部信息已过期，故载入全页。';
-$lang['searchcreatepage']      = '如果没有找到您想要的东西，您可以使用相应的按钮来创建或编辑该页面。';
 $lang['regmissing']            = '对不起，您必须填写所有的字段。';
 $lang['reguexists']            = '对不起，该用户名已经存在。';
 $lang['regsuccess']            = '新用户已建立，密码将通过电子邮件发送给您。';

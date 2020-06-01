@@ -1,7 +1,11 @@
 <?php
+
 /**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * Latvian, Lettish language file
  *
+ * @author Oskars Pakers <oskars.pakers@gmail.com>
  * @author Aivars Miška <allefm@gmail.com>
  */
 $lang['menu']                  = 'Konfigurācijas iestatījumi.';

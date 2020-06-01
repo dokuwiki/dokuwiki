@@ -7,10 +7,10 @@
  * @author Anika Henke <anika@selfthinker.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author jk Lee
- * @author dongnak@gmail.com
+ * @author dongnak <dongnak@gmail.com>
  * @author Song Younghwan <purluno@gmail.com>
  * @author Seung-Chul Yoo <dryoo@live.com>
- * @author erial2@gmail.com
+ * @author erial2 <erial2@gmail.com>
  * @author Myeongjin <aranet100@gmail.com>
  * @author Garam <rowain8@gmail.com>
  */

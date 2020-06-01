@@ -2,4 +2,3 @@
 
 Heus ací els resultats de la cerca. @CREATEPAGEINFO@
 
-===== Resultats =====

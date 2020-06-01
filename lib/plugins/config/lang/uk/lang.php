@@ -2,15 +2,15 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Oleksii <alexey.furashev@gmail.com>
+ * @author Vitaly <vitaly.balashov@smuzzy.com.ua>
  * @author Oleksiy Voronin <ovoronin@gmail.com>
- * @author serg_stetsuk@ukr.net
- * @author okunia@gmail.com
+ * @author serg_stetsuk <serg_stetsuk@ukr.net>
  * @author Oleksandr Kunytsia <okunia@gmail.com>
- * @author Uko uko@uar.net
- * @author Ulrikhe Lukoie  <lukoie@gmail>.com
- * @author Kate Arzamastseva pshns@ukr.net
  * @author Maksim <nikropol@yandex.ru>
+ * @author Nina Zolotova <nina-z@i.ua>
+ * @author Roman <vsmemorial@gmail.com>
  */
 $lang['menu']                  = 'Налаштування Вікі';
 $lang['error']                 = 'Параметри не збережено через помилкові значення. Будь ласка, перегляньте ваші зміни та спробуйте ще раз

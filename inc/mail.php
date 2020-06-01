@@ -210,12 +210,12 @@ function mail_encode_address($string,$header='',$names=true){
 
         // FIXME: is there a way to encode the localpart of a emailaddress?
         if(!utf8_isASCII($addr)){
-            msg(htmlspecialchars("E-Mail address <$addr> is not ASCII"),-1);
+            msg(hsc("E-Mail address <$addr> is not ASCII"),-1);
             continue;
         }
 
         if(!mail_isvalid($addr)){
-            msg(htmlspecialchars("E-Mail address <$addr> is not valid"),-1);
+            msg(hsc("E-Mail address <$addr> is not valid"),-1);
             continue;
         }
 
@@ -267,10 +267,8 @@ function mail_encode_address($string,$header='',$names=true){
  * @param   string $email the address to check
  * @return  bool          true if address is valid
  */
-function mail_isvalid($email){
-    $validator = new EmailAddressValidator;
-    $validator->allowLocalAddresses = true;
-    return $validator->check_email_address($email);
+function mail_isvalid($email) {
+    return EmailAddressValidator::checkEmailAddress($email, true);
 }
 
 /**
@@ -278,6 +276,12 @@ function mail_isvalid($email){
  *
  * @author umu <umuAThrz.tu-chemnitz.de>
  * @link   http://php.net/manual/en/function.imap-8bit.php#61216
+ *
+ * @param string $sText
+ * @param int $maxlen
+ * @param bool $bEmulate_imap_8bit
+ *
+ * @return string
  */
 function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true) {
     // split text into lines

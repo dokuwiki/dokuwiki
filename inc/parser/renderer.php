@@ -845,19 +845,29 @@ class Doku_Renderer extends DokuWiki_Plugin {
                                     return rawurlencode($match[0]);
                                   }, $reference), $url);
             $parsed = parse_url($reference);
-            if(!$parsed['port']) $parsed['port'] = 80;
-            $url = str_replace('{SCHEME}', $parsed['scheme'], $url);
-            $url = str_replace('{HOST}', $parsed['host'], $url);
-            $url = str_replace('{PORT}', $parsed['port'], $url);
-            $url = str_replace('{PATH}', $parsed['path'], $url);
-            $url = str_replace('{QUERY}', $parsed['query'], $url);
+            if (empty($parsed['scheme'])) $parsed['scheme'] = '';
+            if (empty($parsed['host'])) $parsed['host'] = '';
+            if (empty($parsed['port'])) $parsed['port'] = 80;
+            if (empty($parsed['path'])) $parsed['path'] = '';
+            if (empty($parsed['query'])) $parsed['query'] = '';
+            $url = strtr($url,[
+                '{SCHEME}' => $parsed['scheme'],
+                '{HOST}' => $parsed['host'],
+                '{PORT}' => $parsed['port'],
+                '{PATH}' => $parsed['path'],
+                '{QUERY}' => $parsed['query'] ,
+            ]);
         } else {
             //default
             $url = $url.rawurlencode($reference);
         }
         //handle as wiki links
         if($url{0} === ':') {
-            list($id, $urlparam) = explode('?', $url, 2);
+            $urlparam = null;
+            $id = $url;
+            if (strpos($url, '?') !== false) {
+                list($id, $urlparam) = explode('?', $url, 2);
+            }
             $url    = wl(cleanID($id), $urlparam);
             $exists = page_exists($id);
         }

@@ -15,7 +15,7 @@ class httpclient_http_proxy_test extends DokuWikiTest {
         $http->proxy_port = 8080;
 
         $data = $http->get($this->url);
-        $this->assertFalse($data === false, 'HTTP response: '.$http->error.' ['.$this->url.']');
+        $this->assertFalse($data === false, $http->errorInfo($this->url));
         $this->assertTrue(strpos($data,'DokuWiki') !== false, 'response content');
     }
 }

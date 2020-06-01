@@ -202,23 +202,29 @@ function getSchemes() {
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Gina Haeussge <gina@foosel.net>
+ *
+ * @param array $lines
+ * @param bool $lower
+ *
+ * @return array
  */
-function linesToHash($lines, $lower=false) {
+function linesToHash($lines, $lower = false) {
     $conf = array();
     // remove BOM
-    if (isset($lines[0]) && substr($lines[0],0,3) == pack('CCC',0xef,0xbb,0xbf))
-        $lines[0] = substr($lines[0],3);
-    foreach ( $lines as $line ) {
+    if(isset($lines[0]) && substr($lines[0], 0, 3) == pack('CCC', 0xef, 0xbb, 0xbf))
+        $lines[0] = substr($lines[0], 3);
+    foreach($lines as $line) {
         //ignore comments (except escaped ones)
-        $line = preg_replace('/(?<![&\\\\])#.*$/','',$line);
-        $line = str_replace('\\#','#',$line);
+        $line = preg_replace('/(?<![&\\\\])#.*$/', '', $line);
+        $line = str_replace('\\#', '#', $line);
         $line = trim($line);
-        if(empty($line)) continue;
-        $line = preg_split('/\s+/',$line,2);
+        if($line === '') continue;
+        $line = preg_split('/\s+/', $line, 2);
+        $line = array_pad($line, 2, '');
         // Build the associative array
-        if($lower){
+        if($lower) {
             $conf[strtolower($line[0])] = $line[1];
-        }else{
+        } else {
             $conf[$line[0]] = $line[1];
         }
     }
@@ -235,6 +241,11 @@ function linesToHash($lines, $lower=false) {
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Gina Haeussge <gina@foosel.net>
+ *
+ * @param string $file
+ * @param bool $lower
+ *
+ * @return array
  */
 function confToHash($file,$lower=false) {
     $conf = array();
@@ -242,6 +253,25 @@ function confToHash($file,$lower=false) {
     if ( !$lines ) return $conf;
 
     return linesToHash($lines, $lower);
+}
+
+/**
+ * Read a json config file into an array
+ *
+ * @param string $file
+ * @return array
+ */
+function jsonToArray($file)
+{
+    $json = file_get_contents($file);
+
+    $conf = json_decode($json, true);
+
+    if ($conf === null) {
+        return [];
+    }
+
+    return $conf;
 }
 
 /**

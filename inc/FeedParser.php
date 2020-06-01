@@ -23,6 +23,8 @@ class FeedParser extends SimplePie {
 
     /**
      * Backward compatibility for older plugins
+     *
+     * @param string $url
      */
     function feed_url($url){
         $this->set_feed_url($url);

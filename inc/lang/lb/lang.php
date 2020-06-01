@@ -54,7 +54,6 @@ $lang['badlogin']              = 'Entschëllegt, de Benotzernumm oder d\'Passwue
 $lang['minoredit']             = 'Kleng Ännerungen';
 $lang['draftdate']             = 'Entworf automatesch gespäichert den';
 $lang['nosecedit']             = 'D\'Säit gouf an Zwëschenzäit g\'ännert, Sektiounsinfo veralt. Ganz Säit gouf aplaz gelueden.';
-$lang['searchcreatepage']      = 'Wanns de net fënns wats de gesicht hues kanns de eng nei Säit mam Numm vun denger Sich uleeën.';
 $lang['regmissing']            = 'Du muss all d\'Felder ausfëllen.';
 $lang['reguexists']            = 'Et get schonn e Benotzer mat deem Numm.';
 $lang['regsuccess']            = 'De Benotzer gouf erstallt an d\'Passwuert via Email geschéckt.';

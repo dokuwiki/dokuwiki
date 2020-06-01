@@ -22,8 +22,8 @@ class Doku_Event {
     public $canPreventDefault = true; // READONLY  if true, event handlers can prevent the events default action
 
     // private properties, event handlers can effect these through the provided methods
-    var $_default = true;     // whether or not to carry out the default action associated with the event
-    var $_continue = true;    // whether or not to continue propagating the event to other handlers
+    protected $_default = true;     // whether or not to carry out the default action associated with the event
+    protected $_continue = true;    // whether or not to continue propagating the event to other handlers
 
     /**
      * event constructor
@@ -123,8 +123,17 @@ class Doku_Event {
      * stop any further processing of the event by event handlers
      * this function does not prevent the default action taking place
      */
-    function stopPropagation() {
+    public function stopPropagation() {
         $this->_continue = false;
+    }
+
+    /**
+     * may the event propagate to the next handler?
+     *
+     * @return bool
+     */
+    public function mayPropagate() {
+        return $this->_continue;
     }
 
     /**
@@ -132,8 +141,17 @@ class Doku_Event {
      *
      * prevent the default action taking place
      */
-    function preventDefault() {
+    public function preventDefault() {
         $this->_default = false;
+    }
+
+    /**
+     * should the default action be executed?
+     *
+     * @return bool
+     */
+    public function mayRunDefault() {
+        return $this->_default;
     }
 }
 
@@ -211,7 +229,7 @@ class Doku_Event_Handler {
                         $obj->$method($event, $param);
                     }
 
-                    if (!$event->_continue) return;
+                    if (!$event->mayPropagate()) return;
                 }
             }
         }

@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
  * @author     Matthias Schulte <dokuwiki@lupo49.de>
+ * @author     Schplurtz le Déboulonné <Schplurtz@laposte.net>
  */
 
 // for admin plugins, the menu prompt to be displayed in the admin menu
@@ -142,17 +143,22 @@ $lang['subscribe_time'] = 'Time after which subscription lists and digests are s
 $lang['notify']      = 'Always send change notifications to this email address';
 $lang['registernotify'] = 'Always send info on newly registered users to this email address';
 $lang['mailfrom']    = 'Sender email address to use for automatic mails';
+$lang['mailreturnpath']    = 'Recipient email address for non delivery notifications';
 $lang['mailprefix']  = 'Email subject prefix to use for automatic mails. Leave blank to use the wiki title';
 $lang['htmlmail']    = 'Send better looking, but larger in size HTML multipart emails. Disable for plain text only mails.';
 
 /* Syndication Settings */
-$lang['sitemap']     = 'Generate Google sitemap this often (in days). 0 to disable';
-$lang['rss_type']    = 'XML feed type';
-$lang['rss_linkto']  = 'XML feed links to';
-$lang['rss_content'] = 'What to display in the XML feed items?';
-$lang['rss_update']  = 'XML feed update interval (sec)';
-$lang['rss_show_summary'] = 'XML feed show summary in title';
-$lang['rss_media']   = 'What kind of changes should be listed in the XML feed?';
+$lang['sitemap']           = 'Generate Google sitemap this often (in days). 0 to disable';
+$lang['rss_type']          = 'XML feed type';
+$lang['rss_linkto']        = 'XML feed links to';
+$lang['rss_content']       = 'What to display in the XML feed items?';
+$lang['rss_update']        = 'XML feed update interval (sec)';
+$lang['rss_show_summary']  = 'XML feed show summary in title';
+$lang['rss_media']         = 'What kind of changes should be listed in the XML feed?';
+$lang['rss_media_o_both']  = 'both';
+$lang['rss_media_o_pages'] = 'pages';
+$lang['rss_media_o_media'] = 'media';
+
 
 /* Advanced Options */
 $lang['updatecheck'] = 'Check for updates and security warnings? DokuWiki needs to contact update.dokuwiki.org for this feature.';
@@ -172,6 +178,12 @@ $lang['xsendfile']   = 'Use the X-Sendfile header to let the webserver deliver s
 $lang['renderer_xhtml']   = 'Renderer to use for main (xhtml) wiki output';
 $lang['renderer__core']   = '%s (dokuwiki core)';
 $lang['renderer__plugin'] = '%s (plugin)';
+$lang['search_nslimit'] = 'Limit the search to the current X namespaces. When a search is executed from a page within a deeper namespace, the first X namespaces will be added as filter';
+$lang['search_fragment'] = 'Specify the default fragment search behavior';
+$lang['search_fragment_o_exact'] = 'exact';
+$lang['search_fragment_o_starts_with'] = 'starts with';
+$lang['search_fragment_o_ends_with'] = 'ends with';
+$lang['search_fragment_o_contains'] = 'contains';
 
 /* Network Options */
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';

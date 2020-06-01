@@ -230,7 +230,10 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
             return true;
         } else {
             //invalid credentials - log off
-            if(!$silent) msg($lang['badlogin'], -1);
+            if(!$silent) {
+                http_status(403, 'Login failed');
+                msg($lang['badlogin'], -1);
+            }
             auth_logoff();
             return false;
         }
@@ -305,6 +308,9 @@ function auth_browseruid() {
  * @return  string
  */
 function auth_cookiesalt($addsession = false, $secure = false) {
+    if (defined('SIMPLE_TEST')) {
+        return 'test';
+    }
     global $conf;
     $file = $conf['metadir'].'/_htcookiesalt';
     if ($secure || !file_exists($file)) {

@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Bernat Arlandis i Mañó <berarma@ya.com>
  * @author Bernat Arlandis <berarma@llenguaitecnologia.com>
+ * 
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -37,7 +38,7 @@ $lang['btn_delete']            = 'Borrar';
 $lang['btn_back']              = 'Arrere';
 $lang['btn_backlink']          = 'Vínculs remitents';
 $lang['btn_subscribe']         = 'Subscriure\'s a la pàgina';
-$lang['btn_profile']           = 'Actualisar perfil';
+$lang['btn_profile']           = 'Actualitzar perfil';
 $lang['btn_reset']             = 'Reiniciar';
 $lang['btn_draft']             = 'Editar borrador';
 $lang['btn_recover']           = 'Recuperar borrador';
@@ -58,12 +59,11 @@ $lang['badlogin']              = 'Disculpe, pero el nom d\'usuari o la contrasen
 $lang['minoredit']             = 'Canvis menors';
 $lang['draftdate']             = 'Borrador gravat el';
 $lang['nosecedit']             = 'La pàgina ha canviat mentres tant, l\'informació de la secció no estava al dia, s\'ha carregat la pàgina sancera.';
-$lang['searchcreatepage']      = 'Si no ha trobat lo que buscava pot crear o editar una pàgina en el mateix nom que el text que ha buscat utilisant el botó corresponent.';
 $lang['regmissing']            = 'Disculpe, pero deu omplir tots els camps.';
 $lang['reguexists']            = 'Disculpe, pero ya existix un usuari en este nom.';
 $lang['regsuccess']            = 'S\'ha creat l\'usuari i se li ha enviat la contrasenya per correu electrònic.';
 $lang['regsuccess2']           = 'S\'ha creat l\'usuari.';
-$lang['regmailfail']           = 'Pareix que ha hagut un erro enviant el correu en la contrasenya. ¡Per favor, contacte en l\'administrador!';
+$lang['regmailfail']           = 'Pareix que ha hagut un error enviant el correu en la contrasenya. ¡Per favor, contacte en l\'administrador!';
 $lang['regbadmail']            = 'La direcció de correu no pareix vàlida - contacte en l\'administrador si pensa que és deu a un erro nostre';
 $lang['regbadpass']            = 'Les dos contrasenyes que ha donat no són idèntiques, per favor, torne a intentar-ho.';
 $lang['regpwmail']             = 'La seua contrasenya de DokuWiki';
@@ -71,7 +71,7 @@ $lang['reghere']               = '¿Encara no té un conte? Cree-se\'n un';
 $lang['profna']                = 'Este wiki no li permet modificar el perfil';
 $lang['profnochange']          = 'Sense canvis, no hi ha res que fer.';
 $lang['profnoempty']           = 'No es permet deixar el nom o la direcció de correu buits.';
-$lang['profchanged']           = 'Perfil de l\'usuari actualisat.';
+$lang['profchanged']           = 'Perfil de l\'usuari actualitzat.';
 $lang['pwdforget']             = '¿Ha oblidat la contrasenya? Demane\'n una nova';
 $lang['resendna']              = 'Este wiki no permet reenviar la contrasenya.';
 $lang['resendpwdmissing']      = 'Disculpe, pero deu omplir tots els camps.';
@@ -92,18 +92,18 @@ $lang['js']['willexpire']            = 'El seu bloqueig per a editar esta pàgin
 $lang['js']['notsavedyet']     = 'Els canvis no guardats es perdran.\n¿Segur que vol continuar?';
 $lang['rssfailed']             = 'Ha ocorregut un erro al solicitar este canal: ';
 $lang['nothingfound']          = 'No s\'ha trobat res.';
-$lang['mediaselect']           = 'Archius de mijos';
+$lang['mediaselect']           = 'Arxius de mijos';
 $lang['uploadsucc']            = 'Enviament correcte';
 $lang['uploadfail']            = 'Enviament fallit. ¿Potser no tinga els permissos necessaris?';
 $lang['uploadwrong']           = 'Enviament denegat. ¡Esta extensió d\'archiu està prohibida!';
-$lang['uploadexist']           = 'L\'archiu ya existix. No s\'ha fet res.';
+$lang['uploadexist']           = 'L\'arxiu ya existix. No s\'ha fet res.';
 $lang['uploadbadcontent']      = 'El contingut enviat no coincidix en l\'extensió de l\'archiu %s';
 $lang['uploadspam']            = 'L\'enviament ha segut bloquejat per la llista anti-spam.';
 $lang['uploadxss']             = 'L\'enviament ha segut bloquejat per ser possiblement perillós.';
 $lang['uploadsize']            = 'L\'archiu enviat és massa gran. (màx. %s)';
 $lang['deletesucc']            = 'S\'ha borrat l\'archiu "%s".';
 $lang['deletefail']            = 'No s\'ha pogut borrar "%s" - comprove els permissos.';
-$lang['mediainuse']            = 'L\'archiu "%s" no s\'ha borrat - encara s\'està utilisant.';
+$lang['mediainuse']            = 'L\'arxiu "%s" no s\'ha borrat - encara s\'està utilisant.';
 $lang['namespaces']            = 'Espais de noms';
 $lang['mediafiles']            = 'Archius disponibles en';
 $lang['js']['searchmedia']     = 'Buscar archius';
@@ -113,13 +113,13 @@ $lang['js']['nosmblinks']      = 'Els vínculs a recursos compartits de Windows 
 $lang['js']['linkwiz']         = 'Assistent de vínculs';
 $lang['js']['linkto']          = 'Vincular a:';
 $lang['js']['del_confirm']     = '¿Realment vol borrar el(s) ítem(s) seleccionat(s)?';
-$lang['mediausage']            = 'Utilise la següent sintaxis per a referenciar est archiu:';
+$lang['mediausage']            = 'Utilize la següent sintaxis per a referenciar est archiu:';
 $lang['mediaview']             = 'Vore l\'archiu original';
 $lang['mediaroot']             = 'base';
-$lang['mediaupload']           = 'Enviar un archiu a l\'espai de noms actual. Per a crear sub-espais, afigga\'ls separats per dos punts davant del nom de l\'archiu que pose en "Enviar com".';
+$lang['mediaupload']           = 'Enviar un arxiu a l\'espai de noms actual. Per a crear sub-espais, afigga\'ls separats per dos punts davant del nom de l\'arxiu que pose en "Enviar com".';
 $lang['mediaextchange']        = '¡Extensió de l\'archiu canviada de .%s a .%s!';
 $lang['reference']             = 'Referències per a';
-$lang['ref_inuse']             = 'No es pot borrar l\'archiu perque encara s\'utilisa en les següents pàgines:';
+$lang['ref_inuse']             = 'No es pot borrar l\'arxiu perque encara s\'utilisa en les següents pàgines:';
 $lang['ref_hidden']            = 'Algunes referències estan en pàgines que no té permissos per a vore';
 $lang['hits']                  = 'Encerts';
 $lang['quickhits']             = 'Noms de pàgines coincidents';
@@ -170,13 +170,13 @@ $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Caràcters especials';
 $lang['upperns']               = 'anar a l\'espai de noms superior';
 $lang['metaedit']              = 'Editar meta-senyes';
-$lang['metasaveerr']           = 'Erro escrivint meta-senyes';
+$lang['metasaveerr']           = 'Error escrivint meta-senyes';
 $lang['metasaveok']            = 'Meta-senyes guardades';
 $lang['btn_img_backto']        = 'Tornar a %s';
-$lang['img_title']             = 'Títul:';
-$lang['img_caption']           = 'Subtítul:';
+$lang['img_title']             = 'Títol:';
+$lang['img_caption']           = 'Subtítol:';
 $lang['img_date']              = 'Data:';
-$lang['img_fname']             = 'Nom de l\'archiu:';
+$lang['img_fname']             = 'Nom de l\'arxiu:';
 $lang['img_fsize']             = 'Tamany:';
 $lang['img_artist']            = 'Fotógraf:';
 $lang['img_copyr']             = 'Copyright:';
@@ -185,7 +185,7 @@ $lang['img_camera']            = 'Càmara:';
 $lang['img_keywords']          = 'Paraules clau:';
 $lang['authtempfail']          = 'L\'autenticació d\'usuaris està desactivada temporalment. Si la situació persistix, per favor, informe a l\'administrador del Wiki.';
 $lang['i_chooselang']          = 'Trie l\'idioma';
-$lang['i_installer']           = 'Instalador de DokuWiki';
+$lang['i_installer']           = 'Instal·lador de DokuWiki';
 $lang['i_wikiname']            = 'Nom del Wiki';
 $lang['i_enableacl']           = 'Activar ACL (recomanat)';
 $lang['i_superuser']           = 'Super-usuari';
@@ -195,13 +195,13 @@ Deuria tornar a extraure els archius del paquet que ha descarregat o consultar l
 <a href="http://dokuwiki.org/install">instruccions d\'instalació de Dokuwiki</a> completes';
 $lang['i_funcna']              = 'La funció de PHP <code>%s</code> no està disponible. ¿Pot ser que el seu proveïdor d\'hostage l\'haja desactivada per algun motiu?';
 $lang['i_phpver']              = 'La versió de PHP <code>%s</code> és menor que
-la <code>%s</code> que es necessita. Necessita actualisar PHP.';
+la <code>%s</code> que es necessita. Necessita actualitzar PHP.';
 $lang['i_permfail']            = 'DokuWiki no pot escriure en <code>%s</code>. ¡Necessita arreglar els permissos d\'este directori!';
 $lang['i_confexists']          = '<code>%s</code> ya existix';
-$lang['i_writeerr']            = 'No es pot crear <code>%s</code>. Haurà de comprovar els permissos del directori/archiu i crear manualment l\'archiu.';
+$lang['i_writeerr']            = 'No es pot crear <code>%s</code>. Haurà de comprovar els permissos del directori/archiu i crear manualment l\'arxiu.';
 $lang['i_badhash']             = 'dokuwiki.php substituït o modificat (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valor illegal o buit';
-$lang['i_success']             = 'La configuració ha finalisat correctament. Ya pot borrar l\'archiu install.php. Passe al
+$lang['i_success']             = 'La configuració ha finalisat correctament. Ya pot borrar l\'arxiu install.php. Passe al
 <a href="doku.php?id=wiki:welcome">nou DokuWiki</a>.';
 $lang['i_failure']             = 'Han aparegut alguns erros escrivint els archius de configuració. Deurà arreglar-los manualment abans de que
 puga utilisar el <a href="doku.php?id=wiki:welcome">nou DokuWiki</a>.';

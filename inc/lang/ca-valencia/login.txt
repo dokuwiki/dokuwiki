@@ -1,4 +1,4 @@
 ====== Inici de sessió ======
 
-¡Encara no ha iniciat sessió! Introduïxca les seues credencials d'autenticació per a iniciar-la. Necessita tindre les galletes del navegador activades.
+Encara no ha iniciat sessió! Introduïxca les seues credencials d'autenticació per a iniciar-la. Necessita tindre les galetes del navegador activades.
 

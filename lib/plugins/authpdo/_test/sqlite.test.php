@@ -33,6 +33,7 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         if(!class_exists('PDO') || !in_array('sqlite',PDO::getAvailableDrivers())) {
             $this->markTestSkipped('skipping all authpdo tests for sqlite.  Need PDO_sqlite extension');
         }
+        $this->assertTrue(true); // avoid being marked as risky for having no assertion
     }
 
     public function setUp() {

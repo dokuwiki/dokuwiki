@@ -2,4 +2,3 @@
 
 A keresés eredményét lentebb láthatod. @CREATEPAGEINFO@
 
-===== Eredmény(ek) =====

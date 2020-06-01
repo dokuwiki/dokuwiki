@@ -8,7 +8,9 @@ class io_readfile_test extends DokuWikiTest {
     public function test_ext_zlib() {
         if (!DOKU_HAS_GZIP) {
             $this->markTestSkipped('skipping all zlib tests.  Need zlib extension');
+            return;
         }
+        $this->assertTrue(true);
     }
 
     /*
@@ -17,7 +19,9 @@ class io_readfile_test extends DokuWikiTest {
     public function test_ext_bz2() {
         if (!DOKU_HAS_BZIP) {
             $this->markTestSkipped('skipping all bzip2 tests.  Need bz2 extension');
+            return;
         }
+        $this->assertTrue(true);
     }
 
     function test_plain(){

@@ -3,12 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Andrew Pleshakov <beotiger@mail.ru>
- * @author Змей Этерийский evil_snake@eternion.ru
+ * @author Змей Этерийский <evil_snake@eternion.ru>
  * @author Hikaru Nakajima <jisatsu@mail.ru>
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>
- * @author Irina Ponomareva irinaponomareva@webperfectionist.com
  * @author Alexander Sorkin <kibizoid@gmail.com>
  * @author Kirill Krasnov <krasnovforum@gmail.com>
  * @author Vlad Tsybenko <vlad.development@gmail.com>
@@ -17,9 +17,7 @@
  * @author Ladyko Andrey <fylh@succexy.spb.ru>
  * @author Eugene <windy.wanderer@gmail.com>
  * @author Johnny Utah <pcpa@cyberpunk.su>
- * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author Pavel <ivanovtsk@mail.ru>
- * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Igor Degraf <igordegraf@gmail.com>
  * @author Vitaly Filatenko <kot@hacktest.net>
  * @author dimsharav <dimsharav@gmail.com>
@@ -75,17 +73,17 @@ $lang['import_userlistcsv']    = 'Файл со списком пользова�
 $lang['import_header']         = 'Последний импорт — список ошибок';
 $lang['import_success_count']  = 'Импорт пользователей: %d пользователей найдено, %d импортировано успешно.';
 $lang['import_failure_count']  = 'Импорт пользователей: %d не удалось. Ошибки перечислены ниже.';
-$lang['import_error_fields']   = 'Не все поля заполнены. Найдено %d, а нужно: 4.';
+$lang['import_error_fields']   = 'Не все поля заполнены. Найдено %d, а требуется 4.';
 $lang['import_error_baduserid'] = 'Отсутствует идентификатор пользователя';
-$lang['import_error_badname']  = 'Имя не годится';
-$lang['import_error_badmail']  = 'Адрес электронной почты не годится';
+$lang['import_error_badname']  = 'Неверное имя';
+$lang['import_error_badmail']  = 'Неверный адрес эл. почты';
 $lang['import_error_upload']   = 'Импорт не удался. CSV-файл не загружен или пуст.';
 $lang['import_error_readfail'] = 'Импорт не удался. Невозможно прочесть загруженный файл.';
 $lang['import_error_create']   = 'Невозможно создать пользователя';
 $lang['import_notify_fail']    = 'Оповещение не может быть отправлено импортированному пользователю %s по электронной почте %s.';
 $lang['import_downloadfailures'] = 'Скачать ошибки в формате CSV для исправления';
 $lang['addUser_error_missing_pass'] = 'Для возможности генерации пароля, пожалуйста, установите пароль или активируйте оповещения.';
-$lang['addUser_error_pass_not_identical'] = 'Введённые ппароли не совпадают.';
+$lang['addUser_error_pass_not_identical'] = 'Введённые пароли не совпадают.';
 $lang['addUser_error_modPass_disabled'] = 'Изменение пароля в настоящее время невозможно.';
 $lang['addUser_error_name_missing'] = 'Укажите имя нового пользователя.';
 $lang['addUser_error_modName_disabled'] = 'Изменение имени в настоящее время невозможно.';

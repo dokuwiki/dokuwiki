@@ -164,7 +164,7 @@ class Tar extends Archive
 
             // extract data
             if (!$fileinfo->getIsdir()) {
-                $fp = fopen($output, "wb");
+                $fp = @fopen($output, "wb");
                 if (!$fp) {
                     throw new ArchiveIOException('Could not open file for writing: '.$output);
                 }
@@ -230,9 +230,10 @@ class Tar extends Archive
     /**
      * Add a file to the current TAR archive using an existing file in the filesystem
      *
-     * @param string          $file     path to the original file
+     * @param string $file path to the original file
      * @param string|FileInfo $fileinfo either the name to us in archive (string) or a FileInfo oject with all meta data, empty to take from original
-     * @throws ArchiveIOException
+     * @throws ArchiveCorruptedException when the file changes while reading it, the archive will be corrupt and should be deleted
+     * @throws ArchiveIOException there was trouble reading the given file, it was not added
      */
     public function addFile($file, $fileinfo = '')
     {
@@ -244,7 +245,7 @@ class Tar extends Archive
             throw new ArchiveIOException('Archive has been closed, files can no longer be added');
         }
 
-        $fp = fopen($file, 'rb');
+        $fp = @fopen($file, 'rb');
         if (!$fp) {
             throw new ArchiveIOException('Could not open file for reading: '.$file);
         }
@@ -253,8 +254,10 @@ class Tar extends Archive
         $this->writeFileHeader($fileinfo);
 
         // write data
+        $read = 0;
         while (!feof($fp)) {
             $data = fread($fp, 512);
+            $read += strlen($data);
             if ($data === false) {
                 break;
             }
@@ -265,6 +268,11 @@ class Tar extends Archive
             $this->writebytes($packed);
         }
         fclose($fp);
+
+        if($read != $fileinfo->getSize()) {
+            $this->close();
+            throw new ArchiveCorruptedException("The size of $file changed while reading, archive corrupted. read $read expected ".$fileinfo->getSize());
+        }
     }
 
     /**
@@ -348,7 +356,7 @@ class Tar extends Archive
         }
 
         if ($this->comptype === Archive::COMPRESS_GZIP) {
-            return gzcompress($this->memory, $this->complevel);
+            return gzencode($this->memory, $this->complevel);
         }
         if ($this->comptype === Archive::COMPRESS_BZIP) {
             return bzcompress($this->memory);
@@ -371,7 +379,7 @@ class Tar extends Archive
             $this->setCompression($this->complevel, $this->filetype($file));
         }
 
-        if (!file_put_contents($file, $this->getArchive())) {
+        if (!@file_put_contents($file, $this->getArchive())) {
             throw new ArchiveIOException('Could not write to file: '.$file);
         }
     }
@@ -425,7 +433,7 @@ class Tar extends Archive
      *
      * @param int $bytes seek to this position
      */
-    function skipbytes($bytes)
+    protected function skipbytes($bytes)
     {
         if ($this->comptype === Archive::COMPRESS_GZIP) {
             @gzseek($this->fh, $bytes, SEEK_CUR);
@@ -573,7 +581,7 @@ class Tar extends Archive
         // Handle Long-Link entries from GNU Tar
         if ($return['typeflag'] == 'L') {
             // following data block(s) is the filename
-            $filename = trim($this->readbytes(ceil($header['size'] / 512) * 512));
+            $filename = trim($this->readbytes(ceil($return['size'] / 512) * 512));
             // next block is the real header
             $block  = $this->readbytes(512);
             $return = $this->parseHeader($block);
@@ -637,7 +645,7 @@ class Tar extends Archive
     {
         // for existing files, try to read the magic bytes
         if(file_exists($file) && is_readable($file) && filesize($file) > 5) {
-            $fh = fopen($file, 'rb');
+            $fh = @fopen($file, 'rb');
             if(!$fh) return false;
             $magic = fread($fh, 5);
             fclose($fh);

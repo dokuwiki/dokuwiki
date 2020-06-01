@@ -59,6 +59,8 @@ define('METADATA_RENDER_UNLIMITED', 4);
  * @param string $id page id
  * @param string|int $rev revision timestamp or empty string
  * @param bool $excuse
+ * @param string $date_at
+ *
  * @return null|string
  */
 function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
@@ -335,13 +337,13 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
 
             foreach ($value as $subkey => $subvalue){
                 if(isset($meta['current'][$key][$subkey]) && is_array($meta['current'][$key][$subkey])) {
-                    $meta['current'][$key][$subkey] = array_merge($meta['current'][$key][$subkey], (array)$subvalue);
+                    $meta['current'][$key][$subkey] = array_replace($meta['current'][$key][$subkey], (array)$subvalue);
                 } else {
                     $meta['current'][$key][$subkey] = $subvalue;
                 }
                 if($persistent) {
                     if(isset($meta['persistent'][$key][$subkey]) && is_array($meta['persistent'][$key][$subkey])) {
-                        $meta['persistent'][$key][$subkey] = array_merge($meta['persistent'][$key][$subkey], (array)$subvalue);
+                        $meta['persistent'][$key][$subkey] = array_replace($meta['persistent'][$key][$subkey], (array)$subvalue);
                     } else {
                         $meta['persistent'][$key][$subkey] = $subvalue;
                     }
@@ -353,10 +355,10 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
 
             // these keys, must have subkeys - a legitimate value must be an array
             if (is_array($value)) {
-                $meta['current'][$key] = !empty($meta['current'][$key]) ? array_merge((array)$meta['current'][$key],$value) : $value;
+                $meta['current'][$key] = !empty($meta['current'][$key]) ? array_replace((array)$meta['current'][$key],$value) : $value;
 
                 if ($persistent) {
-                    $meta['persistent'][$key] = !empty($meta['persistent'][$key]) ? array_merge((array)$meta['persistent'][$key],$value) : $value;
+                    $meta['persistent'][$key] = !empty($meta['persistent'][$key]) ? array_replace((array)$meta['persistent'][$key],$value) : $value;
                 }
             }
 
@@ -743,20 +745,20 @@ function p_get_first_heading($id, $render=METADATA_RENDER_USING_SIMPLE_CACHE){
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
+function p_xhtml_cached_geshi($code, $language, $wrapper='pre', array $options=null) {
     global $conf, $config_cascade, $INPUT;
     $language = strtolower($language);
 
     // remove any leading or trailing blank lines
     $code = preg_replace('/^\s*?\n|\s*?\n$/','',$code);
 
-    $cache = getCacheName($language.$code,".code");
+    $optionsmd5 = md5(serialize($options));
+    $cache = getCacheName($language.$code.$optionsmd5,".code");
     $ctime = @filemtime($cache);
     if($ctime && !$INPUT->bool('purge') &&
             $ctime > filemtime(DOKU_INC.'vendor/composer/installed.json') &&  // libraries changed
             $ctime > filemtime(reset($config_cascade['main']['default']))){ // dokuwiki changed
         $highlighted_code = io_readFile($cache, false);
-
     } else {
 
         $geshi = new GeSHi($code, $language);
@@ -764,6 +766,13 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
         $geshi->enable_classes();
         $geshi->set_header_type(GESHI_HEADER_PRE);
         $geshi->set_link_target($conf['target']['extern']);
+        if($options !== null) {
+            foreach ($options as $function => $params) {
+                if(is_callable(array($geshi, $function))) {
+                    $geshi->$function($params);
+                }
+            }
+        }
 
         // remove GeSHi's wrapper element (we'll replace it with our own later)
         // we need to use a GeSHi wrapper to avoid <BR> throughout the highlighted text

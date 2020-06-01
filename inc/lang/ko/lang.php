@@ -3,18 +3,19 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Seungheon Song <esketch@gmail.com>
  * @author Hyun Kim <lawfully@gmail.com>
  * @author jk Lee
- * @author dongnak@gmail.com
+ * @author dongnak <dongnak@gmail.com>
  * @author Song Younghwan <purluno@gmail.com>
  * @author Seung-Chul Yoo <dryoo@live.com>
- * @author erial2@gmail.com
+ * @author erial2 <erial2@gmail.com>
  * @author Myeongjin <aranet100@gmail.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Garam <rowain8@gmail.com>
  * @author Young gon Cha <garmede@gmail.com>
  * @author hyeonsoft <hyeonsoft@live.co.kr>
- * @author Erial <erial2@gmail.com>
+ * @author S.H. Lee <tuders@naver.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -75,7 +76,6 @@ $lang['badpassconfirm']        = '죄송하지만 비밀번호가 잘못되었�
 $lang['minoredit']             = '사소한 바뀜';
 $lang['draftdate']             = '초안 자동 저장 시간';
 $lang['nosecedit']             = '한 동안 문서가 바뀌었으며, 문단 정보가 오래되어 문서 전체를 대신 열었습니다.';
-$lang['searchcreatepage']      = '만약 원하는 문서를 찾지 못했다면, \'\'문서 만들기\'\'나 \'\'문서 편집\'\'을 사용해 검색어와 같은 이름의 문서를 만들거나 편집할 수 있습니다.';
 $lang['regmissing']            = '죄송하지만 모든 필드를 채워야 합니다.';
 $lang['reguexists']            = '죄송하지만 같은 이름을 사용하는 사용자가 있습니다.';
 $lang['regsuccess']            = '사용자 계정을 만들었으며 비밀번호는 이메일로 보냈습니다.';

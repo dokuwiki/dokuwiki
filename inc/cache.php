@@ -18,9 +18,9 @@ class cache {
     public $depends = array(); // array containing cache dependency information,
                                //   used by _useCache to determine cache validity
 
-    var $_event = '';       // event to be triggered during useCache
-    var $_time;
-    var $_nocache = false;  // if set to true, cache will not be used or stored
+    public $_event = '';       // event to be triggered during useCache
+    public $_time;
+    public $_nocache = false;  // if set to true, cache will not be used or stored
 
     /**
      * @param string $key primary identifier
@@ -180,7 +180,7 @@ class cache_parser extends cache {
     public $mode = '';       // input mode (represents the processing the input file will undergo)
     public $page = '';
 
-    var $_event = 'PARSER_CACHE_USE';
+    public $_event = 'PARSER_CACHE_USE';
 
     /**
      *

@@ -3,10 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Damien Regad <dregad@mantisbt.org>
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
+ * @author Michael Bohn <mjbohn@gmail.com>
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
- * @author <stephane.gully@gmail.com>
+ * @author stephane.gully <stephane.gully@gmail.com>
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author olivier duperray <duperray.olivier@laposte.net>
@@ -15,7 +18,6 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz <samuel.dorsaz@novelion.net>
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
- * @author <skimpax@gmail.com>
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
@@ -23,7 +25,6 @@
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Floriang <antispam@floriang.eu>
- * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Simon DELAGE <simon.geekitude@gmail.com>
  * @author Eric <ericstevenart@netc.fr>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
@@ -39,7 +40,7 @@ $lang['security']              = 'Avertissement de sécurité : modifier cette o
 $lang['_configuration_manager'] = 'Gestionnaire de configuration';
 $lang['_header_dokuwiki']      = 'Paramètres de DokuWiki';
 $lang['_header_plugin']        = 'Paramètres des extensions';
-$lang['_header_template']      = 'Paramètres du modèle';
+$lang['_header_template']      = 'Paramètres du thème';
 $lang['_header_undefined']     = 'Paramètres indéfinis';
 $lang['_basic']                = 'Paramètres de base';
 $lang['_display']              = 'Paramètres d\'affichage';
@@ -58,9 +59,9 @@ $lang['_msg_setting_no_default'] = 'Pas de valeur par défaut.';
 $lang['title']                 = 'Titre du wiki (nom du wiki)';
 $lang['start']                 = 'Nom de la page d\'accueil à utiliser pour toutes les catégories';
 $lang['lang']                  = 'Langue de l\'interface';
-$lang['template']              = 'Modèle (rendu visuel du wiki)';
-$lang['tagline']               = 'Descriptif du site (si le modèle supporte cette fonctionnalité)';
-$lang['sidebar']               = 'Nom du panneau latéral (si le modèle supporte cette fonctionnalité). Laisser le champ vide désactive le panneau latéral.';
+$lang['template']              = 'Thème (rendu visuel du wiki)';
+$lang['tagline']               = 'Descriptif du site (si le thème utilise cette fonctionnalité)';
+$lang['sidebar']               = 'Nom du panneau latéral (si le thème utilise cette fonctionnalité). Laisser le champ vide désactive le panneau latéral.';
 $lang['license']               = 'Sous quelle licence doit-être placé le contenu ?';
 $lang['savedir']               = 'Répertoire d\'enregistrement des données';
 $lang['basedir']               = 'Répertoire de base du serveur (par exemple : <code>/dokuwiki/</code>). Laisser vide pour une détection automatique.';
@@ -124,7 +125,7 @@ $lang['target____media']       = 'Cible pour liens média';
 $lang['target____windows']     = 'Cible pour liens vers partages Windows';
 $lang['mediarevisions']        = 'Activer les révisions (gestion de versions) des médias';
 $lang['refcheck']              = 'Vérifier si un média est toujours utilisé avant de le supprimer';
-$lang['gdlib']                 = 'Version de la librairie GD';
+$lang['gdlib']                 = 'Version de la bibliothèque GD';
 $lang['im_convert']            = 'Chemin vers l\'outil de conversion ImageMagick';
 $lang['jpg_quality']           = 'Qualité de la compression JPEG (0-100)';
 $lang['fetchsize']             = 'Taille maximale (en octets) que fetch.php peut télécharger depuis une URL tierce (par exemple pour conserver en cache et redimensionner une image tierce)';
@@ -133,6 +134,7 @@ $lang['subscribe_time']        = 'Délai après lequel les listes d\'abonnement 
 $lang['notify']                = 'Notifier systématiquement les modifications à cette adresse de courriel';
 $lang['registernotify']        = 'Notifier systématiquement les nouveaux utilisateurs enregistrés à cette adresse de courriel';
 $lang['mailfrom']              = 'Adresse de courriel de l\'expéditeur des notifications par courriel du wiki';
+$lang['mailreturnpath']        = 'Adresse de courriel du destinataire pour les notifications de non-remise';
 $lang['mailprefix']            = 'Préfixe à utiliser dans les objets des courriels automatiques. Laisser vide pour utiliser le titre du wiki';
 $lang['htmlmail']              = 'Envoyer des courriel HTML multipart (visuellement plus agréable, mais plus lourd). Désactiver pour utiliser uniquement des courriel plain text';
 $lang['sitemap']               = 'Fréquence de génération du sitemap Google (jours). 0 pour désactiver';
@@ -142,6 +144,9 @@ $lang['rss_content']           = 'Quel contenu afficher dans le flux XML?';
 $lang['rss_update']            = 'Fréquence de mise à jour du flux XML (secondes)';
 $lang['rss_show_summary']      = 'Le flux XML affiche le résumé dans le titre';
 $lang['rss_media']             = 'Quels types de changements doivent être listés dans le flux XML?';
+$lang['rss_media_o_both']      = 'les deux';
+$lang['rss_media_o_pages']     = 'pages';
+$lang['rss_media_o_media']     = 'media';
 $lang['updatecheck']           = 'Vérifier les mises à jour et alertes de sécurité? DokuWiki doit pouvoir contacter update.dokuwiki.org';
 $lang['userewrite']            = 'Utiliser des URL esthétiques';
 $lang['useslash']              = 'Utiliser « / » comme séparateur de catégories dans les URL';
@@ -151,15 +156,21 @@ $lang['fnencode']              = 'Méthode pour l\'encodage des fichiers non-ASC
 $lang['autoplural']            = 'Rechercher les formes plurielles dans les liens';
 $lang['compression']           = 'Méthode de compression pour les fichiers attic';
 $lang['gzip_output']           = 'Utiliser gzip pour le Content-Encoding du XHTML';
-$lang['compress']              = 'Compresser les flux CSS et JavaScript';
+$lang['compress']              = 'Compresser les fichiers CSS et JavaScript';
 $lang['cssdatauri']            = 'Taille maximale en octets pour inclure dans les feuilles de styles CSS les images qui y sont référencées. Cette technique réduit le nombre de requêtes HTTP. Cette fonctionnalité ne fonctionne qu\'à partir de la version 8 d\'Internet Explorer! Nous recommandons une valeur entre <code>400</code> et <code>600</code>. <code>0</code> pour désactiver.';
 $lang['send404']               = 'Renvoyer « HTTP 404/Page Not Found » pour les pages inexistantes';
 $lang['broken_iua']            = 'La fonction ignore_user_abort est-elle opérationnelle sur votre système ? Ceci peut empêcher le fonctionnement de l\'index de recherche. IIS+PHP/
 CGI dysfonctionne. Voir le <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">bug 852</a> pour plus d\'informations.';
-$lang['xsendfile']             = 'Utiliser l\'en-tête X-Sendfile pour permettre au serveur web de délivrer les fichiers statiques ? Votre serveur web doit supporter cette fonctionnalité.';
+$lang['xsendfile']             = 'Utiliser l\'en-tête X-Sendfile pour permettre au serveur web de délivrer les fichiers statiques ? Votre serveur web doit prendre en charge cette technologie.';
 $lang['renderer_xhtml']        = 'Moteur de rendu du format de sortie principal (XHTML)';
 $lang['renderer__core']        = '%s (cœur de DokuWiki)';
 $lang['renderer__plugin']      = '%s (extension)';
+$lang['search_nslimit']        = 'Limiter la recherche aux X catégories courantes. Quand une recherche est effectuée à partir d\'une page dans une catégorie profondément imbriquée, les premières X catégories sont ajoutées comme filtre.';
+$lang['search_fragment']       = 'Spécifier le comportement de recherche fragmentaire par défaut';
+$lang['search_fragment_o_exact'] = 'exact';
+$lang['search_fragment_o_starts_with'] = 'commence par';
+$lang['search_fragment_o_ends_with'] = 'se termine par';
+$lang['search_fragment_o_contains'] = 'contient';
 $lang['dnslookups']            = 'DokuWiki effectuera une résolution du nom d\'hôte sur les adresses IP des utilisateurs modifiant des pages. Si vous ne possédez pas de serveur DNS, que ce dernier est lent ou que vous ne souhaitez pas utiliser cette fonctionnalité : désactivez-la.';
 $lang['jquerycdn']             = 'Faut-il distribuer les scripts JQuery et JQuery UI depuis un CDN ? Cela ajoute une requête HTTP, mais les fichiers peuvent se charger plus vite et les internautes les ont peut-être déjà en cache.';
 $lang['jquerycdn_o_0']         = 'Non : utilisation de votre serveur.';
@@ -187,7 +198,7 @@ $lang['userewrite_o_2']        = 'Interne à DokuWiki';
 $lang['deaccent_o_0']          = 'off';
 $lang['deaccent_o_1']          = 'supprimer les accents';
 $lang['deaccent_o_2']          = 'convertir en caractères latins';
-$lang['gdlib_o_0']             = 'Librairie GD non disponible';
+$lang['gdlib_o_0']             = 'Bibliothèque GD non disponible';
 $lang['gdlib_o_1']             = 'version 1.x';
 $lang['gdlib_o_2']             = 'auto-détectée';
 $lang['rss_type_o_rss']        = 'RSS 0.91';

@@ -57,9 +57,9 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
     public function form() {
         global $conf;
         global $ID;
-        define('SIMPLE_TEST', 1); // hack, ideally certain functions should be moved out of css.php
-        require_once(DOKU_INC.'lib/exe/css.php');
-        $styleini     = css_styleini($conf['template'], true);
+
+        $styleUtil = new \dokuwiki\StyleUtils();
+        $styleini     = $styleUtil->cssStyleini($conf['template'], true);
         $replacements = $styleini['replacements'];
 
         if($this->ispopup) {

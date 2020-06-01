@@ -6,17 +6,16 @@
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
- * @author tomas@valenta.cz
+ * @author tomas <tomas@valenta.cz>
  * @author Marek Sacha <sachamar@fel.cvut.cz>
  * @author Lefty <lefty@multihost.cz>
  * @author Vojta Beran <xmamut@email.cz>
- * @author zbynek.krivka@seznam.cz
- * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  * @author Jakub A. Těšínský (j@kub.cz)
- * @author mkucera66@seznam.cz
+ * @author mkucera66 <mkucera66@seznam.cz>
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Daniel Slováček <danslo@danslo.cz>
+ * @author Martin Růžička <martinr@post.cz>
  */
 $lang['menu']                  = 'Správa uživatelů';
 $lang['noauth']                = '(autentizace uživatelů není k dispozici)';
@@ -45,7 +44,7 @@ $lang['import']                = 'Importovat nové uživatele';
 $lang['line']                  = 'Řádek č.';
 $lang['error']                 = 'Chybová zpráva';
 $lang['summary']               = 'Zobrazuji uživatele %1$d-%2$d z %3$d nalezených. Celkem %4$d uživatelů.';
-$lang['nonefound']             = 'Žadný uživatel nenalezen. Celkem %d uživatelů.';
+$lang['nonefound']             = 'Žádný uživatel nebyl nalezen. Celkem %d uživatelů.';
 $lang['delete_ok']             = '%d uživatelů smazáno';
 $lang['delete_fail']           = '%d uživatelů nelze smazat.';
 $lang['update_ok']             = 'Uživatel upraven';
@@ -79,9 +78,9 @@ $lang['import_notify_fail']    = 'Importovanému uživateli %s s e-mailem %s nem
 $lang['import_downloadfailures'] = 'Stáhnout chyby pro nápravu jako CVS';
 $lang['addUser_error_missing_pass'] = 'Buď prosím nastavte heslo nebo aktivujte upozorňování uživatel aby fungovalo vytváření hesel.';
 $lang['addUser_error_pass_not_identical'] = 'Zadaná hesla nebyla shodná.';
-$lang['addUser_error_modPass_disabled'] = 'Změna hesel je momentálně zákázána.';
+$lang['addUser_error_modPass_disabled'] = 'Změna hesel je momentálně zakázána.';
 $lang['addUser_error_name_missing'] = 'Zadejte prosím jméno nového uživatele.';
 $lang['addUser_error_modName_disabled'] = 'Změna jmen je momentálně zakázána.';
 $lang['addUser_error_mail_missing'] = 'Zadejte prosím emailovou adresu nového uživatele.';
-$lang['addUser_error_modMail_disabled'] = 'Změna emailové adresy je momentálně zákázána.';
+$lang['addUser_error_modMail_disabled'] = 'Změna e-mailové adresy je momentálně zakázána.';
 $lang['addUser_error_create_event_failed'] = 'Zásuvný modul zabránil přidání nového uživatele. Pro více informací si prohlédněte další možné zprávy.';

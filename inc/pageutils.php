@@ -396,6 +396,8 @@ function metaFiles($id){
  *
  * @param string     $id  media id
  * @param string|int $rev empty string or revision timestamp
+ * @param bool $clean
+ *
  * @return string full path
  */
 function mediaFN($id, $rev='', $clean=true){

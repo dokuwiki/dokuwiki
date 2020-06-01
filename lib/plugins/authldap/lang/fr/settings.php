@@ -5,7 +5,6 @@
  *
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author schplurtz <Schplurtz@laposte.net>
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  */
 $lang['server']                = 'Votre serveur LDAP. Soit le nom d\'hôte (<code>localhost</code>) ou l\'URL complète (<code>ldap://serveur.dom:389</code>)';
 $lang['port']                  = 'Port du serveur LDAP si l\'URL complète n\'a pas été indiquée ci-dessus';

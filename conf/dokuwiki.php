@@ -108,6 +108,7 @@ $conf['subscribe_time'] = 24*60*60;      //Time after which digests / lists are 
 $conf['notify']      = '';               //send change info to this email (leave blank for nobody)
 $conf['registernotify'] = '';            //send info about newly registered users to this email (leave blank for nobody)
 $conf['mailfrom']    = '';               //use this email when sending mails
+$conf['mailreturnpath']    = '';         //use this email as returnpath for bounce mails
 $conf['mailprefix']  = '';               //use this as prefix of outgoing mails
 $conf['htmlmail']    = 1;                //send HTML multipart mails
 
@@ -155,6 +156,8 @@ $conf['broken_iua']  = 0;                //Platform with broken ignore_user_abor
 $conf['xsendfile']   = 0;                //Use X-Sendfile (1 = lighttpd, 2 = standard)
 $conf['renderer_xhtml'] = 'xhtml';       //renderer to use for main page generation
 $conf['readdircache'] = 0;               //time cache in second for the readdir operation, 0 to deactivate.
+$conf['search_nslimit'] = 0;             //limit the search to the current X namespaces
+$conf['search_fragment'] = 'exact';      //specify the default fragment search behavior
 
 /* Network Settings */
 $conf['dnslookups'] = 1;                 //disable to disallow IP to hostname lookups

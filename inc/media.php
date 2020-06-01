@@ -427,7 +427,12 @@ function media_save($file, $id, $ow, $auth, $move) {
 
     // get filetype regexp
     $types = array_keys(getMimeTypes());
-    $types = array_map(create_function('$q','return preg_quote($q,"/");'),$types);
+    $types = array_map(
+        function ($q) {
+            return preg_quote($q, "/");
+        },
+        $types
+    );
     $regex = join('|',$types);
 
     // because a temp file was created already
@@ -1481,11 +1486,18 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
         'data'  => array(),
         'query' => $query
     );
-    if ($query) {
+    if (!blank($query)) {
         $evt = new Doku_Event('MEDIA_SEARCH', $evdata);
         if ($evt->advise_before()) {
             $dir = utf8_encodeFN(str_replace(':','/',$evdata['ns']));
-            $pattern = '/'.preg_quote($evdata['query'],'/').'/i';
+            $quoted = preg_quote($evdata['query'],'/');
+            //apply globbing
+            $quoted = str_replace(array('\*', '\?'), array('.*', '.'), $quoted, $count);
+
+            //if we use globbing file name must match entirely but may be preceded by arbitrary namespace
+            if ($count > 0) $quoted = '^([^:]*:)*'.$quoted.'$';
+
+            $pattern = '/'.$quoted.'/i';
             search($evdata['data'],
                     $conf['mediadir'],
                     'search_media',
@@ -1729,9 +1741,9 @@ function media_printimgdetail($item, $fullscreen=false){
     // print EXIF/IPTC data
     if($t || $d || $k ){
         echo '<p>';
-        if($t) echo '<strong>'.htmlspecialchars($t).'</strong><br />';
-        if($d) echo htmlspecialchars($d).'<br />';
-        if($t) echo '<em>'.htmlspecialchars($k).'</em>';
+        if($t) echo '<strong>'.hsc($t).'</strong><br />';
+        if($d) echo hsc($d).'<br />';
+        if($t) echo '<em>'.hsc($k).'</em>';
         echo '</p>';
     }
     echo '</div>';
@@ -2446,6 +2458,41 @@ function media_supportedav($mime, $type=NULL){
         $supportedAv = array_merge($supportedAudio, $supportedVideo);
     }
     return in_array($mime, $supportedAv);
+}
+
+/**
+ * Return track media files with the same base name
+ * but extensions that indicate kind and lang.
+ * ie for foo.webm search foo.sub.lang.vtt, foo.cap.lang.vtt...
+ *
+ * @param string   $src     - ID of media file
+ * @return array            - array(mediaID => array( kind, srclang ))
+ *
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
+ */
+function media_trackfiles($src){
+    $kinds=array(
+        'sub' => 'subtitles',
+        'cap' => 'captions',
+        'des' => 'descriptions',
+        'cha' => 'chapters',
+        'met' => 'metadata'
+    );
+
+    $files = array();
+    $re='/\\.(sub|cap|des|cha|met)\\.([^.]+)\\.vtt$/';
+    $baseid=pathinfo($src, PATHINFO_FILENAME);
+    $pattern=mediaFN($baseid).'.*.*.vtt';
+    $list=glob($pattern);
+    foreach($list as $track) {
+        if(preg_match($re, $track, $matches)){
+            $files[$baseid.'.'.$matches[1].'.'.$matches[2].'.vtt']=array(
+                $kinds[$matches[1]],
+                $matches[2],
+            );
+        }
+    }
+    return $files;
 }
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */

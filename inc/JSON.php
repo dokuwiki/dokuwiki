@@ -305,6 +305,10 @@ class JSON {
 
     /**
      * encodes an arbitrary variable into JSON format, alias for encode()
+     *
+     * @param mixed $var
+     *
+     * @return string
      */
     function enc($var) {
         return $this->encode($var);
@@ -640,6 +644,10 @@ class JSON {
 
     /**
      * decodes a JSON string into appropriate variable; alias for decode()
+     *
+     * @param string $var
+     *
+     * @return mixed
      */
     function dec($var) {
         return $this->decode($var);

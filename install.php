@@ -1,4 +1,13 @@
 <?php
+/*><div style="width:60%; margin: auto; background-color: #fcc;
+                border: 1px solid #faa; padding: 0.5em 1em;">
+    <h1 style="font-size: 120%">No PHP Support</h1>
+
+    It seems this server has no PHP support enabled. You will need to
+    enable PHP before you can install and run DokuWiki. Contact your hosting
+    provider if you're unsure what this means.
+
+</div>*/
 /**
  * Dokuwiki installation assistance
  *
@@ -16,18 +25,6 @@ require_once(DOKU_INC.'inc/init.php');
 if (!defined('DOKU_E_LEVEL')) { error_reporting(E_ALL ^ E_NOTICE); }
 else { error_reporting(DOKU_E_LEVEL); }
 
-// kill magic quotes
-if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
-    if (!empty($_GET))    remove_magic_quotes($_GET);
-    if (!empty($_POST))   remove_magic_quotes($_POST);
-    if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
-    if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
-    @ini_set('magic_quotes_gpc', 0);
-    define('MAGIC_QUOTES_STRIPPED',1);
-}
-if (function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
-@ini_set('magic_quotes_sybase',0);
-
 // language strings
 require_once(DOKU_INC.'inc/lang/en/lang.php');
 if(isset($_REQUEST['l']) && !is_array($_REQUEST['l'])) {
@@ -40,30 +37,6 @@ if($LC && $LC != 'en' ) {
 
 // initialise variables ...
 $error = array();
-
-$dokuwiki_hash = array(
-    '2005-09-22'   => 'e33223e957b0b0a130d0520db08f8fb7',
-    '2006-03-05'   => '51295727f79ab9af309a2fd9e0b61acc',
-    '2006-03-09'   => '51295727f79ab9af309a2fd9e0b61acc',
-    '2006-11-06'   => 'b3a8af76845977c2000d85d6990dd72b',
-    '2007-05-24'   => 'd80f2740c84c4a6a791fd3c7a353536f',
-    '2007-06-26'   => 'b3ca19c7a654823144119980be73cd77',
-    '2008-05-04'   => '1e5c42eac3219d9e21927c39e3240aad',
-    '2009-02-14'   => 'ec8c04210732a14fdfce0f7f6eead865',
-    '2009-12-25'   => '993c4b2b385643efe5abf8e7010e11f4',
-    '2010-11-07'   => '7921d48195f4db21b8ead6d9bea801b8',
-    '2011-05-25'   => '4241865472edb6fa14a1227721008072',
-    '2011-11-10'   => 'b46ff19a7587966ac4df61cbab1b8b31',
-    '2012-01-25'   => '72c083c73608fc43c586901fd5dabb74',
-    '2012-09-10'   => 'eb0b3fc90056fbc12bac6f49f7764df3',
-    '2013-05-10'   => '7b62b75245f57f122d3e0f8ed7989623',
-    '2013-12-08'   => '263c76af309fbf083867c18a34ff5214',
-    '2014-05-05'   => '263c76af309fbf083867c18a34ff5214',
-    '2015-08-10'   => '263c76af309fbf083867c18a34ff5214',
-    '2016-06-26'   => 'fd3abb6d89853dacb032907e619fbd73',
-    '2017-02-19'   => 'e4f2f5a34c9dbcd96a5ecc8f2df25bd9'
-);
-
 
 // begin output
 header('Content-Type: text/html; charset=utf-8');
@@ -122,7 +95,7 @@ header('Content-Type: text/html; charset=utf-8');
                 print "</div>\n";
             }
         ?>
-        <a style="background: transparent url(data/security.png) left top no-repeat;
+        <a style="background: transparent url(data/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png) left top no-repeat;
                   display: block; width:380px; height:73px; border:none; clear:both;"
            target="_blank"
            href="http://www.dokuwiki.org/security#web_access_security"></a>
@@ -130,24 +103,28 @@ header('Content-Type: text/html; charset=utf-8');
 
     <div style="float: left; width: 58%;">
         <?php
-            if(! (check_functions() && check_permissions()) ){
-                echo '<p>'.$lang['i_problems'].'</p>';
-                print_errors();
-                print_retry();
-            }elseif(!check_configs()){
-                echo '<p>'.$lang['i_modified'].'</p>';
-                print_errors();
-            }elseif(check_data($_REQUEST['d'])){
-                // check_data has sanitized all input parameters
-                if(!store_data($_REQUEST['d'])){
-                    echo '<p>'.$lang['i_failure'].'</p>';
+            try {
+                if(! (check_functions() && check_permissions()) ){
+                    echo '<p>'.$lang['i_problems'].'</p>';
                     print_errors();
+                    print_retry();
+                }elseif(!check_configs()){
+                    echo '<p>'.$lang['i_modified'].'</p>';
+                    print_errors();
+                }elseif(check_data($_REQUEST['d'])){
+                    // check_data has sanitized all input parameters
+                    if(!store_data($_REQUEST['d'])){
+                        echo '<p>'.$lang['i_failure'].'</p>';
+                        print_errors();
+                    }else{
+                        echo '<p>'.$lang['i_success'].'</p>';
+                    }
                 }else{
-                    echo '<p>'.$lang['i_success'].'</p>';
+                    print_errors();
+                    print_form($_REQUEST['d']);
                 }
-            }else{
-                print_errors();
-                print_form($_REQUEST['d']);
+            } catch (Exception $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
             }
         ?>
     </div>
@@ -173,7 +150,7 @@ function print_form($d){
     include(DOKU_CONF.'license.php');
 
     if(!is_array($d)) $d = array();
-    $d = array_map('htmlspecialchars',$d);
+    $d = array_map('hsc',$d);
 
     if(!isset($d['acl'])) $d['acl']=1;
     if(!isset($d['pop'])) $d['pop']=1;
@@ -228,9 +205,9 @@ function print_form($d){
             if(empty($d['license'])) $d['license'] = 'cc-by-sa';
             foreach($license as $key => $lic){
                 echo '<label for="lic_'.$key.'">';
-                echo '<input type="radio" name="d[license]" value="'.htmlspecialchars($key).'" id="lic_'.$key.'"'.
+                echo '<input type="radio" name="d[license]" value="'.hsc($key).'" id="lic_'.$key.'"'.
                      (($d['license'] === $key)?' checked="checked"':'').'>';
-                echo htmlspecialchars($lic['name']);
+                echo hsc($lic['name']);
                 if($lic['url']) echo ' <a href="'.$lic['url'].'" target="_blank"><sup>[?]</sup></a>';
                 echo '</label>';
             }
@@ -481,7 +458,6 @@ function fileWrite($filename, $data) {
 function check_configs(){
     global $error;
     global $lang;
-    global $dokuwiki_hash;
 
     $ok = true;
 
@@ -490,14 +466,6 @@ function check_configs(){
         'users' => DOKU_LOCAL.'users.auth.php',
         'auth'  => DOKU_LOCAL.'acl.auth.php'
     );
-
-    // main dokuwiki config file (conf/dokuwiki.php) must not have been modified
-    $installation_hash = md5(preg_replace("/(\015\012)|(\015)/","\012",
-                             @file_get_contents(DOKU_CONF.'dokuwiki.php')));
-    if (!in_array($installation_hash, $dokuwiki_hash)) {
-        $error[] = sprintf($lang['i_badhash'],$installation_hash);
-        $ok = false;
-    }
 
     // configs shouldn't exist
     foreach ($config_files as $file) {
@@ -560,8 +528,8 @@ function check_functions(){
     global $lang;
     $ok = true;
 
-    if(version_compare(phpversion(),'5.3.3','<')){
-        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.3.3');
+    if(version_compare(phpversion(),'5.6.0','<')){
+        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.6.0');
         $ok = false;
     }
 

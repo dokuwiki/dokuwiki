@@ -74,7 +74,6 @@ $lang['badpassconfirm']        = 'Üzgünüz, parolanız yanlış';
 $lang['minoredit']             = 'Küçük Değişiklikler';
 $lang['draftdate']             = 'Taslak şu saatte otomatik kaydedildi:';
 $lang['nosecedit']             = 'Sayfa yakın zamanda değiştirilmiştir, bölüm bilgisi eski kalmıştır. Bunun için bölüm yerine tüm sayfa yüklenmiştir.';
-$lang['searchcreatepage']      = 'Aradığınız şeyi bulamadıysanız, \'\'Sayfayı değiştir\'\' tuşuna tıklayarak girdiğiniz sorgu adıyla yeni bir sayfa oluşturabilirsiniz .';
 $lang['regmissing']            = 'Üzgünüz, tüm alanları doldurmalısınız.';
 $lang['reguexists']            = 'Üzgünüz, bu isime sahip bir kullanıcı zaten mevcut.';
 $lang['regsuccess']            = 'Kullanıcı oluşturuldu ve şifre e-posta adresine gönderildi.';

@@ -41,6 +41,5 @@ $lang['lastmod']    = 'Guherandina dawî:';
 $lang['deleted']    = 'hat jê birin';
 $lang['created']    = 'hat afirandin';
 $lang['summary']    = 'Kurteya guhartinê';
-$lang['searchcreatepage']      = "Heke tiştek nehatibe dîtin, tu dikarî dest bi nivîsandina rûpelekê nû bikî. Ji bo vê, ''Vê rûpelê biguherîne'' bitikîne.";
 
 //Setup VIM: ex: et ts=2 :
