@@ -6,7 +6,6 @@
  * @see     http://backend.userland.com/rss
  * @since   1.3
  * @author  Kai Blankenhorn <kaib@bitfolge.de>
- * @package de.bitfolge.feedcreator
  */
 class RSSCreator20 extends RSSCreator091
 {

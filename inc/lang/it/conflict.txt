@@ -3,4 +3,3 @@
 Esiste una versione più recente del documento che hai modificato. Questo può accadere quando un altro utente ha già modificato il documento durante le tue modifiche.
 
 Esamina le differenze mostrate di seguito, quindi decidi quale versione mantenere. Se scegli ''Salva'', la tua versione verrà salvata. Clicca su ''Annulla'' per mantenere la versione attuale.
-

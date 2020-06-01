@@ -1,4 +1,3 @@
 ====== Logga in ======
 
 Du är inte inloggad! Ange ditt användarnamn och lösenord i formuläret nedan för att logga in. Stöd för cookies måste vara aktiverat i din webbläsare för att du skall kunna logga in.
-

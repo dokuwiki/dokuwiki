@@ -4,7 +4,7 @@
  * --------
  * Author: Tan-Vinh Nguyen (tvnguyen@web.de)
  * Copyright: (c) 2009 Tan-Vinh Nguyen
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2009/03/23
  *
  * fo language file for GeSHi.

@@ -1,4 +1,3 @@
 ====== Plan du site ======
 
 Voici un plan du site de toutes les pages disponibles, triées par [[doku>fr:namespaces|catégories]].
-

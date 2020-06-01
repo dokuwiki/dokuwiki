@@ -10,10 +10,8 @@ Her er ændringerne:
 Dato : @DATE@
 Bruger : @USER@
 Summering: @SUMMARY@
-Gammel Revision: @OLDPAGE@
-Ny Revision: @NEWPAGE@
+Gammel revision: @OLDPAGE@
+Ny revision: @NEWPAGE@
 
-For at slå side notifikationer fra, skal du logge ind på
-@DOKUWIKIURL@ og besøge
-@SUBSCRIBE@
-og slå abonnoment for side / navnerum ændringer fra.
+For at stoppe notifikationer om sideændringer, log ind på wikien på
+@DOKUWIKIURL@ og besøg @SUBSCRIBE@ for at afmelde side og/eller navneområde ændringer..

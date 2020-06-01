@@ -9,9 +9,13 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 // some ACL level defines
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\Event;
+use dokuwiki\Extension\PluginController;
+use dokuwiki\PassHash;
+use dokuwiki\Subscriptions\RegistrationSubscriptionSender;
+
 define('AUTH_NONE', 0);
 define('AUTH_READ', 1);
 define('AUTH_EDIT', 2);
@@ -34,13 +38,13 @@ define('AUTH_ADMIN', 255);
  */
 function auth_setup() {
     global $conf;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
     global $AUTH_ACL;
     global $lang;
-    /* @var Doku_Plugin_Controller $plugin_controller */
+    /* @var PluginController $plugin_controller */
     global $plugin_controller;
     $AUTH_ACL = array();
 
@@ -96,17 +100,21 @@ function auth_setup() {
         $INPUT->set('p', stripctl($INPUT->str('p')));
     }
 
-    if(!is_null($auth) && $auth->canDo('external')) {
-        // external trust mechanism in place
-        $auth->trustExternal($INPUT->str('u'), $INPUT->str('p'), $INPUT->bool('r'));
-    } else {
+    $ok = null;
+    if (!is_null($auth) && $auth->canDo('external')) {
+        $ok = $auth->trustExternal($INPUT->str('u'), $INPUT->str('p'), $INPUT->bool('r'));
+    }
+
+    if ($ok === null) {
+        // external trust mechanism not in place, or returns no result,
+        // then attempt auth_login
         $evdata = array(
             'user'     => $INPUT->str('u'),
             'password' => $INPUT->str('p'),
             'sticky'   => $INPUT->bool('r'),
             'silent'   => $INPUT->bool('http_credentials')
         );
-        trigger_event('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
+        Event::createAndTrigger('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
     }
 
     //load ACL into a global array XXX
@@ -135,7 +143,7 @@ function auth_loadACL() {
     $out = array();
     foreach($acl as $line) {
         $line = trim($line);
-        if(empty($line) || ($line{0} == '#')) continue; // skip blank lines & comments
+        if(empty($line) || ($line[0] == '#')) continue; // skip blank lines & comments
         list($id,$rest) = preg_split('/[ \t]+/',$line,2);
 
         // substitute user wildcard first (its 1:1)
@@ -150,10 +158,12 @@ function auth_loadACL() {
         // substitute group wildcard (its 1:m)
         if(strstr($line, '%GROUP%')){
             // if user is not logged in, grps is empty, no output will be added (i.e. skipped)
-            foreach((array) $USERINFO['grps'] as $grp){
-                $nid   = str_replace('%GROUP%',cleanID($grp),$id);
-                $nrest = str_replace('%GROUP%','@'.auth_nameencode($grp),$rest);
-                $out[] = "$nid\t$nrest";
+            if(isset($USERINFO['grps'])){
+                foreach((array) $USERINFO['grps'] as $grp){
+                    $nid   = str_replace('%GROUP%',cleanID($grp),$id);
+                    $nrest = str_replace('%GROUP%','@'.auth_nameencode($grp),$rest);
+                    $out[] = "$nid\t$nrest";
+                }
             }
         } else {
             $out[] = "$id\t$rest";
@@ -211,7 +221,7 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
     global $USERINFO;
     global $conf;
     global $lang;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -407,7 +417,7 @@ function auth_decrypt($ciphertext, $secret) {
 function auth_logoff($keepbc = false) {
     global $conf;
     global $USERINFO;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -440,18 +450,19 @@ function auth_logoff($keepbc = false) {
  *
  * The info is available through $INFO['ismanager'], too
  *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * @param string $user Username
+ * @param array $groups List of groups the user is in
+ * @param bool $adminonly when true checks if user is admin
+ * @param bool $recache set to true to refresh the cache
+ * @return bool
  * @see    auth_isadmin
  *
- * @param  string $user       Username
- * @param  array  $groups     List of groups the user is in
- * @param  bool   $adminonly  when true checks if user is admin
- * @return bool
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
-function auth_ismanager($user = null, $groups = null, $adminonly = false) {
+function auth_ismanager($user = null, $groups = null, $adminonly = false, $recache=false) {
     global $conf;
     global $USERINFO;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -466,16 +477,25 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false) {
         }
     }
     if(is_null($groups)) {
-        $groups = (array) $USERINFO['grps'];
+        $groups = $USERINFO ? (array) $USERINFO['grps'] : array();
     }
 
-    // check superuser match
-    if(auth_isMember($conf['superuser'], $user, $groups)) return true;
-    if($adminonly) return false;
-    // check managers
-    if(auth_isMember($conf['manager'], $user, $groups)) return true;
+    // prefer cached result
+    static $cache = [];
+    $cachekey = serialize([$user, $adminonly, $groups]);
+    if (!isset($cache[$cachekey]) || $recache) {
+        // check superuser match
+        $ok = auth_isMember($conf['superuser'], $user, $groups);
 
-    return false;
+        // check managers
+        if (!$ok && !$adminonly) {
+            $ok = auth_isMember($conf['manager'], $user, $groups);
+        }
+
+        $cache[$cachekey] = $ok;
+    }
+
+    return $cache[$cachekey];
 }
 
 /**
@@ -485,15 +505,16 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false) {
  *
  * The info is available through $INFO['isadmin'], too
  *
+ * @param string $user Username
+ * @param array $groups List of groups the user is in
+ * @param bool $recache set to true to refresh the cache
+ * @return bool
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see auth_ismanager()
  *
- * @param  string $user       Username
- * @param  array  $groups     List of groups the user is in
- * @return bool
  */
-function auth_isadmin($user = null, $groups = null) {
-    return auth_ismanager($user, $groups, true);
+function auth_isadmin($user = null, $groups = null, $recache=false) {
+    return auth_ismanager($user, $groups, true, $recache);
 }
 
 /**
@@ -508,13 +529,13 @@ function auth_isadmin($user = null, $groups = null) {
  * @return bool       true for membership acknowledged
  */
 function auth_isMember($memberlist, $user, array $groups) {
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     if(!$auth) return false;
 
     // clean user and groups
     if(!$auth->isCaseSensitive()) {
-        $user   = utf8_strtolower($user);
+        $user   = \dokuwiki\Utf8\PhpString::strtolower($user);
         $groups = array_map('utf8_strtolower', $groups);
     }
     $user   = $auth->cleanUser($user);
@@ -529,7 +550,7 @@ function auth_isMember($memberlist, $user, array $groups) {
     // compare cleaned values
     foreach($members as $member) {
         if($member == '@ALL' ) return true;
-        if(!$auth->isCaseSensitive()) $member = utf8_strtolower($member);
+        if(!$auth->isCaseSensitive()) $member = \dokuwiki\Utf8\PhpString::strtolower($member);
         if($member[0] == '@') {
             $member = $auth->cleanGroup(substr($member, 1));
             if(in_array($member, $groups)) return true;
@@ -560,7 +581,7 @@ function auth_quickaclcheck($id) {
     global $INPUT;
     # if no ACL is used always return upload rights
     if(!$conf['useacl']) return AUTH_UPLOAD;
-    return auth_aclcheck($id, $INPUT->server->str('REMOTE_USER'), $USERINFO['grps']);
+    return auth_aclcheck($id, $INPUT->server->str('REMOTE_USER'), is_array($USERINFO) ? $USERINFO['grps'] : array());
 }
 
 /**
@@ -581,7 +602,7 @@ function auth_aclcheck($id, $user, $groups) {
         'groups' => $groups
     );
 
-    return trigger_event('AUTH_ACL_CHECK', $data, 'auth_aclcheck_cb');
+    return Event::createAndTrigger('AUTH_ACL_CHECK', $data, 'auth_aclcheck_cb');
 }
 
 /**
@@ -601,7 +622,7 @@ function auth_aclcheck_cb($data) {
 
     global $conf;
     global $AUTH_ACL;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
 
     // if no ACL is used always return upload rights
@@ -617,7 +638,7 @@ function auth_aclcheck_cb($data) {
     }
 
     if(!$auth->isCaseSensitive()) {
-        $user   = utf8_strtolower($user);
+        $user   = \dokuwiki\Utf8\PhpString::strtolower($user);
         $groups = array_map('utf8_strtolower', $groups);
     }
     $user   = auth_nameencode($auth->cleanUser($user));
@@ -644,7 +665,7 @@ function auth_aclcheck_cb($data) {
             $match = preg_replace('/#.*$/', '', $match); //ignore comments
             $acl   = preg_split('/[ \t]+/', $match);
             if(!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
-                $acl[1] = utf8_strtolower($acl[1]);
+                $acl[1] = \dokuwiki\Utf8\PhpString::strtolower($acl[1]);
             }
             if(!in_array($acl[1], $groups)) {
                 continue;
@@ -674,7 +695,7 @@ function auth_aclcheck_cb($data) {
                 $match = preg_replace('/#.*$/', '', $match); //ignore comments
                 $acl   = preg_split('/[ \t]+/', $match);
                 if(!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
-                    $acl[1] = utf8_strtolower($acl[1]);
+                    $acl[1] = \dokuwiki\Utf8\PhpString::strtolower($acl[1]);
                 }
                 if(!in_array($acl[1], $groups)) {
                     continue;
@@ -733,7 +754,7 @@ function auth_nameencode($name, $skip_group = false) {
     if($name == '%GROUP%') return $name;
 
     if(!isset($cache[$name][$skip_group])) {
-        if($skip_group && $name{0} == '@') {
+        if($skip_group && $name[0] == '@') {
             $cache[$name][$skip_group] = '@'.preg_replace_callback(
                 '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/',
                 'auth_nameencode_callback', substr($name, 1)
@@ -778,7 +799,7 @@ function auth_pwgen($foruser = '') {
         'foruser'  => $foruser
     );
 
-    $evt = new Doku_Event('AUTH_PASSWORD_GENERATE', $data);
+    $evt = new Event('AUTH_PASSWORD_GENERATE', $data);
     if($evt->advise_before(true)) {
         $c = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones
         $v = 'aeiou'; //vowels
@@ -792,7 +813,7 @@ function auth_pwgen($foruser = '') {
             $data['password'] .= $a[auth_random(0, strlen($a) - 1)];
         }
         //... and add a nice number and special
-        $data['password'] .= auth_random(10, 99).$s[auth_random(0, strlen($s) - 1)];
+        $data['password'] .= $s[auth_random(0, strlen($s) - 1)].auth_random(10, 99);
     }
     $evt->advise_after();
 
@@ -810,7 +831,7 @@ function auth_pwgen($foruser = '') {
  */
 function auth_sendPassword($user, $password) {
     global $lang;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     if(!$auth) return false;
 
@@ -827,7 +848,7 @@ function auth_sendPassword($user, $password) {
     );
 
     $mail = new Mailer();
-    $mail->to($userinfo['name'].' <'.$userinfo['mail'].'>');
+    $mail->to($mail->getCleanName($userinfo['name']).' <'.$userinfo['mail'].'>');
     $mail->subject($lang['regpwmail']);
     $mail->setBody($text, $trep);
     return $mail->send();
@@ -845,7 +866,7 @@ function auth_sendPassword($user, $password) {
 function register() {
     global $lang;
     global $conf;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var \dokuwiki\Extension\AuthPlugin $auth */
     global $auth;
     global $INPUT;
 
@@ -887,8 +908,8 @@ function register() {
     }
 
     // send notification about the new user
-    $subscription = new Subscription();
-    $subscription->send_register($login, $fullname, $email);
+    $subscription = new RegistrationSubscriptionSender();
+    $subscription->sendRegister($login, $fullname, $email);
 
     // are we done?
     if(!$conf['autopasswd']) {
@@ -914,7 +935,7 @@ function register() {
 function updateprofile() {
     global $conf;
     global $lang;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -1003,7 +1024,7 @@ function updateprofile() {
 function auth_deleteprofile(){
     global $conf;
     global $lang;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var \dokuwiki\Extension\AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -1057,7 +1078,7 @@ function auth_deleteprofile(){
 function act_resendpwd() {
     global $lang;
     global $conf;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -1072,7 +1093,7 @@ function act_resendpwd() {
     if($token) {
         // we're in token phase - get user info from token
 
-        $tfile = $conf['cachedir'].'/'.$token{0}.'/'.$token.'.pwauth';
+        $tfile = $conf['cachedir'].'/'.$token[0].'/'.$token.'.pwauth';
         if(!file_exists($tfile)) {
             msg($lang['resendpwdbadauth'], -1);
             $INPUT->remove('pwauth');
@@ -1147,7 +1168,7 @@ function act_resendpwd() {
 
         // generate auth token
         $token = md5(auth_randombytes(16)); // random secret
-        $tfile = $conf['cachedir'].'/'.$token{0}.'/'.$token.'.pwauth';
+        $tfile = $conf['cachedir'].'/'.$token[0].'/'.$token.'.pwauth';
         $url   = wl('', array('do'=> 'resendpwd', 'pwauth'=> $token), true, '&');
 
         io_saveFile($tfile, $user);
@@ -1225,7 +1246,7 @@ function auth_verifyPassword($clear, $crypt) {
  */
 function auth_setCookie($user, $pass, $sticky) {
     global $conf;
-    /* @var DokuWiki_Auth_Plugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     global $USERINFO;
 

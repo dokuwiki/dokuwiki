@@ -1,4 +1,3 @@
 ====== Enviar contrasenya nova ======
 
 Per favor, introduïxca el nom d'usuari en el formulari per a demanar una nova contrasenya per al seu conte en este wiki. Se li enviarà un víncul de confirmació a la direcció de correu en que estiga registrat.
-

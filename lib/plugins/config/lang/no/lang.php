@@ -3,6 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Torgeir Blesvik <bletor@banenor.no>
+ * @author Rut Kristin Aanestad <dark@met.no>
+ * @author ThorPrestboen <thor.erling.prestboen@gmail.com>
+ * @author Christian McKenna <mckchr@banenor.no>
  * @author Thomas Nygreen <nygreen@gmail.com>
  * @author Arild Burud <arildb@met.no>
  * @author Torkill Bruland <torkar-b@online.no>
@@ -12,12 +16,10 @@
  * @author Knut Staring <knutst@gmail.com>
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
- * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
- * @author Rune Rasmussen syntaxerror.no@gmail.com
+ * @author Rune Rasmussen <syntaxerror.no@gmail.com>
  * @author Jon Bøe <jonmagneboe@hotmail.com>
  * @author Egil Hansen <egil@rosetta.no>
  * @author Arne Hanssen <arne.hanssen@getmail.no>
- * @author Arne Hanssen <arnehans@getmail.no>
  * @author Patrick Sletvold <patricksletvold@hotmail.com>
  */
 $lang['menu']                  = 'Konfigurasjonsinnstillinger';
@@ -163,12 +165,6 @@ $lang['proxy____user']         = 'Brukernavn på proxyserver';
 $lang['proxy____pass']         = 'Passord på proxyserver';
 $lang['proxy____ssl']          = 'Bruk SSL for å koble til proxyserver';
 $lang['proxy____except']       = 'Regulært uttrykk for URLer som ikke trenger bruk av proxy';
-$lang['safemodehack']          = 'Bruk safemode-hack';
-$lang['ftp____host']           = 'FTP-server for safemode-hack';
-$lang['ftp____port']           = 'FTP-port for safemode-hack';
-$lang['ftp____user']           = 'FTP-brukernavn for safemode-hack';
-$lang['ftp____pass']           = 'FTP-passord for safemode-hack';
-$lang['ftp____root']           = 'FTP-rotmappe for safemode-hack';
 $lang['license_o_']            = 'Ingen valgt';
 $lang['typography_o_0']        = 'ingen';
 $lang['typography_o_1']        = 'Kun doble anførselstegn';

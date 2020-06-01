@@ -182,7 +182,7 @@ class PageCLI extends CLI {
         }
 
         if(empty($localfile)) {
-            $localfile = getcwd() . '/' . utf8_basename($wiki_fn);
+            $localfile = getcwd() . '/' . \dokuwiki\Utf8\PhpString::basename($wiki_fn);
         }
 
         if(!file_exists(dirname($localfile))) {

@@ -5,7 +5,7 @@
  * Author: Jesus Guardon (jguardon@telefonica.net)
  * Copyright: (c) 2009 Jesus Guardon (http://gambas-es.org),
  *                     Benny Baumann (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2004/08/20
  *
  * GAMBAS language file for GeSHi.

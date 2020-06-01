@@ -4,7 +4,6 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Arne Hanssen <arne.hanssen@getmail.no>
- * @author Arne Hanssen <arnehans@getmail.no>
  */
 $lang['menu']                  = 'Innstillinger for malstil';
 $lang['js']['loader']          = 'Forhåndsvisning laster...<br />Dersom denne ikke forsvinner, kan det hende at dine verdier er feil';

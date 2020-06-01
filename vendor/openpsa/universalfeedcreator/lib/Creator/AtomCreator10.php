@@ -14,7 +14,6 @@
  * @see     FeedCreator#additionalElements
  * @since   1.7.2-mod (modified)
  * @author  Mohammad Hafiz Ismail (mypapit@gmail.com)
- * @package de.bitfolge.feedcreator
  */
 class AtomCreator10 extends FeedCreator
 {
@@ -103,14 +102,16 @@ class AtomCreator10 extends FeedCreator
                 $feed .= "        </author>\n";
             }
 
-            if ($this->items[$i]->category != "") {
-                $feed .= "        <category ";
+            if (!empty($this->items[$i]->category)) {
+                foreach ((array) $this->items[$i]->category as $category) {
+                    $feed .= "        <category ";
 
-                if ($this->items[$i]->categoryScheme != "") {
-                    $feed .= " scheme=\"".htmlspecialchars($this->items[$i]->categoryScheme)."\" ";
+                    if ($this->items[$i]->categoryScheme != "") {
+                        $feed .= " scheme=\"".htmlspecialchars($this->items[$i]->categoryScheme)."\" ";
+                    }
+
+                    $feed .= " term=\"".htmlspecialchars($category)."\" />\n";
                 }
-
-                $feed .= " term=\"".htmlspecialchars($this->items[$i]->category)."\" />\n";
             }
 
             if ($this->items[$i]->description != "") {

@@ -6,7 +6,10 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
+use dokuwiki\Cache\Cache;
+use dokuwiki\Extension\Event;
+
+if(!defined('DOKU_INC')) define('DOKU_INC', __DIR__ .'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 if(!defined('NL')) define('NL',"\n");
 if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
@@ -66,18 +69,18 @@ function js_out(){
 
     // add possible plugin scripts and userscript
     $files   = array_merge($files,js_pluginscripts());
-    if(!empty($config_cascade['userscript']['default'])) {
+    if(is_array($config_cascade['userscript']['default'])) {
         foreach($config_cascade['userscript']['default'] as $userscript) {
             $files[] = $userscript;
         }
     }
 
     // Let plugins decide to either put more scripts here or to remove some
-    trigger_event('JS_SCRIPT_LIST', $files);
+    Event::createAndTrigger('JS_SCRIPT_LIST', $files);
 
     // The generated script depends on some dynamic options
-    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].md5(serialize($files)),'.js');
-    $cache->_event = 'JS_CACHE_USE';
+    $cache = new Cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].md5(serialize($files)),'.js');
+    $cache->setEvent('JS_CACHE_USE');
 
     $cache_files = array_merge($files, getConfigFiles('main'));
     $cache_files[] = __FILE__;
@@ -90,18 +93,21 @@ function js_out(){
     // start output buffering and build the script
     ob_start();
 
-    $json = new JSON();
     // add some global variables
     print "var DOKU_BASE   = '".DOKU_BASE."';";
     print "var DOKU_TPL    = '".tpl_basedir($tpl)."';";
-    print "var DOKU_COOKIE_PARAM = " . $json->encode(
+    print "var DOKU_COOKIE_PARAM = " . json_encode(
             array(
                  'path' => empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'],
                  'secure' => $conf['securecookie'] && is_ssl()
             )).";";
     // FIXME: Move those to JSINFO
-    print "Object.defineProperty(window, 'DOKU_UHN', { get: function() { console.warn('Using DOKU_UHN is deprecated. Please use JSINFO.useHeadingNavigation instead'); return JSINFO.useHeadingNavigation; } });";
-    print "Object.defineProperty(window, 'DOKU_UHC', { get: function() { console.warn('Using DOKU_UHC is deprecated. Please use JSINFO.useHeadingContent instead'); return JSINFO.useHeadingContent; } });";
+    print "Object.defineProperty(window, 'DOKU_UHN', { get: function() {".
+          "console.warn('Using DOKU_UHN is deprecated. Please use JSINFO.useHeadingNavigation instead');".
+          "return JSINFO.useHeadingNavigation; } });";
+    print "Object.defineProperty(window, 'DOKU_UHC', { get: function() {".
+          "console.warn('Using DOKU_UHC is deprecated. Please use JSINFO.useHeadingContent instead');".
+          "return JSINFO.useHeadingContent; } });";
 
     // load JS specific translations
     $lang['js']['plugins'] = js_pluginstrings();
@@ -109,7 +115,7 @@ function js_out(){
     if(!empty($templatestrings)) {
         $lang['js']['template'] = $templatestrings;
     }
-    echo 'LANG = '.$json->encode($lang['js']).";\n";
+    echo 'LANG = '.json_encode($lang['js']).";\n";
 
     // load toolbar
     toolbar_JSdefines('toolbar');
@@ -170,7 +176,7 @@ function js_load($file){
 
         // is it a include_once?
         if($match[1]){
-            $base = utf8_basename($ifile);
+            $base = \dokuwiki\Utf8\PhpString::basename($ifile);
             if(array_key_exists($base, $loaded) && $loaded[$base] === true){
                 $data  = str_replace($match[0], '' ,$data);
                 continue;
@@ -178,7 +184,7 @@ function js_load($file){
             $loaded[$base] = true;
         }
 
-        if($ifile{0} != '/') $ifile = dirname($file).'/'.$ifile;
+        if($ifile[0] != '/') $ifile = dirname($file).'/'.$ifile;
 
         if(file_exists($ifile)){
             $idata = io_readFile($ifile);
@@ -356,13 +362,13 @@ function js_compress($s){
         // reserved word (e.g. "for", "else", "if") or a
         // variable/object/method (e.g. "foo.color")
         while ($i < $slen && (strpos($chars,$s[$i]) === false) ){
-            $result .= $s{$i};
+            $result .= $s[$i];
             $i = $i + 1;
         }
 
-        $ch = $s{$i};
+        $ch = $s[$i];
         // multiline comments (keeping IE conditionals)
-        if($ch == '/' && $s{$i+1} == '*' && $s{$i+2} != '@'){
+        if($ch == '/' && $s[$i+1] == '*' && $s[$i+2] != '@'){
             $endC = strpos($s,'*/',$i+2);
             if($endC === false) trigger_error('Found invalid /*..*/ comment', E_USER_ERROR);
 
@@ -381,7 +387,7 @@ function js_compress($s){
         }
 
         // singleline
-        if($ch == '/' && $s{$i+1} == '/'){
+        if($ch == '/' && $s[$i+1] == '/'){
             $endC = strpos($s,"\n",$i+2);
             if($endC === false) trigger_error('Invalid comment', E_USER_ERROR);
             $i = $endC;
@@ -392,15 +398,15 @@ function js_compress($s){
         if($ch == '/'){
             // rewind, skip white space
             $j = 1;
-            while(in_array($s{$i-$j}, $whitespaces_chars)){
+            while(in_array($s[$i-$j], $whitespaces_chars)){
                 $j = $j + 1;
             }
-            if( in_array($s{$i-$j}, $regex_starters) ){
+            if( in_array($s[$i-$j], $regex_starters) ){
                 // yes, this is an re
                 // now move forward and find the end of it
                 $j = 1;
-                while($s{$i+$j} != '/'){
-                    if($s{$i+$j} == '\\') $j = $j + 2;
+                while($s[$i+$j] != '/'){
+                    if($s[$i+$j] == '\\') $j = $j + 2;
                     else $j++;
                 }
                 $result .= substr($s,$i,$j+1);
@@ -412,8 +418,8 @@ function js_compress($s){
         // double quote strings
         if($ch == '"'){
             $j = 1;
-            while( $s{$i+$j} != '"' && ($i+$j < $slen)){
-                if( $s{$i+$j} == '\\' && ($s{$i+$j+1} == '"' || $s{$i+$j+1} == '\\') ){
+            while( ($i+$j < $slen) && $s[$i+$j] != '"' ){
+                if( $s[$i+$j] == '\\' && ($s[$i+$j+1] == '"' || $s[$i+$j+1] == '\\') ){
                     $j += 2;
                 }else{
                     $j += 1;
@@ -430,8 +436,8 @@ function js_compress($s){
         // single quote strings
         if($ch == "'"){
             $j = 1;
-            while( $s{$i+$j} != "'" && ($i+$j < $slen)){
-                if( $s{$i+$j} == '\\' && ($s{$i+$j+1} == "'" || $s{$i+$j+1} == '\\') ){
+            while( ($i+$j < $slen) && $s[$i+$j] != "'" ){
+                if( $s[$i+$j] == '\\' && ($s[$i+$j+1] == "'" || $s[$i+$j+1] == '\\') ){
                     $j += 2;
                 }else{
                     $j += 1;

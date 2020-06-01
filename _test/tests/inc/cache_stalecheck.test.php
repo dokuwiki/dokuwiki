@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Cache\CacheRenderer;
+
 class cache_stalecheck_test extends DokuWikiTest {
 	function test_staleness() {
 		global $ID;
@@ -11,7 +13,7 @@ class cache_stalecheck_test extends DokuWikiTest {
 		saveWikiText($ID, 'Fresh', 'Created');
 
 		# Create stale cache
-		$cache = new cache_renderer($ID, $file, 'xhtml');
+		$cache = new CacheRenderer($ID, $file, 'xhtml');
 		$cache->storeCache('Stale');
 		$stale = $cache->retrieveCache();
 

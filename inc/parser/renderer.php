@@ -5,7 +5,9 @@
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-if(!defined('DOKU_INC')) die('meh.');
+
+use dokuwiki\Extension\Plugin;
+use dokuwiki\Extension\SyntaxPlugin;
 
 /**
  * Allowed chars in $language for code highlighting
@@ -16,7 +18,7 @@ define('PREG_PATTERN_VALID_LANGUAGE', '#[^a-zA-Z0-9\-_]#');
 /**
  * An empty renderer, produces no output
  *
- * Inherits from DokuWiki_Plugin for giving additional functions to render plugins
+ * Inherits from dokuwiki\Plugin\DokuWiki_Plugin for giving additional functions to render plugins
  *
  * The renderer transforms the syntax instructions created by the parser and handler into the
  * desired output format. For each instruction a corresponding method defined in this class will
@@ -24,7 +26,7 @@ define('PREG_PATTERN_VALID_LANGUAGE', '#[^a-zA-Z0-9\-_]#');
  * $doc field. When all instructions are processed, the $doc field contents will be cached by
  * DokuWiki and sent to the user.
  */
-class Doku_Renderer extends DokuWiki_Plugin {
+abstract class Doku_Renderer extends Plugin {
     /** @var array Settings, control the behavior of the renderer */
     public $info = array(
         'cache' => true, // may the rendered result cached?
@@ -40,6 +42,9 @@ class Doku_Renderer extends DokuWiki_Plugin {
     /** @var array contains the interwiki configuration, set in p_render() */
     public $interwiki = array();
 
+    /** @var array the list of headers used to create unique link ids */
+    protected $headers = array();
+
     /**
      * @var string the rendered document, this will be cached after the renderer ran through
      */
@@ -51,7 +56,11 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * This is called before each use of the renderer object and should be used to
      * completely reset the state of the renderer to be reused for a new document
      */
-    function reset() {
+    public function reset(){
+        $this->headers = array();
+        $this->doc           = '';
+        $this->info['cache'] = true;
+        $this->info['toc']   = true;
     }
 
     /**
@@ -62,7 +71,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @return bool   false if the plugin has to be instantiated
      */
-    function isSingleton() {
+    public function isSingleton() {
         return false;
     }
 
@@ -73,15 +82,12 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @return string
      */
-    function getFormat() {
-        trigger_error('getFormat() not implemented in '.get_class($this), E_USER_WARNING);
-        return '';
-    }
+    abstract public function getFormat();
 
     /**
      * Disable caching of this renderer's output
      */
-    function nocache() {
+    public function nocache() {
         $this->info['cache'] = false;
     }
 
@@ -90,7 +96,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * This might not be used for certain sub renderer
      */
-    function notoc() {
+    public function notoc() {
         $this->info['toc'] = false;
     }
 
@@ -104,8 +110,8 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string $state matched state if any
      * @param string $match raw matched syntax
      */
-    function plugin($name, $data, $state = '', $match = '') {
-        /** @var DokuWiki_Syntax_Plugin $plugin */
+    public function plugin($name, $data, $state = '', $match = '') {
+        /** @var SyntaxPlugin $plugin */
         $plugin = plugin_load('syntax', $name);
         if($plugin != null) {
             $plugin->render($this->getFormat(), $this, $data);
@@ -118,7 +124,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @param array $instructions
      */
-    function nest($instructions) {
+    public function nest($instructions) {
         foreach($instructions as $instruction) {
             // execute the callback against ourself
             if(method_exists($this, $instruction[0])) {
@@ -133,7 +139,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * normally the syntax mode should override this instruction when instantiating Doku_Handler_Nest -
      * however plugins will not be able to - as their instructions require data.
      */
-    function nest_close() {
+    public function nest_close() {
     }
 
     #region Syntax modes - sub classes will need to implement them to fill $doc
@@ -141,13 +147,13 @@ class Doku_Renderer extends DokuWiki_Plugin {
     /**
      * Initialize the document
      */
-    function document_start() {
+    public function document_start() {
     }
 
     /**
      * Finalize the document
      */
-    function document_end() {
+    public function document_end() {
     }
 
     /**
@@ -155,7 +161,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @return string
      */
-    function render_TOC() {
+    public function render_TOC() {
         return '';
     }
 
@@ -166,7 +172,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string $text     the text to display
      * @param int    $level    the nesting level
      */
-    function toc_additem($id, $text, $level) {
+    public function toc_additem($id, $text, $level) {
     }
 
     /**
@@ -176,7 +182,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param int    $level header level
      * @param int    $pos   byte position in the original source
      */
-    function header($text, $level, $pos) {
+    public function header($text, $level, $pos) {
     }
 
     /**
@@ -184,13 +190,13 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @param int $level section level (as determined by the previous header)
      */
-    function section_open($level) {
+    public function section_open($level) {
     }
 
     /**
      * Close the current section
      */
-    function section_close() {
+    public function section_close() {
     }
 
     /**
@@ -198,151 +204,151 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @param string $text
      */
-    function cdata($text) {
+    public function cdata($text) {
     }
 
     /**
      * Open a paragraph
      */
-    function p_open() {
+    public function p_open() {
     }
 
     /**
      * Close a paragraph
      */
-    function p_close() {
+    public function p_close() {
     }
 
     /**
      * Create a line break
      */
-    function linebreak() {
+    public function linebreak() {
     }
 
     /**
      * Create a horizontal line
      */
-    function hr() {
+    public function hr() {
     }
 
     /**
      * Start strong (bold) formatting
      */
-    function strong_open() {
+    public function strong_open() {
     }
 
     /**
      * Stop strong (bold) formatting
      */
-    function strong_close() {
+    public function strong_close() {
     }
 
     /**
      * Start emphasis (italics) formatting
      */
-    function emphasis_open() {
+    public function emphasis_open() {
     }
 
     /**
      * Stop emphasis (italics) formatting
      */
-    function emphasis_close() {
+    public function emphasis_close() {
     }
 
     /**
      * Start underline formatting
      */
-    function underline_open() {
+    public function underline_open() {
     }
 
     /**
      * Stop underline formatting
      */
-    function underline_close() {
+    public function underline_close() {
     }
 
     /**
      * Start monospace formatting
      */
-    function monospace_open() {
+    public function monospace_open() {
     }
 
     /**
      * Stop monospace formatting
      */
-    function monospace_close() {
+    public function monospace_close() {
     }
 
     /**
      * Start a subscript
      */
-    function subscript_open() {
+    public function subscript_open() {
     }
 
     /**
      * Stop a subscript
      */
-    function subscript_close() {
+    public function subscript_close() {
     }
 
     /**
      * Start a superscript
      */
-    function superscript_open() {
+    public function superscript_open() {
     }
 
     /**
      * Stop a superscript
      */
-    function superscript_close() {
+    public function superscript_close() {
     }
 
     /**
      * Start deleted (strike-through) formatting
      */
-    function deleted_open() {
+    public function deleted_open() {
     }
 
     /**
      * Stop deleted (strike-through) formatting
      */
-    function deleted_close() {
+    public function deleted_close() {
     }
 
     /**
      * Start a footnote
      */
-    function footnote_open() {
+    public function footnote_open() {
     }
 
     /**
      * Stop a footnote
      */
-    function footnote_close() {
+    public function footnote_close() {
     }
 
     /**
      * Open an unordered list
      */
-    function listu_open() {
+    public function listu_open() {
     }
 
     /**
      * Close an unordered list
      */
-    function listu_close() {
+    public function listu_close() {
     }
 
     /**
      * Open an ordered list
      */
-    function listo_open() {
+    public function listo_open() {
     }
 
     /**
      * Close an ordered list
      */
-    function listo_close() {
+    public function listo_close() {
     }
 
     /**
@@ -351,25 +357,25 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param int $level the nesting level
      * @param bool $node true when a node; false when a leaf
      */
-    function listitem_open($level,$node=false) {
+    public function listitem_open($level,$node=false) {
     }
 
     /**
      * Close a list item
      */
-    function listitem_close() {
+    public function listitem_close() {
     }
 
     /**
      * Start the content of a list item
      */
-    function listcontent_open() {
+    public function listcontent_open() {
     }
 
     /**
      * Stop the content of a list item
      */
-    function listcontent_close() {
+    public function listcontent_close() {
     }
 
     /**
@@ -379,7 +385,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @param string $text
      */
-    function unformatted($text) {
+    public function unformatted($text) {
         $this->cdata($text);
     }
 
@@ -391,7 +397,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @param string $text The PHP code
      */
-    function php($text) {
+    public function php($text) {
     }
 
     /**
@@ -402,7 +408,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @param string $text The PHP code
      */
-    function phpblock($text) {
+    public function phpblock($text) {
     }
 
     /**
@@ -412,7 +418,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @param string $text The HTML
      */
-    function html($text) {
+    public function html($text) {
     }
 
     /**
@@ -422,7 +428,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @param string $text The HTML
      */
-    function htmlblock($text) {
+    public function htmlblock($text) {
     }
 
     /**
@@ -430,19 +436,19 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @param string $text
      */
-    function preformatted($text) {
+    public function preformatted($text) {
     }
 
     /**
      * Start a block quote
      */
-    function quote_open() {
+    public function quote_open() {
     }
 
     /**
      * Stop a block quote
      */
-    function quote_close() {
+    public function quote_close() {
     }
 
     /**
@@ -452,7 +458,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string $lang programming language to use for syntax highlighting
      * @param string $file file path label
      */
-    function file($text, $lang = null, $file = null) {
+    public function file($text, $lang = null, $file = null) {
     }
 
     /**
@@ -462,7 +468,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string $lang programming language to use for syntax highlighting
      * @param string $file file path label
      */
-    function code($text, $lang = null, $file = null) {
+    public function code($text, $lang = null, $file = null) {
     }
 
     /**
@@ -472,7 +478,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @param string $acronym
      */
-    function acronym($acronym) {
+    public function acronym($acronym) {
     }
 
     /**
@@ -482,7 +488,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @param string $smiley
      */
-    function smiley($smiley) {
+    public function smiley($smiley) {
     }
 
     /**
@@ -494,7 +500,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @param string $entity
      */
-    function entity($entity) {
+    public function entity($entity) {
     }
 
     /**
@@ -505,37 +511,37 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string|int $x first value
      * @param string|int $y second value
      */
-    function multiplyentity($x, $y) {
+    public function multiplyentity($x, $y) {
     }
 
     /**
      * Render an opening single quote char (language specific)
      */
-    function singlequoteopening() {
+    public function singlequoteopening() {
     }
 
     /**
      * Render a closing single quote char (language specific)
      */
-    function singlequoteclosing() {
+    public function singlequoteclosing() {
     }
 
     /**
      * Render an apostrophe char (language specific)
      */
-    function apostrophe() {
+    public function apostrophe() {
     }
 
     /**
      * Render an opening double quote char (language specific)
      */
-    function doublequoteopening() {
+    public function doublequoteopening() {
     }
 
     /**
      * Render an closinging double quote char (language specific)
      */
-    function doublequoteclosing() {
+    public function doublequoteclosing() {
     }
 
     /**
@@ -544,7 +550,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string $link The link name
      * @see http://en.wikipedia.org/wiki/CamelCase
      */
-    function camelcaselink($link) {
+    public function camelcaselink($link) {
     }
 
     /**
@@ -553,7 +559,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string $hash hash link identifier
      * @param string $name name for the link
      */
-    function locallink($hash, $name = null) {
+    public function locallink($hash, $name = null) {
     }
 
     /**
@@ -562,7 +568,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string       $link  page ID to link to. eg. 'wiki:syntax'
      * @param string|array $title name for the link, array for media file
      */
-    function internallink($link, $title = null) {
+    public function internallink($link, $title = null) {
     }
 
     /**
@@ -571,7 +577,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string       $link  full URL with scheme
      * @param string|array $title name for the link, array for media file
      */
-    function externallink($link, $title = null) {
+    public function externallink($link, $title = null) {
     }
 
     /**
@@ -580,7 +586,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string $url    URL of the feed
      * @param array  $params Finetuning of the output
      */
-    function rss($url, $params) {
+    public function rss($url, $params) {
     }
 
     /**
@@ -593,7 +599,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string       $wikiName indentifier (shortcut) for the remote wiki
      * @param string       $wikiUri  the fragment parsed from the original link
      */
-    function interwikilink($link, $title = null, $wikiName, $wikiUri) {
+    public function interwikilink($link, $title, $wikiName, $wikiUri) {
     }
 
     /**
@@ -602,7 +608,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string       $link  the link
      * @param string|array $title name for the link, array for media file
      */
-    function filelink($link, $title = null) {
+    public function filelink($link, $title = null) {
     }
 
     /**
@@ -611,7 +617,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string       $link  the link
      * @param string|array $title name for the link, array for media file
      */
-    function windowssharelink($link, $title = null) {
+    public function windowssharelink($link, $title = null) {
     }
 
     /**
@@ -622,7 +628,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string $address Email-Address
      * @param string|array $name name for the link, array for media file
      */
-    function emaillink($address, $name = null) {
+    public function emaillink($address, $name = null) {
     }
 
     /**
@@ -636,7 +642,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string $cache   cache|recache|nocache
      * @param string $linking linkonly|detail|nolink
      */
-    function internalmedia($src, $title = null, $align = null, $width = null,
+    public function internalmedia($src, $title = null, $align = null, $width = null,
                            $height = null, $cache = null, $linking = null) {
     }
 
@@ -651,7 +657,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string $cache   cache|recache|nocache
      * @param string $linking linkonly|detail|nolink
      */
-    function externalmedia($src, $title = null, $align = null, $width = null,
+    public function externalmedia($src, $title = null, $align = null, $width = null,
                            $height = null, $cache = null, $linking = null) {
     }
 
@@ -665,7 +671,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param int    $height  height of media in pixel
      * @param string $cache   cache|recache|nocache
      */
-    function internalmedialink($src, $title = null, $align = null,
+    public function internalmedialink($src, $title = null, $align = null,
                                $width = null, $height = null, $cache = null) {
     }
 
@@ -679,7 +685,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param int    $height  height of media in pixel
      * @param string $cache   cache|recache|nocache
      */
-    function externalmedialink($src, $title = null, $align = null,
+    public function externalmedialink($src, $title = null, $align = null,
                                $width = null, $height = null, $cache = null) {
     }
 
@@ -690,7 +696,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param int $numrows NOT IMPLEMENTED
      * @param int $pos     byte position in the original source
      */
-    function table_open($maxcols = null, $numrows = null, $pos = null) {
+    public function table_open($maxcols = null, $numrows = null, $pos = null) {
     }
 
     /**
@@ -698,55 +704,55 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @param int $pos byte position in the original source
      */
-    function table_close($pos = null) {
+    public function table_close($pos = null) {
     }
 
     /**
      * Open a table header
      */
-    function tablethead_open() {
+    public function tablethead_open() {
     }
 
     /**
      * Close a table header
      */
-    function tablethead_close() {
+    public function tablethead_close() {
     }
 
     /**
      * Open a table body
      */
-    function tabletbody_open() {
+    public function tabletbody_open() {
     }
 
     /**
      * Close a table body
      */
-    function tabletbody_close() {
+    public function tabletbody_close() {
     }
 
     /**
      * Open a table footer
      */
-    function tabletfoot_open() {
+    public function tabletfoot_open() {
     }
 
     /**
      * Close a table footer
      */
-    function tabletfoot_close() {
+    public function tabletfoot_close() {
     }
 
     /**
      * Open a table row
      */
-    function tablerow_open() {
+    public function tablerow_open() {
     }
 
     /**
      * Close a table row
      */
-    function tablerow_close() {
+    public function tablerow_close() {
     }
 
     /**
@@ -756,13 +762,13 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string $align left|center|right
      * @param int    $rowspan
      */
-    function tableheader_open($colspan = 1, $align = null, $rowspan = 1) {
+    public function tableheader_open($colspan = 1, $align = null, $rowspan = 1) {
     }
 
     /**
      * Close a table header cell
      */
-    function tableheader_close() {
+    public function tableheader_close() {
     }
 
     /**
@@ -772,18 +778,35 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string $align left|center|right
      * @param int    $rowspan
      */
-    function tablecell_open($colspan = 1, $align = null, $rowspan = 1) {
+    public function tablecell_open($colspan = 1, $align = null, $rowspan = 1) {
     }
 
     /**
      * Close a table cell
      */
-    function tablecell_close() {
+    public function tablecell_close() {
     }
 
     #endregion
 
     #region util functions, you probably won't need to reimplement them
+
+    /**
+     * Creates a linkid from a headline
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @param string  $title   The headline title
+     * @param boolean $create  Create a new unique ID?
+     * @return string
+     */
+    public function _headerToLink($title, $create = false) {
+        if($create) {
+            return sectionID($title, $this->headers);
+        } else {
+            $check = false;
+            return sectionID($title, $check);
+        }
+    }
 
     /**
      * Removes any Namespace from the given name but keeps
@@ -794,7 +817,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param string $name
      * @return string
      */
-    function _simpleTitle($name) {
+    public function _simpleTitle($name) {
         global $conf;
 
         //if there is a hash we use the ancor name only
@@ -818,14 +841,17 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * @param null|bool $exists    reference which returns if an internal page exists
      * @return string interwikilink
      */
-    function _resolveInterWiki(&$shortcut, $reference, &$exists = null) {
+    public function _resolveInterWiki(&$shortcut, $reference, &$exists = null) {
         //get interwiki URL
         if(isset($this->interwiki[$shortcut])) {
             $url = $this->interwiki[$shortcut];
-        } else {
-            // Default to Google I'm feeling lucky
-            $url      = 'https://www.google.com/search?q={URL}&amp;btnI=lucky';
-            $shortcut = 'go';
+        }elseif(isset($this->interwiki['default'])) {
+            $shortcut = 'default';
+            $url = $this->interwiki[$shortcut];
+        }else{
+            // not parsable interwiki outputs '' to make sure string manipluation works
+            $shortcut = '';
+            $url      = '';
         }
 
         //split into hash and url part
@@ -840,7 +866,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
             //use placeholders
             $url    = str_replace('{URL}', rawurlencode($reference), $url);
             //wiki names will be cleaned next, otherwise urlencode unsafe chars
-            $url    = str_replace('{NAME}', ($url{0} === ':') ? $reference :
+            $url    = str_replace('{NAME}', ($url[0] === ':') ? $reference :
                                   preg_replace_callback('/[[\\\\\]^`{|}#%]/', function($match) {
                                     return rawurlencode($match[0]);
                                   }, $reference), $url);
@@ -857,12 +883,13 @@ class Doku_Renderer extends DokuWiki_Plugin {
                 '{PATH}' => $parsed['path'],
                 '{QUERY}' => $parsed['query'] ,
             ]);
-        } else {
-            //default
+        } else if($url != '') {
+            // make sure when no url is defined, we keep it null
+            // default
             $url = $url.rawurlencode($reference);
         }
         //handle as wiki links
-        if($url{0} === ':') {
+        if($url[0] === ':') {
             $urlparam = null;
             $id = $url;
             if (strpos($url, '?') !== false) {

@@ -104,7 +104,9 @@ class DropdownElement extends InputElement {
      */
     public function attr($name, $value = null) {
         if(strtolower($name) == 'multiple') {
-            throw new \InvalidArgumentException('Sorry, the dropdown element does not support the "multiple" attribute');
+            throw new \InvalidArgumentException(
+                'Sorry, the dropdown element does not support the "multiple" attribute'
+            );
         }
         return parent::attr($name, $value);
     }
@@ -181,7 +183,13 @@ class DropdownElement extends InputElement {
         if($this->useInput) $this->prefillInput();
 
         $html = '<select ' . buildAttributes($this->attrs()) . '>';
-        $html = array_reduce($this->optGroups, function($html, OptGroup $optGroup) {return $html . $optGroup->toHTML();}, $html);
+        $html = array_reduce(
+            $this->optGroups,
+            function ($html, OptGroup $optGroup) {
+                return $html . $optGroup->toHTML();
+            },
+            $html
+        );
         $html .= '</select>';
 
         return $html;

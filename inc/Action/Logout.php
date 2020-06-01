@@ -23,7 +23,7 @@ class Logout extends AbstractUserAction {
     public function checkPreconditions() {
         parent::checkPreconditions();
 
-        /** @var \DokuWiki_Auth_Plugin $auth */
+        /** @var \dokuwiki\Extension\AuthPlugin $auth */
         global $auth;
         if(!$auth->canDo('logout')) throw new ActionDisabledException();
     }
@@ -41,7 +41,7 @@ class Logout extends AbstractUserAction {
 
         // do the logout stuff and redirect to login
         auth_logoff();
-        send_redirect(wl($ID, array('do' => 'login')));
+        send_redirect(wl($ID, array('do' => 'login'), true, '&'));
 
         // should never be reached
         throw new ActionException('login');

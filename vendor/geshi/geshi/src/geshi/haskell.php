@@ -6,7 +6,7 @@
  *         Based on haskell.php by Jason Dagit (dagit@codersbase.com), which was
  *         based on ocaml.php by Flaie (fireflaie@gmail.com).
  * Copyright: (c) 2005 Flaie, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2014/05/12
  *
  * Haskell language file for GeSHi.
@@ -105,7 +105,7 @@ $language_data = array (
         4 => array (
             'Bool', 'Maybe', 'Either', 'Ordering',
             'Char', 'String',
-            'Int', 'Integer', 'Float', 'Double', 'Rational',
+            'Int', 'Integer', 'Float', 'Double', 'Rational', 'Word',
             'ShowS', 'ReadS',
             'IO', 'IOError', 'IOException'
             ),
@@ -114,7 +114,9 @@ $language_data = array (
             'Ord', 'Eq', 'Enum', 'Bounded',
             'Num', 'Real', 'Integral', 'Fractional',
             'Floating', 'RealFrac', 'RealFloat',
-            'Monad', 'Functor',
+            'Semigroup', 'Monoid',
+            'Monad', 'Applicative', 'Functor',
+            'Foldable', 'Traversable',
             'Show', 'Read'
             )
         ),
@@ -172,13 +174,13 @@ $language_data = array (
         /* some of keywords are Prelude functions */
         1 => '',
         /* link to the wanted library */
-        2 => 'http://haskell.org/ghc/docs/latest/html/libraries/base/{FNAME}.html',
+        2 => 'http://hackage.haskell.org/package/base/docs/{FNAME}.html',
         /* link to Prelude functions */
-        3 => 'http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#v:{FNAME}',
+        3 => 'http://hackage.haskell.org/package/base/docs/Prelude.html#v:{FNAME}',
         /* link to Prelude types */
-        4 => 'http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t:{FNAME}',
+        4 => 'http://hackage.haskell.org/package/base/docs/Prelude.html#t:{FNAME}',
         /* link to Prelude exceptions */
-        5 => 'http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t:{FNAME}'
+        5 => 'http://hackage.haskell.org/package/base/docs/Prelude.html#t:{FNAME}'
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(

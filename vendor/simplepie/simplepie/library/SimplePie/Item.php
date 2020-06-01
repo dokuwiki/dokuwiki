@@ -5,7 +5,7 @@
  * A PHP-Based RSS and Atom Feed Framework.
  * Takes the hard work out of managing a complete RSS/Atom solution.
  *
- * Copyright (c) 2004-2016, Ryan Parman, Geoffrey Sneddon, Ryan McCue, and contributors
+ * Copyright (c) 2004-2016, Ryan Parman, Sam Sneddon, Ryan McCue, and contributors
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
@@ -33,9 +33,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package SimplePie
- * @copyright 2004-2016 Ryan Parman, Geoffrey Sneddon, Ryan McCue
+ * @copyright 2004-2016 Ryan Parman, Sam Sneddon, Ryan McCue
  * @author Ryan Parman
- * @author Geoffrey Sneddon
+ * @author Sam Sneddon
  * @author Ryan McCue
  * @link http://simplepie.org/ SimplePie
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -121,7 +121,7 @@ class SimplePie_Item
 	 */
 	public function __destruct()
 	{
-		if ((version_compare(PHP_VERSION, '5.3', '<') || !gc_enabled()) && !ini_get('zend.ze1_compatibility_mode'))
+		if (!gc_enabled())
 		{
 			unset($this->feed);
 		}
@@ -147,10 +147,8 @@ class SimplePie_Item
 		{
 			return $this->data['child'][$namespace][$tag];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -366,10 +364,8 @@ class SimplePie_Item
 		{
 			return $this->get_content(true);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -407,18 +403,16 @@ class SimplePie_Item
 		{
 			return $this->get_description(true);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
-	
+
 	/**
 	 * Get the media:thumbnail of the item
 	 *
 	 * Uses `<media:thumbnail>`
 	 *
-	 * 
+	 *
 	 * @return array|null
 	 */
 	public function get_thumbnail()
@@ -435,7 +429,7 @@ class SimplePie_Item
 			}
 		}
 		return $this->data['thumbnail'];
-	}	
+	}
 
 	/**
 	 * Get a category for the item
@@ -451,10 +445,8 @@ class SimplePie_Item
 		{
 			return $categories[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -519,10 +511,8 @@ class SimplePie_Item
 		{
 			return array_unique($categories);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -539,10 +529,8 @@ class SimplePie_Item
 		{
 			return $authors[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -559,10 +547,8 @@ class SimplePie_Item
 		{
 			return $contributors[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -571,7 +557,7 @@ class SimplePie_Item
 	 * Uses `<atom:contributor>`
 	 *
 	 * @since 1.1
-	 * @return array|null List of {@see SimplePie_Author} objects
+	 * @return SimplePie_Author[]|null List of {@see SimplePie_Author} objects
 	 */
 	public function get_contributors()
 	{
@@ -625,10 +611,8 @@ class SimplePie_Item
 		{
 			return array_unique($contributors);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -637,7 +621,7 @@ class SimplePie_Item
 	 * Uses `<atom:author>`, `<author>`, `<dc:creator>` or `<itunes:author>`
 	 *
 	 * @since Beta 2
-	 * @return array|null List of {@see SimplePie_Author} objects
+	 * @return SimplePie_Author[]|null List of {@see SimplePie_Author} objects
 	 */
 	public function get_authors()
 	{
@@ -715,10 +699,8 @@ class SimplePie_Item
 		{
 			return $authors;
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -743,10 +725,8 @@ class SimplePie_Item
 		{
 			return $this->sanitize($return[0]['data'], SIMPLEPIE_CONSTRUCT_TEXT);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -825,10 +805,8 @@ class SimplePie_Item
 					return date($date_format, $this->data['date']['parsed']);
 			}
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -876,10 +854,8 @@ class SimplePie_Item
 					return date($date_format, $this->data['updated']['parsed']);
 			}
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -905,10 +881,8 @@ class SimplePie_Item
 		{
 			return strftime($date_format, $date);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -969,10 +943,8 @@ class SimplePie_Item
 		{
 			return $enclosure->get_link();
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -986,14 +958,12 @@ class SimplePie_Item
 	public function get_link($key = 0, $rel = 'alternate')
 	{
 		$links = $this->get_links($rel);
-		if ($links[$key] !== null)
+		if ($links && $links[$key] !== null)
 		{
 			return $links[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -1073,10 +1043,8 @@ class SimplePie_Item
 		{
 			return $this->data['links'][$rel];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -1096,10 +1064,8 @@ class SimplePie_Item
 		{
 			return $enclosures[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2922,10 +2888,8 @@ class SimplePie_Item
 		{
 			return $this->data['enclosures'];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2950,10 +2914,8 @@ class SimplePie_Item
 		{
 			return (float) $match[1];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2982,10 +2944,8 @@ class SimplePie_Item
 		{
 			return (float) $match[2];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -3000,10 +2960,7 @@ class SimplePie_Item
 		{
 			return $this->registry->create('Source', array($this, $return[0]));
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 }
-

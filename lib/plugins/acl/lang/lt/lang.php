@@ -2,9 +2,9 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Linas Valiukas <shirshegsm@gmail.com>
- * @author audrius.klevas@gmail.com
+ * @author audrius.klevas <audrius.klevas@gmail.com>
  * @author Arunas Vaitekunas <aras@fan.lt>
  */
 $lang['admin_acl']             = 'Priėjimo Kontrolės Sąrašų valdymas';

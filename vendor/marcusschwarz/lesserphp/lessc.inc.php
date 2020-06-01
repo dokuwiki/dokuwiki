@@ -1,7 +1,7 @@
 <?php
 
 /**
- * lessphp v0.5.1
+ * lessphp v0.5.2
  * http://leafo.net/lessphp
  *
  * LESS CSS compiler, adapted from http://lesscss.org
@@ -39,7 +39,7 @@
  * handling things like indentation.
  */
 class lessc {
-	static public $VERSION = "v0.5.1";
+	static public $VERSION = "v0.5.2";
 
 	static public $TRUE = array("keyword", "true");
 	static public $FALSE = array("keyword", "false");
@@ -352,9 +352,9 @@ class lessc {
 		$other = array_merge($other, $stack);
 
 		if ($split) {
-			return array(array_merge($imports, $vars), $other);
+			return array(array_merge($vars, $imports, $vars), $other);
 		} else {
-			return array_merge($imports, $vars, $other);
+			return array_merge($vars, $imports, $vars, $other);
 		}
 	}
 
@@ -668,7 +668,7 @@ class lessc {
 
 		// check for a rest
 		$last = end($args);
-		if ($last[0] == "rest") {
+        if ($last !== false && $last[0] === "rest") {
 			$rest = array_slice($orderedValues, count($args) - 1);
 			$this->set($last[1], $this->reduce(array("list", " ", $rest)));
 		}
@@ -1349,7 +1349,7 @@ class lessc {
 
 	protected function lib_luma($color) {
 	    $color = $this->coerceColor($color);
-	    return (0.2126 * $color[0] / 255) + (0.7152 * $color[1] / 255) + (0.0722 * $color[2] / 255);
+	    return (0.2126 * $color[1] / 255) + (0.7152 * $color[2] / 255) + (0.0722 * $color[3] / 255);
 	}
 
 
@@ -2052,7 +2052,7 @@ class lessc {
 		$this->pushEnv();
 		$parser = new lessc_parser($this, __METHOD__);
 		foreach ($args as $name => $strValue) {
-			if ($name{0} != '@') $name = '@'.$name;
+			if ($name[0] != '@') $name = '@'.$name;
 			$parser->count = 0;
 			$parser->buffer = (string)$strValue;
 			if (!$parser->propertyValue($value)) {

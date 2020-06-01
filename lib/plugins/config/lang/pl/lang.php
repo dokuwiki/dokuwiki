@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Bartek S <sadupl@gmail.com>
  * @author Wojciech Lichota <wojciech@lichota.pl>
  * @author Max <maxrb146@gmail.com>
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
@@ -153,6 +154,11 @@ $lang['xsendfile']             = 'Użyj nagłówka HTTP X-Sendfile w celu przesy
 $lang['renderer_xhtml']        = 'Mechanizm renderowania głównej treści strony (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki)';
 $lang['renderer__plugin']      = '%s (wtyczka)';
+$lang['search_fragment']       = 'Określ domyślne zachowanie wyszukiwania fragmentów';
+$lang['search_fragment_o_exact'] = 'dokładny';
+$lang['search_fragment_o_starts_with'] = 'zaczyna się z';
+$lang['search_fragment_o_ends_with'] = 'kończy się z';
+$lang['search_fragment_o_contains'] = 'zawiera';
 $lang['dnslookups']            = 'DokiWiki wyszuka nazwy hostów dla zdalnych adresów IP użytkowników edytujących strony. Jeśli twój serwer DNS działa zbyt wolno, uległ awarii lub nie chcesz używać wyszukiwania, wyłącz tę opcję.';
 $lang['jquerycdn']             = 'Czy pliki skryptów jQuery i jQuery UI powinny być ładowane z CDN? Powoduje to dodanie dodatkowych żądań HTTP, ale pliki mogą być ładowane szybciej, a użytkownicy mogą już je mieć zbuforowane.';
 $lang['jquerycdn_o_0']         = 'Bez CDN, tylko lokalne zasoby';
@@ -164,12 +170,6 @@ $lang['proxy____user']         = 'Proxy - nazwa użytkownika';
 $lang['proxy____pass']         = 'Proxy - hasło';
 $lang['proxy____ssl']          = 'Proxy - SSL';
 $lang['proxy____except']       = 'Wyrażenie regularne określające adresy URL, do których nie należy używać proxy.';
-$lang['safemodehack']          = 'Bezpieczny tryb (przez FTP)';
-$lang['ftp____host']           = 'FTP - serwer';
-$lang['ftp____port']           = 'FTP - port';
-$lang['ftp____user']           = 'FTP - nazwa użytkownika';
-$lang['ftp____pass']           = 'FTP - hasło';
-$lang['ftp____root']           = 'FTP - katalog główny';
 $lang['license_o_']            = 'Nie wybrano żadnej';
 $lang['typography_o_0']        = 'brak';
 $lang['typography_o_1']        = 'tylko podwójne cudzysłowy';

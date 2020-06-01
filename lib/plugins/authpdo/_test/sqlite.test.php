@@ -10,8 +10,8 @@ class testable_auth_plugin_authpdo extends auth_plugin_authpdo {
         return 'authpdo';
     }
 
-    public function _selectGroups() {
-        return parent::_selectGroups();
+    public function selectGroups() {
+        return parent::selectGroups();
     }
 
     public function addGroup($group) {
@@ -96,7 +96,7 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
     public function test_internals() {
         $auth = new testable_auth_plugin_authpdo();
 
-        $groups = $auth->_selectGroups();
+        $groups = $auth->selectGroups();
         $this->assertArrayHasKey('user', $groups);
         $this->assertEquals(1, $groups['user']['gid']);
         $this->assertArrayHasKey('admin', $groups);
@@ -104,7 +104,7 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
 
         $ok = $auth->addGroup('test');
         $this->assertTrue($ok);
-        $groups = $auth->_selectGroups();
+        $groups = $auth->selectGroups();
         $this->assertArrayHasKey('test', $groups);
         $this->assertEquals(3, $groups['test']['gid']);
     }

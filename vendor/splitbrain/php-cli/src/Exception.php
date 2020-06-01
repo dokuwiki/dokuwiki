@@ -11,7 +11,7 @@ namespace splitbrain\phpcli;
  * @author Andreas Gohr <andi@splitbrain.org>
  * @license MIT
  */
-class Exception extends \Exception
+class Exception extends \RuntimeException
 {
     const E_ANY = -1; // no error code specified
     const E_UNKNOWN_OPT = 1; //Unrecognized option

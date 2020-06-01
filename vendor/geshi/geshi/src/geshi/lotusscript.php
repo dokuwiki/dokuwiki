@@ -4,7 +4,7 @@
  * ------------------------
  * Author: Richard Civil (info@richardcivil.net)
  * Copyright: (c) 2008 Richard Civil (info@richardcivil.net), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2008/04/12
  *
  * LotusScript language file for GeSHi.

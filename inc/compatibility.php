@@ -80,3 +80,4 @@ if(!function_exists('gztell') && function_exists('gztell64')) {
         return gztell64($zp);
     }
 }
+

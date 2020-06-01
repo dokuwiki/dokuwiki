@@ -7,7 +7,6 @@
  * @deprecated
  * @since   1.3
  * @author  Scott Reynen <scott@randomchaos.com> and Kai Blankenhorn <kaib@bitfolge.de>
- * @package de.bitfolge.feedcreator
  */
 class PIECreator01 extends FeedCreator
 {

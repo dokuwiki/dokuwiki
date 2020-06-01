@@ -3,4 +3,3 @@
 Su última sesión de edición en esta página no se completó correctamente. DokuWiki guardó automáticamente un borrador mientras usted trabajaba; puede utilizar el borrador para continuar editándolo. Abajo se ven los datos que fueron guardados en su última sesión.
 
 Por favor decida si desea //recuperar// su sesión perdida, //eliminar// el borrador guardado automáticamente o //cancelar// el proceso de edición.
-

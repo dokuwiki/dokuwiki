@@ -6,8 +6,10 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-if(!defined('NL')) define('NL',"\n");
+use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\HTTP\DokuHTTPClient;
+use dokuwiki\Subscriptions\MediaSubscriptionSender;
+use dokuwiki\Extension\Event;
 
 /**
  * Lists pages which currently use a media file selected for deletion
@@ -172,7 +174,17 @@ function media_metaform($id,$auth){
 
         $form->addElement('<div class="row">');
         if($field[2] == 'text'){
-            $form->addElement(form_makeField('text', $p['name'], $value, ($lang[$field[1]]) ? $lang[$field[1]] : $field[1] . ':', $p['id'], $p['class'], $p_attrs));
+            $form->addElement(
+                form_makeField(
+                    'text',
+                    $p['name'],
+                    $value,
+                    ($lang[$field[1]]) ? $lang[$field[1]] : $field[1] . ':',
+                    $p['id'],
+                    $p['class'],
+                    $p_attrs
+                )
+            );
         }else{
             $att = buildAttributes($p);
             $form->addElement('<label for="meta__'.$key.'">'.$lang[$field[1]].'</label>');
@@ -181,7 +193,14 @@ function media_metaform($id,$auth){
         $form->addElement('</div>'.NL);
     }
     $form->addElement('<div class="buttons">');
-    $form->addElement(form_makeButton('submit', '', $lang['btn_save'], array('accesskey' => 's', 'name' => 'mediado[save]')));
+    $form->addElement(
+        form_makeButton(
+            'submit',
+            '',
+            $lang['btn_save'],
+            array('accesskey' => 's', 'name' => 'mediado[save]')
+        )
+    );
     $form->addElement('</div>'.NL);
     $form->printForm();
 
@@ -242,13 +261,13 @@ function media_delete($id,$auth){
     // trigger an event - MEDIA_DELETE_FILE
     $data = array();
     $data['id']   = $id;
-    $data['name'] = utf8_basename($file);
+    $data['name'] = \dokuwiki\Utf8\PhpString::basename($file);
     $data['path'] = $file;
     $data['size'] = (file_exists($file)) ? filesize($file) : 0;
 
     $data['unl'] = false;
     $data['del'] = false;
-    $evt = new Doku_Event('MEDIA_DELETE_FILE',$data);
+    $evt = new Event('MEDIA_DELETE_FILE',$data);
     if ($evt->advise_before()) {
         $old = @filemtime($file);
         if(!file_exists(mediaFN($id, $old)) && file_exists($file)) {
@@ -466,7 +485,7 @@ function media_save($file, $id, $ow, $auth, $move) {
     $data[5] = $move;
 
     // trigger event
-    return trigger_event('MEDIA_UPLOAD_FINISH', $data, '_media_upload_action', true);
+    return Event::createAndTrigger('MEDIA_UPLOAD_FINISH', $data, '_media_upload_action', true);
 }
 
 /**
@@ -525,12 +544,20 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
         // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
         chmod($fn, $conf['fmode']);
         msg($lang['uploadsucc'],1);
-        media_notify($id,$fn,$imime,$old);
+        media_notify($id,$fn,$imime,$old,$new);
         // add a log entry to the media changelog
         $filesize_new = filesize($fn);
         $sizechange = $filesize_new - $filesize_old;
         if($REV) {
-            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_REVERT, sprintf($lang['restored'], dformat($REV)), $REV, null, $sizechange);
+            addMediaLogEntry(
+                $new,
+                $id,
+                DOKU_CHANGE_TYPE_REVERT,
+                sprintf($lang['restored'], dformat($REV)),
+                $REV,
+                null,
+                $sizechange
+            );
         } elseif($overwrite) {
             addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT, '', '', null, $sizechange);
         } else {
@@ -645,12 +672,12 @@ function media_contentcheck($file,$mime){
  * @param bool|int $old_rev revision timestamp or false
  * @return bool
  */
-function media_notify($id,$file,$mime,$old_rev=false){
+function media_notify($id,$file,$mime,$old_rev=false,$current_rev=false){
     global $conf;
     if(empty($conf['notify'])) return false; //notify enabled?
 
-    $subscription = new Subscription();
-    return $subscription->send_media_diff($conf['notify'], 'uploadmail', $id, $old_rev);
+    $subscription = new MediaSubscriptionSender();
+    return $subscription->sendMediaDiff($conf['notify'], 'uploadmail', $id, $old_rev, $current_rev);
 }
 
 /**
@@ -1249,7 +1276,7 @@ function media_diff($image, $ns, $auth, $fromajax = false) {
     $data[5] = $fromajax;
 
     // trigger event
-    return trigger_event('MEDIA_DIFF', $data, '_media_file_diff', true);
+    return Event::createAndTrigger('MEDIA_DIFF', $data, '_media_file_diff', true);
 }
 
 /**
@@ -1487,7 +1514,7 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
         'query' => $query
     );
     if (!blank($query)) {
-        $evt = new Doku_Event('MEDIA_SEARCH', $evdata);
+        $evt = new Event('MEDIA_SEARCH', $evdata);
         if ($evt->advise_before()) {
             $dir = utf8_encodeFN(str_replace(':','/',$evdata['ns']));
             $quoted = preg_quote($evdata['query'],'/');
@@ -1716,7 +1743,7 @@ function media_printimgdetail($item, $fullscreen=false){
     // output
     if ($fullscreen) {
         echo '<a id="l_:'.$item['id'].'" class="image thumb" href="'.
-            media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']), 'tab_details' => 'view')).'">';
+            media_managerURL(['image' => hsc($item['id']), 'ns' => getNS($item['id']), 'tab_details' => 'view']).'">';
         echo '<img src="'.$src.'" '.$att.' />';
         echo '</a>';
     }
@@ -1735,7 +1762,7 @@ function media_printimgdetail($item, $fullscreen=false){
     $d = $item['meta']->getField(array('IPTC.Caption','EXIF.UserComment',
                 'EXIF.TIFFImageDescription',
                 'EXIF.TIFFUserComment'));
-    if(utf8_strlen($d) > 250) $d = utf8_substr($d,0,250).'...';
+    if(\dokuwiki\Utf8\PhpString::strlen($d) > 250) $d = \dokuwiki\Utf8\PhpString::substr($d,0,250).'...';
     $k = $item['meta']->getField(array('IPTC.Keywords','IPTC.Category','xmp.dc:subject'));
 
     // print EXIF/IPTC data
@@ -1900,7 +1927,16 @@ function media_searchform($ns,$query='',$fullscreen=false){
     $form->addHidden($fullscreen ? 'mediado' : 'do', 'searchlist');
 
     $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeTextField('q', $query,$lang['searchmedia'],'','',array('title'=>sprintf($lang['searchmedia_in'],hsc($ns).':*'))));
+    $form->addElement(
+        form_makeTextField(
+            'q',
+            $query,
+            $lang['searchmedia'],
+            '',
+            '',
+            array('title' => sprintf($lang['searchmedia_in'], hsc($ns) . ':*'))
+        )
+    );
     $form->addElement(form_makeButton('submit', '', $lang['btn_search']));
     $form->addElement(form_makeCloseTag('p'));
     html_form('searchmedia', $form);
@@ -1943,7 +1979,13 @@ function media_nstree($ns){
 
         // find the namespace parts or insert them
         while ($data[$pos]['id'] != $tmp_ns) {
-            if ($pos >= count($data) || ($data[$pos]['level'] <= $level+1 && strnatcmp(utf8_encodeFN($data[$pos]['id']), utf8_encodeFN($tmp_ns)) > 0)) {
+            if (
+                $pos >= count($data) ||
+                (
+                    $data[$pos]['level'] <= $level+1 &&
+                    strnatcmp(utf8_encodeFN($data[$pos]['id']), utf8_encodeFN($tmp_ns)) > 0
+                )
+            ) {
                 array_splice($data, $pos, 0, array(array('level' => $level+1, 'id' => $tmp_ns, 'open' => 'true')));
                 break;
             }
@@ -2040,7 +2082,7 @@ function media_resize_image($file, $ext, $w, $h=0){
         media_resize_imageIM($ext, $file, $info[0], $info[1], $local, $w, $h) ||
         media_resize_imageGD($ext, $file, $info[0], $info[1], $local, $w, $h)
     ) {
-        if(!empty($conf['fperm'])) @chmod($local, $conf['fperm']);
+        if($conf['fperm']) @chmod($local, $conf['fperm']);
         return $local;
     }
     //still here? resizing failed
@@ -2107,7 +2149,7 @@ function media_crop_image($file, $ext, $w, $h=0){
     if( $mtime > @filemtime($file) ||
             media_crop_imageIM($ext,$file,$info[0],$info[1],$local,$cw,$ch,$cx,$cy) ||
             media_resize_imageGD($ext,$file,$cw,$ch,$local,$cw,$ch,$cx,$cy) ){
-        if(!empty($conf['fperm'])) @chmod($local, $conf['fperm']);
+        if($conf['fperm']) @chmod($local, $conf['fperm']);
         return media_resize_image($local,$ext, $w, $h);
     }
 
@@ -2134,7 +2176,7 @@ function media_get_token($id,$w,$h){
         if ($w) $token .= '.'.$w;
         if ($h) $token .= '.'.$h;
 
-        return substr(PassHash::hmac('md5', $token, auth_cookiesalt()),0,6);
+        return substr(\dokuwiki\PassHash::hmac('md5', $token, auth_cookiesalt()),0,6);
     }
 
     return '';
@@ -2353,7 +2395,12 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
             $transcolorindex = @imagecolortransparent($image);
             if($transcolorindex >= 0 ) { //transparent color exists
                 $transcolor = @imagecolorsforindex($image, $transcolorindex);
-                $transcolorindex = @imagecolorallocate($newimg, $transcolor['red'], $transcolor['green'], $transcolor['blue']);
+                $transcolorindex = @imagecolorallocate(
+                    $newimg,
+                    $transcolor['red'],
+                    $transcolor['green'],
+                    $transcolor['blue']
+                );
                 @imagefill($newimg, 0, 0, $transcolorindex);
                 @imagecolortransparent($newimg, $transcolorindex);
             }else{ //filling with white

@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\ChangeLog\PageChangeLog;
+
 /**
  * Tests for requesting revisioninfo of a revision of a page with getRevisionInfo()
  *

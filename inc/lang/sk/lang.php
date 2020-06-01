@@ -1,19 +1,26 @@
 <?php
 
 /**
+ * slovak language file
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * auth.class language support 
+ * installer strings 
+ *
+ * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
  * @author Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik <exusik@gmail.com>
+ * @author Tibor Repček <tiborepcek@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '„';
-$lang['doublequoteclosing']    = '“';
-$lang['singlequoteopening']    = '‚';
-$lang['singlequoteclosing']    = '‘';
+$lang['doublequoteopening']    = '“';
+$lang['doublequoteclosing']    = '”';
+$lang['singlequoteopening']    = '‘';
+$lang['singlequoteclosing']    = '’';
 $lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Upraviť stránku';
 $lang['btn_source']            = 'Zobraziť zdroj stránky';
@@ -67,6 +74,63 @@ $lang['badpassconfirm']        = 'Ľutujem, heslo bolo nesprávne.';
 $lang['minoredit']             = 'Menšie zmeny';
 $lang['draftdate']             = 'Koncept automaticky uložený';
 $lang['nosecedit']             = 'Stránka bola medzičasom zmenená, informácie o sekcii sú zastaralé a z tohto dôvodu bola nahraná celá stránka.';
+$lang['searchcreatepage']      = 'Ak ste nenašli, čo ste hľadali, môžete vytvoriť alebo upraviť stránku %s, ktorá bola nazvaná podľa vášho dopytu.';
+$lang['search_fullresults']    = 'Fulltextové výsledky';
+$lang['js']['search_toggle_tools'] = 'Zobraziť/Skryť vyhľadávacie nástroje';
+$lang['js']['willexpire']      = 'Váš zámok pre editáciu za chvíľu stratí platnosť.\nAby ste predišli konfliktom, stlačte tlačítko Náhľad a zámok sa predĺži.';
+$lang['js']['notsavedyet']     = 'Neuložené zmeny budú stratené.
+Chcete naozaj pokračovať?';
+$lang['js']['searchmedia']     = 'Hľadať súbory';
+$lang['js']['keepopen']        = 'Po vybraní súboru ponechať okno otvorené';
+$lang['js']['hidedetails']     = 'Skryť detaily';
+$lang['js']['mediatitle']      = 'Nastavenia odkazu';
+$lang['js']['mediadisplay']    = 'Typ odkazu';
+$lang['js']['mediaalign']      = 'Zarovnanie';
+$lang['js']['mediasize']       = 'Veľkosť obrázka';
+$lang['js']['mediatarget']     = 'Cieľ odkazu';
+$lang['js']['mediaclose']      = 'Zatvoriť';
+$lang['js']['mediainsert']     = 'Vložiť';
+$lang['js']['mediadisplayimg'] = 'Zobraziť obrázok.';
+$lang['js']['mediadisplaylnk'] = 'Zobraziť iba odkaz.';
+$lang['js']['mediasmall']      = 'Malý';
+$lang['js']['mediamedium']     = 'Stredný';
+$lang['js']['medialarge']      = 'Veľký';
+$lang['js']['mediaoriginal']   = 'Originál';
+$lang['js']['medialnk']        = 'Odkaz na stránku s detailným popisom';
+$lang['js']['mediadirect']     = 'Priamy odkaz na originál';
+$lang['js']['medianolnk']      = 'Žiadny odkaz';
+$lang['js']['medianolink']     = 'Bez odkazu na obrázok';
+$lang['js']['medialeft']       = 'Zarovnať obrázok vľavo.';
+$lang['js']['mediaright']      = 'Zarovnať obrázok vpravo.';
+$lang['js']['mediacenter']     = 'Zarovnať obrázok na stred.';
+$lang['js']['medianoalign']    = 'Nepoužívať zarovnanie.';
+$lang['js']['nosmblinks']      = 'Odkazovanie na zdieľané prostriedky Windows funguje len v Internet Exploreri.\nAj napriek tomu tento odkaz môžete skopírovať a vložiť inde.';
+$lang['js']['linkwiz']         = 'Sprievodca odkazmi';
+$lang['js']['linkto']          = 'Odkaz na:';
+$lang['js']['del_confirm']     = 'Zmazať túto položku?';
+$lang['js']['restore_confirm'] = 'Skutočne obnoviť túto verziu?';
+$lang['js']['media_diff']      = 'Zobraziť rozdiely:';
+$lang['js']['media_diff_both'] = 'Vedľa seba';
+$lang['js']['media_diff_opacity'] = 'Presvitaním';
+$lang['js']['media_diff_portions'] = 'Potiahnutím';
+$lang['js']['media_select']    = 'Vybrať súbory...';
+$lang['js']['media_upload_btn'] = 'Nahrať';
+$lang['js']['media_done_btn']  = 'Hotovo';
+$lang['js']['media_drop']      = 'Pridajte súbory potiahnutím myšou';
+$lang['js']['media_cancel']    = 'odstrániť';
+$lang['js']['media_overwrt']   = 'Prepísať existujúce súbory';
+$lang['search_exact_match']    = 'Presná zhoda';
+$lang['search_starts_with']    = 'Začín na';
+$lang['search_ends_with']      = 'Končí na';
+$lang['search_contains']       = 'Obsahuje';
+$lang['search_custom_match']   = 'Vlastný';
+$lang['search_any_ns']         = 'Akýkoľvek menný priestor';
+$lang['search_any_time']       = 'Kedykoľvek';
+$lang['search_past_7_days']    = 'Posledný týždeň';
+$lang['search_past_month']     = 'Posledný mesiac';
+$lang['search_past_year']      = 'Posledný  rok';
+$lang['search_sort_by_hits']   = 'Zoradiť podľa počtu návštev';
+$lang['search_sort_by_mtime']  = 'Zoradiť podľa posledných úprav';
 $lang['regmissing']            = 'Musíte vyplniť všetky údaje.';
 $lang['reguexists']            = 'Používateľ s rovnakým menom je už zaregistrovaný.';
 $lang['regsuccess']            = 'Používateľský účet bol vytvorený a heslo zaslané emailom.';
@@ -105,49 +169,6 @@ $lang['txt_overwrt']           = 'Prepísať existujúci súbor';
 $lang['maxuploadsize']         = 'Obmedzenie max. %s na súbor.';
 $lang['lockedby']              = 'Práve zamknuté:';
 $lang['lockexpire']            = 'Zámok stratí platnosť:';
-$lang['js']['willexpire']      = 'Váš zámok pre editáciu za chvíľu stratí platnosť.\nAby ste predišli konfliktom, stlačte tlačítko Náhľad a zámok sa predĺži.';
-$lang['js']['notsavedyet']     = 'Neuložené zmeny budú stratené.
-Chcete naozaj pokračovať?';
-$lang['js']['searchmedia']     = 'Hľadať súbory';
-$lang['js']['keepopen']        = 'Po vybraní súboru ponechať okno otvorené';
-$lang['js']['hidedetails']     = 'Skryť detaily';
-$lang['js']['mediatitle']      = 'Nastavenia odkazu';
-$lang['js']['mediadisplay']    = 'Typ odkazu';
-$lang['js']['mediaalign']      = 'Zarovnanie';
-$lang['js']['mediasize']       = 'Veľkosť obrázka';
-$lang['js']['mediatarget']     = 'Cieľ odkazu';
-$lang['js']['mediaclose']      = 'Zatvoriť';
-$lang['js']['mediainsert']     = 'Vložiť';
-$lang['js']['mediadisplayimg'] = 'Zobraziť obrázok.';
-$lang['js']['mediadisplaylnk'] = 'Zobraziť iba odkaz.';
-$lang['js']['mediasmall']      = 'Malý';
-$lang['js']['mediamedium']     = 'Stredný';
-$lang['js']['medialarge']      = 'Veľký';
-$lang['js']['mediaoriginal']   = 'Originál';
-$lang['js']['medialnk']        = 'Odkaz na stránku s detailným popisom';
-$lang['js']['mediadirect']     = 'Priamy odkaz na originál';
-$lang['js']['medianolnk']      = 'Žiadny odkaz';
-$lang['js']['medianolink']     = 'Bez odkazu na obrázok';
-$lang['js']['medialeft']       = 'Zarovnať obrázok vľavo.';
-$lang['js']['mediaright']      = 'Zarovnať obrázok vpravo.';
-$lang['js']['mediacenter']     = 'Zarovnať obrázok na stred.';
-$lang['js']['medianoalign']    = 'Nepoužívať zarovnanie.';
-$lang['js']['nosmblinks']      = 'Odkazovanie na zdieľané prostriedky Windows funguje len v Internet Exploreri.
-Aj napriek tomu tento odkaz môžete skopírovať a vložiť inde.';
-$lang['js']['linkwiz']         = 'Sprievodca odkazmi';
-$lang['js']['linkto']          = 'Odkaz na:';
-$lang['js']['del_confirm']     = 'Zmazať túto položku?';
-$lang['js']['restore_confirm'] = 'Skutočne obnoviť túto verziu?';
-$lang['js']['media_diff']      = 'Zobraziť rozdiely:';
-$lang['js']['media_diff_both'] = 'Vedľa seba';
-$lang['js']['media_diff_opacity'] = 'Presvitaním';
-$lang['js']['media_diff_portions'] = 'Potiahnutím';
-$lang['js']['media_select']    = 'Vybrať súbory...';
-$lang['js']['media_upload_btn'] = 'Nahrať';
-$lang['js']['media_done_btn']  = 'Hotovo';
-$lang['js']['media_drop']      = 'Pridajte súbory potiahnutím myšou';
-$lang['js']['media_cancel']    = 'odstrániť';
-$lang['js']['media_overwrt']   = 'Prepísať existujúce súbory';
 $lang['rssfailed']             = 'Nastala chyba pri vytváraní tohto RSS: ';
 $lang['nothingfound']          = 'Nič nenájdené.';
 $lang['mediaselect']           = 'Výber súboru';
@@ -187,8 +208,10 @@ $lang['diff_side']             = 'Vedľa seba';
 $lang['diffprevrev']           = 'Predchádzajúca revízia';
 $lang['diffnextrev']           = 'Nasledujúca revízia';
 $lang['difflastrev']           = 'Posledná revízia';
+$lang['diffbothprevrev']       = 'Obojstranná predošlá revízia';
+$lang['diffbothnextrev']       = 'Obojstranná nasledujúca revízia';
 $lang['line']                  = 'Riadok';
-$lang['breadcrumb']            = 'História:';
+$lang['breadcrumb']            = 'Cesta:';
 $lang['youarehere']            = 'Nachádzate sa:';
 $lang['lastmod']               = 'Posledná úprava:';
 $lang['by']                    = 'od';
@@ -335,6 +358,7 @@ $lang['currentns']             = 'Aktuálny menný priestor';
 $lang['searchresult']          = 'Výsledky hľadania';
 $lang['plainhtml']             = 'Jednoduché HTML';
 $lang['wikimarkup']            = 'Wiki formát';
+$lang['page_nonexist_rev']     = 'Stránka %s neexistovala. Bola vytvorená dodatočne <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Nie je možné spracovať parameter "%s".';
 $lang['email_signature_text']  = 'Táto správa bola zaslaná DokuWiki
 @DOKUWIKIURL@';

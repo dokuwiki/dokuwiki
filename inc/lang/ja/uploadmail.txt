@@ -1,10 +1,11 @@
 お使いのDokuWikiにファイルがアップロードされました。詳細は以下の通りです。
 
-ファイル    : @MEDIA@
-日付        : @DATE@
-ブラウザ    : @BROWSER@
-IPアドレス  : @IPADDRESS@
-ホスト名    : @HOSTNAME@
-サイズ      : @SIZE@
-MIMEタイプ  : @MIME@
-ユーザー名  : @USER@
+ファイル　: @MEDIA@
+古い版　　: @OLD@
+日付　　　: @DATE@
+ブラウザ　: @BROWSER@
+IPアドレス: @IPADDRESS@
+ホスト名　: @HOSTNAME@
+サイズ　　: @SIZE@
+MIMEタイプ: @MIME@
+ユーザー名: @USER@

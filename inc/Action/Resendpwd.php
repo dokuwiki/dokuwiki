@@ -23,7 +23,7 @@ class Resendpwd extends AbstractAclAction {
     public function checkPreconditions() {
         parent::checkPreconditions();
 
-        /** @var \DokuWiki_Auth_Plugin $auth */
+        /** @var \dokuwiki\Extension\AuthPlugin $auth */
         global $auth;
         global $conf;
         if(isset($conf['resendpasswd']) && !$conf['resendpasswd']) throw new ActionDisabledException(); //legacy option
@@ -59,7 +59,7 @@ class Resendpwd extends AbstractAclAction {
     protected function resendpwd() {
         global $lang;
         global $conf;
-        /* @var \DokuWiki_Auth_Plugin $auth */
+        /* @var \dokuwiki\Extension\AuthPlugin $auth */
         global $auth;
         global $INPUT;
 
@@ -73,7 +73,7 @@ class Resendpwd extends AbstractAclAction {
         if($token) {
             // we're in token phase - get user info from token
 
-            $tfile = $conf['cachedir'] . '/' . $token{0} . '/' . $token . '.pwauth';
+            $tfile = $conf['cachedir'] . '/' . $token[0] . '/' . $token . '.pwauth';
             if(!file_exists($tfile)) {
                 msg($lang['resendpwdbadauth'], -1);
                 $INPUT->remove('pwauth');
@@ -148,7 +148,7 @@ class Resendpwd extends AbstractAclAction {
 
             // generate auth token
             $token = md5(auth_randombytes(16)); // random secret
-            $tfile = $conf['cachedir'] . '/' . $token{0} . '/' . $token . '.pwauth';
+            $tfile = $conf['cachedir'] . '/' . $token[0] . '/' . $token . '.pwauth';
             $url = wl('', array('do' => 'resendpwd', 'pwauth' => $token), true, '&');
 
             io_saveFile($tfile, $user);

@@ -185,14 +185,6 @@ $lang['proxy____pass']    = 'Cyfrinair procsi';
 $lang['proxy____ssl']     = 'Defnyddio SSL i gysylltu â\'r procsi';
 $lang['proxy____except']  = 'Mynegiad rheolaidd i gydweddu URL ar gyfer y procsi a ddylai cael eu hanwybyddu.';
 
-/* Safemode Hack */
-$lang['safemodehack'] = 'Galluogi safemode hack';
-$lang['ftp____host'] = 'Gweinydd FTP safemode hack';
-$lang['ftp____port'] = 'Porth FTP safemode hack';
-$lang['ftp____user'] = 'Defnyddair FTP safemode hack';
-$lang['ftp____pass'] = 'Cyfrinair FTP safemode hack';
-$lang['ftp____root'] = 'Gwraiddffolder FTP safemode hack';
-
 /* License Options */
 $lang['license_o_'] = 'Dim wedi\'i ddewis';
 

@@ -6,7 +6,6 @@
  * @see     http://www.purl.org/rss/1.0/
  * @since   1.3
  * @author  Kai Blankenhorn <kaib@bitfolge.de>
- * @package de.bitfolge.feedcreator
  */
 class RSSCreator10 extends FeedCreator
 {

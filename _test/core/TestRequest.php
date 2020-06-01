@@ -4,6 +4,8 @@
  * runtime inspection.
  */
 
+use dokuwiki\Input\Input;
+
 /**
  * Helper class to execute a fake request
  */

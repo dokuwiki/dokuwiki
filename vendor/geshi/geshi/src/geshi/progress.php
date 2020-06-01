@@ -4,7 +4,7 @@
  * --------
  * Author: Marco Aurelio de Pasqual (marcop@hdi.com.br)
  * Copyright: (c) 2008 Marco Aurelio de Pasqual, Benny Baumann (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2008/07/11
  *
  * Progress language file for GeSHi.

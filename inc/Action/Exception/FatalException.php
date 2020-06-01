@@ -13,9 +13,6 @@ namespace dokuwiki\Action\Exception;
  * @package dokuwiki\Action\Exception
  */
 class FatalException extends \Exception {
-
-    protected $status;
-
     /**
      * FatalException constructor.
      *

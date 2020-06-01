@@ -4,7 +4,7 @@
  * --------------
  * Author: P�draig O`Connel (info@moonsword.info)
  * Copyright: (c) 2005 P�draig O`Connel (http://moonsword.info)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 16.10.2005
  *
  * BlitzBasic language file for GeSHi.

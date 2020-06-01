@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
+use dokuwiki\Extension\Event;
 
 /**
  * All action processing starts here
@@ -16,7 +16,7 @@ function act_dispatch(){
     $router = \dokuwiki\ActionRouter::getInstance(true);
 
     $headers = array('Content-Type: text/html; charset=utf-8');
-    trigger_event('ACTION_HEADERS_SEND',$headers,'act_sendheaders');
+    Event::createAndTrigger('ACTION_HEADERS_SEND',$headers,'act_sendheaders');
 
     // clear internal variables
     unset($router);

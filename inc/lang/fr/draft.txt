@@ -3,4 +3,3 @@
 La dernière modification de cette page ne s'est pas terminée correctement. DokuWiki a enregistré automatiquement un brouillon de votre travail que vous pouvez utiliser pour votre modification. Ci-dessous figurent les données enregistrées lors de votre dernière session.
 
 À vous de décider si vous souhaitez //récupérer// votre session de modification précédente, //supprimer// le brouillon enregistré automatiquement ou //annuler// le processus d'édition.
-

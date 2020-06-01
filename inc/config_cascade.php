@@ -61,6 +61,10 @@ $config_cascade = array_merge(
         'userscript' => array(
             'default'   => array(DOKU_CONF . 'userscript.js')
         ),
+        'styleini' => array(
+            'default'   => array(DOKU_INC . 'lib/tpl/%TEMPLATE%/' . 'style.ini'),
+            'local'     => array(DOKU_CONF . 'tpl/%TEMPLATE%/' . 'style.ini')
+        ),
         'acl' => array(
             'default'   => DOKU_CONF . 'acl.auth.php',
         ),

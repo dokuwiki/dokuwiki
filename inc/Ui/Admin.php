@@ -12,6 +12,9 @@ namespace dokuwiki\Ui;
  */
 class Admin extends Ui {
 
+    protected $forAdmins = array('usermanager', 'acl', 'extension', 'config', 'styling');
+    protected $forManagers = array('revert', 'popularity');
+    /** @var array[] */
     protected $menu;
 
     /**
@@ -24,58 +27,30 @@ class Admin extends Ui {
         echo '<div class="ui-admin">';
         echo p_locale_xhtml('admin');
         $this->showSecurityCheck();
-        $this->showAdminMenu();
-        $this->showManagerMenu();
+        $this->showMenu('admin');
+        $this->showMenu('manager');
         $this->showVersion();
-        $this->showPluginMenu();
+        $this->showMenu('other');
         echo '</div>';
     }
 
     /**
-     * Display the standard admin tasks
+     * Show the given menu of available plugins
+     *
+     * @param string $type admin|manager|other
      */
-    protected function showAdminMenu() {
-        /** @var \DokuWiki_Auth_Plugin $auth */
-        global $auth;
-        global $INFO;
+    protected function showMenu($type) {
+        if (!$this->menu[$type]) return;
 
-        if(!$INFO['isadmin']) return;
-
-        // user manager only if the auth backend supports it
-        if(!$auth || !$auth->canDo('getUsers') ) {
-            if(isset($this->menu['usermanager'])) unset($this->menu['usermanager']);
+        if ($type === 'other') {
+            echo p_locale_xhtml('adminplugins');
+            $class = 'admin_plugins';
+        } else {
+            $class = 'admin_tasks';
         }
 
-        echo '<ul class="admin_tasks">';
-        foreach(array('usermanager','acl', 'extension', 'config', 'styling') as $plugin) {
-            if(!isset($this->menu[$plugin])) continue;
-            $this->showMenuItem($this->menu[$plugin]);
-            unset($this->menu[$plugin]);
-        }
-        echo '</ul>';
-    }
-
-    /**
-     * Display the standard manager tasks
-     */
-    protected function showManagerMenu() {
-        echo '<ul class="admin_tasks">';
-        foreach(array('revert','popularity') as $plugin) {
-            if(!isset($this->menu[$plugin])) continue;
-            $this->showMenuItem($this->menu[$plugin]);
-            unset($this->menu[$plugin]);
-        }
-        echo '</ul>';
-    }
-
-    /**
-     * Display all the remaining plugins
-     */
-    protected function showPluginMenu() {
-        if(!count($this->menu)) return;
-        echo p_locale_xhtml('adminplugins');
-        echo '<ul class="admin_plugins">';
-        foreach ($this->menu as $item) {
+        echo "<ul class=\"$class\">";
+        foreach ($this->menu[$type] as $item) {
             $this->showMenuItem($item);
         }
         echo '</ul>';
@@ -102,9 +77,11 @@ class Admin extends Ui {
     protected function showSecurityCheck() {
         global $conf;
         if(substr($conf['savedir'], 0, 2) !== './') return;
+        $img = DOKU_URL . $conf['savedir'] .
+            '/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png';
         echo '<a style="border:none; float:right;"
                 href="http://www.dokuwiki.org/security#web_access_security">
-                <img src="' . DOKU_URL . $conf['savedir'] . '/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png" alt="Your data directory seems to be protected properly."
+                <img src="' . $img . '" alt="Your data directory seems to be protected properly."
                 onerror="this.parentNode.style.display=\'none\'" /></a>';
     }
 
@@ -136,19 +113,27 @@ class Admin extends Ui {
      * @return array list of plugins with their properties
      */
     protected function getPluginList() {
-        global $INFO;
         global $conf;
 
         $pluginlist = plugin_list('admin');
-        $menu = array();
+        $menu = ['admin' => [], 'manager' => [], 'other' => []];
+
         foreach($pluginlist as $p) {
-            /** @var \DokuWiki_Admin_Plugin $obj */
+            /** @var \dokuwiki\Extension\AdminPlugin $obj */
             if(($obj = plugin_load('admin', $p)) === null) continue;
 
             // check permissions
-            if($obj->forAdminOnly() && !$INFO['isadmin']) continue;
+            if (!$obj->isAccessibleByCurrentUser()) continue;
 
-            $menu[$p] = array(
+            if (in_array($p, $this->forAdmins, true)) {
+                $type = 'admin';
+            } elseif (in_array($p, $this->forManagers, true)){
+                $type = 'manager';
+            } else {
+                $type = 'other';
+            }
+
+            $menu[$type][$p] = array(
                 'plugin' => $p,
                 'prompt' => $obj->getMenuText($conf['lang']),
                 'icon' => $obj->getMenuIcon(),
@@ -157,17 +142,26 @@ class Admin extends Ui {
         }
 
         // sort by name, then sort
-        uasort(
-            $menu,
-            function ($a, $b) {
-                $strcmp = strcasecmp($a['prompt'], $b['prompt']);
-                if($strcmp != 0) return $strcmp;
-                if($a['sort'] == $b['sort']) return 0;
-                return ($a['sort'] < $b['sort']) ? -1 : 1;
-            }
-        );
+        uasort($menu['admin'], [$this, 'menuSort']);
+        uasort($menu['manager'], [$this, 'menuSort']);
+        uasort($menu['other'], [$this, 'menuSort']);
 
         return $menu;
     }
 
+    /**
+     * Custom sorting for admin menu
+     *
+     * We sort alphabetically first, then by sort value
+     *
+     * @param array $a
+     * @param array $b
+     * @return int
+     */
+    protected function menuSort($a, $b) {
+        $strcmp = strcasecmp($a['prompt'], $b['prompt']);
+        if($strcmp != 0) return $strcmp;
+        if($a['sort'] === $b['sort']) return 0;
+        return ($a['sort'] < $b['sort']) ? -1 : 1;
+    }
 }

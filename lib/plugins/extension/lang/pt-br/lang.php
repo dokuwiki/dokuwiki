@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Davi Jorge <davimoises2015@hotmail.com>
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Hudson FAS <hudsonfas@gmail.com>
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
@@ -74,6 +76,7 @@ $lang['msg_template_update_success'] = 'Modelo %s atualizado com sucesso';
 $lang['msg_plugin_install_success'] = 'Extensão %s instalada com sucesso';
 $lang['msg_plugin_update_success'] = 'Extensão %s atualizada com sucesso';
 $lang['msg_upload_failed']     = 'Subida do arquivo falhou';
+$lang['msg_nooverwrite']       = 'A extensão %s já existe e, portanto, não está sendo substituída; para substituir, marque a opção de substituição';
 $lang['missing_dependency']    = '<strong>Dependência faltante ou desabilitada:</strong> %s';
 $lang['security_issue']        = '<strong>Problema com segurança:</strong> %s';
 $lang['security_warning']      = '<strong>Aviso sobre segurança:</strong> %s';

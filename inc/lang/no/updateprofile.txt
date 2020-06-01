@@ -1,5 +1,3 @@
 ====== Oppdater din brukerprofil ======
 
 Du behøver bare fylle ut de felter du ønsker å endre. Du kan ikke endre brukernavnet ditt.
-
-

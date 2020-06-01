@@ -3,6 +3,7 @@
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
+use dokuwiki\Extension\Event;
 
 /**
  * Class Redirect
@@ -41,7 +42,7 @@ class Redirect extends AbstractAliasAction {
         }
 
         // execute the redirect
-        trigger_event('ACTION_SHOW_REDIRECT', $opts, array($this, 'redirect'));
+        Event::createAndTrigger('ACTION_SHOW_REDIRECT', $opts, array($this, 'redirect'));
 
         // should never be reached
         throw new ActionAbort('show');
@@ -55,7 +56,7 @@ class Redirect extends AbstractAliasAction {
      * @param array $opts id and fragment for the redirect and the preact
      */
     public function redirect($opts) {
-        $go = wl($opts['id'], '', true);
+        $go = wl($opts['id'], '', true, '&');
         if(isset($opts['fragment'])) $go .= '#' . $opts['fragment'];
 
         //show it
