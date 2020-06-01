@@ -17,7 +17,7 @@ class sort_without_collator_test extends DokuWikiTest {
     }
 
     /**
-     * Collation for Esperanto.
+     * Actually a wrong collation for Esperanto.
      * @return string
      */
     public function collation() {
@@ -40,11 +40,12 @@ class sort_without_collator_test extends DokuWikiTest {
     }
 
     /**
-     * Pairs that are OK with the fallback intl_strcmp().
+     * Pairs for fallback intl_strcmp().
      * @return array
      */
-    public function pairs_OK() {
+    public function pairs() {
         return array(
+            // fallback sort doesn't recognize the Esperanto letters
             array('celo',     'ĉapo'     ),
             // array('ĉokolado', 'dento'    ), // c ĉ d
             array('glacio',   'ĝirafo'   ),
@@ -57,6 +58,15 @@ class sort_without_collator_test extends DokuWikiTest {
             // array('ŝuo',      'tablo'    ), // s ŝ t
             array('urso',     'ŭaŭ'      ),
             // array('ŭo',       'vino'     ), // u ŭ v
+
+            // all Esperanto letters are put after z (actually a wrong collation)
+            array('zorio',   'ĉokolado'),
+            array('ĉerizo',  'ĝojo'),
+            array('ĝangalo', 'ĥoro'),
+            array('ĥaoso',   'ĵurnalo'),
+            array('ĵipo',    'ŝuo'),
+            array('ŝafo',    'ŭo'),
+
             // natural sort
             array('paĝo 2',   'paĝo 10'  ),
             array('paĝo 51',  'paĝo 100' )
@@ -65,38 +75,11 @@ class sort_without_collator_test extends DokuWikiTest {
 
     /**
      * @depends test_no_intl_extension
-     * @dataProvider pairs_OK
+     * @dataProvider pairs
      * @param $str1
      * @param $str2
      */
-    public function test_intl_strcmp_OK($str1, $str2) {
-        $this->assertLessThan(0, intl_strcmp($str1, $str2));
-    }
-
-    /**
-     * Pairs that are WRONG with the fallback intl_strcmp().
-     * @return array
-     */
-    public function pairs_WRONG() {
-        return array(
-            // fallback sort doesn't recognize the Esperanto letters
-            // all of them are put after z
-            array('zorio',   'ĉokolado'),
-            array('ĉerizo',  'ĝojo'),
-            array('ĝangalo', 'ĥoro'),
-            array('ĥaoso',   'ĵurnalo'),
-            array('ĵipo',    'ŝuo'),
-            array('ŝafo',    'ŭo')
-        );
-    }
-
-    /**
-     * @depends test_no_intl_extension
-     * @dataProvider pairs_WRONG
-     * @param $str1
-     * @param $str2
-     */
-    public function test_intl_strcmp_WRONG($str1, $str2) {
+    public function test_intl_strcmp($str1, $str2) {
         $this->assertLessThan(0, intl_strcmp($str1, $str2));
     }
 
@@ -132,8 +115,8 @@ class sort_without_collator_test extends DokuWikiTest {
         shuffle($keys);
         foreach($keys as $key) $random[$key] = $sorted[$key];
         intl_asort($random);
-        $this->assertEquals(array_keys($random), array_keys($sorted));
         $this->assertEquals(array_values($random), array_values($sorted));
+        $this->assertEquals(array_keys($random), array_keys($sorted));
     }
 
     /**
@@ -148,8 +131,8 @@ class sort_without_collator_test extends DokuWikiTest {
         shuffle($keys);
         foreach($keys as $key) $random[$key] = $sorted[$key];
         intl_asortFN($random);
-        $this->assertEquals(array_keys($random), array_keys($sorted));
         $this->assertEquals(array_values($random), array_values($sorted));
+        $this->assertEquals(array_keys($random), array_keys($sorted));
     }
 
     /**
@@ -165,8 +148,8 @@ class sort_without_collator_test extends DokuWikiTest {
         shuffle($keys);
         foreach($keys as $key) $random[$key] = $sorted[$key];
         intl_asortFN($random);
-        $this->assertEquals(array_keys($random), array_keys($sorted));
         $this->assertEquals(array_values($random), array_values($sorted));
+        $this->assertEquals(array_keys($random), array_keys($sorted));
     }
 
     /**
@@ -181,7 +164,7 @@ class sort_without_collator_test extends DokuWikiTest {
         shuffle($keys);
         foreach($keys as $key) $random[$key] = $sorted[$key];
         intl_asortFN($random);
-        $this->assertEquals(array_keys($random), array_keys($sorted));
         $this->assertEquals(array_values($random), array_values($sorted));
+        $this->assertEquals(array_keys($random), array_keys($sorted));
     }
 }

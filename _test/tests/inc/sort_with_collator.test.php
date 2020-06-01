@@ -7,6 +7,8 @@ class sort_with_collator_test extends DokuWikiTest {
 
     /**
      * Set $conf['lang'] to 'eo' (Esperanto), so the collator uses a specific collation.
+     * The default is 'en' (English), whose collation simply takes away the diacritic.
+     * The words were carefully chosen to make many tests fail in this case.
      */
     public function setUp() {
         parent::setUp();
@@ -53,6 +55,7 @@ class sort_with_collator_test extends DokuWikiTest {
             array('ŝuo',      'tablo'    ), // s ŝ t
             array('urso',     'ŭaŭ'      ),
             array('ŭo',       'vino'     ), // u ŭ v
+
             // natural sort
             array('paĝo 2',   'paĝo 10'  ),
             array('paĝo 51',  'paĝo 100' )
@@ -101,8 +104,8 @@ class sort_with_collator_test extends DokuWikiTest {
         shuffle($keys);
         foreach($keys as $key) $random[$key] = $sorted[$key];
         intl_asort($random);
-        $this->assertEquals(array_keys($random), array_keys($sorted));
         $this->assertEquals(array_values($random), array_values($sorted));
+        $this->assertEquals(array_keys($random), array_keys($sorted));
     }
 
     /**
@@ -117,8 +120,8 @@ class sort_with_collator_test extends DokuWikiTest {
         shuffle($keys);
         foreach($keys as $key) $random[$key] = $sorted[$key];
         intl_asortFN($random);
-        $this->assertEquals(array_keys($random), array_keys($sorted));
         $this->assertEquals(array_values($random), array_values($sorted));
+        $this->assertEquals(array_keys($random), array_keys($sorted));
     }
 
     /**
@@ -134,8 +137,8 @@ class sort_with_collator_test extends DokuWikiTest {
         shuffle($keys);
         foreach($keys as $key) $random[$key] = $sorted[$key];
         intl_asortFN($random);
-        $this->assertEquals(array_keys($random), array_keys($sorted));
         $this->assertEquals(array_values($random), array_values($sorted));
+        $this->assertEquals(array_keys($random), array_keys($sorted));
     }
 
     /**
@@ -150,7 +153,7 @@ class sort_with_collator_test extends DokuWikiTest {
         shuffle($keys);
         foreach($keys as $key) $random[$key] = $sorted[$key];
         intl_asortFN($random);
-        $this->assertEquals(array_keys($random), array_keys($sorted));
         $this->assertEquals(array_values($random), array_values($sorted));
+        $this->assertEquals(array_keys($random), array_keys($sorted));
     }
 }
