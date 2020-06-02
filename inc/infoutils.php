@@ -235,16 +235,18 @@ function check(){
 
     msg('Your current permission for this page is '.$INFO['perm'],0);
 
-    if(is_writable($INFO['filepath'])){
-        msg('The current page is writable by the webserver',0);
-    }else{
-        msg('The current page is not writable by the webserver',0);
+    if (file_exists($INFO['filepath']) && is_writable($INFO['filepath'])) {
+        msg('The current page is writable by the webserver', 1);
+    } elseif (!file_exists($INFO['filepath']) && is_writable(dirname($INFO['filepath']))) {
+        msg('The current page can be created by the webserver', 1);
+    } else {
+        msg('The current page is not writable by the webserver', -1);
     }
 
-    if($INFO['writable']){
-        msg('The current page is writable by you',0);
-    }else{
-        msg('The current page is not writable by you',0);
+    if ($INFO['writable']) {
+        msg('The current page is writable by you', 1);
+    } else {
+        msg('The current page is not writable by you', -1);
     }
 
     // Check for corrupted search index
