@@ -1,23 +1,31 @@
 <?php
-// use no mbstring help here
-if(!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING',1);
 
-class utf8_strtolower_test extends DokuWikiTest {
+class utf8_strtolower_test extends DokuWikiTest
+{
 
-    function test_givens(){
-        $data = array(
-            'Αρχιτεκτονική Μελέτη' => 'αρχιτεκτονική μελέτη', // FS#2173
-        );
+    /**
+     * @see testGivens
+     * @return array
+     */
+    public function provideGivens()
+    {
+        return [
+            ['Αρχιτεκτονική Μελέτη', 'αρχιτεκτονική μελέτη'], // FS#2173
+            ['ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'],
+            ['players:Bruce', 'players:bruce'],
+            ['players:GERALD', 'players:gerald'],
+        ];
+    }
 
-        foreach($data as $input => $expected) {
-            $this->assertEquals($expected, \dokuwiki\Utf8\PhpString::strtolower($input));
-        }
-
+    /**
+     * @dataProvider provideGivens
+     * @param string $input
+     * @param string $expected
+     */
+    public function testGivens($input, $expected)
+    {
+        $this->assertEquals($expected, \dokuwiki\Utf8\PhpString::strtolower($input));
         // just make sure our data was correct
-        if(function_exists('mb_strtolower')) {
-            foreach($data as $input => $expected) {
-                $this->assertEquals($expected, mb_strtolower($input, 'utf-8'));
-            }
-        }
+        $this->assertEquals($expected, mb_strtolower($input, 'utf-8'), 'mbstring check');
     }
 }
