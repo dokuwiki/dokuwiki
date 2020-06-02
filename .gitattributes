@@ -6,6 +6,7 @@
 *.xcf binary
 
 .gitattributes export-ignore
+.github export-ignore
 .gitignore export-ignore
 .editorconfig export-ignore
 .travis.yml export-ignore
