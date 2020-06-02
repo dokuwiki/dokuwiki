@@ -338,15 +338,20 @@ define('MSG_ADMINS_ONLY',4);
  */
 function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
     global $MSG, $MSG_shown;
-    static $errors = array(-1=>'error', 0=>'info', 1=>'success', 2=>'notify');
+    static $errors = [
+        -1 => 'error',
+        0 => 'info',
+        1 => 'success',
+        2 => 'notify',
+    ];
 
-    $msgdata = array(
+    $msgdata = [
         'msg' => $message,
-        'lvl' => $lvl,
+        'lvl' => $errors[$lvl],
         'allow' => $allow,
         'line' => $line,
         'file' => $file,
-    );
+    ];
 
     $evt = new \dokuwiki\Extension\Event('INFOUTIL_MSG_SHOW', $msgdata);
     if ($evt->advise_before()) {
