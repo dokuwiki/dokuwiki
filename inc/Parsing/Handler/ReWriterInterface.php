@@ -5,10 +5,11 @@ namespace dokuwiki\Parsing\Handler;
 /**
  * A ReWriter takes over from the orignal call writer and handles all new calls itself until
  * the process method is called and control is given back to the original writer.
+ *
+ * @property array[] $calls The list of current calls
  */
 interface ReWriterInterface extends CallWriterInterface
 {
-
     /**
      * ReWriterInterface constructor.
      *
@@ -26,4 +27,11 @@ interface ReWriterInterface extends CallWriterInterface
      * @return CallWriterInterface the orignal call writer
      */
     public function process();
+
+    /**
+     * Accessor for this rewriter's original CallWriter
+     *
+     * @return CallWriterInterface
+     */
+    public function getCallWriter();
 }

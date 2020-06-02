@@ -2,37 +2,9 @@
 
 namespace dokuwiki\Parsing\Handler;
 
-class Quote implements ReWriterInterface
+class Quote extends AbstractRewriter
 {
-
-    /** @var CallWriterInterface original CallWriter */
-    protected $callWriter;
-
-    protected $calls = array();
-
     protected $quoteCalls = array();
-
-    /** @inheritdoc */
-    public function __construct(CallWriterInterface $CallWriter)
-    {
-        $this->callWriter = $CallWriter;
-    }
-
-    /** @inheritdoc */
-    public function writeCall($call)
-    {
-        $this->calls[] = $call;
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * Probably not needed but just in case...
-     */
-    public function writeCalls($calls)
-    {
-        $this->calls = array_merge($this->calls, $calls);
-    }
 
     /** @inheritdoc */
     public function finalise()
@@ -101,6 +73,10 @@ class Quote implements ReWriterInterface
         return $this->callWriter;
     }
 
+    /**
+     * @param $marker
+     * @return int
+     */
     protected function getDepth($marker)
     {
         preg_match('/>{1,}/', $marker, $matches);

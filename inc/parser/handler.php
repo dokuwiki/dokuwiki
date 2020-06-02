@@ -49,6 +49,24 @@ class Doku_Handler {
         $this->callWriter->writeCall($call);
     }
 
+    /**
+     * Accessor for the current CallWriter
+     *
+     * @return CallWriterInterface
+     */
+    public function getCallWriter() {
+        return $this->callWriter;
+    }
+
+    /**
+     * Set a new CallWriter
+     *
+     * @param CallWriterInterface $callWriter
+     */
+    public function setCallWriter($callWriter) {
+        $this->callWriter = $callWriter;
+    }
+
     /** @deprecated 2019-10-31 use addCall() instead */
     public function _addCall($handler, $args, $pos) {
         dbg_deprecated('addCall');

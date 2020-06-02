@@ -8,13 +8,8 @@ namespace dokuwiki\Parsing\Handler;
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
  */
-class Nest implements ReWriterInterface
+class Nest extends AbstractRewriter
 {
-
-    /** @var CallWriterInterface original CallWriter */
-    protected $callWriter;
-
-    protected $calls = array();
     protected $closingInstruction;
 
     /**
@@ -26,8 +21,7 @@ class Nest implements ReWriterInterface
      */
     public function __construct(CallWriterInterface $CallWriter, $close = "nest_close")
     {
-        $this->callWriter = $CallWriter;
-
+        parent::__construct($CallWriter);
         $this->closingInstruction = $close;
     }
 
@@ -69,6 +63,9 @@ class Nest implements ReWriterInterface
         return $this->callWriter;
     }
 
+    /**
+     * @param array $call
+     */
     protected function addCall($call)
     {
         $key = count($this->calls);
@@ -80,4 +77,6 @@ class Nest implements ReWriterInterface
             $this->calls[] = $call;
         }
     }
+
+
 }
