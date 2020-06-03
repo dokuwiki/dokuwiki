@@ -19,18 +19,21 @@ $intl_extension_available = class_exists('Collator');
 
 /**
  * Initialize a collator using $conf['lang'] as the locale.
- * The initialization is done only once.
+ * The initialization is done only once, except when $reload is set to TRUE.
  * The collation takes "natural ordering" into account, that is, "page 2" is before "page 10".
  *
+ * @param bool $reload Usually FALSE; TRUE forces collator re-creation after a change in $conf['lang']
  * @return Collator Returns a configured collator or NULL if the collator cannot be created.
  *
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
-function _get_collator() {
+function _get_collator($reload = FALSE) {
     global $conf, $intl_extension_available;
     static $collator = NULL;
 
-    if ($intl_extension_available && !isset($collator)) {
+    if (!$intl_extension_available)
+        return NULL;
+    if ($reload || !isset($collator)) {
         $collator = Collator::create($conf['lang']);
         if (isset($collator)) {
             $collator->setAttribute(Collator::NUMERIC_COLLATION, Collator::ON);

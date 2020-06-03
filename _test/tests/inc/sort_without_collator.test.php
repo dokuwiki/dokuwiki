@@ -7,16 +7,6 @@
 class sort_without_collator_test extends DokuWikiTest {
 
     /**
-     * Set $conf['lang'] to 'eo' (Esperanto), but it doesn't affect the fallback sort.
-     */
-    public function setUp() {
-        parent::setUp();
-
-        global $conf;
-        $conf['lang'] = 'eo'; // see collation below
-    }
-
-    /**
      * Actually a wrong collation for Esperanto.
      * @return string
      */

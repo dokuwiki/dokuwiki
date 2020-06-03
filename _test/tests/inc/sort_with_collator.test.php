@@ -5,16 +5,21 @@
  */
 class sort_with_collator_test extends DokuWikiTest {
 
-    /**
-     * Set $conf['lang'] to 'eo' (Esperanto), so the collator uses a specific collation.
-     * The default is 'en' (English), whose collation simply takes away the diacritic.
-     * The words were carefully chosen to make many tests fail in this case.
-     */
-    public function setUp() {
-        parent::setUp();
+    private static $lang_before;
+
+    public static function setUpBeforeClass() {
+        parent::setUpBeforeClass();
 
         global $conf;
-        $conf['lang'] = 'eo'; // see collation below
+        self::$lang_before = $conf['lang'];
+        $conf['lang'] = 'eo'; // Esperanto
+        _get_collator(TRUE); // force collator re-creation
+    }
+
+    public static function tearDownAfterClass() {
+        global $conf;
+        $conf['lang'] = self::$lang_before;
+        _get_collator(TRUE); // force collator re-creation
     }
 
     /**
