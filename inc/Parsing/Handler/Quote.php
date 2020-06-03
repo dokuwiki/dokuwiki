@@ -74,7 +74,7 @@ class Quote extends AbstractRewriter
     }
 
     /**
-     * @param $marker
+     * @param string $marker
      * @return int
      */
     protected function getDepth($marker)
