@@ -13,13 +13,13 @@ class sort_with_collator_test extends DokuWikiTest {
         global $conf;
         self::$lang_before = $conf['lang'];
         $conf['lang'] = 'eo'; // Esperanto
-        _get_collator(TRUE); // force collator re-creation
+        lang_has_changed();
     }
 
     public static function tearDownAfterClass() {
         global $conf;
         $conf['lang'] = self::$lang_before;
-        _get_collator(TRUE); // force collator re-creation
+        lang_has_changed();
     }
 
     /**

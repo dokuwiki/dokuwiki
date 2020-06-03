@@ -14,11 +14,8 @@
  * @author     Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
 
-/* @var bool $intl_extension_available */
-$intl_extension_available = class_exists('Collator');
-
 /**
- * Initialize a collator using $conf['lang'] as the locale.
+ * Initialization of a collator using $conf['lang'] as the locale.
  * The initialization is done only once, except when $reload is set to TRUE.
  * The collation takes "natural ordering" into account, that is, "page 2" is before "page 10".
  *
@@ -28,9 +25,12 @@ $intl_extension_available = class_exists('Collator');
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
 function _get_collator($reload = FALSE) {
-    global $conf, $intl_extension_available;
+    global $conf;
+    static $intl_extension_available = NULL;
     static $collator = NULL;
 
+    if (is_null($intl_extension_available))
+        $intl_extension_available = class_exists('Collator');
     if (!$intl_extension_available)
         return NULL;
     if ($reload || !isset($collator)) {
@@ -43,6 +43,16 @@ function _get_collator($reload = FALSE) {
         }
     }
     return $collator;
+}
+
+/**
+ * When $conf['lang'] is changed, this function should be called to re-create the collator
+ * using the new value.
+ *
+ * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
+ */
+function lang_has_changed() {
+    _get_collator(TRUE);
 }
 
 /**
