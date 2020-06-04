@@ -101,6 +101,9 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
                 case 'helpermethods':
                     $this->renderHelperMethods($renderer);
                     break;
+                case 'datetime':
+                    $renderer->doc .= date('r');
+                    break;
                 default:
                     $renderer->doc .= "no info about ".htmlspecialchars($data[0]);
             }
