@@ -22,7 +22,6 @@ inc/lang/ru/wordblock.txt
 inc/parser/lexer.php
 inc/plugincontroller.class.php
 inc/subscription.php
-lib/exe/indexer.php
 lib/plugins/authmysql/auth.php
 lib/plugins/authmysql/conf/default.php
 lib/plugins/authmysql/conf/metadata.php
