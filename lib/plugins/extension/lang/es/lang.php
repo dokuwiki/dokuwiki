@@ -3,12 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Domingo Redal <docxml@gmail.com>
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Antonio Castilla <antoniocastilla@trazoide.com>
  * @author Jonathan Hernández <me@jhalicea.com>
  * @author Álvaro Iradier <airadier@gmail.com>
  * @author Mauricio Segura <maose38@yahoo.es>
- * @author Domingo Redal <docxml@gmail.com>
  */
 $lang['menu']                  = 'Administrador de Extensiones ';
 $lang['tab_plugins']           = 'Plugins instalados';
@@ -77,6 +77,7 @@ $lang['msg_template_update_success'] = 'Plantilla %s actualizada con éxito';
 $lang['msg_plugin_install_success'] = 'Plugin %s instalado con éxito';
 $lang['msg_plugin_update_success'] = 'Plugin %s actualizado con éxito';
 $lang['msg_upload_failed']     = 'Falló la carga del archivo';
+$lang['msg_nooverwrite']       = 'La extensión %s ya existe, por lo que no se sobrescribe; para sobrescribirla, marque la opción de sobrescritura';
 $lang['missing_dependency']    = '<strong>Dependencia deshabilitada o perdida:</strong> %s';
 $lang['security_issue']        = '<strong>Problema de seguridad:</strong> %s';
 $lang['security_warning']      = '<strong>Aviso de seguridad:</strong> %s';
