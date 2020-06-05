@@ -9,14 +9,6 @@
 
 namespace dokuwiki\Parsing\Lexer;
 
-// FIXME move elsewhere
-
-define("DOKU_LEXER_ENTER", 1);
-define("DOKU_LEXER_MATCHED", 2);
-define("DOKU_LEXER_UNMATCHED", 3);
-define("DOKU_LEXER_EXIT", 4);
-define("DOKU_LEXER_SPECIAL", 5);
-
 /**
  * Accepts text and breaks it into tokens.
  *

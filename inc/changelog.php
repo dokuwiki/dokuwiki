@@ -6,14 +6,6 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-// Constants for known core changelog line types.
-// Use these in place of string literals for more readable code.
-define('DOKU_CHANGE_TYPE_CREATE',       'C');
-define('DOKU_CHANGE_TYPE_EDIT',         'E');
-define('DOKU_CHANGE_TYPE_MINOR_EDIT',   'e');
-define('DOKU_CHANGE_TYPE_DELETE',       'D');
-define('DOKU_CHANGE_TYPE_REVERT',       'R');
-
 /**
  * parses a changelog line into it's components
  *
