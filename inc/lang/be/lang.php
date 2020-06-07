@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -57,7 +58,7 @@ $lang['passchk']               = 'паспрабуйце';
 $lang['remember']              = 'Запомніць мяне';
 $lang['fullname']              = 'Поўнае імя';
 $lang['email']                 = 'Эл. адрас';
-$lang['профіль']               = 'Профіль карыстальніка';
+$lang['profile']               = 'Профіль карыстальніка';
 $lang['badlogin']              = 'Прабачце, няправільнае імя карыстальніка або пароль.';
 $lang['badpassconfirm']        = 'Прабачце, пароль няправільны';
 $lang['minoredit']             = 'Нязначныя змены';

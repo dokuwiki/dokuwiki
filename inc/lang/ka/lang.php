@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Tengiz <tech2008a@gmail.com>
  * @author Luka Lejava <luka.lejava@gmail.com>
  */
@@ -177,7 +178,7 @@ $lang['accessdenied']          = 'თქვენ არ შეგიძლი�
 $lang['mediausage']            = 'გამოიყენე შემდეგი სინტაქსი რათა მიუთითო ეს ფაილი';
 $lang['mediaview']             = 'ორიგინალი ფაილის ჩვენება';
 $lang['mediaroot']             = 'root';
-$lang['mediaextchange']        = 'ფაილის გაფართოება შეიცვალა .%-დან .%-ზე!';
+$lang['mediaextchange']        = 'ფაილის გაფართოება შეიცვალა .%s დან .%s!';
 $lang['ref_inuse']             = 'ფაილი წაშლა შეუძლებელია, გამოიყენება აქ:';
 $lang['ref_hidden']            = 'ზოგიერთი ბლოკის წაკითხვის უფლება არ გაქვთ';
 $lang['quickhits']             = 'მსგავსი სახელები';

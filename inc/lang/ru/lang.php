@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Анатолий <anatol_m@mail.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Alexander Kh. <001.arx@gmail.com>
  * @author Vyacheslav Strenadko <vyacheslav.strenadko@gmail.com>
@@ -329,8 +330,11 @@ $lang['i_modified']            = 'Из соображений безопасно
                                   Вам нужно либо заново распаковать скачанный пакет установки, либо обратиться к полной
                                   <a href="http://www.dokuwiki.org/install">инструкции по установке «Докувики»</a>';
 $lang['i_funcna']              = 'Функция PHP <code>%s</code> недоступна. Может быть, она по какой-то причине заблокирована вашим хостером?';
+$lang['i_disabled']            = 'Отключено вашим провайдером.';
+$lang['i_funcnmail']           = '<b>Примечание:</ b> PHP-функция mail недоступна. %s Если она по прежнему недоступна, вы можете установить <a href="https://www.dokuwiki.org/plugin:smtp">плагин SMTP</a>.';
 $lang['i_phpver']              = 'Ваша версия PHP (<code>%s</code>) ниже требуемой (<code>%s</code>). Вам необходимо обновить установленную версию PHP.';
 $lang['i_mbfuncoverload']      = 'Для запуска «Докувики» необходимо отключить параметр mbstring.func_overload в php.ini';
+$lang['i_urandom']             = 'DokuWiki не может создавать криптографически безопасные номера для файлов cookie. Возможно, вы захотите проверить настройки open_basedir в php.ini для правильного доступа <code> / dev / urandom </ code>.';
 $lang['i_permfail']            = '<code>%s</code> недоступна для записи «Докувики». Вам необходимо исправить системные права доступа для этой директории!';
 $lang['i_confexists']          = '<code>%s</code> уже существует';
 $lang['i_writeerr']            = 'Не удалось создать <code>%s</code>. Вам необходимо проверить системные права доступа к файлу и директориям, и создать файл вручную.';
@@ -383,6 +387,7 @@ $lang['media_perm_upload']     = 'Извините, у вас недостато
 $lang['media_update']          = 'Загрузить новую версию';
 $lang['media_restore']         = 'Восстановить эту версию';
 $lang['media_acl_warning']     = 'Этот список может быть неполным из-за ограничений списков контроля доступа (ACL) и скрытых страниц.';
+$lang['email_fail']            = 'PHP mail() отсутствует или отключен. Следующее письмо не было отправлено: ';
 $lang['currentns']             = 'Текущее пространство имён';
 $lang['searchresult']          = 'Результаты поиска';
 $lang['plainhtml']             = 'Простой HTML';

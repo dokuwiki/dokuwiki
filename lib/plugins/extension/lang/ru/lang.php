@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Анатолий <anatol_m@mail.ru>
  * @author Igor Degraf <igordegraf@gmail.com>
  * @author Type-kun <workwork-1@yandex.ru>
  * @author Vitaly Filatenko <kot@hacktest.net>
@@ -77,6 +78,7 @@ $lang['msg_template_update_success'] = 'Шаблон %s успешно обно�
 $lang['msg_plugin_install_success'] = 'Плагин %s успешно установлен';
 $lang['msg_plugin_update_success'] = 'Плагин %s успешно обновлён';
 $lang['msg_upload_failed']     = 'Не удалось загрузить файл';
+$lang['msg_nooverwrite']       = 'Расширение %s уже существует, поэтому оно не перезаписано; для перезаписи отметьте опцию перезаписи';
 $lang['missing_dependency']    = '<strong>Отсутствует или отключена зависимость:</strong> %s';
 $lang['security_issue']        = '<strong>Проблема безопасности:</strong> %s';
 $lang['security_warning']      = '<strong>Предупреждение безопасности:</strong> %s';

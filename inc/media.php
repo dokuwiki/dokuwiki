@@ -232,11 +232,6 @@ function media_inuse($id) {
     }
 }
 
-define('DOKU_MEDIA_DELETED', 1);
-define('DOKU_MEDIA_NOT_AUTH', 2);
-define('DOKU_MEDIA_INUSE', 4);
-define('DOKU_MEDIA_EMPTY_NS', 8);
-
 /**
  * Handles media file deletions
  *

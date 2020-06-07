@@ -110,6 +110,9 @@ while (false !== ($entry = $dh->read())) {
 }
 $dh->close();
 
+// use no mbstring help during tests
+if (!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING', 1);
+
 // load dw
 require_once(DOKU_INC.'inc/init.php');
 
