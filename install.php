@@ -378,7 +378,7 @@ EOT;
     if ($d['acl']) {
         // hash the password
         $phash = new \dokuwiki\PassHash();
-        $pass = $phash->hash_smd5($d['password']);
+        $pass = $phash->hash_bcrypt($d['password']);
 
         // create users.auth.php
         $output = <<<EOT
