@@ -7,14 +7,14 @@ interface CallWriterInterface
     /**
      * Add a call to our call list
      *
-     * @param $call     the call to be added
+     * @param array $call the call to be added
      */
     public function writeCall($call);
 
     /**
      * Append a list of calls to our call list
      *
-     * @param $calls     list of calls to be appended
+     * @param array[] $calls list of calls to be appended
      */
     public function writeCalls($calls);
 
