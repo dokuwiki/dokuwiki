@@ -2,38 +2,11 @@
 
 namespace dokuwiki\Parsing\Handler;
 
-class Preformatted implements ReWriterInterface
+class Preformatted extends AbstractRewriter
 {
 
-    /** @var CallWriterInterface original call writer */
-    protected $callWriter;
-
-    protected $calls = array();
     protected $pos;
     protected $text ='';
-
-    /**
-     * @inheritdoc
-     */
-    public function __construct(CallWriterInterface $CallWriter)
-    {
-        $this->callWriter = $CallWriter;
-    }
-
-    /** @inheritdoc */
-    public function writeCall($call)
-    {
-        $this->calls[] = $call;
-    }
-
-    /**
-     * @inheritdoc
-     * Probably not needed but just in case...
-     */
-    public function writeCalls($calls)
-    {
-        $this->calls = array_merge($this->calls, $calls);
-    }
 
     /** @inheritdoc */
     public function finalise()

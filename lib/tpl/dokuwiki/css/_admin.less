@@ -20,28 +20,31 @@
             list-style-type: none;
             white-space: nowrap;
 
-            a span {
-                display: inline-block;
+            a {
+                display: flex;
+                span {
+                    display: inline-block;
 
-                &.icon {
-                    width: 1.5em;
-                    min-height: 1.5em;
-                    margin: 0 0.5em;
-                    vertical-align: top;
-
-                    svg {
+                    &.icon {
                         width: 1.5em;
-                        height: 1.5em;
-                        fill: @ini_link;
-                        display: inline-block;
-                        path {
+                        min-height: 1.5em;
+                        margin: 0 0.5em;
+                        vertical-align: top;
+
+                        svg {
+                            width: 1.5em;
+                            height: 1.5em;
                             fill: @ini_link;
+                            display: inline-block;
+                            path {
+                                fill: @ini_link;
+                            }
                         }
                     }
-                }
 
-                &.prompt {
-                    white-space: normal;
+                    &.prompt {
+                        white-space: normal;
+                    }
                 }
             }
         }

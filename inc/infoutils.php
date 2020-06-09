@@ -305,33 +305,15 @@ function check(){
 }
 
 /**
- * print a message
+ * Display a message to the user
  *
  * If HTTP headers were not sent yet the message is added
  * to the global message array else it's printed directly
  * using html_msgarea()
  *
- *
- * Levels can be:
- *
- * -1 error
- *  0 info
- *  1 success
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @see    html_msgarea
- */
-
-define('MSG_PUBLIC', 0);
-define('MSG_USERS_ONLY', 1);
-define('MSG_MANAGERS_ONLY',2);
-define('MSG_ADMINS_ONLY',4);
-
-/**
- * Display a message to the user
- *
  * Triggers INFOUTIL_MSG_SHOW
  *
+ * @see    html_msgarea()
  * @param string $message
  * @param int    $lvl   -1 = error, 0 = info, 1 = success, 2 = notify
  * @param string $line  line number

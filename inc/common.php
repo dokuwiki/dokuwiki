@@ -15,16 +15,6 @@ use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 
 /**
- * These constants are used with the recents function
- */
-define('RECENTS_SKIP_DELETED', 2);
-define('RECENTS_SKIP_MINORS', 4);
-define('RECENTS_SKIP_SUBSPACES', 8);
-define('RECENTS_MEDIA_CHANGES', 16);
-define('RECENTS_MEDIA_PAGES_MIXED', 32);
-define('RECENTS_ONLY_CREATION', 64);
-
-/**
  * Wrapper around htmlspecialchars()
  *
  * @author Andreas Gohr <andi@splitbrain.org>
