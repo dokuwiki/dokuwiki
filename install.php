@@ -395,7 +395,7 @@ EOT;
 # login:passwordhash:Real Name:email:groups,comma,separated
 
 EOT;
-        // --- user:SMD5password:Real Name:email:groups,comma,seperated
+        // --- user:bcryptpasswordhash:Real Name:email:groups,comma,seperated
         $output = $output."\n".join(":",array($d['superuser'], $pass, $d['fullname'], $d['email'], 'admin,user'))."\n";
         $ok = $ok && fileWrite(DOKU_LOCAL.'users.auth.php', $output);
 
