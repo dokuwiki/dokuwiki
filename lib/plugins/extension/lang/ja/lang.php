@@ -76,6 +76,7 @@ $lang['msg_template_update_success'] = '%s テンプレートは正常に更新�
 $lang['msg_plugin_install_success'] = '%s プラグインは正常にインストールされました。';
 $lang['msg_plugin_update_success'] = '%s プラグインは正常に更新されました。';
 $lang['msg_upload_failed']     = 'ファイルのアップロードに失敗しました。';
+$lang['msg_nooverwrite']       = '拡張機能 %s は既に存在するため上書きされません。上書きするには、上書きオプションにチェックを入れて下さい。';
 $lang['missing_dependency']    = '<strong>依存関係が欠落または無効：</strong> %s';
 $lang['security_issue']        = '<strong>セキュリティ上の問題：</strong> %s';
 $lang['security_warning']      = '<strong>セキュリティ警告：</strong> %s';
