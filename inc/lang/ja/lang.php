@@ -302,6 +302,8 @@ $lang['i_modified']            = 'セキュリティの理由から、新規も�
                          ダウンロードしたパッケージを再解凍して使用するか、
                          <a href="http://dokuwiki.org/install">Dokuwiki インストールガイド</a>を参考にしてインストールしてください。';
 $lang['i_funcna']              = 'PHPの関数 <code>%s</code> が使用できません。ホスティング会社が何らかの理由で無効にしている可能性があります。';
+$lang['i_disabled']            = 'ご利用のプロバイダにより制限されています。';
+$lang['i_funcnmail']           = '<b>注：</b>PHPの mail 関数が利用不能になっています。 %s この状況が続く場合は、<a href="http://dokuwiki.org/plugins/smtp">smtpプラグイン</a>をインストールして解決する事も出来ます。';
 $lang['i_phpver']              = 'PHPのバージョン <code>%s</code> が必要なバージョン <code>%s</code> より以前のものです。PHPのアップグレードが必要です。';
 $lang['i_mbfuncoverload']      = 'DokuWiki を実行する php.ini ファイルの mbstring.func_overload は無効にして下さい。';
 $lang['i_urandom']             = 'DokuWikiは、Cookieに対して暗号的に安全な番号を作成できません。<code>/dev/urandom</code>に対する適切なアクセスについて、php.iniの設定 open_basedir を確認する事をお勧めします。';
@@ -355,6 +357,7 @@ $lang['media_perm_upload']     = '申し訳ありませんが、ファイルを�
 $lang['media_update']          = '新しいバージョンをアップロード';
 $lang['media_restore']         = 'このバージョンを復元';
 $lang['media_acl_warning']     = '閲覧権限の無いページや非表示ページは表示されないので、このリストは完全でない場合があります。';
+$lang['email_fail']            = 'PHPの mail() が欠落しているか無効になっています。次のEメールが送信されませんでした。';
 $lang['currentns']             = '現在の名前空間';
 $lang['searchresult']          = '検索結果';
 $lang['plainhtml']             = 'プレーンHTML';
