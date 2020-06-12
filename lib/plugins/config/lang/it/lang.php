@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Filippo <abrickslife@gmail.com>
  * @author Roberto Bellingeri <bellingeri@netguru.it>
  * @author Eddy <eddy@mail.it>
  * @author Riccardo <riccardo.furlato@gmail.com>
@@ -46,6 +47,7 @@ $lang['_advanced']             = 'Impostazioni Avanzate';
 $lang['_network']              = 'Impostazioni Rete';
 $lang['_msg_setting_undefined'] = 'Nessun metadato definito.';
 $lang['_msg_setting_no_class'] = 'Nessuna classe definita.';
+$lang['_msg_setting_no_known_class'] = 'Classe di impostazioni non disponibile.';
 $lang['_msg_setting_no_default'] = 'Nessun valore predefinito.';
 $lang['title']                 = 'Titolo del wiki';
 $lang['start']                 = 'Nome della pagina iniziale';
@@ -134,6 +136,7 @@ $lang['rss_linkto']            = 'Collega i feed XML a';
 $lang['rss_content']           = 'Cosa mostrare negli elementi dei feed XML?';
 $lang['rss_update']            = 'Intervallo di aggiornamento dei feed XML (sec)';
 $lang['rss_show_summary']      = 'I feed XML riportano un sommario nel titolo';
+$lang['rss_show_deleted']      = 'Feed XML mostra feed cancellati';
 $lang['rss_media']             = 'Quale tipo di cambiamento dovrebbe essere elencato nel feed XML?';
 $lang['rss_media_o_both']      = 'entrambi';
 $lang['rss_media_o_pages']     = 'pagine';
@@ -161,6 +164,7 @@ $lang['search_fragment_o_exact'] = 'esatto';
 $lang['search_fragment_o_starts_with'] = 'inizia con';
 $lang['search_fragment_o_ends_with'] = 'finisce con';
 $lang['search_fragment_o_contains'] = 'contiene';
+$lang['_feature_flags']        = 'Segnalazione di feature';
 $lang['dnslookups']            = 'Dokuwiki farà il lookup dei nomi host per ricavare l\'indirizzo IP remoto degli utenti che modificano le pagine. Se hai un DNS lento o non funzionante o se non vuoi questa funzione, disabilita l\'opzione';
 $lang['jquerycdn']             = 'Vuoi che gli script jQuery e jQuery UI siano caricati da una CDN? Questo richiederà richieste HTTP aggiuntive ma i file potrebbero caricarsi più velocemente e gli utenti potrebbero averli già in cache.';
 $lang['jquerycdn_o_0']         = 'Nessuna CDN, solo consegna locale';
