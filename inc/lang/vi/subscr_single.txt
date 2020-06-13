@@ -11,7 +11,7 @@ Thành viên                : @USER@
 Tóm lược sửa đổi        : @SUMMARY@
 Phiên bản cũ        : @OLDPAGE@
 Phiên bản mới        : @NEWPAGE@
-Ngày phiên bản mới: @DATE@
+Ngày của phiên bản mới: @DATE@
 
 Để hủy thông báo trang, đăng nhập vào wiki tại
 @DOKUWIKIURL@ sau đó truy cập
