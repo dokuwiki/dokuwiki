@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Thien Hau <thienhausoftware@gmail.com>
+ * @author Thien Hau <thienhau.9a14@gmail.com>
  */
 $lang['menu']                  = 'Quản lý lùi sửa';
 $lang['filter']                = 'Tìm kiếm các trang spam';

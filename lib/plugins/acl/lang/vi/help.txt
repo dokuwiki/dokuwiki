@@ -5,4 +5,4 @@ Trên trang này, bạn có thể thêm và xóa quyền cho không gian tên v�
   * Biểu mẫu trên cho phép bạn xem và sửa đổi các quyền của thành viên hoặc nhóm đã chọn.
   * Bảng dưới đây hiện thị tất cả các quy tắc kiểm soát truy cập. Bạn có thể sử dụng nó để nhanh chóng xóa hoặc thay đổi nhiều quy tắc.
 
-Đọc [[doku>acl|tài liệu chính thức về ACL]] có thể giúp bạn hiểu đầy đủ cách thức kiểm soát hoạt động truy cập trong DokuWiki.
+Đọc [[doku>acl|tài liệu chính thức về danh sách quyền truy cập (ACL)]] có thể giúp bạn hiểu đầy đủ cách thức kiểm soát hoạt động truy cập trong DokuWiki.

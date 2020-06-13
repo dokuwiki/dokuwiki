@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Thien Hau <thienhausoftware@gmail.com>
+ * @author Thien Hau <thienhau.9a14@gmail.com>
  * @author NukeViet <admin@nukeviet.vn>
  */
 $lang['admin_acl']             = 'Quản lý danh sách quyền truy cập';
@@ -17,12 +17,12 @@ $lang['p_user_id']             = 'Thành viên <b class="acluser">%s</b> hiện 
 $lang['p_user_ns']             = 'Thành viên <b class="acluser">%s</b> hiện có các quyền sau trong không gian tên <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Thành viên trong nhóm <b class="aclgroup">%s</b> hiện có các quyền sau trên trang <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_group_ns']            = 'Thành viên trong nhóm  <b class="aclgroup">%s</b> hiện có các quyền sau trong không gian tên<b class="aclns">%s</b>: <i>%s</i>.';
-$lang['p_choose_id']           = 'Hãy <b>nhập tên thành viên hoặc nhóm</b> vào ô trên đây để xem hoặc sửa đổi quyền đã thiết đặt cho trang <b class="aclpage">%s</b>.';
-$lang['p_choose_ns']           = 'Hãy <b>nhập tên thành viên hoặc nhóm</b> vào ô trên đây để xem hoặc sửa đổi quyền đã thiết đặt cho thư mục <b class="aclns">%s</b>.';
-$lang['p_inherited']           = 'Ghi chú: Có những quyền không được thể hiện ở đây nhưng nó được cấp phép từ những nhóm hoặc không gian tên cao hơn.';
+$lang['p_choose_id']           = 'Hãy <b>nhập tên thành viên hoặc nhóm</b> vào mẫu trên đây để xem hoặc sửa đổi quyền đã thiết đặt cho trang <b class="aclpage">%s</b>.';
+$lang['p_choose_ns']           = 'Hãy <b>nhập tên thành viên hoặc nhóm</b> vào mẫu trên đây để xem hoặc sửa đổi quyền đã thiết đặt cho thư mục <b class="aclns">%s</b>.';
+$lang['p_inherited']           = 'Ghi chú: Các quyền đó không được thể hiện rõ ràng nhưng được kế thừa từ những nhóm khác hoặc không gian tên cao hơn.';
 $lang['p_isadmin']             = 'Ghi chú: Nhóm hoặc thành viên này luôn được cấp đủ quyền vì họ được đặt là Siêu thành viên';
 $lang['p_include']             = 'Các quyền cao hơn bao gồm những quyền thấp hơn. Quyền Tạo, Tải lên và Xóa chỉ áp dụng cho không gian tên, không phải trang.';
-$lang['current']               = 'Danh sách quyền truy cập hiện tại';
+$lang['current']               = 'Quy tắc danh sách quyền truy cập hiện tại';
 $lang['where']                 = 'Trang/Không gian tên';
 $lang['who']                   = 'Thành viên/Nhóm';
 $lang['perm']                  = 'Quyền';

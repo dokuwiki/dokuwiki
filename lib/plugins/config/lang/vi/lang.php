@@ -3,10 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Thien Hau <thienhausoftware@gmail.com>
+ * @author Thien Hau <thienhau.9a14@gmail.com>
  */
 $lang['menu']                  = 'Thiết lập cấu hình';
-$lang['error']                 = 'Không thể cập nhật cài đặt do giá trị không hợp lệ, vui lòng xem lại các thay đổi của bạn và gửi lại.';
+$lang['error']                 = 'Không thể cập nhật cài đặt do giá trị không hợp lệ, vui lòng xem lại các thay đổi của bạn và gửi lại.
+                       <br />(Các) giá trị không chính xác sẽ được hiển thị bao quanh bởi viền đỏ.';
 $lang['updated']               = 'Đã cập nhật cài đặt thành công .';
 $lang['nochoice']              = '(không có lựa chọn nào khác)';
 $lang['locked']                = 'Không thể cập nhật tập tin cài đặt, nếu điều này là vô ý, <br />
@@ -20,6 +21,7 @@ $lang['_header_undefined']     = 'Cài đặt không xác định';
 $lang['_basic']                = 'Cơ bản';
 $lang['_display']              = 'Hiển thị';
 $lang['_authentication']       = 'Xác thực';
+$lang['_anti_spam']            = 'Chống Spam';
 $lang['_editing']              = 'Sửa đổi';
 $lang['_links']                = 'Liên kết';
 $lang['_media']                = 'Phương tiện';
