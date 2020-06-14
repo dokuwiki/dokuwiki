@@ -3,11 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Thien Hau <thienhausoftware@gmail.com>
+ * @author Thien Hau <thienhau.9a14@gmail.com>
  */
-$lang['menu']                  = 'Trình quản lý thành viên';
-$lang['noauth']                = '(xác thực thành viên không có sẵn)';
-$lang['nosupport']             = '(quản lý thành viên không được hỗ trợ)';
+$lang['menu']                  = 'Quản lý thành viên';
+$lang['noauth']                = '(không có sẵn xác thực thành viên)';
+$lang['nosupport']             = '(không hỗ trợ quản lý thành viên)';
 $lang['badauth']               = 'cơ chế xác thực không hợp lệ';
 $lang['user_id']               = 'Thành viên';
 $lang['user_pass']             = 'Mật khẩu';
@@ -19,7 +19,7 @@ $lang['value']                 = 'Giá trị';
 $lang['add']                   = 'Thêm';
 $lang['delete']                = 'Xóa';
 $lang['delete_selected']       = 'Xóa những mục đã chọn';
-$lang['edit']                  = 'Sửa';
+$lang['edit']                  = 'Sửa đổi';
 $lang['edit_prompt']           = 'Sửa đổi thành viên này';
 $lang['modify']                = 'Lưu thay đổi';
 $lang['search']                = 'Tìm kiếm';
@@ -31,10 +31,10 @@ $lang['export_filtered']       = 'Xuất danh sách thành viên được lọc 
 $lang['import']                = 'Nhập thành viên mới';
 $lang['line']                  = 'Dòng số';
 $lang['error']                 = 'Thông báo lỗi';
-$lang['summary']               = 'Hiển thị thành viên %1$d-%2$d trong %3$d được tìm thấy. %4$d thành viên tổng cộng.';
+$lang['summary']               = 'Hiển thị thành viên %1$d-%2$d trong số %3$d thành viên được tìm thấy. %4$d thành viên tổng cộng.';
 $lang['nonefound']             = 'Không tìm thấy thành viên. %d thành viên tổng cộng.';
 $lang['delete_ok']             = 'Đã xóa %d thành viên.';
-$lang['delete_fail']           = 'Xóa không thành công %d';
+$lang['delete_fail']           = 'Xóa không thành công %d thành viên';
 $lang['update_ok']             = 'Cập nhật thành viên thành công';
 $lang['update_fail']           = 'Cập nhật thành viên không thành công';
 $lang['update_exists']         = 'Thay đổi tên thành viên không thành công, tên thành viên được chỉ định (%s) đã tồn tại (mọi thay đổi khác sẽ được áp dụng).';
@@ -48,7 +48,7 @@ $lang['note_notify']           = 'Chỉ gửi thư điện tử thông báo nế
 $lang['note_group']            = 'Thành viên mới sẽ được thêm vào nhóm mặc định (%s) nếu không có nhóm nào được chỉ định.';
 $lang['note_pass']             = 'Mật khẩu sẽ được tự động tạo nếu trường bị bỏ trống và thông báo của thành viên được bật.';
 $lang['add_ok']                = 'Đã thêm thành viên thành công';
-$lang['add_fail']              = 'Thêm thành viên đã không thành công';
+$lang['add_fail']              = 'Thêm thành viên không thành công';
 $lang['notify_ok']             = 'Đã gửi thư điện tử thông báo';
 $lang['notify_fail']           = 'Không thể gửi thư điện tử thông báo';
 $lang['import_userlistcsv']    = 'Tập tin danh sách thành viên (CSV):';
@@ -60,15 +60,15 @@ $lang['import_error_baduserid'] = 'Thiếu id thành viên';
 $lang['import_error_badname']  = 'Tên không đúng';
 $lang['import_error_badmail']  = 'Địa chỉ thư điện tử không đúng';
 $lang['import_error_upload']   = 'Việc nhập không thành công. Không thể tải lên tập tin csv hoặc trống.';
-$lang['import_error_readfail'] = 'Việc nhập không thành công. Không thể đọc tệp đã tải lên.';
+$lang['import_error_readfail'] = 'Việc nhập không thành công. Không thể đọc tập tin đã tải lên.';
 $lang['import_error_create']   = 'Không thể tạo thành viên';
 $lang['import_notify_fail']    = 'Không thể gửi tin nhắn thông báo cho thành viên đã nhập, %s với thư điện tử %s.';
-$lang['import_downloadfailures'] = 'Tải xuống Lỗi dưới dạng CSV để sửa';
+$lang['import_downloadfailures'] = 'Tải xuống lỗi dưới dạng CSV để sửa';
 $lang['addUser_error_missing_pass'] = 'Vui lòng đặt mật khẩu hoặc kích hoạt thông báo thành viên để cho phép tạo mật khẩu.';
-$lang['addUser_error_pass_not_identical'] = 'Các mật khẩu đã nhập không giống nhau.';
+$lang['addUser_error_pass_not_identical'] = 'Mật khẩu đã nhập không giống nhau.';
 $lang['addUser_error_modPass_disabled'] = 'Việc sửa đổi mật khẩu hiện đang bị vô hiệu hóa';
-$lang['addUser_error_name_missing'] = 'Vui lòng nhập tên cho người dùng mới.';
+$lang['addUser_error_name_missing'] = 'Vui lòng nhập tên cho thành viên mới.';
 $lang['addUser_error_modName_disabled'] = 'Việc sửa đổi tên hiện đang bị vô hiệu hóa.';
-$lang['addUser_error_mail_missing'] = 'Vui lòng nhập địa chỉ thư điện tử cho người dùng mới.';
+$lang['addUser_error_mail_missing'] = 'Vui lòng nhập địa chỉ thư điện tử cho thành viên mới.';
 $lang['addUser_error_modMail_disabled'] = 'Việc sửa đổi địa chỉ thư điện tử hiện đang bị vô hiệu hóa.';
 $lang['addUser_error_create_event_failed'] = 'Một plugin ngăn không cho thành viên mới được thêm vào. Xem lại các tin nhắn khác có thể để biết thêm thông tin.';

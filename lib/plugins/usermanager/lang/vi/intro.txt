@@ -1,1 +1,1 @@
-====== Trình quản lý thành viên ======
+====== Quản lý thành viên ======
