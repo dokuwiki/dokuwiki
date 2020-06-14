@@ -60,7 +60,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
         global $conf;
         global $ID;
 
-        $styleUtil = new \dokuwiki\StyleUtils($conf['template'], true);
+        $styleUtil = new \dokuwiki\StyleUtils($conf['template'], true, true);
         $styleini     = $styleUtil->cssStyleini();
         $replacements = $styleini['replacements'];
 
