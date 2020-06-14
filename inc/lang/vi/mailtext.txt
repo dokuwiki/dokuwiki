@@ -1,4 +1,4 @@
-Một trang trên DokuWiki của bạn vừa được bổ sung hoặc thay đổi. Sau đây là chi tiết:
+Một trang trên DokuWiki của bạn vừa được thêm hoặc thay đổi. Đây là những thông tin chi tiết:
 
 Trình duyệt             : @BROWSER@
 Địa chỉ IP          : @IPADDRESS@
