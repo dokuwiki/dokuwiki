@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Sébastien Bauer <sebastien.bauer@advalvas.be>
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
@@ -35,8 +36,8 @@ $lang['p_user_id']             = 'Autorisations actuelles de l\'utilisateur <str
 $lang['p_user_ns']             = 'Autorisations actuelles de l\'utilisateur <strong class="acluser">%s</strong> sur la catégorie <strong class="aclns">%s</strong> : <em>%s</em>.';
 $lang['p_group_id']            = 'Autorisations actuelles des membres du groupe <strong class="aclgroup">%s</strong> sur la page <strong class="aclpage">%s</strong> : <em>%s</em>.';
 $lang['p_group_ns']            = 'Autorisations actuelles des membres du groupe <strong class="aclgroup">%s</strong> sur la catégorie <strong class="aclns">%s</strong> : <em>%s</em>.';
-$lang['p_choose_id']           = 'Saisissez un <strong>nom d\'utilisateur ou de groupe</strong> dans le formulaire ci-dessous pour afficher ou éditer les autorisations relatives à la page <strong class="aclpage">%s</strong>.';
-$lang['p_choose_ns']           = 'Saisissez un <strong>nom d\'utilisateur ou de groupe</strong> dans le formulaire ci-dessous pour afficher ou éditer les autorisations relatives à la catégorie <strong class="aclns">%s</strong>.';
+$lang['p_choose_id']           = 'Saisissez un <strong>nom d\'utilisateur ou de groupe</strong> dans le formulaire ci-dessus pour afficher ou éditer les autorisations relatives à la page <strong class="aclpage">%s</strong>.';
+$lang['p_choose_ns']           = 'Veuillez saisir un <strong>nom d\'utilisateur ou de groupe</strong> dans le formulaire ci-dessus pour afficher ou éditer les autorisations relatives à la catégorie <strong class="aclns">%s</strong>.';
 $lang['p_inherited']           = 'Note : ces autorisations n\'ont pas été explicitement définies mais sont héritées de groupes ou catégories supérieurs.';
 $lang['p_isadmin']             = 'Note : le groupe ou l\'utilisateur sélectionné dispose toujours de toutes les autorisations car il est paramétré en tant que super-utilisateur.';
 $lang['p_include']             = 'Les autorisations les plus élevées incluent les plus faibles. Création, Envoyer et Effacer ne s\'appliquent qu\'aux catégories, pas aux pages.';

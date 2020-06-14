@@ -76,7 +76,7 @@ $lang['allowdebug']            = 'Debug (<strong>Ne l\'activez que si vous en av
 $lang['recent']                = 'Nombre de lignes à afficher - par page - pour les derniers changements';
 $lang['recent_days']           = 'Signaler les pages modifiées depuis (en jours)';
 $lang['breadcrumbs']           = 'Nombre de traces à afficher. 0 désactive cette fonctionnalité.';
-$lang['youarehere']            = 'Utiliser des traces hiérarchiques (vous voulez probablement désactiver l\'option ci-dessus)';
+$lang['youarehere']            = 'Utiliser des traces hiérarchiques (vous voudrez probablement désactiver l\'option ci-dessus)';
 $lang['fullpath']              = 'Afficher le chemin complet des pages dans le pied de page';
 $lang['typography']            = 'Effectuer des améliorations typographiques';
 $lang['dformat']               = 'Format de date (cf. fonction <a href="http://php.net/strftime">strftime</a> de PHP)';
@@ -131,7 +131,7 @@ $lang['refcheck']              = 'Vérifier si un média est toujours utilisé a
 $lang['gdlib']                 = 'Version de la bibliothèque GD';
 $lang['im_convert']            = 'Chemin vers l\'outil de conversion ImageMagick';
 $lang['jpg_quality']           = 'Qualité de la compression JPEG (0-100)';
-$lang['fetchsize']             = 'Taille maximale (en octets) que fetch.php peut télécharger depuis une URL tierce (par exemple pour conserver en cache et redimensionner une image tierce)';
+$lang['fetchsize']             = 'Taille maximale (en octets) que fetch.php peut télécharger depuis un URL tiers (par exemple pour conserver en cache et redimensionner une image tierce)';
 $lang['subscribers']           = 'Activer l\'abonnement aux pages';
 $lang['subscribe_time']        = 'Délai après lequel les listes d\'abonnement et résumés sont expédiés (en secondes). Devrait être plus petit que le délai précisé dans recent_days.';
 $lang['notify']                = 'Notifier systématiquement les modifications à cette adresse de courriel';
