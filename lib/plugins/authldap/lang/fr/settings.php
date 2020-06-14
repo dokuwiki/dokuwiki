@@ -3,12 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author PaliPalo <palipalo@hotmail.fr>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
- * @author schplurtz <Schplurtz@laposte.net>
  */
-$lang['server']                = 'Votre serveur LDAP. Soit le nom d\'hôte (<code>localhost</code>) ou l\'URL complète (<code>ldap://serveur.dom:389</code>)';
-$lang['port']                  = 'Port du serveur LDAP si l\'URL complète n\'a pas été indiquée ci-dessus';
+$lang['server']                = 'Votre serveur LDAP. Soit le nom d\'hôte (<code>localhost</code>) ou l\'URL complet (<code>ldap://serveur.dom:389</code>)';
+$lang['port']                  = 'Port du serveur LDAP si l\'URL complet n\'a pas été indiqué ci-dessus';
 $lang['usertree']              = 'Où trouver les comptes utilisateur. Ex.: <code>ou=Utilisateurs, dc=serveur, dc=dom</code>';
 $lang['grouptree']             = 'Où trouver les groupes d\'utilisateurs. Ex.: <code>ou=Groupes, dc=serveur, dc=dom</code>';
 $lang['userfilter']            = 'Filtre LDAP pour rechercher les comptes utilisateur. Ex.: <code>(&amp;(uid=%{user})(objectClass=posixAccount))</code>';
