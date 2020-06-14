@@ -86,7 +86,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
                 echo '<tr>';
                 echo '<td><label for="tpl__'.hsc($key).'">'.$name.'</label></td>';
                 echo '<td><input type="'.$this->colorType($key).'" name="tpl['.hsc($key).']" id="tpl__'.hsc($key).'"
-                    value="'.hsc($value).'" dir="ltr" /></td>';
+                    value="'.hsc($this->colorValue($value)).'" dir="ltr" /></td>';
                 echo '</tr>';
             }
             echo '</tbody></table>';
@@ -111,6 +111,20 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
 
             echo tpl_locale_xhtml('style');
         }
+    }
+
+    /**
+     * Adjust three char color codes to the 6 char one supported by browser's color input
+     *
+     * @param string $value
+     * @return string
+     */
+    protected function colorValue($value)
+    {
+        if (preg_match('/^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/', $value, $match)) {
+            return '#' . $match[1] . $match[1] . $match[2] . $match[2] . $match[3] . $match[3];
+        }
+        return $value;
     }
 
     /**
