@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author FENG.JIE <ahx@qq.com>
  * @author Xin <chenxin1034@gmail.com>
  * @author HaoNan <haonan@zhuoming.info>
  * @author Phy <dokuwiki@phy25.com>
@@ -142,6 +143,7 @@ $lang['rss_linkto']            = 'XML feed 链接到';
 $lang['rss_content']           = 'XML feed 项目中显示什么呢？';
 $lang['rss_update']            = 'XML feed 升级间隔（秒）';
 $lang['rss_show_summary']      = 'XML feed 在标题中显示摘要';
+$lang['rss_show_deleted']      = 'XML feed显示已删除的feed';
 $lang['rss_media']             = '在 XML 源中应该列出何种类型的更改？';
 $lang['rss_media_o_both']      = '两者均可';
 $lang['rss_media_o_pages']     = '页面';
@@ -169,6 +171,7 @@ $lang['search_fragment_o_exact'] = '精确';
 $lang['search_fragment_o_starts_with'] = '开头为';
 $lang['search_fragment_o_ends_with'] = '结尾为';
 $lang['search_fragment_o_contains'] = '包含';
+$lang['trustedproxy']          = '信任转发代理与其正则表达式有关系，显示的是真实的客户端IP。默认匹配本地网络。留空则不选择任何代理。';
 $lang['_feature_flags']        = '功能标志';
 $lang['defer_js']              = '推迟在页面HTML解析后执行的JavaScript。提高了页面的感知速度，但可能会破坏少量插件。';
 $lang['dnslookups']            = 'DokuWiki 将会查询用户编辑页面的远程 IP 地址的主机名。如果您的 DNS 服务器比较缓慢或者不工作，或者您不想要这个功能，请禁用此选项。';
