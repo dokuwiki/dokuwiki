@@ -16,23 +16,26 @@
 
 /**
  * Initialization of a collator using $conf['lang'] as the locale.
- * The initialization is done only once, except when $reload is set to TRUE.
+ * The initialization is done only once, except when $reload is set to true.
  * The collation takes "natural ordering" into account, that is, "page 2" is before "page 10".
  *
- * @param bool $reload Usually FALSE; TRUE forces collator re-creation after a change in $conf['lang']
- * @return Collator Returns a configured collator or NULL if the collator cannot be created.
+ * @param bool $reload Usually false; true forces collator re-creation after a change in $conf['lang']
+ * @return Collator Returns a configured collator or null if the collator cannot be created.
  *
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
-function _get_collator($reload = FALSE) {
+function _get_collator($reload = false)
+{
     global $conf;
-    static $intl_extension_available = NULL;
-    static $collator = NULL;
+    static $intl_extension_available = null;
+    static $collator = null;
 
-    if (is_null($intl_extension_available))
+    if (is_null($intl_extension_available)) {
         $intl_extension_available = class_exists('Collator');
-    if (!$intl_extension_available)
-        return NULL;
+    }
+    if (!$intl_extension_available) {
+        return null;
+    }
     if ($reload || !isset($collator)) {
         $collator = Collator::create($conf['lang']);
         if (isset($collator)) {
@@ -51,8 +54,9 @@ function _get_collator($reload = FALSE) {
  *
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
-function lang_has_changed() {
-    _get_collator(TRUE);
+function lang_has_changed()
+{
+    _get_collator(true);
 }
 
 /**
@@ -65,12 +69,14 @@ function lang_has_changed() {
  *
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
-function intl_strcmp($str1, $str2) {
+function intl_strcmp($str1, $str2)
+{
     $collator = _get_collator();
-    if (isset($collator))
+    if (isset($collator)) {
         return $collator->compare($str1, $str2);
-    else
+    } else {
         return strnatcasecmp($str1, $str2);
+    }
 }
 
 /**
@@ -78,16 +84,18 @@ function intl_strcmp($str1, $str2) {
  * It uses a collator-based sort, or sort() with flags SORT_NATURAL and SORT_FLAG_CASE as a fallback.
  *
  * @param array $array The input array.
- * @return bool Returns TRUE on success or FALSE on failure.
+ * @return bool Returns true on success or false on failure.
  *
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
-function intl_sort(&$array) {
+function intl_sort(&$array)
+{
     $collator = _get_collator();
-    if (isset($collator))
+    if (isset($collator)) {
         return $collator->sort($array);
-    else
+    } else {
         return sort($array, SORT_NATURAL | SORT_FLAG_CASE);
+    }
 }
 
 /**
@@ -95,16 +103,18 @@ function intl_sort(&$array) {
  * It uses a collator-based sort, or ksort() with flags SORT_NATURAL and SORT_FLAG_CASE as a fallback.
  *
  * @param array $array The input array.
- * @return bool Returns TRUE on success or FALSE on failure.
+ * @return bool Returns true on success or false on failure.
  *
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
-function intl_ksort(&$array) {
+function intl_ksort(&$array)
+{
     $collator = _get_collator();
-    if (isset($collator))
+    if (isset($collator)) {
         return uksort($array, array($collator, 'compare'));
-    else
+    } else {
         return ksort($array, SORT_NATURAL | SORT_FLAG_CASE);
+    }
 }
 
 /**
@@ -112,16 +122,18 @@ function intl_ksort(&$array) {
  * It uses a collator-based sort, or asort() with flags SORT_NATURAL and SORT_FLAG_CASE as a fallback.
  *
  * @param array $array The input array.
- * @return bool Returns TRUE on success or FALSE on failure.
+ * @return bool Returns true on success or false on failure.
  *
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
-function intl_asort(&$array) {
+function intl_asort(&$array)
+{
     $collator = _get_collator();
-    if (isset($collator))
+    if (isset($collator)) {
         return $collator->asort($array);
-    else
+    } else {
         return asort($array, SORT_NATURAL | SORT_FLAG_CASE);
+    }
 }
 
 /**
@@ -130,16 +142,18 @@ function intl_asort(&$array) {
  * so the correct behavior is to sort page names and reflect this sorting in the filename array.
  *
  * @param array $array The input array.
- * @return bool Returns TRUE on success or FALSE on failure.
+ * @return bool Returns true on success or false on failure.
  *
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
-function intl_asortFN(&$array) {
+function intl_asortFN(&$array)
+{
     $collator = _get_collator();
-    if (isset($collator))
+    if (isset($collator)) {
         return uasort($array, '_sort_filenames_with_collator');
-    else
+    } else {
         return uasort($array, '_sort_filenames_without_collator');
+    }
 }
 
 /**
@@ -152,7 +166,8 @@ function intl_asortFN(&$array) {
  *
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
-function _sort_filenames_with_collator($fn1, $fn2) {
+function _sort_filenames_with_collator($fn1, $fn2)
+{
     $collator = _get_collator();
     return $collator->compare(utf8_decodeFN($fn1), utf8_decodeFN($fn2));
 }
@@ -167,6 +182,7 @@ function _sort_filenames_with_collator($fn1, $fn2) {
  *
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
-function _sort_filenames_without_collator($fn1, $fn2) {
+function _sort_filenames_without_collator($fn1, $fn2)
+{
     return strnatcasecmp(utf8_decodeFN($fn1), utf8_decodeFN($fn2));
 }
