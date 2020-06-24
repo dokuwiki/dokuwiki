@@ -609,7 +609,7 @@ function idx_listIndexLengths() {
 function idx_indexLengths($filter) {
     dbg_deprecated('\dokuwiki\Search\FulltextIndex::getIndexLengths()');
     $FulltextIndex = \dokuwiki\Search\FulltextIndex::getInstance();
-    return $FulltextIndex->getIndexLengths();
+    return $FulltextIndex->getIndexLengths($filter);
 }
 
 /**
