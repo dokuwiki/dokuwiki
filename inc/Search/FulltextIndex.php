@@ -352,7 +352,7 @@ class FulltextIndex extends AbstractIndex
         // $tokenlength = array( base word length => base word ... )
         // $tokenwild = array( base word => base word length ... )
         $length_filter = empty($tokenwild) ? $tokenlength : min(array_keys($tokenlength));
-        $indexes_known = $this->indexLengths($length_filter);
+        $indexes_known = $this->getIndexLengths($length_filter);
         if (!empty($tokenwild)) sort($indexes_known);
         // get word IDs
         $wids = array();
