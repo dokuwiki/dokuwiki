@@ -605,6 +605,13 @@ function idx_listIndexLengths() {
     return $FulltextIndex->listIndexLengths();
 }
 
+/** @deprecated 2019-12-16 */
+function idx_indexLengths($filter) {
+    dbg_deprecated('\dokuwiki\Search\FulltextIndex::getIndexLengths()');
+    $FulltextIndex = \dokuwiki\Search\FulltextIndex::getInstance();
+    return $FulltextIndex->getIndexLengths();
+}
+
 /**
  * Create MetadataIndex instance, which supports following methods:
  *    addMetaKeys($page, $key, $value=null)

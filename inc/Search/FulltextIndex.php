@@ -395,7 +395,7 @@ class FulltextIndex extends AbstractIndex
      * @param array|int $filter
      * @return array
      */
-    protected function indexLengths($filter)
+    public function getIndexLengths($filter)
     {
         global $conf;
         $idx = array();
