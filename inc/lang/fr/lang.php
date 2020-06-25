@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author PaliPalo <palipalo@hotmail.fr>
