@@ -306,7 +306,7 @@ $lang['i_disabled']            = 'a fost dezactivat de furnizorul tău';
 $lang['i_funcnmail']           = '<b>Notă:</b> Funcția PHP de email nu este disponibilă %s Daca tot rămâne nedisponibilă, trebuie sa instalezi <a href="https://www.dokuwiki.org/plugin:smtp">modulul stmp</a>.	';
 $lang['i_phpver']              = 'Versiunea ta de PHP <code>%s</code> este mai veche decât cea necesară (<code>%s</code>). Trebuie să îți actualizezi instalarea PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload trebuie să fie dezactivată în php.ini pentru a rula DokuWiki.';
-$lang['i_urandom']             = 'DokuWiki nu poate sa creeze numere sigure criptografice pentru cookie-uri. Poate doriți să verificați setările open_basedir din php.ini pentru acces <code> / dev / urandom </code> adecvat.';
+$lang['i_urandom']             = 'DokuWiki nu poate sa creeze numere sigure criptografice pentru cookie-uri. Poate doriți să verificați setările open_basedir din php.ini pentru acces <code>/dev/urandom</code> adecvat.';
 $lang['i_permfail']            = '<code>%s</code> nu poate fi scris de către DokuWiki. Trebuie să modifici permisiunile pe acest director.';
 $lang['i_confexists']          = '<code>%s</code> există deja';
 $lang['i_writeerr']            = 'Nu s-a putut crea <code>%s</code>. Trebuie să verifici permisiunile directorului/fișierului și să creezi fișierul manual.';
