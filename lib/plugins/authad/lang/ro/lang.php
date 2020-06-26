@@ -3,7 +3,6 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author not allowed to give my name :| <thisisafakeemailaddress@sorry.lol>
  * @author Razvan Deaconescu <razvan.deaconescu@cs.pub.ro>
  * @author Adrian Vesa <adrianvesa@dotwikis.com>
  */
