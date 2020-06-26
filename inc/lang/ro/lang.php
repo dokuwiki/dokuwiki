@@ -362,7 +362,6 @@ $lang['email_fail']            = 'PHP mail() lipsește sau este dezactivat. Urm�
 $lang['currentns']             = 'Spațiul de nume curent';
 $lang['searchresult']          = 'Rezultatul cautarii';
 $lang['plainhtml']             = 'HTML simplu';
-$lang['wikimarkup']            = '??? Sorry i dont know this one ???';
 $lang['page_nonexist_rev']     = 'Pagina nu a existat la %s. Ulterior a fost creat la <a href="%s">%s </a>.';
 $lang['unable_to_parse_date']  = 'Imposibil de analizat la parametrul "%s".';
 $lang['email_signature_text']  = 'Acest e-mail a fost generat de DokuWiki la
