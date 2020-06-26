@@ -3,7 +3,6 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author not allowed to give my name :| <thisisafakeemailaddress@sorry.lol>
  * @author Vitalie Ciubotaru <vitalie@ciubotaru.tokyo>
  * @author Victor <kvp@live.com>
  * @author Marian Banica <open@banica.eu.org>
