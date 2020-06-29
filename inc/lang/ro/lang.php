@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Vitalie Ciubotaru <vitalie@ciubotaru.tokyo>
  * @author Victor <kvp@live.com>
  * @author Marian Banica <open@banica.eu.org>
@@ -72,7 +73,7 @@ $lang['badpassconfirm']        = 'Ne pare rau, parola este gresita';
 $lang['minoredit']             = 'Modificare minoră';
 $lang['draftdate']             = 'Schiță salvată automat la';
 $lang['nosecedit']             = 'Pagina s-a modificat între timp, secțiunea info a expirat, s-a încărcat pagina întreagă în loc.';
-$lang['searchcreatepage']      = 'Dacă nu găsești ceea ce căuți, poți crea sau modifica pagina numită după căutarea ta.';
+$lang['searchcreatepage']      = 'Dacă nu găsești ceea ce căuți, poți crea sau modifica pagina %s numită după căutarea ta.';
 $lang['search_fullresults']    = 'Rezultatele textului-complet';
 $lang['js']['search_toggle_tools'] = 'Folosiți instrumentele de căutare';
 $lang['js']['willexpire']      = 'Blocarea pentru editarea paginii expiră intr-un minut.\nPentru a preveni conflictele folosește butonul de previzualizare pentru resetarea blocării.';
