@@ -66,9 +66,10 @@ if (preg_match('/^\/_media\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
 } else {
     // treat everything else as a potential wiki page
     // working around https://bugs.php.net/bug.php?id=61286
+    $request_path = preg_split('/\?/', $_SERVER['REQUEST_URI'], 2)[0];
     if (isset($_SERVER['PATH_INFO'])) {
         $_GET['id'] = $_SERVER['PATH_INFO'];
-    } else {
+    } elseif (!($request_path == '/' || $request_path == '/index.php')) {
         $_GET['id'] = $_SERVER['SCRIPT_NAME'];
     }
 
