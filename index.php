@@ -69,7 +69,7 @@ if (preg_match('/^\/_media\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
     $request_path = preg_split('/\?/', $_SERVER['REQUEST_URI'], 2)[0];
     if (isset($_SERVER['PATH_INFO'])) {
         $_GET['id'] = $_SERVER['PATH_INFO'];
-    } elseif (!($request_path == '/' || $request_path == '/index.php')) {
+    } elseif ($request_path != '/' && $request_path != '/index.php') {
         $_GET['id'] = $_SERVER['SCRIPT_NAME'];
     }
 
