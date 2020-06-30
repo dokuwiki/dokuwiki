@@ -52,6 +52,7 @@ if (preg_match('/^\/_media\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
     if (preg_match('/\/([._]ht|README$|VERSION$|COPYING$)/', $_SERVER['SCRIPT_NAME']) or
         preg_match('/^\/(data|conf|bin|inc)\//', $_SERVER['SCRIPT_NAME'])
     ) {
+        header('HTTP/1.1 403 Forbidden');
         die('Access denied');
     }
 
