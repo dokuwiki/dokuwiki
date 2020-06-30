@@ -378,7 +378,7 @@ EOT;
     if ($d['acl']) {
         // hash the password
         $phash = new \dokuwiki\PassHash();
-        $pass = $phash->hash_smd5($d['password']);
+        $pass = $phash->hash_bcrypt($d['password']);
 
         // create users.auth.php
         $output = <<<EOT
@@ -395,7 +395,7 @@ EOT;
 # login:passwordhash:Real Name:email:groups,comma,separated
 
 EOT;
-        // --- user:SMD5password:Real Name:email:groups,comma,seperated
+        // --- user:bcryptpasswordhash:Real Name:email:groups,comma,seperated
         $output = $output."\n".join(":",array($d['superuser'], $pass, $d['fullname'], $d['email'], 'admin,user'))."\n";
         $ok = $ok && fileWrite(DOKU_LOCAL.'users.auth.php', $output);
 
