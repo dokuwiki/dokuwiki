@@ -14,6 +14,10 @@ class utf8_strtolower_test extends DokuWikiTest
             ['ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'],
             ['players:Bruce', 'players:bruce'],
             ['players:GERALD', 'players:gerald'],
+            [
+                'Α Β Γ Δ Ε Ϝ Ϛ Ζ Η Θ Ι Κ Λ Μ Ν Ξ Ο Π Ϟ ϙ Ρ Σ Τ Υ Φ Χ Ψ Ω Ϡ',
+                'α β γ δ ε ϝ ϛ ζ η θ ι κ λ μ ν ξ ο π ϟ ϙ ρ σ τ υ φ χ ψ ω ϡ'
+            ], // #3188
         ];
     }
 
