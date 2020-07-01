@@ -468,16 +468,16 @@
         },
         {
             "name": "splitbrain/php-cli",
-            "version": "1.1.6",
+            "version": "1.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-cli.git",
-                "reference": "b7be3726872547253dd0bd61098fa9f634c33555"
+                "reference": "fb4f888866d090b10e3e68292d197ca274cea626"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/b7be3726872547253dd0bd61098fa9f634c33555",
-                "reference": "b7be3726872547253dd0bd61098fa9f634c33555",
+                "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/fb4f888866d090b10e3e68292d197ca274cea626",
+                "reference": "fb4f888866d090b10e3e68292d197ca274cea626",
                 "shasum": ""
             },
             "require": {
@@ -515,7 +515,7 @@
                 "optparse",
                 "terminal"
             ],
-            "time": "2019-10-16T07:31:14+00:00"
+            "time": "2019-12-12T08:24:54+00:00"
         }
     ],
     "packages-dev": [],
