@@ -1,4 +1,5 @@
 <?php
+
 namespace dokuwiki\Form;
 
 /**
@@ -8,13 +9,14 @@ namespace dokuwiki\Form;
  *
  * @package dokuwiki\Form
  */
-class TagElement extends ValueElement {
-
+class TagElement extends ValueElement
+{
     /**
      * @param string $tag
      * @param array $attributes
      */
-    public function __construct($tag, $attributes = array()) {
+    public function __construct($tag, $attributes = array())
+    {
         parent::__construct('tag', $tag, $attributes);
     }
 
@@ -23,7 +25,8 @@ class TagElement extends ValueElement {
      *
      * @return string
      */
-    public function toHTML() {
+    public function toHTML()
+    {
         return '<'.$this->val().' '.buildAttributes($this->attrs()).' />';
     }
 }
