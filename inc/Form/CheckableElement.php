@@ -62,4 +62,22 @@ class CheckableElement extends InputElement
         }
     }
 
+    /**
+     * The HTML representation of this element wrapped in a label
+     * Note: allow HTML tags in label text
+     *
+     * @return string
+     */
+    public function toHTML()
+    {
+        if ($this->label) {
+            return '<label '. buildAttributes($this->label->attrs()) .'>'.DOKU_LF
+                . $this->mainElementHTML() .DOKU_LF
+                .'<span>'. $this->label->val() .'</span>'.DOKU_LF
+                .'</label>';
+        } else {
+            return $this->mainElementHTML();
+        }
+    }
+
 }

@@ -148,7 +148,7 @@ class InputElement extends Element
     protected function mainElementHTML()
     {
         if ($this->useInput) $this->prefillInput();
-        return '<input ' . buildAttributes($this->attrs()) . ' />';
+        return '<input '. buildAttributes($this->attrs()) .' />';
     }
 
     /**
@@ -159,10 +159,10 @@ class InputElement extends Element
     public function toHTML()
     {
         if ($this->label) {
-            return '<label ' . buildAttributes($this->label->attrs()) . '>' . DOKU_LF .
-                '<span>' . hsc($this->label->val()) . '</span>' . DOKU_LF .
-                $this->mainElementHTML() . DOKU_LF .
-                '</label>';
+            return '<label '. buildAttributes($this->label->attrs()) .'>'.DOKU_LF
+                .'<span>'. hsc($this->label->val()) .'</span>'.DOKU_LF
+                . $this->mainElementHTML() .DOKU_LF
+                .'</label>';
         } else {
             return $this->mainElementHTML();
         }
