@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Рустам <weare@dzetalabs.ru>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Анатолий <anatol_m@mail.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
