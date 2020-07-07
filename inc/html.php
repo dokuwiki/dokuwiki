@@ -2228,12 +2228,16 @@ function html_form($name, &$form) {
 
 /**
  * Form print function.
- * Just calls printForm() on the data object.
  *
- * @param Doku_Form $data The form
+ * @param Form|Doku_Form $form The form
  */
-function html_form_output($data) {
-    $data->printForm();
+function html_form_output($form) {
+    if ($form instanceof dokuwiki\Form\Form) {
+        print $form->toHTML();
+    } else { // $form is instanceof Doku_Form
+        // Just calls printForm() on the form object.
+        $form->printForm();
+    }
 }
 
 /**

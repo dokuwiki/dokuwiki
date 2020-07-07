@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui;
+
 /**
  * Class Locked
  *
@@ -9,17 +11,19 @@ namespace dokuwiki\Action;
  *
  * @package dokuwiki\Action
  */
-class Locked extends AbstractAction {
-
+class Locked extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_READ;
     }
 
     /** @inheritdoc */
-    public function tplContent() {
+    public function tplContent()
+    {
         html_locked();
-        html_edit();
+        (new Ui\Editor)->show();
     }
 
 }
