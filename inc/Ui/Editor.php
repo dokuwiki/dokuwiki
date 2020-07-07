@@ -193,7 +193,7 @@ class Editor extends Ui
         global $TEXT;
 
         if ($data['target'] !== 'section') {
-            msg('No editor for edit target '. hsc($pdata['target']) .' found.', -1);
+            msg('No editor for edit target '. hsc($data['target']) .' found.', -1);
         }
 
         // set textarea attributes
