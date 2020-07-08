@@ -63,7 +63,7 @@ class Editor extends Ui
         }
 
         // create the Editor form
-        $form = new Form(['action' => wl($ID), 'id' => 'dw__editform']);
+        $form = new Form(['id' => 'dw__editform']);
         $form->setHiddenField('id', $ID);
         $form->setHiddenField('rev', $REV);
         $form->setHiddenField('date', $DATE);

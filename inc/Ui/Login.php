@@ -33,7 +33,7 @@ class Login extends Ui
         print '<div class="centeralign">'.NL;
 
         // create the login form
-        $form = new Form(['action' => wl($ID), 'id' => 'dw__login']);
+        $form = new Form(['id' => 'dw__login', 'action' => wl($ID)]);
         $form->addTagOpen('div')->addClass('no');
         $form->addFieldsetOpen($lang['btn_login']);
         $form->setHiddenField('id', $ID);
