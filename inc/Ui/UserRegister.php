@@ -54,7 +54,7 @@ class UserRegister extends Ui
             $form->addHTML("<br>\n");
         }
 
-        $iunpt = $form->addTextInput('fullname', $lang['fullname'])->attrs($base_attrs)->addClass('edit')
+        $input = $form->addTextInput('fullname', $lang['fullname'])->attrs($base_attrs)->addClass('edit')
             ->val($INPUT->post->str('fullname'));
         $input->getLabel()->attr('class', 'block');
         $form->addHTML("<br>\n");
