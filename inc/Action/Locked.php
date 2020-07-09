@@ -22,7 +22,7 @@ class Locked extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
-        html_locked();
+        (new Ui\Locked)->show();
         (new Ui\Editor)->show();
     }
 
