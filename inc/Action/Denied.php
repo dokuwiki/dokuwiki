@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui;
+
 /**
  * Class Denied
  *
@@ -9,15 +11,17 @@ namespace dokuwiki\Action;
  *
  * @package dokuwiki\Action
  */
-class Denied extends AbstractAclAction {
-
+class Denied extends AbstractAclAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_NONE;
     }
 
-    public function tplContent() {
-        html_denied();
+    public function tplContent()
+    {
+        (new Ui\Denied)->show();
     }
 
 }
