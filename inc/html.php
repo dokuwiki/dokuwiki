@@ -2361,24 +2361,30 @@ function html_tab($href, $caption, $selected=false) {
  * Display size change
  *
  * @param int $sizechange - size of change in Bytes
- * @param Doku_Form $form - form to add elements to
+ * @param Form|Doku_Form $form - form to add elements to
  */
 
-function html_sizechange($sizechange, Doku_Form $form) {
+function html_sizechange($sizechange, &$form) {
     if(isset($sizechange)) {
         $class = 'sizechange';
         $value = filesize_h(abs($sizechange));
-        if($sizechange > 0) {
+        if ($sizechange > 0) {
             $class .= ' positive';
             $value = '+' . $value;
-        } elseif($sizechange < 0) {
+        } elseif ($sizechange < 0) {
             $class .= ' negative';
             $value = '-' . $value;
         } else {
             $value = '±' . $value;
         }
-        $form->addElement(form_makeOpenTag('span', array('class' => $class)));
-        $form->addElement($value);
-        $form->addElement(form_makeCloseTag('span'));
+        if ($form instanceof dokuwiki\Form\Form) {
+            $form->addTagOpen('span')->addClass($class);
+            $form->addHTML($value);
+            $form->addTagClose('span');
+        } else { // Doku_Form
+            $form->addElement(form_makeOpenTag('span', array('class' => $class)));
+            $form->addElement($value);
+            $form->addElement(form_makeCloseTag('span'));
+        }
     }
 }
