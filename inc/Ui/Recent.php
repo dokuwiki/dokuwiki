@@ -215,7 +215,7 @@ class Recent extends Ui
         $form->addTagOpen('div')->addClass('pagenav');
         $last = $first + $conf['recent'];
         if ($first > 0) {
-            $first = $conf['recent'] -1;
+            $first = $first - $conf['recent'];
             if ($first < 0) $first = 0;
             $form->addTagOpen('div')->addClass('pagenav-prev');
             $form->addTagOpen('button')->attrs([
