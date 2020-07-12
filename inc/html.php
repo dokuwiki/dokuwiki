@@ -2364,7 +2364,7 @@ function html_tab($href, $caption, $selected=false) {
  * @param Form|Doku_Form $form - form to add elements to
  */
 
-function html_sizechange($sizechange, &$form) {
+function html_sizechange($sizechange, $form) {
     if(isset($sizechange)) {
         $class = 'sizechange';
         $value = filesize_h(abs($sizechange));
