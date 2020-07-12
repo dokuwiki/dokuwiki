@@ -1376,7 +1376,7 @@ function html_diff($text = '', $intro = true, $type = null) {
                 . '</tr>';
         }
         print '<tr>'
-            . '<th colspan="2" '. $l_minor ,'>'. $l_head .'</th>'
+            . '<th colspan="2" '. $l_minor .'>'. $l_head .'</th>'
             . '<th colspan="2" '. $r_minor .'>'. $r_head .'</th>'
             . '</tr>';
     }
