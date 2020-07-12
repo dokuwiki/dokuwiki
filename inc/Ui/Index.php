@@ -39,7 +39,7 @@ class Index extends Ui
 
         $data = array();
         search($data, $conf['datadir'], 'search_index', array('ns' => $ns));
-        print html_buildlist($data, 'idx', [$this,'formatListItem'], [$this,'taglListItem']);
+        print html_buildlist($data, 'idx', [$this,'formatListItem'], [$this,'tagListItem']);
 
         print '</div>'.DOKU_LF;
     }
@@ -89,7 +89,7 @@ class Index extends Ui
      * @param array $item
      * @return string html
      */
-    public function taglListItem($item)    // RENAMED from html_li_index()
+    public function tagListItem($item)    // RENAMED from html_li_index()
     {
         global $INFO;
         global $ACT;
