@@ -57,9 +57,9 @@ EOT;
      */
     public static function showExceptionMsg($e, $intro = 'Error!')
     {
-        $msg = $intro . get_class($e) . ': ' . $e->getMessage();
-        self::logException($e);
-        msg(hsc($msg), -1);
+        $msg = hsc($intro).'<br />' . hsc(get_class($e) . ': ' . $e->getMessage());
+        if(self::logException($e)) $msg .= '<br />More info is available in the _error.log';
+        msg($msg, -1);
     }
 
     /**

@@ -129,7 +129,7 @@ class PluginController
             }
             $DOKU_PLUGINS[$type][$name] = new $class;
 
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             ErrorHandler::showExceptionMsg($e, sprintf('Failed to load plugin %s', $plugin));
             return null;
         }
