@@ -328,27 +328,29 @@ class Diff extends Ui
         list($l_revs, $r_revs) = $pagelog->getRevisionsAround($l_rev, $r_rev);
         $l_revisions = array();
         if (!$l_rev) {
-            $l_revisions[0] = array(0, "", false); //no left revision given, add dummy
+            //no left revision given, add dummy
+            $l_revisions[0]= array('label' => '', 'attrs' => []);
         }
         foreach ($l_revs as $rev) {
             $info = $pagelog->getRevisionInfo($rev);
             $l_revisions[$rev] = array(
-                $rev,
-                dformat($info['date']) . ' ' . editorinfo($info['user'], true) . ' ' . $info['sum'],
-                $r_rev ? $rev >= $r_rev : false //disable?
+                'label' => dformat($info['date']) .' '. editorinfo($info['user'], true) .' '. $info['sum'],
+                'attrs' => ['title' => $rev],
             );
+            if ($r_rev ? $rev >= $r_rev : false) $l_revisions[$rev]['attrs']['disabled'] = 'disabled';
         }
         $r_revisions = array();
         if (!$r_rev) {
-            $r_revisions[0] = array(0, "", false); //no right revision given, add dummy
+            //no right revision given, add dummy
+            $r_revisions[0] = array('label' => '', 'attrs' => []);
         }
         foreach ($r_revs as $rev) {
             $info = $pagelog->getRevisionInfo($rev);
             $r_revisions[$rev] = array(
-                $rev,
-                dformat($info['date']) . ' ' . editorinfo($info['user'], true) . ' ' . $info['sum'],
-                $rev <= $l_rev //disable?
+                'label' => dformat($info['date']) .' '. editorinfo($info['user'], true) .' '. $info['sum'],
+                'attrs' => ['title' => $rev],
             );
+            if ($rev <= $l_rev) $r_revisions[$rev]['attrs']['disabled'] = 'disabled';
         }
 
         //determine previous/next revisions
@@ -379,22 +381,15 @@ class Diff extends Ui
             $l_nav .= $this->diffNavigationlink($type, 'diffprevrev', $l_prev, $r_rev);
         }
         //dropdown
-        $form = new \Doku_Form(array('action' => wl()));
-        $form->addHidden('id', $ID);
-        $form->addHidden('difftype', $type);
-        $form->addHidden('rev2[1]', $r_rev);
-        $form->addHidden('do', 'diff');
-        $form->addElement(
-             form_makeListboxField(
-                 'rev2[0]',
-                 $l_revisions,
-                 $l_rev,
-                 '', '', '',
-                 array('class' => 'quickselect')
-             )
-        );
-        $form->addElement(form_makeButton('submit', 'diff', 'Go'));
-        $l_nav .= $form->getForm();
+        $form = new Form(['action' => wl()]);
+        $form->setHiddenField('id', $ID);
+        $form->setHiddenField('difftype', $type);
+        $form->setHiddenField('rev2[1]', $r_rev);
+        $form->setHiddenField('do', 'diff');
+        $input = $form->addDropdown('rev2[0]', $l_revisions, /*'LeftSide'*/)->val($l_rev)->addClass('quickselect');
+        $input->useInput(false); // inhibit prefillInput() during toHTML() process
+        $form->addButton('do[diff]', 'Go')->attr('type','submit');
+        $l_nav .= $form->toHTML();
         //move forward
         if ($l_next && ($l_next < $r_rev || !$r_rev)) {
             $l_nav .= $this->diffNavigationlink($type, 'diffnextrev', $l_next, $r_rev);
@@ -409,22 +404,15 @@ class Diff extends Ui
             $r_nav .= $this->diffNavigationlink($type, 'diffprevrev', $l_rev, $r_prev);
         }
         //dropdown
-        $form = new \Doku_Form(array('action' => wl()));
-        $form->addHidden('id', $ID);
-        $form->addHidden('rev2[0]', $l_rev);
-        $form->addHidden('difftype', $type);
-        $form->addHidden('do', 'diff');
-        $form->addElement(
-             form_makeListboxField(
-                 'rev2[1]',
-                 $r_revisions,
-                 $r_rev,
-                 '', '', '',
-                 array('class' => 'quickselect')
-             )
-        );
-        $form->addElement(form_makeButton('submit', 'diff', 'Go'));
-        $r_nav .= $form->getForm();
+        $form = new Form(['action' => wl()]);
+        $form->setHiddenField('id', $ID);
+        $form->setHiddenField('rev2[0]', $l_rev);
+        $form->setHiddenField('difftype', $type);
+        $form->setHiddenField('do', 'diff');
+        $input = $form->addDropdown('rev2[1]', $r_revisions, /*'RightSide'*/)->val($r_rev)->addClass('quickselect');
+        $input->useInput(false); // inhibit prefillInput() during toHTML() process
+        $form->addButton('do[diff]', 'Go')->attr('type','submit');
+        $r_nav .= $form->toHTML();
         //move forward
         if ($r_next) {
             if ($pagelog->isCurrentRevision($r_next)) {
