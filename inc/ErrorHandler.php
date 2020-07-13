@@ -94,7 +94,13 @@ EOT;
     {
         global $conf;
 
-        $log = join("\t", [gmdate('c'), get_class($e), $e->getFile() . ':' . $e->getLine(), $e->getMessage()]) . "\n";
+        $log = join("\t", [
+                gmdate('c'),
+                get_class($e),
+                $e->getFile() . '(' . $e->getLine() . ')',
+                $e->getMessage(),
+            ]) . "\n";
+        $log .= $e->getTraceAsString() . "\n";
         return io_saveFile($conf['cachedir'] . '/_error.log', $log, true);
     }
 
