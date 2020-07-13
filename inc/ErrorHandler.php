@@ -13,6 +13,7 @@ class ErrorHandler
         set_error_handler([ErrorHandler::class, 'errorConverter']);
         if (!defined('DOKU_UNITTEST')) {
             set_exception_handler([ErrorHandler::class, 'fatalException']);
+            register_shutdown_function([ErrorHandler::class, 'fatalShutdown']);
         }
     }
 
@@ -57,8 +58,8 @@ EOT;
      */
     public static function showExceptionMsg($e, $intro = 'Error!')
     {
-        $msg = hsc($intro).'<br />' . hsc(get_class($e) . ': ' . $e->getMessage());
-        if(self::logException($e)) $msg .= '<br />More info is available in the _error.log';
+        $msg = hsc($intro) . '<br />' . hsc(get_class($e) . ': ' . $e->getMessage());
+        if (self::logException($e)) $msg .= '<br />More info is available in the _error.log';
         msg($msg, -1);
     }
 
@@ -76,12 +77,38 @@ EOT;
      */
     public static function errorConverter($errno, $errstr, $errfile, $errline)
     {
+
         if (!(error_reporting() & $errno)) {
             // This error code is not included in error_reporting, so let it fall
             // through to the standard PHP error handler
             return false;
         }
+
         throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+    }
+
+    /**
+     * Last resort to handle fatal errors that still can't be cought
+     */
+    public static function fatalShutdown()
+    {
+        $error = error_get_last();
+        // Check if it's a core/fatal error, otherwise it's a normal shutdown
+        if (
+            $error !== null &&
+            in_array(
+                $error['type'],
+                [
+                    E_ERROR,
+                    E_CORE_ERROR,
+                    E_COMPILE_ERROR,
+                ]
+            )
+        ) {
+            self::fatalException(
+                new \ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line'])
+            );
+        }
     }
 
     /**
