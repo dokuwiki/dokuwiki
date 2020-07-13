@@ -199,6 +199,9 @@ if (empty($plugin_controller_class)) $plugin_controller_class = dokuwiki\Extensi
 require_once(DOKU_INC.'vendor/autoload.php');
 require_once(DOKU_INC.'inc/load.php');
 
+// from now on everything is an exception
+\dokuwiki\ErrorHandler::register();
+
 // disable gzip if not available
 define('DOKU_HAS_BZIP', function_exists('bzopen'));
 define('DOKU_HAS_GZIP', function_exists('gzopen'));
