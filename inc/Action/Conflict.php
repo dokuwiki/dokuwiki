@@ -32,7 +32,7 @@ class Conflict extends AbstractAction
         global $SUM;
 
         (new Ui\Conflict)->show(con($PRE, $TEXT, $SUF), $SUM);
-        html_diff(con($PRE, $TEXT, $SUF), false);
+        (new Ui\Diff)->show(con($PRE, $TEXT, $SUF), false);
     }
 
 }
