@@ -25,8 +25,10 @@ class ErrorHandler
      */
     public static function fatalException($e)
     {
+        $plugin = self::guessPlugin($e);
         $title = hsc(get_class($e) . ': ' . $e->getMessage());
         $msg = 'An unforeseen error has occured. This is most likely a bug somewhere.';
+        if ($plugin) $msg .= ' It might be a problem in the ' . $plugin . ' plugin.';
         $logged = self::logException($e)
             ? 'More info has been written to the DokuWiki _error.log'
             : $e->getFile() . ':' . $e->getLine();
@@ -94,5 +96,32 @@ EOT;
 
         $log = join("\t", [gmdate('c'), get_class($e), $e->getFile() . ':' . $e->getLine(), $e->getMessage()]) . "\n";
         return io_saveFile($conf['cachedir'] . '/_error.log', $log, true);
+    }
+
+    /**
+     * Checks the the stacktrace for plugin files
+     *
+     * @param \Throwable $e
+     * @return false|string
+     */
+    protected static function guessPlugin($e)
+    {
+        foreach ($e->getTrace() as $line) {
+            if (
+                isset($line['class']) &&
+                preg_match('/\w+?_plugin_(\w+)/', $line['class'], $match)
+            ) {
+                return $match[1];
+            }
+
+            if (
+                isset($line['file']) &&
+                preg_match('/lib\/plugins\/(\w+)\//', str_replace('\\', '/', $line['file']), $match)
+            ) {
+                return $match[1];
+            }
+        }
+
+        return false;
     }
 }
