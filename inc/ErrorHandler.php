@@ -11,13 +11,11 @@ use dokuwiki\Exception\FatalException;
  */
 class ErrorHandler
 {
-
     /**
      * Register the default error handling
      */
     public static function register()
     {
-        set_error_handler([ErrorHandler::class, 'errorConverter']);
         if (!defined('DOKU_UNITTEST')) {
             set_exception_handler([ErrorHandler::class, 'fatalException']);
             register_shutdown_function([ErrorHandler::class, 'fatalShutdown']);
@@ -68,30 +66,6 @@ EOT;
         $msg = hsc($intro) . '<br />' . hsc(get_class($e) . ': ' . $e->getMessage());
         if (self::logException($e)) $msg .= '<br />More info is available in the _error.log';
         msg($msg, -1);
-    }
-
-    /**
-     * Default error handler to convert old school warnings, notices, etc to exceptions
-     *
-     * You should not need to call this directly!
-     *
-     * @param int $errno
-     * @param string $errstr
-     * @param string $errfile
-     * @param int $errline
-     * @return bool
-     * @throws \ErrorException
-     */
-    public static function errorConverter($errno, $errstr, $errfile, $errline)
-    {
-
-        if (!(error_reporting() & $errno)) {
-            // This error code is not included in error_reporting, so let it fall
-            // through to the standard PHP error handler
-            return false;
-        }
-
-        throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
     }
 
     /**
