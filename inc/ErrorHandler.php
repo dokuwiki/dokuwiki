@@ -2,6 +2,13 @@
 
 namespace dokuwiki;
 
+use dokuwiki\Exception\FatalException;
+
+/**
+ * Manage the global handling of errors and exceptions
+ *
+ * Developer may use this to log and display exceptions themselves
+ */
 class ErrorHandler
 {
 
@@ -88,7 +95,7 @@ EOT;
     }
 
     /**
-     * Last resort to handle fatal errors that still can't be cought
+     * Last resort to handle fatal errors that still can't be caught
      */
     public static function fatalShutdown()
     {
@@ -106,7 +113,7 @@ EOT;
             )
         ) {
             self::fatalException(
-                new \ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line'])
+                new FatalException($error['message'], 0, $error['type'], $error['file'], $error['line'])
             );
         }
     }
@@ -139,6 +146,10 @@ EOT;
      */
     protected static function guessPlugin($e)
     {
+        if (preg_match('/lib\/plugins\/(\w+)\//', str_replace('\\', '/', $e->getFile()), $match)) {
+            return $match[1];
+        }
+
         foreach ($e->getTrace() as $line) {
             if (
                 isset($line['class']) &&
