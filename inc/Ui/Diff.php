@@ -160,12 +160,13 @@ class Diff extends Ui
             );
             $input = $form->addDropdown('difftype', $options, $lang['diff_type'])
                 ->val($type)->addClass('quickselect');
+            $input->useInput(false); // inhibit prefillInput() during toHTML() process
             $form->addButton('do[diff]', 'Go')->attr('type','submit');
             print $form->toHTML();
 
             print '<p>';
             // link to exactly this view FS#2835
-            print $this->diffNavigationlink($type, 'difflink', $l_rev, $r_rev ? $r_rev : $INFO['currentrev']);
+            print $this->diffViewlink($type, 'difflink', $l_rev, $r_rev ? $r_rev : $INFO['currentrev']);
             print '</p>';
 
             print '</div>'; // .diffoptions
@@ -377,8 +378,8 @@ class Diff extends Ui
         $l_nav = '';
         //move back
         if ($l_prev) {
-            $l_nav .= $this->diffNavigationlink($type, 'diffbothprevrev', $l_prev, $r_prev);
-            $l_nav .= $this->diffNavigationlink($type, 'diffprevrev', $l_prev, $r_rev);
+            $l_nav .= $this->diffViewlink($type, 'diffbothprevrev', $l_prev, $r_prev);
+            $l_nav .= $this->diffViewlink($type, 'diffprevrev', $l_prev, $r_rev);
         }
         //dropdown
         $form = new Form(['action' => wl()]);
@@ -386,13 +387,13 @@ class Diff extends Ui
         $form->setHiddenField('difftype', $type);
         $form->setHiddenField('rev2[1]', $r_rev);
         $form->setHiddenField('do', 'diff');
-        $input = $form->addDropdown('rev2[0]', $l_revisions, /*'LeftSide'*/)->val($l_rev)->addClass('quickselect');
+        $input = $form->addDropdown('rev2[0]', $l_revisions)->val($l_rev)->addClass('quickselect');
         $input->useInput(false); // inhibit prefillInput() during toHTML() process
         $form->addButton('do[diff]', 'Go')->attr('type','submit');
         $l_nav .= $form->toHTML();
         //move forward
         if ($l_next && ($l_next < $r_rev || !$r_rev)) {
-            $l_nav .= $this->diffNavigationlink($type, 'diffnextrev', $l_next, $r_rev);
+            $l_nav .= $this->diffViewlink($type, 'diffnextrev', $l_next, $r_rev);
         }
 
         /*
@@ -401,7 +402,7 @@ class Diff extends Ui
         $r_nav = '';
         //move back
         if ($l_rev < $r_prev) {
-            $r_nav .= $this->diffNavigationlink($type, 'diffprevrev', $l_rev, $r_prev);
+            $r_nav .= $this->diffViewlink($type, 'diffprevrev', $l_rev, $r_prev);
         }
         //dropdown
         $form = new Form(['action' => wl()]);
@@ -409,7 +410,7 @@ class Diff extends Ui
         $form->setHiddenField('rev2[0]', $l_rev);
         $form->setHiddenField('difftype', $type);
         $form->setHiddenField('do', 'diff');
-        $input = $form->addDropdown('rev2[1]', $r_revisions, /*'RightSide'*/)->val($r_rev)->addClass('quickselect');
+        $input = $form->addDropdown('rev2[1]', $r_revisions)->val($r_rev)->addClass('quickselect');
         $input->useInput(false); // inhibit prefillInput() during toHTML() process
         $form->addButton('do[diff]', 'Go')->attr('type','submit');
         $r_nav .= $form->toHTML();
@@ -417,26 +418,26 @@ class Diff extends Ui
         if ($r_next) {
             if ($pagelog->isCurrentRevision($r_next)) {
                 //last revision is diff with current page
-                $r_nav .= $this->diffNavigationlink($type, 'difflastrev', $l_rev);
+                $r_nav .= $this->diffViewlink($type, 'difflastrev', $l_rev);
             } else {
-                $r_nav .= $this->diffNavigationlink($type, 'diffnextrev', $l_rev, $r_next);
+                $r_nav .= $this->diffViewlink($type, 'diffnextrev', $l_rev, $r_next);
             }
         } else {
-            $r_nav .= $this->diffNavigationlink($type, 'diffbothnextrev', $l_next, $r_next);
+            $r_nav .= $this->diffViewlink($type, 'diffbothnextrev', $l_next, $r_next);
         }
         return array($l_nav, $r_nav);
     }
 
     /**
-     * Create html link to a diff defined by two revisions
+     * Create html link to a diff view defined by two revisions
      *
      * @param string $difftype display type
      * @param string $linktype
      * @param int $lrev oldest revision
      * @param int $rrev newest revision or null for diff with current revision
-     * @return string html of link to a diff
+     * @return string html of link to a diff view
      */
-    protected function diffNavigationlink($difftype, $linktype, $lrev, $rrev = null)
+    protected function diffViewlink($difftype, $linktype, $lrev, $rrev = null)
     {
         global $ID, $lang;
         if (!$rrev) {
