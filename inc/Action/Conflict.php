@@ -31,8 +31,23 @@ class Conflict extends AbstractAction
         global $SUF;
         global $SUM;
 
-        (new Ui\Conflict)->show(con($PRE, $TEXT, $SUF), $SUM);
+        $this->showBanner();
+        (new Ui\ConflictForm)->show(con($PRE, $TEXT, $SUF), $SUM);
         (new Ui\Diff)->show(con($PRE, $TEXT, $SUF), false);
     }
+
+    /**
+     * Show warning on conflict detection
+     *
+     * @author   Andreas Gohr <andi@splitbrain.org>
+     *
+     * @return void
+     */
+    protected function showBanner()
+    {
+        // print intro
+        print p_locale_xhtml('conflict');
+    }
+
 
 }

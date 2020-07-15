@@ -6,14 +6,14 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**
- * DokuWiki Conflict Insterface
+ * DokuWiki Conflict Form
  *
  * @package dokuwiki\Ui
  */
-class Conflict extends Ui
+class ConflictForm extends Ui
 {
     /**
-     * Show warning on conflict detection
+     * Show conflict form to ask whether save anyway or cancel the page edits
      *
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
@@ -27,10 +27,7 @@ class Conflict extends Ui
         global $ID;
         global $lang;
 
-        // print intro
-        print p_locale_xhtml('conflict');
-
-        // create the draft form
+        // create the form
         $form = new Form(['id' => 'dw__editform']);
         $form->addTagOpen('div')->addClass('no');
         $form->setHiddenField('id', $ID);
