@@ -19,9 +19,26 @@ class Denied extends AbstractAclAction
         return AUTH_NONE;
     }
 
+    /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\Denied)->show();
+        $this->showBanner();
+        if (empty($_SERVER['REMOTE_USER']) && actionOK('login')) {
+            (new Ui\Login)->show();
+        }
+    }
+
+    /**
+     * Display error on denied pages
+     *
+     * @author   Andreas Gohr <andi@splitbrain.org>
+     *
+     * @return void
+     */
+    protected function showBanner()
+    {
+        // print intro
+        print p_locale_xhtml('denied');
     }
 
 }
