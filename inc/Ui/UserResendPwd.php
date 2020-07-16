@@ -6,7 +6,7 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**
- * DokuWiki Resend Password Request Insterface
+ * DokuWiki Resend Password Request Interface
  *
  * @package dokuwiki\Ui
  */

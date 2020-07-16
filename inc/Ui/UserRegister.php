@@ -6,7 +6,7 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**
- * DokuWiki User Registration Insterface (Register Form)
+ * DokuWiki User Registration Interface (Register Form)
  *
  * @package dokuwiki\Ui
  */

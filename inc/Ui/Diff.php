@@ -53,7 +53,7 @@ class Diff extends Ui
         /*
          * Determine diff type
          */
-        if ($this->DffType　=== null) {
+        if ($this->DiffType　=== null) {
             $this->diffType = $INPUT->str('difftype');
             if (empty($this->difftype)) {
                 $this->diffType = get_doku_pref('difftype', $this->diffType);

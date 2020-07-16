@@ -6,7 +6,7 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**
- * DokuWiki Backlinks Insterface
+ * DokuWiki Backlinks Interface
  *
  * @package dokuwiki\Ui
  */

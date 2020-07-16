@@ -6,7 +6,7 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**
- * DokuWiki User Profile Insterface
+ * DokuWiki User Profile Interface
  *
  * @package dokuwiki\Ui
  */

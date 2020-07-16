@@ -5,7 +5,7 @@ namespace dokuwiki\Ui;
 use dokuwiki\Extension\Event;
 
 /**
- * DokuWiki PageView Insterface
+ * DokuWiki PageView Interface
  *
  * @package dokuwiki\Ui
  */
