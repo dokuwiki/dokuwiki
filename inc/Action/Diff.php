@@ -25,9 +25,9 @@ class Diff extends AbstractAction
         global $INPUT;
 
         // store the selected diff type in cookie
-        $diffType = $INPUT->str('difftype');
-        if (!empty($diffType)) {
-            set_doku_pref('difftype', $diffType);
+        $difftype = $INPUT->str('difftype');
+        if (!empty($difftype)) {
+            set_doku_pref('difftype', $difftype);
         }
     }
 

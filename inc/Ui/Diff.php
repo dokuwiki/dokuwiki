@@ -16,20 +16,20 @@ class Diff extends Ui
 {
     protected $text;
     protected $showIntro;
-    protected $diffType;
+    protected $difftype;
 
     /** 
      * Diff Ui constructor
      *
      * @param  string $text  when non-empty: compare with this text with most current version
      * @param  bool   $showIntro display the intro text
-     * @param  string $diffType  type of the diff (inline or sidebyside)
+     * @param  string $difftype  diff view type (inline or sidebyside)
      */
-    public function __construct($text = '', $showIntro = true, $diffType = null)
+    public function __construct($text = '', $showIntro = true, $difftype = null)
     {
         $this->text      = $text;
         $this->showIntro = $showIntro;
-        $this->diffType  = $diffType;
+        $this->difftype  = $difftype;
     }
 
     /**
@@ -51,18 +51,18 @@ class Diff extends Ui
         $pagelog = new PageChangeLog($ID);
 
         /*
-         * Determine diff type
+         * Determine diff view type
          */
-        if ($this->diffType　=== null) {
-            $this->diffType = $INPUT->str('difftype');
+        if ($this->difftype　=== null) {
+            $this->difftype = $INPUT->str('difftype');
             if (empty($this->difftype)) {
-                $this->diffType = get_doku_pref('difftype', $this->diffType);
-                if (empty($this->diffType) && $INFO['ismobile']) {
-                    $this->diffType = 'inline';
+                $this->difftype = get_doku_pref('difftype', $this->difftype);
+                if (empty($this->difftype) && $INFO['ismobile']) {
+                    $this->difftype = 'inline';
                 }
             }
         }
-        if ($this->diffType != 'inline') $this->diffType = 'sidebyside';
+        if ($this->difftype != 'inline') $this->difftype = 'sidebyside';
 
         /*
          * Determine requested revision(s)
@@ -130,7 +130,7 @@ class Diff extends Ui
             $r_text = rawWiki($ID, $r_rev);
 
             list($l_head, $r_head, $l_minor, $r_minor) = $this->diffHead(
-                $l_rev, $r_rev, null, false, ($this->diffType == 'inline')
+                $l_rev, $r_rev, null, false, ($this->difftype == 'inline')
             );
         }
 
@@ -140,14 +140,14 @@ class Diff extends Ui
         $l_nav = '';
         $r_nav = '';
         if (!$this->text) {
-            list($l_nav, $r_nav) = $this->diffNavigation($pagelog, $this->diffType, $l_rev, $r_rev);
+            list($l_nav, $r_nav) = $this->diffNavigation($pagelog, $this->difftype, $l_rev, $r_rev);
         }
         /*
          * Create diff object and the formatter
          */
         $diff = new \Diff(explode("\n", $l_text), explode("\n", $r_text));
 
-        if ($this->diffType == 'inline') {
+        if ($this->difftype == 'inline') {
             $diffformatter = new \InlineDiffFormatter();
         } else {
             $diffformatter = new \TableDiffFormatter();
@@ -163,7 +163,7 @@ class Diff extends Ui
         if (!$this->text) {
             print '<div class="diffoptions group">';
 
-            // create the form to select diff view type
+            // create the form to select difftype
             $form = new Form(['action' => wl()]);
             $form->setHiddenField('id', $ID);
             $form->setHiddenField('rev2[0]', $l_rev);
@@ -174,14 +174,14 @@ class Diff extends Ui
                          'inline' => $lang['diff_inline']
             );
             $input = $form->addDropdown('difftype', $options, $lang['diff_type'])
-                ->val($this->diffType)->addClass('quickselect');
+                ->val($this->difftype)->addClass('quickselect');
             $input->useInput(false); // inhibit prefillInput() during toHTML() process
             $form->addButton('do[diff]', 'Go')->attr('type','submit');
             print $form->toHTML();
 
             print '<p>';
             // link to exactly this view FS#2835
-            print $this->diffViewlink($this->diffType, 'difflink', $l_rev, $r_rev ? $r_rev : $INFO['currentrev']);
+            print $this->diffViewlink($this->difftype, 'difflink', $l_rev, $r_rev ? $r_rev : $INFO['currentrev']);
             print '</p>';
 
             print '</div>'; // .diffoptions
@@ -191,10 +191,10 @@ class Diff extends Ui
          * Display diff view table
          */
         print '<div class="table">';
-        print '<table class="diff diff_'. $this->diffType .'">';
+        print '<table class="diff diff_'. $this->difftype .'">';
 
         //navigation and header
-        if ($this->diffType == 'inline') {
+        if ($this->difftype == 'inline') {
             if (!$this->text) {
                 print '<tr>'
                     . '<td class="diff-lineheader">-</td>'
@@ -321,12 +321,12 @@ class Diff extends Ui
      * Create html for revision navigation
      *
      * @param PageChangeLog $pagelog changelog object of current page
-     * @param string        $type    inline vs sidebyside
+     * @param string        $difftype  inline vs sidebyside
      * @param int           $l_rev   left revision timestamp
      * @param int           $r_rev   right revision timestamp
      * @return string[] html of left and right navigation elements
      */
-    protected function diffNavigation($pagelog, $type, $l_rev, $r_rev)
+    protected function diffNavigation($pagelog, $difftype, $l_rev, $r_rev)
     {
         global $INFO, $ID;
 
@@ -393,13 +393,13 @@ class Diff extends Ui
         $l_nav = '';
         //move back
         if ($l_prev) {
-            $l_nav .= $this->diffViewlink($type, 'diffbothprevrev', $l_prev, $r_prev);
-            $l_nav .= $this->diffViewlink($type, 'diffprevrev', $l_prev, $r_rev);
+            $l_nav .= $this->diffViewlink($difftype, 'diffbothprevrev', $l_prev, $r_prev);
+            $l_nav .= $this->diffViewlink($difftype, 'diffprevrev', $l_prev, $r_rev);
         }
         //dropdown
         $form = new Form(['action' => wl()]);
         $form->setHiddenField('id', $ID);
-        $form->setHiddenField('difftype', $type);
+        $form->setHiddenField('difftype', $difftype);
         $form->setHiddenField('rev2[1]', $r_rev);
         $form->setHiddenField('do', 'diff');
         $input = $form->addDropdown('rev2[0]', $l_revisions)->val($l_rev)->addClass('quickselect');
@@ -408,7 +408,7 @@ class Diff extends Ui
         $l_nav .= $form->toHTML();
         //move forward
         if ($l_next && ($l_next < $r_rev || !$r_rev)) {
-            $l_nav .= $this->diffViewlink($type, 'diffnextrev', $l_next, $r_rev);
+            $l_nav .= $this->diffViewlink($difftype, 'diffnextrev', $l_next, $r_rev);
         }
 
         /*
@@ -417,13 +417,13 @@ class Diff extends Ui
         $r_nav = '';
         //move back
         if ($l_rev < $r_prev) {
-            $r_nav .= $this->diffViewlink($type, 'diffprevrev', $l_rev, $r_prev);
+            $r_nav .= $this->diffViewlink($difftype, 'diffprevrev', $l_rev, $r_prev);
         }
         //dropdown
         $form = new Form(['action' => wl()]);
         $form->setHiddenField('id', $ID);
         $form->setHiddenField('rev2[0]', $l_rev);
-        $form->setHiddenField('difftype', $type);
+        $form->setHiddenField('difftype', $difftype);
         $form->setHiddenField('do', 'diff');
         $input = $form->addDropdown('rev2[1]', $r_revisions)->val($r_rev)->addClass('quickselect');
         $input->useInput(false); // inhibit prefillInput() during toHTML() process
@@ -433,12 +433,12 @@ class Diff extends Ui
         if ($r_next) {
             if ($pagelog->isCurrentRevision($r_next)) {
                 //last revision is diff with current page
-                $r_nav .= $this->diffViewlink($type, 'difflastrev', $l_rev);
+                $r_nav .= $this->diffViewlink($difftype, 'difflastrev', $l_rev);
             } else {
-                $r_nav .= $this->diffViewlink($type, 'diffnextrev', $l_rev, $r_next);
+                $r_nav .= $this->diffViewlink($difftype, 'diffnextrev', $l_rev, $r_next);
             }
         } else {
-            $r_nav .= $this->diffViewlink($type, 'diffbothnextrev', $l_next, $r_next);
+            $r_nav .= $this->diffViewlink($difftype, 'diffbothnextrev', $l_next, $r_next);
         }
         return array($l_nav, $r_nav);
     }
