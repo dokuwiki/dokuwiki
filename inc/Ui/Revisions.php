@@ -8,12 +8,27 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**
- * DokuWiki Revisions Insterface
+ * DokuWiki Revisions Interface
  *
  * @package dokuwiki\Ui
  */
 class Revisions extends Ui
 {
+    protected $first;
+    protected $media_id;
+
+    /** 
+     * Revisions Ui constructor
+     *
+     * @param int $first  skip the first n changelog lines
+     * @param bool|string $media_id  id of media, or false for current page
+     */
+    public function __construct($first = 0, $media_id = false)
+    {
+        $this->first    = $first;
+        $this->media_id = $media_id;
+    }
+
     /**
      * Display list of old revisions
      *
@@ -22,16 +37,18 @@ class Revisions extends Ui
      * @author Kate Arzamastseva <pshns@ukr.net>
      *
      * @triggers HTML_REVISIONSFORM_OUTPUT
-     * @param int $first skip the first n changelog lines
-     * @param bool|string $media_id id of media, or false for current page
      * @return void
      */
-    public function show($first = 0, $media_id = false)
+    public function show()
     {
         global $ID;
         global $INFO;
         global $conf;
         global $lang;
+
+        $first    = $this->first;
+        $media_id = $this->media_id;
+
         $id = $ID;
         if ($media_id) {
             $id = $media_id;

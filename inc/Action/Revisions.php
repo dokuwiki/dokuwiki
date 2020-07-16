@@ -23,6 +23,6 @@ class Revisions extends AbstractAction
     public function tplContent()
     {
         global $INPUT;
-        (new Ui\Revisions)->show($INPUT->int('first'));
+        (new Ui\Revisions($INPUT->int('first')))->show();
     }
 }

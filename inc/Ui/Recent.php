@@ -7,12 +7,27 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**
- * DokuWiki Recent Insterface
+ * DokuWiki Recent Interface
  *
  * @package dokuwiki\Ui
  */
 class Recent extends Ui
 {
+    protected $first;
+    protected $show_changes;
+
+    /** 
+     * Recent Ui constructor
+     *
+     * @param int $first  skip the first n changelog lines
+     * @param string $show_changes  type of changes to show; pages, mediafiles, or both
+     */
+    public function __construct($first = 0, $show_changes = 'both')
+    {
+        $this->first        = $first;
+        $this->show_changes = $show_changes;
+    }
+
     /**
      * Display recent changes
      *
@@ -22,15 +37,16 @@ class Recent extends Ui
      * @author Kate Arzamastseva <pshns@ukr.net>
      *
      * @triggers HTML_RECENTFORM_OUTPUT
-     * @param int $first skip the first n changelog lines
-     * @param string $show_changes
      * @return void
      */
-    public function show($first = 0, $show_changes = 'both')
+    public function show()
     {
         global $conf;
         global $lang;
         global $ID;
+
+        $first = $this->first;
+        $show_changes = $this->show_changes;
 
         /* we need to get one additionally log entry to be able to
          * decide if this is the last page or is there another one.
