@@ -26,7 +26,7 @@ class Preview extends Edit
     {
         global $TEXT;
         (new Ui\Editor)->show();
-        (new Ui\PageView)->show($TEXT);
+        (new Ui\PageView($TEXT))->show();
     }
 
     /**

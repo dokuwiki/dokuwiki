@@ -6,22 +6,33 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**
- * DokuWiki User Login Insterface (Login Form)
+ * DokuWiki User Login Interface (Login Form)
  *
  * @package dokuwiki\Ui
  */
 class Login extends Ui
 {
+    protected $showIcon = false;
+
+    /** 
+     * Login Ui constructor
+     *
+     * @param bool $showIcon  Whether to show svg icons in the register and resendpwd links or not
+     */
+    public function __construct($showIcon = false)
+    {
+        $this->showIcon = (bool)$showIcon;
+    }
+
     /**
      * Display the Login Form Panel
      *
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
      * @triggers HTML_LOGINFORM_OUTPUT
-     * @param bool $svg Whether to show svg icons in the register and resendpwd links or not
      * @return void
      */
-    public function show($svg = false)
+    public function show()
     {
         global $lang;
         global $conf;
@@ -56,12 +67,12 @@ class Login extends Ui
         $form->addTagClose('div');
 
         if(actionOK('register')){
-            $registerLink = (new \dokuwiki\Menu\Item\Register())->asHtmlLink('', $svg);
+            $registerLink = (new \dokuwiki\Menu\Item\Register())->asHtmlLink('', $this->showIcon);
             $form->addHTML('<p>'.$lang['reghere'].': '. $registerLink .'</p>');
         }
 
         if (actionOK('resendpwd')) {
-            $resendPwLink = (new \dokuwiki\Menu\Item\Resendpwd())->asHtmlLink('', $svg);
+            $resendPwLink = (new \dokuwiki\Menu\Item\Resendpwd())->asHtmlLink('', $this->showIcon);
             $form->addHTML('<p>'.$lang['pwdforget'].': '. $resendPwLink .'</p>');
         }
 

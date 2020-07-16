@@ -5,22 +5,33 @@ namespace dokuwiki\Ui;
 use dokuwiki\Extension\Event;
 
 /**
- * DokuWiki Conflict Insterface
+ * DokuWiki PageView Insterface
  *
  * @package dokuwiki\Ui
  */
 class PageView extends Ui
 {
+    protected $text;
+
+    /** 
+     * PageView Ui constructor
+     *
+     * @param null|string $text  wiki text or null for showing $ID
+     */
+    public function __construct($text = null)
+    {
+        $this->text = $text;
+    }
+
     /**
      * Show a wiki page
      *
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
      * @triggers HTML_SHOWREV_OUTPUT
-     * @param null|string $txt wiki text or null for showing $ID
      * @return void
      */
-    public function show($txt = null)
+    public function show()
     {
         global $ID;
         global $REV;
@@ -29,20 +40,20 @@ class PageView extends Ui
         global $DATE_AT;
 
         //disable section editing for old revisions or in preview
-        if ($txt || $REV) {
+        if ($this->text !== null || $REV) {
             $secedit = false;
         } else {
             $secedit = true;
         }
 
-        if (!is_null($txt)) {
+        if ($this->text !== null) {
             //PreviewHeader
             echo '<br id="scroll__here" />';
 
             // print intro for preview
             echo p_locale_xhtml('preview');
             echo '<div class="preview"><div class="pad">';
-            $html = html_secedit(p_render('xhtml', p_get_instructions($txt), $info), $secedit);
+            $html = html_secedit(p_render('xhtml', p_get_instructions($this->text), $info), $secedit);
             if ($INFO['prependTOC']) $html = tpl_toc(true) . $html;
             echo $html;
             echo '<div class="clearer"></div>';

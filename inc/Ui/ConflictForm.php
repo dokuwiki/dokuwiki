@@ -12,6 +12,21 @@ use dokuwiki\Form\Form;
  */
 class ConflictForm extends Ui
 {
+    protected $text;
+    protected $summary;
+
+    /** 
+     * handleConflict Ui constructor
+     *
+     * @param string $text     wiki text
+     * @param string $summary  edit summary
+    */
+    public function __construct($text = '', $summary = '')
+    {
+        $this->text    = $text;
+        $this->summary = $summary;
+    }
+
     /**
      * Show conflict form to ask whether save anyway or cancel the page edits
      *
@@ -22,7 +37,7 @@ class ConflictForm extends Ui
      * @param string $summary
      * @return void
      */
-    public function show($text = '', $summary = '')
+    public function show()
     {
         global $ID;
         global $lang;
@@ -31,8 +46,8 @@ class ConflictForm extends Ui
         $form = new Form(['id' => 'dw__editform']);
         $form->addTagOpen('div')->addClass('no');
         $form->setHiddenField('id', $ID);
-        $form->setHiddenField('wikitext', $text);
-        $form->setHiddenField('summary', $summary);
+        $form->setHiddenField('wikitext', $this->text);
+        $form->setHiddenField('summary', $this->summary);
 
         $form->addButton('do[save]', $lang['btn_save'] )->attrs(['type' => 'submit', 'accesskey' => 's']);
         $form->addButton('do[cancel]', $lang['btn_cancel'] )->attrs(['type' => 'submit']);

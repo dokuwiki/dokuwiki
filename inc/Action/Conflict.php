@@ -24,6 +24,7 @@ class Conflict extends AbstractAction
         }
     }
 
+    /** @inheritdoc */
     public function tplContent()
     {
         global $PRE;
@@ -32,8 +33,9 @@ class Conflict extends AbstractAction
         global $SUM;
 
         $this->showBanner();
-        (new Ui\ConflictForm)->show(con($PRE, $TEXT, $SUF), $SUM);
-        (new Ui\Diff)->show(con($PRE, $TEXT, $SUF), false);
+        $text = con($PRE, $TEXT, $SUF);
+        (new Ui\ConflictForm($text, $SUM))->show();
+        (new Ui\Diff($text, false))->show();
     }
 
     /**

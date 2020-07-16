@@ -33,7 +33,7 @@ class Draft extends Ui
         // print intro
         print p_locale_xhtml('draft');
 
-        (new Diff)->show($text, false);
+        (new Diff($text, false))->show();
 
         // create the draft form
         $form = new Form(['id' => 'dw__editform']);

@@ -8,12 +8,30 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**
- * DokuWiki Diff Insterface
+ * DokuWiki Diff Interface
  *
  * @package dokuwiki\Ui
  */
 class Diff extends Ui
 {
+    protected $text;
+    protected $showIntro;
+    protected $diffType;
+
+    /** 
+     * Diff Ui constructor
+     *
+     * @param  string $text  when non-empty: compare with this text with most current version
+     * @param  bool   $showIntro display the intro text
+     * @param  string $diffType  type of the diff (inline or sidebyside)
+     */
+    public function __construct($text = '', $showIntro = true, $diffType = null)
+    {
+        $this->text      = $text;
+        $this->showIntro = $showIntro;
+        $this->diffType  = $diffType;
+    }
+
     /**
      * Show diff
      * between current page version and provided $text
@@ -21,12 +39,9 @@ class Diff extends Ui
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      *
-     * @param  string $text  when non-empty: compare with this text with most current version
-     * @param  bool   $intro display the intro text
-     * @param  string $type  type of the diff (inline or sidebyside)
      * @return void
      */
-    public function show($text = '', $intro = true, $type = null)
+    public function show()
     {
         global $ID;
         global $REV;
@@ -38,16 +53,16 @@ class Diff extends Ui
         /*
          * Determine diff type
          */
-        if (!$type) {
-            $type = $INPUT->str('difftype');
-            if (empty($type)) {
-                $type = get_doku_pref('difftype', $type);
-                if (empty($type) && $INFO['ismobile']) {
-                    $type = 'inline';
+        if ($this->DffType　=== null) {
+            $this->diffType = $INPUT->str('difftype');
+            if (empty($this->difftype)) {
+                $this->diffType = get_doku_pref('difftype', $this->diffType);
+                if (empty($this->diffType) && $INFO['ismobile']) {
+                    $this->diffType = 'inline';
                 }
             }
         }
-        if ($type != 'inline') $type = 'sidebyside';
+        if ($this->dffType != 'inline') $this->dffType = 'sidebyside';
 
         /*
          * Determine requested revision(s)
@@ -76,7 +91,7 @@ class Diff extends Ui
         $r_minor = '';
         $l_minor = '';
 
-        if ($text) { // compare text to the most current revision
+        if ($this->text) { // compare text to the most current revision
             $l_rev = '';
             $l_text = rawWiki($ID, '');
             $l_head = '<a class="wikilink1" href="'. wl($ID) .'">'
@@ -84,7 +99,7 @@ class Diff extends Ui
                 . $lang['current'];
 
             $r_rev = '';
-            $r_text = cleanText($text);
+            $r_text = cleanText($this->text);
             $r_head = $lang['yours'];
         } else {
             if ($rev1 && isset($rev2) && $rev2) { // two specific revisions wanted
@@ -115,7 +130,7 @@ class Diff extends Ui
             $r_text = rawWiki($ID, $r_rev);
 
             list($l_head, $r_head, $l_minor, $r_minor) = $this->diffHead(
-                $l_rev, $r_rev, null, false, $type == 'inline'
+                $l_rev, $r_rev, null, false, ($this->diffType == 'inline')
             );
         }
 
@@ -124,15 +139,15 @@ class Diff extends Ui
          */
         $l_nav = '';
         $r_nav = '';
-        if (!$text) {
-            list($l_nav, $r_nav) = $this->diffNavigation($pagelog, $type, $l_rev, $r_rev);
+        if (!$this->text) {
+            list($l_nav, $r_nav) = $this->diffNavigation($pagelog, $this->diffType, $l_rev, $r_rev);
         }
         /*
          * Create diff object and the formatter
          */
         $diff = new \Diff(explode("\n", $l_text), explode("\n", $r_text));
 
-        if ($type == 'inline') {
+        if ($this->diffType == 'inline') {
             $diffformatter = new \InlineDiffFormatter();
         } else {
             $diffformatter = new \TableDiffFormatter();
@@ -140,12 +155,12 @@ class Diff extends Ui
         /*
          * Display intro
          */
-        if ($intro) print p_locale_xhtml('diff');
+        if ($this->showIntro) print p_locale_xhtml('diff');
 
         /*
          * Display type and exact reference
          */
-        if (!$text) {
+        if (!$this->text) {
             print '<div class="diffoptions group">';
 
             // create the form to select diff view type
@@ -159,14 +174,14 @@ class Diff extends Ui
                          'inline' => $lang['diff_inline']
             );
             $input = $form->addDropdown('difftype', $options, $lang['diff_type'])
-                ->val($type)->addClass('quickselect');
+                ->val($this->diffType)->addClass('quickselect');
             $input->useInput(false); // inhibit prefillInput() during toHTML() process
             $form->addButton('do[diff]', 'Go')->attr('type','submit');
             print $form->toHTML();
 
             print '<p>';
             // link to exactly this view FS#2835
-            print $this->diffViewlink($type, 'difflink', $l_rev, $r_rev ? $r_rev : $INFO['currentrev']);
+            print $this->diffViewlink($this->diffType, 'difflink', $l_rev, $r_rev ? $r_rev : $INFO['currentrev']);
             print '</p>';
 
             print '</div>'; // .diffoptions
@@ -176,11 +191,11 @@ class Diff extends Ui
          * Display diff view table
          */
         print '<div class="table">';
-        print '<table class="diff diff_'. $type .'">';
+        print '<table class="diff diff_'. $this->diffType .'">';
 
         //navigation and header
-        if ($type == 'inline') {
-            if (!$text) {
+        if ($this->diffType == 'inline') {
+            if (!$this->text) {
                 print '<tr>'
                     . '<td class="diff-lineheader">-</td>'
                     . '<td class="diffnav">'. $l_nav .'</td>'
@@ -199,7 +214,7 @@ class Diff extends Ui
                 . '<th '. $r_minor .'>'. $r_head .'</th>'
                 . '</tr>';
         } else {
-            if (!$text) {
+            if (!$this->text) {
                 print '<tr>'
                     . '<td colspan="2" class="diffnav">'. $l_nav .'</td>'
                     . '<td colspan="2" class="diffnav">'. $r_nav .'</td>'
@@ -440,7 +455,7 @@ class Diff extends Ui
     protected function diffViewlink($difftype, $linktype, $lrev, $rrev = null)
     {
         global $ID, $lang;
-        if (!$rrev) {
+        if ($rrev === null) {
             $urlparam = array(
                 'do' => 'diff',
                 'rev' => $lrev,
