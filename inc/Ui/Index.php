@@ -6,12 +6,25 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**
- * DokuWiki Index Insterface
+ * DokuWiki Index Interface
  *
  * @package dokuwiki\Ui
  */
 class Index extends Ui
 {
+    protected $ns;
+
+    /** 
+     * Index Ui constructor
+     *
+     * @param string $ns  namespace
+    */
+    public function __construct($ns = '')
+    {
+        $this->ns = $ns;
+    }
+
+
     /**
      * Display page index
      *
@@ -20,12 +33,12 @@ class Index extends Ui
      * @param string $ns
      * @return void
      */
-        public function show($ns = '')
-        {
+    public function show()
+    {
         global $conf;
         global $ID;
 
-        $ns  = cleanID($ns);
+        $ns  = cleanID($this->ns);
         if (empty($ns)){
             $ns = getNS($ID);
             if ($ns === false) $ns = '';

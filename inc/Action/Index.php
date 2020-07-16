@@ -23,7 +23,7 @@ class Index extends AbstractAction
     public function tplContent()
     {
         global $IDX;
-        (new Ui\Index)->show($IDX);
+        (new Ui\Index($IDX))->show();
     }
 
 }
