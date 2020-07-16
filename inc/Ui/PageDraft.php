@@ -6,11 +6,11 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**
- * DokuWiki Draft Insterface
+ * DokuWiki Page Draft Interface
  *
  * @package dokuwiki\Ui
  */
-class Draft extends Ui
+class PageDraft extends Ui
 {
     /**
      * Display the Page Draft Form

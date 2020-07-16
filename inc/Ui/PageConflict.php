@@ -6,17 +6,17 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**
- * DokuWiki Conflict Form
+ * DokuWiki Page Conflict Interface
  *
  * @package dokuwiki\Ui
  */
-class ConflictForm extends Ui
+class PageConflict extends Ui
 {
     protected $text;
     protected $summary;
 
     /** 
-     * handleConflict Ui constructor
+     * PageConflict Ui constructor
      *
      * @param string $text     wiki text
      * @param string $summary  edit summary
@@ -42,6 +42,9 @@ class ConflictForm extends Ui
         global $ID;
         global $lang;
 
+        // print intro
+        print p_locale_xhtml('conflict');
+
         // create the form
         $form = new Form(['id' => 'dw__editform']);
         $form->addTagOpen('div')->addClass('no');
@@ -57,6 +60,9 @@ class ConflictForm extends Ui
         Event::createAndTrigger('HTML_CONFLICTFORM_OUTPUT', $form, 'html_form_output', false);
 
         print '<br /><br /><br /><br />'.DOKU_LF;
+
+        (new Diff($this->text, false))->show();
+        print DOKU_LF;
     }
 
 }

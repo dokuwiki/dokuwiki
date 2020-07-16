@@ -37,7 +37,7 @@ class Draft extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\Draft)->show();
+        (new Ui\PageDraft)->show();
     }
 
 }
