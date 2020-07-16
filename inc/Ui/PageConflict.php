@@ -33,8 +33,6 @@ class PageConflict extends Ui
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
      * @triggers HTML_CONFLICTFORM_OUTPUT
-     * @param string $text
-     * @param string $summary
      * @return void
      */
     public function show()

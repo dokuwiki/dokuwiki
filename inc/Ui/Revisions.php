@@ -111,14 +111,13 @@ class Revisions extends Ui
                 $sizechange = $revinfo['sizechange'];
             } else {
                 $date = dformat($INFO['lastmod']);
+                $sizechange = null;
                 if (isset($INFO['meta']) && isset($INFO['meta']['last_change'])) {
                     if ($INFO['meta']['last_change']['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) {
                         $minor = true;
                     }
                     if (isset($INFO['meta']['last_change']['sizechange'])) {
                         $sizechange = $INFO['meta']['last_change']['sizechange'];
-                    } else {
-                        $sizechange = null;
                     }
                 }
                 $pagelog = new PageChangeLog($ID);

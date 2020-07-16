@@ -30,7 +30,6 @@ class Index extends Ui
      *
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @param string $ns
      * @return void
      */
     public function show()

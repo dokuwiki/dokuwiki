@@ -53,7 +53,7 @@ class Diff extends Ui
         /*
          * Determine diff type
          */
-        if ($this->DiffType　=== null) {
+        if ($this->diffType　=== null) {
             $this->diffType = $INPUT->str('difftype');
             if (empty($this->difftype)) {
                 $this->diffType = get_doku_pref('difftype', $this->diffType);
@@ -62,7 +62,7 @@ class Diff extends Ui
                 }
             }
         }
-        if ($this->dffType != 'inline') $this->dffType = 'sidebyside';
+        if ($this->diffType != 'inline') $this->diffType = 'sidebyside';
 
         /*
          * Determine requested revision(s)
