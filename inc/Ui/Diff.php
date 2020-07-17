@@ -29,7 +29,19 @@ class Diff extends Ui
     {
         $this->text      = $text;
         $this->showIntro = $showIntro;
-        $this->difftype  = $difftype;
+
+        // determine diff view type
+        if (isset($difftype)) {
+            $this->difftype  = $difftype;
+        } else {
+            global $INPUT;
+            global $INFO;
+            $this->difftype = $INPUT->str('difftype') ?: get_doku_pref('difftype', $difftype);
+            if (empty($this->difftype) && $INFO['ismobile']) {
+                $this->difftype = 'inline';
+            }
+        }
+        if ($this->difftype !== 'inline') $this->difftype = 'sidebyside';
     }
 
     /**
@@ -49,20 +61,6 @@ class Diff extends Ui
         global $INPUT;
         global $INFO;
         $pagelog = new PageChangeLog($ID);
-
-        /*
-         * Determine diff view type
-         */
-        if ($this->difftype　=== null) {
-            $this->difftype = $INPUT->str('difftype');
-            if (empty($this->difftype)) {
-                $this->difftype = get_doku_pref('difftype', $this->difftype);
-                if (empty($this->difftype) && $INFO['ismobile']) {
-                    $this->difftype = 'inline';
-                }
-            }
-        }
-        if ($this->difftype != 'inline') $this->difftype = 'sidebyside';
 
         /*
          * Determine requested revision(s)
@@ -140,7 +138,7 @@ class Diff extends Ui
         $l_nav = '';
         $r_nav = '';
         if (!$this->text) {
-            list($l_nav, $r_nav) = $this->diffNavigation($pagelog, $this->difftype, $l_rev, $r_rev);
+            list($l_nav, $r_nav) = $this->diffNavigation($pagelog, $l_rev, $r_rev);
         }
         /*
          * Create diff object and the formatter
@@ -181,7 +179,7 @@ class Diff extends Ui
 
             print '<p>';
             // link to exactly this view FS#2835
-            print $this->diffViewlink($this->difftype, 'difflink', $l_rev, $r_rev ? $r_rev : $INFO['currentrev']);
+            print $this->diffViewlink('difflink', $l_rev, ($r_rev ?: $INFO['currentrev']));
             print '</p>';
 
             print '</div>'; // .diffoptions
@@ -321,12 +319,11 @@ class Diff extends Ui
      * Create html for revision navigation
      *
      * @param PageChangeLog $pagelog changelog object of current page
-     * @param string        $difftype  inline vs sidebyside
      * @param int           $l_rev   left revision timestamp
      * @param int           $r_rev   right revision timestamp
      * @return string[] html of left and right navigation elements
      */
-    protected function diffNavigation($pagelog, $difftype, $l_rev, $r_rev)
+    protected function diffNavigation($pagelog, $l_rev, $r_rev)
     {
         global $INFO, $ID;
 
@@ -393,13 +390,13 @@ class Diff extends Ui
         $l_nav = '';
         //move back
         if ($l_prev) {
-            $l_nav .= $this->diffViewlink($difftype, 'diffbothprevrev', $l_prev, $r_prev);
-            $l_nav .= $this->diffViewlink($difftype, 'diffprevrev', $l_prev, $r_rev);
+            $l_nav .= $this->diffViewlink('diffbothprevrev', $l_prev, $r_prev);
+            $l_nav .= $this->diffViewlink('diffprevrev', $l_prev, $r_rev);
         }
         //dropdown
         $form = new Form(['action' => wl()]);
         $form->setHiddenField('id', $ID);
-        $form->setHiddenField('difftype', $difftype);
+        $form->setHiddenField('difftype', $this->difftype);
         $form->setHiddenField('rev2[1]', $r_rev);
         $form->setHiddenField('do', 'diff');
         $input = $form->addDropdown('rev2[0]', $l_revisions)->val($l_rev)->addClass('quickselect');
@@ -408,7 +405,7 @@ class Diff extends Ui
         $l_nav .= $form->toHTML();
         //move forward
         if ($l_next && ($l_next < $r_rev || !$r_rev)) {
-            $l_nav .= $this->diffViewlink($difftype, 'diffnextrev', $l_next, $r_rev);
+            $l_nav .= $this->diffViewlink('diffnextrev', $l_next, $r_rev);
         }
 
         /*
@@ -417,13 +414,13 @@ class Diff extends Ui
         $r_nav = '';
         //move back
         if ($l_rev < $r_prev) {
-            $r_nav .= $this->diffViewlink($difftype, 'diffprevrev', $l_rev, $r_prev);
+            $r_nav .= $this->diffViewlink('diffprevrev', $l_rev, $r_prev);
         }
         //dropdown
         $form = new Form(['action' => wl()]);
         $form->setHiddenField('id', $ID);
         $form->setHiddenField('rev2[0]', $l_rev);
-        $form->setHiddenField('difftype', $difftype);
+        $form->setHiddenField('difftype', $this->difftype);
         $form->setHiddenField('do', 'diff');
         $input = $form->addDropdown('rev2[1]', $r_revisions)->val($r_rev)->addClass('quickselect');
         $input->useInput(false); // inhibit prefillInput() during toHTML() process
@@ -433,12 +430,12 @@ class Diff extends Ui
         if ($r_next) {
             if ($pagelog->isCurrentRevision($r_next)) {
                 //last revision is diff with current page
-                $r_nav .= $this->diffViewlink($difftype, 'difflastrev', $l_rev);
+                $r_nav .= $this->diffViewlink('difflastrev', $l_rev);
             } else {
-                $r_nav .= $this->diffViewlink($difftype, 'diffnextrev', $l_rev, $r_next);
+                $r_nav .= $this->diffViewlink('diffnextrev', $l_rev, $r_next);
             }
         } else {
-            $r_nav .= $this->diffViewlink($difftype, 'diffbothnextrev', $l_next, $r_next);
+            $r_nav .= $this->diffViewlink('diffbothnextrev', $l_next, $r_next);
         }
         return array($l_nav, $r_nav);
     }
@@ -446,27 +443,26 @@ class Diff extends Ui
     /**
      * Create html link to a diff view defined by two revisions
      *
-     * @param string $difftype display type
      * @param string $linktype
      * @param int $lrev oldest revision
      * @param int $rrev newest revision or null for diff with current revision
      * @return string html of link to a diff view
      */
-    protected function diffViewlink($difftype, $linktype, $lrev, $rrev = null)
+    protected function diffViewlink($linktype, $lrev, $rrev = null)
     {
         global $ID, $lang;
         if ($rrev === null) {
             $urlparam = array(
                 'do' => 'diff',
                 'rev' => $lrev,
-                'difftype' => $difftype,
+                'difftype' => $this->difftype,
             );
         } else {
             $urlparam = array(
                 'do' => 'diff',
                 'rev2[0]' => $lrev,
                 'rev2[1]' => $rrev,
-                'difftype' => $difftype,
+                'difftype' => $this->difftype,
             );
         }
         return  '<a class="'. $linktype .'" href="'. wl($ID, $urlparam) .'" title="'. $lang[$linktype] .'">'
@@ -486,24 +482,13 @@ class Diff extends Ui
         // search the diff html string for both:
         // - html tags, so these can be ignored
         // - long strings of characters without breaking characters
-        return preg_replace_callback('/<[^>]*>|[^<> ]{12,}/', [$this,'softbreak_callback'], $diffhtml);
-    }
-
-    /**
-     * callback which adds softbreaks
-     *
-     * @param array $match array with first the complete match
-     * @return string the replacement
-     */
-    protected function softbreak_callback($match)
-    {
-        // if match is an html tag, return it intact
-        if ($match[0][0] == '<') return $match[0];
-
-        // its a long string without a breaking character,
-        // make certain characters into breaking characters by inserting a
-        // word break opportunity (<wbr> tag) in front of them.
-        $regex = <<< REGEX
+        return preg_replace_callback('/<[^>]*>|[^<> ]{12,}/', function ($match) {
+            // if match is an html tag, return it intact
+            if ($match[0][0] == '<') return $match[0];
+            // its a long string without a breaking character,
+            // make certain characters into breaking characters by inserting a
+            // word break opportunity (<wbr> tag) in front of them.
+            $regex = <<< REGEX
 (?(?=              # start a conditional expression with a positive look ahead ...
 &\#?\\w{1,6};)     # ... for html entities - we don't want to split them (ok to catch some invalid combinations)
 &\#?\\w{1,6};      # yes pattern - a quicker match for the html entity, since we know we have one
@@ -511,8 +496,8 @@ class Diff extends Ui
 [?/,&\#;:]         # no pattern - any other group of 'special' characters to insert a breaking character after
 )+                 # end conditional expression
 REGEX;
-
-        return preg_replace('<'.$regex.'>xu', '\0<wbr>', $match[0]);
+            return preg_replace('<'.$regex.'>xu', '\0<wbr>', $match[0]);
+        }, $diffhtml);
     }
 
 }
