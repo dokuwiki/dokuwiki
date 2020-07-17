@@ -227,7 +227,7 @@ class Diff extends Ui
         }
 
         //diff view
-        print html_insert_softbreaks($diffformatter->format($diff));
+        print $this->insertSoftbreaks($diffformatter->format($diff));
 
         print '</table>';
         print '</div>'. DOKU_LF;
@@ -472,6 +472,47 @@ class Diff extends Ui
         return  '<a class="'. $linktype .'" href="'. wl($ID, $urlparam) .'" title="'. $lang[$linktype] .'">'
               . '<span>'. $lang[$linktype] .'</span>'
               . '</a>'. DOKU_LF;
+    }
+
+
+    /**
+     * Insert soft breaks in diff html
+     *
+     * @param string $diffhtml
+     * @return string
+     */
+    protected function insertSoftbreaks($diffhtml)
+    {
+        // search the diff html string for both:
+        // - html tags, so these can be ignored
+        // - long strings of characters without breaking characters
+        return preg_replace_callback('/<[^>]*>|[^<> ]{12,}/', [$this,'softbreak_callback'], $diffhtml);
+    }
+
+    /**
+     * callback which adds softbreaks
+     *
+     * @param array $match array with first the complete match
+     * @return string the replacement
+     */
+    protected function softbreak_callback($match)
+    {
+        // if match is an html tag, return it intact
+        if ($match[0][0] == '<') return $match[0];
+
+        // its a long string without a breaking character,
+        // make certain characters into breaking characters by inserting a
+        // word break opportunity (<wbr> tag) in front of them.
+        $regex = <<< REGEX
+(?(?=              # start a conditional expression with a positive look ahead ...
+&\#?\\w{1,6};)     # ... for html entities - we don't want to split them (ok to catch some invalid combinations)
+&\#?\\w{1,6};      # yes pattern - a quicker match for the html entity, since we know we have one
+|
+[?/,&\#;:]         # no pattern - any other group of 'special' characters to insert a breaking character after
+)+                 # end conditional expression
+REGEX;
+
+        return preg_replace('<'.$regex.'>xu', '\0<wbr>', $match[0]);
     }
 
 }
