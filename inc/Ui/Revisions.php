@@ -162,8 +162,7 @@ class Revisions extends Ui
             );
             $form->addTagClose('span');
 
-
-            html_sizechange($sizechange, $form);
+            $form->addHTML(html_sizechange($sizechange));
 
             $form->addHTML('('.$lang['current'].')');
 
@@ -259,7 +258,7 @@ class Revisions extends Ui
             }
             $form->addTagClose('span');
 
-            html_sizechange($info['sizechange'], $form);
+            $form->addHTML(html_sizechange($info['sizechange']));
 
             if ($media_id) $form->addTagClose('div');
 

@@ -219,7 +219,7 @@ class Recent extends Ui
             }
             $form->addTagClose('span');
 
-            html_sizechange($recent['sizechange'], $form);
+            $form->addHTML(html_sizechange($recent['sizechange']));
 
             $form->addTagClose('div');
             $form->addTagClose('li');

@@ -2346,11 +2346,11 @@ function html_tab($href, $caption, $selected=false) {
  * Display size change
  *
  * @param int $sizechange - size of change in Bytes
- * @param Form|Doku_Form $form - form to add elements to
+ * @param Doku_Form $form - (optional) form to add elements to
+ * @return void|string
  */
-
-function html_sizechange($sizechange, $form) {
-    if(isset($sizechange)) {
+function html_sizechange($sizechange, $form = null) {
+    if (isset($sizechange)) {
         $class = 'sizechange';
         $value = filesize_h(abs($sizechange));
         if ($sizechange > 0) {
@@ -2362,10 +2362,8 @@ function html_sizechange($sizechange, $form) {
         } else {
             $value = '±' . $value;
         }
-        if ($form instanceof dokuwiki\Form\Form) {
-            $form->addTagOpen('span')->addClass($class);
-            $form->addHTML($value);
-            $form->addTagClose('span');
+        if (!isset($form)) {
+            return '<span class="'.$class.'">'.$value.'</span>';
         } else { // Doku_Form
             $form->addElement(form_makeOpenTag('span', array('class' => $class)));
             $form->addElement($value);
