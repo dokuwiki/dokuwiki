@@ -54,8 +54,9 @@ class PageConflict extends Ui
         $form->addButton('do[cancel]', $lang['btn_cancel'] )->attrs(['type' => 'submit']);
         $form->addTagClose('div');
 
-        // emit HTML_CONFLICTFORM_OUTPUT event, print the form
-        Event::createAndTrigger('HTML_CONFLICTFORM_OUTPUT', $form, 'html_form_output', false);
+        // emit HTML_CONFLICTFORM_OUTPUT event
+        Event::createAndTrigger('HTML_CONFLICTFORM_OUTPUT', $form, null, false);
+        print $form->toHTML();
 
         print '<br /><br /><br /><br />'.DOKU_LF;
 

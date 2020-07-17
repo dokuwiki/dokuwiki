@@ -68,8 +68,9 @@ class UserRegister extends Ui
         $form->addFieldsetClose();
         $form->addTagClose('div');
 
-        // emit HTML_REGISTERFORM_OUTPUT event, print the form
-        Event::createAndTrigger('HTML_REGISTERFORM_OUTPUT', $form, 'html_form_output', false);
+        // emit HTML_REGISTERFORM_OUTPUT event
+        Event::createAndTrigger('HTML_REGISTERFORM_OUTPUT', $form, null, false);
+        print $form->toHTML();
 
         print '</div>'.DOKU_LF;
     }

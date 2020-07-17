@@ -2209,7 +2209,7 @@ function html_mktocitem($link, $text, $level, $hash='#'){
  * @param string     $name The name of the form
  * @param Doku_Form  $form The form
  */
-function html_form($name, &$form) {
+function html_form($name, $form) {
     // Safety check in case the caller forgets.
     $form->endFieldset();
     Event::createAndTrigger('HTML_'.strtoupper($name).'FORM_OUTPUT', $form, 'html_form_output', false);
@@ -2217,16 +2217,12 @@ function html_form($name, &$form) {
 
 /**
  * Form print function.
+ * Just calls printForm() on the form object.
  *
- * @param Form|Doku_Form $form The form
+ * @param Doku_Form $form The form
  */
 function html_form_output($form) {
-    if ($form instanceof dokuwiki\Form\Form) {
-        print $form->toHTML();
-    } else { // $form is instanceof Doku_Form
-        // Just calls printForm() on the form object.
-        $form->printForm();
-    }
+    $form->printForm();
 }
 
 /**

@@ -280,8 +280,9 @@ class Revisions extends Ui
 
         $form->addTagClose('div'); // close div class=no
 
-        // emit HTML_REVISIONSFORM_OUTPUT event, print the form
-        Event::createAndTrigger('HTML_REVISIONSFORM_OUTPUT', $form, 'html_form_output', false);
+        // emit HTML_REVISIONSFORM_OUTPUT event
+        Event::createAndTrigger('HTML_REVISIONSFORM_OUTPUT', $form, null, false);
+        print $form->toHTML();
 
         print DOKU_LF;
 

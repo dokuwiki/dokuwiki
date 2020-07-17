@@ -76,8 +76,9 @@ class Login extends Ui
             $form->addHTML('<p>'.$lang['pwdforget'].': '. $resendPwLink .'</p>');
         }
 
-        // emit HTML_LOGINFORM_OUTPUT event, print the form
-        Event::createAndTrigger('HTML_LOGINFORM_OUTPUT', $form, 'html_form_output', false);
+        // emit HTML_LOGINFORM_OUTPUT event
+        Event::createAndTrigger('HTML_LOGINFORM_OUTPUT', $form, null, false);
+        print $form->toHTML();
 
         print '</div>'.DOKU_LF;
     }

@@ -67,8 +67,9 @@ class UserResendPwd extends Ui
             $form->addTagClose('div');
         }
 
-        // emit HTML_RESENDPWDFORM_OUTPUT event, print the form
-        Event::createAndTrigger('HTML_RESENDPWDFORM_OUTPUT', $form, 'html_form_output', false);
+        // emit HTML_RESENDPWDFORM_OUTPUT event
+        Event::createAndTrigger('HTML_RESENDPWDFORM_OUTPUT', $form, null, false);
+        print $form->toHTML();
 
         print '</div>'.DOKU_LF;
     }

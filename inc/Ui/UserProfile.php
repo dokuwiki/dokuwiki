@@ -89,8 +89,9 @@ class UserProfile extends Ui
         $form->addFieldsetClose();
         $form->addTagClose('div');
 
-        // emit HTML_UPDATEPROFILEFORM_OUTPUT event, print the form
-        Event::createAndTrigger('HTML_UPDATEPROFILEFORM_OUTPUT', $form, 'html_form_output', false);
+        // emit HTML_UPDATEPROFILEFORM_OUTPUT event
+        Event::createAndTrigger('HTML_UPDATEPROFILEFORM_OUTPUT', $form, null, false);
+        print $form->toHTML();
 
 
         if ($auth->canDo('delUser') && actionOK('profile_delete')) {
@@ -120,8 +121,9 @@ class UserProfile extends Ui
             $form->addFieldsetClose();
             $form->addTagClose('div');
 
-            // emit HTML_PROFILEDELETEFORM_OUTPUT event, print the form
-            Event::createAndTrigger('HTML_PROFILEDELETEFORM_OUTPUT', $form, 'html_form_output', false);
+            // emit HTML_PROFILEDELETEFORM_OUTPUT event
+            Event::createAndTrigger('HTML_PROFILEDELETEFORM_OUTPUT', $form, null, false);
+            print $form->toHTML();
         }
 
         print '</div>'.DOKU_LF;

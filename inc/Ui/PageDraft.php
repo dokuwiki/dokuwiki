@@ -50,8 +50,9 @@ class PageDraft extends Ui
         $form->addButton('do[show]',     $lang['btn_cancel']  )->attrs(['type' => 'submit', 'tabindex' => '3']);
         $form->addTagClose('div');
 
-        // emit HTML_DRAFTFORM_OUTPUT event, print the form
-        Event::createAndTrigger('HTML_DRAFTFORM_OUTPUT', $form, 'html_form_output', false);
+        // emit HTML_DRAFTFORM_OUTPUT event
+        Event::createAndTrigger('HTML_DRAFTFORM_OUTPUT', $form, null, false);
+        print $form->toHTML();
 
         print DOKU_LF;
     }

@@ -175,8 +175,9 @@ class Editor extends Ui
         }
         echo '</div>'.DOKU_LF;
 
-        // emit HTML_EDITFORM_OUTPUT event, print the form
-        Event::createAndTrigger('HTML_EDITFORM_OUTPUT', $form, 'html_form_output', false);
+        // emit HTML_EDITFORM_OUTPUT event
+        Event::createAndTrigger('HTML_EDITFORM_OUTPUT', $form, null, false);
+        echo $form->toHTML();
 
         echo '</div>'.DOKU_LF; // close div editBox class
     }
