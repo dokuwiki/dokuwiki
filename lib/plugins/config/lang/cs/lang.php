@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Petr Kajzar <petr.kajzar@lf1.cuni.cz>
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Robert Surý <rsurycz@seznam.cz>
  * @author Martin Hořínek <hev@hev.cz>
  * @author Jonáš Dyba <jonas.dyba@gmail.com>
@@ -146,6 +146,7 @@ $lang['rss_linkto']            = 'XML kanál odkazuje na';
 $lang['rss_content']           = 'Co zobrazovat v položkách XML kanálu?';
 $lang['rss_update']            = 'Interval aktualizace XML kanálu (v sekundách)';
 $lang['rss_show_summary']      = 'XML kanál ukazuje souhrn v titulku';
+$lang['rss_show_deleted']      = 'XML kanál Zobrazit smazané kanály';
 $lang['rss_media']             = 'Jaký typ změn má být uveden v kanálu XML';
 $lang['rss_media_o_both']      = 'oba';
 $lang['rss_media_o_pages']     = 'stránky';
@@ -174,6 +175,8 @@ $lang['search_fragment_o_starts_with'] = 'začíná s';
 $lang['search_fragment_o_ends_with'] = 'končí s';
 $lang['search_fragment_o_contains'] = 'obsahuje';
 $lang['trustedproxy']          = 'Důvěřovat proxy serverům odpovídajícím tomuto regulárním výrazu ohledně skutečné IP adresy klienta, kterou hlásí. Výchozí hodnota odpovídá místním sítím. Ponechejte prázdné, pokud nechcete důvěřovat žádné proxy.';
+$lang['_feature_flags']        = 'Feature flags';
+$lang['defer_js']              = 'Odložit spuštění javascriptu až po zpracování HTML kódu stránky. Zlepšuje vnímanou rychlost načtení stránky, ale může narušit funkci některých zásuvných modulů.';
 $lang['dnslookups']            = 'DokuWiki zjišťuje DNS jména pro vzdálené IP adresy uživatelů, kteří editují stránky. Pokud máte pomalý, nebo nefunkční DNS server, nebo nepotřebujete tuto funkci, tak tuto volbu zrušte.';
 $lang['jquerycdn']             = 'Mají být skripty jQuery a jQuery UI načítány z CDN?
 Vzniknou tím další HTTP dotazy, ale soubory se mohou načíst rychleji a uživatelé je už mohou mít ve vyrovnávací paměti.';
