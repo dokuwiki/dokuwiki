@@ -414,18 +414,6 @@ function html_li_index($item) { // FIXME: also called from inc/Ajax.php
 }
 
 /**
- * Default List item
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param array $item
- * @return string html
- */
-function html_li_default($item) { // FIXME: should be closure in html_buildlist()?
-    return '<li class="level'.$item['level'].'">';
-}
-
-/**
  * Build an unordered list
  *
  * Build an unordered list from the given $data array
@@ -443,12 +431,12 @@ function html_li_default($item) { // FIXME: should be closure in html_buildlist(
  * @param array    $data  array with item arrays
  * @param string   $class class of ul wrapper
  * @param callable $func  callback to print an list item
- * @param callable $lifunc callback to the opening li tag
- * @param bool     $forcewrapper Trigger building a wrapper ul if the first level is
+ * @param callable $lifunc (optional) callback to the opening li tag
+ * @param bool     $forcewrapper (optional) Trigger building a wrapper ul if the first level is
  *                               0 (we have a root object) or 1 (just the root content)
  * @return string html of an unordered list
  */
-function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapper=false){
+function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = false) {
     if (count($data) === 0) {
         return '';
     }
@@ -458,6 +446,11 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapp
     $level = $start_level;
     $ret   = '';
     $open  = 0;
+
+    // set callback function to build the <li> tag, formerly defined as html_li_default()
+    if (!is_callable($lifunc)) {
+       $lifunc = function($item) { return '<li class="level'.$item['level'].'">';};
+    }
 
     foreach ($data as $item){
 
@@ -724,8 +717,8 @@ function html_resendpwd() {
  * @param array $toc
  * @return string html
  */
-function html_TOC($toc){
-    if(!count($toc)) return '';
+function html_TOC($toc) {
+    if (!count($toc)) return '';
     global $lang;
     $out  = '<!-- TOC START -->'.DOKU_LF;
     $out .= '<div id="dw__toc" class="dw__toc">'.DOKU_LF;
@@ -733,7 +726,7 @@ function html_TOC($toc){
     $out .= $lang['toc'];
     $out .= '</h3>'.DOKU_LF;
     $out .= '<div>'.DOKU_LF;
-    $out .= html_buildlist($toc,'toc','html_list_toc','html_li_default',true);
+    $out .= html_buildlist($toc, 'toc', 'html_list_toc', null, true);
     $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
     $out .= '<!-- TOC END -->'.DOKU_LF;
     return $out;
@@ -745,10 +738,10 @@ function html_TOC($toc){
  * @param array $item
  * @return string html
  */
-function html_list_toc($item){
-    if(isset($item['hid'])){
+function html_list_toc($item) {
+    if (isset($item['hid'])){
         $link = '#'.$item['hid'];
-    }else{
+    } else {
         $link = $item['link'];
     }
 
@@ -766,11 +759,13 @@ function html_list_toc($item){
  * @param string $hash  - is prepended to the given $link, set blank if you want full links
  * @return array the toc item
  */
-function html_mktocitem($link, $text, $level, $hash='#'){
-    return  array( 'link'  => $hash.$link,
+function html_mktocitem($link, $text, $level, $hash='#') {
+    return  array(
+            'link'  => $hash.$link,
             'title' => $text,
             'type'  => 'ul',
-            'level' => $level);
+            'level' => $level
+    );
 }
 
 /**
