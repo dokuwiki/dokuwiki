@@ -263,7 +263,7 @@ function html_draft() {
  * @param array|string $phrases
  * @return string html
  */
-function html_hilight($html,$phrases){
+function html_hilight($html, $phrases) {
     $phrases = (array) $phrases;
     $phrases = array_map('preg_quote_cb', $phrases);
     $phrases = array_map('ft_snippet_re_preprocess', $phrases);
@@ -272,24 +272,15 @@ function html_hilight($html,$phrases){
 
     if ($regex === '') return $html;
     if (!\dokuwiki\Utf8\Clean::isUtf8($regex)) return $html;
-    $html = @preg_replace_callback("/((<[^>]*)|$regex)/ui",'html_hilight_callback',$html);
-    return $html;
-}
 
-/**
- * Callback used by html_hilight()
- *
- * @author Harry Fuecks <hfuecks@gmail.com>
- *
- * @param array $m matches
- * @return string html
- */
-function html_hilight_callback($m) { // FIXME should be closure in html_highlight()?
-    $hlight = unslash($m[0]);
-    if ( !isset($m[2])) {
-        $hlight = '<span class="search_hit">'.$hlight.'</span>';
-    }
-    return $hlight;
+    $html = @preg_replace_callback("/((<[^>]*)|$regex)/ui", function ($match) {
+        $hlight = unslash($match[0]);
+        if (!isset($match[2])) {
+            $hlight = '<span class="search_hit">'.$hlight.'</span>';
+        }
+        return $hlight;
+    }, $html);
+    return $html;
 }
 
 /**
