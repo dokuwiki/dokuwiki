@@ -51,9 +51,20 @@ class Index extends Ui
 
         $data = array();
         search($data, $conf['datadir'], 'search_index', array('ns' => $ns));
-        print html_buildlist($data, 'idx', [$this,'formatListItem'], [$this,'tagListItem']);
+        print $this->buildIndexList($data);
 
         print '</div>'.DOKU_LF;
+    }
+
+    /**
+     * Build html of unordered list of index items
+     *
+     * @param array $item
+     * @return string
+     */
+    public function buildIndexList($data)
+    {
+        return html_buildlist($data, 'idx', [$this,'formatListItem'], [$this,'tagListItem']);
     }
 
     /**

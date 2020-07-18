@@ -2,6 +2,8 @@
 
 namespace dokuwiki;
 
+use dokuwiki\Ui;
+
 /**
  * Manage all builtin AJAX calls
  *
@@ -320,10 +322,10 @@ class Ajax {
 
         $data = array();
         search($data, $conf['datadir'], 'search_index', array('ns' => $ns), $dir);
-        foreach(array_keys($data) as $item) {
+        foreach (array_keys($data) as $item) {
             $data[$item]['level'] = $lvl + 1;
         }
-        echo html_buildlist($data, 'idx', 'html_list_index', 'html_li_index');
+        echo (new Ui\Index)->buildIndexList($data);
     }
 
     /**

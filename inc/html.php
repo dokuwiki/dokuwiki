@@ -357,27 +357,10 @@ function html_index($ns) {
  *
  * @param array $item
  * @return string
+ * @deprecated 2020-07-18
  */
-function html_list_index($item) { // FIXME: also called from inc/Ajax.php
-    global $ID, $conf;
-
-    // prevent searchbots needlessly following links
-    $nofollow = ($ID != $conf['start'] || $conf['sitemap']) ? 'rel="nofollow"' : '';
-
-    $ret = '';
-    $base = ':'.$item['id'];
-    $base = substr($base,strrpos($base,':')+1);
-    if($item['type']=='d'){
-        // FS#2766, no need for search bots to follow namespace links in the index
-        $link = wl($ID, 'idx=' . rawurlencode($item['id']));
-        $ret .= '<a href="' . $link . '" title="' . $item['id'] . '" class="idx_dir" ' . $nofollow . '><strong>';
-        $ret .= $base;
-        $ret .= '</strong></a>';
-    }else{
-        // default is noNSorNS($id), but we want noNS($id) when useheading is off FS#2605
-        $ret .= html_wikilink(':'.$item['id'], useHeading('navigation') ? null : noNS($item['id']));
-    }
-    return $ret;
+function html_list_index($item) {
+    return (new dokuwiki\Ui\Index)->formatListItem($item);
 }
 
 /**
@@ -391,26 +374,10 @@ function html_list_index($item) { // FIXME: also called from inc/Ajax.php
  *
  * @param array $item
  * @return string html
+ * @deprecated 2020-07-18
  */
-function html_li_index($item) { // FIXME: also called from inc/Ajax.php
-    global $INFO;
-    global $ACT;
-
-    $class = '';
-    $id = '';
-
-    if($item['type'] == "f"){
-        // scroll to the current item
-        if(isset($INFO) && $item['id'] == $INFO['id'] && $ACT == 'index') {
-            $id = ' id="scroll__here"';
-            $class = ' bounce';
-        }
-        return '<li class="level'.$item['level'].$class.'" '.$id.'>';
-    }elseif($item['open']){
-        return '<li class="open">';
-    }else{
-        return '<li class="closed">';
-    }
+function html_li_index($item) {
+    return (new dokuwiki\Ui\Index)->tagListItem($item);
 }
 
 /**
@@ -444,60 +411,61 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
     $firstElement = reset($data);
     $start_level = $firstElement['level'];
     $level = $start_level;
-    $ret   = '';
+    $html  = '';
     $open  = 0;
 
     // set callback function to build the <li> tag, formerly defined as html_li_default()
     if (!is_callable($lifunc)) {
-       $lifunc = function($item) { return '<li class="level'.$item['level'].'">';};
+       $lifunc = function ($item) {
+           return '<li class="level'.$item['level'].'">';
+       };
     }
 
-    foreach ($data as $item){
-
-        if( $item['level'] > $level ){
+    foreach ($data as $item) {
+        if ($item['level'] > $level) {
             //open new list
-            for($i=0; $i<($item['level'] - $level); $i++){
-                if ($i) $ret .= "<li class=\"clear\">";
-                $ret .= "\n<ul class=\"$class\">\n";
+            for ($i = 0; $i < ($item['level'] - $level); $i++) {
+                if ($i) $html .= '<li class="clear">';
+                $html .= "\n".'<ul class="'.$class.'">'."\n";
                 $open++;
             }
             $level = $item['level'];
 
-        }elseif( $item['level'] < $level ){
+        } elseif ($item['level'] < $level) {
             //close last item
-            $ret .= "</li>\n";
-            while( $level > $item['level'] && $open > 0 ){
+            $html .= '</li>'."\n";
+            while ($level > $item['level'] && $open > 0 ) {
                 //close higher lists
-                $ret .= "</ul>\n</li>\n";
+                $html .= '</ul>'."\n".'</li>'."\n";
                 $level--;
                 $open--;
             }
-        } elseif ($ret !== '') {
+        } elseif ($html !== '') {
             //close previous item
-            $ret .= "</li>\n";
+            $html .= '</li>'."\n";
         }
 
         //print item
-        $ret .= call_user_func($lifunc,$item);
-        $ret .= '<div class="li">';
+        $html .= call_user_func($lifunc, $item);
+        $html .= '<div class="li">';
 
-        $ret .= call_user_func($func,$item);
-        $ret .= '</div>';
+        $html .= call_user_func($func, $item);
+        $html .= '</div>';
     }
 
     //close remaining items and lists
-    $ret .= "</li>\n";
-    while($open-- > 0) {
-        $ret .= "</ul></li>\n";
+    $html .= '</li>'."\n";
+    while ($open-- > 0) {
+        $html .= '</ul></li>'."\n";
     }
 
     if ($forcewrapper || $start_level < 2) {
         // Trigger building a wrapper ul if the first level is
         // 0 (we have a root object) or 1 (just the root content)
-        $ret = "\n<ul class=\"$class\">\n".$ret."</ul>\n";
+        $html = "\n".'<ul class="'.$class.'">'."\n".$html.'</ul>'."\n";
     }
 
-    return $ret;
+    return $html;
 }
 
 /**
