@@ -25,10 +25,10 @@ if (!defined('SEC_EDIT_PATTERN')) {
  * @param string|array  $search  search string(s) that shall be highlighted in the target page
  * @return string the HTML code of the link
  */
-function html_wikilink($id,$name=null,$search=''){
+function html_wikilink($id, $name = null, $search = '') {
     /** @var Doku_Renderer_xhtml $xhtml_renderer */
     static $xhtml_renderer = null;
-    if(is_null($xhtml_renderer)){
+    if (is_null($xhtml_renderer)) {
         $xhtml_renderer = p_get_renderer('xhtml');
     }
 
@@ -52,13 +52,9 @@ function html_login($svg = false) {
  * Denied page content
  *
  * @return string html
+ * @deprecated 2020-07-18 not called anymore, see inc/Action/Denied::tplContent()
  */
 function html_denied() {
-    print p_locale_xhtml('denied');
-
-    if(empty($_SERVER['REMOTE_USER']) && actionOK('login')){
-        html_login();
-    }
 }
 
 /**
@@ -70,10 +66,10 @@ function html_denied() {
  * @param bool   $show show section edit buttons?
  * @return string
  */
-function html_secedit($text,$show=true){
+function html_secedit($text, $show = true) {
     global $INFO;
 
-    if((isset($INFO) && !$INFO['writable']) || !$show || (isset($INFO) && $INFO['rev'])){
+    if ((isset($INFO) && !$INFO['writable']) || !$show || (isset($INFO) && $INFO['rev'])) {
         return preg_replace(SEC_EDIT_PATTERN,'',$text);
     }
 
@@ -125,13 +121,15 @@ function html_secedit_get_button($data) {
     $secid = $data['secid'];
     unset($data['secid']);
 
-    return "<div class='secedit editbutton_" . $data['target'] .
-                       " editbutton_" . $secid . "'>" .
-           html_btn('secedit', $ID, '',
-                    array_merge(array('do'  => 'edit',
-                                      'rev' => $INFO['lastmod'],
-                                      'summary' => '['.$name.'] '), $data),
-                    'post', $name) . '</div>';
+    $params = array_merge(
+           array('do'  => 'edit', 'rev' => $INFO['lastmod'], 'summary' => '['.$name.'] '),
+           $data
+    );
+
+    $html = '<div class="secedit editbutton_'.$data['target'] .' editbutton_'.$secid .'">';
+    $html.= html_btn('secedit', $ID, '', $params, 'post', $name);
+    $html.= '</div>';
+    return $html;
 }
 
 /**
@@ -141,15 +139,14 @@ function html_secedit_get_button($data) {
  *
  * @return string html
  */
-function html_topbtn(){
+function html_topbtn() {
     global $lang;
 
-    $ret = '<a class="nolink" href="#dokuwiki__top">' .
-        '<button class="button" onclick="window.scrollTo(0, 0)" title="' . $lang['btn_top'] . '">' .
-        $lang['btn_top'] .
-        '</button></a>';
-
-    return $ret;
+    $html = '<a class="nolink" href="#dokuwiki__top">'
+        .'<button class="button" onclick="window.scrollTo(0, 0)" title="'. $lang['btn_top'] .'">'
+        . $lang['btn_top']
+        .'</button></a>';
+    return $html;
 }
 
 /**
@@ -168,59 +165,51 @@ function html_topbtn(){
  * @param string         $svg (optional) svg code, inserted into the button
  * @return string
  */
-function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label=false, $svg=null){
+function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $label = false, $svg = null) {
     global $conf;
     global $lang;
 
     if (!$label)
         $label = $lang['btn_'.$name];
 
-    $ret = '';
-
     //filter id (without urlencoding)
     $id = idfilter($id,false);
 
     //make nice URLs even for buttons
-    if($conf['userewrite'] == 2){
+    if ($conf['userewrite'] == 2) {
         $script = DOKU_BASE.DOKU_SCRIPT.'/'.$id;
-    }elseif($conf['userewrite']){
+    } elseif ($conf['userewrite']) {
         $script = DOKU_BASE.$id;
-    }else{
+    } else {
         $script = DOKU_BASE.DOKU_SCRIPT;
         $params['id'] = $id;
     }
 
-    $ret .= '<form class="button btn_'.$name.'" method="'.$method.'" action="'.$script.'"><div class="no">';
+    $html = '<form class="button btn_'.$name.'" method="'.$method.'" action="'.$script.'"><div class="no">';
 
-    if(is_array($params)){
-        foreach($params as $key => $val) {
-            $ret .= '<input type="hidden" name="'.$key.'" ';
-            $ret .= 'value="'.hsc($val).'" />';
+    if (is_array($params)) {
+        foreach ($params as $key => $val) {
+            $html .= '<input type="hidden" name="'.$key.'" value="'.hsc($val).'" />';
         }
     }
 
-    if ($tooltip!='') {
-        $tip = hsc($tooltip);
-    }else{
-        $tip = hsc($label);
-    }
+    $tip = empty($tooltip) ? hsc($label) : hsc($tooltip);
 
-    $ret .= '<button type="submit" ';
-    if($akey){
-        $tip .= ' ['.strtoupper($akey).']';
-        $ret .= 'accesskey="'.$akey.'" ';
+    $html .= '<button type="submit" ';
+    if ($akey) {
+        $tip  .= ' ['.strtoupper($akey).']';
+        $html .= 'accesskey="'.$akey.'" ';
     }
-    $ret .= 'title="'.$tip.'">';
+    $html .= 'title="'.$tip.'">';
     if ($svg) {
-        $ret .= '<span>' . hsc($label) . '</span>';
-        $ret .= inlineSVG($svg);
+        $html .= '<span>'. hsc($label) .'</span>'. inlineSVG($svg);
     } else {
-        $ret .= hsc($label);
+        $html .= hsc($label);
     }
-    $ret .= '</button>';
-    $ret .= '</div></form>';
+    $html .= '</button>';
+    $html .= '</div></form>';
 
-    return $ret;
+    return $html;
 }
 /**
  * show a revision warning
@@ -287,22 +276,9 @@ function html_hilight($html, $phrases) {
  * Display error on locked pages
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @deprecated 2020-07-18 not called anymore, see inc/Action/Locked::tplContent()
  */
-function html_locked(){
-    global $ID;
-    global $conf;
-    global $lang;
-    global $INFO;
-
-    $locktime = filemtime(wikiLockFN($ID));
-    $expire = dformat($locktime + $conf['locktime']);
-    $min    = round(($conf['locktime'] - (time() - $locktime) )/60);
-
-    print p_locale_xhtml('locked');
-    print '<ul>';
-    print '<li><div class="li"><strong>'.$lang['lockedby'].'</strong> '.editorinfo($INFO['locked']).'</div></li>';
-    print '<li><div class="li"><strong>'.$lang['lockexpire'].'</strong> '.$expire.' ('.$min.' min)</div></li>';
-    print '</ul>';
+function html_locked() {
 }
 
 /**
@@ -512,19 +488,19 @@ function html_conflict($text, $summary) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_msgarea(){
+function html_msgarea() {
     global $MSG, $MSG_shown;
     /** @var array $MSG */
     // store if the global $MSG has already been shown and thus HTML output has been started
     $MSG_shown = true;
 
-    if(!isset($MSG)) return;
+    if (!isset($MSG)) return;
 
     $shown = array();
-    foreach($MSG as $msg){
+    foreach ($MSG as $msg) {
         $hash = md5($msg['msg']);
-        if(isset($shown[$hash])) continue; // skip double messages
-        if(info_msg_allowed($msg)){
+        if (isset($shown[$hash])) continue; // skip double messages
+        if (info_msg_allowed($msg)) {
             print '<div class="'.$msg['lvl'].'">';
             print $msg['msg'];
             print '</div>';
@@ -573,7 +549,7 @@ function html_edit() {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_debug(){
+function html_debug() {
     global $conf;
     global $lang;
     /** @var AuthPlugin $auth */
@@ -630,10 +606,10 @@ function html_debug(){
     print $lang['encoding'];
     print '</pre>';
 
-    if($auth){
+    if ($auth) {
         print '<b>Auth backend capabilities:</b><pre>';
-        foreach ($auth->getCapabilities() as $cando){
-            print '   '.str_pad($cando,16) . ' => ' . (int)$auth->canDo($cando) . NL;
+        foreach ($auth->getCapabilities() as $cando) {
+            print '   '.str_pad($cando,16) .' => '. (int)$auth->canDo($cando) . DOKU_LF;
         }
         print '</pre>';
     }
@@ -847,7 +823,7 @@ function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts
 function html_tabs($tabs, $current_tab = null) {
     echo '<ul class="tabs">'.NL;
 
-    foreach($tabs as $id => $tab) {
+    foreach ($tabs as $id => $tab) {
         html_tab($tab['href'], $tab['caption'], $id === $current_tab);
     }
 
@@ -865,7 +841,7 @@ function html_tabs($tabs, $current_tab = null) {
  * @param boolean $selected - is tab selected
  */
 
-function html_tab($href, $caption, $selected=false) {
+function html_tab($href, $caption, $selected = false) {
     $tab = '<li>';
     if ($selected) {
         $tab .= '<strong>';
