@@ -93,6 +93,7 @@ class Revisions extends Ui
         if ($media_id) {
             $form->attr('action', media_managerURL(array('image' => $media_id), '&'));
         }
+        $form->addTagOpen('div')->addClass('no');
 
         // start listing
         $form->addTagOpen('ul');
@@ -131,10 +132,12 @@ class Revisions extends Ui
             $form->addTagOpen('li')->addClass($minor ? 'minor' : '');
             $form->addTagOpen('div')->addClass('li');
             $form->addCheckbox('rev2[]')->val('current');
+            $form->addHTML(' ');
 
             $form->addTagOpen('span')->addClass('data');
             $form->addHTML($date);
             $form->addTagClose('span');
+            $form->addHTML(' ');
 
             $form->addTag('img')->attrs([
                 'src' => DOKU_BASE.'lib/images/blank.gif',
@@ -142,10 +145,12 @@ class Revisions extends Ui
                 'height' => 11,
                 'alt' => '',
             ]);
+            $form->addHTML(' ');
 
             $form->addTagOPen('a')->attr('href', $href)->addClass('wikilink1');
             $form->addHTML($display_name);
             $form->addTagClose('a');
+            $form->addHTML(' ');
 
             if ($media_id) $form->addTagOpen('div');
 
@@ -155,14 +160,17 @@ class Revisions extends Ui
                 $form->addHTML('<bdi>' . hsc($summary) . '</bdi>');
                 $form->addTagClose('span');
             }
+            $form->addHTML(' ');
 
             $form->addTagOpen('span')->addClass('user');
             $form->addHTML(
                 (empty($editor)) ? ('('.$lang['external_edit'].')') : '<bdi>'.editorinfo($editor).'</bdi>'
             );
             $form->addTagClose('span');
+            $form->addHTML(' ');
 
             $form->addHTML(html_sizechange($sizechange));
+            $form->addHTML(' ');
 
             $form->addHTML('('.$lang['current'].')');
 
@@ -199,10 +207,12 @@ class Revisions extends Ui
                     'alt' => '',
                 ]);
             }
+            $form->addHTML(' ');
 
             $form->addTagOpen('span')->addClass('date');
             $form->addHTML($date);
             $form->addTagClose('span');
+            $form->addHTML(' ');
 
             if ($exists) {
                 if (!$media_id) {
@@ -219,6 +229,7 @@ class Revisions extends Ui
                     'alt'    => $lang['diff'],
                 ]);
                 $form->addTagClose('a');
+                $form->addHTML(' ');
 
                 if (!$media_id) {
                     $href = wl($id, "rev=$rev", false, '&');
@@ -237,6 +248,7 @@ class Revisions extends Ui
                 ]);
                 $form->addHTML($display_name);
             }
+            $form->addHTML(' ');
 
             if ($media_id) $form->addTagOpen('div');
 
@@ -246,6 +258,7 @@ class Revisions extends Ui
                 $form->addHTML('<bdi>'. hsc($info['sum']) .'</bdi>');
                 $form->addTagClose('span');
             }
+            $form->addHTML(' ');
 
             $form->addTagOpen('span')->addClass('user');
             if ($info['user']) {
@@ -257,6 +270,7 @@ class Revisions extends Ui
                 $form->addHTML('<bdo dir="ltr">' .$info['ip'] .'</bdo>');
             }
             $form->addTagClose('span');
+            $form->addHTML(' ');
 
             $form->addHTML(html_sizechange($info['sizechange']));
 

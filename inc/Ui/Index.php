@@ -59,7 +59,7 @@ class Index extends Ui
     /**
      * Build html of unordered list of index items
      *
-     * @param array $item
+     * @param array $data  array with item arrays
      * @return string
      */
     public function buildIndexList($data)

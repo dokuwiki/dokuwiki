@@ -123,10 +123,12 @@ class Recent extends Ui
                         'alt' => $recent['id']
                 ])->addClass('icon');
             }
+            $form->addHTML(' ');
 
             $form->addTagOpen('span')->addClass('date');
             $form->addHTML($date);
             $form->addTagClose('span');
+            $form->addHTML(' ');
 
             $diff = false;
             $href = '';
@@ -167,6 +169,7 @@ class Recent extends Ui
                 ]);
                 $form->addTagClose('a');
             }
+            $form->addHTML(' ');
 
             if (!empty($recent['media'])) {
                 $href = media_managerURL(
@@ -188,6 +191,7 @@ class Recent extends Ui
                     'alt'    => $lang['btn_revs']
             ]);
             $form->addTagClose('a');
+            $form->addHTML(' ');
 
             if (!empty($recent['media'])) {
                 $href = media_managerURL(
@@ -218,6 +222,7 @@ class Recent extends Ui
                 $form->addHTML('<bdo dir="ltr">'. $recent['ip'] .'</bdo>');
             }
             $form->addTagClose('span');
+            $form->addHTML(' ');
 
             $form->addHTML(html_sizechange($recent['sizechange']));
 
