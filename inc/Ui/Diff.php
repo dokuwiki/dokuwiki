@@ -242,7 +242,7 @@ class Diff extends Ui
      * @param bool   $inline  Return the header on a single line
      * @return string[] HTML snippets for diff header
      */
-    protected function diffHead($l_rev, $r_rev, $id = null, $media = false, $inline = false)
+    public function diffHead($l_rev, $r_rev, $id = null, $media = false, $inline = false)
     {
         global $lang;
         if ($id === null) {

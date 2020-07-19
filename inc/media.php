@@ -1338,7 +1338,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
         }
     }
 
-    list($l_head, $r_head) = html_diff_head($l_rev, $r_rev, $image, true);
+    list($l_head, $r_head) = (new dokuwiki\Ui\Diff)->diffHead($l_rev, $r_rev, $image, true);
 
     ?>
     <div class="table">
