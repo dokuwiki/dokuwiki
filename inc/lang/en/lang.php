@@ -126,6 +126,7 @@ $lang['txt_upload']            = 'Select file to upload:';
 $lang['txt_filename']          = 'Upload as (optional):';
 $lang['txt_overwrt']           = 'Overwrite existing file';
 $lang['maxuploadsize']         = 'Upload max. %s per file.';
+$lang['allowedmime']           = 'List of allowed file extensions';
 $lang['lockedby']              = 'Currently locked by:';
 $lang['lockexpire']            = 'Lock expires at:';
 

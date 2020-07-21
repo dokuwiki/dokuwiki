@@ -177,6 +177,7 @@ $lang['txt_upload']            = 'Wybierz plik do wysłania:';
 $lang['txt_filename']          = 'Nazwa pliku (opcjonalnie):';
 $lang['txt_overwrt']           = 'Nadpisać istniejący plik?';
 $lang['maxuploadsize']         = 'Maksymalny rozmiar wysyłanych danych wynosi %s dla jednego pliku.';
+$lang['allowedmime']           = 'Lista dozwolonych rozszerzeń plików';
 $lang['lockedby']              = 'Aktualnie zablokowane przez:';
 $lang['lockexpire']            = 'Blokada wygasa:';
 $lang['rssfailed']             = 'Wystąpił błąd przy pobieraniu tych danych: ';
