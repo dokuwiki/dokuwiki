@@ -1871,12 +1871,9 @@ function media_uploadform($ns, $auth, $fullscreen = false){
 
     echo '<p class="maxsize">';
     printf($lang['maxuploadsize'],filesize_h(media_getuploadsize()));
+    echo ' <a class="allowedmime" href="#">' . $lang['allowedmime'] . '</a>';
+    echo ' <span style="display: none">' . implode(', ', array_keys(getMimeTypes())) .'</span>';
     echo '</p>'.NL;
-
-    echo '<div class="allowedmime-accordion">';
-    echo '<h3>' . $lang['allowedmime'] . '</h3>' . NL;
-    echo '<div><p>' . implode(', ', array_keys(getMimeTypes())) . '</p></div>' . NL;
-    echo '</div>' . NL;
 }
 
 /**
