@@ -1873,7 +1873,7 @@ function media_uploadform($ns, $auth, $fullscreen = false){
     printf($lang['maxuploadsize'],filesize_h(media_getuploadsize()));
     echo '</p>'.NL;
 
-    echo '<div id="allowedmime-accordion">';
+    echo '<div class="allowedmime-accordion">';
     echo '<h3>' . $lang['allowedmime'] . '</h3>' . NL;
     echo '<div><p>' . implode(', ', array_keys(getMimeTypes())) . '</p></div>' . NL;
     echo '</div>' . NL;
