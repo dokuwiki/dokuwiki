@@ -10,6 +10,7 @@ use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Subscriptions\MediaSubscriptionSender;
 use dokuwiki\Extension\Event;
+use dokuwiki\Form\Form;
 
 /**
  * Lists pages which currently use a media file selected for deletion
@@ -133,77 +134,69 @@ function media_ispublic($id){
  * @param int $auth permission level
  * @return bool
  */
-function media_metaform($id,$auth){
+function media_metaform($id, $auth) {
     global $lang;
 
-    if($auth < AUTH_UPLOAD) {
-        echo '<div class="nothing">'.$lang['media_perm_upload'].'</div>'.NL;
+    if ($auth < AUTH_UPLOAD) {
+        echo '<div class="nothing">'.$lang['media_perm_upload'].'</div>'.DOKU_LF;
         return false;
     }
 
     // load the field descriptions
     static $fields = null;
-    if(is_null($fields)){
+    if ($fields === null) {
         $config_files = getConfigFiles('mediameta');
         foreach ($config_files as $config_file) {
-            if(file_exists($config_file)) include($config_file);
+            if (file_exists($config_file)) include($config_file);
         }
     }
 
     $src = mediaFN($id);
 
     // output
-    $form = new Doku_Form(array('action' => media_managerURL(array('tab_details' => 'view'), '&'),
-                                'class' => 'meta'));
-    $form->addHidden('img', $id);
-    $form->addHidden('mediado', 'save');
-    foreach($fields as $key => $field){
+    $form = new Form([
+            'action' => media_managerURL(['tab_details' => 'view'], '&'),
+            'class' => 'meta'
+    ]);
+    $form->addTagOpen('div')->addClass('no');
+    $form->setHiddenField('img', $id);
+    $form->setHiddenField('mediado', 'save');
+    foreach ($fields as $key => $field) {
         // get current value
         if (empty($field[0])) continue;
         $tags = array($field[0]);
-        if(is_array($field[3])) $tags = array_merge($tags,$field[3]);
-        $value = tpl_img_getTag($tags,'',$src);
+        if (is_array($field[3])) $tags = array_merge($tags, $field[3]);
+        $value = tpl_img_getTag($tags, '', $src);
         $value = cleanText($value);
 
         // prepare attributes
-        $p = array();
-        $p['class'] = 'edit';
-        $p['id']    = 'meta__'.$key;
-        $p['name']  = 'meta['.$field[0].']';
-        $p_attrs    = array('class' => 'edit');
+        $p = array(
+            'class' => 'edit',
+            'id'    => 'meta__'.$key,
+            'name'  => 'meta['.$field[0].']',
+        );
 
-        $form->addElement('<div class="row">');
-        if($field[2] == 'text'){
-            $form->addElement(
-                form_makeField(
-                    'text',
-                    $p['name'],
-                    $value,
-                    ($lang[$field[1]]) ? $lang[$field[1]] : $field[1] . ':',
-                    $p['id'],
-                    $p['class'],
-                    $p_attrs
-                )
-            );
-        }else{
-            $att = buildAttributes($p);
-            $form->addElement('<label for="meta__'.$key.'">'.$lang[$field[1]].'</label>');
-            $form->addElement("<textarea $att rows=\"6\" cols=\"50\">".formText($value).'</textarea>');
+        $form->addTagOpen('div')->addClass('row');
+        if ($field[2] == 'text') {
+            $input = $form->addTextInput(
+                $p['name'],
+                ($lang[$field[1]] ? $lang[$field[1]] : $field[1] . ':')
+            )->id($p['id'])->addClass($p['class'])->val($value);
+        } else {
+            $form->addTextarea($p['name'], $lang[$field[1]])->id($p['id'])
+                ->val(formText($value))
+                ->addClass($p['class'])
+                ->attr('rows', '6')->attr('cols', '50');
         }
-        $form->addElement('</div>'.NL);
+        $form->addTagClose('div');
     }
-    $form->addElement('<div class="buttons">');
-    $form->addElement(
-        form_makeButton(
-            'submit',
-            '',
-            $lang['btn_save'],
-            array('accesskey' => 's', 'name' => 'mediado[save]')
-        )
-    );
-    $form->addElement('</div>'.NL);
-    $form->printForm();
+    $form->addTagOpen('div')->addClass('buttons');
+    $form->addButton('mediado[save]', $lang['btn_save'])->attr('type', 'submit')
+        ->attrs(['accesskey' => 's']);
+    $form->addTagClose('div');
 
+    $form->addTagClose('div');
+    echo $form->toHTML();
     return true;
 }
 
@@ -741,7 +734,7 @@ function media_tabs_files($selected_tab = ''){
     foreach(array('files'  => 'mediaselect',
                   'upload' => 'media_uploadtab',
                   'search' => 'media_searchtab') as $tab => $caption) {
-        $tabs[$tab] = array('href'    => media_managerURL(array('tab_files' => $tab), '&'),
+        $tabs[$tab] = array('href'    => media_managerURL(['tab_files' => $tab], '&'),
                             'caption' => $lang[$caption]);
     }
 
@@ -755,20 +748,20 @@ function media_tabs_files($selected_tab = ''){
  * @param string $image filename of the current image
  * @param string $selected_tab opened tab
  */
-function media_tabs_details($image, $selected_tab = ''){
+function media_tabs_details($image, $selected_tab = '') {
     global $lang, $conf;
 
     $tabs = array();
-    $tabs['view'] = array('href'    => media_managerURL(array('tab_details' => 'view'), '&'),
+    $tabs['view'] = array('href'    => media_managerURL(['tab_details' => 'view'], '&'),
                           'caption' => $lang['media_viewtab']);
 
     list(, $mime) = mimetype($image);
     if ($mime == 'image/jpeg' && file_exists(mediaFN($image))) {
-        $tabs['edit'] = array('href'    => media_managerURL(array('tab_details' => 'edit'), '&'),
+        $tabs['edit'] = array('href'    => media_managerURL(['tab_details' => 'edit'], '&'),
                               'caption' => $lang['media_edittab']);
     }
     if ($conf['mediarevisions']) {
-        $tabs['history'] = array('href'    => media_managerURL(array('tab_details' => 'history'), '&'),
+        $tabs['history'] = array('href'    => media_managerURL(['tab_details' => 'history'], '&'),
                                  'caption' => $lang['media_historytab']);
     }
 
@@ -780,45 +773,52 @@ function media_tabs_details($image, $selected_tab = ''){
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_tab_files_options(){
+function media_tab_files_options() {
     global $lang;
     global $INPUT;
     global $ID;
-    $form = new Doku_Form(array('class' => 'options', 'method' => 'get',
-                                'action' => wl($ID)));
-    $media_manager_params = media_managerURL(array(), '', false, true);
-    foreach($media_manager_params as $pKey => $pVal){
-        $form->addHidden($pKey, $pVal);
+
+    $form = new Form([
+            'method' => 'get',
+            'action' => wl($ID),
+            'class' => 'options'
+    ]);
+    $form->addTagOpen('div')->addClass('no');
+    $form->setHiddenField('sectok', null);
+    $media_manager_params = media_managerURL([], '', false, true);
+    foreach ($media_manager_params as $pKey => $pVal) {
+        $form->setHiddenField($pKey, $pVal);
     }
-    $form->addHidden('sectok', null);
     if ($INPUT->has('q')) {
-        $form->addHidden('q', $INPUT->str('q'));
+        $form->setHiddenField('q', $INPUT->str('q'));
     }
-    $form->addElement('<ul>'.NL);
-    foreach(array('list' => array('listType', array('thumbs', 'rows')),
+    $form->addHTML('<ul>'.NL);
+    foreach (array('list' => array('listType', array('thumbs', 'rows')),
                   'sort' => array('sortBy', array('name', 'date')))
             as $group => $content) {
         $checked = "_media_get_${group}_type";
         $checked = $checked();
 
-        $form->addElement('<li class="' . $content[0] . '">');
-        foreach($content[1] as $option) {
+        $form->addHTML('<li class="'. $content[0] .'">');
+        foreach ($content[1] as $option) {
             $attrs = array();
             if ($checked == $option) {
                 $attrs['checked'] = 'checked';
             }
-            $form->addElement(form_makeRadioField($group . '_dwmedia', $option,
-                                       $lang['media_' . $group . '_' . $option],
-                                                  $content[0] . '__' . $option,
-                                                  $option, $attrs));
+            $radio = $form->addRadioButton(
+                $group.'_dwmedia',
+                $lang['media_'.$group.'_'.$option]
+            )->val($option)->id($content[0].'__'.$option)->addClass($option);
+            $radio->attrs($attrs);
         }
-        $form->addElement('</li>'.NL);
+        $form->addHTML('</li>'.NL);
     }
-    $form->addElement('<li>');
-    $form->addElement(form_makeButton('submit', '', $lang['btn_apply']));
-    $form->addElement('</li>'.NL);
-    $form->addElement('</ul>'.NL);
-    $form->printForm();
+    $form->addHTML('<li>');
+    $form->addButton('', $lang['btn_apply'])->attr('type', 'submit');
+    $form->addHTML('</li>'.NL);
+    $form->addHTML('</ul>'.NL);
+    $form->addTagClose('div');
+    print $form->toHTML();
 }
 
 /**
@@ -1045,48 +1045,60 @@ function media_preview($image, $auth, $rev='', $meta=false) {
  * @param int        $auth  permission level
  * @param string|int $rev   revision timestamp, or empty string
  */
-function media_preview_buttons($image, $auth, $rev='') {
+function media_preview_buttons($image, $auth, $rev = '') {
     global $lang, $conf;
 
-    echo '<ul class="actions">'.NL;
+    echo '<ul class="actions">'.DOKU_LF;
 
-    if($auth >= AUTH_DELETE && !$rev && file_exists(mediaFN($image))){
+    if ($auth >= AUTH_DELETE && !$rev && file_exists(mediaFN($image))) {
 
         // delete button
-        $form = new Doku_Form(array('id' => 'mediamanager__btn_delete',
-            'action'=>media_managerURL(array('delete' => $image), '&')));
-        $form->addElement(form_makeButton('submit','',$lang['btn_delete']));
+        $form = new Form([
+            'id' => 'mediamanager__btn_delete',
+            'action' => media_managerURL(['delete' => $image], '&'),
+        ]);
+        $form->addTagOpen('div')->addClass('no');
+        $form->addButton('', $lang['btn_delete'])->attr('type', 'submit');
+        $form->addTagClose('div');
         echo '<li>';
-        $form->printForm();
-        echo '</li>'.NL;
+        echo $form->toHTML();
+        echo '</li>'.DOKU_LF;
     }
 
     $auth_ow = (($conf['mediarevisions']) ? AUTH_UPLOAD : AUTH_DELETE);
-    if($auth >= $auth_ow && !$rev){
+    if ($auth >= $auth_ow && !$rev) {
 
         // upload new version button
-        $form = new Doku_Form(array('id' => 'mediamanager__btn_update',
-            'action'=>media_managerURL(array('image' => $image, 'mediado' => 'update'), '&')));
-        $form->addElement(form_makeButton('submit','',$lang['media_update']));
+        $form = new Form([
+            'id' => 'mediamanager__btn_update',
+            'action' => media_managerURL(['image' => $image, 'mediado' => 'update'], '&'),
+        ]);
+        $form->addTagOpen('div')->addClass('no');
+        $form->addButton('', $lang['media_update'])->attr('type', 'submit');
+        $form->addTagClose('div');
         echo '<li>';
-        $form->printForm();
-        echo '</li>'.NL;
+        echo $form->toHTML();
+        echo '</li>'.DOKU_LF;
     }
 
-    if($auth >= AUTH_UPLOAD && $rev && $conf['mediarevisions'] && file_exists(mediaFN($image, $rev))){
+    if ($auth >= AUTH_UPLOAD && $rev && $conf['mediarevisions'] && file_exists(mediaFN($image, $rev))) {
 
         // restore button
-        $form = new Doku_Form(array('id' => 'mediamanager__btn_restore',
-            'action'=>media_managerURL(array('image' => $image), '&')));
-        $form->addHidden('mediado','restore');
-        $form->addHidden('rev',$rev);
-        $form->addElement(form_makeButton('submit','',$lang['media_restore']));
+        $form = new Form([
+            'id' => 'mediamanager__btn_restore',
+            'action'=>media_managerURL(['image' => $image], '&'),
+        ]);
+        $form->addTagOpen('div')->addClass('no');
+        $form->setHiddenField('mediado', 'restore');
+        $form->setHiddenField('rev', $rev);
+        $form->addButton('', $lang['media_restore'])->attr('type', 'submit');
+        $form->addTagClose('div');
         echo '<li>';
-        $form->printForm();
-        echo '</li>'.NL;
+        echo $form->toHTML();
+        echo '</li>'.DOKU_LF;
     }
 
-    echo '</ul>'.NL;
+    echo '</ul>'.DOKU_LF;
 }
 
 /**
@@ -1300,7 +1312,7 @@ function _media_file_diff($data) {
  * @param int $auth permission level
  * @param bool $fromajax
  */
-function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
+function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax) {
     global $lang;
     global $INPUT;
 
@@ -1316,17 +1328,18 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
         $difftype = $INPUT->str('difftype');
 
         if (!$fromajax) {
-            $form = new Doku_Form(array(
-                'action' => media_managerURL(array(), '&'),
-                'method' => 'get',
+            $form = new Form([
                 'id' => 'mediamanager__form_diffview',
-                'class' => 'diffView'
-            ));
-            $form->addHidden('sectok', null);
-            $form->addElement('<input type="hidden" name="rev2[]" value="'.$l_rev.'" ></input>');
-            $form->addElement('<input type="hidden" name="rev2[]" value="'.$r_rev.'" ></input>');
-            $form->addHidden('mediado', 'diff');
-            $form->printForm();
+                'action' => media_managerURL([], '&'),
+                'method' => 'get',
+                'class' => 'diffView',
+            ]);
+            $form->addTagOpen('div')->addClass('no');
+            $form->setHiddenField('sectok', null);
+            $form->setHiddenField('mediado', 'diff');
+            $form->setHiddenField('rev2[0]', $l_rev);
+            $form->setHiddenField('rev2[1]', $r_rev);
+            echo $form->toHTML();
 
             echo NL.'<div id="mediamanager__diff" >'.NL;
         }
@@ -1674,8 +1687,8 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
 
     } else {
         echo '<a id="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
-            media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']),
-            'tab_details' => 'view')).'">';
+            media_managerURL(['image' => hsc($item['id']), 'ns' => getNS($item['id']),
+            'tab_details' => 'view']).'">';
         echo media_printicon($item['id'], '32x32');
         echo '</a>';
     }
@@ -1685,8 +1698,8 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
     } else {
         $name = hsc($item['id']);
     }
-    echo '<dd class="name"><a href="'.media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']),
-        'tab_details' => 'view')).'" id="h_:'.$item['id'].'">'.$name.'</a></dd>'.NL;
+    echo '<dd class="name"><a href="'.media_managerURL(['image' => hsc($item['id']), 'ns' => getNS($item['id']),
+        'tab_details' => 'view']).'" id="h_:'.$item['id'].'">'.$name.'</a></dd>'.NL;
 
     if($item['isimg']){
         $size = '';
@@ -1782,7 +1795,7 @@ function media_printimgdetail($item, $fullscreen=false){
  * @param bool       $params_array  return the parmeters array?
  * @return string|array - link or link parameters
  */
-function media_managerURL($params=false, $amp='&amp;', $abs=false, $params_array=false) {
+function media_managerURL($params = false, $amp = '&amp;', $abs = false, $params_array = false) {
     global $ID;
     global $INPUT;
 
@@ -1816,12 +1829,12 @@ function media_managerURL($params=false, $amp='&amp;', $abs=false, $params_array
  * @param int    $auth permission level
  * @param bool  $fullscreen
  */
-function media_uploadform($ns, $auth, $fullscreen = false){
+function media_uploadform($ns, $auth, $fullscreen = false) {
     global $lang;
     global $conf;
     global $INPUT;
 
-    if($auth < AUTH_UPLOAD) {
+    if ($auth < AUTH_UPLOAD) {
         echo '<div class="nothing">'.$lang['media_perm_upload'].'</div>'.NL;
         return;
     }
@@ -1835,44 +1848,49 @@ function media_uploadform($ns, $auth, $fullscreen = false){
     }
 
     // The default HTML upload form
-    $params = array('id'      => 'dw__upload',
-                    'enctype' => 'multipart/form-data');
-    if (!$fullscreen) {
-        $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
-    } else {
-        $params['action'] = media_managerURL(array('tab_files' => 'files',
-            'tab_details' => 'view'), '&');
-    }
-
-    $form = new Doku_Form($params);
-    if (!$fullscreen) echo '<div class="upload">' . $lang['mediaupload'] . '</div>';
-    $form->addElement(formSecurityToken());
-    $form->addHidden('ns', hsc($ns));
-    $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeFileField('upload', $lang['txt_upload'], 'upload__file'));
-    $form->addElement(form_makeCloseTag('p'));
-    $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeTextField('mediaid', noNS($id), $lang['txt_filename'], 'upload__name'));
-    $form->addElement(form_makeButton('submit', '', $lang['btn_upload']));
-    $form->addElement(form_makeCloseTag('p'));
-
-    if($auth >= $auth_ow){
-        $form->addElement(form_makeOpenTag('p'));
+    $form = new Form([
+        'id' => 'dw__upload',
+        'enctype' => 'multipart/form-data',
+        'action' => ($fullscreen)
+                    ? media_managerURL(['tab_files' => 'files', 'tab_details' => 'view'], '&')
+                    : DOKU_BASE.'lib/exe/mediamanager.php',
+    ]);
+    $form->addTagOpen('div')->addClass('no');
+    $form->setHiddenField('ns', hsc($ns));  // FIXME hsc required?
+    $form->addTagOpen('p');
+    $form->addTextInput('upload', $lang['txt_upload'])->id('upload__file')
+            ->attrs(['type' => 'file']);
+    $form->addTagClose('p');
+    $form->addTagOpen('p');
+    $form->addTextInput('mediaid', $lang['txt_filename'])->id('upload__name')
+            ->val(noNS($id));
+    $form->addButton('', $lang['btn_upload'])->attr('type', 'submit');
+    $form->addTagClose('p');
+    if ($auth >= $auth_ow){
+        $form->addTagOpen('p');
         $attrs = array();
         if ($update) $attrs['checked'] = 'checked';
-        $form->addElement(form_makeCheckboxField('ow', 1, $lang['txt_overwrt'], 'dw__ow', 'check', $attrs));
-        $form->addElement(form_makeCloseTag('p'));
+        $form->addCheckbox('ow', $lang['txt_overwrt'])->id('dw__ow')->val('1')
+            ->addClass('check')->attrs($attrs);
+        $form->addTagClose('p');
+    }
+    $form->addTagClose('div');
+
+    if (!$fullscreen) {
+        echo '<div class="upload">'. $lang['mediaupload'] .'</div>'.DOKU_LF;
+    } else {
+        echo DOKU_LF;
     }
 
-    echo NL.'<div id="mediamanager__uploader">'.NL;
-    html_form('upload', $form);
-
-    echo '</div>'.NL;
+    echo '<div id="mediamanager__uploader">'.DOKU_LF;
+    // emit HTML_LOGINFORM_OUTPUT event
+    Event::createAndTrigger('HTML_UPLOADFORM_OUTPUT', $form, null, false);
+    echo $form->toHTML();
+    echo '</div>'.DOKU_LF;
 
     echo '<p class="maxsize">';
-    printf($lang['maxuploadsize'],filesize_h(media_getuploadsize()));
-    echo '</p>'.NL;
-
+    printf($lang['maxuploadsize'], filesize_h(media_getuploadsize()));
+    echo '</p>'.DOKU_LF;
 }
 
 /**
@@ -1907,34 +1925,31 @@ function media_getuploadsize(){
  * @param string $query
  * @param bool $fullscreen
  */
-function media_searchform($ns,$query='',$fullscreen=false){
+function media_searchform($ns, $query = '', $fullscreen = false) {
     global $lang;
 
     // The default HTML search form
-    $params = array('id' => 'dw__mediasearch');
-    if (!$fullscreen) {
-        $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
-    } else {
-        $params['action'] = media_managerURL(array(), '&');
-    }
-    $form = new Doku_Form($params);
-    $form->addHidden('ns', $ns);
-    $form->addHidden($fullscreen ? 'mediado' : 'do', 'searchlist');
+    $form = new Form([
+        'id'     => 'dw__mediasearch',
+        'action' => ($fullscreen)
+                    ? media_managerURL([], '&')
+                    : DOKU_BASE.'lib/exe/mediamanager.php',
+    ]);
+    $form->addTagOpen('div')->addClass('no');
+    $form->setHiddenField('ns', $ns);
+    $form->setHiddenField($fullscreen ? 'mediado' : 'do', 'searchlist');
 
-    $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(
-        form_makeTextField(
-            'q',
-            $query,
-            $lang['searchmedia'],
-            '',
-            '',
-            array('title' => sprintf($lang['searchmedia_in'], hsc($ns) . ':*'))
-        )
-    );
-    $form->addElement(form_makeButton('submit', '', $lang['btn_search']));
-    $form->addElement(form_makeCloseTag('p'));
-    html_form('searchmedia', $form);
+    $form->addTagOpen('p');
+    $input = $form->addTextInput('q', $lang['searchmedia'])
+            ->attr('title', sprintf($lang['searchmedia_in'], hsc($ns) .':*'))
+            ->val($query);
+    $form->addButton('', $lang['btn_search'])->attr('type', 'submit');
+    $form->addTagClose('p');
+    $form->addTagClose('div');
+
+    // emit HTML_LOGINFORM_OUTPUT event
+    Event::createAndTrigger('HTML_SEARCHMEDIAFORM_OUTPUT', $form, null, false);
+    print $form->toHTML();
 }
 
 /**
@@ -2010,7 +2025,7 @@ function media_nstree_item($item){
     $ret  = '';
     if (!($INPUT->str('do') == 'media'))
     $ret .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.idfilter($item['id']).'" class="idx_dir">';
-    else $ret .= '<a href="'.media_managerURL(array('ns' => idfilter($item['id'], false), 'tab_files' => 'files'))
+    else $ret .= '<a href="'.media_managerURL(['ns' => idfilter($item['id'], false), 'tab_files' => 'files'])
         .'" class="idx_dir">';
     $ret .= $item['label'];
     $ret .= '</a>';
