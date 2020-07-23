@@ -73,17 +73,33 @@ class action_plugin_authad extends DokuWiki_Action_Plugin
 
             // update user field value
             if ($dom) {
-                $usr          = $auth->getUserName($usr);
-                $pos          = $form->findElementByAttribute('name', 'u');
-                $ele          =& $form->getElementAt($pos);
-                $ele['value'] = $usr;
+                $usr = $auth->getUserName($usr);
+                if (is_a($form, 'dokuwiki\Form\Form')) {
+                    if (($pos = $form->findPositionByAttribute('name', 'u')) !== false) {
+                        $element = $form->getElementAt($pos);
+                        $element->val($usr);
+                    } else {
+                        return;
+                    }
+                } else {
+                    $pos = $form->findElementByAttribute('name', 'u');
+                    $ele =& $form->getElementAt($pos);
+                    $ele['value'] = $usr;
+                }
             }
         }
 
         // add select box
-        $element = form_makeListboxField('dom', $domains, $dom, $this->getLang('domain'), '', 'block');
-        $pos     = $form->findElementByAttribute('name', 'p');
-        $form->insertElement($pos + 1, $element);
+        if (is_a($form, 'dokuwiki\Form\Form')) {
+            $element = new \dokuwiki\Form\DropdownElement('dom', $domains, $this->getLang('domain'));
+            $element->addClass('block');
+            // locate domain selector just after the username input box
+            $form->addElement($element, $pos +1);
+        } else {
+            $element = form_makeListboxField('dom', $domains, $dom, $this->getLang('domain'), '', 'block');
+            $pos = $form->findElementByAttribute('name', 'p');
+            $form->insertElement($pos + 1, $element);
+        }
     }
 }
 
