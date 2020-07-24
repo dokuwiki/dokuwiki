@@ -20,7 +20,7 @@ class Subscribe extends Ui
      * @triggers HTML_SUBSCRIBEFORM_OUTPUT
      * @return void
      */
-    function show()
+    public function show()
     {
         global $INPUT;
         global $INFO;
