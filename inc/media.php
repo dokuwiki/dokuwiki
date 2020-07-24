@@ -1890,6 +1890,8 @@ function media_uploadform($ns, $auth, $fullscreen = false) {
 
     echo '<p class="maxsize">';
     printf($lang['maxuploadsize'], filesize_h(media_getuploadsize()));
+    echo ' <a class="allowedmime" href="#">'. $lang['allowedmime'] .'</a>';
+    echo ' <span>'. implode(', ', array_keys(getMimeTypes())) .'</span>';
     echo '</p>'.DOKU_LF;
 }
 
