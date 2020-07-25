@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Axel Schwarzer <SchwarzerA@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Eric Haberstroh <ehaberstroh@gmail.com>
  * @author C!own77 <clown77@posteo.de>
@@ -331,8 +332,11 @@ $lang['i_superuser']           = 'Benutzername des Administrators';
 $lang['i_problems']            = 'Das Installationsprogramm hat unten aufgeführte Probleme festgestellt, die zunächst behoben werden müssen bevor Sie mit der Installation fortfahren können.';
 $lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki Installation. Sie sollten entweder alle Dateien noch einmal frisch installieren oder die <a href="http://dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
 $lang['i_funcna']              = 'Die PHP-Funktion <code>%s</code> ist nicht verfügbar. Unter Umständen wurde sie von Ihrem Hoster deaktiviert?';
+$lang['i_disabled']            = 'Es wurde von Ihrem Provider deaktiviert.';
+$lang['i_funcnmail']           = '<b>Hinweis:</b> Die PHP-Funktion "mail()" ist nicht verfügbar. %s Alternativ können Sie das <a href="https://www.dokuwiki.org/plugin:smtp">SMTP-Plugin</a> installieren.';
 $lang['i_phpver']              = 'Ihre PHP-Version <code>%s</code> ist niedriger als die benötigte Version <code>%s</code>. Bitte aktualisieren Sie Ihre PHP-Installation.';
 $lang['i_mbfuncoverload']      = 'Um DokuWiki zu starten muss mbstring.func_overload in php.ini ausgeschaltet sein.';
+$lang['i_urandom']             = 'DokuWiki kann keine kryptografisch sicheren Werte für Cookies generieren. Möglicherweise möchten Sie Ihre "open_basedir"-Einstellungen in der zutreffenden php.ini auf korrekten Zugriff auf <code>/ dev/urandom</ code> überprüfen.';
 $lang['i_permfail']            = '<code>%s</code> ist nicht durch DokuWiki beschreibbar. Sie müssen die Berechtigungen dieses Ordners ändern!';
 $lang['i_confexists']          = '<code>%s</code> existiert bereits';
 $lang['i_writeerr']            = '<code>%s</code> konnte nicht erzeugt werden. Sie sollten die Verzeichnis-/Datei-Rechte überprüfen und die Datei manuell anlegen.';
@@ -383,6 +387,7 @@ $lang['media_perm_upload']     = 'Sie besitzen nicht die notwendigen Berechtigun
 $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
 $lang['media_acl_warning']     = 'Diese Liste ist möglicherweise nicht vollständig. Versteckte und durch ACL gesperrte Seiten werden nicht angezeigt.';
+$lang['email_fail']            = 'PHP-Funktion "mail ()" fehlt oder ist deaktiviert. Die folgende E-Mail wurde nicht gesendet:';
 $lang['currentns']             = 'Aktueller Namensraum';
 $lang['searchresult']          = 'Suchergebnisse';
 $lang['plainhtml']             = 'HTML Klartext';
