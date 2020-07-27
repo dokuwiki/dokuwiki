@@ -44,25 +44,25 @@
     },
     {
         "name": "geshi/geshi",
-        "version": "v1.0.9.1",
-        "version_normalized": "1.0.9.1",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/GeSHi/geshi-1.0.git",
-            "reference": "fd22ab78481bf90337862b590e6f7517863926b8"
+            "reference": "3c12a7931d509c5e3557c5ed44c9a32e9c917c7d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/fd22ab78481bf90337862b590e6f7517863926b8",
-            "reference": "fd22ab78481bf90337862b590e6f7517863926b8",
+            "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/3c12a7931d509c5e3557c5ed44c9a32e9c917c7d",
+            "reference": "3c12a7931d509c5e3557c5ed44c9a32e9c917c7d",
             "shasum": ""
         },
         "require-dev": {
             "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.2"
         },
-        "time": "2019-10-20T20:54:46+00:00",
+        "time": "2020-06-22T15:46:04+00:00",
         "type": "library",
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "classmap": [
                 "src/geshi/",

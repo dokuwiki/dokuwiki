@@ -11,7 +11,7 @@
         "phpseclib/phpseclib": "~2.0",
         "paragonie/random_compat": "^2.0",
         "simplepie/simplepie": "^1.4",
-        "geshi/geshi": "^1.0",
+        "geshi/geshi": "dev-master as 1.0.x-dev",
         "openpsa/universalfeedcreator": "^1.8",
         "aziraphale/email-address-validator": "^2",
         "marcusschwarz/lesserphp": "^0.5.1",
