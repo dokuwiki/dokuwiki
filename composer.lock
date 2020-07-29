@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0bc9b3664395537d94aa155b32251ae8",
+    "content-hash": "1ebbfe99c51901f3e1fb0c95d1703e9f",
     "packages": [
         {
             "name": "aziraphale/email-address-validator",
@@ -49,16 +49,16 @@
         },
         {
             "name": "geshi/geshi",
-            "version": "v1.0.9.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GeSHi/geshi-1.0.git",
-                "reference": "fd22ab78481bf90337862b590e6f7517863926b8"
+                "reference": "3c12a7931d509c5e3557c5ed44c9a32e9c917c7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/fd22ab78481bf90337862b590e6f7517863926b8",
-                "reference": "fd22ab78481bf90337862b590e6f7517863926b8",
+                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/3c12a7931d509c5e3557c5ed44c9a32e9c917c7d",
+                "reference": "3c12a7931d509c5e3557c5ed44c9a32e9c917c7d",
                 "shasum": ""
             },
             "require-dev": {
@@ -85,7 +85,7 @@
             ],
             "description": "Generic Syntax Highlighter",
             "homepage": "http://qbnz.com/highlighter/",
-            "time": "2019-10-20T20:54:46+00:00"
+            "time": "2020-06-22T15:46:04+00:00"
         },
         {
             "name": "marcusschwarz/lesserphp",
@@ -468,16 +468,16 @@
         },
         {
             "name": "splitbrain/php-cli",
-            "version": "1.1.6",
+            "version": "1.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-cli.git",
-                "reference": "b7be3726872547253dd0bd61098fa9f634c33555"
+                "reference": "fb4f888866d090b10e3e68292d197ca274cea626"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/b7be3726872547253dd0bd61098fa9f634c33555",
-                "reference": "b7be3726872547253dd0bd61098fa9f634c33555",
+                "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/fb4f888866d090b10e3e68292d197ca274cea626",
+                "reference": "fb4f888866d090b10e3e68292d197ca274cea626",
                 "shasum": ""
             },
             "require": {
@@ -515,13 +515,22 @@
                 "optparse",
                 "terminal"
             ],
-            "time": "2019-10-16T07:31:14+00:00"
+            "time": "2019-12-12T08:24:54+00:00"
         }
     ],
     "packages-dev": [],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "1.0.x-dev",
+            "alias_normalized": "1.0.9999999.9999999-dev",
+            "version": "9999999-dev",
+            "package": "geshi/geshi"
+        }
+    ],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "geshi/geshi": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author PaliPalo <palipalo@hotmail.fr>
@@ -76,7 +77,7 @@ $lang['allowdebug']            = 'Debug (<strong>Ne l\'activez que si vous en av
 $lang['recent']                = 'Nombre de lignes à afficher - par page - pour les derniers changements';
 $lang['recent_days']           = 'Signaler les pages modifiées depuis (en jours)';
 $lang['breadcrumbs']           = 'Nombre de traces à afficher. 0 désactive cette fonctionnalité.';
-$lang['youarehere']            = 'Utiliser des traces hiérarchiques (vous voulez probablement désactiver l\'option ci-dessus)';
+$lang['youarehere']            = 'Utiliser des traces hiérarchiques (vous voudrez probablement désactiver l\'option ci-dessus)';
 $lang['fullpath']              = 'Afficher le chemin complet des pages dans le pied de page';
 $lang['typography']            = 'Effectuer des améliorations typographiques';
 $lang['dformat']               = 'Format de date (cf. fonction <a href="http://php.net/strftime">strftime</a> de PHP)';

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author FENG.JIE <ahx@qq.com>
  * @author lainme <lainme993@gmail.com>
  * @author oott123 <ip.192.168.1.1@qq.com>
  * @author Errol <errol@hotmail.com>
@@ -20,6 +21,7 @@ $lang['referrals']             = '是否允许引用 (referrals)？';
 $lang['deref']                 = '如何间接引用别名？';
 $lang['binddn']                = '一个可选的绑定用户的 DN (如果匿名绑定不满足要求)。例如 <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']                = '上述用户的密码';
+$lang['attributes']            = '使用LDAP搜索属性。';
 $lang['userscope']             = '限制用户搜索的范围';
 $lang['groupscope']            = '限制组搜索的范围';
 $lang['userkey']               = '表示用户名的属性；必须和用户过滤器保持一致。';
