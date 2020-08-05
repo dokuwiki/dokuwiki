@@ -8,8 +8,8 @@
  * auth.class language support 
  * installer strings 
  *
- * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
+ * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik <exusik@gmail.com>
@@ -167,6 +167,7 @@ $lang['txt_upload']            = 'Vyberte súbor ako prílohu:';
 $lang['txt_filename']          = 'Uložiť ako (voliteľné):';
 $lang['txt_overwrt']           = 'Prepísať existujúci súbor';
 $lang['maxuploadsize']         = 'Obmedzenie max. %s na súbor.';
+$lang['allowedmime']           = 'Zoznam povolených prípon súborov';
 $lang['lockedby']              = 'Práve zamknuté:';
 $lang['lockexpire']            = 'Zámok stratí platnosť:';
 $lang['rssfailed']             = 'Nastala chyba pri vytváraní tohto RSS: ';
@@ -302,6 +303,7 @@ $lang['i_superuser']           = 'Správca';
 $lang['i_problems']            = 'Inštalátor narazil na nižšie uvedené problémy. Nemôžete pokračovať, pokiaľ ich neodstránite.';
 $lang['i_modified']            = 'Z bezpečnostných dôvodov bude tento skript fungovať iba s novou, neupravenou inštaláciou Dokuwiki. Môžete buď znovu rozbaliť stiahnutý inštalačný balík alebo preštudovať <a href="http://dokuwiki.org/install"> inštalačné inštrukcie Dokuwiki</a>';
 $lang['i_funcna']              = 'PHP funkcia <code>%s</code> nie je dostupná. Je možné, že ju z určitých dôvodov zablokoval váš poskytovateľ webhostingu?';
+$lang['i_funcnmail']           = '<b>Note:</b> PHP mail funkcia nie je dostupná. %s Ak zostáva stále nedostupná, možno by ste mohli nainštalovať <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Vaša verzia PHP <code>%s</code> je nižšia ako požadovaná <code>%s</code>. Potrebujete aktualizovať Vašu inštaláciu PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload musí byt zakázaná v php.ini pre bezproblémový chod DokuWiki.';
 $lang['i_permfail']            = '<code>%s</code> nie je zapisovateľný pre DokuWiki. Musíte zmeniť prístupové práva pre tento adresár!';
@@ -354,6 +356,7 @@ $lang['media_perm_upload']     = 'Prepáčte, ale nemáte dostatočné oprávnen
 $lang['media_update']          = 'Nahrať novú verziu';
 $lang['media_restore']         = 'Obnoviť túto verziu';
 $lang['media_acl_warning']     = 'Tento zoznam nemusí byť úplný z dôvodu ACL obmedzení alebo skratých stránok.';
+$lang['email_fail']            = 'PHP funkcia mail() chýba alebo  nie je povolená. Nasledujúci mail nebol poslaný:';
 $lang['currentns']             = 'Aktuálny menný priestor';
 $lang['searchresult']          = 'Výsledky hľadania';
 $lang['plainhtml']             = 'Jednoduché HTML';
