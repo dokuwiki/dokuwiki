@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
+ * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Tibor Repček <tiborepcek@gmail.com>
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik <exusik@gmail.com>

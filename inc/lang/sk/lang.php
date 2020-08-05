@@ -8,8 +8,8 @@
  * auth.class language support 
  * installer strings 
  *
- * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
+ * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik <exusik@gmail.com>
@@ -74,7 +74,7 @@ $lang['badpassconfirm']        = 'Ľutujem, heslo bolo nesprávne.';
 $lang['minoredit']             = 'Menšie zmeny';
 $lang['draftdate']             = 'Koncept automaticky uložený';
 $lang['nosecedit']             = 'Stránka bola medzičasom zmenená, informácie o sekcii sú zastaralé a z tohto dôvodu bola nahraná celá stránka.';
-$lang['searchcreatepage']      = 'Ak ste nenašli, čo ste hľadali, môžete vytvoriť alebo upraviť stránku %s, ktorá bola nazvaná podľa vášho dopytu.';
+$lang['searchcreatepage']      = 'Ak ste nenašli, čo ste hľadali, môžete vytvoriť alebo upraviť stránku %s pomenovanú podľa vášho dopytu.';
 $lang['search_fullresults']    = 'Fulltextové výsledky';
 $lang['js']['search_toggle_tools'] = 'Zobraziť/Skryť vyhľadávacie nástroje';
 $lang['js']['willexpire']      = 'Váš zámok pre editáciu za chvíľu stratí platnosť.\nAby ste predišli konfliktom, stlačte tlačítko Náhľad a zámok sa predĺži.';
@@ -120,7 +120,7 @@ $lang['js']['media_drop']      = 'Pridajte súbory potiahnutím myšou';
 $lang['js']['media_cancel']    = 'odstrániť';
 $lang['js']['media_overwrt']   = 'Prepísať existujúce súbory';
 $lang['search_exact_match']    = 'Presná zhoda';
-$lang['search_starts_with']    = 'Začín na';
+$lang['search_starts_with']    = 'Začína na';
 $lang['search_ends_with']      = 'Končí na';
 $lang['search_contains']       = 'Obsahuje';
 $lang['search_custom_match']   = 'Vlastný';
@@ -128,7 +128,7 @@ $lang['search_any_ns']         = 'Akýkoľvek menný priestor';
 $lang['search_any_time']       = 'Kedykoľvek';
 $lang['search_past_7_days']    = 'Posledný týždeň';
 $lang['search_past_month']     = 'Posledný mesiac';
-$lang['search_past_year']      = 'Posledný  rok';
+$lang['search_past_year']      = 'Posledný rok';
 $lang['search_sort_by_hits']   = 'Zoradiť podľa počtu návštev';
 $lang['search_sort_by_mtime']  = 'Zoradiť podľa posledných úprav';
 $lang['regmissing']            = 'Musíte vyplniť všetky údaje.';
