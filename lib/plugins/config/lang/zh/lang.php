@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Jenxi <seow@jenxi.com>
  * @author FENG.JIE <ahx@qq.com>
  * @author Xin <chenxin1034@gmail.com>
  * @author HaoNan <haonan@zhuoming.info>
