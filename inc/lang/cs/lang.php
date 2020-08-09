@@ -179,6 +179,7 @@ $lang['txt_upload']            = 'Vyberte soubor jako přílohu:';
 $lang['txt_filename']          = 'Wiki jméno (volitelné):';
 $lang['txt_overwrt']           = 'Přepsat existující soubor';
 $lang['maxuploadsize']         = 'Max. velikost souboru %s';
+$lang['allowedmime']           = 'Seznam povolených přípon souboru';
 $lang['lockedby']              = 'Právě zamknuto:';
 $lang['lockexpire']            = 'Zámek vyprší:';
 $lang['rssfailed']             = 'Nastala chyba při vytváření tohoto RSS: ';
