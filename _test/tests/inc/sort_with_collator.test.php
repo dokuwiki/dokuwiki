@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Utf8\Sort;
+
 /**
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
@@ -7,19 +9,11 @@ class sort_with_collator_test extends DokuWikiTest {
 
     private static $lang_before;
 
-    public static function setUpBeforeClass() {
-        parent::setUpBeforeClass();
+    public function setUp() {
+        parent::setUp();
 
         global $conf;
-        self::$lang_before = $conf['lang'];
         $conf['lang'] = 'eo'; // Esperanto
-        lang_has_changed();
-    }
-
-    public static function tearDownAfterClass() {
-        global $conf;
-        $conf['lang'] = self::$lang_before;
-        lang_has_changed();
     }
 
     /**
@@ -74,7 +68,7 @@ class sort_with_collator_test extends DokuWikiTest {
      * @param $str2
      */
     public function test_intl_strcmp($str1, $str2) {
-        $this->assertLessThan(0, intl_strcmp($str1, $str2));
+        $this->assertLessThan(0, Sort::strcmp($str1, $str2));
     }
 
     /**
@@ -84,7 +78,7 @@ class sort_with_collator_test extends DokuWikiTest {
         $sorted = explode(' ', $this->collation());
         $random = explode(' ', $this->collation());
         shuffle($random);
-        intl_sort($random);
+        Sort::sort($random);
         $this->assertEquals(array_values($random), array_values($sorted));
     }
 
@@ -96,7 +90,7 @@ class sort_with_collator_test extends DokuWikiTest {
         $random = explode(' ', $this->collation());
         shuffle($random);
         $random = array_flip($random);
-        intl_ksort($random);
+        Sort::ksort($random);
         $this->assertEquals(array_keys($random), array_keys($sorted));
     }
 
@@ -108,7 +102,7 @@ class sort_with_collator_test extends DokuWikiTest {
         $keys = array_keys($sorted);
         shuffle($keys);
         foreach($keys as $key) $random[$key] = $sorted[$key];
-        intl_asort($random);
+        Sort::asort($random);
         $this->assertEquals(array_values($random), array_values($sorted));
         $this->assertEquals(array_keys($random), array_keys($sorted));
     }
@@ -124,7 +118,7 @@ class sort_with_collator_test extends DokuWikiTest {
         $keys = array_keys($sorted);
         shuffle($keys);
         foreach($keys as $key) $random[$key] = $sorted[$key];
-        intl_asortFN($random);
+        Sort::asortFN($random);
         $this->assertEquals(array_values($random), array_values($sorted));
         $this->assertEquals(array_keys($random), array_keys($sorted));
     }
@@ -141,7 +135,7 @@ class sort_with_collator_test extends DokuWikiTest {
         $keys = array_keys($sorted);
         shuffle($keys);
         foreach($keys as $key) $random[$key] = $sorted[$key];
-        intl_asortFN($random);
+        Sort::asortFN($random);
         $this->assertEquals(array_values($random), array_values($sorted));
         $this->assertEquals(array_keys($random), array_keys($sorted));
     }
@@ -157,7 +151,7 @@ class sort_with_collator_test extends DokuWikiTest {
         $keys = array_keys($sorted);
         shuffle($keys);
         foreach($keys as $key) $random[$key] = $sorted[$key];
-        intl_asortFN($random);
+        Sort::asortFN($random);
         $this->assertEquals(array_values($random), array_values($sorted));
         $this->assertEquals(array_keys($random), array_keys($sorted));
     }
