@@ -19,7 +19,10 @@ namespace dokuwiki\Utf8;
 class Sort
 {
     /** @var \Collator[] language specific collators, usually only one */
-    protected static $collator;
+    protected static $collator = [];
+
+    /** @var bool should the intl extension be used if available? For testing only */
+    protected static $useIntl = true;
 
     /**
      * Initialization of a collator using $conf['lang'] as the locale.
@@ -37,7 +40,7 @@ class Sort
         $lc = $conf['lang'];
 
         // check if intl extension is available
-        if (!class_exists('\Collator')) {
+        if (!self::$useIntl || !class_exists('\Collator')) {
             return null;
         }
 
@@ -50,6 +53,19 @@ class Sort
         }
 
         return self::$collator[$lc];
+    }
+
+    /**
+     * Enable or disable the use of the intl extension collator
+     *
+     * This is mostly used for testing and should not be used in normal code
+     *
+     * @param bool $use
+     */
+    public static function useIntl($use = true)
+    {
+        self::$useIntl = $use;
+        self::$collator = [];
     }
 
     /**
