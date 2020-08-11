@@ -295,22 +295,6 @@ class httpclient_http_test extends DokuWikiTest {
     }
 
     /**
-     * This address caused trouble with stream_select()
-     *
-     * @group internet
-     * @group flaky
-     */
-    function test_wikimatrix(){
-        $http = new HTTPMockClient($this->useproxy);
-        $data = $http->get('http://www.wikimatrix.org/cfeed/dokuwiki/-/-');
-        if($http->noconnection()) {
-            $this->markTestIncomplete('connection timed out');
-            return;
-        }
-        $this->assertTrue($data !== false, $http->errorInfo());
-    }
-
-    /**
      * @throws ReflectionException
      */
     function test_postencode(){
