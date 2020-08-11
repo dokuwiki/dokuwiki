@@ -14,10 +14,24 @@ class HTTPMockClient extends HTTPClient {
 
     /**
      * Sets shorter timeout
+     * @param bool $useproxy
      */
-    public function __construct() {
+    public function __construct($useproxy) {
         parent::__construct();
         $this->timeout = 8; // slightly faster timeouts
+
+        if($useproxy) {
+            // proxy provided by  Andrwe Lord Weber <dokuwiki@andrwe.org>
+            // allows connections to:
+            // test.dokuwiki.org
+            // httpbin.org
+            // eu.httpbin.org
+            // www.dokuwiki.org
+            // github.com
+            // httpbingo.org
+            $this->proxy_host = 'proxy.andrwe.org';
+            $this->proxy_port = 8080;
+        }
     }
 
     /**

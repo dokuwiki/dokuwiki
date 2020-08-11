@@ -17,7 +17,7 @@ class httpclient_https_proxy_test extends httpclient_http_proxy_test {
      * @group internet
      */
     function test_connectfail(){
-        $http = new HTTPMockClient();
+        $http = new HTTPMockClient($this->useproxy);
         // proxy provided by  Andrwe Lord Weber <dokuwiki@andrwe.org>
         $http->proxy_host = 'proxy.andrwe.org';
         $http->proxy_port = 8080;
