@@ -23,7 +23,6 @@ class UserResendPwd extends Ui
      */
     public function show()
     {
-        global $lang;
         global $conf;
         global $INPUT;
 
@@ -31,47 +30,73 @@ class UserResendPwd extends Ui
 
         // print intro
         print p_locale_xhtml('resetpwd');
-        print '<div class="centeralign">'.DOKU_LF;
+        print '<div class="centeralign">';
 
         if (!$conf['autopasswd'] && $token) {
-            // create the form
-            $form = new Form(['id' => 'dw__resendpwd']);
-            $form->addTagOpen('div')->addClass('no');
-            $form->addFieldsetOpen($lang['btn_resendpwd']);
-            $form->setHiddenField('token', $token);
-            $form->setHiddenField('do', 'resendpwd');
-            $input = $form->addPasswordInput('pass', $lang['pass'])->attr('size', '50')->addClass('edit');
-            $input->getLabel()->attr('class', 'block');
-            $form->addHTML("<br>\n");
-            $input = $form->addPasswordInput('passchk', $lang['passchk'])->attr('size', '50')->addClass('edit');
-            $input->getLabel()->attr('class', 'block');
-            $form->addHTML("<br>\n");
-            $form->addButton('', $lang['btn_resendpwd'])->attrs(['type' => 'submit']);
-            $form->addFieldsetClose();
-            $form->addTagClose('div');
+            $form = $this->formSetNewPassword($token);
         } else {
-            // create the form
-            $form = new Form(['id' => 'dw__resendpwd']);
-            $form->addTagOpen('div')->addClass('no');
-            $form->addFieldsetOpen($lang['btn_resendpwd']);
-            $form->setHiddenField('do', 'resendpwd');
-            $form->setHiddenField('save', '1');
-            $form->addHTML("<br>\n");
-            $input = $form->addTextInput('login', $lang['user'])->addClass('edit')
-                ->val($INPUT->str('login'));
-            $input->getLabel()->attr('class', 'block');
-            $form->addHTML("<br>\n");
-            $form->addHTML("<br>\n");
-            $form->addButton('', $lang['btn_resendpwd'])->attrs(['type' => 'submit']);
-            $form->addFieldsetClose();
-            $form->addTagClose('div');
+            $form = $this->formResendPassword();
         }
 
         // emit HTML_RESENDPWDFORM_OUTPUT event
         Event::createAndTrigger('HTML_RESENDPWDFORM_OUTPUT', $form, null, false);
         print $form->toHTML();
 
-        print '</div>'.DOKU_LF;
+        print '</div>';
+    }
+
+    /**
+     * create a form ui to set new password
+     *
+     * @params string $token  cleaned pwauth request variable
+     * @return Form
+     */
+    protected function formSetNewPassword($token)
+    {
+        global $lang;
+
+        // create the form
+        $form = new Form(['id' => 'dw__resendpwd']);
+        $form->addTagOpen('div')->addClass('no');
+        $form->addFieldsetOpen($lang['btn_resendpwd']);
+        $form->setHiddenField('token', $token);
+        $form->setHiddenField('do', 'resendpwd');
+        $input = $form->addPasswordInput('pass', $lang['pass'])->attr('size', '50')->addClass('edit');
+        $input->getLabel()->attr('class', 'block');
+        $form->addHTML("<br>\n");
+        $input = $form->addPasswordInput('passchk', $lang['passchk'])->attr('size', '50')->addClass('edit');
+        $input->getLabel()->attr('class', 'block');
+        $form->addHTML("<br>\n");
+        $form->addButton('', $lang['btn_resendpwd'])->attr('type', 'submit');
+        $form->addFieldsetClose();
+        $form->addTagClose('div');
+        return $form;
+    }
+
+    /**
+     * create a form ui to request new password
+     *
+     * @return Form
+     */
+    protected function formResendPassword()
+    {
+        global $lang;
+
+        // create the form
+        $form = new Form(['id' => 'dw__resendpwd']);
+        $form->addTagOpen('div')->addClass('no');
+        $form->addFieldsetOpen($lang['btn_resendpwd']);
+        $form->setHiddenField('do', 'resendpwd');
+        $form->setHiddenField('save', '1');
+        $form->addHTML("<br>\n");
+        $input = $form->addTextInput('login', $lang['user'])->addClass('edit');
+        $input->getLabel()->attr('class', 'block');
+        $form->addHTML("<br>\n");
+        $form->addHTML("<br>\n");
+        $form->addButton('', $lang['btn_resendpwd'])->attr('type', 'submit');
+        $form->addFieldsetClose();
+        $form->addTagClose('div');
+        return $form;
     }
 
 }
