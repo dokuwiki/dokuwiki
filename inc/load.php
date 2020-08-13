@@ -155,7 +155,7 @@ function load_autoload($name){
             try {
                 require $plg;
             } catch (\Throwable $e) {
-                \dokuwiki\ErrorHandler::showExceptionMsg($e, "Error loading plugin ${$m[2]}");
+                \dokuwiki\ErrorHandler::showExceptionMsg($e, "Error loading plugin {$m[2]}");
             }
         }
         return true;
