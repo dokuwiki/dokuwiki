@@ -424,14 +424,13 @@ function dbg($msg,$hidden=false){
  * Print info to a log file
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- *
+ * @deprecated 2020-08-13
  * @param string $msg
  * @param string $header
  */
 function dbglog($msg,$header=''){
     global $conf;
-    /* @var Input $INPUT */
-    global $INPUT;
+    dbg_deprecated('\\dokuwiki\\Logger');
 
     // The debug log isn't automatically cleaned thus only write it when
     // debugging has been enabled by the user.
@@ -440,14 +439,15 @@ function dbglog($msg,$header=''){
         $msg = print_r($msg,true);
     }
 
-    if($header) $msg = "$header\n$msg";
-
-    $file = $conf['cachedir'].'/debug.log';
-    $fh = fopen($file,'a');
-    if($fh){
-        fwrite($fh,date('H:i:s ').$INPUT->server->str('REMOTE_ADDR').': '.$msg."\n");
-        fclose($fh);
+    // was the msg as single line string? use it as header
+    if($header === '' && strpos($msg, "\n") === false) {
+        $header = $msg;
+        $msg = '';
     }
+
+    \dokuwiki\Logger::getInstance(\dokuwiki\Logger::LOG_DEBUG)->log(
+        $header, $msg
+    );
 }
 
 /**
