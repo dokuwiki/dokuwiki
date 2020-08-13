@@ -6,8 +6,6 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 /**
  * Recurse directory
  *
@@ -20,13 +18,19 @@ if(!defined('DOKU_INC')) die('meh.');
  * @param   array     $opts option array will be given to the Callback
  * @param   string    $dir  Current directory beyond $base
  * @param   int       $lvl  Recursion Level
- * @param   mixed     $sort 'natural' to use natural order sorting (default); 'date' to sort by filemtime; leave empty to skip sorting.
+ * @param   mixed     $sort 'natural' to use natural order sorting (default);
+ *                          'date' to sort by filemtime; leave empty to skip sorting.
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
     $dirs   = array();
     $files  = array();
     $filepaths = array();
+
+    // safeguard against runaways #1452
+    if($base == '' || $base == '/') {
+        throw new RuntimeException('No valid $base passed to search() - possible misconfiguration or bug');
+    }
 
     //read in directories and files
     $dh = @opendir($base.'/'.$dir);
@@ -89,6 +93,15 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
  * Searches for pages beginning with the given query
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
  */
 function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
     $opts = array(
@@ -105,6 +118,15 @@ function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
  * $opts['ns'] is the currently viewed namespace
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
  */
 function search_index(&$data,$base,$file,$type,$lvl,$opts){
     global $conf;
@@ -124,6 +146,15 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
  * List all namespaces
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
  */
 function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
     $opts = array(
@@ -141,6 +172,15 @@ function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
  *   $opts['hash']      add hashes to result list
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
  */
 function search_media(&$data,$base,$file,$type,$lvl,$opts){
 
@@ -171,7 +211,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
         return false;
     }
 
-    $info['file']     = utf8_basename($file);
+    $info['file']     = \dokuwiki\Utf8\PhpString::basename($file);
     $info['size']     = filesize($base.'/'.$file);
     $info['mtime']    = filemtime($base.'/'.$file);
     $info['writable'] = is_writable($base.'/'.$file);
@@ -197,6 +237,15 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
  * This function just lists documents (for RSS namespace export)
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
  */
 function search_list(&$data,$base,$file,$type,$lvl,$opts){
     //we do nothing with directories
@@ -219,6 +268,15 @@ function search_list(&$data,$base,$file,$type,$lvl,$opts){
  * $opts['query'] is the search query
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
  */
 function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
     //we do nothing with directories
@@ -248,6 +306,15 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
  * $opts['skipacl'] list everything regardless of ACL
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
  */
 function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
     if(isset($opts['depth']) && $opts['depth']){
@@ -268,14 +335,14 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
 
     $item = array();
     $item['id']   = pathID($file);
-    if(!$opts['skipacl'] && auth_quickaclcheck($item['id']) < AUTH_READ){
+    if(empty($opts['skipacl']) && auth_quickaclcheck($item['id']) < AUTH_READ){
         return false;
     }
 
     $item['rev']   = filemtime($base.'/'.$file);
     $item['mtime'] = $item['rev'];
     $item['size']  = filesize($base.'/'.$file);
-    if($opts['hash']){
+    if(!empty($opts['hash'])){
         $item['hash'] = md5(trim(rawWiki($item['id'])));
     }
 
@@ -292,6 +359,11 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
  * structure created by search_fulltext. Sorts descending by count
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $a
+ * @param array $b
+ *
+ * @return int
  */
 function sort_search_fulltext($a,$b){
     if($a['count'] > $b['count']){
@@ -308,6 +380,11 @@ function sort_search_fulltext($a,$b){
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @todo    move to pageutils
+ *
+ * @param string $path
+ * @param bool $keeptxt
+ *
+ * @return mixed|string
  */
 function pathID($path,$keeptxt=false){
     $id = utf8_decodeFN($path);
@@ -404,7 +481,8 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     // are we done here maybe?
     if($type == 'd'){
         if(empty($opts['listdirs'])) return $return;
-        if(empty($opts['skipacl']) && !empty($opts['sneakyacl']) && $item['perm'] < AUTH_READ) return false; //neither list nor recurse
+        //neither list nor recurse forbidden items:
+        if(empty($opts['skipacl']) && !empty($opts['sneakyacl']) && $item['perm'] < AUTH_READ) return false;
         if(!empty($opts['dirmatch']) && !preg_match('/'.$opts['dirmatch'].'/',$file)) return $return;
         if(!empty($opts['nsmatch']) && !preg_match('/'.$opts['nsmatch'].'/',$item['ns'])) return $return;
     }else{
@@ -422,7 +500,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     $item['open']  = $return;
 
     if(!empty($opts['meta'])){
-        $item['file']       = utf8_basename($file);
+        $item['file']       = \dokuwiki\Utf8\PhpString::basename($file);
         $item['size']       = filesize($base.'/'.$file);
         $item['mtime']      = filemtime($base.'/'.$file);
         $item['rev']        = $item['mtime'];

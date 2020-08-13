@@ -1,6 +1,7 @@
 <?php
+
 /**
- * German (informal) language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
@@ -11,7 +12,7 @@
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Mateng Schimmerlos <mateng@firemail.de>
  * @author Volker Bödker <volker@boedker.de>
- * @author Matthias Schulte <dokuwiki@lupo49.de>
+ * @author rnck <dokuwiki@rnck.de>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Konfiguration wurde nicht aktualisiert auf Grund eines ungültigen Wertes. Bitte überprüfe deine Änderungen und versuche es erneut.<br />Die/der ungültige(n) Wert(e) werden durch eine rote Umrandung hervorgehoben.';
@@ -60,7 +61,7 @@ $lang['breadcrumbs']           = 'Anzahl der Einträge im "Krümelpfad"';
 $lang['youarehere']            = 'Hierarchische Pfadnavigation verwenden';
 $lang['fullpath']              = 'Zeige vollen Pfad der Datei in Fußzeile an';
 $lang['typography']            = 'Mach drucktechnische Ersetzungen';
-$lang['dformat']               = 'Datumsformat (siehe PHPs <a href="http://www.php.net/strftime">strftime</a> Funktion)';
+$lang['dformat']               = 'Datumsformat (siehe PHPs <a href="http://php.net/strftime">strftime</a> Funktion)';
 $lang['signature']             = 'Signatur';
 $lang['showuseras']            = 'Was angezeigt werden soll, wenn der Benutzer, der zuletzt eine Seite bearbeitet hat, angezeigt wird';
 $lang['toptoclevel']           = 'Inhaltsverzeichnis bei dieser Überschriftengröße beginnen';
@@ -87,6 +88,7 @@ $lang['disableactions_subscription'] = 'Bestellen/Abbestellen';
 $lang['disableactions_wikicode'] = 'Zeige Quelle/Exportiere Rohdaten';
 $lang['disableactions_profile_delete'] = 'Eigenes Benutzerprofil löschen';
 $lang['disableactions_other']  = 'Weitere Aktionen (durch Komma getrennt)';
+$lang['disableactions_rss']    = 'XML Syndication (RSS)';
 $lang['auth_security_timeout'] = 'Zeitüberschreitung bei der Authentifizierung (Sekunden)';
 $lang['securecookie']          = 'Sollen Cookies, die via HTTPS gesetzt wurden nur per HTTPS versendet werden? Deaktiviere diese Option, wenn nur der Login deines Wikis mit SSL gesichert ist, aber das Betrachten des Wikis ungesichert geschieht.';
 $lang['remote']                = 'Aktiviert den externen API-Zugang. Diese Option erlaubt es externen Anwendungen von außen auf die XML-RPC-Schnittstelle oder anderweitigen Schnittstellen zuzugreifen.';
@@ -117,6 +119,7 @@ $lang['subscribe_time']        = 'Zeit nach der Zusammenfassungs- und Änderungs
 $lang['notify']                = 'Sende Änderungsbenachrichtigungen an diese E-Mail-Adresse.';
 $lang['registernotify']        = 'Sende Information bei neu registrierten Benutzern an diese E-Mail-Adresse.';
 $lang['mailfrom']              = 'Absenderadresse für automatisch erzeugte E-Mails';
+$lang['mailreturnpath']        = 'Empfänger-E-Mail-Adresse für Unzustellbarkeitsnachricht';
 $lang['mailprefix']            = 'Präfix für E-Mail-Betreff beim automatischen Versand von Benachrichtigungen';
 $lang['htmlmail']              = 'Versendet optisch angenehmere, aber größere E-Mails im HTML-Format (multipart). Deaktivieren, um Text-Mails zu versenden.';
 $lang['sitemap']               = 'Erzeuge Google Sitemaps (Tage)';
@@ -136,7 +139,7 @@ $lang['autoplural']            = 'Bei Links automatisch nach vorhandenen Pluralf
 $lang['compression']           = 'Komprimierungsmethode für alte Seitenrevisionen';
 $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['compress']              = 'JavaScript und Stylesheets komprimieren';
-$lang['cssdatauri']            = 'Größe in Bytes, bis zu der Bilder in css-Dateien referenziert werden können, um HTTP-Anfragen zu minimieren. Diese Technik funktioniert nicht im IE 7 und älter! <code>400</code> bis <code>600</code> Bytes sind gute Werte. Setze <code>0</code> für inaktive Funktion.';
+$lang['cssdatauri']            = 'Größe in Bytes, bis zu der Bilder in css-Dateien referenziert werden können, um HTTP-Anfragen zu minimieren. <code>400</code> bis <code>600</code> Bytes sind gute Werte. Setze <code>0</code> für inaktive Funktion.';
 $lang['send404']               = 'Sende "HTTP 404/Seite nicht gefunden" für nicht existierende Seiten';
 $lang['broken_iua']            = 'Falls die Funktion ignore_user_abort auf deinem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür. Siehe auch <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
 $lang['xsendfile']             = 'Den X-Sendfile-Header nutzen, um Dateien direkt vom Webserver ausliefern zu lassen? Dein Webserver muss dies unterstützen!';
@@ -144,18 +147,16 @@ $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wik
 $lang['renderer__core']        = '%s (DokuWiki Kern)';
 $lang['renderer__plugin']      = '%s (Erweiterung)';
 $lang['dnslookups']            = 'DokuWiki löst die IP-Adressen von Benutzern zu deren Hostnamen auf. Wenn du einen langsamen, unbrauchbaren DNS-Server verwendest oder die Funktion nicht benötigst, dann sollte diese Option deaktivert sein.';
+$lang['jquerycdn']             = 'Sollen die jQuery und jQuery UI Skriptdateien von einem CDN geladen werden? Das verursacht zusätzliche HTTP Anfragen, aber die Dateien werden möglicherweise schneller geladen und Nutzer haben sie vielleicht bereits im Cache.';
+$lang['jquerycdn_o_0']         = 'Kein CDN, nur lokale Auslieferung';
+$lang['jquerycdn_o_jquery']    = 'CDN bei code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'CDN bei cdnjs.com';
 $lang['proxy____host']         = 'Proxyadresse';
 $lang['proxy____port']         = 'Proxyport';
 $lang['proxy____user']         = 'Benutzername für den Proxy';
 $lang['proxy____pass']         = 'Passwort von dem Proxybenutzer';
 $lang['proxy____ssl']          = 'SSL verwenden um auf den Proxy zu zugreifen';
 $lang['proxy____except']       = 'Regulärer Ausdruck um Adressen zu beschreiben, für die kein Proxy verwendet werden soll';
-$lang['safemodehack']          = 'Aktiviere safemode Hack';
-$lang['ftp____host']           = 'FTP Server für safemode Hack';
-$lang['ftp____port']           = 'FTP Port für safemode Hack';
-$lang['ftp____user']           = 'FTP Benutzername für safemode Hack';
-$lang['ftp____pass']           = 'FTP Passwort für safemode Hack';
-$lang['ftp____root']           = 'FTP Wurzelverzeichnis für Safemodehack';
 $lang['license_o_']            = 'Nichts ausgewählt';
 $lang['typography_o_0']        = 'nichts';
 $lang['typography_o_1']        = 'ohne einfache Anführungszeichen';
@@ -191,6 +192,7 @@ $lang['xsendfile_o_2']         = 'Standard X-Sendfile-Header';
 $lang['xsendfile_o_3']         = 'Proprietärer Nginx X-Accel-Redirect-Header';
 $lang['showuseras_o_loginname'] = 'Login-Name';
 $lang['showuseras_o_username'] = 'Voller Name des Benutzers';
+$lang['showuseras_o_username_link'] = 'Kompletter Name des Benutzers als Interwiki-Link';
 $lang['showuseras_o_email']    = 'E-Mail-Adresse des Benutzers (je nach Mailguard-Einstellung verschleiert)';
 $lang['showuseras_o_email_link'] = 'E-Mail-Adresse des Benutzers als mailto:-Link';
 $lang['useheading_o_0']        = 'Niemals';

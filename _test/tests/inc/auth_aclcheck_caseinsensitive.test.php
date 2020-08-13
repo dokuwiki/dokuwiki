@@ -1,10 +1,6 @@
 <?php
 
-class auth_acl_caseinsensitive_auth extends DokuWiki_Auth_Plugin {
-    function isCaseSensitive() {
-        return false;
-    }
-}
+use dokuwiki\test\mock\AuthCaseInsensitivePlugin;
 
 class auth_acl_caseinsensitive_test extends DokuWikiTest {
     protected $oldAuth;
@@ -18,7 +14,7 @@ class auth_acl_caseinsensitive_test extends DokuWikiTest {
         $this->oldAuth    = $auth;
         $this->oldAuthAcl = $AUTH_ACL;
 
-        $auth = new auth_acl_caseinsensitive_auth();
+        $auth = new AuthCaseInsensitivePlugin();
     }
 
     function tearDown() {

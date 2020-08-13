@@ -10,8 +10,3 @@ IP 地址     : @IPADDRESS@
 用户        : @USER@
 
 @DIFF@
-
-
--- 
-本邮件由 DokuWiki 自动创建
-@DOKUWIKIURL@

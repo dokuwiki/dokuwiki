@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Davor Turkalj <turki.bsc@gmail.com>
  */
 $lang['account_suffix']        = 'Vaš sufiks korisničkog imena. Npr. <code>@my.domain.org</code>';
@@ -18,3 +18,5 @@ $lang['use_tls']               = 'Koristi TLS vezu? Ako da, gore ne koristi SSL!
 $lang['debug']                 = 'Prikaži dodatni debug ispis u slučaju greške? ';
 $lang['expirywarn']            = 'Upozori korisnike o isteku lozinke ovoliko dana. 0 za onemogućavanje. ';
 $lang['additional']            = 'Zarezom odvojena lista dodatnih AD atributa koji se dohvaćaju iz korisničkih podataka. Koristi se u nekim dodatcima (plugin).';
+$lang['update_name']           = 'Omogućiti korisnicima da izmjene svoje ime u AD-u?';
+$lang['update_mail']           = 'Omogućiti korisnicima da izmjene svoju email adresu?';

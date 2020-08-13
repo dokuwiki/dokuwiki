@@ -118,7 +118,7 @@
 .dokuwiki dl.file {
     dt {
         background-color: @ini_background_site;
-        .linear-gradient(~"top, @{ini_background_alt} 0%, @{ini_background_site} 100%");
+        background: linear-gradient(to bottom, @ini_background_alt 0%, @ini_background_site 100%);
         color: inherit;
         border: 1px solid @ini_border;
         border-bottom-color: @ini_background_site;
@@ -140,7 +140,6 @@
     dd {
         margin: 0;
         clear: left;
-        min-height: 1px; /* for IE7 */
     }
 
     pre {

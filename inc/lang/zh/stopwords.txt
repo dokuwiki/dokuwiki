@@ -1,7 +1,7 @@
-# This is a list of words the indexer ignores, one word per line
-# When you edit this file be sure to use UNIX line endings (single newline)
-# No need to include words shorter than 3 chars - these are ignored anyway
-# This list is based upon the ones found at http://www.ranks.nl/stopwords/
+# 这是一个索引器忽略的单词列表，每行一个单词
+# 这个文件需要使用UNIX行结尾（单换行符）
+# 不需要包括短于3字符的词，这些都会被忽略
+# 这个列表是基于此改进的 http://www.ranks.nl/stopwords/
 about
 are
 and

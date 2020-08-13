@@ -2,14 +2,15 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Aleš Milošič <ales.milosic@gmail.com>
+ * @author Simon <sbx@protonmail.ch>
  * @author Jaka Kranjc <lynxlupodian@hotmail.com>
  * @author Boštjan Seničar <senicar@gmail.com>
  * @author Dejan Levec <webphp@gmail.com>
  * @author Gregor Skumavc (grega.skumavc@gmail.com)
  * @author Matej Urbančič (mateju@svn.gnome.org)
  * @author Matej Urbančič <mateju@svn.gnome.org>
- * @author matej <mateju@svn.gnome.org>
  * @author Jernej Vidmar <jernej.vidmar@vidmarboehm.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -42,7 +43,6 @@ $lang['btn_update']            = 'Posodobi';
 $lang['btn_delete']            = 'Izbriši';
 $lang['btn_back']              = 'Nazaj';
 $lang['btn_backlink']          = 'Povratne povezave';
-$lang['btn_backtomedia']       = 'Nazaj na izbiro predstavnih datotek';
 $lang['btn_subscribe']         = 'Urejanje naročnin';
 $lang['btn_profile']           = 'Posodobi profil';
 $lang['btn_reset']             = 'Ponastavi';
@@ -51,7 +51,7 @@ $lang['btn_draft']             = 'Uredi osnutek';
 $lang['btn_recover']           = 'Obnovi osnutek';
 $lang['btn_draftdel']          = 'Izbriši osnutek';
 $lang['btn_revert']            = 'Povrni';
-$lang['btn_register']          = 'Prijava';
+$lang['btn_register']          = 'Registracija';
 $lang['btn_apply']             = 'Uveljavi';
 $lang['btn_media']             = 'Urejevalnik predstavnih vsebin';
 $lang['btn_deleteuser']        = 'Odstrani račun';
@@ -72,41 +72,7 @@ $lang['badpassconfirm']        = 'Napaka! Geslo ni pravo.';
 $lang['minoredit']             = 'Manjše spremembe';
 $lang['draftdate']             = 'Samodejno shranjevanje osnutka je omogočeno';
 $lang['nosecedit']             = 'Stran je bila v vmesnem času spremenjena. Podatki strani so bili zastareli, zato se je celotna vsebina naložila znova.';
-$lang['searchcreatepage']      = "V kolikor rezultati niso skladni z zahtevami iskanja, je mogoče ustvariti  novo stran z nazivom vaše poizvedbe preko povezave ''Uredi stran''.";
-$lang['regmissing']            = 'Izpolniti je treba vsa polja.';
-$lang['reguexists']            = 'Uporabnik s tem imenom že obstaja.';
-$lang['regsuccess']            = 'Uporabniški račun je uspešno ustvarjen. Geslo je bilo poslano na naveden elektronski naslov.';
-$lang['regsuccess2']           = 'Uporabniški račun je uspešno ustvarjen.';
-$lang['regmailfail']           = 'Videti je, da je prišlo do napake med pošiljanjem gesla. Stopite v stik s skrbnikom sistema!';
-$lang['regbadmail']            = 'Videti je, da je naveden elektronski naslov neveljaven - v kolikor je to napaka, stopite v stik s skrbnikom sistema.';
-$lang['regbadpass']            = 'Gesli nista enaki. Poskusite znova.';
-$lang['regpwmail']             = 'Geslo za DokuWiki';
-$lang['reghere']               = 'Nimate še računa? Vpišite se za nov račun.';
-$lang['profna']                = 'DokuWiki ne podpira spreminjanja profila.';
-$lang['profnochange']          = 'Brez sprememb.';
-$lang['profnoempty']           = 'Prazno polje elektronskega naslova ali imena ni dovoljeno.';
-$lang['profchanged']           = 'Uporabniški profil je uspešno posodobljen.';
-$lang['profnodelete']          = 'Ni omogočena podpora za brisanje uporabnikov.';
-$lang['profdeleteuser']        = 'Izbriši račun';
-$lang['profdeleted']           = 'Uporabniški račun je izbrisan.';
-$lang['profconfdeletemissing'] = 'Potrditveno okno ni označeno';
-$lang['pwdforget']             = 'Ali ste pozabili geslo? Pridobite si novo geslo.';
-$lang['resendna']              = 'DokuWiki ne podpira možnosti ponovnega pošiljanja gesel.';
-$lang['resendpwd']             = 'Nastavi novo geslo za';
-$lang['resendpwdmissing']      = 'Izpolniti je treba vsa polja.';
-$lang['resendpwdnouser']       = 'Podanega uporabniškega imena v podatkovni zbirki ni mogoče najti.';
-$lang['resendpwdbadauth']      = 'Koda za overitev ni prava. Prepričajte se, da ste uporabili celotno povezavo za potrditev.';
-$lang['resendpwdconfirm']      = 'Povezava za potrditev računa je bila poslana na elektronski naslov.';
-$lang['resendpwdsuccess']      = 'Novo geslo je bilo poslano na elektronski naslov.';
-$lang['license']               = 'V kolikor ni posebej določeno, je vsebina Wiki strani objavljena pod pogoji dovoljenja:';
-$lang['licenseok']             = 'Opomba: z urejanjem vsebine strani, se strinjate z objavo pod pogoji dovoljenja:';
-$lang['searchmedia']           = 'Poišči ime datoteke:';
-$lang['searchmedia_in']        = 'Poišči v %s';
-$lang['txt_upload']            = 'Izberite datoteko za pošiljanje:';
-$lang['txt_filename']          = 'Pošlji z imenom (izborno):';
-$lang['txt_overwrt']           = 'Prepiši obstoječo datoteko';
-$lang['lockedby']              = 'Trenutno je zaklenjeno s strani:';
-$lang['lockexpire']            = 'Zaklep preteče ob:';
+$lang['searchcreatepage']      = 'Če nisi našel tega kar iščeš, lahko ustvariš ali urediš stran %s, ki bo poimenovana po vašem iskalnem pojmu.';
 $lang['js']['willexpire']      = 'Zaklep za urejevanje bo pretekel čez eno minuto.\nV izogib sporom, uporabite predogled, da se merilnik časa za zaklep ponastavi.';
 $lang['js']['notsavedyet']     = 'Neshranjene spremembe bodo izgubljene.';
 $lang['js']['searchmedia']     = 'Poišči datoteke';
@@ -147,10 +113,43 @@ $lang['js']['media_done_btn']  = 'Končano';
 $lang['js']['media_drop']      = 'Spusti datoteke za nalaganje.';
 $lang['js']['media_cancel']    = 'odstrani';
 $lang['js']['media_overwrt']   = 'Prepiši obstoječe datoteke';
+$lang['regmissing']            = 'Izpolniti je treba vsa polja.';
+$lang['reguexists']            = 'Uporabnik s tem imenom že obstaja.';
+$lang['regsuccess']            = 'Uporabniški račun je uspešno ustvarjen. Geslo je bilo poslano na naveden elektronski naslov.';
+$lang['regsuccess2']           = 'Uporabniški račun je uspešno ustvarjen.';
+$lang['regmailfail']           = 'Videti je, da je prišlo do napake med pošiljanjem gesla. Stopite v stik s skrbnikom sistema!';
+$lang['regbadmail']            = 'Videti je, da je naveden elektronski naslov neveljaven - v kolikor je to napaka, stopite v stik s skrbnikom sistema.';
+$lang['regbadpass']            = 'Gesli nista enaki. Poskusite znova.';
+$lang['regpwmail']             = 'Geslo za DokuWiki';
+$lang['reghere']               = 'Nimate še računa? Vpišite se za nov račun.';
+$lang['profna']                = 'DokuWiki ne podpira spreminjanja profila.';
+$lang['profnochange']          = 'Brez sprememb.';
+$lang['profnoempty']           = 'Prazno polje elektronskega naslova ali imena ni dovoljeno.';
+$lang['profchanged']           = 'Uporabniški profil je uspešno posodobljen.';
+$lang['profnodelete']          = 'Ni omogočena podpora za brisanje uporabnikov.';
+$lang['profdeleteuser']        = 'Izbriši račun';
+$lang['profdeleted']           = 'Uporabniški račun je izbrisan.';
+$lang['profconfdeletemissing'] = 'Potrditveno okno ni označeno';
+$lang['pwdforget']             = 'Ali ste pozabili geslo? Pridobite si novo geslo.';
+$lang['resendna']              = 'DokuWiki ne podpira možnosti ponovnega pošiljanja gesel.';
+$lang['resendpwd']             = 'Nastavi novo geslo za';
+$lang['resendpwdmissing']      = 'Izpolniti je treba vsa polja.';
+$lang['resendpwdnouser']       = 'Podanega uporabniškega imena v podatkovni zbirki ni mogoče najti.';
+$lang['resendpwdbadauth']      = 'Koda za overitev ni prava. Prepričajte se, da ste uporabili celotno povezavo za potrditev.';
+$lang['resendpwdconfirm']      = 'Povezava za potrditev računa je bila poslana na elektronski naslov.';
+$lang['resendpwdsuccess']      = 'Novo geslo je bilo poslano na elektronski naslov.';
+$lang['license']               = 'V kolikor ni posebej določeno, je vsebina Wiki strani objavljena pod pogoji dovoljenja:';
+$lang['licenseok']             = 'Opomba: z urejanjem vsebine strani, se strinjate z objavo pod pogoji dovoljenja:';
+$lang['searchmedia']           = 'Poišči ime datoteke:';
+$lang['searchmedia_in']        = 'Poišči v %s';
+$lang['txt_upload']            = 'Izberite datoteko za pošiljanje:';
+$lang['txt_filename']          = 'Pošlji z imenom (izborno):';
+$lang['txt_overwrt']           = 'Prepiši obstoječo datoteko';
+$lang['lockedby']              = 'Trenutno je zaklenjeno s strani:';
+$lang['lockexpire']            = 'Zaklep preteče ob:';
 $lang['rssfailed']             = 'Prišlo je do napake med pridobivanjem vira: ';
 $lang['nothingfound']          = 'Ni najdenih predmetov.';
 $lang['mediaselect']           = 'Predstavne datoteke';
-$lang['fileupload']            = 'Pošiljanje predstavnih datotek';
 $lang['uploadsucc']            = 'Pošiljanje je bilo uspešno končano.';
 $lang['uploadfail']            = 'Pošiljanje je spodletelo. Morda so uporabljena neustrezna dovoljenja.';
 $lang['uploadwrong']           = 'Pošiljanje je zavrnjeno. Uporabljena pripona datoteke je prepovedana.';
@@ -239,7 +238,6 @@ $lang['qb_sig']                = 'Vstavi podpis';
 $lang['qb_smileys']            = 'Smeški';
 $lang['qb_chars']              = 'Posebni znaki';
 $lang['upperns']               = 'skoči na nadrejeni imenski prostor';
-$lang['admin_register']        = 'Dodaj novega uporabnika';
 $lang['metaedit']              = 'Uredi metapodatke';
 $lang['metasaveerr']           = 'Zapisovanje metapodatkov je spodletelo';
 $lang['metasaveok']            = 'Metapodatki so shranjeni';
@@ -272,7 +270,6 @@ $lang['subscr_style_every']    = 'elektronsko sporočilo ob vsaki spremembi';
 $lang['subscr_style_digest']   = 'strnjeno elektronsko sporočilo sprememb za vsako stran (vsakih %.2f dni)';
 $lang['subscr_style_list']     = 'seznam spremenjenih strani od zadnjega elektronskega sporočila (vsakih %.2f dni)';
 $lang['authtempfail']          = 'Potrditev uporabnika je trenutno nedostopna. Stopite v stik s skrbnikom sistema wiki.';
-$lang['authpwdexpire']         = 'Geslo bo poteklo v %d dneh. Priporočljivo ga je zamenjati.';
 $lang['i_chooselang']          = 'Izberite jezik';
 $lang['i_installer']           = 'DokuWiki namestitev';
 $lang['i_wikiname']            = 'Ime Wiki spletišča';
@@ -335,3 +332,5 @@ $lang['currentns']             = 'Trenutni imenski prostor';
 $lang['searchresult']          = 'Rezultati iskanja';
 $lang['plainhtml']             = 'Zapis HTML';
 $lang['wikimarkup']            = 'Oblikovni jezik Wiki';
+$lang['email_signature_text']  = 'Sporočilo je samodejno ustvarjeno na spletišču
+@DOKUWIKIURL@';

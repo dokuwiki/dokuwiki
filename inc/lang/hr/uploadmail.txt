@@ -1,7 +1,7 @@
 Datoteka je učitana na Vaš DokuWiki. Ovdje su detalji:
 
 Datoteka     : @MEDIA@
-Stara verzija: @OLD@
+Stara izmjena: @OLD@
 Datum        : @DATE@
 Preglednik   : @BROWSER@
 IP-Adresa    : @IPADDRESS@
@@ -9,7 +9,3 @@ Računalo     : @HOSTNAME@
 Veličina     : @SIZE@
 MIME Tip     : @MIME@
 Korisnik     : @USER@
-
--- 
-Ova poruka je generirana od strane DokuWiki dostupnog na
-@DOKUWIKIURL@

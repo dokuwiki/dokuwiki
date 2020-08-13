@@ -8,6 +8,3 @@ IP адрес : @IPADDRESS@
 Размер : @SIZE@
 MIME тип : @MIME@
 Потребител : @USER@
-
--- 
-Писмото е генерирано от DokuWiki на адрес @DOKUWIKIURL@

@@ -4,19 +4,29 @@
     convertNoticesToExceptions="false"
     colors="true"
     stderr="true"
+    backupGlobals="true"
     >
 
     <testsuites>
         <testsuite name="DokuWiki Tests">
             <directory suffix=".test.php">tests/</directory>
+            <directory suffix="Test.php">tests/</directory>
         </testsuite>
         <testsuite name="Plugin Tests">
-            <directory suffix=".test.php">../lib/plugins/*/_test</directory>
+            <directory suffix=".test.php">../lib/plugins/*/_test/</directory>
+            <directory suffix="Test.php">../lib/plugins/*/_test/</directory>
         </testsuite>
         <testsuite name="Template Tests">
-            <directory suffix=".test.php">../lib/tpl/*/_test</directory>
+            <directory suffix=".test.php">../lib/tpl/*/_test/</directory>
+            <directory suffix="Test.php">../lib/tpl/*/_test/</directory>
         </testsuite>
     </testsuites>
+
+    <groups>
+        <exclude>
+            <group>flaky</group>
+        </exclude>
+    </groups>
 
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="false">

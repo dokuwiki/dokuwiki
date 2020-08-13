@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
@@ -11,7 +11,6 @@
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Volker Bödker <volker@boedker.de>
- * @author Matthias Schulte <dokuwiki@lupo49.de>
  */
 $lang['menu']                  = 'Seiten wiederherstellen';
 $lang['filter']                = 'Durchsuche als Spam markierte Seiten';

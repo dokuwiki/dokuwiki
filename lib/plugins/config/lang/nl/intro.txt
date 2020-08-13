@@ -5,5 +5,3 @@ Gebruik deze pagina om de instellingen van je DokuWiki te bekijken en/of te wijz
 Instellingen met een rode achtergond kunnen niet worden gewijzigd met deze plugin. Instellingen met een blauwe achtergrond hebben de default waarde, en instellingen met een witte achtergrond zijn lokaal gewijzigd voor deze specifieke installatie. Zowel blauwe als witte instellingen kunnen worden gewijzigd.
 
 Vergeet niet op **Opslaan** te drukken alvorens de pagina te verlaten, anders gaan je wijzigingen verloren.
-
-

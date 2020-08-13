@@ -17,7 +17,7 @@ class media_get_from_url_test extends DokuWikiTest {
         // remember time stamp
         $time = filemtime($local);
         clearstatcache(false, $local);
-        sleep(1);
+        $this->waitForTick(true);
 
         // fetch again and make sure we got a cache file
         $local = media_get_from_URL('http://www.google.com/images/srpr/logo3w.png','png',-1);

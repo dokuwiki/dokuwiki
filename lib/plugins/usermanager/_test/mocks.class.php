@@ -12,39 +12,34 @@ class admin_mock_usermanager extends admin_plugin_usermanager {
     public $mock_email_notifications = true;
     public $mock_email_notifications_sent = 0;
 
+    public $localised;
+    public $lang;
+
     public function getImportFailures() {
-        return $this->_import_failures;
+        return $this->import_failures;
     }
 
     public function tryExport() {
         ob_start();
-        $this->_export();
+        $this->exportCSV();
         return ob_get_clean();
     }
 
     public function tryImport() {
-        return $this->_import();
-    }
-
-    /**
-     * @deprecated    remove when dokuwiki requires php 5.3+
-     *                also associated unit test & usermanager methods
-     */
-    public function access_str_getcsv($line){
-        return $this->str_getcsv($line);
+        return $this->importCSV();
     }
 
     // no need to send email notifications (mostly)
-    protected function _notifyUser($user, $password, $status_alert=true) {
+    protected function notifyUser($user, $password, $status_alert=true) {
         if ($this->mock_email_notifications) {
             $this->mock_email_notifications_sent++;
             return true;
         } else {
-            return parent::_notifyUser($user, $password, $status_alert);
+            return parent::notifyUser($user, $password, $status_alert);
         }
     }
 
-    protected function _isUploadedFile($file) {
+    protected function isUploadedFile($file) {
         return file_exists($file);
     }
 }

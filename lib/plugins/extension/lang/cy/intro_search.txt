@@ -1,0 +1,1 @@
+Mae'r tab hwn yn rhoi mynediad i bob [[doku>plugins|ategyn]] a [[doku>template|thempled]] 3ydd parti ar gael ar gyfer DokuWiki. Sylwch fod arsefydlu cod 3ydd parti yn achosi **risg diogelwch**. Efallai hoffech chi ddarllen mwy ar [[doku>security#plugin_security|ddiogelwch ategion]] yn gyntaf.

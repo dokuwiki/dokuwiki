@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<ruleset name="Migration Adjustments for the DokuWiki Coding Standard Standard" namespace="DokuWiki\CS\Standard">
+    <description>These are exceptions to the Coding Standard used for DokuWiki that are intended to be removed over time.</description>
+
+    <!-- rules on top of PSR-12 -->
+    <rule ref="./phpcs.xml">
+        <!-- Rules with automatic fixes that we want to adhere to, but currently don't -->
+        <exclude name="Generic.Formatting.DisallowMultipleStatements.SameLine"/>
+        <exclude name="Generic.Functions.FunctionCallArgumentSpacing.NoSpaceAfterComma"/>
+        <exclude name="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma"/>
+        <exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma"/>
+        <exclude name="Generic.PHP.LowerCaseKeyword.Found"/>
+        <exclude name="Generic.PHP.LowerCaseConstant.Found"/>
+        <exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact"/>
+        <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect"/>
+        <exclude name="Generic.WhiteSpace.IncrementDecrementSpacing.SpaceAfterDecrement"/>
+        <exclude name="Generic.WhiteSpace.IncrementDecrementSpacing.SpaceAfterIncrement"/>
+
+        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseParenthesis"/>
+        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterKeyword"/>
+        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace"/>
+        <exclude name="Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace"/>
+        <exclude name="Squiz.ControlStructures.ForEachLoopDeclaration.NoSpaceBeforeArrow"/>
+        <exclude name="Squiz.ControlStructures.ForEachLoopDeclaration.NoSpaceAfterArrow"/>
+        <exclude name="Squiz.ControlStructures.ForEachLoopDeclaration.SpacingBeforeAs"/>
+        <exclude name="Squiz.ControlStructures.ForLoopDeclaration.SpacingAfterSecond"/>
+        <exclude name="Squiz.ControlStructures.ForLoopDeclaration.NoSpaceAfterSecond"/>
+        <exclude name="Squiz.ControlStructures.ForLoopDeclaration.NoSpaceAfterFirst"/>
+        <exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.NoSpaceBeforeArg"/>
+        <exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpaceAfterEquals"/>
+        <exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterReference"/>
+        <exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingBeforeClose"/>
+        <exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpaceBeforeEquals"/>
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine"/>
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.NewlineBeforeOpenBrace"/>
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.CloseBracketLine"/>
+        <exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen"/>
+        <exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose"/>
+        <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore"/>
+        <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.Indent"/>
+        <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EndLine"/>
+
+        <exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"/>
+        <exclude name="PSR2.Classes.ClassDeclaration.OpenBraceNewLine"/>
+        <exclude name="PSR2.Classes.PropertyDeclaration.StaticBeforeVisibility"/>
+        <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
+        <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpaceBeforeCloseBrace"/>
+        <exclude name="PSR2.ControlStructures.ElseIfDeclaration.NotAllowed"/>
+        <exclude name="PSR2.ControlStructures.SwitchDeclaration.BreakIndent"/>
+        <exclude name="PSR2.ControlStructures.SwitchDeclaration.BreakNotNewLine"/>
+        <exclude name="PSR2.ControlStructures.SwitchDeclaration.BodyOnNextLineCASE"/>
+        <exclude name="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonDEFAULT"/>
+        <exclude name="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE"/>
+        <exclude name="PSR2.Files.EndFileNewline.TooMany"/>
+        <exclude name="PSR2.Files.EndFileNewline.NoneFound"/>
+        <exclude name="PSR2.Methods.FunctionCallSignature.Indent"/>
+        <exclude name="PSR2.Methods.FunctionCallSignature.EmptyLine"/>
+        <exclude name="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket"/>
+        <exclude name="PSR2.Methods.FunctionCallSignature.SpaceBeforeOpenBracket"/>
+        <exclude name="PSR2.Methods.FunctionCallSignature.CloseBracketLine"/>
+        <exclude name="PSR2.Methods.FunctionCallSignature.SpaceBeforeCloseBracket"/>
+        <exclude name="PSR2.Methods.FunctionCallSignature.SpaceAfterOpenBracket"/>
+        <exclude name="PSR2.Methods.FunctionCallSignature.MultipleArguments"/>
+        <exclude name="PSR2.Methods.FunctionClosingBrace.SpacingBeforeClose"/>
+        <exclude name="PSR2.Methods.MethodDeclaration.StaticBeforeVisibility"/>
+        <exclude name="PSR2.Namespaces.NamespaceDeclaration.BlankLineAfter"/>
+        <exclude name="PSR2.Namespaces.UseDeclaration.SpaceAfterLastUse"/>
+
+        <exclude name="PSR12.Classes.ClassInstantiation.MissingParentheses"/>
+        <exclude name="PSR12.ControlStructures.BooleanOperatorPlacement.FoundMixed"/>
+        <exclude name="PSR12.ControlStructures.ControlStructureSpacing.FirstExpressionLine"/>
+        <exclude name="PSR12.ControlStructures.ControlStructureSpacing.CloseParenthesisLine"/>
+        <exclude name="PSR12.ControlStructures.ControlStructureSpacing.LineIndent"/>
+        <exclude name="PSR12.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
+        <exclude name="PSR12.ControlStructures.ControlStructureSpacing.SpaceBeforeCloseBrace"/>
+        <exclude name="PSR12.Files.FileHeader.SpacingAfterBlock"/>
+        <exclude name="PSR12.Operators.OperatorSpacing.NoSpaceBefore"/>
+        <exclude name="PSR12.Operators.OperatorSpacing.NoSpaceAfter"/>
+
+        <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
+    </rule>
+
+    <!-- for now we mix declarations and execution here (mostly for defines) -->
+    <rule ref="PSR1.Files.SideEffects">
+        <exclude-pattern>*/index.php</exclude-pattern>
+        <exclude-pattern>*/inc/parserutils.php</exclude-pattern>
+        <exclude-pattern>*/inc/mail.php</exclude-pattern>
+        <exclude-pattern>*/inc/init.php</exclude-pattern>
+        <exclude-pattern>*/inc/farm.php</exclude-pattern>
+        <exclude-pattern>*/inc/fulltext.php</exclude-pattern>
+        <exclude-pattern>*/inc/pluginutils.php</exclude-pattern>
+        <exclude-pattern>*/inc/indexer.php</exclude-pattern>
+        <exclude-pattern>*/inc/Mailer.class.php</exclude-pattern>
+        <exclude-pattern>*/doku.php</exclude-pattern>
+        <exclude-pattern>*/install.php</exclude-pattern>
+        <exclude-pattern>*/inc/utf8.php</exclude-pattern>
+        <exclude-pattern>*/feed.php</exclude-pattern>
+        <exclude-pattern>*/inc/load.php</exclude-pattern>
+        <exclude-pattern>*/bin/*.php</exclude-pattern>
+        <exclude-pattern>*/lib/exe/*.php</exclude-pattern>
+    </rule>
+
+</ruleset>

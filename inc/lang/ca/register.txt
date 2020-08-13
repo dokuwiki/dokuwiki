@@ -1,4 +1,3 @@
 ====== Registre d'un usuari nou ======
 
 Empleneu tota la informació que se us demana per crear un compte nou en aquest wiki. Assegureu-vos que doneu una **adreça de correu vàlida**, on se us enviarà la vostra contrasenya. El nom d'usuari o usuària ha de ser vàlid com a [[doku>pagename|nom de pàgina]].
-

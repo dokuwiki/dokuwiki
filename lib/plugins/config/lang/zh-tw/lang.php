@@ -1,16 +1,17 @@
 <?php
+
 /**
- * Chinese Traditional language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author GHSRobert Ciang <robertus0617@gmail.com>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
  * @author Wayne San <waynesan@zerozone.tw>
- * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin
  * @author Shuo-Ting Jian <shoting@gmail.com>
- * @author syaoranhinata@gmail.com
- * @author Ichirou Uchiki <syaoranhinata@gmail.com>
+ * @author syaoranhinata <syaoranhinata@gmail.com>
+ * @author Liou, Jhe-Yu <lioujheyu@gmail.com>
  */
 $lang['menu']                  = '系統設定';
 $lang['error']                 = '因為含有不合規格的設定值，故未能更新設定。請檢查您的更改並重新送出。
@@ -60,7 +61,7 @@ $lang['breadcrumbs']           = '導覽路徑數量。輸入0表示停用。';
 $lang['youarehere']            = '顯示階層式導覽路徑 (若要用此功能，建議停用上方的選項)';
 $lang['fullpath']              = '顯示完整的路徑於頁面底部';
 $lang['typography']            = '進行字元替換';
-$lang['dformat']               = '日期格式 (參見 PHP 的 <a href="http://www.php.net/strftime">strftime</a> 函數)';
+$lang['dformat']               = '日期格式 (參見 PHP 的 <a href="http://php.net/strftime">strftime</a> 函數)';
 $lang['signature']             = '簽名';
 $lang['showuseras']            = '將最後編輯頁面的使用者顯示為：';
 $lang['toptoclevel']           = '目錄表的最上層級';
@@ -135,9 +136,9 @@ $lang['autoplural']            = '檢查複數形式的連結 (英文)';
 $lang['compression']           = 'attic 文件的壓縮方式';
 $lang['gzip_output']           = '對 xhtml 使用 gzip 內容編碼';
 $lang['compress']              = '壓縮 CSS 與 JavaScript 的輸出';
-$lang['cssdatauri']            = '假如 CSS 中所引用的圖片小於該數字大小(bytes)，圖片將被直接嵌入 CSS 中，以減少 HTTP Request 的發送。 IE 7 及以下的版本並不支援此功能。推薦把此數值設定成 <code>400</code> 至 <code>600</code> bytes 之間。若輸入 <code>0</code> 則停用此功能。';
+$lang['cssdatauri']            = '假如 CSS 中所引用的圖片小於該數字大小(bytes)，圖片將被直接嵌入 CSS 中，以減少 HTTP Request 的發送。 推薦把此數值設定成 <code>400</code> 至 <code>600</code> bytes 之間。若輸入 <code>0</code> 則停用此功能。';
 $lang['send404']               = '存取不存在的頁面時送出 "HTTP 404/Page Not Found"';
-$lang['broken_iua']            = 'ignore_user_abort 功能失效了？這有可能導致搜索索引不可用。IIS+PHP/CGI 已損壞。請參閱 <a href=\"http://bugs.splitbrain.org/?do=details&task_id=852\">Bug 852</a> 獲取更多訊息。';
+$lang['broken_iua']            = 'ignore_user_abort 功能失效了？這有可能導致搜索索引不可用。IIS+PHP/CGI 已損壞。請參閱 <a href=\"http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> 獲取更多訊息。';
 $lang['xsendfile']             = '使用 X-Sendfile 頭讓網頁伺服器發送狀態文件？您的網頁伺服器需要支持該功能。';
 $lang['renderer_xhtml']        = '主要 wiki 輸出 (xhtml) 的渲染器';
 $lang['renderer__core']        = '%s (dokuwiki 核心)';
@@ -149,12 +150,6 @@ $lang['proxy____user']         = 'Proxy 使用者名稱';
 $lang['proxy____pass']         = 'Proxy 密碼';
 $lang['proxy____ssl']          = '使用 SSL 連接到 Proxy';
 $lang['proxy____except']       = '比對 proxy 代理時應跳過的地址的正規式。';
-$lang['safemodehack']          = '啟用 Safemode Hack';
-$lang['ftp____host']           = 'Safemode Hack 的 FTP 伺服器';
-$lang['ftp____port']           = 'Safemode Hack 的 FTP 端口';
-$lang['ftp____user']           = 'Safemode Hack 的 FTP 帳戶';
-$lang['ftp____pass']           = 'Safemode Hack 的 FTP 密碼';
-$lang['ftp____root']           = 'Safemode Hack 的 FTP 根路徑';
 $lang['license_o_']            = '未選擇';
 $lang['typography_o_0']        = '無';
 $lang['typography_o_1']        = '只限雙引號';

@@ -1,10 +1,20 @@
 <?php
+
+use dokuwiki\Parsing\ParserMode\Code;
+use dokuwiki\Parsing\ParserMode\Eol;
+use dokuwiki\Parsing\ParserMode\File;
+use dokuwiki\Parsing\ParserMode\Header;
+use dokuwiki\Parsing\ParserMode\Html;
+use dokuwiki\Parsing\ParserMode\Listblock;
+use dokuwiki\Parsing\ParserMode\Php;
+use dokuwiki\Parsing\ParserMode\Preformatted;
+
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
 
     function testFile() {
-        $this->P->addMode('file',new Doku_Parser_Mode_File());
+        $this->P->addMode('file',new File());
         $this->P->parse('Foo <file>testing</file> Bar');
         $calls = array (
             array('document_start',array()),
@@ -22,7 +32,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
     }
 
     function testCode() {
-        $this->P->addMode('code',new Doku_Parser_Mode_Code());
+        $this->P->addMode('code',new Code());
         $this->P->parse('Foo <code>testing</code> Bar');
         $calls = array (
             array('document_start',array()),
@@ -39,7 +49,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
     }
 
     function testCodeWhitespace() {
-        $this->P->addMode('code',new Doku_Parser_Mode_Code());
+        $this->P->addMode('code',new Code());
         $this->P->parse("Foo <code \n>testing</code> Bar");
         $calls = array (
             array('document_start',array()),
@@ -56,7 +66,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
     }
 
     function testCodeLang() {
-        $this->P->addMode('code',new Doku_Parser_Mode_Code());
+        $this->P->addMode('code',new Code());
         $this->P->parse("Foo <code php>testing</code> Bar");
         $calls = array (
             array('document_start',array()),
@@ -73,7 +83,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
     }
 
     function testPreformatted() {
-        $this->P->addMode('preformatted',new Doku_Parser_Mode_Preformatted());
+        $this->P->addMode('preformatted',new Preformatted());
         $this->P->parse("F  oo\n  x  \n    y  \nBar\n");
         $calls = array (
             array('document_start',array()),
@@ -90,7 +100,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
     }
 
     function testPreformattedWinEOL() {
-        $this->P->addMode('preformatted',new Doku_Parser_Mode_Preformatted());
+        $this->P->addMode('preformatted',new Preformatted());
         $this->P->parse("F  oo\r\n  x  \r\n    y  \r\nBar\r\n");
         $calls = array (
             array('document_start',array()),
@@ -107,7 +117,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
     }
 
     function testPreformattedTab() {
-        $this->P->addMode('preformatted',new Doku_Parser_Mode_Preformatted());
+        $this->P->addMode('preformatted',new Preformatted());
         $this->P->parse("F  oo\n\tx\t\n\t\ty\t\nBar\n");
         $calls = array (
             array('document_start',array()),
@@ -124,7 +134,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
     }
 
     function testPreformattedTabWinEOL() {
-        $this->P->addMode('preformatted',new Doku_Parser_Mode_Preformatted());
+        $this->P->addMode('preformatted',new Preformatted());
         $this->P->parse("F  oo\r\n\tx\t\r\n\t\ty\t\r\nBar\r\n");
         $calls = array (
             array('document_start',array()),
@@ -141,8 +151,8 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
     }
 
     function testPreformattedList() {
-        $this->P->addMode('preformatted',new Doku_Parser_Mode_Preformatted());
-        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
+        $this->P->addMode('preformatted',new Preformatted());
+        $this->P->addMode('listblock',new Listblock());
         $this->P->parse("  - x \n  * y \nF  oo\n  x  \n    y  \n  -X\n  *Y\nBar\n");
         $calls = array (
             array('document_start',array()),
@@ -175,7 +185,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
     // test for php
     function testPHP() {
 
-        $this->P->addMode('php',new Doku_Parser_Mode_PHP());
+        $this->P->addMode('php',new Php());
         $this->P->parse('Foo <php>testing</php> Bar');
         $calls = array (
             array('document_start',array()),
@@ -192,7 +202,7 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
     // test with for HTML
     function testHTML() {
 
-        $this->P->addMode('html',new Doku_Parser_Mode_HTML());
+        $this->P->addMode('html',new Html());
         $this->P->parse('Foo <html>testing</html> Bar');
         $calls = array (
             array('document_start',array()),
@@ -210,9 +220,9 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
 
     function testPreformattedPlusHeaderAndEol() {
         // Note that EOL must come after preformatted!
-        $this->P->addMode('preformatted',new Doku_Parser_Mode_Preformatted());
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
-        $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
+        $this->P->addMode('preformatted',new Preformatted());
+        $this->P->addMode('header',new Header());
+        $this->P->addMode('eol',new Eol());
         $this->P->parse("F  oo\n  ==Test==\n    y  \nBar\n");
         $calls = array (
             array('document_start',array()),

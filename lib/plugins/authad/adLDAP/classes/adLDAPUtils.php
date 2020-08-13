@@ -99,19 +99,23 @@ class adLDAPUtils {
     * @author Port by Andreas Gohr <andi@splitbrain.org>
     * @return string
     */
-    public function ldapSlashes($str){
-        return preg_replace('/([\x00-\x1F\*\(\)\\\\])/e',
-                            '"\\\\\".join("",unpack("H2","$1"))',
-                            $str);
+    public function ldapSlashes($str) {
+        // see https://github.com/adldap/adLDAP/issues/22
+        return preg_replace_callback(
+            '/([\x00-\x1F\*\(\)\\\\])/',
+            function ($matches) {
+                return "\\".join("", unpack("H2", $matches[1]));
+            },
+            $str
+        );
     }
-    
     /**
     * Converts a string GUID to a hexdecimal value so it can be queried
-    * 
+    *
     * @param string $strGUID A string representation of a GUID
     * @return string
     */
-    public function strGuidToHex($strGUID) 
+    public function strGuidToHex($strGUID)
     {
         $strGUID = str_replace('-', '', $strGUID);
 

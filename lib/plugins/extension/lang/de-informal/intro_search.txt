@@ -1,0 +1,1 @@
+Dieser Tab gibt Dir Zugriff auf alle vorhandenen [[doku>de:plugins|Plugins]] und [[doku>de:template|Templates]] für DokuWiki. Bitte bedenke, dass jede installierte Erweiterung ein Sicherheitsrisiko darstellen kann. Du solltest vor einer Installation die [[doku>security#plugin_security|Plugin Security]] Informationen lesen.

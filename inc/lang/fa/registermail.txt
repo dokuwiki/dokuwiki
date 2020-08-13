@@ -8,7 +8,3 @@
 مرورگر: @BROWSER@
 آدرس IP: @IPADDRESS@
 نام هوست: @HOSTNAME@
-
--- 
-این ایمیل توسط DokuWiki تولید شده است
-@DOKUWIKIURL@

@@ -1,0 +1,1 @@
+Denne fanen gir deg tillgang til alle tilgjengelige tredjeparts [[doku>plugins|programtillegg]] og [[doku>template|maler]] for DokuWiki. Merk at det å installere tillegg fra tredjepart kan innebære en **sikerhetsrisiko**. Les mer om [[doku>security#plugin_security|sikkerhet og tillegg ]] før installasjon av disse.

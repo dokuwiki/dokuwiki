@@ -9,7 +9,3 @@ Hostname    : @HOSTNAME@
 Größe       : @SIZE@
 MIME-Typ    : @MIME@
 Benutzer    : @USER@
-
--- 
-Diese Mail kommt vom DokuWiki auf
-@DOKUWIKIURL@

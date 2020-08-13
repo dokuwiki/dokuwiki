@@ -2,17 +2,14 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Wouter Schoot <wouter@schoot.org>
  * @author John de Graaff <john@de-graaff.net>
  * @author Niels Schoot <niels.schoot@quintiq.com>
  * @author Dion Nicolaas <dion@nicolaas.net>
  * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
- * @author Marijn Hofstra hofstra.m@gmail.com
- * @author Matthias Carchon webmaster@c-mattic.be
  * @author Marijn Hofstra <hofstra.m@gmail.com>
  * @author Timon Van Overveldt <timonvo@gmail.com>
- * @author Jeroen
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
  * @author Gerrit <klapinklapin@gmail.com>
  * @author Remon <no@email.local>

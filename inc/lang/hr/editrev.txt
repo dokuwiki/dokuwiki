@@ -1,2 +1,2 @@
-**Učitali ste stariju verziju dokumenta!** Ukoliko je snimite - biti će kreirana nova verzija dokumenta.
+**Učitali ste stariju inačicu dokumenta!** Ukoliko je pohranite - biti će kreirana nova inačica dokumenta.
 ----

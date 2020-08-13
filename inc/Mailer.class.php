@@ -9,6 +9,8 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Extension\Event;
+
 // end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
 // think different
 if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL', "\n");
@@ -28,14 +30,14 @@ class Mailer {
     protected $partid    = '';
     protected $sendparam = null;
 
-    /** @var EmailAddressValidator */
-    protected $validator = null;
     protected $allowhtml = true;
+
+    protected $replacements = array('text'=> array(), 'html' => array());
 
     /**
      * Constructor
      *
-     * Initializes the boundary strings and part counters
+     * Initializes the boundary strings, part counters and token replacements
      */
     public function __construct() {
         global $conf;
@@ -43,17 +45,20 @@ class Mailer {
         global $INPUT;
 
         $server = parse_url(DOKU_URL, PHP_URL_HOST);
-        if(strpos($server,'.') === false) $server = $server.'.localhost';
+        if(strpos($server,'.') === false) $server .= '.localhost';
 
-        $this->partid   = substr(md5(uniqid(rand(), true)),0, 8).'@'.$server;
-        $this->boundary = '__________'.md5(uniqid(rand(), true));
+        $this->partid   = substr(md5(uniqid(mt_rand(), true)),0, 8).'@'.$server;
+        $this->boundary = '__________'.md5(uniqid(mt_rand(), true));
 
-        $listid = join('.', array_reverse(explode('/', DOKU_BASE))).$server;
+        $listid = implode('.', array_reverse(explode('/', DOKU_BASE))).$server;
         $listid = strtolower(trim($listid, '.'));
 
         $this->allowhtml = (bool)$conf['htmlmail'];
 
         // add some default headers for mailfiltering FS#2247
+        if(!empty($conf['mailreturnpath'])) {
+            $this->setHeader('Return-Path', $conf['mailreturnpath']);
+        }
         $this->setHeader('X-Mailer', 'DokuWiki');
         $this->setHeader('X-DokuWiki-User', $INPUT->server->str('REMOTE_USER'));
         $this->setHeader('X-DokuWiki-Title', $conf['title']);
@@ -61,6 +66,8 @@ class Mailer {
         $this->setHeader('X-Auto-Response-Suppress', 'OOF');
         $this->setHeader('List-Id', $conf['title'].' <'.$listid.'>');
         $this->setHeader('Date', date('r'), false);
+
+        $this->prepareTokenReplacements();
     }
 
     /**
@@ -73,7 +80,7 @@ class Mailer {
      */
     public function attachFile($path, $mime, $name = '', $embed = '') {
         if(!$name) {
-            $name = utf8_basename($path);
+            $name = \dokuwiki\Utf8\PhpString::basename($path);
         }
 
         $this->attach[] = array(
@@ -112,7 +119,7 @@ class Mailer {
      * @param array $matches
      * @return string placeholder
      */
-    protected function autoembed_cb($matches) {
+    protected function autoEmbedCallBack($matches) {
         static $embeds = 0;
         $embeds++;
 
@@ -174,37 +181,38 @@ class Mailer {
      * Set the text and HTML body and apply replacements
      *
      * This function applies a whole bunch of default replacements in addition
-     * to the ones specidifed as parameters
+     * to the ones specified as parameters
      *
      * If you pass the HTML part or HTML replacements yourself you have to make
      * sure you encode all HTML special chars correctly
      *
      * @param string $text     plain text body
      * @param array  $textrep  replacements to apply on the text part
-     * @param array  $htmlrep  replacements to apply on the HTML part, leave null to use $textrep
+     * @param array  $htmlrep  replacements to apply on the HTML part, null to use $textrep (urls wrapped in <a> tags)
      * @param string $html     the HTML body, leave null to create it from $text
      * @param bool   $wrap     wrap the HTML in the default header/Footer
      */
     public function setBody($text, $textrep = null, $htmlrep = null, $html = null, $wrap = true) {
-        global $INFO;
-        global $conf;
-        /* @var Input $INPUT */
-        global $INPUT;
 
         $htmlrep = (array)$htmlrep;
         $textrep = (array)$textrep;
 
         // create HTML from text if not given
-        if(is_null($html)) {
+        if($html === null) {
             $html = $text;
             $html = hsc($html);
-            $html = preg_replace('/^-----*$/m', '<hr >', $html);
+            $html = preg_replace('/^----+$/m', '<hr >', $html);
             $html = nl2br($html);
         }
         if($wrap) {
-            $wrap = rawLocale('mailwrap', 'html');
+            $wrapper = rawLocale('mailwrap', 'html');
             $html = preg_replace('/\n-- <br \/>.*$/s', '', $html); //strip signature
-            $html = str_replace('@HTMLBODY@', $html, $wrap);
+            $html = str_replace('@EMAILSIGNATURE@', '', $html); //strip @EMAILSIGNATURE@
+            $html = str_replace('@HTMLBODY@', $html, $wrapper);
+        }
+
+        if(strpos($text, '@EMAILSIGNATURE@') === false) {
+            $text .= '@EMAILSIGNATURE@';
         }
 
         // copy over all replacements missing for HTML (autolink URLs)
@@ -220,37 +228,12 @@ class Mailer {
         // embed media from templates
         $html = preg_replace_callback(
             '/@MEDIA\(([^\)]+)\)@/',
-            array($this, 'autoembed_cb'), $html
+            array($this, 'autoEmbedCallBack'), $html
         );
 
-        // prepare default replacements
-        $ip   = clientIP();
-        $cip  = gethostsbyaddrs($ip);
-        $trep = array(
-            'DATE'        => dformat(),
-            'BROWSER'     => $INPUT->server->str('HTTP_USER_AGENT'),
-            'IPADDRESS'   => $ip,
-            'HOSTNAME'    => $cip,
-            'TITLE'       => $conf['title'],
-            'DOKUWIKIURL' => DOKU_URL,
-            'USER'        => $INPUT->server->str('REMOTE_USER'),
-            'NAME'        => $INFO['userinfo']['name'],
-            'MAIL'        => $INFO['userinfo']['mail'],
-        );
-        $trep = array_merge($trep, (array)$textrep);
-        $hrep = array(
-            'DATE'        => '<i>'.hsc(dformat()).'</i>',
-            'BROWSER'     => hsc($INPUT->server->str('HTTP_USER_AGENT')),
-            'IPADDRESS'   => '<code>'.hsc($ip).'</code>',
-            'HOSTNAME'    => '<code>'.hsc($cip).'</code>',
-            'TITLE'       => hsc($conf['title']),
-            'DOKUWIKIURL' => '<a href="'.DOKU_URL.'">'.DOKU_URL.'</a>',
-            'USER'        => hsc($INPUT->server->str('REMOTE_USER')),
-            'NAME'        => hsc($INFO['userinfo']['name']),
-            'MAIL'        => '<a href="mailto:"'.hsc($INFO['userinfo']['mail']).'">'.
-                hsc($INFO['userinfo']['mail']).'</a>',
-        );
-        $hrep = array_merge($hrep, (array)$htmlrep);
+        // add default token replacements
+        $trep = array_merge($this->replacements['text'], (array)$textrep);
+        $hrep = array_merge($this->replacements['html'], (array)$htmlrep);
 
         // Apply replacements
         foreach($trep as $key => $substitution) {
@@ -341,24 +324,50 @@ class Mailer {
     }
 
     /**
+     * Return a clean name which can be safely used in mail address
+     * fields. That means the name will be enclosed in '"' if it includes
+     * a '"' or a ','. Also a '"' will be escaped as '\"'.
+     *
+     * @param string $name the name to clean-up
+     * @see cleanAddress
+     */
+    public function getCleanName($name) {
+        $name = trim($name, ' \t"');
+        $name = str_replace('"', '\"', $name, $count);
+        if ($count > 0 || strpos($name, ',') !== false) {
+            $name = '"'.$name.'"';
+        }
+        return $name;
+    }
+
+    /**
      * Sets an email address header with correct encoding
      *
      * Unicode characters will be deaccented and encoded base64
      * for headers. Addresses may not contain Non-ASCII data!
      *
+     * If @$addresses is a string then it will be split into multiple
+     * addresses. Addresses must be separated by a comma. If the display
+     * name includes a comma then it MUST be properly enclosed by '"' to
+     * prevent spliting at the wrong point.
+     *
      * Example:
      *   cc("föö <foo@bar.com>, me@somewhere.com","TBcc");
+     *   to("foo, Dr." <foo@bar.com>, me@somewhere.com");
      *
      * @param string|string[]  $addresses Multiple adresses separated by commas or as array
      * @return false|string  the prepared header (can contain multiple lines)
      */
     public function cleanAddress($addresses) {
-        // No named recipients for To: in Windows (see FS#652)
-        $names = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? false : true;
-
         $headers = '';
         if(!is_array($addresses)){
-            $addresses = explode(',', $addresses);
+            $count = preg_match_all('/\s*(?:("[^"]*"[^,]+),*)|([^,]+)\s*,*/', $addresses, $matches, PREG_SET_ORDER);
+            $addresses = array();
+            if ($count !== false && is_array($matches)) {
+                foreach ($matches as $match) {
+                    array_push($addresses, rtrim($match[0], ','));
+                }
+            }
         }
 
         foreach($addresses as $part) {
@@ -370,6 +379,7 @@ class Mailer {
                 $text = trim($matches[1]);
                 $addr = $matches[2];
             } else {
+                $text = '';
                 $addr = $part;
             }
             // skip empty ones
@@ -378,31 +388,27 @@ class Mailer {
             }
 
             // FIXME: is there a way to encode the localpart of a emailaddress?
-            if(!utf8_isASCII($addr)) {
-                msg(htmlspecialchars("E-Mail address <$addr> is not ASCII"), -1);
+            if(!\dokuwiki\Utf8\Clean::isASCII($addr)) {
+                msg(hsc("E-Mail address <$addr> is not ASCII"), -1, __LINE__, __FILE__, MSG_ADMINS_ONLY);
                 continue;
             }
 
-            if(is_null($this->validator)) {
-                $this->validator                      = new EmailAddressValidator();
-                $this->validator->allowLocalAddresses = true;
-            }
-            if(!$this->validator->check_email_address($addr)) {
-                msg(htmlspecialchars("E-Mail address <$addr> is not valid"), -1);
+            if(!mail_isvalid($addr)) {
+                msg(hsc("E-Mail address <$addr> is not valid"), -1, __LINE__, __FILE__, MSG_ADMINS_ONLY);
                 continue;
             }
 
             // text was given
-            if(!empty($text) && $names) {
+            if(!empty($text) && !isWindows()) { // No named recipients for To: in Windows (see FS#652)
                 // add address quotes
                 $addr = "<$addr>";
 
                 if(defined('MAILHEADER_ASCIIONLY')) {
-                    $text = utf8_deaccent($text);
-                    $text = utf8_strip($text);
+                    $text = \dokuwiki\Utf8\Clean::deaccent($text);
+                    $text = \dokuwiki\Utf8\Clean::strip($text);
                 }
 
-                if(strpos($text, ',') !== false || !utf8_isASCII($text)) {
+                if(strpos($text, ',') !== false || !\dokuwiki\Utf8\Clean::isASCII($text)) {
                     $text = '=?UTF-8?B?'.base64_encode($text).'?=';
                 }
             } else {
@@ -548,10 +554,10 @@ class Mailer {
         if(isset($this->headers['Subject'])) {
             // add prefix to subject
             if(empty($conf['mailprefix'])) {
-                if(utf8_strlen($conf['title']) < 20) {
+                if(\dokuwiki\Utf8\PhpString::strlen($conf['title']) < 20) {
                     $prefix = '['.$conf['title'].']';
                 } else {
-                    $prefix = '['.utf8_substr($conf['title'], 0, 20).'...]';
+                    $prefix = '['.\dokuwiki\Utf8\PhpString::substr($conf['title'], 0, 20).'...]';
                 }
             } else {
                 $prefix = '['.$conf['mailprefix'].']';
@@ -563,10 +569,10 @@ class Mailer {
 
             // encode subject
             if(defined('MAILHEADER_ASCIIONLY')) {
-                $this->headers['Subject'] = utf8_deaccent($this->headers['Subject']);
-                $this->headers['Subject'] = utf8_strip($this->headers['Subject']);
+                $this->headers['Subject'] = \dokuwiki\Utf8\Clean::deaccent($this->headers['Subject']);
+                $this->headers['Subject'] = \dokuwiki\Utf8\Clean::strip($this->headers['Subject']);
             }
-            if(!utf8_isASCII($this->headers['Subject'])) {
+            if(!\dokuwiki\Utf8\Clean::isASCII($this->headers['Subject'])) {
                 $this->headers['Subject'] = '=?UTF-8?B?'.base64_encode($this->headers['Subject']).'?=';
             }
         }
@@ -592,7 +598,7 @@ class Mailer {
     protected function prepareHeaders() {
         $headers = '';
         foreach($this->headers as $key => $val) {
-            if ($val === '' || is_null($val)) continue;
+            if ($val === '' || $val === null) continue;
             $headers .= $this->wrappedHeaderLine($key, $val);
         }
         return $headers;
@@ -616,6 +622,72 @@ class Mailer {
     }
 
     /**
+     * Prepare default token replacement strings
+     *
+     * Populates the '$replacements' property.
+     * Should be called by the class constructor
+     */
+    protected function prepareTokenReplacements() {
+        global $INFO;
+        global $conf;
+        /* @var Input $INPUT */
+        global $INPUT;
+        global $lang;
+
+        $ip   = clientIP();
+        $cip  = gethostsbyaddrs($ip);
+        $name = isset($INFO) ? $INFO['userinfo']['name'] : '';
+        $mail = isset($INFO) ? $INFO['userinfo']['mail'] : '';
+
+        $this->replacements['text'] = array(
+            'DATE' => dformat(),
+            'BROWSER' => $INPUT->server->str('HTTP_USER_AGENT'),
+            'IPADDRESS' => $ip,
+            'HOSTNAME' => $cip,
+            'TITLE' => $conf['title'],
+            'DOKUWIKIURL' => DOKU_URL,
+            'USER' => $INPUT->server->str('REMOTE_USER'),
+            'NAME' => $name,
+            'MAIL' => $mail
+        );
+        $signature = str_replace(
+            '@DOKUWIKIURL@',
+            $this->replacements['text']['DOKUWIKIURL'],
+            $lang['email_signature_text']
+        );
+        $this->replacements['text']['EMAILSIGNATURE'] = "\n-- \n" . $signature . "\n";
+
+        $this->replacements['html'] = array(
+            'DATE' => '<i>' . hsc(dformat()) . '</i>',
+            'BROWSER' => hsc($INPUT->server->str('HTTP_USER_AGENT')),
+            'IPADDRESS' => '<code>' . hsc($ip) . '</code>',
+            'HOSTNAME' => '<code>' . hsc($cip) . '</code>',
+            'TITLE' => hsc($conf['title']),
+            'DOKUWIKIURL' => '<a href="' . DOKU_URL . '">' . DOKU_URL . '</a>',
+            'USER' => hsc($INPUT->server->str('REMOTE_USER')),
+            'NAME' => hsc($name),
+            'MAIL' => '<a href="mailto:"' . hsc($mail) . '">' .
+                hsc($mail) . '</a>'
+        );
+        $signature = $lang['email_signature_text'];
+        if(!empty($lang['email_signature_html'])) {
+            $signature = $lang['email_signature_html'];
+        }
+        $signature = str_replace(
+            array(
+                '@DOKUWIKIURL@',
+                "\n"
+            ),
+            array(
+                $this->replacements['html']['DOKUWIKIURL'],
+                '<br />'
+            ),
+            $signature
+        );
+        $this->replacements['html']['EMAILSIGNATURE'] = $signature;
+    }
+
+    /**
      * Send the mail
      *
      * Call this after all data was set
@@ -624,6 +696,7 @@ class Mailer {
      * @return bool true if the mail was successfully passed to the MTA
      */
     public function send() {
+        global $lang;
         $success = false;
 
         // prepare hook data
@@ -644,7 +717,7 @@ class Mailer {
         );
 
         // do our thing if BEFORE hook approves
-        $evt = new Doku_Event('MAIL_MESSAGE_SEND', $data);
+        $evt = new Event('MAIL_MESSAGE_SEND', $data);
         if($evt->advise_before(true)) {
             // clean up before using the headers
             $this->cleanHeaders();
@@ -682,8 +755,16 @@ class Mailer {
                 $headers .= MAILHEADER_EOL.trim($data['headers']);
             }
 
+            if(!function_exists('mail')){
+                $emsg = $lang['email_fail'] . $subject;
+                error_log($emsg);
+                msg(hsc($emsg), -1, __LINE__, __FILE__, MSG_MANAGERS_ONLY);
+                $evt->advise_after();
+                return false;
+            }
+
             // send the thing
-            if(is_null($this->sendparam)) {
+            if($this->sendparam === null) {
                 $success = @mail($to, $subject, $body, $headers);
             } else {
                 $success = @mail($to, $subject, $body, $headers, $this->sendparam);

@@ -2,32 +2,31 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
- * @author stephane.gully@gmail.com
+ * @author stephane.gully <stephane.gully@gmail.com>
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author olivier duperray <duperray.olivier@laposte.net>
  * @author Vincent Feltz <psycho@feltzv.fr>
  * @author Philippe Bajoit <philippe.bajoit@gmail.com>
  * @author Florian Gaub <floriang@floriang.net>
- * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
- * @author schplurtz@laposte.net
- * @author skimpax@gmail.com
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author Antoine Turmel <geekshadow@gmail.com>
- * @author schplurtz <Schplurtz@laposte.net>
  * @author Jérôme Brandt <jeromebrandt@gmail.com>
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
+ * @author Olivier Humbert <trebmuh@tuxfamily.org>
+ * @author Eric <ericstevenart@netc.fr>
  */
 $lang['menu']                  = 'Gestion des utilisateurs';
 $lang['noauth']                = '(authentification de l\'utilisateur non disponible)';
-$lang['nosupport']             = '(gestion de l\'utilisateur non supportée)';
+$lang['nosupport']             = '(gestion de l\'utilisateur non pris en charge)';
 $lang['badauth']               = 'mécanisme d\'authentification invalide';
 $lang['user_id']               = 'Identifiant ';
 $lang['user_pass']             = 'Mot de passe ';
@@ -84,3 +83,11 @@ $lang['import_error_readfail'] = 'L\'import a échoué. Impossible de lire le fi
 $lang['import_error_create']   = 'Impossible de créer l\'utilisateur';
 $lang['import_notify_fail']    = 'Impossible d\'expédier une notification à l\'utilisateur importé %s, adresse %s.';
 $lang['import_downloadfailures'] = 'Télécharger les erreurs au format CSV pour correction';
+$lang['addUser_error_missing_pass'] = 'Veuillez saisir un mot de passe ou activer la notification à l\'utilisateur pour permettre la génération d\'un mot de passe.';
+$lang['addUser_error_pass_not_identical'] = 'Les mots de passe saisis diffèrent.';
+$lang['addUser_error_modPass_disabled'] = 'La modification des mots de passe est actuellement désactivée.';
+$lang['addUser_error_name_missing'] = 'Veuillez saisir un nom pour le nouvel utilisateur.';
+$lang['addUser_error_modName_disabled'] = 'La modification des noms est actuellement désactivée.';
+$lang['addUser_error_mail_missing'] = 'Veuillez saisir une adresse de courriel pour le nouvel utilisateur.';
+$lang['addUser_error_modMail_disabled'] = 'La modification des adresses de courriel est actuellement désactivée.';
+$lang['addUser_error_create_event_failed'] = 'Un greffon a empêché l\'ajout du nouvel utilisateur. Examinez les autres messages potentiels pour obtenir de plus amples informations.';

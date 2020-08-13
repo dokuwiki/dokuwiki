@@ -2,7 +2,7 @@
 require_once dirname(__FILE__).'/httpclient_http.test.php';
 
 class httpclient_https_test extends httpclient_http_test {
-    protected $server = 'https://httpbin.org/';
+    protected $server = 'https://eu.httpbin.org/';
 
     public function setUp(){
         // skip tests when this PHP has no SSL support

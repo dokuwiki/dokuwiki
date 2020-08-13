@@ -1,4 +1,7 @@
 <?php
+
+use dokuwiki\Extension\Event;
+
     if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
     define('DOKU_MEDIAMANAGER',1);
 
@@ -9,6 +12,7 @@
 
     global $INPUT;
     global $lang;
+    global $conf;
     // handle passed message
     if($INPUT->str('msg1')) msg(hsc($INPUT->str('msg1')),1);
     if($INPUT->str('err')) msg(hsc($INPUT->str('err')),-1);
@@ -32,11 +36,12 @@
 
     global $INFO, $JSINFO;
     $INFO = !empty($INFO) ? array_merge($INFO, mediainfo()) : mediainfo();
-    $JSINFO = array('id' => '', 'namespace' => '');
+    $JSINFO['id']        = '';
+    $JSINFO['namespace'] = '';
     $AUTH = $INFO['perm'];    // shortcut for historical reasons
 
     $tmp = array();
-    trigger_event('MEDIAMANAGER_STARTED', $tmp);
+    Event::createAndTrigger('MEDIAMANAGER_STARTED', $tmp);
     session_write_close();  //close session
 
     // do not display the manager if user does not have read access

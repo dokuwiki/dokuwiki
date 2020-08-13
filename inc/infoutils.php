@@ -5,8 +5,16 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-if(!defined('DOKU_INC')) die('meh.');
-if(!defined('DOKU_MESSAGEURL')) define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
+
+use dokuwiki\HTTP\DokuHTTPClient;
+
+if(!defined('DOKU_MESSAGEURL')){
+    if(in_array('ssl', stream_get_transports())) {
+        define('DOKU_MESSAGEURL','https://update.dokuwiki.org/check/');
+    }else{
+        define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
+    }
+}
 
 /**
  * Check for new messages from upstream
@@ -22,11 +30,12 @@ function checkUpdateMessages(){
 
     $cf = getCacheName($updateVersion, '.updmsg');
     $lm = @filemtime($cf);
+    $is_http = substr(DOKU_MESSAGEURL, 0, 5) != 'https';
 
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
         @touch($cf);
-        dbglog("checkUpdateMessages(): downloading messages to ".$cf);
+        dbglog("checkUpdateMessages(): downloading messages to ".$cf.($is_http?' (without SSL)':' (with SSL)'));
         $http = new DokuHTTPClient();
         $http->timeout = 12;
         $resp = $http->get(DOKU_MESSAGEURL.$updateVersion);
@@ -60,7 +69,7 @@ function getVersionData(){
     //import version string
     if(file_exists(DOKU_INC.'VERSION')){
         //official release
-        $version['date'] = trim(io_readfile(DOKU_INC.'VERSION'));
+        $version['date'] = trim(io_readFile(DOKU_INC.'VERSION'));
         $version['type'] = 'Release';
     }elseif(is_dir(DOKU_INC.'.git')){
         $version['type'] = 'Git';
@@ -114,27 +123,32 @@ function check(){
     if ($INFO['isadmin'] || $INFO['ismanager']){
         msg('DokuWiki version: '.getVersion(),1);
 
-        if(version_compare(phpversion(),'5.3.3','<')){
-            msg('Your PHP version is too old ('.phpversion().' vs. 5.3.3+ needed)',-1);
+        if(version_compare(phpversion(),'7.2.0','<')){
+            msg('Your PHP version is too old ('.phpversion().' vs. 7.2+ needed)',-1);
         }else{
             msg('PHP version '.phpversion(),1);
         }
     } else {
-        if(version_compare(phpversion(),'5.3.3','<')){
+        if(version_compare(phpversion(),'7.2.0','<')){
             msg('Your PHP version is too old',-1);
         }
     }
 
     $mem = (int) php_to_byte(ini_get('memory_limit'));
     if($mem){
-        if($mem < 16777216){
-            msg('PHP is limited to less than 16MB RAM ('.$mem.' bytes). Increase memory_limit in php.ini',-1);
-        }elseif($mem < 20971520){
-            msg('PHP is limited to less than 20MB RAM ('.$mem.' bytes), you might encounter problems with bigger pages. Increase memory_limit in php.ini',-1);
-        }elseif($mem < 33554432){
-            msg('PHP is limited to less than 32MB RAM ('.$mem.' bytes), but that should be enough in most cases. If not, increase memory_limit in php.ini',0);
-        }else{
-            msg('More than 32MB RAM ('.$mem.' bytes) available.',1);
+        if ($mem === -1) {
+            msg('PHP memory is unlimited', 1);
+        } else if ($mem < 16777216) {
+            msg('PHP is limited to less than 16MB RAM (' . filesize_h($mem) . ').
+            Increase memory_limit in php.ini', -1);
+        } else if ($mem < 20971520) {
+            msg('PHP is limited to less than 20MB RAM (' . filesize_h($mem) . '),
+                you might encounter problems with bigger pages. Increase memory_limit in php.ini', -1);
+        } else if ($mem < 33554432) {
+            msg('PHP is limited to less than 32MB RAM (' . filesize_h($mem) . '),
+                but that should be enough in most cases. If not, increase memory_limit in php.ini', 0);
+        } else {
+            msg('More than 32MB RAM (' . filesize_h($mem) . ') available.', 1);
         }
     }
 
@@ -200,7 +214,8 @@ function check(){
     if(!$loc){
         msg('No valid locale is set for your PHP setup. You should fix this',-1);
     }elseif(stripos($loc,'utf') === false){
-        msg('Your locale <code>'.hsc($loc).'</code> seems not to be a UTF-8 locale, you should fix this if you encounter problems.',0);
+        msg('Your locale <code>'.hsc($loc).'</code> seems not to be a UTF-8 locale,
+             you should fix this if you encounter problems.',0);
     }else{
         msg('Valid locale '.hsc($loc).' found.', 1);
     }
@@ -220,16 +235,18 @@ function check(){
 
     msg('Your current permission for this page is '.$INFO['perm'],0);
 
-    if(is_writable($INFO['filepath'])){
-        msg('The current page is writable by the webserver',0);
-    }else{
-        msg('The current page is not writable by the webserver',0);
+    if (file_exists($INFO['filepath']) && is_writable($INFO['filepath'])) {
+        msg('The current page is writable by the webserver', 1);
+    } elseif (!file_exists($INFO['filepath']) && is_writable(dirname($INFO['filepath']))) {
+        msg('The current page can be created by the webserver', 1);
+    } else {
+        msg('The current page is not writable by the webserver', -1);
     }
 
-    if($INFO['writable']){
-        msg('The current page is writable by you',0);
-    }else{
-        msg('The current page is not writable by you',0);
+    if ($INFO['writable']) {
+        msg('The current page is writable by you', 1);
+    } else {
+        msg('The current page is not writable by you', -1);
     }
 
     // Check for corrupted search index
@@ -249,46 +266,54 @@ function check(){
         }
     }
 
-    if ($index_corrupted)
-        msg('The search index is corrupted. It might produce wrong results and most
+    if($index_corrupted) {
+        msg(
+            'The search index is corrupted. It might produce wrong results and most
                 probably needs to be rebuilt. See
                 <a href="http://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
-                for ways to rebuild the search index.', -1);
-    elseif (!empty($lengths))
+                for ways to rebuild the search index.', -1
+        );
+    } elseif(!empty($lengths)) {
         msg('The search index seems to be working', 1);
-    else
-        msg('The search index is empty. See
+    } else {
+        msg(
+            'The search index is empty. See
                 <a href="http://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
                 for help on how to fix the search index. If the default indexer
-                isn\'t used or the wiki is actually empty this is normal.');
+                isn\'t used or the wiki is actually empty this is normal.'
+        );
+    }
+
+    // rough time check
+    $http = new DokuHTTPClient();
+    $http->max_redirect = 0;
+    $http->timeout = 3;
+    $http->sendRequest('http://www.dokuwiki.org', '', 'HEAD');
+    $now = time();
+    if(isset($http->resp_headers['date'])) {
+        $time = strtotime($http->resp_headers['date']);
+        $diff = $time - $now;
+
+        if(abs($diff) < 4) {
+            msg("Server time seems to be okay. Diff: {$diff}s", 1);
+        } else {
+            msg("Your server's clock seems to be out of sync!
+                 Consider configuring a sync with a NTP server.  Diff: {$diff}s");
+        }
+    }
+
 }
 
 /**
- * print a message
+ * Display a message to the user
  *
  * If HTTP headers were not sent yet the message is added
  * to the global message array else it's printed directly
  * using html_msgarea()
  *
+ * Triggers INFOUTIL_MSG_SHOW
  *
- * Levels can be:
- *
- * -1 error
- *  0 info
- *  1 success
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @see    html_msgarea
- */
-
-define('MSG_PUBLIC', 0);
-define('MSG_USERS_ONLY', 1);
-define('MSG_MANAGERS_ONLY',2);
-define('MSG_ADMINS_ONLY',4);
-
-/**
- * Display a message to the user
- *
+ * @see    html_msgarea()
  * @param string $message
  * @param int    $lvl   -1 = error, 0 = info, 1 = success, 2 = notify
  * @param string $line  line number
@@ -297,24 +322,42 @@ define('MSG_ADMINS_ONLY',4);
  */
 function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
     global $MSG, $MSG_shown;
-    $errors = array();
-    $errors[-1] = 'error';
-    $errors[0]  = 'info';
-    $errors[1]  = 'success';
-    $errors[2]  = 'notify';
+    static $errors = [
+        -1 => 'error',
+        0 => 'info',
+        1 => 'success',
+        2 => 'notify',
+    ];
 
-    if($line || $file) $message.=' ['.utf8_basename($file).':'.$line.']';
+    $msgdata = [
+        'msg' => $message,
+        'lvl' => $errors[$lvl],
+        'allow' => $allow,
+        'line' => $line,
+        'file' => $file,
+    ];
 
-    if(!isset($MSG)) $MSG = array();
-    $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message, 'allow' => $allow);
-    if(isset($MSG_shown) || headers_sent()){
-        if(function_exists('html_msgarea')){
-            html_msgarea();
-        }else{
-            print "ERROR($lvl) $message";
+    $evt = new \dokuwiki\Extension\Event('INFOUTIL_MSG_SHOW', $msgdata);
+    if ($evt->advise_before()) {
+        /* Show msg normally - event could suppress message show */
+        if($msgdata['line'] || $msgdata['file']) {
+            $basename = \dokuwiki\Utf8\PhpString::basename($msgdata['file']);
+            $msgdata['msg'] .=' ['.$basename.':'.$msgdata['line'].']';
         }
-        unset($GLOBALS['MSG']);
+
+        if(!isset($MSG)) $MSG = array();
+        $MSG[] = $msgdata;
+        if(isset($MSG_shown) || headers_sent()){
+            if(function_exists('html_msgarea')){
+                html_msgarea();
+            }else{
+                print "ERROR(".$msgdata['lvl'].") ".$msgdata['msg']."\n";
+            }
+            unset($GLOBALS['MSG']);
+        }
     }
+    $evt->advise_after();
+    unset($evt);
 }
 /**
  * Determine whether the current user is allowed to view the message
@@ -347,7 +390,8 @@ function info_msg_allowed($msg){
             return $INFO['isadmin'];
 
         default:
-            trigger_error('invalid msg allow restriction.  msg="'.$msg['msg'].'" allow='.$msg['allow'].'"', E_USER_WARNING);
+            trigger_error('invalid msg allow restriction.  msg="'.$msg['msg'].'" allow='.$msg['allow'].'"',
+                          E_USER_WARNING);
             return $INFO['isadmin'];
     }
 
@@ -360,6 +404,9 @@ function info_msg_allowed($msg){
  * little function to print the content of a var
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $msg
+ * @param bool $hidden
  */
 function dbg($msg,$hidden=false){
     if($hidden){
@@ -377,6 +424,9 @@ function dbg($msg,$hidden=false){
  * Print info to a log file
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $msg
+ * @param string $header
  */
 function dbglog($msg,$header=''){
     global $conf;
@@ -404,26 +454,10 @@ function dbglog($msg,$header=''){
  * Log accesses to deprecated fucntions to the debug log
  *
  * @param string $alternative The function or method that should be used instead
+ * @triggers INFO_DEPRECATION_LOG
  */
 function dbg_deprecated($alternative = '') {
-    global $conf;
-    if(!$conf['allowdebug']) return;
-
-    $backtrace = debug_backtrace();
-    array_shift($backtrace);
-    $self = array_shift($backtrace);
-    $call = array_shift($backtrace);
-
-    $called = trim($self['class'].'::'.$self['function'].'()', ':');
-    $caller = trim($call['class'].'::'.$call['function'].'()', ':');
-
-    $msg = $called.' is deprecated. It was called from ';
-    $msg .= $caller.' in '.$call['file'].':'.$call['line'];
-    if($alternative) {
-        $msg .= ' '.$alternative.' should be used instead!';
-    }
-
-    dbglog($msg);
+    \dokuwiki\Debug\DebugHelper::dbgDeprecatedFunction($alternative, 2);
 }
 
 /**
@@ -479,6 +513,8 @@ function dbg_backtrace(){
  * debug output
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
  */
 function debug_guard(&$data){
     foreach($data as $key => $value){

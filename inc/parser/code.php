@@ -4,22 +4,25 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-if(!defined('DOKU_INC')) die('meh.');
-
 class Doku_Renderer_code extends Doku_Renderer {
-    var $_codeblock = 0;
+    protected $_codeblock = 0;
 
     /**
      * Send the wanted code block to the browser
      *
      * When the correct block was found it exits the script.
+     *
+     * @param string $text
+     * @param string $language
+     * @param string $filename
      */
-    function code($text, $language = null, $filename = '') {
+    public function code($text, $language = null, $filename = '') {
         global $INPUT;
         if(!$language) $language = 'txt';
+        $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language);
         if(!$filename) $filename = 'snippet.'.$language;
-        $filename = utf8_basename($filename);
-        $filename = utf8_stripspecials($filename, '_');
+        $filename = \dokuwiki\Utf8\PhpString::basename($filename);
+        $filename = \dokuwiki\Utf8\Clean::stripspecials($filename, '_');
 
         // send CRLF to Windows clients
         if(strpos($INPUT->server->str('HTTP_USER_AGENT'), 'Windows') !== false) {
@@ -39,15 +42,19 @@ class Doku_Renderer_code extends Doku_Renderer {
 
     /**
      * Wraps around code()
+     *
+     * @param string $text
+     * @param string $language
+     * @param string $filename
      */
-    function file($text, $language = null, $filename = '') {
+    public function file($text, $language = null, $filename = '') {
         $this->code($text, $language, $filename);
     }
 
     /**
      * This should never be reached, if it is send a 404
      */
-    function document_end() {
+    public function document_end() {
         http_status(404);
         echo '404 - Not found';
         exit;
@@ -58,7 +65,7 @@ class Doku_Renderer_code extends Doku_Renderer {
      *
      * @returns string 'code'
      */
-    function getFormat() {
+    public function getFormat() {
         return 'code';
     }
 }

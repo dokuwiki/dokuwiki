@@ -3,8 +3,15 @@
  * Initialize some defaults needed for DokuWiki
  */
 
+use dokuwiki\Extension\Event;
+use dokuwiki\Extension\EventHandler;
+
 /**
  * timing Dokuwiki execution
+ *
+ * @param integer $start
+ *
+ * @return mixed
  */
 function delta_time($start=0) {
     return microtime(true)-((float)$start);
@@ -32,14 +39,13 @@ if (!defined('DOKU_E_LEVEL') && file_exists(DOKU_CONF.'report_e_all')) {
     define('DOKU_E_LEVEL', E_ALL);
 }
 if (!defined('DOKU_E_LEVEL')) {
-    if(defined('E_DEPRECATED')){ // since php 5.3, since php 5.4 E_STRICT is part of E_ALL
-        error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);
-    }else{
-        error_reporting(E_ALL ^ E_NOTICE);
-    }
+    error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);
 } else {
     error_reporting(DOKU_E_LEVEL);
 }
+
+// avoid caching issues #1594
+header('Vary: Cookie');
 
 // init memory caches
 global $cache_revinfo;
@@ -100,23 +106,35 @@ if(!defined('DOKU_BASE')){
 }
 
 // define whitespace
+if(!defined('NL')) define ('NL',"\n");
 if(!defined('DOKU_LF')) define ('DOKU_LF',"\n");
 if(!defined('DOKU_TAB')) define ('DOKU_TAB',"\t");
 
 // define cookie and session id, append server port when securecookie is configured FS#1664
-if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5(DOKU_REL.(($conf['securecookie'])?$_SERVER['SERVER_PORT']:'')));
-
+if (!defined('DOKU_COOKIE')) {
+    $serverPort = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : '';
+    define('DOKU_COOKIE', 'DW' . md5(DOKU_REL . (($conf['securecookie']) ? $serverPort : '')));
+    unset($serverPort);
+}
 
 // define main script
 if(!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT','doku.php');
 
-// DEPRECATED, use tpl_basedir() instead
-if(!defined('DOKU_TPL')) define('DOKU_TPL',
-        DOKU_BASE.'lib/tpl/'.$conf['template'].'/');
+if(!defined('DOKU_TPL')) {
+    /**
+     * @deprecated 2012-10-13 replaced by more dynamic method
+     * @see tpl_basedir()
+     */
+    define('DOKU_TPL', DOKU_BASE.'lib/tpl/'.$conf['template'].'/');
+}
 
-// DEPRECATED, use tpl_incdir() instead
-if(!defined('DOKU_TPLINC')) define('DOKU_TPLINC',
-        DOKU_INC.'lib/tpl/'.$conf['template'].'/');
+if(!defined('DOKU_TPLINC')) {
+    /**
+     * @deprecated 2012-10-13 replaced by more dynamic method
+     * @see tpl_incdir()
+     */
+    define('DOKU_TPLINC', DOKU_INC.'lib/tpl/'.$conf['template'].'/');
+}
 
 // make session rewrites XHTML compliant
 @ini_set('arg_separator.output', '&amp;');
@@ -128,7 +146,8 @@ if(!defined('DOKU_TPLINC')) define('DOKU_TPLINC',
 @ini_set('pcre.backtrack_limit', '20971520');
 
 // enable gzip compression if supported
-$conf['gzip_output'] &= (strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip') !== false);
+$httpAcceptEncoding = isset($_SERVER['HTTP_ACCEPT_ENCODING']) ? $_SERVER['HTTP_ACCEPT_ENCODING'] : '';
+$conf['gzip_output'] &= (strpos($httpAcceptEncoding, 'gzip') !== false);
 global $ACT;
 if ($conf['gzip_output'] &&
         !defined('DOKU_DISABLE_GZIP_OUTPUT') &&
@@ -149,9 +168,8 @@ if(!headers_sent() && !defined('NOSESSION')) {
     }
     if(!defined('DOKU_SESSION_DOMAIN'))   define ('DOKU_SESSION_DOMAIN', '');
 
-    session_name(DOKU_SESSION_NAME);
-    session_set_cookie_params(DOKU_SESSION_LIFETIME, DOKU_SESSION_PATH, DOKU_SESSION_DOMAIN, ($conf['securecookie'] && is_ssl()), true);
-    session_start();
+    // start the session
+    init_session();
 
     // load left over messages
     if(isset($_SESSION[DOKU_COOKIE]['msg'])) {
@@ -159,18 +177,6 @@ if(!headers_sent() && !defined('NOSESSION')) {
         unset($_SESSION[DOKU_COOKIE]['msg']);
     }
 }
-
-// kill magic quotes
-if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
-    if (!empty($_GET))    remove_magic_quotes($_GET);
-    if (!empty($_POST))   remove_magic_quotes($_POST);
-    if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
-    if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
-    @ini_set('magic_quotes_gpc', 0);
-    define('MAGIC_QUOTES_STRIPPED',1);
-}
-if(function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
-@ini_set('magic_quotes_sybase',0);
 
 // don't let cookies ever interfere with request vars
 $_REQUEST = array_merge($_GET,$_POST);
@@ -186,34 +192,36 @@ init_paths();
 init_files();
 
 // setup plugin controller class (can be overwritten in preload.php)
-$plugin_types = array('auth', 'admin','syntax','action','renderer', 'helper','remote');
 global $plugin_controller_class, $plugin_controller;
-if (empty($plugin_controller_class)) $plugin_controller_class = 'Doku_Plugin_Controller';
+if (empty($plugin_controller_class)) $plugin_controller_class = dokuwiki\Extension\PluginController::class;
 
 // load libraries
+require_once(DOKU_INC.'vendor/autoload.php');
 require_once(DOKU_INC.'inc/load.php');
 
 // disable gzip if not available
-if($conf['compression'] == 'bz2' && !function_exists('bzopen')){
+define('DOKU_HAS_BZIP', function_exists('bzopen'));
+define('DOKU_HAS_GZIP', function_exists('gzopen'));
+if($conf['compression'] == 'bz2' && !DOKU_HAS_BZIP) {
     $conf['compression'] = 'gz';
 }
-if($conf['compression'] == 'gz' && !function_exists('gzopen')){
+if($conf['compression'] == 'gz' && !DOKU_HAS_GZIP) {
     $conf['compression'] = 0;
 }
 
 // input handle class
 global $INPUT;
-$INPUT = new Input();
+$INPUT = new \dokuwiki\Input\Input();
 
 // initialize plugin controller
 $plugin_controller = new $plugin_controller_class();
 
 // initialize the event handler
 global $EVENT_HANDLER;
-$EVENT_HANDLER = new Doku_Event_Handler();
+$EVENT_HANDLER = new EventHandler();
 
 $local = $conf['lang'];
-trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
+Event::createAndTrigger('INIT_LANG_LOAD', $local, 'init_lang', true);
 
 
 // setup authentication system
@@ -223,6 +231,34 @@ if (!defined('NOSESSION')) {
 
 // setup mail system
 mail_setup();
+
+/**
+ * Initializes the session
+ *
+ * Makes sure the passed session cookie is valid, invalid ones are ignored an a new session ID is issued
+ *
+ * @link http://stackoverflow.com/a/33024310/172068
+ * @link http://php.net/manual/en/session.configuration.php#ini.session.sid-length
+ */
+function init_session() {
+    global $conf;
+    session_name(DOKU_SESSION_NAME);
+    session_set_cookie_params(
+        DOKU_SESSION_LIFETIME,
+        DOKU_SESSION_PATH,
+        DOKU_SESSION_DOMAIN,
+        ($conf['securecookie'] && is_ssl()),
+        true
+    );
+
+    // make sure the session cookie contains a valid session ID
+    if(isset($_COOKIE[DOKU_SESSION_NAME]) && !preg_match('/^[-,a-zA-Z0-9]{22,256}$/', $_COOKIE[DOKU_SESSION_NAME])) {
+        unset($_COOKIE[DOKU_SESSION_NAME]);
+    }
+
+    session_start();
+}
+
 
 /**
  * Checks paths from config file
@@ -252,7 +288,9 @@ function init_paths(){
     }
 
     // path to old changelog only needed for upgrading
-    $conf['changelog_old'] = init_path((isset($conf['changelog']))?($conf['changelog']):($conf['savedir'].'/changes.log'));
+    $conf['changelog_old'] = init_path(
+        (isset($conf['changelog'])) ? ($conf['changelog']) : ($conf['savedir'] . '/changes.log')
+    );
     if ($conf['changelog_old']=='') { unset($conf['changelog_old']); }
     // hardcoded changelog because it is now a cache that lives in meta
     $conf['changelog'] = $conf['metadir'].'/_dokuwiki.changes';
@@ -302,30 +340,12 @@ function init_files(){
             $fh = @fopen($file,'a');
             if($fh){
                 fclose($fh);
-                if(!empty($conf['fperm'])) chmod($file, $conf['fperm']);
+                if($conf['fperm']) chmod($file, $conf['fperm']);
             }else{
                 nice_die("$file is not writable. Check your permissions settings!");
             }
         }
     }
-
-    # create title index (needs to have same length as page.idx)
-    /*
-    $file = $conf['indexdir'].'/title.idx';
-    if(!file_exists($file)){
-        $pages = file($conf['indexdir'].'/page.idx');
-        $pages = count($pages);
-        $fh = @fopen($file,'a');
-        if($fh){
-            for($i=0; $i<$pages; $i++){
-                fwrite($fh,"\n");
-            }
-            fclose($fh);
-        }else{
-            nice_die("$file is not writable. Check your permissions settings!");
-        }
-    }
-    */
 }
 
 /**
@@ -335,6 +355,10 @@ function init_files(){
  * Check for accessibility on directories as well.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $path
+ *
+ * @return bool|string
  */
 function init_path($path){
     // check existence
@@ -381,37 +405,13 @@ function init_creationmodes(){
 
     // check what is set automatically by the system on file creation
     // and set the fperm param if it's not what we want
-    $auto_fmode = 0666 & ~$umask;
+    $auto_fmode = $conf['fmode'] & ~$umask;
     if($auto_fmode != $conf['fmode']) $conf['fperm'] = $conf['fmode'];
 
     // check what is set automatically by the system on file creation
     // and set the dperm param if it's not what we want
     $auto_dmode = $conf['dmode'] & ~$umask;
     if($auto_dmode != $conf['dmode']) $conf['dperm'] = $conf['dmode'];
-}
-
-/**
- * remove magic quotes recursivly
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function remove_magic_quotes(&$array) {
-    foreach (array_keys($array) as $key) {
-        // handle magic quotes in keynames (breaks order)
-        $sk = stripslashes($key);
-        if($sk != $key){
-            $array[$sk] = $array[$key];
-            unset($array[$key]);
-            $key = $sk;
-        }
-
-        // do recursion if needed
-        if (is_array($array[$key])) {
-            remove_magic_quotes($array[$key]);
-        }else {
-            $array[$key] = stripslashes($array[$key]);
-        }
-    }
 }
 
 /**
@@ -423,6 +423,10 @@ function remove_magic_quotes(&$array) {
  * !! initialized.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param null|string $abs
+ *
+ * @return string
  */
 function getBaseURL($abs=null){
     global $conf;
@@ -455,7 +459,7 @@ function getBaseURL($abs=null){
     //finish here for relative URLs
     if(!$abs) return $dir;
 
-    //use config option if available, trim any slash from end of baseurl to avoid multiple consecutive slashes in the path
+    //use config if available, trim any slash from end of baseurl to avoid multiple consecutive slashes in the path
     if(!empty($conf['baseurl'])) return rtrim($conf['baseurl'],'/').$dir;
 
     //split hostheader into host and port
@@ -501,25 +505,35 @@ function getBaseURL($abs=null){
  *
  * @returns bool true when SSL is active
  */
-function is_ssl(){
+function is_ssl() {
     // check if we are behind a reverse proxy
-    if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
-        if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-	    return true;
-	} else {
-	    return false;
-	}
+    if(isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+        if($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+            return true;
+        } else {
+            return false;
+        }
     }
-    if (!isset($_SERVER['HTTPS']) ||
-        preg_match('/^(|off|false|disabled)$/i',$_SERVER['HTTPS'])){
+    if(!isset($_SERVER['HTTPS']) ||
+        preg_match('/^(|off|false|disabled)$/i', $_SERVER['HTTPS'])) {
         return false;
-    }else{
+    } else {
         return true;
     }
 }
 
 /**
+ * checks it is windows OS
+ * @return bool
+ */
+function isWindows() {
+    return (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? true : false;
+}
+
+/**
  * print a nice message even if no styles are loaded yet.
+ *
+ * @param integer|string $msg
  */
 function nice_die($msg){
     echo<<<EOT
@@ -535,6 +549,9 @@ function nice_die($msg){
 </body>
 </html>
 EOT;
+    if(defined('DOKU_UNITTEST')) {
+        throw new RuntimeException('nice_die: '.$msg);
+    }
     exit(1);
 }
 
@@ -546,15 +563,20 @@ EOT;
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author <richpageau at yahoo dot co dot uk>
- * @link   http://de3.php.net/manual/en/function.realpath.php#75992
+ * @link   http://php.net/manual/en/function.realpath.php#75992
+ *
+ * @param string $path
+ * @param bool $exists
+ *
+ * @return bool|string
  */
 function fullpath($path,$exists=false){
     static $run = 0;
     $root  = '';
-    $iswin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' || @$GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS']);
+    $iswin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' || !empty($GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS']));
 
     // find the (indestructable) root of the path - keeps windows stuff intact
-    if($path{0} == '/'){
+    if($path[0] == '/'){
         $root = '/';
     }elseif($iswin){
         // match drive letter and UNC paths

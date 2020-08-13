@@ -19,22 +19,33 @@
     width: 100%;
     text-align: left;
 }
-
+[dir=rtl] #mediamanager__page {
+    text-align: right;
+}
 #mediamanager__page .panel {
     float: left;
+}
+[dir=rtl] #mediamanager__page .panel {
+    float: right;
 }
 
 #mediamanager__page .namespaces {
     width: 20%;
     min-width: 10em; /* @change */
+    left:0 !important; /* overrules jQuery UI resizable in rtl */
 }
 #mediamanager__page .filelist {
     width: 50%;
     min-width: 25em; /* @change */
+    left:0 !important; /* overrules jQuery UI resizable in rtl */
 }
 #mediamanager__page .file {
     width: 30%;
     min-width: 15em; /* @change */
+}
+
+#mediamanager__page .tabs li {
+    white-space: nowrap;
 }
 
 #mediamanager__page .panelHeader {
@@ -45,7 +56,10 @@
     min-height: 20px;
     overflow: hidden;
 }
-
+[dir=rtl] #mediamanager__page .panelHeader {
+    text-align: right;
+    margin: 0 0 10px 10px;
+}
 #mediamanager__page .panelContent {
     overflow-y: auto;
     overflow-x: hidden;
@@ -55,11 +69,16 @@
 }
 [dir=rtl] #mediamanager__page .panelContent {
     text-align: right;
+    margin: 0 0 10px 10px;
 }
 
 #mediamanager__page .file .panelHeader,
 #mediamanager__page .file .panelContent {
     margin-right: 0;
+}
+[dir=rtl] #mediamanager__page .file .panelHeader,
+[dir=rtl] #mediamanager__page .file .panelContent {
+    margin-left: 0;
 }
 
 #mediamanager__page .ui-resizable-e {
@@ -68,6 +87,14 @@
     background: transparent url(../../images/resizecol.png) center center no-repeat;
 }
 #mediamanager__page .ui-resizable-e:hover {
+    background-color: @ini_background_alt;
+}
+[dir=rtl] #mediamanager__page .ui-resizable-w {
+    width: 6px;
+    left: 2px;
+    background: transparent url(../../images/resizecol.png) center center no-repeat;
+}
+[dir=rtl] #mediamanager__page .ui-resizable-w:hover {
     background-color: @ini_background_alt;
 }
 
@@ -82,6 +109,9 @@
     font-size: 1em;
     padding: 0;
     margin: 0 0 3px;
+}
+[dir=rtl] #mediamanager__page .panelHeader h3 {
+    float : right
 }
 
 
@@ -107,10 +137,6 @@
     position: relative;
     bottom: -1px;
     z-index: 2;
-}
-* html #mediamanager__page .namespaces h2,
-*+html #mediamanager__page .namespaces h2 {
-    display: inline;
 }
 [dir=rtl] #mediamanager__page .namespaces h2 {
     margin: 0 .3em 0 0;
@@ -157,7 +183,9 @@
     float: right;
     margin-top: -3px;
 }
-
+[dir=rtl] #mediamanager__page .panelHeader form.options {
+    float : left
+}
 #mediamanager__page .panelHeader ul {
     list-style: none;
     margin: 0;
@@ -170,26 +198,31 @@
     padding-left: 3px;
 }
 [dir=rtl] #mediamanager__page .panelHeader ul li {
-    margin-right: 0;
-    margin-left: .5em;
+    padding-right: 3px;
+    padding-left: 0;
+    float: right;
 }
 
-#mediamanager__page .panelHeader ul li.listType {
+#mediamanager__page .panelHeader ul li.ui-controlgroup-horizontal {
     padding-left: 30px;
     margin: 0 0 0 5px;
+}
+#mediamanager__page .panelHeader ul li.listType {
     background: url('../../images/icon-list.png') 3px 1px no-repeat;
 }
 #mediamanager__page .panelHeader ul li.sortBy {
-    padding-left: 30px;
-    margin: 0 0 0 5px;
     background: url('../../images/icon-sort.png') 3px 1px no-repeat;
 }
+[dir=rtl] #mediamanager__page .panelHeader ul li.ui-controlgroup-horizontal {
+    padding-left: 0;
+    padding-right: 30px;
+    margin: 0 5px 0 0;
+    background-position: right 1px;
+}
 
-#mediamanager__page .panelHeader form.options .ui-buttonset label{
+#mediamanager__page .panelHeader form.options .ui-controlgroup-horizontal label{
     font-size: 90%;
     margin-right: -0.4em;
-}
-#mediamanager__page .panelHeader form.options .ui-buttonset .ui-button-text {
     padding: .3em .5em;
     line-height: 1;
 }
@@ -201,9 +234,11 @@
     margin: 0 10px 0 0;
 }
 [dir=rtl] #mediamanager__page .filelist ul {
-    margin: 0 10px 0 0;
+    margin: 0 0 0 10px;
 }
-
+#mediamanager__page .filelist ul.rows {
+    margin: 0;
+}
 #mediamanager__page .filelist .panelContent ul li:hover {
     background-color: @ini_background_alt;
 }
@@ -213,14 +248,6 @@
     display: table-cell;
     overflow: hidden;
 }
-* html #mediamanager__page .filelist .thumbs li dt a,
-*+html #mediamanager__page .filelist .thumbs li dt a {
-    display: block;
-}
-* html #mediamanager__page .filelist .rows li dt a,
-*+html #mediamanager__page .filelist .rows li dt a {
-    display: inline;
-}
 
 /* file list as thumbs */
 
@@ -228,7 +255,6 @@
     width: 100px;
     min-height: 130px;
     display: inline-block;
-    display: -moz-inline-stack;
     /* the right margin should visually be 10px, but because of its inline-block nature the whitespace inbetween is about 4px more */
     margin: 0 6px 10px 0;
     background-color: @ini_background_neu;
@@ -242,11 +268,6 @@
 [dir=rtl] #mediamanager__page .filelist .thumbs li {
     margin-right: 0;
     margin-left: 6px;
-}
-* html #mediamanager__page .filelist .thumbs li,
-*+html #mediamanager__page .filelist .thumbs li {
-    display: inline;
-    zoom: 1;
 }
 
 #mediamanager__page .filelist .thumbs li dt a {
@@ -285,8 +306,7 @@
     display: block;
     position: relative;
     max-height: 50px;
-    margin: 0;
-    margin-bottom: 3px;
+    margin: 0 0 3px 0;
     background-color: @ini_background;
     color: @ini_text;
     overflow: hidden;
@@ -302,7 +322,9 @@
     height: 40px;
     text-align: center;
 }
-
+[dir=rtl] #mediamanager__page .filelist .rows li dt {
+    float: right;
+}
 #mediamanager__page .filelist .rows li dt a {
     width: 100px;
     height: 40px;
@@ -322,6 +344,14 @@
     float: left;
     margin-left: 1%;
     white-space: nowrap;
+}
+[dir=rtl] #mediamanager__page .filelist .rows li .name,
+[dir=rtl] #mediamanager__page .filelist .rows li .size,
+[dir=rtl] #mediamanager__page .filelist .rows li .filesize,
+[dir=rtl] #mediamanager__page .filelist .rows li .date {
+    float: right;
+    margin-left: 0;
+    margin-right: 1%;
 }
 
 #mediamanager__page .filelist .rows li .name {
@@ -394,7 +424,7 @@
     width: 50%;
 }
 
-#mediamanager__page form.meta input.button {
+#mediamanager__page form.meta button {
     width: auto;
 }
 
@@ -407,19 +437,26 @@
 
 /* file revisions form */
 
-#mediamanager__page #page__revisions ul {
+#mediamanager__page form.changes ul {
     margin-left: 10px;
     padding: 0;
     list-style-type: none;
 }
+[dir=rtl] #mediamanager__page form.changes ul {
+    margin-left: 0;
+    margin-right: 10px;
+}
 
-#mediamanager__page #page__revisions ul li div.li div {
+#mediamanager__page form.changes ul li div.li div {
     font-size: 90%;
     color: @ini_text_neu;
     padding-left: 18px;
 }
-
-#mediamanager__page #page__revisions ul li div.li input {
+[dir=rtl] #mediamanager__page form.changes ul li div.li div {
+    padding-left: 0;
+    padding-right: 18px;
+}
+#mediamanager__page form.changes ul li div.li input {
     position: relative;
     top: 1px;
 }
@@ -442,6 +479,7 @@
 }
 [dir=rtl] #mediamanager__diff td,
 [dir=rtl] #mediamanager__diff th {
+    margin: 0 0 10px 5px;
     text-align: right;
 }
 

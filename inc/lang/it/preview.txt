@@ -1,5 +1,3 @@
 ====== Anteprima ======
 
-Questa è un'anteprima di come apparirà il tuo testo. Attenzione: **la pagina non è ancora stata salvata**!.
-
-
+Questa è un'anteprima di come apparirà il tuo testo. **Attenzione: la pagina non è ancora stata salvata**!

@@ -388,7 +388,7 @@ class DOMDocumentWrapper {
                 phpQuery::debug("Full markup load (XML), appending charset '$charset'");
                 $markup = $this->charsetAppendToXML($markup, $charset);
             }
-            // see http://pl2.php.net/manual/en/book.dom.php#78929
+            // see http://php.net/manual/en/book.dom.php#78929
             // LIBXML_DTDLOAD (>= PHP 5.1)
             // does XML ctalogues works with LIBXML_NONET
     //      $this->document->resolveExternals = true;
@@ -401,7 +401,7 @@ class DOMDocumentWrapper {
                     ? $this->document->loadXML($markup)
                     : @$this->document->loadXML($markup);
             } else {
-                /** @link http://pl2.php.net/manual/en/libxml.constants.php */
+                /** @link http://php.net/manual/en/libxml.constants.php */
                 $libxmlStatic = phpQuery::$debug === 2
                     ? LIBXML_DTDLOAD|LIBXML_DTDATTR|LIBXML_NONET
                     : LIBXML_DTDLOAD|LIBXML_DTDATTR|LIBXML_NONET|LIBXML_NOWARNING|LIBXML_NOERROR;
@@ -2153,7 +2153,7 @@ class phpQueryObject
                 if (! $param)
                     break;
                     // nth-child(n+b) to nth-child(1n+b)
-                if ($param{0} == 'n')
+                if ($param[0] == 'n')
                     $param = '1'.$param;
                 // :nth-child(index/even/odd/equation)
                 if ($param == 'even' || $param == 'odd')
@@ -2168,7 +2168,7 @@ class phpQueryObject
                                 return null;'),
                         new CallbackParam(), $param
                     );
-                else if (mb_strlen($param) > 1 && $param{1} == 'n')
+                else if (mb_strlen($param) > 1 && $param[1] == 'n')
                     // an+b
                     $mapped = $this->map(
                         create_function('$node, $param',

@@ -1,11 +1,13 @@
 <?php
+
 /**
- * Finnish language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author otto@valjakko.net
- * @author Otto Vainio <otto@valjakko.net>
+ * @author Tuomo Hartikainen <tuomo.hartikainen@heksia.fi>
+ * @author otto <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
  * @author Sami Olmari <sami@olmari.fi>
+ * @author Wiki Doku <SugarKidder@mailinator.com>
  */
 $lang['menu']                  = 'Asetukset';
 $lang['error']                 = 'Asetuksia ei päivitetty väärän arvon vuoksi. Tarkista muutokset ja lähetä sivu uudestaan.
@@ -40,7 +42,7 @@ $lang['title']                 = 'Wikin nimi';
 $lang['start']                 = 'Alkusivun nimi';
 $lang['lang']                  = 'Kieli';
 $lang['template']              = 'Sivumalli';
-$lang['tagline']               = 'Apuotsikko - slogan sivustonimen yhteysteen (jos template käyttää)';
+$lang['tagline']               = 'Apuotsikko - slogan sivustonimen yhteyteen (jos template tukee)';
 $lang['sidebar']               = 'Sivupalkin sivunimi (jos template tukee sitä), tyhjä arvo poistaa sivupalkin';
 $lang['license']               = 'Millä lisenssillä sisältö pitäisi julkaista?';
 $lang['savedir']               = 'Hakemisto tietojen tallennukseen.';
@@ -56,7 +58,7 @@ $lang['breadcrumbs']           = 'Leivänmurujen määrä';
 $lang['youarehere']            = 'Hierarkkiset leivänmurut';
 $lang['fullpath']              = 'Näytä sivun koko polku sivun alareunassa';
 $lang['typography']            = 'Tee typografiset korvaukset';
-$lang['dformat']               = 'Päivämäärän muoto (katso PHPn <a href="http://www.php.net/strftime">strftime</a> funktiota)';
+$lang['dformat']               = 'Päivämäärän muoto (katso PHPn <a href="http://php.net/strftime">strftime</a> funktiota)';
 $lang['signature']             = 'Allekirjoitus';
 $lang['showuseras']            = 'Mitä näytetään, kun kerrotaan viimeisen editoijan tiedot';
 $lang['toptoclevel']           = 'Ylätason sisällysluettelo';
@@ -112,7 +114,7 @@ $lang['subscribe_time']        = 'Aika jonka jälkeen tilauslinkit ja yhteenveto
 $lang['notify']                = 'Lähetä muutosilmoitukset tähän osoitteeseen';
 $lang['registernotify']        = 'Lähetä ilmoitus uusista rekisteröitymisistä tähän osoitteeseen';
 $lang['mailfrom']              = 'Sähköpostiosoite automaattisia postituksia varten';
-$lang['mailprefix']            = 'Etuliite automaattisesti lähetettyihin dähköposteihin';
+$lang['mailprefix']            = 'Etuliite automaattisesti lähetettyihin sähköposteihin';
 $lang['htmlmail']              = 'Lähetä paremman näköisiä, mutta isompia HTML multipart sähköposteja. Ota pois päältä, jos haluat vain tekstimuotoisia posteja.';
 $lang['sitemap']               = 'Luo Google sitemap (päiviä)';
 $lang['rss_type']              = 'XML-syötteen tyyppi';
@@ -146,12 +148,6 @@ $lang['proxy____user']         = 'Proxy käyttäjän nimi';
 $lang['proxy____pass']         = 'Proxy salasana';
 $lang['proxy____ssl']          = 'Käytä ssl-yhteyttä kytkeytyäksesi proxy-palvelimeen';
 $lang['proxy____except']       = 'Säännönmukainen lause, URLiin, jolle proxy ohitetaan.';
-$lang['safemodehack']          = 'Käytä safemode kiertoa';
-$lang['ftp____host']           = 'FTP-palvelin safemode kiertoa varten';
-$lang['ftp____port']           = 'FTP-portti safemode kiertoa varten';
-$lang['ftp____user']           = 'FTP-käyttäjä safemode kiertoa varten';
-$lang['ftp____pass']           = 'FTP-salasana safemode kiertoa varten';
-$lang['ftp____root']           = 'FTP-juurihakemisto safemode kiertoa varten';
 $lang['license_o_']            = 'ei mitään valittuna';
 $lang['typography_o_0']        = 'ei mitään';
 $lang['typography_o_1']        = 'ilman yksinkertaisia lainausmerkkejä';

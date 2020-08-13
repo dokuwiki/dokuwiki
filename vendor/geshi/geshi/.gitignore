@@ -1,0 +1,5 @@
+/build.properties
+/composer.lock
+/dist/
+/vendor/
+

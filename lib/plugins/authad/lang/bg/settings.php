@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Kiril <neohidra@gmail.com>
  */
 $lang['account_suffix']        = 'Наставка на акаунта Ви. Например <code>@някакъв.домейн.org</code>';

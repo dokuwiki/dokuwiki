@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author François Kooman <fkooman.tuxed.net>
  * @author Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
  * @author Riny Heijdendael <riny@heijdendael.nl>
@@ -12,14 +12,10 @@
  * @author Niels Schoot <niels.schoot@quintiq.com>
  * @author Dion Nicolaas <dion@nicolaas.net>
  * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
- * @author Marijn Hofstra hofstra.m@gmail.com
- * @author Matthias Carchon webmaster@c-mattic.be
  * @author Marijn Hofstra <hofstra.m@gmail.com>
  * @author Timon Van Overveldt <timonvo@gmail.com>
- * @author Jeroen
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
  * @author Gerrit <klapinklapin@gmail.com>
- * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Remon <no@email.local>
  */
 $lang['admin_acl']             = 'Toegangsrechten';

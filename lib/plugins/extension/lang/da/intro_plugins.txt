@@ -1,0 +1,1 @@
+Dette er de udvidelser du aktuelt har installeret i din DokuWiki. Du kan aktivere, deaktive eller fjerne udvidelser fra denne side. Opdateringer til udvidelser vises også her - husk at læse dokumentationen til en udvidelse inden du opdaterer den.

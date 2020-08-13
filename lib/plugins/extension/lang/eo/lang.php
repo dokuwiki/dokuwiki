@@ -2,7 +2,8 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
  * @author Robert Bogenschneider <bogi@uea.org>
  */
 $lang['menu']                  = 'Aldonaĵa administrado';
@@ -25,6 +26,7 @@ $lang['btn_disable']           = 'Malebligi';
 $lang['btn_install']           = 'Instali';
 $lang['btn_reinstall']         = 'Re-instali';
 $lang['js']['reallydel']       = 'Ĉu vere malinstali la aldonaĵon?';
+$lang['js']['display_updatable'] = 'ĝisdatigebla';
 $lang['search_for']            = 'Serĉi la aldonaĵon:';
 $lang['search']                = 'Serĉi';
 $lang['extensionby']           = '<strong>%s</strong> fare de %s';
@@ -61,7 +63,7 @@ $lang['status_template']       = 'ŝablono';
 $lang['status_bundled']        = 'kunliverita';
 $lang['msg_enabled']           = 'Kromaĵo %s ebligita';
 $lang['msg_disabled']          = 'Kromaĵo %s malebligita';
-$lang['msg_delete_success']    = 'Aldonaĵo malinstaliĝis';
+$lang['msg_delete_success']    = 'Aldonaĵo %s malinstaliĝis';
 $lang['msg_template_install_success'] = 'Ŝablono %s sukcese instaliĝis';
 $lang['msg_template_update_success'] = 'Ŝablono %s sukcese aktualiĝis';
 $lang['msg_plugin_install_success'] = 'Kromaĵo %s sukcese instaliĝis';

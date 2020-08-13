@@ -1,21 +1,22 @@
 <?php
+
 /**
- * dutch language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author PBU <pbu@xs4all.nl>
+ * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Harriet Neitz <harrietneitz@gmail.com>
+ * @author mark prins <mprins@users.sf.net>
  * @author Pieter van der Meulen <pieter@vdmeulen.net>
  * @author Wouter Schoot <wouter@schoot.org>
  * @author John de Graaff <john@de-graaff.net>
  * @author Niels Schoot <niels.schoot@quintiq.com>
  * @author Dion Nicolaas <dion@nicolaas.net>
  * @author Danny Rotsaert <danny.rotsaert@edpnet.be>
- * @author Marijn Hofstra hofstra.m@gmail.com
- * @author Matthias Carchon webmaster@c-mattic.be
  * @author Marijn Hofstra <hofstra.m@gmail.com>
  * @author Timon Van Overveldt <timonvo@gmail.com>
- * @author Jeroen
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
- * @author Gerrit <klapinklapin@gmail.com>
+ * @author Hugo Smet <hugo.smet@scarlet.be>
  */
 $lang['menu']                  = 'Configuratie-instellingen';
 $lang['error']                 = 'De instellingen zijn niet gewijzigd wegens een incorrecte waarde, kijk je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde(s) herkennen aan de rode rand.';
@@ -28,7 +29,7 @@ $lang['security']              = 'Beveiligingswaarschuwing: Het wijzigen van dez
 $lang['_configuration_manager'] = 'Configuratiemanager';
 $lang['_header_dokuwiki']      = 'DokuWiki-instellingen';
 $lang['_header_plugin']        = 'Plugin-instellingen';
-$lang['_header_template']      = 'Sjabloon-instellingen';
+$lang['_header_template']      = 'Template-instellingen';
 $lang['_header_undefined']     = 'Ongedefinieerde instellingen';
 $lang['_basic']                = 'Basisinstellingen';
 $lang['_display']              = 'Beeldinstellingen';
@@ -43,13 +44,14 @@ $lang['_advanced']             = 'Geavanceerde instellingen';
 $lang['_network']              = 'Netwerkinstellingen';
 $lang['_msg_setting_undefined'] = 'Geen metadata voor deze instelling.';
 $lang['_msg_setting_no_class'] = 'Geen class voor deze instelling.';
+$lang['_msg_setting_no_known_class'] = 'Setting class niet beschikbaar';
 $lang['_msg_setting_no_default'] = 'Geen standaard waarde.';
 $lang['title']                 = 'Titel van de wiki';
 $lang['start']                 = 'Naam startpagina';
 $lang['lang']                  = 'Taal';
-$lang['template']              = 'Sjabloon ofwel het design van de wiki.';
-$lang['tagline']               = 'Ondertitel (als het sjabloon dat ondersteunt)';
-$lang['sidebar']               = 'Zijbalk-paginanaam (als het sjabloon dat ondersteunt), leeg veld betekent geen zijbalk';
+$lang['template']              = 'Template ofwel het design van de wiki.';
+$lang['tagline']               = 'Ondertitel (als het template dat ondersteunt)';
+$lang['sidebar']               = 'Zijbalk-paginanaam (als het template dat ondersteunt), leeg veld betekent geen zijbalk';
 $lang['license']               = 'Onder welke licentie zou je tekst moeten worden gepubliceerd?';
 $lang['savedir']               = 'Directory om data op te slaan';
 $lang['basedir']               = 'Basisdirectory';
@@ -64,7 +66,7 @@ $lang['breadcrumbs']           = 'Aantal broodkruimels. Zet dit op 0 om uit te s
 $lang['youarehere']            = 'Gebruik hiërarchische broodkruimels (waarschijnlijk wil je dan de optie hierboven uitschakelen)';
 $lang['fullpath']              = 'Volledig pad van pagina\'s in de footer weergeven';
 $lang['typography']            = 'Breng typografische wijzigingen aan';
-$lang['dformat']               = 'Datum formaat (zie de PHP <a href="http://www.php.net/strftime">strftime</a> functie)';
+$lang['dformat']               = 'Datum formaat (zie de PHP <a href="http://php.net/strftime">strftime</a> functie)';
 $lang['signature']             = 'Tekst die ingevoegd wordt met de Handtekening-knop in het bewerkvenster.';
 $lang['showuseras']            = 'Hoe de gebruiker die de pagina het laatst wijzigde weergeven';
 $lang['toptoclevel']           = 'Bovenste niveau voor inhoudsopgave';
@@ -89,7 +91,9 @@ $lang['disableactions']        = 'Aangevinkte DokuWiki-akties uitschakelen';
 $lang['disableactions_check']  = 'Controleer';
 $lang['disableactions_subscription'] = 'Inschrijven/opzeggen';
 $lang['disableactions_wikicode'] = 'Bron bekijken/exporteer rauw';
+$lang['disableactions_profile_delete'] = 'Schrap eigen account';
 $lang['disableactions_other']  = 'Andere akties (gescheiden door komma\'s)';
+$lang['disableactions_rss']    = 'XML Syndication (RSS)';
 $lang['auth_security_timeout'] = 'Authenticatiebeveiligings-timeout (seconden)';
 $lang['securecookie']          = 'Moeten cookies die via HTTPS gezet zijn alleen via HTTPS verzonden worden door de browser? Zet deze optie uit als alleen het inloggen op de wiki beveiligd is, maar het gebruik verder niet.';
 $lang['remote']                = 'Activeer het remote API-systeem. Hiermee kunnen andere applicaties de wiki benaderen via XML-RPC of andere mechanismen.';
@@ -120,6 +124,7 @@ $lang['subscribe_time']        = 'Inschrijvingsmeldingen en samenvattingen worde
 $lang['notify']                = 'Stuur altijd e-mailnotificaties naar dit adres';
 $lang['registernotify']        = 'Stuur altijd informatie over nieuw geregistreerde gebruikers naar dit e-mailadres';
 $lang['mailfrom']              = 'E-mailadres van afzender voor automatische e-mail';
+$lang['mailreturnpath']        = 'Email adres voor de ontvanger van meldingen van niet-afleverbare berichten';
 $lang['mailprefix']            = 'Te gebruiken voorvoegsel voor onderwerp automatische email. Leeglaten gebruik de wikititel.';
 $lang['htmlmail']              = 'Zend multipart HTML e-mail. Dit ziet er beter uit, maar is groter. Uitschakelen betekent e-mail in platte tekst.';
 $lang['sitemap']               = 'Genereer Google sitemap (dagen). 0 betekent uitschakelen.';
@@ -129,6 +134,9 @@ $lang['rss_content']           = 'Wat moet er in de XML feed items weergegeven w
 $lang['rss_update']            = 'XML feed verversingsinterval (sec)';
 $lang['rss_show_summary']      = 'XML feed samenvatting in titel weergeven';
 $lang['rss_media']             = 'Welk type verandering moet in de XML feed worden weergegeven?';
+$lang['rss_media_o_both']      = 'beide';
+$lang['rss_media_o_pages']     = 'pagina\'s';
+$lang['rss_media_o_media']     = 'media';
 $lang['updatecheck']           = 'Controleer op nieuwe versies en beveiligingswaarschuwingen? DokuWiki moet hiervoor contact opnemen met update.dokuwiki.org.';
 $lang['userewrite']            = 'Gebruik nette URL\'s';
 $lang['useslash']              = 'Gebruik slash (/) als scheiding tussen namepaces in URL\'s';
@@ -139,26 +147,31 @@ $lang['autoplural']            = 'Controleer op meervoudsvormen in links';
 $lang['compression']           = 'Compressiemethode voor attic-bestanden';
 $lang['gzip_output']           = 'Gebruik gzip Content-Encoding voor xhtml';
 $lang['compress']              = 'Compacte CSS en javascript output';
-$lang['cssdatauri']            = 'Maximale omvang in bytes van in CSS gelinkte afbeeldingen die bij de stylesheet moeten worden ingesloten ter reductie van de HTTP request header overhead. Deze techniek werkt niet in IE7 en ouder! <code>400</code> tot <code>600</code> is een geschikte omvang. Stel de omvang in op <code>0</code> om deze functionaliteit uit te schakelen.';
+$lang['cssdatauri']            = 'Maximale omvang in bytes van in CSS gelinkte afbeeldingen die bij de stylesheet moeten worden ingesloten ter reductie van de HTTP request header overhead. <code>400</code> tot <code>600</code> is een geschikte omvang. Stel de omvang in op <code>0</code> om deze functionaliteit uit te schakelen.';
 $lang['send404']               = 'Stuur "HTTP 404/Page Not Found" voor niet-bestaande pagina\'s';
 $lang['broken_iua']            = 'Is de ignore_user_abort functie onbruikbaar op uw systeem? Dit kan een onbruikbare zoekindex tot gevolg hebben. IIS+PHP/CGI staat hier bekend om. Zie <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">Bug 852</a> voor meer informatie.';
 $lang['xsendfile']             = 'Gebruik de X-Sendfile header om de webserver statische content te laten versturen? De webserver moet dit wel ondersteunen.';
 $lang['renderer_xhtml']        = 'Weergavesysteem voor de standaard (xhtml) wiki-uitvoer';
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_nslimit']        = 'Beperk het zoeken tot de huidige X namespaces. Wanneer het zoeken wordt uitgevoerd vanaf een pagina binnen een diepere namespace, worden de eerste X aantal namespaces toegevoegd als filter';
+$lang['search_fragment']       = 'Specifeer het standaard zoekgedrag voor fragmenten';
+$lang['search_fragment_o_exact'] = 'exact';
+$lang['search_fragment_o_starts_with'] = 'begint met';
+$lang['search_fragment_o_ends_with'] = 'eindigt op';
+$lang['search_fragment_o_contains'] = 'bevat';
+$lang['trustedproxy']          = 'Vertrouw op doorstuurproxy\'s die overeenkomen met deze reguliere expressie over het echte client-IP dat ze rapporteren. De standaard komt overeen met lokale netwerken. Laat leeg om geen proxy te vertrouwen.';
 $lang['dnslookups']            = 'DokuWiki zoekt de hostnamen van IP-adressen van gebruikers die pagina wijzigen op. Schakel deze optie uit als je geen of een langzame DNS server hebt.';
+$lang['jquerycdn']             = 'Moet er een CDN gebruikt worden om de jQuery en jQuery UI bestanden te laden. Dit zorgt voor extra HTTP verzoeken, maar bestanden laden mogelijk sneller en zitten misschien al in de cache van de gebruiker.';
+$lang['jquerycdn_o_0']         = 'Geen CDN gebruiken';
+$lang['jquerycdn_o_jquery']    = 'Gebruik code.jquery.com CDN';
+$lang['jquerycdn_o_cdnjs']     = 'Gebruik cdnjs.com CDN';
 $lang['proxy____host']         = 'Proxy server';
 $lang['proxy____port']         = 'Proxy port';
 $lang['proxy____user']         = 'Proxy gebruikersnaam';
 $lang['proxy____pass']         = 'Proxy wachtwoord';
 $lang['proxy____ssl']          = 'Gebruik SSL om een verbinding te maken met de proxy';
 $lang['proxy____except']       = 'Reguliere expressie om URL\'s te bepalen waarvoor de proxy overgeslagen moet worden.';
-$lang['safemodehack']          = 'Safemode hack aanzetten';
-$lang['ftp____host']           = 'FTP server voor safemode hack';
-$lang['ftp____port']           = 'FTP port voor safemode hack';
-$lang['ftp____user']           = 'FTP gebruikersnaam voor safemode hack';
-$lang['ftp____pass']           = 'FTP wachtwoord voor safemode hack';
-$lang['ftp____root']           = 'FTP root directory voor safemode hack';
 $lang['license_o_']            = 'Geen gekozen';
 $lang['typography_o_0']        = 'geen';
 $lang['typography_o_1']        = 'Alleen dubbele aanhalingstekens';
@@ -194,6 +207,7 @@ $lang['xsendfile_o_2']         = 'Standaard X-Sendfile header';
 $lang['xsendfile_o_3']         = 'Merkgebonden Nginx X-Accel-Redirect header';
 $lang['showuseras_o_loginname'] = 'Loginnaam';
 $lang['showuseras_o_username'] = 'Volledige naam';
+$lang['showuseras_o_username_link'] = 'Gebruikers volledige naam als interwiki gebruikers link';
 $lang['showuseras_o_email']    = 'E-mailadres (onherkenbaar gemaakt volgens mailguard-instelling)';
 $lang['showuseras_o_email_link'] = 'E-mailadres als mailto: link';
 $lang['useheading_o_0']        = 'Nooit';

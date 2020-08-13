@@ -1,0 +1,1 @@
+Tutaj możesz ręcznie zainstalować wtyczki i szablony, przesyłając je lub podając bezpośredni adres URL do pobrania.

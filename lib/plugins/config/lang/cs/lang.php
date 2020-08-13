@@ -1,18 +1,26 @@
 <?php
+
 /**
- * Czech language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author Petr Kajzar <petr.kajzar@lf1.cuni.cz>
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Robert Surý <rsurycz@seznam.cz>
+ * @author Martin Hořínek <hev@hev.cz>
+ * @author Jonáš Dyba <jonas.dyba@gmail.com>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
- * @author tomas@valenta.cz
+ * @author tomas <tomas@valenta.cz>
  * @author Marek Sacha <sachamar@fel.cvut.cz>
  * @author Lefty <lefty@multihost.cz>
  * @author Vojta Beran <xmamut@email.cz>
- * @author zbynek.krivka@seznam.cz
- * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  * @author Jakub A. Těšínský (j@kub.cz)
- * @author mkucera66@seznam.cz
+ * @author mkucera66 <mkucera66@seznam.cz>
+ * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
+ * @author Turkislav <turkislav@blabla.com>
+ * @author Daniel Slováček <danslo@danslo.cz>
+ * @author Martin Růžička <martinr@post.cz>
+ * @author Pavel Krupička <pajdacz@gmail.com>
  */
 $lang['menu']                  = 'Správa nastavení';
 $lang['error']                 = 'Nastavení nebyla změněna kvůli alespoň jedné neplatné položce,
@@ -44,6 +52,7 @@ $lang['_advanced']             = 'Pokročilá nastavení';
 $lang['_network']              = 'Nastavení sítě';
 $lang['_msg_setting_undefined'] = 'Chybí metadata položky.';
 $lang['_msg_setting_no_class'] = 'Chybí třída položky.';
+$lang['_msg_setting_no_known_class'] = 'Konfigurační třída není dostupná.';
 $lang['_msg_setting_no_default'] = 'Chybí výchozí hodnota položky.';
 $lang['title']                 = 'Název celé wiki';
 $lang['start']                 = 'Název úvodní stránky';
@@ -65,7 +74,7 @@ $lang['breadcrumbs']           = 'Počet odkazů na navštívené stránky';
 $lang['youarehere']            = 'Hierarchická "drobečková" navigace';
 $lang['fullpath']              = 'Ukazovat plnou cestu ke stránkám v patičce';
 $lang['typography']            = 'Provádět typografické nahrazování';
-$lang['dformat']               = 'Formát data (viz PHP funkci <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Formát data (viz PHP funkci <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Podpis';
 $lang['showuseras']            = 'Co se má přesně zobrazit, když se ukazuje uživatel, který naposledy editoval stránku';
 $lang['toptoclevel']           = 'Nejvyšší úroveň, kterou začít automaticky generovaný obsah';
@@ -95,7 +104,9 @@ $lang['disableactions']        = 'Vypnout DokuWiki akce';
 $lang['disableactions_check']  = 'Zkontrolovat';
 $lang['disableactions_subscription'] = 'Přihlásit se/Odhlásit se ze seznamu pro odběr změn';
 $lang['disableactions_wikicode'] = 'Prohlížet zdrojové kódy/Export wiki textu';
+$lang['disableactions_profile_delete'] = 'Smazat vlastní účet';
 $lang['disableactions_other']  = 'Další akce (oddělené čárkou)';
+$lang['disableactions_rss']    = 'XMS syndikace (RSS)';
 $lang['auth_security_timeout'] = 'Časový limit pro autentikaci (v sekundách)';
 $lang['securecookie']          = 'Má prohlížeč posílat cookies nastavené přes HTTPS opět jen přes HTTPS? Vypněte tuto volbu, pokud chcete, aby bylo pomocí SSL zabezpečeno pouze přihlašování do wiki, ale obsah budete prohlížet nezabezpečeně.';
 $lang['remote']                = 'Zapne API systému, umožňující jiným aplikacím vzdálený přístup k wiki pomoci XML-RPC nebo jiných mechanizmů.';
@@ -126,6 +137,7 @@ $lang['subscribe_time']        = 'Časový interval v sekundách, ve kterém jso
 $lang['notify']                = 'Posílat oznámení o změnách na následující emailovou adresu';
 $lang['registernotify']        = 'Posílat informace o nově registrovaných uživatelích na tuto mailovou adresu';
 $lang['mailfrom']              = 'E-mailová adresa, která se bude používat pro automatické maily';
+$lang['mailreturnpath']        = 'E-mailová adresa příjemce pro oznámení o nedoručení';
 $lang['mailprefix']            = 'Předpona předmětu e-mailu, která se bude používat pro automatické maily';
 $lang['htmlmail']              = 'Posílat emaily v HTML (hezčí ale větší). Při vypnutí budou posílány jen textové emaily.';
 $lang['sitemap']               = 'Generovat Google sitemap (interval ve dnech)';
@@ -134,7 +146,11 @@ $lang['rss_linkto']            = 'XML kanál odkazuje na';
 $lang['rss_content']           = 'Co zobrazovat v položkách XML kanálu?';
 $lang['rss_update']            = 'Interval aktualizace XML kanálu (v sekundách)';
 $lang['rss_show_summary']      = 'XML kanál ukazuje souhrn v titulku';
+$lang['rss_show_deleted']      = 'XML kanál Zobrazit smazané kanály';
 $lang['rss_media']             = 'Jaký typ změn má být uveden v kanálu XML';
+$lang['rss_media_o_both']      = 'oba';
+$lang['rss_media_o_pages']     = 'stránky';
+$lang['rss_media_o_media']     = 'média';
 $lang['updatecheck']           = 'Kontrolovat aktualizace a bezpečnostní varování? DokuWiki potřebuje pro tuto funkci přístup k update.dokuwiki.org';
 $lang['userewrite']            = 'Používat "pěkná" URL';
 $lang['useslash']              = 'Používat lomítko jako oddělovač jmenných prostorů v URL';
@@ -145,26 +161,34 @@ $lang['autoplural']            = 'Kontrolovat plurálové tvary v odkazech';
 $lang['compression']           = 'Metoda komprese pro staré verze';
 $lang['gzip_output']           = 'Používat pro xhtml Content-Encoding gzip';
 $lang['compress']              = 'Zahustit CSS a JavaScript výstup';
-$lang['cssdatauri']            = 'Velikost [v bajtech] obrázků odkazovaných v CSS souborech, které budou pro ušetření HTTP požadavku vestavěny do stylu. Tato technika nefunguje v IE 7 a starším. Doporučená hodnota je mezi <code>400</code> a <code>600</code> bajty. Pro vypnutí nastavte na <code>0</code>.';
+$lang['cssdatauri']            = 'Velikost [v bajtech] obrázků odkazovaných v CSS souborech, které budou pro ušetření HTTP požadavku vestavěny do stylu. Doporučená hodnota je mezi <code>400</code> a <code>600</code> bajty. Pro vypnutí nastavte na <code>0</code>.';
 $lang['send404']               = 'Posílat "HTTP 404/Page Not Found" pro neexistují stránky';
 $lang['broken_iua']            = 'Je na vašem systému funkce ignore_user_abort porouchaná? To může způsobovat nefunkčnost vyhledávacího indexu. O kombinaci IIS+PHP/CGI je známo, že nefunguje správně. Viz <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> pro více informací.';
 $lang['xsendfile']             = 'Používat X-Sendfile hlavničky pro download statických souborů z webserveru? Je však požadována podpora této funkce na straně Vašeho webserveru.';
 $lang['renderer_xhtml']        = 'Vykreslovací jádro pro hlavní (xhtml) výstup wiki';
 $lang['renderer__core']        = '%s (jádro DokuWiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_nslimit']        = 'Omezit vyhledávání na současných X jmenných prostorů. Když je vyhledávání provedeno ze stránky zanořeného jmenného prostoru, bude jako filtr přidáno prvních X jmenných prostorů.';
+$lang['search_fragment']       = 'Určete výchozí chování vyhledávání fragmentů';
+$lang['search_fragment_o_exact'] = 'přesný';
+$lang['search_fragment_o_starts_with'] = 'začíná s';
+$lang['search_fragment_o_ends_with'] = 'končí s';
+$lang['search_fragment_o_contains'] = 'obsahuje';
+$lang['trustedproxy']          = 'Důvěřovat proxy serverům odpovídajícím tomuto regulárním výrazu ohledně skutečné IP adresy klienta, kterou hlásí. Výchozí hodnota odpovídá místním sítím. Ponechejte prázdné, pokud nechcete důvěřovat žádné proxy.';
+$lang['_feature_flags']        = 'Feature flags';
+$lang['defer_js']              = 'Odložit spuštění javascriptu až po zpracování HTML kódu stránky. Zlepšuje vnímanou rychlost načtení stránky, ale může narušit funkci některých zásuvných modulů.';
 $lang['dnslookups']            = 'DokuWiki zjišťuje DNS jména pro vzdálené IP adresy uživatelů, kteří editují stránky. Pokud máte pomalý, nebo nefunkční DNS server, nebo nepotřebujete tuto funkci, tak tuto volbu zrušte.';
+$lang['jquerycdn']             = 'Mají být skripty jQuery a jQuery UI načítány z CDN?
+Vzniknou tím další HTTP dotazy, ale soubory se mohou načíst rychleji a uživatelé je už mohou mít ve vyrovnávací paměti.';
+$lang['jquerycdn_o_0']         = 'Bez CDN, pouze lokální doručení';
+$lang['jquerycdn_o_jquery']    = 'CDN na code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'CDN na cdnjs.com';
 $lang['proxy____host']         = 'Název proxy serveru';
 $lang['proxy____port']         = 'Proxy port';
 $lang['proxy____user']         = 'Proxy uživatelské jméno';
 $lang['proxy____pass']         = 'Proxy heslo';
 $lang['proxy____ssl']          = 'Použít SSL při připojení k proxy';
 $lang['proxy____except']       = 'Regulární výrazy pro URL, pro které bude přeskočena proxy.';
-$lang['safemodehack']          = 'Zapnout safemode hack';
-$lang['ftp____host']           = 'FTP server pro safemode hack';
-$lang['ftp____port']           = 'FTP port pro safemode hack';
-$lang['ftp____user']           = 'FTP uživatelské jméno pro safemode hack';
-$lang['ftp____pass']           = 'FTP heslo pro safemode hack';
-$lang['ftp____root']           = 'FTP kořenový adresář pro safemode hack';
 $lang['license_o_']            = 'Nic nevybráno';
 $lang['typography_o_0']        = 'vypnuto';
 $lang['typography_o_1']        = 'Pouze uvozovky';
@@ -200,6 +224,7 @@ $lang['xsendfile_o_2']         = 'Standardní hlavička X-Sendfile';
 $lang['xsendfile_o_3']         = 'Proprietární hlavička Nginx X-Accel-Redirect';
 $lang['showuseras_o_loginname'] = 'Přihlašovací jméno';
 $lang['showuseras_o_username'] = 'Celé jméno uživatele';
+$lang['showuseras_o_username_link'] = 'Celé uživatelské jméno jako odkaz mezi wiki';
 $lang['showuseras_o_email']    = 'E-mailová adresa uživatele ("zamaskována" aktuálně nastavenou metodou)';
 $lang['showuseras_o_email_link'] = 'E-mailová adresa uživatele jako mailto: odkaz';
 $lang['useheading_o_0']        = 'Nikdy';

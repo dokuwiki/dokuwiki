@@ -1,4 +1,3 @@
 ====== Rejestracja nowego użytkownika ======
 
-Wypełnij wszystkie pola formularza aby utworzyć nowe konto w tym wiki. Pamiętaj, żeby podać **poprawny adres e-mail**, ponieważ nowe hasło może zostać do Ciebie przesłane pocztą. Nazwa użytkownika powinna być zgodna z formatem [[doku>pagename|nazw stron]].
-
+Wypełnij wszystkie pola formularza aby utworzyć nowe konto w tym wiki. Pamiętaj, żeby podać **poprawny adres e-mail**, ponieważ nowe hasło może zostać do Ciebie przesłane pocztą. Nazwa użytkownika powinna być zgodna z formatem [[doku>pl:pagename|nazw stron]].

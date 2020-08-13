@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Oliver S6ro <seem.iges@mail.ee>
  * @author Aari Juhanson <aari@vmg.vil.ee>
  * @author Kaiko Kaur <kaiko@kultuur.edu.ee>
@@ -41,7 +41,6 @@ $lang['btn_update']            = 'Uuenda';
 $lang['btn_delete']            = 'Kustuta';
 $lang['btn_back']              = 'Tagasi';
 $lang['btn_backlink']          = 'Tagasilingid';
-$lang['btn_backtomedia']       = 'Tagasi faili valikusse';
 $lang['btn_subscribe']         = 'Jälgi seda lehte (teated meilile)';
 $lang['btn_profile']           = 'Minu info';
 $lang['btn_reset']             = 'Taasta';
@@ -69,7 +68,6 @@ $lang['badpassconfirm']        = 'Väär salasõna';
 $lang['minoredit']             = 'Ebaolulised muudatused';
 $lang['draftdate']             = 'Mustand automaatselt salvestatud';
 $lang['nosecedit']             = 'Leht on vahepeal muutunud, jaotiste teave osutus aegunuks sestap laeti tervelehekülg.';
-$lang['searchcreatepage']      = "Kui Sa otsitavat ei leidnud võid tekitada oma otsingu nimelise uue lehe kasutades ''Toimeta seda lehte'' nuppu.";
 $lang['regmissing']            = 'Kõik väljad tuleb ära täita.';
 $lang['reguexists']            = 'Tegelikult on sellise nimega kasutaja juba olemas.';
 $lang['regsuccess']            = 'Kasutaja sai tehtud. Parool saadeti Sulle e-posti aadressil.';
@@ -154,7 +152,6 @@ $lang['js']['media_overwrt']   = 'Asenda olemasolevad failid';
 $lang['rssfailed']             = 'Sinu soovitud info ammutamisel tekkis viga: ';
 $lang['nothingfound']          = 'Oops, aga mitte muhvigi ei leitud.';
 $lang['mediaselect']           = 'Hunnik faile';
-$lang['fileupload']            = 'Faili üleslaadimine';
 $lang['uploadsucc']            = 'Üleslaadimine läks ootuspäraselt hästi';
 $lang['uploadfail']            = 'Üleslaadimine läks nässu. Äkki pole Sa selleks lihtsalt piisavalt võimukas tegija?';
 $lang['uploadwrong']           = 'Ei saa Sa midagi üles laadida. Oops, aga seda tüüpi faili sul lihtsalt ei lubata üles laadida';
@@ -239,7 +236,6 @@ $lang['qb_sig']                = 'Lisa allkiri!';
 $lang['qb_smileys']            = 'Emotikonid';
 $lang['qb_chars']              = 'Erisümbolid';
 $lang['upperns']               = 'mine ülemisse nimeruumi';
-$lang['admin_register']        = 'Lisa kasutaja';
 $lang['metaedit']              = 'Muuda lisainfot';
 $lang['metasaveerr']           = 'Lisainfo salvestamine läks untsu.';
 $lang['metasaveok']            = 'Lisainfo salvestatud';
@@ -273,7 +269,6 @@ $lang['subscr_style_every']    = 'igast toimetamisest teavitab ekiri';
 $lang['subscr_style_digest']   = 'kokkuvõte ekirjaga toimetamistest igal leheküljel (iga %.2f päeva järel)';
 $lang['subscr_style_list']     = 'Peale viimast ekirja (iga %.2f päeva järel) toimetaud lehekülgede loend.';
 $lang['authtempfail']          = 'Kasutajate autentimine on ajutiselt rivist väljas. Kui see olukord mõne aja jooksul ei parane, siis teavita sellest serveri haldajat.';
-$lang['authpwdexpire']         = 'Sinu salasõna aegub %päeva pärast, võiksid seda peatselt muuta.';
 $lang['i_chooselang']          = 'Vali keel';
 $lang['i_installer']           = 'DokuWiki paigaldaja';
 $lang['i_wikiname']            = 'Wiki nimi';
@@ -337,3 +332,5 @@ $lang['currentns']             = 'Hetke nimeruum';
 $lang['searchresult']          = 'Otsingu tulemus';
 $lang['plainhtml']             = 'Liht-HTML';
 $lang['wikimarkup']            = 'Wiki märgistus';
+$lang['email_signature_text'] = 'See meil on saadetud DokuWiki poolt
+@DOKUWIKIURL@';

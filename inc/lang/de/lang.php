@@ -2,8 +2,22 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Axel Schwarzer <SchwarzerA@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Eric Haberstroh <ehaberstroh@gmail.com>
+ * @author C!own77 <clown77@posteo.de>
+ * @author Anonymous <anonymous@example.org>
+ * @author Michaelsy <github@informantum.de>
+ * @author Benjamin Molitor <bmolitor@uos.de>
+ * @author Alex Beck <alex@4becks.com>
+ * @author Jürgen Fredriksson <jfriedrich@gmx.at>
+ * @author Sebastian Engel <mail@engel-s.de>
+ * @author Karl_de_Hall <Karl.Grohmueller@sonnenhof-sha.de>
+ * @author Michael Bohn <mjbohn@gmail.com>
+ * @author Joel Strasser <strasser999@gmail.com>
+ * @author Robert Riebisch <robert.riebisch@googlemail.com>
+ * @author Joerg <scooter22@gmx.de>
  * @author Christof <gagi@fin.de>
  * @author Anika Henke <anika@selfthinker.org>
  * @author Esther Brunner <esther@kaffeehaus.ch>
@@ -14,7 +28,7 @@
  * @author Robin Kluth <commi1993@gmail.com>
  * @author Arne Pelka <mail@arnepelka.de>
  * @author Dirk Einecke <dirk@dirkeinecke.de>
- * @author Blitzi94@gmx.de
+ * @author Blitzi94 <Blitzi94@gmx.de>
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Niels Lange <niels@boldencursief.nl>
  * @author Christian Wichmann <nospam@zone0.de>
@@ -23,11 +37,13 @@
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Mateng Schimmerlos <mateng@firemail.de>
  * @author Benedikt Fey <spam@lifeisgoooood.de>
- * @author Joerg <scooter22@gmx.de>
  * @author Simon <st103267@stud.uni-stuttgart.de>
  * @author Hoisl <hoisl@gmx.at>
  * @author Marcel Eickhoff <eickhoff.marcel@gmail.com>
  * @author Pascal Schröder <Pascal1802@gmail.com>
+ * @author Hendrik Diel <diel.hendrik@gmail.com>
+ * @author Marco Hofmann <xenadmin@meinekleinefarm.net>
+ * @author Hella Breitkopf <hella.breitkopf@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -44,7 +60,7 @@ $lang['btn_search']            = 'Suche';
 $lang['btn_save']              = 'Speichern';
 $lang['btn_preview']           = 'Vorschau';
 $lang['btn_top']               = 'Nach oben';
-$lang['btn_newer']             = '<< jüngere Änderungen';
+$lang['btn_newer']             = '<< neuere Änderungen';
 $lang['btn_older']             = 'ältere Änderungen >>';
 $lang['btn_revs']              = 'Ältere Versionen';
 $lang['btn_recent']            = 'Letzte Änderungen';
@@ -55,11 +71,10 @@ $lang['btn_secedit']           = 'Bearbeiten';
 $lang['btn_login']             = 'Anmelden';
 $lang['btn_logout']            = 'Abmelden';
 $lang['btn_admin']             = 'Admin';
-$lang['btn_update']            = 'Updaten';
+$lang['btn_update']            = 'Aktualisieren';
 $lang['btn_delete']            = 'Löschen';
 $lang['btn_back']              = 'Zurück';
 $lang['btn_backlink']          = 'Links hierher';
-$lang['btn_backtomedia']       = 'Zurück zur Dateiauswahl';
 $lang['btn_subscribe']         = 'Aboverwaltung';
 $lang['btn_profile']           = 'Benutzerprofil';
 $lang['btn_reset']             = 'Zurücksetzen';
@@ -88,12 +103,68 @@ $lang['badlogin']              = 'Benutzername oder Passwort sind falsch.';
 $lang['badpassconfirm']        = 'Das Passwort war falsch.';
 $lang['minoredit']             = 'kleine Änderung';
 $lang['draftdate']             = 'Entwurf gespeichert am';
-$lang['nosecedit']             = 'Diese Seite wurde in der Zwischenzeit geändert, Sektionsinfo ist veraltet, lade stattdessen volle Seite.';
-$lang['searchcreatepage']      = 'Falls der gesuchte Begriff nicht gefunden wurde, können Sie direkt eine neue Seite für den Suchbegriff anlegen, indem Sie auf den **\'\'[Seite anlegen]\'\'** Knopf drücken.';
-$lang['regmissing']            = 'Alle Felder müssen ausgefüllt werden.';
+$lang['nosecedit']             = 'Diese Seite wurde in der Zwischenzeit geändert, der Seitenabschnitt ist veraltet, lade stattdessen volle Seite.';
+$lang['searchcreatepage']      = 'Falls der gesuchte Begriff nicht gefunden wurde, können Sie direkt eine neue, nach Ihrer Anfrage benannte Seite %s anlegen.';
+$lang['search_fullresults']    = 'Volltextergebnisse';
+$lang['js']['search_toggle_tools'] = 'Suchwerkzeuge umschalten';
+$lang['js']['willexpire']      = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, sollten Sie sie durch einen Klick auf den Vorschau-Knopf verlängern.';
+$lang['js']['notsavedyet']     = 'Nicht gespeicherte Änderungen gehen verloren!';
+$lang['js']['searchmedia']     = 'Suche Dateien';
+$lang['js']['keepopen']        = 'Fenster nach Auswahl nicht schließen';
+$lang['js']['hidedetails']     = 'Details ausblenden';
+$lang['js']['mediatitle']      = 'Linkeinstellungen';
+$lang['js']['mediadisplay']    = 'Linktyp';
+$lang['js']['mediaalign']      = 'Ausrichtung';
+$lang['js']['mediasize']       = 'Bildgröße';
+$lang['js']['mediatarget']     = 'Linkziel';
+$lang['js']['mediaclose']      = 'Schließen';
+$lang['js']['mediainsert']     = 'Einfügen';
+$lang['js']['mediadisplayimg'] = 'Bild anzeigen.';
+$lang['js']['mediadisplaylnk'] = 'Nur den Link anzeigen.';
+$lang['js']['mediasmall']      = 'Kleine Version';
+$lang['js']['mediamedium']     = 'Mittlere Version';
+$lang['js']['medialarge']      = 'Große Version';
+$lang['js']['mediaoriginal']   = 'Originalversion';
+$lang['js']['medialnk']        = 'Link zur Detailseite';
+$lang['js']['mediadirect']     = 'Direktlink zum Original';
+$lang['js']['medianolnk']      = 'Kein Link';
+$lang['js']['medianolink']     = 'Bild nicht verlinken';
+$lang['js']['medialeft']       = 'Das Bild links ausrichten.';
+$lang['js']['mediaright']      = 'Das Bild rechts ausrichten.';
+$lang['js']['mediacenter']     = 'Das Bild in der Mitte ausrichten.';
+$lang['js']['medianoalign']    = 'Keine Ausrichtung benutzen.';
+$lang['js']['nosmblinks']      = 'Das Verlinken von Windows-Freigaben funktioniert nur im Microsoft Internet Explorer.\nDer Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
+$lang['js']['linkwiz']         = 'Link-Assistent';
+$lang['js']['linkto']          = 'Link nach:';
+$lang['js']['del_confirm']     = 'Eintrag wirklich löschen?';
+$lang['js']['restore_confirm'] = 'Wirklich diese Version wiederherstellen?';
+$lang['js']['media_diff']      = 'Unterschiede anzeigen:';
+$lang['js']['media_diff_both'] = 'Nebeneinander';
+$lang['js']['media_diff_opacity'] = 'Überblenden';
+$lang['js']['media_diff_portions'] = 'Übergang';
+$lang['js']['media_select']    = 'Dateien auswählen…';
+$lang['js']['media_upload_btn'] = 'Hochladen';
+$lang['js']['media_done_btn']  = 'Fertig';
+$lang['js']['media_drop']      = 'Dateien hier hinziehen, um sie hochzuladen';
+$lang['js']['media_cancel']    = 'Entfernen';
+$lang['js']['media_overwrt']   = 'Existierende Dateien überschreiben';
+$lang['search_exact_match']    = 'Genaue Treffer';
+$lang['search_starts_with']    = 'Beginnt mit';
+$lang['search_ends_with']      = 'Endet mit';
+$lang['search_contains']       = 'Enthält';
+$lang['search_custom_match']   = 'Angepasst ';
+$lang['search_any_ns']         = 'Alle Namensräume';
+$lang['search_any_time']       = 'Jederzeit';
+$lang['search_past_7_days']    = 'Letzte Woche';
+$lang['search_past_month']     = 'Letzter Monat';
+$lang['search_past_year']      = 'letztes Jahr';
+$lang['search_sort_by_hits']   = 'Sortiere nach Treffer';
+$lang['search_sort_by_mtime']  = 'Sortiere nach letzter Änderung';
+$lang['regmissing']            = 'Bitte alle Felder ausfüllen!';
 $lang['reguexists']            = 'Der Benutzername existiert leider schon.';
 $lang['regsuccess']            = 'Der neue Benutzer wurde angelegt und das Passwort per E-Mail versandt.';
 $lang['regsuccess2']           = 'Der neue Benutzer wurde angelegt.';
+$lang['regfail']               = 'Der Benutzer konnte nicht angelegt werden.';
 $lang['regmailfail']           = 'Offenbar ist ein Fehler beim Versenden der Passwort-E-Mail aufgetreten. Bitte wenden Sie sich an den Wiki-Admin.';
 $lang['regbadmail']            = 'Die angegebene E-Mail-Adresse scheint ungültig zu sein. Falls dies ein Fehler ist, wenden Sie sich bitte an den Wiki-Admin.';
 $lang['regbadpass']            = 'Die beiden eingegeben Passwörter stimmen nicht überein. Bitte versuchen Sie es noch einmal.';
@@ -103,12 +174,13 @@ $lang['profna']                = 'Änderung des Benutzerprofils in diesem Wiki n
 $lang['profnochange']          = 'Keine Änderungen, nichts zu tun.';
 $lang['profnoempty']           = 'Es muss ein Name und eine E-Mail-Adresse angegeben werden.';
 $lang['profchanged']           = 'Benutzerprofil erfolgreich geändert.';
-$lang['profnodelete']          = 'Dieses Wiki unterstützt nicht das Löschen von Benutzern.';
+$lang['profnodelete']          = 'Dieses Wiki unterstützt kein Löschen von Benutzern.';
 $lang['profdeleteuser']        = 'Benutzerprofil löschen';
 $lang['profdeleted']           = 'Ihr Benutzerprofil wurde im Wiki gelöscht.';
-$lang['profconfdelete']        = 'Ich möchte mein Benutzerprofil löschen.<br/> Diese Aktion ist nicht umkehrbar.';
-$lang['profconfdeletemissing'] = 'Bestätigungs-Checkbox wurde nicht angehakt.';
-$lang['pwdforget']             = 'Passwort vergessen? Fordere ein neues an';
+$lang['profconfdelete']        = 'Ich möchte mein Benutzerprofil löschen.<br/> Diese Aktion lässt sich nicht rückgängig machen,';
+$lang['profconfdeletemissing'] = 'Bestätigung in Kontrollkästchen fehlt';
+$lang['proffail']              = 'Das Benutzerkonto konnte nicht aktualisiert werden.';
+$lang['pwdforget']             = 'Passwort vergessen? Fordern Sie ein neues an';
 $lang['resendna']              = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
 $lang['resendpwd']             = 'Neues Passwort setzen für';
 $lang['resendpwdmissing']      = 'Es tut mir leid, aber Sie müssen alle Felder ausfüllen.';
@@ -124,53 +196,12 @@ $lang['txt_upload']            = 'Datei zum Hochladen auswählen:';
 $lang['txt_filename']          = 'Hochladen als (optional):';
 $lang['txt_overwrt']           = 'Bestehende Datei überschreiben';
 $lang['maxuploadsize']         = 'Max. %s pro Datei-Upload.';
+$lang['allowedmime']           = 'Liste der erlaubten Dateiendungen';
 $lang['lockedby']              = 'Momentan gesperrt von:';
 $lang['lockexpire']            = 'Sperre läuft ab am:';
-$lang['js']['willexpire']      = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, sollten Sie sie durch einen Klick auf den Vorschau-Knopf verlängern.';
-$lang['js']['notsavedyet']     = 'Nicht gespeicherte Änderungen gehen verloren!';
-$lang['js']['searchmedia']     = 'Suche Dateien';
-$lang['js']['keepopen']        = 'Fenster nach Auswahl nicht schließen';
-$lang['js']['hidedetails']     = 'Details ausblenden';
-$lang['js']['mediatitle']      = 'Linkeinstellungen';
-$lang['js']['mediadisplay']    = 'Linktyp';
-$lang['js']['mediaalign']      = 'Anordnung';
-$lang['js']['mediasize']       = 'Bildgröße';
-$lang['js']['mediatarget']     = 'Linkziel';
-$lang['js']['mediaclose']      = 'Schließen';
-$lang['js']['mediainsert']     = 'Einfügen';
-$lang['js']['mediadisplayimg'] = 'Bild anzeigen.';
-$lang['js']['mediadisplaylnk'] = 'Nur den Link anzeigen.';
-$lang['js']['mediasmall']      = 'Kleine Version';
-$lang['js']['mediamedium']     = 'Mittlere Version';
-$lang['js']['medialarge']      = 'Große Version';
-$lang['js']['mediaoriginal']   = 'Originalversion';
-$lang['js']['medialnk']        = 'Link zur Detailseite';
-$lang['js']['mediadirect']     = 'Direktlink zum Original';
-$lang['js']['medianolnk']      = 'Kein Link';
-$lang['js']['medianolink']     = 'Bild nicht verlinken';
-$lang['js']['medialeft']       = 'Das Bild links anordnen.';
-$lang['js']['mediaright']      = 'Das Bild rechts anordnen.';
-$lang['js']['mediacenter']     = 'Das Bild in der Mitte anordnen.';
-$lang['js']['medianoalign']    = 'Keine Anordnung benutzen.';
-$lang['js']['nosmblinks']      = 'Das Verlinken von Windows-Freigaben funktioniert nur im Microsoft Internet Explorer.\nDer Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
-$lang['js']['linkwiz']         = 'Link-Assistent';
-$lang['js']['linkto']          = 'Link nach:';
-$lang['js']['del_confirm']     = 'Eintrag wirklich löschen?';
-$lang['js']['restore_confirm'] = 'Wirklich diese Version wiederherstellen?';
-$lang['js']['media_diff']      = 'Unterschiede anzeigen:';
-$lang['js']['media_diff_both'] = 'Side by Side';
-$lang['js']['media_diff_opacity'] = 'Überblenden';
-$lang['js']['media_diff_portions'] = 'Übergang';
-$lang['js']['media_select']    = 'Dateien auswählen…';
-$lang['js']['media_upload_btn'] = 'Hochladen';
-$lang['js']['media_done_btn']  = 'Fertig';
-$lang['js']['media_drop']      = 'Dateien hier hinziehen um sie hochzuladen';
-$lang['js']['media_cancel']    = 'Entfernen';
-$lang['js']['media_overwrt']   = 'Existierende Dateien überschreiben';
 $lang['rssfailed']             = 'Es ist ein Fehler beim Laden des Feeds aufgetreten: ';
 $lang['nothingfound']          = 'Nichts gefunden.';
 $lang['mediaselect']           = 'Dateiauswahl';
-$lang['fileupload']            = 'Datei hochladen';
 $lang['uploadsucc']            = 'Datei wurde erfolgreich hochgeladen';
 $lang['uploadfail']            = 'Hochladen fehlgeschlagen. Keine Berechtigung?';
 $lang['uploadwrong']           = 'Hochladen verweigert. Diese Dateiendung ist nicht erlaubt.';
@@ -184,12 +215,12 @@ $lang['deletefail']            = '"%s" konnte nicht gelöscht werden - prüfen S
 $lang['mediainuse']            = 'Die Datei "%s" wurde nicht gelöscht - sie wird noch verwendet.';
 $lang['namespaces']            = 'Namensräume';
 $lang['mediafiles']            = 'Vorhandene Dateien in';
-$lang['accessdenied']          = 'Es ist Ihnen nicht gestattet, diese Seite zu sehen.';
+$lang['accessdenied']          = 'Diese Seite dürfen sie nicht sehen.';
 $lang['mediausage']            = 'Syntax zum Verwenden dieser Datei:';
 $lang['mediaview']             = 'Originaldatei öffnen';
 $lang['mediaroot']             = 'Wurzel';
 $lang['mediaupload']           = 'Laden Sie hier eine Datei in den momentanen Namensraum hoch. Um Unterordner zu erstellen, stellen Sie diese dem Dateinamen durch Doppelpunkt getrennt voran, nachdem Sie die Datei ausgewählt haben.';
-$lang['mediaextchange']        = 'Dateiendung vom .%s nach .%s geändert!';
+$lang['mediaextchange']        = 'Dateiendung von .%s nach .%s geändert!';
 $lang['reference']             = 'Verwendung von';
 $lang['ref_inuse']             = 'Diese Datei kann nicht gelöscht werden, da sie noch von folgenden Seiten benutzt wird:';
 $lang['ref_hidden']            = 'Einige Verweise sind auf Seiten, für die Sie keine Leseberechtigung haben.';
@@ -203,7 +234,7 @@ $lang['diff2']                 = 'Zeige Unterschiede der ausgewählten Versionen
 $lang['difflink']              = 'Link zu dieser Vergleichsansicht';
 $lang['diff_type']             = 'Unterschiede anzeigen:';
 $lang['diff_inline']           = 'Inline';
-$lang['diff_side']             = 'Side by Side';
+$lang['diff_side']             = 'Nebeneinander';
 $lang['diffprevrev']           = 'Vorhergehende Überarbeitung';
 $lang['diffnextrev']           = 'Nächste  Überarbeitung';
 $lang['difflastrev']           = 'Letzte  Überarbeitung';
@@ -216,7 +247,7 @@ $lang['lastmod']               = 'Zuletzt geändert:';
 $lang['by']                    = 'von';
 $lang['deleted']               = 'gelöscht';
 $lang['created']               = 'angelegt';
-$lang['restored']              = 'alte Version wieder hergestellt (%s)';
+$lang['restored']              = 'alte Version wiederhergestellt (%s)';
 $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
 $lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
@@ -235,7 +266,7 @@ $lang['mail_upload']           = 'Datei hochgeladen:';
 $lang['changes_type']          = 'Änderungen anzeigen von';
 $lang['pages_changes']         = 'Seiten';
 $lang['media_changes']         = 'Mediendateien';
-$lang['both_changes']          = 'Beides, Seiten- und Mediendateien';
+$lang['both_changes']          = 'Beides: Seiten- und Mediendateien';
 $lang['qb_bold']               = 'Fetter Text';
 $lang['qb_italic']             = 'Kursiver Text';
 $lang['qb_underl']             = 'Unterstrichener Text';
@@ -261,7 +292,6 @@ $lang['qb_sig']                = 'Unterschrift einfügen';
 $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Sonderzeichen';
 $lang['upperns']               = 'zum übergeordneten Namensraum springen';
-$lang['admin_register']        = 'Neuen Benutzer anmelden';
 $lang['metaedit']              = 'Metadaten bearbeiten';
 $lang['metasaveerr']           = 'Die Metadaten konnten nicht gesichert werden';
 $lang['metasaveok']            = 'Metadaten gesichert';
@@ -291,10 +321,9 @@ $lang['subscr_m_unsubscribe']  = 'Löschen';
 $lang['subscr_m_subscribe']    = 'Abonnieren';
 $lang['subscr_m_receive']      = 'Benachrichtigung';
 $lang['subscr_style_every']    = 'E-Mail bei jeder Bearbeitung';
-$lang['subscr_style_digest']   = 'Zusammenfassung der Änderungen für jede veränderte Seite (Alle %.2f Tage)';
+$lang['subscr_style_digest']   = 'E-Mail-Zusammenfassung der Änderungen jeder Seite (Alle %.2f Tage)';
 $lang['subscr_style_list']     = 'Liste der geänderten Seiten (Alle %.2f Tage)';
-$lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wenden Sie sich an den Admin.';
-$lang['authpwdexpire']         = 'Ihr Passwort läuft in %d Tag(en) ab. Sie sollten es frühzeitig ändern.';
+$lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wenden Sie sich bitte an den Admin.';
 $lang['i_chooselang']          = 'Wählen Sie Ihre Sprache';
 $lang['i_installer']           = 'DokuWiki Installation';
 $lang['i_wikiname']            = 'Wiki-Name';
@@ -303,8 +332,11 @@ $lang['i_superuser']           = 'Benutzername des Administrators';
 $lang['i_problems']            = 'Das Installationsprogramm hat unten aufgeführte Probleme festgestellt, die zunächst behoben werden müssen bevor Sie mit der Installation fortfahren können.';
 $lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki Installation. Sie sollten entweder alle Dateien noch einmal frisch installieren oder die <a href="http://dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
 $lang['i_funcna']              = 'Die PHP-Funktion <code>%s</code> ist nicht verfügbar. Unter Umständen wurde sie von Ihrem Hoster deaktiviert?';
+$lang['i_disabled']            = 'Es wurde von Ihrem Provider deaktiviert.';
+$lang['i_funcnmail']           = '<b>Hinweis:</b> Die PHP-Funktion "mail()" ist nicht verfügbar. %s Alternativ können Sie das <a href="https://www.dokuwiki.org/plugin:smtp">SMTP-Plugin</a> installieren.';
 $lang['i_phpver']              = 'Ihre PHP-Version <code>%s</code> ist niedriger als die benötigte Version <code>%s</code>. Bitte aktualisieren Sie Ihre PHP-Installation.';
 $lang['i_mbfuncoverload']      = 'Um DokuWiki zu starten muss mbstring.func_overload in php.ini ausgeschaltet sein.';
+$lang['i_urandom']             = 'DokuWiki kann keine kryptografisch sicheren Werte für Cookies generieren. Möglicherweise möchten Sie Ihre "open_basedir"-Einstellungen in der zutreffenden php.ini auf korrekten Zugriff auf <code>/ dev/urandom</ code> überprüfen.';
 $lang['i_permfail']            = '<code>%s</code> ist nicht durch DokuWiki beschreibbar. Sie müssen die Berechtigungen dieses Ordners ändern!';
 $lang['i_confexists']          = '<code>%s</code> existiert bereits';
 $lang['i_writeerr']            = '<code>%s</code> konnte nicht erzeugt werden. Sie sollten die Verzeichnis-/Datei-Rechte überprüfen und die Datei manuell anlegen.';
@@ -339,8 +371,8 @@ $lang['media_edittab']         = 'Bearbeiten';
 $lang['media_historytab']      = 'Verlauf';
 $lang['media_list_thumbs']     = 'Vorschaubilder';
 $lang['media_list_rows']       = 'Reihen';
-$lang['media_sort_name']       = 'nach Name';
-$lang['media_sort_date']       = 'nach Datum';
+$lang['media_sort_name']       = 'Name';
+$lang['media_sort_date']       = 'Datum';
 $lang['media_namespaces']      = 'Namensraum wählen';
 $lang['media_files']           = 'Dateien in %s';
 $lang['media_upload']          = 'In den <strong>%s</strong> Namensraum hochladen.';
@@ -351,12 +383,16 @@ $lang['media_edit']            = '%s bearbeiten';
 $lang['media_history']         = 'Versionsverlauf von %s.';
 $lang['media_meta_edited']     = 'Meta-Informationen bearbeitet';
 $lang['media_perm_read']       = 'Sie besitzen nicht die notwendigen Berechtigungen um die Datei anzuzeigen.';
-$lang['media_perm_upload']     = 'Sie besitzen nicht die notwendigen Berechtigungen um Dateien hochzuladen.';
+$lang['media_perm_upload']     = 'Sie besitzen nicht die notwendigen Berechtigungen, um Dateien hochzuladen.';
 $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
+$lang['media_acl_warning']     = 'Diese Liste ist möglicherweise nicht vollständig. Versteckte und durch ACL gesperrte Seiten werden nicht angezeigt.';
+$lang['email_fail']            = 'PHP-Funktion "mail ()" fehlt oder ist deaktiviert. Die folgende E-Mail wurde nicht gesendet:';
 $lang['currentns']             = 'Aktueller Namensraum';
 $lang['searchresult']          = 'Suchergebnisse';
 $lang['plainhtml']             = 'HTML Klartext';
 $lang['wikimarkup']            = 'Wiki Markup';
-$lang['page_nonexist_rev']     = 'DIe Seite exitiert nicht unter %s. Sie wurde aber unter <a herf="%s">%s</a>';
+$lang['page_nonexist_rev']     = 'Die Seite exitiert nicht unter %s. Sie wurde aber unter <a href="%s">%s</a>';
 $lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';
+$lang['email_signature_text']  = 'Diese E-Mail wurde erzeugt vom DokuWiki unter
+@DOKUWIKIURL@';

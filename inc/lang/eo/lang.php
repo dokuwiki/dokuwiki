@@ -2,14 +2,13 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Florian <florianmail55@gmail.com>
+ * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
  * @author Antono Vasiljev <esperanto.minsk ĈE tut.by>
  * @author Felipe Castro <fefcas@yahoo.com.br>
- * @author Felipe Castro <fefcas@uol.com.br>
- * @author Felipe Castro <fefcas@gmail.com>
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
- * @author Robert Bogenschneider <bogi@uea.org>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -17,7 +16,7 @@ $lang['doublequoteopening']    = '“';
 $lang['doublequoteclosing']    = '”';
 $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '\'';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Redakti la paĝon';
 $lang['btn_source']            = 'Montri fontan tekston';
 $lang['btn_show']              = 'Montri paĝon';
@@ -41,7 +40,6 @@ $lang['btn_update']            = 'Aktualigi';
 $lang['btn_delete']            = 'Forigi';
 $lang['btn_back']              = 'Retroiri';
 $lang['btn_backlink']          = 'Retroligoj';
-$lang['btn_backtomedia']       = 'Retroiri al elekto de dosiero';
 $lang['btn_subscribe']         = 'Aliĝi al paĝaj modifoj';
 $lang['btn_profile']           = 'Aktualigi profilon';
 $lang['btn_reset']             = 'Rekomenci';
@@ -71,43 +69,7 @@ $lang['badpassconfirm']        = 'Pardonu, la pasvorto malĝustis';
 $lang['minoredit']             = 'Etaj modifoj';
 $lang['draftdate']             = 'Lasta konservo de la skizo:';
 $lang['nosecedit']             = 'La paĝo ŝanĝiĝis intertempe, sekcio-informo estis malĝisdata, tial la tuta paĝo estas reŝargita.';
-$lang['searchcreatepage']      = 'Se vi ne trovis tion, kion vi serĉis, vi povas krei novan paĝon kun necesa nomo per la koresponda butono.';
-$lang['regmissing']            = 'Pardonu, vi devas plenigi ĉiujn kampojn.';
-$lang['reguexists']            = 'Pardonu, ĉi tiu uzanto-nomo jam ekzistas.';
-$lang['regsuccess']            = 'La uzanto kreiĝis kaj la pasvorto sendiĝis per retpoŝto.';
-$lang['regsuccess2']           = 'La uzanto kreiĝis.';
-$lang['regmailfail']           = 'Ŝajne okazis eraro dum elsendo de la pasvorto. Bonvolu informi administranton pri tio!';
-$lang['regbadmail']            = 'Entajpita retpoŝta adreso ŝajnas ne valida. Se vi pensas, ke tio estas eraro, kontaktu la administranton.';
-$lang['regbadpass']            = 'La du pasvortoj ne samas, bonvolu provi refoje.';
-$lang['regpwmail']             = 'Via DokuWiki-pasvorto';
-$lang['reghere']               = 'Se vi ne havas konton, vi povas akiri ĝin';
-$lang['profna']                = 'Tiu ĉi vikio ne ebligas modifon en la profiloj.';
-$lang['profnochange']          = 'Neniu ŝanĝo, nenio farinda.';
-$lang['profnoempty']           = 'Malplena nomo aŭ retadreso ne estas permesata.';
-$lang['profchanged']           = 'La profilo de la uzanto sukcese aktualiĝis.';
-$lang['profnodelete']          = 'Tiu ĉi vikio ne subtenas forigo de uzantoj';
-$lang['profdeleteuser']        = 'Forigi aliĝon';
-$lang['profdeleted']           = 'Via uzant-aliĝo estis forigata de tiu ĉi vikio';
-$lang['profconfdelete']        = 'Mi deziras forigi mian aliĝon de tiu ĉi vikio. <br/> Tiu ĉi ago ne povos esti malfarata.';
-$lang['profconfdeletemissing'] = 'Konfirmilo ne estas markita';
-$lang['pwdforget']             = 'Ĉu vi forgesis vian pasvorton? Prenu novan';
-$lang['resendna']              = 'Tiu ĉi vikio ne ebligas resendon de la pasvortoj.';
-$lang['resendpwd']             = 'Sendi novan pasvorton al';
-$lang['resendpwdmissing']      = 'Pardonu, vi devas plenigi ĉiujn kampojn.';
-$lang['resendpwdnouser']       = 'Pardonu, tiu uzanto ne troveblas en nia datumbazo.';
-$lang['resendpwdbadauth']      = 'Pardonu, tiu aŭtentiga kodo ne validas. Certiĝu, ke vi uzis la kompletan konfirmigan ligilon.';
-$lang['resendpwdconfirm']      = 'Konfirmiga ligilo sendiĝis per retpoŝto.';
-$lang['resendpwdsuccess']      = 'Via nova pasvorto sendiĝis per retpoŝto.';
-$lang['license']               = 'Krom kie rekte indikite, enhavo de tiu ĉi vikio estas publikigita laŭ la jena permesilo:';
-$lang['licenseok']             = 'Rimarku: redaktante tiun ĉi paĝon vi konsentas publikigi vian enhavon laŭ la jena permesilo:';
-$lang['searchmedia']           = 'Serĉi dosiernomon:';
-$lang['searchmedia_in']        = 'Serĉi en %s';
-$lang['txt_upload']            = 'Elektu dosieron por alŝuti:';
-$lang['txt_filename']          = 'Alŝuti kiel (laŭvole):';
-$lang['txt_overwrt']           = 'Anstataŭigi ekzistantan dosieron';
-$lang['maxuploadsize']         = 'Alŝuto maks. %s po dosiero.';
-$lang['lockedby']              = 'Nune ŝlosita de:';
-$lang['lockexpire']            = 'Ŝlosado ĉesos je:';
+$lang['searchcreatepage']      = 'Se vi ne trovis kion vi serĉantis, vi povas krei aŭ redakti la paĝo %s, nomita laŭ via serĉo.';
 $lang['js']['willexpire']      = 'Vi povos redakti ĉi tiun paĝon post unu minuto.\nSe vi volas nuligi tempokontrolon de la ŝlosado, premu la butonon "Antaŭrigardi".';
 $lang['js']['notsavedyet']     = 'Ne konservitaj modifoj perdiĝos.
 Ĉu vi certe volas daŭrigi la procezon?';
@@ -150,10 +112,58 @@ $lang['js']['media_done_btn']  = 'Finita';
 $lang['js']['media_drop']      = 'Demetu ĉi-tien por alŝuti';
 $lang['js']['media_cancel']    = 'forigi';
 $lang['js']['media_overwrt']   = 'Anstataûi ekzistantajn dosierojn';
+$lang['search_exact_match']    = 'Ekzakta kongruo';
+$lang['search_starts_with']    = 'Komenciĝas per';
+$lang['search_ends_with']      = 'Finiĝas per';
+$lang['search_contains']       = 'Enhavas';
+$lang['search_any_ns']         = 'Ajn nomspaco';
+$lang['search_any_time']       = 'Ajn tempo';
+$lang['search_past_7_days']    = 'Pasinta semajno';
+$lang['search_past_month']     = 'Pasinta monato';
+$lang['search_past_year']      = 'Pasinta jaro';
+$lang['search_sort_by_hits']   = 'Ordigi per fururaĵoj';
+$lang['search_sort_by_mtime']  = 'Ordigi per laste modifita';
+$lang['regmissing']            = 'Pardonu, vi devas plenigi ĉiujn kampojn.';
+$lang['reguexists']            = 'Pardonu, ĉi tiu uzanto-nomo jam ekzistas.';
+$lang['regsuccess']            = 'La uzanto kreiĝis kaj la pasvorto sendiĝis per retpoŝto.';
+$lang['regsuccess2']           = 'La uzanto kreiĝis.';
+$lang['regfail']               = 'Ne eblis krei uzanton.';
+$lang['regmailfail']           = 'Ŝajne okazis eraro dum elsendo de la pasvorto. Bonvolu informi administranton pri tio!';
+$lang['regbadmail']            = 'Entajpita retpoŝta adreso ŝajnas ne valida. Se vi pensas, ke tio estas eraro, kontaktu la administranton.';
+$lang['regbadpass']            = 'La du pasvortoj ne samas, bonvolu provi refoje.';
+$lang['regpwmail']             = 'Via DokuWiki-pasvorto';
+$lang['reghere']               = 'Se vi ne havas konton, vi povas akiri ĝin';
+$lang['profna']                = 'Tiu ĉi vikio ne ebligas modifon en la profiloj.';
+$lang['profnochange']          = 'Neniu ŝanĝo, nenio farinda.';
+$lang['profnoempty']           = 'Malplena nomo aŭ retadreso ne estas permesata.';
+$lang['profchanged']           = 'La profilo de la uzanto sukcese aktualiĝis.';
+$lang['profnodelete']          = 'Tiu ĉi vikio ne subtenas forigo de uzantoj';
+$lang['profdeleteuser']        = 'Forigi aliĝon';
+$lang['profdeleted']           = 'Via uzant-aliĝo estis forigata de tiu ĉi vikio';
+$lang['profconfdelete']        = 'Mi deziras forigi mian aliĝon de tiu ĉi vikio. <br/> Tiu ĉi ago ne povos esti malfarata.';
+$lang['profconfdeletemissing'] = 'Konfirmilo ne estas markita';
+$lang['proffail']              = 'La uzantokonto ne estis aktualigita.';
+$lang['pwdforget']             = 'Ĉu vi forgesis vian pasvorton? Prenu novan';
+$lang['resendna']              = 'Tiu ĉi vikio ne ebligas resendon de la pasvortoj.';
+$lang['resendpwd']             = 'Sendi novan pasvorton al';
+$lang['resendpwdmissing']      = 'Pardonu, vi devas plenigi ĉiujn kampojn.';
+$lang['resendpwdnouser']       = 'Pardonu, tiu uzanto ne troveblas en nia datumbazo.';
+$lang['resendpwdbadauth']      = 'Pardonu, tiu aŭtentiga kodo ne validas. Certiĝu, ke vi uzis la kompletan konfirmigan ligilon.';
+$lang['resendpwdconfirm']      = 'Konfirmiga ligilo sendiĝis per retpoŝto.';
+$lang['resendpwdsuccess']      = 'Via nova pasvorto sendiĝis per retpoŝto.';
+$lang['license']               = 'Krom kie rekte indikite, enhavo de tiu ĉi vikio estas publikigita laŭ la jena permesilo:';
+$lang['licenseok']             = 'Rimarku: redaktante tiun ĉi paĝon vi konsentas publikigi vian enhavon laŭ la jena permesilo:';
+$lang['searchmedia']           = 'Serĉi dosiernomon:';
+$lang['searchmedia_in']        = 'Serĉi en %s';
+$lang['txt_upload']            = 'Elektu dosieron por alŝuti:';
+$lang['txt_filename']          = 'Alŝuti kiel (laŭvole):';
+$lang['txt_overwrt']           = 'Anstataŭigi ekzistantan dosieron';
+$lang['maxuploadsize']         = 'Alŝuto maks. %s po dosiero.';
+$lang['lockedby']              = 'Nune ŝlosita de:';
+$lang['lockexpire']            = 'Ŝlosado ĉesos je:';
 $lang['rssfailed']             = 'Okazis eraro dum ricevado de la novaĵ-fluo: ';
 $lang['nothingfound']          = 'Ankoraŭ nenio troviĝas tie ĉi.';
 $lang['mediaselect']           = 'Elekto de aŭdvidaĵa dosiero';
-$lang['fileupload']            = 'Alŝuto de aŭdvidaĵa dosiero';
 $lang['uploadsucc']            = 'Alŝuto sukcesis';
 $lang['uploadfail']            = 'Alŝuto malsukcesis. Ĉu eble estas problemoj pro permes-atributoj?';
 $lang['uploadwrong']           = 'Rifuzita alŝuto. Tiu ĉi dosiersufikso estas malpermesata!';
@@ -244,7 +254,6 @@ $lang['qb_sig']                = 'Inkluzivi subskribon';
 $lang['qb_smileys']            = 'Ridetuloj';
 $lang['qb_chars']              = 'Specialaj signaĵoj';
 $lang['upperns']               = 'saltu al la parenca nomspaco';
-$lang['admin_register']        = 'Aldoni novan uzanton';
 $lang['metaedit']              = 'Redakti metadatumaron';
 $lang['metasaveerr']           = 'La konservo de metadatumaro malsukcesis';
 $lang['metasaveok']            = 'La metadatumaro konserviĝis';
@@ -277,7 +286,6 @@ $lang['subscr_style_every']    = 'retpoŝtaĵo pro ĉiu ŝanĝo';
 $lang['subscr_style_digest']   = 'resuma retpoŝtaĵo de ŝanĝoj por ĉiu paĝo (je %.2f tagoj)';
 $lang['subscr_style_list']     = 'listo de ŝanĝitaj paĝoj ekde la lasta retpoŝtaĵo (je %.2f tagoj)';
 $lang['authtempfail']          = 'La identigo de via uzantonomo estas intertempe maldisponebla. Se tiu ĉi situacio daŭros, bonvolu informi la adminstranton de la vikio.';
-$lang['authpwdexpire']         = 'Via pasvorto malvalidos post %d tagoj, prefere ŝanĝu ĝin baldaũ.';
 $lang['i_chooselang']          = 'Elektu vian lingvon';
 $lang['i_installer']           = 'Instalilo de DokuWiki';
 $lang['i_wikiname']            = 'Nomo de la vikio';
@@ -341,3 +349,7 @@ $lang['currentns']             = 'Aktuala nomspaco';
 $lang['searchresult']          = 'Serĉrezulto';
 $lang['plainhtml']             = 'Plena HTML';
 $lang['wikimarkup']            = 'Vikiteksto';
+$lang['page_nonexist_rev']     = 'Paĝo ne ekzistis al %s. Ĝi do sekve estis kreita al <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Neebla sintakse analizi la parametro "%s".';
+$lang['email_signature_text']  = 'Tiu ĉi mesaĝo kreiĝis de DokuWiki ĉe
+@DOKUWIKIURL@';

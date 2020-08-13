@@ -2,7 +2,7 @@
 
 תאריך        : @DATE@
 דפדפן     : @BROWSER@
-כתובת ה־IP&rlm;  : @IPADDRESS@
+כתובת ה־IP&#8207;  : @IPADDRESS@
 שם המארח    : @HOSTNAME@
 המהדורה הישנה: @OLDPAGE@
 המהדורה החדשה: @NEWPAGE@
@@ -10,8 +10,3 @@
 משתמש        : @USER@
 
 @DIFF@
-
--- 
-
-דף זה נוצר ע״י ה־DokuWiki הזמין בכתובת
-@DOKUWIKIURL@

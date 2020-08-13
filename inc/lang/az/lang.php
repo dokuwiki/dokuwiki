@@ -1,9 +1,10 @@
 <?php
+
 /**
- * Azerbaijani language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * @author Pasha L. Topchiyev <pasha@itopchiyev.com>
+ * @author Elchin <quliyev_elchin1989@mail.ru>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -35,7 +36,6 @@ $lang['btn_update']            = 'Yenilə';
 $lang['btn_delete']            = 'Sil';
 $lang['btn_back']              = 'Geri';
 $lang['btn_backlink']          = 'Bura olan link-lər';
-$lang['btn_backtomedia']       = 'media-fayl seçiminə qayıt';
 $lang['btn_subscribe']         = 'Abunə ol (bütün dəyişiklər)';
 $lang['btn_profile']           = 'Profil';
 $lang['btn_reset']             = 'Boşalt';
@@ -44,6 +44,7 @@ $lang['btn_recover']           = 'Qaralamanı qaytar';
 $lang['btn_draftdel']          = 'Qaralamanı sil';
 $lang['btn_revert']            = 'Qaytar';
 $lang['btn_register']          = 'Qeydiyyatdan keç';
+$lang['btn_img_backto']        = 'Qayıd %s';
 $lang['loggedinas']            = 'İstifadəcinin adı:';
 $lang['user']                  = 'istifadəci adı';
 $lang['pass']                  = 'Şifrə';
@@ -58,7 +59,6 @@ $lang['badlogin']              = 'Təssüf ki istifadəçi adı və ya şifrə s
 $lang['minoredit']             = 'Az dəyişiklər';
 $lang['draftdate']             = 'Qaralama yadda saxlandı';
 $lang['nosecedit']             = 'Bu vaxt ərzində səhifə dəyişilmişdir, və bölmə haqqında məlumat köhnəlmişdir. Səhifənin tam versiyası yüklənmişdir.';
-$lang['searchcreatepage']      = "Əgər Siz axtardığınızı tapa bilmədinizsə, onda Siz adı axtarışınız ilə uyğun düşən yeni səhifə yarada bilərsiniz. Bunu eləmək üçün, sadəcə ''Səhifəni yarat'' düyməsini sıxın.";
 $lang['regmissing']            = 'Təssüf ki Siz bütün xanələri doldurmalısınız.';
 $lang['reguexists']            = 'Təssüf ki bu ad ilə istifadəçi artıq mövcuddur.';
 $lang['regsuccess']            = 'İstivadəci yaradıldı və şifrə sizin e-maila göndərildi.';
@@ -72,6 +72,9 @@ $lang['profna']                = 'Bu wiki profilin dəyişdirilməsini dəstəkl
 $lang['profnochange']          = 'Dəyişiklər edilmədi, profil yenilənmədi.';
 $lang['profnoempty']           = 'istifadəci adı və e-mail ünvanı boş ola bilməz.';
 $lang['profchanged']           = 'İstifadəçi profili uğurla yeniləndi.';
+$lang['profdeleteuser']        = 'Profili sil.';
+$lang['profconfdeletemissing'] = 'Təsdiq xanası seçilməib.';
+$lang['proffail']              = 'İstifadəçi profili yenilənmiyib.';
 $lang['pwdforget']             = 'Şifrəni yaddan çıxartmısız? Buyurun yenisini əldə edin';
 $lang['resendna']              = 'Bu wiki şifrəni yenidən göndərməyi dəstəkləmir.';
 $lang['resendpwdmissing']      = 'Formanın bütün xanəlırini doldurun.';
@@ -88,11 +91,28 @@ $lang['txt_filename']          = 'Faylın wiki-də olan adını daxil edin (müt
 $lang['txt_overwrt']           = 'Mövcud olan faylın üstündən yaz';
 $lang['lockedby']              = 'В данный момент заблокирован Bu an blokdadır:';
 $lang['lockexpire']            = 'Blok bitir:';
-$lang['js']['willexpire']            = 'Sizin bu səhifədə dəyişik etmək üçün blokunuz bir dəqiqə ərzində bitəcək.\nMünaqişələrdən yayınmaq və blokun taymerini sıfırlamaq üçün, baxış düyməsini sıxın.';
+$lang['js']['willexpire']      = 'Sizin bu səhifədə dəyişik etmək üçün blokunuz bir dəqiqə ərzində bitəcək.\nMünaqişələrdən yayınmaq və blokun taymerini sıfırlamaq üçün, baxış düyməsini sıxın.';
+$lang['js']['notsavedyet']     = 'Yaddaşa verilməmiş məlumatlar itəcək.';
+$lang['js']['searchmedia']     = 'Faylların axtarışı';
+$lang['js']['keepopen']        = 'Seçimdən sonra pəncərəni açıq saxlamaq';
+$lang['js']['hidedetails']     = 'Təfərruatı gizlət';
+$lang['js']['mediadisplay']    = 'Link növü';
+$lang['js']['mediasize']       = 'Şəkil ölçüsü.';
+$lang['js']['mediaclose']      = 'Bağla.';
+$lang['js']['mediadisplayimg'] = 'Şəkili göstər.';
+$lang['js']['mediadisplaylnk'] = 'Ancaq linki göstər.';
+$lang['js']['mediasmall']      = 'Kiçik versiya.';
+$lang['js']['mediamedium']     = 'Orta versiya.';
+$lang['js']['medialarge']      = 'Böyük versiya.';
+$lang['js']['mediaoriginal']   = 'Orjinal versiya.';
+$lang['js']['medialnk']        = 'Məlumat səhifəsinə keçid.';
+$lang['js']['nosmblinks']      = 'Windows-un şəbəkə qovluqlarına link ancaq Internet Explorer-dən işləyir. \nAmma Siz linki köçürə bilərsiniz.';
+$lang['js']['linkwiz']         = 'Linklər köməkçisi';
+$lang['js']['linkto']          = 'Link göstərir:';
+$lang['js']['del_confirm']     = 'Siz əminsiz ki, seçilmişləri silmək istəyirsiniz?';
 $lang['rssfailed']             = 'Aşağıda göstərilmiş xəbər lentini əldə edən zaman xəta baş verdi: ';
 $lang['nothingfound']          = 'Heçnə tapılmadı.';
 $lang['mediaselect']           = 'Mediya-faylın seçilməsi';
-$lang['fileupload']            = 'Mediya-faylın serverə yüklənməsi';
 $lang['uploadsucc']            = 'Yüklənmə uğur ilə başa çatdı';
 $lang['uploadfail']            = 'Yüklənmə zamanı xəta baş veri. Bəlkə giriş haqları ilə problem var?';
 $lang['uploadwrong']           = 'Yuklənməyə qadağa qoyuldu. Belə növlu faylları serverə yükləmək olmaz. ';
@@ -106,13 +126,6 @@ $lang['deletefail']            = '"%s" adlı fayl silinmədi. Faylın giriş haq
 $lang['mediainuse']            = '"%s" adlı fayl silinmədi. Fayl hələ istifadə olunur';
 $lang['namespaces']            = 'Namespace-lər';
 $lang['mediafiles']            = 'Mövcud olan fayllar';
-$lang['js']['searchmedia']     = 'Faylların axtarışı';
-$lang['js']['keepopen']        = 'Seçimdən sonra pəncərəni açıq saxlamaq';
-$lang['js']['hidedetails']     = 'Təfərruatı gizlət';
-$lang['js']['nosmblinks']      = 'Windows-un şəbəkə qovluqlarına link ancaq Internet Explorer-dən işləyir. \nAmma Siz linki köçürə bilərsiniz.';
-$lang['js']['linkwiz']         = 'Linklər köməkçisi';
-$lang['js']['linkto']          = 'Link göstərir:';
-$lang['js']['del_confirm']     = 'Siz əminsiz ki, seçilmişləri silmək istəyirsiniz?';
 $lang['mediausage']            = 'Bu fayla link yaratmaq üçün aşağıdakı sintaksisdən istifadə edin:';
 $lang['mediaview']             = 'Bu faylın ilkinə bax';
 $lang['mediaroot']             = 'kök';
@@ -169,11 +182,9 @@ $lang['qb_sig']                = 'İmza at';
 $lang['qb_smileys']            = 'Smayllar';
 $lang['qb_chars']              = 'Xüsusi simvollar';
 $lang['upperns']               = 'Ana namespace-ə keç';
-$lang['admin_register']        = 'İstifadəçi əlavə et';
 $lang['metaedit']              = 'Meta-məlumatlarda düzəliş et';
 $lang['metasaveerr']           = 'Meta-məlumatları yazan zamanı xəta';
 $lang['metasaveok']            = 'Meta-məlumatlar yadda saxlandı';
-$lang['btn_img_backto']        = 'Qayıd %s';
 $lang['img_title']             = 'Başlıq:';
 $lang['img_caption']           = 'İmza:';
 $lang['img_date']              = 'Tarix:';
@@ -216,3 +227,5 @@ $lang['days']                  = '%d gün əvvəl';
 $lang['hours']                 = '%d saat əvvəl';
 $lang['minutes']               = '%d dəqiqə əvvəl';
 $lang['seconds']               = '%d saniyə əvvəl';
+$lang['email_signature_text']  = 'DokuWiki aşağıdakı adresdə yerləşir
+@DOKUWIKIURL@';

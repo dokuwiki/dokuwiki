@@ -1,0 +1,5 @@
+====== Ffeil ddrafft wedi'i darganfod ======
+
+Doedd eich sesiwn golygu ddiwethaf heb gwblhau'n gywir. Gwnaeth DokuWiki gadw copi ddrafft yn awtomatig wrth i chi weithio, sydd nawr ar gael i chi er mwyn parhau gyda'ch golygu. Gallwch chi weld y data a gafodd ei gadw o'ch sesiwn diwethaf isod.
+
+Penderfynwch os ydych chi am //adennill// eich sesiwn golygu goll, //dileu//'r drafft awtogadw neu //canslo//'r broses olygu.

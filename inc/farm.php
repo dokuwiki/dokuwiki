@@ -22,7 +22,7 @@
  * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
 
-// DOKU_FARMDIR needs to be set in preload.php, here the fallback is the same as DOKU_INC would be (if it was set already)
+// DOKU_FARMDIR needs to be set in preload.php, the fallback is the same as DOKU_INC would be (if it was set already)
 if(!defined('DOKU_FARMDIR')) define('DOKU_FARMDIR', fullpath(dirname(__FILE__).'/../').'/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF', farm_confpath(DOKU_FARMDIR));
 if(!defined('DOKU_FARM')) define('DOKU_FARM', false);
@@ -38,6 +38,10 @@ if(!defined('DOKU_FARM')) define('DOKU_FARM', false);
  * website's hostname from left to right and pathname from right to left. The
  * first configuration file found will be used; the remaining will ignored.
  * If no configuration file is found, return the default confdir './conf'.
+ *
+ * @param string $farm
+ *
+ * @return string
  */
 function farm_confpath($farm) {
 

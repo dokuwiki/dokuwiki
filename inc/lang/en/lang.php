@@ -39,7 +39,6 @@ $lang['btn_update']            = 'Update';
 $lang['btn_delete']            = 'Delete';
 $lang['btn_back']              = 'Back';
 $lang['btn_backlink']          = 'Backlinks';
-$lang['btn_backtomedia']       = 'Back to Mediafile Selection';
 $lang['btn_subscribe']         = 'Manage Subscriptions';
 $lang['btn_profile']           = 'Update Profile';
 $lang['btn_reset']             = 'Reset';
@@ -70,12 +69,28 @@ $lang['badpassconfirm']        = 'Sorry, the password was wrong';
 $lang['minoredit']             = 'Minor Changes';
 $lang['draftdate']             = 'Draft autosaved on'; // full dformat date will be added
 $lang['nosecedit']             = 'The page was changed in the meantime, section info was out of date loaded full page instead.';
-$lang['searchcreatepage']      = 'If you didn\'t find what you were looking for, you can create or edit the page named after your query with the appropriate tool.';
+$lang['searchcreatepage']      = 'If you didn\'t find what you were looking for, you can create or edit the page %s, named after your query.';
+
+$lang['search_fullresults']    = 'Fulltext results';
+$lang['js']['search_toggle_tools']   = 'Toggle Search Tools';
+$lang['search_exact_match']    = 'Exact match';
+$lang['search_starts_with']    = 'Starts with';
+$lang['search_ends_with']      = 'Ends with';
+$lang['search_contains']       = 'Contains';
+$lang['search_custom_match']   = 'Custom';
+$lang['search_any_ns']         = 'Any namespace';
+$lang['search_any_time']       = 'Any time';
+$lang['search_past_7_days']    = 'Past week';
+$lang['search_past_month']     = 'Past month';
+$lang['search_past_year']      = 'Past year';
+$lang['search_sort_by_hits']   = 'Sort by hits';
+$lang['search_sort_by_mtime']  = 'Sort by last modified';
 
 $lang['regmissing']            = 'Sorry, you must fill in all fields.';
 $lang['reguexists']            = 'Sorry, a user with this login already exists.';
 $lang['regsuccess']            = 'The user has been created and the password was sent by email.';
 $lang['regsuccess2']           = 'The user has been created.';
+$lang['regfail']               = 'The user could not be created.';
 $lang['regmailfail']           = 'Looks like there was an error on sending the password mail. Please contact the admin!';
 $lang['regbadmail']            = 'The given email address looks invalid - if you think this is an error, contact the admin';
 $lang['regbadpass']            = 'The two given passwords are not identical, please try again.';
@@ -91,6 +106,7 @@ $lang['profdeleteuser']        = 'Delete Account';
 $lang['profdeleted']           = 'Your user account has been deleted from this wiki';
 $lang['profconfdelete']        = 'I wish to remove my account from this wiki. <br/> This action can not be undone.';
 $lang['profconfdeletemissing'] = 'Confirmation check box not ticked';
+$lang['proffail']              = 'User profile was not updated.';
 
 $lang['pwdforget']             = 'Forgotten your password? Get a new one';
 $lang['resendna']              = 'This wiki does not support password resending.';
@@ -110,6 +126,7 @@ $lang['txt_upload']            = 'Select file to upload:';
 $lang['txt_filename']          = 'Upload as (optional):';
 $lang['txt_overwrt']           = 'Overwrite existing file';
 $lang['maxuploadsize']         = 'Upload max. %s per file.';
+$lang['allowedmime']           = 'List of allowed file extensions';
 $lang['lockedby']              = 'Currently locked by:';
 $lang['lockexpire']            = 'Lock expires at:';
 
@@ -159,7 +176,6 @@ $lang['rssfailed']             = 'An error occurred while fetching this feed: ';
 $lang['nothingfound']          = 'Nothing was found.';
 
 $lang['mediaselect']           = 'Media Files';
-$lang['fileupload']            = 'Media File Upload';
 $lang['uploadsucc']            = 'Upload successful';
 $lang['uploadfail']            = 'Upload failed. Maybe wrong permissions?';
 $lang['uploadwrong']           = 'Upload denied. This file extension is forbidden!';
@@ -209,7 +225,7 @@ $lang['created']               = 'created';
 $lang['restored']              = 'old revision restored (%s)';
 $lang['external_edit']         = 'external edit';
 $lang['summary']               = 'Edit summary';
-$lang['noflash']               = 'The <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> is needed to display this content.';
+$lang['noflash']               = 'The <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> is needed to display this content.';
 $lang['download']              = 'Download Snippet';
 $lang['tools']                 = 'Tools';
 $lang['user_tools']            = 'User Tools';
@@ -256,8 +272,6 @@ $lang['qb_chars']              = 'Special Chars';
 
 $lang['upperns']               = 'jump to parent namespace';
 
-$lang['admin_register']        = 'Add new user';
-
 $lang['metaedit']              = 'Edit Metadata';
 $lang['metasaveerr']           = 'Writing metadata failed';
 $lang['metasaveok']            = 'Metadata saved';
@@ -294,7 +308,6 @@ $lang['subscr_style_list']          = 'list of changed pages since last email (e
 
 /* auth.class language support */
 $lang['authtempfail']          = 'User authentication is temporarily unavailable. If this situation persists, please inform your Wiki Admin.';
-$lang['authpwdexpire']         = 'Your password will expire in %d days, you should change it soon.';
 
 /* installer strings */
 $lang['i_chooselang']          = 'Choose your language';
@@ -305,10 +318,14 @@ $lang['i_superuser']           = 'Superuser';
 $lang['i_problems']            = 'The installer found some problems, indicated below. You can not continue until you have fixed them.';
 $lang['i_modified']            = 'For security reasons this script will only work with a new and unmodified Dokuwiki installation.
                                   You should either re-extract the files from the downloaded package or consult the complete
-                                  <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a>';
+                                  <a href="https://www.dokuwiki.org/install">Dokuwiki installation instructions</a>';
 $lang['i_funcna']              = 'PHP function <code>%s</code> is not available. Maybe your hosting provider disabled it for some reason?';
+$lang['i_disabled']            =  'It has been disabled by your provider.';
+$lang['i_funcnmail']           = '<b>Note:</b> The PHP mail function is not available. %s' .
+                                 ' If it remains unavailable, you may install the <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Your PHP version <code>%s</code> is lower than the needed <code>%s</code>. You need to upgrade your PHP install.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload must be disabled in php.ini to run DokuWiki.';
+$lang['i_urandom']             = 'DokuWiki cannot create cryptographically secure numbers for cookies. You may want to check your open_basedir settings in php.ini for proper <code>/dev/urandom</code> access.';
 $lang['i_permfail']            = '<code>%s</code> is not writable by DokuWiki. You need to fix the permission settings of this directory!';
 $lang['i_confexists']          = '<code>%s</code> already exists';
 $lang['i_writeerr']            = 'Unable to create <code>%s</code>. You will need to check directory/file permissions and create the file manually.';
@@ -363,11 +380,16 @@ $lang['media_perm_read']       = 'Sorry, you don\'t have enough rights to read f
 $lang['media_perm_upload']     = 'Sorry, you don\'t have enough rights to upload files.';
 $lang['media_update']          = 'Upload new version';
 $lang['media_restore']         = 'Restore this version';
+$lang['media_acl_warning']     = 'This list might not be complete due to ACL restrictions and hidden pages.';
 
+$lang['email_fail']            = 'PHP mail() missing or disabled. The following email was not sent: ';
 $lang['currentns']             = 'Current namespace';
 $lang['searchresult']          = 'Search Result';
 $lang['plainhtml']             = 'Plain HTML';
 $lang['wikimarkup']            = 'Wiki Markup';
 $lang['page_nonexist_rev']     = 'Page did not exist at %s. It was subsequently created at <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Unable to parse at parameter "%s".';
-//Setup VIM: ex: et ts=2 :
+$lang['email_signature_text'] = 'This mail was generated by DokuWiki at
+@DOKUWIKIURL@';
+#$lang['email_signature_html'] = ''; # the empty default will copy the text signature, you can override it in a local lang file
+

@@ -1,0 +1,40 @@
+{
+    "name": "splitbrain/php-archive",
+    "description": "Pure-PHP implementation to read and write TAR and ZIP archives",
+    "keywords": ["zip", "tar", "archive", "unpack", "extract", "unzip"],
+    "authors": [
+        {
+            "name": "Andreas Gohr",
+            "email": "andi@splitbrain.org"
+        }
+    ],
+    "license": "MIT",
+
+    "require": {
+        "php": ">=5.4"
+    },
+
+    "suggest": {
+        "ext-iconv": "Used for proper filename encode handling",
+        "ext-mbstring": "Can be used alternatively for handling filename encoding"
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "^4.8",
+        "mikey179/vfsStream": "^1.6",
+        "ext-zip": "*",
+        "ext-bz2": "*"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "splitbrain\\PHPArchive\\": "src"
+        }
+    },
+
+    "autoload-dev": {
+        "psr-4": {
+            "splitbrain\\PHPArchive\\": "tests"
+        }
+    }
+}

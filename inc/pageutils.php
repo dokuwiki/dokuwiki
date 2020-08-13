@@ -7,6 +7,9 @@
  * @todo       Combine similar functions like {wiki,media,meta}FN()
  */
 
+use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\ChangeLog\PageChangeLog;
+
 /**
  * Fetch the an ID from request
  *
@@ -41,7 +44,8 @@ function getID($param='id',$clean=true){
             if($param != 'id') {
                 $relpath = 'lib/exe/';
             }
-            $script = $conf['basedir'].$relpath.utf8_basename($INPUT->server->str('SCRIPT_FILENAME'));
+            $script = $conf['basedir'] . $relpath .
+                \dokuwiki\Utf8\PhpString::basename($INPUT->server->str('SCRIPT_FILENAME'));
 
         }elseif($INPUT->server->str('PATH_INFO')){
             $request = $INPUT->server->str('PATH_INFO');
@@ -81,11 +85,16 @@ function getID($param='id',$clean=true){
             // fall back to default
             $id = $id.$conf['start'];
         }
-        if (isset($ACT) && $ACT === 'show') send_redirect(wl($id,'',true));
+        if (isset($ACT) && $ACT === 'show') {
+            $urlParameters = $_GET;
+            if (isset($urlParameters['id'])) {
+                unset($urlParameters['id']);
+            }
+            send_redirect(wl($id, $urlParameters, true, '&'));
+        }
     }
-
     if($clean) $id = cleanID($id);
-    if(empty($id) && $param=='id') $id = $conf['start'];
+    if($id === '' && $param=='id') $id = $conf['start'];
 
     return $id;
 }
@@ -110,7 +119,7 @@ function cleanID($raw_id,$ascii=false){
     $cache = & $cache_cleanid;
 
     // check if it's already in the memory cache
-    if (isset($cache[(string)$raw_id])) {
+    if (!$ascii && isset($cache[(string)$raw_id])) {
         return $cache[(string)$raw_id];
     }
 
@@ -119,7 +128,7 @@ function cleanID($raw_id,$ascii=false){
         $sepcharpat = '#\\'.$sepchar.'+#';
 
     $id = trim((string)$raw_id);
-    $id = utf8_strtolower($id);
+    $id = \dokuwiki\Utf8\PhpString::strtolower($id);
 
     //alternative namespace seperator
     if($conf['useslash']){
@@ -128,13 +137,13 @@ function cleanID($raw_id,$ascii=false){
         $id = strtr($id,';/',':'.$sepchar);
     }
 
-    if($conf['deaccent'] == 2 || $ascii) $id = utf8_romanize($id);
-    if($conf['deaccent'] || $ascii) $id = utf8_deaccent($id,-1);
+    if($conf['deaccent'] == 2 || $ascii) $id = \dokuwiki\Utf8\Clean::romanize($id);
+    if($conf['deaccent'] || $ascii) $id = \dokuwiki\Utf8\Clean::deaccent($id,-1);
 
     //remove specials
-    $id = utf8_stripspecials($id,$sepchar,'\*');
+    $id = \dokuwiki\Utf8\Clean::stripspecials($id,$sepchar,'\*');
 
-    if($ascii) $id = utf8_strip($id);
+    if($ascii) $id = \dokuwiki\Utf8\Clean::strip($id);
 
     //clean up
     $id = preg_replace($sepcharpat,$sepchar,$id);
@@ -143,7 +152,7 @@ function cleanID($raw_id,$ascii=false){
     $id = preg_replace('#:[:\._\-]+#',':',$id);
     $id = preg_replace('#[:\._\-]+:#',':',$id);
 
-    $cache[(string)$raw_id] = $id;
+    if (!$ascii) $cache[(string)$raw_id] = $id;
     return($id);
 }
 
@@ -204,9 +213,9 @@ function noNSorNS($id) {
     global $conf;
 
     $p = noNS($id);
-    if ($p == $conf['start'] || $p == false) {
+    if ($p === $conf['start'] || $p === false || $p === '') {
         $p = curNS($id);
-        if ($p == false) {
+        if ($p === false || $p === '') {
             return $conf['start'];
         }
     }
@@ -243,7 +252,6 @@ function sectionID($title,&$check) {
     return $title;
 }
 
-
 /**
  * Wiki page existence check
  *
@@ -251,9 +259,10 @@ function sectionID($title,&$check) {
  *
  * @author Chris Smith <chris@jalakai.co.uk>
  *
- * @param string     $id     page id
- * @param string|int $rev    empty or revision timestamp
- * @param bool       $clean  flag indicating that $id should be cleaned (see wikiFN as well)
+ * @param string $id page id
+ * @param string|int $rev empty or revision timestamp
+ * @param bool $clean flag indicating that $id should be cleaned (see wikiFN as well)
+ * @param bool $date_at
  * @return bool exists?
  */
 function page_exists($id,$rev='',$clean=true, $date_at=false) {
@@ -285,14 +294,15 @@ function wikiFN($raw_id,$rev='',$clean=true){
     global $cache_wikifn;
     $cache = & $cache_wikifn;
 
-    if (isset($cache[$raw_id]) && isset($cache[$raw_id][$rev])) {
-        return $cache[$raw_id][$rev];
-    }
-
     $id = $raw_id;
 
     if ($clean) $id = cleanID($id);
     $id = str_replace(':','/',$id);
+
+    if (isset($cache[$id]) && isset($cache[$id][$rev])) {
+        return $cache[$id][$rev];
+    }
+
     if(empty($rev)){
         $fn = $conf['datadir'].'/'.utf8_encodeFN($id).'.txt';
     }else{
@@ -310,8 +320,8 @@ function wikiFN($raw_id,$rev='',$clean=true){
         }
     }
 
-    if (!isset($cache[$raw_id])) { $cache[$raw_id] = array(); }
-    $cache[$raw_id][$rev] = $fn;
+    if (!isset($cache[$id])) { $cache[$id] = array(); }
+    $cache[$id][$rev] = $fn;
     return $fn;
 }
 
@@ -389,11 +399,13 @@ function metaFiles($id){
  *
  * @param string     $id  media id
  * @param string|int $rev empty string or revision timestamp
+ * @param bool $clean
+ *
  * @return string full path
  */
-function mediaFN($id, $rev=''){
+function mediaFN($id, $rev='', $clean=true){
     global $conf;
-    $id = cleanID($id);
+    if ($clean) $id = cleanID($id);
     $id = str_replace(':','/',$id);
     if(empty($rev)){
         $fn = $conf['mediadir'].'/'.utf8_encodeFN($id);
@@ -435,7 +447,7 @@ function localeFN($id,$ext='txt'){
  * instead
  *
  * Partyly based on a cleanPath function found at
- * http://www.php.net/manual/en/function.realpath.php#57016
+ * http://php.net/manual/en/function.realpath.php#57016
  *
  * @author <bart at mediawave dot nl>
  *
@@ -452,9 +464,9 @@ function resolve_id($ns,$id,$clean=true){
 
     // if the id starts with a dot we need to handle the
     // relative stuff
-    if($id && $id{0} == '.'){
+    if($id && $id[0] == '.'){
         // normalize initial dots without a colon
-        $id = preg_replace('/^(\.+)(?=[^:\.])/','\1:',$id);
+        $id = preg_replace('/^((\.+:)*)(\.+)(?=[^:\.])/','\1\3:',$id);
         // prepend the current namespace
         $id = $ns.':'.$id;
 
@@ -489,9 +501,11 @@ function resolve_id($ns,$id,$clean=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string  $ns     namespace which is context of id
- * @param string &$page   (reference) relative media id, updated to resolved id
- * @param bool   &$exists (reference) updated with existance of media
+ * @param string $ns namespace which is context of id
+ * @param string &$page (reference) relative media id, updated to resolved id
+ * @param bool &$exists (reference) updated with existance of media
+ * @param int|string $rev
+ * @param bool $date_at
  */
 function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
     $page   = resolve_id($ns,$page);
@@ -502,7 +516,7 @@ function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
             $rev = $medialog_rev;
         }
     }
-    
+
     $file   = mediaFN($page,$rev);
     $exists = file_exists($file);
 }
@@ -512,9 +526,11 @@ function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string  $ns     namespace which is context of id
- * @param string &$page   (reference) relative page id, updated to resolved id
- * @param bool   &$exists (reference) updated with existance of media
+ * @param string $ns namespace which is context of id
+ * @param string &$page (reference) relative page id, updated to resolved id
+ * @param bool &$exists (reference) updated with existance of media
+ * @param string $rev
+ * @param bool $date_at
  */
 function resolve_pageid($ns,&$page,&$exists,$rev='',$date_at=false ){
     global $conf;
@@ -603,7 +619,7 @@ function resolve_pageid($ns,&$page,&$exists,$rev='',$date_at=false ){
 function getCacheName($data,$ext=''){
     global $conf;
     $md5  = md5($data);
-    $file = $conf['cachedir'].'/'.$md5{0}.'/'.$md5.$ext;
+    $file = $conf['cachedir'].'/'.$md5[0].'/'.$md5.$ext;
     io_makeFileDir($file);
     return $file;
 }
@@ -621,7 +637,7 @@ function isHiddenPage($id){
         'id' => $id,
         'hidden' => false
     );
-    trigger_event('PAGEUTILS_ID_HIDEPAGE', $data, '_isHiddenPage');
+    \dokuwiki\Extension\Event::createAndTrigger('PAGEUTILS_ID_HIDEPAGE', $data, '_isHiddenPage');
     return $data['hidden'];
 }
 
@@ -734,27 +750,29 @@ function utf8_decodeFN($file){
 
 /**
  * Find a page in the current namespace (determined from $ID) or any
- * higher namespace
+ * higher namespace that can be accessed by the current user,
+ * this condition can be overriden by an optional parameter.
  *
  * Used for sidebars, but can be used other stuff as well
  *
  * @todo   add event hook
  *
  * @param  string $page the pagename you're looking for
- * @return string|false the full page id of the found page, false if any
+ * @param bool $useacl only return pages readable by the current user, false to ignore ACLs
+ * @return false|string the full page id of the found page, false if any
  */
-function page_findnearest($page){
-    if (!$page) return false;
+function page_findnearest($page, $useacl = true){
+    if ((string) $page === '') return false;
     global $ID;
 
     $ns = $ID;
     do {
         $ns = getNS($ns);
-        $pageid = ltrim("$ns:$page",':');
-        if(page_exists($pageid)){
+        $pageid = cleanID("$ns:$page");
+        if(page_exists($pageid) && (!$useacl || auth_quickaclcheck($pageid) >= AUTH_READ)){
             return $pageid;
         }
-    } while($ns);
+    } while($ns !== false);
 
     return false;
 }

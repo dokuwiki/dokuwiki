@@ -2,22 +2,19 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
- * @author George Sheraton guxd@163.com
  * @author Simon zhan <simonzhan@21cn.com>
- * @author mr.jinyi@gmail.com
  * @author ben <ben@livetom.com>
  * @author lainme <lainme993@gmail.com>
  * @author caii <zhoucaiqi@gmail.com>
  * @author Hiphen Lee <jacob.b.leung@gmail.com>
- * @author caii, patent agent in China <zhoucaiqi@gmail.com>
- * @author lainme993@gmail.com
  * @author Shuo-Ting Jian <shoting@gmail.com>
  * @author Rachel <rzhang0802@gmail.com>
  * @author Yangyu Huang <yangyu.huang@gmail.com>
  * @author oott123 <ip.192.168.1.1@qq.com>
+ * @author Garfield <garfield_550@outlook.com>
  */
 $lang['menu']                  = '用户管理器';
 $lang['noauth']                = '（用户认证不可用）';
@@ -78,3 +75,11 @@ $lang['import_error_readfail'] = '导入失败。无法读取上传的文件。'
 $lang['import_error_create']   = '不能创建新用户';
 $lang['import_notify_fail']    = '通知消息无法发送到导入的用户 %s，电子邮件地址是 %s。';
 $lang['import_downloadfailures'] = '下载CSV的错误信息以修正。';
+$lang['addUser_error_missing_pass'] = '请设置一个密码或者激活用户通知来启用密码生成。';
+$lang['addUser_error_pass_not_identical'] = '输入的密码不相同。';
+$lang['addUser_error_modPass_disabled'] = '修改密码已禁用';
+$lang['addUser_error_name_missing'] = '请为新用户输入一个名字。';
+$lang['addUser_error_modName_disabled'] = '修改名字已禁用';
+$lang['addUser_error_mail_missing'] = '请为新用户输入一个电子邮件地址。';
+$lang['addUser_error_modMail_disabled'] = '修改邮件地址已禁用';
+$lang['addUser_error_create_event_failed'] = '一个插件阻止了添加新用户。请查看其它可能的消息来获取更多信息。';

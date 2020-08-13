@@ -2,11 +2,14 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Rene <wllywlnt@yahoo.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Johan Vervloet <johan.vervloet@gmail.com>
  * @author Mijndert <mijndert@mijndertstuij.nl>
+ * @author Johan Wijnker <johan@wijnker.eu>
+ * @author Mark C. Prins <mprins@users.sf.net>
+ * @author hugo smet <hugo.smet@scarlet.be>
  */
 $lang['menu']                  = 'Uitbreidingen';
 $lang['tab_plugins']           = 'Geïnstalleerde Plugins';
@@ -28,11 +31,15 @@ $lang['btn_disable']           = 'Schakel uit';
 $lang['btn_install']           = 'Installeer';
 $lang['btn_reinstall']         = 'Her-installeer';
 $lang['js']['reallydel']       = 'Wilt u deze uitbreiding deinstalleren?';
+$lang['js']['display_viewoptions'] = 'Weergave opties:';
+$lang['js']['display_enabled'] = 'ingeschakeld';
+$lang['js']['display_disabled'] = 'uitgeschakeld';
+$lang['js']['display_updatable'] = 'update beschikbaar';
 $lang['search_for']            = 'Zoek Uitbreiding:';
 $lang['search']                = 'Zoek';
 $lang['extensionby']           = '<strong>%s</strong> by %s';
 $lang['screenshot']            = 'Schermafdruk bij %s';
-$lang['popularity']            = 'Populariteit:%s%%';
+$lang['popularity']            = 'Populariteit: %s%%';
 $lang['homepage_link']         = 'Documentatie';
 $lang['bugs_features']         = 'Bugs';
 $lang['tags']                  = 'Tags:';
@@ -75,7 +82,7 @@ $lang['missing_dependency']    = '<strong>niet aanwezige of uitgeschakelde afhan
 $lang['security_issue']        = '<strong>Veiligheids kwestie:</strong> %s';
 $lang['security_warning']      = '<strong>Veiligheids Waarschuwing</strong> %s';
 $lang['update_available']      = '<strong>Update:</strong> Nieuwe versie %s is beschikbaar.';
-$lang['wrong_folder']          = '<strong>Plugin onjuist geïnstalleerd:</strong> Hernoem de plugin directory van "%s" naar"%s"';
+$lang['wrong_folder']          = '<strong>Plugin onjuist geïnstalleerd:</strong> Hernoem de plugin directory van "%s" naar "%s"';
 $lang['url_change']            = '<strong>URL gewijzigd:</strong> Download URL is gewijzigd sinds de laatste download. Controleer of de nieuwe URL juist is voordat u de uitbreiding updatet. <br />Nieuw:%s<Br /> Vorig: %s';
 $lang['error_badurl']          = 'URLs moeten beginnen met http of https';
 $lang['error_dircreate']       = 'De tijdelijke map kon niet worden gemaakt om de download te ontvangen';
@@ -87,6 +94,8 @@ $lang['noperms']               = 'Uitbreidings directory is niet schrijfbaar';
 $lang['notplperms']            = 'Template directory is niet schrijfbaar';
 $lang['nopluginperms']         = 'Plugin directory is niet schrijfbaar';
 $lang['git']                   = 'De uitbreiding werd geïnstalleerd via git, u wilt deze hier wellicht niet aanpassen.';
+$lang['auth']                  = 'Deze auth plugin is niet geactiveerd in de configuratie, overweeg het om uit te schakelen.';
 $lang['install_url']           = 'Installeer vanaf URL:';
 $lang['install_upload']        = 'Upload Uitbreiding:';
 $lang['repo_error']            = 'Er kon geen verbinding worden gemaakt met de centrale plugin opslag. Controleer of de server verbinding mag maken met www.dokuwiki.org en controleer de proxy instellingen.';
+$lang['nossl']                 = 'Je PHP mist SSL ondersteuning. Downloaden werkt niet met veel DokuWiki extensies.';

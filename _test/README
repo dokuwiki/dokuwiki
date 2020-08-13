@@ -5,7 +5,7 @@ This is the test suite to automatically test various parts of DokuWiki.
 ===== Requirements =====
 
   * PHPUnit 3.6.10+ http://www.phpunit.de/
-  * PHP 5.3+ http://www.php.net
+  * PHP 5.3+ http://php.net
 
 ===== PHPUnit Installation ======
 

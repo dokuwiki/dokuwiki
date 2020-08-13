@@ -1,27 +1,38 @@
 <?php
-// use no mbstring help here
-if(!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING',1);
 
-class utf8_stripspecials extends DokuWikiTest {
+class utf8_stripspecials extends DokuWikiTest
+{
 
+    /**
+     * @return array
+     * @see testGivens
+     */
+    function provideGivens()
+    {
+        return [
+            ['asciistring', '', '', 'asciistring'],
+            ['asciistring', '', '\._\-:', 'asciistring'],
+            ['ascii.string', '', '\._\-:', 'asciistring'],
+            ['ascii.string', ' ', '\._\-:', 'ascii string'],
+            ['2.1.14', ' ', '\._\-:', '2 1 14'],
+            ['ascii.string', '', '\._\-:\*', 'asciistring'],
+            ['ascii.string', ' ', '\._\-:\*', 'ascii string'],
+            ['2.1.14', ' ', '\._\-:\*', '2 1 14'],
+            ['string with nbsps', '_', '\*', 'string_with_nbsps'],
+            ['αβγδεϝϛζηθικλμνξοπϟϙρστυφχψωϡ', '_', '', 'αβγδεϝϛζηθικλμνξοπϟϙρστυφχψωϡ'], // #3188
+        ];
+    }
 
-    function test1(){
-        // we test multiple cases here - format: string, repl, additional, test
-        $tests   = array();
-        $tests[] = array('asciistring','','','asciistring');
-        $tests[] = array('asciistring','','\._\-:','asciistring');
-        $tests[] = array('ascii.string','','\._\-:','asciistring');
-        $tests[] = array('ascii.string',' ','\._\-:','ascii string');
-        $tests[] = array('2.1.14',' ','\._\-:','2 1 14');
-        $tests[] = array('ascii.string','','\._\-:\*','asciistring');
-        $tests[] = array('ascii.string',' ','\._\-:\*','ascii string');
-        $tests[] = array('2.1.14',' ','\._\-:\*','2 1 14');
-        $tests[] = array('string with nbsps','_','\*','string_with_nbsps');
-
-        foreach($tests as $test){
-            $this->assertEquals(utf8_stripspecials($test[0],$test[1],$test[2]),$test[3]);
-        }
+    /**
+     * @param string $string
+     * @param string $replacement
+     * @param string $additional
+     * @param string $expected
+     * @dataProvider provideGivens
+     */
+    function testGivens($string, $replacement, $additional, $expected)
+    {
+        $this->assertEquals($expected, \dokuwiki\Utf8\Clean::stripspecials($string, $replacement, $additional));
     }
 
 }
-//Setup VIM: ex: et ts=4 :

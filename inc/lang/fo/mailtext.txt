@@ -10,8 +10,3 @@ Rætti samandráttur : @SUMMARY@
 Brúkari            : @USER@
 
 @DIFF@
-
-
--- 
-Hesin t-postur var skaptur av DokuWiki á:
-@DOKUWIKIURL@

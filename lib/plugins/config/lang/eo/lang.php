@@ -1,15 +1,16 @@
 <?php
+
 /**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * Esperantolanguage file
  *
+ * @author Florian <florianmail55@gmail.com>
+ * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
  * @author Felipe Castro <fefcas@uol.com.br>
- * @author Felipe Castro <fefcas@gmail.com>
- * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
  * @author Felipo Kastro <fefcas@gmail.com>
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Erik Pedersen <erik pedersen@shaw.ca>
- * @author Erik Pedersen <erik.pedersen@shaw.ca>
- * @author Robert Bogenschneider <bogi@uea.org>
  */
 $lang['menu']                  = 'Agordaj Difinoj';
 $lang['error']                 = 'La difinoj ne estas ĝisdatigitaj pro malvalida valoro: bonvolu revizii viajn ŝanĝojn kaj resubmeti ilin.
@@ -59,7 +60,7 @@ $lang['breadcrumbs']           = 'Nombro da paderoj';
 $lang['youarehere']            = 'Hierarkiaj paderoj';
 $lang['fullpath']              = 'Montri la kompletan padon de la paĝoj en la piedlinio';
 $lang['typography']            = 'Fari tipografiajn anstataŭigojn';
-$lang['dformat']               = 'Formato de datoj (vidu la PHP-an funkcion <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Formato de datoj (vidu la PHP-an funkcion <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Subskribo';
 $lang['showuseras']            = 'Kiel indiki la lastan redaktinton';
 $lang['toptoclevel']           = 'Supera nivelo por la enhavtabelo';
@@ -84,6 +85,7 @@ $lang['disableactions']        = 'Malebligi DokuWiki-ajn agojn';
 $lang['disableactions_check']  = 'Kontroli';
 $lang['disableactions_subscription'] = 'Aliĝi/Malaliĝi';
 $lang['disableactions_wikicode'] = 'Rigardi vikitekston/Eksporti fontotekston';
+$lang['disableactions_profile_delete'] = 'Forigi la propran konton';
 $lang['disableactions_other']  = 'Aliaj agoj (disigita per komoj)';
 $lang['auth_security_timeout'] = 'Sekureca tempolimo por aŭtentigo (sekundoj)';
 $lang['securecookie']          = 'Ĉu kuketoj difinitaj per HTTPS sendiĝu de la foliumilo nur per HTTPS? Malebligu tiun ĉi opcion kiam nur la ensaluto al via vikio estas sekurigita per SSL, sed foliumado de la vikio estas farita malsekure.';
@@ -124,6 +126,8 @@ $lang['rss_content']           = 'Kion montri en la XML-aj novaĵ-flueroj?';
 $lang['rss_update']            = 'Intertempo por ĝisdatigi XML-an novaĵ-fluon (sek.)';
 $lang['rss_show_summary']      = 'XML-a novaĵ-fluo montras resumon en la titolo';
 $lang['rss_media']             = 'Kiaj ŝangoj estu montrataj en la XML-fluo?';
+$lang['rss_media_o_both']      = 'ambaŭ';
+$lang['rss_media_o_pages']     = 'paĝoj';
 $lang['updatecheck']           = 'Ĉu kontroli aktualigojn kaj sekurecajn avizojn? DokuWiki bezonas kontakti update.dokuwiki.org por tiu ĉi trajto.';
 $lang['userewrite']            = 'Uzi netajn URL-ojn';
 $lang['useslash']              = 'Uzi frakcistrekon kiel disigsignaĵon por nomspacoj en URL-oj';
@@ -134,10 +138,10 @@ $lang['autoplural']            = 'Kontroli pluralajn formojn en ligiloj';
 $lang['compression']           = 'Kompaktigmetodo por arkivaj dosieroj';
 $lang['gzip_output']           = 'Uzi gzip-an enhav-enkodigon por XHTML';
 $lang['compress']              = 'Kompaktigi CSS-ajn kaj ĵavaskriptajn elmetojn';
-$lang['cssdatauri']            = 'Grandeco en bitokoj, ĝis kiom en CSS-dosieroj referencitaj bildoj enmetiĝu rekte en la stilfolion por malgrandigi vanan HTTP-kapan trafikon. Tiu tekniko ne funkcias en IE 7 aŭ pli frua!
+$lang['cssdatauri']            = 'Grandeco en bitokoj, ĝis kiom en CSS-dosieroj referencitaj bildoj enmetiĝu rekte en la stilfolion por malgrandigi vanan HTTP-kapan trafikon.
 <code>400</code> ĝis <code>600</code> bitokoj estas bona grandeco. Indiku <code>0</code> por malebligi enmeton.';
 $lang['send404']               = 'Sendi la mesaĝon "HTTP 404/Paĝo ne trovita" por ne ekzistantaj paĝoj';
-$lang['broken_iua']            = 'Ĉu la funkcio "ignore_user_abort" difektas en via sistemo? Tio povus misfunkciigi la serĉindekson. IIS+PHP/CGI estas konata kiel fuŝaĵo. Vidu <a href="http://bugs.splitbrain.org/?do=details&task_id=852&">Cimon 852</a> por pli da informoj.';
+$lang['broken_iua']            = 'Ĉu la funkcio "ignore_user_abort" difektas en via sistemo? Tio povus misfunkciigi la serĉindekson. IIS+PHP/CGI estas konata kiel fuŝaĵo. Vidu <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Cimon 852</a> por pli da informoj.';
 $lang['xsendfile']             = 'Ĉu uzi la kaplinion X-Sendfile por ebligi al la retservilo liveri fiksajn dosierojn? Via retservilo subtenu tion.';
 $lang['renderer_xhtml']        = 'Prezentilo por la ĉefa vikia rezulto (xhtml)';
 $lang['renderer__core']        = '%s (DokuWiki-a kerno)';
@@ -149,12 +153,6 @@ $lang['proxy____user']         = 'Uzantonomo ĉe la "Proxy"';
 $lang['proxy____pass']         = 'Pasvorto ĉe la "Proxy"';
 $lang['proxy____ssl']          = 'Uzi SSL por konekti al la "Proxy"';
 $lang['proxy____except']       = 'Regula esprimo por URL-oj, kiujn la servilo preterrigardu.';
-$lang['safemodehack']          = 'Ebligi sekuran modon';
-$lang['ftp____host']           = 'FTP-a servilo por sekura modo';
-$lang['ftp____port']           = 'FTP-a pordo por sekura modo';
-$lang['ftp____user']           = 'FTP-a uzantonomo por sekura modo';
-$lang['ftp____pass']           = 'FTP-a pasvorto por sekura modo';
-$lang['ftp____root']           = 'FTP-a superuzanta (root) subdosierujo por sekura modo';
 $lang['license_o_']            = 'Nenio elektita';
 $lang['typography_o_0']        = 'nenio';
 $lang['typography_o_1']        = 'Nur duoblaj citiloj';

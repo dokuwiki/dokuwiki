@@ -18,7 +18,6 @@
     bottom: 0;
     left: 0;
     border-bottom: 1px solid @ini_border;
-    z-index: 1;
 }
 
 .dokuwiki .tabs > ul li,
@@ -67,6 +66,7 @@
 .dokuwiki ul.tabs li a:hover,
 .dokuwiki ul.tabs li a:active,
 .dokuwiki ul.tabs li a:focus,
+.dokuwiki ul.tabs li.active a,
 .dokuwiki ul.tabs li strong {
     background-color: @ini_background_alt;
     color: @ini_text;
@@ -76,6 +76,8 @@
 
 .dokuwiki .tabs > ul li .curid a,
 .dokuwiki .tabs > ul li .active a,
+.dokuwiki .tabs > ul li .active a,
+.dokuwiki ul.tabs li.active a,
 .dokuwiki ul.tabs li strong {
     z-index: 2;
     border-bottom-color: @ini_background_alt;

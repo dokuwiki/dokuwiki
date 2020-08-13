@@ -1,5 +1,8 @@
 <?php
+
 /**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * is language file
  *
  * This file was initially built by fetching translations from other
@@ -8,6 +11,7 @@
  * lines starting with @author
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesIs.php?view=co
+ *
  * @author Hrannar Baldursson <hrannar.baldursson@gmail.com>
  * @author Ólafur Gunnlaugsson <oli@audiotools.com>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
@@ -42,7 +46,6 @@ $lang['btn_update']            = 'Uppfæra';
 $lang['btn_delete']            = 'Eyða';
 $lang['btn_back']              = 'Til baka';
 $lang['btn_backlink']          = 'Hvað tengist hingað';
-$lang['btn_backtomedia']       = 'Aftur til miðlaskrá';
 $lang['btn_subscribe']         = 'Vakta';
 $lang['btn_profile']           = 'Uppfæra notanda';
 $lang['btn_reset']             = 'Endurstilla';
@@ -51,6 +54,7 @@ $lang['btn_recover']           = 'Endurheimta uppkast';
 $lang['btn_draftdel']          = 'Eyða uppkasti';
 $lang['btn_revert']            = 'Endurheimta';
 $lang['btn_register']          = 'Skráning';
+$lang['btn_img_backto']        = 'Aftur til %s';
 $lang['loggedinas']            = 'Innskráning sem:';
 $lang['user']                  = 'Notendanafn';
 $lang['pass']                  = 'Aðgangsorð';
@@ -65,6 +69,11 @@ $lang['badlogin']              = 'Því miður, notandanafn eða aðgangsorð va
 $lang['minoredit']             = 'Minniháttar breyting';
 $lang['draftdate']             = 'Uppkast vistað sjálfkrafa';
 $lang['nosecedit']             = 'Síðunni var breytt á meðan, upplýsingar um svæðið voru úreltar og öll síðan því endurhlaðin.';
+$lang['js']['searchmedia']     = 'Leita að skrám';
+$lang['js']['hidedetails']     = 'Fela upplýsingar';
+$lang['js']['linkwiz']         = 'Tengill-leiðsagnarforrit';
+$lang['js']['linkto']          = 'Tengja';
+$lang['js']['del_confirm']     = 'Á örugglega að eyða valdar skrár?';
 $lang['regmissing']            = 'Afsakið, en þú verður að fylla út í allar eyður.';
 $lang['reguexists']            = 'Afsakið, notandi með þessu nafni er þegar skráður inn.';
 $lang['regsuccess']            = 'Notandi hefur verið búinn til og aðgangsorð sent í tölvupósti.';
@@ -96,7 +105,6 @@ $lang['lockedby']              = 'Læstur af:';
 $lang['lockexpire']            = 'Læsing rennur út eftir:';
 $lang['nothingfound']          = 'Ekkert fannst';
 $lang['mediaselect']           = 'Miðlaskrá';
-$lang['fileupload']            = 'Hlaða inn miðlaskrá';
 $lang['uploadsucc']            = 'Innhlaðning tókst';
 $lang['uploadfail']            = 'Villa í innhlaðningu';
 $lang['uploadwrong']           = 'Innhleðslu neitað. Skrár með þessari endingu eru ekki leyfðar.';
@@ -108,11 +116,6 @@ $lang['uploadsize']            = 'Innhlaðið skrá var of stór. (Hámark eru %
 $lang['deletesucc']            = 'Skrá %s hefur verið eytt.';
 $lang['namespaces']            = 'Nafnrýmar';
 $lang['mediafiles']            = 'Tiltækar skrár í';
-$lang['js']['searchmedia']     = 'Leita að skrám';
-$lang['js']['hidedetails']     = 'Fela upplýsingar';
-$lang['js']['linkwiz']         = 'Tengill-leiðsagnarforrit';
-$lang['js']['linkto']          = 'Tengja';
-$lang['js']['del_confirm']     = 'Á örugglega að eyða valdar skrár?';
 $lang['mediaview']             = 'Sjá upprunalega skrá';
 $lang['mediaroot']             = 'rót';
 $lang['mediaextchange']        = 'Skrárending var breytt úr .%s til .%s!';
@@ -166,11 +169,9 @@ $lang['qb_media']              = 'Bæta inn myndum og öðrum skrám';
 $lang['qb_sig']                = 'Undirskrift þín auk tímasetningu';
 $lang['qb_smileys']            = 'Broskallar';
 $lang['qb_chars']              = 'Sértækir stafir';
-$lang['admin_register']        = 'Setja nýjan notenda inn';
 $lang['metaedit']              = 'Breyta lýsigögnum';
 $lang['metasaveerr']           = 'Vistun lýsigagna mistókst';
 $lang['metasaveok']            = 'Lýsigögn vistuð';
-$lang['btn_img_backto']            = 'Aftur til %s';
 $lang['img_title']             = 'Heiti:';
 $lang['img_caption']           = 'Skýringartexti:';
 $lang['img_date']              = 'Dagsetning:';

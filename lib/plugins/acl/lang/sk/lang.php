@@ -2,10 +2,10 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Ondrej Vegh <ov@vsieti.sk>
  * @author Michal Mesko <michal.mesko@gmail.com>
- * @author exusik@gmail.com
+ * @author exusik <exusik@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
  */
 $lang['admin_acl']             = 'Správa zoznamu prístupových práv';

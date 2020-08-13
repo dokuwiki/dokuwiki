@@ -77,11 +77,17 @@ class css_css_loadfile_test extends DokuWikiTest {
 
         $this->file = tempnam($dir, 'css');
 
-        $this->csstest('@import "test.less"', '@import "/foo/bar/test.less"');
-        $this->csstest('@import \'test.less\'', '@import \'/foo/bar/test.less\'');
-        $this->csstest('@import url(test.less)', '@import url(/foo/bar/test.less)');
-
-        $this->csstest('@import "abc/test.less"', '@import "/foo/bar/abc/test.less"');
+        if (isWindows()) {
+            $this->csstest('@import "test.less"', '@import "\foo\bar/test.less"');
+            $this->csstest('@import \'test.less\'', '@import \'\foo\bar/test.less\'');
+            $this->csstest('@import url(test.less)', '@import url(\foo\bar/test.less)');
+            $this->csstest('@import "abc/test.less"', '@import "\foo\bar/abc/test.less"');
+        } else {
+            $this->csstest('@import "test.less"', '@import "/foo/bar/test.less"');
+            $this->csstest('@import \'test.less\'', '@import \'/foo/bar/test.less\'');
+            $this->csstest('@import url(test.less)', '@import url(/foo/bar/test.less)');
+            $this->csstest('@import "abc/test.less"', '@import "/foo/bar/abc/test.less"');
+        }
     }
 
     public function tearDown() {

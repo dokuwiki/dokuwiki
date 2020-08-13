@@ -1,20 +1,30 @@
 <?php
+
 /**
- * Chinese(Simplified) language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author Jenxi <seow@jenxi.com>
+ * @author FENG.JIE <ahx@qq.com>
+ * @author Xin <chenxin1034@gmail.com>
+ * @author HaoNan <haonan@zhuoming.info>
+ * @author Phy <dokuwiki@phy25.com>
+ * @author Aaron Zhou <iradio@163.com>
+ * @author lempel <riverlempel@hotmail.com>
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
- * @author George Sheraton guxd@163.com
  * @author Simon zhan <simonzhan@21cn.com>
- * @author mr.jinyi@gmail.com
  * @author ben <ben@livetom.com>
  * @author lainme <lainme993@gmail.com>
  * @author caii <zhoucaiqi@gmail.com>
  * @author Hiphen Lee <jacob.b.leung@gmail.com>
- * @author caii, patent agent in China <zhoucaiqi@gmail.com>
- * @author lainme993@gmail.com
  * @author Shuo-Ting Jian <shoting@gmail.com>
+ * @author Garfield <garfield_550@outlook.com>
+ * @author JellyChen <451453325@qq.com>
+ * @author tai <tai_tang@126.com>
+ * @author 高博 <bobnemo1983@gmail.com>
+ * @author hznupeter <qiujiongtao@163.com>
+ * @author kuma <kuma000@qq.com>
+ * @author phy25 <git@phy25.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
@@ -44,6 +54,7 @@ $lang['_advanced']             = '高级设置';
 $lang['_network']              = '网络设置';
 $lang['_msg_setting_undefined'] = '设置的元数据不存在。';
 $lang['_msg_setting_no_class'] = '设置的分类不存在。';
+$lang['_msg_setting_no_known_class'] = '设置分类不可用';
 $lang['_msg_setting_no_default'] = '设置的默认值不存在。';
 $lang['title']                 = '维基站点的标题';
 $lang['start']                 = '开始页面的名称';
@@ -65,7 +76,7 @@ $lang['breadcrumbs']           = '显示“足迹”的数量';
 $lang['youarehere']            = '显示“您在这里”';
 $lang['fullpath']              = '在页面底部显示完整路径';
 $lang['typography']            = '进行字符替换';
-$lang['dformat']               = '日期格式（参见 PHP 的 <a href="http://www.php.net/strftime">strftime</a> 功能）';
+$lang['dformat']               = '日期格式（参见 PHP 的 <a href="http://php.net/strftime">strftime</a> 功能）';
 $lang['signature']             = '签名样式';
 $lang['showuseras']            = '显示用户为';
 $lang['toptoclevel']           = '目录的最顶层';
@@ -90,7 +101,9 @@ $lang['disableactions']        = '停用 DokuWiki 功能';
 $lang['disableactions_check']  = '检查';
 $lang['disableactions_subscription'] = '订阅/退订';
 $lang['disableactions_wikicode'] = '查看源文件/导出源文件';
+$lang['disableactions_profile_delete'] = '删除自己的账户';
 $lang['disableactions_other']  = '其他功能（用英文逗号分隔）';
+$lang['disableactions_rss']    = 'XML 同步 (RSS)';
 $lang['auth_security_timeout'] = '认证安全超时（秒）';
 $lang['securecookie']          = '要让浏览器须以HTTPS方式传送在HTTPS会话中设置的cookies吗？请只在登录过程为SSL加密而浏览维基为明文的情况下打开此选项。';
 $lang['remote']                = '激活远程 API 系统。这允许其他程序通过 XML-RPC 或其他机制来访问维基。';
@@ -122,6 +135,7 @@ $lang['subscribe_time']        = '订阅列表和摘要发送的时间间隔（�
 $lang['notify']                = '发送更改通知给这个邮件地址';
 $lang['registernotify']        = '发送新注册用户的信息给这个邮件地址';
 $lang['mailfrom']              = '自动发送邮件时使用的邮件地址';
+$lang['mailreturnpath']        = '非投递通知的收件人邮箱地址';
 $lang['mailprefix']            = '自动发送邮件时使用的邮件地址前缀';
 $lang['htmlmail']              = '发送更加美观，但体积更大的 HTML 多部分邮件。禁用则发送纯文本邮件。';
 $lang['sitemap']               = '生成 Google sitemap（天）';
@@ -130,7 +144,11 @@ $lang['rss_linkto']            = 'XML feed 链接到';
 $lang['rss_content']           = 'XML feed 项目中显示什么呢？';
 $lang['rss_update']            = 'XML feed 升级间隔（秒）';
 $lang['rss_show_summary']      = 'XML feed 在标题中显示摘要';
+$lang['rss_show_deleted']      = 'XML feed显示已删除的feed';
 $lang['rss_media']             = '在 XML 源中应该列出何种类型的更改？';
+$lang['rss_media_o_both']      = '两者均可';
+$lang['rss_media_o_pages']     = '页面';
+$lang['rss_media_o_media']     = '媒体';
 $lang['updatecheck']           = '自动检查更新并接收安全警告吗？开启该功能后 DokuWiki 将自动访问 splitbrain.org。';
 $lang['userewrite']            = '使用更整洁的 URL';
 $lang['useslash']              = '在 URL 中使用斜杠作为命名空间的分隔符';
@@ -148,19 +166,27 @@ $lang['xsendfile']             = '使用 X-Sendfile 头让服务器发送状态�
 $lang['renderer_xhtml']        = '主维基页面 (xhtml) 输出使用的渲染';
 $lang['renderer__core']        = '%s（DokuWiki 内核）';
 $lang['renderer__plugin']      = '%s（插件）';
-$lang['dnslookups']            = 'Dokuwiki 将会查询用户编辑页面的远程 IP 地址的主机名。如果您的 DNS 服务器比较缓慢或者不工作，或者您不想要这个功能，请禁用此选项。';
+$lang['search_nslimit']        = '限制搜索范围为当前若干层命名空间。当搜索在更深的命名空间中被执行时，前若干层命名空间将会被用来筛选';
+$lang['search_fragment']       = '指定默认的分段搜索方式';
+$lang['search_fragment_o_exact'] = '精确';
+$lang['search_fragment_o_starts_with'] = '开头为';
+$lang['search_fragment_o_ends_with'] = '结尾为';
+$lang['search_fragment_o_contains'] = '包含';
+$lang['trustedproxy']          = '信任转发代理与其正则表达式有关系，显示的是真实的客户端IP。默认匹配本地网络。留空则不选择任何代理。';
+$lang['_feature_flags']        = '功能标志';
+$lang['defer_js']              = '推迟在页面HTML解析后执行的JavaScript。提高了页面的感知速度，但可能会破坏少量插件。';
+$lang['dnslookups']            = 'DokuWiki 将会查询用户编辑页面的远程 IP 地址的主机名。如果您的 DNS 服务器比较缓慢或者不工作，或者您不想要这个功能，请禁用此选项。';
+$lang['jquerycdn']             = 'jQuery和jQuery UI脚本文件应该从CDN加载吗?
+这会增加额外的HTTP请求，但文件加载可能会更快，且用户可能已经缓存过。';
+$lang['jquerycdn_o_0']         = '不使用CDN，只使用本地库';
+$lang['jquerycdn_o_jquery']    = '在code.jquery.com上的CDN';
+$lang['jquerycdn_o_cdnjs']     = '在cdnjs.com上的CDN';
 $lang['proxy____host']         = '代理服务器的名称';
 $lang['proxy____port']         = '代理服务器的端口';
 $lang['proxy____user']         = '代理服务器的用户名';
 $lang['proxy____pass']         = '代理服务器的密码';
 $lang['proxy____ssl']          = '使用 SSL 连接到代理服务器';
 $lang['proxy____except']       = '用来匹配代理应跳过的地址的正则表达式。';
-$lang['safemodehack']          = '启用 Safemode Hack';
-$lang['ftp____host']           = 'Safemode Hack 的 FTP 服务器';
-$lang['ftp____port']           = 'Safemode Hack 的 FTP 端口';
-$lang['ftp____user']           = 'Safemode Hack 的 FTP 用户名';
-$lang['ftp____pass']           = 'Safemode Hack 的 FTP 密码';
-$lang['ftp____root']           = 'Safemode Hack 的 FTP 根路径';
 $lang['license_o_']            = '什么都没有选';
 $lang['typography_o_0']        = '无';
 $lang['typography_o_1']        = '仅限双引号';
@@ -196,6 +222,7 @@ $lang['xsendfile_o_2']         = '标准 X-Sendfile 头';
 $lang['xsendfile_o_3']         = '专有 Nginx X-Accel-Redirect 头';
 $lang['showuseras_o_loginname'] = '登录名';
 $lang['showuseras_o_username'] = '用户全名';
+$lang['showuseras_o_username_link'] = '使用用户全名作为维基内的用户链接';
 $lang['showuseras_o_email']    = '用户的电子邮箱（按邮箱保护设置加扰）';
 $lang['showuseras_o_email_link'] = '以mailto：形式显示用户的电子邮箱';
 $lang['useheading_o_0']        = '从不';

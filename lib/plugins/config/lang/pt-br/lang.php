@@ -1,22 +1,26 @@
 <?php
+
 /**
- * Portuguese language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Davi Jorge <davimoises2015@hotmail.com>
+ * @author Schopf <pschopf@gmail.com>
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
+ * @author Márcio Gomes Gonçalves <gomes@metha.com.br>
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Lucien Raven <lucienraven@yahoo.com.br>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Flávio Veras <flaviove@gmail.com>
  * @author Jeferson Propheta <jeferson.propheta@gmail.com>
- * @author jair.henrique@gmail.com
+ * @author jair.henrique <jair.henrique@gmail.com>
  * @author Luis Dantas <luis@dantas.com>
- * @author Frederico Guimarães <frederico@teia.bio.br>
- * @author Jair Henrique <jair.henrique@gmail.com>
- * @author Luis Dantas <luisdantas@gmail.com>
- * @author Sergio Motta sergio@cisne.com.br
+ * @author Sergio Motta <sergio@cisne.com.br>
  * @author Isaias Masiero Filho <masiero@masiero.org>
  * @author Balaco Baco <balacobaco@imap.cc>
  * @author Victor Westmann <victor.westmann@gmail.com>
+ * @author Guilherme Cardoso <guicardoso@gmail.com>
+ * @author Viliam Dias <viliamjr@gmail.com>
  */
 $lang['menu']                  = 'Configurações do DokuWiki';
 $lang['error']                 = 'As configurações não foram atualizadas devido a um valor inválido. Por favor, reveja suas alterações e reenvie-as.<br />O(s) valor(es) incorreto(s) serão exibidos contornados por uma borda vermelha.';
@@ -46,6 +50,7 @@ $lang['_advanced']             = 'Configurações avançadas';
 $lang['_network']              = 'Configurações de rede';
 $lang['_msg_setting_undefined'] = 'Nenhum metadado configurado.';
 $lang['_msg_setting_no_class'] = 'Nenhuma classe definida.';
+$lang['_msg_setting_no_known_class'] = 'Classe de configuração não disponível.';
 $lang['_msg_setting_no_default'] = 'Nenhum valor padrão.';
 $lang['title']                 = 'Título do wiki';
 $lang['start']                 = 'Nome da página inicial';
@@ -67,7 +72,7 @@ $lang['breadcrumbs']           = 'Número de elementos na trilha de páginas vis
 $lang['youarehere']            = 'Trilha hierárquica';
 $lang['fullpath']              = 'Indica o caminho completo das páginas no rodapé';
 $lang['typography']            = 'Efetuar modificações tipográficas';
-$lang['dformat']               = 'Formato da data (veja a função <a href="http://www.php.net/strftime">strftime</a> do PHP)';
+$lang['dformat']               = 'Formato da data (veja a função <a href="http://php.net/strftime">strftime</a> do PHP)';
 $lang['signature']             = 'Assinatura';
 $lang['showuseras']            = 'O que exibir quando mostrar o usuário que editou a página pela última vez';
 $lang['toptoclevel']           = 'Nível mais alto para a tabela de conteúdos';
@@ -92,7 +97,9 @@ $lang['disableactions']        = 'Desabilitar as ações do DokuWiki';
 $lang['disableactions_check']  = 'Verificação';
 $lang['disableactions_subscription'] = 'Monitoramento';
 $lang['disableactions_wikicode'] = 'Ver a fonte/Exportar sem processamento';
+$lang['disableactions_profile_delete'] = 'Excluir a própria conta';
 $lang['disableactions_other']  = 'Outras ações (separadas por vírgula)';
+$lang['disableactions_rss']    = 'Sindicância XML (RSS)';
 $lang['auth_security_timeout'] = 'Tempo limite de segurança para autenticações (seg)';
 $lang['securecookie']          = 'Os cookies definidos via HTTPS devem ser enviados para o navegador somente via HTTPS? Desabilite essa opção quando somente a autenticação do seu wiki for realizada de maneira segura via SSL e a navegação, de maneira insegura.';
 $lang['remote']                = 'Habilitar o sistema de API remota. Isso permite que outras aplicações acessem o wiki via XML-RPC ou outros mecanismos.';
@@ -123,6 +130,7 @@ $lang['subscribe_time']        = 'Tempo de espera antes do envio das listas e me
 $lang['notify']                = 'Enviar notificações de mudança para esse endereço de e-mail';
 $lang['registernotify']        = 'Enviar informações de usuários registrados para esse endereço de e-mail';
 $lang['mailfrom']              = 'Endereço de e-mail a ser utilizado para mensagens automáticas';
+$lang['mailreturnpath']        = 'Endereço de e-mail do destinatário para notificações de falha de entrega';
 $lang['mailprefix']            = 'Prefixo do assunto dos e-mails de envio automático';
 $lang['htmlmail']              = 'Enviar e-mail HTML multipartes, que têm uma aparência melhor, mas um tamanho maior. Desabilite para enviar e-mails em texto puro.';
 $lang['sitemap']               = 'Gerar Google Sitemap (dias)';
@@ -131,7 +139,11 @@ $lang['rss_linkto']            = 'Os links da fonte XML apontam para';
 $lang['rss_content']           = 'O que deve ser exibido nos itens da fonte XML?';
 $lang['rss_update']            = 'Intervalo de atualização da fonte XML (seg)';
 $lang['rss_show_summary']      = 'Resumo de exibição da fonte XML no título';
+$lang['rss_show_deleted']      = 'Feed XML Mostrar feeds excluídos';
 $lang['rss_media']             = 'Que tipo de alterações devem ser listadas na fonte XML?';
+$lang['rss_media_o_both']      = 'ambos';
+$lang['rss_media_o_pages']     = 'páginas';
+$lang['rss_media_o_media']     = 'mídia';
 $lang['updatecheck']           = 'Verificar atualizações e avisos de segurança? O DokuWiki precisa contactar o "splitbrain.org" para efetuar esse recurso.';
 $lang['userewrite']            = 'Usar URLs "limpas"';
 $lang['useslash']              = 'Usar a barra como separador de espaços de nomes nas URLs';
@@ -149,19 +161,26 @@ $lang['xsendfile']             = 'Usar o cabeçalho "X-Sendfile" para permitir q
 $lang['renderer_xhtml']        = 'Renderizador a ser utilizado para a saída principal (xhtml) do wiki';
 $lang['renderer__core']        = '%s (núcleo do DokuWiki)';
 $lang['renderer__plugin']      = '%s ("plug-in")';
+$lang['search_nslimit']        = 'Limite a pesquisa aos atuais X espaços de nomes. Quando uma pesquisa é executada a partir de uma página em um espaço de nomes mais interno, os primeiros X espaços de nomes serão adicionados como filtro';
+$lang['search_fragment']       = 'Especifique o comportamento padrão da pesquisa de fragmentos';
+$lang['search_fragment_o_exact'] = 'exato';
+$lang['search_fragment_o_starts_with'] = 'começa com';
+$lang['search_fragment_o_ends_with'] = 'termina com';
+$lang['search_fragment_o_contains'] = 'contém';
+$lang['trustedproxy']          = 'Confie nos proxies de encaminhamento que correspondem a essa expressão regular sobre o verdadeiro IP do cliente que eles relatam. O padrão corresponde às redes locais. Deixe em branco para não confiar em proxy.';
+$lang['_feature_flags']        = 'Sinalizadores de recursos';
+$lang['defer_js']              = 'Adie o javascript para ser executado após a análise do HTML da página. Melhora a velocidade percebida da página, mas pode interromper um pequeno número de plugins.';
 $lang['dnslookups']            = 'O DokuWiki procurará pelo nome de host dos endereços IP remotos dos usuários que estão editando as páginas. Caso você tenha um DNS lento, ele não esteja funcionando ou, ainda, você não queira esse recurso, desabilite essa opção.';
+$lang['jquerycdn']             = 'Os scripts jQuery e jQuery UI devem ser carregados a partir de uma CND? Isso adiciona requisições HTTP adicionais, mas os arquivos podem carregar mais rapidamente e os usuários podem já tê-los no cache.';
+$lang['jquerycdn_o_0']         = 'Sem CDN, somente entrega local';
+$lang['jquerycdn_o_jquery']    = 'CDN em code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'CDN em cdnjs.com';
 $lang['proxy____host']         = 'Nome do servidor proxy';
 $lang['proxy____port']         = 'Porta do proxy';
 $lang['proxy____user']         = 'Nome de usuário do proxy';
 $lang['proxy____pass']         = 'Senha do proxy';
 $lang['proxy____ssl']          = 'Usar SSL para conectar ao proxy';
 $lang['proxy____except']       = 'Expressões regulares de URL para excessão de proxy.';
-$lang['safemodehack']          = 'Habilitar o contorno de segurança';
-$lang['ftp____host']           = 'Servidor FTP para o contorno de segurança';
-$lang['ftp____port']           = 'Porta do FTP para o contorno de segurança';
-$lang['ftp____user']           = 'Nome do usuário FTP para o contorno de segurança';
-$lang['ftp____pass']           = 'Senha do usuário FTP para o contorno de segurança';
-$lang['ftp____root']           = 'Diretório raiz do FTP para o contorno de segurança';
 $lang['license_o_']            = 'Nenhuma escolha';
 $lang['typography_o_0']        = 'nenhuma';
 $lang['typography_o_1']        = 'excluir aspas simples';
@@ -197,6 +216,7 @@ $lang['xsendfile_o_2']         = 'cabeçalho "X-Sendfile" padrão';
 $lang['xsendfile_o_3']         = 'cabeçalho proprietário "Nginx X-Accel-Redirect"';
 $lang['showuseras_o_loginname'] = 'nome de usuário';
 $lang['showuseras_o_username'] = 'nome completo do usuário';
+$lang['showuseras_o_username_link'] = 'Nome completo do usuário como um link de usuário interwiki';
 $lang['showuseras_o_email']    = 'endereço de e-mail do usuário (obscurecido segundo a definição anterior)';
 $lang['showuseras_o_email_link'] = 'endereço de e-mail de usuário como um link "mailto:"';
 $lang['useheading_o_0']        = 'nunca';

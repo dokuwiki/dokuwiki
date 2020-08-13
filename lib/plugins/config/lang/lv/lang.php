@@ -1,7 +1,11 @@
 <?php
+
 /**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * Latvian, Lettish language file
  *
+ * @author Oskars Pakers <oskars.pakers@gmail.com>
  * @author Aivars Miška <allefm@gmail.com>
  */
 $lang['menu']                  = 'Konfigurācijas iestatījumi.';
@@ -49,7 +53,7 @@ $lang['breadcrumbs']           = 'Apmeklējumu vēstures garums';
 $lang['youarehere']            = 'Rādīt "tu atrodies šeit"';
 $lang['fullpath']              = 'Norādīt kājenē pilnu lapas ceļu';
 $lang['typography']            = 'Veikt tipogrāfijas aizvietošanu';
-$lang['dformat']               = 'Datuma formāts (sk. PHP <a href="http://www.php.net/strftime">strftime</a> funkciju)';
+$lang['dformat']               = 'Datuma formāts (sk. PHP <a href="http://php.net/strftime">strftime</a> funkciju)';
 $lang['signature']             = 'Paraksts';
 $lang['showuseras']            = 'Kā rādīt pēdējo lietotāju, ka labojis lapu';
 $lang['toptoclevel']           = 'Satura rādītāja pirmais līmenis';
@@ -131,12 +135,6 @@ $lang['proxy____user']         = 'Proxy lietotāja vārds';
 $lang['proxy____pass']         = 'Proxy parole';
 $lang['proxy____ssl']          = 'Lietot SSL savienojumu ar proxy';
 $lang['proxy____except']       = 'Regulārā izteiksme tiem URL, kam nevar lietot proxy.';
-$lang['safemodehack']          = 'Lietot safemode apeju';
-$lang['ftp____host']           = 'FTP serveris safemode apejai';
-$lang['ftp____port']           = 'FTP ports safemode apejai';
-$lang['ftp____user']           = 'FTP lietotājvārds safemode apejai';
-$lang['ftp____pass']           = 'FTP parole safemode apejai';
-$lang['ftp____root']           = 'FTP saknes diektorija safemode apejai';
 $lang['license_o_']            = 'Ar nekādu';
 $lang['typography_o_0']        = 'neko';
 $lang['typography_o_1']        = 'tikai dubultpēdiņas';

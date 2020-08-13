@@ -1,20 +1,23 @@
 <?php
+
 /**
- * Italian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author Filippo <abrickslife@gmail.com>
+ * @author Roberto Bellingeri <bellingeri@netguru.it>
+ * @author Eddy <eddy@mail.it>
+ * @author Riccardo <riccardo.furlato@gmail.com>
+ * @author Stefano <stefano.stefano@gmail.com>
+ * @author damiano <damiano@spagnuolo.eu>
+ * @author Torpedo <dgtorpedo@gmail.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Silvia Sargentoni <polinnia@tin.it>
- * @author Pietro Battiston toobaz@email.it
- * @author Diego Pierotto ita.translations@tiscali.it
- * @author ita.translations@tiscali.it
+ * @author Pietro Battiston <toobaz@email.it>
  * @author Lorenzo Breda <lbreda@gmail.com>
- * @author snarchio@alice.it
  * @author robocap <robocap1@gmail.com>
- * @author Osman Tekin osman.tekin93@hotmail.it
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  * @author Matteo Pasotti <matteo@xquiet.eu>
- * @author snarchio@gmail.com
+ * @author Paolo <paolopoz12@gmail.com>
  */
 $lang['menu']                  = 'Configurazione Wiki';
 $lang['error']                 = 'Impostazioni non aggiornate a causa di un valore non corretto, controlla le modifiche apportate e salva di nuovo.
@@ -44,6 +47,7 @@ $lang['_advanced']             = 'Impostazioni Avanzate';
 $lang['_network']              = 'Impostazioni Rete';
 $lang['_msg_setting_undefined'] = 'Nessun metadato definito.';
 $lang['_msg_setting_no_class'] = 'Nessuna classe definita.';
+$lang['_msg_setting_no_known_class'] = 'Classe di impostazioni non disponibile.';
 $lang['_msg_setting_no_default'] = 'Nessun valore predefinito.';
 $lang['title']                 = 'Titolo del wiki';
 $lang['start']                 = 'Nome della pagina iniziale';
@@ -65,7 +69,7 @@ $lang['breadcrumbs']           = 'Numero di breadcrumb';
 $lang['youarehere']            = 'Breadcrumb gerarchici';
 $lang['fullpath']              = 'Mostra il percorso completo delle pagine';
 $lang['typography']            = 'Abilita la sostituzione tipografica';
-$lang['dformat']               = 'Formato delle date (vedi la funzione <a href="http://www.php.net/strftime">strftime</a> di PHP)';
+$lang['dformat']               = 'Formato delle date (vedi la funzione <a href="http://php.net/strftime">strftime</a> di PHP)';
 $lang['signature']             = 'Firma';
 $lang['showuseras']            = 'Cosa visualizzare quando si mostra l\'ultimo utente che ha modificato una pagina';
 $lang['toptoclevel']           = 'Livello superiore per l\'indice';
@@ -90,7 +94,9 @@ $lang['disableactions']        = 'Disabilita azioni DokuWiki';
 $lang['disableactions_check']  = 'Controlla';
 $lang['disableactions_subscription'] = 'Sottoscrivi/Rimuovi sottoscrizione';
 $lang['disableactions_wikicode'] = 'Mostra sorgente/Esporta Raw';
+$lang['disableactions_profile_delete'] = 'Elimina il proprio account';
 $lang['disableactions_other']  = 'Altre azioni (separate da virgola)';
+$lang['disableactions_rss']    = 'XML Syndication (RSS)';
 $lang['auth_security_timeout'] = 'Tempo di sicurezza per l\'autenticazione (secondi)';
 $lang['securecookie']          = 'Devono i cookies impostati tramite HTTPS essere inviati al browser solo tramite HTTPS? Disattiva questa opzione solo quando l\'accesso al tuo wiki viene effettuato con il protocollo SSL ma la navigazione del wiki non risulta sicura.';
 $lang['remote']                = 'Abilita il sistema di API remoto. Questo permette ad altre applicazioni di accedere al wiki tramite XML-RPC o altri meccanismi.';
@@ -116,11 +122,12 @@ $lang['gdlib']                 = 'Versione GD Lib ';
 $lang['im_convert']            = 'Percorso per il convertitore di ImageMagick';
 $lang['jpg_quality']           = 'Qualità di compressione JPG (0-100)';
 $lang['fetchsize']             = 'Dimensione massima (bytes) scaricabile da fetch.php da extern';
-$lang['subscribers']           = 'Abilita la sottoscrizione alle pagine';
+$lang['subscribers']           = 'Permetti agli utenti la sottoscrizione alle modifiche delle pagine via e-mail';
 $lang['subscribe_time']        = 'Tempo dopo il quale le liste di sottoscrizione e i riassunti vengono inviati (sec); Dovrebbe essere inferiore al tempo specificato in recent_days.';
 $lang['notify']                = 'Invia notifiche sulle modifiche a questo indirizzo';
 $lang['registernotify']        = 'Invia informazioni sui nuovi utenti registrati a questo indirizzo email';
 $lang['mailfrom']              = 'Mittente per le mail automatiche';
+$lang['mailreturnpath']        = 'Indirizzo email destinatario per notifica di mancati recapiti';
 $lang['mailprefix']            = 'Prefisso da inserire nell\'oggetto delle mail automatiche';
 $lang['htmlmail']              = 'Invia email HTML multipart più gradevoli ma più ingombranti in dimensione. Disabilita per mail in puro testo.';
 $lang['sitemap']               = 'Genera una sitemap Google (giorni)';
@@ -129,7 +136,11 @@ $lang['rss_linkto']            = 'Collega i feed XML a';
 $lang['rss_content']           = 'Cosa mostrare negli elementi dei feed XML?';
 $lang['rss_update']            = 'Intervallo di aggiornamento dei feed XML (sec)';
 $lang['rss_show_summary']      = 'I feed XML riportano un sommario nel titolo';
+$lang['rss_show_deleted']      = 'Feed XML mostra feed cancellati';
 $lang['rss_media']             = 'Quale tipo di cambiamento dovrebbe essere elencato nel feed XML?';
+$lang['rss_media_o_both']      = 'entrambi';
+$lang['rss_media_o_pages']     = 'pagine';
+$lang['rss_media_o_media']     = 'media';
 $lang['updatecheck']           = 'Controllare aggiornamenti e avvisi di sicurezza? DokuWiki deve contattare update.dokuwiki.org per questa funzione.';
 $lang['userewrite']            = 'Usa il rewrite delle URL';
 $lang['useslash']              = 'Usa la barra rovescia (slash) come separatore nelle URL';
@@ -140,26 +151,31 @@ $lang['autoplural']            = 'Controlla il plurale nei collegamenti';
 $lang['compression']           = 'Usa la compressione per i file dell\'archivio';
 $lang['gzip_output']           = 'Usa il Content-Encoding gzip per xhtml';
 $lang['compress']              = 'Comprimi i file CSS e javascript';
-$lang['cssdatauri']            = 'Dimensione massima in byte di un\'immagine che può essere integrata nel CSS per ridurre l\'overhead delle richieste HTTP. Questa tecnica non funziona con IE7 e precedenti! Da <code>400</code> a <code>600</code> bytes è un buon valore. Impostare a <code>0</code> per disabilitare.';
+$lang['cssdatauri']            = 'Dimensione massima in byte di un\'immagine che può essere integrata nel CSS per ridurre l\'overhead delle richieste HTTP. Da <code>400</code> a <code>600</code> bytes è un buon valore. Impostare a <code>0</code> per disabilitare.';
 $lang['send404']               = 'Invia "HTTP 404/Pagina non trovata" per le pagine inesistenti';
 $lang['broken_iua']            = 'La funzione ignore_user_abort non funziona sul tuo sistema? Questo potrebbe far sì che l\'indice di ricerca sia inutilizzabile. È noto che nella configurazione IIS+PHP/CGI non funziona. Vedi il<a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> per maggiori informazioni.';
 $lang['xsendfile']             = 'Usare l\'header X-Sendfile per permettere al webserver di fornire file statici? Questa funzione deve essere supportata dal tuo webserver.';
 $lang['renderer_xhtml']        = 'Renderer da usare per la visualizzazione del wiki (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_nslimit']        = 'Limita la ricerca agli attuali spazi dei nomi X. Quando una ricerca viene eseguita da una pagina all\'interno di uno spazio dei nomi più profondo, i primi spazi dei nomi X verranno aggiunti come filtro';
+$lang['search_fragment']       = 'Specificare il comportamento di ricerca del frammento predefinito';
+$lang['search_fragment_o_exact'] = 'esatto';
+$lang['search_fragment_o_starts_with'] = 'inizia con';
+$lang['search_fragment_o_ends_with'] = 'finisce con';
+$lang['search_fragment_o_contains'] = 'contiene';
+$lang['_feature_flags']        = 'Segnalazione di feature';
 $lang['dnslookups']            = 'Dokuwiki farà il lookup dei nomi host per ricavare l\'indirizzo IP remoto degli utenti che modificano le pagine. Se hai un DNS lento o non funzionante o se non vuoi questa funzione, disabilita l\'opzione';
+$lang['jquerycdn']             = 'Vuoi che gli script jQuery e jQuery UI siano caricati da una CDN? Questo richiederà richieste HTTP aggiuntive ma i file potrebbero caricarsi più velocemente e gli utenti potrebbero averli già in cache.';
+$lang['jquerycdn_o_0']         = 'Nessuna CDN, solo consegna locale';
+$lang['jquerycdn_o_jquery']    = 'CDN presso code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'CDN presso cdnjs.com';
 $lang['proxy____host']         = 'Nome server proxy';
 $lang['proxy____port']         = 'Porta proxy';
 $lang['proxy____user']         = 'Nome utente proxy';
 $lang['proxy____pass']         = 'Password proxy';
 $lang['proxy____ssl']          = 'Usa SSL per connetterti al proxy';
 $lang['proxy____except']       = 'Espressioni regolari per far corrispondere le URLs per i quali i proxy dovrebbero essere ommessi.';
-$lang['safemodehack']          = 'Abilita safemode hack';
-$lang['ftp____host']           = 'Server FTP per safemode hack';
-$lang['ftp____port']           = 'Porta FTP per safemode hack';
-$lang['ftp____user']           = 'Nome utente FTP per safemode hack';
-$lang['ftp____pass']           = 'Password FTP per safemode hack';
-$lang['ftp____root']           = 'Directory principale FTP per safemode hack';
 $lang['license_o_']            = 'Nessuna scelta';
 $lang['typography_o_0']        = 'nessuno';
 $lang['typography_o_1']        = 'Solo virgolette';
@@ -195,6 +211,7 @@ $lang['xsendfile_o_2']         = 'Header standard X-Sendfile';
 $lang['xsendfile_o_3']         = 'Header proprietario Nginx X-Accel-Redirect';
 $lang['showuseras_o_loginname'] = 'Nome utente';
 $lang['showuseras_o_username'] = 'Nome completo dell\'utente';
+$lang['showuseras_o_username_link'] = 'Nome completo dell\'utente come link interwiki';
 $lang['showuseras_o_email']    = 'Indirizzo email dell\'utente (offuscato in base alle impostazioni di sicurezza posta)';
 $lang['showuseras_o_email_link'] = 'Indirizzo email dell\'utente come collegamento mailto:';
 $lang['useheading_o_0']        = 'Mai';

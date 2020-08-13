@@ -1,0 +1,1 @@
+Ako želite podesiti logo, jednostavno putem upravitelja datoteka učitate "logo.png" u wiki ili root imenski prostor i biti će automatski korištena. Tu možete učitati i ''favicon.ico''. Ako koristite ACL-om zaštićeni wiki s kontrolom pristupa, obavezno morate učiniti vidljivim svim korisnicima (i neprijavljenim!) wiki ili root imenski prostor gdje je logo pohranjen.

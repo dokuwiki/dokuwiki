@@ -1,0 +1,204 @@
+/**
+ * This file provides styles for the search results page (?do=search)
+ * and the AJAX search popup.
+ */
+
+/* general
+********************************************************************/
+
+/* search hit in normal text */
+.dokuwiki .search_hit {
+    color: @ini_text;
+    background-color: __highlight__;
+}
+
+/* "nothing found" at search + media */
+.dokuwiki div.nothing {
+    margin-bottom: 1.4em;
+}
+
+/* search results page
+********************************************************************/
+
+/*____________ advanced search form ____________*/
+.dokuwiki .search-results-form fieldset.search-form {
+    width: 100%;
+    margin: 1em 0;
+
+    input[name="q"] {
+        width: 50%;
+    }
+
+    button.toggleAssistant {
+        float: right;
+    }
+
+    .advancedOptions {
+        padding: 1em 0;
+
+        > div {
+            display: inline-block;
+            position: relative;
+            margin: 0 0.5em;
+        }
+
+        div.toggle {
+            // default closed toggle state
+            div.current {
+                cursor: pointer;
+                max-width: 10em;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                &::after {
+                    content: '▼';
+                    font-size: smaller;
+                    color: @ini_text_alt;
+                }
+            }
+            div.changed {
+                font-weight: bold;
+            }
+            ul {
+                display: none;
+                position: absolute;
+                border: 1px solid @ini_border;
+                background-color: @ini_background;
+                padding: 0.25em 0.5em;
+                text-align: left;
+                min-width: 10em;
+                max-width: 15em;
+                max-height: 50vh;
+                overflow: auto;
+                z-index: 100;
+                li {
+                    margin: 0.25em 0;
+                    list-style: none;
+
+                    a {
+                        display: block;
+                    }
+                }
+            }
+
+            // open toggle state
+            &.open {
+                div.current::after {
+                    content: '▲';
+                }
+
+                ul {
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+[dir=rtl] .search-results-form fieldset.search-form .advancedOptions {
+    div.toggle ul {
+        text-align: right;
+    }
+}
+
+
+/*____________ matching pagenames ____________*/
+
+.dokuwiki div.search_quickresult {
+    margin-bottom: 1.4em;
+
+    ul {
+        padding: 0;
+
+        li {
+            float: left;
+            width: 12em;
+            margin: 0 1.5em;
+        }
+    }
+}
+
+[dir=rtl] .dokuwiki div.search_quickresult ul li {
+    float: right;
+}
+
+/*____________ search results ____________*/
+
+.dokuwiki dl.search_results {
+    margin-bottom: 1.2em;
+
+    /* search heading */
+    dt {
+        font-weight: normal;
+        margin-bottom: .2em;
+    }
+
+    /* last modified line */
+    dd.meta {
+        margin: 0 0 .2em 0;
+    }
+
+    /* search snippet */
+    dd.snippet {
+        color: @ini_text_alt;
+        background-color: inherit;
+        margin: 0 0 1.2em 0;
+
+        /* search hit in search results */
+        strong.search_hit {
+            font-weight: normal;
+            /* color is set in general */
+        }
+
+        /* ellipsis separating snippets */
+        .search_sep {
+            color: @ini_text;
+            background-color: inherit;
+        }
+    }
+}
+
+/* AJAX quicksearch popup
+********************************************************************/
+
+.dokuwiki form.search {
+    div.no {
+        position: relative;
+    }
+
+    /* .JSpopup */
+    div.ajax_qsearch {
+        position: absolute;
+        top: 0;
+        left: -13.5em; /* -( width of #qsearch__in + padding of .ajax_qsearch + a bit more ) */
+        width: 12em;
+        padding: 0.5em;
+        font-size: .9em;
+        z-index: 20;
+        text-align: left;
+        display: none;
+
+        strong {
+            display: block;
+            margin-bottom: .3em;
+        }
+
+        ul {
+            margin: 0 !important;
+            padding: 0 !important;
+
+            li {
+                margin: 0;
+                padding: 0;
+                display: block !important;
+            }
+        }
+    }
+}
+
+[dir=rtl] .dokuwiki form.search div.ajax_qsearch {
+    left: auto;
+    right: -13.5em;
+    text-align: right;
+}

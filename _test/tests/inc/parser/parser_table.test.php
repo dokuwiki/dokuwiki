@@ -1,10 +1,18 @@
 <?php
+
+use dokuwiki\Parsing\ParserMode\Eol;
+use dokuwiki\Parsing\ParserMode\Footnote;
+use dokuwiki\Parsing\ParserMode\Formatting;
+use dokuwiki\Parsing\ParserMode\Linebreak;
+use dokuwiki\Parsing\ParserMode\Table;
+use dokuwiki\Parsing\ParserMode\Unformatted;
+
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Table extends TestOfDoku_Parser {
 
     function testTable() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse('
 abc
 | Row 0 Col 1    | Row 0 Col 2     | Row 0 Col 3        |
@@ -48,7 +56,7 @@ def');
     }
 
     function testTableWinEOL() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse("\r\nabc\r\n| Row 0 Col 1    | Row 0 Col 2     | Row 0 Col 3        |\r\n| Row 1 Col 1    | Row 1 Col 2     | Row 1 Col 3        |\r\ndef");
         $calls = array (
             array('document_start',array()),
@@ -88,12 +96,12 @@ def');
     }
 
     function testEmptyTable() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse('
 abc
 |
 def');
-        
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -111,14 +119,14 @@ def');
 
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     function testTableHeaders() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse('
 abc
 ^ X | Y ^ Z |
 def');
-    
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -148,7 +156,7 @@ def');
     }
 
     function testTableHead() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse('
 abc
 ^ X ^ Y ^ Z ^
@@ -197,7 +205,7 @@ def');
     }
 
     function testTableHeadOneRowTable() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse('
 abc
 ^ X ^ Y ^ Z ^
@@ -232,7 +240,7 @@ def');
     }
 
     function testTableHeadMultiline() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse('
 abc
 ^ X1 ^ Y1 ^ Z1 ^
@@ -291,14 +299,14 @@ def');
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
 
     }
-    
+
     function testCellAlignment() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse('
 abc
 |  X | Y  ^  Z  |
 def');
-    
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -325,16 +333,16 @@ def');
 
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     function testCellSpan() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse('
 abc
 |  d || e |
 | f ^ ^|
 ||||
 def');
-        
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -367,16 +375,16 @@ def');
         );
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     function testCellRowSpan() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse('
 abc
 | a |  c:::||
 |:::^ d  | e|
 |b  ^  ::: |:::f|
 def');
-        
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -417,7 +425,7 @@ def');
     }
 
     function testCellRowSpanFirstRow() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse('
 abc
 |::: ^  d:::^:::|  :::  |
@@ -473,9 +481,9 @@ def');
         );
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     function testRowSpanTableHead() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse('
 abc
 ^ X1 ^ Y1 ^ Z1 ^
@@ -533,7 +541,7 @@ def');
     }
 
     function testRowSpanAcrossTableHeadBoundary() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse('
 abc
 ^ X1 ^ Y1 ^ Z1 ^
@@ -600,13 +608,13 @@ def');
     }
 
     function testCellAlignmentFormatting() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
-        $this->P->addMode('strong',new Doku_Parser_Mode_Formatting('strong'));
+        $this->P->addMode('table',new Table());
+        $this->P->addMode('strong',new Formatting('strong'));
         $this->P->parse('
 abc
 |  **X** | Y  ^  Z  |
 def');
-    
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -634,14 +642,14 @@ def');
             array('p_close',array()),
             array('document_end',array()),
         );
- 
+
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
-        
+
     }
-    
+
     function testTableEol() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
-        $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
+        $this->P->addMode('table',new Table());
+        $this->P->addMode('eol',new Eol());
         $this->P->parse('
 abc
 | Row 0 Col 1    | Row 0 Col 2     | Row 0 Col 3        |
@@ -683,12 +691,12 @@ def');
         );
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     // This is really a failing test - formatting able to spread across cols
     // Problem is fixing it would mean a major rewrite of table handling
     function testTableStrong() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
-        $this->P->addMode('strong',new Doku_Parser_Mode_Formatting('strong'));
+        $this->P->addMode('table',new Table());
+        $this->P->addMode('strong',new Formatting('strong'));
         $this->P->parse('
 abc
 | **Row 0 Col 1**    | **Row 0 Col 2     | Row 0 Col 3**        |
@@ -738,12 +746,12 @@ def');
         );
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     // This is really a failing test - unformatted able to spread across cols
     // Problem is fixing it would mean a major rewrite of table handling
     function testTableUnformatted() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
-        $this->P->addMode('unformatted',new Doku_Parser_Mode_Unformatted());
+        $this->P->addMode('table',new Table());
+        $this->P->addMode('unformatted',new Unformatted());
         $this->P->parse('
 abc
 | <nowiki>Row 0 Col 1</nowiki>    | <nowiki>Row 0 Col 2     | Row 0 Col 3</nowiki>        |
@@ -789,10 +797,10 @@ def');
         );
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     function testTableLinebreak() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
-        $this->P->addMode('linebreak',new Doku_Parser_Mode_Linebreak());
+        $this->P->addMode('table',new Table());
+        $this->P->addMode('linebreak',new Linebreak());
         $this->P->parse('
 abc
 | Row 0\\\\ Col 1    | Row 0 Col 2     | Row 0 Col 3        |
@@ -837,12 +845,12 @@ def');
 
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     // This is really a failing test - footnote able to spread across cols
     // Problem is fixing it would mean a major rewrite of table handling
     function testTableFootnote() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
-        $this->P->addMode('footnote',new Doku_Parser_Mode_Footnote());
+        $this->P->addMode('table',new Table());
+        $this->P->addMode('footnote',new Footnote());
         $this->P->parse('
 abc
 | ((Row 0 Col 1))    | ((Row 0 Col 2     | Row 0 Col 3))        |
@@ -899,7 +907,7 @@ def');
 
     function testTable_FS1833() {
         $syntax = " \n| Row 0 Col 1    |\n";
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse($syntax);
         $calls = array (
             array('document_start',array()),
@@ -915,4 +923,85 @@ def');
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
+    /**
+     * missing cells in one row get filled up...
+     */
+    function testTable_CellFix() {
+        $syntax = "\n| r1c1 | r1c2 | r1c3 |\n| r2c1 |\n";
+        $this->P->addMode('table',new Table());
+        $this->P->parse($syntax);
+        $calls = array (
+            array('document_start',array()),
+            array('table_open',array(3, 2, 2)),
+
+            array('tablerow_open',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r1c1 ')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r1c2 ')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r1c3 ')),
+            array('tablecell_close',array()),
+            array('tablerow_close',array()),
+
+            array('tablerow_open',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r2c1 ')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array('')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array('')),
+            array('tablecell_close',array()),
+            array('tablerow_close',array()),
+
+            array('table_close',array(strlen($syntax))),
+            array('document_end',array()),
+        );
+        $this->assertEquals($calls, array_map('stripbyteindex',$this->H->calls));
+    }
+
+    /**
+     * ... even if the longer row comes later
+     */
+    function testTable_CellFix2() {
+        $syntax = "\n| r1c1 |\n| r2c1 | r2c2 | r2c3 |\n";
+        $this->P->addMode('table',new Table());
+        $this->P->parse($syntax);
+        $calls = array (
+            array('document_start',array()),
+            array('table_open',array(3, 2, 2)),
+
+            array('tablerow_open',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r1c1 ')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array('')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array('')),
+            array('tablecell_close',array()),
+            array('tablerow_close',array()),
+
+            array('tablerow_open',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r2c1 ')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r2c2 ')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r2c3 ')),
+            array('tablecell_close',array()),
+            array('tablerow_close',array()),
+
+            array('table_close',array(strlen($syntax))),
+            array('document_end',array()),
+        );
+        $this->assertEquals($calls, array_map('stripbyteindex',$this->H->calls));
+    }
 }

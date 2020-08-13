@@ -2,9 +2,11 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Schopf <pschopf@gmail.com>
  * @author Victor Westmann <victor.westmann@gmail.com>
  * @author Frederico Guimarães <frederico@teia.bio.br>
+ * @author Hudson FAS <hudsonfas@gmail.com>
  */
 $lang['server']                = 'Seu servidor LDAP. Ou hostname (<code>localhost</code>) ou uma URL completa (<code>ldap://server.tld:389</code>)';
 $lang['port']                  = 'Porta LDAP do servidor se nenhuma URL completa tiver sido fornecida acima';
@@ -18,11 +20,17 @@ $lang['referrals']             = 'Permitir que as referências sejam seguidas?';
 $lang['deref']                 = 'Como dereferenciar os aliases?';
 $lang['binddn']                = 'DN de um vínculo opcional de usuário se vínculo anônimo não for suficiente. Eg. <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']                = 'Senha do usuário acima';
+$lang['attributes']            = 'Atributos a serem recuperados com a pesquisa LDAP.';
 $lang['userscope']             = 'Limitar escopo da busca para busca de usuário';
 $lang['groupscope']            = 'Limitar escopo da busca para busca de grupo';
+$lang['userkey']               = 'Atributo que indica o nome do usuário; deve ser consistente com userfilter.';
 $lang['groupkey']              = 'Membro de grupo vem de qualquer atributo do usuário (ao invés de grupos padrões AD) e.g. departamento de grupo ou número de telefone';
+$lang['modPass']               = 'A senha LDAP pode ser alterada pelo dokuwiki ?';
 $lang['debug']                 = 'Mostrar informações adicionais de depuração em erros';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
 $lang['deref_o_2']             = 'LDAP_DEREF_FINDING';
 $lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS';
+$lang['referrals_o_-1']        = 'use o padr&atilde;o';
+$lang['referrals_o_0']         = 'não seguem refer&ecirc;ncias';
+$lang['referrals_o_1']         = 'seguem refer&ecirc;ncias';

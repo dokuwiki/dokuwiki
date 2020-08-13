@@ -226,6 +226,14 @@ class _DiffEngine {
      * of the two files do not match, and likewise that the last lines do not
      * match.  The caller must trim matching lines from the beginning and end
      * of the portions it is going to specify.
+     *
+     * @param integer $xoff
+     * @param integer $xlim
+     * @param integer $yoff
+     * @param integer $ylim
+     * @param integer $nchunks
+     *
+     * @return array
      */
     function _diag($xoff, $xlim, $yoff, $ylim, $nchunks) {
         $flip = false;
@@ -262,16 +270,9 @@ class _DiffEngine {
                 if (empty($ymatches[$line]))
                     continue;
                 $matches = $ymatches[$line];
-                reset($matches);
-                while (list ($junk, $y) = each($matches))
-                    if (empty($this->in_seq[$y])) {
-                        $k = $this->_lcs_pos($y);
-                        USE_ASSERTS && assert($k > 0);
-                        $ymids[$k] = $ymids[$k-1];
-                        break;
-                    }
-                while (list ($junk, $y) = each($matches)) {
-                    if ($y > $this->seq[$k-1]) {
+                $switch = false;
+                foreach ($matches as $y) {
+                    if ($switch && $y > $this->seq[$k-1]) {
                         USE_ASSERTS && assert($y < $this->seq[$k]);
                         // Optimization: this is a common case:
                         //  next match is just replacing previous match.
@@ -283,6 +284,7 @@ class _DiffEngine {
                         $k = $this->_lcs_pos($y);
                         USE_ASSERTS && assert($k > 0);
                         $ymids[$k] = $ymids[$k-1];
+                        $switch = true;
                     }
                 }
             }
@@ -336,6 +338,11 @@ class _DiffEngine {
      *
      * Note that XLIM, YLIM are exclusive bounds.
      * All line numbers are origin-0 and discarded lines are not counted.
+     *
+     * @param integer $xoff
+     * @param integer $xlim
+     * @param integer $yoff
+     * @param integer $ylim
      */
     function _compareseq($xoff, $xlim, $yoff, $ylim) {
         // Slide down the bottom initial diagonal.
@@ -392,12 +399,16 @@ class _DiffEngine {
      * to be the "change".
      *
      * This is extracted verbatim from analyze.c (GNU diffutils-2.7).
+     *
+     * @param array $lines
+     * @param array $changed
+     * @param array $other_changed
      */
     function _shift_boundaries($lines, &$changed, $other_changed) {
         $i = 0;
         $j = 0;
 
-        USE_ASSERTS && assert('count($lines) == count($changed)');
+        USE_ASSERTS && assert(count($lines) == count($changed));
         $len = count($lines);
         $other_len = count($other_changed);
 
@@ -417,7 +428,7 @@ class _DiffEngine {
                 $j++;
 
             while ($i < $len && ! $changed[$i]) {
-                USE_ASSERTS && assert('$j < $other_len && ! $other_changed[$j]');
+                USE_ASSERTS && assert($j < $other_len && ! $other_changed[$j]);
                 $i++;
                 $j++;
                 while ($j < $other_len && $other_changed[$j])
@@ -450,10 +461,10 @@ class _DiffEngine {
                     $changed[--$i] = false;
                     while ($start > 0 && $changed[$start - 1])
                         $start--;
-                    USE_ASSERTS && assert('$j > 0');
+                    USE_ASSERTS && assert($j > 0);
                     while ($other_changed[--$j])
                         continue;
-                    USE_ASSERTS && assert('$j >= 0 && !$other_changed[$j]');
+                    USE_ASSERTS && assert($j >= 0 && !$other_changed[$j]);
                 }
 
                 /*
@@ -476,7 +487,7 @@ class _DiffEngine {
                     while ($i < $len && $changed[$i])
                         $i++;
 
-                    USE_ASSERTS && assert('$j < $other_len && ! $other_changed[$j]');
+                    USE_ASSERTS && assert($j < $other_len && ! $other_changed[$j]);
                     $j++;
                     if ($j < $other_len && $other_changed[$j]) {
                         $corresponding = $i;
@@ -493,10 +504,10 @@ class _DiffEngine {
             while ($corresponding < $i) {
                 $changed[--$start] = 1;
                 $changed[--$i] = 0;
-                USE_ASSERTS && assert('$j > 0');
+                USE_ASSERTS && assert($j > 0);
                 while ($other_changed[--$j])
                     continue;
-                USE_ASSERTS && assert('$j >= 0 && !$other_changed[$j]');
+                USE_ASSERTS && assert($j >= 0 && !$other_changed[$j]);
             }
         }
     }
@@ -612,6 +623,9 @@ class Diff {
      * Check a Diff for validity.
      *
      * This is here only for debugging purposes.
+     *
+     * @param mixed $from_lines
+     * @param mixed $to_lines
      */
     function _check($from_lines, $to_lines) {
         if (serialize($from_lines) != serialize($this->orig()))
@@ -856,10 +870,10 @@ class DiffFormatter {
 
     /**
      * Escape string
-     * 
+     *
      * Override this method within other formatters if escaping required.
      * Base class requires $str to be returned WITHOUT escaping.
-     * 
+     *
      * @param $str string Text string to escape
      * @return string The escaped string.
      */
@@ -889,6 +903,10 @@ class HTMLDiff {
 
     /**
      * Return a class or style parameter
+     *
+     * @param string $classname
+     *
+     * @return string
      */
     static function css($classname){
         global $DIFF_INLINESTYLES;
@@ -1281,5 +1299,246 @@ class InlineDiffFormatter extends DiffFormatter {
     }
 }
 
+/**
+ * A class for computing three way diffs.
+ *
+ * @author  Geoffrey T. Dairiki <dairiki@dairiki.org>
+ */
+class Diff3 extends Diff {
+
+    /**
+     * Conflict counter.
+     *
+     * @var integer
+     */
+    var $_conflictingBlocks = 0;
+
+    /**
+     * Computes diff between 3 sequences of strings.
+     *
+     * @param array $orig    The original lines to use.
+     * @param array $final1  The first version to compare to.
+     * @param array $final2  The second version to compare to.
+     */
+    function __construct($orig, $final1, $final2) {
+        $engine = new _DiffEngine();
+
+        $this->_edits = $this->_diff3($engine->diff($orig, $final1),
+                                      $engine->diff($orig, $final2));
+    }
+
+    /**
+     * Returns the merged lines
+     *
+     * @param string $label1  label for first version
+     * @param string $label2  label for second version
+     * @param string $label3  separator between versions
+     * @return array          lines of the merged text
+     */
+    function mergedOutput($label1='<<<<<<<',$label2='>>>>>>>',$label3='=======') {
+        $lines = array();
+        foreach ($this->_edits as $edit) {
+            if ($edit->isConflict()) {
+                /* FIXME: this should probably be moved somewhere else. */
+                $lines = array_merge($lines,
+                                     array($label1),
+                                     $edit->final1,
+                                     array($label3),
+                                     $edit->final2,
+                                     array($label2));
+                $this->_conflictingBlocks++;
+            } else {
+                $lines = array_merge($lines, $edit->merged());
+            }
+        }
+
+        return $lines;
+    }
+
+    /**
+     * @access private
+     *
+     * @param array $edits1
+     * @param array $edits2
+     *
+     * @return array
+     */
+    function _diff3($edits1, $edits2) {
+        $edits = array();
+        $bb = new _Diff3_BlockBuilder();
+
+        $e1 = current($edits1);
+        $e2 = current($edits2);
+        while ($e1 || $e2) {
+            if ($e1 && $e2 && is_a($e1, '_DiffOp_copy') && is_a($e2, '_DiffOp_copy')) {
+                /* We have copy blocks from both diffs. This is the (only)
+                 * time we want to emit a diff3 copy block.  Flush current
+                 * diff3 diff block, if any. */
+                if ($edit = $bb->finish()) {
+                    $edits[] = $edit;
+                }
+
+                $ncopy = min($e1->norig(), $e2->norig());
+                assert($ncopy > 0);
+                $edits[] = new _Diff3_Op_copy(array_slice($e1->orig, 0, $ncopy));
+
+                if ($e1->norig() > $ncopy) {
+                    array_splice($e1->orig, 0, $ncopy);
+                    array_splice($e1->closing, 0, $ncopy);
+                } else {
+                    $e1 = next($edits1);
+                }
+
+                if ($e2->norig() > $ncopy) {
+                    array_splice($e2->orig, 0, $ncopy);
+                    array_splice($e2->closing, 0, $ncopy);
+                } else {
+                    $e2 = next($edits2);
+                }
+            } else {
+                if ($e1 && $e2) {
+                    if ($e1->orig && $e2->orig) {
+                        $norig = min($e1->norig(), $e2->norig());
+                        $orig = array_splice($e1->orig, 0, $norig);
+                        array_splice($e2->orig, 0, $norig);
+                        $bb->input($orig);
+                    }
+
+                    if (is_a($e1, '_DiffOp_copy')) {
+                        $bb->out1(array_splice($e1->closing, 0, $norig));
+                    }
+
+                    if (is_a($e2, '_DiffOp_copy')) {
+                        $bb->out2(array_splice($e2->closing, 0, $norig));
+                    }
+                }
+
+                if ($e1 && ! $e1->orig) {
+                    $bb->out1($e1->closing);
+                    $e1 = next($edits1);
+                }
+                if ($e2 && ! $e2->orig) {
+                    $bb->out2($e2->closing);
+                    $e2 = next($edits2);
+                }
+            }
+        }
+
+        if ($edit = $bb->finish()) {
+            $edits[] = $edit;
+        }
+
+        return $edits;
+    }
+}
+
+/**
+ * @author  Geoffrey T. Dairiki <dairiki@dairiki.org>
+ *
+ * @access private
+ */
+class _Diff3_Op {
+
+    function __construct($orig = false, $final1 = false, $final2 = false) {
+        $this->orig = $orig ? $orig : array();
+        $this->final1 = $final1 ? $final1 : array();
+        $this->final2 = $final2 ? $final2 : array();
+    }
+
+    function merged() {
+        if (!isset($this->_merged)) {
+            if ($this->final1 === $this->final2) {
+                $this->_merged = &$this->final1;
+            } elseif ($this->final1 === $this->orig) {
+                $this->_merged = &$this->final2;
+            } elseif ($this->final2 === $this->orig) {
+                $this->_merged = &$this->final1;
+            } else {
+                $this->_merged = false;
+            }
+        }
+
+        return $this->_merged;
+    }
+
+    function isConflict() {
+        return $this->merged() === false;
+    }
+
+}
+
+/**
+ * @author  Geoffrey T. Dairiki <dairiki@dairiki.org>
+ *
+ * @access private
+ */
+class _Diff3_Op_copy extends _Diff3_Op {
+
+    function __construct($lines = false) {
+        $this->orig = $lines ? $lines : array();
+        $this->final1 = &$this->orig;
+        $this->final2 = &$this->orig;
+    }
+
+    function merged() {
+        return $this->orig;
+    }
+
+    function isConflict() {
+        return false;
+    }
+}
+
+/**
+ * @author  Geoffrey T. Dairiki <dairiki@dairiki.org>
+ *
+ * @access private
+ */
+class _Diff3_BlockBuilder {
+
+    function __construct() {
+        $this->_init();
+    }
+
+    function input($lines) {
+        if ($lines) {
+            $this->_append($this->orig, $lines);
+        }
+    }
+
+    function out1($lines) {
+        if ($lines) {
+            $this->_append($this->final1, $lines);
+        }
+    }
+
+    function out2($lines) {
+        if ($lines) {
+            $this->_append($this->final2, $lines);
+        }
+    }
+
+    function isEmpty() {
+        return !$this->orig && !$this->final1 && !$this->final2;
+    }
+
+    function finish() {
+        if ($this->isEmpty()) {
+            return false;
+        } else {
+            $edit = new _Diff3_Op($this->orig, $this->final1, $this->final2);
+            $this->_init();
+            return $edit;
+        }
+    }
+
+    function _init() {
+        $this->orig = $this->final1 = $this->final2 = array();
+    }
+
+    function _append(&$array, $lines) {
+        array_splice($array, sizeof($array), 0, $lines);
+    }
+}
 
 //Setup VIM: ex: et ts=4 :

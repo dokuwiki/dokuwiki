@@ -1,11 +1,14 @@
 <?php
+
+use dokuwiki\Parsing\ParserMode\File;
+
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_File extends TestOfDoku_Parser {
 
     function setUp() {
         parent::setUp();
-        $this->P->addMode('file',new Doku_Parser_Mode_File());
+        $this->P->addMode('file',new File());
     }
 
     function testFile() {

@@ -1,0 +1,1 @@
+Dette er de temaer du aktuelt har installeret i din DokuWiki. Du kan vælge det tema du vil benytte under [[?do=admin&page=config|Opsætningsstyring]].

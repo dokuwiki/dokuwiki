@@ -6,7 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
+use dokuwiki\Extension\AdminPlugin;
+use dokuwiki\Extension\Event;
 
 /**
  * Access a template file
@@ -80,9 +81,9 @@ function tpl_content($prependTOC = true) {
     $INFO['prependTOC'] = $prependTOC;
 
     ob_start();
-    trigger_event('TPL_ACT_RENDER', $ACT, 'tpl_content_core');
+    Event::createAndTrigger('TPL_ACT_RENDER', $ACT, 'tpl_content_core');
     $html_output = ob_get_clean();
-    trigger_event('TPL_CONTENT_DISPLAY', $html_output, 'ptln');
+    Event::createAndTrigger('TPL_CONTENT_DISPLAY', $html_output, 'ptln');
 
     return !empty($html_output);
 }
@@ -93,90 +94,13 @@ function tpl_content($prependTOC = true) {
  * @return bool
  */
 function tpl_content_core() {
-    global $ACT;
-    global $TEXT;
-    global $PRE;
-    global $SUF;
-    global $SUM;
-    global $IDX;
-    global $INPUT;
-
-    switch($ACT) {
-        case 'show':
-            html_show();
-            break;
-        /** @noinspection PhpMissingBreakStatementInspection */
-        case 'locked':
-            html_locked();
-        case 'edit':
-        case 'recover':
-            html_edit();
-            break;
-        case 'preview':
-            html_edit();
-            html_show($TEXT);
-            break;
-        case 'draft':
-            html_draft();
-            break;
-        case 'search':
-            html_search();
-            break;
-        case 'revisions':
-            html_revisions($INPUT->int('first'));
-            break;
-        case 'diff':
-            html_diff();
-            break;
-        case 'recent':
-            $show_changes = $INPUT->str('show_changes');
-            if (empty($show_changes)) {
-                $show_changes = get_doku_pref('show_changes', $show_changes);
-            }
-            html_recent($INPUT->extract('first')->int('first'), $show_changes);
-            break;
-        case 'index':
-            html_index($IDX); #FIXME can this be pulled from globals? is it sanitized correctly?
-            break;
-        case 'backlink':
-            html_backlinks();
-            break;
-        case 'conflict':
-            html_conflict(con($PRE, $TEXT, $SUF), $SUM);
-            html_diff(con($PRE, $TEXT, $SUF), false);
-            break;
-        case 'login':
-            html_login();
-            break;
-        case 'register':
-            html_register();
-            break;
-        case 'resendpwd':
-            html_resendpwd();
-            break;
-        case 'denied':
-            html_denied();
-            break;
-        case 'profile' :
-            html_updateprofile();
-            break;
-        case 'admin':
-            tpl_admin();
-            break;
-        case 'subscribe':
-            tpl_subscribe();
-            break;
-        case 'media':
-            tpl_media();
-            break;
-        default:
-            $evt = new Doku_Event('TPL_ACT_UNKNOWN', $ACT);
-            if($evt->advise_before()) {
-                msg("Failed to handle command: ".hsc($ACT), -1);
-            }
-            $evt->advise_after();
-            unset($evt);
-            return false;
+    $router = \dokuwiki\ActionRouter::getInstance();
+    try {
+        $router->getAction()->tplContent();
+    } catch(\dokuwiki\Action\Exception\FatalException $e) {
+        // there was no content for the action
+        msg(hsc($e->getMessage()), -1);
+        return false;
     }
     return true;
 }
@@ -218,24 +142,15 @@ function tpl_toc($return = false) {
             $toc = array();
         }
     } elseif($ACT == 'admin') {
-        // try to load admin plugin TOC FIXME: duplicates code from tpl_admin
-        $plugin = null;
-        $class  = $INPUT->str('page');
-        if(!empty($class)) {
-            $pluginlist = plugin_list('admin');
-            if(in_array($class, $pluginlist)) {
-                // attempt to load the plugin
-                /** @var $plugin DokuWiki_Admin_Plugin */
-                $plugin = plugin_load('admin', $class);
-            }
-        }
-        if( ($plugin !== null) && (!$plugin->forAdminOnly() || $INFO['isadmin']) ) {
+        // try to load admin plugin TOC
+        /** @var $plugin AdminPlugin */
+        if ($plugin = plugin_getRequestAdminPlugin()) {
             $toc = $plugin->getTOC();
             $TOC = $toc; // avoid later rebuild
         }
     }
 
-    trigger_event('TPL_TOC_RENDER', $toc, null, false);
+    Event::createAndTrigger('TPL_TOC_RENDER', $toc, null, false);
     $html = html_TOC($toc);
     if($return) return $html;
     echo $html;
@@ -261,7 +176,7 @@ function tpl_admin() {
 
         if(in_array($class, $pluginlist)) {
             // attempt to load the plugin
-            /** @var $plugin DokuWiki_Admin_Plugin */
+            /** @var $plugin AdminPlugin */
             $plugin = plugin_load('admin', $class);
         }
     }
@@ -271,7 +186,8 @@ function tpl_admin() {
         if($INFO['prependTOC']) tpl_toc();
         $plugin->html();
     } else {
-        html_admin();
+        $admin = new dokuwiki\Ui\Admin();
+        $admin->show();
     }
     return true;
 }
@@ -306,21 +222,36 @@ function tpl_metaheaders($alt = true) {
     // prepare seed for js and css
     $tseed   = $updateVersion;
     $depends = getConfigFiles('main');
+    $depends[] = DOKU_CONF."tpl/".$conf['template']."/style.ini";
     foreach($depends as $f) $tseed .= @filemtime($f);
     $tseed   = md5($tseed);
 
     // the usual stuff
     $head['meta'][] = array('name'=> 'generator', 'content'=> 'DokuWiki');
-    $head['link'][] = array(
-        'rel' => 'search', 'type'=> 'application/opensearchdescription+xml',
-        'href'=> DOKU_BASE.'lib/exe/opensearch.php', 'title'=> $conf['title']
-    );
+    if(actionOK('search')) {
+        $head['link'][] = array(
+            'rel' => 'search', 'type'=> 'application/opensearchdescription+xml',
+            'href'=> DOKU_BASE.'lib/exe/opensearch.php', 'title'=> $conf['title']
+        );
+    }
+
     $head['link'][] = array('rel'=> 'start', 'href'=> DOKU_BASE);
     if(actionOK('index')) {
         $head['link'][] = array(
             'rel'  => 'contents', 'href'=> wl($ID, 'do=index', false, '&'),
             'title'=> $lang['btn_index']
         );
+    }
+
+    if (actionOK('manifest')) {
+        $head['link'][] = array('rel'=> 'manifest', 'href'=> DOKU_BASE.'lib/exe/manifest.php');
+    }
+
+    $styleUtil = new \dokuwiki\StyleUtils();
+    $styleIni = $styleUtil->cssStyleini();
+    $replacements = $styleIni['replacements'];
+    if (!empty($replacements['__theme_color__'])) {
+        $head['meta'][] = array('name' => 'theme-color', 'content' => $replacements['__theme_color__']);
     }
 
     if($alt) {
@@ -332,7 +263,7 @@ function tpl_metaheaders($alt = true) {
             $head['link'][] = array(
                 'rel'  => 'alternate', 'type'=> 'application/rss+xml',
                 'title'=> $lang['currentns'],
-                'href' => DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']
+                'href' => DOKU_BASE.'feed.php?mode=list&ns='.(isset($INFO) ? $INFO['namespace'] : '')
             );
         }
         if(($ACT == 'show' || $ACT == 'search') && $INFO['writable']) {
@@ -370,7 +301,7 @@ function tpl_metaheaders($alt = true) {
     if(($ACT == 'show' || $ACT == 'export_xhtml') && !$REV) {
         if($INFO['exists']) {
             //delay indexing:
-            if((time() - $INFO['lastmod']) >= $conf['indexdelay']) {
+            if((time() - $INFO['lastmod']) >= $conf['indexdelay'] && !isHiddenPage($ID) ) {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'index,follow');
             } else {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,nofollow');
@@ -401,27 +332,36 @@ function tpl_metaheaders($alt = true) {
 
     // load stylesheets
     $head['link'][] = array(
-        'rel' => 'stylesheet', 'type'=> 'text/css',
-        'href'=> DOKU_BASE.'lib/exe/css.php?t='.$conf['template'].'&tseed='.$tseed
+        'rel' => 'stylesheet',
+        'href'=> DOKU_BASE.'lib/exe/css.php?t='.rawurlencode($conf['template']).'&tseed='.$tseed
     );
 
-    // make $INFO and other vars available to JavaScripts
-    $json   = new JSON();
-    $script = "var NS='".$INFO['namespace']."';";
+    $script = "var NS='".(isset($INFO)?$INFO['namespace']:'')."';";
     if($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
-        $script .= "var SIG='".toolbar_signature()."';";
+        $script .= "var SIG=".toolbar_signature().";";
     }
-    $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
-    $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
+    jsinfo();
+    $script .= 'var JSINFO = ' . json_encode($JSINFO).';';
+    $head['script'][] = array('_data'=> $script);
 
-    // load external javascript
+    // load jquery
+    $jquery = getCdnUrls();
+    foreach($jquery as $src) {
+        $head['script'][] = array(
+            'charset' => 'utf-8',
+            '_data' => '',
+            'src' => $src,
+        ) + ($conf['defer_js'] ? [ 'defer' => 'defer'] : []);
+    }
+
+    // load our javascript dispatcher
     $head['script'][] = array(
-        'type'=> 'text/javascript', 'charset'=> 'utf-8', '_data'=> '',
-        'src' => DOKU_BASE.'lib/exe/js.php'.'?tseed='.$tseed
-    );
+        'charset'=> 'utf-8', '_data'=> '',
+        'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed,
+    ) + ($conf['defer_js'] ? [ 'defer' => 'defer'] : []);
 
     // trigger event here
-    trigger_event('TPL_METAHEADER_OUTPUT', $head, '_tpl_metaheaders_action', true);
+    Event::createAndTrigger('TPL_METAHEADER_OUTPUT', $head, '_tpl_metaheaders_action', true);
     return true;
 }
 
@@ -441,7 +381,11 @@ function tpl_metaheaders($alt = true) {
  */
 function _tpl_metaheaders_action($data) {
     foreach($data as $tag => $inst) {
+        if($tag == 'script') {
+            echo "<!--[if gte IE 9]><!-->\n"; // no scripts for old IE
+        }
         foreach($inst as $attr) {
+            if ( empty($attr) ) { continue; }
             echo '<', $tag, ' ', buildAttributes($attr);
             if(isset($attr['_data']) || $tag == 'script') {
                 if($tag == 'script' && $attr['_data'])
@@ -454,6 +398,9 @@ function _tpl_metaheaders_action($data) {
                 echo '/>';
             }
             echo "\n";
+        }
+        if($tag == 'script') {
+            echo "<!--<![endif]-->\n";
         }
     }
 }
@@ -489,10 +436,13 @@ function tpl_link($url, $name, $more = '', $return = false) {
  *
  * @param string      $id   page id
  * @param string|null $name the name of the link
- * @return bool true
+ * @param bool        $return
+ * @return true|string
  */
-function tpl_pagelink($id, $name = null) {
-    print '<bdi>'.html_wikilink($id, $name).'</bdi>';
+function tpl_pagelink($id, $name = null, $return = false) {
+    $out = '<bdi>'.html_wikilink($id, $name).'</bdi>';
+    if($return) return $out;
+    print $out;
     return true;
 }
 
@@ -528,8 +478,10 @@ function tpl_getparent($id) {
  * @param string $type
  * @param bool $return
  * @return bool|string html, or false if no data, true if printed
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_button($type, $return = false) {
+    dbg_deprecated('see devel:menus');
     $data = tpl_get_action($type);
     if($data === false) {
         return false;
@@ -566,8 +518,10 @@ function tpl_button($type, $return = false) {
  * @param string $inner   innerHML of link
  * @param bool   $return  if true it returns html, otherwise prints
  * @return bool|string html or false if no data, true if printed
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = false) {
+    dbg_deprecated('see devel:menus');
     global $lang;
     $data = tpl_get_action($type);
     if($data === false) {
@@ -614,174 +568,55 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
 /**
  * Check the actions and get data for buttons and links
  *
- * Available actions are
- *
- *  edit        - edit/create/show/draft
- *  history     - old revisions
- *  recent      - recent changes
- *  login       - login/logout - if ACL enabled
- *  profile     - user profile (if logged in)
- *  index       - The index
- *  admin       - admin page - if enough rights
- *  top         - back to top
- *  back        - back to parent - if available
- *  backlink    - links to the list of backlinks
- *  subscribe/subscription- subscribe/unsubscribe
- *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Adrian Lang <mail@adrianlang.de>
  *
  * @param string $type
  * @return array|bool|string
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_get_action($type) {
-    global $ID;
-    global $INFO;
-    global $REV;
-    global $ACT;
-    global $conf;
-    /** @var Input $INPUT */
-    global $INPUT;
-
-    // check disabled actions and fix the badly named ones
+    dbg_deprecated('see devel:menus');
     if($type == 'history') $type = 'revisions';
-    if ($type == 'subscription') $type = 'subscribe';
-    if(!actionOK($type)) return false;
+    if($type == 'subscription') $type = 'subscribe';
+    if($type == 'img_backto') $type = 'imgBackto';
 
-    $accesskey   = null;
-    $id          = $ID;
-    $method      = 'get';
-    $params      = array('do' => $type);
-    $nofollow    = true;
-    $replacement = '';
-    switch($type) {
-        case 'edit':
-            // most complicated type - we need to decide on current action
-            if($ACT == 'show' || $ACT == 'search') {
-                $method = 'post';
-                if($INFO['writable']) {
-                    $accesskey = 'e';
-                    if(!empty($INFO['draft'])) {
-                        $type         = 'draft';
-                        $params['do'] = 'draft';
-                    } else {
-                        $params['rev'] = $REV;
-                        if(!$INFO['exists']) {
-                            $type = 'create';
-                        }
-                    }
-                } else {
-                    if(!actionOK('source')) return false; //pseudo action
-                    $params['rev'] = $REV;
-                    $type          = 'source';
-                    $accesskey     = 'v';
-                }
-            } else {
-                $params    = array('do' => '');
-                $type      = 'show';
-                $accesskey = 'v';
-            }
-            break;
-        case 'revisions':
-            $type      = 'revs';
-            $accesskey = 'o';
-            break;
-        case 'recent':
-            $accesskey = 'r';
-            break;
-        case 'index':
-            $accesskey = 'x';
-            // allow searchbots to get to the sitemap from the homepage (when dokuwiki isn't providing a sitemap.xml)
-            if ($conf['start'] == $ID && !$conf['sitemap']) {
-                $nofollow = false;
-            }
-            break;
-        case 'top':
-            $accesskey = 't';
-            $params    = array('do' => '');
-            $id        = '#dokuwiki__top';
-            break;
-        case 'back':
-            $parent = tpl_getparent($ID);
-            if(!$parent) {
-                return false;
-            }
-            $id        = $parent;
-            $params    = array('do' => '');
-            $accesskey = 'b';
-            break;
-        case 'img_backto':
-            $params = array();
-            $accesskey = 'b';
-            $replacement = $ID;
-            break;
-        case 'login':
-            $params['sectok'] = getSecurityToken();
-            if($INPUT->server->has('REMOTE_USER')) {
-                if(!actionOK('logout')) {
-                    return false;
-                }
-                $params['do'] = 'logout';
-                $type         = 'logout';
-            }
-            break;
-        case 'register':
-            if($INPUT->server->str('REMOTE_USER')) {
-                return false;
-            }
-            break;
-        case 'resendpwd':
-            if($INPUT->server->str('REMOTE_USER')) {
-                return false;
-            }
-            break;
-        case 'admin':
-            if(!$INFO['ismanager']) {
-                return false;
-            }
-            break;
-        case 'revert':
-            if(!$INFO['ismanager'] || !$REV || !$INFO['writable']) {
-                return false;
-            }
-            $params['rev']    = $REV;
-            $params['sectok'] = getSecurityToken();
-            break;
-        case 'subscribe':
-            if(!$INPUT->server->str('REMOTE_USER')) {
-                return false;
-            }
-            break;
-        case 'backlink':
-            break;
-        case 'profile':
-            if(!$INPUT->server->has('REMOTE_USER')) {
-                return false;
-            }
-            break;
-        case 'media':
-            $params['ns'] = getNS($ID);
-            break;
-        case 'mediaManager':
-            // View image in media manager
-            global $IMG;
-            $imgNS = getNS($IMG);
-            $authNS = auth_quickaclcheck("$imgNS:*");
-            if ($authNS < AUTH_UPLOAD) {
-                return false;
-            }
-            $params = array(
-                'ns' => $imgNS,
-                'image' => $IMG,
-                'do' => 'media'
-            );
-            //$type = 'media';
-            break;
-        default:
-            return '[unknown %s type]';
+    $class = '\\dokuwiki\\Menu\\Item\\' . ucfirst($type);
+    if(class_exists($class)) {
+        try {
+            /** @var \dokuwiki\Menu\Item\AbstractItem $item */
+            $item = new $class;
+            $data = $item->getLegacyData();
+            $unknown = false;
+        } catch(\RuntimeException $ignored) {
+            return false;
+        }
+    } else {
+        global $ID;
+        $data = array(
+            'accesskey' => null,
+            'type' => $type,
+            'id' => $ID,
+            'method' => 'get',
+            'params' => array('do' => $type),
+            'nofollow' => true,
+            'replacement' => '',
+        );
+        $unknown = true;
     }
-    return compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow', 'replacement');
+
+    $evt = new Event('TPL_ACTION_GET', $data);
+    if($evt->advise_before()) {
+        //handle unknown types
+        if($unknown) {
+            $data = '[unknown %s type]';
+        }
+    }
+    $evt->advise_after();
+    unset($evt);
+
+    return $data;
 }
 
 /**
@@ -797,8 +632,10 @@ function tpl_get_action($type) {
  * @param string        $suf suffix for links
  * @param string        $inner inner HTML for links
  * @return bool|string
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_action($type, $link = false, $wrapper = false, $return = false, $pre = '', $suf = '', $inner = '') {
+    dbg_deprecated('see devel:menus');
     $out = '';
     if($link) {
         $out .= tpl_actionlink($type, $pre, $suf, $inner, true);
@@ -832,20 +669,46 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     global $lang;
     global $ACT;
     global $QUERY;
+    global $ID;
 
     // don't print the search form if search action has been disabled
     if(!actionOK('search')) return false;
 
-    print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search" method="get" role="search"><div class="no">';
-    print '<input type="hidden" name="do" value="search" />';
-    print '<input type="text" ';
-    if($ACT == 'search') print 'value="'.htmlspecialchars($QUERY).'" ';
-    print 'placeholder="'.$lang['btn_search'].'" ';
-    if(!$autocomplete) print 'autocomplete="off" ';
-    print 'id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" />';
-    print '<input type="submit" value="'.$lang['btn_search'].'" class="button" title="'.$lang['btn_search'].'" />';
-    if($ajax) print '<div id="qsearch__out" class="ajax_qsearch JSpopup"></div>';
-    print '</div></form>';
+    $searchForm = new dokuwiki\Form\Form([
+        'action' => wl(),
+        'method' => 'get',
+        'role' => 'search',
+        'class' => 'search',
+        'id' => 'dw__search',
+    ], true);
+    $searchForm->addTagOpen('div')->addClass('no');
+    $searchForm->setHiddenField('do', 'search');
+    $searchForm->setHiddenField('id', $ID);
+    $searchForm->addTextInput('q')
+        ->addClass('edit')
+        ->attrs([
+            'title' => '[F]',
+            'accesskey' => 'f',
+            'placeholder' => $lang['btn_search'],
+            'autocomplete' => $autocomplete ? 'on' : 'off',
+        ])
+        ->id('qsearch__in')
+        ->val($ACT === 'search' ? $QUERY : '')
+        ->useInput(false)
+    ;
+    $searchForm->addButton('', $lang['btn_search'])->attrs([
+        'type' => 'submit',
+        'title' => $lang['btn_search'],
+    ]);
+    if ($ajax) {
+        $searchForm->addTagOpen('div')->id('qsearch__out')->addClass('ajax_qsearch JSpopup');
+        $searchForm->addTagClose('div');
+    }
+    $searchForm->addTagClose('div');
+    Event::createAndTrigger('FORM_QUICKSEARCH_OUTPUT', $searchForm);
+
+    echo $searchForm->toHTML();
+
     return true;
 }
 
@@ -855,33 +718,39 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $sep Separator between entries
- * @return bool
+ * @param bool   $return return or print
+ * @return bool|string
  */
-function tpl_breadcrumbs($sep = '•') {
+function tpl_breadcrumbs($sep = null, $return = false) {
     global $lang;
     global $conf;
 
     //check if enabled
     if(!$conf['breadcrumbs']) return false;
 
+    //set default
+    if(is_null($sep)) $sep = '•';
+
+    $out='';
+
     $crumbs = breadcrumbs(); //setup crumb trace
 
     $crumbs_sep = ' <span class="bcsep">'.$sep.'</span> ';
 
     //render crumbs, highlight the last one
-    print '<span class="bchead">'.$lang['breadcrumb'].'</span>';
+    $out .= '<span class="bchead">'.$lang['breadcrumb'].'</span>';
     $last = count($crumbs);
     $i    = 0;
     foreach($crumbs as $id => $name) {
         $i++;
-        echo $crumbs_sep;
-        if($i == $last) print '<span class="curid">';
-        print '<bdi>';
-        tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="'.$id.'"');
-        print '</bdi>';
-        if($i == $last) print '</span>';
+        $out .= $crumbs_sep;
+        if($i == $last) $out .= '<span class="curid">';
+        $out .= '<bdi>' . tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="'.$id.'"', true) .  '</bdi>';
+        if($i == $last) $out .= '</span>';
     }
-    return true;
+    if($return) return $out;
+    print $out;
+    return $out ? true : false;
 }
 
 /**
@@ -894,12 +763,13 @@ function tpl_breadcrumbs($sep = '•') {
  * @author Nigel McNie <oracle.shinoda@gmail.com>
  * @author Sean Coates <sean@caedmon.net>
  * @author <fredrik@averpil.com>
- * @author Mark C. Prins <mprins@users.sf.net>
+ * @todo   May behave strangely in RTL languages
  *
  * @param string $sep Separator between entries
- * @return bool
+ * @param bool   $return return or print
+ * @return bool|string
  */
-function tpl_youarehere($sep = ' → ') {
+function tpl_youarehere($sep = null, $return = false) {
     global $conf;
     global $ID;
     global $lang;
@@ -907,18 +777,18 @@ function tpl_youarehere($sep = ' → ') {
     // check if enabled
     if(!$conf['youarehere']) return false;
 
+    //set default
+    if(is_null($sep)) $sep = ' » ';
+
+    $out = '';
+
     $parts = explode(':', $ID);
     $count = count($parts);
 
-    echo '<nav><h2 class="bchead">'.$lang['youarehere'].': </h2>';
-    echo '<ul class="navlist">';
-    // always print the startpage
-    if ($count > 1) {
-        echo '<li class="home">'.html_wikilink(':'.$conf['start']).$sep.'</li>';
-    } else {
-        echo '<li class="home">'.$conf['start'].'</li>';
-    }
+    $out .= '<span class="bchead">'.$lang['youarehere'].' </span>';
 
+    // always print the startpage
+    $out .= '<span class="home">' . tpl_pagelink(':'.$conf['start'], null, true) . '</span>';
 
     // print intermediate namespace links
     $part = '';
@@ -927,29 +797,28 @@ function tpl_youarehere($sep = ' → ') {
         $page = $part;
         if($page == $conf['start']) continue; // Skip startpage
 
-        echo '<li>'.html_wikilink($page);
-        if ($i < $count - 2) {
-            echo $sep.'</li>';
-        } else {
-            echo '</li>';
-        }
+        // output
+        $out .= $sep . tpl_pagelink($page, null, true);
     }
 
     // print current page, skipping start page, skipping for namespace index
     resolve_pageid('', $page, $exists);
-    if(isset($page) && $page == $part.$parts[$i]) {
-        echo '</li></ul></nav>';
+    if (isset($page) && $page == $part.$parts[$i]) {
+        if($return) return $out;
+        print $out;
         return true;
     }
-
     $page = $part.$parts[$i];
     if($page == $conf['start']) {
-        echo '</li></ul></nav>';
+        if($return) return $out;
+        print $out;
         return true;
     }
-
-    echo $sep.'</li><li class="curid">'.noNSorNS($page).'</li></ul></nav>';
-    return true;
+    $out .= $sep;
+    $out .= tpl_pagelink($page, null, true);
+    if($return) return $out;
+    print $out;
+    return $out ? true : false;
 }
 
 /**
@@ -997,9 +866,9 @@ function tpl_pageinfo($ret = false) {
     $fn = $INFO['filepath'];
     if(!$conf['fullpath']) {
         if($INFO['rev']) {
-            $fn = str_replace(fullpath($conf['olddir']).'/', '', $fn);
+            $fn = str_replace($conf['olddir'].'/', '', $fn);
         } else {
-            $fn = str_replace(fullpath($conf['datadir']).'/', '', $fn);
+            $fn = str_replace($conf['datadir'].'/', '', $fn);
         }
     }
     $fn   = utf8_decodeFN($fn);
@@ -1048,6 +917,8 @@ function tpl_pageinfo($ret = false) {
  * @return bool|string
  */
 function tpl_pagetitle($id = null, $ret = false) {
+    global $ACT, $INPUT, $conf, $lang;
+
     if(is_null($id)) {
         global $ID;
         $id = $ID;
@@ -1055,14 +926,61 @@ function tpl_pagetitle($id = null, $ret = false) {
 
     $name = $id;
     if(useHeading('navigation')) {
-        $title = p_get_first_heading($id);
-        if($title) $name = $title;
+        $first_heading = p_get_first_heading($id);
+        if($first_heading) $name = $first_heading;
+    }
+
+    // default page title is the page name, modify with the current action
+    switch ($ACT) {
+        // admin functions
+        case 'admin' :
+            $page_title = $lang['btn_admin'];
+            // try to get the plugin name
+            /** @var $plugin AdminPlugin */
+            if ($plugin = plugin_getRequestAdminPlugin()){
+                $plugin_title = $plugin->getMenuText($conf['lang']);
+                $page_title = $plugin_title ? $plugin_title : $plugin->getPluginName();
+            }
+            break;
+
+        // user functions
+        case 'login' :
+        case 'profile' :
+        case 'register' :
+        case 'resendpwd' :
+            $page_title = $lang['btn_'.$ACT];
+            break;
+
+         // wiki functions
+        case 'search' :
+        case 'index' :
+            $page_title = $lang['btn_'.$ACT];
+            break;
+
+        // page functions
+        case 'edit' :
+        case 'preview' :
+            $page_title = "✎ ".$name;
+            break;
+
+        case 'revisions' :
+            $page_title = $name . ' - ' . $lang['btn_revs'];
+            break;
+
+        case 'backlink' :
+        case 'recent' :
+        case 'subscribe' :
+            $page_title = $name . ' - ' . $lang['btn_'.$ACT];
+            break;
+
+        default : // SHOW and anything else not included
+            $page_title = $name;
     }
 
     if($ret) {
-        return hsc($name);
+        return hsc($page_title);
     } else {
-        print hsc($name);
+        print hsc($page_title);
         return true;
     }
 }
@@ -1178,8 +1096,8 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     /** @var Input $INPUT */
     global $INPUT;
     global $REV;
-    $w = tpl_img_getTag('File.Width');
-    $h = tpl_img_getTag('File.Height');
+    $w = (int) tpl_img_getTag('File.Width');
+    $h = (int) tpl_img_getTag('File.Height');
 
     //resize to given max values
     $ratio = 1;
@@ -1224,7 +1142,7 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     $p['src'] = $src;
 
     $data = array('url'=> ($link ? $url : null), 'params'=> $p);
-    return trigger_event('TPL_IMG_DISPLAY', $data, '_tpl_img_action', true);
+    return Event::createAndTrigger('TPL_IMG_DISPLAY', $data, '_tpl_img_action', true);
 }
 
 /**
@@ -1255,7 +1173,7 @@ function tpl_indexerWebBug() {
     global $ID;
 
     $p           = array();
-    $p['src']    = DOKU_BASE.'lib/exe/indexer.php?id='.rawurlencode($ID).
+    $p['src']    = DOKU_BASE.'lib/exe/taskrunner.php?id='.rawurlencode($ID).
         '&'.time();
     $p['width']  = 2; //no more 1x1 px image because we live in times of ad blockers...
     $p['height'] = 1;
@@ -1390,7 +1308,7 @@ function tpl_localeFN($id) {
 }
 
 /**
- * prints the "main content" in the mediamanger popup
+ * prints the "main content" in the mediamanager popup
  *
  * Depending on the user's actions this may be a list of
  * files in a namespace, the meta editing dialog or
@@ -1429,7 +1347,7 @@ function tpl_mediaContent($fromajax = false, $sort='natural') {
     // output the content pane, wrapped in an event.
     if(!$fromajax) ptln('<div id="media__content">');
     $data = array('do' => $do);
-    $evt  = new Doku_Event('MEDIAMANAGER_CONTENT_OUTPUT', $data);
+    $evt  = new Event('MEDIAMANAGER_CONTENT_OUTPUT', $data);
     if($evt->advise_before()) {
         $do = $data['do'];
         if($do == 'filesinuse') {
@@ -1499,13 +1417,20 @@ function tpl_mediaFileList() {
  * list of file revisions
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $image
+ * @param boolean $rev
  */
 function tpl_mediaFileDetails($image, $rev) {
     global $conf, $DEL, $lang;
     /** @var Input $INPUT */
     global $INPUT;
 
-    $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')) && $conf['mediarevisions']);
+    $removed = (
+        !file_exists(mediaFN($image)) &&
+        file_exists(mediaMetaFN($image, '.changes')) &&
+        $conf['mediarevisions']
+    );
     if(!$image || (!file_exists(mediaFN($image)) && !$removed) || $DEL) return;
     if($rev && !file_exists(mediaFN($image, $rev))) $rev = false;
     $ns = getNS($image);
@@ -1532,7 +1457,9 @@ function tpl_mediaFileDetails($image, $rev) {
     list($ext) = mimetype($image, false);
     $class    = preg_replace('/[^_\-a-z0-9]+/i', '_', $ext);
     $class    = 'select mediafile mf_'.$class;
-    $tabTitle = '<strong><a href="'.ml($image).'" class="'.$class.'" title="'.$lang['mediaview'].'">'.$image.'</a>'.'</strong>';
+    $attributes = $rev ? ['rev' => $rev] : [];
+    $tabTitle = '<strong><a href="'.ml($image, $attributes).'" class="'.$class.'" title="'.$lang['mediaview'].'">'.
+        $image.'</a>'.'</strong>';
     if($opened_tab === 'view' && $rev) {
         printf($lang['media_viewold'], $tabTitle, dformat($rev));
     } else {
@@ -1557,7 +1484,7 @@ function tpl_mediaFileDetails($image, $rev) {
 }
 
 /**
- * prints the namespace tree in the mediamanger popup
+ * prints the namespace tree in the mediamanager popup
  *
  * Only allowed in mediamanager.php
  *
@@ -1579,71 +1506,12 @@ function tpl_mediaTree() {
  *
  * @param string $empty empty option label
  * @param string $button submit button label
+ * @deprecated 2017-09-01 see devel:menus
  */
 function tpl_actiondropdown($empty = '', $button = '&gt;') {
-    global $ID;
-    global $REV;
-    global $lang;
-    /** @var Input $INPUT */
-    global $INPUT;
-
-    echo '<form action="'.script().'" method="get" accept-charset="utf-8">';
-    echo '<div class="no">';
-    echo '<input type="hidden" name="id" value="'.$ID.'" />';
-    if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
-    if ($INPUT->server->str('REMOTE_USER')) {
-        echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
-    }
-
-    echo '<select name="do" class="edit quickselect" title="'.$lang['tools'].'">';
-    echo '<option value="">'.$empty.'</option>';
-
-    echo '<optgroup label="'.$lang['page_tools'].'">';
-    $act = tpl_get_action('edit');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('revert');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('revisions');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('backlink');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('subscribe');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-    echo '</optgroup>';
-
-    echo '<optgroup label="'.$lang['site_tools'].'">';
-    $act = tpl_get_action('recent');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('media');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('index');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-    echo '</optgroup>';
-
-    echo '<optgroup label="'.$lang['user_tools'].'">';
-    $act = tpl_get_action('login');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('register');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('profile');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('admin');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-    echo '</optgroup>';
-
-    echo '</select>';
-    echo '<input type="submit" value="'.$button.'" />';
-    echo '</div>';
-    echo '</form>';
+    dbg_deprecated('see devel:menus');
+    $menu = new \dokuwiki\Menu\MobileMenu();
+    echo $menu->getDropdown($empty, $button);
 }
 
 /**
@@ -1693,22 +1561,26 @@ function tpl_license($img = 'badge', $imgonly = false, $return = false, $wrap = 
  * This function is useful to populate sidebars or similar features in a
  * template
  *
- * @param string $pageid
- * @param bool $print
- * @param bool $propagate
+ * @param string $pageid The page name you want to include
+ * @param bool $print Should the content be printed or returned only
+ * @param bool $propagate Search higher namespaces, too?
+ * @param bool $useacl Include the page only if the ACLs check out?
  * @return bool|null|string
  */
-function tpl_include_page($pageid, $print = true, $propagate = false) {
-    if (!$pageid) return false;
-    if ($propagate) $pageid = page_findnearest($pageid);
+function tpl_include_page($pageid, $print = true, $propagate = false, $useacl = true) {
+    if($propagate) {
+        $pageid = page_findnearest($pageid, $useacl);
+    } elseif($useacl && auth_quickaclcheck($pageid) == AUTH_NONE) {
+        return false;
+    }
+    if(!$pageid) return false;
 
     global $TOC;
     $oldtoc = $TOC;
     $html   = p_wiki_xhtml($pageid, '', false);
     $TOC    = $oldtoc;
 
-    if(!$print) return $html;
-    echo $html;
+    if($print) echo $html;
     return $html;
 }
 
@@ -1795,7 +1667,7 @@ function tpl_subscribe() {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_flush() {
-    ob_flush();
+    if( ob_get_level() > 0 ) ob_flush();
     flush();
 }
 
@@ -1806,13 +1678,15 @@ function tpl_flush() {
  * file, otherwise it is assumed to be relative to the current template
  *
  * @param  string[] $search       locations to look at
- * @param  bool     $abs           if to use absolute URL
- * @param  array   &$imginfo   filled with getimagesize()
+ * @param  bool     $abs          if to use absolute URL
+ * @param  array    &$imginfo     filled with getimagesize()
+ * @param  bool     $fallback     use fallback image if target isn't found or return 'false' if potential
+ *                                false result is required
  * @return string
  *
  * @author Andreas  Gohr <andi@splitbrain.org>
  */
-function tpl_getMediaFile($search, $abs = false, &$imginfo = null) {
+function tpl_getMediaFile($search, $abs = false, &$imginfo = null, $fallback = true) {
     $img     = '';
     $file    = '';
     $ismedia = false;
@@ -1827,6 +1701,17 @@ function tpl_getMediaFile($search, $abs = false, &$imginfo = null) {
         }
 
         if(file_exists($file)) break;
+    }
+
+    // manage non existing target
+    if (!file_exists($file)) {
+        // give result for fallback image
+        if ($fallback === true) {
+            $file = DOKU_INC . 'lib/images/blank.gif';
+            // stop process if false result is required (if $fallback is false)
+        } else {
+            return false;
+        }
     }
 
     // fetch image data if requested
@@ -1976,10 +1861,34 @@ function tpl_classes() {
         'mode_'.$ACT,
         'tpl_'.$conf['template'],
         $INPUT->server->bool('REMOTE_USER') ? 'loggedIn' : '',
-        $INFO['exists'] ? '' : 'notFound',
+        (isset($INFO) && $INFO['exists']) ? '' : 'notFound',
         ($ID == $conf['start']) ? 'home' : '',
     );
     return join(' ', $classes);
+}
+
+/**
+ * Create event for tools menues
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ * @param string $toolsname name of menu
+ * @param array $items
+ * @param string $view e.g. 'main', 'detail', ...
+ * @deprecated 2017-09-01 see devel:menus
+ */
+function tpl_toolsevent($toolsname, $items, $view = 'main') {
+    dbg_deprecated('see devel:menus');
+    $data = array(
+        'view' => $view,
+        'items' => $items
+    );
+
+    $hook = 'TEMPLATE_' . strtoupper($toolsname) . '_DISPLAY';
+    $evt = new Event($hook, $data);
+    if($evt->advise_before()) {
+        foreach($evt->data['items'] as $k => $html) echo $html;
+    }
+    $evt->advise_after();
 }
 
 //Setup VIM: ex: et ts=4 :

@@ -45,7 +45,7 @@ class SafeFN {
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
     public static function encode($filename) {
-        return self::unicode_to_safe(utf8_to_unicode($filename));
+        return self::unicodeToSafe(\dokuwiki\Utf8\Unicode::fromUtf8($filename));
     }
 
     /**
@@ -74,14 +74,14 @@ class SafeFN {
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
     public static function decode($filename) {
-        return unicode_to_utf8(self::safe_to_unicode(strtolower($filename)));
+        return \dokuwiki\Utf8\Unicode::toUtf8(self::safeToUnicode(strtolower($filename)));
     }
 
-    public static function validate_printable_utf8($printable_utf8) {
+    public static function validatePrintableUtf8($printable_utf8) {
         return !preg_match('#[\x01-\x1f]#',$printable_utf8);
     }
 
-    public static function validate_safe($safe) {
+    public static function validateSafe($safe) {
         return !preg_match('#[^'.self::$plain.self::$post_indicator.self::$pre_indicator.']#',$safe);
     }
 
@@ -93,7 +93,7 @@ class SafeFN {
      *
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
-    private static function unicode_to_safe($unicode) {
+    private static function unicodeToSafe($unicode) {
 
         $safe = '';
         $converted = false;
@@ -126,7 +126,7 @@ class SafeFN {
      *
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
-    private static function safe_to_unicode($safe) {
+    private static function safeToUnicode($safe) {
 
         $unicode = array();
         $split = preg_split('#(?=['.self::$post_indicator.self::$pre_indicator.'])#',$safe,-1,PREG_SPLIT_NO_EMPTY);

@@ -1,6 +1,6 @@
 <?php
 
-require_once DOKU_INC . 'inc/parser/renderer.php';
+use dokuwiki\test\mock\Doku_Renderer;
 
 /**
  * Tests for Doku_Renderer::_resolveInterWiki()
@@ -14,21 +14,23 @@ class Test_resolveInterwiki extends DokuWikiTest {
         $Renderer->interwiki['withslash'] = '/test';
         $Renderer->interwiki['onlytext'] = ':onlytext{NAME}'; //with {URL} double urlencoded
         $Renderer->interwiki['withquery'] = ':anyns:{NAME}?do=edit';
+        //this was the only link with host/port/path/query. Keep it here for regression
+        $Renderer->interwiki['coral'] = 'http://{HOST}.{PORT}.nyud.net:8090{PATH}?{QUERY}';
 
         $tests = array(
             // shortcut, reference and expected
-            array('wp', 'foo @+%/#txt', 'http://en.wikipedia.org/wiki/foo @+%/#txt'),
-            array('amazon', 'foo @+%/#txt', 'http://www.amazon.com/exec/obidos/ASIN/foo%20%40%2B%25%2F/splitbrain-20/#txt'),
-            array('doku', 'foo @+%/#txt', 'http://www.dokuwiki.org/foo%20%40%2B%25%2F#txt'),
-            array('coral', 'http://example.com:83/path/naar/?query=foo%20%40%2B%25%2F', 'http://example.com.83.nyud.net:8090/path/naar/?query=foo%20%40%2B%25%2F'),
+            array('wp', 'foo [\\]^`{|}~@+#%?/#txt', 'https://en.wikipedia.org/wiki/foo %5B%5C%5D%5E%60%7B%7C%7D~@+%23%25?/#txt'),
+            array('amazon', 'foo [\\]^`{|}~@+#%?/#txt', 'https://www.amazon.com/dp/foo%20%5B%5C%5D%5E%60%7B%7C%7D~%40%2B%23%25%3F%2F?tag=splitbrain-20#txt'),
+            array('doku', 'foo [\\]^`{|}~@+#%?/#txt', 'https://www.dokuwiki.org/foo%20%5B%5C%5D%5E%60%7B%7C%7D~%40%2B%23%25%3F%2F#txt'),
+            array('coral', 'http://example.com:83/path/naar/?query=foo%20%40%2B%25%3F%2F', 'http://example.com.83.nyud.net:8090/path/naar/?query=foo%20%40%2B%25%3F%2F'),
             array('scheme', 'ftp://foo @+%/#txt', 'ftp://example.com#txt'),
             //relative url
-            array('withslash', 'foo @+%/#txt', '/testfoo%20%40%2B%25%2F#txt'),
-            array('skype',  'foo @+%/#txt', 'skype:foo @+%/#txt'),
+            array('withslash', 'foo [\\]^`{|}~@+#%?/#txt', '/testfoo%20%5B%5C%5D%5E%60%7B%7C%7D~%40%2B%23%25%3F%2F#txt'),
+            array('skype',  'foo [\\]^`{|}~@+#%?/#txt', 'skype:foo %5B%5C%5D%5E%60%7B%7C%7D~@+%23%25?/#txt'),
             //dokuwiki id's
-            array('onlytext', 'foo @+%#txt', DOKU_BASE.'doku.php?id=onlytextfoo#txt'),
-            array('user', 'foo @+%#txt', DOKU_BASE.'doku.php?id=user:foo#txt'),
-            array('withquery', 'foo @+%#txt', DOKU_BASE.'doku.php?id=anyns:foo&amp;do=edit#txt')
+            array('onlytext', 'foo [\\]^`{|}~@+#%/#txt', DOKU_BASE.'doku.php?id=onlytextfoo#txt'),
+            array('user', 'foo [\\]^`{|}~@+#%/#txt', DOKU_BASE.'doku.php?id=user:foo#txt'),
+            array('withquery', 'foo [\\]^`{|}~@+#%/#txt', DOKU_BASE.'doku.php?id=anyns:foo&amp;do=edit#txt')
         );
 
         foreach($tests as $test) {
@@ -41,13 +43,27 @@ class Test_resolveInterwiki extends DokuWikiTest {
     function testNonexisting() {
         $Renderer = new Doku_Renderer();
         $Renderer->interwiki = getInterwiki();
+        unset($Renderer->interwiki['default']);
 
         $shortcut = 'nonexisting';
         $reference = 'foo @+%/';
         $url = $Renderer->_resolveInterWiki($shortcut, $reference);
-        $expected = 'http://www.google.com/search?q=foo%20%40%2B%25%2F&amp;btnI=lucky';
 
-        $this->assertEquals($expected, $url);
+        $this->assertEquals('', $url);
+        $this->assertEquals('', $shortcut);
+    }
+
+    function testNonexistingWithDefault() {
+        $Renderer = new Doku_Renderer();
+        $Renderer->interwiki = getInterwiki();
+        $Renderer->interwiki['default'] = 'https://en.wikipedia.org/wiki/{NAME}';
+
+        $shortcut = 'nonexisting';
+        $reference = 'foo';
+        $url = $Renderer->_resolveInterWiki($shortcut, $reference);
+
+        $this->assertEquals('https://en.wikipedia.org/wiki/foo', $url);
+        $this->assertEquals('default', $shortcut);
     }
 
 }

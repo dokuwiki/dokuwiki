@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <title>smileys</title>
+    <title>Smileys</title>
 
-    <style type="text/css">
+    <style>
         body {
             background-color: #ccc;
             font-family: Arial;
@@ -11,7 +11,7 @@
 
         .box {
             width: 200px;
-            float:left;
+            float: left;
             padding: 0.5em;
             margin: 0;
         }
@@ -28,19 +28,24 @@
 </head>
 <body>
 
-<div class="white box">
 <?php
+$smi_list = '';
 foreach (glob('*.gif') as $img) {
-    echo '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
+    $smi_list .= '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
 }
-?>
+if(is_dir('local')) {
+    $smi_list .= '<hr />';
+    foreach (glob('local/*.gif') as $img) {
+        $smi_list .= '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
+    }
+}
+
+echo '<div class="white box">
+'.$smi_list.'
 </div>
 
 <div class="black box">
-<?php
-foreach (glob('*.gif') as $img) {
-    echo '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
-}
+'.$smi_list;
 ?>
 </div>
 

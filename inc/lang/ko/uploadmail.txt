@@ -9,6 +9,3 @@ IP 주소: @IPADDRESS@
 크기: @SIZE@
 MIME 유형: @MIME@
 사용자: @USER@
-
--- 
-이 메일은 @DOKUWIKIURL@에서 도쿠위키가 생성했습니다

@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
  * @author     Matthias Schulte <dokuwiki@lupo49.de>
+ * @author     Schplurtz le Déboulonné <Schplurtz@laposte.net>
  */
 
 // for admin plugins, the menu prompt to be displayed in the admin menu
@@ -45,6 +46,7 @@ $lang['_network'] = 'Network';
 /* --- Undefined Setting Messages --- */
 $lang['_msg_setting_undefined'] = 'No setting metadata.';
 $lang['_msg_setting_no_class'] = 'No setting class.';
+$lang['_msg_setting_no_known_class'] = 'Setting class not available.';
 $lang['_msg_setting_no_default'] = 'No default value.';
 
 /* -------------------- Config Options --------------------------- */
@@ -72,7 +74,7 @@ $lang['breadcrumbs'] = 'Number of "trace" breadcrumbs. Set to 0 to disable.';
 $lang['youarehere']  = 'Use hierarchical breadcrumbs (you probably want to disable the above option then)';
 $lang['fullpath']    = 'Reveal full path of pages in the footer';
 $lang['typography']  = 'Do typographical replacements';
-$lang['dformat']     = 'Date format (see PHP\'s <a href="http://www.php.net/strftime">strftime</a> function)';
+$lang['dformat']     = 'Date format (see PHP\'s <a href="http://php.net/strftime">strftime</a> function)';
 $lang['signature']   = 'What to insert with the signature button in the editor';
 $lang['showuseras']  = 'What to display when showing the user that last edited a page';
 $lang['toptoclevel'] = 'Top level for table of contents';
@@ -109,7 +111,7 @@ $lang['remoteuser']  = 'Restrict remote API access to the comma separated groups
 
 /* Anti-Spam Settings */
 $lang['usewordblock']= 'Block spam based on wordlist';
-$lang['relnofollow'] = 'Use rel="nofollow" on external links';
+$lang['relnofollow'] = 'Use rel="ugc nofollow" on external links';
 $lang['indexdelay']  = 'Time delay before indexing (sec)';
 $lang['mailguard']   = 'Obfuscate email addresses';
 $lang['iexssprotect']= 'Check uploaded files for possibly malicious JavaScript or HTML code';
@@ -142,17 +144,23 @@ $lang['subscribe_time'] = 'Time after which subscription lists and digests are s
 $lang['notify']      = 'Always send change notifications to this email address';
 $lang['registernotify'] = 'Always send info on newly registered users to this email address';
 $lang['mailfrom']    = 'Sender email address to use for automatic mails';
+$lang['mailreturnpath']    = 'Recipient email address for non delivery notifications';
 $lang['mailprefix']  = 'Email subject prefix to use for automatic mails. Leave blank to use the wiki title';
 $lang['htmlmail']    = 'Send better looking, but larger in size HTML multipart emails. Disable for plain text only mails.';
 
 /* Syndication Settings */
-$lang['sitemap']     = 'Generate Google sitemap this often (in days). 0 to disable';
-$lang['rss_type']    = 'XML feed type';
-$lang['rss_linkto']  = 'XML feed links to';
-$lang['rss_content'] = 'What to display in the XML feed items?';
-$lang['rss_update']  = 'XML feed update interval (sec)';
-$lang['rss_show_summary'] = 'XML feed show summary in title';
-$lang['rss_media']   = 'What kind of changes should be listed in the XML feed?';
+$lang['sitemap']           = 'Generate Google sitemap this often (in days). 0 to disable';
+$lang['rss_type']          = 'XML feed type';
+$lang['rss_linkto']        = 'XML feed links to';
+$lang['rss_content']       = 'What to display in the XML feed items?';
+$lang['rss_update']        = 'XML feed update interval (sec)';
+$lang['rss_show_summary']  = 'XML feed show summary in title';
+$lang['rss_show_deleted']  = 'XML feed Show deleted feeds';
+$lang['rss_media']         = 'What kind of changes should be listed in the XML feed?';
+$lang['rss_media_o_both']  = 'both';
+$lang['rss_media_o_pages'] = 'pages';
+$lang['rss_media_o_media'] = 'media';
+
 
 /* Advanced Options */
 $lang['updatecheck'] = 'Check for updates and security warnings? DokuWiki needs to contact update.dokuwiki.org for this feature.';
@@ -165,16 +173,32 @@ $lang['autoplural']  = 'Check for plural forms in links';
 $lang['compression'] = 'Compression method for attic files';
 $lang['gzip_output'] = 'Use gzip Content-Encoding for xhtml';
 $lang['compress']    = 'Compact CSS and javascript output';
-$lang['cssdatauri']  = 'Size in bytes up to which images referenced in CSS files should be embedded right into the stylesheet to reduce HTTP request header overhead. This technique won\'t work in IE 7 and below! <code>400</code> to <code>600</code> bytes is a good value. Set <code>0</code> to disable.';
+$lang['cssdatauri']  = 'Size in bytes up to which images referenced in CSS files should be embedded right into the stylesheet to reduce HTTP request header overhead. <code>400</code> to <code>600</code> bytes is a good value. Set <code>0</code> to disable.';
 $lang['send404']     = 'Send "HTTP 404/Page Not Found" for non existing pages';
 $lang['broken_iua']  = 'Is the ignore_user_abort function broken on your system? This could cause a non working search index. IIS+PHP/CGI is known to be broken. See <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">Bug 852</a> for more info.';
 $lang['xsendfile']   = 'Use the X-Sendfile header to let the webserver deliver static files? Your webserver needs to support this.';
 $lang['renderer_xhtml']   = 'Renderer to use for main (xhtml) wiki output';
 $lang['renderer__core']   = '%s (dokuwiki core)';
 $lang['renderer__plugin'] = '%s (plugin)';
+$lang['search_nslimit'] = 'Limit the search to the current X namespaces. When a search is executed from a page within a deeper namespace, the first X namespaces will be added as filter';
+$lang['search_fragment'] = 'Specify the default fragment search behavior';
+$lang['search_fragment_o_exact'] = 'exact';
+$lang['search_fragment_o_starts_with'] = 'starts with';
+$lang['search_fragment_o_ends_with'] = 'ends with';
+$lang['search_fragment_o_contains'] = 'contains';
+$lang['trustedproxy'] = 'Trust forwarding proxies matching this regular expression about the true client IP they report. The default matches local networks. Leave empty to trust no proxy.';
+
+$lang['_feature_flags'] = 'Feature Flags';
+$lang['defer_js'] = 'Defer javascript to be execute after the page\'s HTML has been parsed. Improves perceived page speed but could break a small number of plugins.';
 
 /* Network Options */
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
+$lang['jquerycdn'] = 'Should the jQuery and jQuery UI script files be loaded from a CDN? This adds additional HTTP requests, but files may load faster and users may have them cached already.';
+
+/* jQuery CDN options */
+$lang['jquerycdn_o_0'] = 'No CDN, local delivery only';
+$lang['jquerycdn_o_jquery'] = 'CDN at code.jquery.com';
+$lang['jquerycdn_o_cdnjs'] = 'CDN at cdnjs.com';
 
 /* Proxy Options */
 $lang['proxy____host']    = 'Proxy servername';
@@ -183,14 +207,6 @@ $lang['proxy____user']    = 'Proxy user name';
 $lang['proxy____pass']    = 'Proxy password';
 $lang['proxy____ssl']     = 'Use SSL to connect to proxy';
 $lang['proxy____except']  = 'Regular expression to match URLs for which the proxy should be skipped.';
-
-/* Safemode Hack */
-$lang['safemodehack'] = 'Enable safemode hack';
-$lang['ftp____host'] = 'FTP server for safemode hack';
-$lang['ftp____port'] = 'FTP port for safemode hack';
-$lang['ftp____user'] = 'FTP user name for safemode hack';
-$lang['ftp____pass'] = 'FTP password for safemode hack';
-$lang['ftp____root'] = 'FTP root directory for safemode hack';
 
 /* License Options */
 $lang['license_o_'] = 'None chosen';

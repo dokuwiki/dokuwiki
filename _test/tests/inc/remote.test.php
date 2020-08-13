@@ -1,8 +1,9 @@
 <?php
 
-class MockAuth extends DokuWiki_Auth_Plugin {
-    function isCaseSensitive() { return true; }
-}
+use dokuwiki\test\mock\AuthPlugin;
+use dokuwiki\Extension\RemotePlugin;
+use dokuwiki\Remote\Api;
+use dokuwiki\Remote\RemoteException;
 
 class RemoteAPICoreTest {
 
@@ -75,7 +76,7 @@ class RemoteAPICoreTest {
 
 }
 
-class remote_plugin_testplugin extends DokuWiki_Remote_Plugin {
+class remote_plugin_testplugin extends RemotePlugin {
     function _getMethods() {
         return array(
             'method1' => array(
@@ -106,15 +107,33 @@ class remote_plugin_testplugin extends DokuWiki_Remote_Plugin {
     function methodString() { return 'success'; }
     function method2($str, $int, $bool = false) { return array($str, $int, $bool); }
     function publicCall() {return true;}
-
 }
+
+class remote_plugin_testplugin2 extends RemotePlugin {
+    /**
+     * This is a dummy method
+     *
+     * @param string $str some more parameter description
+     * @param int $int
+     * @param bool $bool
+     * @param Object $unknown
+     * @return array
+     */
+    public function commented($str, $int, $bool, $unknown) { return array($str, $int, $bool); }
+
+    private function privateMethod() {return true;}
+    protected function protectedMethod() {return true;}
+    public function _underscore() {return true;}
+}
+
 
 
 class remote_test extends DokuWikiTest {
 
-    var $userinfo;
+    protected $userinfo;
 
-    var $remote;
+    /** @var  Api */
+    protected $remote;
 
     function setUp() {
         parent::setUp();
@@ -125,10 +144,18 @@ class remote_test extends DokuWikiTest {
 
         parent::setUp();
 
-        $pluginManager = $this->getMock('Doku_Plugin_Controller');
-        $pluginManager->expects($this->any())->method('getList')->will($this->returnValue(array('testplugin')));
-        $pluginManager->expects($this->any())->method('load')->will($this->returnValue(new remote_plugin_testplugin()));
-
+        // mock plugin controller to return our test plugins
+        $pluginManager = $this->createMock('dokuwiki\Extension\PluginController');
+        $pluginManager->method('getList')->willReturn(array('testplugin', 'testplugin2'));
+        $pluginManager->method('load')->willReturnCallback(
+            function($type, $plugin) {
+                if($plugin == 'testplugin2') {
+                    return new remote_plugin_testplugin2();
+                } else {
+                    return new remote_plugin_testplugin();
+                }
+            }
+        );
         $plugin_controller = $pluginManager;
 
         $conf['remote'] = 1;
@@ -136,9 +163,9 @@ class remote_test extends DokuWikiTest {
         $conf['useacl'] = 0;
 
         $this->userinfo = $USERINFO;
-        $this->remote = new RemoteAPI();
+        $this->remote = new Api();
 
-        $auth = new MockAuth();
+        $auth = new AuthPlugin();
     }
 
     function tearDown() {
@@ -151,19 +178,44 @@ class remote_test extends DokuWikiTest {
         $methods = $this->remote->getPluginMethods();
         $actual = array_keys($methods);
         sort($actual);
-        $expect = array('plugin.testplugin.method1', 'plugin.testplugin.method2', 'plugin.testplugin.methodString', 'plugin.testplugin.method2ext', 'plugin.testplugin.publicCall');
+        $expect = array(
+            'plugin.testplugin.method1',
+            'plugin.testplugin.method2',
+            'plugin.testplugin.methodString',
+            'plugin.testplugin.method2ext',
+            'plugin.testplugin.publicCall',
+
+            'plugin.testplugin2.commented'
+        );
         sort($expect);
         $this->assertEquals($expect,$actual);
     }
 
+    function test_pluginDescriptors() {
+        $methods = $this->remote->getPluginMethods();
+        $this->assertEquals(array('string','int','bool','string'), $methods['plugin.testplugin2.commented']['args']);
+        $this->assertEquals('array', $methods['plugin.testplugin2.commented']['return']);
+        $this->assertEquals(0, $methods['plugin.testplugin2.commented']['public']);
+        $this->assertContains('This is a dummy method', $methods['plugin.testplugin2.commented']['doc']);
+        $this->assertContains('string $str some more parameter description', $methods['plugin.testplugin2.commented']['doc']);
+    }
+
     function test_hasAccessSuccess() {
+        global $conf;
+        $conf['remoteuser'] = '';
         $this->assertTrue($this->remote->hasAccess());
     }
 
+    /**
+     * @expectedException dokuwiki\Remote\AccessDeniedException
+     */
     function test_hasAccessFail() {
         global $conf;
         $conf['remote'] = 0;
-        $this->assertFalse($this->remote->hasAccess());
+        // the hasAccess() should throw a Exception to keep the same semantics with xmlrpc.php.
+        // because the user(xmlrpc) check remote before .--> (!$conf['remote']) die('XML-RPC server not enabled.');
+        // so it must be a Exception when get here.
+        $this->remote->hasAccess();
     }
 
     function test_hasAccessFailAcl() {
@@ -203,22 +255,31 @@ class remote_test extends DokuWikiTest {
     function test_forceAccessSuccess() {
         global $conf;
         $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
         $this->remote->forceAccess(); // no exception should occur
+        $this->assertTrue(true); // avoid being marked as risky for having no assertion
     }
 
-    /**
-     * @expectedException RemoteException
-     */
     function test_forceAccessFail() {
         global $conf;
         $conf['remote'] = 0;
-        $this->remote->forceAccess();
+
+        try {
+            $this->remote->forceAccess();
+            $this->fail('Expects RemoteException to be raised');
+        } catch (RemoteException $th) {
+            $this->assertEquals(-32604, $th->getCode());
+        }
     }
 
     function test_generalCoreFunctionWithoutArguments() {
         global $conf;
+        global $USERINFO;
         $conf['remote'] = 1;
-        $remoteApi = new RemoteApi();
+        $conf['remoteuser'] = '';
+        $conf['useacl'] = 1;
+        $USERINFO['grps'] = array('grp');
+        $remoteApi = new Api();
         $remoteApi->getCoreMethods(new RemoteAPICoreTest());
 
         $this->assertEquals($remoteApi->call('wiki.stringTestMethod'), 'success');
@@ -229,23 +290,28 @@ class remote_test extends DokuWikiTest {
         $this->assertEquals($remoteApi->call('wiki.voidTestMethod'), null);
     }
 
-    /**
-     * @expectedException RemoteException
-     */
     function test_generalCoreFunctionOnArgumentMismatch() {
         global $conf;
         $conf['remote'] = 1;
-        $remoteApi = new RemoteApi();
+        $remoteApi = new Api();
         $remoteApi->getCoreMethods(new RemoteAPICoreTest());
 
-        $remoteApi->call('wiki.voidTestMethod', array('something'));
+        try {
+            $remoteApi->call('wiki.voidTestMethod', array('something'));
+            $this->fail('Expects RemoteException to be raised');
+        } catch (RemoteException $th) {
+            $this->assertEquals(-32604, $th->getCode());
+        }
     }
 
     function test_generalCoreFunctionWithArguments() {
         global $conf;
+        global $USERINFO;
         $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
+        $conf['useacl'] = 1;
 
-        $remoteApi = new RemoteApi();
+        $remoteApi = new Api();
         $remoteApi->getCoreMethods(new RemoteAPICoreTest());
 
         $this->assertEquals($remoteApi->call('wiki.oneStringArgMethod', array('string')), 'string');
@@ -254,32 +320,67 @@ class remote_test extends DokuWikiTest {
         $this->assertEquals($remoteApi->call('wiki.twoArgWithDefaultArg', array('string', 'another')), array('string', 'another'));
     }
 
-    function test_pluginCallMethods() {
+    function test_generalCoreFunctionOnArgumentMissing() {
         global $conf;
         $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
+        $remoteApi = new Api();
+        $remoteApi->getCoreMethods(new RemoteAPICoreTest());
 
-        $remoteApi = new RemoteApi();
+        try {
+            $remoteApi->call('wiki.twoArgWithDefaultArg', array());
+            $this->fail('Expects RemoteException to be raised');
+        } catch (RemoteException $th) {
+            $this->assertEquals(-32603, $th->getCode());
+        }
+    }
+
+    function test_pluginCallMethods() {
+        global $conf;
+        global $USERINFO;
+        $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
+        $conf['useacl'] = 1;
+
+        $remoteApi = new Api();
         $this->assertEquals($remoteApi->call('plugin.testplugin.method1'), null);
         $this->assertEquals($remoteApi->call('plugin.testplugin.method2', array('string', 7)), array('string', 7, false));
         $this->assertEquals($remoteApi->call('plugin.testplugin.method2ext', array('string', 7, true)), array('string', 7, true));
         $this->assertEquals($remoteApi->call('plugin.testplugin.methodString'), 'success');
     }
 
-    /**
-     * @expectedException RemoteException
-     */
+    function test_pluginCallMethodsOnArgumentMissing() {
+        global $conf;
+        $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
+        $remoteApi = new Api();
+        $remoteApi->getCoreMethods(new RemoteAPICoreTest());
+
+        try {
+            $remoteApi->call('plugin.testplugin.method2', array());
+            $this->fail('Expects RemoteException to be raised');
+        } catch (RemoteException $th) {
+            $this->assertEquals(-32603, $th->getCode());
+        }
+    }
+
     function test_notExistingCall() {
         global $conf;
         $conf['remote'] = 1;
 
-        $remoteApi = new RemoteApi();
-        $remoteApi->call('dose not exist');
+        $remoteApi = new Api();
+        try {
+            $remoteApi->call('dose not exist');
+            $this->fail('Expects RemoteException to be raised');
+        } catch (RemoteException $th) {
+            $this->assertEquals(-32603, $th->getCode());
+        }
     }
 
     function test_publicCallCore() {
         global $conf;
         $conf['useacl'] = 1;
-        $remoteApi = new RemoteApi();
+        $remoteApi = new Api();
         $remoteApi->getCoreMethods(new RemoteAPICoreTest());
         $this->assertTrue($remoteApi->call('wiki.publicCall'));
     }
@@ -287,36 +388,41 @@ class remote_test extends DokuWikiTest {
     function test_publicCallPlugin() {
         global $conf;
         $conf['useacl'] = 1;
-        $remoteApi = new RemoteApi();
+        $remoteApi = new Api();
         $this->assertTrue($remoteApi->call('plugin.testplugin.publicCall'));
     }
 
     /**
-     * @expectedException RemoteAccessDeniedException
+     * @expectedException dokuwiki\Remote\AccessDeniedException
      */
     function test_publicCallCoreDeny() {
         global $conf;
         $conf['useacl'] = 1;
-        $remoteApi = new RemoteApi();
+        $remoteApi = new Api();
         $remoteApi->getCoreMethods(new RemoteAPICoreTest());
         $remoteApi->call('wiki.stringTestMethod');
     }
 
     /**
-     * @expectedException RemoteAccessDeniedException
+     * @expectedException dokuwiki\Remote\AccessDeniedException
      */
     function test_publicCallPluginDeny() {
         global $conf;
         $conf['useacl'] = 1;
-        $remoteApi = new RemoteApi();
+        $remoteApi = new Api();
         $remoteApi->call('plugin.testplugin.methodString');
     }
 
     function test_pluginCallCustomPath() {
+        global $conf;
+        global $USERINFO;
+        $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
+        $conf['useacl'] = 1;
         global $EVENT_HANDLER;
         $EVENT_HANDLER->register_hook('RPC_CALL_ADD', 'BEFORE', $this, 'pluginCallCustomPathRegister');
 
-        $remoteApi = new RemoteAPI();
+        $remoteApi = new Api();
         $result = $remoteApi->call('custom.path');
         $this->assertEquals($result, 'success');
     }

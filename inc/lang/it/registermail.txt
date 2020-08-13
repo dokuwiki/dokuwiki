@@ -8,7 +8,3 @@ Data : @DATE@
 Browser : @BROWSER@
 Indirizzo IP : @IPADDRESS@
 Nome host : @HOSTNAME@
-
--- 
-Questa email è stata generata dal DokuWiki all'indirizzo
-@DOKUWIKIURL@

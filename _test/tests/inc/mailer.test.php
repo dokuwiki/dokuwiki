@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\HTTP\HTTPClient;
+
 /**
  * Extends the mailer class to expose internal variables for testing
  */
@@ -22,6 +24,9 @@ class TestMailer extends Mailer {
 
 }
 
+/**
+ * @group mailer_class
+ */
 class mailer_test extends DokuWikiTest {
 
 
@@ -73,6 +78,10 @@ class mailer_test extends DokuWikiTest {
     }
 
     function test_addresses(){
+        if (isWindows()) {
+            $this->markTestSkipped();
+        }
+
         $mail = new TestMailer();
 
         $mail->to('andi@splitbrain.org');
@@ -90,10 +99,35 @@ class mailer_test extends DokuWikiTest {
         $headers = $mail->prop('headers');
         $this->assertEquals('Andreas Gohr <andi@splitbrain.org>', $headers['To']);
 
+        $mail->to('"Andreas Gohr" <andi@splitbrain.org>');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('"Andreas Gohr" <andi@splitbrain.org>', $headers['To']);
+
+        $mail->to('andi@splitbrain.org,foo@example.com');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('andi@splitbrain.org,  foo@example.com', $headers['To']);
+
+        $mail->to('andi@splitbrain.org, Text <foo@example.com>');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('andi@splitbrain.org, Text <foo@example.com>', $headers['To']);
+
+        $mail->to('Andreas Gohr <andi@splitbrain.org>,foo@example.com');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('Andreas Gohr <andi@splitbrain.org>,  foo@example.com', $headers['To']);
+
         $mail->to('Andreas Gohr <andi@splitbrain.org> , foo <foo@example.com>');
         $mail->cleanHeaders();
         $headers = $mail->prop('headers');
         $this->assertEquals('Andreas Gohr <andi@splitbrain.org>, foo <foo@example.com>', $headers['To']);
+
+        $mail->to('"Foo, Dr." <foo@example.com> , foo <foo@example.com>');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('=?UTF-8?B?IkZvbywgRHIuIg==?= <foo@example.com>, foo <foo@example.com>', $headers['To']);
 
         $mail->to('Möp <moep@example.com> , foo <foo@example.com>');
         $mail->cleanHeaders();
@@ -116,14 +150,21 @@ class mailer_test extends DokuWikiTest {
     function test_simplemail(){
         global $conf;
         $conf['htmlmail'] = 0;
+
+        $mailbody = 'A test mail in ASCII';
         $mail = new TestMailer();
         $mail->to('test@example.com');
-        $mail->setBody('A test mail in ASCII');
+        $mail->setBody($mailbody);
 
         $dump = $mail->dump();
+
+        // construct the expected mail body text - include the expected dokuwiki signature
+        $replacements = $mail->prop('replacements');
+        $expected_mail_body = chunk_split(base64_encode($mailbody.$replacements['text']['EMAILSIGNATURE']),72,MAILHEADER_EOL);
+
         $this->assertNotRegexp('/Content-Type: multipart/',$dump);
         $this->assertRegexp('#Content-Type: text/plain; charset=UTF-8#',$dump);
-        $this->assertRegexp('/'.base64_encode('A test mail in ASCII').'/',$dump);
+        $this->assertRegexp('/'.preg_quote($expected_mail_body,'/').'/',$dump);
 
         $conf['htmlmail'] = 1;
     }
@@ -131,7 +172,7 @@ class mailer_test extends DokuWikiTest {
     function test_replacements(){
         $mail = new TestMailer();
 
-        $replacements = array( '@DATE@','@BROWSER@','@IPADDRESS@','@HOSTNAME@',
+        $replacements = array( '@DATE@','@BROWSER@','@IPADDRESS@','@HOSTNAME@','@EMAILSIGNATURE@',
                                '@TITLE@','@DOKUWIKIURL@','@USER@','@NAME@','@MAIL@');
         $mail->setBody('A test mail in with replacements '.join(' ',$replacements));
 
@@ -190,7 +231,7 @@ class mailer_test extends DokuWikiTest {
 
         // ask message lint if it is okay
         $html = new HTTPClient();
-        $results = $html->post('http://tools.ietf.org/tools/msglint/msglint', array('msg'=>$msg));
+        $results = $html->post('https://tools.ietf.org/tools/msglint/msglint', array('msg'=>$msg));
         if($results === false) {
             $this->markTestSkipped('no response from validator');
             return;
@@ -215,7 +256,8 @@ class mailer_test extends DokuWikiTest {
             if(substr($line,0,5) == 'ERROR' || substr($line,0,7) == 'WARNING'){
                 // ignore some errors
                 if(strpos($line, "missing mandatory header 'return-path'")) continue; #set by MDA
-                if(strpos($line, "bare newline in text body decoded")) continue; #seems to be false positive
+                if(strpos($line, "bare newline in text body decoded")) continue; #we don't send mail bodies as CRLF, yet
+                if(strpos($line, "last decoded line too long")) continue; #we don't send mail bodies as CRLF, yet
 
                 // get the context in which the error occured
                 $errorin = '';
@@ -233,6 +275,104 @@ class mailer_test extends DokuWikiTest {
             }
         }
 
+        $this->assertTrue(true); // avoid being marked as risky for having no assertion
+    }
+
+    function test_simplemailsignature() {
+        global $conf;
+        $conf['htmlmail'] = 0;
+
+        $mailbody = 'A test mail in ASCII';
+        $signature = "\n-- \n" . 'This mail was generated by DokuWiki at' . "\n" . DOKU_URL . "\n";
+        $mail = new TestMailer();
+        $mail->to('test@example.com');
+        $mail->setBody($mailbody);
+
+        $dump = $mail->dump();
+
+        // construct the expected mail body text - include the expected dokuwiki signature
+        $expected_mail_body = chunk_split(base64_encode($mailbody . $signature), 72, MAILHEADER_EOL);
+        $this->assertRegexp('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
+
+        $conf['htmlmail'] = 1;
+    }
+
+    function test_htmlmailsignature() {
+        $mailbody_text = 'A test mail in ASCII :)';
+        $mailbody_html = 'A test mail in <strong>html</strong>';
+        $htmlmsg_expected = '<html>
+<head>
+    <title>My Test Wiki</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+
+A test mail in <strong>html</strong>
+
+<br /><hr />
+<small>This mail was generated by DokuWiki at<br /><a href="' . DOKU_URL . '">' . DOKU_URL . '</a></small>
+</body>
+</html>
+';
+
+        $mail = new TestMailer();
+        $mail->to('test@example.com');
+        $mail->setBody($mailbody_text, null, null, $mailbody_html);
+
+        $dump = $mail->dump();
+
+        // construct the expected mail body text - include the expected dokuwiki signature
+        $expected_mail_body = chunk_split(base64_encode($htmlmsg_expected), 72, MAILHEADER_EOL);
+
+        $this->assertRegexp('/Content-Type: multipart/', $dump);
+        $this->assertRegexp('#Content-Type: text/plain; charset=UTF-8#', $dump);
+        $this->assertRegexp('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
+
+    }
+
+    function test_htmlmailsignaturecustom() {
+        global $lang;
+        $lang['email_signature_html'] = 'Official message from your DokuWiki @DOKUWIKIURL@<br />Created by wonderful mail class <a href="https://www.dokuwiki.org/devel:mail">https://www.dokuwiki.org/devel:mail</a>';
+
+        $mailbody_text = 'A test mail in ASCII :)';
+        $mailbody_html = 'A test mail in <strong>html</strong>';
+        $htmlmsg_expected = '<html>
+<head>
+    <title>My Test Wiki</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+
+A test mail in <strong>html</strong>
+
+<br /><hr />
+<small>Official message from your DokuWiki <a href="' . DOKU_URL . '">' . DOKU_URL . '</a><br />Created by wonderful mail class <a href="https://www.dokuwiki.org/devel:mail">https://www.dokuwiki.org/devel:mail</a></small>
+</body>
+</html>
+';
+
+        $mail = new TestMailer();
+        $mail->to('test@example.com');
+        $mail->setBody($mailbody_text, null, null, $mailbody_html);
+
+        $dump = $mail->dump();
+
+        // construct the expected mail body text - include the expected dokuwiki signature
+        $replacements = $mail->prop('replacements');
+        $expected_mail_body = chunk_split(base64_encode($htmlmsg_expected), 72, MAILHEADER_EOL);
+
+        $this->assertRegexp('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
+
+    }
+
+    function test_getCleanName() {
+        $mail = new TestMailer();
+        $name = $mail->getCleanName('Foo Bar');
+        $this->assertEquals('Foo Bar', $name);
+        $name = $mail->getCleanName('Foo, Bar');
+        $this->assertEquals('"Foo, Bar"', $name);
+        $name = $mail->getCleanName('Foo" Bar');
+        $this->assertEquals('"Foo\" Bar"', $name);
     }
 }
 //Setup VIM: ex: et ts=4 :

@@ -8,9 +8,3 @@ E-mail      : @NEWEMAIL@
 浏览器      : @BROWSER@
 IP 地址     : @IPADDRESS@
 机器名称    : @HOSTNAME@
-
--- 
-本邮件由 DokuWiki 自动创建
-@DOKUWIKIURL@
-
-

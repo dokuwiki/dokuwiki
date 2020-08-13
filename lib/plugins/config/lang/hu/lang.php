@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Hungarian language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
@@ -59,7 +60,7 @@ $lang['breadcrumbs']           = 'Nyomvonal elemszám';
 $lang['youarehere']            = 'Hierarchikus nyomvonal';
 $lang['fullpath']              = 'Az oldalak teljes útvonalának mutatása a láblécben';
 $lang['typography']            = 'Legyen-e tipográfiai csere';
-$lang['dformat']               = 'Dátum formázás (lásd a PHP <a href="http://www.php.net/strftime">strftime</a> függvényt)';
+$lang['dformat']               = 'Dátum formázás (lásd a PHP <a href="http://php.net/strftime">strftime</a> függvényt)';
 $lang['signature']             = 'Aláírás';
 $lang['showuseras']            = 'A felhasználó melyik adatát mutassunk az utolsó változtatás adatainál?';
 $lang['toptoclevel']           = 'A tartalomjegyzék felső szintje';
@@ -84,7 +85,9 @@ $lang['disableactions']        = 'Bizonyos DokuWiki tevékenységek (action) til
 $lang['disableactions_check']  = 'Ellenőrzés';
 $lang['disableactions_subscription'] = 'Feliratkozás/Leiratkozás';
 $lang['disableactions_wikicode'] = 'Forrás megtekintése/Nyers adat exportja';
+$lang['disableactions_profile_delete'] = 'Saját felhasználó törlése';
 $lang['disableactions_other']  = 'Egyéb tevékenységek (vesszővel elválasztva)';
+$lang['disableactions_rss']    = 'XML hírfolyam (RSS)';
 $lang['auth_security_timeout'] = 'Authentikációs biztonsági időablak (másodperc)';
 $lang['securecookie']          = 'A böngészők a HTTPS felett beállított sütijüket csak HTTPS felett küldhetik? Kapcsoljuk ki ezt az opciót, ha csak a bejelentkezést védjük SSL-lel, a wiki tartalmának böngészése nyílt forgalommal történik.';
 $lang['remote']                = 'Távoli API engedélyezése. Ezzel más alkalmazások XML-RPC-n keresztül hozzáférhetnek a wikihez.';
@@ -134,7 +137,7 @@ $lang['autoplural']            = 'Többes szám ellenőrzés a hivatkozásokban 
 $lang['compression']           = 'Tömörítés használata a törölt lapokhoz';
 $lang['gzip_output']           = 'gzip tömörítés használata xhtml-hez (Content-Encoding)';
 $lang['compress']              = 'CSS és JavaScript fájlok tömörítése';
-$lang['cssdatauri']            = 'Mérethatár bájtokban, ami alatti CSS-ben hivatkozott fájlok közvetlenül beágyazódjanak a stíluslapba. Ez IE 7-ben és alatta nem fog működni! <code>400</code>-<code>600</code> bájt ideális érték. Állítsd <code>0</code>-ra a beágyazás kikapcsolásához!';
+$lang['cssdatauri']            = 'Mérethatár bájtokban, ami alatti CSS-ben hivatkozott fájlok közvetlenül beágyazódjanak a stíluslapba. <code>400</code>-<code>600</code> bájt ideális érték. Állítsd <code>0</code>-ra a beágyazás kikapcsolásához!';
 $lang['send404']               = '"HTTP 404/Page Not Found" küldése nemlétező oldalak esetén';
 $lang['broken_iua']            = 'Az ignore_user_abort függvény hibát dob a rendszereden? Ez nem működő keresési indexet eredményezhet. Az IIS+PHP/CGI összeállításról tudjuk, hogy hibát dob. Lásd a <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> oldalt a további infóért.';
 $lang['xsendfile']             = 'Használjuk az X-Sendfile fejlécet, hogy a webszerver statikus állományokat tudjon küldeni? A webszervernek is támogatnia kell ezt a funkciót.';
@@ -148,12 +151,6 @@ $lang['proxy____user']         = 'Proxy felhasználó név';
 $lang['proxy____pass']         = 'Proxy jelszó';
 $lang['proxy____ssl']          = 'SSL használata a proxyhoz csatlakozáskor';
 $lang['proxy____except']       = 'URL szabály azokra a webcímekre, amit szeretnél, hogy ne kezeljen a proxy.';
-$lang['safemodehack']          = 'A PHP safemode beállítás megkerülésének engedélyezése';
-$lang['ftp____host']           = 'FTP szerver a safemode megkerüléshez';
-$lang['ftp____port']           = 'FTP port a safemode megkerüléshez';
-$lang['ftp____user']           = 'FTP felhasználó név a safemode megkerüléshez';
-$lang['ftp____pass']           = 'FTP jelszó a safemode megkerüléshez';
-$lang['ftp____root']           = 'FTP gyökérkönyvtár a safemode megkerüléshez';
 $lang['license_o_']            = 'Nincs kiválasztva';
 $lang['typography_o_0']        = 'nem';
 $lang['typography_o_1']        = 'Csak a dupla idézőjelet';
@@ -189,6 +186,7 @@ $lang['xsendfile_o_2']         = 'Standard X-Sendfile fejléc';
 $lang['xsendfile_o_3']         = 'Nginx saját X-Accel-Redirect fejléce';
 $lang['showuseras_o_loginname'] = 'Azonosító';
 $lang['showuseras_o_username'] = 'Teljes név';
+$lang['showuseras_o_username_link'] = 'A felhasználó teljes neve belső wiki-hivatkozásként';
 $lang['showuseras_o_email']    = 'E-mail cím (olvashatatlanná téve az e-mailcím védelem beállítása szerint)';
 $lang['showuseras_o_email_link'] = 'E-mail cím mailto: linkként';
 $lang['useheading_o_0']        = 'Soha';
