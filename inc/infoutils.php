@@ -7,6 +7,7 @@
  */
 
 use dokuwiki\HTTP\DokuHTTPClient;
+use dokuwiki\Logger;
 
 if(!defined('DOKU_MESSAGEURL')){
     if(in_array('ssl', stream_get_transports())) {
@@ -35,7 +36,7 @@ function checkUpdateMessages(){
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
         @touch($cf);
-        dbglog("checkUpdateMessages(): downloading messages to ".$cf.($is_http?' (without SSL)':' (with SSL)'));
+        Logger::debug("checkUpdateMessages(): downloading messages to ".$cf.($is_http?' (without SSL)':' (with SSL)'));
         $http = new DokuHTTPClient();
         $http->timeout = 12;
         $resp = $http->get(DOKU_MESSAGEURL.$updateVersion);
@@ -44,10 +45,10 @@ function checkUpdateMessages(){
             // or it looks like one of our messages, not WiFi login or other interposed response
             io_saveFile($cf,$resp);
         } else {
-            dbglog("checkUpdateMessages(): unexpected HTTP response received");
+            Logger::debug("checkUpdateMessages(): unexpected HTTP response received", $http->error);
         }
     }else{
-        dbglog("checkUpdateMessages(): messages up to date");
+        Logger::debug("checkUpdateMessages(): messages up to date");
     }
 
     $data = io_readFile($cf);
@@ -445,7 +446,7 @@ function dbglog($msg,$header=''){
         $msg = '';
     }
 
-    \dokuwiki\Logger::getInstance(\dokuwiki\Logger::LOG_DEBUG)->log(
+    Logger::getInstance(Logger::LOG_DEBUG)->log(
         $header, $msg
     );
 }
