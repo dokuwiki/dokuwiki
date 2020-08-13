@@ -39,6 +39,54 @@ class Logger
     }
 
     /**
+     * Convenience method to directly log to the error log
+     *
+     * @param string $message The log message
+     * @param mixed $details Any details that should be added to the log entry
+     * @param string $file A source filename if this is related to a source position
+     * @param int $line A line number for the above file
+     * @return bool
+     */
+    static public function error($message, $details = null, $file = '', $line = 0)
+    {
+        return self::getInstance(self::LOG_ERROR)->log(
+            $message, $details, $file, $line
+        );
+    }
+
+    /**
+     * Convenience method to directly log to the debug log
+     *
+     * @param string $message The log message
+     * @param mixed $details Any details that should be added to the log entry
+     * @param string $file A source filename if this is related to a source position
+     * @param int $line A line number for the above file
+     * @return bool
+     */
+    static public function debug($message, $details = null, $file = '', $line = 0)
+    {
+        return self::getInstance(self::LOG_DEBUG)->log(
+            $message, $details, $file, $line
+        );
+    }
+
+    /**
+     * Convenience method to directly log to the deprecation log
+     *
+     * @param string $message The log message
+     * @param mixed $details Any details that should be added to the log entry
+     * @param string $file A source filename if this is related to a source position
+     * @param int $line A line number for the above file
+     * @return bool
+     */
+    static public function deprecated($message, $details = null, $file = '', $line = 0)
+    {
+        return self::getInstance(self::LOG_DEPRECATED)->log(
+            $message, $details, $file, $line
+        );
+    }
+
+    /**
      * Log a message to the facility log
      *
      * @param string $message The log message
