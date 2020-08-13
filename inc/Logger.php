@@ -50,8 +50,10 @@ class Logger
     public function log($message, $details = null, $file = '', $line = 0)
     {
         // details are logged indented
-        if ($details && !is_string($details)) {
-            $details = json_encode($details, JSON_PRETTY_PRINT);
+        if ($details) {
+            if (!is_string($details)) {
+                $details = json_encode($details, JSON_PRETTY_PRINT);
+            }
             $details = explode("\n", $details);
             $loglines = array_map(function ($line) {
                 return '  ' . $line;
@@ -62,14 +64,32 @@ class Logger
             $loglines = [];
         }
 
-        $logline = gmdate('c') . "\t" . $message;
+        // datetime, fileline, message
+        $logline = gmdate('Y-m-d H:i:s') . "\t";
         if ($file) {
-            $logline .= "\t$file";
+            $logline .= $file;
             if ($line) $logline .= "($line)";
         }
+        $logline .= "\t" . $message;
 
         array_unshift($loglines, $logline);
         return $this->writeLogLines($loglines);
+    }
+
+    /**
+     * Construct the log file for the given day
+     *
+     * @param false|string|int $date Date to access, false for today
+     * @return string
+     */
+    public function getLogfile($date = false)
+    {
+        global $conf;
+
+        if ($date !== null) $date = strtotime($date);
+        if (!$date) $date = time();
+
+        return $conf['logdir'] . '/' . $this->facility . '/' . date('Y-m-d', $date) . '.log';
     }
 
     /**
@@ -80,8 +100,7 @@ class Logger
      */
     protected function writeLogLines($lines)
     {
-        global $conf;
-        $logfile = $conf['logdir'] . '/' . $this->facility . '/' . gmdate('Y-m-d') . '.log';
+        $logfile = $this->getLogfile();
         return io_saveFile($logfile, join("\n", $lines) . "\n", true);
     }
 }

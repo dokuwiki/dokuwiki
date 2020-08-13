@@ -12,7 +12,7 @@ namespace dokuwiki\Ui;
  */
 class Admin extends Ui {
 
-    protected $forAdmins = array('usermanager', 'acl', 'extension', 'config', 'styling');
+    protected $forAdmins = array('usermanager', 'acl', 'extension', 'config', 'logviewer', 'styling');
     protected $forManagers = array('revert', 'popularity');
     /** @var array[] */
     protected $menu;

@@ -1,0 +1,41 @@
+#plugin__logviewer {
+    form {
+        float: right;
+    }
+
+    .tabs {
+        margin-bottom: 2em;
+    }
+
+    dl {
+        max-height: 80vh;
+        overflow: auto;
+
+        dt {
+            display: flex;
+
+            .datetime {
+                flex: 0 0 auto;
+                margin-right: 1em;
+            }
+
+            .log {
+                flex: 1 1 auto;
+
+                span {
+                    display: block;
+                }
+
+                span.file {
+                    font-family: monospace;
+                }
+            }
+        }
+
+        dd {
+            font-size: 80%;
+            white-space: nowrap;
+            font-family: monospace;
+        }
+    }
+}
