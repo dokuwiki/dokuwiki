@@ -14,6 +14,8 @@ class Logger
     /** @var string what kind of log is this */
     protected $facility;
 
+    protected $isLogging = true;
+
     /**
      * Logger constructor.
      *
@@ -21,7 +23,13 @@ class Logger
      */
     protected function __construct($facility)
     {
+        global $conf;
         $this->facility = $facility;
+
+        // Should logging be disabled for this facility?
+        $dontlog = explode(',', $conf['dontlog']);
+        $dontlog = array_map('trim', $dontlog);
+        if (in_array($facility, $dontlog)) $this->isLogging = false;
     }
 
     /**
@@ -45,7 +53,7 @@ class Logger
      * @param mixed $details Any details that should be added to the log entry
      * @param string $file A source filename if this is related to a source position
      * @param int $line A line number for the above file
-     * @return bool
+     * @return bool has a log been written?
      */
     static public function error($message, $details = null, $file = '', $line = 0)
     {
@@ -61,7 +69,7 @@ class Logger
      * @param mixed $details Any details that should be added to the log entry
      * @param string $file A source filename if this is related to a source position
      * @param int $line A line number for the above file
-     * @return bool
+     * @return bool has a log been written?
      */
     static public function debug($message, $details = null, $file = '', $line = 0)
     {
@@ -77,7 +85,7 @@ class Logger
      * @param mixed $details Any details that should be added to the log entry
      * @param string $file A source filename if this is related to a source position
      * @param int $line A line number for the above file
-     * @return bool
+     * @return bool has a log been written?
      */
     static public function deprecated($message, $details = null, $file = '', $line = 0)
     {
@@ -93,10 +101,12 @@ class Logger
      * @param mixed $details Any details that should be added to the log entry
      * @param string $file A source filename if this is related to a source position
      * @param int $line A line number for the above file
-     * @return bool
+     * @return bool has a log been written?
      */
     public function log($message, $details = null, $file = '', $line = 0)
     {
+        if(!$this->isLogging) return false;
+
         // details are logged indented
         if ($details) {
             if (!is_string($details)) {

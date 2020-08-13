@@ -422,7 +422,7 @@ function dbg($msg,$hidden=false){
 }
 
 /**
- * Print info to a log file
+ * Print info to debug log file
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @deprecated 2020-08-13
@@ -430,18 +430,10 @@ function dbg($msg,$hidden=false){
  * @param string $header
  */
 function dbglog($msg,$header=''){
-    global $conf;
     dbg_deprecated('\\dokuwiki\\Logger');
 
-    // The debug log isn't automatically cleaned thus only write it when
-    // debugging has been enabled by the user.
-    if($conf['allowdebug'] !== 1) return;
-    if(is_object($msg) || is_array($msg)){
-        $msg = print_r($msg,true);
-    }
-
     // was the msg as single line string? use it as header
-    if($header === '' && strpos($msg, "\n") === false) {
+    if($header === '' && is_string($msg) && strpos($msg, "\n") === false) {
         $header = $msg;
         $msg = '';
     }
