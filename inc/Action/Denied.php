@@ -22,8 +22,9 @@ class Denied extends AbstractAclAction
     /** @inheritdoc */
     public function tplContent()
     {
+        global $INPUT;
         $this->showBanner();
-        if (empty($_SERVER['REMOTE_USER']) && actionOK('login')) {
+        if (empty($INPUT->server->str('REMOTE_USER')) && actionOK('login')) {
             (new Ui\Login)->show();
         }
     }

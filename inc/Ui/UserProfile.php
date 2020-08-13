@@ -46,7 +46,7 @@ class UserProfile extends Ui
 
         $attr = array('size' => '50', 'disabled' => 'disabled');
         $input = $form->addTextInput('login', $lang['user'])->attrs($attr)->addClass('edit')
-            ->val($_SERVER['REMOTE_USER']);
+            ->val($INPUT->server->str('REMOTE_USER'));
         $input->getLabel()->attr('class', 'block');
         $form->addHTML("<br>\n");
 

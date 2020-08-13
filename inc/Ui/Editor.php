@@ -124,7 +124,7 @@ class Editor extends Ui
             $input->getLabel()->attr('class', 'nowrap');
 
             // adds a checkbox for minor edits for logged in users
-            if ($conf['useacl'] && $_SERVER['REMOTE_USER']) {
+            if ($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
                 $form->addCheckbox('minor', $lang['minoredit'])->id('edit__minoredit')->addClass('nowrap')->val('1');
             }
             $form->addTagClose('div'); // close div summary class
