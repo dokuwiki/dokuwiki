@@ -583,7 +583,7 @@ class Tar extends Archive
 
         $return['checksum'] = OctDec(trim($header['checksum']));
         if ($return['checksum'] != $chks) {
-            throw new ArchiveCorruptedException('Header does not match it\'s checksum');
+            throw new ArchiveCorruptedException('Header does not match its checksum');
         }
 
         $return['filename'] = trim($header['filename']);
