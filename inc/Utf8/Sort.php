@@ -15,26 +15,26 @@ namespace dokuwiki\Utf8;
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Moisés Braga Ribeiro <moisesbr@gmail.com>
+ * @author     Andreas Gohr <andi@splitbrain.org>
  */
 class Sort
 {
     /** @var \Collator[] language specific collators, usually only one */
-    protected static $collator = [];
+    protected static $collators = [];
 
     /** @var bool should the intl extension be used if available? For testing only */
     protected static $useIntl = true;
 
     /**
      * Initialization of a collator using $conf['lang'] as the locale.
-     * The initialization is done only once, except when $reload is set to true.
+     * The initialization is done only once.
      * The collation takes "natural ordering" into account, that is, "page 2" is before "page 10".
      *
-     * @param bool $reload Usually false; true forces collator re-creation
      * @return \Collator Returns a configured collator or null if the collator cannot be created.
      *
      * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
      */
-    protected static function getCollator($reload = false)
+    protected static function getCollator()
     {
         global $conf;
         $lc = $conf['lang'];
@@ -45,27 +45,30 @@ class Sort
         }
 
         // load collator if not available yet
-        if ($reload || !isset(self::$collator[$lc])) {
+        if (!isset(self::$collators[$lc])) {
             $collator = \Collator::create($lc);
-            if (!isset($collator)) return null;
+            if (!isset($collator)) return null; // check needed as stated in the docs
             $collator->setAttribute(\Collator::NUMERIC_COLLATION, \Collator::ON);
-            self::$collator[$lc] = $collator;
+            dbglog('Collator created with locale "' . $lc . '": numeric collation on, ' .
+                   'valid locale "' . $collator->getLocale(\Locale::VALID_LOCALE) . '", ' .
+                   'actual locale "' . $collator->getLocale(\Locale::ACTUAL_LOCALE) . '"');
+            self::$collators[$lc] = $collator;
         }
 
-        return self::$collator[$lc];
+        return self::$collators[$lc];
     }
 
     /**
-     * Enable or disable the use of the intl extension collator
-     *
-     * This is mostly used for testing and should not be used in normal code
+     * Enable or disable the use of the "intl" extension collator.
+     * This is used for testing and should not be used in normal code.
      *
      * @param bool $use
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
     public static function useIntl($use = true)
     {
         self::$useIntl = $use;
-        self::$collator = [];
     }
 
     /**
@@ -154,6 +157,7 @@ class Sort
      * @return bool Returns true on success or false on failure.
      *
      * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
     public static function asortFN(&$array)
     {
@@ -166,5 +170,4 @@ class Sort
             }
         });
     }
-
 }
