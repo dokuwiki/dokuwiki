@@ -6,6 +6,7 @@ use Doku_Renderer_xhtml;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\Event;
+use dokuwiki\Utf8\Sort;
 
 define('DOKU_API_VERSION', 10);
 
@@ -310,7 +311,7 @@ class ApiCore
         $list = array();
         $pages = idx_get_indexer()->getPages();
         $pages = array_filter(array_filter($pages, 'isVisiblePage'), 'page_exists');
-        intl_ksort($pages);
+        Sort::ksort($pages);
 
         foreach (array_keys($pages) as $idx) {
             $perm = auth_quickaclcheck($pages[$idx]);

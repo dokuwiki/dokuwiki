@@ -29,7 +29,6 @@ require_once(DOKU_INC.'inc/media.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/parserutils.php');
 require_once(DOKU_INC.'inc/search.php');
-require_once(DOKU_INC.'inc/sort.php');
 require_once(DOKU_INC.'inc/template.php');
 require_once(DOKU_INC.'inc/toolbar.php');
 require_once(DOKU_INC.'inc/utf8.php');
