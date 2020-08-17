@@ -8,7 +8,6 @@ use dokuwiki\Utf8\Sort;
  */
 class sort_with_collator_test extends DokuWikiTest
 {
-
     /*
      * Dependency for tests that need "intl" extension.
      */
@@ -26,23 +25,41 @@ class sort_with_collator_test extends DokuWikiTest
      */
     public function provideWordPairs()
     {
-        // ADVICE: craft word pairs to double-check the collator;
-        // if sort by 1st letter fails, sort by 2nd letter gives the opposite result
+        // ADVICE: craft word pairs to double-check the collator, such that
+        // sort by 2nd letter gives the opposite result of sort by 1st letter
         static $pairs = [
             // Esperanto
             'eo' => [
-                // c ĉ d
+                // c < ĉ < d
                 ['celo', 'ĉapo'], ['ĉokolado', 'dento'],
-                // g ĝ h ĥ i
+                // g < ĝ < h < ĥ < i
                 ['glacio', 'ĝirafo'], ['ĝojo', 'haro'], ['horo', 'ĥameleono'], ['ĥoro', 'iam'],
-                // j ĵ k
+                // j < ĵ < k
                 ['jes', 'ĵaŭdo'], ['ĵurnalo', 'kapo'],
-                // s ŝ t
+                // s < ŝ < t
                 ['seka', 'ŝako'], ['ŝuo', 'tablo'],
-                // u ŭ v
+                // u < ŭ < v
                 ['urso', 'ŭaŭ'], ['ŭo', 'vino'],
                 // natural sort
                 ['paĝo 2', 'paĝo 10'], ['paĝo 51', 'paĝo 100']
+            ],
+
+            // Portuguese
+            'pt' => [
+                // a = á = à = â = ã
+                ['a', 'à'], ['água', 'amor'], ['às', 'ato'], ['âmbar', 'arte'], ['lã', 'lata'],
+                // e = é = ê
+                ['de', 'dê'], ['pé', 'pedra'], ['pêssego', 'peste'],
+                // i = í
+                ['liquido', 'líquido'], ['índio', 'indireto'],
+                // o = ó = ô = õ
+                ['avó', 'avô'], ['ótimo', 'ovo'], ['ônibus', 'osso'], ['limões', 'limonada'],
+                // u = ú = ü (ü appears in old texts)
+                ['numero', 'número'], ['último', 'um'], ['tranqüila', 'tranquilamente'],
+                // c = ç
+                ['faca', 'faça'], ['taça', 'taco'],
+                // natural sort
+                ['página 2', 'página 10'], ['página 51', 'página 100']
             ],
         ];
 
@@ -64,16 +81,31 @@ class sort_with_collator_test extends DokuWikiTest
      */
     public function provideSortedCharList()
     {
-        // ADVICE: where necessary, add another character to double-check the collator;
-        // if sort by 1st letter fails, sort by 2nd letter gives the opposite result
+        // ADVICE: where necessary, add another character to double-check the collator,
+        // such that sort by 2nd letter gives the opposite result of sort by 1st letter
         static $data = [
             // Esperanto
+            // no equivalent letters; 2nd letter added in collation to double-check
+            // the sequences c/ĉ/d, g/ĝ/h/ĥ/i, j/ĵ/k, s/ŝ/t, u/ŭ/v
             'eo' => 'a b ci ĉe da e f gu ĝo hi ĥe ia ju ĵo ke l m n o p r so ŝi te us ŭo ve z',
+
             // German
             // vowels with umlaut come after (thus "a" < "ä"), but are equivalent
-            // in collation (thus "äpfel" < "arzt"), so a 2nd letter breaks the test;
+            // in collation (thus "Äpfel" < "Arzt"), so a 2nd letter would break the test;
             // "ß" comes after "s", but is equivalent to "ss" in collation
             'de' => 'a ä b c d e f g h i j k l m n o ö p q r sr ß st t u ü v w x y z',
+
+            // Portuguese
+            // vowels with accent come after (thus "a" < "á"), but are equivalent
+            // in collation (thus "água" < "amor"), so a 2nd letter would break the test;
+            // the same goes for "ç" in relation to "c"
+            'pt' => 'a á à â ã b c ç d e é ê f g h i í j k l m n o ó ô õ p q r s t u ú ü v w x y z',
+
+            // Spanish
+            // 2nd letter added in collation to double-check the sequence n/ñ/o;
+            // vowels with accent come after (thus "a" < "á"), but are equivalent
+            // in collation (thus "ácido" < "agua"), so a 2nd letter would break the test
+            'es' => 'a á b c d e é f g h i í j k l m nu ño oh óh p q r s t u ú v w x y z',
         ];
 
         foreach ($data as $lang => $chars) {
