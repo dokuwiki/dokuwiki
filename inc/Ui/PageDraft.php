@@ -53,8 +53,6 @@ class PageDraft extends Ui
         // emit HTML_DRAFTFORM_OUTPUT event
         Event::createAndTrigger('HTML_DRAFTFORM_OUTPUT', $form, null, false);
         print $form->toHTML();
-
-        print DOKU_LF;
     }
 
 }

@@ -125,6 +125,7 @@ class Editor extends Ui
 
             // adds a checkbox for minor edits for logged in users
             if ($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
+                $form->addHTML(' ');
                 $form->addCheckbox('minor', $lang['minoredit'])->id('edit__minoredit')->addClass('nowrap')->val('1');
             }
             $form->addTagClose('div'); // close div summary class
@@ -146,9 +147,7 @@ class Editor extends Ui
         // start editor html output
         if ($wr) {
             // sets changed to true when previewed
-            echo '<script>/*<![CDATA[*/'. DOKU_LF;
-            echo 'textChanged = ' . ($mod ? 'true' : 'false');
-            echo '/*!]]>*/</script>' . DOKU_LF;
+            echo '<script>/*<![CDATA[*/'.'textChanged = '. ($mod ? 'true' : 'false') .'/*!]]>*/</script>';
         }
 
         // print intro locale text (edit, rditrev, or read.txt)
@@ -173,13 +172,13 @@ class Editor extends Ui
         if ($draft->isDraftAvailable()) {
             echo $draft->getDraftMessage();
         }
-        echo '</div>'.DOKU_LF;
+        echo '</div>';
 
         // emit HTML_EDITFORM_OUTPUT event
         Event::createAndTrigger('HTML_EDITFORM_OUTPUT', $form, null, false);
         echo $form->toHTML();
 
-        echo '</div>'.DOKU_LF; // close div editBox class
+        echo '</div>'; // close div editBox class
     }
 
     /**

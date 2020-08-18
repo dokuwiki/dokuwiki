@@ -31,7 +31,7 @@ class UserRegister extends Ui
 
         // print intro
         print p_locale_xhtml('register');
-        print '<div class="centeralign">'.DOKU_LF;
+        print '<div class="centeralign">';
 
         // create the login form
         $form = new Form(['id' => 'dw__register']);
@@ -72,7 +72,7 @@ class UserRegister extends Ui
         Event::createAndTrigger('HTML_REGISTERFORM_OUTPUT', $form, null, false);
         print $form->toHTML();
 
-        print '</div>'.DOKU_LF;
+        print '</div>';
     }
 
 }

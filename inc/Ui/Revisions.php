@@ -35,6 +35,7 @@ class Revisions extends Ui
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Ben Coburn <btcoburn@silicodon.net>
      * @author Kate Arzamastseva <pshns@ukr.net>
+     * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      *
      * @triggers HTML_REVISIONSFORM_OUTPUT
      * @return void
@@ -298,20 +299,6 @@ class Revisions extends Ui
         $html.= '</div>';
         return $html;
     }
-
-/* ----------------------------------------------------------------------------------------
-    $html = implode(' ', [            // Ui\Recent display      // Ui\Revisions display
-        $objRevInfo->itemIcon(),      // filetype icon
-        $objRevInfo->editDate(),      // edit date and time     // edit date and time
-        $objRevInfo->difflink(),      // link to diffview icon  // link to diffview icon
-        $objRevInfo->revisionlink(),  // linkto revisions icon
-        $objRevInfo->itemName(),      // name of page or media  // name of page
-        $objRevInfo->editSummary(),   // edit summary           // edit summary
-        $objRevInfo->editor(),        // editor info            // editor info
-        html_sizechange               // size change indicator  // size change indicator
-                                                                // current indicator (only when k=1)
-    ]);
- * ---------------------------------------------------------------------------------------- */
 
     /**
      * Returns instance of objRevInfo

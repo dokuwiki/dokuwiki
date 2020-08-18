@@ -58,10 +58,9 @@ class PageConflict extends Ui
         Event::createAndTrigger('HTML_CONFLICTFORM_OUTPUT', $form, null, false);
         print $form->toHTML();
 
-        print '<br /><br /><br /><br />'.DOKU_LF;
+        print '<br /><br /><br /><br />';
 
         (new Diff($this->text, false))->show();
-        print DOKU_LF;
     }
 
 }

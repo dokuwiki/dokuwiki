@@ -203,11 +203,11 @@ class Recent extends Ui
     /**
      * Returns instance of objRevInfo
      * @param array $info  Revision info structure of page or media
-     * @return (anonymous class) object
+     * @return objRevInfo object (anonymous class)
      */
     protected function getObjRevInfo(array $info)
     {
-        return new class ($info) // anonymous class
+        return new class ($info) // anonymous class (objRevInfo)
         {
             protected $info;
 

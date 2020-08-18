@@ -32,7 +32,7 @@ class UserProfile extends Ui
 
         // print intro
         print p_locale_xhtml('updateprofile');
-        print '<div class="centeralign">'.DOKU_LF;
+        print '<div class="centeralign">';
 
         $fullname = $INPUT->post->str('fullname', $INFO['userinfo']['name'], true);
         $email = $INPUT->post->str('email', $INFO['userinfo']['mail'], true);
@@ -126,7 +126,7 @@ class UserProfile extends Ui
             print $form->toHTML();
         }
 
-        print '</div>'.DOKU_LF;
+        print '</div>';
     }
 
 }

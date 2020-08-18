@@ -32,7 +32,7 @@ class Backlinks extends Ui
 
         if (!empty($data)) {
             print '<ul class="idx">';
-            foreach ($data as $blink){
+            foreach ($data as $blink) {
                 print '<li><div class="li">';
                 print html_wikilink(':'.$blink,useHeading('navigation') ? null : $blink);
                 print '</div></li>';
@@ -41,7 +41,6 @@ class Backlinks extends Ui
         } else {
             print '<div class="level1"><p>'. $lang['nothingfound'] .'</p></div>';
         }
-        print DOKU_LF;
     }
 
 }

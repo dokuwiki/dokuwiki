@@ -80,7 +80,7 @@ class Login extends Ui
         Event::createAndTrigger('HTML_LOGINFORM_OUTPUT', $form, null, false);
         print $form->toHTML();
 
-        print '</div>'.DOKU_LF;
+        print '</div>';
     }
 
 }

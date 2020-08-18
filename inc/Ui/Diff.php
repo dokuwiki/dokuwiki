@@ -228,7 +228,7 @@ class Diff extends Ui
         print $this->insertSoftbreaks($diffformatter->format($diff));
 
         print '</table>';
-        print '</div>'. DOKU_LF;
+        print '</div>';
     }
 
 
@@ -467,7 +467,7 @@ class Diff extends Ui
         }
         return  '<a class="'. $linktype .'" href="'. wl($ID, $urlparam) .'" title="'. $lang[$linktype] .'">'
               . '<span>'. $lang[$linktype] .'</span>'
-              . '</a>'. DOKU_LF;
+              . '</a>';
     }
 
 

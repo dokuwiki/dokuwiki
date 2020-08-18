@@ -113,7 +113,7 @@ class Subscribe extends Ui
         Event::createAndTrigger('HTML_SUBSCRIBEFORM_OUTPUT', $form, null, false);
         print $form->toHTML();
 
-        echo '</div>'.DOKU_LF;
+        echo '</div>';
     }
 
 }

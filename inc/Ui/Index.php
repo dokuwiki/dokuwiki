@@ -53,7 +53,7 @@ class Index extends Ui
         search($data, $conf['datadir'], 'search_index', array('ns' => $ns));
         print $this->buildIndexList($data);
 
-        print '</div>'.DOKU_LF;
+        print '</div>';
     }
 
     /**
