@@ -42,254 +42,76 @@ class Revisions extends Ui
     public function show()
     {
         global $ID;
-        global $INFO;
-        global $conf;
+
+        if ($this->media_id) {
+            return $this->showMediaRevisions($this->media_id);
+        } else {
+            return $this->showPageRevisions($ID);
+        }
+    }
+
+    /**
+     * Display a list of Media Revisions in the MediaManager
+     *
+     * @param string $id  media id
+     * @return void
+     */
+    protected function showMediaRevisions($id)
+    {
         global $lang;
 
-        $first    = $this->first;
-        $media_id = $this->media_id;
-
-        $id = $ID;
-        if ($media_id) {
-            $id = $media_id;
-            $changelog = new MediaChangeLog($id);
-        } else {
-            $changelog = new PageChangeLog($id);
-        }
-
-        /* we need to get one additional log entry to be able to
-         * decide if this is the last page or is there another one.
-         * see html_recent()
-         */
-
-        $revisions = $changelog->getRevisions($first, $conf['recent'] +1);
-
-        if (count($revisions) == 0 && $first != 0) {
-            $first = 0;
-            $revisions = $changelog->getRevisions($first, $conf['recent'] +1);
-        }
+        // get revisions, and set correct pagenation parameters (first, hasNext)
+        $first   = $this->first;
         $hasNext = false;
-        if (count($revisions) > $conf['recent']) {
-            $hasNext = true;
-            array_pop($revisions); // remove extra log entry
-        }
-
-        // print intro
-        if (!$media_id) {
-            print p_locale_xhtml('revisions');
-            $exists = $INFO['exists'];
-            $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
-            if (!$display_name) {
-                $display_name = $id;
-            }
-        } else {
-            $exists = file_exists(mediaFN($id));
-            $display_name = $id;
-        }
+        $revisions = $this->getRevisions($first, $hasNext);
 
         // create the form
-        $form = new Form(['id' => 'page__revisions']);
-        $form->addClass('changes');
-        if ($media_id) {
-            $form->attr('action', media_managerURL(array('image' => $media_id), '&'));
-        }
+        $form = new Form([
+                'id' => 'page__revisions', // must not be "media__revisions"
+                'action' => media_managerURL(['image' => $id], '&'),
+                'class'  => 'changes',
+        ]);
+        $form->setHiddenField('mediado', 'diff'); // required for media revisions
         $form->addTagOpen('div')->addClass('no');
 
         // start listing
         $form->addTagOpen('ul');
-
-        if ($exists && $first == 0) {
-            $minor = false;
-            if ($media_id) {
-                $date = dformat(@filemtime(mediaFN($id)));
-                $href = media_managerURL(array('image' => $id, 'tab_details' => 'view'), '&');
-
-                $changelog->setChunkSize(1024);
-                $revinfo = $changelog->getRevisionInfo(@filemtime(fullpath(mediaFN($id))));
-
-                $summary = $revinfo['sum'];
-                $editor = $revinfo['user'] ?: $revinfo['ip'];
-                $sizechange = $revinfo['sizechange'];
-            } else {
-                $date = dformat($INFO['lastmod']);
-                $sizechange = null;
-                if (isset($INFO['meta']) && isset($INFO['meta']['last_change'])) {
-                    if ($INFO['meta']['last_change']['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) {
-                        $minor = true;
-                    }
-                    if (isset($INFO['meta']['last_change']['sizechange'])) {
-                        $sizechange = $INFO['meta']['last_change']['sizechange'];
-                    }
-                }
-                $pagelog = new PageChangeLog($ID);
-                $latestrev = $pagelog->getRevisions(-1, 1);
-                $latestrev = array_pop($latestrev);
-                $href = wl($id, "rev=$latestrev", false, '&');
-                $summary = $INFO['sum'];
-                $editor = $INFO['editor'];
-            }
-
-            $form->addTagOpen('li')->addClass($minor ? 'minor' : '');
-            $form->addTagOpen('div')->addClass('li');
-            $form->addCheckbox('rev2[]')->val('current');
-            $form->addHTML(' ');
-
-            $form->addTagOpen('span')->addClass('data');
-            $form->addHTML($date);
-            $form->addTagClose('span');
-            $form->addHTML(' ');
-
-            $form->addTag('img')->attrs([
-                'src' => DOKU_BASE.'lib/images/blank.gif',
-                'width' => 15,
-                'height' => 11,
-                'alt' => '',
-            ]);
-            $form->addHTML(' ');
-
-            $form->addTagOPen('a')->attr('href', $href)->addClass('wikilink1');
-            $form->addHTML($display_name);
-            $form->addTagClose('a');
-            $form->addHTML(' ');
-
-            if ($media_id) $form->addTagOpen('div');
-
-            if ($summary) {
-                $form->addTagOpen('span')->addClass('sum');
-                if (!$media_id) $form->addHTML(' – ');
-                $form->addHTML('<bdi>' . hsc($summary) . '</bdi>');
-                $form->addTagClose('span');
-            }
-            $form->addHTML(' ');
-
-            $form->addTagOpen('span')->addClass('user');
-            $form->addHTML(
-                (empty($editor)) ? ('('.$lang['external_edit'].')') : '<bdi>'.editorinfo($editor).'</bdi>'
-            );
-            $form->addTagClose('span');
-            $form->addHTML(' ');
-
-            $form->addHTML(html_sizechange($sizechange));
-            $form->addHTML(' ');
-
-            $form->addHTML('('.$lang['current'].')');
-
-            if ($media_id) $form->addTagClose('div');
-
-            $form->addTagClose('div');
-            $form->addTagClose('li');
-        }
-
-        foreach ($revisions as $rev) {
-            $date = dformat($rev);
-            $info = $changelog->getRevisionInfo($rev);
-            if ($media_id) {
-                $exists = file_exists(mediaFN($id, $rev));
-            } else {
-                $exists = page_exists($id, $rev);
-            }
-
-            $class = '';
-            if ($info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) {
-                $class = 'minor';
-            }
-
+        foreach ($revisions as $info) {
+            $rev = $info['date'];
+            $class = ($info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor' : '';
             $form->addTagOpen('li')->addClass($class);
             $form->addTagOpen('div')->addClass('li');
 
-            if ($exists){
+            if (isset($info['current'])) {
+               $form->addCheckbox('rev2[]')->val('current');
+            } elseif (file_exists(mediaFN($id, $rev))) {
                 $form->addCheckbox('rev2[]')->val($rev);
             } else {
-                $form->addTag('img')->attrs([
-                    'src' => DOKU_BASE.'lib/images/blank.gif',
-                    'width' => 15,
-                    'height' => 11,
-                    'alt' => '',
-                ]);
+                $form->addCheckbox('')->val($rev)->attr('disabled','disabled');
             }
             $form->addHTML(' ');
 
-            $form->addTagOpen('span')->addClass('date');
-            $form->addHTML($date);
-            $form->addTagClose('span');
-            $form->addHTML(' ');
-
-            if ($exists) {
-                if (!$media_id) {
-                    $href = wl($id, "rev=$rev,do=diff", false, '&');
-                } else {
-                    $href = media_managerURL(array('image' => $id, 'rev' => $rev, 'mediado' => 'diff'), '&');
-                }
-                $form->addTagOpen('a')->attr('href', $href)->addClass('diff_link');
-                $form->addTag('img')->attrs([
-                    'src'    => DOKU_BASE.'lib/images/diff.png',
-                    'width'  => 15,
-                    'height' => 11,
-                    'title'  => $lang['diff'],
-                    'alt'    => $lang['diff'],
-                ]);
-                $form->addTagClose('a');
-                $form->addHTML(' ');
-
-                if (!$media_id) {
-                    $href = wl($id, "rev=$rev", false, '&');
-                } else {
-                    $href = media_managerURL(array('image' => $id, 'tab_details' => 'view', 'rev' => $rev), '&');
-                }
-                $form->addTagOpen('a')->attr('href', $href)->addClass('wikilink1');
-                $form->addHTML($display_name);
-                $form->addTagClose('a');
-            } else {
-                $form->addTag('img')->attrs([
-                    'src'    => DOKU_BASE.'lib/images/blank.gif',
-                    'width'  => 15,
-                    'height' => 11,
-                    'alt'    => '',
-                ]);
-                $form->addHTML($display_name);
-            }
-            $form->addHTML(' ');
-
-            if ($media_id) $form->addTagOpen('div');
-
-            if ($info['sum']) {
-                $form->addTagOpen('span')->addClass('sum');
-                if (!$media_id) $form->addHTML(' – ');
-                $form->addHTML('<bdi>'. hsc($info['sum']) .'</bdi>');
-                $form->addTagClose('span');
-            }
-            $form->addHTML(' ');
-
-            $form->addTagOpen('span')->addClass('user');
-            if ($info['user']) {
-                $form->addHTML('<bdi>'. editorinfo($info['user']) .'</bdi>');
-                if (auth_ismanager()) {
-                    $form->addHTML(' <bdo dir="ltr">('. $info['ip'] .')</bdo>');
-                }
-            } else {
-                $form->addHTML('<bdo dir="ltr">' .$info['ip'] .'</bdo>');
-            }
-            $form->addTagClose('span');
-            $form->addHTML(' ');
-
-            $form->addHTML(html_sizechange($info['sizechange']));
-
-            if ($media_id) $form->addTagClose('div');
+            $objRevInfo = $this->getObjRevInfo($info);
+            $html = implode(' ', [
+                $objRevInfo->editDate(),          // edit date and time
+                $objRevInfo->difflink(),          // link to diffview icon
+                $objRevInfo->itemName(),          // name of page or media
+                '<div>',
+                $objRevInfo->editSummary(),       // edit summary
+                $objRevInfo->editor(),            // editor info
+                html_sizechange($info['sizechange']), // size change indicator
+                $objRevInfo->currentIndicator(),  // current indicator (only when k=1)
+                '</div>',
+            ]);
+            $form->addHTML($html);
 
             $form->addTagClose('div');
             $form->addTagClose('li');
         }
-
-        // end of revision list
-        $form->addTagClose('ul');
+        $form->addTagClose('ul');  // end of revision list
 
         // show button for diff view
-        if (!$media_id) {
-            $form->addButton('do[diff]', $lang['diff2'])->attr('type', 'submit');
-        } else {
-            $form->setHiddenField('mediado', 'diff');
-            $form->addButton('', $lang['diff2'])->attr('type', 'submit');
-        }
+        $form->addButton('do[diff]', $lang['diff2'])->attr('type', 'submit');
 
         $form->addTagClose('div'); // close div class=no
 
@@ -297,34 +119,338 @@ class Revisions extends Ui
         Event::createAndTrigger('HTML_REVISIONSFORM_OUTPUT', $form, null, false);
         print $form->toHTML();
 
-        print DOKU_LF;
+        // provide navigation for pagenated revision list (of pages and/or media files)
+        print $this->htmlNavigation($id, $first, $hasNext);
+    }
+
+    /**
+     * Display a list of Page Revisions
+     *
+     * @return void
+     */
+    protected function showPageRevisions($id)
+    {
+        global $lang;
+
+        // get revisions, and set correct pagenation parameters (first, hasNext)
+        $first   = $this->first;
+        $hasNext = false;
+        $revisions = $this->getRevisions($first, $hasNext);
+
+        // print intro
+        print p_locale_xhtml('revisions');
+
+        // create the form
+        $form = new Form([
+                'id' => 'page__revisions',
+                'class' => 'changes',
+        ]);
+        $form->addTagOpen('div')->addClass('no');
+
+        // start listing
+        $form->addTagOpen('ul');
+        foreach ($revisions as $info) {
+            $rev = $info['date'];
+            $class = ($info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor' : '';
+            $form->addTagOpen('li')->addClass($class);
+            $form->addTagOpen('div')->addClass('li');
+
+            if (page_exists($id, $rev)) {
+                $form->addCheckbox('rev2[]')->val($rev);
+            } else {
+                $form->addCheckbox('')->val($rev)->attr('disabled','disabled');
+            }
+            $form->addHTML(' ');
+
+            $objRevInfo = $this->getObjRevInfo($info);
+            $html = implode(' ', [
+                $objRevInfo->editDate(),          // edit date and time
+                $objRevInfo->difflink(),          // link to diffview icon
+                $objRevInfo->itemName(),          // name of page or media
+                $objRevInfo->editSummary(),       // edit summary
+                $objRevInfo->editor(),            // editor info
+                html_sizechange($info['sizechange']), // size change indicator
+                $objRevInfo->currentIndicator(),  // current indicator (only when k=1)
+            ]);
+            $form->addHTML($html);
+            $form->addTagClose('div');
+            $form->addTagClose('li');
+        }
+        $form->addTagClose('ul');  // end of revision list
+
+        // show button for diff view
+        $form->addButton('do[diff]', $lang['diff2'])->attr('type', 'submit');
+
+        $form->addTagClose('div'); // close div class=no
+
+        // emit HTML_REVISIONSFORM_OUTPUT event
+        Event::createAndTrigger('HTML_REVISIONSFORM_OUTPUT', $form, null, false);
+        print $form->toHTML();
 
         // provide navigation for pagenated revision list (of pages and/or media files)
-        print '<div class="pagenav">';
+        print $this->htmlNavigation($id, $first, $hasNext);
+    }
+
+
+    /**
+     * Get revisions, and set correct pagenation parameters (first, hasNext)
+     *
+     * @param int  $first
+     * @param bool $hasNext
+     * @return array  revisions to be shown in a pagenated list
+     */
+    protected function getRevisions(&$first, &$hasNext)
+    {
+        global $INFO, $conf;
+
+        if ($this->media_id) {
+            $changelog = new MediaChangeLog($this->media_id);
+        } else {
+            $changelog = new PageChangeLog($INFO['id']);
+        }
+
+        $revisions = [];
+
+        /* we need to get one additional log entry to be able to
+         * decide if this is the last page or is there another one.
+         * see also Ui\Recent::getRecents()
+         */
+        $revlist = $changelog->getRevisions($first, $conf['recent'] +1);
+        if (count($revlist) == 0 && $first != 0) {
+            $first = 0;
+            $revlist = $changelog->getRevisions($first, $conf['recent'] +1);
+        }
+        $exists = ($this->media_id) ? file_exists(mediaFN($this->media_id)) : $INFO['exists'];
+        if ($first === 0 && $exists) {
+            // add current page or media as revision[0]
+            if ($this->media_id) {
+                $rev = filemtime(fullpath(mediaFN($this->media_id)));
+                $revisions[] = $changelog->getRevisionInfo($rev) + array(
+                        'media' => true,
+                        'current' => true,
+                );
+            } else {
+                $revisions[] = array(
+                        'date' => $INFO['lastmod'],
+                        'ip'   => null,
+                        'type' => $INFO['meta']['last_change']['type'],
+                        'id'   => $INFO['id'],
+                        'user' => $INFO['editor'],
+                        'sum'  => $INFO['sum'],
+                        'extra' => null,
+                        'sizechange' => $INFO['meta']['last_change']['sizechange'],
+                        'current' => true,
+                );
+            }
+        }
+
+        // decide if this is the last page or is there another one
+        $hasNext = false;
+        if (count($revlist) > $conf['recent']) {
+            $hasNext = true;
+            array_pop($revlist); // remove one additional log entry
+        }
+
+        // append each revison info array to the revisions
+        foreach ($revlist as $rev) {
+            if ($this->media_id) {
+                $revisions[] = $changelog->getRevisionInfo($rev) + array('media' => true);
+            } else {
+                $revisions[] = $changelog->getRevisionInfo($rev);
+            }
+        }
+        return $revisions;
+    }
+
+    /**
+     * Navigation buttons for Pagenation (prev/next)
+     *
+     * @param string $id  page id or media id
+     * @param int  $first
+     * @param bool $hasNext
+     * @return array  html
+     */
+    protected function htmlNavigation($id, $first, $hasNext)
+    {
+        global $conf;
+
+        $html = '<div class="pagenav">';
         $last = $first + $conf['recent'];
         if ($first > 0) {
-            $first = $first - $conf['recent'];
-            if ($first < 0) $first = 0;
-            print '<div class="pagenav-prev">';
-            if ($media_id) {
-                print html_btn('newer',$media_id,"p",media_managerURL(array('first' => $first), '&amp;', false, true));
+            $first = max($first - $conf['recent'], 0);
+            $html.= '<div class="pagenav-prev">';
+            if ($this->media_id) {
+                $html.= html_btn('newer', $id, "p", media_managerURL(['first' => $first], '&', false, true));
             } else {
-                print html_btn('newer',$id,"p",array('do' => 'revisions', 'first' => $first));
+                $html.= html_btn('newer', $id, "p" ,['do' => 'revisions', 'first' => $first]);
             }
-            print '</div>';
+            $html.= '</div>';
         }
         if ($hasNext) {
-            print '<div class="pagenav-next">';
-            if ($media_id) {
-                print html_btn('older',$media_id,"n",media_managerURL(array('first' => $last), '&amp;', false, true));
+            $html.= '<div class="pagenav-next">';
+            if ($this->media_id) {
+                $html.= html_btn('older', $id, "n", media_managerURL(['first' => $last], '&', false, true));
             } else {
-                print html_btn('older',$id,"n",array('do' => 'revisions', 'first' => $last));
+                $html.= html_btn('older', $id, "n", ['do' => 'revisions', 'first' => $last]);
             }
-            print '</div>';
+            $html.= '</div>';
         }
-        print '</div>';
+        $html.= '</div>';
+        return $html;
+    }
 
-        print DOKU_LF;
+/* ----------------------------------------------------------------------------------------
+    $html = implode(' ', [            // Ui\Recent display      // Ui\Revisions display
+        $objRevInfo->itemIcon(),      // filetype icon
+        $objRevInfo->editDate(),      // edit date and time     // edit date and time
+        $objRevInfo->difflink(),      // link to diffview icon  // link to diffview icon
+        $objRevInfo->revisionlink(),  // linkto revisions icon
+        $objRevInfo->itemName(),      // name of page or media  // name of page
+        $objRevInfo->editSummary(),   // edit summary           // edit summary
+        $objRevInfo->editor(),        // editor info            // editor info
+        html_sizechange               // size change indicator  // size change indicator
+                                                                // current indicator (only when k=1)
+    ]);
+ * ---------------------------------------------------------------------------------------- */
+
+    /**
+     * Returns instance of objRevInfo
+     *
+     * @param array $info  Revision info structure of a page or media file
+     * @return objRevInfo object (anonymous class)
+     */
+    protected function getObjRevInfo(array $info)
+    {
+        return new class ($info) // anonymous class (objRevInfo)
+        {
+            protected $info;
+
+            public function __construct(array $info)
+            {
+                $this->info = $info;
+            }
+
+            // current indicator
+            public function currentIndicator()
+            {
+                global $lang;
+                return ($this->info['current']) ? '('.$lang['current'].')' : '';
+            }
+
+            // edit date and time of the page or media file
+            public function editDate()
+            {
+                return '<span class="date">'. dformat($this->info['date']) .'</span>';
+            }
+
+            // edit summary
+            public function editSummary()
+            {
+                return '<span class="sum">'.' – '. hsc($this->info['sum']).'</span>';
+            }
+
+            // editor of the page or media file
+            public function editor()
+            {
+                // slightly different with display of Ui\Recent, i.e. external edit
+                global $lang;
+                $html = '<span class="user">';
+                if (!$this->info['user'] && !$this->info['ip']) {
+                    $html.= '('.$lang['external_edit'].')';
+                } elseif ($this->info['user']) {
+                    $html.= '<bdi>'. editorinfo($this->info['user']) .'</bdi>';
+                    if (auth_ismanager()) $html.= ' <bdo dir="ltr">('. $this->info['ip'] .')</bdo>';
+                } else {
+                    $html.= '<bdo dir="ltr">'. $this->info['ip'] .'</bdo>';
+                }
+                $html.= '</span>';
+                return $html;
+            }
+
+            // name of the page or media file
+            public function itemName()
+            {
+                // slightly different with display of Ui\Recent, i.e. revison may not exists
+                $id = $this->info['id'];
+                $rev = $this->info['date'];
+
+                if (isset($this->info['media'])) {
+                    // media file revision
+                    if (isset($this->info['current'])) {
+                        $href = media_managerURL(['image'=> $id, 'tab_details'=> 'view'], '&');
+                        $html = '<a href="'.$href.'" class="wikilink1">'.$id.'</a>';
+                    } elseif (file_exists(mediaFN($id, $rev))) {
+                        $href = media_managerURL(['image'=> $id, 'tab_details'=> 'view', 'rev'=> $rev], '&');
+                        $html = '<a href="'.$href.'" class="wikilink1">'.$id.'</a>';
+                    } else {
+                        $html = $id;
+                    }
+                    return $html;
+                } else {
+                    // page revision
+                    $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
+                    if (!$display_name) $display_name = $id;
+                    if ($this->info['current'] || page_exists($id, $rev)) {
+                        $href = wl($id, "rev=$rev", false, '&');
+                        $html = '<a href="'.$href.'" class="wikilink1">'.$display_name.'</a>';
+                    } else {
+                        $html = $display_name;
+                    }
+                    return $html;
+                }
+            }
+
+            // icon difflink
+            public function difflink()
+            {
+                global $lang;
+                $id = $this->info['id'];
+                $rev = $this->info['date'];
+
+                if (isset($this->info['media'])) {
+                    // media file revision
+                    if (isset($this->info['current']) || !file_exists(mediaFN($id, $rev))) {
+                        $html = '<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />';
+                    } else {
+                        $href = media_managerURL(['image'=> $id, 'rev'=> $rev, 'mediado'=>'diff'], '&');
+                        $html = '<a href="'.$href.'" class="diff_link">'
+                              . '<img src="'.DOKU_BASE.'lib/images/diff.png" width="15" height="11"'
+                              . ' title="'. $lang['diff'] .'" alt="'.$lang['diff'] .'" />'
+                              . '</a> ';
+                    }
+                    return $html;
+                } else {
+                    // page revision
+                    if ($this->info['current'] || !page_exists($id, $rev)) {
+                        $html = '<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />';
+                    } else {
+                        $href = wl($id, "rev=$rev,do=diff", false, '&');
+                        $html = '<a href="'.$href.'" class="diff_link">'
+                              . '<img src="'.DOKU_BASE.'lib/images/diff.png" width="15" height="11"'
+                              . ' title="'.$lang['diff'].'" alt="'.$lang['diff'].'" />'
+                              . '</a>';
+                    }
+                    return $html;
+                }
+            }
+
+            // size change
+            public function sizeChange()
+            {
+                $class = 'sizechange';
+                $value = filesize_h(abs($this->info['sizechange']));
+                if ($this->info['sizechange'] > 0) {
+                    $class .= ' positive';
+                    $value = '+' . $value;
+                } elseif ($this->info['sizechange'] < 0) {
+                    $class .= ' negative';
+                    $value = '-' . $value;
+                } else {
+                    $value = '±' . $value;
+                }
+                return '<span class="'.$class.'">'.$value.'</span>';
+            }
+        }; // end of anonymous class (objRevInfo)
     }
 
 }
