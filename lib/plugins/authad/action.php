@@ -61,8 +61,12 @@ class action_plugin_authad extends DokuWiki_Action_Plugin
         $domains = $auth->getConfiguredDomains();
         if (count($domains) <= 1) return; // no choice at all
 
-        /** @var Doku_Form $form */
+        /** @var dokuwiki\Form\Form $form */
         $form =& $event->data;
+
+        // find the username input box
+        $pos = $form->findPositionByAttribute('name', 'u');
+        if ($pos === false) return;
 
         // any default?
         $dom = '';
@@ -73,12 +77,8 @@ class action_plugin_authad extends DokuWiki_Action_Plugin
             // update user field value
             if ($dom) {
                 $usr = $auth->getUserName($usr);
-                if (($pos = $form->findPositionByAttribute('name', 'u')) !== false) {
-                    $element = $form->getElementAt($pos);
-                    $element->val($usr);
-                } else {
-                    return;
-                }
+                $element = $form->getElementAt($pos);
+                $element->val($usr);
             }
         }
 

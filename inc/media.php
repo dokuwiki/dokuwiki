@@ -178,7 +178,7 @@ function media_metaform($id, $auth) {
 
         $form->addTagOpen('div')->addClass('row');
         if ($field[2] == 'text') {
-            $input = $form->addTextInput(
+            $form->addTextInput(
                 $p['name'],
                 ($lang[$field[1]] ? $lang[$field[1]] : $field[1] . ':')
             )->id($p['id'])->addClass($p['class'])->val($value);
@@ -1941,9 +1941,10 @@ function media_searchform($ns, $query = '', $fullscreen = false) {
     $form->setHiddenField($fullscreen ? 'mediado' : 'do', 'searchlist');
 
     $form->addTagOpen('p');
-    $input = $form->addTextInput('q', $lang['searchmedia'])
+    $form->addTextInput('q', $lang['searchmedia'])
             ->attr('title', sprintf($lang['searchmedia_in'], hsc($ns) .':*'))
             ->val($query);
+    $form->addHTML(' ');
     $form->addButton('', $lang['btn_search'])->attr('type', 'submit');
     $form->addTagClose('p');
     $form->addTagClose('div');

@@ -41,7 +41,7 @@ class Recent extends Ui
      */
     public function show()
     {
-        global $lang;
+        global $conf, $lang;
         global $ID;
 
         // get recent items, and set correct pagenation parameters (first, hasNext)
@@ -85,7 +85,7 @@ class Recent extends Ui
                 $objRevInfo->itemName(),          // name of page or media
                 $objRevInfo->editSummary(),       // edit summary
                 $objRevInfo->editor(),            // editor info
-                html_sizechange($recent['sizechange']), // size change indicator
+                $objRevInfo->sizechange(),        // size change indicator
             ]);
             $form->addHTML($html);
             $form->addTagClose('div');
@@ -229,8 +229,40 @@ class Recent extends Ui
             // edit date and time of the page or media file
             public function editDate()
             {
-                $date = $this->info['date'];
-                $html = '<span class="date">'. dformat($date) .'</span>';
+                return '<span class="date">'. dformat($this->info['date']) .'</span>';
+            }
+
+            // edit summary
+            public function editSummary()
+            {
+                return '<span class="sum">'.' – '. hsc($this->info['sum']).'</span>';
+            }
+
+            // editor of the page or media file
+            public function editor()
+            {
+                $html = '<span class="user">';
+                if ($this->info['user']) {
+                    $html.= '<bdi>'. editorinfo($this->info['user']) .'</bdi>';
+                    if (auth_ismanager()) $html.= ' <bdo dir="ltr">('. $this->info['ip'] .')</bdo>';
+                } else {
+                    $html.= '<bdo dir="ltr">'. $this->info['ip'] .'</bdo>';
+                }
+                $html.= '</span>';
+                return $html;
+            }
+
+            // name of the page or media file
+            public function itemName()
+            {
+                $id = $this->info['id'];
+                if (isset($this->info['media'])) {
+                    $href = media_managerURL(['tab_details'=>'view', 'image'=> $id, 'ns'=> getNS($id)], '&');
+                    $class = file_exists(mediaFN($id)) ? 'wikilink1' : 'wikilink2';
+                    $html = '<a href="'.$href.'" class="'.$class.'">'.$id.'</a>';
+                } else {
+                    $html = html_wikilink(':'.$id, (useHeading('navigation') ? null : $id));
+                }
                 return $html;
             }
 
@@ -248,18 +280,20 @@ class Recent extends Ui
                         $href = media_managerURL(
                             ['tab_details'=>'history', 'mediado'=>'diff', 'image'=> $id, 'ns'=> getNS($id)], '&'
                         );
+                    } else {
+                        $href = '';
                     }
                 } else {
                     $href = wl($id, "do=diff", false, '&');
                 }
 
-                if (isset($this->info['media']) && !$diff) {
-                    $html = '<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />';
-                } else {
+                if ($href) {
                     $html = '<a href="'.$href.'" class="diff_link">'
                           . '<img src="'.DOKU_BASE.'lib/images/diff.png" width="15" height="11"'
                           . ' title="'.$lang['diff'].'" alt="'.$lang['diff'].'" />'
                           . '</a>';
+                } else {
+                    $html = '<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />';
                 }
                 return $html;
             }
@@ -281,41 +315,21 @@ class Recent extends Ui
                 return $html;
             }
 
-            // name of the page or media file
-            public function itemName()
+            // size change
+            public function sizeChange()
             {
-                $id = $this->info['id'];
-                if (isset($this->info['media'])) {
-                    $href = media_managerURL(['tab_details'=>'view', 'image'=> $id, 'ns'=> getNS($id)], '&');
-                    $class = file_exists(mediaFN($id)) ? 'wikilink1' : 'wikilink2';
-                    $html = '<a href="'.$href.'" class="'.$class.'">'.$id.'</a>';
+                $class = 'sizechange';
+                $value = filesize_h(abs($this->info['sizechange']));
+                if ($this->info['sizechange'] > 0) {
+                    $class .= ' positive';
+                    $value = '+' . $value;
+                } elseif ($this->info['sizechange'] < 0) {
+                    $class .= ' negative';
+                    $value = '-' . $value;
                 } else {
-                    $html = html_wikilink(':'.$id, (useHeading('navigation') ? null : $id));
+                    $value = '±' . $value;
                 }
-                return $html;
-            }
-
-            // edit summary
-            public function editSummary()
-            {
-                $html = '<span class="sum">';
-                $html.= ' – '. hsc($this->info['sum']);
-                $html.= '</span>';
-                return $html;
-            }
-
-            // editor of the page or media file
-            public function editor()
-            {
-                $html = '<span class="user">';
-                if ($this->info['user']) {
-                    $html.= '<bdi>'. editorinfo($this->info['user']) .'</bdi>';
-                    if (auth_ismanager()) $html.= ' <bdo dir="ltr">('. $this->info['ip'] .')</bdo>';
-                } else {
-                    $html.= '<bdo dir="ltr">'. $this->info['ip'] .'</bdo>';
-                }
-                $html.= '</span>';
-                return $html;
+                return '<span class="'.$class.'">'.$value.'</span>';
             }
         }; // end of anonymous class (objRevInfo)
     }
