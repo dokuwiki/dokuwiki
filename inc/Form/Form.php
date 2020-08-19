@@ -467,11 +467,20 @@ class Form extends Element
     /**
      * The HTML representation of the whole form
      *
+     * @param string $eventName  (optional) name of the event: HTMLFORM_{$name}_OUTPUT
      * @return string
      */
-    public function toHTML()
+    public function toHTML($eventName = null)
     {
         $this->balanceFieldsets();
+
+        // trigger event to provide an opportunity to modify this form
+        if (isset($eventName)) {
+            if (!preg_match('/^HTMLFORM_[A-Z]+?_OUTPUT$/', $eventName)) {
+                $eventName = 'HTMLFORM_'.strtoupper($eventName).'_OUTPUT';
+            }
+            Event::createAndTrigger($eventName, $this, null, false);
+        }
 
         $html = '<form '. buildAttributes($this->attrs()) .'>';
 
