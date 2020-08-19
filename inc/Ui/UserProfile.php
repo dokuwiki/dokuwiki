@@ -17,8 +17,8 @@ class UserProfile extends Ui
      *
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @triggers HTML_UPDATEPROFILEFORM_OUTPUT
-     * @triggers HTML_PROFILEDELETEFORM_OUTPUT
+     * @triggers HTMLFORM_UPDATEPROFILE_OUTPUT
+     * @triggers HTMLFORM_PROFILEDELETE_OUTPUT
      * @return void
      */
     public function show()
@@ -89,9 +89,8 @@ class UserProfile extends Ui
         $form->addFieldsetClose();
         $form->addTagClose('div');
 
-        // emit HTML_UPDATEPROFILEFORM_OUTPUT event
-        Event::createAndTrigger('HTML_UPDATEPROFILEFORM_OUTPUT', $form, null, false);
-        print $form->toHTML();
+        // print form that might be modified by HTMLFORM_UPDATEPROFILE_OUTPUT event handlers
+        print $form->toHTML('updateprofile');
 
 
         if ($auth->canDo('delUser') && actionOK('profile_delete')) {
@@ -121,9 +120,8 @@ class UserProfile extends Ui
             $form->addFieldsetClose();
             $form->addTagClose('div');
 
-            // emit HTML_PROFILEDELETEFORM_OUTPUT event
-            Event::createAndTrigger('HTML_PROFILEDELETEFORM_OUTPUT', $form, null, false);
-            print $form->toHTML();
+            // print form that might be modified by HTMLFORM_PROFILEDELETE_OUTPUT event handlers
+            print $form->toHTML('profiledelete');
         }
 
         print '</div>';

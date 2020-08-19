@@ -37,7 +37,7 @@ class Recent extends Ui
      * @author Kate Arzamastseva <pshns@ukr.net>
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      *
-     * @triggers HTML_RECENTFORM_OUTPUT
+     * @triggers HTMLFORM_RECENT_OUTPUT
      * @return void
      */
     public function show()
@@ -47,7 +47,7 @@ class Recent extends Ui
 
         // get recent items, and set correct pagenation parameters (first, hasNext)
         $first = $this->first;
-        $hasNext = null;
+        $hasNext = false;
         $recents = $this->getRecents($first, $hasNext);
 
         // print intro
@@ -99,9 +99,8 @@ class Recent extends Ui
         // provide navigation for pagenated recent list (of pages and/or media files)
         $form->addHTML($this->htmlNavigation($first, $hasNext));
 
-        // emit HTML_CRECENTFORM_OUTPUT event
-        Event::createAndTrigger('HTML_RECENTFORM_OUTPUT', $form, null, false);
-        print $form->toHTML();
+        // print form that might be modified by HTMLFORM_RECENT_OUTPUT event handlers
+        print $form->toHTML('recent');
     }
 
     /**

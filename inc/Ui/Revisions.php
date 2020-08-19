@@ -37,7 +37,7 @@ class Revisions extends Ui
      * @author Kate Arzamastseva <pshns@ukr.net>
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      *
-     * @triggers HTML_REVISIONSFORM_OUTPUT
+     * @triggers HTMLFORM_REVISIONS_OUTPUT
      * @return void
      */
     public function show()
@@ -116,9 +116,8 @@ class Revisions extends Ui
 
         $form->addTagClose('div'); // close div class=no
 
-        // emit HTML_REVISIONSFORM_OUTPUT event
-        Event::createAndTrigger('HTML_REVISIONSFORM_OUTPUT', $form, null, false);
-        print $form->toHTML();
+        // print form that might be modified by HTMLFORM_REVISIONS_OUTPUT event handlers
+        print $form->toHTML('revisions');
 
         // provide navigation for pagenated revision list (of pages and/or media files)
         print $this->htmlNavigation($id, $first, $hasNext);
@@ -184,9 +183,8 @@ class Revisions extends Ui
 
         $form->addTagClose('div'); // close div class=no
 
-        // emit HTML_REVISIONSFORM_OUTPUT event
-        Event::createAndTrigger('HTML_REVISIONSFORM_OUTPUT', $form, null, false);
-        print $form->toHTML();
+        // print form that might be modified by HTMLFORM_REVISIONS_OUTPUT event handlers
+        print $form->toHTML('revisions');
 
         // provide navigation for pagenated revision list (of pages and/or media files)
         print $this->htmlNavigation($id, $first, $hasNext);

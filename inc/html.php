@@ -537,7 +537,6 @@ function html_updateprofile() {
  *
  * @author   Andreas Gohr <andi@splitbrain.org>
  *
- * @triggers HTML_EDITFORM_OUTPUT
  * @deprecated 2020-07-18
  */
 function html_edit() {

@@ -1883,9 +1883,8 @@ function media_uploadform($ns, $auth, $fullscreen = false) {
     }
 
     echo '<div id="mediamanager__uploader">'.DOKU_LF;
-    // emit HTML_LOGINFORM_OUTPUT event
-    Event::createAndTrigger('HTML_UPLOADFORM_OUTPUT', $form, null, false);
-    echo $form->toHTML();
+    // print form that might be modified by HTMLFORM_UPLOAD_OUTPUT event handlers
+    echo $form->toHTML('upload');
     echo '</div>'.DOKU_LF;
 
     echo '<p class="maxsize">';
@@ -1949,9 +1948,8 @@ function media_searchform($ns, $query = '', $fullscreen = false) {
     $form->addTagClose('p');
     $form->addTagClose('div');
 
-    // emit HTML_LOGINFORM_OUTPUT event
-    Event::createAndTrigger('HTML_SEARCHMEDIAFORM_OUTPUT', $form, null, false);
-    print $form->toHTML();
+    // print form that might be modified by HTMLFORM_SEARCHMEDIA_OUTPUT event handlers
+    print $form->toHTML('searchmedia');
 }
 
 /**
