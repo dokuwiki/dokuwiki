@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
+ * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author PaliPalo <palipalo@hotmail.fr>
  * @author Laurent Ponthieu <contact@coopindus.fr>
@@ -196,6 +196,7 @@ $lang['txt_upload']            = 'Sélectionnez un fichier à envoyer:';
 $lang['txt_filename']          = 'Envoyer en tant que (optionnel):';
 $lang['txt_overwrt']           = 'Écraser le fichier cible (s\'il existe)';
 $lang['maxuploadsize']         = 'Taille d\'envoi maximale : %s par fichier';
+$lang['allowedmime']           = 'Liste des extensions de fichier autorisées';
 $lang['lockedby']              = 'Actuellement bloqué par:';
 $lang['lockexpire']            = 'Le blocage expire à:';
 $lang['rssfailed']             = 'Une erreur s\'est produite en récupérant ce flux : ';
