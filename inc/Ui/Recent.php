@@ -3,7 +3,6 @@
 namespace dokuwiki\Ui;
 
 use dokuwiki\ChangeLog\MediaChangeLog;
-use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**

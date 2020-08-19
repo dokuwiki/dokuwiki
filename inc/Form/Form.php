@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Form;
 
+use dokuwiki\Extension\Event;
+
 /**
  * Class Form
  *

@@ -4,7 +4,6 @@ namespace dokuwiki\Ui;
 
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\ChangeLog\MediaChangeLog;
-use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**
@@ -169,7 +168,7 @@ class Revisions extends Ui
                 $objRevInfo->itemName(),          // name of page or media
                 $objRevInfo->editSummary(),       // edit summary
                 $objRevInfo->editor(),            // editor info
-                html_sizechange($info['sizechange']), // size change indicator
+                $objRevInfo->sizechange(),        // size change indicator
                 $objRevInfo->currentIndicator(),  // current indicator (only when k=1)
             ]);
             $form->addHTML($html);
