@@ -69,7 +69,6 @@ class action_plugin_authad extends DokuWiki_Action_Plugin
         if ($pos === false) return;
 
         // any default?
-        $dom = '';
         if ($INPUT->has('u')) {
             $usr = $auth->cleanUser($INPUT->str('u'));
             $dom = $auth->getUserDomain($usr);

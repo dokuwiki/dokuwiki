@@ -271,7 +271,6 @@ class Recent extends Ui
             {
                 global $lang;
                 $id = $this->info['id'];
-                $diff = false;
 
                 if (isset($this->info['media'])) {
                     $revs = (new MediaChangeLog($id))->getRevisions(0, 1);
