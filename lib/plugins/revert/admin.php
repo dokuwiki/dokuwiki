@@ -69,7 +69,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin
     protected function printSearchForm()
     {
         global $lang, $INPUT;
-        echo '<form action="" method="post"><div class="no">';
+        echo '<form method="post"><div class="no">';
         echo '<label>'.$this->getLang('filter').': </label>';
         echo '<input type="text" name="filter" class="edit" value="'.hsc($INPUT->str('filter')).'" /> ';
         echo '<button type="submit">'.$lang['btn_search'].'</button> ';
@@ -123,7 +123,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin
         global $conf;
         global $lang;
         echo '<hr /><br />';
-        echo '<form action="" method="post"><div class="no">';
+        echo '<form method="post"><div class="no">';
         echo '<input type="hidden" name="filter" value="'.hsc($filter).'" />';
         formSecurityToken();
 

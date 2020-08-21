@@ -159,7 +159,7 @@ function print_form($d){
     if(!isset($d['pop'])) $d['pop']=1;
 
     ?>
-    <form action="" method="post">
+    <form method="post">
     <input type="hidden" name="l" value="<?php echo $LC ?>" />
     <fieldset>
         <label for="title"><?php echo $lang['i_wikiname']?>
@@ -245,7 +245,7 @@ function print_retry() {
     global $lang;
     global $LC;
     ?>
-    <form action="" method="get">
+    <form method="get">
       <fieldset>
         <input type="hidden" name="l" value="<?php echo $LC ?>" />
         <button type="submit"><?php echo $lang['i_retry'];?></button>
@@ -634,7 +634,7 @@ function langsel(){
     closedir($dh);
     sort($langs);
 
-    echo '<form action="">';
+    echo '<form>';
     echo $lang['i_chooselang'];
     echo ': <select name="l" onchange="submit()">';
     foreach($langs as $l){
