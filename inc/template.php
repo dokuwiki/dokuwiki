@@ -1872,7 +1872,6 @@ function tpl_classes() {
     $id = str_replace('_', '__', $id);
     $chain = explode(':', $id);
     $pgname = array_pop($chain);
-    $classes = Array();
 
     $classes[] = 'dwl_' . count($chain);
     $ns = 'dwn_';
