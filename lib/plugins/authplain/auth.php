@@ -1,4 +1,5 @@
 <?php
+use dokuwiki\Utf8\Sort;
 
 /**
  * Plaintext authentication backend
@@ -298,7 +299,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
 
         if ($this->users === null) $this->loadUserData();
 
-        ksort($this->users);
+        Sort::ksort($this->users);
 
         $i     = 0;
         $count = 0;
@@ -335,6 +336,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
         foreach($this->users as $user => $info) {
             $groups = array_merge($groups, array_diff($info['grps'], $groups));
         }
+        Sort::ksort($groups);
 
         if($limit > 0) {
             return array_splice($groups, $start, $limit);

@@ -7,6 +7,7 @@
  */
 
 use dokuwiki\Extension\Event;
+use dokuwiki\Utf8\Sort;
 
 /**
  * create snippets for the first few results only
@@ -151,6 +152,7 @@ function _ft_pageSearch(&$data) {
         uksort($docs, 'ft_pagemtimesorter');
     } else {
         // sort docs by count
+        uksort($docs, 'ft_pagesorter');
         arsort($docs);
     }
 
@@ -180,7 +182,7 @@ function ft_backlinks($id, $ignore_perms = false){
         }
     }
 
-    sort($result);
+    Sort::sort($result);
     return $result;
 }
 
@@ -211,7 +213,7 @@ function ft_mediause($id, $ignore_perms = false){
         }
     }
 
-    sort($result);
+    Sort::sort($result);
     return $result;
 }
 
@@ -370,7 +372,7 @@ function ft_pagesorter($a, $b){
     }elseif($ac > $bc){
         return 1;
     }
-    return strcmp ($a,$b);
+    return Sort::strcmp($a,$b);
 }
 
 /**

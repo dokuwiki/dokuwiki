@@ -1,4 +1,5 @@
 <?php
+use dokuwiki\Utf8\Sort;
 
 /**
  * Active Directory authentication backend for DokuWiki
@@ -739,7 +740,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
                 $domains[$key] = ltrim($val['account_suffix'], '@');
             }
         }
-        ksort($domains);
+        Sort::ksort($domains);
 
         return $domains;
     }

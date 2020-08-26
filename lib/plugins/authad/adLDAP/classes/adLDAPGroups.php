@@ -37,6 +37,8 @@
 require_once(dirname(__FILE__) . '/../adLDAP.php');
 require_once(dirname(__FILE__) . '/../collections/adLDAPGroupCollection.php');
 
+use dokuwiki\Utf8\Sort;
+
 /**
 * GROUP FUNCTIONS
 */
@@ -524,7 +526,7 @@ class adLDAPGroups {
             }
         }
         if ($sorted) { 
-            asort($groupsArray); 
+            Sort::asort($groupsArray); 
         }
         return $groupsArray;
     }
