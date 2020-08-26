@@ -28,7 +28,6 @@ class Login extends Ui
      *
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @triggers HTMLFORM_LOGIN_OUTPUT
      * @return void
      */
     public function show()
@@ -75,8 +74,7 @@ class Login extends Ui
             $form->addHTML('<p>'.$lang['pwdforget'].': '. $resendPwLink .'</p>');
         }
 
-        // print form that might be modified by HTMLFORM_LOGIN_OUTPUT event handlers
-        print $form->toHTML('login');
+        print $form->toHTML('Login');
 
         print '</div>';
     }

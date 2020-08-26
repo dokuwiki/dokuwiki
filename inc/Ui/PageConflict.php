@@ -31,7 +31,6 @@ class PageConflict extends Ui
      *
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @triggers HTMLFORM_CONFLICT_OUTPUT
      * @return void
      */
     public function show()
@@ -53,8 +52,7 @@ class PageConflict extends Ui
         $form->addButton('do[cancel]', $lang['btn_cancel'] )->attrs(['type' => 'submit']);
         $form->addTagClose('div');
 
-        // print form that might be modified by HTMLFORM_CONFLICT_OUTPUT event handlers
-        print $form->toHTML('conflict');
+        print $form->toHTML('Conflict');
 
         print '<br /><br /><br /><br />';
 

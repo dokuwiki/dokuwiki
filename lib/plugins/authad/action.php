@@ -18,7 +18,7 @@ class action_plugin_authad extends DokuWiki_Action_Plugin
     public function register(Doku_Event_Handler $controller)
     {
         $controller->register_hook('AUTH_LOGIN_CHECK', 'BEFORE', $this, 'handleAuthLoginCheck');
-        $controller->register_hook('HTMLFORM_LOGIN_OUTPUT', 'BEFORE', $this, 'handleHtmlFormLoginOutput');
+        $controller->register_hook('FORM_LOGIN_OUTPUT', 'BEFORE', $this, 'handleFormLoginOutput');
     }
 
     /**
@@ -52,7 +52,7 @@ class action_plugin_authad extends DokuWiki_Action_Plugin
      * @param Doku_Event $event
      * @param array      $param
      */
-    public function handleHtmlFormLoginOutput(Doku_Event $event, $param)
+    public function handleFormLoginOutput(Doku_Event $event, $param)
     {
         global $INPUT;
         /** @var auth_plugin_authad $auth */

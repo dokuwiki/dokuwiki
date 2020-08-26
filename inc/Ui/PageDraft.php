@@ -17,7 +17,6 @@ class PageDraft extends Ui
      *
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @triggers HTMLFORM_DRAFT_OUTPUT
      * @return void
      */
     public function show()
@@ -49,8 +48,7 @@ class PageDraft extends Ui
         $form->addButton('do[show]',     $lang['btn_cancel']  )->attrs(['type' => 'submit', 'tabindex' => '3']);
         $form->addTagClose('div');
 
-        // print form that might be modified by HTMLFORM_DRAFT_OUTPUT event handlers
-        print $form->toHTML('draft');
+        print $form->toHTML('Draft');
     }
 
 }

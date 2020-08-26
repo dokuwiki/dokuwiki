@@ -469,7 +469,7 @@ class Form extends Element
     /**
      * The HTML representation of the whole form
      *
-     * @param string $eventName  (optional) name of the event: HTMLFORM_{$name}_OUTPUT
+     * @param string $eventName  (optional) name of the event: FORM_{$name}_OUTPUT
      * @return string
      */
     public function toHTML($eventName = null)
@@ -478,9 +478,7 @@ class Form extends Element
 
         // trigger event to provide an opportunity to modify this form
         if (isset($eventName)) {
-            if (!preg_match('/^HTMLFORM_[A-Z]+?_OUTPUT$/', $eventName)) {
-                $eventName = 'HTMLFORM_'.strtoupper($eventName).'_OUTPUT';
-            }
+            $eventName = 'FORM_'.strtoupper($eventName).'_OUTPUT';
             Event::createAndTrigger($eventName, $this, null, false);
         }
 

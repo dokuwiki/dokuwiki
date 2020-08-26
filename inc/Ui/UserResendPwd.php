@@ -17,7 +17,6 @@ class UserResendPwd extends Ui
      * @author   Benoit Chesneau <benoit@bchesneau.info>
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @triggers HTMLFORM_RESENDPWD_OUTPUT
      * @return void
      */
     public function show()
@@ -37,8 +36,7 @@ class UserResendPwd extends Ui
             $form = $this->formResendPassword();
         }
 
-        //print form that might be modified by HTMLFORM_RESENDPWD_OUTPUT event handlers
-        print $form->toHTML('resendpwd');
+        print $form->toHTML('ResendPwd');
 
         print '</div>';
     }

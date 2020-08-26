@@ -705,9 +705,8 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
         $searchForm->addTagClose('div');
     }
     $searchForm->addTagClose('div');
-    Event::createAndTrigger('FORM_QUICKSEARCH_OUTPUT', $searchForm);
 
-    echo $searchForm->toHTML();
+    echo $searchForm->toHTML('QuickSearch');
 
     return true;
 }

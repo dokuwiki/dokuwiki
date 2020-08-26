@@ -19,7 +19,6 @@ class Editor extends Ui
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
      * @triggers HTML_EDIT_FORMSELECTION
-     * @triggers HTMLFORM_EDIT_OUTPUT
      * @return void
      */
     public function show()
@@ -174,8 +173,7 @@ class Editor extends Ui
         }
         echo '</div>';
 
-        // print form that might be modified by HTMLFORM_EDIT_OUTPUT event handlers
-        echo $form->toHTML('edit');
+        echo $form->toHTML('Edit');
 
         echo '</div>'; // close div editBox class
     }

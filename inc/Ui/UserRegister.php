@@ -16,7 +16,6 @@ class UserRegister extends Ui
      *
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @triggers HTMLFORM_REGISTER_OUTPUT
      * @return void
      */
     public function show()
@@ -67,8 +66,7 @@ class UserRegister extends Ui
         $form->addFieldsetClose();
         $form->addTagClose('div');
 
-        // print form that might be modified by HTMLFORM_REGISTER_OUTPUT event handlers
-        print $form->toHTML('register');
+        print $form->toHTML('Register');
 
         print '</div>';
     }

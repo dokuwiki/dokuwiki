@@ -16,7 +16,6 @@ class Subscribe extends Ui
      *
      * @author Adrian Lang <lang@cosmocode.de>
      *
-     * @triggers HTMLFORM_SUBSCRIBE_OUTPUT
      * @return void
      */
     public function show()
@@ -108,8 +107,7 @@ class Subscribe extends Ui
         $form->addButton('do[subscribe]', $lang['subscr_m_subscribe'])->attr('type', 'submit');
         $form->addTagClose('div');
 
-        // print form that might be modified by HTMLFORM_SUBSCRIBE_OUTPUT event handlers
-        print $form->toHTML('subscribe');
+        print $form->toHTML('Subscribe');
 
         echo '</div>';
     }
