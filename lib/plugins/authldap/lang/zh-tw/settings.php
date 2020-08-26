@@ -2,8 +2,8 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
- * @author syaoranhinata@gmail.com
+ *
+ * @author syaoranhinata <syaoranhinata@gmail.com>
  */
 $lang['server']                = '您的 LDAP 伺服器。填寫主機名稱 (<code>localhost</code>) 或完整的 URL (<code>ldap://server.tld:389</code>)';
 $lang['port']                  = 'LDAP 伺服器端口 (若上方沒填寫完整的 URL)';

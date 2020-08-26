@@ -585,7 +585,7 @@ function check_functions(){
                          'ob_start opendir parse_ini_file readfile realpath '.
                          'rename rmdir serialize session_start unlink usleep '.
                          'preg_replace file_get_contents htmlspecialchars_decode '.
-                         'spl_autoload_register stream_select fsockopen pack');
+                         'spl_autoload_register stream_select fsockopen pack xml_parser_create');
 
     if (!function_exists('mb_substr')) {
         $funcs[] = 'utf8_encode';

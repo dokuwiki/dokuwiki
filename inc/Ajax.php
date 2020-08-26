@@ -3,6 +3,7 @@
 namespace dokuwiki;
 
 use dokuwiki\Ui;
+use dokuwiki\Utf8\Sort;
 
 /**
  * Manage all builtin AJAX calls
@@ -100,7 +101,7 @@ class Ajax {
         $data = array_map('trim', $data);
         $data = array_map('noNS', $data);
         $data = array_unique($data);
-        sort($data);
+        Sort::sort($data);
 
         /* now construct a json */
         $suggestions = array(

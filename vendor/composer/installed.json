@@ -44,25 +44,25 @@
     },
     {
         "name": "geshi/geshi",
-        "version": "v1.0.9.1",
-        "version_normalized": "1.0.9.1",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/GeSHi/geshi-1.0.git",
-            "reference": "fd22ab78481bf90337862b590e6f7517863926b8"
+            "reference": "3c12a7931d509c5e3557c5ed44c9a32e9c917c7d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/fd22ab78481bf90337862b590e6f7517863926b8",
-            "reference": "fd22ab78481bf90337862b590e6f7517863926b8",
+            "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/3c12a7931d509c5e3557c5ed44c9a32e9c917c7d",
+            "reference": "3c12a7931d509c5e3557c5ed44c9a32e9c917c7d",
             "shasum": ""
         },
         "require-dev": {
             "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.2"
         },
-        "time": "2019-10-20T20:54:46+00:00",
+        "time": "2020-06-22T15:46:04+00:00",
         "type": "library",
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "classmap": [
                 "src/geshi/",
@@ -244,17 +244,17 @@
     },
     {
         "name": "phpseclib/phpseclib",
-        "version": "2.0.27",
-        "version_normalized": "2.0.27.0",
+        "version": "2.0.28",
+        "version_normalized": "2.0.28.0",
         "source": {
             "type": "git",
             "url": "https://github.com/phpseclib/phpseclib.git",
-            "reference": "34620af4df7d1988d8f0d7e91f6c8a3bf931d8dc"
+            "reference": "d1ca58cf33cb21046d702ae3a7b14fdacd9f3260"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/34620af4df7d1988d8f0d7e91f6c8a3bf931d8dc",
-            "reference": "34620af4df7d1988d8f0d7e91f6c8a3bf931d8dc",
+            "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/d1ca58cf33cb21046d702ae3a7b14fdacd9f3260",
+            "reference": "d1ca58cf33cb21046d702ae3a7b14fdacd9f3260",
             "shasum": ""
         },
         "require": {
@@ -272,7 +272,7 @@
             "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
             "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
         },
-        "time": "2020-04-04T23:17:33+00:00",
+        "time": "2020-07-08T09:08:33+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

@@ -118,7 +118,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
             $ext->setExtension($extname);
             $date = $ext->getInstalledVersion();
             $avail = $ext->getLastUpdate();
-            if ($avail && $avail > $date) {
+            if ($avail && $avail > $date && !$ext->isBundled()) {
                 $ok += $this->cmdInstall([$extname]);
             }
         }

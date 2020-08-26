@@ -3,10 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author GHSRobert Ciang <robertus0617@gmail.com>
  * @author Stan <talktostan@gmail.com>
  * @author June-Hao Hou <junehao@gmail.com>
  * @author lioujheyu <lioujheyu@gmail.com>
- * @author Liou, Jhe-Yu <lioujheyu@gmail.com>
  */
 $lang['menu']                  = '延伸功能管理';
 $lang['tab_plugins']           = '已安裝外掛';

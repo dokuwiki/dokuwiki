@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Jenxi <seow@jenxi.com>
  * @author FENG.JIE <ahx@qq.com>
  * @author Xin <chenxin1034@gmail.com>
  * @author HaoNan <haonan@zhuoming.info>
@@ -189,6 +190,7 @@ $lang['txt_upload']            = '选择要上传的文件:';
 $lang['txt_filename']          = '上传并重命名为（可选）:';
 $lang['txt_overwrt']           = '覆盖已存在的同名文件';
 $lang['maxuploadsize']         = '上传限制。每个文件 %s';
+$lang['allowedmime']           = '允许文件扩展名列表';
 $lang['lockedby']              = '目前已被下列人员锁定:';
 $lang['lockexpire']            = '预计锁定解除于:';
 $lang['rssfailed']             = '获取该 RSS 信息时产生错误：';
