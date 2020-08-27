@@ -35,11 +35,11 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         // add
         $options->registerCommand('add', 'Add an user to auth backend');
         $options->registerArgument('name', 'Username', true, 'add');
-        $options->registerArgument('mail', 'mail address', true, 'add');
+        $options->registerArgument('mail', 'Email address', true, 'add');
         $options->registerArgument('full_name', 'Full name', false, 'add');
-        $options->registerArgument('groups', 'groups to be added', false, 'add');
-        $options->registerArgument('password', 'password of user', false, 'add');
-        $options->registerOption('notify', 'notify user', 'n', false, 'add');
+        $options->registerArgument('groups', 'Groups to be added', false, 'add');
+        $options->registerArgument('password', 'Password of user', false, 'add');
+        $options->registerOption('notify', 'Notify user', 'n', false, 'add');
 
         // delete
         $options->registerCommand('delete', 'Delete user(s) from auth backend');
@@ -47,12 +47,12 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
 
         // add to group
         $options->registerCommand('addtogroup', 'Add user to group(s)');
-        $options->registerArgument('name', 'Username, comma-seperated', true, 'addtogroup');
+        $options->registerArgument('name', 'Username', true, 'addtogroup');
         $options->registerArgument('group', 'Group(s), comma-seperated', true, 'addtogroup');
 
         // remove from group
         $options->registerCommand('removefromgroup', 'Remove user from group(s)');
-        $options->registerArgument('name', 'Username, comma-seperated', true, 'removefromgroup');
+        $options->registerArgument('name', 'Username', true, 'removefromgroup');
         $options->registerArgument('group', 'Group(s), comma-seperated', true, 'removefromgroup');
     }
 
@@ -259,7 +259,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         if (!empty($grps) && $auth->canDo('modGroups')) {
             $changes['grps'] = $oldinfo['grps'];
             foreach ($grps as $group) {
-                if (($pos = array_search($group, $changes['grps'])) ==! false) {
+                if (($pos = array_search($group, $changes['grps'])) == !false) {
                     unset($changes['grps'][$pos]);
                 }
             }
