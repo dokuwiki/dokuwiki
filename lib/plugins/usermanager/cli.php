@@ -230,7 +230,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         }
 
         if (!empty(array_diff($changes['grps'], $oldinfo['grps']))) {
-            if ($ok = $auth->triggerUserMod('modify', array($name, $changes))) {
+            if ($auth->triggerUserMod('modify', array($name, $changes))) {
                 $this->info($this->getLang('update_ok'));
             } else {
                 $this->error($this->getLang('update_fail'));
@@ -266,7 +266,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         }
 
         if (!empty(array_diff($oldinfo['grps'], $changes['grps']))) {
-            if ($ok = $auth->triggerUserMod('modify', array($name, $changes))) {
+            if ($auth->triggerUserMod('modify', array($name, $changes))) {
                 $this->info($this->getLang('update_ok'));
             } else {
                 $this->error($this->getLang('update_fail'));
