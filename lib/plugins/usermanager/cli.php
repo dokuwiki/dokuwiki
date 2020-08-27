@@ -12,18 +12,12 @@ use splitbrain\phpcli\TableFormatter;
  */
 class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
 {
-    protected $auth = null;        // auth object
-
     public function __construct()
     {
         parent::__construct();
-        global $auth;
 
         /** @var DokuWiki_Auth_Plugin $auth */
         auth_setup();
-        $this->auth = $auth;
-
-        $this->setupLocale();
     }
 
     /** @inheritdoc */
@@ -31,7 +25,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
     {
         // general setup
         $options->setHelp(
-            "Manage users for this DokuWiki instance\n\n"
+            "Manage users for this DokuWiki instance\n"
         );
 
         // list
@@ -48,8 +42,18 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         $options->registerOption('notify', 'notify user', 'n', false, 'add');
 
         // delete
-        $options->registerCommand('delete', 'Delete user from auth backend');
-        $options->registerArgument('name', 'Username', true, 'delete');
+        $options->registerCommand('delete', 'Delete user(s) from auth backend');
+        $options->registerArgument('name', 'Username(s), comma-seperated', true, 'delete');
+
+        // add to group
+        $options->registerCommand('addtogroup', 'Add user to group(s)');
+        $options->registerArgument('name', 'Username, comma-seperated', true, 'addtogroup');
+        $options->registerArgument('group', 'Group(s), comma-seperated', true, 'addtogroup');
+
+        // remove from group
+        $options->registerCommand('removefromgroup', 'Remove user from group(s)');
+        $options->registerArgument('name', 'Username, comma-seperated', true, 'removefromgroup');
+        $options->registerArgument('group', 'Group(s), comma-seperated', true, 'removefromgroup');
     }
 
     /** @inheritdoc */
@@ -65,6 +69,12 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
             case 'delete':
                 $ret = $this->cmdDelete($options->getArgs());
                 break;
+            case 'addtogroup':
+                $ret = $this->cmdAddToGroup($options->getArgs());
+                break;
+            case 'removefromgroup':
+                $ret = $this->cmdRemoveFromGroup($options->getArgs());
+                break;
 
             default:
                 echo $options->help();
@@ -77,37 +87,34 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
     /**
      * @param bool $showdetails
      * @return int
-     * @throws \splitbrain\phpcli\Exception
      */
-    protected function cmdList($showdetails)
+    protected function cmdList(bool $showdetails)
     {
-        if (!$this->auth->canDo('getUsers')) echo 'Authentication backend not available';
+        global $auth;
 
-        $list = $this->getUsers();
-        $this->listUsers($list, $showdetails);
+        if (!isset($auth)) {
+            $this->error($this->getLang('noauth'));
+            return 1;
+        } elseif (!$auth->canDo('getUsers')) {
+            $this->error($this->getLang('nosupport'));
+            return 1;
+        } else {
+            $this->listUsers($showdetails);
+        }
 
         return 0;
     }
 
     /**
-     * Get all users
-     *
-     * @return array
-     */
-    protected function getUsers()
-    {
-        return $this->auth->retrieveUsers();
-    }
-
-    /**
      * List the given users
      *
-     * @param string[] list display details
      * @param bool $details display details
-     * @throws \splitbrain\phpcli\Exception
      */
-    protected function listUsers($list, bool $details = False)
+    protected function listUsers(bool $details = False)
     {
+        global $auth;
+        $list = $auth->retrieveUsers();
+
         $tr = new TableFormatter($this->colors);
 
         foreach ($list as $username => $user) {
@@ -124,54 +131,147 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         }
     }
 
+    /**
+     * Adds an user
+     *
+     * @param bool $notify display details
+     * @param array $args
+     * @return int
+     */
     protected function cmdAdd(bool $notify, array $args)
     {
-        if (!$this->auth->canDo('addUser')) return false;
+        global $auth;
 
-        $user = $args[0];
-        $name = $args[1];
-        $mail = $args[2];
-        $grps = explode(',', $args[3]);
-        $pass = $args[4];
+        if (!$auth->canDo('addUser')) {
+            $this->error($this->getLang('nosupport'));
+            return 1;
+        }
 
-        if ($this->auth->canDo('modPass')) {
+        list($user, $name, $mail, $grps, $pass) = $args;
+        $grps = array_filter(array_map('trim', explode(',', $grps)));
+
+        if ($auth->canDo('modPass')) {
             if (empty($pass)) {
                 if ($notify) {
                     $pass = auth_pwgen($user);
                 } else {
-                    $this->error($this->lang['add_fail']);
-                    $this->error($this->lang['addUser_error_missing_pass']);
-                    return false;
+                    $this->error($this->getLang('add_fail'));
+                    $this->error($this->getLang('addUser_error_missing_pass'));
+                    return 1;
                 }
             }
         } else {
             if (!empty($pass)) {
-                $this->error($this->lang['add_fail']);
-                $this->error($this->lang['addUser_error_modPass_disabled']);
-                return false;
+                $this->error($this->getLang('add_fail'));
+                $this->error($this->getLang('addUser_error_modPass_disabled'));
+                return 1;
             }
         }
 
-        if (!$this->auth->triggerUserMod('create', array($user, $pass, $name, $mail, $grps))) {
-            $this->error($this->lang['add_fail']);
-            $this->error($this->lang['addUser_error_create_event_failed']);
-            return false;
+        if (!$auth->triggerUserMod('create', array($user, $pass, $name, $mail, $grps))) {
+            $this->error($this->getLang('add_fail'));
+            $this->error($this->getLang('addUser_error_create_event_failed'));
+            return 1;
         }
 
         return 0;
     }
 
+    /**
+     * Deletes users
+     * @param array $args
+     * @return int
+     */
     protected function cmdDelete(array $args)
     {
-        if (!$this->auth->canDo('delUser')) return false;
-        $users = explode(',', $args[0]);
+        global $auth;
 
-        $count = $this->auth->triggerUserMod('delete', array($users));
+        if (!$auth->canDo('delUser')) {
+            $this->error($this->getLang('nosupport'));
+            return 1;
+        }
+
+        $users = explode(',', $args[0]);
+        $count = $auth->triggerUserMod('delete', array($users));
 
         if (!($count == count($users))) {
-            $part1 = str_replace('%d', $count, $this->lang['delete_ok']);
-            $part2 = str_replace('%d', (count($users)-$count), $this->lang['delete_fail']);
+            $part1 = str_replace('%d', $count, $this->getLang('delete_ok'));
+            $part2 = str_replace('%d', (count($users) - $count), $this->getLang('delete_fail'));
             $this->error("$part1, $part2");
+
+            return 1;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Adds an user to group(s)
+     *
+     * @param array $args
+     * @return int
+     */
+    protected function cmdAddToGroup(array $args)
+    {
+        global $auth;
+
+        list($name, $newgrps) = $args;
+        $newgrps = array_filter(array_map('trim', explode(',', $newgrps)));
+        $oldinfo = $auth->getUserData($name);
+        $changes = array();
+
+        if (!empty($newgrps) && $auth->canDo('modGroups')) {
+            $changes['grps'] = $oldinfo['grps'];
+            foreach ($newgrps as $group) {
+                if (!in_array($group, $oldinfo['grps'])) {
+                    array_push($changes['grps'], $group);
+                }
+            }
+        }
+
+        if (!empty(array_diff($changes['grps'], $oldinfo['grps']))) {
+            if ($ok = $auth->triggerUserMod('modify', array($name, $changes))) {
+                $this->info($this->getLang('update_ok'));
+            } else {
+                $this->error($this->getLang('update_fail'));
+                return 1;
+            }
+        }
+
+        return 0;
+    }
+
+    /**
+     * Removes an user from group(s)
+     *
+     * @param array $args
+     * @return int
+     */
+    protected function cmdRemoveFromGroup(array $args)
+    {
+        global $auth;
+
+        list($name, $grps) = $args;
+        $grps = array_filter(array_map('trim', explode(',', $grps)));
+        $oldinfo = $auth->getUserData($name);
+        $changes = array();
+
+        if (!empty($grps) && $auth->canDo('modGroups')) {
+            $changes['grps'] = $oldinfo['grps'];
+            foreach ($grps as $group) {
+                if (($pos = array_search($group, $changes['grps'])) ==! false) {
+                    unset($changes['grps'][$pos]);
+                }
+            }
+        }
+
+        if (!empty(array_diff($oldinfo['grps'], $changes['grps']))) {
+            if ($ok = $auth->triggerUserMod('modify', array($name, $changes))) {
+                $this->info($this->getLang('update_ok'));
+            } else {
+                $this->error($this->getLang('update_fail'));
+                return 1;
+            }
         }
 
         return 0;
