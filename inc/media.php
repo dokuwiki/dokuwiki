@@ -2055,40 +2055,37 @@ function media_nstree_li($item){
  */
 function media_resize_image($file, $ext, $w, $h=0){
     global $conf;
-
-    $info = @getimagesize($file); //get original size
-    if($info == false) return $file; // that's no image - it's a spaceship!
-
-    if(!$h) $h = round(($w * $info[1]) / $info[0]);
-    if(!$w) $w = round(($h * $info[0]) / $info[1]);
-
+    if(!$h) $h = $w;
     // we wont scale up to infinity
     if($w > 2000 || $h > 2000) return $file;
-
-    // resize necessary? - (w,h) = native dimensions
-    if(($w == $info[0]) && ($h == $info[1])) return $file;
 
     //cache
     $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
     $mtime = @filemtime($local); // 0 if not exists
 
-    if($mtime > filemtime($file) ||
-        media_resize_imageIM($ext, $file, $info[0], $info[1], $local, $w, $h) ||
-        media_resize_imageGD($ext, $file, $info[0], $info[1], $local, $w, $h)
-    ) {
-        if($conf['fperm']) @chmod($local, $conf['fperm']);
-        return $local;
+    $options = [
+        'quality' => $conf['jpg_quality'],
+        'imconvert' => $conf['im_convert'],
+    ];
+
+    if( $mtime > @filemtime($file) ) {
+        try {
+            \splitbrain\slika\Slika::run($file, $options)
+                                   ->autorotate()
+                                   ->resize($w, $h)
+                                   ->save($local, $ext);
+            if($conf['fperm']) @chmod($local, $conf['fperm']);
+        } catch (\splitbrain\slika\Exception $e) {
+            dbglog($e->getMessage());
+            return $file;
+        }
     }
-    //still here? resizing failed
-    return $file;
+
+    return $local;
 }
 
 /**
- * Crops the given image to the wanted ratio, then calls media_resize_image to scale it
- * to the wanted size
- *
- * Crops are centered horizontally but prefer the upper third of an vertical
- * image because most pics are more interesting in that area (rule of thirds)
+ * Center crops the given image to the wanted size
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
@@ -2100,55 +2097,33 @@ function media_resize_image($file, $ext, $w, $h=0){
  */
 function media_crop_image($file, $ext, $w, $h=0){
     global $conf;
-
     if(!$h) $h = $w;
-    $info = @getimagesize($file); //get original size
-    if($info == false) return $file; // that's no image - it's a spaceship!
-
-    // calculate crop size
-    $fr = $info[0]/$info[1];
-    $tr = $w/$h;
-
-    // check if the crop can be handled completely by resize,
-    // i.e. the specified width & height match the aspect ratio of the source image
-    if ($w == round($h*$fr)) {
-        return media_resize_image($file, $ext, $w);
-    }
-
-    if($tr >= 1){
-        if($tr > $fr){
-            $cw = $info[0];
-            $ch = (int) ($info[0]/$tr);
-        }else{
-            $cw = (int) ($info[1]*$tr);
-            $ch = $info[1];
-        }
-    }else{
-        if($tr < $fr){
-            $cw = (int) ($info[1]*$tr);
-            $ch = $info[1];
-        }else{
-            $cw = $info[0];
-            $ch = (int) ($info[0]/$tr);
-        }
-    }
-    // calculate crop offset
-    $cx = (int) (($info[0]-$cw)/2);
-    $cy = (int) (($info[1]-$ch)/3);
+    // we wont scale up to infinity
+    if($w > 2000 || $h > 2000) return $file;
 
     //cache
-    $local = getCacheName($file,'.media.'.$cw.'x'.$ch.'.crop.'.$ext);
-    $mtime = @filemtime($local); // 0 if not exists
+    $local = getCacheName($file,'.media.'.$w.'x'.$h.'.crop.'.$ext);
+    $mtime = (int) @filemtime($local); // 0 if not exists
 
-    if( $mtime > @filemtime($file) ||
-            media_crop_imageIM($ext,$file,$info[0],$info[1],$local,$cw,$ch,$cx,$cy) ||
-            media_resize_imageGD($ext,$file,$cw,$ch,$local,$cw,$ch,$cx,$cy) ){
-        if($conf['fperm']) @chmod($local, $conf['fperm']);
-        return media_resize_image($local,$ext, $w, $h);
+    $options = [
+        'quality' => $conf['jpg_quality'],
+        'imconvert' => $conf['im_convert'],
+    ];
+
+    if( $mtime <= (int) @filemtime($file) ) {
+        try {
+            \splitbrain\slika\Slika::run($file, $options)
+                                   ->autorotate()
+                                    ->crop($w, $h)
+                                    ->save($local, $ext);
+            if($conf['fperm']) @chmod($local, $conf['fperm']);
+        } catch (\splitbrain\slika\Exception $e) {
+            dbglog($e->getMessage());
+            return $file;
+        }
     }
 
-    //still here? cropping failed
-    return media_resize_image($file,$ext, $w, $h);
+    return $local;
 }
 
 /**
@@ -2305,9 +2280,11 @@ function media_resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
  * @param int    $ofs_x   offset of crop centre
  * @param int    $ofs_y   offset of crop centre
  * @return bool
+ * @deprecated 2020-09-01
  */
 function media_crop_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x,$ofs_y){
     global $conf;
+    dbg_deprecated('splitbrain\\Slika');
 
     // check if convert is configured
     if(!$conf['im_convert']) return false;
@@ -2341,9 +2318,11 @@ function media_crop_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x,$o
  * @param int    $ofs_x   offset of crop centre
  * @param int    $ofs_y   offset of crop centre
  * @return bool
+ * @deprecated 2020-09-01
  */
 function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=0,$ofs_y=0){
     global $conf;
+    dbg_deprecated('splitbrain\\Slika');
 
     if($conf['gdlib'] < 1) return false; //no GDlib available or wanted
 
