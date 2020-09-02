@@ -44,6 +44,7 @@ function html_wikilink($id, $name = null, $search = '') {
  * @deprecated 2020-07-18
  */
 function html_login($svg = false) {
+    dbg_deprecated(\dokuwiki\Ui\Login::class .'::show()');
     (new dokuwiki\Ui\Login($svg))->show();
 }
 
@@ -55,6 +56,7 @@ function html_login($svg = false) {
  * @deprecated 2020-07-18 not called anymore, see inc/Action/Denied::tplContent()
  */
 function html_denied() {
+    dbg_deprecated('see '. \dokuwiki\Action\Denied::class);
 }
 
 /**
@@ -215,9 +217,10 @@ function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $l
  * show a revision warning
  *
  * @author Szymon Olewniczak <dokuwiki@imz.re>
+ * @deprecated 2020-07-18
  */
 function html_showrev() {
-    print p_locale_xhtml('showrev');
+    dbg_deprecated(\dokuwiki\Ui\PageView::class .'::showrev()');
 }
 
 /**
@@ -229,6 +232,7 @@ function html_showrev() {
  * @deprecated 2020-07-18
  */
 function html_show($txt=null) {
+    dbg_deprecated(\dokuwiki\Ui\PageView::class .'::show()');
     (new dokuwiki\Ui\PageView($txt))->show();
 }
 
@@ -239,6 +243,7 @@ function html_show($txt=null) {
  * @deprecated 2020-07-18
  */
 function html_draft() {
+    dbg_deprecated(\dokuwiki\Ui\Draft::class .'::show()');
     (new dokuwiki\Ui\Draft)->show();
 }
 
@@ -279,6 +284,7 @@ function html_hilight($html, $phrases) {
  * @deprecated 2020-07-18 not called anymore, see inc/Action/Locked::tplContent()
  */
 function html_locked() {
+    dbg_deprecated('see '. \dokuwiki\Action\Locked::class);
 }
 
 /**
@@ -293,6 +299,7 @@ function html_locked() {
  * @deprecated 2020-07-18
  */
 function html_revisions($first=0, $media_id = false) {
+    dbg_deprecated(\dokuwiki\Ui\Revisions::class .'::show()');
     (new dokuwiki\Ui\Revisions($first, $media_id))->show();
 }
 
@@ -309,6 +316,7 @@ function html_revisions($first=0, $media_id = false) {
  * @deprecated 2020-07-18
  */
 function html_recent($first = 0, $show_changes = 'both') {
+    dbg_deprecated(\dokuwiki\Ui\Recent::class .'::show()');
     (new dokuwiki\Ui\Recent($first, $show_changes))->show();
 }
 
@@ -321,6 +329,7 @@ function html_recent($first = 0, $show_changes = 'both') {
  * @deprecated 2020-07-18
  */
 function html_index($ns) {
+    dbg_deprecated(\dokuwiki\Ui\Index::class .'::show()');
     (new dokuwiki\Ui\Index($ns))->show();
 }
 
@@ -336,6 +345,7 @@ function html_index($ns) {
  * @deprecated 2020-07-18
  */
 function html_list_index($item) {
+    dbg_deprecated(\dokuwiki\Ui\Index::class .'::formatListItem()');
     return (new dokuwiki\Ui\Index)->formatListItem($item);
 }
 
@@ -353,6 +363,7 @@ function html_list_index($item) {
  * @deprecated 2020-07-18
  */
 function html_li_index($item) {
+    dbg_deprecated(\dokuwiki\Ui\Index::class .'::tagListItem()');
     return (new dokuwiki\Ui\Index)->tagListItem($item);
 }
 
@@ -452,6 +463,7 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
  * @deprecated 2020-07-18
  */
 function html_backlinks() {
+    dbg_deprecated(\dokuwiki\Ui\Backlinks::class .'::show()');
     (new dokuwiki\Ui\Backlinks)->show();
 }
 
@@ -467,6 +479,7 @@ function html_backlinks() {
  * @deprecated 2020-07-18
  */
 function html_diff($text = '', $intro = true, $type = null) {
+    dbg_deprecated(\dokuwiki\Ui\Diff::class .'::show()');
     (new dokuwiki\Ui\Diff($text, $intro, $type))->show();
 }
 
@@ -480,6 +493,7 @@ function html_diff($text = '', $intro = true, $type = null) {
  * @deprecated 2020-07-18
  */
 function html_conflict($text, $summary) {
+    dbg_deprecated(\dokuwiki\Ui\Conflict::class .'::show()');
     (new dokuwiki\Ui\Conflict($text, $summary))->show();
 }
 
@@ -518,6 +532,7 @@ function html_msgarea() {
  * @deprecated 2020-07-18
  */
 function html_register() {
+    dbg_deprecated(\dokuwiki\Ui\UserRegister::class .'::show()');
     (new dokuwiki\Ui\UserRegister)->show();
 }
 
@@ -529,6 +544,7 @@ function html_register() {
  * @deprecated 2020-07-18
  */
 function html_updateprofile() {
+    dbg_deprecated(\dokuwiki\Ui\UserProfile::class .'::show()');
     (new dokuwiki\Ui\UserProfile)->show();
 }
 
@@ -540,6 +556,7 @@ function html_updateprofile() {
  * @deprecated 2020-07-18
  */
 function html_edit() {
+    dbg_deprecated(\dokuwiki\Ui\Editor::class .'::show()');
     (new dokuwiki\Ui\Editor)->show();
 }
 
@@ -649,6 +666,7 @@ function html_debug() {
  * @deprecated 2020-07-18
  */
 function html_resendpwd() {
+    dbg_deprecated(\dokuwiki\Ui\UserResendPwd::class .'::show()');
     (new dokuwiki\Ui\UserResendPwd)->show();
 }
 

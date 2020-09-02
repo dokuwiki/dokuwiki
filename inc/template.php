@@ -1590,6 +1590,7 @@ function tpl_include_page($pageid, $print = true, $propagate = false, $useacl = 
  * @deprecated 2020-07-23
  */
 function tpl_subscribe() {
+    dbg_deprecated(\dokuwiki\Ui\Subscribe::class .'::show()');
     (new \dokuwiki\Ui\Subscribe)->show();
 }
 
