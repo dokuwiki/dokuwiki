@@ -198,6 +198,6 @@ class ParallelRegex
      */
     protected function getPerlMatchingFlags()
     {
-        return ($this->case ? "msS" : "msSi");
+        return ($this->case ? "umsS" : "umsSi");
     }
 }
