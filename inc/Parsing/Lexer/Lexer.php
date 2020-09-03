@@ -54,13 +54,14 @@ class Lexer
      * @param string $mode         Should only apply this
      *                             pattern when dealing with
      *                             this type of input.
+     * @param boolean $unicode     True for Unicode-aware, false for single-byte treatment.
      */
-    public function addPattern($pattern, $mode = "accept")
+    public function addPattern($pattern, $mode = "accept", $unicode = false)
     {
         if (! isset($this->regexes[$mode])) {
             $this->regexes[$mode] = new ParallelRegex($this->case);
         }
-        $this->regexes[$mode]->addPattern($pattern);
+        $this->regexes[$mode]->addPattern($pattern, true, $unicode);
     }
 
     /**
@@ -71,13 +72,14 @@ class Lexer
      * @param string $pattern      Perl style regex, but ( and ) lose the usual meaning.
      * @param string $mode         Should only apply this pattern when dealing with this type of input.
      * @param string $new_mode     Change parsing to this new nested mode.
+     * @param boolean $unicode     True for Unicode-aware, false for single-byte treatment.
      */
-    public function addEntryPattern($pattern, $mode, $new_mode)
+    public function addEntryPattern($pattern, $mode, $new_mode, $unicode = false)
     {
         if (! isset($this->regexes[$mode])) {
             $this->regexes[$mode] = new ParallelRegex($this->case);
         }
-        $this->regexes[$mode]->addPattern($pattern, $new_mode);
+        $this->regexes[$mode]->addPattern($pattern, $new_mode, $unicode);
     }
 
     /**
@@ -85,13 +87,14 @@ class Lexer
      *
      * @param string $pattern      Perl style regex, but ( and ) lose the usual meaning.
      * @param string $mode         Mode to leave.
+     * @param boolean $unicode     True for Unicode-aware, false for single-byte treatment.
      */
-    public function addExitPattern($pattern, $mode)
+    public function addExitPattern($pattern, $mode, $unicode = false)
     {
         if (! isset($this->regexes[$mode])) {
             $this->regexes[$mode] = new ParallelRegex($this->case);
         }
-        $this->regexes[$mode]->addPattern($pattern, "__exit");
+        $this->regexes[$mode]->addPattern($pattern, "__exit", $unicode);
     }
 
     /**
@@ -103,13 +106,14 @@ class Lexer
      * @param string $pattern      Perl style regex, but ( and ) lose the usual meaning.
      * @param string $mode         Should only apply this pattern when dealing with this type of input.
      * @param string $special      Use this mode for this one token.
+     * @param boolean $unicode     True for Unicode-aware, false for single-byte treatment.
      */
-    public function addSpecialPattern($pattern, $mode, $special)
+    public function addSpecialPattern($pattern, $mode, $special, $unicode = false)
     {
         if (! isset($this->regexes[$mode])) {
             $this->regexes[$mode] = new ParallelRegex($this->case);
         }
-        $this->regexes[$mode]->addPattern($pattern, "_$special");
+        $this->regexes[$mode]->addPattern($pattern, "_$special", $unicode);
     }
 
     /**

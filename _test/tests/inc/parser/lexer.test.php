@@ -118,7 +118,7 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
     }
     function testUnicodeCaseSensitive() {
         $regex = new ParallelRegex(true);
-        $regex->addPattern("áêì");
+        $regex->addPattern("áêì", true, true);
         $this->assertTrue($regex->match("abcáêìdef", $match));
         $this->assertEquals($match, "áêì");
         $this->assertTrue($regex->match("AAAÁÊÌBCabcáêìdef", $match));
@@ -126,7 +126,7 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
     }
     function testUnicodeCaseInsensitive() {
         $regex = new ParallelRegex(false);
-        $regex->addPattern("áêì");
+        $regex->addPattern("áêì", true, true);
         $this->assertTrue($regex->match("abcáêìdef", $match));
         $this->assertEquals($match, "áêì");
         $this->assertTrue($regex->match("AAAÁÊÌBCabcáêìdef", $match));
@@ -134,38 +134,38 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
     }
     function testUnicodeSequenceComposed() {
         $regex = new ParallelRegex(false);
-        $regex->addPattern('abc\X\X\Xdef'); // \Xde is interpreted with double quotes
+        $regex->addPattern('abc\X\X\Xdef', true, true); // \Xde is interpreted with double quotes
         $this->assertTrue($regex->match("abcáêìdef", $match));
         $this->assertEquals($match, "abcáêìdef");
     }
     function testUnicodeSequenceDecomposed() {
-        $accents = "a"."́"."e"."̂"."i"."̀"; // áêì decomposed
         $regex = new ParallelRegex(false);
-        $regex->addPattern('abc\X\X\Xdef'); // \Xde is interpreted with double quotes
+        $regex->addPattern('abc\X\X\Xdef', true, true); // \Xde is interpreted with double quotes
+        $accents = "a"."́"."e"."̂"."i"."̀"; // áêì decomposed
         $this->assertTrue($regex->match("abc" . $accents . "def", $match));
         $this->assertEquals($match, "abc" . $accents . "def");
     }
     function testUnicodeWithProperty() {
         $regex = new ParallelRegex(false);
-        $regex->addPattern("\p{Greek}+"); // greek characters
+        $regex->addPattern("\p{Greek}+", true, true); // Greek characters
         $this->assertTrue($regex->match("abcαβγdef", $match));
         $this->assertEquals($match, "αβγ");
     }
     function testUnicodeWithoutProperty() {
         $regex = new ParallelRegex(false);
-        $regex->addPattern("\P{Greek}+"); // not greek characters
+        $regex->addPattern("\P{Greek}+", true, true); // non-Greek characters
         $this->assertTrue($regex->match("αβγabcδεζ", $match));
         $this->assertEquals($match, "abc");
     }
     function testUnicodeWithPropertyGroup() {
         $regex = new ParallelRegex(false);
-        $regex->addPattern("\pL+"); // any letters
+        $regex->addPattern("\pL+", true, true); // any letters
         $this->assertTrue($regex->match("123abcαβγdef456", $match));
         $this->assertEquals($match, "abcαβγdef");
     }
     function testUnicodeWithoutPropertyGroup() {
         $regex = new ParallelRegex(false);
-        $regex->addPattern("\PL+"); // anything except letters
+        $regex->addPattern("\PL+", true, true); // anything except letters
         $this->assertTrue($regex->match("abcαβγ4.@def", $match));
         $this->assertEquals($match, "4.@");
     }
@@ -174,8 +174,13 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
         $utf8TwoBytes   = "α"; // Greek
         $utf8ThreeBytes = "ァ"; // Japanese
         $utf8FourBytes  = "𐤀"; // Phoenician
+        $this->assertEquals(strlen($utf8OneByte),    1); // sanity check
+        $this->assertEquals(strlen($utf8TwoBytes),   2);
+        $this->assertEquals(strlen($utf8ThreeBytes), 3);
+        $this->assertEquals(strlen($utf8FourBytes),  4);
+
         $regex = new ParallelRegex(false);
-        $regex->addPattern("z\Xp");
+        $regex->addPattern("z\Xp", true, true);
         $this->assertTrue($regex->match("abcz" . $utf8OneByte . "pdef", $match));
         $this->assertEquals($match, "z" . $utf8OneByte . "p");
         $this->assertTrue($regex->match("abcz" . $utf8TwoBytes . "pdef", $match));
