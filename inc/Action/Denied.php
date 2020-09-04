@@ -36,7 +36,7 @@ class Denied extends AbstractAclAction
      *
      * @return void
      */
-    protected function showBanner()
+    public function showBanner()
     {
         // print intro
         print p_locale_xhtml('denied');

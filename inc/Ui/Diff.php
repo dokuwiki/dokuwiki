@@ -477,7 +477,7 @@ class Diff extends Ui
      * @param string $diffhtml
      * @return string
      */
-    protected function insertSoftbreaks($diffhtml)
+    public function insertSoftbreaks($diffhtml)
     {
         // search the diff html string for both:
         // - html tags, so these can be ignored

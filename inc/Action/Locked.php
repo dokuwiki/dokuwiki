@@ -33,7 +33,7 @@ class Locked extends AbstractAction
      *
      * @return void
      */
-    protected function showBanner()
+    public function showBanner()
     {
         global $ID;
         global $conf;

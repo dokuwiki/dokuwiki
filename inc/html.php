@@ -56,7 +56,8 @@ function html_login($svg = false) {
  * @deprecated 2020-07-18 not called anymore, see inc/Action/Denied::tplContent()
  */
 function html_denied() {
-    dbg_deprecated('see '. \dokuwiki\Action\Denied::class);
+    dbg_deprecated(\dokuwiki\Action\Denied::class .'::showBanner()');
+    (new dokuwiki\Action\Denied())->showBanner();
 }
 
 /**
@@ -284,7 +285,8 @@ function html_hilight($html, $phrases) {
  * @deprecated 2020-07-18 not called anymore, see inc/Action/Locked::tplContent()
  */
 function html_locked() {
-    dbg_deprecated('see '. \dokuwiki\Action\Locked::class);
+    dbg_deprecated(\dokuwiki\Action\Locked::class .'::showBanner()');
+    (new dokuwiki\Action\Locked())->showBanner();
 }
 
 /**
@@ -468,6 +470,21 @@ function html_backlinks() {
 }
 
 /**
+ * Get header of diff HTML
+ *
+ * @param string $l_rev   Left revisions
+ * @param string $r_rev   Right revision
+ * @param string $id      Page id, if null $ID is used
+ * @param bool   $media   If it is for media files
+ * @param bool   $inline  Return the header on a single line
+ * @return string[] HTML snippets for diff header
+ * @deprecated 2020-07-18
+ */
+function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = false) {
+    dbg_deprecated('see '. \dokuwiki\Ui\Diff::class .'::diffHead()');
+}
+
+/**
  * Show diff
  * between current page version and provided $text
  * or between the revisions provided via GET or POST
@@ -481,6 +498,57 @@ function html_backlinks() {
 function html_diff($text = '', $intro = true, $type = null) {
     dbg_deprecated(\dokuwiki\Ui\Diff::class .'::show()');
     (new dokuwiki\Ui\Diff($text, $intro, $type))->show();
+}
+
+/**
+ * Create html for revision navigation
+ *
+ * @param PageChangeLog $pagelog changelog object of current page
+ * @param string        $type    inline vs sidebyside
+ * @param int           $l_rev   left revision timestamp
+ * @param int           $r_rev   right revision timestamp
+ * @return string[] html of left and right navigation elements
+ * @deprecated 2020-07-18
+ */
+function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
+    dbg_deprecated('see '. \dokuwiki\Ui\Diff::class .'::diffNavigation()');
+}
+
+/**
+ * Create html link to a diff defined by two revisions
+ *
+ * @param string $difftype display type
+ * @param string $linktype
+ * @param int $lrev oldest revision
+ * @param int $rrev newest revision or null for diff with current revision
+ * @return string html of link to a diff
+ * @deprecated 2020-07-18
+ */
+function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
+    dbg_deprecated('see '. \dokuwiki\Ui\Diff::class .'::diffViewlink()');
+}
+
+/**
+ * Insert soft breaks in diff html
+ *
+ * @param string $diffhtml
+ * @return string
+ * @deprecated 2020-07-18
+ */
+function html_insert_softbreaks($diffhtml) {
+    dbg_deprecated(\dokuwiki\Ui\Diff::class .'::insertSoftbreaks()');
+    (new dokuwiki\Ui\Diff())->insertSoftbreaks($diffhtml);
+}
+
+/**
+ * callback which adds softbreaks
+ *
+ * @param array $match array with first the complete match
+ * @return string the replacement
+ * @deprecated 2020-07-18
+ */
+function html_softbreak_callback($match){
+    dbg_deprecated('integrated into '. \dokuwiki\Ui\Diff::class .'::insertSoftbreaks()');
 }
 
 /**
