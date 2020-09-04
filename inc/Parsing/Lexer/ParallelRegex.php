@@ -28,8 +28,7 @@ class ParallelRegex
     /**
      * Constructor. Starts with no patterns.
      *
-     * @param boolean $case    True for case sensitive, false
-     *                         for insensitive.
+     * @param boolean $case    True for case sensitive, false for insensitive.
      */
     public function __construct($case)
     {
@@ -42,13 +41,10 @@ class ParallelRegex
     /**
      * Adds a pattern with an optional label.
      *
-     * @param mixed       $pattern Perl style regex. Must be UTF-8
-     *                             encoded. If its a string, the (, )
-     *                             lose their meaning unless they
-     *                             form part of a lookahead or
-     *                             lookbehind assertation.
-     * @param bool|string $label   Label of regex to be returned
-     *                             on a match. Label must be ASCII
+     * @param mixed       $pattern Perl style regex. Must be UTF-8 encoded. If its a string,
+     *                             the (, ) lose their meaning unless they form part of
+     *                             a lookahead or lookbehind assertation.
+     * @param bool|string $label   Label of regex to be returned on a match. Label must be ASCII
      * @param boolean $unicode     True for Unicode-aware, false for single-byte treatment.
      */
     public function addPattern($pattern, $label = true, $unicode = false)
@@ -67,8 +63,7 @@ class ParallelRegex
      * Attempts to match all patterns at once against a string.
      *
      * @param string $subject      String to match against.
-     * @param string $match        First matched portion of
-     *                             subject.
+     * @param string $match        First matched portion of subject.
      * @return bool|string         False if no match found, label if label exists, true if not
      */
     public function match($subject, &$match)
@@ -81,11 +76,10 @@ class ParallelRegex
     }
 
     /**
-     * Attempts to match all patterns at once against a string.
+     * Attempts to match all patterns of a certain type at once against a string.
      *
      * @param string $subject      String to match against.
-     * @param string $match        First matched portion of
-     *                             subject.
+     * @param string $match        First matched portion of subject.
      * @param boolean $unicode     True for Unicode-aware, false for single-byte treatment.
      * @return bool|string         False if no match found, label if label exists, true if not
      */
@@ -111,7 +105,7 @@ class ParallelRegex
     }
 
     /**
-     * Attempts to split the string against all patterns at once
+     * Attempts to split the string against all patterns at once.
      *
      * @param string $subject      String to match against.
      * @param array $split         The split result: array containing, pre-match, match & post-match strings
@@ -129,7 +123,7 @@ class ParallelRegex
     }
 
     /**
-     * Attempts to split the string against all patterns at once
+     * Attempts to split the string against all patterns of a certain type at once.
      *
      * @param string $subject      String to match against.
      * @param array $split         The split result: array containing, pre-match, match & post-match strings
@@ -168,17 +162,16 @@ class ParallelRegex
         }
 
         $idx = count($matches)-2;
-        list($pre, $post) = preg_split($this->patterns[$unicode][$idx].$this->getPerlMatchingFlags($unicode), $subject, 2);
+        $pattern = $this->patterns[$unicode][$idx] . $this->getPerlMatchingFlags($unicode);
+        list($pre, $post) = preg_split($pattern, $subject, 2);
         $split = array($pre, $matches[0], $post);
 
         return isset($this->labels[$unicode][$idx]) ? $this->labels[$unicode][$idx] : true;
     }
 
     /**
-     * Compounds the patterns into a single
-     * regular expression separated with the
-     * "or" operator. Caches the regex.
-     * Will automatically escape (, ) and / tokens.
+     * Compounds the patterns into a single regular expression separated with the
+     * "or" operator. Caches the regex. Will automatically escape (, ) and / tokens.
      *
      * @param boolean $unicode     True for Unicode-aware, false for single-byte treatment.
      * @return null|string
@@ -230,7 +223,8 @@ class ParallelRegex
                 }
                 $this->patterns[$unicode][$i] = "($pattern)";
             }
-            $this->regexes[$unicode] = "/" . implode("|", $this->patterns[$unicode]) . "/" . $this->getPerlMatchingFlags($unicode);
+            $this->regexes[$unicode] = "/" . implode("|", $this->patterns[$unicode]) .
+                                       "/" . $this->getPerlMatchingFlags($unicode);
         }
         return $this->regexes[$unicode];
     }
@@ -243,6 +237,7 @@ class ParallelRegex
     protected function getPerlMatchingFlags($unicode)
     {
         $u = ($unicode ? "u" : "");
-        return ($this->case ? $u . "msS" : $u . "msSi");
+        $i = ($this->case ? "" : "i");
+        return $u . "msS" . $i;
     }
 }
