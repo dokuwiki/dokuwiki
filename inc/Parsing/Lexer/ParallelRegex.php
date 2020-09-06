@@ -5,6 +5,7 @@
  * https://web.archive.org/web/20120125041816/http://www.phppatterns.com/docs/develop/simple_test_lexer_notes
  *
  * @author Marcus Baker http://www.lastcraft.com
+ * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  */
 
 namespace dokuwiki\Parsing\Lexer;
@@ -45,7 +46,7 @@ class ParallelRegex
      *                             the (, ) lose their meaning unless they form part of
      *                             a lookahead or lookbehind assertation.
      * @param bool|string $label   Label of regex to be returned on a match. Label must be ASCII
-     * @param boolean $unicode     True for Unicode-aware, false for single-byte treatment.
+     * @param boolean $unicode     True for Unicode-aware, false for byte-oriented.
      */
     public function addPattern($pattern, $label = true, $unicode = false)
     {
@@ -65,14 +66,26 @@ class ParallelRegex
      * @param string $subject      String to match against.
      * @param string $match        First matched portion of subject.
      * @return bool|string         False if no match found, label if label exists, true if not
+     *
+     * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
      */
     public function match($subject, &$match)
     {
-        $trySingleByte = $this->partialMatch($subject, $match, false);
-        if ($trySingleByte !== false) {
-            return $trySingleByte;
+        $resultByteOriented = $this->partialMatch($subject, $matchByteOriented, $offsetByteOriented, false);
+        $resultUnicodeAware = $this->partialMatch($subject, $matchUnicodeAware, $offsetUnicodeAware, true);
+        if (! $resultUnicodeAware) {
+            $match = $matchByteOriented;
+            return $resultByteOriented;
         }
-        return $this->partialMatch($subject, $match, true);
+        if (! $resultByteOriented) {
+            $match = $matchUnicodeAware;
+            return $resultUnicodeAware;
+        }
+        $chooseByteOriented = ($offsetByteOriented < $offsetUnicodeAware) ||
+                              ($offsetByteOriented == $offsetUnicodeAware &&
+                                  (strlen($matchByteOriented) >= strlen($matchUnicodeAware)));
+        $match = $chooseByteOriented ? $matchByteOriented : $matchUnicodeAware;
+        return $chooseByteOriented ? $resultByteOriented : $resultUnicodeAware;
     }
 
     /**
@@ -80,24 +93,26 @@ class ParallelRegex
      *
      * @param string $subject      String to match against.
      * @param string $match        First matched portion of subject.
-     * @param boolean $unicode     True for Unicode-aware, false for single-byte treatment.
+     * @param int $offset          Offset of the first matched portion of subject.
+     * @param boolean $unicode     True for Unicode-aware, false for byte-oriented.
      * @return bool|string         False if no match found, label if label exists, true if not
      */
-    protected function partialMatch($subject, &$match, $unicode)
+    protected function partialMatch($subject, &$match, &$offset, $unicode)
     {
         if (! isset($this->patterns[$unicode]) || count($this->patterns[$unicode]) == 0) {
             return false;
         }
-        if (! preg_match($this->getCompoundedRegex($unicode), $subject, $matches)) {
+        if (! preg_match($this->getCompoundedRegex($unicode), $subject, $matches, PREG_OFFSET_CAPTURE)) {
             $match = "";
             return false;
         }
 
-        $match = $matches[0];
+        $match = $matches[0][0];
+        $offset = $matches[0][1];
         $size = count($matches);
         // FIXME this could be made faster by storing the labels as keys in a hashmap
         for ($i = 1; $i < $size; $i++) {
-            if ($matches[$i] && isset($this->labels[$unicode][$i - 1])) {
+            if ($matches[$i][0] && isset($this->labels[$unicode][$i - 1])) {
                 return $this->labels[$unicode][$i - 1];
             }
         }
@@ -108,26 +123,38 @@ class ParallelRegex
      * Attempts to split the string against all patterns at once.
      *
      * @param string $subject      String to match against.
-     * @param array $split         The split result: array containing, pre-match, match & post-match strings
+     * @param array $split         The split result: array containing pre-match, match & post-match strings
      * @return boolean             True on success.
      *
-     * @author Christopher Smith <chris@jalakai.co.uk>
+     * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
      */
     public function split($subject, &$split)
     {
-        $trySingleByte = $this->partialSplit($subject, $split, false);
-        if ($trySingleByte !== false) {
-            return $trySingleByte;
+        $resultByteOriented = $this->partialSplit($subject, $splitByteOriented, false);
+        $resultUnicodeAware = $this->partialSplit($subject, $splitUnicodeAware, true);
+        if (! $resultUnicodeAware) {
+            $split = $splitByteOriented;
+            return $resultByteOriented;
         }
-        return $this->partialSplit($subject, $split, true);
+        if (! $resultByteOriented) {
+            $split = $splitUnicodeAware;
+            return $resultUnicodeAware;
+        }
+        list($preByteOriented, $matchByteOriented, /* $postByteOriented */) = $splitByteOriented;
+        list($preUnicodeAware, $matchUnicodeAware, /* $postUnicodeAware */) = $splitUnicodeAware;
+        $chooseByteOriented = (strlen($preByteOriented) < strlen($preUnicodeAware)) ||
+                              (strlen($preByteOriented) == strlen($preUnicodeAware) &&
+                                  (strlen($matchByteOriented) >= strlen($matchUnicodeAware)));
+        $split = $chooseByteOriented ? $splitByteOriented : $splitUnicodeAware;
+        return $chooseByteOriented ? $resultByteOriented : $resultUnicodeAware;
     }
 
     /**
      * Attempts to split the string against all patterns of a certain type at once.
      *
      * @param string $subject      String to match against.
-     * @param array $split         The split result: array containing, pre-match, match & post-match strings
-     * @param boolean $unicode     True for Unicode-aware, false for single-byte treatment.
+     * @param array $split         The split result: array containing pre-match, match & post-match strings
+     * @param boolean $unicode     True for Unicode-aware, false for byte-oriented.
      * @return boolean             True on success.
      *
      * @author Christopher Smith <chris@jalakai.co.uk>
@@ -173,7 +200,7 @@ class ParallelRegex
      * Compounds the patterns into a single regular expression separated with the
      * "or" operator. Caches the regex. Will automatically escape (, ) and / tokens.
      *
-     * @param boolean $unicode     True for Unicode-aware, false for single-byte treatment.
+     * @param boolean $unicode     True for Unicode-aware, false for byte-oriented.
      * @return null|string
      */
     protected function getCompoundedRegex($unicode)
@@ -231,7 +258,7 @@ class ParallelRegex
 
     /**
      * Accessor for perl regex mode flags to use.
-     * @param boolean $unicode     True for Unicode-aware, false for single-byte treatment.
+     * @param boolean $unicode     True for Unicode-aware, false for byte-oriented.
      * @return string              Perl regex flags.
      */
     protected function getPerlMatchingFlags($unicode)
