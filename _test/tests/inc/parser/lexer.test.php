@@ -117,7 +117,7 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
     }
     function testUnicodeCaseSensitive() {
         $regex = new ParallelRegex(true);
-        $regex->addPattern("áêì", true, true);
+        $regex->addPattern("áêì");
         $this->assertTrue($regex->match("abcáêìdef", $match));
         $this->assertEquals($match, "áêì");
         $this->assertTrue($regex->match("AAAÁÊÌBCabcáêìdef", $match));
@@ -125,7 +125,7 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
     }
     function testUnicodeCaseInsensitive() {
         $regex = new ParallelRegex(false);
-        $regex->addPattern("áêì", true, true);
+        $regex->addPattern("áêì");
         $this->assertTrue($regex->match("abcáêìdef", $match));
         $this->assertEquals($match, "áêì");
         $this->assertTrue($regex->match("AAAÁÊÌBCabcáêìdef", $match));
@@ -133,38 +133,38 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
     }
     function testUnicodeSequenceComposed() {
         $regex = new ParallelRegex(false);
-        $regex->addPattern('abc\X\X\Xdef', true, true); // \Xde is interpreted with double quotes
+        $regex->addPattern('abc\X\X\Xdef'); // \Xde is interpreted with double quotes
         $this->assertTrue($regex->match("xyzabcáêìdef123", $match));
         $this->assertEquals($match, "abcáêìdef");
     }
     function testUnicodeSequenceDecomposed() {
         $regex = new ParallelRegex(false);
-        $regex->addPattern('abc\X\X\Xdef', true, true); // \Xde is interpreted with double quotes
+        $regex->addPattern('abc\X\X\Xdef'); // \Xde is interpreted with double quotes
         $accents = "a"."́"."e"."̂"."i"."̀"; // áêì decomposed
         $this->assertTrue($regex->match("xyzabc" . $accents . "def123", $match));
         $this->assertEquals($match, "abc" . $accents . "def");
     }
     function testUnicodeWithProperty() {
         $regex = new ParallelRegex(false);
-        $regex->addPattern("\p{Greek}+", true, true); // Greek characters
+        $regex->addPattern("\p{Greek}+"); // Greek characters
         $this->assertTrue($regex->match("abcαβγdef", $match));
         $this->assertEquals($match, "αβγ");
     }
     function testUnicodeWithoutProperty() {
         $regex = new ParallelRegex(false);
-        $regex->addPattern("\P{Greek}+", true, true); // non-Greek characters
+        $regex->addPattern("\P{Greek}+"); // non-Greek characters
         $this->assertTrue($regex->match("αβγabcδεζ", $match));
         $this->assertEquals($match, "abc");
     }
     function testUnicodeWithPropertyGroup() {
         $regex = new ParallelRegex(false);
-        $regex->addPattern("\pL+", true, true); // any letters
+        $regex->addPattern("\pL+"); // any letters
         $this->assertTrue($regex->match("123abcαβγdef456", $match));
         $this->assertEquals($match, "abcαβγdef");
     }
     function testUnicodeWithoutPropertyGroup() {
         $regex = new ParallelRegex(false);
-        $regex->addPattern("\PL+", true, true); // anything except letters
+        $regex->addPattern("\PL+"); // anything except letters
         $this->assertTrue($regex->match("abcαβγ4.@def", $match));
         $this->assertEquals($match, "4.@");
     }
@@ -179,7 +179,7 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
         $this->assertEquals(strlen($utf8FourBytes),  4);
 
         $regex = new ParallelRegex(false);
-        $regex->addPattern("z\Xp", true, true);
+        $regex->addPattern("z\Xp");
         $this->assertTrue($regex->match("abcz" . $utf8OneByte . "pdef", $match));
         $this->assertEquals($match, "z" . $utf8OneByte . "p");
         $this->assertTrue($regex->match("abcz" . $utf8TwoBytes . "pdef", $match));
@@ -192,7 +192,7 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
     function testMixedPatterns() {
         $regex = new ParallelRegex(false);
         $regex->addPattern("<\w+>");
-        $regex->addPattern("z\p{Greek}p", true, true);
+        $regex->addPattern("z\p{Greek}p");
         $this->assertTrue($regex->match("123<abc>zαpabc", $match));
         $this->assertEquals($match, "<abc>");
         $this->assertTrue($regex->match("123zαp<abc>abc", $match));
@@ -299,7 +299,7 @@ class TestOfUnicodeAwareLexer extends DokuWikiTest {
             ->with("def", DOKU_LEXER_UNMATCHED, 9)->will($this->returnValue(true));
 
         $lexer = new Lexer($handler);
-        $lexer->addPattern("áêì", "accept", true);
+        $lexer->addPattern("áêì");
         $this->assertTrue($lexer->parse("abcáêìdef"));
     }
     function testSinglePatternUnicodeSequenceComposed() {
@@ -312,7 +312,7 @@ class TestOfUnicodeAwareLexer extends DokuWikiTest {
             ->with("123", DOKU_LEXER_UNMATCHED, 15)->will($this->returnValue(true));
 
         $lexer = new Lexer($handler);
-        $lexer->addPattern('abc\X\X\Xdef', "accept", true); // \Xde is interpreted with double quotes
+        $lexer->addPattern('abc\X\X\Xdef'); // \Xde is interpreted with double quotes
         $this->assertTrue($lexer->parse("xyzabcáêìdef123"));
     }
     function testSinglePatternUnicodeSequenceDecomposed() {
@@ -327,7 +327,7 @@ class TestOfUnicodeAwareLexer extends DokuWikiTest {
             ->with("123", DOKU_LEXER_UNMATCHED, 18)->will($this->returnValue(true));
 
         $lexer = new Lexer($handler);
-        $lexer->addPattern('abc\X\X\Xdef', "accept", true); // \Xde is interpreted with double quotes
+        $lexer->addPattern('abc\X\X\Xdef'); // \Xde is interpreted with double quotes
         $this->assertTrue($lexer->parse("xyzabc" . $accents . "def123"));
     }
     function testSinglePatternUnicodeWithProperty() {
@@ -340,7 +340,7 @@ class TestOfUnicodeAwareLexer extends DokuWikiTest {
             ->with("def", DOKU_LEXER_UNMATCHED, 9)->will($this->returnValue(true));
 
         $lexer = new Lexer($handler);
-        $lexer->addPattern("\p{Greek}+", "accept", true); // Greek characters
+        $lexer->addPattern("\p{Greek}+"); // Greek characters
         $this->assertTrue($lexer->parse("abcαβγdef"));
     }
     function testSinglePatternUnicodeWithoutProperty() {
@@ -353,7 +353,7 @@ class TestOfUnicodeAwareLexer extends DokuWikiTest {
             ->with("δεζ", DOKU_LEXER_UNMATCHED, 9)->will($this->returnValue(true));
 
         $lexer = new Lexer($handler);
-        $lexer->addPattern("\P{Greek}+", "accept", true); // non-Greek characters
+        $lexer->addPattern("\P{Greek}+"); // non-Greek characters
         $this->assertTrue($lexer->parse("αβγabcδεζ"));
     }
     function testSinglePatternUnicodeWithPropertyGroup() {
@@ -366,7 +366,7 @@ class TestOfUnicodeAwareLexer extends DokuWikiTest {
             ->with("456", DOKU_LEXER_UNMATCHED, 15)->will($this->returnValue(true));
 
         $lexer = new Lexer($handler);
-        $lexer->addPattern("\pL+", "accept", true); // any letters
+        $lexer->addPattern("\pL+"); // any letters
         $this->assertTrue($lexer->parse("123abcαβγdef456"));
     }
     function testSinglePatternUnicodeWithoutPropertyGroup() {
@@ -379,7 +379,7 @@ class TestOfUnicodeAwareLexer extends DokuWikiTest {
             ->with("def", DOKU_LEXER_UNMATCHED, 12)->will($this->returnValue(true));
 
         $lexer = new Lexer($handler);
-        $lexer->addPattern("\PL+", "accept", true); // anything except letters
+        $lexer->addPattern("\PL+"); // anything except letters
         $this->assertTrue($lexer->parse("abcαβγ4.@def"));
     }
     function testSinglePatternUnicodeSequenceMultibyte() {
@@ -413,7 +413,7 @@ class TestOfUnicodeAwareLexer extends DokuWikiTest {
             ->with("def", DOKU_LEXER_UNMATCHED, 39)->will($this->returnValue(true));
 
         $lexer = new Lexer($handler);
-        $lexer->addPattern("z\Xp", "accept", true);
+        $lexer->addPattern("z\Xp");
         $this->assertTrue($lexer->parse("abcz" . $utf8OneByte    . "pdef" .
                                         "abcz" . $utf8TwoBytes   . "pdef" .
                                         "abcz" . $utf8ThreeBytes . "pdef" .
@@ -456,8 +456,8 @@ class TestOfUnicodeAwareLexer extends DokuWikiTest {
             ->with("jkl", DOKU_LEXER_UNMATCHED, 47)->will($this->returnValue(true));
 
         $lexer = new Lexer($handler);
-        $lexer->addPattern("<\w+>", "accept", false);
-        $lexer->addPattern("z\Xp", "accept", true);
+        $lexer->addPattern("<\w+>");
+        $lexer->addPattern("z\Xp");
         $this->assertTrue($lexer->parse("<abc>z" . $utf8OneByte    . "pabc" .
                                         "<def>z" . $utf8TwoBytes   . "pdef" .
                                         "<ghi>z" . $utf8ThreeBytes . "pghi" .

@@ -42,14 +42,14 @@ class ParallelRegex
     /**
      * Adds a pattern with an optional label.
      *
-     * @param mixed       $pattern Perl style regex. Must be UTF-8 encoded. If its a string,
+     * @param mixed $pattern       Perl style regex. Must be UTF-8 encoded. If its a string,
      *                             the (, ) lose their meaning unless they form part of
      *                             a lookahead or lookbehind assertation.
      * @param bool|string $label   Label of regex to be returned on a match. Label must be ASCII
-     * @param boolean $unicode     True for Unicode-aware, false for byte-oriented.
      */
-    public function addPattern($pattern, $label = true, $unicode = false)
+    public function addPattern($pattern, $label = true)
     {
+        $unicode = $this->needsUnicodeAware($pattern);
         if (! isset($this->patterns[$unicode])) {
             $this->patterns[$unicode] = array();
             $this->labels[$unicode] = array();
@@ -58,6 +58,20 @@ class ParallelRegex
         $this->patterns[$unicode][$count] = $pattern;
         $this->labels[$unicode][$count] = $label;
         $this->regexes[$unicode] = null;
+    }
+
+    /**
+     * Decides whether the given pattern needs Unicode-aware regex treatment.
+     * Reference: https://www.php.net/manual/en/regexp.reference.unicode.php
+     *
+     * @param mixed $pattern       Perl style regex. Must be UTF-8 encoded.
+     * @param boolean $unicode     True for Unicode-aware, false for byte-oriented.
+     *
+     * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
+     */
+    protected function needsUnicodeAware($pattern)
+    {
+        return preg_match("/[\\x80-\\xFF]|\\\\(X|([pP]([A-Z]|\{\^?[A-Za-z_]+\})))/S", $pattern);
     }
 
     /**
