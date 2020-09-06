@@ -65,7 +65,7 @@ class ParallelRegex
      * Reference: https://www.php.net/manual/en/regexp.reference.unicode.php
      *
      * @param mixed $pattern       Perl style regex. Must be UTF-8 encoded.
-     * @param boolean $unicode     True for Unicode-aware, false for byte-oriented.
+     * @return boolean             True for Unicode-aware, false for byte-oriented.
      *
      * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
      */
