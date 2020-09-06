@@ -60,7 +60,7 @@ class Lexer
         if (! isset($this->regexes[$mode])) {
             $this->regexes[$mode] = new ParallelRegex($this->case);
         }
-        $this->regexes[$mode]->addPattern($pattern, true);
+        $this->regexes[$mode]->addPattern($pattern);
     }
 
     /**
