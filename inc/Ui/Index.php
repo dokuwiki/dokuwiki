@@ -34,37 +34,35 @@ class Index extends Ui
      */
     public function show()
     {
+        // print intro
+        print p_locale_xhtml('index');
+
+        print $this->sitemap();
+    }
+
+    /**
+     * Build html of sitemap, unordered list of pages under the namespace
+     *
+     * @return string
+     */
+    public function sitemap()
+    {
         global $conf;
         global $ID;
 
-        $ns  = cleanID($this->ns);
+        $ns = cleanID($this->ns);
         if (empty($ns)){
             $ns = getNS($ID);
             if ($ns === false) $ns = '';
         }
-        $ns  = utf8_encodeFN(str_replace(':', '/', $ns));
-
-        // print intro
-        print p_locale_xhtml('index');
-
-        print '<div id="index__tree" class="index__tree">';
-
+        $ns = utf8_encodeFN(str_replace(':', '/', $ns));
         $data = array();
         search($data, $conf['datadir'], 'search_index', array('ns' => $ns));
-        print $this->buildIndexList($data);
 
-        print '</div>';
-    }
-
-    /**
-     * Build html of unordered list of index items
-     *
-     * @param array $data  array with item arrays
-     * @return string
-     */
-    public function buildIndexList($data)
-    {
-        return html_buildlist($data, 'idx', [$this,'formatListItem'], [$this,'tagListItem']);
+        $html = '<div id="index__tree" class="index__tree">'
+              . html_buildlist($data, 'idx', [$this,'formatListItem'], [$this,'tagListItem'])
+              . '</div>';
+        return $html;
     }
 
     /**
