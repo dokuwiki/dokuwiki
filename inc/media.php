@@ -2061,14 +2061,14 @@ function media_resize_image($file, $ext, $w, $h=0){
 
     //cache
     $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
-    $mtime = @filemtime($local); // 0 if not exists
+    $mtime = (int) @filemtime($local); // 0 if not exists
 
     $options = [
         'quality' => $conf['jpg_quality'],
         'imconvert' => $conf['im_convert'],
     ];
 
-    if( $mtime > @filemtime($file) ) {
+    if( $mtime <= (int) @filemtime($file) ) {
         try {
             \splitbrain\slika\Slika::run($file, $options)
                                    ->autorotate()
