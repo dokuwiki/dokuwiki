@@ -554,17 +554,6 @@ function html_insert_softbreaks($diffhtml) {
 }
 
 /**
- * callback which adds softbreaks
- *
- * @param array $match array with first the complete match
- * @return string the replacement
- * @deprecated 2020-07-18
- */
-function html_softbreak_callback($match){
-    dbg_deprecated('integrated into '. \dokuwiki\Ui\Diff::class .'::insertSoftbreaks()');
-}
-
-/**
  * show warning on conflict detection
  *
  * @author Andreas Gohr <andi@splitbrain.org>
