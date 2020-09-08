@@ -537,7 +537,7 @@ function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
  */
 function html_insert_softbreaks($diffhtml) {
     dbg_deprecated(\dokuwiki\Ui\Diff::class .'::insertSoftbreaks()');
-    (new dokuwiki\Ui\Diff())->insertSoftbreaks($diffhtml);
+    return (new dokuwiki\Ui\Diff())->insertSoftbreaks($diffhtml);
 }
 
 /**
