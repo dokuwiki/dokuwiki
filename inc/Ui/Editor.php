@@ -200,6 +200,7 @@ class Editor extends Ui
         $attr['cols'] = '80';
         $attr['rows'] = '10';
 
+        /** @var dokuwiki\Form\Form $data['form'] */
         $data['form']->addTextarea('wikitext','')->attrs($attr)->val($TEXT)
                 ->id('wiki__text')->addClass('edit');
     }

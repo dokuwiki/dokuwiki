@@ -642,6 +642,19 @@ function html_edit() {
 }
 
 /**
+ * Display the default edit form
+ *
+ * Is the default action for HTML_EDIT_FORMSELECTION.
+ *
+ * @param mixed[] $param
+ * @deprecated 2020-07-18
+ */
+function html_edit_form($param) {
+    dbg_deprecated(\dokuwiki\Ui\Editor::class .'::addTextarea()');
+    return (new dokuwiki\Ui\Editor)->addTextarea($param);
+}
+
+/**
  * prints some debug info
  *
  * @author Andreas Gohr <andi@splitbrain.org>
