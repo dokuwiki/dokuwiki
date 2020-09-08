@@ -336,7 +336,7 @@ function html_index($ns) {
 }
 
 /**
- * Index item formatter
+ * Index tree item formatter for html_buildlist()
  *
  * User function for html_buildlist()
  *
@@ -352,7 +352,7 @@ function html_list_index($item) {
 }
 
 /**
- * Index List item
+ * Index list item formatter for html_buildlist()
  *
  * This user function is used in html_buildlist to build the
  * <li> tags for namespaces when displaying the page index
@@ -367,6 +367,19 @@ function html_list_index($item) {
 function html_li_index($item) {
     dbg_deprecated(\dokuwiki\Ui\Index::class .'::tagListItem()');
     return (new dokuwiki\Ui\Index)->tagListItem($item);
+}
+
+/**
+ * Default list item formatter for html_buildlist()
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $item
+ * @return string html
+ * @deprecated 2020-07-18
+ */
+function html_li_default($item){
+    return '<li class="level'.$item['level'].'">';
 }
 
 /**
