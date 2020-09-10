@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Thien Hau <thienhausoftware@gmail.com>
+ * @author Thien Hau <thienhau.9a14@gmail.com>
  */
 $lang['debug']                 = 'In ra các thông báo lỗi chi tiết. Nên bị vô hiệu hóa sau khi thiết lập.';
 $lang['dsn']                   = 'DSN để kết nối với cơ sở dữ liệu.';
@@ -16,7 +16,7 @@ $lang['insert-user']           = 'Câu lệnh SQL để chèn thành viên mới
 $lang['delete-user']           = 'Câu lệnh SQL để xóa một thành viên khỏi cơ sở dữ liệu';
 $lang['list-users']            = 'Câu lệnh SQL để liệt kê thành viên khớp với bộ lọc';
 $lang['count-users']           = 'Câu lệnh SQL để đếm thành viên khớp với bộ lọc';
-$lang['update-user-info']      = 'Câu lệnh SQL để cập nhật tên đầy đủ và địa chỉ thư điện thử của một thành viên';
+$lang['update-user-info']      = 'Câu lệnh SQL để cập nhật tên đầy đủ và địa chỉ thư điện tử của một thành viên';
 $lang['update-user-login']     = 'Câu lệnh SQL để cập nhật tên đăng nhập của một thành viên';
 $lang['update-user-pass']      = 'Câu lệnh SQL để cập nhật mật khẩu của một thành viên';
 $lang['insert-group']          = 'Câu lệnh SQL để chèn một nhóm mới vào cơ sở dữ liệu';

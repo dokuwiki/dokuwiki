@@ -6,8 +6,10 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 use dokuwiki\Search\FulltextSearch;
 use dokuwiki\Search\QueryParser;
+use dokuwiki\Utf8\Sort;
 
 use const dokuwiki\Search\FT_SNIPPET_NUMBER;
+
 
 class Search extends Ui
 {
@@ -387,7 +389,7 @@ class Search extends Ui
             }
             $namespaces[$subtopNS] += 1;
         }
-        ksort($namespaces);
+        Sort::ksort($namespaces);
         arsort($namespaces);
         return $namespaces;
     }

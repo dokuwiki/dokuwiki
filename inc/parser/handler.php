@@ -49,6 +49,45 @@ class Doku_Handler {
         $this->callWriter->writeCall($call);
     }
 
+    /**
+     * Accessor for the current CallWriter
+     *
+     * @return CallWriterInterface
+     */
+    public function getCallWriter() {
+        return $this->callWriter;
+    }
+
+    /**
+     * Set a new CallWriter
+     *
+     * @param CallWriterInterface $callWriter
+     */
+    public function setCallWriter($callWriter) {
+        $this->callWriter = $callWriter;
+    }
+
+    /**
+     * Return the current internal status of the given name
+     *
+     * @param string $status
+     * @return mixed|null
+     */
+    public function getStatus($status) {
+        if (!isset($this->status[$status])) return null;
+        return $this->status[$status];
+    }
+
+    /**
+     * Set a new internal status
+     *
+     * @param string $status
+     * @param mixed $value
+     */
+    public function setStatus($status, $value) {
+        $this->status[$status] = $value;
+    }
+
     /** @deprecated 2019-10-31 use addCall() instead */
     public function _addCall($handler, $args, $pos) {
         dbg_deprecated('addCall');

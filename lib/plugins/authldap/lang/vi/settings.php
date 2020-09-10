@@ -3,15 +3,15 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Thien Hau <thienhausoftware@gmail.com>
+ * @author Thien Hau <thienhau.9a14@gmail.com>
  */
 $lang['server']                = 'Máy chủ LDAP của bạn. Tên máy chủ (<code>localhost</code>) hoặc URL đầy đủ (<code>ldap://server.tld:389</code>)';
 $lang['port']                  = 'Cổng máy chủ LDAP nếu không có URL đầy đủ được đưa ra bên trên';
 $lang['usertree']              = 'Nơi tìm tài khoản thành viên. VD. <code>ou=People, dc=server, dc=tld</code>';
-$lang['grouptree']             = 'Nơi tìm nhóm thành viên. Eg. <code>ou=Group, dc=server, dc=tld</code>';
+$lang['grouptree']             = 'Nơi tìm nhóm thành viên. VD. <code>ou=Group, dc=server, dc=tld</code>';
 $lang['userfilter']            = 'Bộ lọc LDAP để tìm kiếm tài khoản thành viên. VD. <code>(&amp;(uid=%{user})(objectClass=posixAccount))</code>';
-$lang['groupfilter']           = 'Bộ lọc LDAP để tìm kiếm nhóm thành viên. Eg. <code>(&amp;(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))</code>';
-$lang['version']               = 'Phiên bản giao thức để sử dụng. Bạn có thể cần đặt cái này thành <code>3</code>';
+$lang['groupfilter']           = 'Bộ lọc LDAP để tìm kiếm nhóm thành viên. VD. <code>(&amp;(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))</code>';
+$lang['version']               = 'Phiên bản giao thức sử dụng. Bạn có thể cần đặt cái này thành <code>3</code>';
 $lang['starttls']              = 'Sử dụng kết nối TLS?';
 $lang['referrals']             = 'Theo dõi Shall referrals?';
 $lang['deref']                 = 'Làm thế nào để xóa bỏ bí danh?';

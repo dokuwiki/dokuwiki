@@ -9,6 +9,7 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Search\Indexer;
 use dokuwiki\Search\FulltextSearch;
 use dokuwiki\Search\MetadataIndex;
+use dokuwiki\Utf8\Sort;
 
 use const dokuwiki\Search\FT_SNIPPET_NUMBER;
 
@@ -147,11 +148,11 @@ class ApiCore
             ), 'wiki.getRecentChanges' => array(
                 'args' => array('int'),
                 'return' => 'array',
-                'Returns a struct about all recent changes since given timestamp.'
+                'doc' => 'Returns a struct about all recent changes since given timestamp.'
             ), 'wiki.getRecentMediaChanges' => array(
                 'args' => array('int'),
                 'return' => 'array',
-                'Returns a struct about all recent media changes since given timestamp.'
+                'doc' => 'Returns a struct about all recent media changes since given timestamp.'
             ), 'wiki.aclCheck' => array(
                 'args' => array('string', 'string', 'array'),
                 'return' => 'int',
@@ -317,6 +318,7 @@ class ApiCore
         $Indexer = Indexer::getInstance();
         $pages = $Indexer->getPages();
         $pages = array_filter(array_filter($pages, 'isVisiblePage'), 'page_exists');
+        Sort::ksort($pages);
 
         foreach (array_keys($pages) as $idx) {
             $perm = auth_quickaclcheck($pages[$idx]);

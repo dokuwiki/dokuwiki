@@ -1,1 +1,1 @@
-Sửa đổi trang này và nhấn ''Lưu''. Xem [[wiki:syntax]] cho cú pháp Wiki. Vui lòng sửa đổi trang chỉ khi nào bạn có thể **cải thiện** nó. Nếu bạn muốn thử một số thứ, hãy học cách thực hiện những bước đầu tiên của bạn tại [[playground:playground|chỗ thử]].
+Sửa đổi trang này và nhấn ''Lưu''. Xem [[wiki:syntax]] cho cú pháp Wiki. Vui lòng chỉ sửa đổi trang nếu bạn có thể **cải thiện** nó. Nếu bạn muốn thử một số thứ, hãy học cách thực hiện những bước đầu tiên của bạn tại [[playground:playground|chỗ thử]].

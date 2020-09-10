@@ -2,41 +2,14 @@
 
 namespace dokuwiki\Parsing\Handler;
 
-class Lists implements ReWriterInterface
+class Lists extends AbstractRewriter
 {
-
-    /** @var CallWriterInterface original call writer */
-    protected $callWriter;
-
-    protected $calls = array();
     protected $listCalls = array();
     protected $listStack = array();
 
     protected $initialDepth = 0;
 
     const NODE = 1;
-
-
-    /** @inheritdoc */
-    public function __construct(CallWriterInterface $CallWriter)
-    {
-        $this->callWriter = $CallWriter;
-    }
-
-    /** @inheritdoc */
-    public function writeCall($call)
-    {
-        $this->calls[] = $call;
-    }
-
-    /**
-     * @inheritdoc
-     * Probably not needed but just in case...
-     */
-    public function writeCalls($calls)
-    {
-        $this->calls = array_merge($this->calls, $calls);
-    }
 
     /** @inheritdoc */
     public function finalise()

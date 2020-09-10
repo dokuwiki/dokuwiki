@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
+ * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Tibor Repček <tiborepcek@gmail.com>
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik <exusik@gmail.com>
@@ -144,10 +144,12 @@ $lang['xsendfile']             = 'Používať X-Sendfile hlavičku pre doručeni
 $lang['renderer_xhtml']        = 'Používané vykresľovacie jadro pre hlavný (xhtml) wiki výstup';
 $lang['renderer__core']        = '%s (dokuwiki jadro)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_nslimit']        = 'Obmedzte vyhľadávanie na aktuálnych X menných priestorov. Ak je vyhľadávanie vyvolané zo stránky v hlbšom mennom priestore, prvých X menných priestorov bude pridaných ako filter';
 $lang['search_fragment_o_exact'] = 'presne';
 $lang['search_fragment_o_starts_with'] = 'začína s';
 $lang['search_fragment_o_ends_with'] = 'končí na';
 $lang['search_fragment_o_contains'] = 'obsahuje';
+$lang['defer_js']              = 'Odložiť vykonanie javascriptu po spracovaní HTML stránky. Zlepší sa vnímanie rýchlosti stránky, ale môže znefunkčniť niektoré pluginy.';
 $lang['dnslookups']            = 'DokuWiki hľadá mená vzdialených IP adries používateľov editujúcich stránky. Ak máte pomalý alebo nefunkčný DNS server alebo nechcete túto možnosť, deaktivujte túto voľbu';
 $lang['jquerycdn']             = 'Mali by byť jQuery a jQuery UI skripty načítané z CDN? Voľba zvýši počet dodatočných HTTP požiadaviek, ale súbory sa môžu načítať rýchlejšie a používatelia ich už môžu mať vo vyrovnávacej pamäti.';
 $lang['jquerycdn_o_0']         = 'Nepoužívať CDN, iba lokálne súbory';
@@ -194,6 +196,7 @@ $lang['xsendfile_o_2']         = 'Štandardná X-Sendfile hlavička';
 $lang['xsendfile_o_3']         = 'Proprietárna Nginx X-Accel-Redirect hlavička';
 $lang['showuseras_o_loginname'] = 'Prihlasovacie meno';
 $lang['showuseras_o_username'] = 'Celé meno používateľa';
+$lang['showuseras_o_username_link'] = 'Celé meno používateľa ako interwiki odkaz';
 $lang['showuseras_o_email']    = 'E-mailová adresa používateľa (zamaskovaná podľa nastavenia)';
 $lang['showuseras_o_email_link'] = 'E-mailová adresa používateľa vo forme odkazu mailto:';
 $lang['useheading_o_0']        = 'Nikdy';

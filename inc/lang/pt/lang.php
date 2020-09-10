@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Paulo Schopf <pschopf@gmail.com>
+ * @author Paulo <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
  * @author Maykon Oliveira <maykonoliveira850@gmail.com>
  * @author José Vieira <jmsv63@gmail.com>
@@ -172,6 +172,7 @@ $lang['txt_upload']            = 'Escolha arquivo a carregar:';
 $lang['txt_filename']          = 'Carregar como (opcional):';
 $lang['txt_overwrt']           = 'Sobrescrever arquivo';
 $lang['maxuploadsize']         = 'Enviar %s max. por arquivo.';
+$lang['allowedmime']           = 'Lista de extensões de arquivo permitidas';
 $lang['lockedby']              = 'Bloqueado por:';
 $lang['lockexpire']            = 'Expira em:';
 $lang['rssfailed']             = 'Erro ao buscar informação deste feed:';

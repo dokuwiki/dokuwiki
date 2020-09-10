@@ -4,6 +4,6 @@ Ai đó đã yêu cầu mật khẩu mới cho bạn đăng nhập @TITLE@ tại
 
 Nếu bạn không yêu cầu mật khẩu mới thì hãy bỏ qua thư điện tử này.
 
-Để xác nhận rằng yêu cầu đã thực sự được gửi bởi bạn, vui lòng truy cập liên kết sau.
+Để xác nhận rằng yêu cầu đã thực sự được gửi bởi bạn, vui lòng truy cập vào liên kết sau.
 
 @CONFIRM@

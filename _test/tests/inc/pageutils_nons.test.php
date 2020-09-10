@@ -43,6 +43,8 @@ class init_noNS_test extends DokuWikiTest {
             ['0:foo', 'foo'],
             ['foo:0', '0'],
             ['0', '0'],
+            ['0:', '0'],
+            ['a:b:', 'b'], // breadcrumbs code passes IDs ending with a colon #3114
         ];
     }
 

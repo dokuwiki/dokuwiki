@@ -6,6 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Utf8\Sort;
+
 /**
  * Recurse directory
  *
@@ -50,9 +52,9 @@ function search(&$data, $base, $func, $opts, $dir='', $lvl=1, $sort='natural')
         if ($sort == 'date') {
             @array_multisort(array_map('filemtime', $filepaths), SORT_NUMERIC, SORT_DESC, $files);
         } else /* natural */ {
-            natsort($files);
+            Sort::asortFN($files);
         }
-        natsort($dirs);
+        Sort::asortFN($dirs);
     }
 
     //give directories to userfunction then recurse
@@ -376,8 +378,8 @@ function sort_search_fulltext($a, $b)
         return -1;
     } elseif ($a['count'] < $b['count']) {
         return 1;
-    } else {
-        return strcmp($a['id'], $b['id']);
+    }else{
+        return Sort::strcmp($a['id'],$b['id']);
     }
 }
 

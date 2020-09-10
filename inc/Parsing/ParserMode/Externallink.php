@@ -41,4 +41,12 @@ class Externallink extends AbstractMode
     {
         return 330;
     }
+
+    /**
+     * @return array
+     */
+    public function getPatterns()
+    {
+        return $this->patterns;
+    }
 }

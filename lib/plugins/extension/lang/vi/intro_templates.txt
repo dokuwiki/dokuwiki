@@ -1,1 +1,1 @@
-Đây là các chủ đề hiện được cài đặt trong DokuWiki của bạn. Bạn có thể chọn sử dụng chủ đề trong [[?do=admin&page=config|Quản lý cấu hình]].
+Đây là những chủ đề hiện được cài đặt trong DokuWiki của bạn. Bạn có thể chọn chủ đề sử dụng trong [[?do=admin&page=config|Quản lý cấu hình]].

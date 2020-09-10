@@ -78,6 +78,9 @@ class httpclient_http_test extends DokuWikiTest {
      * @group internet
      */
     function test_redirect(){
+        $this->markTestSkipped('disabled while redirect bug in httpbin is being fixed');
+        return;
+
         $http = new HTTPMockClient();
         $data = $http->get($this->server.'/redirect/3');
         if($http->noconnection()) {
@@ -95,6 +98,9 @@ class httpclient_http_test extends DokuWikiTest {
      * @group internet
      */
     function test_relredirect(){
+        $this->markTestSkipped('disabled while redirect bug in httpbin is being fixed');
+        return;
+
         $http = new HTTPMockClient();
         $data = $http->get($this->server.'/relative-redirect/3');
         if($http->noconnection()) {
@@ -112,6 +118,9 @@ class httpclient_http_test extends DokuWikiTest {
      * @group internet
      */
     function test_redirectfail(){
+        $this->markTestSkipped('disabled while redirect bug in httpbin is being fixed');
+        return;
+
         $http = new HTTPMockClient();
         $data = $http->get($this->server.'/redirect/5');
         if($http->noconnection()) {

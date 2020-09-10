@@ -2,13 +2,9 @@
 
 namespace dokuwiki\Parsing\Handler;
 
-class Table implements ReWriterInterface
+class Table extends AbstractRewriter
 {
 
-    /** @var CallWriterInterface original CallWriter */
-    protected $callWriter;
-
-    protected $calls = array();
     protected $tableCalls = array();
     protected $maxCols = 0;
     protected $maxRows = 1;
@@ -18,27 +14,6 @@ class Table implements ReWriterInterface
     protected $inTableHead = true;
     protected $currentRow = array('tableheader' => 0, 'tablecell' => 0);
     protected $countTableHeadRows = 0;
-
-    /** @inheritdoc */
-    public function __construct(CallWriterInterface $CallWriter)
-    {
-        $this->callWriter = $CallWriter;
-    }
-
-    /** @inheritdoc */
-    public function writeCall($call)
-    {
-        $this->calls[] = $call;
-    }
-
-    /**
-     * @inheritdoc
-     * Probably not needed but just in case...
-     */
-    public function writeCalls($calls)
-    {
-        $this->calls = array_merge($this->calls, $calls);
-    }
 
     /** @inheritdoc */
     public function finalise()

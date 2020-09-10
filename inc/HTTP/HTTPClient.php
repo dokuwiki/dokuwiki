@@ -329,7 +329,7 @@ class HTTPClient {
             }
 
             // get Status
-            if (!preg_match('/^HTTP\/(\d\.\d)\s*(\d+).*?\n/', $r_headers, $m))
+            if (!preg_match('/^HTTP\/(\d\.\d)\s*(\d+).*?\n/s', $r_headers, $m))
                 throw new HTTPClientException('Server returned bad answer '.$r_headers);
 
             $this->status = $m[2];

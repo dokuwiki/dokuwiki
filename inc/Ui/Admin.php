@@ -1,6 +1,8 @@
 <?php
 namespace dokuwiki\Ui;
 
+use dokuwiki\Utf8\Sort;
+
 /**
  * Class Admin
  *
@@ -159,7 +161,7 @@ class Admin extends Ui {
      * @return int
      */
     protected function menuSort($a, $b) {
-        $strcmp = strcasecmp($a['prompt'], $b['prompt']);
+        $strcmp = Sort::strcmp($a['prompt'], $b['prompt']);
         if($strcmp != 0) return $strcmp;
         if($a['sort'] === $b['sort']) return 0;
         return ($a['sort'] < $b['sort']) ? -1 : 1;

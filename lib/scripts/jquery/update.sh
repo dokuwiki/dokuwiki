@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 #
 # This script loads the latest jQuery and jQuery-UI 1.* versions from jQuery's CDN
 #
