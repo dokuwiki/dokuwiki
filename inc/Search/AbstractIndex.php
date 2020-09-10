@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Search;
 
+use dokuwiki\Search\Exception\IndexLockException;
+use dokuwiki\Search\Exception\IndexWriteException;
 use dokuwiki\Utf8;
 
 /**
@@ -51,6 +53,8 @@ abstract class AbstractIndex
      *
      * @param string $page The page to get the PID for
      * @return int|false  The page id on success, false when not found in page.idx
+     * @throws IndexWriteException
+     * @throws IndexLockException
      */
     public function getPID($page)
     {
@@ -78,8 +82,7 @@ abstract class AbstractIndex
         }
 
         if ($flagSaveIndex && !$this->saveIndex('page', '', $index)) {
-            trigger_error("Indexer: Failed to write page index", E_USER_ERROR);
-            return false;
+            throw new IndexWriteException('Indexer: Failed to write page index');
         }
 
         // limit cache to 10 entries by discarding the oldest element
@@ -129,9 +132,10 @@ abstract class AbstractIndex
     /**
      * Lock the indexer
      *
+     * @return true
+     * @throws IndexLockException
      * @author Tom N Harris <tnharris@whoopdedo.org>
      *
-     * @return bool
      */
     protected function lock()
     {
@@ -143,13 +147,11 @@ abstract class AbstractIndex
             if (is_dir($lock) && time() - @filemtime($lock) > 60*5) {
                 // looks like a stale lock - remove it
                 if (!@rmdir($lock)) {
-                    trigger_error("Indexer: removing the stale lock failed", E_USER_ERROR);
-                    return false;
+                    throw new IndexLockException('Indexer: removing the stale lock failed');
                 }
             } elseif ($run++ == 1000) {
                 // we waited 5 seconds for that lock
-                trigger_error("Indexer: time out to aquire lock", E_USER_ERROR);
-                return false;
+                throw new IndexLockException('Indexer: time out to aquire lock');
             }
         }
         if (!empty($conf['dperm'])) {
@@ -161,16 +163,16 @@ abstract class AbstractIndex
     /**
      * Release the indexer lock
      *
+     * @return true
+     * @throws IndexLockException
      * @author Tom N Harris <tnharris@whoopdedo.org>
      *
-     * @return bool
      */
     protected function unlock()
     {
         global $conf;
         if (!@rmdir($conf['lockdir'].'/_indexer.lock')) {
-            trigger_error("Indexer: unlock failed", E_USER_WARNING);
-            return false;
+            throw new IndexLockException('Indexer: unlock failed');
         }
         return true;
     }
@@ -226,12 +228,12 @@ abstract class AbstractIndex
     /**
      * Retrieve or insert a value in the index
      *
-     * @param string    $idx    name of the index
-     * @param string    $suffix subpart identifier
-     * @param string    $value  line to find in the index
-     * @return int|false        line number of the value in the index
-     *                          or false if writing the index failed
+     * @param string $idx name of the index
+     * @param string $suffix subpart identifier
+     * @param string $value line to find in the index
+     * @return int      line number of the value in the index
      *
+     * @throws IndexWriteException
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function addIndexKey($idx, $suffix, $value)
@@ -242,8 +244,7 @@ abstract class AbstractIndex
             $id = count($index);
             $index[$id] = $value;
             if (!$this->saveIndex($idx, $suffix, $index)) {
-                trigger_error("Failed to write {$idx}{$suffix} index", E_USER_ERROR);
-                return false;
+                throw new IndexWriteException("Failed to write {$idx}{$suffix} index");
             }
         }
         return (int) $id;

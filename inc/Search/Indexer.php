@@ -3,8 +3,8 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
-use dokuwiki\Search\FulltextIndex;
-use dokuwiki\Search\MetadataIndex;
+use dokuwiki\Search\Exception\IndexAccessException;
+use dokuwiki\Search\Exception\SearchException;
 
 // Version tag used to force rebuild on upgrade
 const INDEXER_VERSION = 8;
@@ -37,13 +37,15 @@ class Indexer extends AbstractIndex
     /**
      * Dispatch Indexing request for the page, called by TaskRunner::runIndexer()
      *
-     * @param string        $page   name of the page to index
-     * @param bool          $verbose    print status messages
-     * @param bool          $force  force reindexing even when the index is up to date
+     * @param string $page name of the page to index
+     * @param bool $verbose print status messages
+     * @param bool $force force reindexing even when the index is up to date
      * @return bool  If the function completed successfully
      *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @throws IndexAccessException
+     * @throws SearchException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+     * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function dispatch($page, $verbose = false, $force = false)
     {
@@ -94,13 +96,14 @@ class Indexer extends AbstractIndex
      *
      * Locking is handled internally.
      *
-     * @param string        $page   name of the page to index
-     * @param bool          $verbose    print status messages
-     * @param bool          $force  force reindexing even when the index is up to date
+     * @param string $page name of the page to index
+     * @param bool $verbose print status messages
+     * @param bool $force force reindexing even when the index is up to date
      * @return bool  If the function completed successfully
      *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @throws SearchException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+     * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function addPage($page, $verbose = false, $force = false)
     {
@@ -120,8 +123,7 @@ class Indexer extends AbstractIndex
         $pid = $this->getPID($page);
         if ($pid === false) {
             if ($verbose) dbglog("Indexer: getting the PID failed for {$page}");
-            trigger_error("Failed to get PID for {$page}", E_USER_ERROR);
-            return false;
+            throw new IndexAccessException("Failed to get PID for {$page}");
         }
 
         // prepare metadata indexing
@@ -189,13 +191,14 @@ class Indexer extends AbstractIndex
      *
      * Erases entries in all known indexes. Locking is handled internally.
      *
-     * @param string        $page   name of the page to index
-     * @param bool          $verbose    print status messages
-     * @param bool          $force  force reindexing even when the index is up to date
+     * @param string $page name of the page to index
+     * @param bool $verbose print status messages
+     * @param bool $force force reindexing even when the index is up to date
      * @return bool  If the function completed successfully
      *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @throws Exception\IndexLockException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+     * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function deletePage($page, $verbose = false, $force = false)
     {
@@ -247,6 +250,7 @@ class Indexer extends AbstractIndex
      * @param string $oldpage The old page name
      * @param string $newpage The new page name
      * @return bool           If the page was successfully renamed
+     * @throws Exception\IndexLockException
      */
     public function renamePage($oldpage, $newpage)
     {
@@ -278,14 +282,15 @@ class Indexer extends AbstractIndex
     /**
      * Clear the Page Index
      *
-     * @param bool   $requireLock  should be false only if the caller is resposible for index lock
+     * @param bool $requireLock should be false only if the caller is resposible for index lock
      * @return bool  If the index has been cleared successfully
+     * @throws Exception\IndexLockException
      */
     public function clear($requireLock = true)
     {
         global $conf;
 
-        if ($requireLock && !$this->lock()) return false;
+        if ($requireLock) $this->lock();
 
         // clear Metadata Index
         $MetadataIndex = MetadataIndex::getInstance();

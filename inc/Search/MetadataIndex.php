@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Search;
 
+use dokuwiki\Search\Exception\IndexAccessException;
+
 /**
  * Class DokuWiki Metadata Index (Singleton)
  *
@@ -68,14 +70,17 @@ class MetadataIndex extends AbstractIndex
      * The $key parameter can be an array to add multiple keys. $value will
      * not be used if $key is an array.
      *
-     * @param string $page   a page name
-     * @param mixed  $key    a key string or array of key=>value pairs
-     * @param mixed  $value  the value or list of values
-     * @param bool   $requireLock  should be false only if the caller is resposible for index lock
+     * @param string $page a page name
+     * @param mixed $key a key string or array of key=>value pairs
+     * @param mixed $value the value or list of values
+     * @param bool $requireLock should be false only if the caller is resposible for index lock
      * @return bool  if the function completed successfully
      *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @throws IndexAccessException
+     * @throws Exception\IndexLockException
+     * @throws Exception\IndexWriteException
      * @author Michael Hamann <michael@content-space.de>
+     * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function addMetaKeys($page, $key, $value = null, $requireLock = true)
     {
@@ -83,7 +88,7 @@ class MetadataIndex extends AbstractIndex
             $key = array($key => $value);
         } elseif (!is_null($value)) {
             // $key is array, but $value is not null
-            trigger_error("array passed to addMetaKeys but value is not null", E_USER_WARNING);
+            throw new IndexAccessException('array passed to addMetaKeys but value is not null');
         }
 
         // load known documents
@@ -92,7 +97,7 @@ class MetadataIndex extends AbstractIndex
             return false;
         }
 
-        if ($requireLock && !$this->lock()) return false;
+        if ($requireLock) $this->lock();
 
         // Special handling for titles so the index file is simpler
         if (array_key_exists('title', $key)) {
@@ -175,13 +180,14 @@ class MetadataIndex extends AbstractIndex
     /**
      * Delete keys of the page from metadata index
      *
-     * @param string $page   a page name
-     * @param mixed  $keys   a key string or array of keys
-     * @param bool   $requireLock  should be false only if the caller is resposible for index lock
+     * @param string $page a page name
+     * @param mixed $keys a key string or array of keys
+     * @param bool $requireLock should be false only if the caller is resposible for index lock
      * @return bool  If renaming the value has been successful, false on error
      *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @throws Exception\IndexLockException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+     * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function deleteMetaKeys($page, $keys = [], $requireLock = true)
     {
@@ -191,7 +197,7 @@ class MetadataIndex extends AbstractIndex
             return false;
         }
 
-        if ($requireLock && !$this->lock()) return false;
+        if ($requireLock) $this->lock();
 
         $knownKeys = $this->getIndex('metadata', '');
         $knownKeys[] = 'title';
@@ -334,15 +340,16 @@ class MetadataIndex extends AbstractIndex
      * This doesn't change the meta value in the pages, it assumes that
      * all pages will be updated.
      *
-     * @param string $key       The metadata key of which a value shall be changed
-     * @param string $oldvalue  The old value that shall be renamed
-     * @param string $newvalue  The new value to which the old value shall be renamed,
+     * @param string $key The metadata key of which a value shall be changed
+     * @param string $oldvalue The old value that shall be renamed
+     * @param string $newvalue The new value to which the old value shall be renamed,
      *                          if exists values will be merged
      * @return bool  If renaming the value has been successful, false on error
+     * @throws Exception\IndexLockException
      */
     public function renameMetaValue($key, $oldvalue, $newvalue)
     {
-        if (!$this->lock()) return false;
+        $this->lock();
 
         // change the relation references index
         $metavalues = $this->getIndex($key, '_w');
@@ -435,7 +442,7 @@ class MetadataIndex extends AbstractIndex
                 }
             }
         } else {
-            $FulltextIndex = Search\FulltextIndex::getInstance();
+            $FulltextIndex = FulltextIndex::getInstance();
             $lengths = $FulltextIndex->listIndexLengths();
             foreach ($lengths as $length) {
                 if ($length < $minlen) continue;
@@ -460,14 +467,15 @@ class MetadataIndex extends AbstractIndex
     /**
      * Clear the Metadata Index
      *
-     * @param bool   $requireLock  should be false only if the caller is resposible for index lock
+     * @param bool $requireLock should be false only if the caller is resposible for index lock
      * @return bool  If the index has been cleared successfully
+     * @throws Exception\IndexLockException
      */
     public function clear($requireLock = true)
     {
         global $conf;
 
-        if ($requireLock && !$this->lock()) return false;
+        if ($requireLock) $this->lock();
 
         $knownKeys = $this->getIndex('metadata', '');
         foreach ($knownKeys as $metaname) {

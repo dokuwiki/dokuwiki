@@ -10,7 +10,7 @@ use dokuwiki\Utf8;
 const MINWORDLENGTH = 2;
 
 /**
- * DokuWuki Tokenizer class (Singleton)
+ * DokuWiki Tokenizer class (Singleton)
  */
 class Tokenizer
 {

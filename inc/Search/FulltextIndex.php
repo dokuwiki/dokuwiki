@@ -58,13 +58,14 @@ class FulltextIndex extends AbstractIndex
      * The added text replaces previous words for the same page.
      * An empty value erases the page.
      *
-     * @param string $page   a page name
-     * @param string $text   the body of the page
-     * @param bool   $requireLock  should be false only if the caller is resposible for index lock
+     * @param string $page a page name
+     * @param string $text the body of the page
+     * @param bool $requireLock should be false only if the caller is resposible for index lock
      * @return bool  if the function completed successfully
      *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @throws Exception\IndexLockException
      * @author Andreas Gohr <andi@splitbrain.org>
+     * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function addPageWords($page, $text, $requireLock = true)
     {
@@ -74,7 +75,7 @@ class FulltextIndex extends AbstractIndex
             return false;
         }
 
-        if ($requireLock && !$this->lock()) return false;
+        if ($requireLock) $this->lock();
 
         $pagewords = array();
         // get word usage in page
@@ -136,7 +137,7 @@ class FulltextIndex extends AbstractIndex
      * Split the words in a page and add them to the index
      *
      * @param string    $text   content of the page
-     * @return array            list of word IDs and number of times used
+     * @return array|false      list of word IDs and number of times used, false on errors
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Christopher Smith <chris@jalakai.co.uk>
@@ -188,12 +189,13 @@ class FulltextIndex extends AbstractIndex
     /**
      * Delete the contents of a page to the fulltext index
      *
-     * @param string $page   a page name
-     * @param bool   $requireLock  should be false only if the caller is resposible for index lock
+     * @param string $page a page name
+     * @param bool $requireLock should be false only if the caller is resposible for index lock
      * @return bool  If renaming the value has been successful, false on error
      *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @throws Exception\IndexLockException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+     * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function deletePageWords($page, $requireLock = true)
     {
@@ -203,7 +205,7 @@ class FulltextIndex extends AbstractIndex
             return false;
         }
 
-        if ($requireLock && !$this->lock()) return false;
+        if ($requireLock) $this->lock();
 
         // remove obsolete index entries
         $pageword_idx = $this->getIndexKey('pageword', '', $pid);
@@ -489,20 +491,21 @@ class FulltextIndex extends AbstractIndex
      */
     public function histogram($min=1, $max=0, $minlen=3)
     {
-        return Search\MetadataIndex::getInstance()->histogram($min, $max, $minlen);
+        return MetadataIndex::getInstance()->histogram($min, $max, $minlen);
     }
 
     /**
      * Clear the Fulltext Index
      *
-     * @param bool   $requireLock  should be false only if the caller is resposible for index lock
+     * @param bool $requireLock should be false only if the caller is resposible for index lock
      * @return bool  If the index has been cleared successfully
+     * @throws Exception\IndexLockException
      */
     public function clear($requireLock = true)
     {
         global $conf;
 
-        if ($requireLock && !$this->lock()) return false;
+        if ($requireLock) $this->lock();
 
         $lengths = $this->listIndexLengths();
         foreach ($lengths as $length) {

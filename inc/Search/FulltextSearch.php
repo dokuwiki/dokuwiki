@@ -3,8 +3,6 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
-use dokuwiki\Search\FulltextIndex;
-use dokuwiki\Search\QueryParser;
 use dokuwiki\Utf8;
 
 // create snippets for the first few results only
