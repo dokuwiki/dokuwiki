@@ -822,6 +822,7 @@ function html_mktocitem($link, $text, $level, $hash='#') {
  * @param Doku_Form  $form The form
  */
 function html_form($name, $form) {
+    dbg_deprecated('use dokuwiki\Form\Form instead of Doku_Form');
     // Safety check in case the caller forgets.
     $form->endFieldset();
     Event::createAndTrigger('HTML_'.strtoupper($name).'FORM_OUTPUT', $form, 'html_form_output', false);
@@ -834,6 +835,7 @@ function html_form($name, $form) {
  * @param Doku_Form $form The form
  */
 function html_form_output($form) {
+    dbg_deprecated('use dokuwiki\Form\Form::toHTML()');
     $form->printForm();
 }
 
