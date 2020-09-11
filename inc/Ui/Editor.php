@@ -18,7 +18,7 @@ class Editor extends Ui
      *
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @triggers HTML_EDIT_FORMSELECTION
+     * @triggers EDIT_FORM_ALTERNATE
      * @return void
      */
     public function show()
@@ -70,7 +70,7 @@ class Editor extends Ui
         $form->setHiddenField('suffix', $SUF);
         $form->setHiddenField('changecheck', $check);
 
-        // prepare data for HTML_EDIT_FORMSELECTION event
+        // prepare data for EDIT_FORM_ALTERNATE event
         $data = array(
             'form' => $form,
             'wr'   => $wr,
@@ -82,7 +82,7 @@ class Editor extends Ui
         if ($data['target'] !== 'section') {
             // Only emit event if page is writable, section edit data is valid and
             // edit target is not section.
-            Event::createAndTrigger('HTML_EDIT_FORMSELECTION', $data, [$this,'addTextarea'], true);
+            Event::createAndTrigger('EDIT_FORM_ALTERNATE', $data, [$this,'addTextarea'], true);
         } else {
             $this->addTextarea($data);
         }
@@ -134,11 +134,15 @@ class Editor extends Ui
 
         // license note
         if ($wr && $conf['license']) {
+            $attr = array(
+                'href'   => $license[$conf['license']]['url'],
+                'rel'    => 'license',
+                'class'  => 'urlextern',
+                'target' => $conf['target']['extern'] ? $conf['target']['extern'] : '',
+            );
             $form->addTagOpen('div')->addClass('license');
             $form->addHTML($lang['licenseok']
-                .' <a href="'.$license[$conf['license']]['url'].'" rel="license" class="urlextern"'
-                . ($conf['target']['extern']) ? ' target="'.$conf['target']['extern'].'">' : '>'
-                . $license[$conf['license']]['name'].'</a>'
+                .' <a '.buildAttributes($attr, true).'>'.$license[$conf['license']]['name'].'</a>'
             );
             $form->addTagClose('div');
         }
@@ -181,7 +185,7 @@ class Editor extends Ui
     /**
      * Display the default edit form (textarea)
      *
-     * the default action for HTML_EDIT_FORMSELECTION.
+     * the default action for EDIT_FORM_ALTERNATE.
      *
      * @param mixed[] $data
      */
