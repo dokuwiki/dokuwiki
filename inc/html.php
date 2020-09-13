@@ -820,6 +820,8 @@ function html_mktocitem($link, $text, $level, $hash='#') {
  *
  * @param string     $name The name of the form
  * @param Doku_Form  $form The form
+ * @return void
+ * @deprecated 2020-07-18
  */
 function html_form($name, $form) {
     dbg_deprecated('use dokuwiki\Form\Form instead of Doku_Form');
@@ -833,6 +835,8 @@ function html_form($name, $form) {
  * Just calls printForm() on the form object.
  *
  * @param Doku_Form $form The form
+ * @return void
+ * @deprecated 2020-07-18
  */
 function html_form_output($form) {
     dbg_deprecated('use dokuwiki\Form\Form::toHTML()');
@@ -921,6 +925,7 @@ function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts
  *
  * @param array  $tabs        tab structure
  * @param string $current_tab the current tab id
+ * @return void
  */
 function html_tabs($tabs, $current_tab = null) {
     echo '<ul class="tabs">'.NL;
@@ -941,6 +946,7 @@ function html_tabs($tabs, $current_tab = null) {
  * @param string $href - tab href
  * @param string $caption - tab caption
  * @param boolean $selected - is tab selected
+ * @return void
  */
 
 function html_tab($href, $caption, $selected = false) {
