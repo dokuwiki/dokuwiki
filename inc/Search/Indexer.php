@@ -4,7 +4,8 @@ namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
 use dokuwiki\Search\Exception\IndexAccessException;
-use dokuwiki\Search\Exception\SearchException;
+use dokuwiki\Search\Exception\IndexLockException;
+use dokuwiki\Search\Exception\IndexWriteException;
 
 // Version tag used to force rebuild on upgrade
 const INDEXER_VERSION = 8;
@@ -42,8 +43,8 @@ class Indexer extends AbstractIndex
      * @param bool $force force reindexing even when the index is up to date
      * @return bool  If the function completed successfully
      *
-     * @throws IndexAccessException
-     * @throws SearchException
+     * @throws IndexLockException
+     * @throws IndexWriteException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -101,7 +102,8 @@ class Indexer extends AbstractIndex
      * @param bool $force force reindexing even when the index is up to date
      * @return bool  If the function completed successfully
      *
-     * @throws SearchException
+     * @throws IndexLockException
+     * @throws IndexWriteException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -119,12 +121,8 @@ class Indexer extends AbstractIndex
             }
         }
 
-        // register the page to the page.idx
+        // register the page to the page.idx file, $pid is always numeric
         $pid = $this->getPID($page);
-        if ($pid === false) {
-            if ($verbose) dbglog("Indexer: getting the PID failed for {$page}");
-            throw new IndexAccessException("Failed to get PID for {$page}");
-        }
 
         // prepare metadata indexing
         $metadata = array();
@@ -196,7 +194,8 @@ class Indexer extends AbstractIndex
      * @param bool $force force reindexing even when the index is up to date
      * @return bool  If the function completed successfully
      *
-     * @throws Exception\IndexLockException
+     * @throws IndexLockException
+     * @throws IndexWriteException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -226,15 +225,10 @@ class Indexer extends AbstractIndex
 
         // mark the page as deleted in the page.idx
         $pid = $this->getPID($page);
-        if ($pid !== false) {
-            if (!$this->lock()) return false;
-            $result = $this->saveIndexKey('page', '', $pid, self::INDEX_MARK_DELETED.$page);
-            if ($verbose) dbglog("Indexer: update page.idx  ".($result ? 'done' : 'failed'));
-            $this->unlock();
-        } else {
-            if ($verbose) dbglog("Indexer: {$page} not found in the page.idx, ignoring");
-            $result = true;
-        }
+        $this->lock();
+        $this->saveIndexKey('page', '', $pid, self::INDEX_MARK_DELETED.$page);
+        if ($verbose) dbglog("Indexer: {$page} has marked as deleted in page.idx");
+        $this->unlock();
 
         unset(static::$pidCache[$pid]);
         @unlink($idxtag);
@@ -249,8 +243,9 @@ class Indexer extends AbstractIndex
      *
      * @param string $oldpage The old page name
      * @param string $newpage The new page name
-     * @return bool           If the page was successfully renamed
-     * @throws Exception\IndexLockException
+     * @return bool  If the page was successfully renamed
+     * @throws IndexLockException
+     * @throws IndexWriteException
      */
     public function renamePage($oldpage, $newpage)
     {
@@ -269,14 +264,14 @@ class Indexer extends AbstractIndex
         }
 
         // update page.idx
-        if (!$this->lock()) return false;
-        $result = $this->saveIndexKey('page', '', $oldPid, $newpage);
+        $this->lock();
+        $this->saveIndexKey('page', '', $oldPid, $newpage);
         $this->unlock();
 
         // reset the pid cache
         $this->resetPIDCache();
 
-        return $result;
+        return true;
     }
 
     /**

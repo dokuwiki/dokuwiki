@@ -3,6 +3,8 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Search\Exception\IndexAccessException;
+use dokuwiki\Search\Exception\IndexLockException;
+use dokuwiki\Search\Exception\IndexWriteException;
 
 /**
  * Class DokuWiki Metadata Index (Singleton)
@@ -77,8 +79,8 @@ class MetadataIndex extends AbstractIndex
      * @return bool  if the function completed successfully
      *
      * @throws IndexAccessException
-     * @throws Exception\IndexLockException
-     * @throws Exception\IndexWriteException
+     * @throws IndexLockException
+     * @throws IndexWriteException
      * @author Michael Hamann <michael@content-space.de>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -93,9 +95,6 @@ class MetadataIndex extends AbstractIndex
 
         // load known documents
         $pid = $this->getPID($page);
-        if ($pid === false) {
-            return false;
-        }
 
         if ($requireLock) $this->lock();
 
@@ -185,7 +184,8 @@ class MetadataIndex extends AbstractIndex
      * @param bool $requireLock should be false only if the caller is resposible for index lock
      * @return bool  If renaming the value has been successful, false on error
      *
-     * @throws Exception\IndexLockException
+     * @throws IndexLockException
+     * @throws IndexWriteException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -193,9 +193,6 @@ class MetadataIndex extends AbstractIndex
     {
         // load known documents
         $pid = $this->getPID($page);
-        if ($pid === false) {
-            return false;
-        }
 
         if ($requireLock) $this->lock();
 
@@ -345,7 +342,9 @@ class MetadataIndex extends AbstractIndex
      * @param string $newvalue The new value to which the old value shall be renamed,
      *                          if exists values will be merged
      * @return bool  If renaming the value has been successful, false on error
-     * @throws Exception\IndexLockException
+     *
+     * @throws IndexLockException
+     * @throws IndexWriteException
      */
     public function renameMetaValue($key, $oldvalue, $newvalue)
     {
@@ -386,10 +385,7 @@ class MetadataIndex extends AbstractIndex
                 }
             } else {
                 $metavalues[$oldid] = $newvalue;
-                if (!$this->saveIndex($key.'_w', '', $metavalues)) {
-                    $this->unlock();
-                    return false;
-                }
+                $this->saveIndex($key.'_w', '', $metavalues);
             }
         }
 

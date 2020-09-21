@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Search;
 
+use dokuwiki\Search\Exception\IndexLockException;
+use dokuwiki\Search\Exception\IndexWriteException;
 use dokuwiki\Search\Tokenizer;
 use dokuwiki\Utf8;
 
@@ -63,7 +65,8 @@ class FulltextIndex extends AbstractIndex
      * @param bool $requireLock should be false only if the caller is resposible for index lock
      * @return bool  if the function completed successfully
      *
-     * @throws Exception\IndexLockException
+     * @throws IndexLockException
+     * @throws IndexWriteException
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -71,33 +74,21 @@ class FulltextIndex extends AbstractIndex
     {
         // load known documents
         $pid = $this->getPID($page);
-        if ($pid === false) {
-            return false;
-        }
 
         if ($requireLock) $this->lock();
 
         $pagewords = array();
         // get word usage in page
         $words = $this->getPageWords($text);
-        if ($words === false) {
-            $this->unlock();
-            return false;
-        }
 
-        if (!empty($words)) {
-            foreach (array_keys($words) as $wlen) {
-                $index = $this->getIndex('i', $wlen);
-                foreach ($words[$wlen] as $wid => $freq) {
-                    $idx = ($wid < count($index)) ? $index[$wid] : '';
-                    $index[$wid] = $this->updateTuple($idx, $pid, $freq);
-                    $pagewords[] = "{$wlen}*{$wid}";
-                }
-                if (!$this->saveIndex('i', $wlen, $index)) {
-                    $this->unlock();
-                    return false;
-                }
+        foreach (array_keys($words) as $wlen) {
+            $index = $this->getIndex('i', $wlen);
+            foreach ($words[$wlen] as $wid => $freq) {
+                $idx = ($wid < count($index)) ? $index[$wid] : '';
+                $index[$wid] = $this->updateTuple($idx, $pid, $freq);
+                $pagewords[] = "{$wlen}*{$wid}";
             }
+            $this->saveIndex('i', $wlen, $index);
         }
 
         // Remove obsolete index entries
@@ -123,22 +114,19 @@ class FulltextIndex extends AbstractIndex
         }
         // Save the reverse index
         $pageword_idx = implode(':', $pagewords);
-        if (!$this->saveIndexKey('pageword', '', $pid, $pageword_idx)) {
-            $result = false;
-        } else {
-            $result = true;
-        }
+        $this->saveIndexKey('pageword', '', $pid, $pageword_idx);
 
         if ($requireLock) $this->unlock();
-        return $result;
+        return true;
     }
 
     /**
      * Split the words in a page and add them to the index
      *
-     * @param string    $text   content of the page
-     * @return array|false      list of word IDs and number of times used, false on errors
+     * @param string $text content of the page
+     * @return array  list of word IDs and number of times used, false on errors
      *
+     * @throws IndexWriteException
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Christopher Smith <chris@jalakai.co.uk>
      * @author Tom N Harris <tnharris@whoopdedo.org>
@@ -178,9 +166,7 @@ class FulltextIndex extends AbstractIndex
                 $index[$wlen][$wid] = $freq;
             }
             // save back the word index
-            if ($word_idx_modified && !$this->saveIndex('w', $wlen, $word_idx)) {
-                return false;
-            }
+            if ($word_idx_modified) $this->saveIndex('w', $wlen, $word_idx);
         }
 
         return $index;
@@ -193,7 +179,8 @@ class FulltextIndex extends AbstractIndex
      * @param bool $requireLock should be false only if the caller is resposible for index lock
      * @return bool  If renaming the value has been successful, false on error
      *
-     * @throws Exception\IndexLockException
+     * @throws IndexLockException
+     * @throws IndexWriteException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
@@ -201,9 +188,6 @@ class FulltextIndex extends AbstractIndex
     {
         // load known documents
         $pid = $this->getPID($page);
-        if ($pid === false) {
-            return false;
-        }
 
         if ($requireLock) $this->lock();
 
@@ -228,9 +212,7 @@ class FulltextIndex extends AbstractIndex
             }
         }
         // save the reverse index
-        if (!$this->saveIndexKey('pageword', '', $pid, '')) {
-            return false;
-        }
+        $this->saveIndexKey('pageword', '', $pid, '');
 
         if ($requireLock) $this->unlock();
         return true;
