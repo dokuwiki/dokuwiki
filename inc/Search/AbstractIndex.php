@@ -52,9 +52,10 @@ abstract class AbstractIndex
      * Warning: The page may not exist in the filesystem.
      *
      * @param string $page The page to get the PID for
-     * @return int|false  The page id on success, false when not found in page.idx
-     * @throws IndexWriteException
+     * @return int  The numeric page id
+     *
      * @throws IndexLockException
+     * @throws IndexWriteException
      */
     public function getPID($page)
     {
@@ -63,7 +64,7 @@ abstract class AbstractIndex
         // requested pages by using a cache
         if (isset(static::$pidCache[$page])) return static::$pidCache[$page];
 
-        if (!$this->lock()) return false;
+        $this->lock();
 
         $index = $this->getIndex('page', '');
         $pid = array_search($page, $index, true);
@@ -81,9 +82,7 @@ abstract class AbstractIndex
             }
         }
 
-        if ($flagSaveIndex && !$this->saveIndex('page', '', $index)) {
-            throw new IndexWriteException('Indexer: Failed to write page index');
-        }
+        if ($flagSaveIndex) $this->saveIndex('page', '', $index);
 
         // limit cache to 10 entries by discarding the oldest element
         // as in DokuWiki usually only the most recently
@@ -200,11 +199,12 @@ abstract class AbstractIndex
     /**
      * Replace the contents of the index with an array
      *
-     * @param string    $idx    name of the index
-     * @param string    $suffix subpart identifier
-     * @param array     $lines  list of lines without LF
-     * @return bool             If saving succeeded
+     * @param string $idx name of the index
+     * @param string $suffix subpart identifier
+     * @param array $lines list of lines without LF
+     * @return true
      *
+     * @throws IndexWriteException
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function saveIndex($idx, $suffix, $lines)
@@ -212,7 +212,9 @@ abstract class AbstractIndex
         global $conf;
         $fn = $conf['indexdir'].'/'.$idx.$suffix;
         $fh = @fopen($fn.'.tmp', 'w');
-        if (!$fh) return false;
+        if (!$fh) {
+            throw new IndexWriteException("Failed to write {$idx}{$suffix} index");
+        }
         fwrite($fh, implode("\n", $lines));
         if (!empty($lines)) {
             fwrite($fh, "\n");
@@ -231,7 +233,7 @@ abstract class AbstractIndex
      * @param string $idx name of the index
      * @param string $suffix subpart identifier
      * @param string $value line to find in the index
-     * @return int      line number of the value in the index
+     * @return int  line number of the value in the index
      *
      * @throws IndexWriteException
      * @author Tom N Harris <tnharris@whoopdedo.org>
@@ -243,9 +245,7 @@ abstract class AbstractIndex
         if ($id === false) {
             $id = count($index);
             $index[$id] = $value;
-            if (!$this->saveIndex($idx, $suffix, $index)) {
-                throw new IndexWriteException("Failed to write {$idx}{$suffix} index");
-            }
+            $this->saveIndex($idx, $suffix, $index);
         }
         return (int) $id;
     }
@@ -253,12 +253,13 @@ abstract class AbstractIndex
     /**
      * Write a line into the index
      *
-     * @param string    $idx    name of the index
-     * @param string    $suffix subpart identifier
-     * @param int       $id     the line number
-     * @param string    $line   line to write
-     * @return bool             If saving succeeded
+     * @param string $idx name of the index
+     * @param string $suffix subpart identifier
+     * @param int $id the line number
+     * @param string $line line to write
+     * @return true
      *
+     * @throws IndexWriteException
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function saveIndexKey($idx, $suffix, $id, $line)
@@ -269,7 +270,9 @@ abstract class AbstractIndex
         }
         $fn = $conf['indexdir'].'/'.$idx.$suffix;
         $fh = @fopen($fn.'.tmp', 'w');
-        if (!$fh) return false;
+        if (!$fh) {
+            throw new IndexWriteException("Failed to write {$idx}{$suffix} index");
+        }
         $ih = @fopen($fn.'.idx', 'r');
         if ($ih) {
             $ln = -1;
