@@ -68,9 +68,8 @@ class MetadataIndex extends AbstractIndex
      * Add/update keys to/of the metadata index
      *
      * Adding new keys does not remove other keys for the page.
-     * An empty value will erase the key.
-     * The $key parameter can be an array to add multiple keys. $value will
-     * not be used if $key is an array.
+     * The $key parameter can be an array to add multiple keys. $value will not be used if $key is an array.
+     * An empty value will remove the page from the metadata index.
      *
      * @param string $page a page name
      * @param mixed $key a key string or array of key=>value pairs
@@ -87,11 +86,9 @@ class MetadataIndex extends AbstractIndex
     public function addMetaKeys($page, $key, $value = null, $requireLock = true)
     {
         if (!is_array($key)) {
-            $key = array($key => $value);
-        } elseif (!is_null($value)) {
-            // $key is array, but $value is not null
-            throw new IndexAccessException('array passed to addMetaKeys but value is not null');
+            $key = isset($value) ? array($key => $value) : array($key => '');
         }
+        unset($key['']);
 
         // load known documents
         $pid = $this->getPID($page);
@@ -100,22 +97,18 @@ class MetadataIndex extends AbstractIndex
 
         // Special handling for titles so the index file is simpler
         if (array_key_exists('title', $key)) {
-            $value = $key['title'];
-            if (is_array($value)) {
-                $value = $value[0];
-            }
+            $value = (string)(is_array($key['title']) ? $value[0] : $key['title']);
             $this->saveIndexKey('title', '', $pid, $value);
             unset($key['title']);
         }
 
         foreach ($key as $name => $values) {
             $metaname = $this->cleanName($name);
+            if (empty($metaname)) continue;
             $this->addIndexKey('metadata', '', $metaname);
             $metaidx = $this->getIndex($metaname.'_i', '');
             $metawords = $this->getIndex($metaname.'_w', '');
             $addwords = false;
-
-            if (!is_array($values)) $values = array($values);
 
             $val_idx = $this->getIndexKey($metaname.'_p', '', $pid);
             if ($val_idx !== '') {
@@ -126,12 +119,14 @@ class MetadataIndex extends AbstractIndex
                 $val_idx = array();
             }
 
+            if (!is_array($values)) $values = array($values);
+
             foreach ($values as $val) {
-                $val = (string)$val;
+                $val = (string)$val;  // NULL is always converted to an empty string
                 if ($val !== '') {
                     $id = array_search($val, $metawords, true);
                     if ($id === false) {
-                        // didn't find $val, so we'll add it to the end of metawords
+                        // not found $val, so we'll add it to the end of metawords
                         // and create a placeholder in metaidx
                         $id = count($metawords);
                         $metawords[$id] = $val;
