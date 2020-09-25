@@ -26,7 +26,6 @@ class Indexer extends AbstractIndex
      * Indexer constructor
      *
      * @param string $page name of the page to index
-     * @return Indexer
      */
     public function __construct($page = null)
     {
@@ -195,7 +194,6 @@ class Indexer extends AbstractIndex
      *
      * Erases entries in all known indexes. Locking is handled internally.
      *
-     * @param string $page name of the page to index
      * @param bool $verbose print status messages
      * @param bool $force force reindexing even when the index is up to date
      * @return bool  If the function completed successfully
