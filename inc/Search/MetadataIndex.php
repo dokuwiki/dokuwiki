@@ -15,7 +15,7 @@ use dokuwiki\Search\Exception\IndexWriteException;
  */
 class MetadataIndex extends AbstractIndex
 {
-    // numeric page id to be added to or deleted from the Fulltext index
+    // numeric page id to be added to or deleted from the Metadata index
     protected $pageID;
 
     /**

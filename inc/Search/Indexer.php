@@ -129,7 +129,7 @@ class Indexer extends AbstractIndex
             }
         }
 
-        // register the page to the page.idx file, $pid is always numeric
+        // register the page to the page.idx file, $pid is always integer
         $pid = $this->getPID($page);
 
         // prepare metadata indexing
@@ -160,7 +160,7 @@ class Indexer extends AbstractIndex
         unset($metadata['internal_index']);
 
         // Access to Metadata Index
-        $result = (new MetadataIndex($page))->addMetaKeys($metadata);
+        $result = (new MetadataIndex($pid))->addMetaKeys($metadata);
         if ($verbose) dbglog("Indexer: addMetaKeys({$page}) ".($result ? 'done' : 'failed'));
         if (!$result) {
             return false;
@@ -168,8 +168,8 @@ class Indexer extends AbstractIndex
 
         // Access to Fulltext Index
         if ($indexenabled) {
-            $result = (new FulltextIndex($page))->addWords($body);
-            if ($verbose) dbglog("Indexer: addPageWords({$page}) ".($result ? 'done' : 'failed')); // FIXME
+            $result = (new FulltextIndex($pid))->addWords($body);
+            if ($verbose) dbglog("Indexer: addWords() for {$page} done");
             if (!$result) {
                 return false;
             }
@@ -177,7 +177,7 @@ class Indexer extends AbstractIndex
             if ($verbose) dbglog("Indexer: full text indexing disabled for {$page}");
             // ensure the page content deleted from the Fulltext index
             $result = (new FulltextIndex($page))->deleteWords();
-            if ($verbose) dbglog("Indexer: deletePageWords({$page}) ".($result ? 'done' : 'failed')); // FIXME
+            if ($verbose) dbglog("Indexer: deleteWords() for {$page} done");
             if (!$result) {
                 return false;
             }
@@ -220,22 +220,24 @@ class Indexer extends AbstractIndex
             return true;
         }
 
+        // retrieve pid from the page.idx file, $pid is always integer
+        $pid = $this->getPID($page);
+
         // remove obsoleted content from Fulltext index
-        $result = (new FulltextIndex($page))->deleteWords();
-        if ($verbose) dbglog("Indexer: deletePageWords({$page}) ".($result ? 'done' : 'failed')); // FIXME
+        $result = (new FulltextIndex($pid))->deleteWords();
+        if ($verbose) dbglog("Indexer: deleteWords() for {$page} done");
         if (!$result) {
             return false;
         }
 
         // delete all keys of the page from metadata index
-        $result = (new MetadataIndex($page))->deleteMetaKeys();
-        if ($verbose) dbglog("Indexer: deleteMetaKeys({$page}) ".($result ? 'done' : 'failed')); // FIXME
+        $result = (new MetadataIndex($pid))->deleteMetaKeys();
+        if ($verbose) dbglog("Indexer: deleteMetaKeys() for {$page} done");
         if (!$result) {
             return false;
         }
 
         // mark the page as deleted in the page.idx
-        $pid = $this->getPID($page);
         $this->lock();
         $this->saveIndexKey('page', '', $pid, self::INDEX_MARK_DELETED.$page);
         if ($verbose) dbglog("Indexer: {$page} has marked as deleted in page.idx");
