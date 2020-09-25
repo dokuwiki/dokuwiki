@@ -53,8 +53,7 @@ class Mapper {
 
         dbglog("Sitemapper::generate(): using $sitemap");
 
-        $Indexer = Indexer::getInstance();
-        $pages = $Indexer->getPages();
+        $pages = (new Indexer())->getPages();
         dbglog('Sitemapper::generate(): creating sitemap using '.count($pages).' pages');
         $items = array();
 

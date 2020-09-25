@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Search;
 
+use dokuwiki\Search\Exception\IndexAccessException;
 use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Exception\IndexWriteException;
 use dokuwiki\Utf8;
@@ -20,12 +21,6 @@ abstract class AbstractIndex
 
     /** @var array $pidCache Cache for getPID() */
     protected static $pidCache = array();
-
-    /**
-     * AbstractIndex constructor
-     * extended classes should be Singleton, prevent direct object creation
-     */
-    protected function __construct() {}
 
     /**
      * Clean a name of a key for use as a file name.
@@ -54,11 +49,16 @@ abstract class AbstractIndex
      * @param string $page The page to get the PID for
      * @return int  The numeric page id
      *
+     * @throws IndexAccessException
      * @throws IndexLockException
      * @throws IndexWriteException
      */
     public function getPID($page)
     {
+        if (!isset($page)) {
+            throw new IndexAccessException('Indexer: invalid argument for getPID');
+        }
+
         // return PID when it is in the cache
         // avoid expensive addIndexKey operation for the most recently
         // requested pages by using a cache

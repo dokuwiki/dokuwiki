@@ -315,8 +315,7 @@ class ApiCore
     {
         $list = array();
 
-        $Indexer = Indexer::getInstance();
-        $pages = $Indexer->getPages();
+        $pages = (new Indexer())->getPages();
         $pages = array_filter(array_filter($pages, 'isVisiblePage'), 'page_exists');
         Sort::ksort($pages);
 
@@ -463,8 +462,7 @@ class ApiCore
      */
     public function listBackLinks($id)
     {
-        $MetadataIndex = MetadataIndex::getInstance();
-        return $MetadataIndex->backlinks($this->resolvePageId($id));
+        return (new MetadataIndex())->backlinks($this->resolvePageId($id));
     }
 
     /**
@@ -568,8 +566,7 @@ class ApiCore
         unlock($id);
 
         // run the indexer if page wasn't indexed yet
-        $Indexer = Indexer::getInstance();
-        $Indexer->addPage($id);
+        (new Indexer($id))->addPage();
 
         return true;
     }

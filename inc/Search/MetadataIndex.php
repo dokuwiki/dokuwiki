@@ -15,20 +15,19 @@ use dokuwiki\Search\Exception\IndexWriteException;
  */
 class MetadataIndex extends AbstractIndex
 {
-    /** @var MetadataIndex $instance */
-    protected static $instance = null;
+    // numeric page id to be added to or deleted from the Fulltext index
+    protected $pageID;
 
     /**
-     * Get new or existing singleton instance of the MetadataIndex
+     * MetadataIndex constructor
      *
-     * @return MetadataIndex
+     * @param string|int $page a page name or numeric page id
      */
-    public static function getInstance()
+    public function __construct($page = null)
     {
-        if (is_null(static::$instance)) {
-            static::$instance = new static();
+        if (isset($page)) {
+            $this->pageID = is_int($page) ? $page : $this->getPID($page);
         }
-        return static::$instance;
     }
 
     /**
@@ -71,7 +70,6 @@ class MetadataIndex extends AbstractIndex
      * The $key parameter can be an array to add multiple keys. $value will not be used if $key is an array.
      * An empty value will remove the page from the metadata index.
      *
-     * @param string $page a page name
      * @param mixed $key a key string or array of key=>value pairs
      * @param mixed $value the value or list of values
      * @param bool $requireLock should be false only if the caller is resposible for index lock
@@ -83,15 +81,19 @@ class MetadataIndex extends AbstractIndex
      * @author Michael Hamann <michael@content-space.de>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function addMetaKeys($page, $key, $value = null, $requireLock = true)
+    public function addMetaKeys($key, $value = null, $requireLock = true)
     {
+        // load known documents
+        if (!isset($this->pageID)) {
+            throw new IndexAccessException('Indexer: page unknown to addMetaKeys');
+        } else {
+            $pid = $this->pageID;
+        }
+
         if (!is_array($key)) {
             $key = isset($value) ? array($key => $value) : array($key => '');
         }
         unset($key['']);
-
-        // load known documents
-        $pid = $this->getPID($page);
 
         if ($requireLock) $this->lock();
 
@@ -174,20 +176,24 @@ class MetadataIndex extends AbstractIndex
     /**
      * Delete keys of the page from metadata index
      *
-     * @param string $page a page name
      * @param mixed $keys a key string or array of keys
      * @param bool $requireLock should be false only if the caller is resposible for index lock
      * @return bool  If renaming the value has been successful, false on error
      *
+     * @throws IndexAccessException
      * @throws IndexLockException
      * @throws IndexWriteException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function deleteMetaKeys($page, $keys = [], $requireLock = true)
+    public function deleteMetaKeys($keys = [], $requireLock = true)
     {
         // load known documents
-        $pid = $this->getPID($page);
+        if (!isset($this->pageID)) {
+            throw new IndexAccessException('Indexer: page unknown to deleteMetaKeys');
+        } else {
+            $pid = $this->pageID;
+        }
 
         if ($requireLock) $this->lock();
 
@@ -433,8 +439,7 @@ class MetadataIndex extends AbstractIndex
                 }
             }
         } else {
-            $FulltextIndex = FulltextIndex::getInstance();
-            $lengths = $FulltextIndex->listIndexLengths();
+            $lengths = (new FulltextIndex)->listIndexLengths();
             foreach ($lengths as $length) {
                 if ($length < $minlen) continue;
                 $index = $this->getIndex('i', $length);

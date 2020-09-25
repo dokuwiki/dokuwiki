@@ -1086,8 +1086,7 @@ function html_backlinks(){
 
     print p_locale_xhtml('backlinks');
 
-    $MetadataIndex = MetadataIndex::getInstance();
-    $data = $MetadataIndex->backlinks($ID);
+    $data = (new MetadataIndex())->backlinks($ID);
 
     if(!empty($data)) {
         print '<ul class="idx">';

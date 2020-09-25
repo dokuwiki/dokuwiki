@@ -221,8 +221,7 @@ function media_inuse($id) {
     global $conf;
 
     if ($conf['refcheck']) {
-        $MetadataIndex = MetadataIndex::getInstance();
-        $mediareferences = $MetadataIndex->mediause($id, true);
+        $mediareferences = (new MetadataIndex())->mediause($id, true);
         if (!count($mediareferences)) {
             return false;
         } else {
@@ -1197,8 +1196,7 @@ function media_details($image, $auth, $rev = '', $meta = false) {
     echo '</dl>'.NL;
     echo '<dl>'.NL;
     echo '<dt>'.$lang['reference'].':</dt>';
-    $MetadataIndex = MetadataIndex::getInstance();
-    $media_usage = $MetadataIndex->mediause($image, true);
+    $media_usage = (new MetadataIndex())->mediause($image, true);
     if (count($media_usage) > 0) {
         foreach ($media_usage as $path) {
             echo '<dd>'.html_wikilink($path).'</dd>';

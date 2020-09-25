@@ -253,7 +253,7 @@ function check(){
     }
 
     // Check for corrupted fulltext search index
-    $FulltextIndex = FulltextIndex::getInstance();
+    $FulltextIndex = new FulltextIndex();
     $lengths = $FulltextIndex->listIndexLengths();
     $index_corrupted = false;
     foreach ($lengths as $length) {
@@ -264,7 +264,7 @@ function check(){
     }
 
     // Check for corrupted metadata index
-    $MetadataIndex = MetadataIndex::getInstance();
+    $MetadataIndex = new MetadataIndex();
     foreach ($MetadataIndex->getIndex('metadata', '') as $name) {
         if (count($MetadataIndex->getIndex($name.'_w', '')) != count($MetadataIndex->getIndex($name.'_i', ''))) {
             $index_corrupted = true;

@@ -11,7 +11,7 @@ use dokuwiki\Search\Exception\IndexWriteException;
 const INDEXER_VERSION = 8;
 
 /**
- * Class DokuWiki Indexer (Singleton)
+ * Class DokuWiki Indexer
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
@@ -19,44 +19,46 @@ const INDEXER_VERSION = 8;
  */
 class Indexer extends AbstractIndex
 {
-    /** @var Indexer $instance */
-    protected static $instance = null;
+    // page to be indexed
+    protected $page;
 
     /**
-     * Get new or existing singleton instance of the Indexer
+     * Indexer constructor
      *
+     * @param string $page name of the page to index
      * @return Indexer
      */
-    public static function getInstance()
+    public function __construct($page = null)
     {
-        if (is_null(static::$instance)) {
-            static::$instance = new static();
-        }
-        return static::$instance;
+        if (isset($page)) $this->page = $page;
     }
 
     /**
      * Dispatch Indexing request for the page, called by TaskRunner::runIndexer()
      *
-     * @param string $page name of the page to index
      * @param bool $verbose print status messages
      * @param bool $force force reindexing even when the index is up to date
      * @return bool  If the function completed successfully
      *
+     * @throws IndexAccessException
      * @throws IndexLockException
      * @throws IndexWriteException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function dispatch($page, $verbose = false, $force = false)
+    public function dispatch($verbose = false, $force = false)
     {
+        if (!isset($this->page)) {
+            throw new IndexAccessException('Indexer: unknow page name');
+        }
+
         // check if page was deleted but is still in the index
-        if (!page_exists($page)) {
-            return $this->deletePage($page, $verbose, $force);
+        if (!page_exists($this->page)) {
+            return $this->deletePage($verbose, $force);
         }
 
         // update search index
-        return $this->addPage($page, $verbose, $force);
+        return $this->addPage($verbose, $force);
     }
 
     /**
@@ -97,18 +99,24 @@ class Indexer extends AbstractIndex
      *
      * Locking is handled internally.
      *
-     * @param string $page name of the page to index
      * @param bool $verbose print status messages
      * @param bool $force force reindexing even when the index is up to date
      * @return bool  If the function completed successfully
      *
+     * @throws IndexAccessException
      * @throws IndexLockException
      * @throws IndexWriteException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function addPage($page, $verbose = false, $force = false)
+    public function addPage($verbose = false, $force = false)
     {
+        if (!isset($this->page)) {
+            throw new IndexAccessException('Indexer: invalid page name in addePage');
+        } else {
+            $page = $this->page;
+        }
+
         // check if indexing needed for the existing page (full text and/or metadata indexing)
         $idxtag = metaFN($page,'.indexed');
         if (!$force && file_exists($idxtag)) {
@@ -152,26 +160,24 @@ class Indexer extends AbstractIndex
         unset($metadata['internal_index']);
 
         // Access to Metadata Index
-        $MetadataIndex = MetadataIndex::getInstance();
-        $result = $MetadataIndex->addMetaKeys($page, $metadata);
+        $result = (new MetadataIndex($page))->addMetaKeys($metadata);
         if ($verbose) dbglog("Indexer: addMetaKeys({$page}) ".($result ? 'done' : 'failed'));
         if (!$result) {
             return false;
         }
 
         // Access to Fulltext Index
-        $FulltextIndex = FulltextIndex::getInstance();
         if ($indexenabled) {
-            $result = $FulltextIndex->addPagewords($page, $body);
-            if ($verbose) dbglog("Indexer: addPageWords({$page}) ".($result ? 'done' : 'failed'));
+            $result = (new FulltextIndex($page))->addWords($body);
+            if ($verbose) dbglog("Indexer: addPageWords({$page}) ".($result ? 'done' : 'failed')); // FIXME
             if (!$result) {
                 return false;
             }
         } else {
             if ($verbose) dbglog("Indexer: full text indexing disabled for {$page}");
             // ensure the page content deleted from the Fulltext index
-            $result = $FulltextIndex->deletePageWords($page);
-            if ($verbose) dbglog("Indexer: deletePageWords({$page}) ".($result ? 'done' : 'failed'));
+            $result = (new FulltextIndex($page))->deleteWords();
+            if ($verbose) dbglog("Indexer: deletePageWords({$page}) ".($result ? 'done' : 'failed')); // FIXME
             if (!$result) {
                 return false;
             }
@@ -194,13 +200,20 @@ class Indexer extends AbstractIndex
      * @param bool $force force reindexing even when the index is up to date
      * @return bool  If the function completed successfully
      *
+     * @throws IndexAccessException
      * @throws IndexLockException
      * @throws IndexWriteException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function deletePage($page, $verbose = false, $force = false)
+    public function deletePage($verbose = false, $force = false)
     {
+        if (!isset($this->page)) {
+            throw new IndexAccessException('Indexer: invalid page name in deletePage');
+        } else {
+            $page = $this->page;
+        }
+
         $idxtag = metaFN($page,'.indexed');
         if (!$force && !file_exists($idxtag)) {
             if ($verbose) dbglog("Indexer: {$page}.indexed file does not exist, ignoring");
@@ -208,17 +221,15 @@ class Indexer extends AbstractIndex
         }
 
         // remove obsoleted content from Fulltext index
-        $FulltextIndex = FulltextIndex::getInstance();
-        $result = $FulltextIndex->deletePageWords($page);
-        if ($verbose) dbglog("Indexer: deletePageWords({$page}) ".($result ? 'done' : 'failed'));
+        $result = (new FulltextIndex($page))->deleteWords();
+        if ($verbose) dbglog("Indexer: deletePageWords({$page}) ".($result ? 'done' : 'failed')); // FIXME
         if (!$result) {
             return false;
         }
 
         // delete all keys of the page from metadata index
-        $MetadataIndex = MetadataIndex::getInstance();
-        $result = $MetadataIndex->deleteMetaKeys($page);
-        if ($verbose) dbglog("Indexer: deleteMetaKeys({$page}) ".($result ? 'done' : 'failed'));
+        $result = (new MetadataIndex($page))->deleteMetaKeys();
+        if ($verbose) dbglog("Indexer: deleteMetaKeys({$page}) ".($result ? 'done' : 'failed')); // FIXME
         if (!$result) {
             return false;
         }
@@ -257,7 +268,7 @@ class Indexer extends AbstractIndex
         // check if newpage found in page.idx
         $newPid = array_search($newpage, $index, true);
         if ($newPid !== false) {
-            $result = $this->deletePage($newpage);
+            $result = (new Indexer($newpage))->deletePage();
             if (!$result) return false;
             // Note: $index is no longer valid after deletePage()!
             unset($index);
@@ -288,12 +299,10 @@ class Indexer extends AbstractIndex
         if ($requireLock) $this->lock();
 
         // clear Metadata Index
-        $MetadataIndex = MetadataIndex::getInstance();
-        $MetadataIndex->clear(false);
+        (new MetadataIndex())->clear(false);
 
         // clear Fulltext Index
-        $FulltextIndex = FulltextIndex::getInstance();
-        $FulltextIndex->clear(false);
+        (new FulltextIndex())->clear(false);
 
         @unlink($conf['indexdir'].'/page.idx');
 

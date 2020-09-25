@@ -160,8 +160,7 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase
         // remove any leftovers from the last run
         if(is_dir(DOKU_TMP_DATA)) {
             // clear indexer data and cache
-            $Indexer = Indexer::getInstance();
-            $Indexer->clear();
+            (new Indexer())->clear();
             TestUtils::rdelete(DOKU_TMP_DATA);
         }
 

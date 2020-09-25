@@ -11,7 +11,7 @@ class indexer_pid_test extends DokuWikiTest
 {
     public function test_pid()
     {
-        $Indexer = Indexer::getInstance();
+        $Indexer = new Indexer();
         $syntaxPID = $Indexer->getPID('wiki:syntax');
         $this->assertEquals('wiki:syntax', $Indexer->getPageFromPID($syntaxPID), 'getPageFromPID(getPID(\'wiki:syntax\')) != \'wiki:syntax\'');
         $dokuwikiPID = $Indexer->getPID('wiki:dokuwiki');

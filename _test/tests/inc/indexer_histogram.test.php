@@ -11,10 +11,10 @@ class indexer_histogram_test extends DokuWikiTest
 {
     public function test_minlength()
     {
-        $MetadataIndex = MetadataIndex::getInstance();
-        $MetadataIndex->addMetaKeys('histo1', 'testkey', array('foo', 'bar', 'foobar'));
-        $MetadataIndex->addMetaKeys('histo2', 'testkey', array('bar', 'testing'));
-        $MetadataIndex->addMetaKeys('histo3', 'testkey', array('foo', 'foobar'));
+        $MetadataIndex = new MetadataIndex();
+        (new MetadataIndex('histo1'))->addMetaKeys('testkey', array('foo', 'bar', 'foobar'));
+        (new MetadataIndex('histo2'))->addMetaKeys('testkey', array('bar', 'testing'));
+        (new MetadataIndex('histo3'))->addMetaKeys('testkey', array('foo', 'foobar'));
 
         $histogram4 = $MetadataIndex->histogram(1, 0, 4, 'testkey');
         $this->assertEquals(array('foobar' => 2, 'testing' => 1), $histogram4);

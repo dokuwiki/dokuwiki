@@ -95,7 +95,7 @@ class MetadataSearch
 
         $pages = array();
         if ($id !== '' && $cleaned !== '') {
-            $MetadataIndex = MetadataIndex::getInstance();
+            $MetadataIndex = new MetadataIndex();
             $page_idx = $MetadataIndex->getPages();
             foreach ($page_idx as $p_id) {
                 if ((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) !== false)) {

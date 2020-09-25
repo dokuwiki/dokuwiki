@@ -196,9 +196,8 @@ class TaskRunner
         }
 
         // do the work
-        $Indexer = Indexer::getInstance();
         try {
-            return $Indexer->dispatch($ID, true);
+            return (new Indexer($ID))->dispatch(true);
         } catch(Search\Exception\SearchException $e) {
             echo get_class($e) . ' : ' . $e->getMessage();
             return false;

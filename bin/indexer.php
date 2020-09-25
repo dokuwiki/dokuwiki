@@ -84,8 +84,7 @@ class IndexerCLI extends CLI
     protected function index($id)
     {
         $this->quietecho("$id... ");
-        $Indexer = Indexer::getInstance();
-        $Indexer->addPage($id, !$this->quiet, $this->clear);
+        (new Indexer($id))->addPage(!$this->quiet, $this->clear);
         $this->quietecho("done.\n");
     }
 
@@ -95,8 +94,7 @@ class IndexerCLI extends CLI
     protected function clearindex()
     {
         $this->quietecho("Clearing index... ");
-        $Indexer = Indexer::getInstance();
-        $Indexer->clear();
+        (new Indexer())->clear();
         $this->quietecho("done.\n");
     }
 

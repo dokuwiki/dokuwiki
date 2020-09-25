@@ -1430,8 +1430,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
 
     // if useheading is enabled, purge the cache of all linking pages
     if (useHeading('content')) {
-        $MetadataIndex = MetadataIndex::getInstance();
-        $pages = $MetadataIndex->backlinks($id, true);
+        $pages = (new MetadataIndex())->backlinks($id, true);
         foreach ($pages as $page) {
             $cache = new CacheRenderer($page, wikiFN($page), 'xhtml');
             $cache->removeCache();

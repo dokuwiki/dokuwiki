@@ -98,8 +98,7 @@ class remoteapicore_test extends DokuWikiTest
         $id = 'wiki:syntax';
         $file = wikiFN($id);
 
-        $Indexer = Indexer::getInstance();
-        $Indexer->addPage($id);
+        (new Indexer($id))->addPage();
         $expected = array(
             array(
                 'id' => $id,
@@ -293,9 +292,8 @@ You can use up to five different levels of',
     public function test_getAllPages()
     {
         // all pages depends on index
-        $Indexer = Indexer::getInstance();
-        $Indexer->addPage('wiki:syntax');
-        $Indexer->addPage('wiki:dokuwiki');
+        (new Indexer('wiki:syntax'))->addPage();
+        (new Indexer('wiki:dokuwiki'))->addPage();
 
         $file1 = wikiFN('wiki:syntax');
         $file2 = wikiFN('wiki:dokuwiki');
@@ -321,10 +319,9 @@ You can use up to five different levels of',
     {
         saveWikiText('linky', '[[wiki:syntax]]', 'test');
         // backlinks need index
-        $Indexer = Indexer::getInstance();
-        $Indexer->addPage('wiki:syntax');
-        $Indexer->addPage('linky');
-        $MetadataIndex = MetadataIndex::getInstance();
+        (new Indexer('wiki:syntax'))->addPage();
+        (new Indexer('linky'))->addPage();
+        $MetadataIndex = new MetadataIndex();
 
         $params = array('wiki:syntax');
         $result = $this->remote->call('wiki.getBackLinks', $params);

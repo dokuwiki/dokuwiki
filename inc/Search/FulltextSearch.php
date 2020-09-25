@@ -88,7 +88,7 @@ class FulltextSearch
         if (empty($q['parsed_ary'])) return array();
 
         // lookup all words found in the query
-        $FulltextIndex = FulltextIndex::getInstance();
+        $FulltextIndex = new FulltextIndex();
         $lookup = $FulltextIndex->lookupWords($q['words']);
 
         // get all pages in this dokuwiki site (!: includes nonexistent pages)

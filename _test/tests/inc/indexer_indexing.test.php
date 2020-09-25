@@ -16,70 +16,69 @@ class indexer_indexing_test extends DokuWikiTest
         parent::setUp();
         saveWikiText('testpage', 'Foo bar baz.', 'Test initialization');
         saveWikiText('notfound', 'Foon barn bazn.', 'Test initialization');
-        $Indexer = Indexer::getInstance();
-        $Indexer->addPage('testpage');
-        $Indexer->addPage('notfound');
+        (new Indexer('testpage'))->addPage();
+        (new Indexer('notfound'))->addPage();
     }
 
     public function test_words()
     {
-        $FulltextIndex = FulltextIndex::getInstance();
+        $FulltextIndex = new FulltextIndex();
         $query = array('baz', 'foo');
         $this->assertEquals(array('baz' => array('testpage' => 1), 'foo' => array('testpage' => 1)), $FulltextIndex->lookupWords($query));
     }
 
     public function test_numerically_identical_words()
     {
-        $FulltextIndex = FulltextIndex::getInstance();
-        $FulltextIndex->addPageWords('testpage', '0x1 002');
-        $FulltextIndex->addPageWords('notfound', '0x2');
+        $FulltextIndex = new FulltextIndex();
+        (new FulltextIndex('testpage'))->addWords('0x1 002');
+        (new FulltextIndex('notfound'))->addWords('0x2');
         $query = array('001', '002');
         $this->assertEquals(array('001' => array(), '002' => array('testpage' => 1)), $FulltextIndex->lookupWords($query));
     }
 
     public function test_meta()
     {
-        $MetadataIndex = MetadataIndex::getInstance();
-        $MetadataIndex->addMetaKeys('testpage', 'testkey', 'testvalue');
-        $MetadataIndex->addMetaKeys('notfound', 'testkey', 'notvalue');
+        $MetadataIndex = new MetadataIndex();
+        (new MetadataIndex('testpage'))->addMetaKeys('testkey', 'testvalue');
+        (new MetadataIndex('notfound'))->addMetaKeys('testkey', 'notvalue');
         $query = 'testvalue';
         $this->assertEquals(array('testpage'), $MetadataIndex->lookupKey('testkey', $query));
     }
 
     public function test_numerically_identical_meta_values()
     {
-        $MetadataIndex = MetadataIndex::getInstance();
-        $MetadataIndex->addMetaKeys('testpage', 'numkey', array('0001', '01'));
-        $MetadataIndex->addMetaKeys('notfound', 'numkey', array('00001', '000001'));
+        $MetadataIndex = new MetadataIndex();
+        (new MetadataIndex('testpage'))->addMetaKeys('numkey', array('0001', '01'));
+        (new MetadataIndex('notfound'))->addMetaKeys('numkey', array('00001', '000001'));
         $query = array('001', '01');
         $this->assertEquals(array('001' => array(), '01' => array('testpage')), $MetadataIndex->lookupKey('numkey', $query));
     }
 
     public function test_numeric_twice()
     {
-        $FulltextIndex = FulltextIndex::getInstance();
-        $FulltextIndex->addPageWords('testpage', '| 1010 | Dallas |');
+        $FulltextIndex = new FulltextIndex();
+        (new FulltextIndex('testpage'))->addWords('| 1010 | Dallas |');
         $query = array('1010');
         $this->assertEquals(array('1010' => array('testpage' => 1)), $FulltextIndex->lookupWords($query));
-        $FulltextIndex->addPageWords('notfound', '| 1010 | Dallas |');
+        (new FulltextIndex('notfound'))->addWords('| 1010 | Dallas |');
         $this->assertEquals(array('1010' => array('testpage' => 1, 'notfound' => 1)), $FulltextIndex->lookupWords($query));
     }
 
     public function test_numeric_twice_meta()
     {
-        $MetadataIndex = MetadataIndex::getInstance();
-        $MetadataIndex->addMetaKeys('testpage', 'onezero', array('1010'));
-        $MetadataIndex->addMetaKeys('notfound', 'onezero', array('1010'));
+        $MetadataIndex = new MetadataIndex();
+        (new MetadataIndex('testpage'))->addMetaKeys('onezero', array('1010'));
+        (new MetadataIndex('notfound'))->addMetaKeys('onezero', array('1010'));
         $query = '1010';
         $this->assertEquals(array('notfound', 'testpage'), $MetadataIndex->lookupKey('onezero', $query));
     }
 
     public function test_numeric_zerostring_meta()
     {
-        $MetadataIndex = MetadataIndex::getInstance();
-        $MetadataIndex->addMetaKeys('zero1', 'zerostring', array('0'));
-        $MetadataIndex->addMetaKeys('zero2', 'zerostring', array('0'));
-        $MetadataIndex->addMetaKeys('0', 'zerostring', array('zero'));
+        $MetadataIndex = new MetadataIndex();
+        (new MetadataIndex('zero1'))->addMetaKeys('zerostring', array('0'));
+        (new MetadataIndex('zero2'))->addMetaKeys('zerostring', array('0'));
+        (new MetadataIndex('0'))->addMetaKeys('zerostring', array('zero'));
 
         $query = '0';
         $result = $MetadataIndex->lookupKey('zerostring', $query);

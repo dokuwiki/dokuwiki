@@ -580,36 +580,31 @@ class Doku_Indexer extends \dokuwiki\Search\Indexer {};
 /** @deprecated 2019-12-16 */
 function idx_get_version() {
     dbg_deprecated('\dokuwiki\Search\Indexer::getVersion()');
-    $Indexer = \dokuwiki\Search\Indexer::getInstance();
-    return $Indexer->getVersion();
+    return (new \dokuwiki\Search\Indexer())->getVersion();
 }
 
 /** @deprecated 2019-12-16 */
 function idx_addPage($page, $verbose=false, $force=false) {
     dbg_deprecated('\dokuwiki\Search\Indexer::addPage()');
-    $Indexer = \dokuwiki\Search\Indexer::getInstance();
-    return $Indexer->addPage($page, $verbose, $force);
+    return (new \dokuwiki\Search\Indexer($page))->addPage($verbose, $force);
 }
 
 /** @deprecated 2019-12-16 */
 function idx_getIndex($idx, $suffix) {
     dbg_deprecated('\dokuwiki\Search\Indexer::getIndex()');
-    $Indexer = \dokuwiki\Search\Indexer::getInstance();
-    return $Indexer->getIndex($idx, $suffix);
+    return (new \dokuwiki\Search\Indexer())->getIndex($idx, $suffix);
 }
 
 /** @deprecated 2019-12-16 */
 function idx_listIndexLengths() {
     dbg_deprecated('\dokuwiki\Search\FulltextIndex::listIndexLengths()');
-    $FulltextIndex = \dokuwiki\Search\FulltextIndex::getInstance();
-    return $FulltextIndex->listIndexLengths();
+    return (new \dokuwiki\Search\FulltextIndex())->listIndexLengths();
 }
 
 /** @deprecated 2019-12-16 */
 function idx_indexLengths($filter) {
     dbg_deprecated('\dokuwiki\Search\FulltextIndex::getIndexLengths()');
-    $FulltextIndex = \dokuwiki\Search\FulltextIndex::getInstance();
-    return $FulltextIndex->getIndexLengths($filter);
+    return (new \dokuwiki\Search\FulltextIndex())->getIndexLengths($filter);
 }
 
 /**
@@ -622,8 +617,8 @@ function idx_indexLengths($filter) {
  * @deprecated 2020-01-30
  */
 function idx_get_indexer() {
-    dbg_deprecated('\dokuwiki\Search\MetadataIndex::getInstance()');
-    return \dokuwiki\Search\MetadataIndex::getInstance();
+    dbg_deprecated('\dokuwiki\Search\MetadataIndex()');
+    return new \dokuwiki\Search\MetadataIndex();
 }
 
 /**
@@ -682,14 +677,12 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $befor
 /** @deprecated 2019-12-28 */
 function ft_backlinks($id, $ignore_perms = false) {
     dbg_deprecated('\dokuwiki\Search\MetadataSearch::backlinks()');
-    $MetadataIndex = \dokuwiki\Search\MetadataIndex::getInstance();
-    return $MetadataIndex->backlinks($id, $ignore_perms);
+    return (new \dokuwiki\Search\MetadataIndex())->backlinks($id, $ignore_perms);
 }
 
 /** @deprecated 2019-12-28 */
 function ft_mediause($id, $ignore_perms = false) {
     dbg_deprecated('\dokuwiki\Search\MetadataIndex::mediause()');
-    $MetadataIndex = \dokuwiki\Search\MetadataIndex::getInstance();
-    return $MetadataIndex->mediause($id, $ignore_perms);
+    return (new \dokuwiki\Search\MetadataIndex())->mediause($id, $ignore_perms);
 }
 

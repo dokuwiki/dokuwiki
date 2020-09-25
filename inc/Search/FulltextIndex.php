@@ -2,13 +2,14 @@
 
 namespace dokuwiki\Search;
 
+use dokuwiki\Search\Exception\IndexAccessException;
 use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Exception\IndexWriteException;
 use dokuwiki\Search\Tokenizer;
 use dokuwiki\Utf8;
 
 /**
- * Class DokuWiki Fulltext Index (Singleton)
+ * Class DokuWiki Fulltext Index
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
@@ -16,20 +17,19 @@ use dokuwiki\Utf8;
  */
 class FulltextIndex extends AbstractIndex
 {
-    /** @var FulltextIndex $instance */
-    protected static $instance = null;
+    // numeric page id to be added to or deleted from the Fulltext index
+    protected $pageID;
 
     /**
-     * Get new or existing singleton instance of the FulltextIndex
+     * FulltextIndex constructor
      *
-     * @return FulltextIndex
+     * @param string|int $page a page name or numeric page id
      */
-    public static function getInstance()
+    public function __construct($page = null)
     {
-        if (is_null(static::$instance)) {
-            static::$instance = new static();
+        if (isset($page)) {
+            $this->pageID = is_int($page) ? $page : $this->getPID($page);
         }
-        return static::$instance;
     }
 
     /**
@@ -60,26 +60,30 @@ class FulltextIndex extends AbstractIndex
      * The added text replaces previous words for the same page.
      * An empty value erases the page.
      *
-     * @param string $page a page name
      * @param string $text the body of the page
      * @param bool $requireLock should be false only if the caller is resposible for index lock
      * @return bool  if the function completed successfully
      *
+     * @throws IndexAccessException
      * @throws IndexLockException
      * @throws IndexWriteException
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function addPageWords($page, $text, $requireLock = true)
+    public function addWords($text, $requireLock = true)
     {
         // load known documents
-        $pid = $this->getPID($page);
-
+        if (!isset($this->pageID)) {
+            throw new IndexAccessException('Indexer: page unknown to addWords');
+        } else {
+            $pid = $this->pageID;
+        }
+ 
         if ($requireLock) $this->lock();
 
         $pagewords = array();
         // get word usage in page
-        $words = $this->getPageWords($text);
+        $words = $this->getWords($text);
 
         foreach (array_keys($words) as $wlen) {
             $index = $this->getIndex('i', $wlen);
@@ -94,7 +98,7 @@ class FulltextIndex extends AbstractIndex
         // Remove obsolete index entries
         $pageword_idx = $this->getIndexKey('pageword', '', $pid);
         if ($pageword_idx !== '') {
-            $oldwords = explode(':',$pageword_idx);
+            $oldwords = explode(':', $pageword_idx);
             $delwords = array_diff($oldwords, $pagewords);
             $upwords = array();
             foreach ($delwords as $word) {
@@ -131,7 +135,7 @@ class FulltextIndex extends AbstractIndex
      * @author Christopher Smith <chris@jalakai.co.uk>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function getPageWords($text)
+    protected function getWords($text)
     {
         $Tokenizer = Tokenizer::getInstance();
         $tokens = $Tokenizer->getWords($text);
@@ -175,19 +179,23 @@ class FulltextIndex extends AbstractIndex
     /**
      * Delete the contents of a page to the fulltext index
      *
-     * @param string $page a page name
      * @param bool $requireLock should be false only if the caller is resposible for index lock
      * @return bool  If renaming the value has been successful, false on error
      *
+     * @throws IndexAccessException
      * @throws IndexLockException
      * @throws IndexWriteException
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function deletePageWords($page, $requireLock = true)
+    public function deleteWords($requireLock = true)
     {
         // load known documents
-        $pid = $this->getPID($page);
+        if (!isset($this->pageID)) {
+            throw new IndexAccessException('Indexer: page unknown to deleteWords');
+        } else {
+            $pid = $this->pageID;
+        }
 
         if ($requireLock) $this->lock();
 
@@ -473,7 +481,7 @@ class FulltextIndex extends AbstractIndex
      */
     public function histogram($min=1, $max=0, $minlen=3)
     {
-        return MetadataIndex::getInstance()->histogram($min, $max, $minlen);
+        return (new MetadataIndex())->histogram($min, $max, $minlen);
     }
 
     /**
