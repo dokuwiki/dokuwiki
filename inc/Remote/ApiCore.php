@@ -367,7 +367,7 @@ class ApiCore
     public function search($query)
     {
         $regex = array();
-        $FulltextSearch = FulltextSearch::getInstance();
+        $FulltextSearch = new FulltextSearch();
         $data = $FulltextSearch->pageSearch($query, $regex);
         $pages = array();
 

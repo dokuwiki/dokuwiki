@@ -14,27 +14,6 @@ use dokuwiki\Search\QueryParser;
  */
 class MetadataSearch
 {
-    /** @var MetadataSearch $instance */
-    protected static $instance = null;
-
-    /**
-     * Get new or existing singleton instance of the MetadataSearch
-     *
-     * @return MetadataSearch
-     */
-    public static function getInstance()
-    {
-        if (is_null(static::$instance)) {
-            static::$instance = new static();
-        }
-        return static::$instance;
-    }
-
-    /**
-     *  Metadata Search constructor. prevent direct object creation
-     */
-    protected function __construct() {}
-
     /**
      * Quicksearch for pagenames
      *

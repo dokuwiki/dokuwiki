@@ -69,12 +69,10 @@ class Search extends AbstractAction {
         global $INPUT, $QUERY;
         $after = $INPUT->str('min');
         $before = $INPUT->str('max');
-        $MetadataSearch = MetadataSearch::getInstance();
-        $this->pageLookupResults = $MetadataSearch->pageLookup(
+        $this->pageLookupResults = (new MetadataSearch)->pageLookup(
                 $QUERY, true, useHeading('navigation'), $after, $before
         );
-        $FulltextSearch = FulltextSearch::getInstance();
-        $this->fullTextResults = $FulltextSearch->pageSearch(
+        $this->fullTextResults = (new FulltextSearch)->pageSearch(
                 $QUERY, $highlight, $INPUT->str('srt'), $after, $before
         );
         $this->highlight = $highlight;

@@ -512,8 +512,7 @@ function rssListNamespace($opt) {
 function rssSearch($opt) {
     if (!$opt['search_query']) return array();
 
-    $FulltextSearch = FulltextSearch::getInstance();
-    $data = $FulltextSearch->pageSearch($opt['search_query'], $poswords);
+    $data = (new FulltextSearch)->pageSearch($opt['search_query'], $poswords);
     $data = array_keys($data);
 
     return $data;

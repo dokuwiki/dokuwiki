@@ -16,27 +16,6 @@ const FT_SNIPPET_NUMBER = 15;
  */
 class FulltextSearch
 {
-    /** @var FulltextSearch $instance */
-    protected static $instance = null;
-
-    /**
-     * Get new or existing singleton instance of the FulltextSearch
-     *
-     * @return FulltextSearch
-     */
-    public static function getInstance()
-    {
-        if (is_null(static::$instance)) {
-            static::$instance = new static();
-        }
-        return static::$instance;
-    }
-
-    /**
-     *  Fulltext Search constructor. prevent direct object creation
-     */
-    protected function __construct() {}
-
     /**
      * The fulltext search
      *

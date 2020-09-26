@@ -51,9 +51,7 @@ class Ajax
         if (empty($query)) return;
 
         $query = urldecode($query);
-
-        $MetadataSearch = MetadataSearch::getInstance();
-        $data = $MetadataSearch->pageLookup($query, true, useHeading('navigation'));
+        $data = (new MetadataSearch)->pageLookup($query, true, useHeading('navigation'));
 
         if (!count($data)) return;
 
@@ -96,8 +94,7 @@ class Ajax
         if (empty($query)) $query = cleanID($INPUT->get->str('q'));
         if (empty($query)) return;
 
-        $MetadataSearch = MetadataSearch::getInstance();
-        $data = $MetadataSearch->pageLookup($query);
+        $data = (new MetadataSearch)->pageLookup($query);
         if (!count($data)) return;
         $data = array_keys($data);
 
@@ -362,8 +359,7 @@ class Ajax
         if($q !== '' && $ns === '') {
 
             // use index to lookup matching pages
-            $MetadataSearch = MetadataSearch::getInstance();
-            $pages = $MetadataSearch->pageLookup($id, true);
+            $pages = (new MetadataSearch)->pageLookup($id, true);
 
             // result contains matches in pages and namespaces
             // we now extract the matching namespaces to show

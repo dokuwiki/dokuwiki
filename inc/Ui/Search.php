@@ -577,7 +577,7 @@ class Search extends Ui
         $html .= '<dl class="search_results">';
         $num = 0;
         $position = 0;
-        $FulltextSearch = FulltextSearch::getInstance();
+        $FulltextSearch = new FulltextSearch();
 
         foreach ($data as $id => $cnt) {
             $position += 1;

@@ -634,22 +634,19 @@ function idx_get_indexer() {
 /** @deprecated 2019-12-28 */
 function ft_pageSearch($query, &$highlight, $sort = null, $after = null, $before = null) {
     dbg_deprecated('\dokuwiki\Search\FulltextSearch::pageSearch()');
-    $FulltextSearch = \dokuwiki\Search\FulltextSearch::getInstance();
-    return $FulltextSearch->pageSearch($query, $highlight, $sort, $after, $before);
+    return (new FulltextSearch)->pageSearch($query, $highlight, $sort, $after, $before);
 }
 
 /** @deprecated 2019-12-28 */
 function ft_snippet($id, $highlight) {
     dbg_deprecated('\dokuwiki\Search\FulltextSearch::snippet()');
-    $FulltextSearch = \dokuwiki\Search\FulltextSearch::getInstance();
-    return $FulltextSearch->snippet($id, $highlight);
+    return (new FulltextSearch)->snippet($id, $highlight);
 }
 
 /** @deprecated 2019-12-28 */
 function ft_snippet_re_preprocess($term) {
     dbg_deprecated('\dokuwiki\Search\FulltextSearch::snippetRePreprocess()');
-    $FulltextSearch = \dokuwiki\Search\FulltextSearch::getInstance();
-    return $FulltextSearch->snippetRePreprocess($term);
+    return (new FulltextSearch)->snippetRePreprocess($term);
 }
 
 /** @deprecated 2019-12-28 */
@@ -670,13 +667,12 @@ function ft_queryUnparser_simple(array $and, array $not, array $phrases, array $
 /** @deprecated 2019-12-28 */
 function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $before = null) {
     dbg_deprecated('\dokuwiki\Search\MetadataSearch::pageLookup()');
-    $MetadataSearch = \dokuwiki\Search\MetadataSearch::getInstance();
-    return $MetadataSearch->pageLookup($id, $in_ns, $in_title, $after, $before);
+    return (new MetadataSearch)->pageLookup($id, $in_ns, $in_title, $after, $before);
 }
 
 /** @deprecated 2019-12-28 */
 function ft_backlinks($id, $ignore_perms = false) {
-    dbg_deprecated('\dokuwiki\Search\MetadataSearch::backlinks()');
+    dbg_deprecated('\dokuwiki\Search\MetadataIndex::backlinks()');
     return (new \dokuwiki\Search\MetadataIndex())->backlinks($id, $ignore_perms);
 }
 

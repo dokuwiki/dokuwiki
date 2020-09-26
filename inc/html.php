@@ -351,7 +351,7 @@ function html_draft(){
  * @return string html
  */
 function html_hilight($html, $phrases) {
-    $FulltextSearch = FulltextSearch::getInstance();
+    $FulltextSearch = new FulltextSearch();
     $phrases = (array) $phrases;
     $phrases = array_map('preg_quote_cb', $phrases);
     $phrases = array_map([$FulltextSearch, 'snippetRePreprocess'], $phrases);
