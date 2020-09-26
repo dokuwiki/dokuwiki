@@ -137,8 +137,7 @@ class FulltextIndex extends AbstractIndex
      */
     protected function getWords($text)
     {
-        $Tokenizer = Tokenizer::getInstance();
-        $tokens = $Tokenizer->getWords($text);
+        $tokens = Tokenizer::getWords($text);
         $tokens = array_count_values($tokens);  // count the frequency of each token
 
         $words = array();
@@ -298,8 +297,6 @@ class FulltextIndex extends AbstractIndex
      */
     protected function getIndexWords(&$words, &$result)
     {
-        $Tokenizer = Tokenizer::getInstance();
-
         $tokens = array();
         $tokenlength = array();
         $tokenwild = array();
@@ -321,7 +318,7 @@ class FulltextIndex extends AbstractIndex
                 $dollar = '';
                 $wlen -= 1;
             }
-            if ($wlen < $Tokenizer->getMinWordLength()
+            if ($wlen < Tokenizer::getMinWordLength()
                 && $caret && $dollar && !is_numeric($xword)
             ) {
                 continue;

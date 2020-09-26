@@ -34,8 +34,7 @@ class QueryParser
             }
         } else {
             $term_noparen = str_replace(['(',')'], ' ', $term);
-            $Tokenizer = Tokenizer::getInstance();
-            $words = $Tokenizer->getWords($term_noparen, true);
+            $words = Tokenizer::getWords($term_noparen, true);
 
             // W_: no need to highlight
             if (empty($words)) {
