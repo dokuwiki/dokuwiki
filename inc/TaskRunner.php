@@ -198,8 +198,10 @@ class TaskRunner
         // do the work
         try {
             return (new Indexer($ID))->dispatch(true);
-        } catch(Search\Exception\SearchException $e) {
-            echo get_class($e) . ' : ' . $e->getMessage();
+        } catch (Search\Exception\SearchException $e) {
+            $msg = get_class($e) .' : '. $e->getMessage();
+            echo $msg;
+            dbglog($msg);
             return false;
         }
     }
