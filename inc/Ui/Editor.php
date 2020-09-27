@@ -18,7 +18,7 @@ class Editor extends Ui
      *
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @triggers EDIT_FORM_ALTERNATE
+     * @triggers EDIT_FORM_ADDTEXTAREA
      * @return void
      */
     public function show()
@@ -82,7 +82,7 @@ class Editor extends Ui
         if ($data['target'] !== 'section') {
             // Only emit event if page is writable, section edit data is valid and
             // edit target is not section.
-            Event::createAndTrigger('EDIT_FORM_ALTERNATE', $data, [$this,'addTextarea'], true);
+            Event::createAndTrigger('EDIT_FORM_ADDTEXTAREA', $data, [$this,'addTextarea'], true);
         } else {
             $this->addTextarea($data);
         }
@@ -185,7 +185,7 @@ class Editor extends Ui
     /**
      * Display the default edit form (textarea)
      *
-     * the default action for EDIT_FORM_ALTERNATE.
+     * the default action for EDIT_FORM_ADDTEXTAREA
      *
      * @param mixed[] $data
      */
