@@ -290,7 +290,6 @@ function auth_browseruid() {
     $uid .= $INPUT->server->str('HTTP_USER_AGENT');
     $uid .= $INPUT->server->str('HTTP_ACCEPT_LANGUAGE');
     $uid .= $INPUT->server->str('HTTP_ACCEPT_ENCODING');
-    $uid .= $INPUT->server->str('HTTP_ACCEPT');
     // convert IP string to packed binary representation
     $pip = inet_pton($ip);
     // use half of the IP address (works for both IPv4 and IPv6)
