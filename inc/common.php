@@ -790,7 +790,6 @@ function clientIP($single = false) {
 
     // remove any non-IP stuff
     $cnt   = count($ip);
-    $match = array();
     for($i = 0; $i < $cnt; $i++) {
         $ip[$i] = filter_var($ip[$i], FILTER_VALIDATE_IP);
         if(empty($ip[$i])) unset($ip[$i]);
