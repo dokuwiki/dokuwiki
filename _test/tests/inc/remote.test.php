@@ -7,7 +7,7 @@ use dokuwiki\Remote\RemoteException;
 
 class RemoteAPICoreTest {
 
-    function __getRemoteInfo() {
+    function getRemoteInfo() {
         return array(
             'wiki.stringTestMethod' => array(
                 'args' => array(),
