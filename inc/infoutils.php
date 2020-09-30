@@ -236,7 +236,7 @@ function check(){
 
     if($INFO['userinfo']['name']){
         msg('You are currently logged in as '.$INPUT->server->str('REMOTE_USER').' ('.$INFO['userinfo']['name'].')',0);
-        msg('You are part of the groups '.join($INFO['userinfo']['grps'],', '),0);
+        msg('You are part of the groups '.implode(', ', $INFO['userinfo']['grps']),0);
     }else{
         msg('You are currently not logged in',0);
     }
