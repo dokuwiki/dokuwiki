@@ -4267,21 +4267,21 @@ class phpQueryObject
         $debug = phpQuery::$debug;
         phpQuery::$debug = false;
         foreach($this->stack() as $node)
-            $output .= $this->dumpTree($node);
+            $output .= $this->dumpTreeInternal($node);
         phpQuery::$debug = $debug;
         print $html
             ? nl2br(str_replace(' ', '&nbsp;', $output))
             : $output;
         return $this;
     }
-    private function dumpTree($node, $intend = 0) {
+    private function dumpTreeInternal($node, $intend = 0) {
         $whois = $this->whois($node);
         $return = '';
         if ($whois)
             $return .= str_repeat(' - ', $intend).$whois."\n";
         if (isset($node->childNodes))
             foreach($node->childNodes as $chNode)
-                $return .= $this->dumpTree($chNode, $intend+1);
+                $return .= $this->dumpTreeInternal($chNode, $intend+1);
         return $return;
     }
     /**
