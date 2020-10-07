@@ -1,7 +1,17 @@
-====== Asetusten hallinta ======
+HI!
 
-Käytä tätä sivua hallitaksesi DokuWikisi asetuksia. Apua yksittäisiin asetuksiin löytyy sivulta [[doku>config]]. Lisätietoa tästä liitännäisestä löytyy sivulta [[doku>plugin:config]].
+Best prices on the market -40 %
 
-Asetukset, jotka näkyvät vaaleanpunaisella taustalla ovat suojattuja, eikä niitä voi muutta tämän liitännäisen avulla. Asetukset, jotka näkyvät sinisellä taustalla ovat oletusasetuksia. Asetukset valkoisella taustalla ovat asetettu paikallisesti tätä asennusta varten. Sekä sinisiä että valkoisia asetuksia voi muokata.
+Clothing, Garden, Security -15%
 
-Muista painaa **TALLENNA**-nappia ennen kuin poistut sivulta. Muuten muutoksesi häviävät.
+Camera, Lights, Health -45%
+
+Childrens Clothing, Bathroom, Wedding Apparel -20%
+
+Womens Clothing, Beauty, Headphone -45%
+
+Textiles, Clothing, Jewelry -20%
+
+Offer valid 7 days!
+
+Published on: https://vae.me/DG7w

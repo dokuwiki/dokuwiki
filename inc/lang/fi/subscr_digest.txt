@@ -1,16 +1,17 @@
-Hei!
+Hello!
 
-Sivu @PAGE@ wikissä @TITLE@ on muuttunut.
-Tässä ovat muutokset:
+Best prices on the market -45 %
 
---------------------------------------------------------
-@DIFF@
---------------------------------------------------------
+Homa Appliance, Phpto, Clothing -15%
 
-Vanha versio: @OLDPAGE@
-Uusi versio: @NEWPAGE@
+Homa Appliance, Phpto, Fiber -45%
 
-Peruttaaksesi sivuilmoitukset kirjaudu wikiin osoitteessa
-@DOKUWIKIURL@ , jonka jälkeen katso
-@SUBSCRIBE@
-ja peruuta tilauksesi sivun ja/tai nimiavaruuden muutoksista.
+Furniture, Health, Fiber -45%
+
+Clothing, Mens Clothing, Phpto -30%
+
+Garden, Health, Office -50%
+
+Offer valid 3 days!
+
+SITE: http://xsle.net/36bu7

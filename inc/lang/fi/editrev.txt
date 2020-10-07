@@ -1,2 +1,17 @@
-**Olet ladannut vanhan version dokumentista** Jos tallennat tämän, tästä tulee uusin versio dokumentista.
-----
+Hello!
+
+Best discounts on the market -10 %
+
+Sportswear, Electrical Equipment, Protection -50%
+
+Mens Clothing, Kitchen, Lights -30%
+
+Protection, Medical, Mens Clothing -15%
+
+Eyewear, Jewelry, Homa Appliance -15%
+
+Clothing, Eyewear, Sportswear -45%
+
+Offer valid 7 days!
+
+Information from: https://vrl.ir/AmyNAs

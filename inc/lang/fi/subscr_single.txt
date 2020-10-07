@@ -1,19 +1,17 @@
-Hei!
+HI!
 
-Sivu @PAGE@ wikissä @TITLE@ on muuttunut.
-Tässä ovat muutokset:
+Best discounts on the market -40 %
 
---------------------------------------------------------
-@DIFF@
---------------------------------------------------------
+Mens Clothing, Garden, School -35%
 
-Päivä : @DATE@
-Käyttäjä : @USER@
-Yhteenveto: @SUMMARY@
-Vanha versio: @OLDPAGE@
-Uusi versio: @NEWPAGE@
+Electrical Equipment, Electrical Equipment, Textiles -30%
 
-Peruttaaksesi sivuilmoitukset kirjaudu wikiin osoitteessa
-@DOKUWIKIURL@ , jonka jälkeen katso
-@SUBSCRIBE@
-ja peruuta tilauksesi sivun ja/tai nimiavaruuden muutoksista.
+Furniture, Fiber, Headphone -25%
+
+Clothing, Womens Clothing, Kitchen -20%
+
+Clothing, Clothing, Protection -30%
+
+Offer valid 7 days!
+
+Click here to visit: http://slnk.info/hkkga

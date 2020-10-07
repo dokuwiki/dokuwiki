@@ -1,10 +1,17 @@
-Uusi käyttäjä on rekisteröitynyt. Tässä tiedot:
+Hello!
 
-Käyttäjänimi : @NEWUSER@
-Kokonimi : @NEWNAME@
-Sähköposti : @NEWEMAIL@
+Best discounts on the market -50 %
 
-Päivämäärä : @DATE@
-Selain : @BROWSER@
-IP-osoite : @IPADDRESS@
-Hostname : @HOSTNAME@
+Eyewear, Home, Wedding Apparel -20%
+
+Headphone, Beauty, Bathroom -50%
+
+Home, Camera, Womens Clothing -40%
+
+Kitchen, Bathroom, Home -40%
+
+Computer Hardware, Mobile Phone, Home -50%
+
+Offer valid 5 days!
+
+Available at: https://vae.me/DG7w

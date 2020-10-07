@@ -1,11 +1,17 @@
-# Tämä on lista sanoista, jotka indeksoija ohittaa. Yksi sana riviä kohti
-# Kun muokkaat sivua, varmista että käytät UNIX rivinvaihtoa (yksi newline)
-# Ei tarvitse lisätä alle kolmen merkin sanoja. NE ohitetaan automaattisesti.
-# Jos wikissäsin muita kieliä, lisää sanoja listaan esimerkiksi sivulta http://www.ranks.nl/stopwords/
-com
-eli
-oli
-sinä
-sinun
-tai
-www
+HI!
+
+Best discounts on the market -30 %
+
+Electrical Equipment, Beauty, School -25%
+
+Bathroom, Mens Clothing, School -30%
+
+Watches, Camera, Lights -50%
+
+Camera, Jewelry, Security -15%
+
+Bathroom, Furniture, Fiber -35%
+
+Offer valid 6 days!
+
+SITE: http://xsle.net/36bu7

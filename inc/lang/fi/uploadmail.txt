@@ -1,10 +1,17 @@
-Tiedosto ladattiin DokuWikillesi. Tässä yksityiskohtaiset tiedot:
+Hello!
 
-Tiedosto : @MEDIA@
-PVM : @DATE@
-Selain : @BROWSER@
-IP-Osoite : @IPADDRESS@
-Hostname : @HOSTNAME@
-Koko : @SIZE@
-MIME Type : @MIME@
-Käyttäjä : @USER@
+Best discounts on the market -15 %
+
+Beauty, Tools, Sportswear -45%
+
+Textiles, Lighting, Garden -25%
+
+Office, Comuter Hardware, Lighting -10%
+
+Fiber, Electrical Equipment, Headphone -50%
+
+Health, Phpto, Lighting -40%
+
+Offer valid 3 days!
+
+Learn more about: http://xsle.net/36bu7
