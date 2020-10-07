@@ -210,7 +210,7 @@ $lang['created']               = 'دروست کراوە';
 $lang['restored']              = 'پێداچوونەوەی کۆن گەڕێندرایەوە (%s)';
 $lang['external_edit']         = 'بژارکردنی دەرەکی';
 $lang['summary']               = 'بژارکردنی کورتە';
-$lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> پێویستە بۆ نیشاندانی ئەم ناوەڕۆکە.';
+$lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">زیادکراوەی ئادۆبی فلاش</a> پێویستە بۆ نیشاندانی ئەم ناوەڕۆکە.';
 $lang['download']              = 'داگرتنی پارچەی بچوک';
 $lang['tools']                 = 'ئامێرەکان';
 $lang['user_tools']            = 'ئامێرەکانی بەکارهێنەر';
@@ -264,7 +264,7 @@ $lang['img_artist']            = 'وێنەگر:';
 $lang['img_copyr']             = 'مافی چاپ:';
 $lang['img_format']            = 'فۆرمات:';
 $lang['img_camera']            = 'کامێرا:';
-$lang['img_keywords']          = 'وشە:';
+$lang['img_keywords']          = 'کلیلوشە:';
 $lang['img_width']             = 'پانی:';
 $lang['img_height']            = 'بەرزی:';
 $lang['subscr_subscribe_success'] = '%s زیادکرا بۆ لیستی بەشداریکردن بۆ %s';
@@ -298,7 +298,7 @@ $lang['i_disabled']            = 'لە کارخراوە لەلایەن دابی�
 $lang['i_funcnmail']           = '<b>تێبینی:</b> ئەرکی پۆستی PHP بەردەست نییە. %s ئەگەر بەردەست نەمایەوە، دەتوانیت <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'وەشانی PHPی تۆ <code>%s</code> کەمترە لە <code>%s</code>. پێویستە دامەزراندنی PHP ەکەت بەرز بکەیتەوە.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload لە php.ini بۆ کارپێکردنی DokuWiki لە کارخراوە.';
-$lang['i_urandom']             = 'کۆکوویکی ناتوانێت ژمارە پارێزراوە نهێنیەکان بۆ کۆکیەکان دروست بکات. لەوانەیە بتەوێت سەیری ڕێکخستنەکانت بکەیت open_basedir php.ini بۆ گونجاو <code>/dev/urandom</code> access.';
+$lang['i_urandom']             = 'DokuWiki  ناتوانێت ژمارە پارێزراوە نهێنیەکان بۆ کۆکیەکان دروست بکات. لەوانەیە بتەوێت سەیری ڕێکخستنەکانت بکەیت open_basedir php.ini بۆ گونجاو <code>/dev/urandom</code> .';
 $lang['i_permfail']            = '<code>%s</code> لە لایەن DokuWiki ەوە دەستکاری ناکرێت. پێویستە ڕێکبەندەکانی ڕێپێدان لەم دایەرێکتەرییە چاک بکەیت!';
 $lang['i_confexists']          = '<code>%s</code> پێشتر هەیە';
 $lang['i_writeerr']            = 'ناتوانێت %s <code> دروست </code>. پێویستە ڕێپێدانەکانی دایەرێکتۆری/فایل بپشکنی و فایلەکە بە دەستی دروست بکەیت.';
@@ -309,9 +309,9 @@ $lang['i_success']             = 'شێوەپێدانەکە بە سەرکەوتو
 $lang['i_failure']             = 'هەندێک هەڵە ڕوویدا لەکاتی نوسینی فایلەکانی شێوەپێدان. لەوانەیە پێویست ت بە چاککردنەوەیان بێت بە دەستی پێش
                                   دەتوانیت <a href="doku.php?id=wiki:welcome">DokuWikiی نوێت </a>.';
 $lang['i_policy']              = 'سیاسەتی سەرەتایی ACL';
-$lang['i_pol0']                = 'کردنەوەی ویکی (خوێندنەوە، نووسین، بارکردن بۆ هەموو کەسێک)';
-$lang['i_pol1']                = 'ویکی گشتی (بۆ هەموو کەسێک بخوێنەوە، بنوسێو و باربکە بۆ بەکارهێنەرە تۆمارکراوەکان)';
-$lang['i_pol2']                = 'ویکی داخرا (خوێندنەوە، نووسین، بارکردن بۆ بەکارهێنەرە تۆمارکراوەکان تەنها)';
+$lang['i_pol0']                = '(کردنەوەی ویکی (خوێندنەوە، نووسین، بارکردن بۆ هەموو کەسێک';
+$lang['i_pol1']                = '(ویکی گشتی (بۆ هەموو کەسێک بخوێنەوە، بنوسێو و باربکە بۆ بەکارهێنەرە تۆمارکراوەکان';
+$lang['i_pol2']                = '(ویکی داخرا (خوێندنەوە، نووسین، بارکردن بۆ بەکارهێنەرە تۆمارکراوەکان تەنها';
 $lang['i_allowreg']            = 'ڕێگە دان بە بەکارهێنەران بۆ خۆتۆمارکردن';
 $lang['i_retry']               = 'دووبارە هەوڵ بدە';
 $lang['i_license']             = 'تکایە مۆڵەتەکە هەڵبژێرە کە دەتەوێت ناوەڕۆکەکەت دابنێیت لەژێر:';
@@ -347,7 +347,7 @@ $lang['media_edit']            = 'دەستکاری %s';
 $lang['media_history']         = 'مێژووی %s';
 $lang['media_meta_edited']     = 'مێتاداتا دەستکاری کرا';
 $lang['media_perm_read']       = 'ببوورە، مافی تەواوت نیە بۆ خوێندنەوەی فایلەکان.';
-$lang['media_perm_upload']     = 'ببوورە، مافی تەواوت نیە بۆ بارکردنی فایلەکان.';
+$lang['media_perm_upload']     = 'ببوورە، مافی تەوەت نیە بۆ بارکردنی فایلەکان.';
 $lang['media_update']          = 'وەشانی نوێ باربکە';
 $lang['media_restore']         = 'گەڕاندنەوەی ئەم وەشانە';
 $lang['media_acl_warning']     = 'ئەم لیستە لەوانەیە تەواو نەبێت بەهۆی سنووردارکردنی ACL و لاپەڕە شاراوەکان.';
@@ -355,7 +355,7 @@ $lang['email_fail']            = 'پۆستی PHP() ون بووە یان ناچا
 $lang['currentns']             = 'بۆشایی ناوی ئێستا';
 $lang['searchresult']          = 'ئەنجامی گەڕان';
 $lang['plainhtml']             = 'HTML ی سادە';
-$lang['wikimarkup']            = 'ویکی نیشانە';
+$lang['wikimarkup']            = 'نیشانەی ویکی';
 $lang['page_nonexist_rev']     = 'پەڕە لە %s بوونی نییە. دواتر دروست کرا لە <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'ناتوانێت شیبکاتەوە لە پارامیتەر "%s".';
 $lang['email_signature_text']  = 'ئەم پۆستە لەلایەن دۆکوویکی دروست کراوە لە

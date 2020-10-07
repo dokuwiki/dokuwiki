@@ -6,10 +6,10 @@
  * @author qezwan <qezwan@gmail.com>
  */
 $lang['account_suffix']        = 'پاشگری ئەژمێرەکەت. ئێگ <code>@my.domain.org</code>';
-$lang['base_dn']               = 'بنکەی دی ئێن ئێچ <code>DC=my,DC=domain,DC=org</code>';
-$lang['domain_controllers']    = 'لیستی کۆما جیاکراوەی کۆنترۆڵەکانی دۆمەین. ئێگ <code>srv1.domain.org,srv2.domain.org</code>';
+$lang['base_dn']               = 'Your base DN. Eg. <code>DC=my,DC=domain,DC=org</code>';
+$lang['domain_controllers']    = 'لیستی بۆر جیاکراوەی کۆنترۆڵەکانی دۆمەین. وەک <code>srv1.domain.org,srv2.domain.org</code>';
 $lang['admin_username']        = 'بەکارهێنەرێکی ڕێنیشاندەرێکی چالاک کە توانای چوونە ژورەوەی بۆ هەموو داتاکانی بەکارهێنەری تر هەیە. ئارەزوومەندانە، بەڵام پێویستە بۆ هەندێک چالاکی وەک ناردنی پۆستی ئابوونە.';
-$lang['admin_password']        = 'نهێنوشەی بەکارهێنەری سەرەوە.';
+$lang['admin_password']        = 'تێپەڕوشەی بەکارهێنەری سەرەوە.';
 $lang['sso']                   = 'پێویستە چوونەناو تاک لە ڕێگای Kerberos یان NTLM بەکار بهێنرێت؟';
 $lang['sso_charset']           = 'ئەو پشکانەی وێبسێرڤەرەکەت ناوی بەکارهێنەری Kerberos یان NTLM تێدەپەڕن. بەتاڵ بۆ UTF-8 یان لاتین-1. پێویستی بە درێژکراوەی ئایکۆنڤ هەیە.';
 $lang['real_primarygroup']     = 'ئایا دەبێت گرووپی سەرەتایی ڕاستەقینە چارەسەر بکرێت لە جیاتی ئەوەی وا لە "بەکارهێنەرانی دۆمەین" (هێواشتر) بکرێت.';
