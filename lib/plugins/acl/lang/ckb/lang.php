@@ -5,8 +5,7 @@
  *
  * @author qezwan <qezwan@gmail.com>
  */
-$lang['admin_acl']             = '
-بەڕێوەبردنی لیستی کۆنترۆڵ ەکانی Access';
+$lang['admin_acl']             = 'بەڕێوەبردنی لیستی کۆنترۆڵ ەکانی Access';
 $lang['acl_group']             = 'کۆمەڵە:';
 $lang['acl_user']              = 'بەکارهێنەر:';
 $lang['acl_perms']             = 'مۆڵەتەکان بۆ';
