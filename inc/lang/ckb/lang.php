@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Wrya <wryaali33@gmail.com>
  * @author qezwan <qezwan@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -53,9 +54,9 @@ $lang['btn_mediaManager']      = 'نیشاندان لە بەڕێوەبەری م�
 $lang['loggedinas']            = 'لە ژوورەوە ی وەک:';
 $lang['user']                  = 'ناوی بەکارهێنەر';
 $lang['pass']                  = 'نهێنوشە';
-$lang['newpass']               = 'نهێنوشەی نوێ';
+$lang['newpass']               = 'تێپەرە وشەی نوێ';
 $lang['oldpass']               = 'پشتڕاستکردنەوەی نهێنوشەی ئێستا';
-$lang['passchk']               = 'دووبارە';
+$lang['passchk']               = 'جارێکی تر';
 $lang['remember']              = 'بمهێنەوە یاد';
 $lang['fullname']              = 'ناوی ڕاستەقینە';
 $lang['email']                 = 'ئیمەیل';
