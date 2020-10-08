@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Wrya <wryaali33@gmail.com>
  * @author qezwan <qezwan@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -72,20 +73,20 @@ $lang['js']['willexpire']      = 'قوفڵەکەت بۆ بژارکردنی ئە�
 $lang['js']['notsavedyet']     = 'گۆڕانکاری پاشکەوتنەکراوە بەتاڵ دەبن';
 $lang['js']['searchmedia']     = 'گەڕان بۆ پەڕگەکان';
 $lang['js']['keepopen']        = 'پەنجێرە لەکاتی هەڵبژاردن بکەرەوە';
-$lang['js']['hidedetails']     = 'شاردنەوەی وردە';
+$lang['js']['hidedetails']     = 'شاردنەوەی وردەکارییەکان';
 $lang['js']['mediatitle']      = 'ریکخستنی بەستەر';
 $lang['js']['mediadisplay']    = 'جۆری بەستەر';
 $lang['js']['mediaalign']      = 'تەراز';
 $lang['js']['mediasize']       = 'ئەندازەی وێنە';
 $lang['js']['mediatarget']     = 'لەنگەری وێنە';
 $lang['js']['mediaclose']      = 'داخستن';
-$lang['js']['mediainsert']     = 'هەناردن';
+$lang['js']['mediainsert']     = 'هێنانە ناو ';
 $lang['js']['mediadisplayimg'] = 'پیشاندانی وێنە';
 $lang['js']['mediadisplaylnk'] = 'پیشاندانی یەک  بەستەر';
 $lang['js']['mediasmall']      = 'وشانی بچکۆلە';
 $lang['js']['mediamedium']     = 'وشانی مامناوەندی';
 $lang['js']['medialarge']      = 'وشانی گەورە';
-$lang['js']['mediaoriginal']   = 'وشانی ڕەسەن';
+$lang['js']['mediaoriginal']   = 'وەشانی ڕەسەن';
 $lang['js']['medialnk']        = 'لینک کردن بۆ لاپەڕەی وردکاری';
 $lang['js']['mediadirect']     = 'لینکی ڕاستەوخۆ بۆ ڕەسەن	';
 $lang['js']['medianolnk']      = 'بێ لینک	';
