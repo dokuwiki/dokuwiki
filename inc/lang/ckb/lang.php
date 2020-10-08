@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Wrya <wryaali33@gmail.com>
  * @author qezwan <qezwan@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -23,7 +24,7 @@ $lang['btn_top']               = 'گەڕانەوە بۆ سەرەوە';
 $lang['btn_newer']             = '«ئاکامی فرەتر ';
 $lang['btn_older']             = 'ئاکامی کەمتر »';
 $lang['btn_revs']              = 'دەستکارییەکانی کۆنە';
-$lang['btn_recent']            = 'دوایین دەستکاری';
+$lang['btn_recent']            = 'دواین دەستکارییەکان';
 $lang['btn_upload']            = 'بارکردن';
 $lang['btn_cancel']            = 'هەڵوەشاندنەوه';
 $lang['btn_index']             = 'نەخشەی ماڵپەڕ';
