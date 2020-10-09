@@ -21,7 +21,7 @@
 
 /*____________ toc header ____________*/
 
-.dokuwiki h3.toggle {
+.dokuwiki h3.toggle, .dokuwiki h2.toggle {
     padding: .2em .5em;
     font-weight: bold;
 }

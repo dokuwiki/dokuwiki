@@ -2167,9 +2167,9 @@ function html_TOC($toc){
     global $lang;
     $out  = '<!-- TOC START -->'.DOKU_LF;
     $out .= '<div id="dw__toc" class="dw__toc">'.DOKU_LF;
-    $out .= '<h3 class="toggle">';
+    $out .= '<h2 class="toggle">';
     $out .= $lang['toc'];
-    $out .= '</h3>'.DOKU_LF;
+    $out .= '</h2>'.DOKU_LF;
     $out .= '<div>'.DOKU_LF;
     $out .= html_buildlist($toc,'toc','html_list_toc','html_li_default',true);
     $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
