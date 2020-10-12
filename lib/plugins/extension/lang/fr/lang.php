@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Damien Regad <dregad@mantisbt.org>
  * @author Yves Grandvalet <Yves.Grandvalet@laposte.net>
@@ -82,7 +83,7 @@ $lang['security_issue']        = '<strong>Problème de sécurité :</strong> %s'
 $lang['security_warning']      = '<strong>Avertissement de sécurité :</strong> %s';
 $lang['update_available']      = '<strong>Mise à jour :</strong> la version %s est disponible.';
 $lang['wrong_folder']          = '<strong>Greffon installé incorrectement :</strong> renommer le dossier du greffon "%s" en "%s".';
-$lang['url_change']            = '<strong>URL modifié :</strong> L\'URL de téléchargement a changé depuis le dernier téléchargement. Vérifiez si l\'URL est valide avant de mettre à jour l\'extension.<br />Nouvel URL : %s<br />Ancien : %s';
+$lang['url_change']            = '<strong>URL modifiée :</strong> L\'URL de téléchargement a changé depuis le dernier téléchargement. Vérifiez si l\'URL est valide avant de mettre à jour l\'extension.<br />Nouvelle URL : %s<br />Ancien : %s';
 $lang['error_badurl']          = 'Les URL doivent commencer par http ou https';
 $lang['error_dircreate']       = 'Impossible de créer le dossier temporaire pour le téléchargement.';
 $lang['error_download']        = 'Impossible de télécharger le fichier : %s';

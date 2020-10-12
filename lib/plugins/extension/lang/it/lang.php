@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Filippo <abrickslife@gmail.com>
  * @author Francesco <francesco.cavalli@hotmail.com>
  * @author Fabio <fabioslurp@yahoo.it>
  * @author Torpedo <dgtorpedo@gmail.com>
@@ -75,6 +76,7 @@ $lang['msg_template_update_success'] = 'Il Template %s è stato aggiornato corre
 $lang['msg_plugin_install_success'] = 'Plugin %s installato con successo';
 $lang['msg_plugin_update_success'] = 'Plugin %s aggiornato con successo';
 $lang['msg_upload_failed']     = 'Caricamento del file fallito';
+$lang['msg_nooverwrite']       = 'L\'estensione %s esiste già e non è stata sovrascritta; per sovrascriverla, seleziona l\'opzione "overwrite" o "sovrascrivi"';
 $lang['missing_dependency']    = '<strong>Dipendenza mancante o disabilitata: </strong> %s';
 $lang['security_issue']        = '<strong>Problema di sicurezza:</strong> %s';
 $lang['security_warning']      = '<strong>Avvertimento di sicurezza:</strong> %s';

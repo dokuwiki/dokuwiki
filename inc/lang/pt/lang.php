@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Paulo Schopf <pschopf@gmail.com>
+ * @author Paulo <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
  * @author Maykon Oliveira <maykonoliveira850@gmail.com>
  * @author José Vieira <jmsv63@gmail.com>
@@ -152,8 +152,8 @@ $lang['profnoempty']           = 'Não são permitidos nomes ou e-mails em branc
 $lang['profchanged']           = 'Perfil do usuário atualizado com sucesso.';
 $lang['profnodelete']          = 'Este wiki não suporta remoção de utilizadores';
 $lang['profdeleteuser']        = 'Apagar Conta';
-$lang['profdeleted']           = 'A sua conta de utilizador foi removida desta wiki';
-$lang['profconfdelete']        = 'Quero remover a minha conta desta wiki. <br/> Esta ação não pode ser desfeita.';
+$lang['profdeleted']           = 'A sua conta de utilizador foi removida deste wiki';
+$lang['profconfdelete']        = 'Quero remover a minha conta deste wiki. <br/> Esta ação não pode ser desfeita.';
 $lang['profconfdeletemissing'] = 'A caixa de confirmação não foi marcada';
 $lang['proffail']              = 'O perfil do usuário não foi atualizado.';
 $lang['pwdforget']             = 'Esqueceu a sua senha? Peça uma nova';
@@ -172,6 +172,7 @@ $lang['txt_upload']            = 'Escolha arquivo a carregar:';
 $lang['txt_filename']          = 'Carregar como (opcional):';
 $lang['txt_overwrt']           = 'Sobrescrever arquivo';
 $lang['maxuploadsize']         = 'Enviar %s max. por arquivo.';
+$lang['allowedmime']           = 'Lista de extensões de arquivo permitidas';
 $lang['lockedby']              = 'Bloqueado por:';
 $lang['lockexpire']            = 'Expira em:';
 $lang['rssfailed']             = 'Erro ao buscar informação deste feed:';

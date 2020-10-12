@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Petr Kajzar <petr.kajzar@lf1.cuni.cz>
  * @author Viktor Zavadil <vzavadil@newps.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Turkislav <turkislav@blabla.com>
@@ -75,6 +76,7 @@ $lang['msg_template_update_success'] = 'Šablona %s úspěšně aktualizována';
 $lang['msg_plugin_install_success'] = 'Zásuvný modul %s úspěšně nainstalován.';
 $lang['msg_plugin_update_success'] = 'Zásuvný modul %s úspěšně aktualizován.';
 $lang['msg_upload_failed']     = 'Nahrávání souboru selhalo';
+$lang['msg_nooverwrite']       = 'Rozšíření %s již existuje, proto nebylo přepsáno; pro přepsání zatrhněte příslušnou možnost';
 $lang['missing_dependency']    = '<strong>Chybějící nebo zakázaná závislost:</strong> %s';
 $lang['security_issue']        = '<strong>Bezpečnostní problém:</strong> %s';
 $lang['security_warning']      = '<strong>Bezpečnostní varování:</strong> %s';

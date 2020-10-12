@@ -9,20 +9,11 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-// some ACL level defines
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Extension\PluginController;
 use dokuwiki\PassHash;
 use dokuwiki\Subscriptions\RegistrationSubscriptionSender;
-
-define('AUTH_NONE', 0);
-define('AUTH_READ', 1);
-define('AUTH_EDIT', 2);
-define('AUTH_CREATE', 4);
-define('AUTH_UPLOAD', 8);
-define('AUTH_DELETE', 16);
-define('AUTH_ADMIN', 255);
 
 /**
  * Initialize the auth system.

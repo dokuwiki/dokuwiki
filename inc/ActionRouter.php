@@ -156,7 +156,7 @@ class ActionRouter {
         if(defined('DOKU_UNITTEST')) {
             throw $e;
         }
-        $msg = 'Something unforseen has happened: ' . $e->getMessage();
+        $msg = 'Something unforeseen has happened: ' . $e->getMessage();
         nice_die(hsc($msg));
     }
 

@@ -213,9 +213,9 @@ function noNSorNS($id) {
     global $conf;
 
     $p = noNS($id);
-    if ($p === $conf['start'] || $p === false) {
+    if ($p === $conf['start'] || $p === false || $p === '') {
         $p = curNS($id);
-        if ($p === false) {
+        if ($p === false || $p === '') {
             return $conf['start'];
         }
     }

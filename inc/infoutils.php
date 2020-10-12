@@ -123,13 +123,13 @@ function check(){
     if ($INFO['isadmin'] || $INFO['ismanager']){
         msg('DokuWiki version: '.getVersion(),1);
 
-        if(version_compare(phpversion(),'5.6.0','<')){
-            msg('Your PHP version is too old ('.phpversion().' vs. 5.6.0+ needed)',-1);
+        if(version_compare(phpversion(),'7.2.0','<')){
+            msg('Your PHP version is too old ('.phpversion().' vs. 7.2+ needed)',-1);
         }else{
             msg('PHP version '.phpversion(),1);
         }
     } else {
-        if(version_compare(phpversion(),'5.6.0','<')){
+        if(version_compare(phpversion(),'7.2.0','<')){
             msg('Your PHP version is too old',-1);
         }
     }
@@ -139,13 +139,13 @@ function check(){
         if ($mem === -1) {
             msg('PHP memory is unlimited', 1);
         } else if ($mem < 16777216) {
-            msg('PHP is limited to less than 16MB RAM (' . filesize_h($mem) . '). 
+            msg('PHP is limited to less than 16MB RAM (' . filesize_h($mem) . ').
             Increase memory_limit in php.ini', -1);
         } else if ($mem < 20971520) {
-            msg('PHP is limited to less than 20MB RAM (' . filesize_h($mem) . '), 
+            msg('PHP is limited to less than 20MB RAM (' . filesize_h($mem) . '),
                 you might encounter problems with bigger pages. Increase memory_limit in php.ini', -1);
         } else if ($mem < 33554432) {
-            msg('PHP is limited to less than 32MB RAM (' . filesize_h($mem) . '), 
+            msg('PHP is limited to less than 32MB RAM (' . filesize_h($mem) . '),
                 but that should be enough in most cases. If not, increase memory_limit in php.ini', 0);
         } else {
             msg('More than 32MB RAM (' . filesize_h($mem) . ') available.', 1);
@@ -235,16 +235,18 @@ function check(){
 
     msg('Your current permission for this page is '.$INFO['perm'],0);
 
-    if(is_writable($INFO['filepath'])){
-        msg('The current page is writable by the webserver',0);
-    }else{
-        msg('The current page is not writable by the webserver',0);
+    if (file_exists($INFO['filepath']) && is_writable($INFO['filepath'])) {
+        msg('The current page is writable by the webserver', 1);
+    } elseif (!file_exists($INFO['filepath']) && is_writable(dirname($INFO['filepath']))) {
+        msg('The current page can be created by the webserver', 1);
+    } else {
+        msg('The current page is not writable by the webserver', -1);
     }
 
-    if($INFO['writable']){
-        msg('The current page is writable by you',0);
-    }else{
-        msg('The current page is not writable by you',0);
+    if ($INFO['writable']) {
+        msg('The current page is writable by you', 1);
+    } else {
+        msg('The current page is not writable by you', -1);
     }
 
     // Check for corrupted search index
@@ -303,31 +305,15 @@ function check(){
 }
 
 /**
- * print a message
+ * Display a message to the user
  *
  * If HTTP headers were not sent yet the message is added
  * to the global message array else it's printed directly
  * using html_msgarea()
  *
+ * Triggers INFOUTIL_MSG_SHOW
  *
- * Levels can be:
- *
- * -1 error
- *  0 info
- *  1 success
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @see    html_msgarea
- */
-
-define('MSG_PUBLIC', 0);
-define('MSG_USERS_ONLY', 1);
-define('MSG_MANAGERS_ONLY',2);
-define('MSG_ADMINS_ONLY',4);
-
-/**
- * Display a message to the user
- *
+ * @see    html_msgarea()
  * @param string $message
  * @param int    $lvl   -1 = error, 0 = info, 1 = success, 2 = notify
  * @param string $line  line number
@@ -336,24 +322,42 @@ define('MSG_ADMINS_ONLY',4);
  */
 function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
     global $MSG, $MSG_shown;
-    $errors = array();
-    $errors[-1] = 'error';
-    $errors[0]  = 'info';
-    $errors[1]  = 'success';
-    $errors[2]  = 'notify';
+    static $errors = [
+        -1 => 'error',
+        0 => 'info',
+        1 => 'success',
+        2 => 'notify',
+    ];
 
-    if($line || $file) $message.=' ['.\dokuwiki\Utf8\PhpString::basename($file).':'.$line.']';
+    $msgdata = [
+        'msg' => $message,
+        'lvl' => $errors[$lvl],
+        'allow' => $allow,
+        'line' => $line,
+        'file' => $file,
+    ];
 
-    if(!isset($MSG)) $MSG = array();
-    $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message, 'allow' => $allow);
-    if(isset($MSG_shown) || headers_sent()){
-        if(function_exists('html_msgarea')){
-            html_msgarea();
-        }else{
-            print "ERROR($lvl) $message";
+    $evt = new \dokuwiki\Extension\Event('INFOUTIL_MSG_SHOW', $msgdata);
+    if ($evt->advise_before()) {
+        /* Show msg normally - event could suppress message show */
+        if($msgdata['line'] || $msgdata['file']) {
+            $basename = \dokuwiki\Utf8\PhpString::basename($msgdata['file']);
+            $msgdata['msg'] .=' ['.$basename.':'.$msgdata['line'].']';
         }
-        unset($GLOBALS['MSG']);
+
+        if(!isset($MSG)) $MSG = array();
+        $MSG[] = $msgdata;
+        if(isset($MSG_shown) || headers_sent()){
+            if(function_exists('html_msgarea')){
+                html_msgarea();
+            }else{
+                print "ERROR(".$msgdata['lvl'].") ".$msgdata['msg']."\n";
+            }
+            unset($GLOBALS['MSG']);
+        }
     }
+    $evt->advise_after();
+    unset($evt);
 }
 /**
  * Determine whether the current user is allowed to view the message

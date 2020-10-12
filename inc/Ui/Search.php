@@ -4,6 +4,7 @@ namespace dokuwiki\Ui;
 
 use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
+use dokuwiki\Utf8\Sort;
 
 class Search extends Ui
 {
@@ -384,7 +385,7 @@ class Search extends Ui
             }
             $namespaces[$subtopNS] += 1;
         }
-        ksort($namespaces);
+        Sort::ksort($namespaces);
         arsort($namespaces);
         return $namespaces;
     }

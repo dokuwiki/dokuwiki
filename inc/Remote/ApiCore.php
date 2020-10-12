@@ -6,6 +6,7 @@ use Doku_Renderer_xhtml;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\Event;
+use dokuwiki\Utf8\Sort;
 
 define('DOKU_API_VERSION', 10);
 
@@ -142,11 +143,11 @@ class ApiCore
             ), 'wiki.getRecentChanges' => array(
                 'args' => array('int'),
                 'return' => 'array',
-                'Returns a struct about all recent changes since given timestamp.'
+                'doc' => 'Returns a struct about all recent changes since given timestamp.'
             ), 'wiki.getRecentMediaChanges' => array(
                 'args' => array('int'),
                 'return' => 'array',
-                'Returns a struct about all recent media changes since given timestamp.'
+                'doc' => 'Returns a struct about all recent media changes since given timestamp.'
             ), 'wiki.aclCheck' => array(
                 'args' => array('string', 'string', 'array'),
                 'return' => 'int',
@@ -310,6 +311,7 @@ class ApiCore
         $list = array();
         $pages = idx_get_indexer()->getPages();
         $pages = array_filter(array_filter($pages, 'isVisiblePage'), 'page_exists');
+        Sort::ksort($pages);
 
         foreach (array_keys($pages) as $idx) {
             $perm = auth_quickaclcheck($pages[$idx]);

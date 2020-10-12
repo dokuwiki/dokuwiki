@@ -176,6 +176,7 @@ $lang['txt_upload']            = 'Datei zum Hochladen auswählen:';
 $lang['txt_filename']          = 'Hochladen als (optional):';
 $lang['txt_overwrt']           = 'Bestehende Datei überschreiben';
 $lang['maxuploadsize']         = 'Max. %s pro Datei-Upload.';
+$lang['allowedmime']           = 'Liste der erlaubten Dateiendungen';
 $lang['lockedby']              = 'Momentan gesperrt von:';
 $lang['lockexpire']            = 'Sperre läuft ab am:';
 $lang['rssfailed']             = 'Es ist ein Fehler beim Laden des Feeds aufgetreten: ';

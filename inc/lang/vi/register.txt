@@ -1,3 +1,3 @@
 ====== Đăng ký làm thành viên mới ======
 
-Điền vào tất cả các thông tin dưới đây để tạo một tài khoản mới trong wiki này. Hãy chắc chắn rằng bạn cung cấp một **địa chủ thư điện tử hợp lệ** - nếu bạn không được yêu cầu nhập mật khẩu tại đây, một mật khẩu mới sẽ được gửi đến địa chỉ đó. Tên đăng nhập phải là [[doku>pagename|tên]] hợp lệ .
+Điền vào tất cả các thông tin dưới đây để tạo một tài khoản mới trong wiki này. Hãy chắc chắn rằng bạn cung cấp một **địa chỉ thư điện tử hợp lệ** - nếu bạn không được yêu cầu nhập mật khẩu tại đây, một mật khẩu mới sẽ được gửi đến địa chỉ đó. Tên đăng nhập phải là [[doku>pagename|tên]] hợp lệ .

@@ -3,9 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Phy <dokuwiki@phy25.com>
+ * @author Jenxi <seow@jenxi.com>
+ * @author FENG.JIE <ahx@qq.com>
  * @author Xin <chenxin1034@gmail.com>
  * @author HaoNan <haonan@zhuoming.info>
- * @author Phy <dokuwiki@phy25.com>
  * @author Aaron Zhou <iradio@163.com>
  * @author lempel <riverlempel@hotmail.com>
  * @author ZDYX <zhangduyixiong@gmail.com>
@@ -188,6 +190,7 @@ $lang['txt_upload']            = '选择要上传的文件:';
 $lang['txt_filename']          = '上传并重命名为（可选）:';
 $lang['txt_overwrt']           = '覆盖已存在的同名文件';
 $lang['maxuploadsize']         = '上传限制。每个文件 %s';
+$lang['allowedmime']           = '允许文件扩展名列表';
 $lang['lockedby']              = '目前已被下列人员锁定:';
 $lang['lockexpire']            = '预计锁定解除于:';
 $lang['rssfailed']             = '获取该 RSS 信息时产生错误：';
@@ -241,7 +244,7 @@ $lang['created']               = '创建';
 $lang['restored']              = '已恢复为旧版 (%s)';
 $lang['external_edit']         = '外部编辑';
 $lang['summary']               = '编辑摘要';
-$lang['noflash']               = '需要 <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash 插件</a> 来播放本内容。 ';
+$lang['noflash']               = '需要 <a href="https://get.adobe.com/flashplayer">Adobe Flash 插件</a> 来播放本内容。 ';
 $lang['download']              = '下载片段';
 $lang['tools']                 = '工具';
 $lang['user_tools']            = '用户工具';
@@ -323,15 +326,17 @@ $lang['i_superuser']           = '超级用户';
 $lang['i_problems']            = '安装工具发现一些问题，已在下面列出。您必须先修复这些问题，才能继续安装。';
 $lang['i_modified']            = '由于安全上的考虑，该脚本只能用于全新且做任何改动的 DokuWiki 安装包。
                          您可以重新解压下载的程序包，或查阅完整的
-                         <a href="http://dokuwiki.org/install">Dokuwiki 安装指南</a>';
+                         <a href="https://www.dokuwiki.org/install">Dokuwiki 安装指南</a>';
 $lang['i_funcna']              = 'PHP 功能 <code>%s</code> 无法使用。也许您的服务器提供商因为某些原因禁用了它。';
+$lang['i_disabled']            = '它已经被您的服务商禁用';
+$lang['i_funcnmail']           = '<b>注意：</b> PHP邮件功能不可用。%s 如果仍然不可用，则可以安装<a href="https://www.dokuwiki.org/plugin:smtp">SMTP 插件</a>。';
 $lang['i_phpver']              = '您的 PHP 版本 <code>%s</code> 低于最低要求的 <code>%s</code>。您需要升级您的 PHP 版本。';
 $lang['i_mbfuncoverload']      = '为了运行DokuWiki，您必须在php.ini中禁用mbstring.func_overload。';
 $lang['i_urandom']             = 'DokuWiki 无法为 Cookie 创建密码安全的数字。您可能需要检查 php.ini 中的 open_basedir 设置，以获取正确的<code>/dev/urandom</code>访问权限。';
 $lang['i_permfail']            = 'DokuWiki 无法写入 <code>%s</code>。您需要修改该路径的权限设定！';
 $lang['i_confexists']          = '<code>%s</code> 已经存在';
 $lang['i_writeerr']            = '无法创建 <code>%s</code>。您需要检查该路径/文件的权限设定并手动创建该文件。';
-$lang['i_badhash']             = '无法识别的或被修改的 dokuwiki.php（值=<code>%s</code>）';
+$lang['i_badhash']             = '无法识别的或被修改的 dokuwiki.php（哈希值=<code>%s</code>）';
 $lang['i_badval']              = '<code>%s</code> - 非法或空值';
 $lang['i_success']             = '配置成功完成。您现在可以删除 install.php 了。继续进入
                         <a href="doku.php?id=wiki:welcome">您全新的 DokuWiki</a>。';
@@ -380,6 +385,7 @@ $lang['media_perm_upload']     = '抱歉，您没有足够权限来上传文件�
 $lang['media_update']          = '上传新版本';
 $lang['media_restore']         = '恢复这个版本';
 $lang['media_acl_warning']     = '此列表可能不完全是由ACL限制和隐藏的页面。';
+$lang['email_fail']            = 'PHP mail() 不存在或被禁用。未发送以下电子邮件：';
 $lang['currentns']             = '当前命名空间';
 $lang['searchresult']          = '搜索结果';
 $lang['plainhtml']             = '纯HTML';

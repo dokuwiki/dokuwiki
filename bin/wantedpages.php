@@ -1,8 +1,9 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
+use dokuwiki\Utf8\Sort;
 
 if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
 define('NOSESSION', 1);
@@ -77,13 +78,13 @@ class WantedPagesCLI extends CLI {
         foreach($this->getPages($startdir) as $page) {
             $this->internalLinks($page);
         }
-        ksort($this->result);
+        Sort::ksort($this->result);
         foreach($this->result as $main => $subs) {
             if($this->skip) {
                 print "$main\n";
             } else {
                 $subs = array_unique($subs);
-                sort($subs);
+                Sort::sort($subs);
                 foreach($subs as $sub) {
                     printf("%-40s %s\n", $main, $sub);
                 }

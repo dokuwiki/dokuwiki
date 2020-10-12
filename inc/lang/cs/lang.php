@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Petr Kajzar <petr.kajzar@lf1.cuni.cz>
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Robert Surý <rsurycz@seznam.cz>
  * @author Martin Hořínek <hev@hev.cz>
  * @author Jonáš Dyba <jonas.dyba@gmail.com>
@@ -179,6 +179,7 @@ $lang['txt_upload']            = 'Vyberte soubor jako přílohu:';
 $lang['txt_filename']          = 'Wiki jméno (volitelné):';
 $lang['txt_overwrt']           = 'Přepsat existující soubor';
 $lang['maxuploadsize']         = 'Max. velikost souboru %s';
+$lang['allowedmime']           = 'Seznam povolených přípon souboru';
 $lang['lockedby']              = 'Právě zamknuto:';
 $lang['lockexpire']            = 'Zámek vyprší:';
 $lang['rssfailed']             = 'Nastala chyba při vytváření tohoto RSS: ';
@@ -314,8 +315,11 @@ $lang['i_superuser']           = 'Správce';
 $lang['i_problems']            = 'Instalátor narazil na níže popsané problémy. Nelze pokračovat v instalaci, dokud je neopravíte.';
 $lang['i_modified']            = 'Instalátor bude z bezpečnostních důvodů pracovat pouze s čistou a ještě neupravenou instalací DokuWiki. Buď znovu rozbalte soubory z instalačního balíčku, nebo zkuste prostudovat <a href="http://dokuwiki.org/install">instrukce pro instalaci DokuWiki</a>.';
 $lang['i_funcna']              = 'PHP funkce <code>%s</code> není dostupná. Váš webhosting ji možná z nějakého důvodu vypnul.';
+$lang['i_disabled']            = 'Bylo zakázáno vaším poskytovatelem.';
+$lang['i_funcnmail']           = '<b>Poznámka:</b> Funkce mail() není v PHP dostupná. %s Pokud tento problém přetrvává, zkuste nainstalovat <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Verze vaší instalace PHP <code>%s</code> je nižší než požadovaná <code>%s</code>. Budete muset aktualizovat svou instalaci PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload musí být vypnut v php.ini pro běh DokuWiki.';
+$lang['i_urandom']             = 'DokuWiki nemůže vytvořit kryptograficky bezpečná čísla pro cookies. Zkuste zkontrolovat nastavení open_basedir v php.ini, zda máte přistup k  <code>/dev/urandom </code>.';
 $lang['i_permfail']            = 'DokuWiki nemůže zapisovat do <code>%s</code>. Budete muset opravit práva k tomuto adresáři.';
 $lang['i_confexists']          = '<code>%s</code> již existuje';
 $lang['i_writeerr']            = 'Nelze vytvořit <code>%s</code>. Budete muset zkontrolovat práva k souborům či adresářům a vytvořit tento soubor ručně.';
@@ -366,6 +370,7 @@ $lang['media_perm_upload']     = 'Bohužel, nemáte práva nahrávat soubory.';
 $lang['media_update']          = 'Nahrát novou verzi';
 $lang['media_restore']         = 'Obnovit tuto verzi';
 $lang['media_acl_warning']     = 'Tento seznam nemusí být úplný z důvodu omezení práv ACL a skrytým stránkám.';
+$lang['email_fail']            = 'Funkce mail() v PHP chybí nebo je zakázána. Tato e-mailová zpráva nebyla odeslána:';
 $lang['currentns']             = 'Aktuální jmenný prostor';
 $lang['searchresult']          = 'Výsledek hledání';
 $lang['plainhtml']             = 'Čisté HTML';
