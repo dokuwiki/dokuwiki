@@ -1860,8 +1860,8 @@ function media_uploadform($ns, $auth, $fullscreen = false){
     if($auth >= $auth_ow){
         $form->addElement(form_makeOpenTag('p'));
         $attrs = array();
-        if ($update) $attrs['checked'] = 'checked';
-        $form->addElement(form_makeCheckboxField('ow', 1, $lang['txt_overwrt'], 'dw__ow', 'check', $attrs));
+        if ($update || $conf['mediarevisions']) $attrs['checked'] = 'checked';
+        $form->addElement(form_makeCheckboxField('ow', 1, ($conf['mediarevisions'] ? $lang['media_update'] : $lang['txt_overwrt']), 'dw__ow', 'check', $attrs));
         $form->addElement(form_makeCloseTag('p'));
     }
 

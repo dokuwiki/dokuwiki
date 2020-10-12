@@ -341,6 +341,7 @@ function tpl_metaheaders($alt = true) {
         $script .= "var SIG=".toolbar_signature().";";
     }
     jsinfo();
+    $JSINFO['conf']['mediarevisions'] = $conf['mediarevisions'];
     $script .= 'var JSINFO = ' . json_encode($JSINFO).';';
     $head['script'][] = array('_data'=> $script);
 

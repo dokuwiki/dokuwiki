@@ -115,6 +115,7 @@ function js_out(){
     if(!empty($templatestrings)) {
         $lang['js']['template'] = $templatestrings;
     }
+    $lang['js']['media_update'] = $lang['media_update'];
     echo 'LANG = '.json_encode($lang['js']).";\n";
 
     // load toolbar
