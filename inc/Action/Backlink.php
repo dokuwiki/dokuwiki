@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui;
+
 /**
  * Class Backlink
  *
@@ -9,16 +11,18 @@ namespace dokuwiki\Action;
  *
  * @package dokuwiki\Action
  */
-class Backlink extends AbstractAction {
-
+class Backlink extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_NONE;
     }
 
     /** @inheritdoc */
-    public function tplContent() {
-        html_backlinks();
+    public function tplContent()
+    {
+        (new Ui\Backlinks)->show();
     }
 
 }

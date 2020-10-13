@@ -11,8 +11,8 @@ namespace dokuwiki\Form;
  *
  * @package dokuwiki\Form
  */
-abstract class ValueElement extends Element {
-
+abstract class ValueElement extends Element
+{
     /**
      * @var string holds the element's value
      */
@@ -23,7 +23,8 @@ abstract class ValueElement extends Element {
      * @param string $value
      * @param array $attributes
      */
-    public function __construct($type, $value, $attributes = array()) {
+    public function __construct($type, $value, $attributes = array())
+    {
         parent::__construct($type, $attributes);
         $this->val($value);
     }
@@ -34,8 +35,9 @@ abstract class ValueElement extends Element {
      * @param null|string $value
      * @return string|$this
      */
-    public function val($value = null) {
-        if($value !== null) {
+    public function val($value = null)
+    {
+        if ($value !== null) {
             $this->value = $value;
             return $this;
         }
