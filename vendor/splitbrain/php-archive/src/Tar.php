@@ -158,7 +158,7 @@ class Tar extends Archive
             $fileinfo->strip($strip);
 
             // skip unwanted files
-            if (!strlen($fileinfo->getPath()) || !$fileinfo->match($include, $exclude)) {
+            if (!strlen($fileinfo->getPath()) || !$fileinfo->matchExpression($include, $exclude)) {
                 $this->skipbytes(ceil($header['size'] / 512) * 512);
                 continue;
             }
@@ -583,7 +583,7 @@ class Tar extends Archive
 
         $return['checksum'] = OctDec(trim($header['checksum']));
         if ($return['checksum'] != $chks) {
-            throw new ArchiveCorruptedException('Header does not match it\'s checksum');
+            throw new ArchiveCorruptedException('Header does not match its checksum');
         }
 
         $return['filename'] = trim($header['filename']);

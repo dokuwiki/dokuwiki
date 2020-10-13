@@ -421,17 +421,17 @@
     },
     {
         "name": "splitbrain/php-archive",
-        "version": "1.1.1",
-        "version_normalized": "1.1.1.0",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/splitbrain/php-archive.git",
-            "reference": "10d89013572ba1f4d4ad7fcb74860242f4c3860b"
+            "reference": "d4cf2d9a2d82548b7e4f1dc04802c526eba68b65"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/10d89013572ba1f4d4ad7fcb74860242f4c3860b",
-            "reference": "10d89013572ba1f4d4ad7fcb74860242f4c3860b",
+            "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/d4cf2d9a2d82548b7e4f1dc04802c526eba68b65",
+            "reference": "d4cf2d9a2d82548b7e4f1dc04802c526eba68b65",
             "shasum": ""
         },
         "require": {
@@ -447,7 +447,7 @@
             "ext-iconv": "Used for proper filename encode handling",
             "ext-mbstring": "Can be used alternatively for handling filename encoding"
         },
-        "time": "2018-09-09T12:13:53+00:00",
+        "time": "2020-10-13T12:41:15+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
