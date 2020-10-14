@@ -197,7 +197,7 @@ function print_form($d){
         <fieldset>
             <p><?php echo $lang['i_license']?></p>
             <?php
-            $license['none'] = array('name' => $lang['i_license_none'], 'url'=>'');
+            $license[''] = array('name' => $lang['i_license_none'], 'url'=>'');
             if(!isset($d['license'])) $d['license'] = 'cc-by-sa';
             foreach($license as $key => $lic){
                 echo '<label for="lic_'.$key.'">';
