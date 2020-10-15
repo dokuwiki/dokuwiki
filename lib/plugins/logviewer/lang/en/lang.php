@@ -6,4 +6,5 @@
  */
 
 $lang['menu'] = 'View Logs';
-
+$lang['date'] = 'Date';
+$lang['js']['filter'] = 'Filter Loglines:';

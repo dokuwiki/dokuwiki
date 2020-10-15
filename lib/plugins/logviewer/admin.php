@@ -59,7 +59,7 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
         $form->setHiddenField('do', 'admin');
         $form->setHiddenField('page', 'logviewer');
         $form->setHiddenField('facility', $this->facility);
-        $form->addTextInput('date','Date*')->attr('type','date')->val($this->date)->addClass('quickselect');
+        $form->addTextInput('date',$this->getLang('date'))->attr('type','date')->val($this->date)->addClass('quickselect');
         $form->addButton('submit','>')->attr('type','submit');
         echo $form->toHTML();
 

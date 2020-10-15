@@ -7,12 +7,22 @@
         margin-bottom: 2em;
     }
 
+    label {
+        display: block;
+        margin-top: -1em;
+        margin-bottom: 1em;
+    }
+
     dl {
         max-height: 80vh;
         overflow: auto;
 
         dt {
             display: flex;
+
+            &.hidden {
+                display: none;
+            }
 
             .datetime {
                 flex: 0 0 auto;
