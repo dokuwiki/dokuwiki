@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Wrya <wryaali33@gmail.com>
  * @author qezwan <qezwan@gmail.com>
+ * @author Wrya <wryaali33@gmail.com>
  */
 $lang['menu']                  = 'سازدانی ڕێکخستنەکان';
 $lang['error']                 = 'رێکخستنەکان  نوێ نەکرانەوە بەهۆی بەهایەکی نادروست، تکایە پێداچوونەوە بە گۆڕانکاریەکانت دا بکە و دووبارە بینێرە.
