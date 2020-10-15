@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Wrya <wryaali33@gmail.com>
  * @author qezwan <qezwan@gmail.com>
+ * @author Wrya <wryaali33@gmail.com>
  */
 $lang['menu']                  = 'سازدانی ڕێکخستنەکان';
 $lang['error']                 = 'رێکخستنەکان  نوێ نەکرانەوە بەهۆی بەهایەکی نادروست، تکایە پێداچوونەوە بە گۆڕانکاریەکانت دا بکە و دووبارە بینێرە.
@@ -74,7 +74,7 @@ $lang['authtype']              = 'Authentication backend';
 $lang['passcrypt']             = 'شێوازی نهێنینهێنی';
 $lang['defaultgroup']          = 'گرووپی بنەڕەت، هەموو بەکارهێنەرە نوێکان لەم گرووپەدا دابنرێ';
 $lang['superuser']             = 'Superuser - group, بەکارهێنەر یان وێرکڕا لیستی جیاکراوە user1,@group1,user2 لەگەڵ گەیشتنی تەواو بۆ هەموو لاپەڕەکان و ئەرکەکان بەبێ گوێدانە ڕێکبەندەکانی ACL';
-$lang['manager']               = 'بەڕێوەبەر - گرووپ، بەکارهێنەر یان کۆما لیستی جیاکراوەی بەکارهێنەر1,@group1,user2 لەگەڵ دەستگەیشتن بە هەندێک ئەرکی بەڕێوەبردن';
+$lang['manager']               = 'بەڕێوەبەر - گرووپ، بەکارهێنەر یان بۆر لیستی جیاکراوەی user1,@group1,user2لەگەڵ دەستگەیشتن بە هەندێک ئەرکی بەڕێوەبردن';
 $lang['profileconfirm']        = 'پشتڕاستکردنەوەی گۆڕانکاریەکانی پرۆفایل بە نهێنوشە';
 $lang['rememberme']            = 'ڕێگەدان بە کۆکیزەکانی چوونە ژوورەوەی هەمیشەیی (لەبیرت بێت)';
 $lang['disableactions']        = 'کردارەکانی دۆکوویکی لە کاربخە';

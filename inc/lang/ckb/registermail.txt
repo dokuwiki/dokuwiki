@@ -7,4 +7,4 @@
 بەروار : @DATE@
 وێبگەڕ : @BROWSER@
 ئای پی-ناونیشان: @IPADDRESS@
-ناوی خانەخوێ : @HOSTNAME @
+ناوی خانەخوێ : @HOSTNAME@
