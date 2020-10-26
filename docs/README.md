@@ -12,7 +12,7 @@ At the end of the tutorial you will have a cluster with DokuWiki up and runnning
 * Click the **Catalog** button on the top 
 * Select **Service** from the catalog
 * Search for **Kubernetes Service** and click on it
-![Kubernetes](docs/kubernetes-select.png)
+![Kubernetes](/docs/kubernetes-select.png)
 * You are now at the Kubernetes deployment page, you need to specify some details about the cluster 
 * Choose a plan **standard** or **free**, the free plan only has one worker node and no subnet, to provision a standard cluster, you will need to upgrade you account to Pay-As-You-Go 
   * To upgrade to a Pay-As-You-Go account, complete the following steps:
@@ -21,35 +21,35 @@ At the end of the tutorial you will have a cluster with DokuWiki up and runnning
   * Select Account settings, and click Add credit card.
   * Enter your payment information, click Next, and submit your information
 * Choose **classic** or **VPC**, read the [docs] and choose the most suitable type for yourself 
- ![VPC](docs/infra-select.png)
+ ![VPC](/docs/infra-select.png)
 * Now choose your location settings, for more information please visit [Locations]
   * Choose **Geography** (continent)
-![continent](docs/location-geo.png)
+![continent](/docs/location-geo.png)
   * Choose **Single** or **Multizone**, in single zone your data is only kept in on datacenter, on the other hand with Multizone it is distributed to multiple zones, thus  safer in an unforseen zone failure 
-![avail](docs/location-avail.png)
+![avail](/docs/location-avail.png)
   * Choose a **Worker Zone** if using Single zones or **Metro** if Multizone
- ![worker](docs/location-worker.png) 
+ ![worker](/docs/location-worker.png) 
     * If you wish to use Multizone please set up your account with [VRF] or [enable Vlan spanning]
     * If at your current location selection, there is no available Virtual LAN, a new Vlan will be created for you 
  
 * Choose a **Worker node setup** or use the preselected one, set **Worker node amount per zone**
-![worker-pool](docs/worker-pool.png)
+![worker-pool](/docs/worker-pool.png)
 * Choose **Master Service Endpoint**,  In VRF-enabled accounts, you can choose private-only to make your master accessible on the private network or via VPN tunnel. Choose public-only to make your master publicly accessible. When you have a VRF-enabled account, your cluster is set up by default to use both private and public endpoints. For more information visit [endpoints].
-![endpoints](docs/endpoints.png)
+![endpoints](/docs/endpoints.png)
 * Give cluster a **name**
 
-![name-new](docs/name-new.png)
+![name-new](/docs/name-new.png)
 * Give desired **tags** to your cluster, for more information visit [tags]
 
-![tags-new](docs/tasg-new.png)
+![tags-new](/docs/tasg-new.png)
 * Click **create**
-![create-new](docs/create-new.png)
+![create-new](/docs/create-new.png)
 
 * Wait for you cluster to be provisioned 
-![cluster-prepare](docs/cluster-prepare.png)
+![cluster-prepare](/docs/cluster-prepare.png)
 * Your cluster is ready for usage 
 
-![cluster-ready](docs/cluster-done.png)
+![cluster-ready](/docs/cluster-done.png)
 
 ## Step 2 deploy IBM Cloud Block Storage plug-in
 The Block Storage plug-in is a persistent, high-performance iSCSI storage that you can add to your apps by using Kubernetes Persistent Volumes (PVs).
@@ -57,14 +57,14 @@ The Block Storage plug-in is a persistent, high-performance iSCSI storage that y
 * Click the **Catalog** button on the top 
 * Select **Software** from the catalog
 * Search for **IBM Cloud Block Storage plug-in** and click on it
-![Block](docs/block-search.png)
+![Block](/docs/block-search.png)
 
 * On the application page Click in the _dot_ next to the cluster, you wish to use
 * Click on  **Enter or Select Namespace** and choose the default Namespace or use a custom one (if you get error please wait 30 minutes for the cluster to finalize)
-![block-c](docs/block-cluster.png)
+![block-c](/docs/block-cluster.png)
 * Give a **name** to this workspace 
 * Click **install** and wait for the deployment
-![block-create](docs/block-storage-create.png)
+![block-create](/docs/block-storage-create.png)
  
 
 ## Step 3 deploy DokuWiki
@@ -74,60 +74,60 @@ We will deploy Dokuwiki on our cluster
 * Click the **Catalog** button on the top 
 * Select **Software** from the catalog
 * Search for **DokuWiki** and click on it
-![Joomla](docs/search.png)
+![Joomla](/docs/search.png)
 
 * Please select IBM Kubernetes Service
-![target](docs/target-select.png)
+![target](/docs/target-select.png)
 
 * On the application page Click in the _dot_ next to the cluster, you wish to use
-![Cluster](docs/cluster-select.png)
+![Cluster](/docs/cluster-select.png)
 * Click on  **Enter or Select Namespace** and choose the default Namespace or use a custom one 
-![Namespace](docs/details-namespace.png)
+![Namespace](/docs/details-namespace.png)
 * Give a unique **name** to workspace, which you can easily recognize
-![Name](docs/details-name.png)
+![Name](/docs/details-name.png)
 * Select which resource group you want to use, it's for access controll and billing purposes. For more information please visit [resource groups]
 
-![dr-resource](docs/details-resource.png)
+![dr-resource](/docs/details-resource.png)
 
 * Give **tags** to your DokuWiki workspace, for more information visit [tags]
 
-![doku-tags](docs/details-tags.png)
+![doku-tags](/docs/details-tags.png)
 
 * Click on **Parameters with default values**, You can set deployment values or use the default ones
 
-![def-val](docs/parameters.png)
+![def-val](/docs/parameters.png)
 
 * Please set the DokuWiki password in the parameters
 
-![pass](docs/password.png)
+![pass](/docs/password.png)
 
 * After finishing everything, **tick** the box next to the agreements and click **install**
 
-![Install](docs/aggreement-create.png)
+![Install](/docs/aggreement-create.png)
 
 * The DokuWiki workspace will start installing, wait a couple of minutes 
 
-![doku-install](docs/in-progress.png)
+![doku-install](/docs/in-progress.png)
 
 * You DokuWiki workspace has been successfully deployed
 
-![doku-finsihed](docs/done.png)
+![doku-finsihed](/docs/done.png)
 
 ## Verify DokuWiki installation
 
 * Go to [Resources] in your browser 
 * Click on **Clusters**
 * Click on your Cluster
-![Resourcelect](docs/resource-select.png)
+![Resourcelect](/docs/resource-select.png)
 
 * Now you are at you clusters overview, here Click on **Actions** and **Web terminal** from the dropdown menu
 
 
-![Actions](docs/cluster-main.png)
+![Actions](/docs/cluster-main.png)
 
 * Click **install** - wait couple of minutes 
 
-![terminal-install](docs/terminal-install.jpg)
+![terminal-install](/docs/terminal-install.jpg)
 
 * Click on **Actions**
 * Click **Web terminal** --> a terminal will open up
@@ -137,19 +137,19 @@ We will deploy Dokuwiki on our cluster
  ```sh
 $ kubectl get ns
 ```
-![get-ns](docs/get-ns.png)
+![get-ns](/docs/get-ns.png)
 
 
  ```sh
 $ kubectl get pod -n NAMESPACE -o wide 
 ```
-![get-pod](docs/get-pod.png)
+![get-pod](/docs/get-pod.png)
 
 
  ```sh
 $ kubectl get service -n NAMESPACE
 ```
-![get-service](docs/get-service.png)
+![get-service](/docs/get-service.png)
 
 
 * Running DokuWiki service will be visible 
@@ -157,13 +157,13 @@ $ kubectl get service -n NAMESPACE
 * Paste it into your browser
 * DokuWiki main page will be visible
 
-![works](docs/welcome.png)
+![works](/docs/welcome.png)
 
 * Please login with your set username (default is user) and the password you set at the deployment 
 
-![login](docs/login.png)
+![login](/docs/login.png)
 
-![logged-in](docs/logged-in.png)
+![logged-in](/docs/logged-in.png)
 
 You successfully deployed DokuWiki on IBM Cloud! 
 
