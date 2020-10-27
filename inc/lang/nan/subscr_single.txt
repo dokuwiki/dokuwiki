@@ -1,0 +1,19 @@
+Hello!
+
+The page @PAGE@ in the @TITLE@ wiki changed.
+Here are the changes:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+User                : @USER@
+Edit Summary        : @SUMMARY@
+Old Revision        : @OLDPAGE@
+New Revision        : @NEWPAGE@
+Date of New Revision: @DATE@
+
+To cancel the page notifications, log into the wiki at
+@DOKUWIKIURL@ then visit
+@SUBSCRIBE@
+and unsubscribe page and/or namespace changes.

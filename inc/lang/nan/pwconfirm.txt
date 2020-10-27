@@ -1,0 +1,9 @@
+Hi @FULLNAME@!
+
+Someone requested a new password for your @TITLE@ login at @DOKUWIKIURL@
+
+If you did not request a new password then just ignore this email.
+
+To confirm that the request was really sent by you please use the following link.
+
+@CONFIRM@

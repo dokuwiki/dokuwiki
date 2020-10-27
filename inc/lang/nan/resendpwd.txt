@@ -1,0 +1,3 @@
+====== Send new password ======
+
+Please enter your user name in the form below to request a new password for your account in this wiki. A confirmation link will be sent to your registered email address.

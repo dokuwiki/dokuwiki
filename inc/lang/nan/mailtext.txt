@@ -1,0 +1,15 @@
+A page in your DokuWiki was added or changed. Here are the details:
+
+Browser             : @BROWSER@
+IP Address          : @IPADDRESS@
+Hostname            : @HOSTNAME@
+Old Revision        : @OLDPAGE@
+New Revision        : @NEWPAGE@
+Date of New Revision: @DATE@
+Edit Summary        : @SUMMARY@
+User                : @USER@
+
+There may be newer changes after this revision. If this
+happens, a message will be shown on the top of the rev page.
+
+@DIFF@

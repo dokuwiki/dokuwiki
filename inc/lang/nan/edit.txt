@@ -1,0 +1,1 @@
+Edit the page and hit ''Save''. See [[wiki:syntax]] for Wiki syntax. Please edit the page only if you can **improve** it. If you want to test some things, learn to make your first steps on the [[playground:playground|playground]].
