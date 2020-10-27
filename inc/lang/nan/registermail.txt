@@ -1,0 +1,10 @@
+A new user has registered. Here are the details:
+
+User name   : @NEWUSER@
+Full name   : @NEWNAME@
+E-mail      : @NEWEMAIL@
+
+Date        : @DATE@
+Browser     : @BROWSER@
+IP-Address  : @IPADDRESS@
+Hostname    : @HOSTNAME@

@@ -1,0 +1,5 @@
+====== Draft file found ======
+
+Your last edit session on this page was not completed correctly. DokuWiki automatically saved a draft during your work which you may now use to continue your editing. Below you can see the data that was saved from your last session.
+
+Please decide if you want to //recover// your lost edit session, //delete// the autosaved draft or //cancel// the editing process.
