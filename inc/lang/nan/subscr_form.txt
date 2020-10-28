@@ -1,3 +1,0 @@
-====== Subscription Management ======
-
-This page allows you to manage your subscriptions for the current page and namespace.

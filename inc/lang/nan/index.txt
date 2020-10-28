@@ -1,3 +1,0 @@
-====== Sitemap ======
-
-This is a sitemap over all available pages ordered by [[doku>namespaces|namespaces]].

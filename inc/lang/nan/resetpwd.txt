@@ -1,3 +1,0 @@
-====== Set new password ======
-
-Please enter a new password for your account in this wiki.
