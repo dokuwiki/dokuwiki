@@ -468,7 +468,13 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false, $recac
         }
     }
     if(is_null($groups)) {
-        $groups = $USERINFO ? (array) $USERINFO['grps'] : array();
+        if ($user === $INPUT->server->str('REMOTE_USER')) {
+            $groups = $USERINFO ? (array) $USERINFO['grps'] : array();
+        } else {
+            $groups = !empty($auth->getUserData($user)['grps']) ?
+                $auth->getUserData($user)['grps'] :
+                [];
+        }
     }
 
     // prefer cached result
