@@ -290,7 +290,7 @@ function auth_browseruid() {
     $uid .= $INPUT->server->str('HTTP_USER_AGENT');
     $uid .= $INPUT->server->str('HTTP_ACCEPT_CHARSET');
     $uid .= substr($ip, 0, strpos($ip, '.'));
-    $uid = strtolower($uid);
+    $uid = \dokuwiki\Utf8\PhpString::strtolower($uid);
     return md5($uid);
 }
 
@@ -527,7 +527,7 @@ function auth_isMember($memberlist, $user, array $groups) {
     // clean user and groups
     if(!$auth->isCaseSensitive()) {
         $user   = \dokuwiki\Utf8\PhpString::strtolower($user);
-        $groups = array_map('utf8_strtolower', $groups);
+        $groups = array_map([\dokuwiki\Utf8\PhpString::class, 'strtolower'], $groups);
     }
     $user   = $auth->cleanUser($user);
     $groups = array_map(array($auth, 'cleanGroup'), $groups);

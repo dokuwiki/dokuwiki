@@ -78,21 +78,29 @@ function getVersionData(){
         $version['type'] = 'Git';
         $version['date'] = 'unknown';
 
-        $inventory = DOKU_INC.'.git/logs/HEAD';
-        if(is_file($inventory)){
-            $sz   = filesize($inventory);
-            $seek = max(0,$sz-2000); // read from back of the file
-            $fh   = fopen($inventory,'rb');
-            fseek($fh,$seek);
-            $chunk = fread($fh,2000);
-            fclose($fh);
-            $chunk = trim($chunk);
-            $chunk = @array_pop(explode("\n",$chunk));   //last log line
-            $chunk = @array_shift(explode("\t",$chunk)); //strip commit msg
-            $chunk = explode(" ",$chunk);
-            array_pop($chunk); //strip timezone
-            $date = date('Y-m-d',array_pop($chunk));
-            if($date) $version['date'] = $date;
+        if ($date = shell_exec("git log -1 --pretty=format:'%cd' --date=short")) {
+            $version['date'] = hsc($date);
+        } else if (file_exists(DOKU_INC . '.git/HEAD')) {
+            // we cannot use git on the shell -- let's do it manually!
+            $headCommit = trim(file_get_contents(DOKU_INC . '.git/HEAD'));
+            if (strpos($headCommit, 'ref: ') === 0) {
+                // it is something like `ref: refs/heads/master`
+                $pathToHead = substr($headCommit, 5);
+                $headCommit = trim(file_get_contents(DOKU_INC . '.git/' . $pathToHead));
+            }
+            $subDir = substr($headCommit, 0, 2);
+            $fileName = substr($headCommit, 2);
+            $gitCommitObject = DOKU_INC . ".git/objects/$subDir/$fileName";
+            if (file_exists($gitCommitObject) && method_exists(zlib_decode)) {
+                $commit = zlib_decode(file_get_contents($gitCommitObject));
+                $committerLine = explode("\n", $commit)[3];
+                $committerData = explode(' ', $committerLine);
+                end($committerData);
+                $ts = prev($committerData);
+                if ($ts && $date = date('Y-m-d', $ts)) {
+                    $version['date'] = $date;
+                }
+            }
         }
     }else{
         global $updateVersion;
@@ -231,7 +239,7 @@ function check(){
 
     if($INFO['userinfo']['name']){
         msg('You are currently logged in as '.$INPUT->server->str('REMOTE_USER').' ('.$INFO['userinfo']['name'].')',0);
-        msg('You are part of the groups '.join($INFO['userinfo']['grps'],', '),0);
+        msg('You are part of the groups '.implode(', ', $INFO['userinfo']['grps']),0);
     }else{
         msg('You are currently not logged in',0);
     }

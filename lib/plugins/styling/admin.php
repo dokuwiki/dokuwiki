@@ -86,7 +86,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
                 echo '<tr>';
                 echo '<td><label for="tpl__'.hsc($key).'">'.$name.'</label></td>';
                 echo '<td><input type="'.$this->colorType($value).'" name="tpl['.hsc($key).']" id="tpl__'.hsc($key).'"
-                    value="'.hsc($this->colorValue($value)).'" dir="ltr" /></td>';
+                    value="'.hsc($this->colorValue($value)).'" dir="ltr" required="required"/></td>';
                 echo '</tr>';
             }
             echo '</tbody></table>';

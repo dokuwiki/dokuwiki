@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui;
+
 /**
  * Class Preview
  *
@@ -9,26 +11,29 @@ namespace dokuwiki\Action;
  *
  * @package dokuwiki\Action
  */
-class Preview extends Edit {
-
+class Preview extends Edit
+{
     /** @inheritdoc */
-    public function preProcess() {
+    public function preProcess()
+    {
         header('X-XSS-Protection: 0');
         $this->savedraft();
         parent::preProcess();
     }
 
     /** @inheritdoc */
-    public function tplContent() {
+    public function tplContent()
+    {
         global $TEXT;
-        html_edit();
-        html_show($TEXT);
+        (new Ui\Editor)->show();
+        (new Ui\PageView($TEXT))->show();
     }
 
     /**
      * Saves a draft on preview
      */
-    protected function savedraft() {
+    protected function savedraft()
+    {
         global $ID, $INFO;
         $draft = new \dokuwiki\Draft($ID, $INFO['client']);
         if (!$draft->saveDraft()) {

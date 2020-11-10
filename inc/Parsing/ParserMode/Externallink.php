@@ -23,8 +23,10 @@ class Externallink extends AbstractMode
             $this->patterns[] = '\b(?i)'.$scheme.'(?-i)://['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
         }
 
-        $this->patterns[] = '(?<=\s)(?i)www?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
-        $this->patterns[] = '(?<=\s)(?i)ftp?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
+        $this->patterns[] = '(?<![/\\\\])\b(?i)www?(?-i)\.['.$host.']+?\.'.
+                            '['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
+        $this->patterns[] = '(?<![/\\\\])\b(?i)ftp?(?-i)\.['.$host.']+?\.'.
+                            '['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
     }
 
     /** @inheritdoc */

@@ -215,6 +215,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
             return false;
         }
 
+        if(isset($this->users[$user])) unset($this->users[$user]);
         $this->users[$newuser] = $userinfo;
         return true;
     }
