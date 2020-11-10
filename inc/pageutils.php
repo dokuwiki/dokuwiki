@@ -768,7 +768,6 @@ function page_findnearest($page, $useacl = true){
     $ns = $ID;
 
     do {
-        $ns = getNS($ns);
         $pageid = cleanID("$ns:$page");
         if(page_exists($pageid) && (!$useacl || auth_quickaclcheck($pageid) >= AUTH_READ)){
             return $pageid;
