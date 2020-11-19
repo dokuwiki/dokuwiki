@@ -734,10 +734,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param string $smiley
      */
     public function smiley($smiley) {
-        if(array_key_exists($smiley, $this->smileys)) {
-            $this->doc .= '<img src="'.DOKU_BASE.'lib/images/smileys/'.$this->smileys[$smiley].
-                '" class="icon" alt="'.
-                $this->_xmlEntities($smiley).'" />';
+        if (isset($this->smileys[$smiley])) {
+            $this->doc .= '<img src="' . DOKU_BASE . 'lib/images/smileys/' . $this->smileys[$smiley] .
+                '" class="icon smiley" alt="' . $this->_xmlEntities($smiley) . '" />';
         } else {
             $this->doc .= $this->_xmlEntities($smiley);
         }
