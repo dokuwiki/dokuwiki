@@ -31,7 +31,7 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
     header("Content-Type: $mime");
 
     // send security policy if given
-    if ($csp) dokuwiki\HTTP\Headers::contentSecurityPolicy($csp);
+    if (!empty($csp)) dokuwiki\HTTP\Headers::contentSecurityPolicy($csp);
 
     // calculate cache times
     if($cache == -1) {
