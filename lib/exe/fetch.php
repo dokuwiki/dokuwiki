@@ -58,11 +58,11 @@ if (defined('SIMPLE_TEST')) {
         'csp' => [
             'sandbox' => '',
             'default-src' => "'none'",
-            'script-src' => "'none'",
             'style-src' => "'unsafe-inline'",
             'media-src' => "'self'",
             'object-src' => "'self'",
             'form-action' => "'none'",
+            'frame-ancestors' => "'self'",
         ],
     );
 
