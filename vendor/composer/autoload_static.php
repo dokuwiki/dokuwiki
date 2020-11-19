@@ -15,6 +15,8 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
     public static $prefixLengthsPsr4 = array (
         's' => 
         array (
+            'splitbrain\\slika\\tests\\' => 23,
+            'splitbrain\\slika\\' => 17,
             'splitbrain\\phpcli\\' => 18,
             'splitbrain\\PHPArchive\\' => 22,
         ),
@@ -25,6 +27,14 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
     );
 
     public static $prefixDirsPsr4 = array (
+        'splitbrain\\slika\\tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/splitbrain/slika/tests',
+        ),
+        'splitbrain\\slika\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/splitbrain/slika/src',
+        ),
         'splitbrain\\phpcli\\' => 
         array (
             0 => __DIR__ . '/..' . '/splitbrain/php-cli/src',
