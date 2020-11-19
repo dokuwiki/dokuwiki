@@ -32,8 +32,12 @@ $url = "https://phar.phpunit.de/$phpunit";
 $out = __DIR__ . '/phpunit.phar';
 
 $return = 0;
-system("wget '$url' -O '$out'", $return);
-if ($return !== 0) exit($return);
+try {
+    file_put_contents($out, file_get_contents($url));
+} catch (Throwable $e) {
+    fwrite(STDERR, $e->getMessage());
+    exit(1);
+}
 
 chmod($out, 0755);
 print "Downloaded $phpunit\n";

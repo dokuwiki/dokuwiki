@@ -7,16 +7,13 @@ jobs:
         name: PHP CodeSniffer
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v1
+            - uses: actions/checkout@v2
 
             - name: Setup PHP
-              uses: shivammathur/setup-php@7b8bf7af6a42e028cbcccf623bb8499b4d6edf02
+              uses: shivammathur/setup-php@v2
               with:
                   php-version: '7.4'
-                  coverage: none
-
-            - name: Download PHPCS
-              run: wget https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+                  tools: cs2pr, phpcs
 
             - name: run PHP codesniffer
-              run: php phpcs.phar -v --standard=_test/phpcs_MigrationAdjustments.xml
+              run: phpcs -q --standard=_test/phpcs_MigrationAdjustments.xml --report=checkstyle | cs2pr
