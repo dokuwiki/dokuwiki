@@ -177,6 +177,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         }
 
         if (!$auth->triggerUserMod('create', array($user, $pass, $name, $mail, $grps))) {
+            $this->printErrorMessages();
             $this->error($this->getLang('add_fail'));
             $this->error($this->getLang('addUser_error_create_event_failed'));
             return 1;
@@ -204,10 +205,10 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         $count = $auth->triggerUserMod('delete', array($users));
 
         if (!($count == count($users))) {
+            $this->printErrorMessages();
             $part1 = str_replace('%d', $count, $this->getLang('delete_ok'));
             $part2 = str_replace('%d', (count($users) - $count), $this->getLang('delete_fail'));
             $this->error("$part1, $part2");
-
             return 1;
         }
 
@@ -243,6 +244,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
             if ($auth->triggerUserMod('modify', array($name, $changes))) {
                 $this->info($this->getLang('update_ok'));
             } else {
+                $this->printErrorMessages();
                 $this->error($this->getLang('update_fail'));
                 return 1;
             }
@@ -280,11 +282,23 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
             if ($auth->triggerUserMod('modify', array($name, $changes))) {
                 $this->info($this->getLang('update_ok'));
             } else {
+                $this->printErrorMessages();
                 $this->error($this->getLang('update_fail'));
                 return 1;
             }
         }
 
         return 0;
+    }
+
+    /**
+     * Plugins triggered during user modification may cause failures and output messages via
+     * DokuWiki's msg() function
+     */
+    protected function printErrorMessages() {
+        global $MSG;
+        if(isset($MSG)) foreach($MSG as $msg) {
+            if($msg['lvl'] === 'error') $this->error($msg['msg']);
+        }
     }
 }
