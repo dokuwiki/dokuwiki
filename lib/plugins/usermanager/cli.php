@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Extension\AuthPlugin;
+use splitbrain\phpcli\Options;
 use splitbrain\phpcli\TableFormatter;
 
 /**
@@ -15,13 +17,11 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
     public function __construct()
     {
         parent::__construct();
-
-        /** @var DokuWiki_Auth_Plugin $auth */
         auth_setup();
     }
 
     /** @inheritdoc */
-    protected function setup(\splitbrain\phpcli\Options $options)
+    protected function setup(Options $options)
     {
         // general setup
         $options->setHelp(
@@ -42,7 +42,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         $options->registerOption('notify', 'Notify user', 'n', false, 'add');
 
         // delete
-        $options->registerCommand('delete', 'Delete user(s) from auth backend');
+        $options->registerCommand('delete', 'Deletes user(s) from auth backend');
         $options->registerArgument('name', 'Username(s), comma-seperated', true, 'delete');
 
         // add to group
@@ -53,11 +53,11 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         // remove from group
         $options->registerCommand('removefromgroup', 'Remove user from group(s)');
         $options->registerArgument('name', 'Username', true, 'removefromgroup');
-        $options->registerArgument('group', 'Group(s), comma-seperated', true, 'removefromgroup');
+        $options->registerArgument('group', 'Group(s), comma-separated', true, 'removefromgroup');
     }
 
     /** @inheritdoc */
-    protected function main(\splitbrain\phpcli\Options $options)
+    protected function main(Options $options)
     {
         switch ($options->getCmd()) {
             case 'list':
@@ -90,6 +90,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
      */
     protected function cmdList(bool $showdetails)
     {
+        /** @var AuthPlugin $auth */
         global $auth;
 
         if (!isset($auth)) {
@@ -110,8 +111,9 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
      *
      * @param bool $details display details
      */
-    protected function listUsers(bool $details = False)
+    protected function listUsers(bool $details = false)
     {
+        /** @var AuthPlugin $auth */
         global $auth;
         $list = $auth->retrieveUsers();
 
@@ -140,6 +142,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
      */
     protected function cmdAdd(bool $notify, array $args)
     {
+        /** @var AuthPlugin $auth */
         global $auth;
 
         if (!$auth->canDo('addUser')) {
@@ -184,6 +187,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
      */
     protected function cmdDelete(array $args)
     {
+        /** @var AuthPlugin $auth */
         global $auth;
 
         if (!$auth->canDo('delUser')) {
@@ -213,6 +217,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
      */
     protected function cmdAddToGroup(array $args)
     {
+        /** @var AuthPlugin $auth */
         global $auth;
 
         list($name, $newgrps) = $args;
@@ -249,6 +254,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
      */
     protected function cmdRemoveFromGroup(array $args)
     {
+        /** @var AuthPlugin $auth */
         global $auth;
 
         list($name, $grps) = $args;
