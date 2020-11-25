@@ -34,9 +34,9 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
 
         // add
         $options->registerCommand('add', 'Add an user to auth backend');
-        $options->registerArgument('name', 'Username', true, 'add');
+        $options->registerArgument('login', 'Username', true, 'add');
         $options->registerArgument('mail', 'Email address', true, 'add');
-        $options->registerArgument('full_name', 'Full name', false, 'add');
+        $options->registerArgument('name', 'Full name', false, 'add');
         $options->registerArgument('groups', 'Groups to be added', false, 'add');
         $options->registerArgument('password', 'Password of user', false, 'add');
         $options->registerOption('notify', 'Notify user', 'n', false, 'add');
@@ -155,13 +155,13 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
             return 1;
         }
 
-        list($user, $name, $mail, $grps, $pass) = $args;
+        list($login, $mail, $name, $grps, $pass) = $args;
         $grps = array_filter(array_map('trim', explode(',', $grps)));
 
         if ($auth->canDo('modPass')) {
             if (empty($pass)) {
                 if ($notify) {
-                    $pass = auth_pwgen($user);
+                    $pass = auth_pwgen($login);
                 } else {
                     $this->error($this->getLang('add_fail'));
                     $this->error($this->getLang('addUser_error_missing_pass'));
@@ -176,7 +176,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
             }
         }
 
-        if (!$auth->triggerUserMod('create', array($user, $pass, $name, $mail, $grps))) {
+        if (!$auth->triggerUserMod('create', array($login, $pass, $name, $mail, $grps))) {
             $this->printErrorMessages();
             $this->error($this->getLang('add_fail'));
             $this->error($this->getLang('addUser_error_create_event_failed'));
