@@ -176,7 +176,9 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
             }
         }
 
-        if (!$auth->triggerUserMod('create', array($login, $pass, $name, $mail, $grps))) {
+        if ($auth->triggerUserMod('create', array($login, $pass, $name, $mail, $grps))) {
+            $this->success($this->getLang('add_ok'));
+        } else {
             $this->printErrorMessages();
             $this->error($this->getLang('add_fail'));
             $this->error($this->getLang('addUser_error_create_event_failed'));
@@ -242,7 +244,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
 
         if (!empty(array_diff($changes['grps'], $oldinfo['grps']))) {
             if ($auth->triggerUserMod('modify', array($name, $changes))) {
-                $this->info($this->getLang('update_ok'));
+                $this->success($this->getLang('update_ok'));
             } else {
                 $this->printErrorMessages();
                 $this->error($this->getLang('update_fail'));
@@ -280,7 +282,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
 
         if (!empty(array_diff($oldinfo['grps'], $changes['grps']))) {
             if ($auth->triggerUserMod('modify', array($name, $changes))) {
-                $this->info($this->getLang('update_ok'));
+                $this->success($this->getLang('update_ok'));
             } else {
                 $this->printErrorMessages();
                 $this->error($this->getLang('update_fail'));
