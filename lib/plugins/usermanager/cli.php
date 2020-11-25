@@ -59,6 +59,14 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
     /** @inheritdoc */
     protected function main(Options $options)
     {
+        /** @var AuthPlugin $auth */
+        global $auth;
+
+        if (!isset($auth)) {
+            $this->error($this->getLang('noauth'));
+            return 1;
+        }
+
         switch ($options->getCmd()) {
             case 'list':
                 $ret = $this->cmdList($options->getOpt('verbose'));
@@ -93,10 +101,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         /** @var AuthPlugin $auth */
         global $auth;
 
-        if (!isset($auth)) {
-            $this->error($this->getLang('noauth'));
-            return 1;
-        } elseif (!$auth->canDo('getUsers')) {
+        if (!$auth->canDo('getUsers')) {
             $this->error($this->getLang('nosupport'));
             return 1;
         } else {
