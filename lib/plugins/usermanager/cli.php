@@ -37,8 +37,8 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         $options->registerArgument('login', 'Username', true, 'add');
         $options->registerArgument('mail', 'Email address', true, 'add');
         $options->registerArgument('name', 'Full name', false, 'add');
-        $options->registerArgument('groups', 'Groups to be added', false, 'add');
-        $options->registerArgument('password', 'Password of user', false, 'add');
+        $options->registerArgument('groups', 'Groups to be added, comma-seperated', false, 'add');
+        $options->registerArgument('password', 'Password to set', false, 'add');
         $options->registerOption('notify', 'Notify user', 'n', false, 'add');
 
         // delete
@@ -297,10 +297,13 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
      * Plugins triggered during user modification may cause failures and output messages via
      * DokuWiki's msg() function
      */
-    protected function printErrorMessages() {
+    protected function printErrorMessages()
+    {
         global $MSG;
-        if(isset($MSG)) foreach($MSG as $msg) {
-            if($msg['lvl'] === 'error') $this->error($msg['msg']);
+        if (isset($MSG)) {
+            foreach ($MSG as $msg) {
+                if ($msg['lvl'] === 'error') $this->error($msg['msg']);
+            }
         }
     }
 }
