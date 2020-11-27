@@ -300,9 +300,14 @@ function html_locked() {
  * @param bool|string $media_id id of media, or false for current page
  * @deprecated 2020-07-18
  */
-function html_revisions($first=0, $media_id = false) {
-    dbg_deprecated(\dokuwiki\Ui\Revisions::class .'::show()');
-    (new dokuwiki\Ui\Revisions($first, $media_id))->show();
+function html_revisions($first = 0, $media_id = false) {
+    dbg_deprecated(\dokuwiki\Ui\PageRevisions::class .'::show()');
+    if ($media_id) {
+        (new dokuwiki\Ui\MediaRevisions($media_id))->show($first);
+    } else {
+        global $INFO;
+        (new dokuwiki\Ui\PageRevisions($INFO['id']))->show($first);
+    }
 }
 
 /**
