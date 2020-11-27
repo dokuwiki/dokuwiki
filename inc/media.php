@@ -992,7 +992,7 @@ function media_tab_history($image, $ns, $auth=null) {
             media_diff($image, $ns, $auth);
         } else {
             $first = $INPUT->int('first');
-            html_revisions($first, $image);
+            (new dokuwiki\Ui\MediaRevisions($image))->show($first);
         }
     } else {
         echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
