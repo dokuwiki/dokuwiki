@@ -56,7 +56,7 @@ class PageConflict extends Ui
 
         print '<br /><br /><br /><br />';
 
-        (new Diff($this->text, false))->show();
+        (new PageDiff($this->text, false))->show();
     }
 
 }

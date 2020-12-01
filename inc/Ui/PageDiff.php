@@ -8,18 +8,18 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
 /**
- * DokuWiki Diff Interface
+ * DokuWiki PageDiff Interface
  *
  * @package dokuwiki\Ui
  */
-class Diff extends Ui
+class PageDiff extends Ui
 {
     protected $text;
     protected $showIntro;
     protected $difftype;
 
     /** 
-     * Diff Ui constructor
+     * PageDiff Ui constructor
      *
      * @param  string $text  when non-empty: compare with this text with most current version
      * @param  bool   $showIntro display the intro text

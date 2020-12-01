@@ -34,7 +34,7 @@ class Diff extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\Diff())->show();
+        (new Ui\PageDiff())->show();
     }
 
 }

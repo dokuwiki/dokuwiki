@@ -499,7 +499,7 @@ function html_backlinks() {
  * @deprecated 2020-07-18
  */
 function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = false) {
-    dbg_deprecated('see '. \dokuwiki\Ui\Diff::class .'::diffHead()');
+    dbg_deprecated('see '. \dokuwiki\Ui\PageDiff::class .'::diffHead()');
 }
 
 /**
@@ -514,8 +514,8 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
  * @deprecated 2020-07-18
  */
 function html_diff($text = '', $intro = true, $type = null) {
-    dbg_deprecated(\dokuwiki\Ui\Diff::class .'::show()');
-    (new dokuwiki\Ui\Diff($text, $intro, $type))->show();
+    dbg_deprecated(\dokuwiki\Ui\PageDiff::class .'::show()');
+    (new dokuwiki\Ui\PageDiff($text, $intro, $type))->show();
 }
 
 /**
@@ -529,7 +529,7 @@ function html_diff($text = '', $intro = true, $type = null) {
  * @deprecated 2020-07-18
  */
 function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
-    dbg_deprecated('see '. \dokuwiki\Ui\Diff::class .'::diffNavigation()');
+    dbg_deprecated('see '. \dokuwiki\Ui\PageDiff::class .'::diffNavigation()');
 }
 
 /**
@@ -543,7 +543,7 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
  * @deprecated 2020-07-18
  */
 function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
-    dbg_deprecated('see '. \dokuwiki\Ui\Diff::class .'::diffViewlink()');
+    dbg_deprecated('see '. \dokuwiki\Ui\PageDiff::class .'::diffViewlink()');
 }
 
 /**
@@ -554,8 +554,8 @@ function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
  * @deprecated 2020-07-18
  */
 function html_insert_softbreaks($diffhtml) {
-    dbg_deprecated(\dokuwiki\Ui\Diff::class .'::insertSoftbreaks()');
-    return (new dokuwiki\Ui\Diff())->insertSoftbreaks($diffhtml);
+    dbg_deprecated(\dokuwiki\Ui\PageDiff::class .'::insertSoftbreaks()');
+    return (new dokuwiki\Ui\PageDiff())->insertSoftbreaks($diffhtml);
 }
 
 /**
