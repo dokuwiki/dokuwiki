@@ -1340,6 +1340,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax) {
             $form->setHiddenField('mediado', 'diff');
             $form->setHiddenField('rev2[0]', $l_rev);
             $form->setHiddenField('rev2[1]', $r_rev);
+            $form->addTagClose('div');
             echo $form->toHTML();
 
             echo NL.'<div id="mediamanager__diff" >'.NL;
