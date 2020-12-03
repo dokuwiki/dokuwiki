@@ -1,6 +1,5 @@
 <?php
 use dokuwiki\Utf8\Sort;
-
 use dokuwiki\Logger;
 
 /**
