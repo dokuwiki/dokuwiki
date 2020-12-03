@@ -199,6 +199,14 @@ $meta['mailfrom']       = array('email', '_placeholders' => true);
 $meta['mailreturnpath']       = array('email', '_placeholders' => true);
 $meta['mailprefix']     = array('string');
 $meta['htmlmail']       = array('onoff');
+$meta['dontlog'] = array(
+    'disableactions',
+    '_choices' => array(
+        'error',
+        'debug',
+        'deprecated',
+    ),
+);
 
 $meta['_syndication'] = array('fieldset');
 $meta['sitemap']     = array('numeric');

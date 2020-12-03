@@ -36,7 +36,7 @@ class ErrorHandler
         $msg = 'An unforeseen error has occured. This is most likely a bug somewhere.';
         if ($plugin) $msg .= ' It might be a problem in the ' . $plugin . ' plugin.';
         $logged = self::logException($e)
-            ? 'More info has been written to the DokuWiki _error.log'
+            ? 'More info has been written to the DokuWiki error log.'
             : $e->getFile() . ':' . $e->getLine();
 
         echo <<<EOT
@@ -64,7 +64,7 @@ EOT;
     public static function showExceptionMsg($e, $intro = 'Error!')
     {
         $msg = hsc($intro) . '<br />' . hsc(get_class($e) . ': ' . $e->getMessage());
-        if (self::logException($e)) $msg .= '<br />More info is available in the _error.log';
+        if (self::logException($e)) $msg .= '<br />More info is available in the error log.';
         msg($msg, -1);
     }
 
@@ -100,16 +100,12 @@ EOT;
      */
     public static function logException($e)
     {
-        global $conf;
-
-        $log = join("\t", [
-                gmdate('c'),
-                get_class($e),
-                $e->getFile() . '(' . $e->getLine() . ')',
-                $e->getMessage(),
-            ]) . "\n";
-        $log .= $e->getTraceAsString() . "\n";
-        return io_saveFile($conf['cachedir'] . '/_error.log', $log, true);
+        return Logger::getInstance()->log(
+            get_class($e) . ': ' . $e->getMessage(),
+            $e->getTraceAsString(),
+            $e->getFile(),
+            $e->getLine()
+        );
     }
 
     /**

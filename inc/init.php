@@ -269,16 +269,19 @@ function init_session() {
 function init_paths(){
     global $conf;
 
-    $paths = array('datadir'   => 'pages',
-            'olddir'    => 'attic',
-            'mediadir'  => 'media',
-            'mediaolddir' => 'media_attic',
-            'metadir'   => 'meta',
-            'mediametadir' => 'media_meta',
-            'cachedir'  => 'cache',
-            'indexdir'  => 'index',
-            'lockdir'   => 'locks',
-            'tmpdir'    => 'tmp');
+    $paths = [
+        'datadir'   => 'pages',
+        'olddir'    => 'attic',
+        'mediadir'  => 'media',
+        'mediaolddir' => 'media_attic',
+        'metadir'   => 'meta',
+        'mediametadir' => 'media_meta',
+        'cachedir'  => 'cache',
+        'indexdir'  => 'index',
+        'lockdir'   => 'locks',
+        'tmpdir'    => 'tmp',
+        'logdir'    => 'log',
+    ];
 
     foreach($paths as $c => $p) {
         $path = empty($conf[$c]) ? $conf['savedir'].'/'.$p : $conf[$c];

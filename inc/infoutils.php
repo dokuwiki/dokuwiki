@@ -7,6 +7,7 @@
  */
 
 use dokuwiki\HTTP\DokuHTTPClient;
+use dokuwiki\Logger;
 
 if(!defined('DOKU_MESSAGEURL')){
     if(in_array('ssl', stream_get_transports())) {
@@ -35,7 +36,7 @@ function checkUpdateMessages(){
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
         @touch($cf);
-        dbglog("checkUpdateMessages(): downloading messages to ".$cf.($is_http?' (without SSL)':' (with SSL)'));
+        Logger::debug("checkUpdateMessages(): downloading messages to ".$cf.($is_http?' (without SSL)':' (with SSL)'));
         $http = new DokuHTTPClient();
         $http->timeout = 12;
         $resp = $http->get(DOKU_MESSAGEURL.$updateVersion);
@@ -44,10 +45,10 @@ function checkUpdateMessages(){
             // or it looks like one of our messages, not WiFi login or other interposed response
             io_saveFile($cf,$resp);
         } else {
-            dbglog("checkUpdateMessages(): unexpected HTTP response received");
+            Logger::debug("checkUpdateMessages(): unexpected HTTP response received", $http->error);
         }
     }else{
-        dbglog("checkUpdateMessages(): messages up to date");
+        Logger::debug("checkUpdateMessages(): messages up to date");
     }
 
     $data = io_readFile($cf);
@@ -429,33 +430,25 @@ function dbg($msg,$hidden=false){
 }
 
 /**
- * Print info to a log file
+ * Print info to debug log file
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- *
+ * @deprecated 2020-08-13
  * @param string $msg
  * @param string $header
  */
 function dbglog($msg,$header=''){
-    global $conf;
-    /* @var Input $INPUT */
-    global $INPUT;
+    dbg_deprecated('\\dokuwiki\\Logger');
 
-    // The debug log isn't automatically cleaned thus only write it when
-    // debugging has been enabled by the user.
-    if($conf['allowdebug'] !== 1) return;
-    if(is_object($msg) || is_array($msg)){
-        $msg = print_r($msg,true);
+    // was the msg as single line string? use it as header
+    if($header === '' && is_string($msg) && strpos($msg, "\n") === false) {
+        $header = $msg;
+        $msg = '';
     }
 
-    if($header) $msg = "$header\n$msg";
-
-    $file = $conf['cachedir'].'/debug.log';
-    $fh = fopen($file,'a');
-    if($fh){
-        fwrite($fh,date('H:i:s ').$INPUT->server->str('REMOTE_ADDR').': '.$msg."\n");
-        fclose($fh);
-    }
+    Logger::getInstance(Logger::LOG_DEBUG)->log(
+        $header, $msg
+    );
 }
 
 /**

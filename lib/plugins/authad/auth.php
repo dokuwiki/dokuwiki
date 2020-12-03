@@ -1,6 +1,8 @@
 <?php
 use dokuwiki\Utf8\Sort;
 
+use dokuwiki\Logger;
+
 /**
  * Active Directory authentication backend for DokuWiki
  *
@@ -384,7 +386,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
     {
         $adldap = $this->initAdLdap(null);
         if (!$adldap) {
-            dbglog("authad/auth.php getUserCount(): _adldap not set.");
+            Logger::debug("authad/auth.php getUserCount(): _adldap not set.");
             return -1;
         }
         if ($filter == array()) {
