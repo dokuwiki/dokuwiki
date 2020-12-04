@@ -12,57 +12,61 @@ use dokuwiki\Form\Form;
  */
 class PageDiff extends Diff
 {
-    protected $text;
-    protected $showIntro;
-    protected $difftype;
+    /* @var string */
+    protected $id;
 
-    /** 
+    /* @var string */
+    protected $text = '';
+
+    /**
      * PageDiff Ui constructor
      *
-     * @param  string $text  when non-empty: compare with this text with most current version
-     * @param  bool   $showIntro display the intro text
-     * @param  string $difftype  diff view type (inline or sidebyside)
+     * @param string $id  page id
+     * @param string $text  when non-empty: compare with this text with most current version
      */
-    public function __construct($text = '', $showIntro = true, $difftype = null)
+    public function __construct($id = null, $text = null)
     {
-        $this->text      = $text;
-        $this->showIntro = $showIntro;
+        global $INFO;
+        $this->id = isset($id) ? $id : $INFO['id'];
+        if (isset($text)) $this->text = $text;
 
-        // determine diff view type
-        if (isset($difftype)) {
-            $this->difftype  = $difftype;
-        } else {
-            global $INPUT;
-            global $INFO;
-            $this->difftype = $INPUT->str('difftype') ?: get_doku_pref('difftype', $difftype);
-            if (empty($this->difftype) && $INFO['ismobile']) {
-                $this->difftype = 'inline';
-            }
-        }
-        if ($this->difftype !== 'inline') $this->difftype = 'sidebyside';
+        $this->preference['showIntro'] = true;
+        $this->preference['difftype']  = null; // inline or sidebyside
     }
 
     /**
-     * Show diff
-     * between current page version and provided $text
-     * or between the revisions provided via GET or POST
+     * Determine requested diff view type
      *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     *
-     * @return void
+     * @param string $mode  diff view type (inline or sidebyside)
      */
-    public function show()
+    public function getDiffType($mode = null)
     {
-        global $ID;
-        global $REV;
-        global $lang;
         global $INPUT;
         global $INFO;
-        $pagelog = new PageChangeLog($ID);
+        $difftype =& $this->preference['difftype'];
 
-        /*
-         * Determine requested revision(s)
-         */
+        if (!isset($mode)) {
+            // retrieve requested $difftype or read preference from DokuWiki cookie
+            $difftype = $INPUT->str('difftype') ?: get_doku_pref('difftype', $mode);
+            if (empty($difftype)) {
+                $difftype = $INFO['ismobile'] ? 'inline' : 'sidebyside';
+            }
+        } elseif (in_array($mode, ['inline', 'sidebyside'])) {
+            $difftype = $mode;
+        } else {
+            $difftype = 'sidebyside';
+        }
+        return $this->preference['difftype'];
+    }
+
+    /**
+     * Determine requested revision(s)
+     */
+    protected function getRevisions()
+    {
+        global $REV;
+        global $INPUT;
+
         // we're trying to be clever here, revisions to compare can be either
         // given as rev and rev2 parameters, with rev2 being optional. Or in an
         // array in rev2.
@@ -75,26 +79,45 @@ class PageDiff extends Diff
 
             if (!$rev1) {
                 $rev1 = $rev2;
-                unset($rev2);
+                $rev2 = null;
             }
         } else {
             $rev2 = $INPUT->int('rev2');
         }
+        return array($rev1, $rev2);
+    }
 
-        /*
-         * Determine left and right revision, its texts and the header
-         */
-        $r_minor = '';
-        $l_minor = '';
+    /**
+     * Determine left and right revision, its texts and the header
+     *
+     * @return array
+     *       $l_rev,   $r_rev,    // int     left and right revisions
+     *       $l_minor, $r_minor,  // string  class attributes
+     *       $l_head,  $r_head,   // string  html snippet
+     *       $l_text,  $r_text,   // string  raw wiki text
+     *       $l_nav,   $r_nav,    // string  html snippet
+     */
+    protected function getHtmlParts()
+    {
+        global $REV;
+        global $lang;
+
+        // determine requested revision(s)
+        list($rev1, $rev2) = $this->getRevisions();
+        if ($rev2 === null) unset($rev2);
+
+        $pagelog = new PageChangeLog($this->id);
 
         if ($this->text) { // compare text to the most current revision
             $l_rev = '';
-            $l_text = rawWiki($ID, '');
-            $l_head = '<a class="wikilink1" href="'. wl($ID) .'">'
-                . $ID .' '. dformat((int) @filemtime(wikiFN($ID))) .'</a> '
+            $r_minor = '';
+            $l_text = rawWiki($this->id, '');
+            $l_head = '<a class="wikilink1" href="'. wl($this->id) .'">'
+                . $this->id .' '. dformat((int) @filemtime(wikiFN($this->id))) .'</a> '
                 . $lang['current'];
 
             $r_rev = '';
+            $l_minor = '';
             $r_text = cleanText($this->text);
             $r_head = $lang['yours'];
         } else {
@@ -121,48 +144,74 @@ class PageDiff extends Diff
             if (!$l_rev && !$r_rev) {
                 $l_text = '';
             } else {
-                $l_text = rawWiki($ID, $l_rev);
+                $l_text = rawWiki($this->id, $l_rev);
             }
-            $r_text = rawWiki($ID, $r_rev);
+            $r_text = rawWiki($this->id, $r_rev);
 
             // get header of diff HTML
-            list($l_head, $r_head, $l_minor, $r_minor) = $this->diffHead(
-                $l_rev, $r_rev, null, false, ($this->difftype == 'inline')
-            );
+            list($l_head, $r_head, $l_minor, $r_minor) = $this->diffHead($pagelog, $l_rev, $r_rev);
         }
 
-        /*
-         * Build navigation
-         */
+        // build navigation
         $l_nav = '';
         $r_nav = '';
         if (!$this->text) {
             list($l_nav, $r_nav) = $this->diffNavigation($pagelog, $l_rev, $r_rev);
         }
-        /*
-         * Create diff object and the formatter
-         */
+
+        return array(
+            $l_rev,   $r_rev,
+            $l_minor, $r_minor,
+            $l_head,  $r_head,
+            $l_text,  $r_text,
+            $l_nav,   $r_nav,
+        );
+    }
+
+    /**
+     * Show diff
+     * between current page version and provided $text
+     * or between the revisions provided via GET or POST
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @return void
+     */
+    public function show($difftype = null)
+    {
+        global $lang;
+        global $INFO;
+
+        $difftype = $this->getDiffType($difftype);
+
+        // determine left and right revision, its texts and the header
+        list(
+            $l_rev,   $r_rev,
+            $l_minor, $r_minor,
+            $l_head,  $r_head,
+            $l_text,  $r_text,
+            $l_nav,   $r_nav,
+        ) = $this->getHtmlParts();
+
+        // Create diff object and the formatter
         $diff = new \Diff(explode("\n", $l_text), explode("\n", $r_text));
 
-        if ($this->difftype == 'inline') {
+        if ($difftype == 'inline') {
             $diffformatter = new \InlineDiffFormatter();
         } else {
             $diffformatter = new \TableDiffFormatter();
         }
-        /*
-         * Display intro
-         */
-        if ($this->showIntro) print p_locale_xhtml('diff');
 
-        /*
-         * Display type and exact reference
-         */
+        // Display intro
+        if ($this->preference['showIntro']) print p_locale_xhtml('diff');
+
+        // Display type and exact reference
         if (!$this->text) {
             print '<div class="diffoptions group">';
 
             // create the form to select difftype
             $form = new Form(['action' => wl()]);
-            $form->setHiddenField('id', $ID);
+            $form->setHiddenField('id', $this->id);
             $form->setHiddenField('rev2[0]', $l_rev);
             $form->setHiddenField('rev2[1]', $r_rev);
             $form->setHiddenField('do', 'diff');
@@ -171,7 +220,7 @@ class PageDiff extends Diff
                          'inline' => $lang['diff_inline']
             );
             $input = $form->addDropdown('difftype', $options, $lang['diff_type'])
-                ->val($this->difftype)->addClass('quickselect');
+                ->val($difftype)->addClass('quickselect');
             $input->useInput(false); // inhibit prefillInput() during toHTML() process
             $form->addButton('do[diff]', 'Go')->attr('type','submit');
             print $form->toHTML();
@@ -188,10 +237,10 @@ class PageDiff extends Diff
          * Display diff view table
          */
         print '<div class="table">';
-        print '<table class="diff diff_'. $this->difftype .'">';
+        print '<table class="diff diff_'. $difftype .'">';
 
         //navigation and header
-        if ($this->difftype == 'inline') {
+        if ($difftype == 'inline') {
             if (!$this->text) {
                 print '<tr>'
                     . '<td class="diff-lineheader">-</td>'
@@ -241,7 +290,7 @@ class PageDiff extends Diff
      */
     protected function diffNavigation($pagelog, $l_rev, $r_rev)
     {
-        global $INFO, $ID;
+        global $INFO;
 
         // last timestamp is not in changelog, retrieve timestamp from metadata
         // note: when page is removed, the metadata timestamp is zero
@@ -311,7 +360,7 @@ class PageDiff extends Diff
         }
         //dropdown
         $form = new Form(['action' => wl()]);
-        $form->setHiddenField('id', $ID);
+        $form->setHiddenField('id', $this->id);
         $form->setHiddenField('difftype', $this->difftype);
         $form->setHiddenField('rev2[1]', $r_rev);
         $form->setHiddenField('do', 'diff');
@@ -334,7 +383,7 @@ class PageDiff extends Diff
         }
         //dropdown
         $form = new Form(['action' => wl()]);
-        $form->setHiddenField('id', $ID);
+        $form->setHiddenField('id', $this->id);
         $form->setHiddenField('rev2[0]', $l_rev);
         $form->setHiddenField('difftype', $this->difftype);
         $form->setHiddenField('do', 'diff');
@@ -366,22 +415,22 @@ class PageDiff extends Diff
      */
     protected function diffViewlink($linktype, $lrev, $rrev = null)
     {
-        global $ID, $lang;
+        global $lang;
         if ($rrev === null) {
             $urlparam = array(
                 'do' => 'diff',
                 'rev' => $lrev,
-                'difftype' => $this->difftype,
+                'difftype' => $this->preference['difftype'],
             );
         } else {
             $urlparam = array(
                 'do' => 'diff',
                 'rev2[0]' => $lrev,
                 'rev2[1]' => $rrev,
-                'difftype' => $this->difftype,
+                'difftype' => $this->preference['difftype'],
             );
         }
-        return  '<a class="'. $linktype .'" href="'. wl($ID, $urlparam) .'" title="'. $lang[$linktype] .'">'
+        return  '<a class="'. $linktype .'" href="'. wl($this->id, $urlparam) .'" title="'. $lang[$linktype] .'">'
               . '<span>'. $lang[$linktype] .'</span>'
               . '</a>';
     }

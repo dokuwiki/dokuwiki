@@ -515,7 +515,11 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
  */
 function html_diff($text = '', $intro = true, $type = null) {
     dbg_deprecated(\dokuwiki\Ui\PageDiff::class .'::show()');
-    (new dokuwiki\Ui\PageDiff($text, $intro, $type))->show();
+    global $INFO;
+    (new dokuwiki\Ui\PageDiff($INFO['id'], $text))->preference([
+        'showIntro' => $intro,
+        'difftype'  => $type,
+    ])->show();
 }
 
 /**
@@ -568,8 +572,8 @@ function html_insert_softbreaks($diffhtml) {
  * @deprecated 2020-07-18
  */
 function html_conflict($text, $summary) {
-    dbg_deprecated(\dokuwiki\Ui\Conflict::class .'::show()');
-    (new dokuwiki\Ui\Conflict($text, $summary))->show();
+    dbg_deprecated(\dokuwiki\Ui\PageConflict::class .'::show()');
+    (new dokuwiki\Ui\PageConflict($text, $summary))->show();
 }
 
 /**

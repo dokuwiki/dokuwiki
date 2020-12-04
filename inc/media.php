@@ -989,7 +989,7 @@ function media_tab_history($image, $ns, $auth=null) {
 
     if ($auth >= AUTH_READ && $image) {
         if ($do == 'diff'){
-            media_diff($image, $ns, $auth);
+            (new dokuwiki\Ui\MediaDiff($image))->show(); //media_diff($image, $ns, $auth);
         } else {
             $first = $INPUT->int('first');
             (new dokuwiki\Ui\MediaRevisions($image))->show($first);
@@ -1353,7 +1353,8 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax) {
         }
     }
 
-    list($l_head, $r_head) = (new dokuwiki\Ui\Diff)->diffHead($l_rev, $r_rev, $image, true);
+    $medialog = new MediaChangeLog($image);
+    list($l_head, $r_head) = (new dokuwiki\Ui\MediaDiff($image))->diffHead($medialog, $l_rev, $r_rev);
 
     ?>
     <div class="table">

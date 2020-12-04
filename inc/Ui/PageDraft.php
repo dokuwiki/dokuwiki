@@ -22,7 +22,6 @@ class PageDraft extends Ui
     public function show()
     {
         global $INFO;
-        global $ID;
         global $lang;
 
         $draft = new \dokuwiki\Draft($ID, $INFO['client']);
@@ -31,12 +30,12 @@ class PageDraft extends Ui
         // print intro
         print p_locale_xhtml('draft');
 
-        (new PageDiff($text, false))->show();
+        (new PageDiff($INFO['id'], $text))->preference('showIntro', false)->show();
 
         // create the draft form
         $form = new Form(['id' => 'dw__editform']);
         $form->addTagOpen('div')->addClass('no');
-        $form->setHiddenField('id', $ID);
+        $form->setHiddenField('id', $INFO['id']);
         $form->setHiddenField('date', $draft->getDraftDate());
         $form->setHiddenField('wikitext', $text);
 
