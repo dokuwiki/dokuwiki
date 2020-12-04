@@ -141,6 +141,7 @@ $lang['mailfrom']              = 'Adresse de courriel de l\'expéditeur des noti
 $lang['mailreturnpath']        = 'Adresse de courriel du destinataire pour les notifications de non-remise';
 $lang['mailprefix']            = 'Préfixe à utiliser dans les objets des courriels automatiques. Laisser vide pour utiliser le titre du wiki';
 $lang['htmlmail']              = 'Envoyer des courriel HTML multipart (visuellement plus agréable, mais plus lourd). Désactiver pour utiliser uniquement des courriel plain text';
+$lang['dontlog']               = 'Désactiver l\'enregistrement pour ces types de journaux.';
 $lang['sitemap']               = 'Fréquence de génération du sitemap Google (jours). 0 pour désactiver';
 $lang['rss_type']              = 'Type de flux XML (RSS)';
 $lang['rss_linkto']            = 'Lien du flux XML vers';
