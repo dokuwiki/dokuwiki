@@ -35,140 +35,6 @@ class PageDiff extends Diff
     }
 
     /**
-     * Determine requested diff view type
-     *
-     * @param string $mode  diff view type (inline or sidebyside)
-     */
-    public function getDiffType($mode = null)
-    {
-        global $INPUT;
-        global $INFO;
-        $difftype =& $this->preference['difftype'];
-
-        if (!isset($mode)) {
-            // retrieve requested $difftype or read preference from DokuWiki cookie
-            $difftype = $INPUT->str('difftype') ?: get_doku_pref('difftype', $mode);
-            if (empty($difftype)) {
-                $difftype = $INFO['ismobile'] ? 'inline' : 'sidebyside';
-            }
-        } elseif (in_array($mode, ['inline', 'sidebyside'])) {
-            $difftype = $mode;
-        } else {
-            $difftype = 'sidebyside';
-        }
-        return $this->preference['difftype'];
-    }
-
-    /**
-     * Determine requested revision(s)
-     */
-    protected function getRevisions()
-    {
-        global $REV;
-        global $INPUT;
-
-        // we're trying to be clever here, revisions to compare can be either
-        // given as rev and rev2 parameters, with rev2 being optional. Or in an
-        // array in rev2.
-        $rev1 = $REV;
-
-        $rev2 = $INPUT->ref('rev2');
-        if (is_array($rev2)) {
-            $rev1 = (int) $rev2[0];
-            $rev2 = (int) $rev2[1];
-
-            if (!$rev1) {
-                $rev1 = $rev2;
-                $rev2 = null;
-            }
-        } else {
-            $rev2 = $INPUT->int('rev2');
-        }
-        return array($rev1, $rev2);
-    }
-
-    /**
-     * Determine left and right revision, its texts and the header
-     *
-     * @return array
-     *       $l_rev,   $r_rev,    // int     left and right revisions
-     *       $l_minor, $r_minor,  // string  class attributes
-     *       $l_head,  $r_head,   // string  html snippet
-     *       $l_text,  $r_text,   // string  raw wiki text
-     *       $l_nav,   $r_nav,    // string  html snippet
-     */
-    protected function getHtmlParts()
-    {
-        global $REV;
-        global $lang;
-
-        // determine requested revision(s)
-        list($rev1, $rev2) = $this->getRevisions();
-        if ($rev2 === null) unset($rev2);
-
-        $pagelog = new PageChangeLog($this->id);
-
-        if ($this->text) { // compare text to the most current revision
-            $l_rev = '';
-            $r_minor = '';
-            $l_text = rawWiki($this->id, '');
-            $l_head = '<a class="wikilink1" href="'. wl($this->id) .'">'
-                . $this->id .' '. dformat((int) @filemtime(wikiFN($this->id))) .'</a> '
-                . $lang['current'];
-
-            $r_rev = '';
-            $l_minor = '';
-            $r_text = cleanText($this->text);
-            $r_head = $lang['yours'];
-        } else {
-            if ($rev1 && isset($rev2) && $rev2) { // two specific revisions wanted
-                // make sure order is correct (older on the left)
-                if ($rev1 < $rev2) {
-                    $l_rev = $rev1;
-                    $r_rev = $rev2;
-                } else {
-                    $l_rev = $rev2;
-                    $r_rev = $rev1;
-                }
-            } elseif ($rev1) { // single revision given, compare to current
-                $r_rev = '';
-                $l_rev = $rev1;
-            } else { // no revision was given, compare previous to current
-                $r_rev = '';
-                $revs = $pagelog->getRevisions(0, 1);
-                $l_rev = $revs[0];
-                $REV = $l_rev; // store revision back in $REV
-            }
-
-            // when both revisions are empty then the page was created just now
-            if (!$l_rev && !$r_rev) {
-                $l_text = '';
-            } else {
-                $l_text = rawWiki($this->id, $l_rev);
-            }
-            $r_text = rawWiki($this->id, $r_rev);
-
-            // get header of diff HTML
-            list($l_head, $r_head, $l_minor, $r_minor) = $this->diffHead($pagelog, $l_rev, $r_rev);
-        }
-
-        // build navigation
-        $l_nav = '';
-        $r_nav = '';
-        if (!$this->text) {
-            list($l_nav, $r_nav) = $this->diffNavigation($pagelog, $l_rev, $r_rev);
-        }
-
-        return array(
-            $l_rev,   $r_rev,
-            $l_minor, $r_minor,
-            $l_head,  $r_head,
-            $l_text,  $r_text,
-            $l_nav,   $r_nav,
-        );
-    }
-
-    /**
      * Show diff
      * between current page version and provided $text
      * or between the revisions provided via GET or POST
@@ -179,58 +45,26 @@ class PageDiff extends Diff
      */
     public function show($difftype = null)
     {
-        global $lang;
-        global $INFO;
+       // determine left and right revision
+        list($l_rev, $r_rev) = $this->getRevisionPair();
 
-        $difftype = $this->getDiffType($difftype);
-
-        // determine left and right revision, its texts and the header
+       // determine html diff view components
         list(
-            $l_rev,   $r_rev,
             $l_minor, $r_minor,
             $l_head,  $r_head,
             $l_text,  $r_text,
             $l_nav,   $r_nav,
-        ) = $this->getHtmlParts();
+        ) = $this->getDiffViewComponents($l_rev, $r_rev);
 
-        // Create diff object and the formatter
-        $diff = new \Diff(explode("\n", $l_text), explode("\n", $r_text));
+        // determine requested diff view type
+        $difftype = $this->getDiffType($difftype);
 
-        if ($difftype == 'inline') {
-            $diffformatter = new \InlineDiffFormatter();
-        } else {
-            $diffformatter = new \TableDiffFormatter();
-        }
+        // display intro
+        if ($this->preference['showIntro']) echo p_locale_xhtml('diff');
 
-        // Display intro
-        if ($this->preference['showIntro']) print p_locale_xhtml('diff');
-
-        // Display type and exact reference
+        // print form to choose diff view type, and exact url reference to the view
         if (!$this->text) {
-            print '<div class="diffoptions group">';
-
-            // create the form to select difftype
-            $form = new Form(['action' => wl()]);
-            $form->setHiddenField('id', $this->id);
-            $form->setHiddenField('rev2[0]', $l_rev);
-            $form->setHiddenField('rev2[1]', $r_rev);
-            $form->setHiddenField('do', 'diff');
-            $options = array(
-                         'sidebyside' => $lang['diff_side'],
-                         'inline' => $lang['diff_inline']
-            );
-            $input = $form->addDropdown('difftype', $options, $lang['diff_type'])
-                ->val($difftype)->addClass('quickselect');
-            $input->useInput(false); // inhibit prefillInput() during toHTML() process
-            $form->addButton('do[diff]', 'Go')->attr('type','submit');
-            print $form->toHTML();
-
-            print '<p>';
-            // link to exactly this view FS#2835
-            print $this->diffViewlink('difflink', $l_rev, ($r_rev ?: $INFO['currentrev']));
-            print '</p>';
-
-            print '</div>'; // .diffoptions
+            $this->showDiffViewSelector($l_rev, $r_rev, $difftype);
         }
 
         /*
@@ -272,11 +106,209 @@ class PageDiff extends Diff
                 . '</tr>';
         }
 
+        // create difference engine object and the formatter
+        $Difference = new \Diff(explode("\n", $l_text), explode("\n", $r_text));
+
+        if ($difftype == 'inline') {
+            $DiffFormatter = new \InlineDiffFormatter();
+        } else {
+            $DiffFormatter = new \TableDiffFormatter();
+        }
+
         //diff view
-        print $this->insertSoftbreaks($diffformatter->format($diff));
+        print $this->insertSoftbreaks($DiffFormatter->format($Difference));
 
         print '</table>';
         print '</div>';
+    }
+
+    /**
+     * Determine requested diff view type for page
+     *
+     * @param string $mode  diff view type (inline or sidebyside)
+     * @return string
+     */
+    protected function getDiffType($mode = null)
+    {
+        global $INPUT;
+        global $INFO;
+        $difftype =& $this->preference['difftype'];
+
+        if (!isset($mode)) {
+            // retrieve requested $difftype or read preference from DokuWiki cookie
+            $difftype = $INPUT->str('difftype') ?: get_doku_pref('difftype', $mode);
+            if (empty($difftype)) {
+                $difftype = $INFO['ismobile'] ? 'inline' : 'sidebyside';
+            }
+        } elseif (in_array($mode, ['inline', 'sidebyside'])) {
+            $difftype = $mode;
+        } else {
+            $difftype = 'sidebyside';
+        }
+        return $this->preference['difftype'];
+    }
+
+    /**
+     * Determine requested revision(s)
+     *
+     * @return array
+     */
+    protected function getRevisions()
+    {
+        global $REV;
+        global $INPUT;
+
+        // we're trying to be clever here, revisions to compare can be either
+        // given as rev and rev2 parameters, with rev2 being optional. Or in an
+        // array in rev2.
+        $rev1 = $REV;
+
+        $rev2 = $INPUT->ref('rev2');
+        if (is_array($rev2)) {
+            $rev1 = (int) $rev2[0];
+            $rev2 = (int) $rev2[1];
+
+            if (!$rev1) {
+                $rev1 = $rev2;
+                $rev2 = null;
+            }
+        } else {
+            $rev2 = $INPUT->int('rev2');
+        }
+        return array($rev1, $rev2);
+    }
+
+    /**
+     * Determine left and right revision
+     *
+     * @return array
+     */
+    protected function getRevisionPair()
+    {
+        if ($this->text) { // compare text to the most current revision
+            $l_rev = '';
+            $r_rev = '';
+            return array($l_rev, $r_rev);
+        }
+
+        global $REV;
+
+        // determine requested revision(s)
+        list($rev1, $rev2) = $this->getRevisions();
+        if ($rev2 === null) unset($rev2);
+
+        if ($rev1 && isset($rev2) && $rev2) { // two specific revisions wanted
+            // make sure order is correct (older on the left)
+            if ($rev1 < $rev2) {
+                $l_rev = $rev1;
+                $r_rev = $rev2;
+            } else {
+                $l_rev = $rev2;
+                $r_rev = $rev1;
+            }
+        } elseif ($rev1) { // single revision given, compare to current
+            $r_rev = '';
+            $l_rev = $rev1;
+        } else { // no revision was given, compare previous to current
+            $r_rev = '';
+            $pagelog = new PageChangeLog($this->id);
+            $revs = $pagelog->getRevisions(0, 1);
+            $l_rev = $revs[0];
+            $REV = $l_rev; // store revision back in $REV
+        }
+        return array($l_rev, $r_rev);
+    }
+
+    /**
+     * Determine html diff view components
+     *
+     * @param int $l_rev  revision timestamp of left side
+     * @param int $r_rev  revision timestamp of right side
+     * @return array
+     *       $l_minor, $r_minor,  // string  class attributes
+     *       $l_head,  $r_head,   // string  html snippet
+     *       $l_text,  $r_text,   // string  raw wiki text
+     *       $l_nav,   $r_nav,    // string  html snippet
+     */
+    protected function getDiffViewComponents($l_rev, $r_rev)
+    {
+        global $lang;
+
+        if ($this->text) { // compare text to the most current revision
+            $r_minor = '';
+            $l_text = rawWiki($this->id, '');
+            $l_head = '<a class="wikilink1" href="'. wl($this->id) .'">'
+                . $this->id .' '. dformat((int) @filemtime(wikiFN($this->id))) .'</a> '
+                . $lang['current'];
+
+            $l_minor = '';
+            $r_text = cleanText($this->text);
+            $r_head = $lang['yours'];
+
+        } else {
+            // when both revisions are empty then the page was created just now
+            if (!$l_rev && !$r_rev) {
+                $l_text = '';
+            } else {
+                $l_text = rawWiki($this->id, $l_rev);
+            }
+            $r_text = rawWiki($this->id, $r_rev);
+
+            $pagelog = new PageChangeLog($this->id);
+
+            // get header of diff HTML
+            list($l_head, $r_head, $l_minor, $r_minor) = $this->diffHead($pagelog, $l_rev, $r_rev);
+        }
+        // build navigation
+        $l_nav = '';
+        $r_nav = '';
+        if (!$this->text) {
+            list($l_nav, $r_nav) = $this->diffNavigation($pagelog, $l_rev, $r_rev);
+        }
+
+        return array(
+            $l_minor, $r_minor,
+            $l_head,  $r_head,
+            $l_text,  $r_text,
+            $l_nav,   $r_nav,
+        );
+    }
+
+    /**
+     * Print form to choose diff view type, and exact url reference to the view
+     *
+     * @param int $l_rev  revision timestamp of left side
+     * @param int $r_rev  revision timestamp of right side
+     * @param string $difftype  diff view type for page (inline or sidebyside)
+     */
+    protected function showDiffViewSelector($l_rev, $r_rev, $difftype)
+    {
+        global $INFO, $lang;
+
+        echo '<div class="diffoptions group">';
+
+        // create the form to select difftype
+        $form = new Form(['action' => wl()]);
+        $form->setHiddenField('id', $this->id);
+        $form->setHiddenField('rev2[0]', $l_rev);
+        $form->setHiddenField('rev2[1]', $r_rev);
+        $form->setHiddenField('do', 'diff');
+        $options = array(
+                     'sidebyside' => $lang['diff_side'],
+                     'inline' => $lang['diff_inline']
+        );
+        $input = $form->addDropdown('difftype', $options, $lang['diff_type'])
+            ->val($difftype)->addClass('quickselect');
+        $input->useInput(false); // inhibit prefillInput() during toHTML() process
+        $form->addButton('do[diff]', 'Go')->attr('type','submit');
+        echo $form->toHTML();
+
+        echo '<p>';
+        // link to exactly this view FS#2835
+        echo $this->diffViewlink('difflink', $l_rev, ($r_rev ?: $INFO['currentrev']));
+        echo '</p>';
+
+        echo '</div>'; // .diffoptions
     }
 
 
