@@ -19,16 +19,30 @@ class PageDiff extends Diff
      * PageDiff Ui constructor
      *
      * @param string $id  page id
-     * @param string $text  when non-empty: compare with this text with most current version
      */
-    public function __construct($id = null, $text = null)
+    public function __construct($id = null)
     {
         global $INFO;
         $this->id = isset($id) ? $id : $INFO['id'];
-        if (isset($text)) $this->text = $text;
 
         $this->preference['showIntro'] = true;
         $this->preference['difftype']  = null; // inline or sidebyside
+    }
+
+    /**
+     * Set text to be compared with most current version
+     * exclusively use of the compare($old, $new) method
+     *
+     * @param string $text
+     * @return $this
+     */
+    public function compareWith($text = null)
+    {
+        if (isset($text)) {
+            $this->text = $text;
+            $this->old_rev = '';
+        }
+        return $this;
     }
 
     /** @inheritdoc */

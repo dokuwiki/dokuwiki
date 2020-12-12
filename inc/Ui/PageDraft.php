@@ -30,7 +30,8 @@ class PageDraft extends Ui
         // print intro
         print p_locale_xhtml('draft');
 
-        (new PageDiff($INFO['id'], $text))->preference('showIntro', false)->show();
+        // print difference
+        (new PageDiff($INFO['id']))->compareWith($text)->preference('showIntro', false)->show();
 
         // create the draft form
         $form = new Form(['id' => 'dw__editform']);

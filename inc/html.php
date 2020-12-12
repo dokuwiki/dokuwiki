@@ -516,7 +516,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
 function html_diff($text = '', $intro = true, $type = null) {
     dbg_deprecated(\dokuwiki\Ui\PageDiff::class .'::show()');
     global $INFO;
-    (new dokuwiki\Ui\PageDiff($INFO['id'], $text))->preference([
+    (new dokuwiki\Ui\PageDiff($INFO['id']))->compareWith($text)->preference([
         'showIntro' => $intro,
         'difftype'  => $type,
     ])->show();
