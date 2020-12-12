@@ -37,7 +37,7 @@ class PageRevisions extends Revisions
      */
     public function show($first = 0)
     {
-        global $lang;
+        global $lang, $REV;
 
         // get revisions, and set correct pagenation parameters (first, hasNext)
         if ($first === null) $first = 0;
@@ -62,7 +62,11 @@ class PageRevisions extends Revisions
             $form->addTagOpen('li')->addClass($class);
             $form->addTagOpen('div')->addClass('li');
 
-            if (page_exists($this->id, $rev)) {
+            if (isset($info['current'])) {
+                $form->addCheckbox('rev2[]')->val('current');
+            } elseif ($rev == $REV) {
+                $form->addCheckbox('rev2[]')->val($rev)->attr('checked','checked');
+            } elseif (page_exists($this->id, $rev)) {
                 $form->addCheckbox('rev2[]')->val($rev);
             } else {
                 $form->addCheckbox('')->val($rev)->attr('disabled','disabled');
