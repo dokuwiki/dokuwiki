@@ -13,9 +13,6 @@ use dokuwiki\Form\Form;
  */
 class MediaDiff extends Diff
 {
-    /* @var string */
-    protected $id;
-
     /**
      * MediaDiff Ui constructor
      *
@@ -28,6 +25,19 @@ class MediaDiff extends Diff
         $this->preference['fromAjax'] = false; // see doluwiki\Ajax::callMediadiff()
         $this->preference['showIntro'] = false;
         $this->preference['difftype'] = null;  // both, opacity or portions.
+    }
+
+    /** @inheritdoc */
+    protected function preProcess()
+    {
+        parent::preProcess();
+        if (!isset($this->old_rev, $this->new_rev)) {
+            // no revision was given, compare previous to current
+            $changelog = new MediaChangeLog($this->id);
+            $revs = $changelog->getRevisions(0, 1);
+            $this->old_rev = file_exists(mediaFN($this->id, $revs[0])) ? $revs[0] : '';
+            $this->new_rev = '';
+        }
     }
 
     /**
@@ -46,7 +56,8 @@ class MediaDiff extends Diff
         if ($auth < AUTH_READ || !$this->id || !$conf['mediarevisions']) return '';
 
        // determine left and right revision
-        list($l_rev, $r_rev) = $this->getRevisionPair();
+        $this->preProcess();
+        [$l_rev, $r_rev] = [$this->old_rev, $this->new_rev];
 
         // prepare event data
         // NOTE: MEDIA_DIFF event does not found in DokuWiki Event List?
@@ -133,70 +144,6 @@ class MediaDiff extends Diff
             $difftype = $mode;
         }
         return $this->preference['difftype'];
-    }
-
-    /**
-     * Determine requested revision(s)
-     *
-     * @return array
-     */
-    protected function getRevisions()
-    {
-        global $INPUT;
-
-        $rev1 = $INPUT->int('rev');
-
-        $rev2 = $INPUT->ref('rev2');
-        if (is_array($rev2)) {
-            $rev1 = (int) $rev2[0];
-            $rev2 = (int) $rev2[1];
-
-            if (!$rev1) {
-                $rev1 = $rev2;
-                $rev2 = null;
-            }
-        } else {
-            $rev2 = $INPUT->int('rev2');
-        }
-        return array($rev1, $rev2);
-    }
-
-    /**
-     * Determine left and right revision
-     *
-     * @return array
-     */
-    protected function getRevisionPair()
-    {
-        // determine requested revision(s)
-        list($rev1, $rev2) = $this->getRevisions();
-
-        if ($rev1 && !file_exists(mediaFN($this->id, $rev1))) $rev1 = false;
-        if ($rev2 && !file_exists(mediaFN($this->id, $rev2))) $rev2 = false;
-
-        if ($rev1 && $rev2) {  // two specific revisions wanted
-            // make sure order is correct (older on the left)
-            if ($rev1 < $rev2) {
-                $l_rev = $rev1;
-                $r_rev = $rev2;
-            } else {
-                $l_rev = $rev2;
-                $r_rev = $rev1;
-            }
-        } elseif ($rev1) {     // single revision given, compare to current
-            $r_rev = '';
-            $l_rev = $rev1;
-        } else {               // no revision was given, compare previous to current
-            $r_rev = '';
-            $medialog = new MediaChangeLog($this->id);
-            $revs = $medialog->getRevisions(0, 1);
-            if (file_exists(mediaFN($this->id, $revs[0]))) {
-                $l_rev = $revs[0];
-            } else {
-                $l_rev = '';
-            }
-        }
-        return array($l_rev, $r_rev);
     }
 
     /**

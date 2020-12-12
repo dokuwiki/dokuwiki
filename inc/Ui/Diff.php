@@ -16,6 +16,10 @@ abstract class Diff extends Ui
     /* @var string */
     protected $id;  // page id or media id
 
+    /* @var int */
+    protected $old_rev; // older revision, timestamp of left side
+    protected $new_rev; // newer revision, timestamp of right side
+
     /* @var array */
     protected $preference = [];
 
@@ -27,6 +31,20 @@ abstract class Diff extends Ui
     public function __construct($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * Set a pair of revisions to be compared
+     *
+     * @param int $old_rev
+     * @param int $new_rev
+     * @return $this
+     */
+    public function compare($old_rev, $new_rev)
+    {
+        $this->old_rev = $old_rev;
+        $this->new_rev = $new_rev;
+        return $this;
     }
 
     /**
@@ -51,6 +69,46 @@ abstract class Diff extends Ui
         // get
         return $this->preference;
     }
+
+    /**
+     * Retrieve requested revision(s) and difftype from Ui\Revisions
+     *
+     * @return void
+     */
+    protected function preProcess()
+    {
+        global $INPUT;
+
+        // difflink icon click, eg. ?rev=123456789&do=diff
+        if ($INPUT->has('rev')) {
+            $this->old_rev = $INPUT->int('rev');
+            $this->new_rev = ''; // current revision
+        }
+
+        // submit button with two checked boxes
+        $rev2 = $INPUT->arr('rev2', []);
+        if (count($rev2) > 1) {
+            if ($rev2[0] == 'current') {
+                [$this->old_rev, $this->new_rev] = [$rev2[1], ''];
+            } elseif ($rev2[1] == 'current') {
+                [$this->old_rev, $this->new_rev] = [$rev2[0], ''];
+            } elseif ($rev2[0] < $rev2[1]) {
+                [$this->old_rev, $this->new_rev] = [$rev2[0], $rev2[1]];
+            } else {
+                [$this->old_rev, $this->new_rev] = [$rev2[1], $rev2[0]];
+            }
+        }
+
+        // diff view type
+        if ($INPUT->has('difftype')) {
+            // retrieve requested $difftype
+            $this->preference['difftype'] = $INPUT->str('difftype');
+        } else {
+            // read preference from DokuWiki cookie. PageDiff only
+            $this->preference['difftype'] = get_doku_pref('difftype', $mode);
+        }
+    }
+
 
 
     /**
