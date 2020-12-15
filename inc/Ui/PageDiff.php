@@ -248,8 +248,8 @@ class PageDiff extends Diff
         // create the form to select difftype
         $form = new Form(['action' => wl()]);
         $form->setHiddenField('id', $this->id);
-        $form->setHiddenField('rev2[0]', $l_rev);
-        $form->setHiddenField('rev2[1]', $r_rev);
+        $form->setHiddenField('rev2[0]', $l_rev ?: 'current');
+        $form->setHiddenField('rev2[1]', $r_rev ?: 'current');
         $form->setHiddenField('do', 'diff');
         $options = array(
                      'sidebyside' => $lang['diff_side'],
@@ -352,9 +352,9 @@ class PageDiff extends Diff
         $form = new Form(['action' => wl()]);
         $form->setHiddenField('id', $this->id);
         $form->setHiddenField('difftype', $this->difftype);
-        $form->setHiddenField('rev2[1]', $r_rev);
+        $form->setHiddenField('rev2[1]', $r_rev ?: 'current');
         $form->setHiddenField('do', 'diff');
-        $input = $form->addDropdown('rev2[0]', $l_revisions)->val($l_rev)->addClass('quickselect');
+        $input = $form->addDropdown('rev2[0]', $l_revisions)->val($l_rev ?: 'current')->addClass('quickselect');
         $input->useInput(false); // inhibit prefillInput() during toHTML() process
         $form->addButton('do[diff]', 'Go')->attr('type','submit');
         $l_nav .= $form->toHTML();
@@ -374,10 +374,10 @@ class PageDiff extends Diff
         //dropdown
         $form = new Form(['action' => wl()]);
         $form->setHiddenField('id', $this->id);
-        $form->setHiddenField('rev2[0]', $l_rev);
+        $form->setHiddenField('rev2[0]', $l_rev ?: 'current');
         $form->setHiddenField('difftype', $this->difftype);
         $form->setHiddenField('do', 'diff');
-        $input = $form->addDropdown('rev2[1]', $r_revisions)->val($r_rev)->addClass('quickselect');
+        $input = $form->addDropdown('rev2[1]', $r_revisions)->val($r_rev ?: 'current')->addClass('quickselect');
         $input->useInput(false); // inhibit prefillInput() during toHTML() process
         $form->addButton('do[diff]', 'Go')->attr('type','submit');
         $r_nav .= $form->toHTML();
@@ -389,7 +389,6 @@ class PageDiff extends Diff
             } else {
                 $r_nav .= $this->diffViewlink('diffnextrev', $l_rev, $r_next);
             }
-        } else {
             $r_nav .= $this->diffViewlink('diffbothnextrev', $l_next, $r_next);
         }
         return array($l_nav, $r_nav);
