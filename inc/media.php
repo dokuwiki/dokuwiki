@@ -1258,7 +1258,7 @@ function _media_file_diff($data) {
  * @deprecated 2020-XX-XX
  */
 function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax) {
-    dbg_deprecated(\dokuwiki\Ui\MediaDiff::class .'::showFfileDiff()');
+    dbg_deprecated(\dokuwiki\Ui\MediaDiff::class .'::showFileDiff()');
 }
 
 /**
