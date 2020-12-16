@@ -499,7 +499,7 @@ function html_backlinks() {
  * @deprecated 2020-07-18
  */
 function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = false) {
-    dbg_deprecated('see '. \dokuwiki\Ui\PageDiff::class .'::diffHead()');
+    dbg_deprecated('see '. \dokuwiki\Ui\PageDiff::class .'::buildDiffHead()');
 }
 
 /**
@@ -533,7 +533,7 @@ function html_diff($text = '', $intro = true, $type = null) {
  * @deprecated 2020-07-18
  */
 function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
-    dbg_deprecated('see '. \dokuwiki\Ui\PageDiff::class .'::diffNavigation()');
+    dbg_deprecated('see '. \dokuwiki\Ui\PageDiff::class .'::buildDiffNavigation()');
 }
 
 /**

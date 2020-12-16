@@ -112,7 +112,7 @@ abstract class Diff extends Ui
 
 
     /**
-     * Get header of diff HTML
+     * Build header of diff HTML
      *
      * @param ChangeLog $changelog  PageChangeLog or MediaChangeLog object
      * @param string $l_rev   Left revisions
@@ -122,7 +122,7 @@ abstract class Diff extends Ui
      * @param bool   $inline  Return the header on a single line  // クラスプロパティを使用するべき
      * @return string[] HTML snippets for diff header
      */
-    public function diffHead($changelog, $l_rev, $r_rev)
+    public function buildDiffHead($changelog, $l_rev, $r_rev)
     {
         global $lang;
 

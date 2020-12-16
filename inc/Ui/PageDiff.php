@@ -82,7 +82,7 @@ class PageDiff extends Diff
             $l_head,  $r_head,
             $l_text,  $r_text,
             $l_nav,   $r_nav,
-        ) = $this->getDiffViewComponents($l_rev, $r_rev);
+        ) = $this->buildDiffViewComponents($l_rev, $r_rev);
 
         // determine requested diff view type
         $difftype = $this->getDiffType($difftype);
@@ -188,7 +188,7 @@ class PageDiff extends Diff
      *       $l_text,  $r_text,   // string  raw wiki text
      *       $l_nav,   $r_nav,    // string  html snippet
      */
-    protected function getDiffViewComponents($l_rev, $r_rev)
+    protected function buildDiffViewComponents($l_rev, $r_rev)
     {
         global $lang;
 
@@ -215,13 +215,13 @@ class PageDiff extends Diff
             $pagelog = new PageChangeLog($this->id);
 
             // get header of diff HTML
-            list($l_head, $r_head, $l_minor, $r_minor) = $this->diffHead($pagelog, $l_rev, $r_rev);
+            list($l_head, $r_head, $l_minor, $r_minor) = $this->buildDiffHead($pagelog, $l_rev, $r_rev);
         }
         // build navigation
         $l_nav = '';
         $r_nav = '';
         if (!$this->text) {
-            list($l_nav, $r_nav) = $this->diffNavigation($pagelog, $l_rev, $r_rev);
+            list($l_nav, $r_nav) = $this->buildDiffNavigation($pagelog, $l_rev, $r_rev);
         }
 
         return array(
@@ -278,7 +278,7 @@ class PageDiff extends Diff
      * @param int           $r_rev   right revision timestamp
      * @return string[] html of left and right navigation elements
      */
-    protected function diffNavigation($pagelog, $l_rev, $r_rev)
+    protected function buildDiffNavigation($pagelog, $l_rev, $r_rev)
     {
         global $INFO;
 

@@ -227,7 +227,7 @@ class MediaDiff extends Diff
     {
         $medialog = new MediaChangeLog($this->id);
 
-        list($l_head, $r_head) = $this->diffHead($medialog, $l_rev, $r_rev);
+        list($l_head, $r_head) = $this->buildDiffHead($medialog, $l_rev, $r_rev);
 
         echo '<div class="table">';
         echo '<table>';
