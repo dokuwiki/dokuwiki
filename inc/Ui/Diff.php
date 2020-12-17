@@ -23,6 +23,9 @@ abstract class Diff extends Ui
     /* @var array */
     protected $preference = [];
 
+    /* @var ChangeLog */
+    protected $changelog; // PageChangeLog or MediaChangeLog object
+
     /**
      * Diff Ui constructor
      *
@@ -31,7 +34,13 @@ abstract class Diff extends Ui
     public function __construct($id)
     {
         $this->id = $id;
+        $this->setChangeLog();
     }
+
+    /**
+     * set class property changelog
+     */
+    abstract protected function setChangeLog();
 
     /**
      * Set a pair of revisions to be compared
@@ -114,20 +123,16 @@ abstract class Diff extends Ui
     /**
      * Build header of diff HTML
      *
-     * @param ChangeLog $changelog  PageChangeLog or MediaChangeLog object
      * @param string $l_rev   Left revisions
      * @param string $r_rev   Right revision
-     * @param string $id      Page id, if null $ID is used   // クラスプロパティを使用するべき
-     * @param bool   $media   If it is for media files       // changelog object を渡せばよいのは？
-     * @param bool   $inline  Return the header on a single line  // クラスプロパティを使用するべき
      * @return string[] HTML snippets for diff header
      */
-    public function buildDiffHead($changelog, $l_rev, $r_rev)
+    public function buildDiffHead($l_rev, $r_rev)
     {
         global $lang;
 
         // detect PageDiff or MediaDiff
-        switch (get_class($changelog)) {
+        switch (get_class($this->changelog)) {
             case PageChangeLog::class :
                 $media_or_wikiFN = 'wikiFN';
                 $ml_or_wl = 'wl';
@@ -147,7 +152,7 @@ abstract class Diff extends Ui
         if (!$l_rev) {
             $l_head = '&mdash;';
         } else {
-            $l_info   = $changelog->getRevisionInfo($l_rev);
+            $l_info   = $this->changelog->getRevisionInfo($l_rev);
             if ($l_info['user']) {
                 $l_user = '<bdi>'.editorinfo($l_info['user']).'</bdi>';
                 if (auth_ismanager()) $l_user .= ' <bdo dir="ltr">('.$l_info['ip'].')</bdo>';
@@ -165,7 +170,7 @@ abstract class Diff extends Ui
 
         // right side
         if ($r_rev) {
-            $r_info   = $changelog->getRevisionInfo($r_rev);
+            $r_info   = $this->changelog->getRevisionInfo($r_rev);
             if ($r_info['user']) {
                 $r_user = '<bdi>'.editorinfo($r_info['user']).'</bdi>';
                 if (auth_ismanager()) $r_user .= ' <bdo dir="ltr">('.$r_info['ip'].')</bdo>';
@@ -180,7 +185,7 @@ abstract class Diff extends Ui
             $r_head = '<bdi><a class="wikilink1" href="'.$ml_or_wl($this->id,"rev=$r_rev").'">'
                 . $r_head_title.'</a></bdi>'.$head_separator.$r_user.' '.$r_sum;
         } elseif ($_rev = @filemtime($media_or_wikiFN($this->id))) {
-            $_info   = $changelog->getRevisionInfo($_rev);
+            $_info   = $this->changelog->getRevisionInfo($_rev);
             if ($_info['user']) {
                 $_user = '<bdi>'.editorinfo($_info['user']).'</bdi>';
                 if (auth_ismanager()) $_user .= ' <bdo dir="ltr">('.$_info['ip'].')</bdo>';

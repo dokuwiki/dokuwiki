@@ -27,6 +27,14 @@ class PageDiff extends Diff
 
         $this->preference['showIntro'] = true;
         $this->preference['difftype']  = null; // inline or sidebyside
+
+        $this->setChangeLog();
+    }
+
+    /** @inheritdoc */
+    protected function setChangeLog()
+    {
+        $this->changelog = new PageChangeLog($this->id);
     }
 
     /**
@@ -51,8 +59,7 @@ class PageDiff extends Diff
         parent::preProcess();
         if (!isset($this->old_rev, $this->new_rev)) {
             // no revision was given, compare previous to current
-            $changelog = new PageChangeLog($this->id);
-            $revs = $changelog->getRevisions(0, 1);
+            $revs = $this->changelog->getRevisions(0, 1);
             $this->old_rev = $revs[0];
             $this->new_rev = '';
 
@@ -212,16 +219,14 @@ class PageDiff extends Diff
             }
             $r_text = rawWiki($this->id, $r_rev);
 
-            $pagelog = new PageChangeLog($this->id);
-
             // get header of diff HTML
-            list($l_head, $r_head, $l_minor, $r_minor) = $this->buildDiffHead($pagelog, $l_rev, $r_rev);
+            list($l_head, $r_head, $l_minor, $r_minor) = $this->buildDiffHead($l_rev, $r_rev);
         }
         // build navigation
         $l_nav = '';
         $r_nav = '';
         if (!$this->text) {
-            list($l_nav, $r_nav) = $this->buildDiffNavigation($pagelog, $l_rev, $r_rev);
+            list($l_nav, $r_nav) = $this->buildDiffNavigation($l_rev, $r_rev);
         }
 
         return array(
@@ -278,7 +283,7 @@ class PageDiff extends Diff
      * @param int           $r_rev   right revision timestamp
      * @return string[] html of left and right navigation elements
      */
-    protected function buildDiffNavigation($pagelog, $l_rev, $r_rev)
+    protected function buildDiffNavigation($l_rev, $r_rev)
     {
         global $INFO;
 
@@ -293,14 +298,14 @@ class PageDiff extends Diff
         }
 
         //retrieve revisions with additional info
-        list($l_revs, $r_revs) = $pagelog->getRevisionsAround($l_rev, $r_rev);
+        list($l_revs, $r_revs) = $this->changelog->getRevisionsAround($l_rev, $r_rev);
         $l_revisions = array();
         if (!$l_rev) {
             //no left revision given, add dummy
             $l_revisions[0]= array('label' => '', 'attrs' => []);
         }
         foreach ($l_revs as $rev) {
-            $info = $pagelog->getRevisionInfo($rev);
+            $info = $this->changelog->getRevisionInfo($rev);
             $l_revisions[$rev] = array(
                 'label' => dformat($info['date']) .' '. editorinfo($info['user'], true) .' '. $info['sum'],
                 'attrs' => ['title' => $rev],
@@ -313,7 +318,7 @@ class PageDiff extends Diff
             $r_revisions[0] = array('label' => '', 'attrs' => []);
         }
         foreach ($r_revs as $rev) {
-            $info = $pagelog->getRevisionInfo($rev);
+            $info = $this->changelog->getRevisionInfo($rev);
             $r_revisions[$rev] = array(
                 'label' => dformat($info['date']) .' '. editorinfo($info['user'], true) .' '. $info['sum'],
                 'attrs' => ['title' => $rev],
@@ -383,7 +388,7 @@ class PageDiff extends Diff
         $r_nav .= $form->toHTML();
         //move forward
         if ($r_next) {
-            if ($pagelog->isCurrentRevision($r_next)) {
+            if ($this->changelog->isCurrentRevision($r_next)) {
                 //last revision is diff with current page
                 $r_nav .= $this->diffViewlink('difflastrev', $l_rev);
             } else {

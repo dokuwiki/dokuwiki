@@ -25,6 +25,14 @@ class MediaDiff extends Diff
         $this->preference['fromAjax'] = false; // see doluwiki\Ajax::callMediadiff()
         $this->preference['showIntro'] = false;
         $this->preference['difftype'] = null;  // both, opacity or portions.
+
+        $this->setChangeLog();
+    }
+
+    /** @inheritdoc */
+    protected function setChangeLog()
+    {
+        $this->changelog = new MediaChangeLog($this->id);
     }
 
     /** @inheritdoc */
@@ -33,8 +41,7 @@ class MediaDiff extends Diff
         parent::preProcess();
         if (!isset($this->old_rev, $this->new_rev)) {
             // no revision was given, compare previous to current
-            $changelog = new MediaChangeLog($this->id);
-            $revs = $changelog->getRevisions(0, 1);
+            $revs = $this->changelog->getRevisions(0, 1);
             $this->old_rev = file_exists(mediaFN($this->id, $revs[0])) ? $revs[0] : '';
             $this->new_rev = '';
         }
@@ -225,9 +232,7 @@ class MediaDiff extends Diff
      */
     protected function showFileDiff($l_rev, $r_rev, $l_meta, $r_meta, $auth)
     {
-        $medialog = new MediaChangeLog($this->id);
-
-        list($l_head, $r_head) = $this->buildDiffHead($medialog, $l_rev, $r_rev);
+        list($l_head, $r_head) = $this->buildDiffHead($l_rev, $r_rev);
 
         echo '<div class="table">';
         echo '<table>';
