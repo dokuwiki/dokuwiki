@@ -26,7 +26,7 @@ class PageDiff extends Diff
         $this->id = isset($id) ? $id : $INFO['id'];
 
         $this->preference['showIntro'] = true;
-        $this->preference['difftype']  = null; // inline or sidebyside
+        $this->preference['difftype']  = null; // diff view type: inline or sidebyside
 
         $this->setChangeLog();
     }
@@ -77,13 +77,13 @@ class PageDiff extends Diff
      *
      * @return void
      */
-    public function show($difftype = null)
+    public function show()
     {
        // determine left and right revision
         $this->preProcess();
         [$l_rev, $r_rev] = [$this->old_rev, $this->new_rev];
 
-       // determine html diff view components
+       // build html diff view components
         list(
             $l_minor, $r_minor,
             $l_head,  $r_head,
@@ -91,67 +91,64 @@ class PageDiff extends Diff
             $l_nav,   $r_nav,
         ) = $this->buildDiffViewComponents($l_rev, $r_rev);
 
-        // determine requested diff view type
-        $difftype = $this->getDiffType($difftype);
-     // $difftype = $this->preference['difftype'] ?? get_doku_pref('difftype', $mode);;
+        // create difference engine object
+        $Difference = new \Diff(explode("\n", $l_text), explode("\n", $r_text));
 
         // display intro
         if ($this->preference['showIntro']) echo p_locale_xhtml('diff');
 
         // print form to choose diff view type, and exact url reference to the view
         if (!$this->text) {
-            $this->showDiffViewSelector($l_rev, $r_rev, $difftype);
+            $this->showDiffViewSelector($l_rev, $r_rev);
         }
 
-        /*
-         * Display diff view table
-         */
+        // display diff view table
         print '<div class="table">';
-        print '<table class="diff diff_'. $difftype .'">';
+        print '<table class="diff diff_'.$this->preference['difftype'] .'">';
 
         //navigation and header
-        if ($difftype == 'inline') {
-            if (!$this->text) {
+        switch ($this->preference['difftype']) {
+            case 'inline':
+                if (!$this->text) {
+                    print '<tr>'
+                        . '<td class="diff-lineheader">-</td>'
+                        . '<td class="diffnav">'. $l_nav .'</td>'
+                        . '</tr>';
+                    print '<tr>'
+                        . '<th class="diff-lineheader">-</th>'
+                        . '<th '. $l_minor .'>'. $l_head .'</th>'
+                        .'</tr>';
+                }
                 print '<tr>'
-                    . '<td class="diff-lineheader">-</td>'
-                    . '<td class="diffnav">'. $l_nav .'</td>'
-                    . '</tr>';
-                print '<tr>'
-                    . '<th class="diff-lineheader">-</th>'
-                    . '<th '. $l_minor .'>'. $l_head .'</th>'
+                    . '<td class="diff-lineheader">+</td>'
+                    . '<td class="diffnav">'. $r_nav .'</td>'
                     .'</tr>';
-            }
-            print '<tr>'
-                . '<td class="diff-lineheader">+</td>'
-                . '<td class="diffnav">'. $r_nav .'</td>'
-                .'</tr>';
-            print '<tr>'
-                . '<th class="diff-lineheader">+</th>'
-                . '<th '. $r_minor .'>'. $r_head .'</th>'
-                . '</tr>';
-        } else {
-            if (!$this->text) {
                 print '<tr>'
-                    . '<td colspan="2" class="diffnav">'. $l_nav .'</td>'
-                    . '<td colspan="2" class="diffnav">'. $r_nav .'</td>'
+                    . '<th class="diff-lineheader">+</th>'
+                    . '<th '. $r_minor .'>'. $r_head .'</th>'
                     . '</tr>';
-            }
-            print '<tr>'
-                . '<th colspan="2" '. $l_minor .'>'. $l_head .'</th>'
-                . '<th colspan="2" '. $r_minor .'>'. $r_head .'</th>'
-                . '</tr>';
+                // create formatter object
+                $DiffFormatter = new \InlineDiffFormatter();
+                break;
+
+            case 'sidebyside':
+            default:
+                if (!$this->text) {
+                    print '<tr>'
+                        . '<td colspan="2" class="diffnav">'. $l_nav .'</td>'
+                        . '<td colspan="2" class="diffnav">'. $r_nav .'</td>'
+                        . '</tr>';
+                }
+                print '<tr>'
+                    . '<th colspan="2" '. $l_minor .'>'. $l_head .'</th>'
+                    . '<th colspan="2" '. $r_minor .'>'. $r_head .'</th>'
+                    . '</tr>';
+                // create formatter object
+                $DiffFormatter = new \TableDiffFormatter();
+                break;
         }
 
-        // create difference engine object and the formatter
-        $Difference = new \Diff(explode("\n", $l_text), explode("\n", $r_text));
-
-        if ($difftype == 'inline') {
-            $DiffFormatter = new \InlineDiffFormatter();
-        } else {
-            $DiffFormatter = new \TableDiffFormatter();
-        }
-
-        //diff view
+        // output formatted difference
         print $this->insertSoftbreaks($DiffFormatter->format($Difference));
 
         print '</table>';
@@ -159,33 +156,7 @@ class PageDiff extends Diff
     }
 
     /**
-     * Determine requested diff view type for page
-     *
-     * @param string $mode  diff view type (inline or sidebyside)
-     * @return string
-     */
-    protected function getDiffType($mode = null)
-    {
-        global $INPUT;
-        global $INFO;
-        $difftype =& $this->preference['difftype'];
-
-        if (!isset($mode)) {
-            // retrieve requested $difftype or read preference from DokuWiki cookie
-            $difftype = $INPUT->str('difftype') ?: get_doku_pref('difftype', $mode);
-            if (empty($difftype)) {
-                $difftype = $INFO['ismobile'] ? 'inline' : 'sidebyside';
-            }
-        } elseif (in_array($mode, ['inline', 'sidebyside'])) {
-            $difftype = $mode;
-        } else {
-            $difftype = 'sidebyside';
-        }
-        return $this->preference['difftype'];
-    }
-
-    /**
-     * Determine html diff view components
+     * Build html diff view components
      *
      * @param int $l_rev  revision timestamp of left side
      * @param int $r_rev  revision timestamp of right side
@@ -242,11 +213,13 @@ class PageDiff extends Diff
      *
      * @param int $l_rev  revision timestamp of left side
      * @param int $r_rev  revision timestamp of right side
-     * @param string $difftype  diff view type for page (inline or sidebyside)
      */
-    protected function showDiffViewSelector($l_rev, $r_rev, $difftype)
+    protected function showDiffViewSelector($l_rev, $r_rev)
     {
         global $INFO, $lang;
+
+        // diff view type: inline or sidebyside
+        if (!isset($this->preference['difftype'])) $this->preference['difftype'] = 'sidebyside';
 
         echo '<div class="diffoptions group">';
 
@@ -261,7 +234,7 @@ class PageDiff extends Diff
                      'inline' => $lang['diff_inline']
         );
         $input = $form->addDropdown('difftype', $options, $lang['diff_type'])
-            ->val($difftype)->addClass('quickselect');
+            ->val($this->preference['difftype'])->addClass('quickselect');
         $input->useInput(false); // inhibit prefillInput() during toHTML() process
         $form->addButton('do[diff]', 'Go')->attr('type','submit');
         echo $form->toHTML();
@@ -356,7 +329,7 @@ class PageDiff extends Diff
         //dropdown
         $form = new Form(['action' => wl()]);
         $form->setHiddenField('id', $this->id);
-        $form->setHiddenField('difftype', $this->difftype);
+        $form->setHiddenField('difftype', $this->preference['difftype']);
         $form->setHiddenField('rev2[1]', $r_rev ?: 'current');
         $form->setHiddenField('do', 'diff');
         $input = $form->addDropdown('rev2[0]', $l_revisions)->val($l_rev ?: 'current')->addClass('quickselect');
@@ -380,7 +353,7 @@ class PageDiff extends Diff
         $form = new Form(['action' => wl()]);
         $form->setHiddenField('id', $this->id);
         $form->setHiddenField('rev2[0]', $l_rev ?: 'current');
-        $form->setHiddenField('difftype', $this->difftype);
+        $form->setHiddenField('difftype', $this->preference['difftype']);
         $form->setHiddenField('do', 'diff');
         $input = $form->addDropdown('rev2[1]', $r_revisions)->val($r_rev ?: 'current')->addClass('quickselect');
         $input->useInput(false); // inhibit prefillInput() during toHTML() process

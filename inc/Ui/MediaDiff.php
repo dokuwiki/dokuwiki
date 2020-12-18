@@ -24,7 +24,7 @@ class MediaDiff extends Diff
 
         $this->preference['fromAjax'] = false; // see doluwiki\Ajax::callMediadiff()
         $this->preference['showIntro'] = false;
-        $this->preference['difftype'] = null;  // both, opacity or portions.
+        $this->preference['difftype'] = null;  // diff view type for media: both, opacity or portions
 
         $this->setChangeLog();
     }
@@ -51,9 +51,8 @@ class MediaDiff extends Diff
      * Shows difference between two revisions of media
      *
      * @author Kate Arzamastseva <pshns@ukr.net>
-     * @param string $difftype diff view type for media (both, opacity or portions)
      */
-    public function show($difftype = null)
+    public function show()
     {
         global $conf;
 
@@ -103,7 +102,9 @@ class MediaDiff extends Diff
         }
 
         // determine requested diff view type
-        $difftype = $this->getDiffType($difftype);
+        if (!$is_img) {
+            $this->preference['difftype'] = 'both';
+        }
 
         // display intro
         if ($this->preference['showIntro']) echo p_locale_xhtml('diff');
@@ -114,43 +115,20 @@ class MediaDiff extends Diff
             echo '<div id="mediamanager__diff" >';
         }
 
-        if ($is_img) {
-            switch ($difftype) {
-                case 'opacity':
-                case 'portions':
-                    $this->showImageDiff($l_rev, $r_rev, $l_size, $r_size, $difftype);
-                    break;
-                case 'both':
-                default:
-                    $this->showFileDiff($l_rev, $r_rev, $l_meta, $r_meta, $auth);
-                    break;
-            }
-        } else {
-            $this->showFileDiff($l_rev, $r_rev, $l_meta, $r_meta, $auth);
+        switch ($this->preference['difftype']) {
+            case 'opacity':
+            case 'portions':
+                $this->showImageDiff($l_rev, $r_rev, $l_size, $r_size, $difftype);
+                break;
+            case 'both':
+            default:
+                $this->showFileDiff($l_rev, $r_rev, $l_meta, $r_meta, $auth);
+                break;
         }
 
         if ($is_img && !$this->preference['fromAjax']) {
             echo '</div>';
         }
-    }
-
-    /**
-     * Determine requested diff view type for media
-     *
-     * @param string $mode  diff view type (both, opacity or portions)
-     * @return string
-     */
-    protected function getDiffType($mode = null)
-    {
-        global $INPUT;
-        $difftype =& $this->preference['difftype'];
-
-        if (!isset($mode)) {
-            $difftype = $INPUT->str('difftype');
-        } elseif (in_array($mode, ['both', 'opacity', 'portions'])) {
-            $difftype = $mode;
-        }
-        return $this->preference['difftype'];
     }
 
     /**
@@ -187,7 +165,7 @@ class MediaDiff extends Diff
      * @param int    $r_rev   revision timestamp, or empty string
      * @param array  $l_size  array with width and height
      * @param array  $r_size  array with width and height
-     * @param string $type    diff type: opacity or portions
+     * @param string $type    diff view type: opacity or portions
      */
     protected function showImageDiff($l_rev, $r_rev, $l_size, $r_size, $type = null)
     {
