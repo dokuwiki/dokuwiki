@@ -24,7 +24,7 @@ class MediaDiff extends Diff
 
         $this->preference['fromAjax'] = false; // see doluwiki\Ajax::callMediadiff()
         $this->preference['showIntro'] = false;
-        $this->preference['difftype'] = null;  // diff view type for media: both, opacity or portions
+        $this->preference['difftype'] = 'both';  // media diff view type: both, opacity or portions
 
         $this->setChangeLog();
     }
@@ -111,7 +111,7 @@ class MediaDiff extends Diff
 
         // print form to choose diff view type
         if ($is_img && !$this->preference['fromAjax']) {
-            $this->showDiffViewSelector($l_rev, $r_rev);
+            $this->showDiffViewSelector();
             echo '<div id="mediamanager__diff" >';
         }
 
@@ -134,12 +134,11 @@ class MediaDiff extends Diff
     /**
      * Print form to choose diff view type
      * the dropdown is to be added through JavaScript, see lib/scripts/media.js
-     *
-     * @param int $l_rev  revision timestamp of left side
-     * @param int $r_rev  revision timestamp of right side
      */
-    protected function showDiffViewSelector($l_rev, $r_rev)
+    protected function showDiffViewSelector()
     {
+        echo '<div class="diffoptions group">';
+
         $form = new Form([
             'id' => 'mediamanager__form_diffview',
             'action' => media_managerURL([], '&'),
@@ -149,10 +148,12 @@ class MediaDiff extends Diff
         $form->addTagOpen('div')->addClass('no');
         $form->setHiddenField('sectok', null);
         $form->setHiddenField('mediado', 'diff');
-        $form->setHiddenField('rev2[0]', $l_rev ?: 'current');
-        $form->setHiddenField('rev2[1]', $r_rev ?: 'current');
+        $form->setHiddenField('rev2[0]', $this->old_rev ?: 'current');
+        $form->setHiddenField('rev2[1]', $this->new_rev ?: 'current');
         $form->addTagClose('div');
         echo $form->toHTML();
+
+        echo '</div>'; // .diffoptions
     }
 
     /**

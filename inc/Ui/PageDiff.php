@@ -26,7 +26,7 @@ class PageDiff extends Diff
         $this->id = isset($id) ? $id : $INFO['id'];
 
         $this->preference['showIntro'] = true;
-        $this->preference['difftype']  = null; // diff view type: inline or sidebyside
+        $this->preference['difftype'] = 'sidebyside'; // diff view type: inline or sidebyside
 
         $this->setChangeLog();
     }
@@ -99,7 +99,7 @@ class PageDiff extends Diff
 
         // print form to choose diff view type, and exact url reference to the view
         if (!$this->text) {
-            $this->showDiffViewSelector($l_rev, $r_rev);
+            $this->showDiffViewSelector();
         }
 
         // display diff view table
@@ -156,6 +156,40 @@ class PageDiff extends Diff
     }
 
     /**
+     * Print form to choose diff view type, and exact url reference to the view
+     */
+    protected function showDiffViewSelector()
+    {
+        global $INFO, $lang;
+
+        echo '<div class="diffoptions group">';
+
+        // create the form to select difftype
+        $form = new Form(['action' => wl()]);
+        $form->setHiddenField('id', $this->id);
+        $form->setHiddenField('rev2[0]', $this->old_rev ?: 'current');
+        $form->setHiddenField('rev2[1]', $this->new_rev ?: 'current');
+        $form->setHiddenField('do', 'diff');
+        $options = array(
+                     'sidebyside' => $lang['diff_side'],
+                     'inline' => $lang['diff_inline']
+        );
+        $input = $form->addDropdown('difftype', $options, $lang['diff_type'])
+            ->val($this->preference['difftype'])
+            ->addClass('quickselect');
+        $input->useInput(false); // inhibit prefillInput() during toHTML() process
+        $form->addButton('do[diff]', 'Go')->attr('type','submit');
+        echo $form->toHTML();
+
+        echo '<p>';
+        // link to exactly this view FS#2835
+        echo $this->diffViewlink('difflink', $l_rev, ($r_rev ?: $INFO['currentrev']));
+        echo '</p>';
+
+        echo '</div>'; // .diffoptions
+    }
+
+    /**
      * Build html diff view components
      *
      * @param int $l_rev  revision timestamp of left side
@@ -172,14 +206,14 @@ class PageDiff extends Diff
 
         if ($this->text) { // compare text to the most current revision
             $r_minor = '';
-            $l_text = rawWiki($this->id, '');
             $l_head = '<a class="wikilink1" href="'. wl($this->id) .'">'
                 . $this->id .' '. dformat((int) @filemtime(wikiFN($this->id))) .'</a> '
                 . $lang['current'];
+            $l_text = rawWiki($this->id, '');
 
             $l_minor = '';
-            $r_text = cleanText($this->text);
             $r_head = $lang['yours'];
+            $r_text = cleanText($this->text);
 
         } else {
             // when both revisions are empty then the page was created just now
@@ -191,7 +225,10 @@ class PageDiff extends Diff
             $r_text = rawWiki($this->id, $r_rev);
 
             // get header of diff HTML
-            list($l_head, $r_head, $l_minor, $r_minor) = $this->buildDiffHead($l_rev, $r_rev);
+            list(
+                $l_head,  $r_head,
+                $l_minor, $r_minor,
+            ) = $this->buildDiffHead($l_rev, $r_rev);
         }
         // build navigation
         $l_nav = '';
@@ -207,46 +244,6 @@ class PageDiff extends Diff
             $l_nav,   $r_nav,
         );
     }
-
-    /**
-     * Print form to choose diff view type, and exact url reference to the view
-     *
-     * @param int $l_rev  revision timestamp of left side
-     * @param int $r_rev  revision timestamp of right side
-     */
-    protected function showDiffViewSelector($l_rev, $r_rev)
-    {
-        global $INFO, $lang;
-
-        // diff view type: inline or sidebyside
-        if (!isset($this->preference['difftype'])) $this->preference['difftype'] = 'sidebyside';
-
-        echo '<div class="diffoptions group">';
-
-        // create the form to select difftype
-        $form = new Form(['action' => wl()]);
-        $form->setHiddenField('id', $this->id);
-        $form->setHiddenField('rev2[0]', $l_rev ?: 'current');
-        $form->setHiddenField('rev2[1]', $r_rev ?: 'current');
-        $form->setHiddenField('do', 'diff');
-        $options = array(
-                     'sidebyside' => $lang['diff_side'],
-                     'inline' => $lang['diff_inline']
-        );
-        $input = $form->addDropdown('difftype', $options, $lang['diff_type'])
-            ->val($this->preference['difftype'])->addClass('quickselect');
-        $input->useInput(false); // inhibit prefillInput() during toHTML() process
-        $form->addButton('do[diff]', 'Go')->attr('type','submit');
-        echo $form->toHTML();
-
-        echo '<p>';
-        // link to exactly this view FS#2835
-        echo $this->diffViewlink('difflink', $l_rev, ($r_rev ?: $INFO['currentrev']));
-        echo '</p>';
-
-        echo '</div>'; // .diffoptions
-    }
-
 
     /**
      * Create html for revision navigation
