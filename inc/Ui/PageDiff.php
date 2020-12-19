@@ -25,6 +25,7 @@ class PageDiff extends Diff
         global $INFO;
         $this->id = isset($id) ? $id : $INFO['id'];
 
+        // init preference
         $this->preference['showIntro'] = true;
         $this->preference['difftype'] = 'sidebyside'; // diff view type: inline or sidebyside
 
@@ -103,30 +104,30 @@ class PageDiff extends Diff
         }
 
         // display diff view table
-        print '<div class="table">';
-        print '<table class="diff diff_'.$this->preference['difftype'] .'">';
+        echo '<div class="table">';
+        echo '<table class="diff diff_'.$this->preference['difftype'] .'">';
 
         //navigation and header
         switch ($this->preference['difftype']) {
             case 'inline':
                 if (!$this->text) {
-                    print '<tr>'
-                        . '<td class="diff-lineheader">-</td>'
-                        . '<td class="diffnav">'. $l_nav .'</td>'
-                        . '</tr>';
-                    print '<tr>'
-                        . '<th class="diff-lineheader">-</th>'
-                        . '<th '. $l_minor .'>'. $l_head .'</th>'
+                    echo '<tr>'
+                        .'<td class="diff-lineheader">-</td>'
+                        .'<td class="diffnav">'. $l_nav .'</td>'
+                        .'</tr>';
+                    echo '<tr>'
+                        .'<th class="diff-lineheader">-</th>'
+                        .'<th '. $l_minor .'>'. $l_head .'</th>'
                         .'</tr>';
                 }
-                print '<tr>'
-                    . '<td class="diff-lineheader">+</td>'
-                    . '<td class="diffnav">'. $r_nav .'</td>'
+                echo '<tr>'
+                    .'<td class="diff-lineheader">+</td>'
+                    .'<td class="diffnav">'. $r_nav .'</td>'
                     .'</tr>';
-                print '<tr>'
-                    . '<th class="diff-lineheader">+</th>'
-                    . '<th '. $r_minor .'>'. $r_head .'</th>'
-                    . '</tr>';
+                echo '<tr>'
+                    .'<th class="diff-lineheader">+</th>'
+                    .'<th '. $r_minor .'>'. $r_head .'</th>'
+                    .'</tr>';
                 // create formatter object
                 $DiffFormatter = new \InlineDiffFormatter();
                 break;
@@ -134,25 +135,25 @@ class PageDiff extends Diff
             case 'sidebyside':
             default:
                 if (!$this->text) {
-                    print '<tr>'
-                        . '<td colspan="2" class="diffnav">'. $l_nav .'</td>'
-                        . '<td colspan="2" class="diffnav">'. $r_nav .'</td>'
-                        . '</tr>';
+                    echo '<tr>'
+                        .'<td colspan="2" class="diffnav">'. $l_nav .'</td>'
+                        .'<td colspan="2" class="diffnav">'. $r_nav .'</td>'
+                        .'</tr>';
                 }
-                print '<tr>'
-                    . '<th colspan="2" '. $l_minor .'>'. $l_head .'</th>'
-                    . '<th colspan="2" '. $r_minor .'>'. $r_head .'</th>'
-                    . '</tr>';
+                echo '<tr>'
+                    .'<th colspan="2" '. $l_minor .'>'. $l_head .'</th>'
+                    .'<th colspan="2" '. $r_minor .'>'. $r_head .'</th>'
+                    .'</tr>';
                 // create formatter object
                 $DiffFormatter = new \TableDiffFormatter();
                 break;
         }
 
         // output formatted difference
-        print $this->insertSoftbreaks($DiffFormatter->format($Difference));
+        echo $this->insertSoftbreaks($DiffFormatter->format($Difference));
 
-        print '</table>';
-        print '</div>';
+        echo '</table>';
+        echo '</div>';
     }
 
     /**
@@ -248,7 +249,6 @@ class PageDiff extends Diff
     /**
      * Create html for revision navigation
      *
-     * @param PageChangeLog $pagelog changelog object of current page
      * @param int           $l_rev   left revision timestamp
      * @param int           $r_rev   right revision timestamp
      * @return string[] html of left and right navigation elements
@@ -269,6 +269,7 @@ class PageDiff extends Diff
 
         //retrieve revisions with additional info
         list($l_revs, $r_revs) = $this->changelog->getRevisionsAround($l_rev, $r_rev);
+
         $l_revisions = array();
         if (!$l_rev) {
             //no left revision given, add dummy
@@ -277,11 +278,17 @@ class PageDiff extends Diff
         foreach ($l_revs as $rev) {
             $info = $this->changelog->getRevisionInfo($rev);
             $l_revisions[$rev] = array(
-                'label' => dformat($info['date']) .' '. editorinfo($info['user'], true) .' '. $info['sum'],
+                'label' => implode(' ', array(
+                            dformat($info['date']),
+                            editorinfo($info['user'], true),
+                            $info['sum'],
+                           )),
                 'attrs' => ['title' => $rev],
             );
-            if ($r_rev ? $rev >= $r_rev : false) $l_revisions[$rev]['attrs']['disabled'] = 'disabled';
+            if ($r_rev ? $rev >= $r_rev : false)
+                $l_revisions[$rev]['attrs']['disabled'] = 'disabled';
         }
+
         $r_revisions = array();
         if (!$r_rev) {
             //no right revision given, add dummy
@@ -290,10 +297,15 @@ class PageDiff extends Diff
         foreach ($r_revs as $rev) {
             $info = $this->changelog->getRevisionInfo($rev);
             $r_revisions[$rev] = array(
-                'label' => dformat($info['date']) .' '. editorinfo($info['user'], true) .' '. $info['sum'],
+                'label' => implode(' ', array(
+                            dformat($info['date']),
+                            editorinfo($info['user'], true),
+                            $info['sum'],
+                           )),
                 'attrs' => ['title' => $rev],
             );
-            if ($rev <= $l_rev) $r_revisions[$rev]['attrs']['disabled'] = 'disabled';
+            if ($rev <= $l_rev)
+                $r_revisions[$rev]['attrs']['disabled'] = 'disabled';
         }
 
         //determine previous/next revisions
@@ -306,11 +318,7 @@ class PageDiff extends Diff
             $r_next = $r_revs[$r_index - 1];
         } else {
             //removed page
-            if ($l_next) {
-                $r_prev = $r_revs[0];
-            } else {
-                $r_prev = null;
-            }
+            $r_prev = ($l_next) ? $r_revs[0] : null;
             $r_next = null;
         }
 
@@ -329,7 +337,8 @@ class PageDiff extends Diff
         $form->setHiddenField('difftype', $this->preference['difftype']);
         $form->setHiddenField('rev2[1]', $r_rev ?: 'current');
         $form->setHiddenField('do', 'diff');
-        $input = $form->addDropdown('rev2[0]', $l_revisions)->val($l_rev ?: 'current')->addClass('quickselect');
+        $input = $form->addDropdown('rev2[0]', $l_revisions)
+            ->val($l_rev ?: 'current')->addClass('quickselect');
         $input->useInput(false); // inhibit prefillInput() during toHTML() process
         $form->addButton('do[diff]', 'Go')->attr('type','submit');
         $l_nav .= $form->toHTML();
@@ -352,7 +361,8 @@ class PageDiff extends Diff
         $form->setHiddenField('rev2[0]', $l_rev ?: 'current');
         $form->setHiddenField('difftype', $this->preference['difftype']);
         $form->setHiddenField('do', 'diff');
-        $input = $form->addDropdown('rev2[1]', $r_revisions)->val($r_rev ?: 'current')->addClass('quickselect');
+        $input = $form->addDropdown('rev2[1]', $r_revisions)
+            ->val($r_rev ?: 'current')->addClass('quickselect');
         $input->useInput(false); // inhibit prefillInput() during toHTML() process
         $form->addButton('do[diff]', 'Go')->attr('type','submit');
         $r_nav .= $form->toHTML();
@@ -394,9 +404,12 @@ class PageDiff extends Diff
                 'difftype' => $this->preference['difftype'],
             );
         }
-        return  '<a class="'. $linktype .'" href="'. wl($this->id, $urlparam) .'" title="'. $lang[$linktype] .'">'
-              . '<span>'. $lang[$linktype] .'</span>'
-              . '</a>';
+        $attr = array(
+            'class' => $linktype,
+            'href'  => wl($this->id, $urlparam),
+            'title' => $lang[$linktype],
+        );
+        return '<a '. buildAttributes($attr) .'><span>'. $lang[$linktype] .'</span></a>';
     }
 
 

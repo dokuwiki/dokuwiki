@@ -22,6 +22,7 @@ class MediaDiff extends Diff
     {
         $this->id = $id;
 
+        // init preference
         $this->preference['fromAjax'] = false; // see doluwiki\Ajax::callMediadiff()
         $this->preference['showIntro'] = false;
         $this->preference['difftype'] = 'both';  // media diff view type: both, opacity or portions
@@ -162,8 +163,8 @@ class MediaDiff extends Diff
      *
      * @author Kate Arzamastseva <pshns@ukr.net>
      *
-     * @param int    $l_rev   revision timestamp, or empty string
-     * @param int    $r_rev   revision timestamp, or empty string
+     * @param string|int $l_rev revision timestamp, or empty string
+     * @param string|int $r_rev revision timestamp, or empty string
      * @param array  $l_size  array with width and height
      * @param array  $r_size  array with width and height
      * @param string $type    diff view type: opacity or portions

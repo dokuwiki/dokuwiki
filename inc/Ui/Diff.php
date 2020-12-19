@@ -66,13 +66,13 @@ abstract class Diff extends Ui
     public function preference($prefs = null, $value = null)
     {
         // set
-        if (is_array($prefs)) {
+        if (is_string($prefs) && isset($value)) {
+            $this->preference[$prefs] = $value;
+            return $this;
+        } elseif (is_array($prefs)) {
             foreach ($prefs as $name => $value) {
                 $this->preference[$name] = $value;
             }
-            return $this;
-        } elseif (is_string($prefs) && isset($value)) {
-            $this->preference[$prefs] = $value;
             return $this;
         }
         // get
@@ -153,15 +153,15 @@ abstract class Diff extends Ui
         if (!$l_rev) {
             $l_head = '&mdash;';
         } else {
-            $l_info   = $this->changelog->getRevisionInfo($l_rev);
+            $l_info = $this->changelog->getRevisionInfo($l_rev);
             if ($l_info['user']) {
                 $l_user = '<bdi>'.editorinfo($l_info['user']).'</bdi>';
                 if (auth_ismanager()) $l_user .= ' <bdo dir="ltr">('.$l_info['ip'].')</bdo>';
             } else {
                 $l_user = '<bdo dir="ltr">'.$l_info['ip'].'</bdo>';
             }
-            $l_user  = '<span class="user">'.$l_user.'</span>';
-            $l_sum   = ($l_info['sum']) ? '<span class="sum"><bdi>'.hsc($l_info['sum']).'</bdi></span>' : '';
+            $l_user = '<span class="user">'.$l_user.'</span>';
+            $l_sum  = ($l_info['sum']) ? '<span class="sum"><bdi>'.hsc($l_info['sum']).'</bdi></span>' : '';
             if ($l_info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) $l_minor = 'class="minor"';
 
             $l_head_title = ($media) ? dformat($l_rev) : $this->id.' ['.dformat($l_rev).']';
@@ -171,7 +171,7 @@ abstract class Diff extends Ui
 
         // right side
         if ($r_rev) {
-            $r_info   = $this->changelog->getRevisionInfo($r_rev);
+            $r_info  = $this->changelog->getRevisionInfo($r_rev);
             if ($r_info['user']) {
                 $r_user = '<bdi>'.editorinfo($r_info['user']).'</bdi>';
                 if (auth_ismanager()) $r_user .= ' <bdo dir="ltr">('.$r_info['ip'].')</bdo>';
@@ -186,7 +186,7 @@ abstract class Diff extends Ui
             $r_head = '<bdi><a class="wikilink1" href="'.$ml_or_wl($this->id,"rev=$r_rev").'">'
                 . $r_head_title.'</a></bdi>'.$head_separator.$r_user.' '.$r_sum;
         } elseif ($_rev = @filemtime($media_or_wikiFN($this->id))) {
-            $_info   = $this->changelog->getRevisionInfo($_rev);
+            $_info = $this->changelog->getRevisionInfo($_rev);
             if ($_info['user']) {
                 $_user = '<bdi>'.editorinfo($_info['user']).'</bdi>';
                 if (auth_ismanager()) $_user .= ' <bdo dir="ltr">('.$_info['ip'].')</bdo>';
