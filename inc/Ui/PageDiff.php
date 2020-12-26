@@ -60,12 +60,12 @@ class PageDiff extends Diff
         parent::preProcess();
         if (!isset($this->old_rev, $this->new_rev)) {
             // no revision was given, compare previous to current
-            $revs = $this->changelog->getRevisions(0, 1);
-            $this->old_rev = $revs[0];
+            $this->old_rev = $this->changelog->getRevisions(0, 1)[0];
             $this->new_rev = '';
 
-            global $REV;
-            $REV = $this->old_rev; // store revision back in $REV
+            global $INFO, $REV;
+            if ($this->id == $INFO['id'])
+               $REV = $this->old_rev; // store revision back in $REV
         }
     }
 
@@ -80,9 +80,20 @@ class PageDiff extends Diff
      */
     public function show()
     {
+        global $INFO;
+
        // determine left and right revision
-        $this->preProcess();
+        if (!isset($this->old_rev, $this->new_rev)) $this->preProcess();
         [$l_rev, $r_rev] = [$this->old_rev, $this->new_rev];
+
+       // determine the last revision, which is usually the timestamp of current page,
+       // however which might be the last revision if the page had removed.
+       if ($this->id == $INFO['id']) {
+           $this->last_rev = $INFO['currentrev'] ?? $INFO['meta']['last_change']['date'] ?? 0;
+       } else {
+           $this->last_rev = $this->changelog->getRevisions(-1, 1)[0] // empty array for removed page
+                           ?: $this->changelog->getRevisions(0, 1)[0];
+       }
 
        // build html diff view components
         list(
@@ -182,10 +193,13 @@ class PageDiff extends Diff
         $form->addButton('do[diff]', 'Go')->attr('type','submit');
         echo $form->toHTML();
 
-        echo '<p>';
-        // link to exactly this view FS#2835
-        echo $this->diffViewlink('difflink', $l_rev, ($r_rev ?: $INFO['currentrev']));
-        echo '</p>';
+        // show exact url reference to the view
+        if ($this->id == $INFO['id']) {
+            echo '<p>';
+            // link to exactly this view FS#2835
+            echo $this->diffViewlink('difflink', $this->old_rev, ($this->new_rev ?: $this->last_rev));
+            echo '</p>';
+        }
 
         echo '</div>'; // .diffoptions
     }
@@ -260,11 +274,7 @@ class PageDiff extends Diff
         // last timestamp is not in changelog, retrieve timestamp from metadata
         // note: when page is removed, the metadata timestamp is zero
         if (!$r_rev) {
-            if (isset($INFO['meta']['last_change']['date'])) {
-                $r_rev = $INFO['meta']['last_change']['date'];
-            } else {
-                $r_rev = 0;
-            }
+            $r_rev = $this->last_rev;
         }
 
         //retrieve revisions with additional info
@@ -273,7 +283,7 @@ class PageDiff extends Diff
         $l_revisions = array();
         if (!$l_rev) {
             //no left revision given, add dummy
-            $l_revisions[0]= array('label' => '', 'attrs' => []);
+            $l_revisions[0] = array('label' => '', 'attrs' => []);
         }
         foreach ($l_revs as $rev) {
             $info = $this->changelog->getRevisionInfo($rev);
@@ -406,7 +416,7 @@ class PageDiff extends Diff
         }
         $attr = array(
             'class' => $linktype,
-            'href'  => wl($this->id, $urlparam),
+            'href'  => wl($this->id, $urlparam, true, '&'),
             'title' => $lang[$linktype],
         );
         return '<a '. buildAttributes($attr) .'><span>'. $lang[$linktype] .'</span></a>';

@@ -200,7 +200,7 @@ abstract class Diff extends Ui
             $r_head_title = ($media) ? dformat($_rev) : $this->id.' ['.dformat($_rev).']';
             $r_head  = '<bdi><a class="wikilink1" href="'.$ml_or_wl($this->id).'">'
                 . $r_head_title.'</a></bdi> '.'('.$lang['current'].')'.$head_separator.$_user.' '.$_sum;
-        }else{
+        } else {
             $r_head = '&mdash; ('.$lang['current'].')';
         }
 

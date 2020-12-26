@@ -63,7 +63,7 @@ class MediaDiff extends Diff
         if ($auth < AUTH_READ || !$this->id || !$conf['mediarevisions']) return '';
 
        // determine left and right revision
-        $this->preProcess();
+        if (!isset($this->old_rev, $this->new_rev)) $this->preProcess();
         [$l_rev, $r_rev] = [$this->old_rev, $this->new_rev];
 
         // prepare event data
