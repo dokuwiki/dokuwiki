@@ -68,7 +68,7 @@ abstract class Revisions extends Ui
      * @param array $info  Revision info structure of a page or media file
      * @return objRevInfo object (anonymous class)
      */
-    protected function getObjRevInfo(array $info)
+    public function getObjRevInfo(array $info)
     {
         return new class ($info) // anonymous class (objRevInfo)
         {

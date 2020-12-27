@@ -17,8 +17,9 @@ abstract class Diff extends Ui
     protected $id;  // page id or media id
 
     /* @var int */
-    protected $old_rev; // older revision, timestamp of left side
-    protected $new_rev; // newer revision, timestamp of right side
+    protected $old_rev;  // older revision, timestamp of left side
+    protected $new_rev;  // newer revision, timestamp of right side
+    protected $last_rev; // current revision, or last revision when it had removed
 
     /* @var array */
     protected $preference = [];
@@ -135,72 +136,64 @@ abstract class Diff extends Ui
         // detect PageDiff or MediaDiff
         switch (get_class($this->changelog)) {
             case PageChangeLog::class :
-                $media_or_wikiFN = 'wikiFN';
-                $ml_or_wl = 'wl';
-                $media = false;
+                $isMedia = false;
+                $ui = new PageRevisions($this->id);
                 break;
             case MediaChangeLog::class :
-                $media_or_wikiFN = 'mediaFN';
-                $ml_or_wl = 'ml';
-                $media = true;
+                $isMedia = true;
+                $ui = new MediaRevisions($this->id);
                 break;
         }
 
         $head_separator = ($this->preference['difftype'] === 'inline') ? ' ' : '<br />';
-        $l_minor = $r_minor = '';
+
+        // assign minor edit checker to the variable
+        $minor = function ($info) {
+            return ($info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'class="minor"' : '';
+        };
+
+        // assign link builder to the variable
+        $idToUrl = function ($id, $rev = '') use ($isMedia) {
+            return ($isMedia) ? ml($id, $rev) : wl($id, $rev);
+        };
+
+        // assign title builder to the variable
+        $idToTitle = function ($id, $rev = '') use ($isMedia) {
+            return ($isMedia) ? dformat($rev) : $id.' ['.dformat($rev).']';
+        };
 
         // left side
         if (!$l_rev) {
+            $l_minor = '';
             $l_head = '&mdash;';
         } else {
-            $l_info = $this->changelog->getRevisionInfo($l_rev);
-            if ($l_info['user']) {
-                $l_user = '<bdi>'.editorinfo($l_info['user']).'</bdi>';
-                if (auth_ismanager()) $l_user .= ' <bdo dir="ltr">('.$l_info['ip'].')</bdo>';
-            } else {
-                $l_user = '<bdo dir="ltr">'.$l_info['ip'].'</bdo>';
-            }
-            $l_user = '<span class="user">'.$l_user.'</span>';
-            $l_sum  = ($l_info['sum']) ? '<span class="sum"><bdi>'.hsc($l_info['sum']).'</bdi></span>' : '';
-            if ($l_info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) $l_minor = 'class="minor"';
+            $info = $this->changelog->getRevisionInfo($l_rev);
+            $objRevInfo = $ui->getObjRevInfo($info);
+            $l_minor = $minor($info);
+            $l_head = '<bdi><a class="wikilink1" href="'.$idToUrl($this->id, "rev=$l_rev").'">'
+                    .$idToTitle($this->id, $l_rev).'</a></bdi>'.$head_separator
+                    .$objRevInfo->editor().' '.$objRevInfo->editSummary();
 
-            $l_head_title = ($media) ? dformat($l_rev) : $this->id.' ['.dformat($l_rev).']';
-            $l_head = '<bdi><a class="wikilink1" href="'.$ml_or_wl($this->id,"rev=$l_rev").'">'
-                . $l_head_title.'</a></bdi>'.$head_separator.$l_user.' '.$l_sum;
         }
 
         // right side
         if ($r_rev) {
-            $r_info  = $this->changelog->getRevisionInfo($r_rev);
-            if ($r_info['user']) {
-                $r_user = '<bdi>'.editorinfo($r_info['user']).'</bdi>';
-                if (auth_ismanager()) $r_user .= ' <bdo dir="ltr">('.$r_info['ip'].')</bdo>';
-            } else {
-                $r_user = '<bdo dir="ltr">'.$r_info['ip'].'</bdo>';
-            }
-            $r_user = '<span class="user">'.$r_user.'</span>';
-            $r_sum  = ($r_info['sum']) ? '<span class="sum"><bdi>'.hsc($r_info['sum']).'</bdi></span>' : '';
-            if ($r_info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
-
-            $r_head_title = ($media) ? dformat($r_rev) : $this->id.' ['.dformat($r_rev).']';
-            $r_head = '<bdi><a class="wikilink1" href="'.$ml_or_wl($this->id,"rev=$r_rev").'">'
-                . $r_head_title.'</a></bdi>'.$head_separator.$r_user.' '.$r_sum;
-        } elseif ($_rev = @filemtime($media_or_wikiFN($this->id))) {
-            $_info = $this->changelog->getRevisionInfo($_rev);
-            if ($_info['user']) {
-                $_user = '<bdi>'.editorinfo($_info['user']).'</bdi>';
-                if (auth_ismanager()) $_user .= ' <bdo dir="ltr">('.$_info['ip'].')</bdo>';
-            } else {
-                $_user = '<bdo dir="ltr">'.$_info['ip'].'</bdo>';
-            }
-            $_user = '<span class="user">'.$_user.'</span>';
-            $_sum  = ($_info['sum']) ? '<span class="sum"><bdi>'.hsc($_info['sum']).'</span></bdi>' : '';
-            if ($_info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
-
-            $r_head_title = ($media) ? dformat($_rev) : $this->id.' ['.dformat($_rev).']';
-            $r_head  = '<bdi><a class="wikilink1" href="'.$ml_or_wl($this->id).'">'
-                . $r_head_title.'</a></bdi> '.'('.$lang['current'].')'.$head_separator.$_user.' '.$_sum;
+            $info  = $this->changelog->getRevisionInfo($r_rev);
+            $objRevInfo = $ui->getObjRevInfo($info);
+            $r_minor = $minor($info);
+            $r_head = '<bdi><a class="wikilink1" href="'.$idToUrl($this->id, "rev=$r_rev").'">'
+                    .$idToTitle($this->id, $r_rev).'</a></bdi>'.$head_separator
+                    .$objRevInfo->editor().' '.$objRevInfo->editSummary();
+        } elseif ($this->last_rev) {
+            $_rev = $this->last_rev;
+            $info = $this->changelog->getRevisionInfo($_rev);
+            $objRevInfo = $ui->getObjRevInfo($info);
+            $r_minor = $minor($info);
+            $r_head  = '<bdi><a class="wikilink1" href="'.$idToUrl($this->id).'">'
+                     .$idToTitle($this->id, $_rev).'</a></bdi> '.'('.$lang['current'].')'.$head_separator
+                     .$objRevInfo->editor().' '.$objRevInfo->editSummary();
         } else {
+            $r_minor = '';
             $r_head = '&mdash; ('.$lang['current'].')';
         }
 

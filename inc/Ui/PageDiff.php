@@ -91,8 +91,9 @@ class PageDiff extends Diff
        if ($this->id == $INFO['id']) {
            $this->last_rev = $INFO['currentrev'] ?? $INFO['meta']['last_change']['date'] ?? 0;
        } else {
-           $this->last_rev = $this->changelog->getRevisions(-1, 1)[0] // empty array for removed page
-                           ?: $this->changelog->getRevisions(0, 1)[0];
+           $last_rev = $this->changelog->getRevisions(-1, 1) // empty array for removed page
+                     ?: $this->changelog->getRevisions(0, 1);
+           $this->last_rev = count($last_rev) > 0 ? $last_rev[0] : 0;
        }
 
        // build html diff view components
