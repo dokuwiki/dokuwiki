@@ -21,7 +21,14 @@ class PageRevisions extends Revisions
     {
         global $INFO;
         if (!$id) $id = $INFO['id'];
+        $this->item = 'page';
         parent::__construct($id);
+    }
+
+    /** @inheritdoc */
+    protected function setChangeLog()
+    {
+        $this->changelog = new PageChangeLog($this->id);
     }
 
     /**
@@ -114,7 +121,11 @@ class PageRevisions extends Revisions
     {
         global $INFO, $conf;
 
-        $changelog = new PageChangeLog($this->id);
+        if ($this->id != $INFO['id']) {
+            return parent::getRevisions($first, $hasNext);
+        }
+
+        $changelog =& $this->changelog;
 
         $revisions = [];
 
@@ -127,41 +138,21 @@ class PageRevisions extends Revisions
             $first = 0;
             $revlist = $changelog->getRevisions($first, $conf['recent'] +1);
         }
-        if ($this->id == $INFO['id']) {
-            $exists = $INFO['exists'];
-            if ($first == 0 && $exists) {
-                // add current page as revision[0]
-                $revisions[] = array(
-                    'date' => $INFO['lastmod'],
-                    'ip'   => null,
-                    'type' => $INFO['meta']['last_change']['type'],
-                    'id'   => $INFO['id'],
-                    'user' => $INFO['editor'],
-                    'sum'  => $INFO['sum'],
-                    'extra' => null,
-                    'sizechange' => $INFO['meta']['last_change']['sizechange'],
-                    'current' => true,
-                );
-            }
-        } else {
-            $exists = file_exists(wikiFN($this->id));
-            if ($first == 0 && $exists) {
-                // add current page as revision[0]
-                $rev = filemtime(fullpath(wikiFN($this->id)));
-                $revinfo = $changelog->getRevisionInfo($rev) ?: array(
-                    'date' => $rev,
-                    'ip'   => null,
-                    'type' => null,
-                    'id'   => $this->id,
-                    'user' => null,
-                    'sum'  => null,
-                    'extra' => null,
-                    'sizechange' => null,
-                );
-                $revisions[] = $revinfo + array(
-                    'current' => true,
-                );
-            }
+        $exists = $INFO['exists'];
+        if ($first == 0 && $exists) {
+            // add current page as revision[0]
+            $revisions[] = array(
+                'date' => $INFO['lastmod'],
+                'ip'   => null,
+                'type' => $INFO['meta']['last_change']['type'],
+                'id'   => $INFO['id'],
+                'user' => $INFO['editor'],
+                'sum'  => $INFO['sum'],
+                'extra' => null,
+                'sizechange' => $INFO['meta']['last_change']['sizechange'],
+                'item' => $this->item,
+                'current' => true,
+            );
         }
 
         // decide if this is the last page or is there another one
@@ -173,7 +164,7 @@ class PageRevisions extends Revisions
 
         // append each revison info array to the revisions
         foreach ($revlist as $rev) {
-            $revisions[] = $changelog->getRevisionInfo($rev);
+            $revisions[] = $changelog->getRevisionInfo($rev) + array('item' => $this->item);
         }
         return $revisions;
     }

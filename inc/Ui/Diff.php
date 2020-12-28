@@ -2,9 +2,6 @@
 
 namespace dokuwiki\Ui;
 
-use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\ChangeLog\MediaChangeLog;
-
 /**
  * DokuWiki Diff Interface
  * parent class of PageDiff and MediaDiff
@@ -14,7 +11,8 @@ use dokuwiki\ChangeLog\MediaChangeLog;
 abstract class Diff extends Ui
 {
     /* @var string */
-    protected $id;  // page id or media id
+    protected $id;   // page id or media id
+    protected $item; // page or media
 
     /* @var int */
     protected $old_rev;  // older revision, timestamp of left side
@@ -133,13 +131,14 @@ abstract class Diff extends Ui
     {
         global $lang;
 
-        // detect PageDiff or MediaDiff
-        switch (get_class($this->changelog)) {
-            case PageChangeLog::class :
+        $changelog =& $this->changelog;
+
+        switch ($this->item) {
+            case 'page':
                 $isMedia = false;
                 $ui = new PageRevisions($this->id);
                 break;
-            case MediaChangeLog::class :
+            case 'media':
                 $isMedia = true;
                 $ui = new MediaRevisions($this->id);
                 break;
@@ -148,17 +147,12 @@ abstract class Diff extends Ui
         $head_separator = ($this->preference['difftype'] === 'inline') ? ' ' : '<br />';
 
         // assign minor edit checker to the variable
-        $minor = function ($info) {
-            return ($info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'class="minor"' : '';
-        };
-
-        // assign link builder to the variable
-        $idToUrl = function ($id, $rev = '') use ($isMedia) {
-            return ($isMedia) ? ml($id, $rev) : wl($id, $rev);
+        $isMinorEdit = function ($info) {
+            return ($info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT);
         };
 
         // assign title builder to the variable
-        $idToTitle = function ($id, $rev = '') use ($isMedia) {
+        $itemTitle = function ($id, $rev = '') use ($isMedia) {
             return ($isMedia) ? dformat($rev) : $id.' ['.dformat($rev).']';
         };
 
@@ -167,30 +161,32 @@ abstract class Diff extends Ui
             $l_minor = '';
             $l_head = '&mdash;';
         } else {
-            $info = $this->changelog->getRevisionInfo($l_rev);
+            $info = $changelog->getRevisionInfo($l_rev);
             $objRevInfo = $ui->getObjRevInfo($info);
-            $l_minor = $minor($info);
-            $l_head = '<bdi><a class="wikilink1" href="'.$idToUrl($this->id, "rev=$l_rev").'">'
-                    .$idToTitle($this->id, $l_rev).'</a></bdi>'.$head_separator
+            $l_minor = $isMinorEdit($info) ? ' class="minor"' : '';
+            $l_head = '<bdi>'
+                    .'<a class="wikilink1" href="'.$this->itemUrl($this->id, "rev=$l_rev").'">'
+                    .$itemTitle($this->id, $l_rev).'</a></bdi>'.$head_separator
                     .$objRevInfo->editor().' '.$objRevInfo->editSummary();
-
         }
 
         // right side
         if ($r_rev) {
-            $info  = $this->changelog->getRevisionInfo($r_rev);
+            $info  = $changelog->getRevisionInfo($r_rev);
             $objRevInfo = $ui->getObjRevInfo($info);
-            $r_minor = $minor($info);
-            $r_head = '<bdi><a class="wikilink1" href="'.$idToUrl($this->id, "rev=$r_rev").'">'
-                    .$idToTitle($this->id, $r_rev).'</a></bdi>'.$head_separator
+            $r_minor = $isMinorEdit($info) ? ' class="minor"' : '';
+            $r_head = '<bdi>'
+                    .'<a class="wikilink1" href="'.$this->itemUrl($this->id, "rev=$r_rev").'">'
+                    .$itemTitle($this->id, $r_rev).'</a></bdi>'.$head_separator
                     .$objRevInfo->editor().' '.$objRevInfo->editSummary();
         } elseif ($this->last_rev) {
             $_rev = $this->last_rev;
-            $info = $this->changelog->getRevisionInfo($_rev);
+            $info = $changelog->getRevisionInfo($_rev);
             $objRevInfo = $ui->getObjRevInfo($info);
-            $r_minor = $minor($info);
-            $r_head  = '<bdi><a class="wikilink1" href="'.$idToUrl($this->id).'">'
-                     .$idToTitle($this->id, $_rev).'</a></bdi> '.'('.$lang['current'].')'.$head_separator
+            $r_minor = $isMinorEdit($info) ? ' class="minor"' : '';
+            $r_head  = '<bdi>'
+                     .'<a class="wikilink1" href="'.$this->itemUrl($this->id).'">'
+                     .$itemTitle($this->id, $_rev).'</a></bdi> '.'('.$lang['current'].')'.$head_separator
                      .$objRevInfo->editor().' '.$objRevInfo->editSummary();
         } else {
             $r_minor = '';
@@ -198,6 +194,21 @@ abstract class Diff extends Ui
         }
 
         return array($l_head, $r_head, $l_minor, $r_minor);
+    }
+
+    /**
+     * item url generator
+     *
+     * @param string $id  page id or media id
+     * @param string|array $urlParameters  URL parameters, associative array recommended
+     * @return string
+     */
+    protected function itemUrl($id, $urlParameters = '')
+    {
+        switch ($this->item) {
+            case 'page':  return wl($id, $urlParameters, $absolute = false, '&');
+            case 'media': return ml($id, $urlParameters, $direct = true, '&', $absolute = false);
+        }
     }
 
 }

@@ -19,7 +19,14 @@ class MediaRevisions extends Revisions
      */
     public function __construct($id)
     {
+        $this->item = 'media';
         parent::__construct($id);
+    }
+
+    /** @inheritdoc */
+    protected function setChangeLog()
+    {
+        $this->changelog = new MediaChangeLog($this->id);
     }
 
     /**
@@ -98,66 +105,6 @@ class MediaRevisions extends Revisions
         print $this->navigation($first, $hasNext, function ($n) {
             return media_managerURL(['first' => $n], '&', false, true);
         });
-    }
-
-    /**
-     * Get revisions, and set correct pagenation parameters (first, hasNext)
-     *
-     * @param int  $first
-     * @param bool $hasNext
-     * @return array  revisions to be shown in a pagenated list
-     * @see also https://www.dokuwiki.org/devel:changelog
-     */
-    protected function getRevisions(&$first, &$hasNext)
-    {
-        global $conf;
-
-        $changelog = new MediaChangeLog($this->id);
-
-        $revisions = [];
-
-        /* we need to get one additional log entry to be able to
-         * decide if this is the last page or is there another one.
-         * see also Ui\Recent::getRecents()
-         */
-        $revlist = $changelog->getRevisions($first, $conf['recent'] +1);
-        if (count($revlist) == 0 && $first != 0) {
-            $first = 0;
-            $revlist = $changelog->getRevisions($first, $conf['recent'] +1);
-        }
-        $exists = file_exists(mediaFN($this->id));
-        if ($first === 0 && $exists) {
-            // add current media as revision[0]
-            $rev = filemtime(fullpath(mediaFN($this->id)));
-            $changelog->setChunkSize(1024);
-            $revinfo = $changelog->getRevisionInfo($rev) ?: array(
-                    'date' => $rev,
-                    'ip'   => null,
-                    'type' => null,
-                    'id'   => $this->id,
-                    'user' => null,
-                    'sum'  => null,
-                    'extra' => null,
-                    'sizechange' => null,
-            );
-            $revisions[] = $revinfo + array(
-                    'media' => true,
-                    'current' => true,
-            );
-        }
-
-        // decide if this is the last page or is there another one
-        $hasNext = false;
-        if (count($revlist) > $conf['recent']) {
-            $hasNext = true;
-            array_pop($revlist); // remove one additional log entry
-        }
-
-        // append each revison info array to the revisions
-        foreach ($revlist as $rev) {
-            $revisions[] = $changelog->getRevisionInfo($rev) + array('media' => true);
-        }
-        return $revisions;
     }
 
 }

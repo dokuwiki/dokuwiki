@@ -24,6 +24,7 @@ class PageDiff extends Diff
     {
         global $INFO;
         $this->id = isset($id) ? $id : $INFO['id'];
+        $this->item = 'page';
 
         // init preference
         $this->preference['showIntro'] = true;
@@ -129,7 +130,7 @@ class PageDiff extends Diff
                         .'</tr>';
                     echo '<tr>'
                         .'<th class="diff-lineheader">-</th>'
-                        .'<th '. $l_minor .'>'. $l_head .'</th>'
+                        .'<th'. $l_minor .'>'. $l_head .'</th>'
                         .'</tr>';
                 }
                 echo '<tr>'
@@ -138,7 +139,7 @@ class PageDiff extends Diff
                     .'</tr>';
                 echo '<tr>'
                     .'<th class="diff-lineheader">+</th>'
-                    .'<th '. $r_minor .'>'. $r_head .'</th>'
+                    .'<th'. $r_minor .'>'. $r_head .'</th>'
                     .'</tr>';
                 // create formatter object
                 $DiffFormatter = new \InlineDiffFormatter();
@@ -153,8 +154,8 @@ class PageDiff extends Diff
                         .'</tr>';
                 }
                 echo '<tr>'
-                    .'<th colspan="2" '. $l_minor .'>'. $l_head .'</th>'
-                    .'<th colspan="2" '. $r_minor .'>'. $r_head .'</th>'
+                    .'<th colspan="2"'. $l_minor .'>'. $l_head .'</th>'
+                    .'<th colspan="2"'. $r_minor .'>'. $r_head .'</th>'
                     .'</tr>';
                 // create formatter object
                 $DiffFormatter = new \TableDiffFormatter();
@@ -221,13 +222,13 @@ class PageDiff extends Diff
         global $lang;
 
         if ($this->text) { // compare text to the most current revision
-            $r_minor = '';
+            $l_minor = '';
             $l_head = '<a class="wikilink1" href="'. wl($this->id) .'">'
                 . $this->id .' '. dformat((int) @filemtime(wikiFN($this->id))) .'</a> '
                 . $lang['current'];
             $l_text = rawWiki($this->id, '');
 
-            $l_minor = '';
+            $r_minor = '';
             $r_head = $lang['yours'];
             $r_text = cleanText($this->text);
 

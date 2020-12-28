@@ -21,6 +21,7 @@ class MediaDiff extends Diff
     public function __construct($id)
     {
         $this->id = $id;
+        $this->item = 'media';
 
         // init preference
         $this->preference['fromAjax'] = false; // see doluwiki\Ajax::callMediadiff()
