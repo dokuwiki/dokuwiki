@@ -19,7 +19,7 @@ class PageRevisions extends Revisions
      */
     public function __construct($id)
     {
-        global $ID, $INFO;
+        global $INFO;
         if (!$id) $id = $INFO['id'];
         parent::__construct($id);
     }
@@ -114,7 +114,7 @@ class PageRevisions extends Revisions
     {
         global $INFO, $conf;
 
-        $changelog = new PageChangeLog($INFO['id']);
+        $changelog = new PageChangeLog($this->id);
 
         $revisions = [];
 
@@ -127,10 +127,11 @@ class PageRevisions extends Revisions
             $first = 0;
             $revlist = $changelog->getRevisions($first, $conf['recent'] +1);
         }
-        $exists = $INFO['exists'];
-        if ($first === 0 && $exists) {
-            // add current page as revision[0]
-            $revisions[] = array(
+        if ($this->id == $INFO['id']) {
+            $exists = $INFO['exists'];
+            if ($first == 0 && $exists) {
+                // add current page as revision[0]
+                $revisions[] = array(
                     'date' => $INFO['lastmod'],
                     'ip'   => null,
                     'type' => $INFO['meta']['last_change']['type'],
@@ -140,7 +141,27 @@ class PageRevisions extends Revisions
                     'extra' => null,
                     'sizechange' => $INFO['meta']['last_change']['sizechange'],
                     'current' => true,
-            );
+                );
+            }
+        } else {
+            $exists = file_exists(wikiFN($this->id));
+            if ($first == 0 && $exists) {
+                // add current page as revision[0]
+                $rev = filemtime(fullpath(wikiFN($this->id)));
+                $revinfo = $changelog->getRevisionInfo($rev) ?: array(
+                    'date' => $rev,
+                    'ip'   => null,
+                    'type' => null,
+                    'id'   => $this->id,
+                    'user' => null,
+                    'sum'  => null,
+                    'extra' => null,
+                    'sizechange' => null,
+                );
+                $revisions[] = $revinfo + array(
+                    'current' => true,
+                );
+            }
         }
 
         // decide if this is the last page or is there another one
