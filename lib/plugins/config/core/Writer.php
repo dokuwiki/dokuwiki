@@ -76,7 +76,7 @@ class Writer {
      */
     protected function opcacheUpdate($file) {
         if(!function_exists('opcache_invalidate')) return;
-        opcache_invalidate($file);
+        @opcache_invalidate($file);
     }
 
     /**
