@@ -151,74 +151,11 @@ abstract class Diff extends Ui
      * @param string $l_rev   Left revisions
      * @param string $r_rev   Right revision
      * @return string[] HTML snippets for diff header
+     * @deprecated 2020-12-31
      */
     public function buildDiffHead($l_rev, $r_rev)
     {
-        global $lang;
-
-        $changelog =& $this->changelog;
-
-        switch ($this->item) {
-            case 'page':
-                $isMedia = false;
-                $ui = new PageRevisions($this->id);
-                break;
-            case 'media':
-                $isMedia = true;
-                $ui = new MediaRevisions($this->id);
-                break;
-        }
-
-        $head_separator = ($this->preference['difftype'] === 'inline') ? ' ' : '<br />';
-
-        // assign minor edit checker to the variable
-        $isMinorEdit = function ($info) {
-            return ($info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT);
-        };
-
-        // assign title builder to the variable
-        $itemTitle = function ($id, $rev = '') use ($isMedia) {
-            return ($isMedia) ? dformat($rev) : $id.' ['.dformat($rev).']';
-        };
-
-        // left side
-        if (!$l_rev) {
-            $l_minor = '';
-            $l_head = '&mdash;';
-        } else {
-            $info = $changelog->getRevisionInfo($l_rev);
-            $objRevInfo = $ui->getObjRevInfo($info);
-            $l_minor = $isMinorEdit($info) ? ' class="minor"' : '';
-            $l_head = '<bdi>'
-                    .'<a class="wikilink1" href="'.$this->itemUrl($this->id, "rev=$l_rev").'">'
-                    .$itemTitle($this->id, $l_rev).'</a></bdi>'.$head_separator
-                    .$objRevInfo->editor().' '.$objRevInfo->editSummary();
-        }
-
-        // right side
-        if ($r_rev) {
-            $info  = $changelog->getRevisionInfo($r_rev);
-            $objRevInfo = $ui->getObjRevInfo($info);
-            $r_minor = $isMinorEdit($info) ? ' class="minor"' : '';
-            $r_head = '<bdi>'
-                    .'<a class="wikilink1" href="'.$this->itemUrl($this->id, "rev=$r_rev").'">'
-                    .$itemTitle($this->id, $r_rev).'</a></bdi>'.$head_separator
-                    .$objRevInfo->editor().' '.$objRevInfo->editSummary();
-        } elseif ($this->last_rev) {
-            $_rev = $this->last_rev;
-            $info = $changelog->getRevisionInfo($_rev);
-            $objRevInfo = $ui->getObjRevInfo($info);
-            $r_minor = $isMinorEdit($info) ? ' class="minor"' : '';
-            $r_head  = '<bdi>'
-                     .'<a class="wikilink1" href="'.$this->itemUrl($this->id).'">'
-                     .$itemTitle($this->id, $_rev).'</a></bdi> '.'('.$lang['current'].')'.$head_separator
-                     .$objRevInfo->editor().' '.$objRevInfo->editSummary();
-        } else {
-            $r_minor = '';
-            $r_head = '&mdash; ('.$lang['current'].')';
-        }
-
-        return array($l_head, $r_head, $l_minor, $r_minor);
+        dbg_deprecated('not used see '. \dokuwiki\Ui\PageDiff::class .'::show()');
     }
 
     /**

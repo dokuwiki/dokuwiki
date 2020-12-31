@@ -533,7 +533,7 @@ function html_diff($text = '', $intro = true, $type = null) {
  * @deprecated 2020-07-18
  */
 function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
-    dbg_deprecated('see '. \dokuwiki\Ui\PageDiff::class .'::buildDiffNavigation()');
+    dbg_deprecated('see '. \dokuwiki\Ui\PageDiff::class .'::buildRevisionsNavigation()');
 }
 
 /**
