@@ -118,6 +118,31 @@ abstract class Diff extends Ui
         }
     }
 
+    /**
+     * get extended revision info
+     *
+     * @param int|string $rev  revision identifier, '' means current one
+     * @return array  revision info structure of a page or media file
+     */
+    protected function getExtendedRevisionInfo($rev)
+    {
+        $changelog =& $this->changelog;
+
+        if ($rev) {
+            $info = $changelog->getRevisionInfo($rev);
+        } elseif (file_exists($filename = $this->itemFN($this->id))) {
+            $rev = filemtime(fullpath($filename));
+            $info = $changelog->getRevisionInfo($rev) + array(
+                'current' => true,
+            );
+        } else { // once exists, but now removed
+            $info = array(
+                'current' => true,
+            );
+        }
+        return array('item' => $this->item) + $info;
+    }
+
 
 
     /**
@@ -208,6 +233,21 @@ abstract class Diff extends Ui
         switch ($this->item) {
             case 'page':  return wl($id, $urlParameters, $absolute = false, '&');
             case 'media': return ml($id, $urlParameters, $direct = true, '&', $absolute = false);
+        }
+    }
+
+    /**
+     * item filename resolver
+     *
+     * @param string $id  page id or media id
+     * @param string|int $rev empty string or revision timestamp
+     * @return string
+     */
+    protected function itemFN($id, $rev = '')
+    {
+        switch ($this->item) {
+            case 'page':  return wikiFN($id, $rev);
+            case 'media': return mediaFN($id, $rev);
         }
     }
 

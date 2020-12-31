@@ -213,13 +213,20 @@ class MediaDiff extends Diff
      */
     protected function showFileDiff($l_rev, $r_rev, $l_meta, $r_meta, $auth)
     {
-        list($l_head, $r_head) = $this->buildDiffHead($l_rev, $r_rev);
+        // revison info of older file (left side)
+        $oldRevInfo = $this->getExtendedRevisionInfo($l_rev);
+        // revison info of newer file (right side)
+        $newRevInfo = $this->getExtendedRevisionInfo($r_rev);
+        // determin exact revisions
+        $oldRev = $oldRevInfo['date'];
+        $newRev = $newRevInfo['date'];
 
+        // display diff view table
         echo '<div class="table">';
         echo '<table>';
         echo '<tr>';
-        echo '<th>'. $l_head .'</th>';
-        echo '<th>'. $r_head .'</th>';
+        echo '<th>'. $this->revisionTitle($oldRevInfo) .'</th>';
+        echo '<th>'. $this->revisionTitle($newRevInfo) .'</th>';
         echo '</tr>';
 
         echo '<tr class="image">';
@@ -282,6 +289,38 @@ class MediaDiff extends Diff
 
         echo '</table>';
         echo '</div>';
+    }
+
+    /**
+     * Revision Title for MediaDiff table headline
+     *
+     * @param array $info  Revision info structure of a media file
+     * @return string
+     */
+    protected function revisionTitle(array $info)
+    {
+        global $lang;
+
+        if (isset($info['date'])) {
+            $rev = $info['date'];
+            $title = '<bdi><a class="wikilink1" href="'.ml($this->id, ['rev' => $rev]).'">'
+                   . dformat($rev).'</a></bdi>';
+        } else {
+            $title = '&mdash;';
+        }
+        if (isset($info['current']) || ($rev && $rev == $INFO['currentrev'])) {
+            $title .= '&nbsp;('.$lang['current'].')';
+        }
+
+        // append separator
+        $title .= ($this->preference['difftype'] === 'inline') ? ' ' : '<br />';
+
+        // supplement
+        if (isset($info['date'])) {
+            $objRevInfo = (new MediaRevisions($this->id))->getObjRevInfo($info);
+            $title .= $objRevInfo->editSummary().' '.$objRevInfo->editor();
+        }
+        return $title;
     }
 
 }
