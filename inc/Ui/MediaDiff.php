@@ -41,11 +41,11 @@ class MediaDiff extends Diff
     protected function preProcess()
     {
         parent::preProcess();
-        if (!isset($this->old_rev, $this->new_rev)) {
+        if (!isset($this->oldRev, $this->newRev)) {
             // no revision was given, compare previous to current
             $revs = $this->changelog->getRevisions(0, 1);
-            $this->old_rev = file_exists(mediaFN($this->id, $revs[0])) ? $revs[0] : '';
-            $this->new_rev = '';
+            $this->oldRev = file_exists(mediaFN($this->id, $revs[0])) ? $revs[0] : '';
+            $this->newRev = '';
         }
     }
 
@@ -64,15 +64,15 @@ class MediaDiff extends Diff
         if ($auth < AUTH_READ || !$this->id || !$conf['mediarevisions']) return '';
 
        // determine left and right revision
-        if (!isset($this->old_rev, $this->new_rev)) $this->preProcess();
-        [$l_rev, $r_rev] = [$this->old_rev, $this->new_rev];
+        if (!isset($this->oldRev, $this->newRev)) $this->preProcess();
+        [$oldRev, $newRev] = [$this->oldRev, $this->newRev];
 
         // prepare event data
         // NOTE: MEDIA_DIFF event does not found in DokuWiki Event List?
         $data = array();
         $data[0] = $this->id;
-        $data[1] = $l_rev;
-        $data[2] = $r_rev;
+        $data[1] = $oldRev;
+        $data[2] = $newRev;
         $data[3] = $ns;
         $data[4] = $auth; // permission level
         $data[5] = $this->preference['fromAjax'];
@@ -82,25 +82,25 @@ class MediaDiff extends Diff
 
         if (is_array($data) && count($data) === 6) {
             $this->id = $data[0];
-            $l_rev = $data[1];
-            $r_rev = $data[2];
-            $ns    = $data[3];
-            $auth  = $data[4];
+            $oldRev = $data[1];
+            $newRev = $data[2];
+            $ns     = $data[3];
+            $auth   = $data[4];
             $this->preference['fromAjax'] = $data[5];
         } else {
             return '';
         }
 
-        $l_meta = new \JpegMeta(mediaFN($this->id, $l_rev));
-        $r_meta = new \JpegMeta(mediaFN($this->id, $r_rev));
+        $oldRevMeta = new \JpegMeta(mediaFN($this->id, $oldRev));
+        $newRevMeta = new \JpegMeta(mediaFN($this->id, $newRev));
 
         $is_img = preg_match('/\.(jpe?g|gif|png)$/', $this->id);
         if ($is_img) {
             // get image width and height for the mediamanager preview panel
-            $l_size = media_image_preview_size($this->id, $l_rev, $l_meta);
-            $r_size = media_image_preview_size($this->id, $r_rev, $r_meta);
+            $oldRevSize = media_image_preview_size($this->id, $oldRev, $oldRevMeta);
+            $newRevSize = media_image_preview_size($this->id, $newRev, $newRevMeta);
             // re-check image, ensure minimum image width for showImageDiff()
-            $is_img = ($l_size && $r_size && ($l_size[0] >= 30 || $r_size[0] >= 30));
+            $is_img = ($oldRevSize && $newRevSize && ($oldRevSize[0] >= 30 || $newRevSize[0] >= 30));
         }
 
         // determine requested diff view type
@@ -120,11 +120,11 @@ class MediaDiff extends Diff
         switch ($this->preference['difftype']) {
             case 'opacity':
             case 'portions':
-                $this->showImageDiff($l_rev, $r_rev, $l_size, $r_size, $difftype);
+                $this->showImageDiff($oldRev, $newRev, $oldRevSize, $newRevSize, $difftype);
                 break;
             case 'both':
             default:
-                $this->showFileDiff($l_rev, $r_rev, $l_meta, $r_meta, $auth);
+                $this->showFileDiff($oldRev, $newRev, $oldRevMeta, $newRevMeta, $auth);
                 break;
         }
 
@@ -150,8 +150,8 @@ class MediaDiff extends Diff
         $form->addTagOpen('div')->addClass('no');
         $form->setHiddenField('sectok', null);
         $form->setHiddenField('mediado', 'diff');
-        $form->setHiddenField('rev2[0]', $this->old_rev ?: 'current');
-        $form->setHiddenField('rev2[1]', $this->new_rev ?: 'current');
+        $form->setHiddenField('rev2[0]', $this->oldRev ?: 'current');
+        $form->setHiddenField('rev2[1]', $this->newRev ?: 'current');
         $form->addTagClose('div');
         echo $form->toHTML();
 
@@ -164,38 +164,38 @@ class MediaDiff extends Diff
      *
      * @author Kate Arzamastseva <pshns@ukr.net>
      *
-     * @param string|int $l_rev revision timestamp, or empty string
-     * @param string|int $r_rev revision timestamp, or empty string
-     * @param array  $l_size  array with width and height
-     * @param array  $r_size  array with width and height
+     * @param string|int $oldRev revision timestamp, or empty string
+     * @param string|int $newRev revision timestamp, or empty string
+     * @param array  $oldRevSize  array with width and height
+     * @param array  $newRevSize  array with width and height
      * @param string $type    diff view type: opacity or portions
      */
-    protected function showImageDiff($l_rev, $r_rev, $l_size, $r_size, $type = null)
+    protected function showImageDiff($oldRev, $newRev, $oldRevSize, $newRevSize, $type = null)
     {
         if (!isset($type)) {
             $type = $this->preference['difftype'];
         }
 
         // adjust image width, right side (newer) has priority
-        if ($l_size != $r_size) {
-            if ($r_size[0] > $l_size[0]) {
-                $l_size = $r_size;
+        if ($oldRevSize != $newRevSize) {
+            if ($newRevSize[0] > $oldRevSize[0]) {
+                $oldRevSize = $newRevSize;
             }
         }
 
-        $l_src = ml($this->id, ['rev' => $l_rev, 'h' => $l_size[1], 'w' => $l_size[0]]);
-        $r_src = ml($this->id, ['rev' => $r_rev, 'h' => $l_size[1], 'w' => $l_size[0]]);
+        $oldRevSrc = ml($this->id, ['rev' => $oldRev, 'h' => $oldRevSize[1], 'w' => $oldRevSize[0]]);
+        $newRevSrc = ml($this->id, ['rev' => $newRev, 'h' => $oldRevSize[1], 'w' => $oldRevSize[0]]);
 
         // slider
-        echo '<div class="slider" style="max-width: '.($l_size[0]-20).'px;" ></div>';
+        echo '<div class="slider" style="max-width: '.($oldRevSize[0]-20).'px;" ></div>';
 
         // two images in divs
         echo '<div class="imageDiff '.$type.'">';
-        echo '<div class="image1" style="max-width: '.$l_size[0].'px;">';
-        echo '<img src="'.$l_src.'" alt="" />';
+        echo '<div class="image1" style="max-width: '.$oldRevSize[0].'px;">';
+        echo '<img src="'.$oldRevSrc.'" alt="" />';
         echo '</div>';
-        echo '<div class="image2" style="max-width: '.$l_size[0].'px;">';
-        echo '<img src="'.$r_src.'" alt="" />';
+        echo '<div class="image2" style="max-width: '.$oldRevSize[0].'px;">';
+        echo '<img src="'.$newRevSrc.'" alt="" />';
         echo '</div>';
         echo '</div>';
     }
@@ -205,21 +205,18 @@ class MediaDiff extends Diff
      *
      * @author Kate Arzamastseva <pshns@ukr.net>
      *
-     * @param string|int $l_rev revision timestamp, or empty string
-     * @param string|int $r_rev revision timestamp, or empty string
-     * @param JpegMeta $l_meta
-     * @param JpegMeta $r_meta
+     * @param string|int $oldRev revision timestamp, or empty string
+     * @param string|int $newRev revision timestamp, or empty string
+     * @param JpegMeta $oldRevMeta
+     * @param JpegMeta $newRevMeta
      * @param int $auth permission level
      */
-    protected function showFileDiff($l_rev, $r_rev, $l_meta, $r_meta, $auth)
+    protected function showFileDiff($oldRev, $newRev, $oldRevMeta, $newRevMeta, $auth)
     {
         // revison info of older file (left side)
-        $oldRevInfo = $this->getExtendedRevisionInfo($l_rev);
+        $oldRevInfo = $this->getExtendedRevisionInfo($oldRev);
         // revison info of newer file (right side)
-        $newRevInfo = $this->getExtendedRevisionInfo($r_rev);
-        // determin exact revisions
-        $oldRev = $oldRevInfo['date'];
-        $newRev = $newRevInfo['date'];
+        $newRevInfo = $this->getExtendedRevisionInfo($newRev);
 
         // display diff view table
         echo '<div class="table">';
@@ -231,26 +228,26 @@ class MediaDiff extends Diff
 
         echo '<tr class="image">';
         echo '<td>';
-        media_preview($this->id, $auth, $l_rev, $l_meta); // $auth not used in media_preview()?
+        media_preview($this->id, $auth, $oldRev, $oldRevMeta); // $auth not used in media_preview()?
         echo '</td>';
 
         echo '<td>';
-        media_preview($this->id, $auth, $r_rev, $r_meta);
+        media_preview($this->id, $auth, $newRev, $newRevMeta);
         echo '</td>';
         echo '</tr>';
 
         echo '<tr class="actions">';
         echo '<td>';
-        media_preview_buttons($this->id, $auth, $l_rev); // $auth used in media_preview_buttons()
+        media_preview_buttons($this->id, $auth, $oldRev); // $auth used in media_preview_buttons()
         echo '</td>';
 
         echo '<td>';
-        media_preview_buttons($this->id, $auth, $r_rev);
+        media_preview_buttons($this->id, $auth, $newRev);
         echo '</td>';
         echo '</tr>';
 
-        $l_tags = media_file_tags($l_meta);
-        $r_tags = media_file_tags($r_meta);
+        $l_tags = media_file_tags($oldRevMeta);
+        $r_tags = media_file_tags($newRevMeta);
         // FIXME r_tags-only stuff
         foreach ($l_tags as $key => $l_tag) {
             if ($l_tag['value'] != $r_tags[$key]['value']) {

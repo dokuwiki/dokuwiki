@@ -52,8 +52,8 @@ class PageDiff extends Diff
     {
         if (isset($text)) {
             $this->text = $text;
-            $this->old_rev = '';
-            $this->new_rev = null;
+            $this->oldRev = '';
+            $this->newRev = null;
         }
         return $this;
     }
@@ -62,14 +62,14 @@ class PageDiff extends Diff
     protected function preProcess()
     {
         parent::preProcess();
-        if (!isset($this->old_rev, $this->new_rev)) {
+        if (!isset($this->oldRev, $this->newRev)) {
             // no revision was given, compare previous to current
-            $this->old_rev = $this->changelog->getRevisions(0, 1)[0];
-            $this->new_rev = '';
+            $this->oldRev = $this->changelog->getRevisions(0, 1)[0];
+            $this->newRev = '';
 
             global $INFO, $REV;
             if ($this->id == $INFO['id'])
-               $REV = $this->old_rev; // store revision back in $REV
+               $REV = $this->oldRev; // store revision back in $REV
         }
     }
 
@@ -87,8 +87,7 @@ class PageDiff extends Diff
         global $INFO, $lang;
 
        // determine left and right revision
-        if (!isset($this->old_rev)) $this->preProcess();
-        [$l_rev, $r_rev] = [$this->old_rev, $this->new_rev];
+        if (!isset($this->oldRev)) $this->preProcess();
 
        // determine the last revision, which is usually the timestamp of current page,
        // however which might be the last revision if the page had removed.
@@ -107,19 +106,19 @@ class PageDiff extends Diff
             $newText = cleanText($this->text);
         } else {
             // when both revisions are empty then the page was created just now
-            $oldText = (!$l_rev && !$r_rev) ? '' : rawWiki($this->id, $l_rev);
-            $newText = rawWiki($this->id, $r_rev); // empty when removed page
+            $oldText = (!$this->oldRev && !$this->newRev) ? '' : rawWiki($this->id, $this->oldRev);
+            $newText = rawWiki($this->id, $this->newRev); // empty when removed page
         }
         $Difference = new \Diff(explode("\n", $oldText), explode("\n", $newText));
 
         // revison info of older page (left side)
-        $oldRevInfo = $this->getExtendedRevisionInfo($l_rev);
+        $oldRevInfo = $this->getExtendedRevisionInfo($this->oldRev);
 
         // revison info of newer page (right side)
         if (isset($this->text)) {
             $newRevInfo = array('date' => null);
         } else {
-            $newRevInfo = $this->getExtendedRevisionInfo($r_rev);
+            $newRevInfo = $this->getExtendedRevisionInfo($this->newRev);
         }
 
         // determin exact revision identifiers, even for current page
@@ -254,8 +253,8 @@ class PageDiff extends Diff
         // create the form to select difftype
         $form = new Form(['action' => wl()]);
         $form->setHiddenField('id', $this->id);
-        $form->setHiddenField('rev2[0]', $this->old_rev ?: 'current');
-        $form->setHiddenField('rev2[1]', $this->new_rev ?: 'current');
+        $form->setHiddenField('rev2[0]', $this->oldRev ?: 'current');
+        $form->setHiddenField('rev2[1]', $this->newRev ?: 'current');
         $form->setHiddenField('do', 'diff');
         $options = array(
                      'sidebyside' => $lang['diff_side'],

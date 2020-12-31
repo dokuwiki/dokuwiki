@@ -15,8 +15,8 @@ abstract class Diff extends Ui
     protected $item; // page or media
 
     /* @var int */
-    protected $old_rev;  // older revision, timestamp of left side
-    protected $new_rev;  // newer revision, timestamp of right side
+    protected $oldRev;  // timestamp of older revision, left side
+    protected $newRev;  // timestamp of newer revision, right side
     protected $last_rev; // current revision, or last revision when it had removed
 
     /* @var array */
@@ -44,14 +44,14 @@ abstract class Diff extends Ui
     /**
      * Set a pair of revisions to be compared
      *
-     * @param int $old_rev
-     * @param int $new_rev
+     * @param int $oldRev
+     * @param int $newRev
      * @return $this
      */
-    public function compare($old_rev, $new_rev)
+    public function compare($oldRev, $newRev)
     {
-        $this->old_rev = $old_rev;
-        $this->new_rev = $new_rev;
+        $this->oldRev = $oldRev;
+        $this->newRev = $newRev;
         return $this;
     }
 
@@ -89,21 +89,21 @@ abstract class Diff extends Ui
 
         // difflink icon click, eg. ?rev=123456789&do=diff
         if ($INPUT->has('rev')) {
-            $this->old_rev = $INPUT->int('rev');
-            $this->new_rev = ''; // current revision
+            $this->oldRev = $INPUT->int('rev');
+            $this->newRev = ''; // current revision
         }
 
         // submit button with two checked boxes
         $rev2 = $INPUT->arr('rev2', []);
         if (count($rev2) > 1) {
             if ($rev2[0] == 'current') {
-                [$this->old_rev, $this->new_rev] = [$rev2[1], ''];
+                [$this->oldRev, $this->newRev] = [$rev2[1], ''];
             } elseif ($rev2[1] == 'current') {
-                [$this->old_rev, $this->new_rev] = [$rev2[0], ''];
+                [$this->oldRev, $this->newRev] = [$rev2[0], ''];
             } elseif ($rev2[0] < $rev2[1]) {
-                [$this->old_rev, $this->new_rev] = [$rev2[0], $rev2[1]];
+                [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
             } else {
-                [$this->old_rev, $this->new_rev] = [$rev2[1], $rev2[0]];
+                [$this->oldRev, $this->newRev] = [$rev2[1], $rev2[0]];
             }
         }
 
