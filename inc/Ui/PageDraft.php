@@ -24,7 +24,7 @@ class PageDraft extends Ui
         global $INFO;
         global $lang;
 
-        $draft = new \dokuwiki\Draft($ID, $INFO['client']);
+        $draft = new \dokuwiki\Draft($INFO['id'], $INFO['client']);
         $text  = $draft->getDraftText();
 
         // print intro

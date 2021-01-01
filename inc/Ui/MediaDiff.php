@@ -213,6 +213,8 @@ class MediaDiff extends Diff
      */
     protected function showFileDiff($oldRev, $newRev, $oldRevMeta, $newRevMeta, $auth)
     {
+        global $lang;
+
         // revison info of older file (left side)
         $oldRevInfo = $this->getExtendedRevisionInfo($oldRev);
         // revison info of newer file (right side)
@@ -296,13 +298,14 @@ class MediaDiff extends Diff
      */
     protected function revisionTitle(array $info)
     {
-        global $lang;
+        global $lang, $INFO;
 
         if (isset($info['date'])) {
             $rev = $info['date'];
             $title = '<bdi><a class="wikilink1" href="'.ml($this->id, ['rev' => $rev]).'">'
                    . dformat($rev).'</a></bdi>';
         } else {
+            $rev = false;
             $title = '&mdash;';
         }
         if (isset($info['current']) || ($rev && $rev == $INFO['currentrev'])) {
