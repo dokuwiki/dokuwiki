@@ -1226,11 +1226,10 @@ function media_details($image, $auth, $rev='', $meta=false) {
  * @param int $auth permission level
  * @param bool $fromajax
  * @return false|null|string
- * @deprecated 2020-XX-XX
+ * @deprecated 2020-12-31
  */
 function media_diff($image, $ns, $auth, $fromajax = false) {
-    dbg_deprecated(\dokuwiki\Ui\MediaDiff::class .'::show()');
-    (new \dokuwiki\Ui\MediaDiff($image))->preference('fromAjax',$fromajax)->show();
+    dbg_deprecated('see '. \dokuwiki\Ui\MediaDiff::class .'::show()');
 }
 
 /**
@@ -1238,10 +1237,10 @@ function media_diff($image, $ns, $auth, $fromajax = false) {
  *
  * @param array $data event data
  * @return false|null
- * @deprecated 2020-XX-XX
+ * @deprecated 2020-12-31
  */
 function _media_file_diff($data) {
-    dbg_deprecated(\dokuwiki\Ui\MediaDiff::class .'::show()');
+    dbg_deprecated('see '. \dokuwiki\Ui\MediaDiff::class .'::show()');
 }
 
 /**
@@ -1255,10 +1254,10 @@ function _media_file_diff($data) {
  * @param string $ns
  * @param int $auth permission level
  * @param bool $fromajax
- * @deprecated 2020-XX-XX
+ * @deprecated 2020-12-31
  */
 function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax) {
-    dbg_deprecated(\dokuwiki\Ui\MediaDiff::class .'::showFileDiff()');
+    dbg_deprecated('see '. \dokuwiki\Ui\MediaDiff::class .'::showFileDiff()');
 }
 
 /**
@@ -1273,10 +1272,10 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax) {
  * @param array  $l_size  array with width and height
  * @param array  $r_size  array with width and height
  * @param string $type
- * @deprecated 2020-XX-XX
+ * @deprecated 2020-12-31
  */
 function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type) {
-    dbg_deprecated(\dokuwiki\Ui\MediaDiff::class .'::showImageDiff()');
+    dbg_deprecated('see '. \dokuwiki\Ui\MediaDiff::class .'::showImageDiff()');
 }
 
 /**
