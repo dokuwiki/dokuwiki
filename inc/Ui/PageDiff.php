@@ -3,6 +3,7 @@
 namespace dokuwiki\Ui;
 
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Ui\PageRevisions;
 use dokuwiki\Form\Form;
 
 /**
@@ -14,6 +15,9 @@ use dokuwiki\Form\Form;
  */
 class PageDiff extends Diff
 {
+    /* @var PageChangeLog */
+    protected $changelog;
+
     /* @var string */
     protected $text;
 
@@ -39,6 +43,12 @@ class PageDiff extends Diff
     protected function setChangeLog()
     {
         $this->changelog = new PageChangeLog($this->id);
+    }
+
+    /** @inheritdoc */
+    protected function itemFN($id, $rev = '')
+    {
+        return wikiFN($id, $rev);
     }
 
     /**

@@ -42,6 +42,15 @@ abstract class Diff extends Ui
     abstract protected function setChangeLog();
 
     /**
+     * item filename resolver
+     *
+     * @param string $id  page id or media id
+     * @param int|string $rev revision timestamp, or empty string for current one
+     * @return string full path
+     */
+    abstract protected function itemFN($id, $rev = '');
+
+    /**
      * Set a pair of revisions to be compared
      *
      * @param int $oldRev
@@ -156,36 +165,6 @@ abstract class Diff extends Ui
     public function buildDiffHead($l_rev, $r_rev)
     {
         dbg_deprecated('not used see '. \dokuwiki\Ui\PageDiff::class .'::show()');
-    }
-
-    /**
-     * item url generator
-     *
-     * @param string $id  page id or media id
-     * @param string|array $urlParameters  URL parameters, associative array recommended
-     * @return string
-     */
-    protected function itemUrl($id, $urlParameters = '')
-    {
-        switch ($this->item) {
-            case 'page':  return wl($id, $urlParameters, $absolute = false, '&');
-            case 'media': return ml($id, $urlParameters, $direct = true, '&', $absolute = false);
-        }
-    }
-
-    /**
-     * item filename resolver
-     *
-     * @param string $id  page id or media id
-     * @param string|int $rev empty string or revision timestamp
-     * @return string
-     */
-    protected function itemFN($id, $rev = '')       // FIXME declare as abstract method
-    {
-        switch ($this->item) {
-            case 'page':  return wikiFN($id, $rev);
-            case 'media': return mediaFN($id, $rev);
-        }
     }
 
 }

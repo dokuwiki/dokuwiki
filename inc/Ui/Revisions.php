@@ -34,18 +34,13 @@ abstract class Revisions extends Ui
     abstract protected function setChangeLog();
 
     /**
-     * item source file resolver
+     * item filename resolver
      *
      * @param string $id  page id or media id
+     * @param int|string $rev revision timestamp, or empty string for current one
      * @return string full path
      */
-    protected function itemFN($id)      // FIXME declare as abstract method
-    {
-        switch ($this->item) {
-            case 'page':  return wikiFN($id);
-            case 'media': return mediaFN($id);
-        }
-    }
+    abstract protected function itemFN($id, $rev = '');
 
     /**
      * Get revisions, and set correct pagenation parameters (first, hasNext)

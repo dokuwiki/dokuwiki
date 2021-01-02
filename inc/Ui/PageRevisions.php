@@ -12,6 +12,9 @@ use dokuwiki\Form\Form;
  */
 class PageRevisions extends Revisions
 {
+    /* @var PageChangeLog */
+    protected $changelog;
+
     /** 
      * PageRevisions Ui constructor
      *
@@ -29,6 +32,12 @@ class PageRevisions extends Revisions
     protected function setChangeLog()
     {
         $this->changelog = new PageChangeLog($this->id);
+    }
+
+    /** @inheritdoc */
+    protected function itemFN($id, $rev = '')
+    {
+        return wikiFN($id, $rev);
     }
 
     /**

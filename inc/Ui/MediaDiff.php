@@ -3,6 +3,7 @@
 namespace dokuwiki\Ui;
 
 use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\Ui\MediaRevisions;
 use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 use JpegMeta;
@@ -14,6 +15,9 @@ use JpegMeta;
  */
 class MediaDiff extends Diff
 {
+    /* @var MediaChangeLog */
+    protected $changelog;
+
     /**
      * MediaDiff Ui constructor
      *
@@ -38,6 +42,12 @@ class MediaDiff extends Diff
     protected function setChangeLog()
     {
         $this->changelog = new MediaChangeLog($this->id);
+    }
+
+    /** @inheritdoc */
+    protected function itemFN($id, $rev = '')
+    {
+        return mediaFN($id, $rev);
     }
 
     /** @inheritdoc */

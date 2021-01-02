@@ -12,6 +12,9 @@ use dokuwiki\Form\Form;
  */
 class MediaRevisions extends Revisions
 {
+    /* @var MediaChangeLog */
+    protected $changelog;
+
     /** 
      * MediaRevisions Ui constructor
      *
@@ -30,6 +33,12 @@ class MediaRevisions extends Revisions
     protected function setChangeLog()
     {
         $this->changelog = new MediaChangeLog($this->id);
+    }
+
+    /** @inheritdoc */
+    protected function itemFN($id, $rev = '')
+    {
+        return mediaFN($id, $rev);
     }
 
     /**
