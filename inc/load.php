@@ -108,7 +108,11 @@ function load_autoload($name){
         $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
         $file = DOKU_PLUGIN . substr($name, 16) . '.php';
         if(file_exists($file)) {
-            require $file;
+            try {
+                require $file;
+            } catch (\Throwable $e) {
+                \dokuwiki\ErrorHandler::showExceptionMsg($e, "Error loading plugin $name");
+            }
             return true;
         }
     }
@@ -118,7 +122,11 @@ function load_autoload($name){
         $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
         $file = DOKU_INC.'lib/tpl/' . substr($name, 18) . '.php';
         if(file_exists($file)) {
-            require $file;
+            try {
+                require $file;
+            } catch (\Throwable $e) {
+                \dokuwiki\ErrorHandler::showExceptionMsg($e, "Error loading template $name");
+            }
             return true;
         }
     }
@@ -144,7 +152,11 @@ function load_autoload($name){
         $c = ((count($m) === 4) ? "/{$m[3]}" : '');
         $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
         if(file_exists($plg)){
-            require $plg;
+            try {
+                require $plg;
+            } catch (\Throwable $e) {
+                \dokuwiki\ErrorHandler::showExceptionMsg($e, "Error loading plugin {$m[2]}");
+            }
         }
         return true;
     }

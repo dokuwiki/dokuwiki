@@ -199,6 +199,9 @@ if (empty($plugin_controller_class)) $plugin_controller_class = dokuwiki\Extensi
 require_once(DOKU_INC.'vendor/autoload.php');
 require_once(DOKU_INC.'inc/load.php');
 
+// from now on everything is an exception
+\dokuwiki\ErrorHandler::register();
+
 // disable gzip if not available
 define('DOKU_HAS_BZIP', function_exists('bzopen'));
 define('DOKU_HAS_GZIP', function_exists('gzopen'));
@@ -266,16 +269,19 @@ function init_session() {
 function init_paths(){
     global $conf;
 
-    $paths = array('datadir'   => 'pages',
-            'olddir'    => 'attic',
-            'mediadir'  => 'media',
-            'mediaolddir' => 'media_attic',
-            'metadir'   => 'meta',
-            'mediametadir' => 'media_meta',
-            'cachedir'  => 'cache',
-            'indexdir'  => 'index',
-            'lockdir'   => 'locks',
-            'tmpdir'    => 'tmp');
+    $paths = [
+        'datadir'   => 'pages',
+        'olddir'    => 'attic',
+        'mediadir'  => 'media',
+        'mediaolddir' => 'media_attic',
+        'metadir'   => 'meta',
+        'mediametadir' => 'media_meta',
+        'cachedir'  => 'cache',
+        'indexdir'  => 'index',
+        'lockdir'   => 'locks',
+        'tmpdir'    => 'tmp',
+        'logdir'    => 'log',
+    ];
 
     foreach($paths as $c => $p) {
         $path = empty($conf[$c]) ? $conf['savedir'].'/'.$p : $conf[$c];
