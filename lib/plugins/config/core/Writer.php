@@ -2,6 +2,7 @@
 
 namespace dokuwiki\plugin\config\core;
 use dokuwiki\plugin\config\core\Setting\Setting;
+use dokuwiki\Logger;
 
 /**
  * Writes the settings to the correct local file
@@ -69,14 +70,18 @@ class Writer {
     }
 
     /**
-     * Invalidate the opcache of the given file
+     * Invalidate the opcache of the given file (if possible)
      *
      * @todo this should probably be moved to core
      * @param string $file
      */
     protected function opcacheUpdate($file) {
         if(!function_exists('opcache_invalidate')) return;
-        @opcache_invalidate($file);
+        set_error_handler(function($errNo, $errMsg) { 
+            Logger::debug('Unable to invalidate opcache: ' . $errMsg); }
+        );
+        opcache_invalidate($file);
+        restore_error_handler();
     }
 
     /**
