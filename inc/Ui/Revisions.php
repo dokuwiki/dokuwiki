@@ -39,7 +39,7 @@ abstract class Revisions extends Ui
      * @param string $id  page id or media id
      * @return string full path
      */
-    protected function itemFN($id)
+    protected function itemFN($id)      // FIXME declare as abstract method
     {
         switch ($this->item) {
             case 'page':  return wikiFN($id);

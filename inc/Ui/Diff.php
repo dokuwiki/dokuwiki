@@ -180,7 +180,7 @@ abstract class Diff extends Ui
      * @param string|int $rev empty string or revision timestamp
      * @return string
      */
-    protected function itemFN($id, $rev = '')
+    protected function itemFN($id, $rev = '')       // FIXME declare as abstract method
     {
         switch ($this->item) {
             case 'page':  return wikiFN($id, $rev);

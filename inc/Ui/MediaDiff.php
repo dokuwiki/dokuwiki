@@ -5,6 +5,7 @@ namespace dokuwiki\Ui;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
+use JpegMeta;
 
 /**
  * DokuWiki MediaDiff Interface
@@ -20,7 +21,9 @@ class MediaDiff extends Diff
      */
     public function __construct($id)
     {
-        $this->id = $id;
+        if ($id) {
+            throw new \InvalidArgumentException('media id should not be empty!');
+        }
         $this->item = 'media';
 
         // init preference
@@ -28,7 +31,7 @@ class MediaDiff extends Diff
         $this->preference['showIntro'] = false;
         $this->preference['difftype'] = 'both';  // media diff view type: both, opacity or portions
 
-        $this->setChangeLog();
+        parent::__construct($id);
     }
 
     /** @inheritdoc */
@@ -91,8 +94,8 @@ class MediaDiff extends Diff
             return '';
         }
 
-        $oldRevMeta = new \JpegMeta(mediaFN($this->id, $oldRev));
-        $newRevMeta = new \JpegMeta(mediaFN($this->id, $newRev));
+        $oldRevMeta = new JpegMeta(mediaFN($this->id, $oldRev));
+        $newRevMeta = new JpegMeta(mediaFN($this->id, $newRev));
 
         $is_img = preg_match('/\.(jpe?g|gif|png)$/', $this->id);
         if ($is_img) {
@@ -120,7 +123,7 @@ class MediaDiff extends Diff
         switch ($this->preference['difftype']) {
             case 'opacity':
             case 'portions':
-                $this->showImageDiff($oldRev, $newRev, $oldRevSize, $newRevSize, $difftype);
+                $this->showImageDiff($oldRev, $newRev, $oldRevSize, $newRevSize);
                 break;
             case 'both':
             default:

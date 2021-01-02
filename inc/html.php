@@ -297,10 +297,10 @@ function html_locked() {
  * @author Kate Arzamastseva <pshns@ukr.net>
  *
  * @param int $first skip the first n changelog lines
- * @param bool|string $media_id id of media, or false for current page
+ * @param string $media_id id of media, or empty for current page
  * @deprecated 2020-07-18
  */
-function html_revisions($first = 0, $media_id = false) {
+function html_revisions($first = 0, $media_id = '') {
     dbg_deprecated(\dokuwiki\Ui\PageRevisions::class .'::show()');
     if ($media_id) {
         (new dokuwiki\Ui\MediaRevisions($media_id))->show($first);

@@ -22,17 +22,17 @@ class PageDiff extends Diff
      *
      * @param string $id  page id
      */
-    public function __construct($id = null)
+    public function __construct($id)
     {
         global $INFO;
-        $this->id = isset($id) ? $id : $INFO['id'];
+        $this->id = $id ?: $INFO['id'];
         $this->item = 'page';
 
         // init preference
         $this->preference['showIntro'] = true;
         $this->preference['difftype'] = 'sidebyside'; // diff view type: inline or sidebyside
 
-        $this->setChangeLog();
+        parent::__construct($id);
     }
 
     /** @inheritdoc */
