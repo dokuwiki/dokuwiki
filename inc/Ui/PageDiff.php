@@ -318,8 +318,8 @@ class PageDiff extends Diff
         list($oldRevs, $newRevs) = $changelog->getRevisionsAround($oldRev, $newRev);
 
         // build options for dropdown selector 
-        $olderRevisions = $this->buildRevsionOptions('older', $oldRevs, $oldRev, $newRev);
-        $newerRevisions = $this->buildRevsionOptions('newer', $newRevs, $oldRev, $newRev);
+        $olderRevisions = $this->buildRevisionOptions('older', $oldRevs, $oldRev, $newRev);
+        $newerRevisions = $this->buildRevisionOptions('newer', $newRevs, $oldRev, $newRev);
 
         //determine previous/next revisions
         $index = array_search($oldRev, $oldRevs);
@@ -345,7 +345,7 @@ class PageDiff extends Diff
             $navOlderRevs .= $this->diffViewlink('diffprevrev', $oldPrevRev, $newRev);
         }
         //dropdown
-        $navOlderRevs .= $this->buildDropdwonSelector('older', $olderRevisions, $oldRev, $newRev);
+        $navOlderRevs .= $this->buildDropdownSelector('older', $olderRevisions, $oldRev, $newRev);
         //move forward
         if ($oldNextRev && ($oldNextRev < $newRev || !$newRev)) {
             $navOlderRevs .= $this->diffViewlink('diffnextrev', $oldNextRev, $newRev);
@@ -360,7 +360,7 @@ class PageDiff extends Diff
             $navNewerRevs .= $this->diffViewlink('diffprevrev', $oldRev, $newPrevRev);
         }
         //dropdown
-        $navNewerRevs .= $this->buildDropdwonSelector('newer', $newerRevisions, $oldRev, $newRev);
+        $navNewerRevs .= $this->buildDropdownSelector('newer', $newerRevisions, $oldRev, $newRev);
         //move forward
         if ($newNextRev) {
             if ($changelog->isCurrentRevision($newNextRev)) {
@@ -383,7 +383,7 @@ class PageDiff extends Diff
      * @param int $newRev  timestamp of newer revision, right side
      * @return array
      */
-    protected function buildRevsionOptions($side, $revs, $oldRev, $newRev)
+    protected function buildRevisionOptions($side, $revs, $oldRev, $newRev)
     {
         $changelog =& $this->changelog;
         $revisions = array();
@@ -426,7 +426,7 @@ class PageDiff extends Diff
      * @param int $newRev  timestamp of newer revision, right side
      * @return sting
      */
-    protected function buildDropdwonSelector($side, $options, $oldRev, $newRev)
+    protected function buildDropdownSelector($side, $options, $oldRev, $newRev)
     {
         $form = new Form(['action' => wl($this->id)]);
         $form->setHiddenField('id', $this->id);
