@@ -23,7 +23,7 @@ class PageRevisions extends Revisions
     public function __construct($id)
     {
         global $INFO;
-        if (!$id) $id = $INFO['id'];
+        if (!isset($id)) $id = $INFO['id'];
         $this->item = 'page';
         parent::__construct($id);
     }

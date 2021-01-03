@@ -29,7 +29,7 @@ class PageDiff extends Diff
     public function __construct($id)
     {
         global $INFO;
-        $this->id = $id ?: $INFO['id'];
+        if (!isset($id)) $id = $INFO['id'];
         $this->item = 'page';
 
         // init preference
