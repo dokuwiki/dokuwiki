@@ -79,6 +79,13 @@ class Admin extends Ui {
     protected function showSecurityCheck() {
         global $conf;
         if(substr($conf['savedir'], 0, 2) !== './') return;
+        $inhibition_file = $conf['savedir'] . '/.disable-security-check-at-my-own-risk';
+        if(file_exists($inhibition_file)) {
+          echo '<a style="border:2px solid red; padding: 5px; float:right; text-align: center;"
+                  href="http://www.dokuwiki.org/security#web_access_security">
+                  Security Check<br> disabled</a>';
+          return;
+        }
         $img = DOKU_URL . $conf['savedir'] .
             '/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png';
         echo '<a style="border:none; float:right;"
