@@ -22,7 +22,7 @@ class MediaRevisions extends Revisions
      */
     public function __construct($id)
     {
-        if ($id) {
+        if (!$id) {
             throw new \InvalidArgumentException('media id should not be empty!');
         }
         $this->item = 'media';
