@@ -384,7 +384,7 @@ class PageDiff extends Diff
         $revisions = array();
 
         if (($side == 'older' && !$oldRev) // NOTE: this case should not happen!
-          ||($side == 'newer' && (!$newRev || page_exists($this->id) == false))
+          ||($side == 'newer' && (!$newRev || !page_exists($this->id)))
         ) {
             //no revision given, likely removed page, add dummy entry
             $revisions['current'] = array(

@@ -121,7 +121,7 @@ abstract class Diff extends Ui
             $this->preference['difftype'] = $INPUT->str('difftype');
         } else {
             // read preference from DokuWiki cookie. PageDiff only
-            get_doku_pref('difftype', $mode);
+            $mode = get_doku_pref('difftype', $mode = null);
             if (isset($mode)) $this->preference['difftype'] = $mode;
         }
     }
