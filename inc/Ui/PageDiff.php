@@ -99,17 +99,6 @@ class PageDiff extends Diff
        // determine left and right revision
         if (!isset($this->oldRev)) $this->preProcess();
 
-       // determine the last revision, which is usually the timestamp of current page,
-       // however which might be the last revision if the page had removed.
-       if ($this->id == $INFO['id']) {
-           $this->last_rev = $INFO['currentrev'] ?? $INFO['meta']['last_change']['date'] ?? 0;
-       } else {
-           $changelog =& $this->changelog;
-           $last_revs = $changelog->getRevisions(-1, 1) // empty array for removed page
-                      ?: $changelog->getRevisions(0, 1);
-           $this->last_rev = count($last_revs) > 0 ? $last_revs[0] : 0;
-       }
-
         // create difference engine object
         if (isset($this->text)) { // compare text to the most current revision
             $oldText = rawWiki($this->id, '');
@@ -292,9 +281,12 @@ class PageDiff extends Diff
     /**
      * Create html for revision navigation
      *
-     * @param int $oldRev  timestamp of older revision, left side
-     * @param int $newRev  timestamp of newer revision, right side
-     * @return string[] html of left and right navigation elements
+     * The navigation consists of older and newer revisions selectors, each
+     * state mutually depends on the selected revision of opposite side.
+     *
+     * @param int $oldRev  timestamp of older revision, older side
+     * @param int $newRev  timestamp of newer revision, newer side
+     * @return string[] html of navigation for both older and newer sides
      */
     protected function buildRevisionsNavigation($oldRev, $newRev)
     {
@@ -302,16 +294,18 @@ class PageDiff extends Diff
 
         $changelog =& $this->changelog;
 
+       // determine the last revision, which is usually the timestamp of current page,
+       // however which might be the last revision if the page had removed.
         if (!$newRev) {
             if ($this->id == $INFO['id']) {
                 // note: when page is removed, the metadata timestamp is zero
-                $last_rev = $INFO['currentrev'] ?? $INFO['meta']['last_change']['date'] ?? 0;
+                $lastRev = $INFO['currentrev'] ?? $INFO['meta']['last_change']['date'] ?? 0;
             } else {
-                $last_revs = $changelog->getRevisions(-1, 1)  // empty array for removed page
-                           ?: $changelog->getRevisions(0, 1); // last entry of changelog
-                $last_rev = count($last_revs) > 0 ? $last_revs[0] : 0;
+                $lastRevs = $changelog->getRevisions(-1, 1)  // empty array for removed page
+                          ?: $changelog->getRevisions(0, 1); // last entry of changelog
+                $lastRev = count($last_revs) > 0 ? $last_revs[0] : 0;
             }
-            $newRev = $last_rev;
+            $newRev = $lastRev;
         }
 
         // retrieve revisions with additional info

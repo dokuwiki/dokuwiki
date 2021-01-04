@@ -17,7 +17,6 @@ abstract class Diff extends Ui
     /* @var int */
     protected $oldRev;  // timestamp of older revision, left side
     protected $newRev;  // timestamp of newer revision, right side
-    protected $last_rev; // current revision, or last revision when it had removed
 
     /* @var array */
     protected $preference = [];
