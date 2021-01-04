@@ -25,7 +25,7 @@ class MediaDiff extends Diff
      */
     public function __construct($id)
     {
-        if (!$id) {
+        if (!isset($id)) {
             throw new \InvalidArgumentException('media id should not be empty!');
         }
         $this->item = 'media';
