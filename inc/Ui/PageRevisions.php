@@ -20,7 +20,7 @@ class PageRevisions extends Revisions
      *
      * @param string $id  id of page
      */
-    public function __construct($id)
+    public function __construct($id = null)
     {
         global $INFO;
         if (!isset($id)) $id = $INFO['id'];

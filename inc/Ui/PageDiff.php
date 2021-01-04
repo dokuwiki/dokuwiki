@@ -26,7 +26,7 @@ class PageDiff extends Diff
      *
      * @param string $id  page id
      */
-    public function __construct($id)
+    public function __construct($id = null)
     {
         global $INFO;
         if (!isset($id)) $id = $INFO['id'];
@@ -220,6 +220,7 @@ class PageDiff extends Diff
             $title = '<bdi><a class="wikilink1" href="'.wl($this->id, ['rev' => $rev]).'">'
                    . $this->id.' ['.dformat($rev).']'.'</a></bdi>';
         } else {
+            $rev = false;
             $title = '&mdash;';
         }
         if (isset($info['current']) || ($rev && $rev == $INFO['currentrev'])) {
@@ -303,7 +304,7 @@ class PageDiff extends Diff
             } else {
                 $lastRevs = $changelog->getRevisions(-1, 1)  // empty array for removed page
                           ?: $changelog->getRevisions(0, 1); // last entry of changelog
-                $lastRev = count($last_revs) > 0 ? $last_revs[0] : 0;
+                $lastRev = count($lastRevs) > 0 ? $lastRevs[0] : 0;
             }
             $newRev = $lastRev;
         }
