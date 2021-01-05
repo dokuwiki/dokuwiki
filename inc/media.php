@@ -1747,6 +1747,7 @@ function media_printimgdetail($item, $fullscreen=false){
         $p['height'] = $h;
     }
     $p['alt']    = $item['id'];
+    $p['loading'] = 'lazy';
     $att = buildAttributes($p);
 
     // output
