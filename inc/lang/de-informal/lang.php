@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author lp <spam@lukpopp.ch>
  * @author Martin <martin@andev.de>
  * @author F. Mueller-Donath <j.felix@mueller-donath.de>
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -85,6 +86,7 @@ $lang['badpassconfirm']        = 'Das Passwort war falsch.';
 $lang['minoredit']             = 'Kleine Änderung';
 $lang['draftdate']             = 'Entwurf gespeichert am';
 $lang['nosecedit']             = 'Diese Seite wurde in der Zwischenzeit geändert, da das Sektionsinfo veraltet ist. Die ganze Seite wird stattdessen geladen.';
+$lang['searchcreatepage']      = 'Falls der gesuchte Begriff nicht gefunden wurde, kannst du direkt eine neue, nach deiner Anfrage benannte Seite %s anlegen.';
 $lang['search_fullresults']    = 'Volltextergebnisse';
 $lang['js']['search_toggle_tools'] = 'Suchwerkzeuge umschalten';
 $lang['js']['willexpire']      = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, solltest du sie durch einen Klick auf den Vorschau-Knopf verlängern.';
