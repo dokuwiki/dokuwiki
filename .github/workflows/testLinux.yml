@@ -1,15 +1,12 @@
 name: Linux Unit Tests
 
-on:
-    push:
-    pull_request:
-        branches:
-            - '**:**'
+on: [push, pull_request]
 
 jobs:
     run:
         name: PHP ${{ matrix.php-versions }}
         runs-on: ubuntu-latest
+        if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
 
         strategy:
             matrix:
