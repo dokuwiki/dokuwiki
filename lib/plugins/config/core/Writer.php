@@ -77,7 +77,7 @@ class Writer {
      */
     protected function opcacheUpdate($file) {
         if(!function_exists('opcache_invalidate')) return;
-        set_error_handler(function($errNo, $errMsg) { 
+        set_error_handler(function ($errNo, $errMsg) {
             Logger::debug('Unable to invalidate opcache: ' . $errMsg); }
         );
         opcache_invalidate($file);
