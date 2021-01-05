@@ -1009,7 +1009,7 @@ function media_tab_history($image, $ns, $auth=null) {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_preview($image, $auth, $rev='', $meta=false) {
+function media_preview($image, $auth, $rev = '', $meta = false) {
 
     $size = media_image_preview_size($image, $rev, $meta);
 
@@ -1033,7 +1033,7 @@ function media_preview($image, $auth, $rev='', $meta=false) {
         echo '<img src="'.$src.'" alt="" style="max-width: '.$size[0].'px;" />';
         echo '</a>';
 
-        echo '</div>'.NL;
+        echo '</div>';
     }
 }
 
@@ -1044,12 +1044,12 @@ function media_preview($image, $auth, $rev='', $meta=false) {
  *
  * @param string     $image media id
  * @param int        $auth  permission level
- * @param string|int $rev   revision timestamp, or empty string
+ * @param int|string $rev   revision timestamp, or empty string
  */
 function media_preview_buttons($image, $auth, $rev = '') {
     global $lang, $conf;
 
-    echo '<ul class="actions">'.DOKU_LF;
+    echo '<ul class="actions">';
 
     if ($auth >= AUTH_DELETE && !$rev && file_exists(mediaFN($image))) {
 
@@ -1063,7 +1063,7 @@ function media_preview_buttons($image, $auth, $rev = '') {
         $form->addTagClose('div');
         echo '<li>';
         echo $form->toHTML();
-        echo '</li>'.DOKU_LF;
+        echo '</li>';
     }
 
     $auth_ow = (($conf['mediarevisions']) ? AUTH_UPLOAD : AUTH_DELETE);
@@ -1079,7 +1079,7 @@ function media_preview_buttons($image, $auth, $rev = '') {
         $form->addTagClose('div');
         echo '<li>';
         echo $form->toHTML();
-        echo '</li>'.DOKU_LF;
+        echo '</li>';
     }
 
     if ($auth >= AUTH_UPLOAD && $rev && $conf['mediarevisions'] && file_exists(mediaFN($image, $rev))) {
@@ -1096,10 +1096,10 @@ function media_preview_buttons($image, $auth, $rev = '') {
         $form->addTagClose('div');
         echo '<li>';
         echo $form->toHTML();
-        echo '</li>'.DOKU_LF;
+        echo '</li>';
     }
 
-    echo '</ul>'.DOKU_LF;
+    echo '</ul>';
 }
 
 /**
@@ -1110,16 +1110,18 @@ function media_preview_buttons($image, $auth, $rev = '') {
  * @param int|string     $rev
  * @param JpegMeta|bool  $meta
  * @param int            $size
- * @return array|false
+ * @return array
  */
-function media_image_preview_size($image, $rev, $meta, $size = 500) {
-    if (!preg_match("/\.(jpe?g|gif|png)$/", $image) || !file_exists(mediaFN($image, $rev))) return false;
+function media_image_preview_size($image, $rev, $meta = false, $size = 500) {
+    if (!preg_match("/\.(jpe?g|gif|png)$/", $image)
+      || !file_exists($filename = mediaFN($image, $rev))
+    ) return array();
 
-    $info = getimagesize(mediaFN($image, $rev));
+    $info = getimagesize($filename);
     $w = (int) $info[0];
     $h = (int) $info[1];
 
-    if($meta && ($w > $size || $h > $size)){
+    if ($meta && ($w > $size || $h > $size)) {
         $ratio = $meta->getResizeRatio($size, $size);
         $w = floor($w * $ratio);
         $h = floor($h * $ratio);
@@ -1137,10 +1139,10 @@ function media_image_preview_size($image, $rev, $meta, $size = 500) {
  * @param string   $alt  alternative value
  * @return string
  */
-function media_getTag($tags,$meta,$alt=''){
-    if($meta === false) return $alt;
+function media_getTag($tags, $meta = false, $alt = '') {
+    if (!$meta) return $alt;
     $info = $meta->getField($tags);
-    if($info == false) return $alt;
+    if (!$info) return $alt;
     return $info;
 }
 
@@ -1155,19 +1157,19 @@ function media_getTag($tags,$meta,$alt=''){
 function media_file_tags($meta) {
     // load the field descriptions
     static $fields = null;
-    if(is_null($fields)){
+    if (is_null($fields)) {
         $config_files = getConfigFiles('mediameta');
         foreach ($config_files as $config_file) {
-            if(file_exists($config_file)) include($config_file);
+            if (file_exists($config_file)) include($config_file);
         }
     }
 
     $tags = array();
 
-    foreach($fields as $key => $tag){
+    foreach ($fields as $key => $tag) {
         $t = array();
         if (!empty($tag[0])) $t = array($tag[0]);
-        if(isset($tag[3]) && is_array($tag[3])) $t = array_merge($t,$tag[3]);
+        if (isset($tag[3]) && is_array($tag[3])) $t = array_merge($t,$tag[3]);
         $value = media_getTag($t, $meta);
         $tags[] = array('tag' => $tag, 'value' => $value);
     }
