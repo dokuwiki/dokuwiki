@@ -27,22 +27,7 @@ class MediaFile
         $this->id = $id; //FIXME should it be cleaned?
         $this->path = mediaFN($id);
 
-        list($this->mime, $this->ext, $this->downloadable) = mimetype($this->path, false);
-    }
-
-    /**
-     * Factory to create a new MediaFile from a Media Path
-     *
-     * @param string $path The path of a file, relative to the media base dir
-     * @return MediaFile
-     */
-    static public function fromRelativePath($path)
-    {
-        if ($path[0] === '/' || $path[1] === ':') {
-            throw new \RuntimeException('Only paths relative to the media directory may be used');
-        }
-
-        return new MediaFile(pathID($path, true));
+        list($this->ext, $this->mime, $this->downloadable) = mimetype($this->path, false);
     }
 
     /** @return string */
@@ -159,6 +144,17 @@ class MediaFile
     {
         if ($this->height === null) $this->initSizes();
         return $this->height;
+    }
+
+    /**
+     * Returns the permissions the current user has on the file
+     *
+     * @todo doing this for each file within a namespace is a waste, we need to cache this somehow
+     * @return int
+     */
+    public function userPermission()
+    {
+        return auth_quickaclcheck(getNS($this->id).':*');
     }
 
     /** @return \JpegMeta */

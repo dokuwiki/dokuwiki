@@ -699,7 +699,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
 
         $dir = utf8_encodeFN(str_replace(':','/',$ns));
         $data = array();
-        search($data,$conf['mediadir'],'search_media',
+        search($data,$conf['mediadir'],'search_mediafiles',
                 array('showmsg'=>true,'depth'=>1),$dir,1,$sort);
 
         if(!count($data)){
@@ -710,9 +710,15 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
             }
             foreach($data as $item){
                 if (!$fullscreenview) {
-                    media_printfile($item,$auth,$jump);
+                    //FIXME old call: media_printfile($item,$auth,$jump);
+                    $display = new \dokuwiki\Ui\Media\DisplayRow($item);
+                    $display->show();
                 } else {
-                    media_printfile_thumbs($item,$auth,$jump);
+                    //FIXME old call: media_printfile_thumbs($item,$auth,$jump);
+                    echo '<li>';
+                    $display = new \dokuwiki\Ui\Media\DisplayTile($item);
+                    $display->show();
+                    echo '</li>';
                 }
             }
             if ($fullscreenview) echo '</ul>'.NL;
@@ -1536,7 +1542,7 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
             $pattern = '/'.$quoted.'/i';
             search($evdata['data'],
                     $conf['mediadir'],
-                    'search_media',
+                    'search_mediafiles',
                     array('showmsg'=>false,'pattern'=>$pattern),
                     $dir,
                     1,
@@ -1558,8 +1564,19 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
             echo '<ul class="' . _media_get_list_type() . '">';
         }
         foreach($evdata['data'] as $item){
-            if (!$fullscreen) media_printfile($item,$item['perm'],'',true);
-            else media_printfile_thumbs($item,$item['perm'],false,true);
+            if (!$fullscreen) {
+                // FIXME old call: media_printfile($item,$item['perm'],'',true);
+                // FIXME we actually want the namespace here -> needs fixing
+                $display = new \dokuwiki\Ui\Media\DisplayRow($item);
+                $display->show();
+            } else {
+                // FIXME old call: media_printfile_thumbs($item,$item['perm'],false,true);
+                // FIXME we actually want the namespace here -> needs fixing
+                $display = new \dokuwiki\Ui\Media\DisplayTile($item);
+                echo '<li>';
+                $display->show();
+                echo '</li>';
+            }
         }
         if ($fullscreen) echo '</ul>'.NL;
     }

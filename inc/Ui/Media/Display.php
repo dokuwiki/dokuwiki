@@ -28,7 +28,7 @@ class Display
     public function getPreviewHtml($w, $h)
     {
         if ($this->mediaFile->isImage()) {
-            $src = ml($this->mediaFile, ['w' => $w, 'h' => $h]);
+            $src = ml($this->mediaFile->getId(), ['w' => $w, 'h' => $h]);
         } else {
             $src = $this->getIconUrl();
         }

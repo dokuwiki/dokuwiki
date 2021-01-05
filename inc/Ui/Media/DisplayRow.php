@@ -39,7 +39,7 @@ class DisplayRow extends DisplayTile
             'alt="' . $lang['btn_media'] . '" title="' . $lang['btn_media'] . '" class="btn" /></a>';
 
         // delete button  FIXME
-        if ($item['writable'] && $auth >= AUTH_DELETE) {
+        if ($this->mediaFile->isWritable() && $this->mediaFile->userPermission() >= AUTH_DELETE) {
             $link = DOKU_BASE . 'lib/exe/mediamanager.php?delete=' . rawurlencode($id) .
                 '&amp;sectok=' . getSecurityToken();
             echo ' <a href="' . $link . '" class="btn_media_delete" title="' . $id . '">' .
@@ -50,13 +50,16 @@ class DisplayRow extends DisplayTile
         echo '<div class="example" id="ex_' . str_replace(':', '_', $id) . '">';
         echo $lang['mediausage'] . ' <code>{{:' . $id . '}}</code>';
         echo '</div>';
-        if ($item['isimg']) media_printimgdetail($item);
+        if ($this->mediaFile->getWidth()) $this->showDetails();
         echo '<div class="clearer"></div>' . NL;
         echo '</div>' . NL;
 
     }
 
-    public function showDetails()
+    /**
+     * Show Thumbnail and EXIF data
+     */
+    protected function showDetails()
     {
         $id = $this->mediaFile->getId();
 
