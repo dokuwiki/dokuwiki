@@ -12,6 +12,9 @@ class Display
     /** @var string should IDs be shown relative to this namespace? Used in search results */
     protected $relativeDisplay = null;
 
+    /** @var bool scroll to this file on display? */
+    protected $scrollIntoView = false;
+
     /**
      * Display constructor.
      * @param MediaFile $mediaFile
@@ -59,6 +62,16 @@ class Display
     public function relativeDisplay($ns)
     {
         $this->relativeDisplay = $ns;
+    }
+
+    /**
+     * Scroll to this file on display?
+     *
+     * @param bool $set
+     */
+    public function scrollIntoView($set = true)
+    {
+        $this->scrollIntoView = $set;
     }
 
     /** @return string */

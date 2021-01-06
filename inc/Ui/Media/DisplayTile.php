@@ -30,7 +30,9 @@ class DisplayTile extends Display
      */
     public function show()
     {
-        echo '<dl title="' . $this->mediaFile->getDisplayName() . '">';
+        $jump = $this->scrollIntoView ? 'id="scroll__here"' : '';
+
+        echo '<dl title="' . $this->mediaFile->getDisplayName() . '"' . $jump . '>';
         echo '<dt>';
         echo '<a id="l_:' . $this->mediaFile->getId() . '" class="image thumb" href="' . $this->mmUrl . '">';
         echo $this->getPreviewHtml(90, 90);

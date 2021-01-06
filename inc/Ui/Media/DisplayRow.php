@@ -13,16 +13,14 @@ class DisplayRow extends DisplayTile
     public function show()
     {
         global $lang;
-
-        // FIXME support for jumping to file?
         // FIXME Zebra classes have been dropped and need to be readded via CSS
-        // FIXME use of $display_namespace unclear, dropped for now -> maybe for search?
 
         $id = $this->mediaFile->getId();
         $class = 'select mediafile mf_' . $this->mediaFile->getIcoClass();
         $info = trim($this->formatDimensions('') . ' ' . $this->formatDate() . ' ' . $this->formatFileSize());
+        $jump = $this->scrollIntoView ? 'id="scroll__here"' : '';
 
-        echo '<div title="' . $id . '">';
+        echo '<div title="' . $id . '" ' . $jump . '>';
         echo '<a id="h_:' . $id . '" class="' . $class . '">' .
             $this->formatDisplayName() .
             '</a> ';
