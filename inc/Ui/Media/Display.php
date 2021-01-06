@@ -73,7 +73,7 @@ class Display
      * @param string $empty what to show when no dimensions are available
      * @return string
      */
-    protected function formatDimensions($empty = '&#160')
+    protected function formatDimensions($empty = '&#160;')
     {
         $w = $this->mediaFile->getWidth();
         $h = $this->mediaFile->getHeight();
