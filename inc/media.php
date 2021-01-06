@@ -1566,13 +1566,13 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
         foreach($evdata['data'] as $item){
             if (!$fullscreen) {
                 // FIXME old call: media_printfile($item,$item['perm'],'',true);
-                // FIXME we actually want the namespace here -> needs fixing
                 $display = new \dokuwiki\Ui\Media\DisplayRow($item);
+                $display->relativeDisplay($ns);
                 $display->show();
             } else {
                 // FIXME old call: media_printfile_thumbs($item,$item['perm'],false,true);
-                // FIXME we actually want the namespace here -> needs fixing
                 $display = new \dokuwiki\Ui\Media\DisplayTile($item);
+                $display->relativeDisplay($ns);
                 echo '<li>';
                 $display->show();
                 echo '</li>';

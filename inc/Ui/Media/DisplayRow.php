@@ -24,7 +24,7 @@ class DisplayRow extends DisplayTile
 
         echo '<div title="' . $id . '">';
         echo '<a id="h_:' . $id . '" class="' . $class . '">' .
-            $this->mediaFile->getDisplayName() .
+            $this->formatDisplayName() .
             '</a> ';
         echo '<span class="info">(' . $info . ')</span>' . NL;
 
@@ -38,7 +38,7 @@ class DisplayRow extends DisplayTile
         echo ' <a href="' . $link . '" target="_blank"><img src="' . DOKU_BASE . 'lib/images/mediamanager.png" ' .
             'alt="' . $lang['btn_media'] . '" title="' . $lang['btn_media'] . '" class="btn" /></a>';
 
-        // delete button  FIXME
+        // delete button
         if ($this->mediaFile->isWritable() && $this->mediaFile->userPermission() >= AUTH_DELETE) {
             $link = DOKU_BASE . 'lib/exe/mediamanager.php?delete=' . rawurlencode($id) .
                 '&amp;sectok=' . getSecurityToken();

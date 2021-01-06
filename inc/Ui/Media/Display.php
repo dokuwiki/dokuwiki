@@ -6,8 +6,11 @@ use dokuwiki\Media\MediaFile;
 
 class Display
 {
-
+    /** @var MediaFile */
     protected $mediaFile;
+
+    /** @var string should IDs be shown relative to this namespace? Used in search results */
+    protected $relativeDisplay = null;
 
     /**
      * Display constructor.
@@ -48,6 +51,16 @@ class Display
         return DOKU_BASE . $link;
     }
 
+    /**
+     * Show IDs relative to this namespace
+     *
+     * @param string|null $ns Use null to disable
+     */
+    public function relativeDisplay($ns)
+    {
+        $this->relativeDisplay = $ns;
+    }
+
     /** @return string */
     protected function formatDate()
     {
@@ -75,5 +88,19 @@ class Display
     protected function formatFileSize()
     {
         return filesize_h($this->mediaFile->getFileSize());
+    }
+
+    /** @return string */
+    protected function formatDisplayName()
+    {
+        if ($this->relativeDisplay !== null) {
+            $id = $this->mediaFile->getId();
+            if (substr($id, 0, strlen($this->relativeDisplay)) == $this->relativeDisplay) {
+                $id = substr($id, strlen($this->relativeDisplay));
+            }
+            return ltrim($id, ':');
+        } else {
+            return $this->mediaFile->getDisplayName();
+        }
     }
 }

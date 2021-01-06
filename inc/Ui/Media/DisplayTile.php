@@ -39,7 +39,7 @@ class DisplayTile extends Display
 
         echo '<dd class="name">';
         echo '<a href="' . $this->mmUrl . '" id="h_:' . $this->mediaFile->getId() . '">' .
-            $this->mediaFile->getDisplayName() .
+            $this->formatDisplayName() .
             '</a>';
         echo '</dd>';
 
