@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author IAW_Dyaln <dylang.81x@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  * @author Liliana <lilianasaidon@gmail.com>
  * @author Alex Cachinero <anarres@protonmail.com>
