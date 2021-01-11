@@ -84,8 +84,7 @@ class Admin extends Ui {
         if(substr($conf['savedir'], 0, 2) !== './') return;
         $img = DOKU_URL . $conf['savedir'] .
             '/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png';
-        echo '<a style="border:none; float:right;" id="security__check"
-                href="http://www.dokuwiki.org/security#web_access_security" data-src="' . $img . '">⚠</a>';
+        echo '<div id="security__check" data-src="' . $img . '"></div>';
     }
 
     /**
