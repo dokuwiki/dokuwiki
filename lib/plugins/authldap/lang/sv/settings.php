@@ -4,7 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Tor Härnqvist <tor@harnqvist.se>
- * @author Smorkster Andersson smorkster@gmail.com
+ * @author Smorkster Andersson <smorkster@gmail.com>
  */
 $lang['server']                = 'Din LDAO server. Antingen värdnamn (<code>localhost</code>) eller giltig full URL (<code>ldap://server.tld:389</code>)';
 $lang['port']                  = 'LDAP server port, om det inte angavs full URL ovan';

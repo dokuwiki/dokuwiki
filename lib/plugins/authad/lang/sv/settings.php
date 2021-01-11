@@ -4,7 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Tor Härnqvist <tor@harnqvist.se>
- * @author Smorkster Andersson smorkster@gmail.com
+ * @author Smorkster Andersson <smorkster@gmail.com>
  */
 $lang['account_suffix']        = 'Ditt konto suffix. T.ex. <code>min.domän.org</code>';
 $lang['base_dn']               = 'Din bas-DN. T ex <code>DC=min,DC=domän,DC=org</code>';

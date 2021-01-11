@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Patrik K Lundberg <patrik.kotiranta.lundberg@gmail.com>
  * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Joaquim Homrighausen <joho@webbplatsen.se>
  * @author Per Foreby <per@foreby.se>
@@ -78,44 +79,6 @@ $lang['badpassconfirm']        = 'Ledsen, lösenordet var felaktigt';
 $lang['minoredit']             = 'Små ändringar';
 $lang['draftdate']             = 'Utkast automatiskt sparat';
 $lang['nosecedit']             = 'Sidan ändrades medan du skrev, sektionsinformationen var inte uppdaterad. Laddar hela sidan istället.';
-$lang['regmissing']            = 'Du måste fylla i alla fälten.';
-$lang['reguexists']            = 'Det finns redan en användare med det användarnamnet.';
-$lang['regsuccess']            = 'Användarkontot skapat, lösenordet har skickats via e-post.';
-$lang['regsuccess2']           = 'Användarkontot skapat.';
-$lang['regfail']               = 'Användaren kunde inte skapas.';
-$lang['regmailfail']           = 'Ett fel uppstod när ditt lösenord skulle skickas via e-post. Var god kontakta administratören!';
-$lang['regbadmail']            = 'Den angivna e-postadressen verkar vara ogiltig - om du anser detta felaktigt, var god kontakta administratören';
-$lang['regbadpass']            = 'De två angivna lösenorden är inte identiska. Försök igen.';
-$lang['regpwmail']             = 'Ditt DokuWikilösenord';
-$lang['reghere']               = 'Har du inte ett konto än? Skaffa ett';
-$lang['profna']                = 'Denna wiki stödjer inte ändringar av profiler';
-$lang['profnochange']          = 'Ingenting ändrades, inget att göra.';
-$lang['profnoempty']           = 'Namn och e-postadress måste fyllas i.';
-$lang['profchanged']           = 'Användarprofilen uppdaterad.';
-$lang['profnodelete']          = 'Den här wiki:n stödjer ej borttagning av användare';
-$lang['profdeleteuser']        = 'Radera kontot';
-$lang['profdeleted']           = 'Ditt användarkonto har raderats från den här wiki:n';
-$lang['profconfdelete']        = 'Jag vill ta bort mitt konto/inlogg på den här wiki:n <br/> Denna åtgärd går ej att ångra.';
-$lang['profconfdeletemissing'] = 'Bekräftelse-kryssrutan är ej markerad';
-$lang['proffail']              = 'Användarprofilen uppdaterades ej.';
-$lang['pwdforget']             = 'Glömt ditt lösenord? Ordna ett nytt';
-$lang['resendna']              = 'Den här wikin stödjer inte utskick av lösenord.';
-$lang['resendpwd']             = 'Sätt lösenord för';
-$lang['resendpwdmissing']      = 'Du måste fylla i alla fält.';
-$lang['resendpwdnouser']       = 'Den här användaren hittas inte i databasen.';
-$lang['resendpwdbadauth']      = 'Den här verifieringskoden är inte giltig. Kontrollera att du använde hela verifieringslänken.';
-$lang['resendpwdconfirm']      = 'En verifieringslänk har skickats med e-post.';
-$lang['resendpwdsuccess']      = 'Ditt nya lösenord har skickats med e-post.';
-$lang['license']               = 'Om inte annat angivet, innehållet i denna wiki är licensierat under följande licenser:';
-$lang['licenseok']             = 'Notera: Genom att ändra i denna sidan så accepterar du att licensiera ditt bidrag under följande licenser:';
-$lang['searchmedia']           = 'Sök efter filnamn:';
-$lang['searchmedia_in']        = 'Sök i %s';
-$lang['txt_upload']            = 'Välj fil att ladda upp:';
-$lang['txt_filename']          = 'Ladda upp som (ej obligatoriskt):';
-$lang['txt_overwrt']           = 'Skriv över befintlig fil';
-$lang['maxuploadsize']         = 'Max %s per uppladdad fil.';
-$lang['lockedby']              = 'Låst av:';
-$lang['lockexpire']            = 'Lås upphör att gälla:';
 $lang['js']['willexpire']      = 'Ditt redigeringslås för detta dokument kommer snart att upphöra.\nFör att undvika versionskonflikter bör du förhandsgranska ditt dokument för att förlänga redigeringslåset.';
 $lang['js']['notsavedyet']     = 'Det finns ändringar som inte är sparade.
 Är du säker på att du vill fortsätta?';
@@ -158,6 +121,57 @@ $lang['js']['media_done_btn']  = 'Färdig';
 $lang['js']['media_drop']      = 'Släpp filer här för att ladda upp';
 $lang['js']['media_cancel']    = 'ta bort';
 $lang['js']['media_overwrt']   = 'Skriv över existerande filer';
+$lang['search_exact_match']    = 'Exakt träff';
+$lang['search_starts_with']    = 'Börjar med';
+$lang['search_ends_with']      = 'Slutar med';
+$lang['search_contains']       = 'Innehåller';
+$lang['search_custom_match']   = 'Anpassad';
+$lang['search_any_ns']         = 'Alla namespaces';
+$lang['search_any_time']       = 'Alla tider';
+$lang['search_past_7_days']    = 'Senaste veckan';
+$lang['search_past_month']     = 'Senaste månaden';
+$lang['search_past_year']      = 'Senaste året';
+$lang['search_sort_by_hits']   = 'Sortera efter träffar';
+$lang['search_sort_by_mtime']  = 'Sortera efter senast modifierad';
+$lang['regmissing']            = 'Du måste fylla i alla fälten.';
+$lang['reguexists']            = 'Det finns redan en användare med det användarnamnet.';
+$lang['regsuccess']            = 'Användarkontot skapat, lösenordet har skickats via e-post.';
+$lang['regsuccess2']           = 'Användarkontot skapat.';
+$lang['regfail']               = 'Användaren kunde inte skapas.';
+$lang['regmailfail']           = 'Ett fel uppstod när ditt lösenord skulle skickas via e-post. Var god kontakta administratören!';
+$lang['regbadmail']            = 'Den angivna e-postadressen verkar vara ogiltig - om du anser detta felaktigt, var god kontakta administratören';
+$lang['regbadpass']            = 'De två angivna lösenorden är inte identiska. Försök igen.';
+$lang['regpwmail']             = 'Ditt DokuWikilösenord';
+$lang['reghere']               = 'Har du inte ett konto än? Skaffa ett';
+$lang['profna']                = 'Denna wiki stödjer inte ändringar av profiler';
+$lang['profnochange']          = 'Ingenting ändrades, inget att göra.';
+$lang['profnoempty']           = 'Namn och e-postadress måste fyllas i.';
+$lang['profchanged']           = 'Användarprofilen uppdaterad.';
+$lang['profnodelete']          = 'Den här wiki:n stödjer ej borttagning av användare';
+$lang['profdeleteuser']        = 'Radera kontot';
+$lang['profdeleted']           = 'Ditt användarkonto har raderats från den här wiki:n';
+$lang['profconfdelete']        = 'Jag vill ta bort mitt konto/inlogg på den här wiki:n <br/> Denna åtgärd går ej att ångra.';
+$lang['profconfdeletemissing'] = 'Bekräftelse-kryssrutan är ej markerad';
+$lang['proffail']              = 'Användarprofilen uppdaterades ej.';
+$lang['pwdforget']             = 'Glömt ditt lösenord? Ordna ett nytt';
+$lang['resendna']              = 'Den här wikin stödjer inte utskick av lösenord.';
+$lang['resendpwd']             = 'Sätt lösenord för';
+$lang['resendpwdmissing']      = 'Du måste fylla i alla fält.';
+$lang['resendpwdnouser']       = 'Den här användaren hittas inte i databasen.';
+$lang['resendpwdbadauth']      = 'Den här verifieringskoden är inte giltig. Kontrollera att du använde hela verifieringslänken.';
+$lang['resendpwdconfirm']      = 'En verifieringslänk har skickats med e-post.';
+$lang['resendpwdsuccess']      = 'Ditt nya lösenord har skickats med e-post.';
+$lang['license']               = 'Om inte annat angivet, innehållet i denna wiki är licensierat under följande licenser:';
+$lang['licenseok']             = 'Notera: Genom att ändra i denna sidan så accepterar du att licensiera ditt bidrag under följande licenser:';
+$lang['searchmedia']           = 'Sök efter filnamn:';
+$lang['searchmedia_in']        = 'Sök i %s';
+$lang['txt_upload']            = 'Välj fil att ladda upp:';
+$lang['txt_filename']          = 'Ladda upp som (ej obligatoriskt):';
+$lang['txt_overwrt']           = 'Skriv över befintlig fil';
+$lang['maxuploadsize']         = 'Max %s per uppladdad fil.';
+$lang['allowedmime']           = 'Lista av alla tillåtna extensions';
+$lang['lockedby']              = 'Låst av:';
+$lang['lockexpire']            = 'Lås upphör att gälla:';
 $lang['rssfailed']             = 'Ett fel uppstod när detta RSS-flöde skulle hämtas: ';
 $lang['nothingfound']          = 'Inga filer hittades.';
 $lang['mediaselect']           = 'Mediafiler';
@@ -290,7 +304,10 @@ $lang['i_modified']            = 'Av säkerhetsskäl fungerar det här skriptet 
                          Du får antingen packa upp det nedladdade paketet på nytt, eller konsultera de kompletta
                          <a href="http://dokuwiki.org/install">instruktionerna för installation av Dokuwiki</a>';
 $lang['i_funcna']              = 'PHP-funktionen <code>%s</code> är inte tillgänglig. Kanske ditt webbhotell har avaktiverat den av någon anledning?';
+$lang['i_disabled']            = 'Det är avstängt av din leverantör.';
+$lang['i_funcnmail']           = '<b>Note:</b> PHP mail funktionen är inte tillgänglig. %s Om det är fortsatt otillgängligt kan du installera <a href="https://www.dokuwiki.org/plugin:smtp">smtp pluginet</a>';
 $lang['i_phpver']              = 'Din PHP-version <code>%s</code> är lägre än vad som krävs <code>%s</code>. Du behöver uppgradera din PHP-installation.';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload måste inaktiveras i php.ini för att använda DokuWiki.';
 $lang['i_permfail']            = '<code>%s</code> är inte skrivbar av DokuWiki. Du behöver ändra filskyddet på den här katalogen!';
 $lang['i_confexists']          = '<code>%s</code> finns redan';
 $lang['i_writeerr']            = 'Kan inte skapa <code>%s</code>. Kontrollera filskyddet på kataloger/filer och skapa filen manuellt.';
@@ -343,9 +360,12 @@ $lang['media_perm_upload']     = 'Du har tyvärr inte tillräckliga behörighete
 $lang['media_update']          = 'Ladda upp ny version';
 $lang['media_restore']         = 'Återställ denna version';
 $lang['media_acl_warning']     = 'Listan kanske inte är ';
+$lang['email_fail']            = 'PHP mail() saknas eller är inaktiverad. Följande mejl skickades inte:';
 $lang['currentns']             = 'Nuvarande namnrymd.';
 $lang['searchresult']          = 'Sökresultat';
 $lang['plainhtml']             = 'Ren HTML';
+$lang['wikimarkup']            = 'Wiki Markup';
 $lang['page_nonexist_rev']     = 'Sidan fanns inte på %s. Den blev sedermera skapad på <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Oförmögen att processera i parameter "%s".';
 $lang['email_signature_text']  = 'Detta meddelande har skapats av DokuWiki på
 @DOKUWIKIURL@';
