@@ -569,7 +569,6 @@ function check_functions(){
         random_bytes(1);
     } catch (\Exception $th) {
         // If an appropriate source of randomness cannot be found, an Exception will be thrown by PHP 7+
-        // this exception is also thrown by paragonie/random_compat for PHP 5.6 support
         $error[] = $lang['i_urandom'];
         $ok = false;
     }
