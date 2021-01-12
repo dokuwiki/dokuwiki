@@ -7,7 +7,7 @@
  * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Smorkster Andersson <smorkster@gmail.com>
  */
-$lang['server']                = 'Din LDAO server. Antingen värdnamn (<code>localhost</code>) eller giltig full URL (<code>ldap://server.tld:389</code>)';
+$lang['server']                = 'Din LDAP server. Antingen värdnamn (<code>localhost</code>) eller giltig full URL (<code>ldap://server.tld:389</code>)';
 $lang['port']                  = 'LDAP server port, om det inte angavs full URL ovan';
 $lang['usertree']              = 'Specificera var användarkonton finns. T.ex. <code>ou=Användare, dc=server, dc=tld</code>';
 $lang['grouptree']             = 'Specificera var grupper finns. T.ex. <code>ou=Grupp, dc=server, dc=tld</code>';
@@ -30,6 +30,3 @@ $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
 $lang['deref_o_2']             = 'LDAP_DEREF_FINDING';
 $lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS';
-$lang['referrals_o_-1']        = 'använd standard';
-$lang['referrals_o_0']         = '<b>Note:</b> PHP mail funktionen är inte tillgänglig. %s Om det är fortsatt otillgängligt kan du installera <a href="https://www.dokuwiki.org/plugin:smtp">smtp pluginet</a>';
-$lang['referrals_o_1']         = 'mbstring.func_overload måste inaktiveras i php.ini för att använda DokuWiki.';

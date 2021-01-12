@@ -5,10 +5,6 @@
  *
  * @author Patrik K Lundberg <patrik.kotiranta.lundberg@gmail.com>
  */
-$lang['debug']                 = 'Oförmögen att processera i parameter "%s".';
-$lang['dsn']                   = '======= Den här sidan existerar inte längre ======
-
-Du har följt en länk till en sida som inte längre existerar. Du kan kontrollera följande lista [[?do=revisions|old revisions]] för att se när och varför den togs bort, gå till en äldre version för att återställa den.';
 $lang['user']                  = 'Användaren för databasen ovan (tom för sqlite)';
 $lang['pass']                  = 'Lösenordet för databasen ovan (tom för sqlite)';
 $lang['select-user']           = 'SQL uttryck för att välja datan för en enda användare';
