@@ -2,7 +2,7 @@
 
 namespace dokuwiki\Ui\Media;
 
-use dokuwiki\Media\MediaFile;
+use dokuwiki\File\MediaFile;
 
 class Display
 {

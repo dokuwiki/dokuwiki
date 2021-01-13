@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Media;
+namespace dokuwiki\File;
 
 use dokuwiki\Utf8\PhpString;
 

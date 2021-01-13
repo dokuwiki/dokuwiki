@@ -2,7 +2,7 @@
 
 namespace dokuwiki\Ui\Media;
 
-use dokuwiki\Media\MediaFile;
+use dokuwiki\File\MediaFile;
 
 /**
  * Display a MediaFile in the FullScreen MediaManager

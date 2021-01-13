@@ -279,7 +279,7 @@ function search_mediafiles(&$data,$base,$file,$type,$lvl,$opts){
         return false;
     }
 
-    $data[] = new \dokuwiki\Media\MediaFile($id);
+    $data[] = new \dokuwiki\File\MediaFile($id);
     return false;
 }
 
