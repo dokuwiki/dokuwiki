@@ -118,6 +118,28 @@ class PageCLI extends CLI {
             true,
             'unlock'
         );
+
+        /* gmeta command */
+        $options->registerCommand(
+            'gmeta',
+            'Prints metadata value for a page to stdout.'
+        );
+        $options->registerArgument(
+            'wikipage',
+            'The wiki page to get the metadata for',
+            true,
+            'gmeta'
+        );
+        $options->registerArgument(
+            'key',
+            'The name of the metadata item to be retrieved.' . "\n" .
+            'If empty, an array of all the metadata items is returned.' ."\n" .
+            'For retrieving items that are stored in sub-arrays, separate the ' .
+            'keys of the different levels by spaces, in quotes, eg "date modified".',
+            false,
+            'gmeta'
+        );
+
     }
 
     /**
@@ -159,6 +181,14 @@ class PageCLI extends CLI {
                 $wiki_id = array_shift($args);
                 $this->clearLock($wiki_id);
                 $this->success("$wiki_id unlocked");
+                break;
+            case 'gmeta':
+                $wiki_id = array_shift($args);
+                $key = trim(array_shift($args));
+                $meta=print_r(p_get_metadata($wiki_id, $key), true);
+                print($meta);
+                if (strcmp(substr($meta, -1), "\n"))
+                    print("\n");
                 break;
             default:
                 echo $options->help();
