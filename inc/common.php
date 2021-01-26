@@ -2079,7 +2079,7 @@ function set_doku_pref($pref, $val) {
         }
         $cookieVal = implode('#', $parts);
     } else if ($orig === false && $val !== false) {
-        $cookieVal = ($_COOKIE['DOKU_PREFS'] ? $_COOKIE['DOKU_PREFS'] . '#' : '') .
+        $cookieVal = (isset($_COOKIE['DOKU_PREFS']) ? $_COOKIE['DOKU_PREFS'] . '#' : '') .
             rawurlencode($pref) . '#' . rawurlencode($val);
     }
 
