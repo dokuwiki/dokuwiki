@@ -16,7 +16,7 @@ class Revisions extends Ui
     protected $first;
     protected $media_id;
 
-    /** 
+    /**
      * Revisions Ui constructor
      *
      * @param int $first  skip the first n changelog lines
@@ -320,6 +320,9 @@ class Revisions extends Ui
 
             public function __construct(array $info)
             {
+                if (!isset($info['current'])) {
+                    $info['current'] = false;
+                }
                 $this->info = $info;
             }
 
