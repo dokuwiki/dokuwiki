@@ -156,7 +156,7 @@ class BulkSubscriptionSender extends SubscriptionSender
             return false;
         }
 
-        if (!empty($conf['dperm'])) {
+        if ($conf['dperm']) {
             chmod($lock, $conf['dperm']);
         }
         return true;

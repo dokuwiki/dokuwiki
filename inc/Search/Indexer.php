@@ -942,7 +942,7 @@ class Indexer {
                 return false;
             }
         }
-        if (!empty($conf['dperm'])) {
+        if ($conf['dperm']) {
             chmod($lock, $conf['dperm']);
         }
         return $status;

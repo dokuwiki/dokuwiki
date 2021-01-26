@@ -410,7 +410,7 @@ function io_lock($file){
         if ((time() - $timeStart) > 3) break;
         $locked = @mkdir($lockDir, $conf['dmode']);
         if($locked){
-            if(!empty($conf['dperm'])) chmod($lockDir, $conf['dperm']);
+            if($conf['dperm']) chmod($lockDir, $conf['dperm']);
             break;
         }
         usleep(50);
