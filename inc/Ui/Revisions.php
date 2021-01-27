@@ -237,15 +237,22 @@ class Revisions extends Ui
                         'current' => true,
                 );
             } else {
+                if (isset($INFO['meta']['last_change'])) {
+                    $type = $INFO['meta']['last_change']['type'];
+                    $sizechange = $INFO['meta']['last_change']['sizechange'];
+                } else {
+                    $type = $sizechange = null;
+                }
+
                 $revisions[] = array(
                         'date' => $INFO['lastmod'],
                         'ip'   => null,
-                        'type' => $INFO['meta']['last_change']['type'],
+                        'type' => $type,
                         'id'   => $INFO['id'],
                         'user' => $INFO['editor'],
                         'sum'  => $INFO['sum'],
                         'extra' => null,
-                        'sizechange' => $INFO['meta']['last_change']['sizechange'],
+                        'sizechange' => $sizechange,
                         'current' => true,
                 );
             }
