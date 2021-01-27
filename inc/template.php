@@ -1272,7 +1272,7 @@ function tpl_getLang($id) {
             }
         }
     }
-    return $lang[$id];
+    return isset($lang[$id]) ? $lang[$id] : '';
 }
 
 /**
