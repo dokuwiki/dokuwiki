@@ -1186,8 +1186,10 @@ class Indexer {
             if ($tuple === '') continue;
             list($key, $cnt) = explode('*', $tuple);
             if (!$cnt) continue;
-            $key = $keys[$key];
-            if ($key === false || is_null($key)) continue;
+            if (isset($keys[$key])) {
+                $key = $keys[$key];
+                if ($key === false || is_null($key)) continue;
+            }
             $result[$key] = $cnt;
         }
         return $result;
