@@ -587,8 +587,10 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
 
     if(is_array($more)) {
         // add token for resized images
-        if(!empty($more['w']) || !empty($more['h']) || $isexternalimage){
-            $more['tok'] = media_get_token($id,$more['w'],$more['h']);
+        $w = isset($more['w']) ? $more['w'] : null;
+        $h = isset($more['h']) ? $more['h'] : null;
+        if(!$w || !$h || $isexternalimage){
+            $more['tok'] = media_get_token($id, $w, $h);
         }
         // strip defaults for shorter URLs
         if(isset($more['cache']) && $more['cache'] == 'cache') unset($more['cache']);
