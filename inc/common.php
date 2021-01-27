@@ -589,7 +589,7 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
         // add token for resized images
         $w = isset($more['w']) ? $more['w'] : null;
         $h = isset($more['h']) ? $more['h'] : null;
-        if(!$w || !$h || $isexternalimage){
+        if($w || $h || $isexternalimage){
             $more['tok'] = media_get_token($id, $w, $h);
         }
         // strip defaults for shorter URLs
