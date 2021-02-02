@@ -681,6 +681,7 @@ function media_notify($id,$file,$mime,$old_rev=false,$current_rev=false){
 function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=false){
     global $conf;
     global $lang;
+	global $INPUT;
     $ns = cleanID($ns);
 
     // check auth our self if not given (needed for ajax calls)
@@ -700,22 +701,72 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
         $dir = utf8_encodeFN(str_replace(':','/',$ns));
         $data = array();
         search($data,$conf['mediadir'],'search_media',
-                array('showmsg'=>true,'depth'=>1),$dir,1,$sort);
-
-        if(!count($data)){
+                array('showmsg'=>true,'depth'=>1),$dir,1,$sort);		
+		// How many items to list per page
+		$nItemsPerPage = 50;
+		// amount of files.
+		$item_count = empty($data) ? 0 : count($data);
+		// How many pages will there be
+		$max_pages = ceil($item_count / $nItemsPerPage);
+		// What page are we currently on?
+		$page = min($max_pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
+			'options' => array(
+            'default'   => 1,
+            'min_range' => 1,
+			),
+		)));
+        if(!$item_count){
             echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
         }else {
             if ($fullscreenview) {
                 echo '<ul class="' . _media_get_list_type() . '">';
             }
-            foreach($data as $item){
+            foreach( array_slice( $data, $nItemsPerPage*($page-1), $nItemsPerPage) as $item){
                 if (!$fullscreenview) {
                     media_printfile($item,$auth,$jump);
                 } else {
                     media_printfile_thumbs($item,$auth,$jump);
                 }
             }
-            if ($fullscreenview) echo '</ul>'.NL;
+		if ($fullscreenview) echo '</ul>'.NL;
+			// Previous Button
+			$previous  = '';
+			if($_GET['page'] > 1){
+				if (!($INPUT->str('do') == 'media')){
+				$previous .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.$ns.'&page='.($_GET['page']-1).'">';
+				}else{
+				$previous .= '<a href="'.media_managerURL(array('ns' => idfilter($ns, false), 'tab_files' => 'files', 'page' => ($_GET['page']-1))).'">';
+				}
+			$previous .= 'Previous';
+			$previous .= '</a>';
+			}
+			// Next Button
+			$next  = '';
+			if($_GET['page'] < $max_pages){
+			if($_GET['page'] == 0){ // the page=1 url doesn't show up at first so need to count from 2 at the beginning.
+				if (!($INPUT->str('do') == 'media')){
+				$next .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.$ns.'&page='. ($_GET['page']+2).'">';
+				}else{
+				$next .= '<a href="'.media_managerURL(array('ns' => idfilter($ns, false), 'tab_files' => 'files', 'page' => ($_GET['page']+2))).'">';
+				}
+			}else{
+				if (!($INPUT->str('do') == 'media')){
+				$next .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.$ns.'&page='. ($_GET['page']+1).'" class="idx_dir">';
+				}else{ 
+				$next .= '<a href="'.media_managerURL(array('ns' => idfilter($ns, false), 'tab_files' => 'files', 'page' => ($_GET['page']+1))).'"">';
+				}
+			}
+			$next .= ' Next';
+			$next .= '</a>';
+			}
+			// Files Amount
+			$file_amount  = '';
+			$file_amount .= '<span> ' .$item_count.' Files</span>';
+			// Page Amount
+			$page_amount  = '';
+			$page_amount .= '<span> ' .$max_pages.' Pages</span>';
+			// Call the data
+			echo '<div id="media_pagination">'.$previous, $next, $file_amount, $page_amount.'</div>'.NL;
         }
     }
 }
