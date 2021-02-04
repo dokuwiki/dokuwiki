@@ -95,6 +95,7 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
             $conf['compression'] = 0;
         }
         // make real paths and check them
+        init_creationmodes();
         init_paths();
         init_files();
 
