@@ -196,8 +196,8 @@ class remote_test extends DokuWikiTest {
         $this->assertEquals(array('string','int','bool','string'), $methods['plugin.testplugin2.commented']['args']);
         $this->assertEquals('array', $methods['plugin.testplugin2.commented']['return']);
         $this->assertEquals(0, $methods['plugin.testplugin2.commented']['public']);
-        $this->assertContains('This is a dummy method', $methods['plugin.testplugin2.commented']['doc']);
-        $this->assertContains('string $str some more parameter description', $methods['plugin.testplugin2.commented']['doc']);
+        $this->assertStringContainsString('This is a dummy method', $methods['plugin.testplugin2.commented']['doc']);
+        $this->assertStringContainsString('string $str some more parameter description', $methods['plugin.testplugin2.commented']['doc']);
     }
 
     function test_hasAccessSuccess() {
@@ -206,15 +206,13 @@ class remote_test extends DokuWikiTest {
         $this->assertTrue($this->remote->hasAccess());
     }
 
-    /**
-     * @expectedException dokuwiki\Remote\AccessDeniedException
-     */
     function test_hasAccessFail() {
         global $conf;
         $conf['remote'] = 0;
         // the hasAccess() should throw a Exception to keep the same semantics with xmlrpc.php.
         // because the user(xmlrpc) check remote before .--> (!$conf['remote']) die('XML-RPC server not enabled.');
         // so it must be a Exception when get here.
+        $this->expectException(\dokuwiki\Remote\AccessDeniedException::class);
         $this->remote->hasAccess();
     }
 
@@ -392,23 +390,19 @@ class remote_test extends DokuWikiTest {
         $this->assertTrue($remoteApi->call('plugin.testplugin.publicCall'));
     }
 
-    /**
-     * @expectedException dokuwiki\Remote\AccessDeniedException
-     */
     function test_publicCallCoreDeny() {
         global $conf;
         $conf['useacl'] = 1;
+        $this->expectException(\dokuwiki\Remote\AccessDeniedException::class);
         $remoteApi = new Api();
         $remoteApi->getCoreMethods(new RemoteAPICoreTest());
         $remoteApi->call('wiki.stringTestMethod');
     }
 
-    /**
-     * @expectedException dokuwiki\Remote\AccessDeniedException
-     */
     function test_publicCallPluginDeny() {
         global $conf;
         $conf['useacl'] = 1;
+        $this->expectException(\dokuwiki\Remote\AccessDeniedException::class);
         $remoteApi = new Api();
         $remoteApi->call('plugin.testplugin.methodString');
     }
