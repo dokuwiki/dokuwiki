@@ -1008,6 +1008,7 @@ function tpl_img_getTag($tags, $alt = '', $src = null) {
     global $SRC;
 
     if(is_null($src)) $src = $SRC;
+    if(is_null($src)) return $alt;
 
     static $meta = null;
     if(is_null($meta)) $meta = new JpegMeta($src);

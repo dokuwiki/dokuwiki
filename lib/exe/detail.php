@@ -4,6 +4,10 @@ use dokuwiki\Extension\Event;
 
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 define('DOKU_MEDIADETAIL',1);
+
+// define all DokuWiki globals here (needed within test requests but also helps to keep track)
+global $INPUT, $IMG, $ID, $REV, $SRC, $ERROR, $AUTH;
+
 require_once(DOKU_INC.'inc/init.php');
 
 $IMG  = getID('media');
