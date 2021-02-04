@@ -40,7 +40,7 @@ class Logger
      */
     static public function getInstance($facility = self::LOG_ERROR)
     {
-        if (self::$instances[$facility] === null) {
+        if (empty(self::$instances[$facility])) {
             self::$instances[$facility] = new Logger($facility);
         }
         return self::$instances[$facility];

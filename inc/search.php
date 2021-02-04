@@ -132,13 +132,14 @@ function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
  */
 function search_index(&$data,$base,$file,$type,$lvl,$opts){
     global $conf;
+    $ns = isset($opts['ns']) ? $opts['ns'] : '';
     $opts = array(
         'pagesonly' => true,
         'listdirs' => true,
         'listfiles' => empty($opts['nofiles']),
         'sneakyacl' => $conf['sneaky_index'],
         // Hacky, should rather use recmatch
-        'depth' => preg_match('#^'.preg_quote($file, '#').'(/|$)#','/'.$opts['ns']) ? 0 : -1
+        'depth' => preg_match('#^'.preg_quote($file, '#').'(/|$)#','/'.$ns) ? 0 : -1
     );
 
     return search_universal($data, $base, $file, $type, $lvl, $opts);

@@ -424,7 +424,7 @@ EOT;
     }
 
     // enable popularity submission
-    if($d['pop']){
+    if(isset($d['pop']) && $d['pop']){
         @touch(DOKU_INC.'data/cache/autosubmit.txt');
     }
 

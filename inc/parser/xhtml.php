@@ -1249,7 +1249,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $title = $reference;
             }
         }
-        list($src, $hash) = explode('#', $src, 2);
+        // Squelch the warning in case there is no hash in the URL
+        @list($src, $hash) = explode('#', $src, 2);
         $noLink = false;
         if($src == '') {
             // only output plaintext without link if there is no src
