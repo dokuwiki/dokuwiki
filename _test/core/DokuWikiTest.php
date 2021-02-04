@@ -3,33 +3,12 @@
 use dokuwiki\Extension\PluginController;
 use dokuwiki\Extension\Event;
 use dokuwiki\Extension\EventHandler;
-
-if(!class_exists('PHPUnit_Framework_TestCase')) {
-    /**
-     * phpunit 5/6 compatibility
-     */
-    class PHPUnit_Framework_TestCase extends PHPUnit\Framework\TestCase {
-        /**
-         * setExpectedException is deprecated in PHPUnit 6
-         *
-         * @param string $class
-         * @param null|string $message
-         */
-        public function setExpectedException($class, $message=null) {
-            $this->expectException($class);
-            if(!is_null($message)) {
-                $this->expectExceptionMessage($message);
-            }
-        }
-    }
-}
-
 /**
  * Helper class to provide basic functionality for tests
  *
  * @uses PHPUnit_Framework_TestCase and thus PHPUnit 5.7+ is required
  */
-abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
+abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
 
     /**
      * tests can override this
@@ -44,6 +23,19 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
      * @var array plugins to disable for test class
      */
     protected $pluginsDisabled = array();
+
+    /**
+     * setExpectedException was deprecated in PHPUnit 6
+     *
+     * @param string $class
+     * @param null|string $message
+     */
+    public function setExpectedException($class, $message=null) {
+        $this->expectException($class);
+        if(!is_null($message)) {
+            $this->expectExceptionMessage($message);
+        }
+    }
 
     /**
      * Setup the data directory
