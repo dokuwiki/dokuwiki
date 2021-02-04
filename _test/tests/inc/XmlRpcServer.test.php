@@ -15,7 +15,7 @@ class XmlRpcServerTest extends DokuWikiTest
 {
     protected $server;
 
-    function setUp()
+    function setUp () : void
     {
         parent::setUp();
         global $conf;
