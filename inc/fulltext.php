@@ -80,7 +80,9 @@ function _ft_pageSearch(&$data) {
             case 'W-:':
             case 'W_:': // word
                 $word    = substr($token, 3);
-                $stack[] = (array) $lookup[$word];
+                if(isset($lookup[$word])) {
+                    $stack[] = (array)$lookup[$word];
+                }
                 break;
             case 'P+:':
             case 'P-:': // phrase
