@@ -193,7 +193,7 @@ class HTTPClient {
             $use_tls     = $this->proxy_ssl;
         }else{
             $request_url = $path;
-            if (!isset($port)) $port = ($uri['scheme'] == 'https') ? 443 : 80;
+            $port = $uriPort ?: ($uri['scheme'] == 'https' ? 443 : 80);
             $use_tls     = ($uri['scheme'] == 'https');
         }
 
