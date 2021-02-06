@@ -251,7 +251,7 @@ class input_test extends DokuWikiTest {
         $INPUT->get->set('test2','foo');
         $this->assertEquals('foo',$_GET['test2']);
         $this->assertEquals('foo',$_REQUEST['test2']);
-        $this->assertArrayNotHasKey('test', $_POST);
+        $this->assertArrayNotHasKey('test2', $_POST);
     }
 
     public function test_ref(){
