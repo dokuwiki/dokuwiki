@@ -366,13 +366,12 @@ class remote_test extends DokuWikiTest {
         global $conf;
         $conf['remote'] = 1;
 
+        $this->expectException(RemoteException::class);
+        $this->expectExceptionCode(-32603);
+
         $remoteApi = new Api();
-        try {
-            $remoteApi->call('does.not exist');
-            $this->fail('Expects RemoteException to be raised');
-        } catch (RemoteException $th) {
-            $this->assertEquals(-32603, $th->getCode());
-        }
+        $remoteApi->call('invalid method'); // no '.'
+        $remoteApi->call('does.not exist'); // unknown method type
     }
 
     function test_publicCallCore() {
