@@ -822,7 +822,7 @@ function clientIP($single = false) {
         if(empty($ip[$i])) unset($ip[$i]);
     }
     $ip = array_values(array_unique($ip));
-    if(!$ip[0]) $ip[0] = '0.0.0.0'; // for some strange reason we don't have a IP
+    if(empty($ip) || !$ip[0]) $ip[0] = '0.0.0.0'; // for some strange reason we don't have a IP
 
     if(!$single) return join(',', $ip);
 

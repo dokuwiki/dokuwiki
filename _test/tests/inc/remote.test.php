@@ -368,7 +368,7 @@ class remote_test extends DokuWikiTest {
 
         $remoteApi = new Api();
         try {
-            $remoteApi->call('dose not exist');
+            $remoteApi->call('does.not exist');
             $this->fail('Expects RemoteException to be raised');
         } catch (RemoteException $th) {
             $this->assertEquals(-32603, $th->getCode());
