@@ -297,7 +297,7 @@ function tpl_metaheaders($alt = true) {
         }
     }
 
-    // setup robot tags apropriate for different modes
+    // setup robot tags appropriate for different modes
     if(($ACT == 'show' || $ACT == 'export_xhtml') && !$REV) {
         if($INFO['exists']) {
             //delay indexing:
