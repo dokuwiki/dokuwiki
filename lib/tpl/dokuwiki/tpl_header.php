@@ -17,7 +17,7 @@ if (!defined('DOKU_INC')) die();
             <li><a href="#dokuwiki__content"><?php echo $lang['skip_to_content']; ?></a></li>
         </ul>
 
-        <h1><?php
+        <h1 class="logo"><?php
             // get logo either out of the template images folder or data/media folder
             $logoSize = array();
             $logo = tpl_getMediaFile(array(':wiki:logo.png', ':logo.png', 'images/logo.png'), false, $logoSize);
