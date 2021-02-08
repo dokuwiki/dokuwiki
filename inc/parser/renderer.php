@@ -889,7 +889,7 @@ abstract class Doku_Renderer extends Plugin {
             $url = $url.rawurlencode($reference);
         }
         //handle as wiki links
-        if($url[0] === ':') {
+        if($url && $url[0] === ':') {
             $urlparam = null;
             $id = $url;
             if (strpos($url, '?') !== false) {

@@ -178,10 +178,9 @@ class HTTPClient {
         // parse URL into bits
         $uri = parse_url($url);
         $server = $uri['host'];
-        $path   = $uri['path'];
-        if(empty($path)) $path = '/';
+        $path   = !empty($uri['path']) ? $uri['path'] : '/';
+        $uriPort = !empty($uri['port']) ? $uri['port'] : null;
         if(!empty($uri['query'])) $path .= '?'.$uri['query'];
-        if(!empty($uri['port'])) $port = $uri['port'];
         if(isset($uri['user'])) $this->user = $uri['user'];
         if(isset($uri['pass'])) $this->pass = $uri['pass'];
 
@@ -194,7 +193,7 @@ class HTTPClient {
             $use_tls     = $this->proxy_ssl;
         }else{
             $request_url = $path;
-            if (!isset($port)) $port = ($uri['scheme'] == 'https') ? 443 : 80;
+            $port = $uriPort ?: ($uri['scheme'] == 'https' ? 443 : 80);
             $use_tls     = ($uri['scheme'] == 'https');
         }
 
@@ -209,8 +208,8 @@ class HTTPClient {
 
         // prepare headers
         $headers               = $this->headers;
-        $headers['Host']       = $uri['host'];
-        if(!empty($uri['port'])) $headers['Host'].= ':'.$uri['port'];
+        $headers['Host']       = $uri['host']
+            . ($uriPort ? ':' . $uriPort : '');
         $headers['User-Agent'] = $this->agent;
         $headers['Referer']    = $this->referer;
 
@@ -370,10 +369,10 @@ class HTTPClient {
                     // handle non-RFC-compliant relative redirects
                     if (!preg_match('/^http/i', $this->resp_headers['location'])){
                         if($this->resp_headers['location'][0] != '/'){
-                            $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].':'.$uri['port'].
-                                dirname($uri['path']).'/'.$this->resp_headers['location'];
+                            $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].':'.$uriPort.
+                                dirname($path).'/'.$this->resp_headers['location'];
                         }else{
-                            $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].':'.$uri['port'].
+                            $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].':'.$uriPort.
                                 $this->resp_headers['location'];
                         }
                     }
@@ -511,7 +510,7 @@ class HTTPClient {
         if(!$this->useProxyForUrl($requesturl)) return false;
         $requestinfo = parse_url($requesturl);
         if($requestinfo['scheme'] != 'https') return false;
-        if(!$requestinfo['port']) $requestinfo['port'] = 443;
+        if(empty($requestinfo['port'])) $requestinfo['port'] = 443;
 
         // build request
         $request  = "CONNECT {$requestinfo['host']}:{$requestinfo['port']} HTTP/1.0".HTTP_NL;

@@ -92,7 +92,8 @@ class Api
         if ($args === null) {
             $args = array();
         }
-        list($type, $pluginName, /* $call */) = explode('.', $method, 3);
+        // Ensure we have at least one '.' in $method
+        list($type, $pluginName, /* $call */) = explode('.', $method . '.', 3);
         if ($type === 'plugin') {
             return $this->callPlugin($pluginName, $method, $args);
         }
