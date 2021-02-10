@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marianne Blikken <blimar@banenor.no>
  * @author Torgeir Blesvik <bletor@banenor.no>
  * @author Rut Kristin Aanestad <dark@met.no>
  * @author ThorPrestboen <thor.erling.prestboen@gmail.com>
