@@ -1014,6 +1014,7 @@ function tpl_img_getTag($tags, $alt = '', $src = null) {
     if(is_null($meta)) $meta = new JpegMeta($src);
     if($meta === false) return $alt;
     $info = cleanText($meta->getField($tags));
+    $meta = null; // garbage collect and close any file handles. See #3404
     if($info == false) return $alt;
     return $info;
 }
