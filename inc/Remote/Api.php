@@ -129,8 +129,9 @@ class Api
         if (!array_key_exists($method, $customCalls)) {
             throw new RemoteException('Method does not exist', -32603);
         }
-        $customCall = $customCalls[$method];
-        return $this->callPlugin($customCall[0], $customCall[1], $args);
+        list($plugin, $method) = $customCalls[$method];
+        $fullMethod = "plugin.$plugin.$method";
+        return $this->callPlugin($plugin, $fullMethod, $args);
     }
 
     /**
