@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f43d3a0e0afb925e14da17a3b8323a29",
+    "content-hash": "cd951937a517d2f058327d0429efe7ff",
     "packages": [
         {
             "name": "aziraphale/email-address-validator",
@@ -298,16 +298,16 @@
         },
         {
             "name": "simplepie/simplepie",
-            "version": "1.5.5",
+            "version": "1.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simplepie/simplepie.git",
-                "reference": "ae49e2201b6da9c808e5dac437aca356a11831b4"
+                "reference": "1c68e14ca3ac84346b6e6fe3c5eedf725d0f92c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/ae49e2201b6da9c808e5dac437aca356a11831b4",
-                "reference": "ae49e2201b6da9c808e5dac437aca356a11831b4",
+                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/1c68e14ca3ac84346b6e6fe3c5eedf725d0f92c6",
+                "reference": "1c68e14ca3ac84346b6e6fe3c5eedf725d0f92c6",
                 "shasum": ""
             },
             "require": {
@@ -361,7 +361,7 @@
                 "feeds",
                 "rss"
             ],
-            "time": "2020-05-01T12:23:14+00:00"
+            "time": "2020-10-14T07:17:22+00:00"
         },
         {
             "name": "splitbrain/php-archive",
