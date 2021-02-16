@@ -1658,6 +1658,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     )
                 ) . '"';
             $ret .= ' class="media'.$align.'"';
+            $ret .= ' loading="lazy"';
 
             if($title) {
                 $ret .= ' title="'.$title.'"';
