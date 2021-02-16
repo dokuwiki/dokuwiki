@@ -121,14 +121,14 @@ class PageCLI extends CLI {
 
         /* gmeta command */
         $options->registerCommand(
-            'gmeta',
+            'getmeta',
             'Prints metadata value for a page to stdout.'
         );
         $options->registerArgument(
             'wikipage',
             'The wiki page to get the metadata for',
             true,
-            'gmeta'
+            'getmeta'
         );
         $options->registerArgument(
             'key',
@@ -137,7 +137,7 @@ class PageCLI extends CLI {
             'For retrieving items that are stored in sub-arrays, separate the ' .
             'keys of the different levels by spaces, in quotes, eg "date modified".',
             false,
-            'gmeta'
+            'getmeta'
         );
 
     }
@@ -182,7 +182,7 @@ class PageCLI extends CLI {
                 $this->clearLock($wiki_id);
                 $this->success("$wiki_id unlocked");
                 break;
-            case 'gmeta':
+            case 'getmeta':
                 $wiki_id = array_shift($args);
                 $key = trim(array_shift($args));
                 $meta=print_r(p_get_metadata($wiki_id, $key), true);
