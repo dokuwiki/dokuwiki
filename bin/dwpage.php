@@ -139,7 +139,6 @@ class PageCLI extends CLI {
             false,
             'getmeta'
         );
-
     }
 
     /**
@@ -185,10 +184,9 @@ class PageCLI extends CLI {
             case 'getmeta':
                 $wiki_id = array_shift($args);
                 $key = trim(array_shift($args));
-                $meta=print_r(p_get_metadata($wiki_id, $key), true);
-                print($meta);
-                if (strcmp(substr($meta, -1), "\n"))
-                    print("\n");
+                $meta = p_get_metadata($wiki_id, $key, METADATA_RENDER_UNLIMITED);
+                echo trim(json_encode($meta, JSON_PRETTY_PRINT));
+                echo "\n";
                 break;
             default:
                 echo $options->help();
