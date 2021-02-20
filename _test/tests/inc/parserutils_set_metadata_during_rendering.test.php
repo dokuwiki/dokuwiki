@@ -9,7 +9,12 @@ class parserutils_set_metadata_during_rendering_test extends DokuWikiTest
     // the original plugin controller
     private $plugin_controller;
 
-    // the actual test
+    /**
+     * the actual test
+     *
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
     public function test_p_set_metadata_during_rendering()
     {
         global $EVENT_HANDLER;
