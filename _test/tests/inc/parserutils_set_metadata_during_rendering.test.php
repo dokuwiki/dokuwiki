@@ -77,7 +77,7 @@ class parserutils_set_metadata_during_rendering_test extends DokuWikiTest
     public function helper_inject_test_instruction($event)
     {
         if ($this->active) {
-            $event->data->calls[] = ['plugin', ['parserutils_test', []]];
+            $event->data->calls[] = ['plugin', ['parserutils_test', []], -9000];
         }
     }
 
