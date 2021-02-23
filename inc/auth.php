@@ -148,7 +148,7 @@ function auth_loadACL() {
         }
 
         // support for Translation plugin functionality
-		if ( ( plugin_enable ( 'translation' ) === true ) && ( strstr ( $line, '%LANG%' ) ) ) {
+        if ( ( plugin_enable ( 'translation' ) === true ) && ( strstr ( $line, '%LANG%' ) ) ) {
             $id = str_replace ( '%LANG%', $conf [ 'lang' ], $id );
         }
                                                                                               
