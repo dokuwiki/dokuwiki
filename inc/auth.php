@@ -148,7 +148,9 @@ function auth_loadACL() {
         }
 
         // support for Translation plugin functionality
-		if ( ( plugin_enable ( 'translation' ) === true ) && ( strstr ( $line, '%LANG%' ) ) ) $id = str_replace ( '%LANG%', $conf [ 'lang' ], $id );
+		if ( ( plugin_enable ( 'translation' ) === true ) && ( strstr ( $line, '%LANG%' ) ) ) {
+            $id = str_replace ( '%LANG%', $conf [ 'lang' ], $id );
+        }
                                                                                               
         // substitute group wildcard (its 1:m)
         if(strstr($line, '%GROUP%')){
