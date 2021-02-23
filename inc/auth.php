@@ -126,6 +126,7 @@ function auth_loadACL() {
     global $USERINFO;
     /* @var Input $INPUT */
     global $INPUT;
+    global $conf;
 
     if(!is_readable($config_cascade['acl']['default'])) return array();
 
@@ -145,6 +146,15 @@ function auth_loadACL() {
             $id   = str_replace('%USER%',cleanID($INPUT->server->str('REMOTE_USER')),$id);
             $rest = str_replace('%USER%',auth_nameencode($INPUT->server->str('REMOTE_USER')),$rest);
         }
+
+        // support for Translation plugin functionality
+		if (
+            ( plugin_enable ( 'translation' ) == true )
+            &&
+            ( strstr ( $line, '%LANG%' ) )
+        ) {
+			$id = str_replace ( '%LANG%', $conf [ 'lang' ], $id );
+		}
 
         // substitute group wildcard (its 1:m)
         if(strstr($line, '%GROUP%')){
