@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Dominik Heidler <dominik@heidler.eu>
  * @author lp <spam@lukpopp.ch>
  * @author Martin <martin@andev.de>
  * @author F. Mueller-Donath <j.felix@mueller-donath.de>
