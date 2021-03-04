@@ -1888,7 +1888,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $url = ml($file, '', true, '&');
                 $linkType = 'internalmedia';
             }
-            $title = $atts['title'] ? $atts['title'] : $this->_xmlEntities(\dokuwiki\Utf8\PhpString::basename(noNS($file)));
+            $title = !empty($atts['title'])
+                ? $atts['title']
+                : $this->_xmlEntities(\dokuwiki\Utf8\PhpString::basename(noNS($file)));
 
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
             // alternative content (just a link to the file)

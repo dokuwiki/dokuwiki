@@ -38,7 +38,7 @@ function parseChangelogLine($line) {
 }
 
 /**
- * Add's an entry to the changelog and saves the metadata for the page
+ * Adds an entry to the changelog and saves the metadata for the page
  *
  * @param int    $date      Timestamp of the change
  * @param String $id        Name of the affected page
@@ -94,12 +94,12 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
     $wasReverted = ($type===DOKU_CHANGE_TYPE_REVERT);
     // update metadata
     if (!$wasRemoved) {
-        $oldmeta = p_read_metadata($id);
+        $oldmeta = p_read_metadata($id)['persistent'];
         $meta    = array();
         if (
             $wasCreated && (
-                empty($oldmeta['persistent']['date']['created']) ||
-                $oldmeta['persistent']['date']['created'] === $created
+                empty($oldmeta['date']['created']) ||
+                $oldmeta['date']['created'] === $created
             )
         ){
             // newly created
@@ -108,11 +108,11 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
                 $meta['creator'] = isset($INFO) ? $INFO['userinfo']['name'] : null;
                 $meta['user']    = $user;
             }
-        } elseif (($wasCreated || $wasReverted) && !empty($oldmeta['persistent']['date']['created'])) {
+        } elseif (($wasCreated || $wasReverted) && !empty($oldmeta['date']['created'])) {
             // re-created / restored
-            $meta['date']['created']  = $oldmeta['persistent']['date']['created'];
+            $meta['date']['created']  = $oldmeta['date']['created'];
             $meta['date']['modified'] = $created; // use the files ctime here
-            $meta['creator'] = $oldmeta['persistent']['creator'];
+            $meta['creator'] = isset($oldmeta['creator']) ? $oldmeta['creator'] : null;
             if ($user) $meta['contributor'][$user] = isset($INFO) ? $INFO['userinfo']['name'] : null;
         } elseif (!$minor) {   // non-minor modification
             $meta['date']['modified'] = $date;

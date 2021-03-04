@@ -1,12 +1,12 @@
 <?php
 
 class fetch_imagetoken_test extends DokuWikiTest {
- 
+
     private $media = 'wiki:dokuwiki-128.png';
     private $width = 200;
     private $height = 0;
 
-    function setUp() {
+    function setUp() : void {
         // check we can carry out these tests
         if (!file_exists(mediaFN($this->media))) {
             $this->markTestSkipped('Source image required for test');

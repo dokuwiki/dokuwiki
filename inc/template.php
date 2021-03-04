@@ -297,7 +297,7 @@ function tpl_metaheaders($alt = true) {
         }
     }
 
-    // setup robot tags apropriate for different modes
+    // setup robot tags appropriate for different modes
     if(($ACT == 'show' || $ACT == 'export_xhtml') && !$REV) {
         if($INFO['exists']) {
             //delay indexing:
@@ -1008,11 +1008,13 @@ function tpl_img_getTag($tags, $alt = '', $src = null) {
     global $SRC;
 
     if(is_null($src)) $src = $SRC;
+    if(is_null($src)) return $alt;
 
     static $meta = null;
     if(is_null($meta)) $meta = new JpegMeta($src);
     if($meta === false) return $alt;
     $info = cleanText($meta->getField($tags));
+    $meta = null; // garbage collect and close any file handles. See #3404
     if($info == false) return $alt;
     return $info;
 }
@@ -1067,7 +1069,7 @@ function tpl_get_img_meta() {
         if (!empty($tag[0])) {
             $t = array($tag[0]);
         }
-        if(is_array($tag[3])) {
+        if(isset($tag[3]) && is_array($tag[3])) {
             $t = array_merge($t,$tag[3]);
         }
         $value = tpl_img_getTag($t);
