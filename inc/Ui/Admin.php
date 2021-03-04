@@ -28,9 +28,10 @@ class Admin extends Ui {
         $this->menu = $this->getPluginList();
         echo '<div class="ui-admin">';
         echo p_locale_xhtml('admin');
-        $this->showSecurityCheck();
+
         $this->showMenu('admin');
         $this->showMenu('manager');
+        $this->showSecurityCheck();
         $this->showVersion();
         $this->showMenu('other');
         echo '</div>';
@@ -75,16 +76,15 @@ class Admin extends Ui {
      * it verifies either:
      *   'savedir' has been moved elsewhere, or
      *   has protection to prevent the webserver serving files from it
+     *
+     * The actual check is carried out via JavaScript. See behaviour.js
      */
     protected function showSecurityCheck() {
         global $conf;
         if(substr($conf['savedir'], 0, 2) !== './') return;
         $img = DOKU_URL . $conf['savedir'] .
             '/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png';
-        echo '<a style="border:none; float:right;"
-                href="http://www.dokuwiki.org/security#web_access_security">
-                <img src="' . $img . '" alt="Your data directory seems to be protected properly."
-                onerror="this.parentNode.style.display=\'none\'" /></a>';
+        echo '<div id="security__check" data-src="' . $img . '"></div>';
     }
 
     /**
