@@ -8,7 +8,7 @@ if (!defined('DOKU_INC')) die();
 ?>
 
 <!-- ********** HEADER ********** -->
-<div id="dokuwiki__header"><div class="pad group">
+<header id="dokuwiki__header"><div class="pad group">
 
     <?php tpl_includeFile('header.html') ?>
 
@@ -78,7 +78,5 @@ if (!defined('DOKU_INC')) die();
         </div>
     <?php endif ?>
 
-
-
     <hr class="a11y" />
-</div></div><!-- /header -->
+</div></header><!-- /header -->

@@ -8,7 +8,7 @@ if (!defined('DOKU_INC')) die();
 ?>
 
 <!-- ********** FOOTER ********** -->
-<div id="dokuwiki__footer"><div class="pad">
+<footer id="dokuwiki__footer"><div class="pad">
     <?php tpl_license(''); // license text ?>
 
     <div class="buttons">
@@ -28,7 +28,6 @@ if (!defined('DOKU_INC')) die();
             src="<?php echo tpl_basedir(); ?>images/button-dw.png" width="80" height="15"
             alt="Driven by DokuWiki" /></a>
     </div>
-</div></div><!-- /footer -->
 
-<?php
-tpl_includeFile('footer.html');
+    <?php tpl_includeFile('footer.html'); ?>
+</div></footer><!-- /footer -->
