@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
  * @author Paulo <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
  * @author Maykon Oliveira <maykonoliveira850@gmail.com>
@@ -124,6 +125,7 @@ $lang['js']['media_done_btn']  = 'Feito';
 $lang['js']['media_drop']      = 'Largue arquivo aqui para enviar';
 $lang['js']['media_cancel']    = 'excluir';
 $lang['js']['media_overwrt']   = 'Escrever por cima de arquivos existentes';
+$lang['js']['data_insecure']   = 'AVISO: Parece que seu diretório de dados não está devidamente protegido. Por favor leia sobre <a href="https://www.dokuwiki.org/security#web_access_security">Segurança de acesso à web em DokuWiki</a>.';
 $lang['search_exact_match']    = 'Correspondência exata';
 $lang['search_starts_with']    = 'Começa por';
 $lang['search_ends_with']      = 'Termina em';
