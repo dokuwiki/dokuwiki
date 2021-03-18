@@ -3,9 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
- * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author PaliPalo <palipalo@hotmail.fr>
  * @author Laurent Ponthieu <contact@coopindus.fr>
  * @author Damien Regad <dregad@mantisbt.org>
@@ -148,6 +148,7 @@ $lang['js']['media_done_btn']  = 'Terminé';
 $lang['js']['media_drop']      = 'Déposez des fichiers ici pour les envoyer';
 $lang['js']['media_cancel']    = 'supprimer';
 $lang['js']['media_overwrt']   = 'Écraser les fichiers existants';
+$lang['js']['data_insecure']   = 'ATTENTION: Votre répertoire de données ne semble pas correctement sécurisé. Merci de lire <a href="https://www.dokuwiki.org/fr:security#securite_de_l_acces_web">Sécurité de l\'accès web</a> ou <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
 $lang['search_exact_match']    = 'Correspondance exacte';
 $lang['search_starts_with']    = 'Commence par';
 $lang['search_ends_with']      = 'Se termine par';
