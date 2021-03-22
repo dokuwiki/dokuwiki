@@ -4,9 +4,9 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
+ * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
- * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author PaliPalo <palipalo@hotmail.fr>
  * @author Laurent Ponthieu <contact@coopindus.fr>
  * @author Damien Regad <dregad@mantisbt.org>
