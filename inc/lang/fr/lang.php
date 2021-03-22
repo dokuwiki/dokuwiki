@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
@@ -43,7 +44,6 @@
  * @author Pietroni <pietroni@informatique.univ-paris-diderot.fr>
  * @author Floriang <antispam@floriang.eu>
  * @author Eric <ericstevenart@netc.fr>
- * @author Olivier Humbert <trebmuh@tuxfamily.org>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -305,9 +305,9 @@ $lang['img_artist']            = 'Photographe:';
 $lang['img_copyr']             = 'Copyright:';
 $lang['img_format']            = 'Format:';
 $lang['img_camera']            = 'Appareil photo:';
-$lang['img_keywords']          = 'Mots-clés:';
-$lang['img_width']             = 'Largeur:';
-$lang['img_height']            = 'Hauteur:';
+$lang['img_keywords']          = 'Mots-clés :';
+$lang['img_width']             = 'Largeur :';
+$lang['img_height']            = 'Hauteur :';
 $lang['subscr_subscribe_success'] = '%s a été ajouté à la liste des abonnés à %s';
 $lang['subscr_subscribe_error'] = 'Erreur à l\'ajout de %s à la liste des abonnés de %s';
 $lang['subscr_subscribe_noaddress'] = 'Il n\'y a pas d\'adresse associée à votre identifiant, vous ne pouvez pas être ajouté à la liste des abonnés.';
