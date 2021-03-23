@@ -32,19 +32,6 @@ $showSidebar = $hasSidebar && ($ACT=='show');
 
         <div class="wrapper group">
 
-            <?php if($showSidebar): ?>
-                <!-- ********** ASIDE ********** -->
-                <div id="dokuwiki__aside"><div class="pad aside include group">
-                    <h3 class="toggle"><?php echo $lang['sidebar'] ?></h3>
-                    <div class="content"><div class="group">
-                        <?php tpl_flush() ?>
-                        <?php tpl_includeFile('sidebarheader.html') ?>
-                        <?php tpl_include_page($conf['sidebar'], true, true) ?>
-                        <?php tpl_includeFile('sidebarfooter.html') ?>
-                    </div></div>
-                </div></div><!-- /aside -->
-            <?php endif; ?>
-
             <!-- ********** CONTENT ********** -->
             <div id="dokuwiki__content"><div class="pad group">
                 <?php html_msgarea() ?>
@@ -64,6 +51,19 @@ $showSidebar = $hasSidebar && ($ACT=='show');
 
                 <?php tpl_flush() ?>
             </div></div><!-- /content -->
+
+            <?php if($showSidebar): ?>
+                <!-- ********** ASIDE ********** -->
+                <div id="dokuwiki__aside"><div class="pad aside include group">
+                    <h3 class="toggle"><?php echo $lang['sidebar'] ?></h3>
+                    <div class="content"><div class="group">
+                        <?php tpl_flush() ?>
+                        <?php tpl_includeFile('sidebarheader.html') ?>
+                        <?php tpl_include_page($conf['sidebar'], true, true) ?>
+                        <?php tpl_includeFile('sidebarfooter.html') ?>
+                    </div></div>
+                </div></div><!-- /aside -->
+            <?php endif; ?>
 
             <hr class="a11y" />
 
