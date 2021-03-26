@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Markus Glaser <glaser@hallowelt.com>
  * @author Axel Schwarzer <SchwarzerA@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Eric Haberstroh <ehaberstroh@gmail.com>
@@ -148,6 +149,7 @@ $lang['js']['media_done_btn']  = 'Fertig';
 $lang['js']['media_drop']      = 'Dateien hier hinziehen, um sie hochzuladen';
 $lang['js']['media_cancel']    = 'Entfernen';
 $lang['js']['media_overwrt']   = 'Existierende Dateien überschreiben';
+$lang['js']['data_insecure']   = 'WARNUNG: Es scheint, als wäre Ihr Datenverzeichnis nicht ausreichend geschützt. Bitte informieren Sie sich zur <a href="https://www.dokuwiki.org/security#web_access_security">Sicherheit von Webzugriffen in DokuWiki</a>';
 $lang['search_exact_match']    = 'Genaue Treffer';
 $lang['search_starts_with']    = 'Beginnt mit';
 $lang['search_ends_with']      = 'Endet mit';
