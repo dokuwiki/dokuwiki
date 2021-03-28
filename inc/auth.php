@@ -469,13 +469,12 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false, $recac
             $user = $INPUT->server->str('REMOTE_USER');
         }
     }
-    if(is_null($groups)) {
-        if ($user === $INPUT->server->str('REMOTE_USER')) {
-            $groups = $USERINFO ? (array) $USERINFO['grps'] : array();
+    if (is_null($groups)) {
+        // checking the logged in user, or another one?
+        if ($USERINFO && $user === $INPUT->server->str('REMOTE_USER')) {
+            $groups =  (array) $USERINFO['grps'];
         } else {
-            $groups = !empty($auth->getUserData($user)['grps']) ?
-                $auth->getUserData($user)['grps'] :
-                [];
+            $groups = (array) $auth->getUserData($user)['grps'];
         }
     }
 
