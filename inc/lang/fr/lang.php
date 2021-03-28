@@ -3,9 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Olivier Humbert <trebmuh@tuxfamily.org>
+ * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
- * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author PaliPalo <palipalo@hotmail.fr>
  * @author Laurent Ponthieu <contact@coopindus.fr>
  * @author Damien Regad <dregad@mantisbt.org>
@@ -43,7 +44,6 @@
  * @author Pietroni <pietroni@informatique.univ-paris-diderot.fr>
  * @author Floriang <antispam@floriang.eu>
  * @author Eric <ericstevenart@netc.fr>
- * @author Olivier Humbert <trebmuh@tuxfamily.org>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -148,6 +148,7 @@ $lang['js']['media_done_btn']  = 'Terminé';
 $lang['js']['media_drop']      = 'Déposez des fichiers ici pour les envoyer';
 $lang['js']['media_cancel']    = 'supprimer';
 $lang['js']['media_overwrt']   = 'Écraser les fichiers existants';
+$lang['js']['data_insecure']   = 'ATTENTION : votre répertoire de données ne semble pas correctement sécurisé. Veuillez lire <a href="https://www.dokuwiki.org/fr:security#securite_de_l_acces_web">Sécurité de l\'accès web (en français)</a> ou <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki (en anglais)</a>.';
 $lang['search_exact_match']    = 'Correspondance exacte';
 $lang['search_starts_with']    = 'Commence par';
 $lang['search_ends_with']      = 'Se termine par';
@@ -304,9 +305,9 @@ $lang['img_artist']            = 'Photographe:';
 $lang['img_copyr']             = 'Copyright:';
 $lang['img_format']            = 'Format:';
 $lang['img_camera']            = 'Appareil photo:';
-$lang['img_keywords']          = 'Mots-clés:';
-$lang['img_width']             = 'Largeur:';
-$lang['img_height']            = 'Hauteur:';
+$lang['img_keywords']          = 'Mots-clés :';
+$lang['img_width']             = 'Largeur :';
+$lang['img_height']            = 'Hauteur :';
 $lang['subscr_subscribe_success'] = '%s a été ajouté à la liste des abonnés à %s';
 $lang['subscr_subscribe_error'] = 'Erreur à l\'ajout de %s à la liste des abonnés de %s';
 $lang['subscr_subscribe_noaddress'] = 'Il n\'y a pas d\'adresse associée à votre identifiant, vous ne pouvez pas être ajouté à la liste des abonnés.';

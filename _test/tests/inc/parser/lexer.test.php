@@ -17,54 +17,54 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
 
     function testNoPatterns() {
         $regex = new ParallelRegex(false);
-        $this->assertFalse($regex->match("Hello", $match));
+        $this->assertFalse($regex->apply("Hello", $match));
         $this->assertEquals($match, "");
     }
     function testNoSubject() {
         $regex = new ParallelRegex(false);
         $regex->addPattern(".*");
-        $this->assertTrue($regex->match("", $match));
+        $this->assertTrue($regex->apply("", $match));
         $this->assertEquals($match, "");
     }
     function testMatchAll() {
         $regex = new ParallelRegex(false);
         $regex->addPattern(".*");
-        $this->assertTrue($regex->match("Hello", $match));
+        $this->assertTrue($regex->apply("Hello", $match));
         $this->assertEquals($match, "Hello");
     }
     function testCaseSensitive() {
         $regex = new ParallelRegex(true);
         $regex->addPattern("abc");
-        $this->assertTrue($regex->match("abcdef", $match));
+        $this->assertTrue($regex->apply("abcdef", $match));
         $this->assertEquals($match, "abc");
-        $this->assertTrue($regex->match("AAABCabcdef", $match));
+        $this->assertTrue($regex->apply("AAABCabcdef", $match));
         $this->assertEquals($match, "abc");
     }
     function testCaseInsensitive() {
         $regex = new ParallelRegex(false);
         $regex->addPattern("abc");
-        $this->assertTrue($regex->match("abcdef", $match));
+        $this->assertTrue($regex->apply("abcdef", $match));
         $this->assertEquals($match, "abc");
-        $this->assertTrue($regex->match("AAABCabcdef", $match));
+        $this->assertTrue($regex->apply("AAABCabcdef", $match));
         $this->assertEquals($match, "ABC");
     }
     function testMatchMultiple() {
         $regex = new ParallelRegex(true);
         $regex->addPattern("abc");
         $regex->addPattern("ABC");
-        $this->assertTrue($regex->match("abcdef", $match));
+        $this->assertTrue($regex->apply("abcdef", $match));
         $this->assertEquals($match, "abc");
-        $this->assertTrue($regex->match("AAABCabcdef", $match));
+        $this->assertTrue($regex->apply("AAABCabcdef", $match));
         $this->assertEquals($match, "ABC");
-        $this->assertFalse($regex->match("Hello", $match));
+        $this->assertFalse($regex->apply("Hello", $match));
     }
     function testPatternLabels() {
         $regex = new ParallelRegex(false);
         $regex->addPattern("abc", "letter");
         $regex->addPattern("123", "number");
-        $this->assertEquals($regex->match("abcdef", $match), "letter");
+        $this->assertEquals($regex->apply("abcdef", $match), "letter");
         $this->assertEquals($match, "abc");
-        $this->assertEquals($regex->match("0123456789", $match), "number");
+        $this->assertEquals($regex->apply("0123456789", $match), "number");
         $this->assertEquals($match, "123");
     }
     function testMatchMultipleWithLookaheadNot() {
@@ -72,48 +72,48 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
         $regex->addPattern("abc");
         $regex->addPattern("ABC");
         $regex->addPattern("a(?!\n).{1}");
-        $this->assertTrue($regex->match("abcdef", $match));
+        $this->assertTrue($regex->apply("abcdef", $match));
         $this->assertEquals($match, "abc");
-        $this->assertTrue($regex->match("AAABCabcdef", $match));
+        $this->assertTrue($regex->apply("AAABCabcdef", $match));
         $this->assertEquals($match, "ABC");
-        $this->assertTrue($regex->match("a\nab", $match));
+        $this->assertTrue($regex->apply("a\nab", $match));
         $this->assertEquals($match, "ab");
-        $this->assertFalse($regex->match("Hello", $match));
+        $this->assertFalse($regex->apply("Hello", $match));
     }
     function testMatchSetOptionCaseless() {
         $regex = new ParallelRegex(true);
         $regex->addPattern("a(?i)b(?i)c");
-        $this->assertTrue($regex->match("aBc", $match));
+        $this->assertTrue($regex->apply("aBc", $match));
         $this->assertEquals($match, "aBc");
     }
     function testMatchSetOptionUngreedy() {
         $regex = new ParallelRegex(true);
         $regex->addPattern("(?U)\w+");
-        $this->assertTrue($regex->match("aaaaaa", $match));
+        $this->assertTrue($regex->apply("aaaaaa", $match));
         $this->assertEquals($match, "a");
     }
     function testMatchLookaheadEqual() {
         $regex = new ParallelRegex(true);
         $regex->addPattern("\w(?=c)");
-        $this->assertTrue($regex->match("xbyczd", $match));
+        $this->assertTrue($regex->apply("xbyczd", $match));
         $this->assertEquals($match, "y");
     }
     function testMatchLookaheadNot() {
         $regex = new ParallelRegex(true);
         $regex->addPattern("\w(?!b|c)");
-        $this->assertTrue($regex->match("xbyczd", $match));
+        $this->assertTrue($regex->apply("xbyczd", $match));
         $this->assertEquals($match, "b");
     }
     function testMatchLookbehindEqual() {
         $regex = new ParallelRegex(true);
         $regex->addPattern("(?<=c)\w");
-        $this->assertTrue($regex->match("xbyczd", $match));
+        $this->assertTrue($regex->apply("xbyczd", $match));
         $this->assertEquals($match, "z");
     }
     function testMatchLookbehindNot() {
         $regex = new ParallelRegex(true);
         $regex->addPattern("(?<!\A|x|b)\w");
-        $this->assertTrue($regex->match("xbyczd", $match));
+        $this->assertTrue($regex->apply("xbyczd", $match));
         $this->assertEquals($match, "c");
     }
 }

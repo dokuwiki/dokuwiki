@@ -8,7 +8,7 @@ class auth_admin_test extends DokuWikiTest
 
     private $oldauth;
 
-    function setUp()
+    function setUp() : void
     {
         parent::setUp();
         global $auth;
@@ -47,7 +47,7 @@ class auth_admin_test extends DokuWikiTest
         $auth = new \auth_plugin_authplain();
     }
 
-    function teardown()
+    function tearDown() : void
     {
         global $auth;
         global $AUTH_ACL;

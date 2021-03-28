@@ -7,14 +7,14 @@
 
 class auth_loadacl_test extends DokuWikiTest {
 
-    function setUp() {
+    function setUp() : void {
         global $USERINFO;
         parent::setUp();
         $_SERVER['REMOTE_USER'] = 'testuser';
         $USERINFO['grps'] = array('foo','bar');
     }
 
-    function tearDown() {
+    function tearDown() : void {
         parent::tearDown();
     }
 

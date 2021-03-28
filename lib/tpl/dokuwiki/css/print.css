@@ -141,18 +141,19 @@ th {
 #dokuwiki__header {
     border-bottom: 2pt solid #ccc;
 }
-#dokuwiki__header h1 {
+#dokuwiki__header .logo {
     font-size: 1.5em;
+    font-weight: bold;
 }
-#dokuwiki__header h1 a {
+#dokuwiki__header .logo a {
     text-decoration: none;
     border-width: 0;
 }
-#dokuwiki__header h1 img {
+#dokuwiki__header .logo img {
     float: left;
     margin-right: .5em;
 }
-[dir=rtl] #dokuwiki__header h1 img {
+[dir=rtl] #dokuwiki__header .logo img {
     float: right;
     margin-right: 0;
     margin-left: .5em;

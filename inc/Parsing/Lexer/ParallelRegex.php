@@ -66,7 +66,7 @@ class ParallelRegex
      *                             subject.
      * @return bool|string         False if no match found, label if label exists, true if not
      */
-    public function match($subject, &$match)
+    public function apply($subject, &$match)
     {
         if (count($this->patterns) == 0) {
             return false;

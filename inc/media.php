@@ -699,7 +699,7 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
 
         $dir = utf8_encodeFN(str_replace(':','/',$ns));
         $data = array();
-        search($data,$conf['mediadir'],'search_media',
+        search($data,$conf['mediadir'],'search_mediafiles',
                 array('showmsg'=>true,'depth'=>1),$dir,1,$sort);
 
         if(!count($data)){
@@ -710,9 +710,17 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
             }
             foreach($data as $item){
                 if (!$fullscreenview) {
-                    media_printfile($item,$auth,$jump);
+                    //FIXME old call: media_printfile($item,$auth,$jump);
+                    $display = new \dokuwiki\Ui\Media\DisplayRow($item);
+                    $display->scrollIntoView($jump == $item->getID());
+                    $display->show();
                 } else {
-                    media_printfile_thumbs($item,$auth,$jump);
+                    //FIXME old call: media_printfile_thumbs($item,$auth,$jump);
+                    echo '<li>';
+                    $display = new \dokuwiki\Ui\Media\DisplayTile($item);
+                    $display->scrollIntoView($jump == $item->getID());
+                    $display->show();
+                    echo '</li>';
                 }
             }
             if ($fullscreenview) echo '</ul>'.NL;
@@ -1536,7 +1544,7 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
             $pattern = '/'.$quoted.'/i';
             search($evdata['data'],
                     $conf['mediadir'],
-                    'search_media',
+                    'search_mediafiles',
                     array('showmsg'=>false,'pattern'=>$pattern),
                     $dir,
                     1,
@@ -1558,91 +1566,22 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
             echo '<ul class="' . _media_get_list_type() . '">';
         }
         foreach($evdata['data'] as $item){
-            if (!$fullscreen) media_printfile($item,$item['perm'],'',true);
-            else media_printfile_thumbs($item,$item['perm'],false,true);
+            if (!$fullscreen) {
+                // FIXME old call: media_printfile($item,$item['perm'],'',true);
+                $display = new \dokuwiki\Ui\Media\DisplayRow($item);
+                $display->relativeDisplay($ns);
+                $display->show();
+            } else {
+                // FIXME old call: media_printfile_thumbs($item,$item['perm'],false,true);
+                $display = new \dokuwiki\Ui\Media\DisplayTile($item);
+                $display->relativeDisplay($ns);
+                echo '<li>';
+                $display->show();
+                echo '</li>';
+            }
         }
         if ($fullscreen) echo '</ul>'.NL;
     }
-}
-
-/**
- * Formats and prints one file in the list
- *
- * @param array     $item
- * @param int       $auth              permission level
- * @param string    $jump              item id
- * @param bool      $display_namespace
- */
-function media_printfile($item,$auth,$jump,$display_namespace=false){
-    global $lang;
-
-    // Prepare zebra coloring
-    // I always wanted to use this variable name :-D
-    static $twibble = 1;
-    $twibble *= -1;
-    $zebra = ($twibble == -1) ? 'odd' : 'even';
-
-    // Automatically jump to recent action
-    if($jump == $item['id']) {
-        $jump = ' id="scroll__here" ';
-    }else{
-        $jump = '';
-    }
-
-    // Prepare fileicons
-    list($ext) = mimetype($item['file'],false);
-    $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
-    $class = 'select mediafile mf_'.$class;
-
-    // Prepare filename
-    $file = utf8_decodeFN($item['file']);
-
-    // Prepare info
-    $info = '';
-    if($item['isimg']){
-        $info .= (int) $item['meta']->getField('File.Width');
-        $info .= '&#215;';
-        $info .= (int) $item['meta']->getField('File.Height');
-        $info .= ' ';
-    }
-    $info .= '<i>'.dformat($item['mtime']).'</i>';
-    $info .= ' ';
-    $info .= filesize_h($item['size']);
-
-    // output
-    echo '<div class="'.$zebra.'"'.$jump.' title="'.hsc($item['id']).'">'.NL;
-    if (!$display_namespace) {
-        echo '<a id="h_:'.$item['id'].'" class="'.$class.'">'.hsc($file).'</a> ';
-    } else {
-        echo '<a id="h_:'.$item['id'].'" class="'.$class.'">'.hsc($item['id']).'</a><br/>';
-    }
-    echo '<span class="info">('.$info.')</span>'.NL;
-
-    // view button
-    $link = ml($item['id'],'',true);
-    echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
-        'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
-
-    // mediamanager button
-    $link = wl('',array('do'=>'media','image'=>$item['id'],'ns'=>getNS($item['id'])));
-    echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/mediamanager.png" '.
-        'alt="'.$lang['btn_media'].'" title="'.$lang['btn_media'].'" class="btn" /></a>';
-
-    // delete button
-    if($item['writable'] && $auth >= AUTH_DELETE){
-        $link = DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
-            '&amp;sectok='.getSecurityToken();
-        echo ' <a href="'.$link.'" class="btn_media_delete" title="'.$item['id'].'">'.
-            '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
-            'title="'.$lang['btn_delete'].'" class="btn" /></a>';
-    }
-
-    echo '<div class="example" id="ex_'.str_replace(':','_',$item['id']).'">';
-    echo $lang['mediausage'].' <code>{{:'.$item['id'].'}}</code>';
-    echo '</div>';
-    if($item['isimg']) media_printimgdetail($item);
-    echo '<div class="clearer"></div>'.NL;
-    echo '</div>'.NL;
 }
 
 /**
@@ -1662,127 +1601,6 @@ function media_printicon($filename, $size=''){
     }
 
     return '<img src="'.$icon.'" alt="'.$filename.'" class="icon" />';
-}
-
-/**
- * Formats and prints one file in the list in the thumbnails view
- *
- * @author Kate Arzamastseva <pshns@ukr.net>
- *
- * @param array       $item
- * @param int         $auth              permission level
- * @param bool|string $jump              item id
- * @param bool        $display_namespace
- */
-function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false){
-
-    // Prepare filename
-    $file = utf8_decodeFN($item['file']);
-
-    // output
-    echo '<li><dl title="'.hsc($item['id']).'">'.NL;
-
-        echo '<dt>';
-    if($item['isimg']) {
-        media_printimgdetail($item, true);
-
-    } else {
-        echo '<a id="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
-            media_managerURL(['image' => hsc($item['id']), 'ns' => getNS($item['id']),
-            'tab_details' => 'view']).'">';
-        echo media_printicon($item['id'], '32x32');
-        echo '</a>';
-    }
-    echo '</dt>'.NL;
-    if (!$display_namespace) {
-        $name = hsc($file);
-    } else {
-        $name = hsc($item['id']);
-    }
-    echo '<dd class="name"><a href="'.media_managerURL(['image' => hsc($item['id']), 'ns' => getNS($item['id']),
-        'tab_details' => 'view']).'" id="h_:'.$item['id'].'">'.$name.'</a></dd>'.NL;
-
-    if($item['isimg']){
-        $size = '';
-        $size .= (int) $item['meta']->getField('File.Width');
-        $size .= '&#215;';
-        $size .= (int) $item['meta']->getField('File.Height');
-        echo '<dd class="size">'.$size.'</dd>'.NL;
-    } else {
-        echo '<dd class="size">&#160;</dd>'.NL;
-    }
-    $date = dformat($item['mtime']);
-    echo '<dd class="date">'.$date.'</dd>'.NL;
-    $filesize = filesize_h($item['size']);
-    echo '<dd class="filesize">'.$filesize.'</dd>'.NL;
-    echo '</dl></li>'.NL;
-}
-
-/**
- * Prints a thumbnail and metainfo
- *
- * @param array $item
- * @param bool  $fullscreen
- */
-function media_printimgdetail($item, $fullscreen=false){
-    // prepare thumbnail
-    $size = $fullscreen ? 90 : 120;
-
-    $w = (int) $item['meta']->getField('File.Width');
-    $h = (int) $item['meta']->getField('File.Height');
-    if($w>$size || $h>$size){
-        if (!$fullscreen) {
-            $ratio = $item['meta']->getResizeRatio($size);
-        } else {
-            $ratio = $item['meta']->getResizeRatio($size,$size);
-        }
-        $w = floor($w * $ratio);
-        $h = floor($h * $ratio);
-    }
-    $src = ml($item['id'],array('w'=>$w,'h'=>$h,'t'=>$item['mtime']));
-    $p = array();
-    if (!$fullscreen) {
-        // In fullscreen mediamanager view, image resizing is done via CSS.
-        $p['width']  = $w;
-        $p['height'] = $h;
-    }
-    $p['alt']    = $item['id'];
-    $att = buildAttributes($p);
-
-    // output
-    if ($fullscreen) {
-        echo '<a id="l_:'.$item['id'].'" class="image thumb" href="'.
-            media_managerURL(['image' => hsc($item['id']), 'ns' => getNS($item['id']), 'tab_details' => 'view']).'">';
-        echo '<img src="'.$src.'" '.$att.' />';
-        echo '</a>';
-    }
-
-    if ($fullscreen) return;
-
-    echo '<div class="detail">';
-    echo '<div class="thumb">';
-    echo '<a id="d_:'.$item['id'].'" class="select">';
-    echo '<img src="'.$src.'" '.$att.' />';
-    echo '</a>';
-    echo '</div>';
-
-    // read EXIF/IPTC data
-    $t = $item['meta']->getField(array('IPTC.Headline','xmp.dc:title'));
-    $d = $item['meta']->getField(array('IPTC.Caption','EXIF.UserComment',
-                'EXIF.TIFFImageDescription',
-                'EXIF.TIFFUserComment'));
-    if(\dokuwiki\Utf8\PhpString::strlen($d) > 250) $d = \dokuwiki\Utf8\PhpString::substr($d,0,250).'...';
-    $k = $item['meta']->getField(array('IPTC.Keywords','IPTC.Category','xmp.dc:subject'));
-
-    // print EXIF/IPTC data
-    if($t || $d || $k ){
-        echo '<p>';
-        if($t) echo '<strong>'.hsc($t).'</strong><br />';
-        if($d) echo hsc($d).'<br />';
-        if($t) echo '<em>'.hsc($k).'</em>';
-        echo '</p>';
-    }
-    echo '</div>';
 }
 
 /**
@@ -2067,40 +1885,37 @@ function media_nstree_li($item){
  */
 function media_resize_image($file, $ext, $w, $h=0){
     global $conf;
-
-    $info = @getimagesize($file); //get original size
-    if($info == false) return $file; // that's no image - it's a spaceship!
-
-    if(!$h) $h = round(($w * $info[1]) / $info[0]);
-    if(!$w) $w = round(($h * $info[0]) / $info[1]);
-
+    if(!$h) $h = $w;
     // we wont scale up to infinity
     if($w > 2000 || $h > 2000) return $file;
 
-    // resize necessary? - (w,h) = native dimensions
-    if(($w == $info[0]) && ($h == $info[1])) return $file;
-
     //cache
     $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
-    $mtime = @filemtime($local); // 0 if not exists
+    $mtime = (int) @filemtime($local); // 0 if not exists
 
-    if($mtime > filemtime($file) ||
-        media_resize_imageIM($ext, $file, $info[0], $info[1], $local, $w, $h) ||
-        media_resize_imageGD($ext, $file, $info[0], $info[1], $local, $w, $h)
-    ) {
-        if($conf['fperm']) @chmod($local, $conf['fperm']);
-        return $local;
+    $options = [
+        'quality' => $conf['jpg_quality'],
+        'imconvert' => $conf['im_convert'],
+    ];
+
+    if( $mtime <= (int) @filemtime($file) ) {
+        try {
+            \splitbrain\slika\Slika::run($file, $options)
+                                   ->autorotate()
+                                   ->resize($w, $h)
+                                   ->save($local, $ext);
+            if($conf['fperm']) @chmod($local, $conf['fperm']);
+        } catch (\splitbrain\slika\Exception $e) {
+            dbglog($e->getMessage());
+            return $file;
+        }
     }
-    //still here? resizing failed
-    return $file;
+
+    return $local;
 }
 
 /**
- * Crops the given image to the wanted ratio, then calls media_resize_image to scale it
- * to the wanted size
- *
- * Crops are centered horizontally but prefer the upper third of an vertical
- * image because most pics are more interesting in that area (rule of thirds)
+ * Center crops the given image to the wanted size
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
@@ -2112,55 +1927,33 @@ function media_resize_image($file, $ext, $w, $h=0){
  */
 function media_crop_image($file, $ext, $w, $h=0){
     global $conf;
-
     if(!$h) $h = $w;
-    $info = @getimagesize($file); //get original size
-    if($info == false) return $file; // that's no image - it's a spaceship!
-
-    // calculate crop size
-    $fr = $info[0]/$info[1];
-    $tr = $w/$h;
-
-    // check if the crop can be handled completely by resize,
-    // i.e. the specified width & height match the aspect ratio of the source image
-    if ($w == round($h*$fr)) {
-        return media_resize_image($file, $ext, $w);
-    }
-
-    if($tr >= 1){
-        if($tr > $fr){
-            $cw = $info[0];
-            $ch = (int) ($info[0]/$tr);
-        }else{
-            $cw = (int) ($info[1]*$tr);
-            $ch = $info[1];
-        }
-    }else{
-        if($tr < $fr){
-            $cw = (int) ($info[1]*$tr);
-            $ch = $info[1];
-        }else{
-            $cw = $info[0];
-            $ch = (int) ($info[0]/$tr);
-        }
-    }
-    // calculate crop offset
-    $cx = (int) (($info[0]-$cw)/2);
-    $cy = (int) (($info[1]-$ch)/3);
+    // we wont scale up to infinity
+    if($w > 2000 || $h > 2000) return $file;
 
     //cache
-    $local = getCacheName($file,'.media.'.$cw.'x'.$ch.'.crop.'.$ext);
-    $mtime = @filemtime($local); // 0 if not exists
+    $local = getCacheName($file,'.media.'.$w.'x'.$h.'.crop.'.$ext);
+    $mtime = (int) @filemtime($local); // 0 if not exists
 
-    if( $mtime > @filemtime($file) ||
-            media_crop_imageIM($ext,$file,$info[0],$info[1],$local,$cw,$ch,$cx,$cy) ||
-            media_resize_imageGD($ext,$file,$cw,$ch,$local,$cw,$ch,$cx,$cy) ){
-        if($conf['fperm']) @chmod($local, $conf['fperm']);
-        return media_resize_image($local,$ext, $w, $h);
+    $options = [
+        'quality' => $conf['jpg_quality'],
+        'imconvert' => $conf['im_convert'],
+    ];
+
+    if( $mtime <= (int) @filemtime($file) ) {
+        try {
+            \splitbrain\slika\Slika::run($file, $options)
+                                   ->autorotate()
+                                    ->crop($w, $h)
+                                    ->save($local, $ext);
+            if($conf['fperm']) @chmod($local, $conf['fperm']);
+        } catch (\splitbrain\slika\Exception $e) {
+            dbglog($e->getMessage());
+            return $file;
+        }
     }
 
-    //still here? cropping failed
-    return media_resize_image($file,$ext, $w, $h);
+    return $local;
 }
 
 /**
@@ -2317,9 +2110,11 @@ function media_resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
  * @param int    $ofs_x   offset of crop centre
  * @param int    $ofs_y   offset of crop centre
  * @return bool
+ * @deprecated 2020-09-01
  */
 function media_crop_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x,$ofs_y){
     global $conf;
+    dbg_deprecated('splitbrain\\Slika');
 
     // check if convert is configured
     if(!$conf['im_convert']) return false;
@@ -2353,9 +2148,11 @@ function media_crop_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x,$o
  * @param int    $ofs_x   offset of crop centre
  * @param int    $ofs_y   offset of crop centre
  * @return bool
+ * @deprecated 2020-09-01
  */
 function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=0,$ofs_y=0){
     global $conf;
+    dbg_deprecated('splitbrain\\Slika');
 
     if($conf['gdlib'] < 1) return false; //no GDlib available or wanted
 

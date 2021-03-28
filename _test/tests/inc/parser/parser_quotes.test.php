@@ -6,7 +6,7 @@ require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
-    function setUp() {
+    function setUp() : void {
         parent::setUp();
         global $conf;
         $conf['typography'] = 2;

@@ -13,21 +13,25 @@
  * This function will abort the current script when a 304 is sent or file sending is handled
  * through x-sendfile
  *
+ * @param string $file local file to send
+ * @param string $mime mime type of the file
+ * @param bool $dl set to true to force a browser download
+ * @param int $cache remaining cache time in seconds (-1 for $conf['cache'], 0 for no-cache)
+ * @param bool $public is this a public ressource or a private one?
+ * @param string $orig original file to send - the file name will be used for the Content-Disposition
+ * @param array $csp The ContentSecurityPolicy to send
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Gerry Weissbach <dokuwiki@gammaproduction.de>
  *
- * @param string $file   local file to send
- * @param string $mime   mime type of the file
- * @param bool   $dl     set to true to force a browser download
- * @param int    $cache  remaining cache time in seconds (-1 for $conf['cache'], 0 for no-cache)
- * @param bool   $public is this a public ressource or a private one?
- * @param string $orig   original file to send - the file name will be used for the Content-Disposition
  */
-function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null) {
+function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp=[]) {
     global $conf;
     // send mime headers
     header("Content-Type: $mime");
+
+    // send security policy if given
+    if (!empty($csp)) dokuwiki\HTTP\Headers::contentSecurityPolicy($csp);
 
     // calculate cache times
     if($cache == -1) {
