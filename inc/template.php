@@ -348,7 +348,6 @@ function tpl_metaheaders($alt = true) {
     $jquery = getCdnUrls();
     foreach($jquery as $src) {
         $head['script'][] = array(
-            'charset' => 'utf-8',
             '_data' => '',
             'src' => $src,
         ) + ($conf['defer_js'] ? [ 'defer' => 'defer'] : []);
@@ -356,7 +355,7 @@ function tpl_metaheaders($alt = true) {
 
     // load our javascript dispatcher
     $head['script'][] = array(
-        'charset'=> 'utf-8', '_data'=> '',
+        '_data'=> '',
         'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed,
     ) + ($conf['defer_js'] ? [ 'defer' => 'defer'] : []);
 
