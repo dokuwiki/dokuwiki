@@ -109,6 +109,7 @@ $lang['js']['media_done_btn']  = 'Xong';
 $lang['js']['media_drop']      = 'Kéo tập tin vào đây để tải lên';
 $lang['js']['media_cancel']    = 'xóa';
 $lang['js']['media_overwrt']   = 'Ghi đè các tập tin hiện có';
+$lang['js']['data_insecure']   = 'CẢNH BÁO: Có vẻ như đường dẫn dữ liệu của bạn không được bảo mật đúng cách. Xin vui lòng đọc <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
 $lang['search_exact_match']    = 'Khớp chính xác';
 $lang['search_starts_with']    = 'Bắt đầu với';
 $lang['search_ends_with']      = 'Kết thúc bằng';
