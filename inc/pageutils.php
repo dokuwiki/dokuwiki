@@ -548,8 +548,8 @@ function resolve_mediaid($ns,&$media,&$exists,$rev='',$date_at=false){
  */
 function resolve_pageid($ns,&$page,&$exists,$rev='',$date_at=false )
 {
-    dbg_deprecated(\dokuwiki\Utils\PageResolver::class);
-    $resolver = new \dokuwiki\Utils\PageResolver("$ns:deprecated");
+    dbg_deprecated(PageResolver::class);
+    $resolver = new PageResolver("$ns:deprecated");
     $page = $resolver->resolveId($page, $rev, $date_at);
     $exists = page_exists($page, $rev, false, $date_at);
 }
