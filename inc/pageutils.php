@@ -9,6 +9,8 @@
 
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Utils\MediaResolver;
+use dokuwiki\Utils\PageResolver;
 
 /**
  * Fetch the an ID from request
@@ -276,6 +278,27 @@ function page_exists($id,$rev='',$clean=true, $date_at=false) {
 }
 
 /**
+ * Media existence check
+ *
+ * @param string $id page id
+ * @param string|int $rev empty or revision timestamp
+ * @param bool $clean flag indicating that $id should be cleaned (see mediaFN as well)
+ * @param bool $date_at
+ * @return bool exists?
+ */
+function media_exists($id, $rev = '', $clean = true, $date_at = false)
+{
+    if ($rev !== '' && $date_at) {
+        $changeLog = new MediaChangeLog($id);
+        $changelog_rev = $changeLog->getLastRevisionAt($rev);
+        if ($changelog_rev !== false) {
+            $rev = $changelog_rev;
+        }
+    }
+    return file_exists(mediaFN($id, $rev, $clean));
+}
+
+/**
  * returns the full path to the datafile specified by ID and optional revision
  *
  * The filename is URL encoded to protect Unicode chars
@@ -499,18 +522,18 @@ function resolve_id($ns,$id,$clean=true){
 /**
  * Returns a full media id
  *
- * @deprecated 2020-09-30
  * @param string $ns namespace which is context of id
- * @param string &$page (reference) relative media id, updated to resolved id
+ * @param string &$media (reference) relative media id, updated to resolved id
  * @param bool &$exists (reference) updated with existance of media
  * @param int|string $rev
  * @param bool $date_at
+ * @deprecated 2020-09-30
  */
-function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
-    dbg_deprecated(\dokuwiki\Utils\MediaResolver::class);
-    $resolver = new \dokuwiki\Utils\MediaResolver("$ns:deprecated");
-    $page = $resolver->resolveId($page, $rev, $date_at);
-    $exists = page_exists($page, $rev, false, $date_at);
+function resolve_mediaid($ns,&$media,&$exists,$rev='',$date_at=false){
+    dbg_deprecated(MediaResolver::class);
+    $resolver = new MediaResolver("$ns:deprecated");
+    $media = $resolver->resolveId($media, $rev, $date_at);
+    $exists = media_exists($media, $rev, false, $date_at);
 }
 
 /**
