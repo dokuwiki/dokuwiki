@@ -3,6 +3,8 @@
 
 namespace dokuwiki\Extension;
 
+use dokuwiki\Logger;
+
 /**
  * The Action plugin event
  */
@@ -71,7 +73,8 @@ class Event
         if ($EVENT_HANDLER !== null) {
             $EVENT_HANDLER->process_event($this, 'BEFORE');
         } else {
-            dbglog($this->name . ':BEFORE event triggered before event system was initialized');
+            Logger::getInstance(Logger::LOG_DEBUG)
+                  ->log($this->name . ':BEFORE event triggered before event system was initialized');
         }
 
         return (!$enablePreventDefault || $this->runDefault);
@@ -92,7 +95,8 @@ class Event
         if ($EVENT_HANDLER !== null) {
             $EVENT_HANDLER->process_event($this, 'AFTER');
         } else {
-            dbglog($this->name . ':AFTER event triggered before event system was initialized');
+            Logger::getInstance(Logger::LOG_DEBUG)->
+                log($this->name . ':AFTER event triggered before event system was initialized');
         }
     }
 

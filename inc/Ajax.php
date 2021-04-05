@@ -2,6 +2,7 @@
 
 namespace dokuwiki;
 
+use dokuwiki\Ui;
 use dokuwiki\Utf8\Sort;
 
 /**
@@ -322,10 +323,11 @@ class Ajax {
 
         $data = array();
         search($data, $conf['datadir'], 'search_index', array('ns' => $ns), $dir);
-        foreach(array_keys($data) as $item) {
+        foreach (array_keys($data) as $item) {
             $data[$item]['level'] = $lvl + 1;
         }
-        echo html_buildlist($data, 'idx', 'html_list_index', 'html_li_index');
+        $idx = new Ui\Index;
+        echo html_buildlist($data, 'idx', [$idx,'formatListItem'], [$idx,'tagListItem']);
     }
 
     /**

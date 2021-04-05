@@ -1317,79 +1317,81 @@ class JpegMeta {
             $this->_info['file']['UnixTime'] = filemtime($this->_fileName);
 
             // get image size directly from file
-            $size = getimagesize($this->_fileName);
-            $this->_info['file']['Width']  = $size[0];
-            $this->_info['file']['Height'] = $size[1];
-            // set mime types and formats
-            // http://php.net/manual/en/function.getimagesize.php
-            // http://php.net/manual/en/function.image-type-to-mime-type.php
-            switch ($size[2]){
-                case 1:
-                    $this->_info['file']['Mime']   = 'image/gif';
-                    $this->_info['file']['Format'] = 'GIF';
-                    break;
-                case 2:
-                    $this->_info['file']['Mime']   = 'image/jpeg';
-                    $this->_info['file']['Format'] = 'JPEG';
-                    break;
-                case 3:
-                    $this->_info['file']['Mime']   = 'image/png';
-                    $this->_info['file']['Format'] = 'PNG';
-                    break;
-                case 4:
-                    $this->_info['file']['Mime']   = 'application/x-shockwave-flash';
-                    $this->_info['file']['Format'] = 'SWF';
-                    break;
-                case 5:
-                    $this->_info['file']['Mime']   = 'image/psd';
-                    $this->_info['file']['Format'] = 'PSD';
-                    break;
-                case 6:
-                    $this->_info['file']['Mime']   = 'image/bmp';
-                    $this->_info['file']['Format'] = 'BMP';
-                    break;
-                case 7:
-                    $this->_info['file']['Mime']   = 'image/tiff';
-                    $this->_info['file']['Format'] = 'TIFF (Intel)';
-                    break;
-                case 8:
-                    $this->_info['file']['Mime']   = 'image/tiff';
-                    $this->_info['file']['Format'] = 'TIFF (Motorola)';
-                    break;
-                case 9:
-                    $this->_info['file']['Mime']   = 'application/octet-stream';
-                    $this->_info['file']['Format'] = 'JPC';
-                    break;
-                case 10:
-                    $this->_info['file']['Mime']   = 'image/jp2';
-                    $this->_info['file']['Format'] = 'JP2';
-                    break;
-                case 11:
-                    $this->_info['file']['Mime']   = 'application/octet-stream';
-                    $this->_info['file']['Format'] = 'JPX';
-                    break;
-                case 12:
-                    $this->_info['file']['Mime']   = 'application/octet-stream';
-                    $this->_info['file']['Format'] = 'JB2';
-                    break;
-                case 13:
-                    $this->_info['file']['Mime']   = 'application/x-shockwave-flash';
-                    $this->_info['file']['Format'] = 'SWC';
-                    break;
-                case 14:
-                    $this->_info['file']['Mime']   = 'image/iff';
-                    $this->_info['file']['Format'] = 'IFF';
-                    break;
-                case 15:
-                    $this->_info['file']['Mime']   = 'image/vnd.wap.wbmp';
-                    $this->_info['file']['Format'] = 'WBMP';
-                    break;
-                case 16:
-                    $this->_info['file']['Mime']   = 'image/xbm';
-                    $this->_info['file']['Format'] = 'XBM';
-                    break;
-                default:
-                    $this->_info['file']['Mime']   = 'image/unknown';
+            if ($size = getimagesize($this->_fileName)) {
+                $this->_info['file']['Width'] = $size[0];
+                $this->_info['file']['Height'] = $size[1];
+
+                // set mime types and formats
+                // http://php.net/manual/en/function.getimagesize.php
+                // http://php.net/manual/en/function.image-type-to-mime-type.php
+                switch ($size[2]) {
+                    case 1:
+                        $this->_info['file']['Mime'] = 'image/gif';
+                        $this->_info['file']['Format'] = 'GIF';
+                        break;
+                    case 2:
+                        $this->_info['file']['Mime'] = 'image/jpeg';
+                        $this->_info['file']['Format'] = 'JPEG';
+                        break;
+                    case 3:
+                        $this->_info['file']['Mime'] = 'image/png';
+                        $this->_info['file']['Format'] = 'PNG';
+                        break;
+                    case 4:
+                        $this->_info['file']['Mime'] = 'application/x-shockwave-flash';
+                        $this->_info['file']['Format'] = 'SWF';
+                        break;
+                    case 5:
+                        $this->_info['file']['Mime'] = 'image/psd';
+                        $this->_info['file']['Format'] = 'PSD';
+                        break;
+                    case 6:
+                        $this->_info['file']['Mime'] = 'image/bmp';
+                        $this->_info['file']['Format'] = 'BMP';
+                        break;
+                    case 7:
+                        $this->_info['file']['Mime'] = 'image/tiff';
+                        $this->_info['file']['Format'] = 'TIFF (Intel)';
+                        break;
+                    case 8:
+                        $this->_info['file']['Mime'] = 'image/tiff';
+                        $this->_info['file']['Format'] = 'TIFF (Motorola)';
+                        break;
+                    case 9:
+                        $this->_info['file']['Mime'] = 'application/octet-stream';
+                        $this->_info['file']['Format'] = 'JPC';
+                        break;
+                    case 10:
+                        $this->_info['file']['Mime'] = 'image/jp2';
+                        $this->_info['file']['Format'] = 'JP2';
+                        break;
+                    case 11:
+                        $this->_info['file']['Mime'] = 'application/octet-stream';
+                        $this->_info['file']['Format'] = 'JPX';
+                        break;
+                    case 12:
+                        $this->_info['file']['Mime'] = 'application/octet-stream';
+                        $this->_info['file']['Format'] = 'JB2';
+                        break;
+                    case 13:
+                        $this->_info['file']['Mime'] = 'application/x-shockwave-flash';
+                        $this->_info['file']['Format'] = 'SWC';
+                        break;
+                    case 14:
+                        $this->_info['file']['Mime'] = 'image/iff';
+                        $this->_info['file']['Format'] = 'IFF';
+                        break;
+                    case 15:
+                        $this->_info['file']['Mime'] = 'image/vnd.wap.wbmp';
+                        $this->_info['file']['Format'] = 'WBMP';
+                        break;
+                    case 16:
+                        $this->_info['file']['Mime'] = 'image/xbm';
+                        $this->_info['file']['Format'] = 'XBM';
+                        break;
+                    default:
+                        $this->_info['file']['Mime'] = 'image/unknown';
+                }
             }
         } else {
             $this->_info['file'] = array();

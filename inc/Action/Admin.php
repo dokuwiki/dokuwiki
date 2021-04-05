@@ -18,10 +18,7 @@ class Admin extends AbstractUserAction {
         return AUTH_READ; // let in check later
     }
 
-    public function checkPreconditions() {
-        parent::checkPreconditions();
-    }
-
+    /** @inheritDoc */
     public function preProcess() {
         global $INPUT;
         global $INFO;
@@ -38,8 +35,8 @@ class Admin extends AbstractUserAction {
         }
     }
 
+    /** @inheritDoc */
     public function tplContent() {
         tpl_admin();
     }
-
 }

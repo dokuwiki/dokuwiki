@@ -245,19 +245,21 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
             // we got a cookie - see if we can trust it
 
             // get session info
-            $session = $_SESSION[DOKU_COOKIE]['auth'];
-            if(isset($session) &&
-                $auth->useSessionCache($user) &&
-                ($session['time'] >= time() - $conf['auth_security_timeout']) &&
-                ($session['user'] == $user) &&
-                ($session['pass'] == sha1($pass)) && //still crypted
-                ($session['buid'] == auth_browseruid())
-            ) {
+            if (isset($_SESSION[DOKU_COOKIE])) {
+                $session = $_SESSION[DOKU_COOKIE]['auth'];
+                if (isset($session) &&
+                    $auth->useSessionCache($user) &&
+                    ($session['time'] >= time() - $conf['auth_security_timeout']) &&
+                    ($session['user'] == $user) &&
+                    ($session['pass'] == sha1($pass)) && //still crypted
+                    ($session['buid'] == auth_browseruid())
+                ) {
 
-                // he has session, cookie and browser right - let him in
-                $INPUT->server->set('REMOTE_USER', $user);
-                $USERINFO               = $session['info']; //FIXME move all references to session
-                return true;
+                    // he has session, cookie and browser right - let him in
+                    $INPUT->server->set('REMOTE_USER', $user);
+                    $USERINFO = $session['info']; //FIXME move all references to session
+                    return true;
+                }
             }
             // no we don't trust it yet - recheck pass but silent
             $secret = auth_cookiesalt(!$sticky, true); //bind non-sticky to session
@@ -290,7 +292,7 @@ function auth_browseruid() {
     $uid .= $INPUT->server->str('HTTP_USER_AGENT');
     $uid .= $INPUT->server->str('HTTP_ACCEPT_CHARSET');
     $uid .= substr($ip, 0, strpos($ip, '.'));
-    $uid = strtolower($uid);
+    $uid = \dokuwiki\Utf8\PhpString::strtolower($uid);
     return md5($uid);
 }
 
@@ -527,7 +529,7 @@ function auth_isMember($memberlist, $user, array $groups) {
     // clean user and groups
     if(!$auth->isCaseSensitive()) {
         $user   = \dokuwiki\Utf8\PhpString::strtolower($user);
-        $groups = array_map('utf8_strtolower', $groups);
+        $groups = array_map([\dokuwiki\Utf8\PhpString::class, 'strtolower'], $groups);
     }
     $user   = $auth->cleanUser($user);
     $groups = array_map(array($auth, 'cleanGroup'), $groups);

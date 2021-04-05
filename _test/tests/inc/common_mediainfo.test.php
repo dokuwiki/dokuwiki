@@ -1,8 +1,8 @@
 <?php
 
 class common_basicinfo_test extends DokuWikiTest {
- 
-    function setup(){
+
+    function setup() : void {
         parent::setup();
 
         global $USERINFO; 

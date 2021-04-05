@@ -1,4 +1,5 @@
 <?php
+
 namespace dokuwiki\Form;
 
 /**
@@ -8,12 +9,13 @@ namespace dokuwiki\Form;
  *
  * @package dokuwiki\Form
  */
-class FieldsetCloseElement extends TagCloseElement {
-
+class FieldsetCloseElement extends TagCloseElement
+{
     /**
      * @param array $attributes
      */
-    public function __construct($attributes = array()) {
+    public function __construct($attributes = array())
+    {
         parent::__construct('', $attributes);
         $this->type = 'fieldsetclose';
     }
@@ -24,7 +26,8 @@ class FieldsetCloseElement extends TagCloseElement {
      *
      * @return string
      */
-    public function toHTML() {
+    public function toHTML()
+    {
         return '</fieldset>';
     }
 }

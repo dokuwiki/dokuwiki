@@ -111,6 +111,7 @@ $conf['mailfrom']    = '';               //use this email when sending mails
 $conf['mailreturnpath']    = '';         //use this email as returnpath for bounce mails
 $conf['mailprefix']  = '';               //use this as prefix of outgoing mails
 $conf['htmlmail']    = 1;                //send HTML multipart mails
+$conf['dontlog'] = 'debug';              //logging facilites that should be disabled
 
 /* Syndication Settings */
 $conf['sitemap']     = 0;                //Create a google sitemap? How often? In days.

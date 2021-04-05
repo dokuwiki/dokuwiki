@@ -1,3 +1,17 @@
+# Editor and temporary files
+*.swp
+*.bak
+*.old
+*~
+*.DS_Store
+*.iml
+.idea/
+.buildpath
+.project
+.settings/
+
+# DokuWiki
+.htaccess
 /conf/*.local.conf
 /conf/acl.auth.php
 /conf/local.php
@@ -10,19 +24,6 @@
 /conf/plugin_lang/*
 /conf/plugins.local.*
 /conf/tpl/*
-.htaccess
-*.swp
-*.bak
-*.old
-*~
-*.DS_Store
-*.iml
-.idea/
-# Eclipse IDE
-.buildpath
-.project
-.settings/
-# DokuWiki
 /data/attic/*
 /data/cache/*
 /data/index/*
@@ -56,6 +57,7 @@
 !/lib/plugins/styling
 !/lib/plugins/testing
 !/lib/plugins/usermanager
+!/lib/plugins/logviewer
 !/lib/plugins/action.php
 !/lib/plugins/admin.php
 !/lib/plugins/auth.php
@@ -90,3 +92,7 @@ vendor/splitbrain/php-cli/screenshot*
 vendor/splitbrain/php-cli/generate-api.sh
 vendor/splitbrain/php-cli/apigen.neon
 
+# PHPUnit tests
+phpunit.phar
+.phpunit.result.cache
+_test/data/

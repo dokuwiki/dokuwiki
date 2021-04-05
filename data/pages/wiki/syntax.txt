@@ -246,6 +246,7 @@ DokuWiki converts commonly used [[wp>emoticon]]s to their graphical equivalents.
   * :-| %%  :-|  %%
   * ;-) %%  ;-)  %%
   * ^_^ %%  ^_^  %%
+  * m(  %%  m(   %%
   * :?: %%  :?:  %%
   * :!: %%  :!:  %%
   * LOL %%  LOL  %%

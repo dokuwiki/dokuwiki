@@ -1,4 +1,5 @@
 <?php
+
 namespace dokuwiki\Form;
 
 /**
@@ -8,8 +9,8 @@ namespace dokuwiki\Form;
  *
  * @package dokuwiki\Form
  */
-class DropdownElement extends InputElement {
-
+class DropdownElement extends InputElement
+{
     /** @var array OptGroup[] */
     protected $optGroups = array();
 
@@ -18,7 +19,8 @@ class DropdownElement extends InputElement {
      * @param array  $options The available options
      * @param string $label The label text for this element (will be autoescaped)
      */
-    public function __construct($name, $options, $label = '') {
+    public function __construct($name, $options, $label = '')
+    {
         parent::__construct('dropdown', $name, $label);
         $this->rmattr('type');
         $this->optGroups[''] = new OptGroup(null, $options);
@@ -33,7 +35,8 @@ class DropdownElement extends InputElement {
      * @return OptGroup a reference to the added optgroup
      * @throws \Exception
      */
-    public function addOptGroup($label, $options) {
+    public function addOptGroup($label, $options)
+    {
         if (empty($label)) {
             throw new \InvalidArgumentException(hsc('<optgroup> must have a label!'));
         }
@@ -51,8 +54,9 @@ class DropdownElement extends InputElement {
      * @param null|array $optGroups
      * @return OptGroup[]|DropdownElement
      */
-    public function optGroups($optGroups = null) {
-        if($optGroups === null) {
+    public function optGroups($optGroups = null)
+    {
+        if ($optGroups === null) {
             return $this->optGroups;
         }
         if (!is_array($optGroups)) {
@@ -81,7 +85,8 @@ class DropdownElement extends InputElement {
      * @param null|array $options
      * @return $this|array
      */
-    public function options($options = null) {
+    public function options($options = null)
+    {
         if ($options === null) {
             return $this->optGroups['']->options();
         }
@@ -102,8 +107,9 @@ class DropdownElement extends InputElement {
      * @param null|string $value New value to set
      * @return string|$this
      */
-    public function attr($name, $value = null) {
-        if(strtolower($name) == 'multiple') {
+    public function attr($name, $value = null)
+    {
+        if (strtolower($name) == 'multiple') {
             throw new \InvalidArgumentException(
                 'Sorry, the dropdown element does not support the "multiple" attribute'
             );
@@ -120,12 +126,13 @@ class DropdownElement extends InputElement {
      * @param null|string $value The value to set
      * @return $this|string
      */
-    public function val($value = null) {
-        if($value === null) return $this->value;
+    public function val($value = null)
+    {
+        if ($value === null) return $this->value;
 
         $value_exists = $this->setValueInOptGroups($value);
 
-        if($value_exists) {
+        if ($value_exists) {
             $this->value = $value;
         } else {
             // unknown value set, select first option instead
@@ -141,7 +148,8 @@ class DropdownElement extends InputElement {
      *
      * @return string
      */
-    protected function getFirstOption() {
+    protected function getFirstOption()
+    {
         $options = $this->options();
         if (!empty($options)) {
             $keys = array_keys($options);
@@ -162,7 +170,8 @@ class DropdownElement extends InputElement {
      * @param string $value
      * @return bool
      */
-    protected function setValueInOptGroups($value) {
+    protected function setValueInOptGroups($value)
+    {
         $value_exists = false;
         /** @var OptGroup $optGroup */
         foreach ($this->optGroups as $optGroup) {
@@ -179,8 +188,9 @@ class DropdownElement extends InputElement {
      *
      * @return string
      */
-    protected function mainElementHTML() {
-        if($this->useInput) $this->prefillInput();
+    protected function mainElementHTML()
+    {
+        if ($this->useInput) $this->prefillInput();
 
         $html = '<select ' . buildAttributes($this->attrs()) . '>';
         $html = array_reduce(

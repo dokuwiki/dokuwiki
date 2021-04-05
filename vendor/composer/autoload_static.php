@@ -8,13 +8,14 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
 {
     public static $files = array (
         'fdc0e9724ddc47859c8bf0c1ea0a623a' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/constants.php',
-        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         's' => 
         array (
+            'splitbrain\\slika\\tests\\' => 23,
+            'splitbrain\\slika\\' => 17,
             'splitbrain\\phpcli\\' => 18,
             'splitbrain\\PHPArchive\\' => 22,
         ),
@@ -25,6 +26,14 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
     );
 
     public static $prefixDirsPsr4 = array (
+        'splitbrain\\slika\\tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/splitbrain/slika/tests',
+        ),
+        'splitbrain\\slika\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/splitbrain/slika/src',
+        ),
         'splitbrain\\phpcli\\' => 
         array (
             0 => __DIR__ . '/..' . '/splitbrain/php-cli/src',

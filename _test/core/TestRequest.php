@@ -197,7 +197,7 @@ class TestRequest {
         }
 
         $params = array();
-        list($uri, $query) = explode('?', $uri, 2);
+        list($uri, $query) = array_pad(explode('?', $uri, 2), 2, null);
         if($query) parse_str($query, $params);
 
         $this->script = substr($uri, 1);

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author ANDRE BASSANI DE FREITAS <dedebf@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Davi Jorge <davimoises2015@hotmail.com>
  * @author Schopf <pschopf@gmail.com>
@@ -182,6 +183,7 @@ $lang['txt_upload']            = 'Selecione o arquivo a ser enviado:';
 $lang['txt_filename']          = 'Enviar como (opcional):';
 $lang['txt_overwrt']           = 'Substituir o arquivo existente';
 $lang['maxuploadsize']         = 'Tamanho máximo de %s por arquivo.';
+$lang['allowedmime']           = 'Lista de extensões de arquivo permitidas';
 $lang['lockedby']              = 'Atualmente bloqueada por:';
 $lang['lockexpire']            = 'O bloqueio expira em:';
 $lang['rssfailed']             = 'Ocorreu um erro durante a atualização dessa fonte: ';

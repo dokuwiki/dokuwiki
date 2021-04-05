@@ -108,8 +108,11 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
             $data = $httpclient->get(self::EXTENSION_REPOSITORY_API.'?fmt=php&ext[]='.urlencode($name));
             if ($data !== false) {
                 $result = unserialize($data);
-                $cache->storeCache(serialize($result[0]));
-                return $result[0];
+                if(count($result)) {
+                    $cache->storeCache(serialize($result[0]));
+                    return $result[0];
+                }
+                return array();
             } else {
                 $this->has_access = false;
             }

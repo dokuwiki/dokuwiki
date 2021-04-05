@@ -88,9 +88,7 @@ class Search extends Ui
 
         $searchForm->addFieldsetClose();
 
-        Event::createAndTrigger('FORM_SEARCH_OUTPUT', $searchForm);
-
-        return $searchForm->toHTML();
+        return $searchForm->toHTML('Search');
     }
 
     /**
