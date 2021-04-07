@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eren <bosshyapma@protonmail.com>
  * @author Hakan <hakandursun2009@gmail.com>
  * @author mahir <mahirtakak@gmail.com>
  * @author Selim Farsakoğlu <farsakogluselim@yahoo.de>
@@ -167,6 +168,7 @@ $lang['txt_upload']            = 'Yüklenecek dosyayı seç:';
 $lang['txt_filename']          = 'Dosya adı (zorunlu değil):';
 $lang['txt_overwrt']           = 'Mevcut dosyanın üstüne yaz';
 $lang['maxuploadsize']         = 'Yükleme dosya başına en fazla %s';
+$lang['allowedmime']           = 'İzin verilen dosya uzantılarının listesi';
 $lang['lockedby']              = 'Şu an şunun tarafından kilitli:';
 $lang['lockexpire']            = 'Kilitin açılma tarihi:';
 $lang['rssfailed']             = 'Bu beslemeyi çekerken hata oluştu: ';
@@ -302,6 +304,7 @@ $lang['i_superuser']           = 'Ana Kullanıcı';
 $lang['i_problems']            = 'Kurulum sihirbazı aşağıda gösterilen sorunları buldu. Bunları düzeltmeden devam etmeniz mümkün değil.';
 $lang['i_modified']            = 'Güzenlik sebebiyle bu script sadece yeni ve değiştirilmemiş bir Dokuwiki kurulumunda çalışır. Ya indirdiğiniz paketi yeniden açmalı ya da <a href="http://dokuwiki.org/install"> adresindeki Dokuwiki kurulum kılavuzu</a>na bakmalısınız.';
 $lang['i_funcna']              = '<code>%s</code> PHP fonksiyonu bulunmamaktadır. Barındırma(Hosting) hizmetinde bu özellik kapatılmış olabilir.';
+$lang['i_disabled']            = 'Sağlayıcınız tarafından devre dışı bırakılmış.';
 $lang['i_phpver']              = '<code>%s</code> PHP sürümü, gereken <code>%s</code>  sürümünden daha düşük. PHP kurulumunu yükseltmeniz gerekmektedir.';
 $lang['i_mbfuncoverload']      = 'DokuWiki\'nin çalışması için php.ini dosyasında mbstring.func_overload seçeneği kapalı (değeri 0) olarak ayarlanmalıdır.';
 $lang['i_permfail']            = '<code>%s</code> Dokuwiki tarafından yazılabilir değil. İzin ayarlarını bu klasör için düzeltmeniz gerekmektedir!';
