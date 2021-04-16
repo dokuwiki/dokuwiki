@@ -71,6 +71,7 @@ composer.phar
 vendor/bin/*
 vendor/*/*/phpunit.xml*
 vendor/*/*/.travis.yml
+vendor/*/*/.github
 vendor/*/*/bin/*
 vendor/*/*/tests/*
 vendor/*/*/test/*

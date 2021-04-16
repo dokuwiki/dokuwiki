@@ -45,6 +45,10 @@
             ],
             "description": "Fork of AddedBytes' PHP EmailAddressValidator script, now with Composer support!",
             "homepage": "https://github.com/aziraphale/email-address-validator",
+            "support": {
+                "issues": "https://github.com/aziraphale/email-address-validator/issues",
+                "source": "https://github.com/aziraphale/email-address-validator/tree/master"
+            },
             "time": "2017-05-22T14:05:57+00:00"
         },
         {
@@ -64,6 +68,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.2"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "classmap": [
@@ -85,24 +90,30 @@
             ],
             "description": "Generic Syntax Highlighter",
             "homepage": "http://qbnz.com/highlighter/",
+            "support": {
+                "forum": "https://lists.sourceforge.net/lists/listinfo/geshi-users",
+                "irc": "irc://irc.freenode.org/geshi",
+                "issues": "https://sourceforge.net/p/geshi/feature-requests/",
+                "source": "https://github.com/GeSHi/geshi-1.0/tree/master"
+            },
             "time": "2020-06-22T15:46:04+00:00"
         },
         {
             "name": "marcusschwarz/lesserphp",
-            "version": "v0.5.4",
+            "version": "v0.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MarcusSchwarz/lesserphp.git",
-                "reference": "3a0f5ae0d63cbb661b5f4afd2f96875e73b3ad7e"
+                "reference": "77ba82b5218ff228267d3b0e5ec8697be75e86a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MarcusSchwarz/lesserphp/zipball/3a0f5ae0d63cbb661b5f4afd2f96875e73b3ad7e",
-                "reference": "3a0f5ae0d63cbb661b5f4afd2f96875e73b3ad7e",
+                "url": "https://api.github.com/repos/MarcusSchwarz/lesserphp/zipball/77ba82b5218ff228267d3b0e5ec8697be75e86a7",
+                "reference": "77ba82b5218ff228267d3b0e5ec8697be75e86a7",
                 "shasum": ""
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.3"
+                "phpunit/phpunit": ">=4.8.35 <8"
             },
             "bin": [
                 "plessc"
@@ -137,20 +148,24 @@
             ],
             "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
             "homepage": "http://leafo.net/lessphp/",
-            "time": "2020-01-19T19:18:49+00:00"
+            "support": {
+                "issues": "https://github.com/MarcusSchwarz/lesserphp/issues",
+                "source": "https://github.com/MarcusSchwarz/lesserphp/tree/v0.5.5"
+            },
+            "time": "2021-03-10T17:56:57+00:00"
         },
         {
             "name": "openpsa/universalfeedcreator",
-            "version": "v1.8.3.2",
+            "version": "v1.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/flack/UniversalFeedCreator.git",
-                "reference": "906745196469b13ceefa6523ef04851a78ad10f4"
+                "reference": "099817dc9efef33ca2382b04daf9e191b77fed13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/906745196469b13ceefa6523ef04851a78ad10f4",
-                "reference": "906745196469b13ceefa6523ef04851a78ad10f4",
+                "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/099817dc9efef33ca2382b04daf9e191b77fed13",
+                "reference": "099817dc9efef33ca2382b04daf9e191b77fed13",
                 "shasum": ""
             },
             "require": {
@@ -188,20 +203,24 @@
                 "pie",
                 "rss"
             ],
-            "time": "2019-09-01T17:49:46+00:00"
+            "support": {
+                "issues": "https://github.com/flack/UniversalFeedCreator/issues",
+                "source": "https://github.com/flack/UniversalFeedCreator/tree/v1.8.4"
+            },
+            "time": "2020-09-25T08:36:47+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.28",
+            "version": "2.0.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "d1ca58cf33cb21046d702ae3a7b14fdacd9f3260"
+                "reference": "233a920cb38636a43b18d428f9a8db1f0a1a08f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/d1ca58cf33cb21046d702ae3a7b14fdacd9f3260",
-                "reference": "d1ca58cf33cb21046d702ae3a7b14fdacd9f3260",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/233a920cb38636a43b18d428f9a8db1f0a1a08f4",
+                "reference": "233a920cb38636a43b18d428f9a8db1f0a1a08f4",
                 "shasum": ""
             },
             "require": {
@@ -209,8 +228,7 @@
             },
             "require-dev": {
                 "phing/phing": "~2.7",
-                "phpunit/phpunit": "^4.8.35|^5.7|^6.0",
-                "sami/sami": "~2.0",
+                "phpunit/phpunit": "^4.8.35|^5.7|^6.0|^9.4",
                 "squizlabs/php_codesniffer": "~2.0"
             },
             "suggest": {
@@ -280,6 +298,10 @@
                 "x.509",
                 "x509"
             ],
+            "support": {
+                "issues": "https://github.com/phpseclib/phpseclib/issues",
+                "source": "https://github.com/phpseclib/phpseclib/tree/2.0.31"
+            },
             "funding": [
                 {
                     "url": "https://github.com/terrafrost",
@@ -294,7 +316,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-08T09:08:33+00:00"
+            "time": "2021-04-06T13:56:45+00:00"
         },
         {
             "name": "simplepie/simplepie",
@@ -361,20 +383,24 @@
                 "feeds",
                 "rss"
             ],
+            "support": {
+                "issues": "https://github.com/simplepie/simplepie/issues",
+                "source": "https://github.com/simplepie/simplepie/tree/1.5.6"
+            },
             "time": "2020-10-14T07:17:22+00:00"
         },
         {
             "name": "splitbrain/php-archive",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-archive.git",
-                "reference": "d4cf2d9a2d82548b7e4f1dc04802c526eba68b65"
+                "reference": "211a2198b73b233d7d2b6159462e11cd9a91348a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/d4cf2d9a2d82548b7e4f1dc04802c526eba68b65",
-                "reference": "d4cf2d9a2d82548b7e4f1dc04802c526eba68b65",
+                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/211a2198b73b233d7d2b6159462e11cd9a91348a",
+                "reference": "211a2198b73b233d7d2b6159462e11cd9a91348a",
                 "shasum": ""
             },
             "require": {
@@ -384,7 +410,7 @@
                 "ext-bz2": "*",
                 "ext-zip": "*",
                 "mikey179/vfsstream": "^1.6",
-                "phpunit/phpunit": "^4.8"
+                "phpunit/phpunit": "^8"
             },
             "suggest": {
                 "ext-iconv": "Used for proper filename encode handling",
@@ -415,27 +441,31 @@
                 "unzip",
                 "zip"
             ],
-            "time": "2020-10-13T12:41:15+00:00"
+            "support": {
+                "issues": "https://github.com/splitbrain/php-archive/issues",
+                "source": "https://github.com/splitbrain/php-archive/tree/1.2.1"
+            },
+            "time": "2021-02-22T17:59:24+00:00"
         },
         {
             "name": "splitbrain/php-cli",
-            "version": "1.1.7",
+            "version": "1.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-cli.git",
-                "reference": "fb4f888866d090b10e3e68292d197ca274cea626"
+                "reference": "8c2c001b1b55d194402cf18aad2757049ac6d575"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/fb4f888866d090b10e3e68292d197ca274cea626",
-                "reference": "fb4f888866d090b10e3e68292d197ca274cea626",
+                "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/8c2c001b1b55d194402cf18aad2757049ac6d575",
+                "reference": "8c2c001b1b55d194402cf18aad2757049ac6d575",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.5.*"
+                "phpunit/phpunit": "^8"
             },
             "suggest": {
                 "psr/log": "Allows you to make the CLI available as PSR-3 logger"
@@ -466,20 +496,24 @@
                 "optparse",
                 "terminal"
             ],
-            "time": "2019-12-12T08:24:54+00:00"
+            "support": {
+                "issues": "https://github.com/splitbrain/php-cli/issues",
+                "source": "https://github.com/splitbrain/php-cli/tree/1.1.8"
+            },
+            "time": "2021-02-05T12:02:46+00:00"
         },
         {
             "name": "splitbrain/slika",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/slika.git",
-                "reference": "a357f2ac6a10668c43516ef11220f60da9fab171"
+                "reference": "fda87e816eb150f3608282da962788b4ad509c11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/slika/zipball/a357f2ac6a10668c43516ef11220f60da9fab171",
-                "reference": "a357f2ac6a10668c43516ef11220f60da9fab171",
+                "url": "https://api.github.com/repos/splitbrain/slika/zipball/fda87e816eb150f3608282da962788b4ad509c11",
+                "reference": "fda87e816eb150f3608282da962788b4ad509c11",
                 "shasum": ""
             },
             "require-dev": {
@@ -506,16 +540,20 @@
                 }
             ],
             "description": "Simple image resizing",
-            "time": "2020-09-01T15:14:41+00:00"
+            "support": {
+                "issues": "https://github.com/splitbrain/slika/issues",
+                "source": "https://github.com/splitbrain/slika/tree/master"
+            },
+            "time": "2020-09-07T18:35:00+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [
         {
-            "alias": "1.0.x-dev",
-            "alias_normalized": "1.0.9999999.9999999-dev",
+            "package": "geshi/geshi",
             "version": "9999999-dev",
-            "package": "geshi/geshi"
+            "alias": "1.0.x-dev",
+            "alias_normalized": "1.0.9999999.9999999-dev"
         }
     ],
     "minimum-stability": "stable",
@@ -532,5 +570,5 @@
     "platform-overrides": {
         "php": "7.2"
     },
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

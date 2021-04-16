@@ -268,6 +268,9 @@ class GdAdapter extends Adapter
      */
     protected function boundingBox($width, $height)
     {
+        $width = $this->cleanDimension($width, $this->width);
+        $height = $this->cleanDimension($height, $this->height);
+
         if ($width == 0 && $height == 0) {
             throw new Exception('You can not resize to 0x0');
         }
@@ -286,6 +289,26 @@ class GdAdapter extends Adapter
         }
 
         return [$width, $height];
+    }
+
+    /**
+     * Ensure the given Dimension is a proper pixel value
+     *
+     * When a percentage is given, the value is calculated based on the given original dimension
+     *
+     * @param int|string $dim New Dimension
+     * @param int $orig Original dimension
+     * @return int
+     */
+    protected function cleanDimension($dim, $orig)
+    {
+        if ($dim && substr($dim, -1) == '%') {
+            $dim = round($orig * ((float)$dim / 100));
+        } else {
+            $dim = (int)$dim;
+        }
+
+        return $dim;
     }
 
     /**
