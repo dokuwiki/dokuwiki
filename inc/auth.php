@@ -474,7 +474,8 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false, $recac
         if ($USERINFO && $user === $INPUT->server->str('REMOTE_USER')) {
             $groups =  (array) $USERINFO['grps'];
         } else {
-            $groups = (array) $auth->getUserData($user)['grps'];
+            $groups = $auth->getUserData($user);
+            $groups = $groups ? $groups['grps'] : [];
         }
     }
 
