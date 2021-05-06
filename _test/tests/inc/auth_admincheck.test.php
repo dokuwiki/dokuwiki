@@ -27,6 +27,26 @@ class auth_admin_test extends DokuWikiTest
         $auth = new AuthCaseInsensitivePlugin();
     }
 
+    public function authenticateAdmin()
+    {
+        global $USERINFO;
+        $_SERVER['REMOTE_USER'] = 'testadmin';
+        $USERINFO['grps'] = ['admin', 'foo', 'bar'];
+
+        global $auth;
+        $auth = new \auth_plugin_authplain();
+    }
+
+    public function authenticateNonadmin()
+    {
+        global $USERINFO;
+        $_SERVER['REMOTE_USER'] = 'testuser';
+        $USERINFO['grps'] = ['foo', 'bar'];
+
+        global $auth;
+        $auth = new \auth_plugin_authplain();
+    }
+
     function tearDown() : void
     {
         global $auth;
@@ -126,4 +146,56 @@ class auth_admin_test extends DokuWikiTest
         $this->assertTrue(auth_ismanager('Doe', array('admin'), true, true));
     }
 
+    public function test_ismanager_authenticated_admin()
+    {
+        $this->authenticateAdmin();
+
+        global $conf;
+        $conf['superuser'] = '@admin';
+        $conf['manager'] = '@managers';
+
+        global $auth;
+        $auth->createUser(
+            'alice',
+            '179ad45c6ce2cb97cf1029e212046e81',
+            'Alice',
+            'alice@example.com',
+            [
+                'foo'
+            ]
+        );
+        $auth->createUser(
+            'bob',
+            '179ad45c6ce2cb97cf1029e212046e81',
+            'Robert',
+            'bob@example.com',
+            [
+                'managers'
+            ]
+        );
+
+        $this->assertFalse(auth_ismanager('alice', null, false, true));
+        $this->assertTrue(auth_ismanager('bob', null, false, true));
+    }
+
+    public function test_isadmin_authenticated_nonadmin()
+    {
+        $this->authenticateNonadmin();
+
+        global $conf;
+        $conf['superuser'] = '@admin';
+
+        global $auth;
+        $auth->createUser(
+            'camilla',
+            '179ad45c6ce2cb97cf1029e212046e81',
+            'Camilla',
+            'camilla@example.com',
+            [
+                'admin'
+            ]
+        );
+
+        $this->assertTrue(auth_ismanager('camilla', null, true, true));
+    }
 }
