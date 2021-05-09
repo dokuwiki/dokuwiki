@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Luna Frax <lunafrax@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  * @author Liliana <lilianasaidon@gmail.com>
  * @author Alex Cachinero <anarres@protonmail.com>
@@ -201,6 +202,7 @@ $lang['txt_upload']            = 'Selecciona el archivo a subir:';
 $lang['txt_filename']          = 'Subir como (opcional):';
 $lang['txt_overwrt']           = 'Sobreescribir archivo existente';
 $lang['maxuploadsize']         = 'Peso máximo de %s por archivo';
+$lang['allowedmime']           = 'Lista de extensiones de archivo permitidas';
 $lang['lockedby']              = 'Actualmente bloqueado por:';
 $lang['lockexpire']            = 'El bloqueo expira en:';
 $lang['rssfailed']             = 'Se ha producido un error mientras se leían los datos de este feed: ';

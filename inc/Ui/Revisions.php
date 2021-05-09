@@ -17,7 +17,7 @@ abstract class Revisions extends Ui
     /* @var ChangeLog */
     protected $changelog; // PageChangeLog or MediaChangeLog object
 
-    /** 
+    /**
      * Revisions Ui constructor
      *
      * @param string $id  page id or media id
@@ -145,6 +145,9 @@ abstract class Revisions extends Ui
 
             public function __construct(array $info)
             {
+                if (!isset($info['current'])) {
+                    $info['current'] = false;
+                }
                 $this->info = $info;
             }
 

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Markus Glaser <glaser@hallowelt.com>
  * @author Axel Schwarzer <SchwarzerA@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Eric Haberstroh <ehaberstroh@gmail.com>
@@ -138,6 +139,7 @@ $lang['mailfrom']              = 'Absender-E-Mail-Adresse für automatische Mail
 $lang['mailreturnpath']        = 'Empfänger-E-Mail-Adresse für Unzustellbarkeitsnachricht';
 $lang['mailprefix']            = 'Präfix für E-Mail-Betreff beim automatischen Versand von Benachrichtigungen (Leer lassen um den Wiki-Titel zu verwenden)';
 $lang['htmlmail']              = 'Versendet optisch angenehmere, aber größere E-Mails im HTML-Format (multipart). Deaktivieren, um Text-Mails zu versenden.';
+$lang['dontlog']               = 'Protokollierung für diese Logtypen deaktivieren.';
 $lang['sitemap']               = 'Google Sitemap erzeugen (Tage). Mit 0 deaktivieren.';
 $lang['rss_type']              = 'XML-Feed-Format';
 $lang['rss_linkto']            = 'XML-Feed verlinken auf';

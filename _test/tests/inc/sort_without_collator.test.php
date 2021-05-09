@@ -15,7 +15,7 @@ class sort_without_collator_test extends sort_with_collator_test
     /**
      * Disable the "intl" extension.
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass() : void
     {
         parent::setUpBeforeClass();
         Sort::useIntl(false);
@@ -24,7 +24,7 @@ class sort_without_collator_test extends sort_with_collator_test
     /**
      * Reenable the "intl" extension.
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass() : void
     {
         Sort::useIntl(true);
         parent::tearDownAfterClass();

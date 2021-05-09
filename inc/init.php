@@ -402,8 +402,9 @@ function init_creationmodes(){
     unset($conf['dmask']);
     unset($conf['fmask']);
     unset($conf['umask']);
-    unset($conf['fperm']);
-    unset($conf['dperm']);
+
+    $conf['fperm'] = false;
+    $conf['dperm'] = false;
 
     // get system umask, fallback to 0 if none available
     $umask = @umask();

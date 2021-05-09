@@ -114,6 +114,7 @@ $lang['mailfrom']              = 'Đia chỉ thư điện tử người gửi s�
 $lang['mailreturnpath']        = 'Địa chỉ thư điện tử người nhận cho thông báo không cung cấp';
 $lang['mailprefix']            = 'Tiền tố chủ đề thư điện tử sử dụng cho thư tự động. Để trống nếu muốn sử dụng tiêu đề wiki';
 $lang['htmlmail']              = 'Gửi tìm kiếm tốt hơn, nhưng kích thước lớn hơn thư điện tử HTML nhiều phần. Vô hiệu hóa cho thư chỉ có văn bản đơn thuần .';
+$lang['dontlog']               = 'Vô hiệu hóa ghi nhật ký đối với các loại nhật ký này.';
 $lang['sitemap']               = 'Tạo sơ đồ trang web của Google (sitemap) thường xuyên (tính theo ngày). Đặt thành 0 để vô hiệu hóa';
 $lang['rss_type']              = 'Loại nguồn cấp dữ liệu XML';
 $lang['rss_linkto']            = 'Liên kết đến nguồn cấp dữ liệu XML ';
@@ -135,7 +136,7 @@ $lang['autoplural']            = 'Kiểm tra các hình thức số nhiều tron
 $lang['compression']           = 'Phương pháp nén cho các tập tin attic ';
 $lang['gzip_output']           = 'Sử dụng mã hóa nội dung gzip cho xhtml';
 $lang['compress']              = 'Đầu ra CSS và javascript nhỏ gọn';
-$lang['cssdatauri']            = 'Kích thước tính theo byte mà hình ảnh được tham chiếu trong tập tin CSS nên được nhúng ngay vào bảng định kiểu để giảm yêu cầu đầu đề HTTP phía trước. <code>400</code> đến <code>600</code> bytes là các giá trị tốt. Đặt thành <code>0</code> để vô hiệu.';
+$lang['cssdatauri']            = 'Kích thước tính theo byte mà hình ảnh được tham chiếu trong tập tin CSS nên được nhúng ngay vào bảng định kiểu để giảm yêu cầu đầu đề HTTP phía trước. <code>400</code> đến <code>600</code> bytes là các giá trị tốt. Đặt thành <code>0</code> để vô hiệu hóa.';
 $lang['send404']               = 'Gửi "HTTP 404/Không tìm thấy trang" cho những trang không tồn tại';
 $lang['broken_iua']            = 'Chức năng ign_user_abort có bị hỏng trên hệ thống của bạn không? Điều này có thể khiến chỉ mục tìm kiếm không hoạt động. IIS + PHP/CGI được biết sẽ bị hỏng. Xem <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">Bug 852</a> để biết thêm thông tin.';
 $lang['xsendfile']             = 'Sử dụng đầu đề X-Sendfile cho phép máy chủ web cung cấp các tập tin tĩnh? Máy chủ web của bạn cần hỗ trợ cái này.';

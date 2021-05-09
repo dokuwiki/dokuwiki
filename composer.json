@@ -9,7 +9,6 @@
         "ext-json": "*",
         "splitbrain/php-archive": "~1.0",
         "phpseclib/phpseclib": "~2.0",
-        "paragonie/random_compat": "^2.0",
         "simplepie/simplepie": "^1.4",
         "geshi/geshi": "dev-master as 1.0.x-dev",
         "openpsa/universalfeedcreator": "^1.8",

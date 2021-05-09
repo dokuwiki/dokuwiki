@@ -80,7 +80,9 @@ function _ft_pageSearch(&$data) {
             case 'W-:':
             case 'W_:': // word
                 $word    = substr($token, 3);
-                $stack[] = (array) $lookup[$word];
+                if(isset($lookup[$word])) {
+                    $stack[] = (array)$lookup[$word];
+                }
                 break;
             case 'P+:':
             case 'P-:': // phrase
@@ -266,6 +268,10 @@ function _ft_pageLookup(&$data){
         $ns = cleanID($parsedQuery['ns'][0]) . ':';
         $id = implode(' ', $parsedQuery['highlight']);
     }
+    if (count($parsedQuery['notns']) > 0) {
+        $notns = cleanID($parsedQuery['notns'][0]) . ':';
+        $id = implode(' ', $parsedQuery['highlight']);
+    }
 
     $in_ns    = $data['in_ns'];
     $in_title = $data['in_title'];
@@ -293,6 +299,13 @@ function _ft_pageLookup(&$data){
     if (isset($ns)) {
         foreach (array_keys($pages) as $p_id) {
             if (strpos($p_id, $ns) !== 0) {
+                unset($pages[$p_id]);
+            }
+        }
+    }
+    if (isset($notns)) {
+        foreach (array_keys($pages) as $p_id) {
+            if (strpos($p_id, $notns) === 0) {
                 unset($pages[$p_id]);
             }
         }

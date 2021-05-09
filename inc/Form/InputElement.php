@@ -107,7 +107,7 @@ class InputElement extends Element
         $name = array_keys($parsed);
         $name = array_shift($name);
 
-        if (is_array($parsed[$name])) {
+        if (isset($parsed[$name]) && is_array($parsed[$name])) {
             $key = array_keys($parsed[$name]);
             $key = array_shift($key);
         } else {

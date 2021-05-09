@@ -2,6 +2,20 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# removed in next version
+vendor/paragonie/random_compat/LICENSE
+vendor/paragonie/random_compat/composer.json
+vendor/paragonie/random_compat/lib/byte_safe_strings.php
+vendor/paragonie/random_compat/lib/cast_to_int.php
+vendor/paragonie/random_compat/lib/error_polyfill.php
+vendor/paragonie/random_compat/lib/random.php
+vendor/paragonie/random_compat/lib/random_bytes_com_dotnet.php
+vendor/paragonie/random_compat/lib/random_bytes_dev_urandom.php
+vendor/paragonie/random_compat/lib/random_bytes_libsodium.php
+vendor/paragonie/random_compat/lib/random_bytes_libsodium_legacy.php
+vendor/paragonie/random_compat/lib/random_bytes_mcrypt.php
+vendor/paragonie/random_compat/lib/random_int.php
+
 # removed in 2020-06-01
 inc/PluginInterface.php
 inc/PluginTrait.php

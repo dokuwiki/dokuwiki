@@ -8,7 +8,6 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
 {
     public static $files = array (
         'fdc0e9724ddc47859c8bf0c1ea0a623a' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/constants.php',
-        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
     );
 
@@ -69,6 +68,7 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
     public static $classMap = array (
         'AtomCreator03' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/AtomCreator03.php',
         'AtomCreator10' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/AtomCreator10.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'FeedCreator' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/FeedCreator.php',
         'FeedDate' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Element/FeedDate.php',
         'FeedHtmlField' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Element/FeedHtmlField.php',

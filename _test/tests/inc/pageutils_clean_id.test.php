@@ -4,7 +4,7 @@ class init_clean_id_test extends DokuWikiTest
 {
 
     /** @inheritDoc */
-    function teardown()
+    function teardown() : void
     {
         global $cache_cleanid;
         $cache_cleanid = array();
@@ -92,9 +92,9 @@ class init_clean_id_test extends DokuWikiTest
 
         foreach ($tests as $test) {
             // defaults
-            $sepchar = $test[2]['sepchar'] ?: '_';
+            $sepchar = isset($test[2]['sepchar']) ? $test[2]['sepchar'] :  '_';
             $deaccent = isset($test[2]['deaccent']) ? $test[2]['deaccent'] : 1;
-            $ascii = $test[2]['ascii'] ?: false;
+            $ascii = isset($test[2]['ascii']) ? $test[2]['ascii'] : false;
 
             // unless set, test both useslash settings
             if (isset($test[2]['useslash'])) {

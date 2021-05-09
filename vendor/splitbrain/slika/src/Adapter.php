@@ -57,8 +57,8 @@ abstract class Adapter
      *
      * You may omit one of the dimensions to auto calculate it based on the aspect ratio
      *
-     * @param int $width
-     * @param int $height
+     * @param int|string $width in pixels or %
+     * @param int|string $height in pixels or %
      * @return Adapter
      */
     abstract public function resize($width, $height);
@@ -69,8 +69,8 @@ abstract class Adapter
      *
      * You may omit one of the dimensions to use a square area
      *
-     * @param int $width
-     * @param int $height
+     * @param int|string $width in pixels or %
+     * @param int|string $height in pixels or %
      * @return Adapter
      */
     abstract public function crop($width, $height);
