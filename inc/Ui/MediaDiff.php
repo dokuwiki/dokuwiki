@@ -80,30 +80,6 @@ class MediaDiff extends Diff
         if (!isset($this->oldRev, $this->newRev)) $this->preProcess();
         [$oldRev, $newRev] = [$this->oldRev, $this->newRev];
 
-        // prepare event data
-        // NOTE: MEDIA_DIFF event does not found in DokuWiki Event List?
-        $data = array();
-        $data[0] = $this->id;
-        $data[1] = $oldRev;
-        $data[2] = $newRev;
-        $data[3] = $ns;
-        $data[4] = $auth; // permission level
-        $data[5] = $this->preference['fromAjax'];
-
-        // trigger event
-        Event::createAndTrigger('MEDIA_DIFF', $data, null, false);
-
-        if (is_array($data) && count($data) === 6) {
-            $this->id = $data[0];
-            $oldRev = $data[1];
-            $newRev = $data[2];
-            $ns     = $data[3];
-            $auth   = $data[4];
-            $this->preference['fromAjax'] = $data[5];
-        } else {
-            return '';
-        }
-
         $oldRevMeta = new JpegMeta(mediaFN($this->id, $oldRev));
         $newRevMeta = new JpegMeta(mediaFN($this->id, $newRev));
 
