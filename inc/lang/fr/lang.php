@@ -3,9 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Nicolas Friedli <nicolas@theologique.ch>
- * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
  * @author Laurent Ponthieu <contact@coopindus.fr>
@@ -163,7 +163,7 @@ $lang['search_sort_by_hits']   = 'Trier par nombre de résultats';
 $lang['search_sort_by_mtime']  = 'Trier par date de modification';
 $lang['regmissing']            = 'Désolé, vous devez remplir tous les champs.';
 $lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà pris.';
-$lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
+$lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a lui été expédié par courriel.';
 $lang['regsuccess2']           = 'L\'utilisateur a été créé.';
 $lang['regfail']               = 'L\'utilisateur n\'a pu être crée.';
 $lang['regmailfail']           = 'On dirait qu\'il y a eu une erreur lors de l\'envoi du mot de passe de messagerie. Veuillez contacter l\'administrateur !';
@@ -333,7 +333,7 @@ $lang['i_superuser']           = 'Super-utilisateur';
 $lang['i_problems']            = 'L\'installateur a détecté les problèmes indiqués ci-dessous. Vous ne pouvez pas poursuivre l\'installation tant qu\'ils n\'auront pas été corrigés.';
 $lang['i_modified']            = 'Pour des raisons de sécurité, ce script ne fonctionne qu\'avec une installation neuve et non modifiée de DokuWiki. Vous devriez ré-extraire les fichiers depuis le paquet téléchargé ou consulter les <a href="http://dokuwiki.org/install">instructions d\'installation de DokuWiki</a>';
 $lang['i_funcna']              = 'La fonction PHP <code>%s</code> n\'est pas disponible. Peut-être que votre hébergeur web l\'a désactivée ?';
-$lang['i_disabled']            = 'Elle a été désactivée par votre fournisseur d’accès.';
+$lang['i_disabled']            = 'Elle a été désactivée par votre hébergeur';
 $lang['i_funcnmail']           = '<b>Note:</b> La fonction PHP mail n\'est pas disponible. %s Si vous ne pouvez pas l\'activer, vous pourriez installer le <a href="http://dokuwiki.org/plugins/smtp">greffon smtp</a>.';
 $lang['i_phpver']              = 'Votre version de PHP (%s) est antérieure à la version requise (%s). Vous devez mettre à jour votre installation de PHP.';
 $lang['i_mbfuncoverload']      = 'Il faut désactiver mbstring.func_overload dans php.ini pour DokuWiki';
@@ -394,6 +394,6 @@ $lang['searchresult']          = 'Résultat de la recherche';
 $lang['plainhtml']             = 'HTML brut';
 $lang['wikimarkup']            = 'Wiki balise';
 $lang['page_nonexist_rev']     = 'La page n\'existait pas le %s. Elle a été créée le <a href="%s">%s</a>.';
-$lang['unable_to_parse_date']  = 'Ne peut analyser le paramètre date "%s".';
+$lang['unable_to_parse_date']  = 'Impossible d\'analyser le paramètre temporel at "%s".';
 $lang['email_signature_text']  = 'Courriel envoyé par DokuWiki depuis
 @DOKUWIKIURL@';
