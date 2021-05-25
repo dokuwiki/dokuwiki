@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
@@ -163,7 +163,7 @@ $lang['search_sort_by_hits']   = 'Trier par nombre de résultats';
 $lang['search_sort_by_mtime']  = 'Trier par date de modification';
 $lang['regmissing']            = 'Désolé, vous devez remplir tous les champs.';
 $lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà pris.';
-$lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a lui été expédié par courriel.';
+$lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
 $lang['regsuccess2']           = 'L\'utilisateur a été créé.';
 $lang['regfail']               = 'L\'utilisateur n\'a pu être crée.';
 $lang['regmailfail']           = 'On dirait qu\'il y a eu une erreur lors de l\'envoi du mot de passe de messagerie. Veuillez contacter l\'administrateur !';
