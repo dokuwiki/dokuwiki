@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author pavulondit <pavloo@vp.pl>
  * @author Bartek S <sadupl@gmail.com>
  * @author Przemek <p_kudriawcew@o2.pl>
  * @author Wojciech Lichota <wojciech@lichota.pl>
@@ -129,6 +130,7 @@ $lang['js']['media_done_btn']  = 'Zrobione';
 $lang['js']['media_drop']      = 'Upuść tutaj pliki do przesłania';
 $lang['js']['media_cancel']    = 'usuń';
 $lang['js']['media_overwrt']   = 'Nadpisz istniejące pliki';
+$lang['js']['data_insecure']   = 'OSTRZEŻENIE: Wygląda na to, że twój katalog z danymi nie jest odpowiednio zabezpieczony. Proszę przeczytaj <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
 $lang['search_exact_match']    = 'Dokładne dopasowanie';
 $lang['search_starts_with']    = 'Zaczyna się na';
 $lang['search_ends_with']      = 'Kończy się na';
@@ -314,6 +316,7 @@ $lang['i_problems']            = 'Instalator napotkał poniższe problemy. Nie m
 $lang['i_modified']            = 'Ze względów bezpieczeństwa, ten skrypt działa tylko z nową i niezmodyfikowaną instalacją DokuWiki.
 Aby uruchomić instalator ponownie, rozpakuj archiwum DokuWiki lub zapoznaj się z <a href="http://dokuwiki.org/install">instrukcją instalacji Dokuwiki</a>';
 $lang['i_funcna']              = 'Funkcja PHP <code>%s</code> jest niedostępna.';
+$lang['i_disabled']            = 'To zostało wyłączone przez twojego dostawcę.';
 $lang['i_phpver']              = 'Wersja PHP <code>%s</code> jest niższa od wymaganej <code>%s</code>. Zaktualizuj instalację PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload musi zostać wyłączone w pliku php.ini aby móc uruchomić DokuWiki.';
 $lang['i_permfail']            = 'DokuWiki nie ma prawa zapisu w katalogu <code>%s</code>. Zmień uprawnienia zapisu dla tego katalogu!';

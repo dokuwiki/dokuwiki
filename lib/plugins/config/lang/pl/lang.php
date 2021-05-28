@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author pavulondit <pavloo@vp.pl>
  * @author Bartek S <sadupl@gmail.com>
  * @author Wojciech Lichota <wojciech@lichota.pl>
  * @author Max <maxrb146@gmail.com>
@@ -127,6 +128,7 @@ $lang['mailfrom']              = 'Adres e-mail tego wiki';
 $lang['mailreturnpath']        = 'Adres e-mail odbiorcy dla powiadomień o niedostarczeniu';
 $lang['mailprefix']            = 'Prefiks tematu e-mail do automatycznych wiadomości';
 $lang['htmlmail']              = 'Wysyłaj wiadomości e-mail w formacie HTML, które wyglądają lepiej, lecz ich rozmiar jest większy. Wyłącz wysyłanie wiadomości zawierających tekst niesformatowany.';
+$lang['dontlog']               = 'Wyłącz logowanie dla tego typu logów.';
 $lang['sitemap']               = 'Okres generowania Google Sitemap (w dniach)';
 $lang['rss_type']              = 'Typ RSS';
 $lang['rss_linkto']            = 'Odnośniki w RSS';
