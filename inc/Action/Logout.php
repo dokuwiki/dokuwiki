@@ -39,9 +39,8 @@ class Logout extends AbstractUserAction {
             unlock($ID);
         }
 
-        // do the logout stuff and redirect to login
+        // do the logout stuff
         auth_logoff();
-        send_redirect(wl($ID, array('do' => 'login'), true, '&'));
 
         // should never be reached
         throw new ActionException('login');
