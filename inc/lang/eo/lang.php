@@ -3,12 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author Florian <florianmail55@gmail.com>
  * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
  * @author Antono Vasiljev <esperanto.minsk ĈE tut.by>
  * @author Felipe Castro <fefcas@yahoo.com.br>
  * @author Robert Bogenschneider <robog@gmx.de>
- * @author Erik Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -116,6 +116,7 @@ $lang['search_exact_match']    = 'Ekzakta kongruo';
 $lang['search_starts_with']    = 'Komenciĝas per';
 $lang['search_ends_with']      = 'Finiĝas per';
 $lang['search_contains']       = 'Enhavas';
+$lang['search_custom_match']   = 'Propra';
 $lang['search_any_ns']         = 'Ajn nomspaco';
 $lang['search_any_time']       = 'Ajn tempo';
 $lang['search_past_7_days']    = 'Pasinta semajno';
@@ -159,6 +160,7 @@ $lang['txt_upload']            = 'Elektu dosieron por alŝuti:';
 $lang['txt_filename']          = 'Alŝuti kiel (laŭvole):';
 $lang['txt_overwrt']           = 'Anstataŭigi ekzistantan dosieron';
 $lang['maxuploadsize']         = 'Alŝuto maks. %s po dosiero.';
+$lang['allowedmime']           = 'Listo de permesitaj dosiersufiksoj';
 $lang['lockedby']              = 'Nune ŝlosita de:';
 $lang['lockexpire']            = 'Ŝlosado ĉesos je:';
 $lang['rssfailed']             = 'Okazis eraro dum ricevado de la novaĵ-fluo: ';
