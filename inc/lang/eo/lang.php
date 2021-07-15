@@ -3,12 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author Florian <florianmail55@gmail.com>
  * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
  * @author Antono Vasiljev <esperanto.minsk ĈE tut.by>
  * @author Felipe Castro <fefcas@yahoo.com.br>
  * @author Robert Bogenschneider <robog@gmx.de>
- * @author Erik Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
