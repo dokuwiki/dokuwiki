@@ -328,22 +328,24 @@ function css_interwiki(){
 
     // default style
     echo 'a.interwiki {';
-    echo ' background: transparent url('.DOKU_BASE.'lib/images/interwiki.png) 0px 1px no-repeat;';
-    echo ' padding: 1px 0px 1px 16px;';
+    echo ' background: transparent url('.DOKU_BASE.'lib/images/interwiki.png) 0 0 no-repeat;';
+    echo ' background-size: 1.2em;';
+    echo ' padding: 0 0 0 1.4em;';
     echo '}';
 
     // additional styles when icon available
     $iwlinks = getInterwiki();
-    foreach(array_keys($iwlinks) as $iw){
-        $class = preg_replace('/[^_\-a-z0-9]+/i','_',$iw);
-        if(file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.png')){
-            echo "a.iw_$class {";
-            echo '  background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$iw.'.png)';
-            echo '}';
-        }elseif(file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.gif')){
-            echo "a.iw_$class {";
-            echo '  background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$iw.'.gif)';
-            echo '}';
+    foreach (array_keys($iwlinks) as $iw) {
+        $class = preg_replace('/[^_\-a-z0-9]+/i', '_', $iw);
+        foreach (['svg', 'png', 'gif'] as $ext) {
+            $file = 'lib/images/interwiki/' . $iw . '.' . $ext;
+
+            if (file_exists(DOKU_INC . $file)) {
+                echo "a.iw_$class {";
+                echo '  background-image: url(' . DOKU_BASE . $file . ')';
+                echo '}';
+                break;
+            }
         }
     }
 }
