@@ -168,6 +168,9 @@ class HTTPClient {
         $this->resp_body = '';
         $this->resp_headers = array();
 
+        // save unencoded data for recursive call
+        $unencodedData = $data;
+
         // don't accept gzip if truncated bodies might occur
         if($this->max_bodysize &&
             !$this->max_bodysize_abort &&
@@ -353,7 +356,7 @@ class HTTPClient {
             $this->debug('Object headers',$this->resp_headers);
 
             // check server status code to follow redirect
-            if($this->status == 301 || $this->status == 302 ){
+            if(in_array($this->status, [301, 302, 303, 307, 308])){
                 if (empty($this->resp_headers['location'])){
                     throw new HTTPClientException('Redirect but no Location Header found');
                 }elseif($this->redirect_count == $this->max_redirect){
@@ -376,8 +379,13 @@ class HTTPClient {
                                 $this->resp_headers['location'];
                         }
                     }
-                    // perform redirected request, always via GET (required by RFC)
-                    return $this->sendRequest($this->resp_headers['location'],array(),'GET');
+                    if($this->status == 307 || $this->status == 308) {
+                        // perform redirected request, same method as before (required by RFC)
+                        return $this->sendRequest($this->resp_headers['location'],$unencodedData,$method);
+                    }else{
+                        // perform redirected request, always via GET (required by RFC)
+                        return $this->sendRequest($this->resp_headers['location'],array(),'GET');
+                    }
                 }
             }
 
