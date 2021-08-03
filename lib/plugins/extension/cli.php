@@ -212,27 +212,46 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
 
         $ok = 0;
         foreach ($extensions as $extname) {
-            $ext->setExtension($extname);
-
-            if (!$ext->getDownloadURL()) {
-                $ok += 1;
-                $this->error(
-                    sprintf('Could not find download for %s', $ext->getID())
-                );
-                continue;
-            }
-
-            try {
-                $installed = $ext->installOrUpdate();
-                foreach ($installed as $name => $info) {
-                    $this->success(sprintf(
-                            $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
-                            $info['base'])
-                    );
+            if (preg_match("/^https?:\/\//i", $extname)) {
+                try {
+                    $installed = $ext->installFromURL($extname, true);
+                    foreach ($installed as $name => $info) {
+                        $this->success(
+                            sprintf(
+                                $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
+                                $info['base']
+                            )
+                        );
+                    }
+                } catch (Exception $e) {
+                    $this->error($e->getMessage());
+                    $ok += 1;
                 }
-            } catch (Exception $e) {
-                $this->error($e->getMessage());
-                $ok += 1;
+            } else {
+                $ext->setExtension($extname);
+
+                if (!$ext->getDownloadURL()) {
+                    $ok += 1;
+                    $this->error(
+                        sprintf('Could not find download for %s', $ext->getID())
+                    );
+                    continue;
+                }
+
+                try {
+                    $installed = $ext->installOrUpdate();
+                    foreach ($installed as $name => $info) {
+                        $this->success(
+                            sprintf(
+                                $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
+                                $info['base']
+                            )
+                        );
+                    }
+                } catch (Exception $e) {
+                    $this->error($e->getMessage());
+                    $ok += 1;
+                }
             }
         }
         return $ok;
