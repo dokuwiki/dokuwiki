@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Axel Kirch <axel@globeglotter.com>
  * @author MaWi <drmaxxis@gmail.com>
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
@@ -75,7 +76,7 @@ $lang['deaccent']              = 'Seitennamen bereinigen';
 $lang['useheading']            = 'Erste Überschrift als Seitennamen verwenden';
 $lang['sneaky_index']          = 'Standardmäßig zeigt DokuWiki alle Namensräume in der Indexansicht an. Bei Aktivierung dieser Einstellung werden alle Namensräume versteckt, in welchen der Benutzer keine Leserechte hat. Dies könnte dazu führen, dass lesbare Unternamensräume versteckt werden. Dies kann die Indexansicht bei bestimmten Zugangskontrolleinstellungen unbenutzbar machen.';
 $lang['hidepages']             = 'Seiten verstecken (Regulärer Ausdruck)';
-$lang['useacl']                = 'Benutze Zugangskontrollliste';
+$lang['useacl']                = 'Benutze Zugriffskontrollliste';
 $lang['autopasswd']            = 'Automatisch erzeugte Passwörter';
 $lang['authtype']              = 'Authentifizierungsmethode';
 $lang['passcrypt']             = 'Passwortverschlüsselungsmethode';
@@ -170,8 +171,8 @@ $lang['jquerycdn_o_cdnjs']     = 'CDN bei cdnjs.com';
 $lang['proxy____host']         = 'Proxyadresse';
 $lang['proxy____port']         = 'Proxyport';
 $lang['proxy____user']         = 'Benutzername für den Proxy';
-$lang['proxy____pass']         = 'Passwort von dem Proxybenutzer';
-$lang['proxy____ssl']          = 'SSL verwenden um auf den Proxy zu zugreifen';
+$lang['proxy____pass']         = 'Passwort des Proxybenutzers';
+$lang['proxy____ssl']          = 'SSL verwenden, um auf den Proxy zuzugreifen';
 $lang['proxy____except']       = 'Regulärer Ausdruck um Adressen zu beschreiben, für die kein Proxy verwendet werden soll';
 $lang['license_o_']            = 'Nichts ausgewählt';
 $lang['typography_o_0']        = 'nichts';
