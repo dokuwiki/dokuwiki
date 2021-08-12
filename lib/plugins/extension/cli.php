@@ -212,17 +212,11 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
 
         $ok = 0;
         foreach ($extensions as $extname) {
+            $installed = [];
+
             if (preg_match("/^https?:\/\//i", $extname)) {
                 try {
                     $installed = $ext->installFromURL($extname, true);
-                    foreach ($installed as $name => $info) {
-                        $this->success(
-                            sprintf(
-                                $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
-                                $info['base']
-                            )
-                        );
-                    }
                 } catch (Exception $e) {
                     $this->error($e->getMessage());
                     $ok += 1;
@@ -240,18 +234,19 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
 
                 try {
                     $installed = $ext->installOrUpdate();
-                    foreach ($installed as $name => $info) {
-                        $this->success(
-                            sprintf(
-                                $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
-                                $info['base']
-                            )
-                        );
-                    }
                 } catch (Exception $e) {
                     $this->error($e->getMessage());
                     $ok += 1;
                 }
+            }
+
+            foreach ($installed as $name => $info) {
+                $this->success(
+                    sprintf(
+                        $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
+                        $info['base']
+                    )
+                );
             }
         }
         return $ok;
