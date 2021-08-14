@@ -412,12 +412,12 @@ function init_creationmodes(){
 
     // check what is set automatically by the system on file creation
     // and set the fperm param if it's not what we want
-    $auto_fmode = $conf['fmode'] & ~$umask;
+    $auto_fmode = 0666 & ~$umask;
     if($auto_fmode != $conf['fmode']) $conf['fperm'] = $conf['fmode'];
 
-    // check what is set automatically by the system on file creation
-    // and set the dperm param if it's not what we want
-    $auto_dmode = $conf['dmode'] & ~$umask;
+    // check what is set automatically by the system on directory creation
+    // and set the dperm param if it's not what we want.
+    $auto_dmode = 0777 & ~$umask;
     if($auto_dmode != $conf['dmode']) $conf['dperm'] = $conf['dmode'];
 }
 

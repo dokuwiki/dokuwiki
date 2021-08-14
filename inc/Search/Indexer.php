@@ -927,7 +927,7 @@ class Indexer {
         $status = true;
         $run = 0;
         $lock = $conf['lockdir'].'/_indexer.lock';
-        while (!@mkdir($lock, $conf['dmode'])) {
+        while (!@mkdir($lock)) {
             usleep(50);
             if(is_dir($lock) && time()-@filemtime($lock) > 60*5){
                 // looks like a stale lock - remove it
