@@ -353,10 +353,14 @@ class Ajax {
         if($q !== '' && $ns === '') {
 
             // use index to lookup matching pages
-            // If 'useheading' option is always or content,
-            // search titles as well.
-            $pages = ft_pageLookup($id, true, $conf['useheading'] === 1 or 'content');
-            
+            $pages = ft_pageLookup($id, true);
+
+            // If search result is empty but 'useheading' option is 'always' or 'content',
+            // search page titles with original query.
+            if (count($pages) === 0 && in_array($conf['useheading'], ['1', 'content'], true)) { 
+                $pages = ft_pageLookup($q, true, true);
+            }
+        
             // result contains matches in pages and namespaces
             // we now extract the matching namespaces to show
             // them seperately
