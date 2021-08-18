@@ -1881,7 +1881,7 @@ function tpl_classes() {
     }
     $parent = array_pop($chain);
     $classes[] = "dwn_{$parent}_";
-    $classes[] = 'dwp_'.$pgname;
+    $classes[] = "dwp_$pgname";
     if('' != $parent)
         $classes[] = 'dwp_' . str_replace(':', '_', $id);
 
