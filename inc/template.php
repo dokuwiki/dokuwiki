@@ -1873,17 +1873,17 @@ function tpl_classes() {
     $chain = explode(':', $id);
     $pgname = array_pop($chain);
 
-    $classes[] = 'dwl_' . count($chain);
-    $ns = 'dwn_';
+    $classes[] = 'lv_' . count($chain);
+    $ns = 'ns_';
     foreach($chain as $comp) {
         $ns .= "_$comp";
         $classes[] = $ns;
     }
     $parent = array_pop($chain);
-    $classes[] = "dwn_{$parent}_";
-    $classes[] = "dwp_$pgname";
+    $classes[] = "ns_{$parent}_";
+    $classes[] = "pg_$pgname";
     if('' != $parent)
-        $classes[] = 'dwp_' . str_replace(':', '_', $id);
+        $classes[] = 'pg_' . str_replace(':', '_', $id);
 
     return join(' ', $classes);
 }
