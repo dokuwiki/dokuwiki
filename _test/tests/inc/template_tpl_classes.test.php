@@ -82,7 +82,6 @@ class template_tpl_classes_test extends DokuWikiTest {
         $this->assertTrue($this->hasClass('ns__a_b', $classes));
         $this->assertTrue($this->hasClass('ns__a_b_c', $classes));
         $this->assertTrue($this->hasClass('ns__a_b_c_d', $classes));
-        $this->assertTrue($this->hasClass('ns__a_b_c_d', $classes));
         $this->assertTrue($this->hasClass('ns_d_', $classes));
         // negative tests
         $this->assertFalse($this->hasClass('ns_d', $classes));
@@ -119,11 +118,16 @@ class template_tpl_classes_test extends DokuWikiTest {
         $classes=tpl_classes();
         $this->assertTrue($this->hasClass('pg_a__b_c', $classes));
         $this->assertTrue($this->hasClass('pg_c', $classes));
+        $this->assertTrue($this->hasClass('ns__a__b', $classes));
+        $this->assertTrue($this->hasClass('ns_a__b_', $classes));
         // negative tests
         $this->assertFalse($this->hasClass('pg_', $classes));
         $this->assertFalse($this->hasClass('pg_a_b_c', $classes));
         $this->assertFalse($this->hasClass('pg__c', $classes));
         $this->assertFalse($this->hasClass('pg___c', $classes));
+        $this->assertFalse($this->hasClass('ns__a_b_c', $classes));
+        $this->assertFalse($this->hasClass('ns_a_b_', $classes));
+
 
         $ID=':a_b:c_d';
         $classes=tpl_classes();
@@ -135,5 +139,8 @@ class template_tpl_classes_test extends DokuWikiTest {
         $this->assertFalse($this->hasClass('pg_c_d', $classes));
         $this->assertFalse($this->hasClass('pg__c_d', $classes));
         $this->assertFalse($this->hasClass('pg___c_d', $classes));
+        $this->assertFalse($this->hasClass('ns__a_b_c_d', $classes));
+        $this->assertFalse($this->hasClass('ns__a__b_c_d', $classes));
+        $this->assertFalse($this->hasClass('ns__a_b_c__d', $classes));
     }
 }
