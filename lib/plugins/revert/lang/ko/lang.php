@@ -3,13 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author 유승철 <dryoo@live.com>
  * @author pavement <pavement@rael.cc>
  * @author Traend <Traend@ruu.kr>
  * @author Seungheon Song <esketch@gmail.com>
  * @author jk Lee
  * @author dongnak <dongnak@gmail.com>
  * @author Song Younghwan <purluno@gmail.com>
- * @author Seung-Chul Yoo <dryoo@live.com>
  * @author erial2 <erial2@gmail.com>
  * @author Myeongjin <aranet100@gmail.com>
  * @author S.H. Lee <tuders@naver.com>
