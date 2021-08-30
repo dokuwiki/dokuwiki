@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author David Surroca <davidsurrocaestrada@gmail.com>
  * @author Adolfo Jayme Barrientos <fito@libreoffice.org>
  * @author Carles Bellver <carles.bellver@cent.uji.es>
  * @author daniel <daniel@6temes.cat>
@@ -10,7 +11,6 @@
  * @author controlonline.net <controlonline.net@gmail.com>
  * @author Pauet <pauet@gmx.com>
  * @author Àngel Pérez Beroy <aperezberoy@gmail.com>
- * @author David Surroca <david.tb303@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -165,6 +165,7 @@ $lang['txt_upload']            = 'Trieu el fitxer que voleu penjar:';
 $lang['txt_filename']          = 'Introduïu el nom wiki (opcional):';
 $lang['txt_overwrt']           = 'Sobreescriu el fitxer actual';
 $lang['maxuploadsize']         = 'Puja com a màxim %s per arxiu.';
+$lang['allowedmime']           = 'Llista d\'extensions permeses';
 $lang['lockedby']              = 'Actualment blocat per:';
 $lang['lockexpire']            = 'Venciment del blocatge:';
 $lang['rssfailed']             = 'S\'ha produït un error en recollir aquesta alimentació: ';
@@ -300,6 +301,7 @@ $lang['i_superuser']           = 'Superusuari';
 $lang['i_problems']            = 'L\'instal·lador ha trobat alguns problemes, que s\'indiquen més avall. No podeu continuar fins que no els hàgiu solucionat.';
 $lang['i_modified']            = 'Per raons de seguretat aquesta seqüència només funciona amb una instal·lació nova i no modificada de Dokuwiki. Hauríeu de tornar a baixar el paquet i/o descomprimir-lo o consultar les <a href="http://dokuwiki.org/install">instruccions d\'instal·lació de Dokuwiki</a> completes';
 $lang['i_funcna']              = 'La funció PHP <code>%s</code> no està disponible. Potser el vostre proveïdor de serveis l\'ha inhabilitada per alguna raó';
+$lang['i_disabled']            = 'El vostre proveïdor l\'ha desactivat.';
 $lang['i_phpver']              = 'La vostra versió de PHP <code>%s</code> és inferior a la requerida <code>%s</code>. Necessiteu actualitzar la vostra instal·lació de PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload cal que sigui deshabilitada en php.ini perquè funcioni DokuWiki';
 $lang['i_permfail']            = 'DokuWiki no pot escriure <code>%s</code>. Heu d\'arreglar els permisos d\'aquest directori';
