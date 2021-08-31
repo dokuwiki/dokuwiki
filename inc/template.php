@@ -1867,8 +1867,9 @@ function tpl_classes() {
         ($ID == $conf['start']) ? 'home' : '',
     );
     $id=$ID;
-    if($id[0] == ':')
+    if($id[0] == ':') {
         $id = substr($id,1);
+    }
     $id = str_replace('_', '__', $id);
     $chain = explode(':', $id);
     $pgname = array_pop($chain);
@@ -1882,8 +1883,9 @@ function tpl_classes() {
     $parent = array_pop($chain);
     $classes[] = "ns_{$parent}_";
     $classes[] = "pg_$pgname";
-    if('' != $parent)
+    if('' != $parent) {
         $classes[] = 'pg_' . str_replace(':', '_', $id);
+    }
 
     return join(' ', $classes);
 }
