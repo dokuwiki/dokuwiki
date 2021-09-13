@@ -15,7 +15,7 @@ class PageRevisions extends Revisions
     /* @var PageChangeLog */
     protected $changelog;
 
-    /** 
+    /**
      * PageRevisions Ui constructor
      *
      * @param string $id  id of page
@@ -138,42 +138,48 @@ class PageRevisions extends Revisions
 
         $revisions = [];
 
+        $extEditRevInfo = $changelog->getExternalEditRevInfo();
+
         /* we need to get one additional log entry to be able to
          * decide if this is the last page or is there another one.
          * see also Ui\Recent::getRecents()
          */
-        $revlist = $changelog->getRevisions($first, $conf['recent'] +1);
-        if (count($revlist) == 0 && $first != 0) {
-            $first = 0;
-            $revlist = $changelog->getRevisions($first, $conf['recent'] +1);
+        $num = $conf['recent'];
+        if($first == 0) {
+            $num = $extEditRevInfo ? $num - 1 : $num;
         }
-        $exists = $INFO['exists'];
-        if ($first == 0 && $exists) {
-            // add current page as revision[0]
-            $revisions[] = array(
-                'date' => $INFO['lastmod'],
-                'ip'   => null,
-                'type' => $INFO['meta']['last_change']['type'],
-                'id'   => $INFO['id'],
-                'user' => $INFO['editor'],
-                'sum'  => $INFO['sum'],
-                'extra' => null,
-                'sizechange' => $INFO['meta']['last_change']['sizechange'],
-                'item' => $this->item,
-                'current' => true,
-            );
+        $revlist = $changelog->getRevisions($first - 1, $num + 1);
+        if (count($revlist) == 0 && $first != 0) {
+            //resets to zero if $first requested a too high number
+            $first = 0;
+            $num = $extEditRevInfo ? $num - 1 : $num;
+            $revlist = $changelog->getRevisions(-1, $num + 1);
+        }
+
+        if($first == 0 && $extEditRevInfo) {
+            $revisions[] = $extEditRevInfo + [
+                    'item' => $this->item,
+                    'current' => true
+                ];
         }
 
         // decide if this is the last page or is there another one
         $hasNext = false;
-        if (count($revlist) > $conf['recent']) {
+        if (count($revlist) > $num) {
             $hasNext = true;
             array_pop($revlist); // remove one additional log entry
         }
 
+
         // append each revison info array to the revisions
+        $fileLastMod = wikiFN($this->id);
+        $lastMod     = @filemtime($fileLastMod); // from wiki page, suppresses warning in case the file not exists
         foreach ($revlist as $rev) {
-            $revisions[] = $changelog->getRevisionInfo($rev) + array('item' => $this->item);
+            $more = ['item' => $this->item];
+            if($rev == $lastMod) {
+                $more['current'] = true;
+            }
+            $revisions[] = $changelog->getRevisionInfo($rev) + $more;
         }
         return $revisions;
     }
