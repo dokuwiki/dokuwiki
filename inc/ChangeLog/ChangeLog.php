@@ -84,7 +84,8 @@ abstract class ChangeLog
      */
     public function getRevisionInfo($rev)
     {
-        $rev = max($rev, 0);
+        $rev = max(0, $rev);
+        if(!$rev) return false;
 
         // check if it's already in the memory cache
         if (isset($this->cache[$this->id]) && isset($this->cache[$this->id][$rev])) {
@@ -602,21 +603,44 @@ abstract class ChangeLog
      */
     protected function retrieveRevisionsAround($rev, $max)
     {
+        $lastChangelogRev = 0;
+        $externaleditRevinfo = $this->getExternalEditRevInfo();
+
+        if($externaleditRevinfo) {
+            $revisions = $this->getRevisions(-1, 1);
+            $lastChangelogRev = $revisions[0];
+            if($externaleditRevinfo['date'] == $rev) {
+                $rev = $lastChangelogRev; //replace by an existing changelog line
+            }
+        }
+
+        $revs = array();
+        $aftercount = $beforecount = 0;
+
         //get lines from changelog
         list($fp, $lines, $starthead, $starttail, /* $eof */) = $this->readloglines($rev);
-        if (empty($lines)) return false;
+        if (empty($lines)) {
+            if($externaleditRevinfo) {
+                $revs[] = $externaleditRevinfo['date'];
+                return array($revs, $revs, false, [], 0, 0);
+            } else {
+                return false;
+            }
+        }
 
         //parse chunk containing $rev, and read forward more chunks until $max/2 is reached
         $head = $starthead;
         $tail = $starttail;
-        $revs = array();
-        $aftercount = $beforecount = 0;
         while (count($lines) > 0) {
             foreach ($lines as $line) {
                 $tmp = parseChangelogLine($line);
                 if ($tmp !== false) {
                     $this->cache[$this->id][$tmp['date']] = $tmp;
                     $revs[] = $tmp['date'];
+                    //add external edit next to the first existing line from the changelog
+                    if($externaleditRevinfo && $tmp['date'] == $lastChangelogRev) {
+                        $revs[] = $externaleditRevinfo['date'];
+                    }
                     if ($tmp['date'] >= $rev) {
                         //count revs after reference $rev
                         $aftercount++;
@@ -662,5 +686,86 @@ abstract class ChangeLog
         $requestedrevs = array_slice($revs, -$max, $max);
 
         return array($requestedrevs, $revs, $fp, $lines, $head, $lasttail);
+    }
+
+    /**
+     * Returns revision logline in same format as @see ChangeLog::getRevisionInfo()
+     *
+     * @return bool|array false if not external edit/deletion, otherwise array with entries:
+     *      - date:  unix timestamp for external edit or 'unknown' for external deletion
+     *      - ip:    IPv4 address (127.0.0.1)
+     *      - type:  log line type
+     *      - id:    page id
+     *      - user:  user name
+     *      - sum:   edit summary (or action reason)
+     *      - extra: extra data (varies by line type)
+     */
+    public function getExternalEditRevInfo() {
+        global $lang;
+        global $cache_externaledit; //caches external edits per page
+
+        // check if it's already in the memory cache
+        if (isset($cache_externaledit[$this->id])) {
+            if($cache_externaledit[$this->id] === false) {
+                return false;
+            } else {
+                return $this->cache[$this->id][$cache_externaledit[$this->id]];
+            }
+        }
+        $externaleditRevinfo = false;
+        $cache_externaledit[$this->id] = false;
+
+        //in attic no revision of current existing wiki page, so external edit occurred
+        $fileLastMod = wikiFN($this->id);
+        $lastMod     = @filemtime($fileLastMod); // from wiki page, suppresses warning in case the file not exists
+        $lastRev     = $this->getRevisions(-1, 1); // from changelog
+        $lastRev     = (int) (empty($lastRev) ? 0 : $lastRev[0]);
+        if(!file_exists(wikiFN($this->id, $lastMod)) && file_exists($fileLastMod) && $lastRev < $lastMod) {
+            $cache_externaledit[$this->id] = $lastMod;
+            $fileLastRev = wikiFN($this->id, $lastRev); //returns current wikipage path if $lastRev==false
+            $revinfo = $this->getRevisionInfo($lastRev);
+            if (empty($lastRev) || !file_exists($fileLastRev) || $revinfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
+                $filesize_old = 0;
+            } else {
+                $filesize_old = io_getSizeFile($fileLastRev);
+            }
+            $filesize_new = filesize($fileLastMod);
+            $sizechange = $filesize_new - $filesize_old;
+            $isJustCreated = empty($lastRev) || !file_exists($fileLastRev);
+
+            $externaleditRevinfo = [
+                'date' => $lastMod,
+                'ip'   => '127.0.0.1',
+                'type' => $isJustCreated ? DOKU_CHANGE_TYPE_CREATE : DOKU_CHANGE_TYPE_EDIT,
+                'id'   => $this->id,
+                'user' => '',
+                'sum'  => ($isJustCreated ? $lang['created'] .' - ' : '') . $lang['external_edit'],
+                'extra' => '',
+                'sizechange' => $sizechange
+            ];
+            $cache_externaledit[$this->id] = $externaleditRevinfo['date'];
+            $this->cache[$this->id][$externaleditRevinfo['date']] = $externaleditRevinfo;
+        }
+
+        $revinfo = $this->getRevisionInfo($lastRev);
+        //deleted wiki page, but not registered in changelog
+        if(!file_exists($fileLastMod) // there is no current page=>true
+            && !empty($lastRev) && $revinfo['type'] !== DOKU_CHANGE_TYPE_DELETE) {
+            $fileLastRev = wikiFN($this->id, $lastRev);
+            $externaleditRevinfo = [
+                'date' => 9999999999, //unknown deletion date, always higher as latest rev
+                'ip'   => '127.0.0.1',
+                'type' => DOKU_CHANGE_TYPE_DELETE,
+                'id'   => $this->id,
+                'user' => '',
+                'sum'  => $lang['deleted']. ' - ' . $lang['external_edit'],
+                'extra' => '',
+                'sizechange' => -io_getSizeFile($fileLastRev)
+            ];
+            $cache_externaledit[$this->id] = $externaleditRevinfo['date'];
+            $this->cache[$this->id][$externaleditRevinfo['date']] = $externaleditRevinfo;
+        }
+
+        return $externaleditRevinfo;
     }
 }
