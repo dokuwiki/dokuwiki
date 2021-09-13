@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\ChangeLog\ChangeLog;
+
 /**
  * DokuWiki Diff Interface
  * parent class of PageDiff and MediaDiff
@@ -129,7 +131,7 @@ abstract class Diff extends Ui
     /**
      * get extended revision info
      *
-     * @param int|string $rev  revision identifier, '' means current one
+     * @param int|string $rev  revision identifier, '' means current one, null means
      * @return array  revision info structure of a page or media file
      */
     protected function getExtendedRevisionInfo($rev)
@@ -138,17 +140,31 @@ abstract class Diff extends Ui
 
         if ($rev) {
             $info = $changelog->getRevisionInfo($rev);
+            $info = is_array($info) ? $info : $changelog->getExternalEditRevInfo() ?: []; //if external deletion, rev 9999999999 was used.
+        } elseif ($rev === null) { //if do=diff at just created page
+            $info = [
+                'none' => true
+            ];
         } elseif (file_exists($filename = $this->itemFN($this->id))) {
             $rev = filemtime(fullpath($filename));
-            $info = $changelog->getRevisionInfo($rev) + array(
-                'current' => true,
-            );
+            $info = $changelog->getRevisionInfo($rev);
+            $info = is_array($info) ? $info : $changelog->getExternalEditRevInfo() ?: []; //if external edit, file exist but has no changelog line
+            $info = $info + [
+                'current' => true
+            ];
         } else { // once exists, but now removed
-            $info = array(
-                'current' => true,
-            );
+            $lastRev = $changelog->getRevisions(-1, 1); // from changelog
+            $lastRev = (int) (empty($lastRev) ? 0 : $lastRev[0]);
+            $info = $changelog->getRevisionInfo($lastRev);
+            if(!(is_array($info) && $info['type'] == DOKU_CHANGE_TYPE_DELETE)) {
+                $info = $changelog->getExternalEditRevInfo();
+                $info = is_array($info) && $info['type'] == DOKU_CHANGE_TYPE_DELETE ? $info : [];
+            }
+            $info = $info + [
+                'current' => true
+            ];
         }
-        return array('item' => $this->item) + $info;
+        return ['item' => $this->item] + $info;
     }
 
 
