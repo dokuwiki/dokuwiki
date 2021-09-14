@@ -1273,7 +1273,7 @@ function detectExternalEdit($id) {
     global $lang;
 
     $fileLastMod = wikiFN($id);
-    $lastMod     = @filemtime($fileLastMod); // from page
+    $lastMod     = @filemtime($fileLastMod); // from wiki page, suppresses warning in case the file not exists
     $pagelog     = new PageChangeLog($id, 1024);
     $lastRev     = $pagelog->getRevisions(-1, 1); // from changelog
     $lastRev     = (int) (empty($lastRev) ? 0 : $lastRev[0]);
