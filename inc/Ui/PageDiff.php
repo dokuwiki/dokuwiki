@@ -3,7 +3,6 @@
 namespace dokuwiki\Ui;
 
 use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\Ui\PageRevisions;
 use dokuwiki\Form\Form;
 
 /**
@@ -94,8 +93,6 @@ class PageDiff extends Diff
      */
     public function show()
     {
-        global $INFO, $lang;
-
        // determine left and right revision
         if (!isset($this->oldRev)) $this->preProcess();
 
@@ -105,8 +102,28 @@ class PageDiff extends Diff
             $newText = cleanText($this->text);
         } else {
             // when both revisions are empty then the page was created just now
-            $oldText = (!$this->oldRev && !$this->newRev) ? '' : rawWiki($this->id, $this->oldRev);
-            $newText = rawWiki($this->id, $this->newRev); // empty when removed page
+            if (!$this->oldRev && !$this->newRev) {
+                $oldText = '';
+            } else {
+                $revinfo = $this->changelog->getRevisionInfo($this->oldRev);
+                if ($revinfo && $revinfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
+                    $oldText = ''; //attic stores complete last page version for a deleted page
+                } else {
+                    $oldText = rawWiki($this->id, $this->oldRev);
+                }
+            }
+
+            $extEditInfo = $this->changelog->getExternalEditRevInfo();
+            $newRev = $this->newRev;
+            if ($extEditInfo && $extEditInfo['date'] == $this->newRev) {
+                $newRev = ''; //request file from page folder instead of attic, because not yet stored in attic
+            }
+            $revinfo = $this->changelog->getRevisionInfo($this->newRev);
+            if ($revinfo && $revinfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
+                $newText = '';
+            } else {
+                $newText = rawWiki($this->id, $newRev); // empty when removed page
+            }
         }
         $Difference = new \Diff(explode("\n", $oldText), explode("\n", $newText));
 
@@ -120,7 +137,7 @@ class PageDiff extends Diff
             $newRevInfo = $this->getExtendedRevisionInfo($this->newRev);
         }
 
-        // determin exact revision identifiers, even for current page
+        // determine exact revision identifiers, even for current page
         $oldRev = $oldRevInfo['date'];
         $newRev = $newRevInfo['date'];
 
@@ -218,7 +235,7 @@ class PageDiff extends Diff
         if (isset($info['date'])) {
             $rev = $info['date'];
             $title = '<bdi><a class="wikilink1" href="'.wl($this->id, ['rev' => $rev]).'">'
-                   . $this->id.' ['.dformat($rev).']'.'</a></bdi>';
+                   . $this->id .' ['. ($rev === 9999999999 ? $lang['unknowndate'] : dformat($rev)) .']'.'</a></bdi>';
         } else {
             $rev = false;
             $title = '&mdash;';
@@ -292,7 +309,6 @@ class PageDiff extends Diff
     protected function buildRevisionsNavigation($oldRev, $newRev)
     {
         global $INFO;
-
         $changelog =& $this->changelog;
 
        // determine the last revision, which is usually the timestamp of current page,
@@ -302,7 +318,7 @@ class PageDiff extends Diff
                 // note: when page is removed, the metadata timestamp is zero
                 $lastRev = $INFO['currentrev'] ?? $INFO['meta']['last_change']['date'] ?? 0;
             } else {
-                $lastRevs = $changelog->getRevisions(-1, 1)  // empty array for removed page
+                $lastRevs = $changelog->getRevisions(-1, 1)  // empty array for removed page !!TODO external edit/deletion? when is this used?
                           ?: $changelog->getRevisions(0, 1); // last entry of changelog
                 $lastRev = count($lastRevs) > 0 ? $lastRevs[0] : 0;
             }
@@ -312,7 +328,7 @@ class PageDiff extends Diff
         // retrieve revisions with additional info
         list($oldRevs, $newRevs) = $changelog->getRevisionsAround($oldRev, $newRev);
 
-        // build options for dropdown selector 
+        // build options for dropdown selector
         $olderRevisions = $this->buildRevisionOptions('older', $oldRevs, $oldRev, $newRev);
         $newerRevisions = $this->buildRevisionOptions('newer', $newRevs, $oldRev, $newRev);
 
@@ -380,34 +396,40 @@ class PageDiff extends Diff
      */
     protected function buildRevisionOptions($side, $revs, $oldRev, $newRev)
     {
+        global $lang;
         $changelog =& $this->changelog;
         $revisions = array();
 
-        if (($side == 'older' && !$oldRev) // NOTE: this case should not happen!
-          ||($side == 'newer' && (!$newRev || !page_exists($this->id)))
-        ) {
-            //no revision given, likely removed page, add dummy entry
-            $revisions['current'] = array(
-                'label' => '—', // U+2014 &mdash;
-                'attrs' => [],
-            );
-        }
+//       if ($side == 'newer' && (!$newRev || !page_exists($this->id))) {
+//            //no revision given, likely removed page, add dummy entry (or not yet existing)
+//            $revisions['current'] = array(
+//                'label' => '—', // U+2014 &mdash;
+//                'attrs' => [],
+//            );
+//        }
 
         foreach ($revs as $rev) {
             $info = $changelog->getRevisionInfo($rev);
             $revisions[$rev] = array(
                 'label' => implode(' ', [
-                            dformat($info['date']),
+                            ($info['date'] === 9999999999 ? $lang['unknowndate'] : dformat($info['date'])),
                             editorinfo($info['user'], true),
                             $info['sum'],
                            ]),
                 'attrs' => ['title' => $rev],
             );
-            if (($side == 'older' && ($newRev ? $rev >= $newRev : false))
+            if (($side == 'older' && ($newRev && $rev >= $newRev))
               ||($side == 'newer' && ($rev <= $oldRev))
             ) {
                 $revisions[$rev]['attrs']['disabled'] = 'disabled';
             }
+        }
+        if ($side == 'older' && !$oldRev)  {// NOTE: this case should not happen, only for do=diff for just created page
+            //no revision given, likely removed page, add dummy entry (or not yet existing)
+            $revisions['none'] = array(
+                'label' => '—', // U+2014 &mdash;
+                'attrs' => [],
+            );
         }
         return $revisions;
     }
@@ -419,7 +441,7 @@ class PageDiff extends Diff
      * @params array $options  dropdown options
      * @param int $oldRev  timestamp of older revision, left side
      * @param int $newRev  timestamp of newer revision, right side
-     * @return sting
+     * @return string
      */
     protected function buildDropdownSelector($side, $options, $oldRev, $newRev)
     {
@@ -432,7 +454,7 @@ class PageDiff extends Diff
             case 'older': // left side
                 $form->setHiddenField('rev2[1]', $newRev ?: 'current');
                 $input = $form->addDropdown('rev2[0]', $options)
-                    ->val($oldRev ?: 'current')->addClass('quickselect');
+                    ->val($oldRev ?: 'none')->addClass('quickselect');
                 $input->useInput(false); // inhibit prefillInput() during toHTML() process
                 break;
             case 'newer': // right side
