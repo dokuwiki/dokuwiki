@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\ChangeLog\ChangeLog;
+
 /**
  * DokuWiki Revisions Interface
  * parent class of PageRevisions and MediaRevisions
@@ -55,49 +57,48 @@ abstract class Revisions extends Ui
         global $conf;
 
         $changelog =& $this->changelog;
+        $revisions = [];
 
-        $revisions = array();
+        $extEditRevInfo = $changelog->getExternalEditRevInfo();
 
         /* we need to get one additional log entry to be able to
          * decide if this is the last page or is there another one.
-         * see also Ui\Recent::getRecents()
+         * @see Ui\Recent::getRecents() as well
          */
-        $revlist = $changelog->getRevisions($first, $conf['recent'] +1);
+        $num = $conf['recent'];
+        if ($first == 0) {
+            $num = $extEditRevInfo ? $num - 1 : $num;
+        }
+        $revlist = $changelog->getRevisions($first-1, $num +1 );
         if (count($revlist) == 0 && $first != 0) {
             $first = 0;
-            $revlist = $changelog->getRevisions($first, $conf['recent'] +1);
+            $num = $extEditRevInfo ? $num - 1 : $num;
+            $revlist = $changelog->getRevisions(-1, $num + 1);
         }
 
-        // add current page or media as revision[0] when necessary
-        if ($first === 0 && file_exists($this->itemFN($this->id))) {
-            $rev = filemtime(fullpath($this->itemFN($this->id)));
-            $changelog->setChunkSize(1024); //FIXME why does chunksize change wanted?
-            $revinfo = $changelog->getRevisionInfo($rev) ?: array(
-                    'date' => $rev,
-                    'ip'   => null,
-                    'type' => null,
-                    'id'   => $this->id,
-                    'user' => null,
-                    'sum'  => null,
-                    'extra' => null,
-                    'sizechange' => null,
-            );
-            $revisions[] = $revinfo + array(
+        if ($first == 0 && $extEditRevInfo) {
+            $revisions[] = $extEditRevInfo + [
                     'item' => $this->item,
                     'current' => true,
-            );
+            ];
         }
 
         // decide if this is the last page or is there another one
         $hasNext = false;
-        if (count($revlist) > $conf['recent']) {
+        if (count($revlist) > $num) {
             $hasNext = true;
             array_pop($revlist); // remove one additional log entry
         }
 
         // append each revison info array to the revisions
+        $fileLastMod = $this->itemFN($this->id);
+        $lastMod     = @filemtime($fileLastMod); // from wiki page, suppresses warning in case the file not exists
         foreach ($revlist as $rev) {
-            $revisions[] = $changelog->getRevisionInfo($rev) + array('item' => $this->item);
+            $more = ['item' => $this->item];
+            if ($rev == $lastMod) {
+                $more['current'] = true;
+            }
+            $revisions[] = $changelog->getRevisionInfo($rev) + $more;
         }
         return $revisions;
     }
@@ -108,7 +109,7 @@ abstract class Revisions extends Ui
      * @param int  $first
      * @param bool $hasNext
      * @param callable $callback returns array of hidden fields for the form button
-     * @return array  html
+     * @return string html
      */
     protected function navigation($first, $hasNext, $callback)
     {
@@ -161,7 +162,13 @@ abstract class Revisions extends Ui
             // edit date and time of the page or media file
             public function editDate()
             {
-                return '<span class="date">'. dformat($this->info['date']) .'</span>';
+                global $lang;
+                if ($this->info['date'] === 9999999999) {
+                    $date = $lang['unknowndate']; //unknown when files are deleted externally
+                } else {
+                    $date = dformat($this->info['date']);
+                }
+                return '<span class="date">'. $date .'</span>';
             }
 
             // edit summary

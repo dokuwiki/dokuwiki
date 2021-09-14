@@ -226,6 +226,7 @@ $lang['created']               = 'created';
 $lang['restored']              = 'old revision restored (%s)';
 $lang['external_edit']         = 'external edit';
 $lang['summary']               = 'Edit summary';
+$lang['unknowndate']           = 'Unknown date';
 $lang['noflash']               = 'The <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> is needed to display this content.';
 $lang['download']              = 'Download Snippet';
 $lang['tools']                 = 'Tools';
