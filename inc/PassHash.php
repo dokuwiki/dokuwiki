@@ -709,6 +709,18 @@ class PassHash {
         }
     }
 
+    /** @see sha2 */
+    public function hash_sha512($clear, $salt = null, $opts=[]) {
+        $opts['prefix'] = 6;
+        return $this->hash_sha2($clear, $salt, $opts);
+    }
+
+    /** @see sha2 */
+    public function hash_sha256($clear, $salt = null, $opts=[]) {
+        $opts['prefix'] = 5;
+        return $this->hash_sha2($clear, $salt, $opts);
+    }
+
     /**
      * Password hashing method 'mediawiki'
      *
@@ -742,7 +754,7 @@ class PassHash {
         if(!defined('PASSWORD_ARGON2I')) {
             throw new \Exception('This PHP installation has no ARGON2I support');
         }
-        return password_hash($clear,PASSWORD_ARGON2I);   
+        return password_hash($clear,PASSWORD_ARGON2I);
     }
 
     /**
@@ -760,7 +772,7 @@ class PassHash {
         if(!defined('PASSWORD_ARGON2ID')) {
             throw new \Exception('This PHP installation has no ARGON2ID support');
         }
-        return password_hash($clear,PASSWORD_ARGON2ID);   
+        return password_hash($clear,PASSWORD_ARGON2ID);
     }
 
     /**
