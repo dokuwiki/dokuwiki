@@ -2,10 +2,15 @@
 
 namespace dokuwiki\Remote;
 
+use IXR\DataType\Base64;
+use IXR\DataType\Date;
+use IXR\Exception\ServerException;
+use IXR\Server\Server;
+
 /**
  * Contains needed wrapper functions and registers all available XMLRPC functions.
  */
-class XmlRpcServer extends \IXR_Server
+class XmlRpcServer extends Server
 {
     protected $remote;
 
@@ -28,34 +33,34 @@ class XmlRpcServer extends \IXR_Server
         try {
             $result = $this->remote->call($methodname, $args);
             return $result;
-        } /** @noinspection PhpRedundantCatchClauseInspection */ catch (AccessDeniedException $e) {
+        } catch (AccessDeniedException $e) {
             if (!isset($_SERVER['REMOTE_USER'])) {
                 http_status(401);
-                return new \IXR_Error(-32603, "server error. not authorized to call method $methodname");
+                return new ServerException("server error. not authorized to call method $methodname", -32603);
             } else {
                 http_status(403);
-                return new \IXR_Error(-32604, "server error. forbidden to call the method $methodname");
+                return new ServerException("server error. forbidden to call the method $methodname", -32604);
             }
         } catch (RemoteException $e) {
-            return new \IXR_Error($e->getCode(), $e->getMessage());
+            return new ServerException($e->getMessage(), $e->getCode());
         }
     }
 
     /**
      * @param string|int $data iso date(yyyy[-]mm[-]dd[ hh:mm[:ss]]) or timestamp
-     * @return \IXR_Date
+     * @return Date
      */
     public function toDate($data)
     {
-        return new \IXR_Date($data);
+        return new Date($data);
     }
 
     /**
      * @param string $data
-     * @return \IXR_Base64
+     * @return Base64
      */
     public function toFile($data)
     {
-        return new \IXR_Base64($data);
+        return new Base64($data);
     }
 }
