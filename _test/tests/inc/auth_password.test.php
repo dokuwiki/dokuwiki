@@ -124,6 +124,14 @@ class auth_password_test extends DokuWikiTest {
         $this->assertTrue($except);
     }
 
+    function test_verifyPassword_sha256_crypt() {
+        if(defined('CRYPT_SHA256') && CRYPT_SHA256 == 1) {
+            $this->assertTrue(auth_verifyPassword('password', '$5$KvtIFskJlsLHR95A$CABu0dPozYsRq/dGNj4KITBQ21ZK.gC9KVXAkYFNE85'));
+            $this->assertTrue(auth_verifyPassword('password', '$5$rounds=1000$FQM/YjSke3Iqsdma$RYwG1MP21u68qUBQKqHoz7GLpWlnA6tunNKMNH3nRh5'));
+        } else {
+            $this->markTestSkipped('SHA256 not available in this PHP environment');
+        }
+    }
     /**
      * issue #2629, support PHP's crypt() format (with rounds=0 parameter)
      */
