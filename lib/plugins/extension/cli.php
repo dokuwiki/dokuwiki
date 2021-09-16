@@ -42,7 +42,9 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
 
         // install
         $options->registerCommand('install', 'Install or upgrade extensions');
-        $options->registerArgument('extensions...', 'One or more extensions to install', true, 'install');
+        $options->registerArgument('extensions...',
+            'One or more extensions to install. Either by name or download URL', true, 'install'
+        );
 
         // uninstall
         $options->registerCommand('uninstall', 'Uninstall a new extension');
