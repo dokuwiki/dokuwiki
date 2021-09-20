@@ -141,7 +141,7 @@ abstract class Diff extends Ui
         if ($rev) {
             $info = $changelog->getRevisionInfo($rev);
             //if external deletion, rev 9999999999 was used.
-            $info = is_array($info) ? $info : $changelog->getExternalEditRevInfo() ?: [];
+            $info = is_array($info) ? $info : ($changelog->getExternalEditRevInfo() ?: []);
         } elseif ($rev === null) { //if do=diff at just created page
             $info = [
                 'none' => true
@@ -150,7 +150,7 @@ abstract class Diff extends Ui
             $rev = filemtime(fullpath($filename));
             $info = $changelog->getRevisionInfo($rev);
             // if external edit, file exist but has no changelog line
-            $info = is_array($info) ? $info : $changelog->getExternalEditRevInfo() ?: [];
+            $info = is_array($info) ? $info : ($changelog->getExternalEditRevInfo() ?: []);
             $info = $info + [
                 'current' => true
             ];
