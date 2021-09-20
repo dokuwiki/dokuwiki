@@ -21,10 +21,11 @@ class MediaChangeLog extends ChangeLog
     /**
      * Returns path to current page/media
      *
+     * @param string|int $rev empty string or revision timestamp
      * @return string path to file
      */
-    protected function getFilename()
+    protected function getFilename($rev = '')
     {
-        return mediaFN($this->id);
+        return mediaFN($this->id, $rev);
     }
 }

@@ -609,7 +609,7 @@ abstract class ChangeLog
         if ($externaleditRevinfo) {
             $revisions = $this->getRevisions(-1, 1);
             $lastChangelogRev = $revisions[0];
-            if($externaleditRevinfo['date'] == $rev) {
+            if ($externaleditRevinfo['date'] == $rev) {
                 $rev = $lastChangelogRev; //replace by an existing changelog line
             }
         }
@@ -699,6 +699,8 @@ abstract class ChangeLog
      *      - user:  user name
      *      - sum:   edit summary (or action reason)
      *      - extra: extra data (varies by line type)
+     *
+     * @author  Gerrit Uitslag <klapinklapin@gmail.com>
      */
     public function getExternalEditRevInfo()
     {
@@ -717,11 +719,11 @@ abstract class ChangeLog
         $cache_externaledit[$this->id] = false;
 
         //in attic no revision of current existing wiki page, so external edit occurred
-        $fileLastMod = wikiFN($this->id);
-        $lastMod     = @filemtime($fileLastMod); // from wiki page, suppresses warning in case the file not exists
-        $lastRev     = $this->getRevisions(-1, 1); // from changelog
-        $lastRev     = (int) (empty($lastRev) ? 0 : $lastRev[0]);
-        if (!file_exists(wikiFN($this->id, $lastMod)) && file_exists($fileLastMod) && $lastRev < $lastMod) {
+        $fileLastMod = $this->getFilename();
+        $lastMod = @filemtime($fileLastMod); // from wiki page, suppresses warning in case the file not exists
+        $lastRev = $this->getRevisions(-1, 1); // from changelog
+        $lastRev = (int) (empty($lastRev) ? 0 : $lastRev[0]);
+        if (!file_exists($this->getFilename($lastMod)) && file_exists($fileLastMod) && $lastRev < $lastMod) {
             $cache_externaledit[$this->id] = $lastMod;
             $fileLastRev = wikiFN($this->id, $lastRev); //returns current wikipage path if $lastRev==false
             $revinfo = $this->getRevisionInfo($lastRev);
@@ -752,7 +754,7 @@ abstract class ChangeLog
         //deleted wiki page, but not registered in changelog
         if (!file_exists($fileLastMod) // there is no current page=>true
             && !empty($lastRev) && $revinfo['type'] !== DOKU_CHANGE_TYPE_DELETE) {
-            $fileLastRev = wikiFN($this->id, $lastRev);
+            $fileLastRev = $this->getFilename($lastRev);
             $externaleditRevinfo = [
                 'date' => 9999999999, //unknown deletion date, always higher as latest rev
                 'ip'   => '127.0.0.1',
