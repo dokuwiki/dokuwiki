@@ -54,7 +54,15 @@ function parseChangelogLine($line) {
  * @author Esther Brunner <wikidesign@gmail.com>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extra='', $flags=null, $sizechange = null){
+function addLogEntry(
+    $date,
+    $id,
+    $type=DOKU_CHANGE_TYPE_EDIT,
+    $summary='',
+    $extra='',
+    $flags=null,
+    $sizechange=null)
+{
     global $conf, $INFO;
     /** @var Input $INPUT */
     global $INPUT;
@@ -405,3 +413,21 @@ function _handleRecent($line,$ns,$flags,&$seen){
 
     return $recent;
 }
+
+/**
+ * Internal function used in Ui\{Revisions, Diff}, don't call directly
+ *
+ * @param array $info  Revision info structure of a page or media file
+ * @return bool
+ */
+function _isExternalDeletion(array $info) {
+    if ($info['type'] == DOKU_CHANGE_TYPE_EXTERNAL_DELETE
+        || $info['date'] === null
+        || $info['date'] === 9999999999
+        || $info['date'] < 0
+    ) {
+        return true;
+    }
+    return false;
+ }
+ 

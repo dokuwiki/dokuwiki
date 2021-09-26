@@ -160,7 +160,7 @@ abstract class Diff extends Ui
             $info = $changelog->getRevisionInfo($lastRev);
             if (!(is_array($info) && $info['type'] == DOKU_CHANGE_TYPE_DELETE)) {
                 $info = $changelog->getExternalEditRevInfo();
-                $info = is_array($info) && $info['type'] == DOKU_CHANGE_TYPE_DELETE ? $info : [];
+                $info = is_array($info) && $info['type'] == DOKU_CHANGE_TYPE_EXTERNAL_DELETE ? $info : [];
             }
             $info = $info + [
                 'current' => true

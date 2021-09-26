@@ -163,7 +163,7 @@ abstract class Revisions extends Ui
             public function editDate()
             {
                 global $lang;
-                if ($this->info['date'] === 9999999999) {
+                if (_isExternalDeletion($this->info)) {
                     $date = $lang['unknowndate']; //unknown when files are deleted externally
                 } else {
                     $date = dformat($this->info['date']);
@@ -217,7 +217,10 @@ abstract class Revisions extends Ui
                     case 'page': // page revision
                         $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
                         if (!$display_name) $display_name = $id;
-                        if ($this->info['current'] || page_exists($id, $rev)) {
+                        if (_isExternalDeletion($this->info)) {
+                            $href = wl($id, "", false, '&');
+                            $html = '<a href="'.$href.'" class="wikilink2">'.$display_name.'</a>';
+                        } elseif ($this->info['current'] || page_exists($id, $rev)) {
                             $href = wl($id, "rev=$rev", false, '&');
                             $html = '<a href="'.$href.'" class="wikilink1">'.$display_name.'</a>';
                         } else {

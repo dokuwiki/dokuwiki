@@ -234,8 +234,13 @@ class PageDiff extends Diff
 
         if (isset($info['date'])) {
             $rev = $info['date'];
-            $title = '<bdi><a class="wikilink1" href="'.wl($this->id, ['rev' => $rev]).'">'
-                   . $this->id .' ['. ($rev === 9999999999 ? $lang['unknowndate'] : dformat($rev)) .']'.'</a></bdi>';
+            if (_isExternalDeletion($info)) {
+                $title = '<bdi><a class="wikilink2" href="'.wl($this->id).'">'
+                   . $this->id .' ['. $lang['unknowndate'] .']'.'</a></bdi>';
+            } else {
+                $title = '<bdi><a class="wikilink1" href="'.wl($this->id, ['rev' => $rev]).'">'
+                   . $this->id .' ['. dformat($rev) .']'.'</a></bdi>';
+            }
         } else {
             $rev = false;
             $title = '&mdash;';
@@ -316,7 +321,7 @@ class PageDiff extends Diff
         if (!$newRev) {
             if ($this->id == $INFO['id']) {
                 // note: when page is removed, the metadata timestamp is zero
-                $lastRev = $INFO['currentrev'] ?? $INFO['meta']['last_change']['date'] ?? 0;
+                $lastRev = $INFO['currentrev'] ?: ($INFO['meta']['last_change']['date'] ?: 0);
             } else {
                 $lastRevs = $changelog->getRevisions(-1, 1)  // empty array for removed page !!TODO external edit/deletion? when is this used?
                           ?: $changelog->getRevisions(0, 1); // last entry of changelog
@@ -412,7 +417,7 @@ class PageDiff extends Diff
             $info = $changelog->getRevisionInfo($rev);
             $revisions[$rev] = array(
                 'label' => implode(' ', [
-                            ($info['date'] === 9999999999 ? $lang['unknowndate'] : dformat($info['date'])),
+                            (_isExternalDeletion($info) ? $lang['unknowndate'] : dformat($info['date'])),
                             editorinfo($info['user'], true),
                             $info['sum'],
                            ]),

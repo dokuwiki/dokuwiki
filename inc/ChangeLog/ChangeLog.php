@@ -296,7 +296,7 @@ abstract class ChangeLog
         list($fp, $lines, $head, $tail, $eof) = $this->readloglines($rev);
         if (empty($lines)) return false;
 
-        // look for revisions later/earlier then $rev, when founded count till the wanted revision is reached
+        // look for revisions later/earlier than $rev, when founded count till the wanted revision is reached
         // also parse and cache changelog lines for getRevisionInfo().
         $revcounter = 0;
         $relativerev = false;
@@ -355,7 +355,7 @@ abstract class ChangeLog
      */
     public function getRevisionsAround($rev1, $rev2, $max = 50)
     {
-        $max = floor(abs($max) / 2) * 2 + 1;
+        $max = intval(abs($max) / 2) * 2 + 1;
         $rev1 = max($rev1, 0);
         $rev2 = max($rev2, 0);
 
@@ -383,6 +383,7 @@ abstract class ChangeLog
             if (empty($revs1)) $revs1 = array();
         } else {
             //revisions overlaps, reuse revisions around rev2
+            $lastrev = array_pop($allrevs); //keep last entry that could be external edit
             $revs1 = $allrevs;
             while ($head > 0) {
                 for ($i = count($lines) - 1; $i >= 0; $i--) {
@@ -392,15 +393,17 @@ abstract class ChangeLog
                         $revs1[] = $tmp['date'];
                         $index++;
 
-                        if ($index > floor($max / 2)) break 2;
+                        if ($index > intval($max / 2)) break 2;
                     }
                 }
 
                 list($lines, $head, $tail) = $this->readAdjacentChunk($fp, $head, $tail, -1);
             }
             sort($revs1);
+            $revs1[] = $lastrev; //push back last entry
+
             //return wanted selection
-            $revs1 = array_slice($revs1, max($index - floor($max / 2), 0), $max);
+            $revs1 = array_slice($revs1, max($index - intval($max / 2), 0), $max);
         }
 
         return array(array_reverse($revs1), array_reverse($revs2));
@@ -458,7 +461,7 @@ abstract class ChangeLog
 
             // find chunk
             while ($tail - $head > $this->chunk_size) {
-                $finger = $head + floor(($tail - $head) / 2.0);
+                $finger = $head + intval(($tail - $head) / 2);
                 $finger = $this->getNewlinepointer($fp, $finger);
                 $tmp = fgets($fp);
                 if ($finger == $head || $finger == $tail) {
@@ -588,7 +591,7 @@ abstract class ChangeLog
         if ($direction > 0) {
             //read forward
             $head = $tail;
-            $tail = $head + floor($this->chunk_size * (2 / 3));
+            $tail = $head + intval($this->chunk_size * (2 / 3));
             $tail = $this->getNewlinepointer($fp, $tail);
         } else {
             //read backward
@@ -662,17 +665,13 @@ abstract class ChangeLog
                 if ($tmp !== false) {
                     $this->cache[$this->id][$tmp['date']] = $tmp;
                     $revs[] = $tmp['date'];
-                    //add external edit next to the first existing line from the changelog
-                    if ($externaleditRevinfo && $tmp['date'] == $lastChangelogRev) {
-                        $revs[] = $externaleditRevinfo['date'];
-                    }
                     if ($tmp['date'] >= $rev) {
                         //count revs after reference $rev
                         $aftercount++;
                         if ($aftercount == 1) $beforecount = count($revs);
                     }
                     //enough revs after reference $rev?
-                    if ($aftercount > floor($max / 2)) break 2;
+                    if ($aftercount > intval($max / 2)) break 2;
                 }
             }
             //retrieve next chunk
@@ -698,12 +697,17 @@ abstract class ChangeLog
                         $revs[] = $tmp['date'];
                         $beforecount++;
                         //enough revs before reference $rev?
-                        if ($beforecount > max(floor($max / 2), $max - $aftercount)) break 2;
+                        if ($beforecount > max(intval($max / 2), $max - $aftercount)) break 2;
                     }
                 }
             }
         }
         sort($revs);
+
+        //add external edit when the last value is identical with the last revision in the changelog
+        if ($externaleditRevinfo && $revs[count($revs)-1] == $lastChangelogRev) {
+            $revs[] = $externaleditRevinfo['date'];
+        }
 
         //keep only non-parsed lines
         $lines = array_slice($lines, 0, $i);
@@ -781,12 +785,13 @@ abstract class ChangeLog
         $revinfo = $this->getRevisionInfo($lastRev);
         //deleted wiki page, but not registered in changelog
         if (!file_exists($fileLastMod) // there is no current page=>true
-            && !empty($lastRev) && $revinfo['type'] !== DOKU_CHANGE_TYPE_DELETE) {
+            && !empty($lastRev) && $revinfo['type'] !== DOKU_CHANGE_TYPE_DELETE
+        ) {
             $fileLastRev = $this->getFilename($lastRev);
             $externaleditRevinfo = [
-                'date' => 9999999999, //unknown deletion date, always higher as latest rev
+                'date' => time(), //unknown deletion date, always higher as latest rev
                 'ip'   => '127.0.0.1',
-                'type' => DOKU_CHANGE_TYPE_DELETE,
+                'type' => DOKU_CHANGE_TYPE_EXTERNAL_DELETE,
                 'id'   => $this->id,
                 'user' => '',
                 'sum'  => $lang['deleted']. ' - ' . $lang['external_edit'],
