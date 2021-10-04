@@ -90,6 +90,9 @@ function getID($param='id',$clean=true){
             if (isset($urlParameters['id'])) {
                 unset($urlParameters['id']);
             }
+            if (isset($urlParameters['animal'])) {
+                unset($urlParameters['animal']);
+            }
             send_redirect(wl($id, $urlParameters, true, '&'));
         }
     }
