@@ -7,9 +7,10 @@ namespace dokuwiki\ChangeLog;
  */
 abstract class ChangeLog
 {
-
     /** @var string */
     protected $id;
+    /** @var int */
+    protected $currentRevision;
     /** @var int */
     protected $chunk_size;
     /** @var array */
@@ -78,6 +79,7 @@ abstract class ChangeLog
      *      - user:  user name
      *      - sum:   edit summary (or action reason)
      *      - extra: extra data (varies by line type)
+     *      - sizechange: change of filesize
      *
      * @author Ben Coburn <btcoburn@silicodon.net>
      * @author Kate Arzamastseva <pshns@ukr.net>
@@ -101,9 +103,9 @@ abstract class ChangeLog
 
         // parse and cache changelog lines
         foreach ($lines as $value) {
-            $tmp = parseChangelogLine($value);
-            if ($tmp !== false) {
-                $this->cache[$this->id][$tmp['date']] = $tmp;
+            $info = parseChangelogLine($value);
+            if ($info !== false) {
+                $this->cache[$this->id][$info['date']] = $info;
             }
         }
         if (!isset($this->cache[$this->id][$rev])) {
@@ -149,8 +151,8 @@ abstract class ChangeLog
         if ($first < 0) {
             $first = 0;
         } else {
-            if (file_exists($this->getFilename())) {
-                // skip current revision if the page exists
+            if (file_exists($this->getFilename()) && !$this->isExternalEdition()) {
+                // skip current revision if the page exist and not external edition
                 $first = max($first + 1, 0);
             }
         }
@@ -232,10 +234,10 @@ abstract class ChangeLog
 
         // handle lines in reverse order
         for ($i = count($lines) - 1; $i >= 0; $i--) {
-            $tmp = parseChangelogLine($lines[$i]);
-            if ($tmp !== false) {
-                $this->cache[$this->id][$tmp['date']] = $tmp;
-                $revs[] = $tmp['date'];
+            $info = parseChangelogLine($lines[$i]);
+            if ($info !== false) {
+                $this->cache[$this->id][$info['date']] = $info;
+                $revs[] = $info['date'];
             }
         }
 
@@ -277,7 +279,7 @@ abstract class ChangeLog
         $relativerev = false;
         $checkotherchunck = true; //always runs once
         while (!$relativerev && $checkotherchunck) {
-            $tmp = array();
+            $info = array();
             //parse in normal or reverse order
             $count = count($lines);
             if ($direction > 0) {
@@ -288,14 +290,14 @@ abstract class ChangeLog
                 $step = -1;
             }
             for ($i = $start; $i >= 0 && $i < $count; $i = $i + $step) {
-                $tmp = parseChangelogLine($lines[$i]);
-                if ($tmp !== false) {
-                    $this->cache[$this->id][$tmp['date']] = $tmp;
+                $info = parseChangelogLine($lines[$i]);
+                if ($info !== false) {
+                    $this->cache[$this->id][$info['date']] = $info;
                     //look for revs older/earlier then reference $rev and select $direction-th one
-                    if (($direction > 0 && $tmp['date'] > $rev) || ($direction < 0 && $tmp['date'] < $rev)) {
+                    if (($direction > 0 && $info['date'] > $rev) || ($direction < 0 && $info['date'] < $rev)) {
                         $revcounter++;
                         if ($revcounter == abs($direction)) {
-                            $relativerev = $tmp['date'];
+                            $relativerev = $info['date'];
                         }
                     }
                 }
@@ -303,7 +305,7 @@ abstract class ChangeLog
 
             //true when $rev is found, but not the wanted follow-up.
             $checkotherchunck = $fp
-                && ($tmp['date'] == $rev || ($revcounter > 0 && !$relativerev))
+                && ($info['date'] == $rev || ($revcounter > 0 && !$relativerev))
                 && !(($tail == $eof && $direction > 0) || ($head == 0 && $direction < 0));
 
             if ($checkotherchunck) {
@@ -342,8 +344,7 @@ abstract class ChangeLog
             }
         } else {
             //empty right side means a removed page. Look up last revision.
-            $revs = $this->getRevisions(-1, 1);
-            $rev2 = $revs[0];
+            $rev2 = $this->currentRevision();
         }
         //collect revisions around rev2
         list($revs2, $allrevs, $fp, $lines, $head, $tail) = $this->retrieveRevisionsAround($rev2, $max);
@@ -362,10 +363,10 @@ abstract class ChangeLog
             $revs1 = $allrevs;
             while ($head > 0) {
                 for ($i = count($lines) - 1; $i >= 0; $i--) {
-                    $tmp = parseChangelogLine($lines[$i]);
-                    if ($tmp !== false) {
-                        $this->cache[$this->id][$tmp['date']] = $tmp;
-                        $revs1[] = $tmp['date'];
+                    $info = parseChangelogLine($lines[$i]);
+                    if ($info !== false) {
+                        $this->cache[$this->id][$info['date']] = $info;
+                        $revs1[] = $info['date'];
                         $index++;
 
                         if ($index > intval($max / 2)) break 2;
@@ -397,6 +398,9 @@ abstract class ChangeLog
     /**
      * Returns lines from changelog.
      * If file larger than $chuncksize, only chunck is read that could contain $rev.
+     *
+     * When reference timestamp $rev is outside time range of changelog, readloglines() will return
+     * lines in first or last chunk, but they obviously does not contain $rev.
      *
      * @param int $rev revision timestamp
      * @return array|false
@@ -442,8 +446,8 @@ abstract class ChangeLog
                 if ($finger == $head || $finger == $tail) {
                     break;
                 }
-                $tmp = parseChangelogLine($tmp);
-                $finger_rev = $tmp['date'];
+                $info = parseChangelogLine($tmp);
+                $finger_rev = $info['date'];
 
                 if ($finger_rev > $rev) {
                     $tail = $finger;
@@ -523,7 +527,7 @@ abstract class ChangeLog
      */
     public function isCurrentRevision($rev)
     {
-        return $rev == @filemtime($this->getFilename());
+        return $rev == $this->currentRevision();
     }
 
     /**
@@ -592,6 +596,10 @@ abstract class ChangeLog
     /**
      * Collect the $max revisions near to the timestamp $rev
      *
+     * Ideally, half of retrieved timestamps are older than $rev, another half are newer.
+     * The returned array $requestedrevs may not contain the reference timestamp $rev
+     * when it does not match any revision value recorded in changelog.
+     *
      * @param int $rev revision timestamp
      * @param int $max maximum number of revisions to be returned
      * @return bool|array
@@ -606,41 +614,23 @@ abstract class ChangeLog
      */
     protected function retrieveRevisionsAround($rev, $max)
     {
-        $lastChangelogRev = 0;
-        $externaleditRevinfo = $this->getExternalEditRevInfo();
-
-        if ($externaleditRevinfo) {
-            $revisions = $this->getRevisions(-1, 1);
-            $lastChangelogRev = $revisions[0];
-            if ($externaleditRevinfo['date'] == $rev) {
-                $rev = $lastChangelogRev; //replace by an existing changelog line
-            }
-        }
-
         $revs = array();
         $aftercount = $beforecount = 0;
 
         //get lines from changelog
-        list($fp, $lines, $starthead, $starttail, /* $eof */) = $this->readloglines($rev);
-        if (empty($lines)) {
-            if ($externaleditRevinfo) {
-                $revs[] = $externaleditRevinfo['date'];
-                return array($revs, $revs, false, [], 0, 0);
-            } else {
-                return false;
-            }
-        }
+        list($fp, $lines, $starthead, $starttail, $eof) = $this->readloglines($rev);
+        if (empty($lines)) return false;
 
-        //parse chunk containing $rev, and read forward more chunks until $max/2 is reached
+        //parse changelog lines in chunk, and read forward more chunks until $max/2 is reached
         $head = $starthead;
         $tail = $starttail;
         while (count($lines) > 0) {
             foreach ($lines as $line) {
-                $tmp = parseChangelogLine($line);
-                if ($tmp !== false) {
-                    $this->cache[$this->id][$tmp['date']] = $tmp;
-                    $revs[] = $tmp['date'];
-                    if ($tmp['date'] >= $rev) {
+                $info = parseChangelogLine($line);
+                if ($info !== false) {
+                    $this->cache[$this->id][$info['date']] = $info;
+                    $revs[] = $info['date'];
+                    if ($info['date'] >= $rev) {
                         //count revs after reference $rev
                         $aftercount++;
                         if ($aftercount == 1) $beforecount = count($revs);
@@ -652,11 +642,20 @@ abstract class ChangeLog
             //retrieve next chunk
             list($lines, $head, $tail) = $this->readAdjacentChunk($fp, $head, $tail, 1);
         }
-        if ($aftercount == 0) return false;
-
         $lasttail = $tail;
 
-        //read additional chuncks backward until $max/2 is reached and total number of revs is equal to $max
+        // add a possible revision of external edit, create or deletion
+        if ($lasttail == $eof && $aftercount <= intval($max / 2) && $this->isExternalEdition()) {
+            $revs[] = $this->currentRevision;
+            $aftercount++;
+        }
+
+        if ($aftercount == 0) {
+            //given timestamp $rev is newer than the most recent line in chunk
+            return false; //FIXME: or proceed to collect older revisions?
+        }
+
+        //read more chunks backward until $max/2 is reached and total number of revs is equal to $max
         $lines = array();
         $i = 0;
         if ($aftercount > 0) {
@@ -666,10 +665,10 @@ abstract class ChangeLog
                 list($lines, $head, $tail) = $this->readAdjacentChunk($fp, $head, $tail, -1);
 
                 for ($i = count($lines) - 1; $i >= 0; $i--) {
-                    $tmp = parseChangelogLine($lines[$i]);
-                    if ($tmp !== false) {
-                        $this->cache[$this->id][$tmp['date']] = $tmp;
-                        $revs[] = $tmp['date'];
+                    $info = parseChangelogLine($lines[$i]);
+                    if ($info !== false) {
+                        $this->cache[$this->id][$info['date']] = $info;
+                        $revs[] = $info['date'];
                         $beforecount++;
                         //enough revs before reference $rev?
                         if ($beforecount > max(intval($max / 2), $max - $aftercount)) break 2;
@@ -677,15 +676,11 @@ abstract class ChangeLog
                 }
             }
         }
-        sort($revs);
-
-        //add external edit when the last value is identical with the last revision in the changelog
-        if ($externaleditRevinfo && $revs[count($revs)-1] == $lastChangelogRev) {
-            $revs[] = $externaleditRevinfo['date'];
-        }
-
         //keep only non-parsed lines
         $lines = array_slice($lines, 0, $i);
+
+        sort($revs);
+
         //trunk desired selection
         $requestedrevs = array_slice($revs, -$max, $max);
 
@@ -703,6 +698,7 @@ abstract class ChangeLog
      *      - user:  user name
      *      - sum:   edit summary (or action reason)
      *      - extra: extra data (varies by line type)
+     *      - sizechange: change of filesize
      *
      * @author  Gerrit Uitslag <klapinklapin@gmail.com>
      */
@@ -729,7 +725,7 @@ abstract class ChangeLog
         $lastRev = (int) (empty($lastRev) ? 0 : $lastRev[0]);
         if (!file_exists($this->getFilename($lastMod)) && file_exists($fileLastMod) && $lastRev < $lastMod) {
             $cache_externaledit[$this->id] = $lastMod;
-            $fileLastRev = wikiFN($this->id, $lastRev); //returns current wikipage path if $lastRev==false
+            $fileLastRev = $this->getFilename($lastRev); //returns current wikipage path if $lastRev==false
             $revinfo = $this->getRevisionInfo($lastRev);
             if (empty($lastRev) || !file_exists($fileLastRev) || $revinfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
                 $filesize_old = 0;
@@ -775,5 +771,160 @@ abstract class ChangeLog
         }
 
         return $externaleditRevinfo;
+    }
+
+    /**
+     * Get the current revision information, considering external edit, create or deletion
+     *
+     * The "current" revison is the last timestamp of the page in the context of changelog.
+     * However it is often recognised that is in sight now from the DokuWiki user perspective.
+     * The current page is accessible without any revision identifier (eg. doku.php?id=foo),
+     * but it has unique modification time of the source txt file and kept in changelog.
+     * When the page is deleted by saving blank text in the DokuWiki editor, the deletion
+     * time is to be kept as its revision identifier in the changelog.
+     *
+     * External edit will break consistency between the file and changelog. A page source
+     * file might be modified, created or deleted without using DokuWiki editor, instead
+     * by accessing direct to the file stored in data directory via server console.
+     * Such editions are never recorded in changelog. However after external file edit,
+     * now we can see new "current" content of the edited page!
+     *
+     * A tentative revision should be assigned for the external edition to handle whole
+     * revisions successfully in DokuWiki revision list and diff view interface.
+     * As far as the source file of the edition exists, a unique revision can be decided
+     * using function filemtime(), but it could be unknown if the foo.txt file had deleted
+     * or moved to foo.bak file.
+     * In such case, we assume unknown revision as "last timestamp in chagelog" +1
+     * to ensure that current one should be newer than any revisions in changelog.
+     * Another case of external edit: when foo.bak file moved back to foo.txt, the current
+     * one could become older than latest timestamp in changelog. In this case, we should
+     * assume the revison as "last timestamp in chagelog" +1, instead of its timestamp.
+     *
+     * @return bool|array false when page had never existed or array with entries:
+     *      - date:  revision identifier (timestamp or last revision +1)
+     *      - ip:    IPv4 address (127.0.0.1)
+     *      - type:  log line type
+     *      - id:    id of page or media
+     *      - user:  user name
+     *      - sum:   edit summary (or action reason)
+     *      - extra: extra data (varies by line type)
+     *      - sizechange: change of filesize
+     *      - timestamp: timestamp or 'unknown' (key set only for external edition)
+     *
+     * @author  Satoshi Sahara <sahara.satoshi@gmail.com>
+     */
+    public function getCurrentRevisionInfo()
+    {
+        global $lang;
+
+        if (isset($this->currentRevision)) return $this->getRevisionInfo($this->currentRevision);
+
+        // get revision id from the item file timestamp and chagelog
+        $fileRev = @filemtime($this->getFilename()); // false when the file not exist
+        $lastRev = @$this->getRevisions(-1, 1)[0];   // null when failed
+
+        if (!$fileRev && $lastRev === null) {             // has never existed
+            return false;
+        } elseif ($fileRev === $lastRev) {                // not external edit
+            $this->currentRevision = $lastRev;
+            $this->cache[$this->id][$this->currentRevision] += [
+                    'current' => true,
+            ];
+            return $this->getRevisionInfo($this->currentRevision);
+        }
+
+        if (!$fileRev && $lastRev) {                // item file does not exist
+            // check consistency against changelog
+            $revInfo = $this->getRevisionInfo($lastRev);
+            if ($revInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
+                $this->currentRevision = $lastRev;
+                $this->cache[$this->id][$this->currentRevision] += [
+                    'current' => true,
+                ];
+                return $this->getRevisionInfo($this->currentRevision);
+            }
+
+            // externally deleted
+            $revInfo = [
+                'date' => $lastRev +1,
+                'ip'   => '127.0.0.1',
+                'type' => DOKU_CHANGE_TYPE_DELETE,
+                'id'   => $this->id,
+                'user' => '',
+                'sum'  => $lang['deleted'] .' - '. $lang['external_edit'],
+                'extra' => '',
+                'sizechange' => -io_getSizeFile($this->getFilename($lastRev)),
+                'current' => true,
+                'timestamp' => 'unknown',
+            ];
+
+        } elseif ($fileRev) {                       // item file exist
+            // here, file timestamp is different with last revision in changelog
+            $isJustCreated = !boolval($lastRev);
+            $filesize_new = filesize($this->getFilename());
+            $filesize_old = $lastRev ? io_getSizeFile($this->getFilename($lastRev)) : 0;
+            $sizechange = $filesize_new - $filesize_old;
+
+            if ($isJustCreated) { // lastRev is null
+                $rev = $timestamp = $fileRev;
+                $sum = $lang['created'] .' - '. $lang['external_edit'];
+            } elseif ($fileRev > $lastRev) {
+                $rev = $timestamp = $fileRev;
+                $sum = $lang['external_edit'];
+            } else {
+                // $fileRev is older than $lastRev, externally reverted an old file
+                $rev = max($fileRev, $lastRev +1);
+                $timestamp = 'unknown';
+                $sum = $lang['external_edit'];
+            }
+
+            // externally created or edited
+            $revInfo = [
+                'date' => $rev,
+                'ip'   => '127.0.0.1',
+                'type' => $isJustCreated ? DOKU_CHANGE_TYPE_CREATE : DOKU_CHANGE_TYPE_EDIT,
+                'id'   => $this->id,
+                'user' => '',
+                'sum'  => $sum,
+                'extra' => '',
+                'sizechange' => $sizechange,
+                'current' => true,
+                'timestamp' => $timestamp,
+            ];
+        }
+
+        // cache current revision information of external edition
+        $this->currentRevision = $revInfo['date'];
+        $this->cache[$this->id][$this->currentRevision] = $revInfo;
+        return $this->getRevisionInfo($this->currentRevision);
+    }
+
+    /**
+     * Checks if the revision is external edition
+     * @return boolean
+     */
+    public function isExternalEdition($rev =null)
+    {
+        if ($rev === 'current' || $rev === null) {
+            $revInfo = $this->getCurrentRevisionInfo();
+        } elseif (is_int($rev)) {
+            $revInfo = $this->getRevisionInfo($rev);
+        } elseif (is_array($rev)) {
+            $revInfo =  $rev;
+        }
+        return array_key_exists('timestamp', $revInfo);
+    }
+
+    /**
+     * Return the current revision identifer
+     * @return int|false
+     */
+    public function currentRevision()
+    {
+        if (!isset($this->currentRevision)) {
+            // set ChangeLog::currentRevision property
+            $this->getCurrentRevisionInfo();
+        }
+        return $this->currentRevision;
     }
 }
