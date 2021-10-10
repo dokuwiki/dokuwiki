@@ -29,7 +29,6 @@ class PageDiff extends Diff
     {
         global $INFO;
         if (!isset($id)) $id = $INFO['id'];
-        $this->item = 'page';
 
         // init preference
         $this->preference['showIntro'] = true;
@@ -44,12 +43,6 @@ class PageDiff extends Diff
         $this->changelog = new PageChangeLog($this->id);
     }
 
-    /** @inheritdoc */
-    protected function itemFN($id, $rev = '')
-    {
-        return wikiFN($id, $rev);
-    }
-
     /**
      * Set text to be compared with most current version
      * exclusively use of the compare($old, $new) method
@@ -61,8 +54,9 @@ class PageDiff extends Diff
     {
         if (isset($text)) {
             $this->text = $text;
-            $this->oldRev = '';
-            $this->newRev = null;
+            $changelog =& $this->changelog;
+            $this->oldRev = $changelog->currentRevision(); // FIXME should 'current' or lastRev ?
+            $this->newRev = null;  // PageConflict or PageDraft
         }
         return $this;
     }
@@ -73,8 +67,9 @@ class PageDiff extends Diff
         parent::preProcess();
         if (!isset($this->oldRev, $this->newRev)) {
             // no revision was given, compare previous to current
-            $this->oldRev = $this->changelog->getRevisions(0, 1)[0];
-            $this->newRev = '';
+            $changelog =& $this->changelog;
+            $this->oldRev = $changelog->getRevisions(0, 1)[0];
+            $this->newRev = $changelog->currentRevision();
 
             global $INFO, $REV;
             if ($this->id == $INFO['id'])
@@ -93,6 +88,8 @@ class PageDiff extends Diff
      */
     public function show()
     {
+        $changelog =& $this->changelog;
+
        // determine left and right revision
         if (!isset($this->oldRev)) $this->preProcess();
 
@@ -105,7 +102,7 @@ class PageDiff extends Diff
             if (!$this->oldRev && !$this->newRev) {
                 $oldText = '';
             } else {
-                $revinfo = $this->changelog->getRevisionInfo($this->oldRev);
+                $revinfo = $changelog->getRevisionInfo($this->oldRev);
                 if ($revinfo && $revinfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
                     $oldText = ''; //attic stores complete last page version for a deleted page
                 } else {
@@ -113,12 +110,10 @@ class PageDiff extends Diff
                 }
             }
 
-            $extEditInfo = $this->changelog->getExternalEditRevInfo();
-            $newRev = $this->newRev;
-            if ($extEditInfo && $extEditInfo['date'] == $this->newRev) {
-                $newRev = ''; //request file from page folder instead of attic, because not yet stored in attic
-            }
-            $revinfo = $this->changelog->getRevisionInfo($this->newRev);
+            $newRev = $changelog->isExternalEdition($newRev)
+                ? '' //request file from page folder instead of attic, because not yet stored in attic
+                : $this->newRev;
+            $revinfo = $changelog->getRevisionInfo($this->newRev);
             if ($revinfo && $revinfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
                 $newText = '';
             } else {
@@ -225,7 +220,7 @@ class PageDiff extends Diff
      */
     protected function revisionTitle(array $info)
     {
-        global $lang, $INFO;
+        global $lang;
 
         // use designated title when compare current page source with given text
         if (array_key_exists('date', $info) && is_null($info['date'])) {
@@ -234,7 +229,8 @@ class PageDiff extends Diff
 
         if (isset($info['date'])) {
             $rev = $info['date'];
-            if (_isExternalDeletion($info)) {
+            if (($info['timestamp'] ?? '') == 'unknown') {
+                // exteranlly deleted or older file restored
                 $title = '<bdi><a class="wikilink2" href="'.wl($this->id).'">'
                    . $this->id .' ['. $lang['unknowndate'] .']'.'</a></bdi>';
             } else {
@@ -245,7 +241,7 @@ class PageDiff extends Diff
             $rev = false;
             $title = '&mdash;';
         }
-        if (isset($info['current']) || ($rev && $rev == $INFO['currentrev'])) {
+        if (isset($info['current'])) {
             $title .= '&nbsp;('.$lang['current'].')';
         }
 
@@ -313,21 +309,11 @@ class PageDiff extends Diff
      */
     protected function buildRevisionsNavigation($oldRev, $newRev)
     {
-        global $INFO;
         $changelog =& $this->changelog;
 
-       // determine the last revision, which is usually the timestamp of current page,
-       // however which might be the last revision if the page had removed.
         if (!$newRev) {
-            if ($this->id == $INFO['id']) {
-                // note: when page is removed, the metadata timestamp is zero
-                $lastRev = $INFO['currentrev'] ?: ($INFO['meta']['last_change']['date'] ?: 0);
-            } else {
-                $lastRevs = $changelog->getRevisions(-1, 1)  // empty array for removed page !!TODO external edit/deletion? when is this used?
-                          ?: $changelog->getRevisions(0, 1); // last entry of changelog
-                $lastRev = count($lastRevs) > 0 ? $lastRevs[0] : 0;
-            }
-            $newRev = $lastRev;
+            // use timestamp instead of '' for the curernt page
+            $newRev = $changelog->currentRevision();
         }
 
         // retrieve revisions with additional info
@@ -415,9 +401,14 @@ class PageDiff extends Diff
 
         foreach ($revs as $rev) {
             $info = $changelog->getRevisionInfo($rev);
+            $date = dformat($info['date']);
+            if (($info['timestamp'] ?? '') == 'unknown') {
+                // exteranlly deleted or older file restored
+                $date = preg_replace('/[0-9a-zA-Z]/','_', $date);
+            }
             $revisions[$rev] = array(
                 'label' => implode(' ', [
-                            (_isExternalDeletion($info) ? $lang['unknowndate'] : dformat($info['date'])),
+                            $date,
                             editorinfo($info['user'], true),
                             $info['sum'],
                            ]),

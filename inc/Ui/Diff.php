@@ -14,7 +14,6 @@ abstract class Diff extends Ui
 {
     /* @var string */
     protected $id;   // page id or media id
-    protected $item; // page or media
 
     /* @var int|string */
     protected $oldRev;  // timestamp of older revision, '' means current one
@@ -35,21 +34,14 @@ abstract class Diff extends Ui
     {
         $this->id = $id;
         $this->setChangeLog();
+        // ensure to have valid changelog::currentRevision property
+        $this->changelog->getCurrentRevisionInfo();
     }
 
     /**
      * set class property changelog
      */
     abstract protected function setChangeLog();
-
-    /**
-     * item filename resolver
-     *
-     * @param string $id  page id or media id
-     * @param int|string $rev revision timestamp, or empty string for current one
-     * @return string full path
-     */
-    abstract protected function itemFN($id, $rev = '');
 
     /**
      * Set a pair of revisions to be compared
@@ -96,20 +88,21 @@ abstract class Diff extends Ui
     protected function preProcess()
     {
         global $INPUT;
+        $changelog =& $this->changelog;
 
         // difflink icon click, eg. ?rev=123456789&do=diff
         if ($INPUT->has('rev')) {
             $this->oldRev = $INPUT->int('rev');
-            $this->newRev = ''; // current revision
+            $this->newRev = $changelog->currentRevision();
         }
 
         // submit button with two checked boxes
         $rev2 = $INPUT->arr('rev2', []);
         if (count($rev2) > 1) {
             if ($rev2[0] == 'current') {
-                [$this->oldRev, $this->newRev] = [$rev2[1], ''];
+                [$this->oldRev, $this->newRev] = [$rev2[1], $changelog->currentRevision()];
             } elseif ($rev2[1] == 'current') {
-                [$this->oldRev, $this->newRev] = [$rev2[0], ''];
+                [$this->oldRev, $this->newRev] = [$rev2[0], $changelog->currentRevision()];
             } elseif ($rev2[0] < $rev2[1]) {
                 [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
             } else {
@@ -138,35 +131,14 @@ abstract class Diff extends Ui
     {
         $changelog =& $this->changelog;
 
-        if ($rev) {
+        if ($rev == '' || $rev == 'current') {
+            $info = $changelog->getCurrentRevisionInfo();
+        } elseif (is_numeric($rev)) {
             $info = $changelog->getRevisionInfo($rev);
-            //if external deletion, rev 9999999999 was used.
-            $info = is_array($info) ? $info : ($changelog->getExternalEditRevInfo() ?: []);
-        } elseif ($rev === null) { //if do=diff at just created page
-            $info = [
-                'none' => true
-            ];
-        } elseif (file_exists($filename = $this->itemFN($this->id))) {
-            $rev = filemtime(fullpath($filename));
-            $info = $changelog->getRevisionInfo($rev);
-            // if external edit, file exist but has no changelog line
-            $info = is_array($info) ? $info : ($changelog->getExternalEditRevInfo() ?: []);
-            $info = $info + [
-                'current' => true
-            ];
-        } else { // once exists, but now removed
-            $lastRev = $changelog->getRevisions(-1, 1); // from changelog
-            $lastRev = (int) (empty($lastRev) ? 0 : $lastRev[0]);
-            $info = $changelog->getRevisionInfo($lastRev);
-            if (!(is_array($info) && $info['type'] == DOKU_CHANGE_TYPE_DELETE)) {
-                $info = $changelog->getExternalEditRevInfo();
-                $info = is_array($info) && $info['type'] == DOKU_CHANGE_TYPE_EXTERNAL_DELETE ? $info : [];
-            }
-            $info = $info + [
-                'current' => true
-            ];
+        } else { //if do=diff at just created page
+            $info = ['none' => true];
         }
-        return ['item' => $this->item] + $info;
+        return $info;
     }
 
 

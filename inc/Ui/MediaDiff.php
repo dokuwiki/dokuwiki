@@ -28,7 +28,6 @@ class MediaDiff extends Diff
         if (!isset($id)) {
             throw new \InvalidArgumentException('media id should not be empty!');
         }
-        $this->item = 'media';
 
         // init preference
         $this->preference['fromAjax'] = false; // see doluwiki\Ajax::callMediadiff()
@@ -45,20 +44,14 @@ class MediaDiff extends Diff
     }
 
     /** @inheritdoc */
-    protected function itemFN($id, $rev = '')
-    {
-        return mediaFN($id, $rev);
-    }
-
-    /** @inheritdoc */
     protected function preProcess()
     {
         parent::preProcess();
         if (!isset($this->oldRev, $this->newRev)) {
             // no revision was given, compare previous to current
-            $revs = $this->changelog->getRevisions(0, 1);
-            $this->oldRev = file_exists(mediaFN($this->id, $revs[0])) ? $revs[0] : '';
-            $this->newRev = '';
+            $changelog =& $this->changelog;
+            $this->oldRev = $changelog->getRevisions(0, 1)[0];
+            $this->newRev = $changelog->currentRevision();
         }
     }
 
@@ -70,6 +63,7 @@ class MediaDiff extends Diff
     public function show()
     {
         global $conf;
+        $changelog =& $this->changelog;
 
         $ns = getNS($this->id);
         $auth = auth_quickaclcheck("$ns:*");
@@ -78,7 +72,13 @@ class MediaDiff extends Diff
 
        // determine left and right revision
         if (!isset($this->oldRev, $this->newRev)) $this->preProcess();
-        [$oldRev, $newRev] = [$this->oldRev, $this->newRev];
+
+        // use timestamp and '' properly as $rev for the current file
+        if ($changelog->isCurrentRevision($this->newRev)) {
+            [$oldRev, $newRev] = [$this->oldRev, ''];
+        } else {
+            [$oldRev, $newRev] = [$this->oldRev, $this->newRev];
+        }
 
         $oldRevMeta = new JpegMeta(mediaFN($this->id, $oldRev));
         $newRevMeta = new JpegMeta(mediaFN($this->id, $newRev));
