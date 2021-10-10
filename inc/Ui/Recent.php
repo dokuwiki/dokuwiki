@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\Form\Form;
 
@@ -72,6 +73,9 @@ class Recent extends Ui
         // start listing of recent items
         $form->addTagOpen('ul');
         foreach ($recents as $recent) {
+            // check possible external edition for current page or media
+            $this->checkCurrentRevision($recent);
+
             $objRevInfo = $this->getObjRevInfo($recent);
             $class = ($recent['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor': '';
             $form->addTagOpen('li')->addClass($class);
@@ -138,6 +142,31 @@ class Recent extends Ui
             array_pop($recents); // remove extra log entry
         }
         return $recents;
+    }
+
+    /**
+     * Check possible external deletion for current page or media
+     *
+     * To keep sort order in the recent list, we ignore externally modification.
+     * It is not possible to know when external deletion had happened,
+     * $info['date'] is to be incremented 1 second when such deletion detected.
+     */
+    protected function checkCurrentRevision(array &$info)
+    {
+        $itemType = strrpos($info['id'], '.') ? 'media' : 'page';
+        if ($itemType == 'page') {
+            $changelog = new PageChangelog($info['id']);
+        } else {
+            $changelog = new MediaChangelog($info['id']);
+        }
+        if ($changelog->isExternalEdition()) {
+            $currentRevInfo = $changelog->getCurrentRevisionInfo();
+            if ($currentRevInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
+                // the page or media file had externally deleted
+                $info = array_merge($info, $currentRevInfo);
+            }
+        }
+        unset($changelog);
     }
 
     /**
