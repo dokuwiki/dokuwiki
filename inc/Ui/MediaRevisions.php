@@ -25,7 +25,6 @@ class MediaRevisions extends Revisions
         if (!$id) {
             throw new \InvalidArgumentException('media id should not be empty!');
         }
-        $this->item = 'media';
         parent::__construct($id);
     }
 
@@ -33,12 +32,6 @@ class MediaRevisions extends Revisions
     protected function setChangeLog()
     {
         $this->changelog = new MediaChangeLog($this->id);
-    }
-
-    /** @inheritdoc */
-    protected function itemFN($id, $rev = '')
-    {
-        return mediaFN($id, $rev);
     }
 
     /**
@@ -55,6 +48,7 @@ class MediaRevisions extends Revisions
     public function show($first = 0)
     {
         global $lang;
+        $changelog =& $this->changelog;
 
         // get revisions, and set correct pagenation parameters (first, hasNext)
         if ($first === null) $first = 0;

@@ -14,7 +14,6 @@ abstract class Revisions extends Ui
 {
     /* @var string */
     protected $id;   // page id or media id
-    protected $item; // page or media
 
     /* @var ChangeLog */
     protected $changelog; // PageChangeLog or MediaChangeLog object
@@ -36,16 +35,7 @@ abstract class Revisions extends Ui
     abstract protected function setChangeLog();
 
     /**
-     * item filename resolver
-     *
-     * @param string $id  page id or media id
-     * @param int|string $rev revision timestamp, or empty string for current one
-     * @return string full path
-     */
-    abstract protected function itemFN($id, $rev = '');
-
-    /**
-     * Get revisions, and set correct pagenation parameters (first, hasNext)
+     * Get revisions, and set correct pagination parameters (first, hasNext)
      *
      * @param int  $first
      * @param bool $hasNext
@@ -59,28 +49,23 @@ abstract class Revisions extends Ui
         $changelog =& $this->changelog;
         $revisions = [];
 
-        $extEditRevInfo = $changelog->getExternalEditRevInfo();
+        $currentRevInfo = $changelog->getCurrentRevisionInfo();
+        if (!$currentRevInfo) return $revisions;
 
-        /* we need to get one additional log entry to be able to
-         * decide if this is the last page or is there another one.
-         * @see Ui\Recent::getRecents() as well
-         */
         $num = $conf['recent'];
         if ($first == 0) {
-            $num = $extEditRevInfo ? $num - 1 : $num;
+            $revisions[] = $currentRevInfo;
+            $num = $num - 1;
         }
-        $revlist = $changelog->getRevisions($first-1, $num +1 );
-        if (count($revlist) == 0 && $first != 0) {
+        /* we need to get one additional log entry to be able to
+         * decide if this is the last page or is there another one.
+         * see also Ui\Recent::getRecents()
+         */
+        $revlist = $changelog->getRevisions($first, $num + 1);
+        if (count($revlist) == 0 && $first > 0) {
+            // resets to zero if $first requested a too high number
             $first = 0;
-            $num = $extEditRevInfo ? $num - 1 : $num;
-            $revlist = $changelog->getRevisions(-1, $num + 1);
-        }
-
-        if ($first == 0 && $extEditRevInfo) {
-            $revisions[] = $extEditRevInfo + [
-                    'item' => $this->item,
-                    'current' => true,
-            ];
+            return $this->getRevisions($first, $hasNext);
         }
 
         // decide if this is the last page or is there another one
@@ -91,14 +76,8 @@ abstract class Revisions extends Ui
         }
 
         // append each revison info array to the revisions
-        $fileLastMod = $this->itemFN($this->id);
-        $lastMod     = @filemtime($fileLastMod); // from wiki page, suppresses warning in case the file not exists
         foreach ($revlist as $rev) {
-            $more = ['item' => $this->item];
-            if ($rev == $lastMod) {
-                $more['current'] = true;
-            }
-            $revisions[] = $changelog->getRevisionInfo($rev) + $more;
+            $revisions[] = $changelog->getRevisionInfo($rev);
         }
         return $revisions;
     }
@@ -146,6 +125,7 @@ abstract class Revisions extends Ui
 
             public function __construct(array $info)
             {
+                $info['item'] = strrpos($info['id'], '.') ? 'media' : 'page';
                 if (!isset($info['current'])) {
                     $info['current'] = false;
                 }
@@ -163,10 +143,10 @@ abstract class Revisions extends Ui
             public function editDate()
             {
                 global $lang;
-                if (_isExternalDeletion($this->info)) {
-                    $date = $lang['unknowndate']; //unknown when files are deleted externally
-                } else {
-                    $date = dformat($this->info['date']);
+                $date = dformat($this->info['date']);
+                if (($this->info['timestamp'] ?? '') == 'unknown') {
+                    // exteranlly deleted or older file restored
+                    $date = preg_replace('/[0-9a-zA-Z]/','_', $date);
                 }
                 return '<span class="date">'. $date .'</span>';
             }
@@ -217,7 +197,8 @@ abstract class Revisions extends Ui
                     case 'page': // page revision
                         $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
                         if (!$display_name) $display_name = $id;
-                        if (_isExternalDeletion($this->info)) {
+                        if ($this->info['type'] == DOKU_CHANGE_TYPE_DELETE) {
+                            // exteranlly deleted or older file restored
                             $href = wl($id, "", false, '&');
                             $html = '<a href="'.$href.'" class="wikilink2">'.$display_name.'</a>';
                         } elseif ($this->info['current'] || page_exists($id, $rev)) {
