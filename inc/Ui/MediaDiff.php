@@ -139,8 +139,8 @@ class MediaDiff extends Diff
         $form->addTagOpen('div')->addClass('no');
         $form->setHiddenField('sectok', null);
         $form->setHiddenField('mediado', 'diff');
-        $form->setHiddenField('rev2[0]', $this->oldRev ?: 'current');
-        $form->setHiddenField('rev2[1]', $this->newRev ?: 'current');
+        $form->setHiddenField('rev2[0]', $this->oldRev);
+        $form->setHiddenField('rev2[1]', $this->newRev);
         $form->addTagClose('div');
         echo $form->toHTML();
 

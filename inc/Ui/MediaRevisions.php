@@ -73,7 +73,7 @@ class MediaRevisions extends Revisions
             $form->addTagOpen('div')->addClass('li');
 
             if (isset($info['current'])) {
-               $form->addCheckbox('rev2[]')->val('current');
+                $form->addCheckbox('rev2[]')->val($rev);
             } elseif (file_exists(mediaFN($this->id, $rev))) {
                 $form->addCheckbox('rev2[]')->val($rev);
             } else {

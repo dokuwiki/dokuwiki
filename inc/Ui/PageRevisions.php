@@ -73,7 +73,7 @@ class PageRevisions extends Revisions
             $form->addTagOpen('div')->addClass('li');
 
             if (isset($info['current'])) {
-                $form->addCheckbox('rev2[]')->val('current');
+                $form->addCheckbox('rev2[]')->val($rev);
             } elseif ($rev == $REV) {
                 $form->addCheckbox('rev2[]')->val($rev)->attr('checked','checked');
             } elseif (page_exists($this->id, $rev)) {

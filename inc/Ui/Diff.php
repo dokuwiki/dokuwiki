@@ -16,8 +16,8 @@ abstract class Diff extends Ui
     protected $id;   // page id or media id
 
     /* @var int|string */
-    protected $oldRev;  // timestamp of older revision, '' means current one
-    protected $newRev;  // timestamp of newer revision, '' means current one
+    protected $oldRev;  // timestamp of older revision
+    protected $newRev;  // timestamp of newer revision, null means PageConflict or PageDraft
 
     /* @var array */
     protected $preference = [];
