@@ -203,11 +203,12 @@ class MediaDiff extends Diff
     protected function showFileDiff($oldRev, $newRev, $oldRevMeta, $newRevMeta, $auth)
     {
         global $lang;
+        $changelog =& $this->changelog;
 
         // revison info of older file (left side)
-        $oldRevInfo = $this->getExtendedRevisionInfo($oldRev);
+        $oldRevInfo = $changelog->getRevisionInfo($this->oldRev);
         // revison info of newer file (right side)
-        $newRevInfo = $this->getExtendedRevisionInfo($newRev);
+        $newRevInfo = $changelog->getRevisionInfo($this->newRev);
 
         // display diff view table
         echo '<div class="table">';

@@ -121,25 +121,6 @@ abstract class Diff extends Ui
         }
     }
 
-    /**
-     * get extended revision info
-     *
-     * @param int|string $rev  revision identifier, '' means current one, null means
-     * @return array  revision info structure of a page or media file
-     */
-    protected function getExtendedRevisionInfo($rev)
-    {
-        $changelog =& $this->changelog;
-
-        if ($rev == '' || $rev == 'current') {
-            $info = $changelog->getCurrentRevisionInfo();
-        } elseif (is_numeric($rev)) {
-            $info = $changelog->getRevisionInfo($rev);
-        } else { //if do=diff at just created page
-            $info = ['none' => true];
-        }
-        return $info;
-    }
 
 
 

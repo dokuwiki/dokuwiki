@@ -123,13 +123,13 @@ class PageDiff extends Diff
         $Difference = new \Diff(explode("\n", $oldText), explode("\n", $newText));
 
         // revison info of older page (left side)
-        $oldRevInfo = $this->getExtendedRevisionInfo($this->oldRev);
+        $oldRevInfo = $changelog->getRevisionInfo($this->oldRev);
 
         // revison info of newer page (right side)
         if (isset($this->text)) {
             $newRevInfo = array('date' => null);
         } else {
-            $newRevInfo = $this->getExtendedRevisionInfo($this->newRev);
+            $newRevInfo = $changelog->getRevisionInfo($this->newRev);
         }
 
         // determine exact revision identifiers, even for current page
