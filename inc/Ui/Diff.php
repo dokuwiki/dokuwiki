@@ -15,9 +15,9 @@ abstract class Diff extends Ui
     /* @var string */
     protected $id;   // page id or media id
 
-    /* @var int|string */
+    /* @var int */
     protected $oldRev;  // timestamp of older revision
-    protected $newRev;  // timestamp of newer revision, null means PageConflict or PageDraft
+    protected $newRev;  // timestamp of newer revision
 
     /* @var array */
     protected $preference = [];
@@ -44,6 +44,11 @@ abstract class Diff extends Ui
     abstract protected function setChangeLog();
 
     /**
+     * Prepare revision info of comparison pair
+     */
+    abstract protected function preProcess();
+
+    /**
      * Set a pair of revisions to be compared
      *
      * @param int $oldRev
@@ -52,8 +57,11 @@ abstract class Diff extends Ui
      */
     public function compare($oldRev, $newRev)
     {
-        $this->oldRev = $oldRev;
-        $this->newRev = $newRev;
+        if ($oldRev < $newRev) {
+            [$this->oldRev, $this->newRev] = [$oldRev, $newRev];
+        } else {
+            [$this->oldRev, $this->newRev] = [$newRev, $oldRev];
+        }
         return $this;
     }
 
@@ -81,43 +89,28 @@ abstract class Diff extends Ui
     }
 
     /**
-     * Retrieve requested revision(s) and difftype from Ui\Revisions
+     * Handle requested revision(s)
      *
      * @return void
      */
-    protected function preProcess()
+    protected function handle()
     {
         global $INPUT;
-        $changelog =& $this->changelog;
 
         // difflink icon click, eg. ?rev=123456789&do=diff
         if ($INPUT->has('rev')) {
             $this->oldRev = $INPUT->int('rev');
-            $this->newRev = $changelog->currentRevision();
+            $this->newRev = $this->changelog->currentRevision();
         }
 
         // submit button with two checked boxes
         $rev2 = $INPUT->arr('rev2', []);
         if (count($rev2) > 1) {
-            if ($rev2[0] == 'current') {
-                [$this->oldRev, $this->newRev] = [$rev2[1], $changelog->currentRevision()];
-            } elseif ($rev2[1] == 'current') {
-                [$this->oldRev, $this->newRev] = [$rev2[0], $changelog->currentRevision()];
-            } elseif ($rev2[0] < $rev2[1]) {
+            if ($rev2[0] < $rev2[1]) {
                 [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
             } else {
                 [$this->oldRev, $this->newRev] = [$rev2[1], $rev2[0]];
             }
-        }
-
-        // diff view type
-        if ($INPUT->has('difftype')) {
-            // retrieve requested $difftype
-            $this->preference['difftype'] = $INPUT->str('difftype');
-        } else {
-            // read preference from DokuWiki cookie. PageDiff only
-            $mode = get_doku_pref('difftype', $mode = null);
-            if (isset($mode)) $this->preference['difftype'] = $mode;
         }
     }
 

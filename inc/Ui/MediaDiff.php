@@ -18,6 +18,13 @@ class MediaDiff extends Diff
     /* @var MediaChangeLog */
     protected $changelog;
 
+    /* @var array */
+    protected $oldRevInfo;
+    protected $newRevInfo;
+ 
+    /* @var bool */
+    protected $is_img;
+
     /**
      * MediaDiff Ui constructor
      *
@@ -30,9 +37,9 @@ class MediaDiff extends Diff
         }
 
         // init preference
-        $this->preference['fromAjax'] = false; // see doluwiki\Ajax::callMediadiff()
+        $this->preference['fromAjax'] = false;  // see doluwiki\Ajax::callMediadiff()
         $this->preference['showIntro'] = false;
-        $this->preference['difftype'] = 'both';  // media diff view type: both, opacity or portions
+        $this->preference['difftype'] = 'both'; // diff view type: both, opacity or portions
 
         parent::__construct($id);
     }
@@ -43,10 +50,23 @@ class MediaDiff extends Diff
         $this->changelog = new MediaChangeLog($this->id);
     }
 
-    /** @inheritdoc */
-    protected function preProcess()
+    /**
+     * Handle requested revision(s) and diff view preferences
+     *
+     * @return void
+     */
+    protected function handle()
     {
-        parent::preProcess();
+        global $INPUT;
+
+        // requested rev or rev2
+        parent::handle();
+
+        // requested diff view type
+        if ($INPUT->has('difftype')) {
+            $this->preference['difftype'] = $INPUT->str('difftype');
+        }
+
         if (!isset($this->oldRev, $this->newRev)) {
             // no revision was given, compare previous to current
             $changelog =& $this->changelog;
@@ -56,6 +76,48 @@ class MediaDiff extends Diff
     }
 
     /**
+     * Prepare revision info of comparison pair
+     */
+    protected function preProcess()
+    {
+        $changelog =& $this->changelog;
+
+        // revision info of older file (left side)
+        $this->oldRevInfo = $changelog->getRevisionInfo($this->oldRev);
+        // revision info of newer file (right side)
+        $this->newRevInfo = $changelog->getRevisionInfo($this->newRev);
+
+        $this->is_img = preg_match('/\.(jpe?g|gif|png)$/', $this->id);
+
+        foreach ([&$this->oldRevInfo, &$this->newRevInfo] as &$revInfo) {
+            // use timestamp and '' properly as $rev for the current file
+            $revInfo['rev'] = isset($revInfo['current']) ? '' : $revInfo['date'];
+            $rev = $revInfo['rev'];
+
+            // headline in the Diff view navigation
+            $revInfo['navTitle'] = $this->revisionTitle($revInfo);
+
+            if ($this->is_img) {
+                $meta = new JpegMeta(mediaFN($this->id, $rev));
+                // get image width and height for the mediamanager preview panel
+                $revInfo['previewSize'] = media_image_preview_size($this->id, $rev, $meta);
+            }
+        }
+        unset($revInfo);
+
+        // re-check image, ensure minimum image width for showImageDiff()
+        $this->is_img = ($this->is_img
+            && ($this->oldRevInfo['previewSize'][0] ?? 0) >= 30
+            && ($this->newRevInfo['previewSize'][0] ?? 0) >= 30
+        );
+        // adjust requested diff view type
+        if (!$this->is_img) {
+            $this->preference['difftype'] = 'both';
+        }
+    }
+
+
+    /**
      * Shows difference between two revisions of media
      *
      * @author Kate Arzamastseva <pshns@ukr.net>
@@ -63,45 +125,22 @@ class MediaDiff extends Diff
     public function show()
     {
         global $conf;
-        $changelog =& $this->changelog;
 
         $ns = getNS($this->id);
         $auth = auth_quickaclcheck("$ns:*");
 
         if ($auth < AUTH_READ || !$this->id || !$conf['mediarevisions']) return '';
 
-       // determine left and right revision
-        if (!isset($this->oldRev, $this->newRev)) $this->preProcess();
-
-        // use timestamp and '' properly as $rev for the current file
-        if ($changelog->isCurrentRevision($this->newRev)) {
-            [$oldRev, $newRev] = [$this->oldRev, ''];
-        } else {
-            [$oldRev, $newRev] = [$this->oldRev, $this->newRev];
-        }
-
-        $oldRevMeta = new JpegMeta(mediaFN($this->id, $oldRev));
-        $newRevMeta = new JpegMeta(mediaFN($this->id, $newRev));
-
-        $is_img = preg_match('/\.(jpe?g|gif|png)$/', $this->id);
-        if ($is_img) {
-            // get image width and height for the mediamanager preview panel
-            $oldRevSize = media_image_preview_size($this->id, $oldRev, $oldRevMeta);
-            $newRevSize = media_image_preview_size($this->id, $newRev, $newRevMeta);
-            // re-check image, ensure minimum image width for showImageDiff()
-            $is_img = ($oldRevSize && $newRevSize && ($oldRevSize[0] >= 30 || $newRevSize[0] >= 30));
-        }
-
-        // determine requested diff view type
-        if (!$is_img) {
-            $this->preference['difftype'] = 'both';
-        }
+        // retrieve form parameters: rev, rev2, difftype
+        $this->handle();
+        // prepare revision info of comparison pair
+        $this->preProcess();
 
         // display intro
         if ($this->preference['showIntro']) echo p_locale_xhtml('diff');
 
         // print form to choose diff view type
-        if ($is_img && !$this->preference['fromAjax']) {
+        if ($this->is_img && !$this->preference['fromAjax']) {
             $this->showDiffViewSelector();
             echo '<div id="mediamanager__diff" >';
         }
@@ -109,15 +148,15 @@ class MediaDiff extends Diff
         switch ($this->preference['difftype']) {
             case 'opacity':
             case 'portions':
-                $this->showImageDiff($oldRev, $newRev, $oldRevSize, $newRevSize);
+                $this->showImageDiff();
                 break;
             case 'both':
             default:
-                $this->showFileDiff($oldRev, $newRev, $oldRevMeta, $newRevMeta, $auth);
+                $this->showFileDiff();
                 break;
         }
 
-        if ($is_img && !$this->preference['fromAjax']) {
+        if ($this->is_img && !$this->preference['fromAjax']) {
             echo '</div>';
         }
     }
@@ -128,6 +167,9 @@ class MediaDiff extends Diff
      */
     protected function showDiffViewSelector()
     {
+        // use timestamp for current revision
+        [$oldRev, $newRev] = [(int)$this->oldRevInfo['date'], (int)$this->newRevInfo['date']];
+
         echo '<div class="diffoptions group">';
 
         $form = new Form([
@@ -139,8 +181,8 @@ class MediaDiff extends Diff
         $form->addTagOpen('div')->addClass('no');
         $form->setHiddenField('sectok', null);
         $form->setHiddenField('mediado', 'diff');
-        $form->setHiddenField('rev2[0]', $this->oldRev);
-        $form->setHiddenField('rev2[1]', $this->newRev);
+        $form->setHiddenField('rev2[0]', $oldRev);
+        $form->setHiddenField('rev2[1]', $newRev);
         $form->addTagClose('div');
         echo $form->toHTML();
 
@@ -152,20 +194,18 @@ class MediaDiff extends Diff
      * and slider
      *
      * @author Kate Arzamastseva <pshns@ukr.net>
-     *
-     * @param string|int $oldRev revision timestamp, or empty string
-     * @param string|int $newRev revision timestamp, or empty string
-     * @param array  $oldRevSize  array with width and height
-     * @param array  $newRevSize  array with width and height
-     * @param string $type    diff view type: opacity or portions
      */
-    protected function showImageDiff($oldRev, $newRev, $oldRevSize, $newRevSize, $type = null)
+    protected function showImageDiff()
     {
-        if (!isset($type)) {
-            $type = $this->preference['difftype'];
-        }
+        // diff view type: opacity or portions
+        $type = $this->preference['difftype']; 
+
+        // use '' for current revision
+        [$oldRev, $newRev] = [$this->oldRevInfo['rev'], $this->newRevInfo['rev']];
 
         // adjust image width, right side (newer) has priority
+        $oldRevSize = $this->oldRevInfo['previewSize'];
+        $newRevSize = $this->newRevInfo['previewSize'];
         if ($oldRevSize != $newRevSize) {
             if ($newRevSize[0] > $oldRevSize[0]) {
                 $oldRevSize = $newRevSize;
@@ -193,29 +233,27 @@ class MediaDiff extends Diff
      * Shows difference between two revisions of media file
      *
      * @author Kate Arzamastseva <pshns@ukr.net>
-     *
-     * @param string|int $oldRev revision timestamp, or empty string
-     * @param string|int $newRev revision timestamp, or empty string
-     * @param JpegMeta $oldRevMeta
-     * @param JpegMeta $newRevMeta
-     * @param int $auth permission level
      */
-    protected function showFileDiff($oldRev, $newRev, $oldRevMeta, $newRevMeta, $auth)
+    protected function showFileDiff()
     {
         global $lang;
         $changelog =& $this->changelog;
 
-        // revison info of older file (left side)
-        $oldRevInfo = $changelog->getRevisionInfo($this->oldRev);
-        // revison info of newer file (right side)
-        $newRevInfo = $changelog->getRevisionInfo($this->newRev);
+        $ns = getNS($this->id);
+        $auth = auth_quickaclcheck("$ns:*");
+
+        // use '' for current revision
+        [$oldRev, $newRev] = [$this->oldRevInfo['rev'], $this->newRevInfo['rev']];
+
+        $oldRevMeta = new JpegMeta(mediaFN($this->id, $oldRev));
+        $newRevMeta = new JpegMeta(mediaFN($this->id, $newRev));
 
         // display diff view table
         echo '<div class="table">';
         echo '<table>';
         echo '<tr>';
-        echo '<th>'. $this->revisionTitle($oldRevInfo) .'</th>';
-        echo '<th>'. $this->revisionTitle($newRevInfo) .'</th>';
+        echo '<th>'. $this->oldRevInfo['navTitle'] .'</th>';
+        echo '<th>'. $this->newRevInfo['navTitle'] .'</th>';
         echo '</tr>';
 
         echo '<tr class="image">';
