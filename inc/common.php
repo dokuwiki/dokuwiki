@@ -1282,11 +1282,13 @@ function detectExternalEdit($id) {
         // add old revision to the attic if missing
         saveOldRevision($id);
         // add a changelog entry if this edit came from outside dokuwiki
-        if($lastMod > $lastRev) {
+        if ($lastMod > $lastRev) {
             $fileLastRev = wikiFN($id, $lastRev);
             $revinfo = $pagelog->getRevisionInfo($lastRev);
-            if(empty($lastRev) || !file_exists($fileLastRev) || $revinfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
+            $type = DOKU_CHANGE_TYPE_EDIT;
+            if (empty($lastRev) || !file_exists($fileLastRev) || $revinfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
                 $filesize_old = 0;
+                $type = DOKU_CHANGE_TYPE_CREATE; //page did not exists before, so is (re)created now
             } else {
                 $filesize_old = io_getSizeFile($fileLastRev);
             }
@@ -1296,8 +1298,8 @@ function detectExternalEdit($id) {
             addLogEntry(
                 $lastMod,
                 $id,
-                DOKU_CHANGE_TYPE_EDIT,
-                $lang['external_edit'],
+                $type,
+                ($type == DOKU_CHANGE_TYPE_CREATE ? $lang['created'] . ' - ' : '') . $lang['external_edit'],
                 '',
                 array('ExternalEdit' => true),
                 $sizechange
@@ -1306,6 +1308,26 @@ function detectExternalEdit($id) {
             $cache = new CacheInstructions($id, $fileLastMod);
             $cache->removeCache();
         }
+    }
+    $revinfo = $pagelog->getRevisionInfo($lastRev);
+    //deleted wiki page, but not registered in changelog (only possible if there was a previous version)
+    if (!file_exists($fileLastMod) && $lastRev && $revinfo['type'] !== DOKU_CHANGE_TYPE_DELETE) {
+        $fileLastRev = wikiFN($id, $lastRev);
+
+        //save copy of previous version (used for reverts)
+        $date = time() - 1; //get older timestamp then now, so new save does not has same date..
+        $newf = wikiFN($id, $date);
+        io_writeWikiPage($newf, rawWiki($id, $lastRev), $id, $date);
+
+        addLogEntry(
+            $date,
+            $id,
+            DOKU_CHANGE_TYPE_DELETE,
+            $lang['deleted'] . ' - ' . $lang['external_edit'],
+            '',
+            array('ExternalEdit' => true),
+            -io_getSizeFile($fileLastRev)
+        );
     }
 }
 
