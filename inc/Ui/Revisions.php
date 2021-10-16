@@ -205,8 +205,8 @@ abstract class Revisions extends Ui
 
                 switch ($this->info['item']) {
                     case 'media': // media file revision
-                        if (isset($this->info['current'])) {
                             $href = media_managerURL(['image'=> $id, 'tab_details'=> 'view'], '&');
+                        if ($this->info['current']) {
                             $html = '<a href="'.$href.'" class="wikilink1">'.$id.'</a>';
                         } elseif (file_exists(mediaFN($id, $rev))) {
                             $href = media_managerURL(['image'=> $id, 'tab_details'=> 'view', 'rev'=> $rev], '&');
@@ -238,7 +238,7 @@ abstract class Revisions extends Ui
 
                 switch ($this->info['item']) {
                     case 'media': // media file revision
-                        if (isset($this->info['current']) || !file_exists(mediaFN($id, $rev))) {
+                        if ($this->info['current'] || !file_exists(mediaFN($id, $rev))) {
                             $html = '<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />';
                         } else {
                             $href = media_managerURL(['image'=> $id, 'rev'=> $rev, 'mediado'=>'diff'], '&');
