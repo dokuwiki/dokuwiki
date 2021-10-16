@@ -43,7 +43,6 @@ define('DOKU_CHANGE_TYPE_EDIT', 'E');
 define('DOKU_CHANGE_TYPE_MINOR_EDIT', 'e');
 define('DOKU_CHANGE_TYPE_DELETE', 'D');
 define('DOKU_CHANGE_TYPE_REVERT', 'R');
-define('DOKU_CHANGE_TYPE_EXTERNAL_DELETE', 'DX'); // never recorded in changelog files
 
 /**
  * Changelog filter constants
