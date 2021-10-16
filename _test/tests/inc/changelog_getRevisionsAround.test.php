@@ -89,6 +89,7 @@ class changelog_getrevisionsaround_test extends DokuWikiTest {
     function test_request_non_overlapping() {
         $rev1 = 1362525899;
         $rev2 = 1368612599;
+        touch(wikiFN($this->pageid), $this->revsexpected[0]); //external edit check looks for modification time
         $max = 10;
         $revsexpected = array(
             array_slice($this->revsexpected, 13, 11),
@@ -115,6 +116,7 @@ class changelog_getrevisionsaround_test extends DokuWikiTest {
     function test_request_first_last() {
         $rev1 = 1360110636;
         $rev2 = 1374261194;
+        touch(wikiFN($this->pageid), $this->revsexpected[0]); //external edit check looks for modification time
         $max = 10;
         $revsexpected = array(
             array_slice($this->revsexpected, 13, 11),
@@ -147,6 +149,7 @@ class changelog_getrevisionsaround_test extends DokuWikiTest {
     function test_request_wholelog() {
         $rev1 = 1362525899;
         $rev2 = 1368612599;
+        touch(wikiFN($this->pageid), $this->revsexpected[0]); //external edit check looks for modification time
         $max = 50;
         $revsexpected = array($this->revsexpected, $this->revsexpected);
 
@@ -174,6 +177,124 @@ class changelog_getrevisionsaround_test extends DokuWikiTest {
             array_slice($this->revsexpected, 8, 11),
             array_slice($this->revsexpected, 5, 11)
         );
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);
+        $this->assertEquals($revsexpected, $revs);
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);
+        $this->assertEquals($revsexpected, $revs);
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 20);
+        $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);
+        $this->assertEquals($revsexpected, $revs);
+    }
+
+    /**
+     * Surrounding revisions of rev1 and rev2 don't overlap.
+     */
+    function test_request_non_overlapping_externaledit() {
+        $rev1 = 1362525899;
+        $rev2 = 1368612506;
+        $curentExtRev = 1634401011;
+        touch(wikiFN($this->pageid), $curentExtRev); //external edit with known modification time
+        $max = 10;
+        array_unshift($this->revsexpected, $curentExtRev);
+        $revsexpected = array(
+            array_slice($this->revsexpected, 14, 11),
+            array_slice($this->revsexpected, 2, 11)
+        );
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);
+        $this->assertEquals($revsexpected, $revs);
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);
+        $this->assertEquals($revsexpected, $revs);
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 20);
+        $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);
+        $this->assertEquals($revsexpected, $revs);
+    }
+
+    /**
+     * Surrounding revisions of rev1 and rev2 don't overlap.
+     * Get rev2 is near top, such that externaledit is just not in selection
+     */
+    function test_request_neartop_externaledit() {
+        $rev1 = 1362525899;
+        $rev2 = 1368612599;//1368612599;
+        $currentExtRev = 1634401011;
+        touch(wikiFN($this->pageid), $currentExtRev); //external edit with known modification time
+        $max = 10;
+        array_unshift($this->revsexpected, $currentExtRev);
+        $revsexpected = array(
+            array_slice($this->revsexpected, 14, 11),
+            array_slice($this->revsexpected, 1, 11)
+        );
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        //TODO: fixme: retrieves one line too much, because external added is added at the same iteration as last existing revision.
+        $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);
+        $this->assertEquals($revsexpected, $revs);
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);
+        $this->assertEquals($revsexpected, $revs);
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 20);
+        $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);
+        $this->assertEquals($revsexpected, $revs);
+    }
+
+    /**
+     * rev1 and rev2 are at start and end of the changelog.
+     * Should return still a number of revisions equal to max
+     */
+    function test_request_first_last_externaledit() {
+        $rev1 = 1360110636;
+        $currentExtRev = 1634401011;
+        $rev2 = $currentExtRev;
+        touch(wikiFN($this->pageid), $currentExtRev); //external edit with known modification time
+        $max = 10;
+        array_unshift($this->revsexpected, $currentExtRev);
+        $revsexpected = array(
+            array_slice($this->revsexpected, 14, 11),
+            array_slice($this->revsexpected, 0, 11)
+        );
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);
+        $this->assertEquals($revsexpected, $revs);
+
+        //todo: number of revisions on the left side is not (yet) completed until max number
+        $revsexpected = array(
+            array_slice($this->revsexpected, 19, 6),
+            array_slice($this->revsexpected, 0, 11)
+        );
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);
+        $this->assertEquals($revsexpected, $revs);
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 20);
+        $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);
+        $this->assertEquals($revsexpected, $revs);
+    }
+
+    /**
+     * Number of requested revisions is larger than available revisions,
+     * so returns whole log
+     */
+    function test_request_wholelog_externaledit() {
+        $rev1 = 1362525899;
+        $rev2 = 1368612599;
+        $currentExtRev = 1634401011;
+        touch(wikiFN($this->pageid), $currentExtRev);  //external edit with known modification time
+        $max = 50;
+        array_unshift($this->revsexpected, $currentExtRev);
+        $revsexpected = array($this->revsexpected, $this->revsexpected);
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
         $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);

@@ -195,7 +195,7 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
      * Waits until a new second has passed
      *
      * This tried to be clever about the passing of time and return early if possible. Unfortunately
-     * this never worked reliably fo unknown reasons. To avoid flaky tests, this now always simply
+     * this never worked reliably for unknown reasons. To avoid flaky tests, this now always simply
      * sleeps for a full second on every call.
      *
      * @param bool $init no longer used
