@@ -34,8 +34,6 @@ abstract class Diff extends Ui
     {
         $this->id = $id;
         $this->setChangeLog();
-        // ensure to have valid changelog::currentRevision property
-        $this->changelog->getCurrentRevisionInfo();
     }
 
     /**
