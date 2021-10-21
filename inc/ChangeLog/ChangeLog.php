@@ -65,6 +65,19 @@ abstract class ChangeLog
     abstract protected function getFilename();
 
     /**
+     * Save revision info to the cache pool
+     *
+     * @return bool
+     */
+    protected function saveRevisionInfo($info)
+    {
+        if (!is_array($info)) return false;
+        //$this->cache[$this->id][$info['date']] ??= $info; // since php 7.4
+        $this->cache[$this->id][$info['date']] = $this->cache[$this->id][$info['date']] ?? $info;
+        return true;
+    }
+
+    /**
      * Get the changelog information for a specific page id and revision (timestamp)
      *
      * Adjacent changelog lines are optimistically parsed and cached to speed up
@@ -105,9 +118,7 @@ abstract class ChangeLog
         // parse and cache changelog lines
         foreach ($lines as $value) {
             $info = parseChangelogLine($value);
-            if ($info !== false) {
-                $this->cache[$this->id][$info['date']] ??= $info;
-            }
+            $this->saveRevisionInfo($info);
         }
         if (!isset($this->cache[$this->id][$rev])) {
             return false;
@@ -236,8 +247,7 @@ abstract class ChangeLog
         // handle lines in reverse order
         for ($i = count($lines) - 1; $i >= 0; $i--) {
             $info = parseChangelogLine($lines[$i]);
-            if ($info !== false) {
-                $this->cache[$this->id][$info['date']] ??= $info;
+            if ($this->saveRevisionInfo($info)) {
                 $revs[] = $info['date'];
             }
         }
@@ -292,8 +302,7 @@ abstract class ChangeLog
             }
             for ($i = $start; $i >= 0 && $i < $count; $i = $i + $step) {
                 $info = parseChangelogLine($lines[$i]);
-                if ($info !== false) {
-                    $this->cache[$this->id][$info['date']] ??= $info;
+                if ($this->saveRevisionInfo($info)) {
                     //look for revs older/earlier then reference $rev and select $direction-th one
                     if (($direction > 0 && $info['date'] > $rev) || ($direction < 0 && $info['date'] < $rev)) {
                         $revcounter++;
@@ -365,8 +374,7 @@ abstract class ChangeLog
             while ($head > 0) {
                 for ($i = count($lines) - 1; $i >= 0; $i--) {
                     $info = parseChangelogLine($lines[$i]);
-                    if ($info !== false) {
-                        $this->cache[$this->id][$info['date']] ??= $info;
+                    if ($this->saveRevisionInfo($info)) {
                         $revs1[] = $info['date'];
                         $index++;
 
@@ -628,8 +636,7 @@ abstract class ChangeLog
         while (count($lines) > 0) {
             foreach ($lines as $line) {
                 $info = parseChangelogLine($line);
-                if ($info !== false) {
-                    $this->cache[$this->id][$info['date']] ??= $info;
+                if ($this->saveRevisionInfo($info)) {
                     $revs[] = $info['date'];
                     if ($info['date'] >= $rev) {
                         //count revs after reference $rev
@@ -667,8 +674,7 @@ abstract class ChangeLog
 
                 for ($i = count($lines) - 1; $i >= 0; $i--) {
                     $info = parseChangelogLine($lines[$i]);
-                    if ($info !== false) {
-                        $this->cache[$this->id][$info['date']] ??= $info;
+                    if ($this->saveRevisionInfo($info)) {
                         $revs[] = $info['date'];
                         $beforecount++;
                         //enough revs before reference $rev?
