@@ -775,7 +775,10 @@ abstract class ChangeLog
 
         } elseif ($fileRev) {                       // item file exist
             // here, file timestamp is different with last revision in changelog
-            $isJustCreated = !boolval($lastRev);
+            $isJustCreated = is_null($lastRev) || (
+                    $fileRev > $lastRev &&
+                    $this->getRevisionInfo($lastRev)['type'] == DOKU_CHANGE_TYPE_DELETE
+            );
             $filesize_new = filesize($this->getFilename());
             $filesize_old = $lastRev ? io_getSizeFile($this->getFilename($lastRev)) : 0;
             $sizechange = $filesize_new - $filesize_old;
