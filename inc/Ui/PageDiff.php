@@ -138,8 +138,7 @@ class PageDiff extends Diff
 
         foreach ([&$this->oldRevInfo, &$this->newRevInfo] as &$revInfo) {
             // use timestamp and '' properly as $rev for the current file
-            $rev = isset($revInfo['current']) ? '' : $revInfo['date'];
-            $revInfo['rev'] = $rev;
+            $rev = $revInfo['rev'] = isset($revInfo['current']) ? '' : $revInfo['date'];
 
             // headline in the Diff view navigation
             $revInfo['navTitle'] = $this->revisionTitle($revInfo);
