@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Emmanuel <seedfloyd@gmail.com>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Nicolas Friedli <nicolas@theologique.ch>
@@ -33,7 +34,6 @@
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
- * @author Emmanuel <seedfloyd@gmail.com>
  * @author Jérôme Brandt <jeromebrandt@gmail.com>
  * @author Wild <wild.dagger@free.fr>
  * @author ggallon <gwenael.gallon@mac.com>
@@ -213,7 +213,7 @@ $lang['uploadxss']             = 'L\'envoi a été bloqué car son contenu est p
 $lang['uploadsize']            = 'Le fichier envoyé était trop gros. (max. : %s)';
 $lang['deletesucc']            = 'Le fichier « %s » a été effacé.';
 $lang['deletefail']            = 'Le fichier « %s » n\'a pas pu être effacé. Vérifiez les autorisations.';
-$lang['mediainuse']            = 'Le fichier « %s » n\'a pas été effacé : il est en toujours utilisé.';
+$lang['mediainuse']            = 'Le fichier « %s » n\'a pas été effacé car il est toujours utilisé.';
 $lang['namespaces']            = 'Catégories';
 $lang['mediafiles']            = 'Fichiers disponibles dans';
 $lang['accessdenied']          = 'Vous n\'êtes pas autorisé à voir cette page.';
