@@ -786,7 +786,7 @@ abstract class ChangeLog
                     $this->getRevisionInfo($lastRev)['type'] == DOKU_CHANGE_TYPE_DELETE
             );
             $filesize_new = filesize($this->getFilename());
-            $filesize_old = $lastRev ? io_getSizeFile($this->getFilename($lastRev)) : 0;
+            $filesize_old = $isJustCreated ? 0 : io_getSizeFile($this->getFilename($lastRev));
             $sizechange = $filesize_new - $filesize_old;
 
             if ($isJustCreated) { // lastRev is null
