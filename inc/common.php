@@ -215,11 +215,11 @@ function pageinfo() {
     $info['filepath']   = wikiFN($ID);
     $info['exists']     = file_exists($info['filepath']);
     $info['currentrev'] = @filemtime($info['filepath']);
-    if($REV) {
+    if ($REV) {
         //check if current revision was meant
-        if($info['exists'] && ($info['currentrev'] == $REV)) {
+        if ($info['exists'] && ($info['currentrev'] == $REV)) {
             $REV = '';
-        } elseif($RANGE) {
+        } elseif ($RANGE) {
             //section editing does not work with old revisions!
             $REV   = '';
             $RANGE = '';
@@ -231,9 +231,8 @@ function pageinfo() {
         }
     }
     $info['rev'] = $REV;
-    if($info['exists']) {
-        $info['writable'] = (is_writable($info['filepath']) &&
-            ($info['perm'] >= AUTH_EDIT));
+    if ($info['exists']) {
+        $info['writable'] = (is_writable($info['filepath']) && $info['perm'] >= AUTH_EDIT);
     } else {
         $info['writable'] = ($info['perm'] >= AUTH_CREATE);
     }
@@ -245,40 +244,36 @@ function pageinfo() {
 
     //who's the editor
     $pagelog = new PageChangeLog($ID, 1024);
-    if($REV) {
+    if ($REV) {
         $revinfo = $pagelog->getRevisionInfo($REV);
     } else {
-        if(!empty($info['meta']['last_change']) && is_array($info['meta']['last_change'])) {
+        if (!empty($info['meta']['last_change']) && is_array($info['meta']['last_change'])) {
             $revinfo = $info['meta']['last_change'];
         } else {
             $revinfo = $pagelog->getRevisionInfo($info['lastmod']);
             // cache most recent changelog line in metadata if missing and still valid
-            if($revinfo !== false) {
+            if ($revinfo !== false) {
                 $info['meta']['last_change'] = $revinfo;
                 p_set_metadata($ID, array('last_change' => $revinfo));
             }
         }
     }
     //and check for an external edit
-    if($revinfo !== false && $revinfo['date'] != $info['lastmod']) {
+    if ($revinfo !== false && $revinfo['date'] != $info['lastmod']) {
         // cached changelog line no longer valid
         $revinfo                     = false;
         $info['meta']['last_change'] = $revinfo;
         p_set_metadata($ID, array('last_change' => $revinfo));
     }
 
-    if($revinfo !== false){
+    if ($revinfo !== false) {
         $info['ip']   = $revinfo['ip'];
         $info['user'] = $revinfo['user'];
         $info['sum']  = $revinfo['sum'];
         // See also $INFO['meta']['last_change'] which is the most recent log line for page $ID.
         // Use $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT in place of $info['minor'].
 
-        if($revinfo['user']) {
-            $info['editor'] = $revinfo['user'];
-        } else {
-            $info['editor'] = $revinfo['ip'];
-        }
+        $info['editor'] = $revinfo['user'] ?: $revinfo['ip'];
     }else{
         $info['ip']     = null;
         $info['user']   = null;
@@ -317,7 +312,7 @@ function jsinfo() {
  *
  * @return array with info about current media item
  */
-function mediainfo(){
+function mediainfo() {
     global $NS;
     global $IMG;
 
@@ -1278,14 +1273,14 @@ function detectExternalEdit($id) {
     $lastRev     = $pagelog->getRevisions(-1, 1); // from changelog
     $lastRev     = (int) (empty($lastRev) ? 0 : $lastRev[0]);
 
-    if(!file_exists(wikiFN($id, $lastMod)) && file_exists($fileLastMod) && $lastMod >= $lastRev) {
+    if (!file_exists(wikiFN($id, $lastMod)) && file_exists($fileLastMod) && $lastMod >= $lastRev) {
         // add old revision to the attic if missing
         saveOldRevision($id);
         // add a changelog entry if this edit came from outside dokuwiki
-        if($lastMod > $lastRev) {
+        if ($lastMod > $lastRev) {
             $fileLastRev = wikiFN($id, $lastRev);
             $revinfo = $pagelog->getRevisionInfo($lastRev);
-            if(empty($lastRev) || !file_exists($fileLastRev) || $revinfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
+            if (empty($lastRev) || !file_exists($fileLastRev) || $revinfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
                 $filesize_old = 0;
             } else {
                 $filesize_old = io_getSizeFile($fileLastRev);
@@ -1350,40 +1345,40 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     $svdta['sizechange']     = null;
 
     // select changelog line type
-    if($REV) {
-        $svdta['changeType']  = DOKU_CHANGE_TYPE_REVERT;
+    if ($REV) {
+        $svdta['changeType'] = DOKU_CHANGE_TYPE_REVERT;
         $svdta['changeInfo'] = $REV;
-    } else if(!file_exists($svdta['file'])) {
+    } elseif (!file_exists($svdta['file'])) {
         $svdta['changeType'] = DOKU_CHANGE_TYPE_CREATE;
-    } else if(trim($text) == '') {
+    } elseif (trim($text) == '') {
         // empty or whitespace only content deletes
         $svdta['changeType'] = DOKU_CHANGE_TYPE_DELETE;
         // autoset summary on deletion
-        if(blank($svdta['summary'])) {
+        if (blank($svdta['summary'])) {
             $svdta['summary'] = $lang['deleted'];
         }
-    } else if($minor && $conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
+    } elseif ($minor && $conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
         //minor edits only for logged in users
         $svdta['changeType'] = DOKU_CHANGE_TYPE_MINOR_EDIT;
     }
 
     $event = new Event('COMMON_WIKIPAGE_SAVE', $svdta);
-    if(!$event->advise_before()) return;
+    if (!$event->advise_before()) return;
 
     // if the content has not been changed, no save happens (plugins may override this)
-    if(!$svdta['contentChanged']) return;
+    if (!$svdta['contentChanged']) return;
 
     detectExternalEdit($id);
 
-    if(
-        $svdta['changeType'] == DOKU_CHANGE_TYPE_CREATE ||
+    if (
+        ($svdta['changeType'] == DOKU_CHANGE_TYPE_CREATE) ||
         ($svdta['changeType'] == DOKU_CHANGE_TYPE_REVERT && !file_exists($svdta['file']))
     ) {
         $filesize_old = 0;
     } else {
         $filesize_old = filesize($svdta['file']);
     }
-    if($svdta['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
+    if ($svdta['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
         // Send "update" event with empty data, so plugins can react to page deletion
         $data = array(array($svdta['file'], '', false), getNS($id), noNS($id), false);
         Event::createAndTrigger('IO_WIKIPAGE_WRITE', $data);
@@ -1430,9 +1425,9 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     io_saveFile($conf['cachedir'].'/purgefile', time());
 
     // if useheading is enabled, purge the cache of all linking pages
-    if(useHeading('content')) {
+    if (useHeading('content')) {
         $pages = ft_backlinks($id, true);
-        foreach($pages as $page) {
+        foreach ($pages as $page) {
             $cache = new CacheRenderer($page, wikiFN($page), 'xhtml');
             $cache->removeCache();
         }
@@ -1450,7 +1445,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
  */
 function saveOldRevision($id) {
     $oldf = wikiFN($id);
-    if(!file_exists($oldf)) return '';
+    if (!file_exists($oldf)) return '';
     $date = filemtime($oldf);
     $newf = wikiFN($id, $date);
     io_writeWikiPage($newf, rawWiki($id), $id, $date);

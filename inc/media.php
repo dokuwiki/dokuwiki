@@ -567,11 +567,11 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
  * @param string $id
  * @return int - revision date
  */
-function media_saveOldRevision($id){
+function media_saveOldRevision($id) {
     global $conf, $lang;
 
     $oldf = mediaFN($id);
-    if(!file_exists($oldf)) return '';
+    if (!file_exists($oldf)) return '';
     $date = filemtime($oldf);
     if (!$conf['mediarevisions']) return $date;
 
@@ -592,9 +592,9 @@ function media_saveOldRevision($id){
         }
     }
 
-    $newf = mediaFN($id,$date);
+    $newf = mediaFN($id, $date);
     io_makeFileDir($newf);
-    if(copy($oldf, $newf)) {
+    if (copy($oldf, $newf)) {
         // Set the correct permission here.
         // Always chmod media because they may be saved with different permissions than expected from the php umask.
         // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)

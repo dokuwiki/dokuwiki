@@ -266,14 +266,14 @@ function sectionID($title,&$check) {
  * @param bool $date_at
  * @return bool exists?
  */
-function page_exists($id,$rev='',$clean=true, $date_at=false) {
-    if($rev !== '' && $date_at) {
+function page_exists($id, $rev = '', $clean = true, $date_at = false) {
+    if ($rev !== '' && $date_at) {
         $pagelog = new PageChangeLog($id);
         $pagelog_rev = $pagelog->getLastRevisionAt($rev);
-        if($pagelog_rev !== false)
+        if ($pagelog_rev !== false)
             $rev = $pagelog_rev;
     }
-    return file_exists(wikiFN($id,$rev,$clean));
+    return file_exists(wikiFN($id, $rev, $clean));
 }
 
 /**
@@ -508,18 +508,17 @@ function resolve_id($ns,$id,$clean=true){
  * @param int|string $rev
  * @param bool $date_at
  */
-function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
-    $page   = resolve_id($ns,$page);
-    if($rev !== '' &&  $date_at){
+function resolve_mediaid($ns, &$page, &$exists, $rev = '', $date_at = false) {
+    $page = resolve_id($ns, $page);
+    if ($rev !== '' &&  $date_at) {
         $medialog = new MediaChangeLog($page);
         $medialog_rev = $medialog->getLastRevisionAt($rev);
-        if($medialog_rev !== false) {
+        if ($medialog_rev !== false) {
             $rev = $medialog_rev;
         }
     }
 
-    $file   = mediaFN($page,$rev);
-    $exists = file_exists($file);
+    $exists = file_exists(mediaFN($page, $rev));
 }
 
 /**
@@ -533,7 +532,7 @@ function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
  * @param string $rev
  * @param bool $date_at
  */
-function resolve_pageid($ns,&$page,&$exists,$rev='',$date_at=false ){
+function resolve_pageid($ns, &$page, &$exists, $rev = '', $date_at = false) {
     global $conf;
     global $ID;
     $exists = false;
@@ -545,56 +544,57 @@ function resolve_pageid($ns,&$page,&$exists,$rev='',$date_at=false ){
 
     //keep hashlink if exists then clean both parts
     if (strpos($page,'#')) {
-        list($page,$hash) = explode('#',$page,2);
+        list($page,$hash) = explode('#', $page, 2);
     } else {
         $hash = '';
     }
     $hash = cleanID($hash);
-    $page = resolve_id($ns,$page,false); // resolve but don't clean, yet
+    $page = resolve_id($ns, $page, false); // resolve but don't clean, yet
 
     // get filename (calls clean itself)
-    if($rev !== '' && $date_at) {
+    if ($rev !== '' && $date_at) {
         $pagelog = new PageChangeLog($page);
         $pagelog_rev = $pagelog->getLastRevisionAt($rev);
-        if($pagelog_rev !== false)//something found
-           $rev  = $pagelog_rev;
+        if ($pagelog_rev !== false)//something found
+           $rev = $pagelog_rev;
     }
     $file = wikiFN($page,$rev);
 
     // if ends with colon or slash we have a namespace link
-    if(in_array(substr($page,-1), array(':', ';')) ||
-       ($conf['useslash'] && substr($page,-1) == '/')){
-        if(page_exists($page.$conf['start'],$rev,true,$date_at)){
+    if (in_array(substr($page, -1), array(':', ';')) ||
+        ($conf['useslash'] && substr($page,-1) == '/')
+    ) {
+        if (page_exists($page.$conf['start'], $rev, true, $date_at)) {
             // start page inside namespace
             $page = $page.$conf['start'];
             $exists = true;
-        }elseif(page_exists($page.noNS(cleanID($page)),$rev,true,$date_at)){
+        } elseif (page_exists($page.noNS(cleanID($page)), $rev, true, $date_at)) {
             // page named like the NS inside the NS
             $page = $page.noNS(cleanID($page));
             $exists = true;
-        }elseif(page_exists($page,$rev,true,$date_at)){
+        } elseif (page_exists($page, $rev, true, $date_at)) {
             // page like namespace exists
             $page = $page;
             $exists = true;
-        }else{
+        } else {
             // fall back to default
             $page = $page.$conf['start'];
         }
-    }else{
+    } else {
         //check alternative plural/nonplural form
-        if(!file_exists($file)){
-            if( $conf['autoplural'] ){
-                if(substr($page,-1) == 's'){
-                    $try = substr($page,0,-1);
-                }else{
+        if (!file_exists($file)) {
+            if ($conf['autoplural']) {
+                if (substr($page, -1) == 's') {
+                    $try = substr($page, 0, -1);
+                } else {
                     $try = $page.'s';
                 }
-                if(page_exists($try,$rev,true,$date_at)){
-                    $page   = $try;
+                if (page_exists($try, $rev, true, $date_at)) {
+                    $page = $try;
                     $exists = true;
                 }
             }
-        }else{
+        } else {
             $exists = true;
         }
     }
@@ -603,7 +603,7 @@ function resolve_pageid($ns,&$page,&$exists,$rev='',$date_at=false ){
     $page = cleanID($page);
 
     //add hash if any
-    if(!empty($hash)) $page .= '#'.$hash;
+    if (!empty($hash)) $page .= '#'.$hash;
 }
 
 /**

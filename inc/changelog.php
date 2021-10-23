@@ -17,7 +17,7 @@
 function parseChangelogLine($line) {
     $line = rtrim($line, "\n");
     $tmp = explode("\t", $line);
-    if ($tmp!==false && count($tmp)>1) {
+    if ($tmp !== false && count($tmp) > 1) {
         $info = array();
         $info['date']  = (int)$tmp[0]; // unix timestamp
         $info['ip']    = $tmp[1]; // IPv4 address (127.0.0.1)
@@ -26,7 +26,7 @@ function parseChangelogLine($line) {
         $info['user']  = $tmp[4]; // user name
         $info['sum']   = $tmp[5]; // edit summary (or action reason)
         $info['extra'] = $tmp[6]; // extra data (varies by line type)
-        if(isset($tmp[7]) && $tmp[7] !== '') { //last item has line-end||
+        if (isset($tmp[7]) && $tmp[7] !== '') { //last item has line-end||
             $info['sizechange'] = (int) $tmp[7];
         } else {
             $info['sizechange'] = null;
@@ -57,30 +57,30 @@ function parseChangelogLine($line) {
 function addLogEntry(
     $date,
     $id,
-    $type=DOKU_CHANGE_TYPE_EDIT,
-    $summary='',
-    $extra='',
-    $flags=null,
-    $sizechange=null)
+    $type = DOKU_CHANGE_TYPE_EDIT,
+    $summary = '',
+    $extra = '',
+    $flags = null,
+    $sizechange = null)
 {
     global $conf, $INFO;
     /** @var Input $INPUT */
     global $INPUT;
 
     // check for special flags as keys
-    if (!is_array($flags)) { $flags = array(); }
+    if (!is_array($flags)) $flags = array();
     $flagExternalEdit = isset($flags['ExternalEdit']);
 
     $id = cleanid($id);
     $file = wikiFN($id);
     $created = @filectime($file);
-    $minor = ($type===DOKU_CHANGE_TYPE_MINOR_EDIT);
-    $wasRemoved = ($type===DOKU_CHANGE_TYPE_DELETE);
+    $minor = ($type === DOKU_CHANGE_TYPE_MINOR_EDIT);
+    $wasRemoved = ($type === DOKU_CHANGE_TYPE_DELETE);
 
-    if(!$date) $date = time(); //use current time if none supplied
-    $remote = (!$flagExternalEdit)?clientIP(true):'127.0.0.1';
-    $user   = (!$flagExternalEdit)?$INPUT->server->str('REMOTE_USER'):'';
-    if($sizechange === null) {
+    if (!$date) $date = time(); //use current time if none supplied
+    $remote = (!$flagExternalEdit) ? clientIP(true) : '127.0.0.1';
+    $user   = (!$flagExternalEdit) ? $INPUT->server->str('REMOTE_USER') : '';
+    if ($sizechange === null) {
         $sizechange = '';
     } else {
         $sizechange = (int) $sizechange;
@@ -98,8 +98,8 @@ function addLogEntry(
         'sizechange' => $sizechange
     );
 
-    $wasCreated = ($type===DOKU_CHANGE_TYPE_CREATE);
-    $wasReverted = ($type===DOKU_CHANGE_TYPE_REVERT);
+    $wasCreated = ($type === DOKU_CHANGE_TYPE_CREATE);
+    $wasReverted = ($type === DOKU_CHANGE_TYPE_REVERT);
     // update metadata
     if (!$wasRemoved) {
         $oldmeta = p_read_metadata($id)['persistent'];
@@ -109,10 +109,10 @@ function addLogEntry(
                 empty($oldmeta['date']['created']) ||
                 $oldmeta['date']['created'] === $created
             )
-        ){
+        ) {
             // newly created
             $meta['date']['created'] = $created;
-            if ($user){
+            if ($user) {
                 $meta['creator'] = isset($INFO) ? $INFO['userinfo']['name'] : null;
                 $meta['user']    = $user;
             }
@@ -132,8 +132,8 @@ function addLogEntry(
 
     // add changelog lines
     $logline = implode("\t", $logline)."\n";
-    io_saveFile(metaFN($id,'.changes'),$logline,true); //page changelog
-    io_saveFile($conf['changelog'],$logline,true); //global changelog cache
+    io_saveFile(metaFN($id,'.changes'), $logline, true); //page changelog
+    io_saveFile($conf['changelog'], $logline, true); //global changelog cache
 }
 
 /**
@@ -157,10 +157,10 @@ function addLogEntry(
 function addMediaLogEntry(
     $date,
     $id,
-    $type=DOKU_CHANGE_TYPE_EDIT,
-    $summary='',
-    $extra='',
-    $flags=null,
+    $type = DOKU_CHANGE_TYPE_EDIT,
+    $summary = '',
+    $extra = '',
+    $flags = null,
     $sizechange = null)
 {
     global $conf;
@@ -196,13 +196,12 @@ function addMediaLogEntry(
 
     // add changelog lines
     $logline = implode("\t", $logline)."\n";
-    io_saveFile($conf['media_changelog'],$logline,true); //global media changelog cache
-    io_saveFile(mediaMetaFN($id,'.changes'),$logline,true); //media file's changelog
+    io_saveFile($conf['media_changelog'], $logline, true); //global media changelog cache
+    io_saveFile(mediaMetaFN($id,'.changes'), $logline, true); //media file's changelog
 }
 
 /**
- * returns an array of recently changed files using the
- * changelog
+ * returns an array of recently changed files using the changelog
  *
  * The following constants can be used to control which changes are
  * included. Add them together as needed.
@@ -223,12 +222,12 @@ function addMediaLogEntry(
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function getRecents($first,$num,$ns='',$flags=0){
+function getRecents($first, $num, $ns = '', $flags = 0) {
     global $conf;
     $recent = array();
     $count  = 0;
 
-    if(!$num)
+    if (!$num)
         return $recent;
 
     // read all recent changes. (kept short)
@@ -240,7 +239,7 @@ function getRecents($first,$num,$ns='',$flags=0){
     if (!is_array($lines)) {
         $lines = array();
     }
-    $lines_position = count($lines)-1;
+    $lines_position = count($lines) - 1;
     $media_lines_position = 0;
     $media_lines = array();
 
@@ -249,13 +248,13 @@ function getRecents($first,$num,$ns='',$flags=0){
         if (!is_array($media_lines)) {
             $media_lines = array();
         }
-        $media_lines_position = count($media_lines)-1;
+        $media_lines_position = count($media_lines) - 1;
     }
 
     $seen = array(); // caches seen lines, _handleRecent() skips them
 
     // handle lines
-    while ($lines_position >= 0 || (($flags & RECENTS_MEDIA_PAGES_MIXED) && $media_lines_position >=0)) {
+    while ($lines_position >= 0 || (($flags & RECENTS_MEDIA_PAGES_MIXED) && $media_lines_position >= 0)) {
         if (empty($rec) && $lines_position >= 0) {
             $rec = _handleRecent(@$lines[$lines_position], $ns, $flags, $seen);
             if (!$rec) {
@@ -286,11 +285,11 @@ function getRecents($first,$num,$ns='',$flags=0){
             if ($flags & RECENTS_MEDIA_CHANGES) $x['media'] = true;
             $rec = false;
         }
-        if(--$first >= 0) continue; // skip first entries
+        if (--$first >= 0) continue; // skip first entries
         $recent[] = $x;
         $count++;
         // break when we have enough entries
-        if($count >= $num){ break; }
+        if ($count >= $num) { break; }
     }
     return $recent;
 }
@@ -317,11 +316,11 @@ function getRecents($first,$num,$ns='',$flags=0){
  * @author Michael Hamann <michael@content-space.de>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function getRecentsSince($from,$to=null,$ns='',$flags=0){
+function getRecentsSince($from, $to = null, $ns = '', $flags = 0) {
     global $conf;
     $recent = array();
 
-    if($to && $to < $from)
+    if ($to && $to < $from)
         return $recent;
 
     // read all recent changes. (kept short)
@@ -330,7 +329,7 @@ function getRecentsSince($from,$to=null,$ns='',$flags=0){
     } else {
         $lines = @file($conf['changelog']);
     }
-    if(!$lines) return $recent;
+    if (!$lines) return $recent;
 
     // we start searching at the end of the list
     $lines = array_reverse($lines);
@@ -338,9 +337,9 @@ function getRecentsSince($from,$to=null,$ns='',$flags=0){
     // handle lines
     $seen = array(); // caches seen lines, _handleRecent() skips them
 
-    foreach($lines as $line){
+    foreach ($lines as $line) {
         $rec = _handleRecent($line, $ns, $flags, $seen);
-        if($rec !== false) {
+        if ($rec !== false) {
             if ($rec['date'] >= $from) {
                 if (!$to || $rec['date'] <= $to) {
                     $recent[] = $rec;
@@ -369,30 +368,30 @@ function getRecentsSince($from,$to=null,$ns='',$flags=0){
  * @param array  $seen   listing of seen pages
  * @return array|bool    false or array with info about a change
  */
-function _handleRecent($line,$ns,$flags,&$seen){
-    if(empty($line)) return false;   //skip empty lines
+function _handleRecent($line, $ns, $flags, &$seen) {
+    if (empty($line)) return false;   //skip empty lines
 
     // split the line into parts
     $recent = parseChangelogLine($line);
-    if ($recent===false) { return false; }
+    if ($recent === false) return false;
 
     // skip seen ones
-    if(isset($seen[$recent['id']])) return false;
+    if (isset($seen[$recent['id']])) return false;
 
     // skip changes, of only new items are requested
-    if($recent['type']!==DOKU_CHANGE_TYPE_CREATE && ($flags & RECENTS_ONLY_CREATION)) return false;
+    if ($recent['type'] !== DOKU_CHANGE_TYPE_CREATE && ($flags & RECENTS_ONLY_CREATION)) return false;
 
     // skip minors
-    if($recent['type']===DOKU_CHANGE_TYPE_MINOR_EDIT && ($flags & RECENTS_SKIP_MINORS)) return false;
+    if ($recent['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT && ($flags & RECENTS_SKIP_MINORS)) return false;
 
     // remember in seen to skip additional sights
     $seen[$recent['id']] = 1;
 
     // check if it's a hidden page
-    if(isHiddenPage($recent['id'])) return false;
+    if (isHiddenPage($recent['id'])) return false;
 
     // filter namespace
-    if (($ns) && (strpos($recent['id'],$ns.':') !== 0)) return false;
+    if (($ns) && (strpos($recent['id'], $ns.':') !== 0)) return false;
 
     // exclude subnamespaces
     if (($flags & RECENTS_SKIP_SUBSPACES) && (getNS($recent['id']) != $ns)) return false;
@@ -406,9 +405,9 @@ function _handleRecent($line,$ns,$flags,&$seen){
     if ($recent['perms'] < AUTH_READ) return false;
 
     // check existance
-    if($flags & RECENTS_SKIP_DELETED){
+    if ($flags & RECENTS_SKIP_DELETED) {
         $fn = (($flags & RECENTS_MEDIA_CHANGES) ? mediaFN($recent['id']) : wikiFN($recent['id']));
-        if(!file_exists($fn)) return false;
+        if (!file_exists($fn)) return false;
     }
 
     return $recent;
