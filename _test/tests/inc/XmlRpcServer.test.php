@@ -57,7 +57,7 @@ EOD;
   <member><name>lastModified</name><value><dateTime.iso8601>$ixrModifiedTime</dateTime.iso8601></value></member>
   <member><name>author</name><value><string>$auther</string></value></member>
   <member><name>version</name><value><int>$timestamp</int></value></member>
-        </struct>
+</struct>
       </value>
     </param>
   </params>
