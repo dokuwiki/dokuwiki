@@ -27,7 +27,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(1, count($revisions));
+        $this->assertCount(1, $revisions);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('first save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_CREATE, $revinfo['type']);
@@ -43,7 +43,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(1, count($revisions));
+        $this->assertCount(1, $revisions);
 
         // update the page with new text
         saveWikiText($page, 'teststring2long', 'third save', false);
@@ -54,7 +54,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(2, count($revisions));
+        $this->assertCount(2, $revisions);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('third save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
@@ -71,7 +71,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(3, count($revisions));
+        $this->assertCount(3, $revisions);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('fourth save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
@@ -89,7 +89,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(4, count($revisions));
+        $this->assertCount(4, $revisions);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('fifth save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_MINOR_EDIT, $revinfo['type']);
@@ -104,7 +104,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(5, count($revisions));
+        $this->assertCount(5, $revisions);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('sixth save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_DELETE, $revinfo['type']);
@@ -124,7 +124,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(6, count($revisions));
+        $this->assertCount(6, $revisions);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('seventh save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_REVERT, $revinfo['type']);
@@ -149,7 +149,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(8, count($revisions)); // two more revisions now!
+        $this->assertCount(8, $revisions); // two more revisions now!
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('eigth save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
@@ -183,7 +183,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(1, count($revisions));
+        $this->assertCount(1, $revisions);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('first save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_CREATE, $revinfo['type']);
@@ -199,7 +199,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(2, count($revisions));
+        $this->assertCount(2, $revisions);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('second save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_DELETE, $revinfo['type']);
@@ -219,7 +219,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(4, count($revisions)); // two more revisions now!
+        $this->assertCount(4, $revisions); // two more revisions now!
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('third save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
@@ -227,8 +227,8 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertFileExists(wikiFN($page, $revinfo['date']));
 
         $revinfo = $pagelog->getRevisionInfo($revisions[1]);
-        $this->assertEquals('external edit', $revinfo['sum']);
-        $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
+        $this->assertEquals('created - external edit', $revinfo['sum']);
+        $this->assertEquals(DOKU_CHANGE_TYPE_CREATE, $revinfo['type']);
         $this->assertEquals(11, $revinfo['sizechange']);
         $this->assertFileExists(wikiFN($page, $revinfo['date']));
 
@@ -255,15 +255,15 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(2, count($revisions)); // two more revisions now!
+        $this->assertCount(2, $revisions); // two more revisions now!
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('first save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
         $this->assertEquals(1, $revinfo['sizechange']);
 
         $revinfo = $pagelog->getRevisionInfo($revisions[1]);
-        $this->assertEquals('external edit', $revinfo['sum']);
-        $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
+        $this->assertEquals('created - external edit', $revinfo['sum']);
+        $this->assertEquals(DOKU_CHANGE_TYPE_CREATE, $revinfo['type']);
         $this->assertEquals(10, $revinfo['sizechange']);
 
     }
@@ -283,7 +283,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(1, count($revisions));
+        $this->assertCount(1, $revisions);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('first save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_CREATE, $revinfo['type']);
@@ -304,7 +304,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(2, count($revisions)); // one more revisions now!
+        $this->assertCount(2, $revisions); // one more revisions now!
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('second save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_CREATE, $revinfo['type']);
@@ -332,7 +332,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(1, count($revisions));
+        $this->assertCount(1, $revisions);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('first save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_CREATE, $revinfo['type']);
@@ -359,7 +359,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(2, count($revisions));
+        $this->assertCount(2, $revisions);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('third save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
@@ -376,7 +376,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(3, count($revisions));
+        $this->assertCount(3, $revisions);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('fourth save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_EDIT, $revinfo['type']);
@@ -394,7 +394,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(4, count($revisions));
+        $this->assertCount(4, $revisions);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('fifth save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_MINOR_EDIT, $revinfo['type']);
@@ -412,7 +412,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertEquals(5, count($revisions));
+        $this->assertCount(5, $revisions);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $this->assertEquals('sixth save', $revinfo['sum']);
         $this->assertEquals(DOKU_CHANGE_TYPE_REVERT, $revinfo['type']);

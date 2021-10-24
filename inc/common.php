@@ -253,6 +253,7 @@ function pageinfo() {
             $revinfo = $pagelog->getRevisionInfo($info['lastmod']);
             // cache most recent changelog line in metadata if missing and still valid
             if ($revinfo !== false) {
+                unset($revinfo['current']); // exclude current key in metadata
                 $info['meta']['last_change'] = $revinfo;
                 p_set_metadata($ID, array('last_change' => $revinfo));
             }
@@ -274,7 +275,7 @@ function pageinfo() {
         // Use $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT in place of $info['minor'].
 
         $info['editor'] = $revinfo['user'] ?: $revinfo['ip'];
-    }else{
+    } else {
         $info['ip']     = null;
         $info['user']   = null;
         $info['sum']    = null;
