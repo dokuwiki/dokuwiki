@@ -64,6 +64,52 @@ abstract class ChangeLog
      */
     abstract protected function getFilename();
 
+
+    /**
+     * Check whether given revision is the current page
+     *
+     * @param int $rev timestamp of current page
+     * @return bool true if $rev is current revision, otherwise false
+     */
+    public function isCurrentRevision($rev)
+    {
+        return $rev == $this->currentRevision();
+    }
+
+    /**
+     * Checks if the revision is last revision
+     *
+     * @param int $rev revision timestamp
+     * @return bool true if $rev is last revision, otherwise false
+     */
+    public function isLastRevision($rev = null)
+    {
+        return $rev === $this->lastRevision();
+    }
+
+    /**
+     * Return the current revision identifer
+     * @return int|false
+     */
+    public function currentRevision()
+    {
+        if (!isset($this->currentRevision)) {
+            // set ChangeLog::currentRevision property
+            $this->getCurrentRevisionInfo();
+        }
+        return $this->currentRevision;
+    }
+
+    /**
+     * Return the last revision identifer, timestamp of last entry of changelog
+     * @return int|false
+     */
+    public function lastRevision()
+    {
+        $revs = $this->getRevisions(-1, 1);
+        return empty($revs) ? false : $revs[0];
+    }
+
     /**
      * Save revision info to the cache pool
      *
@@ -163,8 +209,9 @@ abstract class ChangeLog
         if ($first < 0) {
             $first = 0;
         } else {
-            if (file_exists($this->getFilename()) && !$this->isExternalEdition()) {
-                // skip current revision if the page exist and not external edition
+            $fileLastMod = $this->getFilename();
+            if (file_exists($fileLastMod) && $this->isLastRevision(filemtime($fileLastMod))) {
+                // skip last revision if the page exists
                 $first = max($first + 1, 0);
             }
         }
@@ -236,12 +283,10 @@ abstract class ChangeLog
         $num = max(min(count($lines) - $first, $num), 0);
         if ($first > 0 && $num > 0) {
             $lines = array_slice($lines, max(count($lines) - $first - $num, 0), $num);
-        } else {
-            if ($first > 0 && $num == 0) {
-                $lines = array_slice($lines, 0, max(count($lines) - $first, 0));
-            } elseif ($first == 0 && $num > 0) {
-                $lines = array_slice($lines, max(count($lines) - $num, 0));
-            }
+        } elseif ($first > 0 && $num == 0) {
+            $lines = array_slice($lines, 0, max(count($lines) - $first, 0));
+        } elseif ($first == 0 && $num > 0) {
+            $lines = array_slice($lines, max(count($lines) - $num, 0));
         }
 
         // handle lines in reverse order
@@ -529,17 +574,6 @@ abstract class ChangeLog
     }
 
     /**
-     * Check whether given revision is the current page
-     *
-     * @param int $rev timestamp of current page
-     * @return bool true if $rev is current revision, otherwise false
-     */
-    public function isCurrentRevision($rev)
-    {
-        return $rev == $this->currentRevision();
-    }
-
-    /**
      * Return an existing revision for a specific date which is
      * the current one or younger or equal then the date
      *
@@ -653,7 +687,9 @@ abstract class ChangeLog
         $lasttail = $tail;
 
         // add a possible revision of external edit, create or deletion
-        if ($lasttail == $eof && $aftercount <= intval($max / 2) && $this->isExternalEdition()) {
+        if ($lasttail == $eof && $aftercount <= intval($max / 2) &&
+            count($revs) && !$this->isCurrentRevision($revs[count($revs)-1])
+        ) {
             $revs[] = $this->currentRevision;
             $aftercount++;
         }
@@ -715,7 +751,7 @@ abstract class ChangeLog
      * As far as the source file of the edition exists, a unique revision can be decided
      * using function filemtime(), but it could be unknown if the foo.txt file had deleted
      * or moved to foo.bak file.
-     * In such case, we assume unknown revision as "last timestamp in chagelog" +1
+     * In such case, we assume unknown revision as "last timestamp in changelog" +1
      * to ensure that current one should be newer than any revisions in changelog.
      * Another case of external edit: when foo.bak file moved back to foo.txt, the current
      * one could become older than latest timestamp in changelog. In this case, we should
@@ -742,11 +778,12 @@ abstract class ChangeLog
 
         // get revision id from the item file timestamp and chagelog
         $fileRev = @filemtime($this->getFilename()); // false when the file not exist
-        $lastRev = @$this->getRevisions(-1, 1)[0];   // null when failed
+        $lastRev = $this->lastRevision();            // false when no changelog
 
-        if (!$fileRev && $lastRev === null) {             // has never existed
+        if (!$fileRev && !$lastRev) {                // has never existed
+            $this->currentRevision = false;
             return false;
-        } elseif ($fileRev === $lastRev) {                // not external edit
+        } elseif ($fileRev === $lastRev) {           // not external edit
             $this->currentRevision = $lastRev;
             $this->cache[$this->id][$this->currentRevision] += [
                     'current' => true,
@@ -754,7 +791,7 @@ abstract class ChangeLog
             return $this->getRevisionInfo($this->currentRevision);
         }
 
-        if (!$fileRev && $lastRev) {                // item file does not exist
+        if (!$fileRev && $lastRev) {                 // item file does not exist
             // check consistency against changelog
             $revInfo = $this->getRevisionInfo($lastRev);
             if ($revInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
@@ -772,16 +809,16 @@ abstract class ChangeLog
                 'type' => DOKU_CHANGE_TYPE_DELETE,
                 'id'   => $this->id,
                 'user' => '',
-                'sum'  => $lang['deleted'] .' - '. $lang['external_edit'],
+                'sum'  => $lang['deleted'].' - '.$lang['external_edit'].' ('.$lang['unknowndate'].')',
                 'extra' => '',
                 'sizechange' => -io_getSizeFile($this->getFilename($lastRev)),
                 'current' => true,
                 'timestamp' => 'unknown',
             ];
 
-        } elseif ($fileRev) {                       // item file exist
+        } elseif ($fileRev) {                        // item file exist
             // here, file timestamp is different with last revision in changelog
-            $isJustCreated = is_null($lastRev) || (
+            $isJustCreated = $lastRev === false || (
                     $fileRev > $lastRev &&
                     $this->getRevisionInfo($lastRev)['type'] == DOKU_CHANGE_TYPE_DELETE
             );
@@ -791,7 +828,7 @@ abstract class ChangeLog
 
             if ($isJustCreated) { // lastRev is null
                 $rev = $timestamp = $fileRev;
-                $sum = $lang['created'] .' - '. $lang['external_edit'];
+                $sum = $lang['created'].' - '.$lang['external_edit'];
             } elseif ($fileRev > $lastRev) {
                 $rev = $timestamp = $fileRev;
                 $sum = $lang['external_edit'];
@@ -799,7 +836,7 @@ abstract class ChangeLog
                 // $fileRev is older than $lastRev, externally reverted an old file
                 $rev = max($fileRev, $lastRev +1);
                 $timestamp = 'unknown';
-                $sum = $lang['external_edit'];
+                $sum = $lang['external_edit'].' ('.$lang['unknowndate'].')';
             }
 
             // externally created or edited
@@ -821,34 +858,5 @@ abstract class ChangeLog
         $this->currentRevision = $revInfo['date'];
         $this->cache[$this->id][$this->currentRevision] = $revInfo;
         return $this->getRevisionInfo($this->currentRevision);
-    }
-
-    /**
-     * Checks if the revision is external edition
-     * @return boolean
-     */
-    public function isExternalEdition($rev =null)
-    {
-        if ($rev === 'current' || $rev === null) {
-            $revInfo = $this->getCurrentRevisionInfo();
-        } elseif (is_int($rev)) {
-            $revInfo = $this->getRevisionInfo($rev);
-        } elseif (is_array($rev)) {
-            $revInfo =  $rev;
-        }
-        return array_key_exists('timestamp', $revInfo);
-    }
-
-    /**
-     * Return the current revision identifer
-     * @return int|false
-     */
-    public function currentRevision()
-    {
-        if (!isset($this->currentRevision)) {
-            // set ChangeLog::currentRevision property
-            $this->getCurrentRevisionInfo();
-        }
-        return $this->currentRevision;
     }
 }
