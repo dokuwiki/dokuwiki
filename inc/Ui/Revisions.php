@@ -55,6 +55,7 @@ abstract class Revisions extends Ui
         $num = $conf['recent'];
         if ($first == 0) {
             $revisions[] = $currentRevInfo;
+            $first += (int)($currentRevInfo['date'] == $changelog->lastRevision());
             $num = $num - 1;
         }
         /* we need to get one additional log entry to be able to
@@ -126,9 +127,7 @@ abstract class Revisions extends Ui
             public function __construct(array $info)
             {
                 $info['item'] = strrpos($info['id'], '.') ? 'media' : 'page';
-                if (!isset($info['current'])) {
-                    $info['current'] = false;
-                }
+                $info['current'] = $info['current'] ?? false;
                 $this->info = $info;
             }
 
@@ -145,7 +144,7 @@ abstract class Revisions extends Ui
                 global $lang;
                 $date = dformat($this->info['date']);
                 if (($this->info['timestamp'] ?? '') == 'unknown') {
-                    // exteranlly deleted or older file restored
+                    // externally deleted or older file restored
                     $date = preg_replace('/[0-9a-zA-Z]/','_', $date);
                 }
                 return '<span class="date">'. $date .'</span>';
@@ -184,7 +183,7 @@ abstract class Revisions extends Ui
 
                 switch ($this->info['item']) {
                     case 'media': // media file revision
-                        if (isset($this->info['current'])) {
+                        if ($this->info['current']) {
                             $href = media_managerURL(['image'=> $id, 'tab_details'=> 'view'], '&');
                             $html = '<a href="'.$href.'" class="wikilink1">'.$id.'</a>';
                         } elseif (file_exists(mediaFN($id, $rev))) {
@@ -221,7 +220,7 @@ abstract class Revisions extends Ui
 
                 switch ($this->info['item']) {
                     case 'media': // media file revision
-                        if (isset($this->info['current']) || !file_exists(mediaFN($id, $rev))) {
+                        if ($this->info['current'] || !file_exists(mediaFN($id, $rev))) {
                             $html = '<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />';
                         } else {
                             $href = media_managerURL(['image'=> $id, 'rev'=> $rev, 'mediado'=>'diff'], '&');

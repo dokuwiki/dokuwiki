@@ -785,10 +785,7 @@ abstract class ChangeLog
             return false;
         } elseif ($fileRev === $lastRev) {           // not external edit
             $this->currentRevision = $lastRev;
-            $this->cache[$this->id][$this->currentRevision] += [
-                    'current' => true,
-            ];
-            return $this->getRevisionInfo($this->currentRevision);
+            return $this->getRevisionInfo($lastRev);
         }
 
         if (!$fileRev && $lastRev) {                 // item file does not exist
@@ -796,10 +793,7 @@ abstract class ChangeLog
             $revInfo = $this->getRevisionInfo($lastRev);
             if ($revInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
                 $this->currentRevision = $lastRev;
-                $this->cache[$this->id][$this->currentRevision] += [
-                    'current' => true,
-                ];
-                return $this->getRevisionInfo($this->currentRevision);
+                return $this->getRevisionInfo($lastRev);
             }
 
             // externally deleted
@@ -812,7 +806,6 @@ abstract class ChangeLog
                 'sum'  => $lang['deleted'].' - '.$lang['external_edit'].' ('.$lang['unknowndate'].')',
                 'extra' => '',
                 'sizechange' => -io_getSizeFile($this->getFilename($lastRev)),
-                'current' => true,
                 'timestamp' => 'unknown',
             ];
 
@@ -849,7 +842,6 @@ abstract class ChangeLog
                 'sum'  => $sum,
                 'extra' => '',
                 'sizechange' => $sizechange,
-                'current' => true,
                 'timestamp' => $timestamp,
             ];
         }

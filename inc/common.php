@@ -215,6 +215,7 @@ function pageinfo() {
     $info['filepath']   = wikiFN($ID);
     $info['exists']     = file_exists($info['filepath']);
     $info['currentrev'] = @filemtime($info['filepath']);
+
     if ($REV) {
         //check if current revision was meant
         if ($info['exists'] && ($info['currentrev'] == $REV)) {
@@ -253,7 +254,6 @@ function pageinfo() {
             $revinfo = $pagelog->getRevisionInfo($info['lastmod']);
             // cache most recent changelog line in metadata if missing and still valid
             if ($revinfo !== false) {
-                unset($revinfo['current']); // exclude current key in metadata
                 $info['meta']['last_change'] = $revinfo;
                 p_set_metadata($ID, array('last_change' => $revinfo));
             }

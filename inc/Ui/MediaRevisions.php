@@ -68,6 +68,8 @@ class MediaRevisions extends Revisions
         $form->addTagOpen('ul');
         foreach ($revisions as $info) {
             $rev = $info['date'];
+            $info['current'] = $changelog->isCurrentRevision($rev);
+
             $class = ($info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor' : '';
             $form->addTagOpen('li')->addClass($class);
             $form->addTagOpen('div')->addClass('li');

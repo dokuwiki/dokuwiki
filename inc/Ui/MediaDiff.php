@@ -91,12 +91,17 @@ class MediaDiff extends Diff
 
         foreach ([&$this->oldRevInfo, &$this->newRevInfo] as &$revInfo) {
             // use timestamp and '' properly as $rev for the current file
-            $rev = $revInfo['rev'] = isset($revInfo['current']) ? '' : $revInfo['date'];
+            $isCurrent = $changelog->isCurrentRevision($revInfo['date']);
+            $revInfo += [
+                'current' => $isCurrent,
+                'rev'     => $isCurrent ? '' : $revInfo['date'],
+            ];
 
             // headline in the Diff view navigation
             $revInfo['navTitle'] = $this->revisionTitle($revInfo);
 
             if ($this->is_img) {
+                $rev = $revInfo['rev'];
                 $meta = new JpegMeta(mediaFN($this->id, $rev));
                 // get image width and height for the mediamanager preview panel
                 $revInfo['previewSize'] = media_image_preview_size($this->id, $rev, $meta);

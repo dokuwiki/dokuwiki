@@ -65,6 +65,7 @@ class PageDiff extends Diff
 
             // revision info of older file (left side)
             $this->oldRevInfo = $changelog->getCurrentRevisionInfo() + [
+                'current' => true,
                 'rev'  => '',
                 'navTitle' => $this->revisionTitle($changelog->getCurrentRevisionInfo()),
                 'text' => rawWiki($this->id, ''),
@@ -81,6 +82,7 @@ class PageDiff extends Diff
               //'extra' => '',
                 'sizechange' => strlen($this->text) - io_getSizeFile(wikiFN($this->id, '')),
                 'timestamp' => 'unknown',
+                'current' => false,
                 'rev'  => false,
                 'navTitle' => $lang['yours'],
                 'text' => cleanText($this->text),
@@ -138,7 +140,11 @@ class PageDiff extends Diff
 
         foreach ([&$this->oldRevInfo, &$this->newRevInfo] as &$revInfo) {
             // use timestamp and '' properly as $rev for the current file
-            $rev = $revInfo['rev'] = isset($revInfo['current']) ? '' : $revInfo['date'];
+            $isCurrent = $changelog->isCurrentRevision($revInfo['date']);
+            $revInfo += [
+                'current' => $isCurrent,
+                'rev'     => $isCurrent ? '' : $revInfo['date'],
+            ];
 
             // headline in the Diff view navigation
             $revInfo['navTitle'] = $this->revisionTitle($revInfo);
@@ -147,7 +153,7 @@ class PageDiff extends Diff
                 //attic stores complete last page version for a deleted page
                 $revInfo['text'] = '';
             } else {
-                $revInfo['text'] = rawWiki($this->id, $rev);
+                $revInfo['text'] = rawWiki($this->id, $revInfo['rev']);
             }
         }
     }
