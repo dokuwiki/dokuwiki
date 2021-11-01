@@ -40,7 +40,10 @@ function parseChangelogLine($line) {
 /**
  * Adds an entry to the changelog and saves the metadata for the page
  *
- * @param int    $date      Timestamp of the change (after quick repeated edits not unique (e.g. change checkbox via do plugin)
+ * Note: timestamp of the change might not be unique especially after very quick
+ *       repeated edits (e.g. change checkbox via do plugin)
+ *
+ * @param int    $date      Timestamp of the change
  * @param String $id        Name of the affected page
  * @param String $type      Type of the change see DOKU_CHANGE_TYPE_*
  * @param String $summary   Summary of the change

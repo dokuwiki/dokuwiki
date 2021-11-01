@@ -37,7 +37,7 @@ class MediaDiff extends Diff
         }
 
         // init preference
-        $this->preference['fromAjax'] = false;  // see doluwiki\Ajax::callMediadiff()
+        $this->preference['fromAjax'] = false;  // see dokuwiki\Ajax::callMediadiff()
         $this->preference['showIntro'] = false;
         $this->preference['difftype'] = 'both'; // diff view type: both, opacity or portions
 
