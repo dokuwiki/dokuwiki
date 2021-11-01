@@ -110,6 +110,13 @@ abstract class Diff extends Ui
                 [$this->oldRev, $this->newRev] = [$rev2[1], $rev2[0]];
             }
         }
+
+        if (!isset($this->oldRev, $this->newRev)) {
+            // no revision was given, compare previous to current
+            $revs = $this->changelog->getRevisions(-1, 2);
+            $this->newRev = $this->changelog->currentRevision();
+            $this->oldRev = ($revs[0] == $this->newRev) ? $revs[1] : $revs[0];
+        }
     }
 
 

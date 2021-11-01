@@ -114,15 +114,10 @@ class PageDiff extends Diff
             if (isset($mode)) $this->preference['difftype'] = $mode;
         }
 
-        if (!isset($this->oldRev, $this->newRev)) {
-            // no revision was given, compare previous to current
-            $changelog =& $this->changelog;
-            $this->oldRev = $changelog->getRevisions(0, 1)[0];
-            $this->newRev = $changelog->currentRevision();
-
+        if (!$INPUT->has('rev') && !$INPUT->has('rev2')) {
             global $INFO, $REV;
             if ($this->id == $INFO['id'])
-               $REV = $this->oldRev; // store revision back in $REV
+                $REV = $this->oldRev; // store revision back in $REV
         }
     }
 
@@ -282,7 +277,7 @@ class PageDiff extends Diff
             $rev = false;
             $title = '&mdash;';
         }
-        if (isset($info['current'])) {
+        if ($info['current']) {
             $title .= '&nbsp;('.$lang['current'].')';
         }
 

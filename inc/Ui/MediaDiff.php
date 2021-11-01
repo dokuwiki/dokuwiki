@@ -66,13 +66,6 @@ class MediaDiff extends Diff
         if ($INPUT->has('difftype')) {
             $this->preference['difftype'] = $INPUT->str('difftype');
         }
-
-        if (!isset($this->oldRev, $this->newRev)) {
-            // no revision was given, compare previous to current
-            $changelog =& $this->changelog;
-            $this->oldRev = $changelog->getRevisions(0, 1)[0];
-            $this->newRev = $changelog->currentRevision();
-        }
     }
 
     /**
