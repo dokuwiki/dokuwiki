@@ -821,21 +821,21 @@ abstract class ChangeLog
             $sizechange = $filesize_new - $filesize_old;
 
             if ($isJustCreated) {
-                $rev = $timestamp = $fileRev;
+                $timestamp = $fileRev;
                 $sum = $lang['created'].' - '.$lang['external_edit'];
             } elseif ($fileRev > $lastRev) {
-                $rev = $timestamp = $fileRev;
+                $timestamp = $fileRev;
                 $sum = $lang['external_edit'];
             } else {
-                // $fileRev is older than $lastRev, externally reverted an old file
-                $rev = max($fileRev, $lastRev +1);
-                $timestamp = false;
+                // $fileRev is older than $lastRev, that is erroneous/incorrect occurence.
+                // try to change file modification time to the detection time
+                $timestamp = touch($fileLastMod) ? filemtime($fileLastMod) : false;
                 $sum = $lang['external_edit'].' ('.$lang['unknowndate'].')';
             }
 
             // externally created or edited
             $revInfo = [
-                'date' => $rev,
+                'date' => $timestamp ?: $lastRev +1,
                 'ip'   => '127.0.0.1',
                 'type' => $isJustCreated ? DOKU_CHANGE_TYPE_CREATE : DOKU_CHANGE_TYPE_EDIT,
                 'id'   => $this->id,
