@@ -766,7 +766,7 @@ abstract class ChangeLog
      *      - sum:   edit summary (or action reason)
      *      - extra: extra data (varies by line type)
      *      - sizechange: change of filesize
-     *      - timestamp: timestamp or 'unknown' (key set only for external edition)
+     *      - timestamp: unix timestamp or false (key set only for external edit occurred)
      *
      * @author  Satoshi Sahara <sahara.satoshi@gmail.com>
      */
@@ -777,8 +777,9 @@ abstract class ChangeLog
         if (isset($this->currentRevision)) return $this->getRevisionInfo($this->currentRevision);
 
         // get revision id from the item file timestamp and chagelog
-        $fileRev = @filemtime($this->getFilename()); // false when the file not exist
-        $lastRev = $this->lastRevision();            // false when no changelog
+        $fileLastMod = $this->getFilename();
+        $fileRev = @filemtime($fileLastMod); // false when the file not exist
+        $lastRev = $this->lastRevision();    // false when no changelog
 
         if (!$fileRev && !$lastRev) {                // has never existed
             $this->currentRevision = false;
@@ -806,7 +807,7 @@ abstract class ChangeLog
                 'sum'  => $lang['deleted'].' - '.$lang['external_edit'].' ('.$lang['unknowndate'].')',
                 'extra' => '',
                 'sizechange' => -io_getSizeFile($this->getFilename($lastRev)),
-                'timestamp' => 'unknown',
+                'timestamp' => false,
             ];
 
         } elseif ($fileRev) {                        // item file exist
@@ -819,7 +820,7 @@ abstract class ChangeLog
             $filesize_old = $isJustCreated ? 0 : io_getSizeFile($this->getFilename($lastRev));
             $sizechange = $filesize_new - $filesize_old;
 
-            if ($isJustCreated) { // lastRev is null
+            if ($isJustCreated) {
                 $rev = $timestamp = $fileRev;
                 $sum = $lang['created'].' - '.$lang['external_edit'];
             } elseif ($fileRev > $lastRev) {
@@ -828,7 +829,7 @@ abstract class ChangeLog
             } else {
                 // $fileRev is older than $lastRev, externally reverted an old file
                 $rev = max($fileRev, $lastRev +1);
-                $timestamp = 'unknown';
+                $timestamp = false;
                 $sum = $lang['external_edit'].' ('.$lang['unknowndate'].')';
             }
 

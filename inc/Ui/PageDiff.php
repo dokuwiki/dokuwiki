@@ -81,7 +81,7 @@ class PageDiff extends Diff
               //'sum'  => '',
               //'extra' => '',
                 'sizechange' => strlen($this->text) - io_getSizeFile(wikiFN($this->id, '')),
-                'timestamp' => 'unknown',
+                'timestamp' => false,
                 'current' => false,
                 'rev'  => false,
                 'navTitle' => $lang['yours'],
@@ -263,9 +263,12 @@ class PageDiff extends Diff
             return $lang['yours'];
         }
 
+        // revision info may have timestamp key when external edits occurred
+        $info['timestamp'] = $info['timestamp'] ?? true;
+
         if (isset($info['date'])) {
             $rev = $info['date'];
-            if (($info['timestamp'] ?? '') == 'unknown') {
+            if ($info['timestamp'] === false) {
                 // exteranlly deleted or older file restored
                 $title = '<bdi><a class="wikilink2" href="'.wl($this->id).'">'
                    . $this->id .' ['. $lang['unknowndate'] .']'.'</a></bdi>';
@@ -426,8 +429,10 @@ class PageDiff extends Diff
 
         foreach ($revs as $rev) {
             $info = $changelog->getRevisionInfo($rev);
+            // revision info may have timestamp key when external edits occurred
+            $info['timestamp'] = $info['timestamp'] ?? true;
             $date = dformat($info['date']);
-            if (($info['timestamp'] ?? '') == 'unknown') {
+            if ($info['timestamp'] === false) {
                 // exteranlly deleted or older file restored
                 $date = preg_replace('/[0-9a-zA-Z]/','_', $date);
             }

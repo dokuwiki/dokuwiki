@@ -54,9 +54,14 @@ abstract class Revisions extends Ui
 
         $num = $conf['recent'];
         if ($first == 0) {
-            $revisions[] = $currentRevInfo;
-            $first += (int)($currentRevInfo['date'] == $changelog->lastRevision());
-            $num = $num - 1;
+            // add extrenal or existing last revision that is excluded from $changelog->getRevisions()
+            if (array_key_exists('timestamp', $currentRevInfo) || (
+                $currentRevInfo['type'] != DOKU_CHANGE_TYPE_DELETE &&
+                $currentRevInfo['date'] == $changelog->lastRevision() )
+            ) {
+                $revisions[] = $currentRevInfo;
+                $num = $num - 1;
+            }
         }
         /* we need to get one additional log entry to be able to
          * decide if this is the last page or is there another one.
@@ -128,6 +133,8 @@ abstract class Revisions extends Ui
             {
                 $info['item'] = strrpos($info['id'], '.') ? 'media' : 'page';
                 $info['current'] = $info['current'] ?? false;
+                // revision info may have timestamp key when external edits occurred
+                $info['timestamp'] = $info['timestamp'] ?? true;
                 $this->info = $info;
             }
 
@@ -143,7 +150,7 @@ abstract class Revisions extends Ui
             {
                 global $lang;
                 $date = dformat($this->info['date']);
-                if (($this->info['timestamp'] ?? '') == 'unknown') {
+                if ($this->info['timestamp'] === false) {
                     // externally deleted or older file restored
                     $date = preg_replace('/[0-9a-zA-Z]/','_', $date);
                 }
@@ -197,7 +204,7 @@ abstract class Revisions extends Ui
                         $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
                         if (!$display_name) $display_name = $id;
                         if ($this->info['type'] == DOKU_CHANGE_TYPE_DELETE) {
-                            // exteranlly deleted or older file restored
+                            // externally deleted or older file restored
                             $href = wl($id, "", false, '&');
                             $html = '<a href="'.$href.'" class="wikilink2">'.$display_name.'</a>';
                         } elseif ($this->info['current'] || page_exists($id, $rev)) {
