@@ -1266,43 +1266,25 @@ function con($pre, $text, $suf, $pretty = false) {
  * @param string $id the page ID
  */
 function detectExternalEdit($id) {
-    global $lang;
 
-    $fileLastMod = wikiFN($id);
-    $lastMod     = @filemtime($fileLastMod); // from wiki page, suppresses warning in case the file not exists
-    $pagelog     = new PageChangeLog($id, 1024);
-    $lastRev     = $pagelog->getRevisions(-1, 1); // from changelog
-    $lastRev     = (int) (empty($lastRev) ? 0 : $lastRev[0]);
+    $pagelog = new PageChangeLog($id, 1024);
+    $revInfo = $pagelog->getCurrentRevisionInfo();
 
-    if (!file_exists(wikiFN($id, $lastMod)) && file_exists($fileLastMod) && $lastMod >= $lastRev) {
-        // add old revision to the attic if missing
-        saveOldRevision($id);
-        // add a changelog entry if this edit came from outside dokuwiki
-        if ($lastMod > $lastRev) {
-            $fileLastRev = wikiFN($id, $lastRev);
-            $revinfo = $pagelog->getRevisionInfo($lastRev);
-            if (empty($lastRev) || !file_exists($fileLastRev) || $revinfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
-                $filesize_old = 0;
-            } else {
-                $filesize_old = io_getSizeFile($fileLastRev);
-            }
-            $filesize_new = filesize($fileLastMod);
-            $sizechange = $filesize_new - $filesize_old;
+    // external edit, creation or deletion
+    if (empty($revInfo) || !array_key_exists('timestamp', $revInfo)) return;
 
-            addLogEntry(
-                $lastMod,
-                $id,
-                DOKU_CHANGE_TYPE_EDIT,
-                $lang['external_edit'],
-                '',
-                array('ExternalEdit' => true),
-                $sizechange
-            );
-            // remove soon to be stale instructions
-            $cache = new CacheInstructions($id, $fileLastMod);
-            $cache->removeCache();
-        }
-    }
+    // use detection time for externally deleted page file
+    $timestamp = $revInfo['timestamp'] ?: time();
+
+    // store externally edited file to the attic folder
+    saveOldRevision($id);
+
+    // add a changelog entry for externally edited file
+    $revInfo = $pagelog->addLogEntry($revInfo, $timestamp);
+
+    // remove soon to be stale instructions
+    $cache = new CacheInstructions($id, wikiFN($id));
+    $cache->removeCache();
 }
 
 /**
@@ -1369,6 +1351,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     // if the content has not been changed, no save happens (plugins may override this)
     if (!$svdta['contentChanged']) return;
 
+    // register external edit, creation or deletion as a regular changelog entry
     detectExternalEdit($id);
 
     if (
@@ -1381,7 +1364,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     }
     if ($svdta['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
         // Send "update" event with empty data, so plugins can react to page deletion
-        $data = array(array($svdta['file'], '', false), getNS($id), noNS($id), false);
+        $data = array([$svdta['file'], '', false], getNS($id), noNS($id), false);
         Event::createAndTrigger('IO_WIKIPAGE_WRITE', $data);
         // pre-save deleted revision
         @touch($svdta['file']);
@@ -1408,6 +1391,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
 
     $event->advise_after();
 
+    // adds an entry to the changelog and saves the metadata for the page
     addLogEntry(
         $svdta['newRevision'],
         $svdta['id'],

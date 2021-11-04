@@ -79,6 +79,8 @@ function addLogEntry(
     $created = @filectime($file);
     $minor = ($type === DOKU_CHANGE_TYPE_MINOR_EDIT);
     $wasRemoved = ($type === DOKU_CHANGE_TYPE_DELETE);
+    $wasCreated = ($type === DOKU_CHANGE_TYPE_CREATE);
+    $wasReverted = ($type === DOKU_CHANGE_TYPE_REVERT);
 
     if (!$date) $date = time(); //use current time if none supplied
     $remote = (!$flagExternalEdit) ? clientIP(true) : '127.0.0.1';
@@ -89,20 +91,19 @@ function addLogEntry(
         $sizechange = (int) $sizechange;
     }
 
-    $strip = array("\t", "\n");
-    $logline = array(
+    // update changelog file, the logline is also to be stored in metadata
+    $revInfo = array(
         'date'       => $date,
         'ip'         => $remote,
-        'type'       => str_replace($strip, '', $type),
+        'type'       => $type,
         'id'         => $id,
         'user'       => $user,
-        'sum'        => \dokuwiki\Utf8\PhpString::substr(str_replace($strip, '', $summary), 0, 255),
-        'extra'      => str_replace($strip, '', $extra),
-        'sizechange' => $sizechange
+        'sum'        => $summary,
+        'extra'      => $extra,
+        'sizechange' => $sizechange,
     );
+    $logline = (new PageChangeLog($id, 1024))->addLogEntry($revInfo);
 
-    $wasCreated = ($type === DOKU_CHANGE_TYPE_CREATE);
-    $wasReverted = ($type === DOKU_CHANGE_TYPE_REVERT);
     // update metadata
     if (!$wasRemoved) {
         $oldmeta = p_read_metadata($id)['persistent'];
@@ -132,11 +133,6 @@ function addLogEntry(
         $meta['last_change'] = $logline;
         p_set_metadata($id, $meta);
     }
-
-    // add changelog lines
-    $logline = implode("\t", $logline)."\n";
-    io_saveFile(metaFN($id,'.changes'), $logline, true); //page changelog
-    io_saveFile($conf['changelog'], $logline, true); //global changelog cache
 }
 
 /**
@@ -185,22 +181,18 @@ function addMediaLogEntry(
         $sizechange = (int) $sizechange;
     }
 
-    $strip = array("\t", "\n");
-    $logline = array(
+    // update changelog file
+    $revInfo = array(
         'date'       => $date,
         'ip'         => $remote,
-        'type'       => str_replace($strip, '', $type),
+        'type'       => $type,
         'id'         => $id,
         'user'       => $user,
-        'sum'        => \dokuwiki\Utf8\PhpString::substr(str_replace($strip, '', $summary), 0, 255),
-        'extra'      => str_replace($strip, '', $extra),
-        'sizechange' => $sizechange
+        'sum'        => $summary,
+        'extra'      => $extra,
+        'sizechange' => $sizechange,
     );
-
-    // add changelog lines
-    $logline = implode("\t", $logline)."\n";
-    io_saveFile($conf['media_changelog'], $logline, true); //global media changelog cache
-    io_saveFile(mediaMetaFN($id,'.changes'), $logline, true); //media file's changelog
+    $logline = (new MediaChangeLog($id, 1024))->addLogEntry($revInfo);
 }
 
 /**
