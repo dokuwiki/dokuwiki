@@ -3,7 +3,7 @@
 namespace dokuwiki\ChangeLog;
 
 /**
- * handles changelog of a media file
+ * Class MediaChanegLog; handles changelog of a media file
  */
 class MediaChangeLog extends ChangeLog
 {
@@ -36,7 +36,7 @@ class MediaChangeLog extends ChangeLog
      *
      * @param array $info    Revision info structure of a media file
      * @param int $timestamp logline date (optional)
-     * @return array added logline as revision info
+     * @return array revision info of added logline
      *
      * @see also addMediaLogEntry() in inc/changelog.php file
      */
@@ -44,28 +44,17 @@ class MediaChangeLog extends ChangeLog
     {
         global $conf;
 
-        $strip = ["\t", "\n"];
-        $revInfo = array(
-            'date' => $timestamp ?? $info['date'],
-            'ip'   => $info['ip'],
-            'type' => str_replace($strip, '', $info['type']),
-            'id'   => $this->id,
-            'user' => $info['user'],
-            'sum'  => \dokuwiki\Utf8\PhpString::substr(str_replace($strip, '', $info['sum']), 0, 255),
-            'extra' => str_replace($strip, '', $info['extra']),
-            'sizechange' => $info['sizechange'],
-        );
+        if (isset($timestamp)) unset($this->cache[$this->id][$info['date']]);
 
         // add changelog lines
-        $logline = implode("\t", $revInfo) ."\n";
+        $logline = $this->buildLogLine($info, $timestamp);
         io_saveFile(mediaMetaFN($this->id,'.changes'), $logline, $append = true);
         io_saveFile($conf['media_changelog'], $logline, $append = true); //global changelog cache
 
         // update cache
-        if (isset($timestamp)) unset($this->cache[$this->id][$info['date']]);
-        $this->currentRevision = $revInfo['date'];
-        $this->cache[$this->id][$this->currentRevision] = $revInfo;
-        return $revInfo;
+        $this->currentRevision = $info['date'];
+        $this->cache[$this->id][$this->currentRevision] = $info;
+        return $info;
     }
 
 }

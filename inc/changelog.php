@@ -6,6 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\ChangeLog\ChangeLog;
+
 /**
  * parses a changelog line into it's components
  *
@@ -15,26 +17,7 @@
  * @return array|bool parsed line or false
  */
 function parseChangelogLine($line) {
-    $line = rtrim($line, "\n");
-    $tmp = explode("\t", $line);
-    if ($tmp !== false && count($tmp) > 1) {
-        $info = array();
-        $info['date']  = (int)$tmp[0]; // unix timestamp
-        $info['ip']    = $tmp[1]; // IPv4 address (127.0.0.1)
-        $info['type']  = $tmp[2]; // log line type
-        $info['id']    = $tmp[3]; // page id
-        $info['user']  = $tmp[4]; // user name
-        $info['sum']   = $tmp[5]; // edit summary (or action reason)
-        $info['extra'] = $tmp[6]; // extra data (varies by line type)
-        if (isset($tmp[7]) && $tmp[7] !== '') { //last item has line-end||
-            $info['sizechange'] = (int) $tmp[7];
-        } else {
-            $info['sizechange'] = null;
-        }
-        return $info;
-    } else {
-        return false;
-    }
+    return ChangeLog::parseLogLine($line);
 }
 
 /**
@@ -85,14 +68,10 @@ function addLogEntry(
     if (!$date) $date = time(); //use current time if none supplied
     $remote = (!$flagExternalEdit) ? clientIP(true) : '127.0.0.1';
     $user   = (!$flagExternalEdit) ? $INPUT->server->str('REMOTE_USER') : '';
-    if ($sizechange === null) {
-        $sizechange = '';
-    } else {
-        $sizechange = (int) $sizechange;
-    }
+    $sizechange = ($sizechange === null) ? '' : (int)$sizechange;
 
-    // update changelog file, the logline is also to be stored in metadata
-    $revInfo = array(
+    // update changelog file and get the added entry that is also to be stored in metadata
+    $logEntry = (new PageChangeLog($id, 1024))->addLogEntry([
         'date'       => $date,
         'ip'         => $remote,
         'type'       => $type,
@@ -101,18 +80,14 @@ function addLogEntry(
         'sum'        => $summary,
         'extra'      => $extra,
         'sizechange' => $sizechange,
-    );
-    $logline = (new PageChangeLog($id, 1024))->addLogEntry($revInfo);
+    ]);
 
     // update metadata
     if (!$wasRemoved) {
         $oldmeta = p_read_metadata($id)['persistent'];
         $meta    = array();
-        if (
-            $wasCreated && (
-                empty($oldmeta['date']['created']) ||
-                $oldmeta['date']['created'] === $created
-            )
+        if ($wasCreated &&
+            (empty($oldmeta['date']['created']) || $oldmeta['date']['created'] === $created)
         ) {
             // newly created
             $meta['date']['created'] = $created;
@@ -130,7 +105,7 @@ function addLogEntry(
             $meta['date']['modified'] = $date;
             if ($user) $meta['contributor'][$user] = isset($INFO) ? $INFO['userinfo']['name'] : null;
         }
-        $meta['last_change'] = $logline;
+        $meta['last_change'] = $logEntry;
         p_set_metadata($id, $meta);
     }
 }
@@ -175,14 +150,10 @@ function addMediaLogEntry(
     if (!$date) $date = time(); //use current time if none supplied
     $remote = (!$flagExternalEdit) ? clientIP(true) : '127.0.0.1';
     $user   = (!$flagExternalEdit) ? $INPUT->server->str('REMOTE_USER') : '';
-    if ($sizechange === null) {
-        $sizechange = '';
-    } else {
-        $sizechange = (int) $sizechange;
-    }
+    $sizechange = ($sizechange === null) ? '' : (int)$sizechange;
 
-    // update changelog file
-    $revInfo = array(
+    // update changelog file and get the added entry
+    $logEntry = (new MediaChangeLog($id, 1024))->addLogEntry([
         'date'       => $date,
         'ip'         => $remote,
         'type'       => $type,
@@ -191,8 +162,7 @@ function addMediaLogEntry(
         'sum'        => $summary,
         'extra'      => $extra,
         'sizechange' => $sizechange,
-    );
-    $logline = (new MediaChangeLog($id, 1024))->addLogEntry($revInfo);
+    ]);
 }
 
 /**
@@ -367,7 +337,7 @@ function _handleRecent($line, $ns, $flags, &$seen) {
     if (empty($line)) return false;   //skip empty lines
 
     // split the line into parts
-    $recent = parseChangelogLine($line);
+    $recent = ChangeLog::parseLogLine($line);
     if ($recent === false) return false;
 
     // skip seen ones

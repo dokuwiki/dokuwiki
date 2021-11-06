@@ -3,16 +3,16 @@
 namespace dokuwiki\ChangeLog;
 
 /**
- * methods for handling of changelog of pages or media files
+ * ChangeLog Prototype; methods for handling changelog
  */
 abstract class ChangeLog
 {
+    use ChangeLogTrait;
+
     /** @var string */
     protected $id;
     /** @var int */
     protected $currentRevision;
-    /** @var int */
-    protected $chunk_size;
     /** @var array */
     protected $cache;
 
@@ -38,32 +38,11 @@ abstract class ChangeLog
     }
 
     /**
-     * Set chunk size for file reading
-     * Chunk size zero let read whole file at once
-     *
-     * @param int $chunk_size maximum block size read from file
-     */
-    public function setChunkSize($chunk_size)
-    {
-        if (!is_numeric($chunk_size)) $chunk_size = 0;
-
-        $this->chunk_size = (int)max($chunk_size, 0);
-    }
-
-    /**
-     * Returns path to changelog
-     *
-     * @return string path to file
-     */
-    abstract protected function getChangelogFilename();
-
-    /**
      * Returns path to current page/media
      *
      * @return string path to file
      */
     abstract protected function getFilename();
-
 
     /**
      * Check whether given revision is the current page
@@ -163,7 +142,7 @@ abstract class ChangeLog
 
         // parse and cache changelog lines
         foreach ($lines as $value) {
-            $info = parseChangelogLine($value);
+            $info = $this->parseLogLine($value);
             $this->saveRevisionInfo($info);
         }
         if (!isset($this->cache[$this->id][$rev])) {
@@ -291,7 +270,7 @@ abstract class ChangeLog
 
         // handle lines in reverse order
         for ($i = count($lines) - 1; $i >= 0; $i--) {
-            $info = parseChangelogLine($lines[$i]);
+            $info = $this->parseLogLine($lines[$i]);
             if ($this->saveRevisionInfo($info)) {
                 $revs[] = $info['date'];
             }
@@ -346,7 +325,7 @@ abstract class ChangeLog
                 $step = -1;
             }
             for ($i = $start; $i >= 0 && $i < $count; $i = $i + $step) {
-                $info = parseChangelogLine($lines[$i]);
+                $info = $this->parseLogLine($lines[$i]);
                 if ($this->saveRevisionInfo($info)) {
                     //look for revs older/earlier then reference $rev and select $direction-th one
                     if (($direction > 0 && $info['date'] > $rev) || ($direction < 0 && $info['date'] < $rev)) {
@@ -418,7 +397,7 @@ abstract class ChangeLog
             $revs1 = $allrevs;
             while ($head > 0) {
                 for ($i = count($lines) - 1; $i >= 0; $i--) {
-                    $info = parseChangelogLine($lines[$i]);
+                    $info = $this->parseLogLine($lines[$i]);
                     if ($this->saveRevisionInfo($info)) {
                         $revs1[] = $info['date'];
                         $index++;
@@ -450,130 +429,6 @@ abstract class ChangeLog
     }
 
     /**
-     * Returns lines from changelog.
-     * If file larger than $chuncksize, only chunck is read that could contain $rev.
-     *
-     * When reference timestamp $rev is outside time range of changelog, readloglines() will return
-     * lines in first or last chunk, but they obviously does not contain $rev.
-     *
-     * @param int $rev revision timestamp
-     * @return array|false
-     *     if success returns array(fp, array(changeloglines), $head, $tail, $eof)
-     *     where fp only defined for chuck reading, needs closing.
-     *     otherwise false
-     */
-    protected function readloglines($rev)
-    {
-        $file = $this->getChangelogFilename();
-
-        if (!file_exists($file)) {
-            return false;
-        }
-
-        $fp = null;
-        $head = 0;
-        $tail = 0;
-        $eof = 0;
-
-        if (filesize($file) < $this->chunk_size || $this->chunk_size == 0) {
-            // read whole file
-            $lines = file($file);
-            if ($lines === false) {
-                return false;
-            }
-        } else {
-            // read by chunk
-            $fp = fopen($file, 'rb'); // "file pointer"
-            if ($fp === false) {
-                return false;
-            }
-            $head = 0;
-            fseek($fp, 0, SEEK_END);
-            $eof = ftell($fp);
-            $tail = $eof;
-
-            // find chunk
-            while ($tail - $head > $this->chunk_size) {
-                $finger = $head + intval(($tail - $head) / 2);
-                $finger = $this->getNewlinepointer($fp, $finger);
-                $tmp = fgets($fp);
-                if ($finger == $head || $finger == $tail) {
-                    break;
-                }
-                $info = parseChangelogLine($tmp);
-                $finger_rev = $info['date'];
-
-                if ($finger_rev > $rev) {
-                    $tail = $finger;
-                } else {
-                    $head = $finger;
-                }
-            }
-
-            if ($tail - $head < 1) {
-                // cound not find chunk, assume requested rev is missing
-                fclose($fp);
-                return false;
-            }
-
-            $lines = $this->readChunk($fp, $head, $tail);
-        }
-        return array(
-            $fp,
-            $lines,
-            $head,
-            $tail,
-            $eof,
-        );
-    }
-
-    /**
-     * Read chunk and return array with lines of given chunck.
-     * Has no check if $head and $tail are really at a new line
-     *
-     * @param resource $fp resource filepointer
-     * @param int $head start point chunck
-     * @param int $tail end point chunck
-     * @return array lines read from chunck
-     */
-    protected function readChunk($fp, $head, $tail)
-    {
-        $chunk = '';
-        $chunk_size = max($tail - $head, 0); // found chunk size
-        $got = 0;
-        fseek($fp, $head);
-        while ($got < $chunk_size && !feof($fp)) {
-            $tmp = @fread($fp, max(min($this->chunk_size, $chunk_size - $got), 0));
-            if ($tmp === false) { //error state
-                break;
-            }
-            $got += strlen($tmp);
-            $chunk .= $tmp;
-        }
-        $lines = explode("\n", $chunk);
-        array_pop($lines); // remove trailing newline
-        return $lines;
-    }
-
-    /**
-     * Set pointer to first new line after $finger and return its position
-     *
-     * @param resource $fp filepointer
-     * @param int $finger a pointer
-     * @return int pointer
-     */
-    protected function getNewlinepointer($fp, $finger)
-    {
-        fseek($fp, $finger);
-        $nl = $finger;
-        if ($finger > 0) {
-            fgets($fp); // slip the finger forward to a new line
-            $nl = ftell($fp);
-        }
-        return $nl;
-    }
-
-    /**
      * Return an existing revision for a specific date which is
      * the current one or younger or equal then the date
      *
@@ -592,48 +447,6 @@ abstract class ChangeLog
                 return false;
             }
         }
-    }
-
-    /**
-     * Returns the next lines of the changelog  of the chunck before head or after tail
-     *
-     * @param resource $fp filepointer
-     * @param int $head position head of last chunk
-     * @param int $tail position tail of last chunk
-     * @param int $direction positive forward, negative backward
-     * @return array with entries:
-     *    - $lines: changelog lines of readed chunk
-     *    - $head: head of chunk
-     *    - $tail: tail of chunk
-     */
-    protected function readAdjacentChunk($fp, $head, $tail, $direction)
-    {
-        if (!$fp) return array(array(), $head, $tail);
-
-        if ($direction > 0) {
-            //read forward
-            $head = $tail;
-            $tail = $head + intval($this->chunk_size * (2 / 3));
-            $tail = $this->getNewlinepointer($fp, $tail);
-        } else {
-            //read backward
-            $tail = $head;
-            $head = max($tail - $this->chunk_size, 0);
-            while (true) {
-                $nl = $this->getNewlinepointer($fp, $head);
-                // was the chunk big enough? if not, take another bite
-                if ($nl > 0 && $tail <= $nl) {
-                    $head = max($head - $this->chunk_size, 0);
-                } else {
-                    $head = $nl;
-                    break;
-                }
-            }
-        }
-
-        //load next chunck
-        $lines = $this->readChunk($fp, $head, $tail);
-        return array($lines, $head, $tail);
     }
 
     /**
@@ -669,7 +482,7 @@ abstract class ChangeLog
         $tail = $starttail;
         while (count($lines) > 0) {
             foreach ($lines as $line) {
-                $info = parseChangelogLine($line);
+                $info = $this->parseLogLine($line);
                 if ($this->saveRevisionInfo($info)) {
                     $revs[] = $info['date'];
                     if ($info['date'] >= $rev) {
@@ -709,7 +522,7 @@ abstract class ChangeLog
                 list($lines, $head, $tail) = $this->readAdjacentChunk($fp, $head, $tail, -1);
 
                 for ($i = count($lines) - 1; $i >= 0; $i--) {
-                    $info = parseChangelogLine($lines[$i]);
+                    $info = $this->parseLogLine($lines[$i]);
                     if ($this->saveRevisionInfo($info)) {
                         $revs[] = $info['date'];
                         $beforecount++;
