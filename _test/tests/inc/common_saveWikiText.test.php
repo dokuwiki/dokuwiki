@@ -431,8 +431,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $revisions = $pagelog->getRevisions(-1, 200);
         $this->assertCount(0, $revisions); // external edit is not yet in changelog
         // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $this->assertFalse($lastRevInfo);
+        $this->assertFalse($pagelog->lastRevision(), 'changelog file does not yet exist');
         // current revision
         $currentRevInfo = $pagelog->getCurrentRevisionInfo();
         $this->assertArrayHasKey('timestamp', $currentRevInfo, 'should be external revision');
@@ -460,8 +459,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $revisions = $pagelog->getRevisions(-1, 200);
         $this->assertCount(0, $revisions); // external edit is not yet in changelog
         // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $this->assertFalse($lastRevInfo);
+        $this->assertFalse($pagelog->lastRevision(), 'changelog file does not yet exist');
         // current revision
         $currentRevInfo = $pagelog->getCurrentRevisionInfo();
         $this->assertArrayHasKey('timestamp', $currentRevInfo, 'should be external revision');
