@@ -355,10 +355,11 @@ class Ajax {
             // use index to lookup matching pages
             $pages = ft_pageLookup($id, true);
 
-            // If search result is empty but 'useheading' option is 'always' or 'content',
-            // search page titles with original query.
-            if (count($pages) === 0 && in_array($conf['useheading'], ['1', 'content'], true)) { 
-                $pages = ft_pageLookup($q, true, true);
+            // If 'useheading' option is 'always' or 'content',
+            // search page titles with original query as well.
+            if ($conf['useheading'] === '1' || $conf['useheading'] === 'content') { 
+                $pages = array_merge($pages, ft_pageLookup($q, true, true));
+                asort($pages, SORT_STRING);
             }
         
             // result contains matches in pages and namespaces
