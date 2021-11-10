@@ -357,7 +357,7 @@ class Ajax {
 
             // If 'useheading' option is 'always' or 'content',
             // search page titles with original query as well.
-            if ($conf['useheading'] === '1' || $conf['useheading'] === 'content') { 
+            if ($conf['useheading'] == '1' || $conf['useheading'] == 'content') { 
                 $pages = array_merge($pages, ft_pageLookup($q, true, true));
                 asort($pages, SORT_STRING);
             }
