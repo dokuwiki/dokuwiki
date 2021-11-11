@@ -68,6 +68,7 @@ class PageResolverTest extends \DokuWikiTest
 
             // empty page links to itself
             ['context', '', 'context'],
+            ['foo:context', '', 'foo:context'],
         ];
 
         // run each test without a hash
