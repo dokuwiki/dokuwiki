@@ -118,4 +118,35 @@ class PageResolverTest extends \DokuWikiTest
         $actual = $this->callInaccessibleMethod($resolver, 'resolveStartPage', ['foo:', false, false]);
         $this->assertEquals($expect, $actual, 'default existing');
     }
+
+    /**
+     * @return array
+     * @see testResolveRelatives
+     */
+    public function provideResolveRelatives() {
+        return [
+            ['foo', 'foo'],
+            ['foo:bar', 'foo:bar'],
+            ['foo:..:bar', 'bar'],
+            ['foo:..:..:bar', 'bar'],
+            ['foo:.:bar', 'foo:bar'],
+            ['foo:.:..:.:bar', 'bar'],
+            ['foo:.:.:.:bar', 'foo:bar'],
+            ['foo::::bar', 'foo:bar'],
+            ['foo::::bar:', 'foo:bar:'],
+            ['foo:bar:', 'foo:bar:'],
+        ];
+    }
+
+    /**
+     * @dataProvider provideResolveRelatives
+     * @param string $input
+     * @param string $expected
+     */
+    public function testResolveRelatives($input, $expected) {
+        $resolver = new PageResolver('arbitrary');
+
+        $actual = $this->callInaccessibleMethod($resolver, 'resolveRelatives', [$input]);
+        $this->assertEquals($expected, $actual);
+    }
 }

@@ -81,23 +81,24 @@ abstract class Resolver
      */
     protected function resolveRelatives($id)
     {
-        // cleanup relatives
-        $result = array();
+        if ($id === '') return '';
+        $trail = ($id[-1] === ':') ? ':' : ''; // keep trailing colon
+
+        $result = [];
         $parts = explode(':', $id);
-        if (!$parts[0]) $result[] = ''; // FIXME is this necessary? what's it for? should it be type checked?
-        foreach ($parts AS $key => $dir) {
-            if ($dir == '..') {
-                if (end($result) == '..') {
-                    $result[] = '..';
-                } elseif (!array_pop($result)) {
-                    $result[] = '..';
-                }
-            } elseif ($dir && $dir != '.') {
-                $result[] = $dir;
+
+        foreach ($parts as $dir) {
+            if ($dir === '.') continue;
+            if ($dir === '') continue;
+            if ($dir === '..') {
+                array_pop($result);
+                continue;
             }
+            array_push($result, $dir);
         }
-        if (!end($parts)) $result[] = '';
+
         $id = implode(':', $result);
+        $id .= $trail;
 
         return $id;
     }
