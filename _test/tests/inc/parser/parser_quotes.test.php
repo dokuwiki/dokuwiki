@@ -359,4 +359,3 @@ class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
     }
 
 }
-

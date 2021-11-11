@@ -35,6 +35,7 @@ jobs:
               with:
                   php-version: ${{ matrix.php-versions }}
                   extensions: mbstring, intl, PDO, pdo_sqlite, pdo_mysql, pdo_pgsql, bz2
+                  ini-values: pcre.jit=0
 
             - name: Setup problem matchers
               run: |

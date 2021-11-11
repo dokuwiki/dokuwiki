@@ -15,7 +15,8 @@
         "aziraphale/email-address-validator": "^2",
         "marcusschwarz/lesserphp": "^0.5.1",
         "splitbrain/php-cli": "^1.1",
-        "splitbrain/slika": "^1.0"
+        "splitbrain/slika": "^1.0",
+        "kissifrot/php-ixr": "^1.8"
     },
     "config": {
         "platform": {

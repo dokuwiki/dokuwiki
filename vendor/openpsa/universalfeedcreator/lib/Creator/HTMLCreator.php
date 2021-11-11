@@ -140,7 +140,7 @@ class HTMLCreator extends FeedCreator
             $feedArray[] = "<div class='".$this->stylePrefix."footer'>".$this->footer."</div>";
         }
 
-        $feed = "".join($feedArray, "\r\n");
+        $feed = "".implode("\r\n", $feedArray);
 
         return $feed;
     }

@@ -28,7 +28,7 @@ use \splitbrain\slika\Exception;
 
 $options = [
     'quality' => 75
-]
+];
 
 try {
     Slika::run('input.png', $options)

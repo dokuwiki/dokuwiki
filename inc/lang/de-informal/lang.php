@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Axel Kirch <axel@globeglotter.com>
  * @author MaWi <drmaxxis@gmail.com>
  * @author lp <spam@lukpopp.ch>
  * @author Martin <martin@andev.de>
@@ -36,10 +37,10 @@ $lang['singlequoteopening']    = '‚';
 $lang['singlequoteclosing']    = '‘';
 $lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Diese Seite bearbeiten';
-$lang['btn_source']            = 'Zeige Quelltext';
+$lang['btn_source']            = 'Quelltext anzeigen';
 $lang['btn_show']              = 'Seite anzeigen';
 $lang['btn_create']            = 'Seite anlegen';
-$lang['btn_search']            = 'Suche';
+$lang['btn_search']            = 'Suchen';
 $lang['btn_save']              = 'Speichern';
 $lang['btn_preview']           = 'Vorschau';
 $lang['btn_top']               = 'Nach oben';
@@ -54,14 +55,14 @@ $lang['btn_secedit']           = 'Bearbeiten';
 $lang['btn_login']             = 'Anmelden';
 $lang['btn_logout']            = 'Abmelden';
 $lang['btn_admin']             = 'Admin';
-$lang['btn_update']            = 'Updaten';
+$lang['btn_update']            = 'Aktualisieren';
 $lang['btn_delete']            = 'Löschen';
 $lang['btn_back']              = 'Zurück';
 $lang['btn_backlink']          = 'Links hierher';
 $lang['btn_subscribe']         = 'Aboverwaltung';
 $lang['btn_profile']           = 'Benutzerprofil';
 $lang['btn_reset']             = 'Zurücksetzen';
-$lang['btn_resendpwd']         = 'Setze neues Passwort';
+$lang['btn_resendpwd']         = 'Neues Passwort festlegen';
 $lang['btn_draft']             = 'Entwurf bearbeiten';
 $lang['btn_recover']           = 'Entwurf wiederherstellen';
 $lang['btn_draftdel']          = 'Entwurf löschen';
@@ -85,9 +86,9 @@ $lang['profile']               = 'Benutzerprofil';
 $lang['badlogin']              = 'Benutzername oder Passwort sind falsch.';
 $lang['badpassconfirm']        = 'Das Passwort war falsch.';
 $lang['minoredit']             = 'Kleine Änderung';
-$lang['draftdate']             = 'Entwurf gespeichert am';
-$lang['nosecedit']             = 'Diese Seite wurde in der Zwischenzeit geändert, da das Sektionsinfo veraltet ist. Die ganze Seite wird stattdessen geladen.';
-$lang['searchcreatepage']      = 'Falls der gesuchte Begriff nicht gefunden wurde, kannst du direkt eine neue, nach deiner Anfrage benannte Seite %s anlegen.';
+$lang['draftdate']             = 'Entwurf automatisch gesichert am';
+$lang['nosecedit']             = 'Diese Seite wurde inzwischen geändert. Weil deshalb ein oder mehrere Abschnitte veraltet sind, wurde die Seite komplett neu geladen.';
+$lang['searchcreatepage']      = 'Falls der gesuchte Begriff nicht gefunden wurde, kannst du die nach deiner Anfrage benannte Seite %s umgehend neu anlegen.';
 $lang['search_fullresults']    = 'Volltextergebnisse';
 $lang['js']['search_toggle_tools'] = 'Suchwerkzeuge umschalten';
 $lang['js']['willexpire']      = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, solltest du sie durch einen Klick auf den Vorschau-Knopf verlängern.';
@@ -102,21 +103,21 @@ $lang['js']['mediasize']       = 'Bildgröße';
 $lang['js']['mediatarget']     = 'Linkziel';
 $lang['js']['mediaclose']      = 'Schließen';
 $lang['js']['mediainsert']     = 'Einfügen';
-$lang['js']['mediadisplayimg'] = 'Bild anzeigen.';
-$lang['js']['mediadisplaylnk'] = 'Nur den Link anzeigen.';
-$lang['js']['mediasmall']      = 'Kleine Version';
-$lang['js']['mediamedium']     = 'Mittelgroße Version';
-$lang['js']['medialarge']      = 'Große Version';
-$lang['js']['mediaoriginal']   = 'Original Version';
-$lang['js']['medialnk']        = 'Link zu der Detailseite';
+$lang['js']['mediadisplayimg'] = 'Bild anzeigen';
+$lang['js']['mediadisplaylnk'] = 'Nur den Link anzeigen';
+$lang['js']['mediasmall']      = 'Bild in kleiner Auflösung';
+$lang['js']['mediamedium']     = 'Bild in mittlerer Auflösung';
+$lang['js']['medialarge']      = 'Bild in hoher Auflösung';
+$lang['js']['mediaoriginal']   = 'Originalauflösung';
+$lang['js']['medialnk']        = 'Link zur Detailseite';
 $lang['js']['mediadirect']     = 'Direkter Link zum Original';
-$lang['js']['medianolnk']      = 'Kein link';
-$lang['js']['medianolink']     = 'Keine Verlinkung des Bildes';
-$lang['js']['medialeft']       = 'Bild nach links ausrichten.';
-$lang['js']['mediaright']      = 'Bild nach rechts ausrichten.';
-$lang['js']['mediacenter']     = 'Bild in der Mitte ausrichten';
-$lang['js']['medianoalign']    = 'Keine Ausrichtung des Bildes.';
-$lang['js']['nosmblinks']      = 'Das Verlinken von Windows-Freigaben funktioniert nur im Microsoft Internet-Explorer.\nDer Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
+$lang['js']['medianolnk']      = 'Kein Link';
+$lang['js']['medianolink']     = 'Bild nicht verlinken';
+$lang['js']['medialeft']       = 'Bild linksbündig ausrichten.';
+$lang['js']['mediaright']      = 'Bild rechtsbündig ausrichten.';
+$lang['js']['mediacenter']     = 'Bild horizontal zentriert ausrichten';
+$lang['js']['medianoalign']    = 'Bild ohne bestimmte Ausrichtung lassen';
+$lang['js']['nosmblinks']      = 'Das Verlinken von Windows-Freigaben funktioniert nur im Microsoft Internet-Explorer.\nDer Link kann jedoch zum Einfügen kopiert werden.';
 $lang['js']['linkwiz']         = 'Link-Assistent';
 $lang['js']['linkto']          = 'Link zu:';
 $lang['js']['del_confirm']     = 'Die ausgewählten Dateien wirklich löschen?';
@@ -310,7 +311,7 @@ $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich.
 $lang['i_chooselang']          = 'Wähle deine Sprache';
 $lang['i_installer']           = 'DokuWiki-Installation';
 $lang['i_wikiname']            = 'Wiki-Name';
-$lang['i_enableacl']           = 'Zugangskontrolle (ACL) aktivieren (empfohlen)';
+$lang['i_enableacl']           = 'Zugriffskontrolle (ACL) aktivieren (empfohlen)';
 $lang['i_superuser']           = 'Benutzername des Administrators';
 $lang['i_problems']            = 'Das Installationsprogramm hat unten aufgeführte Probleme festgestellt, die zunächst behoben werden müssen, bevor du mit der Installation fortfahren kannst.';
 $lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki-Installation. Du solltest entweder alle Dateien noch einmal frisch installieren oder die <a href="http://dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
@@ -327,7 +328,7 @@ $lang['i_badhash']             = 'Unbekannte oder modifizierte dokuwiki.php (Has
 $lang['i_badval']              = '<code>%s</code> - unerlaubter oder leerer Wert';
 $lang['i_success']             = 'Die Konfiguration wurde erfolgreich abgeschlossen. Du kannst jetzt die install.php löschen. Dein <a href="doku.php?id=wiki:welcome">neues DokuWiki</a> ist jetzt für dich bereit.';
 $lang['i_failure']             = 'Es sind Fehler beim Schreiben der Konfigurationsdateien aufgetreten. Du musst diese von Hand beheben, bevor du dein <a href="doku.php?id=wiki:welcome">neues DokuWiki</a> nutzen kannst.';
-$lang['i_policy']              = 'Anfangseinstellungen der Zugangskontrolle (ACL)';
+$lang['i_policy']              = 'Anfangseinstellungen der Zugriffskontrolle (ACL)';
 $lang['i_pol0']                = 'Offenes Wiki (lesen, schreiben und hochladen für alle Benutzer)';
 $lang['i_pol1']                = 'Öffentliches Wiki (Lesen für alle, Schreiben und Hochladen nur für registrierte Benutzer)';
 $lang['i_pol2']                = 'Geschlossenes Wiki (Lesen, Schreiben und Hochladen nur für registrierte Benutzer)';
