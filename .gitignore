@@ -95,5 +95,5 @@ vendor/splitbrain/php-cli/apigen.neon
 
 # PHPUnit tests
 phpunit.phar
-.phpunit.result.cache
+*.phpunit.result.cache
 _test/data/
