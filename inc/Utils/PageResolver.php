@@ -46,7 +46,7 @@ class PageResolver extends Resolver
      * IDs ending in :
      *
      * @param string $id
-     * @param int $rev
+     * @param string|int|false $rev
      * @param bool $isDateAt
      * @return string
      */
@@ -58,16 +58,17 @@ class PageResolver extends Resolver
 
         if (page_exists($id . $conf['start'], $rev, true, $isDateAt)) {
             // start page inside namespace
-            $id = $id . $conf['start'];
+            return $id . $conf['start'];
         } elseif (page_exists($id . noNS(cleanID($id)), $rev, true, $isDateAt)) {
             // page named like the NS inside the NS
-            $id = $id . noNS(cleanID($id));
-        } elseif (!page_exists($id, $rev, true, $isDateAt)) { #FIXME is this correct?
-            // page like namespace does not exist, fall back to default
-            $id = $id . $conf['start'];
+            return $id . noNS(cleanID($id));
+        } elseif (page_exists(substr($id, 0, -1), $rev, true, $isDateAt)) {
+            // page named like the NS outside the NS
+            return substr($id, 0, -1);
         }
 
-        return $id;
+        // fall back to default start page
+        return $id . $conf['start'];
     }
 
     /**

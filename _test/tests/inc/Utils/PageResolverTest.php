@@ -95,4 +95,27 @@ class PageResolverTest extends \DokuWikiTest
         $this->assertEquals($expected, $resolver->resolveId($id));
     }
 
+    public function testResolveStartPage() {
+
+        $resolver = new PageResolver('arbitrary');
+
+        $expect = 'foo:start';
+        $actual = $this->callInaccessibleMethod($resolver, 'resolveStartPage', ['foo:', false, false]);
+        $this->assertEquals($expect, $actual, 'default non-existing');
+
+        saveWikiText('foo', 'test', 'test');
+        $expect = 'foo';
+        $actual = $this->callInaccessibleMethod($resolver, 'resolveStartPage', ['foo:', false, false]);
+        $this->assertEquals($expect, $actual, 'page like namespace outside');
+
+        saveWikiText('foo:foo', 'test', 'test');
+        $expect = 'foo:foo';
+        $actual = $this->callInaccessibleMethod($resolver, 'resolveStartPage', ['foo:', false, false]);
+        $this->assertEquals($expect, $actual, 'page like namespace inside');
+
+        saveWikiText('foo:start', 'test', 'test');
+        $expect = 'foo:start';
+        $actual = $this->callInaccessibleMethod($resolver, 'resolveStartPage', ['foo:', false, false]);
+        $this->assertEquals($expect, $actual, 'default existing');
+    }
 }
