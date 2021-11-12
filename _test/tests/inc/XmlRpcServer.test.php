@@ -33,19 +33,19 @@ class XmlRpcServerTest extends DokuWikiTest
         $pageName = ":wiki:dokuwiki";
         $file = wikiFN($pageName);
         $timestamp = filemtime($file);
-        $ixrModifiedTime = (new DateTime('@' . $timestamp))->format(IXR_Date::XMLRPC_ISO8601);
+        $ixrModifiedTime = (new DateTime('@' . $timestamp))->format(DateTime::ATOM);
         $author = '127.0.0.1'; // read from changelog, $info['user'] or $info['ip']
 
         $request = <<<EOD
 <?xml version="1.0"?>
-  <methodCall>
-    <methodName>wiki.getPageInfo</methodName>
-      <param> 
-        <value>
-          <string>$pageName</string>
-        </value>
-      </param>
-  </methodCall>
+   <methodCall>
+     <methodName>wiki.getPageInfo</methodName>
+     		<param>
+			<value>
+				<string>$pageName</string>
+			</value>
+		</param>
+   </methodCall>
 EOD;
         $expected = <<<EOD
 <methodResponse>
@@ -65,6 +65,6 @@ EOD;
 EOD;
 
         $this->server->serve($request);
-        $this->assertEquals(trim($expected), trim($this->server->output));
+        $this->assertXmlStringEqualsXmlString(trim($expected), trim($this->server->output));
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd951937a517d2f058327d0429efe7ff",
+    "content-hash": "09f5f3726c3993d80980df99ab2a59dc",
     "packages": [
         {
             "name": "aziraphale/email-address-validator",
@@ -97,6 +97,53 @@
                 "source": "https://github.com/GeSHi/geshi-1.0/tree/master"
             },
             "time": "2020-06-22T15:46:04+00:00"
+        },
+        {
+            "name": "kissifrot/php-ixr",
+            "version": "1.8.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kissifrot/php-ixr.git",
+                "reference": "4477cd1a67416ce5b6a2080f9a79d9eb50a965c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kissifrot/php-ixr/zipball/4477cd1a67416ce5b6a2080f9a79d9eb50a965c1",
+                "reference": "4477cd1a67416ce5b6a2080f9a79d9eb50a965c1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "IXR\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Incutio Ltd 2010 - Simon Willison",
+                    "homepage": "http://scripts.incutio.com/xmlrpc/"
+                }
+            ],
+            "description": "Incutio XML-RPC library (IXR)",
+            "homepage": "http://scripts.incutio.com/xmlrpc/",
+            "keywords": [
+                "remote procedure call",
+                "rpc",
+                "xlm-rpc",
+                "xmlrpc"
+            ],
+            "support": {
+                "issues": "https://github.com/kissifrot/php-ixr/issues",
+                "source": "https://github.com/kissifrot/php-ixr/tree/master"
+            },
+            "time": "2016-11-17T12:00:18+00:00"
         },
         {
             "name": "marcusschwarz/lesserphp",
@@ -570,5 +617,5 @@
     "platform-overrides": {
         "php": "7.2"
     },
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }

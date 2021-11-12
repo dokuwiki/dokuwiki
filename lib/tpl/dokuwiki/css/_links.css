@@ -33,21 +33,22 @@
 .dokuwiki a.mail,
 .dokuwiki a.mediafile,
 .dokuwiki a.interwiki {
+    background-size: 1.2em;
     background-repeat: no-repeat;
     background-position: 0 center;
-    padding: 0 0 0 18px;
+    padding: 0 0 0 1.4em;
 }
 /* external link */
 .dokuwiki a.urlextern {
-    background-image: url(../../images/external-link.png);
+    background-image: url(../../images/external-link.svg);
 }
 /* windows share */
 .dokuwiki a.windows {
-    background-image: url(../../images/unc.png);
+    background-image: url(../../images/unc.svg);
 }
 /* email link */
 .dokuwiki a.mail {
-    background-image: url(../../images/email.png);
+    background-image: url(../../images/email.svg);
 }
 
 /* icons of the following are set by dokuwiki in lib/exe/css.php */

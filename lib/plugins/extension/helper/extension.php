@@ -112,7 +112,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     public function isGitControlled()
     {
         if (!$this->isInstalled()) return false;
-        return is_dir($this->getInstallDir().'/.git');
+        return file_exists($this->getInstallDir().'/.git');
     }
 
     /**
