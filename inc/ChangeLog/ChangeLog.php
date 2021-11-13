@@ -68,7 +68,14 @@ abstract class ChangeLog
 
     /**
      * Return the current revision identifer
-     * @return int|false
+     *
+     * The "current" revision means current version of the page or media file. It is either
+     * identical with or newer than the "last" revision, that depends on whether the file
+     * has modified, created or deleted outside of DokuWiki.
+     * The value of identifier can be determined by timestamp as far as the file exists,
+     * otherwise it must be assigned larger than any other revisions to keep them sortable.
+     *
+     * @return int|false revision timestamp
      */
     public function currentRevision()
     {
@@ -80,9 +87,9 @@ abstract class ChangeLog
     }
 
     /**
-     * Return the last revision identifer, timestamp of last entry of changelog
+     * Return the last revision identifer, date value of the last entry of the changelog
      *
-     * @return int|false
+     * @return int|false revision timestamp
      */
     public function lastRevision()
     {
@@ -539,29 +546,18 @@ abstract class ChangeLog
     /**
      * Get the current revision information, considering external edit, create or deletion
      *
-     * The "current" revison is the last timestamp of the page in the context of changelog.
-     * However it is often recognised that is in sight now from the DokuWiki user perspective.
-     * The current page is accessible without any revision identifier (eg. doku.php?id=foo),
-     * but it has unique modification time of the source txt file and kept in changelog.
-     * When the page is deleted by saving blank text in the DokuWiki editor, the deletion
-     * time is to be kept as its revision identifier in the changelog.
+     * When the file has not modified since its last revision, the infomation of the last
+     * change that had already recorded in the changelog is returned as current change info.
+     * Otherwise, the change infomation since the last revision caused outside DokuWiki
+     * should be returned, which is referred as "external revision".
      *
-     * External edit will break consistency between the file and changelog. A page source
-     * file might be modified, created or deleted without using DokuWiki editor, instead
-     * by accessing direct to the file stored in data directory via server console.
-     * Such editions are never recorded in changelog. However after external file edit,
-     * now we can see new "current" content of the edited page!
-     *
-     * A tentative revision should be assigned for the external edition to handle whole
-     * revisions successfully in DokuWiki revision list and diff view interface.
-     * As far as the source file of the edition exists, a unique revision can be decided
-     * using function filemtime(), but it could be unknown if the foo.txt file had deleted
-     * or moved to foo.bak file.
-     * In such case, we assume unknown revision as "last timestamp in changelog" +1
-     * to ensure that current one should be newer than any revisions in changelog.
-     * Another case of external edit: when foo.bak file moved back to foo.txt, the current
-     * one could become older than latest timestamp in changelog. In this case, we should
-     * assume the revison as "last timestamp in chagelog" +1, instead of its timestamp.
+     * The change date of the file can be determined by timestamp as far as the file exists,
+     * however this is not possible when the file has already deleted outside of DokuWiki.
+     * In such case we assign current time() value for the external deletion. The change
+     * date is used as revision identifier.
+     * As a result, the value of current revision identifier may change each time because:
+     *   1) the file has again modified outside of DokuWiki, or
+     *   2) the value is essentially volatile for deleted but once existed files.
      *
      * @return bool|array false when page had never existed or array with entries:
      *      - date:  revision identifier (timestamp or last revision +1)
@@ -605,7 +601,7 @@ abstract class ChangeLog
 
             // externally deleted
             $revInfo = [
-                'date' => $lastRev +1,
+                'date' => time(), // assign current time
                 'ip'   => '127.0.0.1',
                 'type' => DOKU_CHANGE_TYPE_DELETE,
                 'id'   => $this->id,
@@ -641,7 +637,7 @@ abstract class ChangeLog
 
             // externally created or edited
             $revInfo = [
-                'date' => $timestamp ?: $lastRev +1,
+                'date' => $timestamp ?: time(),
                 'ip'   => '127.0.0.1',
                 'type' => $isJustCreated ? DOKU_CHANGE_TYPE_CREATE : DOKU_CHANGE_TYPE_EDIT,
                 'id'   => $this->id,
