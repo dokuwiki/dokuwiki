@@ -17,6 +17,7 @@ class Diff extends Ui
     protected $text;
     protected $showIntro;
     protected $difftype;
+    protected $difftypes;
 
     /**
      * Diff Ui constructor
@@ -27,8 +28,16 @@ class Diff extends Ui
      */
     public function __construct($text = '', $showIntro = true, $difftype = null)
     {
+        global $lang;
+        
         $this->text      = $text;
         $this->showIntro = $showIntro;
+        
+        $this->difftypes = [
+            'sidebyside' => $lang['diff_side'],
+            'inline' => $lang['diff_inline']
+        ];
+        Event::createAndTrigger('DIFF_TYPES', $this->difftypes);
 
         // determine diff view type
         if (isset($difftype)) {
@@ -41,7 +50,8 @@ class Diff extends Ui
                 $this->difftype = 'inline';
             }
         }
-        if ($this->difftype !== 'inline') $this->difftype = 'sidebyside';
+        if (!isset($this->difftypes[$this->difftype])) $this->difftype = 'sidebyside';
+        
     }
 
     /**
@@ -167,10 +177,7 @@ class Diff extends Ui
             $form->setHiddenField('rev2[0]', $l_rev);
             $form->setHiddenField('rev2[1]', $r_rev);
             $form->setHiddenField('do', 'diff');
-            $options = array(
-                         'sidebyside' => $lang['diff_side'],
-                         'inline' => $lang['diff_inline']
-            );
+            $options = $this->difftypes;
             $input = $form->addDropdown('difftype', $options, $lang['diff_type'])
                 ->val($this->difftype)->addClass('quickselect');
             $input->useInput(false); // inhibit prefillInput() during toHTML() process
@@ -223,10 +230,24 @@ class Diff extends Ui
                 . '<th colspan="2" '. $r_minor .'>'. $r_head .'</th>'
                 . '</tr>';
         }
-
-        //diff view
-        print $this->insertSoftbreaks($diffformatter->format($diff));
-
+        
+        $eventData = [
+            'difftype' => $this->difftype,
+            'diff' => $diff,
+            'diffformatter' => $diffformatter,
+            'l_text' => $l_text,
+            'r_text' => $r_text,
+            'l_rev' => $l_rev,
+            'r_rev' => $r_rev,
+        ];
+        $diffEvent = new Event('DIFF_RENDER', $eventData);
+        if($diffEvent->advise_before()) {
+            //diff view
+             echo $this->insertSoftbreaks($diffformatter->format($diff));
+        }
+        $diffEvent->advise_after();
+        unset($diffEvent);
+        
         print '</table>';
         print '</div>';
     }
