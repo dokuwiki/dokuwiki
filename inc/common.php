@@ -1270,7 +1270,7 @@ function detectExternalEdit($id) {
     $pagelog = new PageChangeLog($id, 1024);
     $revInfo = $pagelog->getCurrentRevisionInfo();
 
-    // external edit, creation or deletion
+    // only interested in external revision
     if (empty($revInfo) || !array_key_exists('timestamp', $revInfo)) return;
 
     // use detection time for externally deleted page file
@@ -1312,66 +1312,81 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     /* @var Input $INPUT */
     global $INPUT;
 
-    // prepare data for event
-    $svdta = array();
-    $svdta['id']             = $id;
-    $svdta['file']           = wikiFN($id);
-    $svdta['revertFrom']     = $REV;
-    $svdta['oldRevision']    = @filemtime($svdta['file']);
-    $svdta['newRevision']    = 0;
-    $svdta['newContent']     = $text;
-    $svdta['oldContent']     = rawWiki($id);
-    $svdta['summary']        = $summary;
-    $svdta['contentChanged'] = ($svdta['newContent'] != $svdta['oldContent']);
-    $svdta['changeInfo']     = '';
-    $svdta['changeType']     = DOKU_CHANGE_TYPE_EDIT;
-    $svdta['sizechange']     = null;
+    $pagefile = wikiFN($id);
+    $currentRevision = @filemtime($pagefile);       // int or false
+    $currentContent = rawWiki($id);
+    $currentSize = file_exists($pagefile) ? filesize($pagefile) : 0;
 
-    // select changelog line type
+    // prepare data for event COMMON_WIKIPAGE_SAVE
+    $data = array(
+        'id'             => $id,       // should not be altered by any handlers
+        'file'           => $pagefile, // same above
+        'revertFrom'     => $REV,
+        'oldRevision'    => $currentRevision,
+        'newRevision'    => 0,      // only available in the after hook
+        'newContent'     => $text,
+        'oldContent'     => $currentContent,
+        'summary'        => $summary,
+        'contentChanged' => (bool)($text != $currentContent), // confirm later
+        'changeInfo'     => '',     // set prior to event
+        'changeType'     => null,   // set prior to event
+        'sizechange'     => strlen($text) - strlen($currentContent), // TBD
+    );
+    // determin change type and relevant elements of event data
     if ($REV) {
-        $svdta['changeType'] = DOKU_CHANGE_TYPE_REVERT;
-        $svdta['changeInfo'] = $REV;
-    } elseif (!file_exists($svdta['file'])) {
-        $svdta['changeType'] = DOKU_CHANGE_TYPE_CREATE;
+        $data['changeType'] = DOKU_CHANGE_TYPE_REVERT;
+        $data['changeInfo'] = $REV;
+    } elseif (!file_exists($pagefile)) {
+        $data['changeType'] = DOKU_CHANGE_TYPE_CREATE;
     } elseif (trim($text) == '') {
         // empty or whitespace only content deletes
-        $svdta['changeType'] = DOKU_CHANGE_TYPE_DELETE;
+        $data['changeType'] = DOKU_CHANGE_TYPE_DELETE;
         // autoset summary on deletion
-        if (blank($svdta['summary'])) {
-            $svdta['summary'] = $lang['deleted'];
+        if (blank($data['summary'])) {
+            $data['summary'] = $lang['deleted'];
         }
     } elseif ($minor && $conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
         //minor edits only for logged in users
-        $svdta['changeType'] = DOKU_CHANGE_TYPE_MINOR_EDIT;
+        $data['changeType'] = DOKU_CHANGE_TYPE_MINOR_EDIT;
+    } else {
+        $data['changeType'] = DOKU_CHANGE_TYPE_EDIT;
     }
 
-    $event = new Event('COMMON_WIKIPAGE_SAVE', $svdta);
+    $event = new Event('COMMON_WIKIPAGE_SAVE', $data);
     if (!$event->advise_before()) return;
 
     // if the content has not been changed, no save happens (plugins may override this)
-    if (!$svdta['contentChanged']) return;
+    if (!$data['contentChanged']) return;
 
-    // register external edit, creation or deletion as a regular changelog entry
-    detectExternalEdit($id);
-
-    if (
-        ($svdta['changeType'] == DOKU_CHANGE_TYPE_CREATE) ||
-        ($svdta['changeType'] == DOKU_CHANGE_TYPE_REVERT && !file_exists($svdta['file']))
-    ) {
+    // confirm again event data that may altered by event handlers
+    // plugin may alter the value of oldRevision to last revision to ignore extrnal edit
+    if ($data['oldRevision'] === false) {
+        // current file was not existed, no external edit occured
         $filesize_old = 0;
+    } elseif ($data['oldRevision'] == $currentRevision) {
+        // add current external revision entry to changelog as a regular changelog entry
+        detectExternalEdit($id);
+        $filesize_old = $currentSize;
+//  } elseif ($data['oldRevision'] == $lastRevision) {
+//      $filesize_old = strlen(rawWiki($id, $data['oldRevision']));
     } else {
-        $filesize_old = filesize($svdta['file']);
+        $filesize_old = (
+            $data['changeType'] == DOKU_CHANGE_TYPE_CREATE || (
+            $data['changeType'] == DOKU_CHANGE_TYPE_REVERT && !file_exists($pagefile))
+        ) ? 0 : filesize($pagefile);
     }
-    if ($svdta['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
+
+    // make change to the current file
+    if ($data['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
         // Send "update" event with empty data, so plugins can react to page deletion
-        $data = array([$svdta['file'], '', false], getNS($id), noNS($id), false);
-        Event::createAndTrigger('IO_WIKIPAGE_WRITE', $data);
+        $ioData = array([$pagefile, '', false], getNS($id), noNS($id), false);
+        Event::createAndTrigger('IO_WIKIPAGE_WRITE', $ioData);
         // pre-save deleted revision
-        @touch($svdta['file']);
+        @touch($pagefile);
         clearstatcache();
-        $svdta['newRevision'] = saveOldRevision($id);
+        $data['newRevision'] = saveOldRevision($id);
         // remove empty file
-        @unlink($svdta['file']);
+        @unlink($pagefile);
         $filesize_new = 0;
         // don't remove old meta info as it should be saved, plugins can use
         // IO_WIKIPAGE_WRITE for removing their metadata...
@@ -1382,29 +1397,29 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         io_sweepNS($id, 'mediadir');
     } else {
         // save file (namespace dir is created in io_writeWikiPage)
-        io_writeWikiPage($svdta['file'], $svdta['newContent'], $id);
+        io_writeWikiPage($pagefile, $data['newContent'], $id);
         // pre-save the revision, to keep the attic in sync
-        $svdta['newRevision'] = saveOldRevision($id);
-        $filesize_new = filesize($svdta['file']);
+        $data['newRevision'] = saveOldRevision($id);
+        $filesize_new = filesize($pagefile);
     }
-    $svdta['sizechange'] = $filesize_new - $filesize_old;
+    $data['sizechange'] = $filesize_new - $filesize_old;
 
     $event->advise_after();
 
     // adds an entry to the changelog and saves the metadata for the page
     addLogEntry(
-        $svdta['newRevision'],
-        $svdta['id'],
-        $svdta['changeType'],
-        $svdta['summary'],
-        $svdta['changeInfo'],
+        $data['newRevision'],
+        $id,
+        $data['changeType'],
+        $data['summary'],
+        $data['changeInfo'],
         null,
-        $svdta['sizechange']
+        $data['sizechange']
     );
 
     // send notify mails
-    notify($svdta['id'], 'admin', $svdta['oldRevision'], $svdta['summary'], $minor, $svdta['newRevision']);
-    notify($svdta['id'], 'subscribers', $svdta['oldRevision'], $svdta['summary'], $minor, $svdta['newRevision']);
+    notify($id, 'admin', $data['oldRevision'], $data['summary'], $minor, $data['newRevision']);
+    notify($id, 'subscribers', $data['oldRevision'], $data['summary'], $minor, $data['newRevision']);
 
     // update the purgefile (timestamp of the last time anything within the wiki was changed)
     io_saveFile($conf['cachedir'].'/purgefile', time());
@@ -1420,8 +1435,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
 }
 
 /**
- * moves the current version to the attic and returns its
- * revision date
+ * moves the current version to the attic and returns its revision date
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
@@ -1429,11 +1443,11 @@ function saveWikiText($id, $text, $summary, $minor = false) {
  * @return int|string revision timestamp
  */
 function saveOldRevision($id) {
-    $oldf = wikiFN($id);
-    if (!file_exists($oldf)) return '';
-    $date = filemtime($oldf);
-    $newf = wikiFN($id, $date);
-    io_writeWikiPage($newf, rawWiki($id), $id, $date);
+    $oldfile = wikiFN($id);
+    if (!file_exists($oldfile)) return '';
+    $date = filemtime($oldfile);
+    $newfile = wikiFN($id, $date);
+    io_writeWikiPage($newfile, rawWiki($id), $id, $date);
     return $date;
 }
 
