@@ -65,10 +65,6 @@ trait ChangeLogTrait
         return $line = implode("\t", $entry) ."\n";
     }
 
-
-    /** @var int */
-    protected $chunk_size;
-
     /**
      * Returns path to changelog
      *
@@ -76,6 +72,19 @@ trait ChangeLogTrait
      */
     abstract protected function getChangelogFilename();
 
+    /**
+     * Checks if the ID has old revisons
+     * @return boolean
+     */
+    public function hasRevisions()
+    {
+        $logfile = $this->getChangelogFilename();
+        return file_exists($logfile);
+    }
+
+
+    /** @var int */
+    protected $chunk_size;
 
     /**
      * Set chunk size for file reading
