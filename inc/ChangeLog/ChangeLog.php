@@ -81,6 +81,7 @@ abstract class ChangeLog
 
     /**
      * Return the last revision identifer, timestamp of last entry of changelog
+     *
      * @return int|false
      */
     public function lastRevision()
@@ -92,9 +93,10 @@ abstract class ChangeLog
     /**
      * Save revision info to the cache pool
      *
+     * @param array $info Revision info structure
      * @return bool
      */
-    protected function saveRevisionInfo($info)
+    protected function cacheRevisionInfo($info)
     {
         if (!is_array($info)) return false;
         //$this->cache[$this->id][$info['date']] ??= $info; // since php 7.4
@@ -103,7 +105,7 @@ abstract class ChangeLog
     }
 
     /**
-     * Get the changelog information for a specific page id and revision (timestamp)
+     * Get the changelog information for a specific revision (timestamp)
      *
      * Adjacent changelog lines are optimistically parsed and cached to speed up
      * consecutive calls to getRevisionInfo. For large changelog files, only the chunk
@@ -143,7 +145,7 @@ abstract class ChangeLog
         // parse and cache changelog lines
         foreach ($lines as $value) {
             $info = $this->parseLogLine($value);
-            $this->saveRevisionInfo($info);
+            $this->cacheRevisionInfo($info);
         }
         if (!isset($this->cache[$this->id][$rev])) {
             return false;
@@ -180,6 +182,9 @@ abstract class ChangeLog
         $lines = array();
         $count = 0;
 
+        $logfile = $this->getChangelogFilename();
+        if (!file_exists($logfile)) return $revs;
+
         $num = max($num, 0);
         if ($num == 0) {
             return $revs;
@@ -195,20 +200,15 @@ abstract class ChangeLog
             }
         }
 
-        $file = $this->getChangelogFilename();
-
-        if (!file_exists($file)) {
-            return $revs;
-        }
-        if (filesize($file) < $this->chunk_size || $this->chunk_size == 0) {
+        if (filesize($logfile) < $this->chunk_size || $this->chunk_size == 0) {
             // read whole file
-            $lines = file($file);
+            $lines = file($logfile);
             if ($lines === false) {
                 return $revs;
             }
         } else {
             // read chunks backwards
-            $fp = fopen($file, 'rb'); // "file pointer"
+            $fp = fopen($logfile, 'rb'); // "file pointer"
             if ($fp === false) {
                 return $revs;
             }
@@ -271,7 +271,7 @@ abstract class ChangeLog
         // handle lines in reverse order
         for ($i = count($lines) - 1; $i >= 0; $i--) {
             $info = $this->parseLogLine($lines[$i]);
-            if ($this->saveRevisionInfo($info)) {
+            if ($this->cacheRevisionInfo($info)) {
                 $revs[] = $info['date'];
             }
         }
@@ -288,8 +288,10 @@ abstract class ChangeLog
      * Adjacent changelog lines are optimistically parsed and cached to speed up
      * consecutive calls to getRevisionInfo.
      *
-     * @param int $rev revision timestamp used as startdate (doesn't need to be revisionnumber)
-     * @param int $direction give position of returned revision with respect to $rev; positive=next, negative=prev
+     * @param int $rev revision timestamp used as startdate
+     *    (doesn't need to be exact revision number)
+     * @param int $direction give position of returned revision with respect to $rev;
+          positive=next, negative=prev
      * @return bool|int
      *      timestamp of the requested revision
      *      otherwise false
@@ -326,7 +328,7 @@ abstract class ChangeLog
             }
             for ($i = $start; $i >= 0 && $i < $count; $i = $i + $step) {
                 $info = $this->parseLogLine($lines[$i]);
-                if ($this->saveRevisionInfo($info)) {
+                if ($this->cacheRevisionInfo($info)) {
                     //look for revs older/earlier then reference $rev and select $direction-th one
                     if (($direction > 0 && $info['date'] > $rev) || ($direction < 0 && $info['date'] < $rev)) {
                         $revcounter++;
@@ -398,7 +400,7 @@ abstract class ChangeLog
             while ($head > 0) {
                 for ($i = count($lines) - 1; $i >= 0; $i--) {
                     $info = $this->parseLogLine($lines[$i]);
-                    if ($this->saveRevisionInfo($info)) {
+                    if ($this->cacheRevisionInfo($info)) {
                         $revs1[] = $info['date'];
                         $index++;
 
@@ -427,8 +429,9 @@ abstract class ChangeLog
      */
     public function getLastRevisionAt($date_at)
     {
+        $fileLastMod = $this->getFilename();
         //requested date_at(timestamp) younger or equal then modified_time($this->id) => load current
-        if (file_exists($this->getFilename()) && $date_at >= @filemtime($this->getFilename())) {
+        if (file_exists($fileLastMod) && $date_at >= @filemtime($fileLastMod)) {
             return '';
         } else {
             if ($rev = $this->getRelativeRevision($date_at + 1, -1)) { //+1 to get also the requested date revision
@@ -473,7 +476,7 @@ abstract class ChangeLog
         while (count($lines) > 0) {
             foreach ($lines as $line) {
                 $info = $this->parseLogLine($line);
-                if ($this->saveRevisionInfo($info)) {
+                if ($this->cacheRevisionInfo($info)) {
                     $revs[] = $info['date'];
                     if ($info['date'] >= $rev) {
                         //count revs after reference $rev
@@ -513,7 +516,7 @@ abstract class ChangeLog
 
                 for ($i = count($lines) - 1; $i >= 0; $i--) {
                     $info = $this->parseLogLine($lines[$i]);
-                    if ($this->saveRevisionInfo($info)) {
+                    if ($this->cacheRevisionInfo($info)) {
                         $revs[] = $info['date'];
                         $beforecount++;
                         //enough revs before reference $rev?
