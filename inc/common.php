@@ -1321,35 +1321,42 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     $data = array(
         'id'             => $id,       // should not be altered by any handlers
         'file'           => $pagefile, // same above
+        'changeType'     => null,      // set prior to event, and confirm later
         'revertFrom'     => $REV,
         'oldRevision'    => $currentRevision,
-        'newRevision'    => 0,      // only available in the after hook
-        'newContent'     => $text,
         'oldContent'     => $currentContent,
+        'newRevision'    => 0,         // only available in the after hook
+        'newContent'     => $text,
         'summary'        => $summary,
         'contentChanged' => (bool)($text != $currentContent), // confirm later
-        'changeInfo'     => '',     // set prior to event
-        'changeType'     => null,   // set prior to event
+        'changeInfo'     => '',        // automatically determined by revertFrom
         'sizechange'     => strlen($text) - strlen($currentContent), // TBD
     );
-    // determin change type and relevant elements of event data
-    if ($REV) {
-        $data['changeType'] = DOKU_CHANGE_TYPE_REVERT;
-        $data['changeInfo'] = $REV;
-    } elseif (!file_exists($pagefile)) {
-        $data['changeType'] = DOKU_CHANGE_TYPE_CREATE;
-    } elseif (trim($text) == '') {
-        // empty or whitespace only content deletes
-        $data['changeType'] = DOKU_CHANGE_TYPE_DELETE;
-        // autoset summary on deletion
-        if (blank($data['summary'])) {
-            $data['summary'] = $lang['deleted'];
+
+    // determine tentatively change type and relevant elements of event data
+    $tentative = true;
+    DETERMINE_CHANGE_TYPE: {
+        if ($data['revertFrom']) {
+            // new text may differ from exact revert revision
+            $data['changeType'] = DOKU_CHANGE_TYPE_REVERT;
+            $data['changeInfo'] = $REV;
+        } elseif (trim($data['newContent']) == '') {
+            // empty or whitespace only content deletes
+            $data['changeType'] = DOKU_CHANGE_TYPE_DELETE;
+        } elseif (!file_exists($pagefile)) {
+            $data['changeType'] = DOKU_CHANGE_TYPE_CREATE;
+        } else {
+            // minor edits allowable only for logged in users
+            $is_minor_change = ($minor && $conf['useacl'] && $INPUT->server->str('REMOTE_USER'));
+            $data['changeType'] = $is_minor_change
+                ? DOKU_CHANGE_TYPE_MINOR_EDIT
+                : DOKU_CHANGE_TYPE_EDIT;
         }
-    } elseif ($minor && $conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
-        //minor edits only for logged in users
-        $data['changeType'] = DOKU_CHANGE_TYPE_MINOR_EDIT;
-    } else {
-        $data['changeType'] = DOKU_CHANGE_TYPE_EDIT;
+        if (!$tentative) goto MAIN;
+        /* FIXME: reluctantly use of goto statement to avoid declare new function in this file.
+           nice to have a dedicated class that implements saveWikiText(), as well as
+           determineChangeType(), saveOldRevision(), detectExternalEdit(), ...
+        */
     }
 
     $event = new Event('COMMON_WIKIPAGE_SAVE', $data);
@@ -1358,18 +1365,28 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     // if the content has not been changed, no save happens (plugins may override this)
     if (!$data['contentChanged']) return;
 
-    // confirm again event data that may altered by event handlers
-    // plugin may alter the value of oldRevision to last revision to ignore extrnal edit
-    if ($data['oldRevision'] === false) {
-        // current file was not existed, no external edit occured
-        $filesize_old = 0;
-    } elseif ($data['oldRevision'] == $currentRevision) {
-        // add current external revision entry to changelog as a regular changelog entry
+    // Confirm again both event data and pagefile that may altered by event handlers
+    //
+    // Event handlers may also modify the pagefile as well as oldRevision of event data.
+    // For example, we can imagine an action plugin that provides alternative approach for
+    // handling external edits in changelog; merging early external edits into one normal
+    // edit entry instead of separating two entries of external and normal edits. 
+    // This will be achievable if the pagefile could be restored to the last revision
+    // during $event->advise_before() using attic data.
+    //
+    $tentative = false;
+    goto DETERMINE_CHANGE_TYPE;
+    MAIN:
+    // Check whether the pagefile has modified during $event->advise_before()
+    clearstatcache(false, $pagefile);
+    $fileRev = @filemtime($pagefile);
+    if ($fileRev === $currentRevision) {
+        // pagefile has not touched by plugin
+        // add a potential external edit entry to changelog and store it into attic
         detectExternalEdit($id);
         $filesize_old = $currentSize;
-//  } elseif ($data['oldRevision'] == $lastRevision) {
-//      $filesize_old = strlen(rawWiki($id, $data['oldRevision']));
     } else {
+        // pagefile has modified by plugin that must be responsible for changelog
         $filesize_old = (
             $data['changeType'] == DOKU_CHANGE_TYPE_CREATE || (
             $data['changeType'] == DOKU_CHANGE_TYPE_REVERT && !file_exists($pagefile))
@@ -1378,6 +1395,12 @@ function saveWikiText($id, $text, $summary, $minor = false) {
 
     // make change to the current file
     if ($data['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
+        // nothing to do when the file has already deleted
+        if (!file_exists($pagefile)) return;
+        // autoset summary on deletion
+        if (blank($data['summary'])) {
+            $data['summary'] = $lang['deleted'];
+        }
         // Send "update" event with empty data, so plugins can react to page deletion
         $ioData = array([$pagefile, '', false], getNS($id), noNS($id), false);
         Event::createAndTrigger('IO_WIKIPAGE_WRITE', $ioData);
