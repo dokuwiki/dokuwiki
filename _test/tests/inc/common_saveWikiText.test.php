@@ -15,29 +15,89 @@ class common_saveWikiText_test extends DokuWikiTest {
     }
 
     /**
+     * assertions against changelog entries and attic after saveWikiText()
+     */
+    private function checkChangeLogAfterNormalSave(
+        PageChangeLog $pagelog,
+        $expectedRevs,
+        &$expectedLastEntry
+    ) {
+        $revisions = $pagelog->getRevisions(-1, 200);
+        $this->assertCount($expectedRevs, $revisions);
+        $this->assertCount($expectedRevs, array_unique($revisions), 'date duplicated in changelog');
+        // last revision
+        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
+        $expectedLastEntry += $lastRevInfo;
+        $this->assertEquals($expectedLastEntry, $lastRevInfo);
+        // current revision
+        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
+        $this->assertEquals($currentRevInfo, $lastRevInfo, 'current & last revs should be identical');
+        // attic
+        $attic = wikiFN($lastRevInfo['id'], $lastRevInfo['date']);
+        $this->assertFileExists($attic, 'file missing in attic');
+        $files = count(glob(dirname($attic).'/'.noNS($lastRevInfo['id']).'.*'));
+        $this->assertLessThanOrEqual($expectedRevs, $files, 'detectExternalEdit() should not add too often old revs');
+    }
+
+    /**
+     * assertions against changelog entries and attic after external edit, create or deletion of page
+     */
+    private function checkChangeLogAfterExternalEdit(
+        PageChangeLog $pagelog,
+        $expectedRevs,
+        $expectedLastEntry,
+        $expectedCurrentEntry
+    ) {
+        $revisions = $pagelog->getRevisions(-1, 200);
+        $this->assertCount($expectedRevs, $revisions);
+        $this->assertCount($expectedRevs, array_unique($revisions), 'date duplicated in changelog');
+        // last revision
+        if ($expectedRevs > 0) {
+            $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
+            $expectedLastEntry += $lastRevInfo;
+            $this->assertEquals($expectedLastEntry, $lastRevInfo);
+        } else {
+            $this->assertFalse($pagelog->lastRevision(), 'changelog file does not yet exist');
+        }
+        // current revision
+        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
+        $this->assertArrayHasKey('timestamp', $currentRevInfo, 'should be external revision');
+        $expectedCurrentEntry += $currentRevInfo;
+        if ($expectedRevs > 0) {
+            $this->assertEquals($expectedCurrentEntry, $currentRevInfo);
+                                
+        }
+        // attic
+        $attic = wikiFN($currentRevInfo['id'], $currentRevInfo['date']);
+        $this->assertFileNotExists($attic, 'page does not yet exist in attic');
+    }
+
+
+    /**
      * Execute a whole bunch of saves on the same page and check the results
      * TEST 1
      *  1.1 create a page
      *  1.2 save with same content should be ignored
      *  1.3 update the page with new text
-     *  1.4 add a minor edit (unauthenticated)
+     *  1.4 add a minor edit (unauthenticated, minor not allowable)
      *  1.5 add a minor edit (authenticated)
      *  1.6 delete
      *  1.7 restore
      *  1.8 external edit
-     *  1.9 save on top of external edit
+     *  1.9 edit and save on top of external edit
      */
     function test_savesequence1() {
         global $REV;
 
         $page = 'page';
         $file = wikiFN($page);
+        $this->assertFileNotExists($file);
 
         // 1.1 create a page
-        $this->assertFileNotExists($file);
         saveWikiText($page, 'teststring', '1st save', false);
         $this->assertFileExists($file);
         $lastmod = filemtime($file);
+        $expectedRevs = 1;
         $expect = array(
             'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_CREATE,
@@ -46,17 +106,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(1, $revisions);
-        // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $expect += $lastRevInfo;
-        $this->assertEquals($expect, $lastRevInfo);
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertEquals($currentRevInfo, $lastRevInfo, 'current & last revs should be identical');
-        // attic
-        $this->assertFileExists(wikiFN($page, $lastRevInfo['date'], 'file missing in attic'));
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
 
         $this->waitForTick(true); // wait for new revision ID
 
@@ -75,6 +125,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $newmod = filemtime($file);
         $this->assertNotEquals($lastmod, $newmod);
         $lastmod = $newmod;
+        $expectedRevs = 2;
         $expect = array(
             'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_EDIT,
@@ -83,26 +134,17 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(2, $revisions);
-        // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $expect += $lastRevInfo;
-        $this->assertEquals($expect, $lastRevInfo);
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertEquals($currentRevInfo, $lastRevInfo, 'current & last revs should be identical');
-        // attic
-        $this->assertFileExists(wikiFN($page, $lastRevInfo['date'], 'file missing in attic'));
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
 
         $this->waitForTick(); // wait for new revision ID
 
-        // 1.4 add a minor edit (unauthenticated)
+        // 1.4 add a minor edit (unauthenticated, minor not allowable)
         saveWikiText($page, 'teststring3long', '4th save', true);
         clearstatcache(false, $file);
         $newmod = filemtime($file);
         $this->assertNotEquals($lastmod, $newmod);
         $lastmod = $newmod;
+        $expectedRevs = 3;
         $expect = array(
             'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_EDIT,
@@ -111,17 +153,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(3, $revisions);
-        // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $expect += $lastRevInfo;
-        $this->assertEquals($expect, $lastRevInfo);
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertEquals($currentRevInfo, $lastRevInfo, 'current & last revs should be identical');
-        // attic
-        $this->assertFileExists(wikiFN($page, $lastRevInfo['date'], 'file missing in attic'));
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
 
         $this->waitForTick(); // wait for new revision ID
 
@@ -132,6 +164,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $newmod = filemtime($file);
         $this->assertNotEquals($lastmod, $newmod);
         $lastmod = $newmod;
+        $expectedRevs = 4;
         $expect = array(
             'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_MINOR_EDIT,
@@ -140,17 +173,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(4, $revisions);
-        // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $expect += $lastRevInfo;
-        $this->assertEquals($expect, $lastRevInfo);
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertEquals($currentRevInfo, $lastRevInfo, 'current & last revs should be identical');
-        // attic
-        $this->assertFileExists(wikiFN($page, $lastRevInfo['date'], 'file missing in attic'));
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
 
         $this->waitForTick(); // wait for new revision ID
 
@@ -158,6 +181,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         saveWikiText($page, '', '6th save', false);
         clearstatcache(false, $file);
         $this->assertFileNotExists($file);
+        $expectedRevs = 5;
         $expect = array(
           //'date' => $lastmod, // ignore from lastRev assertion, but confirm attic file existence
             'type' => DOKU_CHANGE_TYPE_DELETE,
@@ -166,17 +190,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(5, $revisions);
-        // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $expect += $lastRevInfo;
-        $this->assertEquals($expect, $lastRevInfo);
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertEquals($currentRevInfo, $lastRevInfo, 'current & last revs should be identical');
-        // attic
-        $this->assertFileExists(wikiFN($page, $lastRevInfo['date'], 'file missing in attic'));
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
 
         $this->waitForTick(); // wait for new revision ID
 
@@ -188,6 +202,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $newmod = filemtime($file);
         $this->assertNotEquals($lastmod, $newmod);
         $lastmod = $newmod;
+        $expectedRevs = 6;
         $expect = array(
             'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_REVERT,
@@ -196,19 +211,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(6, $revisions);
-        // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $expect += $lastRevInfo;
-        $this->assertEquals($expect, $lastRevInfo);
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertEquals($currentRevInfo, $lastRevInfo, 'current & last revs should be identical');
-        // attic
-        $this->assertFileExists(wikiFN($page, $lastRevInfo['date']), 'file missing in attic');
-        $files = glob(dirname(wikiFN($page, $lastRevInfo['date'])).'/'.$page.'.*');
-        $this->assertCount(6, $files, 'detectExternalEdit() should not add too often old revs');
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
         $REV = '';
 
         $this->waitForTick(); // wait for new revision ID
@@ -219,6 +222,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $newmod = filemtime($file);
         $this->assertNotEquals($lastmod, $newmod);
         $lastmod = $newmod;
+        $expectedRevs = 6; // external edit is not yet in changelog
         $expectExternal = array(
             'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_EDIT,
@@ -227,19 +231,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(6, $revisions); // external edit is not yet in changelog
-        // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $this->assertEquals($expect, $lastRevInfo);
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertArrayHasKey('timestamp', $currentRevInfo, 'should be external revision');
-        $expectExternal += $currentRevInfo;
-        $this->assertEquals($expectExternal, $currentRevInfo);
-        // attic
-        $this->assertFileExists(wikiFN($page, $lastRevInfo['date']), 'file missing in attic');
-        $this->assertFileNotExists(wikiFN($page, $currentRevInfo['date']),'page does not yet exist in attic');
+        $this->checkChangeLogAfterExternalEdit($pagelog, $expectedRevs, $expect, $expectExternal);
 
         $this->waitForTick(); // wait for new revision ID
 
@@ -249,6 +241,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $newmod = filemtime($file);
         $this->assertNotEquals($lastmod, $newmod);
         $lastmod = $newmod;
+        $expectedRevs = 8;
         $expect = array(
             'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_EDIT,
@@ -257,30 +250,19 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(8, $revisions); // two more revisions now!
-        // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $expect += $lastRevInfo;
-        $this->assertEquals($expect, $lastRevInfo);
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertEquals($currentRevInfo, $lastRevInfo, 'current & last revs should be identical');
-        // attic
-        $this->assertFileExists(wikiFN($page, $lastRevInfo['date'], 'file missing in attic'));
-        $files = glob(dirname(wikiFN($page, $lastRevInfo['date'])).'/'.$page.'.*');
-        $this->assertCount(8, $files, 'detectExternalEdit() should not add too often old revs');
-
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
     }
 
     /**
      * Execute a whole bunch of saves on the same page and check the results
      * using $this->handle_write() in event IO_WIKIPAGE_WRITE
-     * TEST 2 - create a page externally, while external edit in Test 1
+     * TEST 2 - create a page externally in 2.3, while external edit in Test 1.8
      *  2.1 create a page
      *  2.2 delete
      *  2.3 externally create the page
-     *  2.4 save on top of external edit
+     *  2.4 edit and save on top of external edit
+     *  2.5 external edit
+     *  2.6 edit and save on top of external edit, again
      */
     function test_savesequence2() {
         // add an additional delay when saving files to make sure
@@ -291,12 +273,13 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $page = 'page2';
         $file = wikiFN($page);
+        $this->assertFileNotExists($file);
 
         // 2.1 create a page
-        $this->assertFileNotExists($file);
         saveWikiText($page, 'teststring', 'Test 2, 1st save', false);
         $this->assertFileExists($file);
         $lastmod = filemtime($file);
+        $expectedRevs = 1;
         $expect = array(
             'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_CREATE,
@@ -305,17 +288,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(1, $revisions);
-        // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $expect += $lastRevInfo;
-        $this->assertEquals($expect, $lastRevInfo);
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertEquals($currentRevInfo, $lastRevInfo, 'current & last revs should be identical');
-        // attic
-        $this->assertFileExists(wikiFN($page, $lastRevInfo['date'], 'file missing in attic'));
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
 
         $this->waitForTick(true); // wait for new revision ID
 
@@ -323,6 +296,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         saveWikiText($page, '', 'Test 2, 2nd save', false);
         clearstatcache(false, $file);
         $this->assertFileNotExists($file);
+        $expectedRevs = 2;
         $expect = array(
           //'date' => $lastmod, // ignore from lastRev assertion, but confirm attic file existence
             'type' => DOKU_CHANGE_TYPE_DELETE,
@@ -331,17 +305,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(2, $revisions);
-        // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $expect += $lastRevInfo;
-        $this->assertEquals($expect, $lastRevInfo);
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertEquals($currentRevInfo, $lastRevInfo, 'current & last revs should be identical');
-        // attic
-        $this->assertFileExists(wikiFN($page, $lastRevInfo['date'], 'file missing in attic'));
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
 
         $this->waitForTick(); // wait for new revision ID
 
@@ -349,6 +313,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         file_put_contents($file, 'teststring5');
         clearstatcache(false, $file);
         $lastmod = filemtime($file);
+        $expectedRevs = 2; // external edit is not yet in changelog
         $expectExternal = array(
             'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_CREATE,
@@ -357,19 +322,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(2, $revisions); // external edit is not yet in changelog
-        // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $this->assertEquals($expect, $lastRevInfo);
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertArrayHasKey('timestamp', $currentRevInfo, 'should be external revision');
-        $expectExternal += $currentRevInfo;
-        $this->assertEquals($expectExternal, $currentRevInfo);
-        // attic
-        $this->assertFileExists(wikiFN($page, $lastRevInfo['date']), 'file missing in attic');
-        $this->assertFileNotExists(wikiFN($page, $currentRevInfo['date']),'page does not yet exist in attic');
+        $this->checkChangeLogAfterExternalEdit($pagelog, $expectedRevs, $expect, $expectExternal);
 
         $this->waitForTick(); // wait for new revision ID
 
@@ -379,6 +332,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $newmod = filemtime($file);
         $this->assertNotEquals($lastmod, $newmod);
         $lastmod = $newmod;
+        $expectedRevs = 4; // two more revisions now!
         $expect = array(
             'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_EDIT,
@@ -387,28 +341,53 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(4, $revisions); // two more revisions now!
-        // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $expect += $lastRevInfo;
-        $this->assertEquals($expect, $lastRevInfo);
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertEquals($currentRevInfo, $lastRevInfo, 'current & last revs should be identical');
-        // attic
-        $this->assertFileExists(wikiFN($page, $lastRevInfo['date'], 'file missing in attic'));
-        $files = glob(dirname(wikiFN($page, $lastRevInfo['date'])).'/'.$page.'.*');
-        $this->assertCount(4, $files, 'detectExternalEdit() should not add too often old revs');
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
 
+        $this->waitForTick(); // wait for new revision ID
+
+         // 2.5 external edit
+        file_put_contents($file, 'teststring7 external edit2');
+        clearstatcache(false, $file);
+        $newmod = filemtime($file);
+        $this->assertNotEquals($lastmod, $newmod);
+        $lastmod = $newmod;
+        $expectedRevs = 4; // external edit is not yet in changelog
+        $expectExternal = array(
+            'date' => $lastmod,
+            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'sum'  => 'external edit',
+            'sizechange' => 15,
+        );
+
+        $pagelog = new PageChangeLog($page);
+        $this->checkChangeLogAfterExternalEdit($pagelog, $expectedRevs, $expect, $expectExternal);
+
+        $this->waitForTick(); // wait for new revision ID
+
+        // 2.6 save on top of external edit, again
+        saveWikiText($page, 'teststring8', 'Test 2, 4th save', false);
+        clearstatcache(false, $file);
+        $newmod = filemtime($file);
+        $this->assertNotEquals($lastmod, $newmod);
+        $lastmod = $newmod;
+        $expectedRevs = 6; // two more revisions now!
+        $expect = array(
+            'date' => $lastmod,
+            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'sum'  => 'Test 2, 4th save',
+            'sizechange' => -15,
+        );
+
+        $pagelog = new PageChangeLog($page);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
     }
 
     /**
      * Execute a whole bunch of saves on the same page and check the results
-     * TEST 3 - typical page life of bundled page such as wiki/syntax
+     * TEST 3 - typical page life of bundled page such as wiki:syntax
      *  3.1 externally create a page
      *  3.2 external edit
-     *  3.3 save on top of external edit
+     *  3.3 edit and save on top of external edit
      *  3.4 externally delete the page
      */
     function test_savesequence3() {
@@ -420,6 +399,8 @@ class common_saveWikiText_test extends DokuWikiTest {
         file_put_contents($file, 'teststring');
         clearstatcache(false, $file);
         $lastmod = filemtime($file);
+        $expectedRevs = 0; // external edit is not yet in changelog
+        $expect = false;
         $expectExternal = array(
             'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_CREATE,
@@ -428,45 +409,26 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(0, $revisions); // external edit is not yet in changelog
-        // last revision
-        $this->assertFalse($pagelog->lastRevision(), 'changelog file does not yet exist');
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertArrayHasKey('timestamp', $currentRevInfo, 'should be external revision');
-        $expectExternal += $currentRevInfo;
-        $this->assertEquals($expectExternal, $currentRevInfo);
-        // attic
-        $this->assertFileNotExists(wikiFN($page, $currentRevInfo['date']),'page does not yet exist in attic');
+        $this->checkChangeLogAfterExternalEdit($pagelog, $expectedRevs, $expect, $expectExternal);
 
         $this->waitForTick(true); // wait for new revision ID
 
-        // 3.2 external edit
+        // 3.2 external edit (repeated, still no changelog exists)
         file_put_contents($file, 'teststring external edit');
         clearstatcache(false, $file);
         $newmod = filemtime($file);
         $this->assertNotEquals($lastmod, $newmod);
         $lastmod = $newmod;
+        $expectedRevs = 0; // external edit is not yet in changelog
         $expectExternal = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_CREATE,
+            'type' => DOKU_CHANGE_TYPE_CREATE,  // not DOKU_CHANGE_TYPE_EDIT
             'sum'  => 'created - external edit',
             'sizechange' => 24,
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(0, $revisions); // external edit is not yet in changelog
-        // last revision
-        $this->assertFalse($pagelog->lastRevision(), 'changelog file does not yet exist');
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertArrayHasKey('timestamp', $currentRevInfo, 'should be external revision');
-        $expectExternal += $currentRevInfo;
-        $this->assertEquals($expectExternal, $currentRevInfo);
-        // attic
-        $this->assertFileNotExists(wikiFN($page, $currentRevInfo['date']),'page does not yet exist in attic');
+        $this->checkChangeLogAfterExternalEdit($pagelog, $expectedRevs, $expect, $expectExternal);
 
         $this->waitForTick(true); // wait for new revision ID
 
@@ -476,6 +438,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $newmod = filemtime($file);
         $this->assertNotEquals($lastmod, $newmod);
         $lastmod = $newmod;
+        $expectedRevs = 2; // two more revisions now!
         $expect = array(
             'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_EDIT,
@@ -484,25 +447,15 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(2, $revisions); // two more revisions now!
-        // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $expect += $lastRevInfo;
-        $this->assertEquals($expect, $lastRevInfo);
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertEquals($currentRevInfo, $lastRevInfo, 'current & last revs should be identical');
-        // attic
-        $this->assertFileExists(wikiFN($page, $lastRevInfo['date'], 'file missing in attic'));
-        $files = glob(dirname(wikiFN($page, $lastRevInfo['date'])).'/'.$page.'.*');
-        $this->assertCount(2, $files, 'detectExternalEdit() should not add too often old revs');
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
+
 
         $this->waitForTick(true); // wait for new revision ID
 
         // 3.4 externally delete the page
         unlink($file);
         clearstatcache(false, $file);
+        $expectedRevs = 2;
         $expectExternal = array(
           //'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_DELETE,
@@ -511,19 +464,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $revisions = $pagelog->getRevisions(-1, 200);
-        $this->assertCount(2, $revisions); // two more revisions now!
-        // last revision
-        $lastRevInfo = $pagelog->getRevisionInfo($revisions[0]);
-        $this->assertEquals($expect, $lastRevInfo);
-        // current revision
-        $currentRevInfo = $pagelog->getCurrentRevisionInfo();
-        $this->assertArrayHasKey('timestamp', $currentRevInfo, 'should be external revision');
-        $expectExternal += $currentRevInfo;
-        $this->assertEquals($expectExternal, $currentRevInfo);
-        // attic
-        $this->assertFileNotExists(wikiFN($page, $currentRevInfo['date']),'page does not yet exist in attic');
-
+        $this->checkChangeLogAfterExternalEdit($pagelog, $expectedRevs, $expect, $expectExternal);
     }
 
 }
