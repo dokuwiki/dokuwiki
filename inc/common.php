@@ -9,6 +9,7 @@
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Logger;
 use dokuwiki\Subscriptions\PageSubscriptionSender;
 use dokuwiki\Subscriptions\SubscriberManager;
 use dokuwiki\Extension\AuthPlugin;
@@ -1273,15 +1274,31 @@ function detectExternalEdit($id) {
     // only interested in external revision
     if (empty($revInfo) || !array_key_exists('timestamp', $revInfo)) return;
 
-    // use detection time for externally deleted page file
-    $timestamp = $revInfo['timestamp'] ?: time();
+    if ($revInfo['type'] != DOKU_CHANGE_TYPE_DELETE && !$revInfo['timestamp']) {
+        // file is older than last revision, that is erroneous/incorrect occurence.
+        // try to change file modification time
+        $fileLastMod = wikiFN($id);
+        $wrong_timestamp = filemtime($fileLastMod);
+        if (touch($fileLastMod, $revInfo['date'])) {
+            clearstatcache();
+            $msg = "detectExternalEdit($id): timestamp successfully modified";
+            $details = '('.$wrong_timestamp.' -> '.$revInfo['date'].')';
+            Logger::error($msg, $details, $fileLastMod);
+        } else {
+            // runtime error
+            $msg = "detectExternalEdit($id): page file should be newer than last revision "
+                  .'('.filemtime($fileLastMod).' < '. $pagelog->lastRevision() .')';
+            throw new \RuntimeException($msg);
+        }
+    }
+
+    // keep at least 1 sec before new page save
+    if ($revInfo['date'] == time()) sleep(1); // wait a tick
 
     // store externally edited file to the attic folder
     saveOldRevision($id);
-
     // add a changelog entry for externally edited file
-    $revInfo = $pagelog->addLogEntry($revInfo, $timestamp);
-
+    $revInfo = $pagelog->addLogEntry($revInfo);
     // remove soon to be stale instructions
     $cache = new CacheInstructions($id, wikiFN($id));
     $cache->removeCache();

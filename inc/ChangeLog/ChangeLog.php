@@ -2,6 +2,8 @@
 
 namespace dokuwiki\ChangeLog;
 
+use dokuwiki\Logger;
+
 /**
  * ChangeLog Prototype; methods for handling changelog
  */
@@ -553,8 +555,7 @@ abstract class ChangeLog
      *
      * The change date of the file can be determined by timestamp as far as the file exists,
      * however this is not possible when the file has already deleted outside of DokuWiki.
-     * In such case we assign current time() value for the external deletion. The change
-     * date is used as revision identifier.
+     * In such case we assign 1 sec before current time() for the external deletion.
      * As a result, the value of current revision identifier may change each time because:
      *   1) the file has again modified outside of DokuWiki, or
      *   2) the value is essentially volatile for deleted but once existed files.
@@ -599,9 +600,9 @@ abstract class ChangeLog
                 return $this->getRevisionInfo($lastRev);
             }
 
-            // externally deleted
+            // externally deleted, set revision date as late as possible
             $revInfo = [
-                'date' => time(), // assign current time
+                'date' => max($lastRev +1, time() -1), // 1 sec before now or new page save
                 'ip'   => '127.0.0.1',
                 'type' => DOKU_CHANGE_TYPE_DELETE,
                 'id'   => $this->id,
@@ -630,14 +631,17 @@ abstract class ChangeLog
                 $sum = $lang['external_edit'];
             } else {
                 // $fileRev is older than $lastRev, that is erroneous/incorrect occurence.
-                // try to change file modification time to the detection time
-                $timestamp = touch($fileLastMod) ? filemtime($fileLastMod) : false;
+                $msg = "Warning: current file modification time is older than last revision date";
+                $details = 'File revision: '.$fileRev.' '.strftime("%Y-%m-%d %H:%M:%S", $fileRev)."\n"
+                          .'Last revision: '.$lastRev.' '.strftime("%Y-%m-%d %H:%M:%S", $lastRev);
+                Logger::error($msg, $details, $this->getFilename());
+                $timestamp = false;
                 $sum = $lang['external_edit'].' ('.$lang['unknowndate'].')';
             }
 
             // externally created or edited
             $revInfo = [
-                'date' => $timestamp ?: time(),
+                'date' => $timestamp ?: $lastRev +1,
                 'ip'   => '127.0.0.1',
                 'type' => $isJustCreated ? DOKU_CHANGE_TYPE_CREATE : DOKU_CHANGE_TYPE_EDIT,
                 'id'   => $this->id,
