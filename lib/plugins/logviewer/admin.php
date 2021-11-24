@@ -95,19 +95,22 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
         echo '<dl>';
         $lines = file($logfile);
         $cnt = count($lines);
+        $details_mode = false; // true when printing indented details lines
         for ($i = 0; $i < $cnt; $i++) {
             $line = $lines[$i];
 
             if ($line[0] === ' ' && $line[1] === ' ') {
                 // lines indented by two spaces are details, aggregate them
-                echo '<dd>';
-                while ($line[0] === ' ' && $line[1] === ' ') {
-                    echo hsc(substr($line, 2)) . '<br />';
-                    $line = $lines[$i++];
+                if (!$details_mode) {
+                    $details_mode = true;
+                    echo '<dd>';
                 }
-                echo '</dd>';
-                $i -= 2; // rewind the counter
+                echo hsc(substr($line, 2)) . '<br />';
             } else {
+                if ($details_mode) {
+                    $details_mode = false;
+                    echo '</dd>';
+                }
                 // other lines are actual log lines in three parts
                 list($dt, $file, $msg) = explode("\t", $line, 3);
                 echo '<dt>';
@@ -118,6 +121,10 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
                 echo '</span>';
                 echo '</dt>';
             }
+        }
+        if ($details_mode) {
+            $details_mode = false;
+            echo '</dd>';
         }
         echo '</dl>';
     }
