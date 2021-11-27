@@ -9,6 +9,7 @@
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\File\PageFile;
 use dokuwiki\Logger;
 use dokuwiki\Subscriptions\PageSubscriptionSender;
 use dokuwiki\Subscriptions\SubscriberManager;
@@ -1265,43 +1266,11 @@ function con($pre, $text, $suf, $pretty = false) {
  * wiki, triggered in @see saveWikiText()
  *
  * @param string $id the page ID
+ * @deprecated YYYY-MM-DD
  */
 function detectExternalEdit($id) {
-
-    $pagelog = new PageChangeLog($id, 1024);
-    $revInfo = $pagelog->getCurrentRevisionInfo();
-
-    // only interested in external revision
-    if (empty($revInfo) || !array_key_exists('timestamp', $revInfo)) return;
-
-    if ($revInfo['type'] != DOKU_CHANGE_TYPE_DELETE && !$revInfo['timestamp']) {
-        // file is older than last revision, that is erroneous/incorrect occurence.
-        // try to change file modification time
-        $fileLastMod = wikiFN($id);
-        $wrong_timestamp = filemtime($fileLastMod);
-        if (touch($fileLastMod, $revInfo['date'])) {
-            clearstatcache();
-            $msg = "detectExternalEdit($id): timestamp successfully modified";
-            $details = '('.$wrong_timestamp.' -> '.$revInfo['date'].')';
-            Logger::error($msg, $details, $fileLastMod);
-        } else {
-            // runtime error
-            $msg = "detectExternalEdit($id): page file should be newer than last revision "
-                  .'('.filemtime($fileLastMod).' < '. $pagelog->lastRevision() .')';
-            throw new \RuntimeException($msg);
-        }
-    }
-
-    // keep at least 1 sec before new page save
-    if ($revInfo['date'] == time()) sleep(1); // wait a tick
-
-    // store externally edited file to the attic folder
-    saveOldRevision($id);
-    // add a changelog entry for externally edited file
-    $revInfo = $pagelog->addLogEntry($revInfo);
-    // remove soon to be stale instructions
-    $cache = new CacheInstructions($id, wikiFN($id));
-    $cache->removeCache();
+  //dbg_deprecated(\dokuwiki\File\PageFile::class .'::detectExternalEdit()');
+    (new PageFile($id))->detectExternalEdit();
 }
 
 /**
@@ -1317,132 +1286,13 @@ function detectExternalEdit($id) {
  * @param bool   $minor    mark this saved version as minor update
  */
 function saveWikiText($id, $text, $summary, $minor = false) {
-    /* Note to developers:
-       This code is subtle and delicate. Test the behavior of
-       the attic and changelog with dokuwiki and external edits
-       after any changes. External edits change the wiki page
-       directly without using php or dokuwiki.
-     */
-    global $conf;
-    global $lang;
-    global $REV;
-    /* @var Input $INPUT */
-    global $INPUT;
 
-    $pagefile = wikiFN($id);
-    $currentRevision = @filemtime($pagefile);       // int or false
-    $currentContent = rawWiki($id);
-    $currentSize = file_exists($pagefile) ? filesize($pagefile) : 0;
-
-    // prepare data for event COMMON_WIKIPAGE_SAVE
-    $data = array(
-        'id'             => $id,       // should not be altered by any handlers
-        'file'           => $pagefile, // same above
-        'changeType'     => null,      // set prior to event, and confirm later
-        'revertFrom'     => $REV,
-        'oldRevision'    => $currentRevision,
-        'oldContent'     => $currentContent,
-        'newRevision'    => 0,         // only available in the after hook
-        'newContent'     => $text,
-        'summary'        => $summary,
-        'contentChanged' => (bool)($text != $currentContent), // confirm later
-        'changeInfo'     => '',        // automatically determined by revertFrom
-        'sizechange'     => strlen($text) - strlen($currentContent), // TBD
-    );
-
-    // determine tentatively change type and relevant elements of event data
-    if ($data['revertFrom']) {
-        // new text may differ from exact revert revision
-        $data['changeType'] = DOKU_CHANGE_TYPE_REVERT;
-        $data['changeInfo'] = $REV;
-    } elseif (trim($data['newContent']) == '') {
-        // empty or whitespace only content deletes
-        $data['changeType'] = DOKU_CHANGE_TYPE_DELETE;
-    } elseif (!file_exists($pagefile)) {
-        $data['changeType'] = DOKU_CHANGE_TYPE_CREATE;
-    } else {
-        // minor edits allowable only for logged in users
-        $is_minor_change = ($minor && $conf['useacl'] && $INPUT->server->str('REMOTE_USER'));
-        $data['changeType'] = $is_minor_change
-            ? DOKU_CHANGE_TYPE_MINOR_EDIT
-            : DOKU_CHANGE_TYPE_EDIT;
-    }
-
-    $event = new Event('COMMON_WIKIPAGE_SAVE', $data);
-    if (!$event->advise_before()) return;
-
-    // if the content has not been changed, no save happens (plugins may override this)
-    if (!$data['contentChanged']) return;
-
-    // Check whether the pagefile has modified during $event->advise_before()
-    clearstatcache();
-    $fileRev = @filemtime($pagefile);
-    if ($fileRev === $currentRevision) {
-        // pagefile has not touched by plugin
-        // add a potential external edit entry to changelog and store it into attic
-        detectExternalEdit($id);
-        $filesize_old = $currentSize;
-    } else {
-        // pagefile has modified by plugin that must be responsible for changelog
-        $filesize_old = (
-            $data['changeType'] == DOKU_CHANGE_TYPE_CREATE || (
-            $data['changeType'] == DOKU_CHANGE_TYPE_REVERT && !file_exists($pagefile))
-        ) ? 0 : filesize($pagefile);
-    }
-
-    // make change to the current file
-    if ($data['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
-        // nothing to do when the file has already deleted
-        if (!file_exists($pagefile)) return;
-        // autoset summary on deletion
-        if (blank($data['summary'])) {
-            $data['summary'] = $lang['deleted'];
-        }
-        // Send "update" event with empty data, so plugins can react to page deletion
-        $ioData = array([$pagefile, '', false], getNS($id), noNS($id), false);
-        Event::createAndTrigger('IO_WIKIPAGE_WRITE', $ioData);
-        // pre-save deleted revision
-        @touch($pagefile);
-        clearstatcache();
-        $data['newRevision'] = saveOldRevision($id);
-        // remove empty file
-        @unlink($pagefile);
-        $filesize_new = 0;
-        // don't remove old meta info as it should be saved, plugins can use
-        // IO_WIKIPAGE_WRITE for removing their metadata...
-        // purge non-persistant meta data
-        p_purge_metadata($id);
-        // remove empty namespaces
-        io_sweepNS($id, 'datadir');
-        io_sweepNS($id, 'mediadir');
-    } else {
-        // save file (namespace dir is created in io_writeWikiPage)
-        io_writeWikiPage($pagefile, $data['newContent'], $id);
-        // pre-save the revision, to keep the attic in sync
-        $data['newRevision'] = saveOldRevision($id);
-        $filesize_new = filesize($pagefile);
-    }
-    $data['sizechange'] = $filesize_new - $filesize_old;
-
-    $event->advise_after();
-
-    // adds an entry to the changelog and saves the metadata for the page
-    addLogEntry(
-        $data['newRevision'],
-        $id,
-        $data['changeType'],
-        $data['summary'],
-        $data['changeInfo'],
-        null,
-        $data['sizechange']
-    );
+    // get COMMON_WIKIPAGE_SAVE event data
+    $data = (new PageFile($id))->saveWikiText($text, $summary, $minor);
 
     // send notify mails
     notify($id, 'admin', $data['oldRevision'], $data['summary'], $minor, $data['newRevision']);
     notify($id, 'subscribers', $data['oldRevision'], $data['summary'], $minor, $data['newRevision']);
-
-    // update the purgefile (timestamp of the last time anything within the wiki was changed)
-    io_saveFile($conf['cachedir'].'/purgefile', time());
 
     // if useheading is enabled, purge the cache of all linking pages
     if (useHeading('content')) {
@@ -1461,14 +1311,11 @@ function saveWikiText($id, $text, $summary, $minor = false) {
  *
  * @param string $id page id
  * @return int|string revision timestamp
+ * @deprecated YYYY-MM-DD
  */
 function saveOldRevision($id) {
-    $oldfile = wikiFN($id);
-    if (!file_exists($oldfile)) return '';
-    $date = filemtime($oldfile);
-    $newfile = wikiFN($id, $date);
-    io_writeWikiPage($newfile, rawWiki($id), $id, $date);
-    return $date;
+  //dbg_deprecated(\dokuwiki\File\PageFile::class .'::saveOldRevision()');
+    return (new PageFile($id))->saveOldRevision();
 }
 
 /**
