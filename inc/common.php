@@ -1291,8 +1291,9 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     $data = (new PageFile($id))->saveWikiText($text, $summary, $minor);
 
     // send notify mails
-    notify($id, 'admin', $data['oldRevision'], $data['summary'], $minor, $data['newRevision']);
-    notify($id, 'subscribers', $data['oldRevision'], $data['summary'], $minor, $data['newRevision']);
+    list('oldRevision' => $rev, 'newRevision' => $new_rev, 'summary' => $summary) = $data;
+    notify($id, 'admin', $rev, $summary, $minor, $new_rev);
+    notify($id, 'subscribers', $rev, $summary, $minor, $new_rev);
 
     // if useheading is enabled, purge the cache of all linking pages
     if (useHeading('content')) {
@@ -1323,7 +1324,7 @@ function saveOldRevision($id) {
  *
  * @param string     $id       The changed page
  * @param string     $who      Who to notify (admin|subscribers|register)
- * @param int|string $rev Old page revision
+ * @param int|string $rev      Old page revision
  * @param string     $summary  What changed
  * @param boolean    $minor    Is this a minor edit?
  * @param string[]   $replace  Additional string substitutions, @KEY@ to be replaced by value
@@ -1338,20 +1339,20 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
     global $INPUT;
 
     // decide if there is something to do, eg. whom to mail
-    if($who == 'admin') {
-        if(empty($conf['notify'])) return false; //notify enabled?
+    if ($who == 'admin') {
+        if (empty($conf['notify'])) return false; //notify enabled?
         $tpl = 'mailtext';
         $to  = $conf['notify'];
-    } elseif($who == 'subscribers') {
-        if(!actionOK('subscribe')) return false; //subscribers enabled?
-        if($conf['useacl'] && $INPUT->server->str('REMOTE_USER') && $minor) return false; //skip minors
+    } elseif ($who == 'subscribers') {
+        if (!actionOK('subscribe')) return false; //subscribers enabled?
+        if ($conf['useacl'] && $INPUT->server->str('REMOTE_USER') && $minor) return false; //skip minors
         $data = array('id' => $id, 'addresslist' => '', 'self' => false, 'replacements' => $replace);
         Event::createAndTrigger(
             'COMMON_NOTIFY_ADDRESSLIST', $data,
             array(new SubscriberManager(), 'notifyAddresses')
         );
         $to = $data['addresslist'];
-        if(empty($to)) return false;
+        if (empty($to)) return false;
         $tpl = 'subscr_single';
     } else {
         return false; //just to be safe
