@@ -451,12 +451,16 @@ class common_saveWikiText_test extends DokuWikiTest {
         $pagelog = new PageChangeLog($page);
         $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
 
+        // second to last revision record that corresponds to step 3.2 external edit
+        $revs = $pagelog->getRevisions(-1, $expectedRevs);
+        $prevRevInfo = $pagelog->getRevisionInfo($revs[$expectedRevs -1]);
+        unset($expectExternal['timestamp']); // drop timestamp key
+        $this->assertEquals($expectExternal, $prevRevInfo);
 
         $this->waitForTick(true); // wait for new revision ID
 
         // 3.4 externally delete the page
         unlink($file);
-        clearstatcache(false, $file);
         $expectedRevs = 2;
         $expectExternal = array(
           //'date' => $lastmod,
