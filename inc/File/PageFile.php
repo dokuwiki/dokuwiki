@@ -162,7 +162,7 @@ class PageFile
                 $data['summary'] = $lang['deleted'];
             }
             // send "update" event with empty data, so plugins can react to page deletion
-            $ioData = array([$pagefile, '', false], getNS($id), noNS($id), false);
+            $ioData = array([$pagefile, '', false], getNS($this->id), noNS($this->id), false);
             Event::createAndTrigger('IO_WIKIPAGE_WRITE', $ioData);
             // pre-save deleted revision
             @touch($pagefile);
