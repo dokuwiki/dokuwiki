@@ -541,4 +541,144 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->checkChangeLogAfterExternalEdit($pagelog, $expectedRevs, $expect, $expectExternal);
     }
 
+    /**
+     * Execute a whole bunch of saves on the same page and check the results
+     * TEST 5 - page creation and deletion
+     *  5.1 create a page
+     *  5.2 external edit
+     *  5.3 edit and save on top of external edit
+     *  5.4 delete
+     *  5.5 create a page, second time
+     *  5.6 externally delete
+     *  5.7 create a page, third time
+     */
+    function test_savesequence5() {
+        $page = 'page5';
+        $file = wikiFN($page);
+        $this->assertFileNotExists($file);
+
+        // 5.1 create a page
+        saveWikiText($page, 'teststring', 'Test 5, 1st save', false);
+        $this->assertFileExists($file);
+        $lastmod = filemtime($file);
+        $expectedRevs = 1;
+        $expect = array(
+            'date' => $lastmod,
+            'type' => DOKU_CHANGE_TYPE_CREATE,
+            'sum'  => 'Test 5, 1st save',
+            'sizechange' => 10, // = strlen('teststring')
+        );
+
+        $pagelog = new PageChangeLog($page);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
+
+        $this->waitForTick(true); // wait for new revision ID
+
+        // 5.2 external edit
+        file_put_contents($file, 'teststring external edit');
+        clearstatcache(false, $file);
+        $newmod = filemtime($file);
+        $this->assertNotEquals($lastmod, $newmod);
+        $lastmod = $newmod;
+        $expectedRevs = 1; // external edit is not yet in changelog
+        $expectExternal = array(
+            'date' => $lastmod,
+            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'sum'  => 'external edit',
+            'sizechange' => 14,
+        );
+
+        $pagelog = new PageChangeLog($page);
+        $this->checkChangeLogAfterExternalEdit($pagelog, $expectedRevs, $expect, $expectExternal);
+
+        $this->waitForTick(); // wait for new revision ID
+
+        // 5.3 edit and save on top of external edit
+        saveWikiText($page, 'teststring normal edit', 'Test 5, 2nd save', false);
+        clearstatcache(false, $file);
+        $newmod = filemtime($file);
+        $this->assertNotEquals($lastmod, $newmod);
+        $lastmod = $newmod;
+        $expectedRevs = 3; // two more revisions now!
+        $expect = array(
+            'date' => $lastmod,
+            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'sum'  => 'Test 5, 2nd save',
+            'sizechange' => -2,
+        );
+
+        $pagelog = new PageChangeLog($page);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
+
+        $this->waitForTick(); // wait for new revision ID
+
+        // 5.4 delete
+        saveWikiText($page, '', 'Test 5 3rd save', false);
+        clearstatcache(false, $file);
+        $this->assertFileNotExists($file);
+        $expectedRevs = 4;
+        $expect = array(
+          //'date' => $lastmod, // ignore from lastRev assertion, but confirm attic file existence
+            'type' => DOKU_CHANGE_TYPE_DELETE,
+            'sum'  => 'Test 5 3rd save',
+            'sizechange' => -22,
+        );
+
+        $pagelog = new PageChangeLog($page);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
+
+        $this->waitForTick(); // wait for new revision ID
+
+        // 5.5 create a page, second time
+        $this->assertFileNotExists($file);
+        saveWikiText($page, 'teststring revived', 'Test 5, 4th save', false);
+        $this->assertFileExists($file);
+        $lastmod = filemtime($file);
+        $expectedRevs = 5;
+        $expect = array(
+            'date' => $lastmod,
+            'type' => DOKU_CHANGE_TYPE_CREATE,
+            'sum'  => 'Test 5, 4th save',
+            'sizechange' => 18, // = strlen('teststring revived')
+        );
+
+        $pagelog = new PageChangeLog($page);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
+
+        $this->waitForTick(true); // wait for new revision ID
+
+        // 5.6 externally delete
+        unlink($file);
+        $this->assertFileNotExists($file);
+        $expectedRevs = 5;
+        $expectExternal = array(
+          //'date' => $lastmod,
+            'type' => DOKU_CHANGE_TYPE_DELETE,
+            'sum'  => 'removed - external edit (Unknown date)',
+            'sizechange' => -18,
+        );
+
+        $pagelog = new PageChangeLog($page);
+        $this->checkChangeLogAfterExternalEdit($pagelog, $expectedRevs, $expect, $expectExternal);
+
+        $this->waitForTick(true); // wait for new revision ID
+
+        // 5.7 create a page, third time
+        $this->assertFileNotExists($file);
+        saveWikiText($page, 'teststring revived 2', 'Test 5, 5th save', false);
+        clearstatcache(false, $file);
+        $this->assertFileExists($file);
+        $lastmod = filemtime($file);
+        $expectedRevs = 7;
+        $expect = array(
+            'date' => $lastmod,
+            'type' => DOKU_CHANGE_TYPE_CREATE,
+            'sum'  => 'Test 5, 5th save',
+            'sizechange' => 20, // = strlen('teststring revived 2')
+        );
+
+        $pagelog = new PageChangeLog($page);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
+    }
+
 }
