@@ -19,8 +19,8 @@ class common_saveWikiText_test extends DokuWikiTest {
      */
     private function checkChangeLogAfterNormalSave(
         PageChangeLog $pagelog,
-        $expectedRevs,
-        &$expectedLastEntry
+        $expectedRevs,          // @param int
+        &$expectedLastEntry     // @param array, pass by reference
     ) {
         $revisions = $pagelog->getRevisions(-1, 200);
         $this->assertCount($expectedRevs, $revisions);
@@ -44,9 +44,9 @@ class common_saveWikiText_test extends DokuWikiTest {
      */
     private function checkChangeLogAfterExternalEdit(
         PageChangeLog $pagelog,
-        $expectedRevs,
-        $expectedLastEntry,
-        $expectedCurrentEntry
+        $expectedRevs,          // @param int
+        $expectedLastEntry,     // @param array
+        &$expectedCurrentEntry  // @param array, pass by reference
     ) {
         $revisions = $pagelog->getRevisions(-1, 200);
         $this->assertCount($expectedRevs, $revisions);
@@ -95,6 +95,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         // 1.1 create a page
         saveWikiText($page, 'teststring', '1st save', false);
+        clearstatcache(false, $file);
         $this->assertFileExists($file);
         $lastmod = filemtime($file);
         $expectedRevs = 1;
@@ -277,6 +278,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         // 2.1 create a page
         saveWikiText($page, 'teststring', 'Test 2, 1st save', false);
+        clearstatcache(false, $file);
         $this->assertFileExists($file);
         $lastmod = filemtime($file);
         $expectedRevs = 1;
@@ -461,6 +463,74 @@ class common_saveWikiText_test extends DokuWikiTest {
             'type' => DOKU_CHANGE_TYPE_DELETE,
             'sum'  => 'removed - external edit (Unknown date)',
             'sizechange' => -11,
+        );
+
+        $pagelog = new PageChangeLog($page);
+        $this->checkChangeLogAfterExternalEdit($pagelog, $expectedRevs, $expect, $expectExternal);
+    }
+
+    /**
+     * Execute a whole bunch of saves on the same page and check the results
+     * TEST 4 - typical page life of bundled page such as wiki:syntax
+     *  4.1 externally create a page
+     *  4.2 edit and save
+     *  4.3 externally edit as a result of a file which has older timestamp than last revision
+     */
+    function test_savesequence4() {
+        $page = 'page4';
+        $file = wikiFN($page);
+
+        // 4.1 externally create a page
+        $this->assertFileNotExists($file);
+        file_put_contents($file, 'teststring');
+        clearstatcache(false, $file);
+        $lastmod = filemtime($file);
+        $expectedRevs = 0; // external edit is not yet in changelog
+        $expect = false;
+        $expectExternal = array(
+            'date' => $lastmod,
+            'type' => DOKU_CHANGE_TYPE_CREATE,
+            'sum'  => 'created - external edit',
+            'sizechange' => 10,
+        );
+
+        $pagelog = new PageChangeLog($page);
+        $this->checkChangeLogAfterExternalEdit($pagelog, $expectedRevs, $expect, $expectExternal);
+
+        $this->waitForTick(true); // wait for new revision ID
+
+        // 4.2 edit and save
+        saveWikiText($page, 'teststring1', 'Test 4, first save', false);
+        clearstatcache(false, $file);
+        $newmod = filemtime($file);
+        $this->assertNotEquals($lastmod, $newmod);
+        $lastmod = $newmod;
+        $expectedRevs = 2; // two more revisions now!
+        $expect = array(
+            'date' => $lastmod,
+            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'sum'  => 'Test 4, first save',
+            'sizechange' => 1,
+        );
+
+        $pagelog = new PageChangeLog($page);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
+
+        $this->waitForTick(true); // wait for new revision ID
+
+        // 4.3 externally edit as a result of a file which has older timestamp than last revision
+        unlink($file);
+        file_put_contents($file, 'teststring fake 1 hout past');
+        touch($file, filemtime($file) -3600); // change file modification time to 1 hour past
+        clearstatcache();
+        $newmod = filemtime($file);
+        $this->assertLessThan($lastmod, $newmod); // file must be older than previous for this test
+        $expectedRevs = 2; // external edit is not yet in changelog
+        $expectExternal = array(
+            'date' => $lastmod + 1,
+            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'sum'  => 'external edit (Unknown date)',
+            'sizechange' => 16,
         );
 
         $pagelog = new PageChangeLog($page);
