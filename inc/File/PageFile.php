@@ -72,6 +72,7 @@ class PageFile
      * @param string $text     wikitext being saved
      * @param string $summary  summary of text update
      * @param bool   $minor    mark this saved version as minor update
+     * @return array data of event COMMON_WIKIPAGE_SAVE
      */
     public function saveWikiText($text, $summary, $minor = false)
     {
@@ -109,7 +110,6 @@ class PageFile
             'contentChanged' => (bool)($text != $currentContent), // confirm later
             'changeInfo'     => '',        // automatically determined by revertFrom
             'sizechange'     => strlen($text) - strlen($currentContent), // TBD
-            'page'           => $this,     // allow handlers to use class methods
         );
 
         // determine tentatively change type and relevant elements of event data
@@ -131,6 +131,8 @@ class PageFile
         }
 
         $this->data = $data;
+        $data['page'] = $this; // allow event handlers to use this class methods
+
         $event = new Event('COMMON_WIKIPAGE_SAVE', $data);
         if (!$event->advise_before()) return;
 
@@ -204,6 +206,7 @@ class PageFile
         // update the purgefile (timestamp of the last time anything within the wiki was changed)
         io_saveFile($conf['cachedir'].'/purgefile', time());
 
+        unset($data['page']);
         return $data;
     }
 
