@@ -3,7 +3,7 @@
 namespace dokuwiki\ChangeLog;
 
 /**
- * Class MediaChanegLog; handles changelog of a media file
+ * Class MediaChangeLog; handles changelog of a media file
  */
 class MediaChangeLog extends ChangeLog
 {
