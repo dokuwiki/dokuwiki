@@ -189,24 +189,27 @@ class PageFile
         }
         $data['sizechange'] = $filesize_new - $filesize_old;
 
-        // 
         $event->advise_after();
 
+        unset($data['page']);
+
         // adds an entry to the changelog and saves the metadata for the page
-        addLogEntry(
-            $data['newRevision'],
-            $this->id,
-            $data['changeType'],
-            $data['summary'],
-            $data['changeInfo'],
-            null,
-            $data['sizechange']
-        );
+        $logEntry = $this->changelog->addLogEntry([
+            'date'       => $data['newRevision'],
+            'ip'         => clientIP(true),
+            'type'       => $data['changeType'],
+            'id'         => $this->id,
+            'user'       => $INPUT->server->str('REMOTE_USER'),
+            'sum'        => $data['summary'],
+            'extra'      => $data['changeInfo'],
+            'sizechange' => $data['sizechange'],
+        ]);
+        // update metadata
+        $this->updateMetadata($logEntry);
 
         // update the purgefile (timestamp of the last time anything within the wiki was changed)
         io_saveFile($conf['cachedir'].'/purgefile', time());
 
-        unset($data['page']);
         return $data;
     }
 
@@ -270,6 +273,60 @@ class PageFile
         $newfile = $this->getPath($date);
         io_writeWikiPage($newfile, $this->rawWikiText(), $this->id, $date);
         return $date;
+    }
+
+    /**
+     * Update metadata of changed page
+     *
+     * @param array $logEntry  changelog entry
+     */
+    public function updateMetadata(array $logEntry)
+    {
+        global $INFO;
+
+        list(
+            'date' => $date,
+            'type' => $changeType,
+            'user' => $user,
+        ) = $logEntry;
+
+        $wasRemoved   = ($changeType === DOKU_CHANGE_TYPE_DELETE);
+        $wasCreated   = ($changeType === DOKU_CHANGE_TYPE_CREATE);
+        $wasReverted  = ($changeType === DOKU_CHANGE_TYPE_REVERT);
+        $wasMinorEdit = ($changeType === DOKU_CHANGE_TYPE_MINOR_EDIT);
+
+        $created = @filectime($pagefile); // @filectime($this->getPath())
+
+        if ($wasRemoved) return;
+
+        $oldmeta = p_read_metadata($this->id)['persistent'];
+        $meta    = array();
+
+        if ($wasCreated &&
+            (empty($oldmeta['date']['created']) || $oldmeta['date']['created'] === $created)
+        ) {
+            // newly created
+            $meta['date']['created'] = $created;
+            if ($user) {
+                $meta['creator'] = isset($INFO) ? $INFO['userinfo']['name'] : null;
+                $meta['user']    = $user;
+            }
+        } elseif (($wasCreated || $wasReverted) && !empty($oldmeta['date']['created'])) {
+            // re-created / restored
+            $meta['date']['created']  = $oldmeta['date']['created'];
+            $meta['date']['modified'] = $created; // use the files ctime here
+            $meta['creator'] = isset($oldmeta['creator']) ? $oldmeta['creator'] : null;
+            if ($user) {
+                $meta['contributor'][$user] = isset($INFO) ? $INFO['userinfo']['name'] : null;
+            }
+        } elseif (!$wasMinorEdit) {   // non-minor modification
+            $meta['date']['modified'] = $date;
+            if ($user) {
+                $meta['contributor'][$user] = isset($INFO) ? $INFO['userinfo']['name'] : null;
+            }
+        }
+        $meta['last_change'] = $logEntry;
+        p_set_metadata($this->id, $meta);
     }
 
 }

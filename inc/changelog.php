@@ -7,6 +7,7 @@
  */
 
 use dokuwiki\ChangeLog\ChangeLog;
+use dokuwiki\File\PageFile;
 
 /**
  * parses a changelog line into it's components
@@ -58,12 +59,6 @@ function addLogEntry(
     $flagExternalEdit = isset($flags['ExternalEdit']);
 
     $id = cleanid($id);
-    $file = wikiFN($id);
-    $created = @filectime($file);
-    $minor = ($type === DOKU_CHANGE_TYPE_MINOR_EDIT);
-    $wasRemoved = ($type === DOKU_CHANGE_TYPE_DELETE);
-    $wasCreated = ($type === DOKU_CHANGE_TYPE_CREATE);
-    $wasReverted = ($type === DOKU_CHANGE_TYPE_REVERT);
 
     if (!$date) $date = time(); //use current time if none supplied
     $remote = (!$flagExternalEdit) ? clientIP(true) : '127.0.0.1';
@@ -71,7 +66,8 @@ function addLogEntry(
     $sizechange = ($sizechange === null) ? '' : (int)$sizechange;
 
     // update changelog file and get the added entry that is also to be stored in metadata
-    $logEntry = (new PageChangeLog($id, 1024))->addLogEntry([
+    $pageFile = new PageFile($id);
+    $logEntry = $pageFile->changelog->addLogEntry([
         'date'       => $date,
         'ip'         => $remote,
         'type'       => $type,
@@ -83,31 +79,7 @@ function addLogEntry(
     ]);
 
     // update metadata
-    if (!$wasRemoved) {
-        $oldmeta = p_read_metadata($id)['persistent'];
-        $meta    = array();
-        if ($wasCreated &&
-            (empty($oldmeta['date']['created']) || $oldmeta['date']['created'] === $created)
-        ) {
-            // newly created
-            $meta['date']['created'] = $created;
-            if ($user) {
-                $meta['creator'] = isset($INFO) ? $INFO['userinfo']['name'] : null;
-                $meta['user']    = $user;
-            }
-        } elseif (($wasCreated || $wasReverted) && !empty($oldmeta['date']['created'])) {
-            // re-created / restored
-            $meta['date']['created']  = $oldmeta['date']['created'];
-            $meta['date']['modified'] = $created; // use the files ctime here
-            $meta['creator'] = isset($oldmeta['creator']) ? $oldmeta['creator'] : null;
-            if ($user) $meta['contributor'][$user] = isset($INFO) ? $INFO['userinfo']['name'] : null;
-        } elseif (!$minor) {   // non-minor modification
-            $meta['date']['modified'] = $date;
-            if ($user) $meta['contributor'][$user] = isset($INFO) ? $INFO['userinfo']['name'] : null;
-        }
-        $meta['last_change'] = $logEntry;
-        p_set_metadata($id, $meta);
-    }
+    $pageFile->updateMetadata($logEntry);
 }
 
 /**
