@@ -19,8 +19,9 @@ class common_saveWikiText_test extends DokuWikiTest {
      */
     private function checkChangeLogAfterNormalSave(
         PageChangeLog $pagelog,
-        $expectedRevs,          // @param int
-        &$expectedLastEntry     // @param array, pass by reference
+        $expectedRevs,               // @param int
+        &$expectedLastEntry,         // @param array, pass by reference
+        $expected2ndLastEntry = null // @param array
     ) {
         $revisions = $pagelog->getRevisions(-1, 200);
         $this->assertCount($expectedRevs, $revisions);
@@ -37,6 +38,13 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertFileExists($attic, 'file missing in attic');
         $files = count(glob(dirname($attic).'/'.noNS($lastRevInfo['id']).'.*'));
         $this->assertLessThanOrEqual($expectedRevs, $files, 'detectExternalEdit() should not add too often old revs');
+
+        // second to last revision (optional)
+        if ($expected2ndLastEntry && array_key_exists('timestamp',$expected2ndLastEntry) && count($revisions) > 1) {
+            $prevRevInfo = $pagelog->getRevisionInfo($revisions[1]);
+            unset($expected2ndLastEntry['timestamp']); // drop timestamp key
+            $this->assertEquals($expected2ndLastEntry, $prevRevInfo);
+        }
     }
 
     /**
@@ -251,7 +259,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect, $expectExternal);
     }
 
     /**
@@ -343,7 +351,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect, $expectExternal);
 
         $this->waitForTick(); // wait for new revision ID
 
@@ -381,7 +389,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect, $expectExternal);
     }
 
     /**
@@ -449,13 +457,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
-
-        // second to last revision record that corresponds to step 3.2 external edit
-        $revs = $pagelog->getRevisions(-1, $expectedRevs);
-        $prevRevInfo = $pagelog->getRevisionInfo($revs[$expectedRevs -1]);
-        unset($expectExternal['timestamp']); // drop timestamp key
-        $this->assertEquals($expectExternal, $prevRevInfo);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect, $expectExternal);
 
         $this->waitForTick(true); // wait for new revision ID
 
@@ -518,7 +520,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect, $expectExternal);
 
         $this->waitForTick(true); // wait for new revision ID
 
@@ -608,7 +610,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect, $expectExternal);
 
         $this->waitForTick(); // wait for new revision ID
 
@@ -678,7 +680,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect, $expectExternal);
     }
 
 }
