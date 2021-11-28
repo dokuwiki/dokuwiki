@@ -40,6 +40,7 @@ function parseChangelogLine($line) {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Esther Brunner <wikidesign@gmail.com>
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @deprecated 2021-11-28
  */
 function addLogEntry(
     $date,
@@ -50,6 +51,9 @@ function addLogEntry(
     $flags = null,
     $sizechange = null)
 {
+    // no more used in DokuWiki core, but left for third-party plugins
+    dbg_deprecated('see '. \dokuwiki\File\PageFile::class .'::saveWikiText()');
+
     global $conf, $INFO;
     /** @var Input $INPUT */
     global $INPUT;

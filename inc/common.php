@@ -1266,10 +1266,10 @@ function con($pre, $text, $suf, $pretty = false) {
  * wiki, triggered in @see saveWikiText()
  *
  * @param string $id the page ID
- * @deprecated YYYY-MM-DD
+ * @deprecated 2021-11-28
  */
 function detectExternalEdit($id) {
-  //dbg_deprecated(\dokuwiki\File\PageFile::class .'::detectExternalEdit()');
+    dbg_deprecated(\dokuwiki\File\PageFile::class .'::detectExternalEdit()');
     (new PageFile($id))->detectExternalEdit();
 }
 
@@ -1312,10 +1312,10 @@ function saveWikiText($id, $text, $summary, $minor = false) {
  *
  * @param string $id page id
  * @return int|string revision timestamp
- * @deprecated YYYY-MM-DD
+ * @deprecated 2021-11-28
  */
 function saveOldRevision($id) {
-  //dbg_deprecated(\dokuwiki\File\PageFile::class .'::saveOldRevision()');
+    dbg_deprecated(\dokuwiki\File\PageFile::class .'::saveOldRevision()');
     return (new PageFile($id))->saveOldRevision();
 }
 
