@@ -41,7 +41,7 @@ class ApiCore
      *
      * @return array
      */
-    public function __getRemoteInfo()
+    public function getRemoteInfo()
     {
         return array(
             'dokuwiki.getVersion' => array(

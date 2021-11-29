@@ -5,34 +5,12 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Extension\EventHandler;
 use dokuwiki\Search\Indexer;
 
-if (!class_exists('PHPUnit_Framework_TestCase')) {
-    /**
-     * phpunit 5/6 compatibility
-     */
-    class PHPUnit_Framework_TestCase extends PHPUnit\Framework\TestCase
-    {
-        /**
-         * setExpectedException is deprecated in PHPUnit 6
-         *
-         * @param string $class
-         * @param null|string $message
-         */
-        public function setExpectedException($class, $message=null)
-        {
-            $this->expectException($class);
-            if (!is_null($message)) {
-                $this->expectExceptionMessage($message);
-            }
-        }
-    }
-}
-
 /**
  * Helper class to provide basic functionality for tests
  *
  * @uses PHPUnit_Framework_TestCase and thus PHPUnit 5.7+ is required
  */
-abstract class DokuWikiTest extends PHPUnit_Framework_TestCase
+abstract class DokuWikiTest extends PHPUnit\Framework\TestCase
 {
     /**
      * tests can override this
@@ -49,12 +27,24 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase
     protected $pluginsDisabled = array();
 
     /**
+     * setExpectedException was deprecated in PHPUnit 6
+     *
+     * @param string $class
+     * @param null|string $message
+     */
+    public function setExpectedException($class, $message=null) {
+        $this->expectException($class);
+        if(!is_null($message)) {
+            $this->expectExceptionMessage($message);
+        }
+    }
+
+    /**
      * Setup the data directory
      *
      * This is ran before each test class
      */
-    public static function setUpBeforeClass()
-    {
+    public static function setUpBeforeClass() : void {
         // just to be safe not to delete something undefined later
         if(!defined('TMP_DIR')) die('no temporary directory');
         if(!defined('DOKU_TMP_DATA')) die('no temporary data directory');
@@ -70,8 +60,8 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase
      * @throws Exception if plugin actions fail
      * @return void
      */
-    public function setUp()
-    {
+    public function setUp() : void {
+
         // reload config
         global $conf, $config_cascade;
         $conf = array();
@@ -107,6 +97,7 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase
             $conf['compression'] = 0;
         }
         // make real paths and check them
+        init_creationmodes();
         init_paths();
         init_files();
 

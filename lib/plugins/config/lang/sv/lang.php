@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Patrik K Lundberg <patrik.kotiranta.lundberg@gmail.com>
  * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
@@ -47,6 +48,7 @@ $lang['title']                 = 'Wikins namn';
 $lang['start']                 = 'Startsidans namn';
 $lang['lang']                  = 'Språk';
 $lang['template']              = 'Mall';
+$lang['sidebar']               = 'Sidofältets sidonamn (om mall stödjer det), tomt fällt deaktiverar sidofältet';
 $lang['license']               = 'Under vilken licens skall ditt innehåll publiceras?';
 $lang['savedir']               = 'Katalog för att spara data';
 $lang['basedir']               = 'Grundkatalog';
@@ -88,6 +90,7 @@ $lang['disableactions_subscription'] = 'Prenumerera/Säg upp prenumeration';
 $lang['disableactions_wikicode'] = 'Visa källkod/Exportera råtext';
 $lang['disableactions_profile_delete'] = 'Ta bort eget konto';
 $lang['disableactions_other']  = 'Andra funktioner (kommaseparerade)';
+$lang['disableactions_rss']    = 'XML Syndikation (RSS)';
 $lang['auth_security_timeout'] = 'Autentisieringssäkerhets timeout (sekunder)';
 $lang['securecookie']          = 'Skall cookies som sätts via HTTPS endast skickas via HTTPS från webbläsaren? Avaktivera detta alternativ endast om inloggningen till din wiki är säkrad med SSL men läsning av wikin är osäkrad.';
 $lang['usewordblock']          = 'Blockera spam baserat på ordlista';
@@ -105,6 +108,7 @@ $lang['target____interwiki']   = 'Målfönster för interwiki-länkar';
 $lang['target____extern']      = 'Målfönster för externa länkar';
 $lang['target____media']       = 'Målfönster för medialänkar';
 $lang['target____windows']     = 'Målfönster för windowslänkar';
+$lang['mediarevisions']        = 'Aktivera versionshantering för media?';
 $lang['refcheck']              = 'Kontrollera referenser till mediafiler';
 $lang['gdlib']                 = 'Version av GD-biblioteket';
 $lang['im_convert']            = 'Sökväg till ImageMagicks konverteringsverktyg';
@@ -114,14 +118,20 @@ $lang['subscribers']           = 'Aktivera stöd för prenumeration på ändring
 $lang['notify']                = 'Skicka meddelande om ändrade sidor till den här e-postadressen';
 $lang['registernotify']        = 'Skicka meddelande om nyregistrerade användare till en här e-postadressen';
 $lang['mailfrom']              = 'Avsändaradress i automatiska e-postmeddelanden';
+$lang['mailreturnpath']        = 'Mottagarens mejladress för inga leveransnotifikationer';
 $lang['mailprefix']            = 'Prefix i början på ämnesraden vid automatiska e-postmeddelanden';
+$lang['dontlog']               = 'Avaktivera loggning för dessa typer av loggar';
 $lang['sitemap']               = 'Skapa Google sitemap (dagar)';
 $lang['rss_type']              = 'Typ av XML-flöde';
 $lang['rss_linkto']            = 'XML-flöde pekar på';
 $lang['rss_content']           = 'Vad ska visas för saker i XML-flödet?';
 $lang['rss_update']            = 'Uppdateringsintervall för XML-flöde (sek)';
 $lang['rss_show_summary']      = 'XML-flöde visar sammanfattning i rubriken';
+$lang['rss_show_deleted']      = 'XML flöde Visa raderade flöden';
 $lang['rss_media']             = 'Vilka ändringar ska listas i XML flödet?';
+$lang['rss_media_o_both']      = 'båda';
+$lang['rss_media_o_pages']     = 'sidor';
+$lang['rss_media_o_media']     = 'media';
 $lang['updatecheck']           = 'Kontrollera uppdateringar och säkerhetsvarningar? DokuWiki behöver kontakta update.dokuwiki.org för den här funktionen.';
 $lang['userewrite']            = 'Använd rena webbadresser';
 $lang['useslash']              = 'Använd snedstreck för att separera namnrymder i webbadresser';
@@ -138,6 +148,11 @@ $lang['xsendfile']             = 'Använd X-Sendfile huvudet för att låta webs
 $lang['renderer_xhtml']        = 'Generera för användning i huvudwikipresentation (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_fragment_o_exact'] = 'exakt';
+$lang['search_fragment_o_starts_with'] = 'börjar med';
+$lang['search_fragment_o_ends_with'] = 'slutar med';
+$lang['search_fragment_o_contains'] = 'innehåller';
+$lang['jquerycdn_o_0']         = 'Ingen CDN, enbart lokal leverans';
 $lang['jquerycdn_o_jquery']    = 'CDN på code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN på cdnjs.com';
 $lang['proxy____host']         = 'Proxyserver';

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Patrik K Lundberg <patrik.kotiranta.lundberg@gmail.com>
  * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
@@ -38,6 +39,7 @@ $lang['filter']                = 'Filter';
 $lang['export_all']            = 'Exportera alla användare (CSV)';
 $lang['export_filtered']       = 'Exportera filtrerade användarlistningen (CSV)';
 $lang['import']                = 'Importera nya användare';
+$lang['line']                  = 'Radnummer.';
 $lang['error']                 = 'Error-meddelande';
 $lang['summary']               = 'Visar användare %1$d-%2$d av %3$d funna. %4$d användare totalt.';
 $lang['nonefound']             = 'Inga användare hittades. %d användare totalt.';
@@ -68,6 +70,12 @@ $lang['import_error_badmail']  = 'Felaktig e-postadress';
 $lang['import_error_upload']   = 'Import misslyckades. Csv-filen kunde inte laddas upp eller är tom.';
 $lang['import_error_readfail'] = 'Import misslyckades. Den uppladdade filen gick inte att läsa.';
 $lang['import_error_create']   = 'Misslyckades att skapa användaren.';
+$lang['import_downloadfailures'] = 'Ladda ner misslyckanden som CSV för korrigering';
+$lang['addUser_error_missing_pass'] = 'Vänligen skapa ett lösenord eller aktivera användarnotifikationer för att aktivera lösenordsgenerering.';
 $lang['addUser_error_pass_not_identical'] = 'De angivna lösenorden var inte identiska.';
+$lang['addUser_error_modPass_disabled'] = 'Ändring av lösenord är för tillfället avaktiverat';
 $lang['addUser_error_name_missing'] = 'Var god fyll i namn på den nya användaren.';
+$lang['addUser_error_modName_disabled'] = 'Ändring av namn är för tillfället avaktiverat';
 $lang['addUser_error_mail_missing'] = 'Var god fyll i e-postadress för den nya användaren.';
+$lang['addUser_error_modMail_disabled'] = 'Ändring av mejladresser är för tillfället avaktiverat';
+$lang['addUser_error_create_event_failed'] = 'Ett plugin förhindrade att den nya användaren lades till. Granska andra möjliga meddelanden för mer information.';

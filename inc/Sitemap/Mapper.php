@@ -10,6 +10,7 @@ namespace dokuwiki\Sitemap;
 
 use dokuwiki\Extension\Event;
 use dokuwiki\HTTP\DokuHTTPClient;
+use dokuwiki\Logger;
 use dokuwiki\Search\Indexer;
 
 /**
@@ -17,7 +18,8 @@ use dokuwiki\Search\Indexer;
  *
  * @author Michael Hamann
  */
-class Mapper {
+class Mapper
+{
     /**
      * Builds a Google Sitemap of all public pages known to the indexer
      *
@@ -47,14 +49,14 @@ class Mapper {
         if (@filesize($sitemap) &&
             @filemtime($sitemap) > (time()-($conf['sitemap']*86400)) // 60*60*24=86400
         ) {
-            dbglog('Sitemapper::generate(): Sitemap up to date');
+            Logger::debug('Sitemapper::generate(): Sitemap up to date');
             return false;
         }
 
-        dbglog("Sitemapper::generate(): using $sitemap");
+        Logger::debug("Sitemapper::generate(): using $sitemap");
 
-        $pages = (new Indexer())->getPages();
-        dbglog('Sitemapper::generate(): creating sitemap using '.count($pages).' pages');
+        $pages = idx_get_indexer()->getPages();
+        Logger::debug('Sitemapper::generate(): creating sitemap using '.count($pages).' pages');
         $items = array();
 
         // build the sitemap items
@@ -159,10 +161,11 @@ class Mapper {
         $event = new Event('SITEMAP_PING', $data);
         if ($event->advise_before(true)) {
             foreach ($data['ping_urls'] as $name => $url) {
-                dbglog("Sitemapper::PingSearchEngines(): pinging $name");
+                Logger::debug("Sitemapper::PingSearchEngines(): pinging $name");
                 $resp = $http->get($url);
-                if ($http->error) dbglog("Sitemapper:pingSearchengines(): $http->error");
-                dbglog('Sitemapper:pingSearchengines(): '.preg_replace('/[\n\r]/',' ',strip_tags($resp)));
+                if($http->error) {
+                    Logger::debug("Sitemapper:pingSearchengines(): $http->error", $resp);
+                }
             }
         }
         $event->advise_after();

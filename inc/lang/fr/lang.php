@@ -3,9 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
- * @author Pierre Henriot <pierre.henriot@gmail.com>
+ * @author Olivier Humbert <trebmuh@tuxfamily.org>
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Nicolas Friedli <nicolas@theologique.ch>
+ * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
  * @author Laurent Ponthieu <contact@coopindus.fr>
  * @author Damien Regad <dregad@mantisbt.org>
@@ -43,7 +44,6 @@
  * @author Pietroni <pietroni@informatique.univ-paris-diderot.fr>
  * @author Floriang <antispam@floriang.eu>
  * @author Eric <ericstevenart@netc.fr>
- * @author Olivier Humbert <trebmuh@tuxfamily.org>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -148,6 +148,7 @@ $lang['js']['media_done_btn']  = 'Terminé';
 $lang['js']['media_drop']      = 'Déposez des fichiers ici pour les envoyer';
 $lang['js']['media_cancel']    = 'supprimer';
 $lang['js']['media_overwrt']   = 'Écraser les fichiers existants';
+$lang['js']['data_insecure']   = 'ATTENTION : votre répertoire de données ne semble pas correctement sécurisé. Veuillez lire <a href="https://www.dokuwiki.org/fr:security#securite_de_l_acces_web">Sécurité de l\'accès web (en français)</a> ou <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki (en anglais)</a>.';
 $lang['search_exact_match']    = 'Correspondance exacte';
 $lang['search_starts_with']    = 'Commence par';
 $lang['search_ends_with']      = 'Se termine par';
@@ -304,9 +305,9 @@ $lang['img_artist']            = 'Photographe:';
 $lang['img_copyr']             = 'Copyright:';
 $lang['img_format']            = 'Format:';
 $lang['img_camera']            = 'Appareil photo:';
-$lang['img_keywords']          = 'Mots-clés:';
-$lang['img_width']             = 'Largeur:';
-$lang['img_height']            = 'Hauteur:';
+$lang['img_keywords']          = 'Mots-clés :';
+$lang['img_width']             = 'Largeur :';
+$lang['img_height']            = 'Hauteur :';
 $lang['subscr_subscribe_success'] = '%s a été ajouté à la liste des abonnés à %s';
 $lang['subscr_subscribe_error'] = 'Erreur à l\'ajout de %s à la liste des abonnés de %s';
 $lang['subscr_subscribe_noaddress'] = 'Il n\'y a pas d\'adresse associée à votre identifiant, vous ne pouvez pas être ajouté à la liste des abonnés.';
@@ -332,7 +333,7 @@ $lang['i_superuser']           = 'Super-utilisateur';
 $lang['i_problems']            = 'L\'installateur a détecté les problèmes indiqués ci-dessous. Vous ne pouvez pas poursuivre l\'installation tant qu\'ils n\'auront pas été corrigés.';
 $lang['i_modified']            = 'Pour des raisons de sécurité, ce script ne fonctionne qu\'avec une installation neuve et non modifiée de DokuWiki. Vous devriez ré-extraire les fichiers depuis le paquet téléchargé ou consulter les <a href="http://dokuwiki.org/install">instructions d\'installation de DokuWiki</a>';
 $lang['i_funcna']              = 'La fonction PHP <code>%s</code> n\'est pas disponible. Peut-être que votre hébergeur web l\'a désactivée ?';
-$lang['i_disabled']            = 'Elle a été désactivée par votre fournisseur d’accès.';
+$lang['i_disabled']            = 'Elle a été désactivée par votre hébergeur';
 $lang['i_funcnmail']           = '<b>Note:</b> La fonction PHP mail n\'est pas disponible. %s Si vous ne pouvez pas l\'activer, vous pourriez installer le <a href="http://dokuwiki.org/plugins/smtp">greffon smtp</a>.';
 $lang['i_phpver']              = 'Votre version de PHP (%s) est antérieure à la version requise (%s). Vous devez mettre à jour votre installation de PHP.';
 $lang['i_mbfuncoverload']      = 'Il faut désactiver mbstring.func_overload dans php.ini pour DokuWiki';
@@ -393,6 +394,6 @@ $lang['searchresult']          = 'Résultat de la recherche';
 $lang['plainhtml']             = 'HTML brut';
 $lang['wikimarkup']            = 'Wiki balise';
 $lang['page_nonexist_rev']     = 'La page n\'existait pas le %s. Elle a été créée le <a href="%s">%s</a>.';
-$lang['unable_to_parse_date']  = 'Ne peut analyser le paramètre date "%s".';
+$lang['unable_to_parse_date']  = 'Impossible d\'analyser le paramètre temporel at "%s".';
 $lang['email_signature_text']  = 'Courriel envoyé par DokuWiki depuis
 @DOKUWIKIURL@';

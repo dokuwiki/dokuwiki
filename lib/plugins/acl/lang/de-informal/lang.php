@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Axel Kirch <axel@globeglotter.com>
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
@@ -12,7 +13,7 @@
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Volker Bödker <volker@boedker.de>
  */
-$lang['admin_acl']             = 'Zugangsverwaltung';
+$lang['admin_acl']             = 'Zugriffsverwaltung';
 $lang['acl_group']             = 'Gruppe:';
 $lang['acl_user']              = 'Benutzer:';
 $lang['acl_perms']             = 'Rechte für';

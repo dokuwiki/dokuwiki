@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Dario <darioriso@virgilio.it>
  * @author Filippo <abrickslife@gmail.com>
  * @author Roberto Bellingeri <bellingeri@netguru.it>
  * @author Eddy <eddy@mail.it>
@@ -180,6 +181,7 @@ $lang['txt_upload']            = 'Seleziona un file da caricare:';
 $lang['txt_filename']          = 'Carica come (opzionale):';
 $lang['txt_overwrt']           = 'Sovrascrivi file esistente';
 $lang['maxuploadsize']         = 'Upload max. %s per ogni file.';
+$lang['allowedmime']           = 'Elenco delle estensioni di file consentite';
 $lang['lockedby']              = 'Attualmente bloccato da:';
 $lang['lockexpire']            = 'Il blocco scade alle:';
 $lang['rssfailed']             = 'Si è verificato un errore cercando questo feed: ';

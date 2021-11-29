@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
  * @author Paulo <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
  * @author Maykon Oliveira <maykonoliveira850@gmail.com>
@@ -126,6 +127,7 @@ $lang['mailfrom']              = 'Endereço de e-mail a ser utilizado para mensa
 $lang['mailreturnpath']        = 'Endereço de e-mail do destinatário para notificações não entregues';
 $lang['mailprefix']            = 'Prefixo de e-mail a ser utilizado para mensagens automáticas. Deixe em branco para usar o título do wiki';
 $lang['htmlmail']              = 'Envie e-mails multipartes em HTML para uma melhor aparência, mas maiores em tamanho. Desative para mensagens em texto simples.';
+$lang['dontlog']               = 'Desabilite a gravação de relatórios para estes tipos de relatórios.';
 $lang['sitemap']               = 'Gerar sitemap Google frequentemente (dias). 0 para desativar';
 $lang['rss_type']              = 'Tipo de feed XML';
 $lang['rss_linkto']            = 'Links de feed XML para';

@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Petr Kajzar <petr.kajzar@lf1.cuni.cz>
+ * @author Petr Kajzar <petr.kajzar@centrum.cz>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Robert Surý <rsurycz@seznam.cz>
  * @author Martin Hořínek <hev@hev.cz>

@@ -152,11 +152,11 @@ class BulkSubscriptionSender extends SubscriptionSender
         }
 
         // try creating the lock directory
-        if (!@mkdir($lock, $conf['dmode'])) {
+        if (!@mkdir($lock)) {
             return false;
         }
 
-        if (!empty($conf['dperm'])) {
+        if ($conf['dperm']) {
             chmod($lock, $conf['dperm']);
         }
         return true;

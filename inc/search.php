@@ -135,13 +135,14 @@ function search_qsearch(&$data, $base, $file, $type, $lvl, $opts)
 function search_index(&$data, $base, $file, $type, $lvl, $opts)
 {
     global $conf;
+    $ns = isset($opts['ns']) ? $opts['ns'] : '';
     $opts = array(
         'pagesonly' => true,
         'listdirs' => true,
         'listfiles' => empty($opts['nofiles']),
         'sneakyacl' => $conf['sneaky_index'],
         // Hacky, should rather use recmatch
-        'depth' => preg_match('#^'.preg_quote($file, '#').'(/|$)#','/'.$opts['ns']) ? 0 : -1
+        'depth' => preg_match('#^'.preg_quote($file, '#').'(/|$)#','/'.$ns) ? 0 : -1
     );
 
     return search_universal($data, $base, $file, $type, $lvl, $opts);
@@ -235,6 +236,58 @@ function search_media(&$data, $base, $file, $type, $lvl, $opts)
 
     return false;
 }
+
+/**
+ * List all mediafiles in a namespace
+ *   $opts['depth']     recursion level, 0 for all
+ *   $opts['showmsg']   shows message if invalid media id is used
+ *   $opts['skipacl']   skip acl checking
+ *   $opts['pattern']   check given pattern
+ *   $opts['hash']      add hashes to result list
+ *
+ * @todo This is a temporary copy of search_media returning a list of MediaFile intances
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
+ */
+function search_mediafiles(&$data,$base,$file,$type,$lvl,$opts){
+
+    //we do nothing with directories
+    if($type == 'd') {
+        if(empty($opts['depth'])) return true; // recurse forever
+        $depth = substr_count($file,'/');
+        if($depth >= $opts['depth']) return false; // depth reached
+        return true;
+    }
+
+    $id   = pathID($file,true);
+    if($id != cleanID($id)){
+        if($opts['showmsg'])
+            msg(hsc($id).' is not a valid file name for DokuWiki - skipped',-1);
+        return false; // skip non-valid files
+    }
+
+    //check ACL for namespace (we have no ACL for mediafiles)
+    $info['perm'] = auth_quickaclcheck(getNS($id).':*');
+    if(empty($opts['skipacl']) && $info['perm'] < AUTH_READ){
+        return false;
+    }
+
+    //check pattern filter
+    if(!empty($opts['pattern']) && !@preg_match($opts['pattern'], $id)){
+        return false;
+    }
+
+    $data[] = new \dokuwiki\File\MediaFile($id);
+    return false;
+}
+
 
 /**
  * This function just lists documents (for RSS namespace export)

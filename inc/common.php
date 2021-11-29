@@ -588,8 +588,10 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
 
     if(is_array($more)) {
         // add token for resized images
-        if(!empty($more['w']) || !empty($more['h']) || $isexternalimage){
-            $more['tok'] = media_get_token($id,$more['w'],$more['h']);
+        $w = isset($more['w']) ? $more['w'] : null;
+        $h = isset($more['h']) ? $more['h'] : null;
+        if($w || $h || $isexternalimage){
+            $more['tok'] = media_get_token($id, $w, $h);
         }
         // strip defaults for shorter URLs
         if(isset($more['cache']) && $more['cache'] == 'cache') unset($more['cache']);
@@ -821,7 +823,7 @@ function clientIP($single = false) {
         if(empty($ip[$i])) unset($ip[$i]);
     }
     $ip = array_values(array_unique($ip));
-    if(!$ip[0]) $ip[0] = '0.0.0.0'; // for some strange reason we don't have a IP
+    if(empty($ip) || !$ip[0]) $ip[0] = '0.0.0.0'; // for some strange reason we don't have a IP
 
     if(!$single) return join(',', $ip);
 
@@ -2080,7 +2082,7 @@ function set_doku_pref($pref, $val) {
         }
         $cookieVal = implode('#', $parts);
     } else if ($orig === false && $val !== false) {
-        $cookieVal = ($_COOKIE['DOKU_PREFS'] ? $_COOKIE['DOKU_PREFS'] . '#' : '') .
+        $cookieVal = (isset($_COOKIE['DOKU_PREFS']) ? $_COOKIE['DOKU_PREFS'] . '#' : '') .
             rawurlencode($pref) . '#' . rawurlencode($val);
     }
 

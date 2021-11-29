@@ -5,6 +5,7 @@ namespace dokuwiki\Debug;
 
 use Doku_Event;
 use dokuwiki\Extension\EventHandler;
+use dokuwiki\Logger;
 
 class DebugHelper
 {
@@ -164,7 +165,7 @@ class DebugHelper
             if ($event->data['alternative']) {
                 $msg .= ' ' . $event->data['alternative'] . ' should be used instead!';
             }
-            dbglog($msg);
+            Logger::getInstance(Logger::LOG_DEPRECATED)->log($msg);
         }
         $event->advise_after();
     }

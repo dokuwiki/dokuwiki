@@ -18,7 +18,7 @@ class Diff extends Ui
     protected $showIntro;
     protected $difftype;
 
-    /** 
+    /**
      * Diff Ui constructor
      *
      * @param  string $text  when non-empty: compare with this text with most current version
@@ -368,12 +368,12 @@ class Diff extends Ui
 
         //determine previous/next revisions
         $l_index = array_search($l_rev, $l_revs);
-        $l_prev = $l_revs[$l_index + 1];
-        $l_next = $l_revs[$l_index - 1];
+        $l_prev = $l_index < count($l_revs) - 1 ? $l_revs[$l_index + 1] : null;
+        $l_next = $l_index > 1 ? $l_revs[$l_index - 1] : null;
         if ($r_rev) {
             $r_index = array_search($r_rev, $r_revs);
-            $r_prev = $r_revs[$r_index + 1];
-            $r_next = $r_revs[$r_index - 1];
+            $r_prev = $r_index < count($r_revs) - 1 ? $r_revs[$r_index + 1] : null;
+            $r_next = $r_index > 1 ? $r_revs[$r_index - 1] : null;
         } else {
             //removed page
             if ($l_next) {

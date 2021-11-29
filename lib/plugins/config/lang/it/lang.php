@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Dario <darioriso@virgilio.it>
  * @author Filippo <abrickslife@gmail.com>
  * @author Roberto Bellingeri <bellingeri@netguru.it>
  * @author Eddy <eddy@mail.it>
@@ -130,6 +131,7 @@ $lang['mailfrom']              = 'Mittente per le mail automatiche';
 $lang['mailreturnpath']        = 'Indirizzo email destinatario per notifica di mancati recapiti';
 $lang['mailprefix']            = 'Prefisso da inserire nell\'oggetto delle mail automatiche';
 $lang['htmlmail']              = 'Invia email HTML multipart più gradevoli ma più ingombranti in dimensione. Disabilita per mail in puro testo.';
+$lang['dontlog']               = 'Disabilita la registrazione per questi tipi di log.';
 $lang['sitemap']               = 'Genera una sitemap Google (giorni)';
 $lang['rss_type']              = 'Tipo di feed XML';
 $lang['rss_linkto']            = 'Collega i feed XML a';
@@ -164,7 +166,9 @@ $lang['search_fragment_o_exact'] = 'esatto';
 $lang['search_fragment_o_starts_with'] = 'inizia con';
 $lang['search_fragment_o_ends_with'] = 'finisce con';
 $lang['search_fragment_o_contains'] = 'contiene';
+$lang['trustedproxy']          = 'Proxy di inoltro di fiducia che corrispondono a questa espressione regolare sul vero IP del client che riportano. L\'impostazione predefinita corrisponde alle reti locali. Lascia vuoto per non fidarti di nessun proxy.';
 $lang['_feature_flags']        = 'Segnalazione di feature';
+$lang['defer_js']              = 'Rimanda l\'esecuzione di JavaScript dopo che l\'HTML della pagina è stato analizzato. Migliora la velocità della pagina percepita ma potrebbe interrompere un piccolo numero di plugin.';
 $lang['dnslookups']            = 'Dokuwiki farà il lookup dei nomi host per ricavare l\'indirizzo IP remoto degli utenti che modificano le pagine. Se hai un DNS lento o non funzionante o se non vuoi questa funzione, disabilita l\'opzione';
 $lang['jquerycdn']             = 'Vuoi che gli script jQuery e jQuery UI siano caricati da una CDN? Questo richiederà richieste HTTP aggiuntive ma i file potrebbero caricarsi più velocemente e gli utenti potrebbero averli già in cache.';
 $lang['jquerycdn_o_0']         = 'Nessuna CDN, solo consegna locale';

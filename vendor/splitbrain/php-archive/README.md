@@ -6,8 +6,6 @@ needed for compression). It can create new files or extract existing ones.
 
 To keep things simple, the modification (adding or removing files) of existing archives is not supported.
 
-[![Build Status](https://travis-ci.org/splitbrain/php-archive.svg)](https://travis-ci.org/splitbrain/php-archive)
-
 Install
 -------
 

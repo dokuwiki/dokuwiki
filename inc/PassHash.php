@@ -92,10 +92,13 @@ class PassHash {
         } elseif(preg_match('/^:B:(.+?):.{32}$/', $hash, $m)) {
             $method = 'mediawiki';
             $salt   = $m[1];
-        } elseif(preg_match('/^\$6\$(rounds=\d+)?\$?(.+?)\$/', $hash, $m)) {
-            $method = 'sha512';
-            $salt   = $m[2];
-            $magic  = $m[1];
+        } elseif(preg_match('/^\$(5|6)\$(rounds=\d+)?\$?(.+?)\$/', $hash, $m)) {
+            $method = 'sha2';
+            $salt   = $m[3];
+            $magic  = array(
+                'prefix' => $m[1],
+                'rounds' => $m[2],
+            );
         } elseif(preg_match('/^\$(argon2id?)/', $hash, $m)) {
             if(!defined('PASSWORD_'.strtoupper($m[1]))) {
                 throw new \Exception('This PHP installation has no '.strtoupper($m[1]).' support');
@@ -666,27 +669,56 @@ class PassHash {
     }
 
     /**
-     * Password hashing method SHA512
+     * Password hashing method SHA-2
      *
      * This is only supported on PHP 5.3.2 or higher and will throw an exception if
      * the needed crypt support is not available
      *
+     * Uses:
+     *  - SHA-2 with 256-bit output for prefix $5$
+     *  - SHA-2 with 512-bit output for prefix $6$ (default)
+     *
      * @param string $clear The clear text to hash
      * @param string $salt  The salt to use, null for random
-     * @param string $magic The rounds for sha512 (for example "rounds=3000"), null for default value
+     * @param array $opts ('rounds' => rounds for sha256/sha512, 'prefix' => selected method from SHA-2 family)
      * @return string Hashed password
      * @throws \Exception
      */
-    public function hash_sha512($clear, $salt = null, $magic = null) {
-        if(!defined('CRYPT_SHA512') || CRYPT_SHA512 != 1) {
+    public function hash_sha2($clear, $salt = null, $opts = array()) {
+        if(empty($opts['prefix'])) {
+            $prefix = '6';
+        } else {
+            $prefix = $opts['prefix'];
+        }
+        if(empty($opts['rounds'])) {
+            $rounds = null;
+        } else {
+            $rounds = $opts['rounds'];
+        }
+        if($prefix == '5' && (!defined('CRYPT_SHA256') || CRYPT_SHA256 != 1)) {
+            throw new \Exception('This PHP installation has no SHA256 support');
+        }
+        if($prefix == '6' && (!defined('CRYPT_SHA512') || CRYPT_SHA512 != 1)) {
             throw new \Exception('This PHP installation has no SHA512 support');
         }
         $this->init_salt($salt, 8, false);
-        if(empty($magic)) {
-            return crypt($clear, '$6$'.$salt.'$');
+        if(empty($rounds)) {
+            return crypt($clear, '$'.$prefix.'$'.$salt.'$');
         }else{
-            return crypt($clear, '$6$'.$magic.'$'.$salt.'$');
+            return crypt($clear, '$'.$prefix.'$'.$rounds.'$'.$salt.'$');
         }
+    }
+
+    /** @see sha2 */
+    public function hash_sha512($clear, $salt = null, $opts=[]) {
+        $opts['prefix'] = 6;
+        return $this->hash_sha2($clear, $salt, $opts);
+    }
+
+    /** @see sha2 */
+    public function hash_sha256($clear, $salt = null, $opts=[]) {
+        $opts['prefix'] = 5;
+        return $this->hash_sha2($clear, $salt, $opts);
     }
 
     /**
@@ -722,7 +754,7 @@ class PassHash {
         if(!defined('PASSWORD_ARGON2I')) {
             throw new \Exception('This PHP installation has no ARGON2I support');
         }
-        return password_hash($clear,PASSWORD_ARGON2I);   
+        return password_hash($clear,PASSWORD_ARGON2I);
     }
 
     /**
@@ -740,7 +772,7 @@ class PassHash {
         if(!defined('PASSWORD_ARGON2ID')) {
             throw new \Exception('This PHP installation has no ARGON2ID support');
         }
-        return password_hash($clear,PASSWORD_ARGON2ID);   
+        return password_hash($clear,PASSWORD_ARGON2ID);
     }
 
     /**
