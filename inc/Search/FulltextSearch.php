@@ -83,8 +83,8 @@ class FulltextSearch
                 case 'W+:':
                 case 'W-:':
                 case 'W_:': // word
-                    $word    = substr($token, 3);
-                    $stack[] = (array) $lookup[$word];
+                    $word = substr($token, 3);
+                    if (array_key_exists($word, $lookup)) $stack[] = (array) $lookup[$word];
                     break;
                 case 'P+:':
                 case 'P-:': // phrase
