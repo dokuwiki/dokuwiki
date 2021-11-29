@@ -3,6 +3,7 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
+use dokuwiki\Logger;
 use dokuwiki\Search\Exception\IndexAccessException;
 use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Exception\IndexWriteException;
@@ -122,7 +123,7 @@ class Indexer extends AbstractIndex
             if (trim(io_readFile($idxtag)) == $this->getVersion()) {
                 $last = @filemtime($idxtag);
                 if ($last > @filemtime(wikiFN($page))) {
-                    if ($verbose) dbglog("Indexer: index for {$page} up to date");
+                    if ($verbose) Logger::debug("Indexer: index for {$page} up to date");
                     return true;
                 }
             }
@@ -160,7 +161,7 @@ class Indexer extends AbstractIndex
 
         // Access to Metadata Index
         $result = (new MetadataIndex($pid))->addMetaKeys($metadata);
-        if ($verbose) dbglog("Indexer: addMetaKeys({$page}) ".($result ? 'done' : 'failed'));
+        if ($verbose) Logger::debug("Indexer: addMetaKeys({$page}) ".($result ? 'done' : 'failed'));
         if (!$result) {
             return false;
         }
@@ -168,15 +169,15 @@ class Indexer extends AbstractIndex
         // Access to Fulltext Index
         if ($indexenabled) {
             $result = (new FulltextIndex($pid))->addWords($body);
-            if ($verbose) dbglog("Indexer: addWords() for {$page} done");
+            if ($verbose) Logger::debug("Indexer: addWords() for {$page} done");
             if (!$result) {
                 return false;
             }
         } else {
-            if ($verbose) dbglog("Indexer: full text indexing disabled for {$page}");
+            if ($verbose) Logger::debug("Indexer: full text indexing disabled for {$page}");
             // ensure the page content deleted from the Fulltext index
             $result = (new FulltextIndex($page))->deleteWords();
-            if ($verbose) dbglog("Indexer: deleteWords() for {$page} done");
+            if ($verbose) Logger::debug("Indexer: deleteWords() for {$page} done");
             if (!$result) {
                 return false;
             }
@@ -184,7 +185,7 @@ class Indexer extends AbstractIndex
 
         // update index tag file
         io_saveFile($idxtag, $this->getVersion());
-        if ($verbose) dbglog("Indexer: finished");
+        if ($verbose) Logger::debug("Indexer: finished");
 
         return $result;
     }
@@ -214,7 +215,7 @@ class Indexer extends AbstractIndex
 
         $idxtag = metaFN($page,'.indexed');
         if (!$force && !file_exists($idxtag)) {
-            if ($verbose) dbglog("Indexer: {$page}.indexed file does not exist, ignoring");
+            if ($verbose) Logger::debug("Indexer: {$page}.indexed file does not exist, ignoring");
             return true;
         }
 
@@ -223,14 +224,14 @@ class Indexer extends AbstractIndex
 
         // remove obsoleted content from Fulltext index
         $result = (new FulltextIndex($pid))->deleteWords();
-        if ($verbose) dbglog("Indexer: deleteWords() for {$page} done");
+        if ($verbose) Logger::debug("Indexer: deleteWords() for {$page} done");
         if (!$result) {
             return false;
         }
 
         // delete all keys of the page from metadata index
         $result = (new MetadataIndex($pid))->deleteMetaKeys();
-        if ($verbose) dbglog("Indexer: deleteMetaKeys() for {$page} done");
+        if ($verbose) Logger::debug("Indexer: deleteMetaKeys() for {$page} done");
         if (!$result) {
             return false;
         }
@@ -238,7 +239,7 @@ class Indexer extends AbstractIndex
         // mark the page as deleted in the page.idx
         $this->lock();
         $this->saveIndexKey('page', '', $pid, self::INDEX_MARK_DELETED.$page);
-        if ($verbose) dbglog("Indexer: {$page} has marked as deleted in page.idx");
+        if ($verbose) Logger::debug("Indexer: {$page} has marked as deleted in page.idx");
         $this->unlock();
 
         unset(static::$pidCache[$pid]);

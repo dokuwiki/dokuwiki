@@ -3,6 +3,7 @@
 namespace dokuwiki;
 
 use dokuwiki\Extension\Event;
+use dokuwiki\Logger;
 use dokuwiki\Search\Indexer;
 use dokuwiki\Sitemap\Mapper;
 use dokuwiki\Subscriptions\BulkSubscriptionSender;
@@ -201,7 +202,7 @@ class TaskRunner
         } catch (Search\Exception\SearchException $e) {
             $msg = get_class($e) .' : '. $e->getMessage();
             echo $msg;
-            dbglog($msg);
+            Logger::debug($msg);
             return false;
         }
     }
