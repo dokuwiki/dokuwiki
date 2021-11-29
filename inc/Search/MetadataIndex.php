@@ -5,6 +5,7 @@ namespace dokuwiki\Search;
 use dokuwiki\Search\Exception\IndexAccessException;
 use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Exception\IndexWriteException;
+use dokuwiki\Utf8;
 
 /**
  * Class DokuWiki Metadata Index (Singleton)
@@ -513,7 +514,7 @@ class MetadataIndex extends AbstractIndex
             }
         }
 
-        sort($result);
+        Utf8\Sort::sort($result);
         return $result;
     }
 
@@ -549,7 +550,7 @@ class MetadataIndex extends AbstractIndex
             }
         }
 
-        sort($result);
+        Utf8\Sort::sort($result);
         return $result;
     }
 }

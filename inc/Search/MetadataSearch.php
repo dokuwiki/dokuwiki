@@ -5,6 +5,7 @@ namespace dokuwiki\Search;
 use dokuwiki\Extension\Event;
 use dokuwiki\Search\MetadataIndex;
 use dokuwiki\Search\QueryParser;
+use dokuwiki\Utf8;
 
 /**
  * Class DokuWiki Metadata Search
@@ -161,7 +162,7 @@ class MetadataSearch
         } elseif ($ac > $bc) {
             return 1;
         }
-        return strcmp ($a,$b);
+        return Utf8\Sort::strcmp ($a,$b);
     }
 
     /**
