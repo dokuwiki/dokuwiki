@@ -295,7 +295,7 @@ class PageFile
         $wasReverted  = ($changeType === DOKU_CHANGE_TYPE_REVERT);
         $wasMinorEdit = ($changeType === DOKU_CHANGE_TYPE_MINOR_EDIT);
 
-        $created = @filectime($pagefile); // @filectime($this->getPath())
+        $createdDate = @filectime($this->getPath());
 
         if ($wasRemoved) return;
 
@@ -303,26 +303,26 @@ class PageFile
         $meta    = array();
 
         if ($wasCreated &&
-            (empty($oldmeta['date']['created']) || $oldmeta['date']['created'] === $created)
+            (empty($oldmeta['date']['created']) || $oldmeta['date']['created'] === $createdDate)
         ) {
             // newly created
-            $meta['date']['created'] = $created;
+            $meta['date']['created'] = $createdDate;
             if ($user) {
-                $meta['creator'] = isset($INFO) ? $INFO['userinfo']['name'] : null;
+                $meta['creator'] = $INFO['userinfo']['name'] ?? null;
                 $meta['user']    = $user;
             }
         } elseif (($wasCreated || $wasReverted) && !empty($oldmeta['date']['created'])) {
             // re-created / restored
             $meta['date']['created']  = $oldmeta['date']['created'];
-            $meta['date']['modified'] = $created; // use the files ctime here
-            $meta['creator'] = isset($oldmeta['creator']) ? $oldmeta['creator'] : null;
+            $meta['date']['modified'] = $createdDate; // use the files ctime here
+            $meta['creator'] = $oldmeta['creator'] ?? null;
             if ($user) {
-                $meta['contributor'][$user] = isset($INFO) ? $INFO['userinfo']['name'] : null;
+                $meta['contributor'][$user] = $INFO['userinfo']['name'] ?? null;
             }
         } elseif (!$wasMinorEdit) {   // non-minor modification
             $meta['date']['modified'] = $date;
             if ($user) {
-                $meta['contributor'][$user] = isset($INFO) ? $INFO['userinfo']['name'] : null;
+                $meta['contributor'][$user] = $INFO['userinfo']['name'] ?? null;
             }
         }
         $meta['last_change'] = $logEntry;
