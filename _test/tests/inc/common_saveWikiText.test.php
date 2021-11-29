@@ -21,7 +21,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         PageChangeLog $pagelog,
         $expectedRevs,               // @param int
         &$expectedLastEntry,         // @param array, pass by reference
-        $expected2ndLastEntry = null // @param array
+        $expected2ndLastEntry = null // @param array (optional)
     ) {
         $revisions = $pagelog->getRevisions(-1, 200);
         $this->assertCount($expectedRevs, $revisions);
@@ -39,8 +39,8 @@ class common_saveWikiText_test extends DokuWikiTest {
         $files = count(glob(dirname($attic).'/'.noNS($lastRevInfo['id']).'.*'));
         $this->assertLessThanOrEqual($expectedRevs, $files, 'detectExternalEdit() should not add too often old revs');
 
-        // second to last revision (optional)
-        if ($expected2ndLastEntry && array_key_exists('timestamp',$expected2ndLastEntry) && count($revisions) > 1) {
+        // second to last revision (optional), intended to check logline of previous external edits
+        if ($expected2ndLastEntry && count($revisions) > 1) {
             $prevRevInfo = $pagelog->getRevisionInfo($revisions[1]);
             unset($expected2ndLastEntry['timestamp']); // drop timestamp key
             $this->assertEquals($expected2ndLastEntry, $prevRevInfo);
@@ -135,6 +135,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->assertNotEquals($lastmod, $newmod);
         $lastmod = $newmod;
         $expectedRevs = 2;
+        $expectPrev = $expect;
         $expect = array(
             'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_EDIT,
@@ -143,7 +144,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         );
 
         $pagelog = new PageChangeLog($page);
-        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect);
+        $this->checkChangeLogAfterNormalSave($pagelog, $expectedRevs, $expect, $expectPrev);
 
         $this->waitForTick(); // wait for new revision ID
 
