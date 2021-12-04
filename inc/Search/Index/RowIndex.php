@@ -12,9 +12,6 @@ use dokuwiki\Search\Exception\IndexWriteException;
  */
 class RowIndex extends AbstractIndex
 {
-    /* entries will be marked as deleted in index */
-    const INDEX_MARK_DELETED = '#deleted:';
-
     /** @var array RID cache for faster access */
     protected static $ridCache = [];
 
@@ -93,33 +90,46 @@ class RowIndex extends AbstractIndex
      */
     public function accessValue($value)
     {
-        $value = trim($value);
-        $deleted = self::INDEX_MARK_DELETED . $value;
+        $result = $this->accessValues([$value]);
+        return $result[$value];
+    }
 
-        // search for the value
+    /**
+     * Searches the Index for all given values and adds them if not found
+     *
+     * @param string[] $values
+     * @return array the RIDs of the entries
+     * @throws IndexAccessException
+     */
+    public function accessValues($values)
+    {
+        $values = array_map('trim', $values);
+        $values = array_fill_keys($values, 1); // easier access as associative array
+
+        // search for the values
+        $result = [];
         $ln = 0;
         if (file_exists($this->filename)) {
             $fh = @fopen($this->filename, 'r');
             if (!$fh) throw new IndexAccessException("Failed to read {$this->filename}");
-            while (($line = fgets($fh)) !== false) {
+            while (($line = fgets($fh)) !== false && $values) {
                 $line = trim($line);
-                if ($line === $value) {
-                    fclose($fh);
-                    return $ln; // value has been found
-                }
-                if ($line === $deleted) {
-                    fclose($fh);
-                    $this->changeRow($ln, $value); // undelete row
-                    return $ln;
+                if (isset($values[$line])) {
+                    $result[$line] = $ln;
+                    unset($values[$line]);
                 }
                 $ln++;
             }
             fclose($fh);
         }
 
-        // if we're still here, the value has not been found and will be appended
-        file_put_contents($this->filename, "$value\n", FILE_APPEND);
-        return $ln;
+        // if there are still values, they have not been found and will be appended
+        foreach (array_keys($values) as $value) {
+            file_put_contents($this->filename, "$value\n", FILE_APPEND);
+            $result[$value] = $ln++;
+        }
+
+        return $result;
     }
 
     /**
