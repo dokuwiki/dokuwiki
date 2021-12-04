@@ -1,0 +1,52 @@
+<?php
+
+namespace tests\Search\Index;
+
+use dokuwiki\Search\Index\RowIndex;
+
+class RowIndexTest extends \DokuWikiTest
+{
+
+    public function testChangeRow()
+    {
+
+        $index = new RowIndex(__FUNCTION__);
+
+        $index->changeRow(5, 'test');
+        $full = file($index->getFilename(), FILE_IGNORE_NEW_LINES);
+        $this->assertEquals(6, count($full));
+
+        $index->changeRow(3, 'foo');
+        $full = file($index->getFilename(), FILE_IGNORE_NEW_LINES);
+        $this->assertEquals(6, count($full));
+
+        $index->changeRow(5, 'bar');
+        $index->changeRow(7, 'bang');
+
+        $full = file($index->getFilename(), FILE_IGNORE_NEW_LINES);
+        $this->assertEquals(['', '', '', 'foo', '', 'bar', '', 'bang'], $full);
+    }
+
+    public function testRetrieveRow()
+    {
+        $index = new RowIndex(__FUNCTION__);
+        $index->changeRow(5, 'test');
+        $this->assertEquals('test', $index->retrieveRow(5));
+
+        // out of bounds line should be empty
+        $this->assertEquals('', $index->retrieveRow(100));
+    }
+
+    public function testAccessValue()
+    {
+        $index = new RowIndex(__FUNCTION__);
+        $result = $index->accessValue('foo');
+        $this->assertEquals(0, $result);
+
+        $result = $index->accessValue('bar');
+        $this->assertEquals(1, $result);
+
+        $result = $index->accessValue('foo');
+        $this->assertEquals(0, $result);
+    }
+}
