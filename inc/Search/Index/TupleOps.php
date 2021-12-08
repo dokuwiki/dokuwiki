@@ -2,84 +2,14 @@
 
 namespace dokuwiki\Search\Index;
 
-use dokuwiki\Search\Exception\IndexWriteException;
-
 /**
- * A single index file storing lines containing a list of tuples
+ * Provides operations on tuple records used in our indexes
  *
- * Tuples consist of a key (typically a RID from another Index) and a count.
+ * Tuples consist of a key (typically a RID from another Index) and a number (usually a count).
  * Used to store page <-> word counts for example
- *
- * Access to these files always happens by loading the full index into memory.
- * All modifications need to be explicitly made permanent using the save() method.
  */
-class TupleIndex extends AbstractIndex
+class TupleOps
 {
-
-    /** @var string the raw data lines of the index, no newlines */
-    protected $data;
-
-    /**
-     * Loads the full contents of the index into memory
-     *
-     * @inheritdoc
-     */
-    public function __construct($idx, $suffix = '')
-    {
-        parent::__construct($idx, $suffix);
-
-        $this->data = [];
-        if (!file_exists($this->filename)) return;
-        $this->data = file($this->filename, FILE_IGNORE_NEW_LINES);
-
-    }
-
-    /** @inheritdoc */
-    public function changeRow($rid, $value)
-    {
-        if ($rid > count($this->data)) {
-            $this->data = array_pad($this->data, $rid, '');
-        }
-        $this->data[$rid] = $value;
-    }
-
-    /** @inheritdoc */
-    public function retrieveRow($rid)
-    {
-        if (isset($this->data[$rid])) return $this->data[$rid];
-        return '';
-    }
-
-    /**
-     * Save the changed index back to its file
-     *
-     * @throws IndexWriteException
-     */
-    public function save()
-    {
-        global $conf;
-
-        $tempname = $this->filename . '.tmp';
-
-        $fh = @fopen($tempname, 'w');
-        if (!$fh) {
-            throw new IndexWriteException("Failed to write $tempname");
-        }
-        fwrite($fh, implode("\n", $this->data));
-        if (!empty($lines)) {
-            fwrite($fh, "\n");
-        }
-        fclose($fh);
-
-        if ($conf['fperm']) {
-            chmod($tempname, $conf['fperm']);
-        }
-
-        if (!io_rename($tempname, $this->filename)) {
-            throw new IndexWriteException("Failed to write {$this->filename}");
-        }
-    }
-
     /**
      * Insert or replace a tuple in a line
      *
@@ -90,7 +20,7 @@ class TupleIndex extends AbstractIndex
      * @author Tom N Harris <tnharris@whoopdedo.org>
      *
      */
-    protected function updateTuple($record, $key, $count)
+    public static function updateTuple($record, $key, $count)
     {
         if ($record != '') {
             // remove any current version of the tuple
@@ -114,7 +44,7 @@ class TupleIndex extends AbstractIndex
      * @return int sum of all counts
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function aggregateTupleCounts($record)
+    public static function aggregateTupleCounts($record)
     {
         $freq = 0;
         $parts = explode(':', $record);
@@ -141,7 +71,7 @@ class TupleIndex extends AbstractIndex
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function parseTuples($record, $filtermap)
+    public static function parseTuples($record, $filtermap)
     {
         $result = array();
         if ($record == '') return $result;

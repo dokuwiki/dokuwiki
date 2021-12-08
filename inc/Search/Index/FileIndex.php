@@ -6,11 +6,13 @@ use dokuwiki\Search\Exception\IndexAccessException;
 use dokuwiki\Search\Exception\IndexWriteException;
 
 /**
- * A single index file containing one key per line
+ * Access to a single index file
  *
- * Access to this index happens only on a line-by-line basis. It is usually not read in full.
+ * Access using this class always happens on a line-by-line basis. It is usually not read in full.
+ * All modifications are implicitly saved
+ * Should be used for large indexes that receive only few changes at once.
  */
-class RowIndex extends AbstractIndex
+class FileIndex extends AbstractIndex
 {
     /** @var array RID cache for faster access */
     protected static $ridCache = [];

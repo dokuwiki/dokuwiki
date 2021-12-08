@@ -2,15 +2,15 @@
 
 namespace tests\Search\Index;
 
-use dokuwiki\Search\Index\RowIndex;
+use dokuwiki\Search\Index\FileIndex;
 
-class RowIndexTest extends \DokuWikiTest
+class FileIndexTest extends \DokuWikiTest
 {
 
     public function testChangeRow()
     {
 
-        $index = new RowIndex(__FUNCTION__);
+        $index = new FileIndex(__FUNCTION__);
 
         $index->changeRow(5, 'test');
         $full = file($index->getFilename(), FILE_IGNORE_NEW_LINES);
@@ -29,7 +29,7 @@ class RowIndexTest extends \DokuWikiTest
 
     public function testRetrieveRow()
     {
-        $index = new RowIndex(__FUNCTION__);
+        $index = new FileIndex(__FUNCTION__);
         $index->changeRow(5, 'test');
         $this->assertEquals('test', $index->retrieveRow(5));
 
@@ -39,7 +39,7 @@ class RowIndexTest extends \DokuWikiTest
 
     public function testAccessValue()
     {
-        $index = new RowIndex(__FUNCTION__);
+        $index = new FileIndex(__FUNCTION__);
         $result = $index->accessValue('foo');
         $this->assertEquals(0, $result);
 
@@ -52,7 +52,7 @@ class RowIndexTest extends \DokuWikiTest
 
     public function testAccessValues()
     {
-        $index = new RowIndex(__FUNCTION__);
+        $index = new FileIndex(__FUNCTION__);
         $result = $index->accessValues(['foo', 'bar', 'baz']);
         $this->assertEquals(['foo' => 0, 'bar' => 1, 'baz' => 2], $result);
 
