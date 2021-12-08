@@ -49,7 +49,7 @@ class MemoryIndex extends AbstractIndex
     }
 
     /** @inheritdoc */
-    public function accessValues($values)
+    public function getRowIDs($values)
     {
         $values = array_map('trim', $values);
         $values = array_fill_keys($values, 1); // easier access as associative array

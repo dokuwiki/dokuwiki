@@ -79,7 +79,7 @@ class FileIndex extends AbstractIndex
      * @inheritdoc
      * @throws IndexAccessException
      */
-    public function accessValues($values)
+    public function getRowIDs($values)
     {
         $values = array_map('trim', $values);
         $values = array_fill_keys($values, 1); // easier access as associative array
@@ -126,7 +126,7 @@ class FileIndex extends AbstractIndex
         // as in DokuWiki usually only the most recently
         // added item will be requested again
         if (count(static::$ridCache) > 10) array_shift(static::$ridCache);
-        static::$ridCache[$value] = $this->accessValue($value);
+        static::$ridCache[$value] = $this->getRowID($value);
         return static::$ridCache[$value];
     }
 }

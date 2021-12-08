@@ -75,9 +75,9 @@ abstract class AbstractIndex
      * @param string $value
      * @return int the RID of the entry
      */
-    public function accessValue($value)
+    public function getRowID($value)
     {
-        $result = $this->accessValues([$value]);
+        $result = $this->getRowIDs([$value]);
         return $result[$value];
     }
 
@@ -87,7 +87,7 @@ abstract class AbstractIndex
      * @param string[] $values
      * @return array the RIDs of the entries
      */
-    abstract public function accessValues($values);
+    abstract public function getRowIDs($values);
 
     /**
      * Clears the index by deleting its file
