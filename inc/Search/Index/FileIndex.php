@@ -76,31 +76,7 @@ class FileIndex extends AbstractIndex
     }
 
     /**
-     * Searches the Index for a given value and adds it if not found
-     *
-     * Entries previously marked as deleted will be restored.
-     *
-     * Note the existance of an entry in the index does not say anything about the exististance
-     * of the real world object (eg. a page)
-     *
-     * You should preferable use accessCachedValue() instead.
-     *
-     * @param string $value
-     * @return int the RID of the entry
-     * @throws IndexAccessException
-     * @throws IndexWriteException
-     */
-    public function accessValue($value)
-    {
-        $result = $this->accessValues([$value]);
-        return $result[$value];
-    }
-
-    /**
-     * Searches the Index for all given values and adds them if not found
-     *
-     * @param string[] $values
-     * @return array the RIDs of the entries
+     * @inheritdoc
      * @throws IndexAccessException
      */
     public function accessValues($values)

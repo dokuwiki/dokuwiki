@@ -48,6 +48,31 @@ class MemoryIndex extends AbstractIndex
         return '';
     }
 
+    /** @inheritdoc */
+    public function accessValues($values)
+    {
+        $values = array_map('trim', $values);
+        $values = array_fill_keys($values, 1); // easier access as associative array
+
+        $result = [];
+        $count = count($this->data);
+        for ($ln = 0; $ln < $count; $ln++) {
+            $line = $this->data[$ln];
+            if (isset($values[$line])) {
+                $result[$line] = $ln;
+                unset($values[$line]);
+            }
+        }
+
+        // if there are still values, they have not been found and will be appended
+        foreach (array_keys($values) as $value) {
+            $this->data[] = $value;
+            $result[$value] = $ln++;
+        }
+
+        return $result;
+    }
+
     /**
      * Save the changed index back to its file
      *

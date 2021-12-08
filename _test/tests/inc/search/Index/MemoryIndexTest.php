@@ -44,4 +44,27 @@ class MemoryIndexTest extends \DokuWikiTest
         $this->assertFileExists($index->getFilename());
     }
 
+    public function testAccessValue()
+    {
+        $index = new MemoryIndex(__FUNCTION__);
+        $result = $index->accessValue('foo');
+        $this->assertEquals(0, $result);
+
+        $result = $index->accessValue('bar');
+        $this->assertEquals(1, $result);
+
+        $result = $index->accessValue('foo');
+        $this->assertEquals(0, $result);
+    }
+
+    public function testAccessValues()
+    {
+        $index = new MemoryIndex(__FUNCTION__);
+        $result = $index->accessValues(['foo', 'bar', 'baz']);
+        $this->assertEquals(['foo' => 0, 'bar' => 1, 'baz' => 2], $result);
+
+        $result = $index->accessValues(['foo', 'bang', 'baz']);
+        $this->assertEquals(['foo' => 0, 'baz' => 2, 'bang' => 3], $result);
+    }
+
 }
