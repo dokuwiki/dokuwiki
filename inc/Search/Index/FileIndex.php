@@ -69,10 +69,20 @@ class FileIndex extends AbstractIndex
         if (!$fh) return '';
         $ln = -1;
         while (($line = fgets($fh)) !== false) {
-            if (++$ln == $rid) break;
+            if (++$ln == $rid) {
+                fclose($fh);
+                return rtrim((string)$line);
+            }
         }
         fclose($fh);
-        return rtrim((string)$line);
+
+        // still here? pad the index for the given ID
+        // we do not simply call changeRow() here because appending is faster than line-by-line copying
+        if (!file_put_contents($this->filename, join("\n", array_fill(0, $rid - $ln + 1, '')), FILE_APPEND)) {
+            throw new IndexWriteException("Failed to write {$this->filename}");
+        }
+
+        return '';
     }
 
     /**

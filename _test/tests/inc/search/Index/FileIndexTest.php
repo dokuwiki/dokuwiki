@@ -1,16 +1,22 @@
 <?php
 
-namespace tests\Search\Index;
-
+use dokuwiki\Search\Index\AbstractIndex;
 use dokuwiki\Search\Index\FileIndex;
 
 class FileIndexTest extends \DokuWikiTest
 {
+    /**
+     * @return AbstractIndex
+     */
+    protected function getIndex() {
+        static $count = 0;
+        return new FileIndex('index', $count++);
+    }
 
     public function testChangeRow()
     {
 
-        $index = new FileIndex(__FUNCTION__);
+        $index = $this->getIndex();
 
         $index->changeRow(5, 'test');
         $full = file($index->getFilename(), FILE_IGNORE_NEW_LINES);
@@ -29,17 +35,19 @@ class FileIndexTest extends \DokuWikiTest
 
     public function testRetrieveRow()
     {
-        $index = new FileIndex(__FUNCTION__);
+        $index = $this->getIndex();
         $index->changeRow(5, 'test');
         $this->assertEquals('test', $index->retrieveRow(5));
 
-        // out of bounds line should be empty
-        $this->assertEquals('', $index->retrieveRow(100));
+        // out of bounds line should be empty, but pad the file
+        $this->assertEquals('', $index->retrieveRow(10));
+        $full = file($index->getFilename(), FILE_IGNORE_NEW_LINES);
+        $this->assertEquals(11, count($full));
     }
 
     public function testGetRowId()
     {
-        $index = new FileIndex(__FUNCTION__);
+        $index = $this->getIndex();
         $result = $index->getRowID('foo');
         $this->assertEquals(0, $result);
 
@@ -52,7 +60,7 @@ class FileIndexTest extends \DokuWikiTest
 
     public function testGetRowIDs()
     {
-        $index = new FileIndex(__FUNCTION__);
+        $index = $this->getIndex();
         $result = $index->getRowIDs(['foo', 'bar', 'baz']);
         $this->assertEquals(['foo' => 0, 'bar' => 1, 'baz' => 2], $result);
 

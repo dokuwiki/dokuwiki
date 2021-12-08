@@ -45,6 +45,7 @@ class MemoryIndex extends AbstractIndex
     public function retrieveRow($rid)
     {
         if (isset($this->data[$rid])) return $this->data[$rid];
+        $this->changeRow($rid, ''); // add to index
         return '';
     }
 
@@ -77,6 +78,7 @@ class MemoryIndex extends AbstractIndex
      * Save the changed index back to its file
      *
      * @throws IndexWriteException
+     * @fixme store a dirty marker and only save when needed
      */
     public function save()
     {
@@ -89,7 +91,7 @@ class MemoryIndex extends AbstractIndex
             throw new IndexWriteException("Failed to write $tempname");
         }
         fwrite($fh, implode("\n", $this->data));
-        if (!empty($lines)) {
+        if (count($this->data)) {
             fwrite($fh, "\n");
         }
         fclose($fh);

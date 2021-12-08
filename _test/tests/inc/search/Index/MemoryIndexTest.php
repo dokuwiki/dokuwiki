@@ -24,6 +24,10 @@ class MemoryIndexTest extends \DokuWikiTest
 
         $full = $this->getInaccessibleProperty($index, 'data');
         $this->assertEquals(['', '', '', 'foo', '', 'bar', '', 'bang'], $full);
+
+        $index->save();
+        $full = file($index->getFilename(), FILE_IGNORE_NEW_LINES);
+        $this->assertEquals(['', '', '', 'foo', '', 'bar', '', 'bang'], $full);
     }
 
     public function testRetrieveRow()
@@ -32,8 +36,11 @@ class MemoryIndexTest extends \DokuWikiTest
         $index->changeRow(5, 'test');
         $this->assertEquals('test', $index->retrieveRow(5));
 
-        // out of bounds line should be empty
-        $this->assertEquals('', $index->retrieveRow(100));
+        // out of bounds line should be empty, but pad the file
+        $this->assertEquals('', $index->retrieveRow(10));
+        $index->save();
+        $full = file($index->getFilename(), FILE_IGNORE_NEW_LINES);
+        $this->assertEquals(11, count($full));
     }
 
     public function testSave()
@@ -42,6 +49,15 @@ class MemoryIndexTest extends \DokuWikiTest
         $this->assertFileNotExists($index->getFilename());
         $index->save();
         $this->assertFileExists($index->getFilename());
+        $this->assertEquals(0, filesize($index->getFilename())); // empty
+
+        $index->changeRow(0, '');
+        $index->save();
+        $this->assertEquals(1, filesize($index->getFilename())); // new line
+
+        $index->changeRow(3, 'test');
+        $index->save();
+        $this->assertEquals(8, filesize($index->getFilename())); // 4 new lines + test
     }
 
     public function testGetRowID()
