@@ -34,6 +34,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
         global $INPUT;
         $run = $INPUT->extract('run')->str('run');
         if (!$run) return;
+        if(!checkSecurityToken()) return;
         $run = 'run'.ucfirst($run);
         $this->$run();
     }
@@ -76,6 +77,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
             echo $this->locale_xhtml('intro');
 
             echo '<form class="styling" method="post" action="'.$target.'">';
+            formSecurityToken();
 
             echo '<table><tbody>';
             foreach ($replacements as $key => $value) {
