@@ -33,6 +33,8 @@ class Logout extends AbstractUserAction {
         global $ID;
         global $INPUT;
 
+        if (!checkSecurityToken()) throw new ActionException();
+
         // when logging out during an edit session, unlock the page
         $lockedby = checklock($ID);
         if($lockedby == $INPUT->server->str('REMOTE_USER')) {
