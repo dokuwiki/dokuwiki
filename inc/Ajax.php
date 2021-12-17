@@ -168,8 +168,10 @@ class Ajax {
         $client = $_SERVER['REMOTE_USER'];
         if(!$client) $client = clientIP(true);
 
-        $cname = getCacheName($client . $id, '.draft');
-        @unlink($cname);
+        $draft = new Draft($id, $client);
+        if ($draft->isDraftAvailable() && checkSecurityToken()) {
+            $draft->deleteDraft();
+        }
     }
 
     /**
