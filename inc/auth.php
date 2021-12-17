@@ -56,7 +56,7 @@ function auth_setup() {
 
     if ($auth->success == false) {
         // degrade to unauthenticated user
-        unset($auth);
+        $auth = null;
         auth_logoff();
         msg($lang['authtempfail'], -1);
         return false;
