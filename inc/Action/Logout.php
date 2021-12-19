@@ -32,6 +32,7 @@ class Logout extends AbstractUserAction {
     public function preProcess() {
         global $ID;
         global $INPUT;
+        global $conf;
 
         if (!checkSecurityToken()) throw new ActionException();
 
@@ -43,7 +44,11 @@ class Logout extends AbstractUserAction {
 
         // do the logout stuff and redirect to login
         auth_logoff();
-        send_redirect(wl($ID, array('do' => 'login'), true, '&'));
+        $parameters = array();
+        if ($conf['redirect_to_login_after_logout']) {
+            $parameters['do'] = 'login';
+        }
+        send_redirect(wl($ID, $parameters, true, '&'));
 
         // should never be reached
         throw new ActionException('login');
