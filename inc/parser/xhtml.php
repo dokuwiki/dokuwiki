@@ -1851,7 +1851,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         if(!is_null($width)) $atts['width']  = (int) $width;
         if(!is_null($height)) $atts['height']  = (int) $height;
-        
+
         $posterUrl = '';
         $files = array();
         $tracks = array();
@@ -1875,10 +1875,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $out = '';
         // open video tag
         $out .= '<video '.buildAttributes($atts);
-        if($videoAtts["controls"]) $out .= ' controls="controls"';
-        if($videoAtts["autoplay"]) $out .= ' autoplay="autoplay"';
-        if($videoAtts["loop"]) $out .= ' loop="loop"';
-        if($videoAtts["muted"]) $out .= ' muted="muted"';
+        if(!empty($videoAtts['controls'])) $out .= ' controls="controls"';
+        if(!empty($videoAtts['autoplay'])) $out .= ' autoplay="autoplay"';
+        if(!empty($videoAtts['loop'])) $out .= ' loop="loop"';
+        if(!empty($videoAtts['muted'])) $out .= ' muted="muted"';
         if($posterUrl) $out .= ' poster="'.hsc($posterUrl).'"';
         $out .= '>'.NL;
         $fallback = '';

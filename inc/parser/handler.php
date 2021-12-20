@@ -926,7 +926,7 @@ class Doku_Handler {
         $this->addCall(
             $p['type'],
             array($p['src'], $p['title'], $p['align'], $p['width'],
-                   $p['height'], $p['cache'], $p['linking'], $p["videoAtts"]),
+                   $p['height'], $p['cache'], $p['linking'], $p['videoAtts']),
             $pos
            );
         return true;
@@ -1167,6 +1167,7 @@ function Doku_Handler_Parse_Media($match) {
         'height'=>$h,
         'cache'=>$cache,
         'linking'=>$linking,
+        'videoAtts'=>[]
     );
 
     if($isVideo && $linking != "linkonly") {
