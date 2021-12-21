@@ -16,7 +16,7 @@ class Doku_Renderer_code extends Doku_Renderer {
      * @param string $language
      * @param string $filename
      */
-    public function code($text, $language = null, $filename = '') {
+    public function code($text, $language = null, $filename = '', $linefeed = '') {
         global $INPUT;
         if(!$language) $language = 'txt';
         $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language);
