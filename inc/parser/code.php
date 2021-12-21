@@ -25,9 +25,15 @@ class Doku_Renderer_code extends Doku_Renderer {
         $filename = \dokuwiki\Utf8\Clean::stripspecials($filename, '_');
 
         // send CRLF to Windows clients
-        if(strpos($INPUT->server->str('HTTP_USER_AGENT'), 'Windows') !== false) {
-            $text = str_replace("\n", "\r\n", $text);
+        if(strpos($INPUT->server->str('HTTP_USER_AGENT'), 'Windows') !== false && $linefeed !== "Unix") {
+            if($linefeed && $linefeed !== 'Unix' || !$linefeed) {
+                $text = str_replace("\n", "\r\n", $text);
+            }
         }
+
+        //if($linefeed == "Windows") {
+        //    $text = str_replace("\n", "\r\n", $text);
+        //}
 
         if($this->_codeblock == $INPUT->str('codeblock')) {
             header("Content-Type: text/plain; charset=utf-8");
@@ -47,8 +53,8 @@ class Doku_Renderer_code extends Doku_Renderer {
      * @param string $language
      * @param string $filename
      */
-    public function file($text, $language = null, $filename = '') {
-        $this->code($text, $language, $filename);
+    public function file($text, $language = null, $filename = '', $linefeed = '') {
+        $this->code($text, $language, $filename, $linefeed);
     }
 
     /**
