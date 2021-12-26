@@ -166,7 +166,7 @@ function basicinfo($id, $htmlClient=true){
         }
 
         // if some outside auth were used only REMOTE_USER is set
-        if(!$info['userinfo']['name']) {
+        if(empty($info['userinfo']['name'])) {
             $info['userinfo']['name'] = $INPUT->server->str('REMOTE_USER');
         }
 
