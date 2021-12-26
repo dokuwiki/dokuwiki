@@ -3,13 +3,15 @@
 use dokuwiki\Extension\PluginController;
 use dokuwiki\Extension\Event;
 use dokuwiki\Extension\EventHandler;
+use dokuwiki\Search\Indexer;
+
 /**
  * Helper class to provide basic functionality for tests
  *
  * @uses PHPUnit_Framework_TestCase and thus PHPUnit 5.7+ is required
  */
-abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
-
+abstract class DokuWikiTest extends PHPUnit\Framework\TestCase
+{
     /**
      * tests can override this
      *
@@ -80,7 +82,7 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
         foreach (array('default','local') as $config_group) {
             if (empty($config_cascade['license'][$config_group])) continue;
             foreach ($config_cascade['license'][$config_group] as $config_file) {
-                if(file_exists($config_file)){
+                if (file_exists($config_file)) {
                     include($config_file);
                 }
             }
@@ -88,10 +90,10 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
         // reload some settings
         $conf['gzip_output'] &= (strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip') !== false);
 
-        if($conf['compression'] == 'bz2' && !DOKU_HAS_BZIP) {
+        if ($conf['compression'] == 'bz2' && !DOKU_HAS_BZIP) {
             $conf['compression'] = 'gz';
         }
-        if($conf['compression'] == 'gz' && !DOKU_HAS_GZIP) {
+        if ($conf['compression'] == 'gz' && !DOKU_HAS_GZIP) {
             $conf['compression'] = 0;
         }
         // make real paths and check them
@@ -144,11 +146,12 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
     /**
      * Reinitialize the data directory for this class run
      */
-    public static function setupDataDir() {
+    public static function setupDataDir()
+    {
         // remove any leftovers from the last run
         if(is_dir(DOKU_TMP_DATA)) {
             // clear indexer data and cache
-            idx_get_indexer()->clear();
+            (new Indexer())->clear();
             TestUtils::rdelete(DOKU_TMP_DATA);
         }
 
@@ -159,7 +162,8 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
     /**
      * Reinitialize the conf directory for this class run
      */
-    public static function setupConfDir() {
+    public static function setupConfDir()
+    {
         $defaults = [
             'acronyms.conf',
             'dokuwiki.php',
@@ -177,13 +181,13 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
         ];
 
         // clear any leftovers
-        if(is_dir(DOKU_CONF)) {
+        if (is_dir(DOKU_CONF)) {
             TestUtils::rdelete(DOKU_CONF);
         }
         mkdir(DOKU_CONF);
 
         // copy defaults
-        foreach($defaults as $file) {
+        foreach ($defaults as $file) {
             copy(DOKU_INC . '/conf/' . $file, DOKU_CONF . $file);
         }
 
@@ -201,7 +205,8 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
      * @param bool $init no longer used
      * @return int new timestamp
      */
-    protected function waitForTick($init = false) {
+    protected function waitForTick($init = false)
+    {
         sleep(1);
         return time();
     }
@@ -219,7 +224,8 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
      * @return mixed
      * @throws ReflectionException when the given obj/func does not exist
      */
-    protected static function callInaccessibleMethod($obj, $func, array $args) {
+    protected static function callInaccessibleMethod($obj, $func, array $args)
+    {
         $class = new \ReflectionClass($obj);
         $method = $class->getMethod($func);
         $method->setAccessible(true);
@@ -237,7 +243,8 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
      * @return mixed
      * @throws ReflectionException  when the given obj/prop does not exist
      */
-    protected static function getInaccessibleProperty($obj, $prop) {
+    protected static function getInaccessibleProperty($obj, $prop)
+    {
         $class = new \ReflectionClass($obj);
         $property = $class->getProperty($prop);
         $property->setAccessible(true);
@@ -256,7 +263,8 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
      * @return void
      * @throws ReflectionException when the given obj/prop does not exist
      */
-    protected static function setInaccessibleProperty($obj, $prop, $value) {
+    protected static function setInaccessibleProperty($obj, $prop, $value)
+    {
         $class = new \ReflectionClass($obj);
         $property = $class->getProperty($prop);
         $property->setAccessible(true);
