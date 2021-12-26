@@ -601,7 +601,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      * @param string $videoAtts controls, autoplay, loop, muted
      */
     public function internalmedia($src, $title = null, $align = null, $width = null,
-                           $height = null, $cache = null, $linking = null, $videoAtts = []) {
+                           $height = null, $cache = null, $linking = null, $videoAtts = null) {
         if ($this->capture && $title) {
             $this->doc .= '['.$title.']';
         }

@@ -58,7 +58,7 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $calls = array(
             array('document_start', array()),
             array('p_open', array()),
-            array('externalmedia', array($file, null, null, null, null, 'cache', 'details', null)),
+            array('externalmedia', array($file, null, null, null, null, 'cache', 'details', [])),
             array('cdata', array(null)),
             array('p_close', array()),
             array('document_end', array()),
@@ -151,7 +151,7 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('internalmedia',array($file,'This is a simple text.',null,null,null,'cache','details',null)),
+            array('internalmedia',array($file,'This is a simple text.',null,null,null,'cache','details',[])),
             array('cdata',array(null)),
             array('p_close',array()),
             array('document_end',array()),
@@ -166,7 +166,7 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('internalmedia',array($file,'We got a { here.',null,null,null,'cache','details',null)),
+            array('internalmedia',array($file,'We got a { here.',null,null,null,'cache','details',[])),
             array('cdata',array(null)),
             array('p_close',array()),
             array('document_end',array()),
@@ -181,7 +181,7 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('internalmedia',array($file,'We got a } here.',null,null,null,'cache','details',null)),
+            array('internalmedia',array($file,'We got a } here.',null,null,null,'cache','details',[])),
             array('cdata',array(null)),
             array('p_close',array()),
             array('document_end',array()),
@@ -196,7 +196,7 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('internalmedia',array($file,'We got a { and a } here.',null,null,null,'cache','details',null)),
+            array('internalmedia',array($file,'We got a { and a } here.',null,null,null,'cache','details',[])),
             array('cdata',array(null)),
             array('p_close',array()),
             array('document_end',array()),

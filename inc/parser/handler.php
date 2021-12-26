@@ -1109,8 +1109,8 @@ function Doku_Handler_Parse_Media($match) {
 
     //parse width and height
     if(preg_match('#(\d+)(x(\d+))?#i',$param,$size)){
-        !empty($size[1]) ? $w = (int) $size[1] : $w = null;
-        !empty($size[3]) ? $h = (int) $size[3] : $h = null;
+        !empty($size[1]) ? $w = $size[1] : $w = null;
+        !empty($size[3]) ? $h = $size[3] : $h = null;
     } else {
         $w = null;
         $h = null;
@@ -1167,7 +1167,7 @@ function Doku_Handler_Parse_Media($match) {
         'height'=>$h,
         'cache'=>$cache,
         'linking'=>$linking,
-        'videoAtts'=>null
+        'videoAtts'=>[]
     );
 
     if($isVideo && $linking != "linkonly") {

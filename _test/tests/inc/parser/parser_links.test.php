@@ -762,7 +762,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('p_open',array()),
             array('cdata',array("\n".'Foo ')),
             array('externalmedia',
-            array('http://www.google.com/img.gif','Some Image',NULL,'50','100','cache','details',null)),
+            array('http://www.google.com/img.gif','Some Image',NULL,'50','100','cache','details',NULL)),
             array('cdata',array(' Bar')),
             array('p_close',array()),
             array('document_end',array()),
@@ -782,8 +782,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             'width'=>10,
             'height'=>20,
             'cache'=>'nocache',
-            'linking'=>'details',
-            'videoAtts'=>null,
+            'linking'=>'details'
         );
 
         $calls = array (
@@ -810,8 +809,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             'width'=>10,
             'height'=>20,
             'cache'=>'nocache',
-            'linking'=>'details',
-            'videoAtts'=>null,
+            'linking'=>'details'
         );
 
         $calls = array (
@@ -838,8 +836,7 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             'width'=>10,
             'height'=>20,
             'cache'=>'nocache',
-            'linking'=>'details',
-            'videoAtts'=>null,
+            'linking'=>'details'
         );
 
         $calls = array (
