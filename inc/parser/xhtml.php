@@ -1163,12 +1163,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param int    $height    height of media in pixel
      * @param string $cache     cache|recache|nocache
      * @param string $linking   linkonly|detail|nolink
-     * @param string $videoAtts controls, autoplay, loop, muted
      * @param bool   $return    return HTML instead of adding to $doc
      * @return void|string writes to doc attribute or returns html depends on $return
      */
     public function internalmedia($src, $title = null, $align = null, $width = null,
-                           $height = null, $cache = null, $linking = null, $videoAtts = null, $return = false) {
+                           $height = null, $cache = null, $linking = null, $return = false) {
         global $ID;
         if (strpos($src, '#') !== false) {
             list($src, $hash) = explode('#', $src, 2);
@@ -1177,7 +1176,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $noLink = false;
         $render = ($linking == 'linkonly') ? false : true;
-        $link   = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render, $videoAtts);
+        $link   = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render);
 
         list($ext, $mime) = mimetype($src, false);
         if(substr($mime, 0, 5) == 'image' && $render) {
@@ -1240,7 +1239,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @return void|string writes to doc attribute or returns html depends on $return
      */
     public function externalmedia($src, $title = null, $align = null, $width = null,
-                           $height = null, $cache = null, $linking = null, $videoAtts = null, $return = false) {
+                           $height = null, $cache = null, $linking = null, $return = false) {
         if(link_isinterwiki($src)){
             list($shortcut, $reference) = explode('>', $src, 2);
             $exists = null;
@@ -1258,7 +1257,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $noLink = true;
         }
         $render = ($linking == 'linkonly') ? false : true;
-        $link   = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render, $videoAtts);
+        $link   = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render);
 
         $link['url'] = ml($src, array('cache' => $cache));
 
@@ -1622,7 +1621,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @return string
      */
     public function _media($src, $title = null, $align = null, $width = null,
-                    $height = null, $cache = null, $render = true, $videoAtts = null) {
+                    $height = null, $cache = null, $render = true) {
 
         $ret = '';
 
@@ -1693,7 +1692,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
             if(media_supportedav($mime, 'video')) {
                 //add video
-                $ret .= $this->_video($src, $width, $height, $att, $videoAtts);
+                $ret .= $this->_video($src, $width, $height, $att);
             }
             if(media_supportedav($mime, 'audio')) {
                 //add audio
@@ -1816,7 +1815,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param bool   $render    should the media be embedded inline or just linked
      * @return array associative array with link config
      */
-    public function _getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render, $videoAtts = null) {
+    public function _getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render) {
         global $conf;
 
         $link           = array();
@@ -1828,7 +1827,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['target'] = $conf['target']['media'];
         if($conf['target']['media']) $link['rel'] = 'noopener';
         $link['title']  = $this->_xmlEntities($src);
-        $link['name']   = $this->_media($src, $title, $align, $width, $height, $cache, $render, $videoAtts);
+        $link['name']   = $this->_media($src, $title, $align, $width, $height, $cache, $render);
 
         return $link;
     }
@@ -1845,13 +1844,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param array  $atts        - additional attributes for the <video> tag
      * @return string
      */
-    public function _video($src, $width, $height, $atts = null, $videoAtts = null)  {
+    public function _video($src, $width, $height, $atts = null) {
         // prepare width and height
         if(is_null($atts)) $atts = array();
+        $atts['width']  = (int) $width;
+        $atts['height'] = (int) $height;
+        if(!$atts['width']) $atts['width'] = 320;
+        if(!$atts['height']) $atts['height'] = 240;
 
-        if(!is_null($width)) $atts['width']  = (int) $width;
-        if(!is_null($height)) $atts['height']  = (int) $height;
-        
         $posterUrl = '';
         $files = array();
         $tracks = array();
@@ -1874,11 +1874,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $out = '';
         // open video tag
-        $out .= '<video '.buildAttributes($atts);
-        if($videoAtts["controls"]) $out .= ' controls="controls"';
-        if($videoAtts["autoplay"]) $out .= ' autoplay="autoplay"';
-        if($videoAtts["loop"]) $out .= ' loop="loop"';
-        if($videoAtts["muted"]) $out .= ' muted="muted"';
+        $out .= '<video '.buildAttributes($atts).' controls="controls"';
         if($posterUrl) $out .= ' poster="'.hsc($posterUrl).'"';
         $out .= '>'.NL;
         $fallback = '';
@@ -1906,7 +1902,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 null,
                 $cache = null,
                 $linking = 'linkonly',
-                $videoAtts = $videoAtts,
                 $return = true
             );
         }
