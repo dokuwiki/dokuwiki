@@ -11,7 +11,7 @@ use dokuwiki\Ui;
  *
  * @package dokuwiki\Action
  */
-class Denied extends AbstractAclAction
+class Denied extends AbstractAction
 {
     /** @inheritdoc */
     public function minimumPermission()

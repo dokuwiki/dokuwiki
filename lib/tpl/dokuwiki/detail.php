@@ -9,7 +9,6 @@
 
 // must be run from within DokuWiki
 if (!defined('DOKU_INC')) die();
-header('X-UA-Compatible: IE=edge,chrome=1');
 
 ?><!DOCTYPE html>
 <html lang="<?php echo $conf['lang']?>" dir="<?php echo $lang['direction'] ?>" class="no-js">

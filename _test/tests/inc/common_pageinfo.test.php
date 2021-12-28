@@ -310,7 +310,8 @@ class common_pageinfo_test extends DokuWikiTest {
 
         // setup a draft, make it more recent than the current page
         // - pageinfo should recognise it and keep it
-        $draft = getCacheName($info['client'].$ID,'.draft');
+
+        $draft = getCacheName($info['client']."\n".$ID,'.draft');
         touch($draft, $rev + 10);
 
         $info['draft'] = $draft;
