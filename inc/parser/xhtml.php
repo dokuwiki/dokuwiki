@@ -1988,10 +1988,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @access protected
      * @return string revision ('' for current)
      */
-    protected function _getLastMediaRevisionAt($media_id){
-        if(!$this->date_at || media_isexternal($media_id)) return '';
-        $pagelog = new MediaChangeLog($media_id);
-        return $pagelog->getLastRevisionAt($this->date_at);
+    protected function _getLastMediaRevisionAt($media_id) {
+        if (!$this->date_at || media_isexternal($media_id)) return '';
+        $changelog = new MediaChangeLog($media_id);
+        return $changelog->getLastRevisionAt($this->date_at);
     }
 
     #endregion
