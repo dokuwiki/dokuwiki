@@ -3,11 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Mark Prins <mprins@users.sf.net>
  * @author PBU <pbu@xs4all.nl>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Andy <astolker@icloud.com>
  * @author Harriet Neitz <harrietneitz@gmail.com>
- * @author mark prins <mprins@users.sf.net>
  * @author François Kooman <fkooman.tuxed.net>
  * @author Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
  * @author Riny Heijdendael <riny@heijdendael.nl>
@@ -373,6 +373,7 @@ $lang['media_perm_upload']     = 'Sorry, u heeft niet voldoende rechten om besta
 $lang['media_update']          = 'Upload nieuwe versie';
 $lang['media_restore']         = 'Deze versie terugzetten';
 $lang['media_acl_warning']     = 'De lijst is mogelijk niet compleet door ACL beperkingen en verborgen pagina\'s.';
+$lang['email_fail']            = 'PHP mail() ontbreekt of is uitgeschakeld. De volgende e-mail is niet verzonden:';
 $lang['currentns']             = 'Huidige namespace';
 $lang['searchresult']          = 'Zoekresultaat';
 $lang['plainhtml']             = 'Alleen HTML';
