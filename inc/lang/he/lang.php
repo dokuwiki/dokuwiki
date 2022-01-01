@@ -208,7 +208,7 @@ $lang['created']               = 'נוצר';
 $lang['restored']              = 'שוחזר (%s)';
 $lang['external_edit']         = 'עריכה חיצונית';
 $lang['summary']               = 'תקציר העריכה';
-$lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">תוסף פלאש לדפדפן</a> נדרש כדי להציג תוכן זה.';
+$lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">תוסף פלאש לדפדפן</a> נדרש כדי להציג תוכן זה.';
 $lang['download']              = 'הורדת מקטע';
 $lang['tools']                 = 'כלים';
 $lang['user_tools']            = 'כלים של משתמש';
@@ -290,7 +290,7 @@ $lang['i_superuser']           = 'משתמש־על';
 $lang['i_problems']            = 'תכנית ההתקנה זיהתה מספר בעיות המפורטות להלן. אין באפשרותך להמשיך לפני תיקונן.';
 $lang['i_modified']            = 'משיקולי אבטחה סקריפט זה יעבוד אך ורק עם התקנת DokuWiki חדשה שלא עברה כל שינוי.
                          עליך לחלץ שנית את הקבצים מהחבילה שהורדה או להיעזר בדף
-                         <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a>';
+                         <a href="https://www.dokuwiki.org/install">Dokuwiki installation instructions</a>';
 $lang['i_funcna']              = 'פונקציית ה-PHP&#8207; <code>%s</code> אינה זמינה. יתכן כי מארח האתר חסם אותה מסיבה כלשהי?';
 $lang['i_phpver']              = 'גרסת PHP שלך <code>%s</code> נמוכה מ <code>%s</code> הצורך. אתה צריך לשדרג PHP שלך להתקין.';
 $lang['i_mbfuncoverload']      = 'יש לבטל את mbstring.func_overload בphp.ini בכדי להריץ את DokuWiki';

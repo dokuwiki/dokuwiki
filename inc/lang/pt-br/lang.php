@@ -237,7 +237,7 @@ $lang['created']               = 'criada';
 $lang['restored']              = 'a revisão anterior foi restaurada (%s)';
 $lang['external_edit']         = 'edição externa';
 $lang['summary']               = 'Resumo da edição';
-$lang['noflash']               = 'O <a href="http://www.adobe.com/products/flashplayer/">plug-in Adobe Flash</a> é necessário para exibir este conteúdo.';
+$lang['noflash']               = 'O <a href="http://get.adobe.com/flashplayer">plug-in Adobe Flash</a> é necessário para exibir este conteúdo.';
 $lang['download']              = 'Baixar o snippet';
 $lang['tools']                 = 'Ferramentas';
 $lang['user_tools']            = 'Ferramentas do usuário';
@@ -318,7 +318,7 @@ $lang['i_enableacl']           = 'Habilitar Lista de Controle de Acessos (recome
 $lang['i_superuser']           = 'Superusuário';
 $lang['i_problems']            = 'O instalador encontrou alguns problemas, indicados abaixo. Você não pode continuar até corrigi-los.';
 $lang['i_modified']            = 'Por questões de segurança, esse script funcionará apenas em uma instalação nova e não modificada do DokuWiki.
-Você pode extrair novamente os arquivos do pacote original ou consultar as <a href="http://dokuwiki.org/install">instruções de instalação do DokuWiki</a>.';
+Você pode extrair novamente os arquivos do pacote original ou consultar as <a href="https://www.dokuwiki.org/install">instruções de instalação do DokuWiki</a>.';
 $lang['i_funcna']              = 'A função PHP <code>%s</code> não está disponível. O seu host a mantém desabilitada por algum motivo?';
 $lang['i_disabled']            = 'Foi desativado pelo seu provedor.';
 $lang['i_funcnmail']           = '<b>Nota:</b> A função de correio PHP não está disponível. %s Se permanecer indisponível, você pode instalar o <a href="https://www.dokuwiki.org/plugin:smtp">plugin SMTP</a>.';
