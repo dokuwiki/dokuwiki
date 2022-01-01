@@ -26,7 +26,7 @@ use dokuwiki\Extension\Event;
  * @return string converted string
  */
 function hsc($string) {
-    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, 'UTF-8');
 }
 
 /**
@@ -367,7 +367,7 @@ function buildAttributes($params, $skipEmptyStrings = false) {
         if($white) $url .= ' ';
 
         $url .= $key.'="';
-        $url .= htmlspecialchars($val);
+        $url .= hsc($val);
         $url .= '"';
         $white = true;
     }
