@@ -320,7 +320,7 @@ Prova a estrarre di nuovo i file dal pacchetto scaricato oppure consulta le
 <a href="http://dokuwiki.org/install">istruzioni per l\'installazione di Dokuwiki</a>';
 $lang['i_funcna']              = 'La funzione PHP <code>%s</code> non è disponibile. Forse è stata disabilitata dal tuo provider per qualche motivo?';
 $lang['i_disabled']            = 'E\' stato disabilitato dal tuo provider di servizi.';
-$lang['i_funcnmail']           = '<b>Nota:</b> La funzione mail PHP non è disponibile. %s Se rimane non disponibile, puoi provare ad installare <a href="http://dokuwiki.org/plugins/smtp">smtp plugin</a>.';
+$lang['i_funcnmail']           = '<b>Nota:</b> La funzione mail PHP non è disponibile. %s Se rimane non disponibile, puoi provare ad installare <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'La versione di PHP <code>%s</code> è inferiore a quella richiesta <code>%s</code>. Devi aggiornare l\'installazione di PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload deve essere disabilitato in php.ini per eseguire DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki non può creare un numero crittograficamente sicuro di cookies. Puoi provare a controllare sulle impostazioni open_basedir su php.ini per un corretto <code>/dev/urandom</code> accesso.';

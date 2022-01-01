@@ -312,7 +312,7 @@ Du burde enten gen-udpakke filerne fra den hentede pakke eller tjekke den fuldst
 <a href="http://dokuwiki.org/install">DokuWiki installations instruktioner</a>';
 $lang['i_funcna']              = 'PHP funtionen <code>%s</code> er ikke tilgængelig. Måske har din udbyder slået det fra af en eller anden grund?';
 $lang['i_disabled']            = 'Det er blevet slået fra af din udbyder.';
-$lang['i_funcnmail']           = '<b>Bemærk:</b> PHP mail funktionen er ikke tilgængelig. %s Hvis den forbliver utilgængelig, kan du installere <a href="http://dokuwiki.org/plugins/smtp">SMTP udvidelsen</a>.';
+$lang['i_funcnmail']           = '<b>Bemærk:</b> PHP mail funktionen er ikke tilgængelig. %s Hvis den forbliver utilgængelig, kan du installere <a href="https://www.dokuwiki.org/plugin:smtp">SMTP udvidelsen</a>.';
 $lang['i_phpver']              = 'Din PHP version <code>%s</code> er mindre en den nødvendige <code>%s</code>. Du er nød til at opgradere din PHP installation.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload skal være deaktiveret i php.ini for at køre DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki kan ikke oprette kryptografisk sikre numre til cookies. Du bør måske kontrollere dine open_basedir indstillinger i php.ini for korrekt <code>/dev/urandom</code> adgang.';

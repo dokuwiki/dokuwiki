@@ -303,7 +303,7 @@ $lang['i_modified']            = 'セキュリティの理由から、新規も�
                          <a href="http://dokuwiki.org/install">Dokuwiki インストールガイド</a>を参考にしてインストールしてください。';
 $lang['i_funcna']              = 'PHPの関数 <code>%s</code> が使用できません。ホスティング会社が何らかの理由で無効にしている可能性があります。';
 $lang['i_disabled']            = 'ご利用のプロバイダにより制限されています。';
-$lang['i_funcnmail']           = '<b>注：</b>PHPの mail 関数が利用不能になっています。 %s この状況が続く場合は、<a href="http://dokuwiki.org/plugins/smtp">smtpプラグイン</a>をインストールして解決する事も出来ます。';
+$lang['i_funcnmail']           = '<b>注：</b>PHPの mail 関数が利用不能になっています。 %s この状況が続く場合は、<a href="https://www.dokuwiki.org/plugin:smtp">smtpプラグイン</a>をインストールして解決する事も出来ます。';
 $lang['i_phpver']              = 'PHPのバージョン <code>%s</code> が必要なバージョン <code>%s</code> より以前のものです。PHPのアップグレードが必要です。';
 $lang['i_mbfuncoverload']      = 'DokuWiki を実行する php.ini ファイルの mbstring.func_overload は無効にして下さい。';
 $lang['i_urandom']             = 'DokuWikiは、Cookieに対して暗号的に安全な番号を作成できません。<code>/dev/urandom</code>に対する適切なアクセスについて、php.iniの設定 open_basedir を確認する事をお勧めします。';
