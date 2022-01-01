@@ -138,7 +138,7 @@ $lang['created']               = 'creat';
 $lang['restored']              = 'restaurada l\'última versió (%s)';
 $lang['external_edit']         = 'edició externa';
 $lang['summary']               = 'Editar sumari';
-$lang['noflash']               = 'Necessita el <a href="http://www.adobe.com/products/flashplayer/">plúgin d\'Adobe Flash</a> per a vore este contingut.';
+$lang['noflash']               = 'Necessita el <a href="http://get.adobe.com/flashplayer">plúgin d\'Adobe Flash</a> per a vore este contingut.';
 $lang['download']              = 'Descarregar un tros';
 $lang['mail_newpage']          = 'pàgina afegida:';
 $lang['mail_changed']          = 'pàgina canviada:';

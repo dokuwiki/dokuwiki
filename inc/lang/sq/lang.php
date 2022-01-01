@@ -159,7 +159,7 @@ $lang['created']               = 'u krijua';
 $lang['restored']              = 'Kthehu tek një version i vjetër (%s)';
 $lang['external_edit']         = 'redaktim i jashtëm';
 $lang['summary']               = 'Përmbledhja redaktimit';
-$lang['noflash']               = 'Nevojitet <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> për të paraqitur këtë përmbajtje.';
+$lang['noflash']               = 'Nevojitet <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> për të paraqitur këtë përmbajtje.';
 $lang['download']              = 'Shkarko Copën';
 $lang['mail_newpage']          = 'faqje u shtua:';
 $lang['mail_changed']          = 'faqja u ndryshua:';

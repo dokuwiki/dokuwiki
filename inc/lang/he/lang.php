@@ -208,7 +208,7 @@ $lang['created']               = 'נוצר';
 $lang['restored']              = 'שוחזר (%s)';
 $lang['external_edit']         = 'עריכה חיצונית';
 $lang['summary']               = 'תקציר העריכה';
-$lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">תוסף פלאש לדפדפן</a> נדרש כדי להציג תוכן זה.';
+$lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">תוסף פלאש לדפדפן</a> נדרש כדי להציג תוכן זה.';
 $lang['download']              = 'הורדת מקטע';
 $lang['tools']                 = 'כלים';
 $lang['user_tools']            = 'כלים של משתמש';

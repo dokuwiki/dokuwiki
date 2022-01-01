@@ -196,7 +196,7 @@ $lang['created']               = 'ustvarjena';
 $lang['restored']              = 'povrnjena stara različica (%s)';
 $lang['external_edit']         = 'urejanje v zunanjem urejevalniku';
 $lang['summary']               = 'Povzetek urejanja';
-$lang['noflash']               = 'Za prikaz vsebine je treba namestiti <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>';
+$lang['noflash']               = 'Za prikaz vsebine je treba namestiti <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>';
 $lang['download']              = 'Naloži izrezek';
 $lang['tools']                 = 'Orodja';
 $lang['user_tools']            = 'Uporabniška orodja';

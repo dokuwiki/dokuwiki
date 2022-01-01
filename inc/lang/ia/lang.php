@@ -164,7 +164,7 @@ $lang['created']               = 'create';
 $lang['restored']              = 'ancian version restaurate (%s)';
 $lang['external_edit']         = 'modification externe';
 $lang['summary']               = 'Modificar summario';
-$lang['noflash']               = 'Le <a href="http://www.adobe.com/products/flashplayer/">plug-in Flash de Adobe</a> es necessari pro monstrar iste contento.';
+$lang['noflash']               = 'Le <a href="http://get.adobe.com/flashplayer">plug-in Flash de Adobe</a> es necessari pro monstrar iste contento.';
 $lang['download']              = 'Discargar fragmento';
 $lang['mail_newpage']          = 'pagina addite:';
 $lang['mail_changed']          = 'pagina modificate:';

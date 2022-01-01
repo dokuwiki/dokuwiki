@@ -237,7 +237,7 @@ $lang['created']               = 'criada';
 $lang['restored']              = 'a revisão anterior foi restaurada (%s)';
 $lang['external_edit']         = 'edição externa';
 $lang['summary']               = 'Resumo da edição';
-$lang['noflash']               = 'O <a href="http://www.adobe.com/products/flashplayer/">plug-in Adobe Flash</a> é necessário para exibir este conteúdo.';
+$lang['noflash']               = 'O <a href="http://get.adobe.com/flashplayer">plug-in Adobe Flash</a> é necessário para exibir este conteúdo.';
 $lang['download']              = 'Baixar o snippet';
 $lang['tools']                 = 'Ferramentas';
 $lang['user_tools']            = 'Ferramentas do usuário';

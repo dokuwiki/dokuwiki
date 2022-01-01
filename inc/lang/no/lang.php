@@ -228,7 +228,7 @@ $lang['created']               = 'opprettet';
 $lang['restored']              = 'gjenopprettet til en tidligere versjon (%s)';
 $lang['external_edit']         = 'ekstern redigering';
 $lang['summary']               = 'Redigeringskommentar';
-$lang['noflash']               = 'For at dette innholdet skal vises må du ha <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
+$lang['noflash']               = 'For at dette innholdet skal vises må du ha <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Last ned utdraget';
 $lang['tools']                 = 'Verktøy';
 $lang['user_tools']            = 'Brukerverktøy';

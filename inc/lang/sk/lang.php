@@ -221,7 +221,7 @@ $lang['created']               = 'vytvorené';
 $lang['restored']              = 'stará verzia bola obnovená (%s)';
 $lang['external_edit']         = 'externá úprava';
 $lang['summary']               = 'Komentár k úpravám';
-$lang['noflash']               = 'Pre zobrazenie tohto obsahu potrebujete <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
+$lang['noflash']               = 'Pre zobrazenie tohto obsahu potrebujete <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Stiahnuť';
 $lang['tools']                 = 'Nástroje';
 $lang['user_tools']            = 'Nástroje používateľa';

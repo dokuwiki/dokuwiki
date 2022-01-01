@@ -235,7 +235,7 @@ $lang['created']               = 'creata';
 $lang['restored']              = 'versione precedente ripristinata (%s)';
 $lang['external_edit']         = 'modifica esterna';
 $lang['summary']               = 'Oggetto della modifica';
-$lang['noflash']               = 'E\' necessario <a href="http://www.adobe.com/products/flashplayer/">il plugin Adobe Flash</a> per visualizzare questo contenuto.';
+$lang['noflash']               = 'E\' necessario <a href="http://get.adobe.com/flashplayer">il plugin Adobe Flash</a> per visualizzare questo contenuto.';
 $lang['download']              = 'Scarica lo "snippet"';
 $lang['tools']                 = 'Strumenti';
 $lang['user_tools']            = 'Strumenti Utente';

@@ -139,7 +139,7 @@ $lang['created']               = 'креирана';
 $lang['restored']              = 'обновена е стара ревизија (%s)';
 $lang['external_edit']         = 'надворешно уредување';
 $lang['summary']               = 'Уреди го изводот';
-$lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash приклучокот</a> е потребен за да се прикаже оваа содржина.';
+$lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">Adobe Flash приклучокот</a> е потребен за да се прикаже оваа содржина.';
 $lang['download']              = 'Симни Snippe';
 $lang['mail_newpage']          = 'додадена е страницата:';
 $lang['mail_changed']          = 'променета е страницата:';

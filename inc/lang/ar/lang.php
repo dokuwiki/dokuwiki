@@ -213,7 +213,7 @@ $lang['created']               = 'اُنشئت';
 $lang['restored']              = 'استعيدت نسخة قديمة (%s)';
 $lang['external_edit']         = 'تحرير خارجي';
 $lang['summary']               = 'ملخص التحرير';
-$lang['noflash']               = 'تحتاج إلى<a href="http://www.adobe.com/products/flashplayer/">ملحق فلاش أدوبي</a> لعرض هذا المحتوى.';
+$lang['noflash']               = 'تحتاج إلى<a href="http://get.adobe.com/flashplayer">ملحق فلاش أدوبي</a> لعرض هذا المحتوى.';
 $lang['download']              = 'نزل Snippet';
 $lang['tools']                 = 'أدوات';
 $lang['user_tools']            = 'أدوات المستخدم';

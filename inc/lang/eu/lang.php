@@ -199,7 +199,7 @@ $lang['created']               = 'sortua';
 $lang['restored']              = 'bertsio zaharra berrezarria (%s)';
 $lang['external_edit']         = 'kanpoko aldaketa';
 $lang['summary']               = 'Aldatu laburpena';
-$lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> beharrezkoa da eduki hau bistaratzeko.';
+$lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> beharrezkoa da eduki hau bistaratzeko.';
 $lang['download']              = 'Deskarga Snippet-a';
 $lang['tools']                 = 'Tresnak';
 $lang['user_tools']            = 'Erabiltzaile Tresnak';

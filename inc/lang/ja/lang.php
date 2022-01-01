@@ -218,7 +218,7 @@ $lang['created']               = '作成';
 $lang['restored']              = '以前のリビジョンを復元 (%s)';
 $lang['external_edit']         = '外部編集';
 $lang['summary']               = '編集の概要';
-$lang['noflash']               = 'この内容を表示するには <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> が必要です。';
+$lang['noflash']               = 'この内容を表示するには <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> が必要です。';
 $lang['download']              = 'この部分をダウンロード';
 $lang['tools']                 = 'ツール';
 $lang['user_tools']            = 'ユーザ用ツール';

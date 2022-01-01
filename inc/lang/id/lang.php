@@ -190,7 +190,7 @@ $lang['deleted']               = 'terhapus';
 $lang['created']               = 'dibuat';
 $lang['restored']              = 'revisi lama ditampilkan kembali (%s)';
 $lang['external_edit']         = 'Perubahan eksternal';
-$lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> diperlukan untuk menampilkan konten ini.';
+$lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> diperlukan untuk menampilkan konten ini.';
 $lang['download']              = 'Unduh Cuplikan';
 $lang['tools']                 = 'Alat';
 $lang['user_tools']            = 'Alat Pengguna';

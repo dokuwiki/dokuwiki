@@ -210,7 +210,7 @@ $lang['created']               = '建立';
 $lang['restored']              = '還原成舊版 (%s)';
 $lang['external_edit']         = '外部編輯';
 $lang['summary']               = '編輯摘要';
-$lang['noflash']               = '顯示此內容需要 <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash 附加元件</a>。';
+$lang['noflash']               = '顯示此內容需要 <a href="http://get.adobe.com/flashplayer">Adobe Flash 附加元件</a>。';
 $lang['download']              = '下載程式碼片段';
 $lang['tools']                 = '工具';
 $lang['user_tools']            = '使用者工具';

@@ -201,7 +201,7 @@ $lang['created']               = 'luotu';
 $lang['restored']              = 'vanha versio palautettu (%s)';
 $lang['external_edit']         = 'ulkoinen muokkaus';
 $lang['summary']               = 'Yhteenveto muokkauksesta';
-$lang['noflash']               = 'Tarvitset <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash-liitännäisen</a> nähdäksesi tämän sisällön.';
+$lang['noflash']               = 'Tarvitset <a href="http://get.adobe.com/flashplayer">Adobe Flash-liitännäisen</a> nähdäksesi tämän sisällön.';
 $lang['download']              = 'Lataa palanen';
 $lang['tools']                 = 'Työkalut';
 $lang['user_tools']            = 'Käyttäjän työkalut';

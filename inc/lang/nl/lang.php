@@ -239,7 +239,7 @@ $lang['created']               = 'aangemaakt';
 $lang['restored']              = 'oude revisie hersteld (%s)';
 $lang['external_edit']         = 'Externe bewerking';
 $lang['summary']               = 'Samenvatting wijziging';
-$lang['noflash']               = 'De <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> is vereist om de pagina te kunnen weergeven.';
+$lang['noflash']               = 'De <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> is vereist om de pagina te kunnen weergeven.';
 $lang['download']              = 'Download fragment';
 $lang['tools']                 = 'Hulpmiddelen';
 $lang['user_tools']            = 'Gebruikershulpmiddelen';

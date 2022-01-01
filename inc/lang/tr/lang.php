@@ -222,7 +222,7 @@ $lang['created']               = 'oluşturuldu';
 $lang['restored']              = 'eski sürüme dönüldü (%s)';
 $lang['external_edit']         = 'Dışarıdan düzenle';
 $lang['summary']               = 'Özeti düzenle';
-$lang['noflash']               = 'Bu içeriği göstermek için <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Eklentisi</a> gerekmektedir.';
+$lang['noflash']               = 'Bu içeriği göstermek için <a href="http://get.adobe.com/flashplayer">Adobe Flash Eklentisi</a> gerekmektedir.';
 $lang['download']              = 'Parçacığı indir';
 $lang['tools']                 = 'Alet';
 $lang['user_tools']            = 'Kullanıcı Aletleri';

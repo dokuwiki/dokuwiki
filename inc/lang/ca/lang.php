@@ -219,7 +219,7 @@ $lang['created']               = 'creat';
 $lang['restored']              = 's\'ha restaurat una versió anterior %s';
 $lang['external_edit']         = 'edició externa';
 $lang['summary']               = 'Resum d\'edició';
-$lang['noflash']               = 'Per a visualitzar aquest contingut necessiteu el <a href="http://www.adobe.com/products/flashplayer/">connector d\'Adobe Flash</a>.';
+$lang['noflash']               = 'Per a visualitzar aquest contingut necessiteu el <a href="http://get.adobe.com/flashplayer">connector d\'Adobe Flash</a>.';
 $lang['download']              = 'Baixa el fragment';
 $lang['tools']                 = 'Eines';
 $lang['user_tools']            = 'Eines de l\'usuari';

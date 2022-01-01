@@ -215,7 +215,7 @@ $lang['created']               = 'ถูกสร้าง';
 $lang['restored']              = 'ย้อนไปรุ่นก่อนหน้า (%s)';
 $lang['external_edit']         = 'แก้ไขภายนอก';
 $lang['summary']               = 'สรุป(หมายเหตุ)การแก้ไขนี้';
-$lang['noflash']               = 'ต้องการตัวเล่นแฟลช <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> เพื่อแสดงผลเนื้อหานี้';
+$lang['noflash']               = 'ต้องการตัวเล่นแฟลช <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> เพื่อแสดงผลเนื้อหานี้';
 $lang['download']              = 'ดาวน์โหลดสนิปเป็ด(Snippet)';
 $lang['tools']                 = 'เครื่องมือ';
 $lang['user_tools']            = 'เครื่องมือสำหรับผู้ใช้';

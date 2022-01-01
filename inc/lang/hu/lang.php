@@ -205,7 +205,7 @@ $lang['created']               = 'létrehozva';
 $lang['restored']              = 'régebbi változat helyreállítva (%s)';
 $lang['external_edit']         = 'külső szerkesztés';
 $lang['summary']               = 'A változások összefoglalása';
-$lang['noflash']               = 'Ennek a tartalomnak a megtekintéséhez <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> szükséges.';
+$lang['noflash']               = 'Ennek a tartalomnak a megtekintéséhez <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> szükséges.';
 $lang['download']              = 'Kódrészlet letöltése';
 $lang['tools']                 = 'Eszközök';
 $lang['user_tools']            = 'Felhasználói eszközök';

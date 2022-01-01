@@ -180,7 +180,7 @@ $lang['deleted']               = 'काढून टाकले';
 $lang['created']               = 'निर्माण केले';
 $lang['external_edit']         = 'बाहेरून संपादित';
 $lang['summary']               = 'सारांश बदला';
-$lang['noflash']               = 'ही माहिती दाखवण्यासाठी <a href="http://www.adobe.com/products/flashplayer/">अडोब फ्लॅश प्लेअर</a> ची गरज आहे.';
+$lang['noflash']               = 'ही माहिती दाखवण्यासाठी <a href="http://get.adobe.com/flashplayer">अडोब फ्लॅश प्लेअर</a> ची गरज आहे.';
 $lang['download']              = 'तुकडा डाउनलोड करा';
 $lang['tools']                 = 'साधने';
 $lang['user_tools']            = 'युजरची साधने';

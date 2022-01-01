@@ -182,7 +182,7 @@ $lang['created']               = 'creado';
 $lang['restored']              = 'revisión antiga restaurada (%s)';
 $lang['external_edit']         = 'edición externa';
 $lang['summary']               = 'Resumo da edición';
-$lang['noflash']               = 'Precísase o <a href="http://www.adobe.com/products/flashplayer/">Extensión Adobe Flash</a> para amosar este contido.';
+$lang['noflash']               = 'Precísase o <a href="http://get.adobe.com/flashplayer">Extensión Adobe Flash</a> para amosar este contido.';
 $lang['download']              = 'Descargar Retallo (Snippet)';
 $lang['tools']                 = 'Ferramentas';
 $lang['user_tools']            = 'Ferramentas de usuario';

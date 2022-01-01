@@ -209,7 +209,7 @@ $lang['created']               = 'crewyd';
 $lang['restored']              = 'adferwyd hen adolygiad (%s)';
 $lang['external_edit']         = 'golygiad allanol';
 $lang['summary']               = 'Crynodeb golygiad';
-$lang['noflash']               = 'Mae angen <a href="http://www.adobe.com/products/flashplayer/">Ategyn Adobe Flash</a> i ddangos y cynnwys hwn.';
+$lang['noflash']               = 'Mae angen <a href="http://get.adobe.com/flashplayer">Ategyn Adobe Flash</a> i ddangos y cynnwys hwn.';
 $lang['download']              = 'Lawrlwytho Darn';
 $lang['tools']                 = 'Teclynnau';
 $lang['user_tools']            = 'Teclynnau Defnyddiwr';

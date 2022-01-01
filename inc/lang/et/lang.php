@@ -195,7 +195,7 @@ $lang['created']               = 'tekitatud';
 $lang['restored']              = 'vana versioon taastatud (%s)';
 $lang['external_edit']         = 'väline muutmine';
 $lang['summary']               = 'kokkuvõte muudatustest';
-$lang['noflash']               = 'Sele sisu vaatamisesks on vajalik <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Laiendus</a>.';
+$lang['noflash']               = 'Sele sisu vaatamisesks on vajalik <a href="http://get.adobe.com/flashplayer">Adobe Flash Laiendus</a>.';
 $lang['tools']                 = 'Tööriistad';
 $lang['user_tools']            = 'Kasutaja tarvikud';
 $lang['site_tools']            = 'Lehe tööriistad';

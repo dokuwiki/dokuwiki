@@ -225,7 +225,7 @@ $lang['created']               = 'ایجاد شد';
 $lang['restored']              = 'یک نگارش پیشین واگردانی شد. (%s)';
 $lang['external_edit']         = 'ویرایش خارجی';
 $lang['summary']               = 'پیش‌نمایش';
-$lang['noflash']               = 'برای نمایش محتویات <a href="http://www.adobe.com/products/flashplayer/">افزونه‌ی فلش</a> مورد نیاز است.';
+$lang['noflash']               = 'برای نمایش محتویات <a href="http://get.adobe.com/flashplayer">افزونه‌ی فلش</a> مورد نیاز است.';
 $lang['download']              = 'دیافت فایل منقطع گردید';
 $lang['tools']                 = 'ابزار';
 $lang['user_tools']            = 'ابزار کاربر';

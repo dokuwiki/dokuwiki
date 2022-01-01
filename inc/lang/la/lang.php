@@ -164,7 +164,7 @@ $lang['created']               = 'creatur';
 $lang['restored']              = 'Recensio uetus restituta (%s)';
 $lang['external_edit']         = 'Externe recensere';
 $lang['summary']               = 'Indicem recensere';
-$lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> necessarium est.';
+$lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> necessarium est.';
 $lang['download']              = 'Snippet capere';
 $lang['mail_newpage']          = 'Pagina addita:';
 $lang['mail_changed']          = 'Pagina mutata:';

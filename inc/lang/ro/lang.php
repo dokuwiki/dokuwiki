@@ -220,7 +220,7 @@ $lang['created']               = 'creat';
 $lang['restored']              = 'versiune veche restaurată (%s)';
 $lang['external_edit']         = 'editare externă';
 $lang['summary']               = 'Editează sumarul';
-$lang['noflash']               = 'Plugin-ul <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> este necesar pentru afișarea corectă a conținutului.';
+$lang['noflash']               = 'Plugin-ul <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> este necesar pentru afișarea corectă a conținutului.';
 $lang['download']              = 'Bloc descărcări';
 $lang['tools']                 = 'Unelte';
 $lang['user_tools']            = 'Unelte utilizator';

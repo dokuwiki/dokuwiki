@@ -203,7 +203,7 @@ $lang['created']               = 'създадена';
 $lang['restored']              = 'възстановена предишна версия (%s)';
 $lang['external_edit']         = 'външна редакция';
 $lang['summary']               = 'Обобщение';
-$lang['noflash']               = 'Необходим е <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> за изобразяване на съдържанието.';
+$lang['noflash']               = 'Необходим е <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> за изобразяване на съдържанието.';
 $lang['download']              = 'Изтегляне на фрагмент';
 $lang['tools']                 = 'Инструменти';
 $lang['user_tools']            = 'Инструменти за потребители';

@@ -224,7 +224,7 @@ $lang['created']               = 'створено';
 $lang['restored']              = 'відновлено стару ревізію (%s)';
 $lang['external_edit']         = 'зовнішнє редагування';
 $lang['summary']               = 'Підсумок змін';
-$lang['noflash']               = 'Для перегляду цієї сторінки необхідно встановити <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
+$lang['noflash']               = 'Для перегляду цієї сторінки необхідно встановити <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Завантажити фрагмент';
 $lang['tools']                 = 'Налаштування';
 $lang['user_tools']            = 'Користувальницькькі налаштування';

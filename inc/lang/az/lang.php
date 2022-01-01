@@ -151,7 +151,7 @@ $lang['created']               = 'yaranıb';
 $lang['restored']              = 'köhnə versiya qaytarıldı (%s)';
 $lang['external_edit']         = 'bayırdan dəyişik';
 $lang['summary']               = 'Dəyişiklər xülasəsi';
-$lang['noflash']               = 'Bu məzmuna baxmaq üçün <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> tələb olunur.';
+$lang['noflash']               = 'Bu məzmuna baxmaq üçün <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> tələb olunur.';
 $lang['download']              = 'Kodu yüklə';
 $lang['mail_newpage']          = 'səhifə əlavə olundu:';
 $lang['mail_changed']          = 'səhifəyə düzəliş edildi:';

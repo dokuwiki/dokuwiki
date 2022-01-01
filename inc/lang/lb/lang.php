@@ -125,7 +125,7 @@ $lang['created']               = 'erstallt';
 $lang['restored']              = 'al Versioun zeréckgeholl (%s)';
 $lang['external_edit']         = 'extern Ännerung';
 $lang['summary']               = 'Resumé vun den Ännerungen';
-$lang['noflash']               = 'Den <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> get gebraucht fir dësen Inhalt unzeweisen.';
+$lang['noflash']               = 'Den <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> get gebraucht fir dësen Inhalt unzeweisen.';
 $lang['mail_newpage']          = 'Säit bäigesat:';
 $lang['mail_changed']          = 'Säit geännert:';
 $lang['mail_subscribe_list']   = 'g\'ännert Säiten am Namespace:';
