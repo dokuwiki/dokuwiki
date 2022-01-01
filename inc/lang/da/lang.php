@@ -309,7 +309,7 @@ $lang['i_superuser']           = 'Superbruger';
 $lang['i_problems']            = 'Installeren fandt nogle problemer, vist nedenunder. Du kan ikke fortsætte før du har rettet dem.';
 $lang['i_modified']            = 'Af sikkerheds hensyn vil dette script kun virke på en ny og umodificeret Dokuwiki installation.
 Du burde enten gen-udpakke filerne fra den hentede pakke eller tjekke den fuldstændige
-<a href="http://dokuwiki.org/install">DokuWiki installations instruktioner</a>';
+<a href="https://www.dokuwiki.org/install">DokuWiki installations instruktioner</a>';
 $lang['i_funcna']              = 'PHP funtionen <code>%s</code> er ikke tilgængelig. Måske har din udbyder slået det fra af en eller anden grund?';
 $lang['i_disabled']            = 'Det er blevet slået fra af din udbyder.';
 $lang['i_funcnmail']           = '<b>Bemærk:</b> PHP mail funktionen er ikke tilgængelig. %s Hvis den forbliver utilgængelig, kan du installere <a href="https://www.dokuwiki.org/plugin:smtp">SMTP udvidelsen</a>.';

@@ -317,7 +317,7 @@ $lang['i_superuser']           = 'Amministratore';
 $lang['i_problems']            = 'Si sono verificati problemi durante l\'installazione, indicati di seguito. Non è possibile continuare finché non saranno risolti.';
 $lang['i_modified']            = 'Per motivi di sicurezza questa procedura funziona solamente con un\'installazione Dokuwiki nuova e non modificata.
 Prova a estrarre di nuovo i file dal pacchetto scaricato oppure consulta le
-<a href="http://dokuwiki.org/install">istruzioni per l\'installazione di Dokuwiki</a>';
+<a href="https://www.dokuwiki.org/install">istruzioni per l\'installazione di Dokuwiki</a>';
 $lang['i_funcna']              = 'La funzione PHP <code>%s</code> non è disponibile. Forse è stata disabilitata dal tuo provider per qualche motivo?';
 $lang['i_disabled']            = 'E\' stato disabilitato dal tuo provider di servizi.';
 $lang['i_funcnmail']           = '<b>Nota:</b> La funzione mail PHP non è disponibile. %s Se rimane non disponibile, puoi provare ad installare <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';

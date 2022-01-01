@@ -319,7 +319,7 @@ $lang['i_wikiname']            = 'Wikinaam';
 $lang['i_enableacl']           = 'ACLs inschakelen (aanbevolen)';
 $lang['i_superuser']           = 'Superuser';
 $lang['i_problems']            = 'De installer vond problemen, hieronder aangegeven. Verhelp deze voor je doorgaat.';
-$lang['i_modified']            = 'Uit veiligheidsoverwegingen werkt dit script alleen met nieuwe en onveranderde DokuWiki-installaties. Pak de bestanden opnieuw uit of raadpleeg de <a href="http://dokuwiki.org/install">Dokuwiki installatie-instructies</a>';
+$lang['i_modified']            = 'Uit veiligheidsoverwegingen werkt dit script alleen met nieuwe en onveranderde DokuWiki-installaties. Pak de bestanden opnieuw uit of raadpleeg de <a href="https://www.dokuwiki.org/install">Dokuwiki installatie-instructies</a>';
 $lang['i_funcna']              = 'PHP functie <code>%s</code> is niet beschikbaar. Wellicht heeft je hosting provider deze uitgeschakeld?';
 $lang['i_phpver']              = 'PHP-versie <code>%s</code> is lager dan de vereiste <code>%s</code>. Upgrade PHP.';
 $lang['i_mbfuncoverload']      = 'Om DokuWiki te draaien moet mbstring.func_overload uitgeschakeld zijn in php.ini.';

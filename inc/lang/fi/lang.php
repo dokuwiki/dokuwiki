@@ -281,7 +281,7 @@ $lang['i_wikiname']            = 'Wikin nimi';
 $lang['i_enableacl']           = 'Käytä käyttöoikeuksien hallintaa (ACL) (Suositeltu)';
 $lang['i_superuser']           = 'Pääkäyttäjä';
 $lang['i_problems']            = 'Asennusohjelma löysi alla listattuja ongelmia ongelmia. Et voi jatkaa ennen kuin ne on korjattu.';
-$lang['i_modified']            = 'Turvallisuussyistä tämä ohjelma toimii vain uusien ja muokkaamattomien Dokuwiki-asennusten kanssa. Pura tiedostot uudestaan asennuspaketista, tai lue <a href="http://dokuwiki.org/install">Dokuwikin asennusohje (englanniksi)</a>';
+$lang['i_modified']            = 'Turvallisuussyistä tämä ohjelma toimii vain uusien ja muokkaamattomien Dokuwiki-asennusten kanssa. Pura tiedostot uudestaan asennuspaketista, tai lue <a href="https://www.dokuwiki.org/install">Dokuwikin asennusohje (englanniksi)</a>';
 $lang['i_funcna']              = 'PHP:n funktio <code>%s</code> ei ole käytettävissä. Palveluntarjoajasi on saattanut poistaa sen jostain syystä.';
 $lang['i_phpver']              = 'Käyttämäsi PHP-ohjelmiston versio <code>%s</code> on pienempi, kuin tarvitaan <code>%s</code>. PHP-asennuksesi pitää päivittää.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload pitää ottaa pois käytöstä php.ini -tiedostosta käyttääksesi DokuWikiä';

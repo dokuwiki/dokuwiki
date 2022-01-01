@@ -336,7 +336,7 @@ $lang['i_wikiname']            = 'Nombre del wiki';
 $lang['i_enableacl']           = 'Habilitar ACL (recomendado) (ACL: lista de control de acceso)';
 $lang['i_superuser']           = 'Super-usuario';
 $lang['i_problems']            = 'El instalador encontró algunos problemas, se muestran abajo. No se puede continuar la instalación hasta que usted no los corrija.';
-$lang['i_modified']            = 'Por razones de seguridad este script sólo funcionará con una instalación nueva y no modificada de Dokuwiki. Usted debe extraer nuevamente los ficheros del paquete bajado, o bien consultar las <a href="http://dokuwiki.org/install">instrucciones de instalación de Dokuwiki</a> completas.';
+$lang['i_modified']            = 'Por razones de seguridad este script sólo funcionará con una instalación nueva y no modificada de Dokuwiki. Usted debe extraer nuevamente los ficheros del paquete bajado, o bien consultar las <a href="https://www.dokuwiki.org/install">instrucciones de instalación de Dokuwiki</a> completas.';
 $lang['i_funcna']              = 'La función de PHP <code>%s</code> no está disponible. ¿Tal vez su proveedor de hosting la ha deshabilitado por alguna razón?';
 $lang['i_disabled']            = 'Ha sido deshabilitado por su proveedor.';
 $lang['i_funcnmail']           = '<b>Nota:</b> La función de PHP mail() no está disponible. %s si no está disponible, puede instalar el <a href="https://www.dokuwiki.org/plugin:smtp">complemento smtp</a>.';

@@ -300,7 +300,7 @@ $lang['i_superuser']           = 'スーパーユーザー';
 $lang['i_problems']            = '問題が発見されました。以下に示す問題を解決するまで、インストールを続行できません。';
 $lang['i_modified']            = 'セキュリティの理由から、新規もしくはカスタマイズしていない DokuWiki に対してのみ、このスクリプトは有効です。
                          ダウンロードしたパッケージを再解凍して使用するか、
-                         <a href="http://dokuwiki.org/install">Dokuwiki インストールガイド</a>を参考にしてインストールしてください。';
+                         <a href="https://www.dokuwiki.org/install">Dokuwiki インストールガイド</a>を参考にしてインストールしてください。';
 $lang['i_funcna']              = 'PHPの関数 <code>%s</code> が使用できません。ホスティング会社が何らかの理由で無効にしている可能性があります。';
 $lang['i_disabled']            = 'ご利用のプロバイダにより制限されています。';
 $lang['i_funcnmail']           = '<b>注：</b>PHPの mail 関数が利用不能になっています。 %s この状況が続く場合は、<a href="https://www.dokuwiki.org/plugin:smtp">smtpプラグイン</a>をインストールして解決する事も出来ます。';

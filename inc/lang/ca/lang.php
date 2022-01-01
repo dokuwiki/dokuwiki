@@ -299,7 +299,7 @@ $lang['i_wikiname']            = 'Nom del wiki';
 $lang['i_enableacl']           = 'Habilita ACL (recomanat)';
 $lang['i_superuser']           = 'Superusuari';
 $lang['i_problems']            = 'L\'instal·lador ha trobat alguns problemes, que s\'indiquen més avall. No podeu continuar fins que no els hàgiu solucionat.';
-$lang['i_modified']            = 'Per raons de seguretat aquesta seqüència només funciona amb una instal·lació nova i no modificada de Dokuwiki. Hauríeu de tornar a baixar el paquet i/o descomprimir-lo o consultar les <a href="http://dokuwiki.org/install">instruccions d\'instal·lació de Dokuwiki</a> completes';
+$lang['i_modified']            = 'Per raons de seguretat aquesta seqüència només funciona amb una instal·lació nova i no modificada de Dokuwiki. Hauríeu de tornar a baixar el paquet i/o descomprimir-lo o consultar les <a href="https://www.dokuwiki.org/install">instruccions d\'instal·lació de Dokuwiki</a> completes';
 $lang['i_funcna']              = 'La funció PHP <code>%s</code> no està disponible. Potser el vostre proveïdor de serveis l\'ha inhabilitada per alguna raó';
 $lang['i_disabled']            = 'El vostre proveïdor l\'ha desactivat.';
 $lang['i_phpver']              = 'La vostra versió de PHP <code>%s</code> és inferior a la requerida <code>%s</code>. Necessiteu actualitzar la vostra instal·lació de PHP.';

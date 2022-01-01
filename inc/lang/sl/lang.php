@@ -276,7 +276,7 @@ $lang['i_wikiname']            = 'Ime Wiki spletišča';
 $lang['i_enableacl']           = 'Omogoči ACL (priporočeno)';
 $lang['i_superuser']           = 'Skrbnik';
 $lang['i_problems']            = 'Namestilnik je naletel na težave, ki so izpisane spodaj. Namestitve ni mogoče nadaljevati, dokler težave ne bodo odpravljene.';
-$lang['i_modified']            = 'Iz varnostnih razlogov skript deluje le v novi in neprilagojeni namestitvi sistema DokuWiki. Postopek namestitve je treba začeti znova ali pa sistem namestiti ročno s pomočjo <a href="http://dokuwiki.org/install">navodil nameščanja Dokuwiki</a>.';
+$lang['i_modified']            = 'Iz varnostnih razlogov skript deluje le v novi in neprilagojeni namestitvi sistema DokuWiki. Postopek namestitve je treba začeti znova ali pa sistem namestiti ročno s pomočjo <a href="https://www.dokuwiki.org/install">navodil nameščanja Dokuwiki</a>.';
 $lang['i_funcna']              = 'Funkcija PHP <code>%s</code> ni na voljo. Morda je možnost na strežniku zaradi varnostnih razlogov onemogočena.';
 $lang['i_phpver']              = 'Različica PHP <code>%s</code> je nižja od zahtevane različice <code>%s</code>. Pred nadaljevanjem je treba posodobiti namestitev PHP.';
 $lang['i_permfail']            = 'Predmet <code>%s</code> ni zapisljiv. Zahtevana je sprememba dovoljenj za to mapo.';

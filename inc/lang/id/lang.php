@@ -257,7 +257,7 @@ $lang['i_installer']           = 'Instalasi DokuWiki';
 $lang['i_wikiname']            = 'Nama Wiki';
 $lang['i_enableacl']           = 'Aktifkan ACL (disarankan)';
 $lang['i_problems']            = 'Terdapat beberapa kesalahan seperti berikut. Anda tidak dapat melanjutkan sampai kesalahan tersebut diperbaiki.';
-$lang['i_modified']            = 'Untuk alasan keamanan, skrip ini hanya dapat dijalankan pada instalasi DikuWiki baru dan belum di modifikasi. Silahkan meng-ekstrak kembali berkasi dari halaman dowload, atau lihat   <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a> ';
+$lang['i_modified']            = 'Untuk alasan keamanan, skrip ini hanya dapat dijalankan pada instalasi DikuWiki baru dan belum di modifikasi. Silahkan meng-ekstrak kembali berkasi dari halaman dowload, atau lihat   <a href="https://www.dokuwiki.org/install">Dokuwiki installation instructions</a> ';
 $lang['i_funcna']              = 'Fungsi PHP <code>%s</code> tidak tersedia. Mungkin dinonaktifkan oleh layanan hosting Anda?';
 $lang['i_phpver']              = 'Versi PHP Anda <code>%s</code> lebih rendah dari yang dibutuhkan <code>%s</code>. Mohon melakukan upgrade.';
 $lang['i_permfail']            = '<code>%s</code> tidak dapat ditulis oleh DokuWiki. Anda harus memperbaiki konfigurasi hak akses untuk direktori tersebut.';

@@ -294,7 +294,7 @@ $lang['i_superuser']           = 'Siêu thành viên';
 $lang['i_problems']            = 'Trình cài đặt tìm thấy một số vấn đề, được chỉ ra bên dưới. Bạn không thể tiếp tục cho đến khi bạn đã sửa chúng.';
 $lang['i_modified']            = 'Vì lý do bảo mật, tập lệnh này sẽ chỉ hoạt động với bản cài đặt Dokuwiki mới và chưa được sửa đổi.
                                   Bạn nên trích xuất lại các tập tin từ gói đã tải xuống hoặc tham khảo
-                    <a href="http://dokuwiki.org/install">Hướng dẫn cài đặt Dokuwiki</a> đầy đủ';
+                    <a href="https://www.dokuwiki.org/install">Hướng dẫn cài đặt Dokuwiki</a> đầy đủ';
 $lang['i_funcna']              = 'Hàm PHP <code>%s</code> không có sẵn. Có lẽ nhà cung cấp dịch vụ lưu trữ của bạn đã vô hiệu hóa nó vì một số lý do?';
 $lang['i_disabled']            = 'Nó đã bị vô hiệu hóa bởi nhà cung cấp của bạn.';
 $lang['i_funcnmail']           = '<b>Lưu ý:</b> Không có sẵn hàm PHP mail. %s Nếu nó vẫn không có sẵn, bạn có thể cài đặt <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
