@@ -450,6 +450,8 @@ function idfilter($id, $ue = true) {
     /* @var Input $INPUT */
     global $INPUT;
 
+    $id = (string) $id;
+
     if($conf['useslash'] && $conf['userewrite']) {
         $id = strtr($id, ':', '/');
     } elseif(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' &&
@@ -1904,7 +1906,7 @@ function set_doku_pref($pref, $val) {
             if ($parts[$i] == $enc_pref) {
                 if (!$seen){
                     if ($val !== false) {
-                        $parts[$i + 1] = rawurlencode($val);
+                        $parts[$i + 1] = rawurlencode($val ?? '');
                     } else {
                         unset($parts[$i]);
                         unset($parts[$i + 1]);
