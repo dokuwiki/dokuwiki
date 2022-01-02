@@ -8,7 +8,7 @@
 
 use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\Extension\Event;
-use dokuwiki\Utils\PageResolver;
+use dokuwiki\File\PageResolver;
 
 /**
  * Access a template file

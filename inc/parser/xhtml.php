@@ -1,8 +1,8 @@
 <?php
 
 use dokuwiki\ChangeLog\MediaChangeLog;
-use dokuwiki\Utils\MediaResolver;
-use dokuwiki\Utils\PageResolver;
+use dokuwiki\File\MediaResolver;
+use dokuwiki\File\PageResolver;
 
 /**
  * Renderer for XHTML output

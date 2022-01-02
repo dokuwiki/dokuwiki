@@ -2,7 +2,7 @@
 <?php
 
 use dokuwiki\Utf8\Sort;
-use dokuwiki\Utils\PageResolver;
+use dokuwiki\File\PageResolver;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 

@@ -9,8 +9,8 @@
 
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\Utils\MediaResolver;
-use dokuwiki\Utils\PageResolver;
+use dokuwiki\File\MediaResolver;
+use dokuwiki\File\PageResolver;
 
 /**
  * Fetch the an ID from request
@@ -481,7 +481,7 @@ function localeFN($id,$ext='txt'){
  */
 function resolve_id($ns,$id,$clean=true){
     global $conf;
-    dbg_deprecated(\dokuwiki\Utils\Resolver::class.' and its children');
+    dbg_deprecated(\dokuwiki\File\Resolver::class.' and its children');
 
     // some pre cleaning for useslash:
     if($conf['useslash']) $id = str_replace('/',':',$id);

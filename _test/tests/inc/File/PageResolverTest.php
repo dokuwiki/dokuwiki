@@ -1,8 +1,8 @@
 <?php
 
-namespace tests\inc\Utils;
+namespace tests\inc\File;
 
-use dokuwiki\Utils\PageResolver;
+use dokuwiki\File\PageResolver;
 
 /**
  * @todo tests that make use of revisions might be wanted
