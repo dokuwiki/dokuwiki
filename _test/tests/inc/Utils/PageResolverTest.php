@@ -96,6 +96,36 @@ class PageResolverTest extends \DokuWikiTest
         $this->assertEquals($expected, $resolver->resolveId($id));
     }
 
+    /**
+     * Tilde start page bahaviour
+     *
+     * Please note that a ~ alone is the same as ~:
+     */
+    public function testTildeStartPage() {
+        $context = 'foo:context';
+        $resolver = new PageResolver($context);
+
+        // the $context page itself does not exist
+        // a link like that is usually not possible, but we fall back to standard start
+        // page behaviour
+        $this->assertEquals("$context:start", $resolver->resolveId('~:'));
+        $this->assertEquals("$context:start", $resolver->resolveId('~'));
+
+        // now $context has become the start page
+        saveWikiText($context, 'test', 'test');
+        $this->assertEquals($context, $resolver->resolveId('~:'));
+
+        // now we have a startpage named like the namespace
+        saveWikiText("$context:context", 'test', 'test');
+        $this->assertEquals("$context:context", $resolver->resolveId('~:'));
+        $this->assertEquals("$context:context", $resolver->resolveId('~'));
+
+        // now we have a dedicated start page
+        saveWikiText("$context:start", 'test', 'test');
+        $this->assertEquals("$context:start", $resolver->resolveId('~:'));
+        $this->assertEquals("$context:start", $resolver->resolveId('~'));
+    }
+
     public function testResolveStartPage() {
 
         $resolver = new PageResolver('arbitrary');
