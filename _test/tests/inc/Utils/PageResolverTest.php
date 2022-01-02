@@ -180,4 +180,24 @@ class PageResolverTest extends \DokuWikiTest
         $actual = $this->callInaccessibleMethod($resolver, 'resolveRelatives', [$input]);
         $this->assertEquals($expected, $actual);
     }
+
+    public function testAutoPlural()
+    {
+        $resolver = new PageResolver('arbitrary');
+
+        $singular = 'some:page';
+        $plural = 'some:pages';
+
+
+        $actual = $this->callInaccessibleMethod($resolver, 'resolveAutoPlural', [$singular, '', false]);
+        $this->assertEquals($singular, $actual); // no pages exist
+
+        saveWikiText($plural, 'plural', 'plural');
+        $actual = $this->callInaccessibleMethod($resolver, 'resolveAutoPlural', [$singular, '', false]);
+        $this->assertEquals($plural, $actual); // plural exists
+
+        saveWikiText($singular, 'singular', 'singular');
+        $actual = $this->callInaccessibleMethod($resolver, 'resolveAutoPlural', [$singular, '', false]);
+        $this->assertEquals($singular, $actual); // requested singular has preference
+    }
 }
