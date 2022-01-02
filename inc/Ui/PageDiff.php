@@ -126,12 +126,34 @@ class PageDiff extends Diff
      */
     protected function preProcess()
     {
+        global $lang;
+
         $changelog =& $this->changelog;
 
-        // revision info of older file (left side)
-        $this->oldRevInfo = $changelog->getRevisionInfo($this->oldRev);
-        // revision info of newer file (right side)
-        $this->newRevInfo = $changelog->getRevisionInfo($this->newRev);
+        // check validity of $this->{oldRev, newRev}
+        foreach (['oldRev','newRev'] as $rev) {
+            $revInfo = $rev.'Info';
+            $this->$revInfo = $changelog->getRevisionInfo((int)$this->$rev);
+            if (!$this->$revInfo) {
+                // invalid revision number, set dummy revInfo
+                $this->$revInfo = array(
+                    'date' => time(),
+                    'type' => '',
+                    'timestamp' => false,
+                    'rev'  => false,
+                    'text' => '',
+                    'navTitle' => '&mdash;',
+                );
+            }
+        }
+        if ($this->newRev === false) {
+            msg(sprintf($lang['page_nonexist_rev'],
+                $this->id,
+                wl($this->id, ['do'=>'edit']),
+                $this->id), -1);
+        } elseif ($this->oldRevInfo == $this->newRevInfo) {
+            msg('no way to compare when less than two revisions', -1);
+        }
 
         foreach ([&$this->oldRevInfo, &$this->newRevInfo] as &$revInfo) {
             // use timestamp and '' properly as $rev for the current file
@@ -142,7 +164,9 @@ class PageDiff extends Diff
             ];
 
             // headline in the Diff view navigation
-            $revInfo['navTitle'] = $this->revisionTitle($revInfo);
+            if (!isset($revInfo['navTitle'])) {
+                $revInfo['navTitle'] = $this->revisionTitle($revInfo);
+            }
 
             if ($revInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
                 //attic stores complete last page version for a deleted page
@@ -420,7 +444,6 @@ class PageDiff extends Diff
      */
     protected function buildRevisionOptions($side, $revs)
     {
-        global $lang;
         $changelog =& $this->changelog;
         $revisions = array();
 

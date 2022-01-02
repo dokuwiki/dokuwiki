@@ -113,9 +113,15 @@ abstract class Diff extends Ui
 
         if (!isset($this->oldRev, $this->newRev)) {
             // no revision was given, compare previous to current
-            $revs = $this->changelog->getRevisions(-1, 2);
+            // Note: need to chack validity of each revision numbers later
             $this->newRev = $this->changelog->currentRevision();
-            $this->oldRev = ($revs[0] == $this->newRev) ? $revs[1] : $revs[0];
+            $revs = $this->changelog->getRevisions(-1, 2);
+            if (count($revs) < 2) {
+                // impossible compare revision pair, both false when page or media not exists
+                $this->oldRev = $this->newRev;
+            } else {
+                $this->oldRev = ($revs[0] == $this->newRev) ? $revs[1] : $revs[0];
+            }
         }
     }
 
