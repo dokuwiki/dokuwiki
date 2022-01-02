@@ -268,14 +268,14 @@ function sectionID($title,&$check) {
  * @param bool $date_at
  * @return bool exists?
  */
-function page_exists($id,$rev='',$clean=true, $date_at=false) {
-    if($rev !== '' && $date_at) {
+function page_exists($id, $rev = '', $clean = true, $date_at = false) {
+    if ($rev !== '' && $date_at) {
         $pagelog = new PageChangeLog($id);
         $pagelog_rev = $pagelog->getLastRevisionAt($rev);
-        if($pagelog_rev !== false)
+        if ($pagelog_rev !== false)
             $rev = $pagelog_rev;
     }
-    return file_exists(wikiFN($id,$rev,$clean));
+    return file_exists(wikiFN($id, $rev, $clean));
 }
 
 /**

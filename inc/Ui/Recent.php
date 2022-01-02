@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\Form\Form;
 
@@ -72,6 +73,10 @@ class Recent extends Ui
         // start listing of recent items
         $form->addTagOpen('ul');
         foreach ($recents as $recent) {
+            // check possible external edition for current page or media
+            $this->checkCurrentRevision($recent);
+            $recent['current'] = true;
+
             $objRevInfo = $this->getObjRevInfo($recent);
             $class = ($recent['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor': '';
             $form->addTagOpen('li')->addClass($class);
@@ -138,6 +143,31 @@ class Recent extends Ui
             array_pop($recents); // remove extra log entry
         }
         return $recents;
+    }
+
+    /**
+     * Check possible external deletion for current page or media
+     *
+     * To keep sort order in the recent list, we ignore externally modification.
+     * It is not possible to know when external deletion had happened,
+     * $info['date'] is to be incremented 1 second when such deletion detected.
+     */
+    protected function checkCurrentRevision(array &$info)
+    {
+        $itemType = strrpos($info['id'], '.') ? 'media' : 'page';
+        if ($itemType == 'page') {
+            $changelog = new PageChangelog($info['id']);
+        } else {
+            $changelog = new MediaChangelog($info['id']);
+        }
+        if (!$changelog->isCurrentRevision($info['date'])) {
+            $currentRevInfo = $changelog->getCurrentRevisionInfo();
+            if ($currentRevInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
+                // the page or media file was externally deleted
+                $info = array_merge($info, $currentRevInfo);
+            }
+        }
+        unset($changelog);
     }
 
     /**
@@ -209,6 +239,8 @@ class Recent extends Ui
 
             public function __construct(array $info)
             {
+                $info['item'] = strrpos($info['id'], '.') ? 'media' : 'page';
+                $info['current'] = $info['current'] ?? false;
                 $this->info = $info;
             }
 
@@ -216,10 +248,12 @@ class Recent extends Ui
             public function itemIcon()
             {
                 $id = $this->info['id'];
-                if (isset($this->info['media'])) {
-                    $html = media_printicon($id);
-                } else {
-                    $html = '<img class="icon" src="'.DOKU_BASE.'lib/images/fileicons/file.png" alt="'.$id.'" />';
+                switch ($this->info['item']) {
+                    case 'media': // media file revision
+                        $html = media_printicon($id);
+                        break;
+                    case 'page': // page revision
+                        $html = '<img class="icon" src="'.DOKU_BASE.'lib/images/fileicons/file.png" alt="'.$id.'" />';
                 }
                 return $html;
             }
@@ -254,14 +288,17 @@ class Recent extends Ui
             public function itemName()
             {
                 $id = $this->info['id'];
-                if (isset($this->info['media'])) {
-                    $href = media_managerURL(['tab_details'=>'view', 'image'=> $id, 'ns'=> getNS($id)], '&');
-                    $class = file_exists(mediaFN($id)) ? 'wikilink1' : 'wikilink2';
-                    $html = '<a href="'.$href.'" class="'.$class.'">'.$id.'</a>';
-                } else {
-                    $html = html_wikilink(':'.$id, (useHeading('navigation') ? null : $id));
+                switch ($this->info['item']) {
+                    case 'media': // media file revision
+                        $href = media_managerURL(['tab_details'=>'view', 'image'=> $id, 'ns'=> getNS($id)], '&');
+                        $class = file_exists(mediaFN($id)) ? 'wikilink1' : 'wikilink2';
+                        $html = '<a href="'.$href.'" class="'.$class.'">'.$id.'</a>';
+                        return $html;
+                    case 'page': // page revision
+                        $html = html_wikilink(':'.$id, (useHeading('navigation') ? null : $id));
+                        return $html;
                 }
-                return $html;
+                return '';
             }
 
             // icon difflink
@@ -270,18 +307,20 @@ class Recent extends Ui
                 global $lang;
                 $id = $this->info['id'];
 
-                if (isset($this->info['media'])) {
-                    $revs = (new MediaChangeLog($id))->getRevisions(0, 1);
-                    $diff = (count($revs) && file_exists(mediaFN($id)));
-                    if ($diff) {
-                        $href = media_managerURL(
-                            ['tab_details'=>'history', 'mediado'=>'diff', 'image'=> $id, 'ns'=> getNS($id)], '&'
-                        );
-                    } else {
-                        $href = '';
-                    }
-                } else {
-                    $href = wl($id, "do=diff", false, '&');
+                switch ($this->info['item']) {
+                    case 'media': // media file revision
+                        $revs = (new MediaChangeLog($id))->getRevisions(0, 1);
+                        $diff = (count($revs) && file_exists(mediaFN($id)));
+                        if ($diff) {
+                            $href = media_managerURL(
+                                ['tab_details'=>'history', 'mediado'=>'diff', 'image'=> $id, 'ns'=> getNS($id)], '&'
+                            );
+                        } else {
+                            $href = '';
+                        }
+                        break;
+                    case 'page': // page revision
+                        $href = wl($id, "do=diff", false, '&');
                 }
 
                 if ($href) {
@@ -300,10 +339,12 @@ class Recent extends Ui
             {
                 global $lang;
                 $id = $this->info['id'];
-                if (isset($this->info['media'])) {
-                    $href = media_managerURL(['tab_details'=>'history', 'image'=> $id, 'ns'=> getNS($id)], '&');
-                } else {
-                    $href = wl($id, "do=revisions", false, '&');
+                switch ($this->info['item']) {
+                    case 'media': // media file revision
+                        $href = media_managerURL(['tab_details'=>'history', 'image'=> $id, 'ns'=> getNS($id)], '&');
+                        break;
+                    case 'page': // page revision
+                        $href = wl($id, "do=revisions", false, '&');
                 }
                 $html = '<a href="'.$href.'" class="revisions_link">'
                       . '<img src="'.DOKU_BASE.'lib/images/history.png" width="12" height="14"'

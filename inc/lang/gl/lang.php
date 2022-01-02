@@ -182,7 +182,7 @@ $lang['created']               = 'creado';
 $lang['restored']              = 'revisión antiga restaurada (%s)';
 $lang['external_edit']         = 'edición externa';
 $lang['summary']               = 'Resumo da edición';
-$lang['noflash']               = 'Precísase o <a href="http://www.adobe.com/products/flashplayer/">Extensión Adobe Flash</a> para amosar este contido.';
+$lang['noflash']               = 'Precísase o <a href="http://get.adobe.com/flashplayer">Extensión Adobe Flash</a> para amosar este contido.';
 $lang['download']              = 'Descargar Retallo (Snippet)';
 $lang['tools']                 = 'Ferramentas';
 $lang['user_tools']            = 'Ferramentas de usuario';
@@ -264,7 +264,7 @@ $lang['i_superuser']           = 'Super-usuario';
 $lang['i_problems']            = 'O instalador atopou algúns problemas, que se amosan de seguido. Non poderás continuar até que os soluciones.';
 $lang['i_modified']            = 'Por razóns de seguridade este script só funcionará cunha instalación nova e sen modificar do Dokuwiki.
                          Podes ou ben extraer de novo os arquivos dende o paquete descargado ou consultar as
-                         <a href="http://dokuwiki.org/install">instruccións completas de instalación do Dokuwiki</a>';
+                         <a href="https://www.dokuwiki.org/install">instruccións completas de instalación do Dokuwiki</a>';
 $lang['i_funcna']              = 'A función <code>%s</code> do PHP non está dispoñíbel. Pode que o teu provedor de hospedaxe a desactivase por algún motivo?';
 $lang['i_phpver']              = 'A túa versión <code>%s</code> do PHP é inferior á <code>%s</code> precisa. Debes actualizar a túa instalación do PHP.';
 $lang['i_permfail']            = '<code>%s</code> non é escribíbel polo DokuWiki. Debes corrixir a configuración de permisos deste directorio!';

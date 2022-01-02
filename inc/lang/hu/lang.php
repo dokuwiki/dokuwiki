@@ -205,7 +205,7 @@ $lang['created']               = 'létrehozva';
 $lang['restored']              = 'régebbi változat helyreállítva (%s)';
 $lang['external_edit']         = 'külső szerkesztés';
 $lang['summary']               = 'A változások összefoglalása';
-$lang['noflash']               = 'Ennek a tartalomnak a megtekintéséhez <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> szükséges.';
+$lang['noflash']               = 'Ennek a tartalomnak a megtekintéséhez <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> szükséges.';
 $lang['download']              = 'Kódrészlet letöltése';
 $lang['tools']                 = 'Eszközök';
 $lang['user_tools']            = 'Felhasználói eszközök';
@@ -286,7 +286,7 @@ $lang['i_enableacl']           = 'Hozzáférési listák engedélyezése (ajánl
 $lang['i_superuser']           = 'Adminisztrátor';
 $lang['i_problems']            = 'A Beállító Varázsló a következő problémák miatt megakadt. Nem tudjuk folytatni, amíg ezek nincsenek elhárítva!';
 $lang['i_modified']            = 'Biztonsági okokból ez a Varázsló csak új és módosítatlan DokuWiki változaton működik.
-Csomagold ki újra a fájlokat a letöltött csomagból, vagy nézd meg a teljes <a href="http://dokuwiki.org/install">Dokuwiki telepítési útmutatót</a>.';
+Csomagold ki újra a fájlokat a letöltött csomagból, vagy nézd meg a teljes <a href="https://www.dokuwiki.org/install">Dokuwiki telepítési útmutatót</a>.';
 $lang['i_funcna']              = 'A <code>%s</code> PHP funkció nem elérhető. Esetleg a tárhelyszolgáltató letiltotta biztonsági okok miatt?';
 $lang['i_phpver']              = 'A PHP <code>%s</code> verziója alacsonyabb, mint ami szükséges lenne: <code>%s</code>. Frissítsd a PHP-det újabb verzióra!';
 $lang['i_mbfuncoverload']      = 'A DokuWiki futtatásához az mbstring.func_overload opciót ki kell kapcsolni a php.ini-ben.';

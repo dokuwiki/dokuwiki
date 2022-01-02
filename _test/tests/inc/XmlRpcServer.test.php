@@ -34,6 +34,7 @@ class XmlRpcServerTest extends DokuWikiTest
         $file = wikiFN($pageName);
         $timestamp = filemtime($file);
         $ixrModifiedTime = (new DateTime('@' . $timestamp))->format(DateTime::ATOM);
+        $author = '127.0.0.1'; // read from changelog, $info['user'] or $info['ip']
 
         $request = <<<EOD
 <?xml version="1.0"?>
@@ -54,7 +55,7 @@ EOD;
         <struct>
   <member><name>name</name><value><string>wiki:dokuwiki</string></value></member>
   <member><name>lastModified</name><value><dateTime.iso8601>$ixrModifiedTime</dateTime.iso8601></value></member>
-  <member><name>author</name><value><string></string></value></member>
+  <member><name>author</name><value><string>$author</string></value></member>
   <member><name>version</name><value><int>$timestamp</int></value></member>
 </struct>
       </value>
