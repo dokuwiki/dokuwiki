@@ -61,29 +61,42 @@ class PageDiffTest extends \DokuWikiTest
     }
 
 
-
-    // test PageDiff::handle()
-    public function testDiffPairing()
+    // test PageDiff::handle() when external deletion happened
+    public function testDiffPairing_ExternalDelete()
     {
         global $INFO;
 
-        // create new page
+        // a page that had not ever existed
         $INFO['id'] = $page = 'page';
         $file = wikiFN($page);
-        saveWikiText($page, 'teststring', '1st save', false);
-        $this->assertFileExists($file);
-        $lastmod = filemtime($file);
-        $PageDiff = new PageDiff($page);
+        $this->assertFileNotExists($file);
 
+        $PageDiff = new PageDiff($page);
         $this->doMethod($PageDiff, 'handle');
         $newRev= $this->getProperty($PageDiff, 'newRev');
         $oldRev= $this->getProperty($PageDiff, 'oldRev');
 
-        $this->assertEquals($lastmod, $newRev);
-        $this->assertEquals($lastmod, $oldRev);
+        $this->assertFalse($newRev);
+        $this->assertFalse($oldRev);
+
+        // create new page
+        saveWikiText($page, 'teststring', '1st save', false);
+        $this->assertFileExists($file);
+        $newmod = filemtime($file);
+
+        $PageDiff = new PageDiff($page);
+        $this->doMethod($PageDiff, 'handle');
+        $newRev= $this->getProperty($PageDiff, 'newRev');
+        $oldRev= $this->getProperty($PageDiff, 'oldRev');
+
+        $this->assertEquals($newmod, $newRev);
+        $this->assertEquals($newmod, $oldRev);
+        $lastmod =$newmod;
 
         // externally delete the page
+        $this->waitForTick(); // wait for new revision ID
         unlink($file);
+
         $PageDiff = new PageDiff($page);
         $this->doMethod($PageDiff, 'handle');
         $newRev= $this->getProperty($PageDiff, 'newRev');
@@ -92,15 +105,43 @@ class PageDiffTest extends \DokuWikiTest
         $this->assertNotEquals($lastmod, $newRev);
         $this->assertEquals($lastmod, $oldRev);
 
-        // a page that had not ever existed
-        $INFO['id'] = $page = 'noexist';
+        unset($PageDiff);
+    }
+
+    // test PageDiff::handle() when external edit happened
+    public function testDiffPairing_ExternalEdit()
+    {
+        global $INFO;
+
+        // create new page2
+        $INFO['id'] = $page = 'page2';
+        $file = wikiFN($page);
+        saveWikiText($page, 'teststring', '1st save', false);
+        $this->assertFileExists($file);
+        $newmod = filemtime($file);
+
         $PageDiff = new PageDiff($page);
         $this->doMethod($PageDiff, 'handle');
         $newRev= $this->getProperty($PageDiff, 'newRev');
         $oldRev= $this->getProperty($PageDiff, 'oldRev');
 
-        $this->assertFalse($newRev);
-        $this->assertFalse($oldRev);
+        $this->assertEquals($newmod, $newRev);
+        $this->assertEquals($newmod, $oldRev);
+        $lastmod =$newmod;
+
+        // externally edit
+        $this->waitForTick(); // wait for new revision ID
+        file_put_contents($file, 'teststring external edit');
+        clearstatcache(false, $file);
+        $newmod = filemtime($file);
+
+        $PageDiff = new PageDiff($page);
+        $this->doMethod($PageDiff, 'handle');
+        $newRev= $this->getProperty($PageDiff, 'newRev');
+        $oldRev= $this->getProperty($PageDiff, 'oldRev');
+
+        $this->assertEquals($newmod, $newRev);
+        $this->assertEquals($lastmod, $oldRev);
 
         unset($PageDiff);
     }
