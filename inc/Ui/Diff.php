@@ -111,16 +111,19 @@ abstract class Diff extends Ui
             }
         }
 
-        if (!isset($this->oldRev, $this->newRev)) {
+        if (!isset($this->oldRev, $this->newRev) || $this->oldRev == $this->newRev) {
             // no revision was given, compare previous to current
             // Note: need to chack validity of each revision numbers later
             $this->newRev = $this->changelog->currentRevision();
             $revs = $this->changelog->getRevisions(-1, 2);
+            if ($this->newRev && !$this->changelog->isLastRevision($this->newRev)) {
+                $revs = array_merge([$this->newRev], $revs);
+            }
             if (count($revs) < 2) {
                 // impossible compare revision pair, both false when page or media not exists
                 $this->oldRev = $this->newRev;
             } else {
-                $this->oldRev = ($revs[0] == $this->newRev) ? $revs[1] : $revs[0];
+                $this->oldRev = $revs[1];
             }
         }
     }
