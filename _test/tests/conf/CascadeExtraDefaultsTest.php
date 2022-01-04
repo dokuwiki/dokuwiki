@@ -1,10 +1,11 @@
 <?php
 
-class CascadeExtraDefaultsTest extends DokuWikiTest {
+class CascadeExtraDefaultsTest extends DokuWikiTest
+{
 
     protected $oldSetting = [];
 
-    public function setUp() : void
+    public function setUp(): void
     {
         global $config_cascade;
 
@@ -43,7 +44,7 @@ class CascadeExtraDefaultsTest extends DokuWikiTest {
         $this->assertEquals('Local setting', $testing->getConf('second'), 'local value still overrides default');
     }
 
-    public function tearDown() : void
+    public function tearDown(): void
     {
         global $config_cascade;
 

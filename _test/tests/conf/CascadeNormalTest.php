@@ -1,8 +1,10 @@
 <?php
 
-class CascadeNormalTest extends DokuWikiTest {
+class CascadeNormalTest extends DokuWikiTest
+{
 
-    public function setUp() : void {
+    public function setUp(): void
+    {
         $this->pluginsEnabled = [
             'testing'
         ];
@@ -23,7 +25,8 @@ class CascadeNormalTest extends DokuWikiTest {
         $this->assertEquals(0, $testing->getConf('schnibble'), 'default value');
     }
 
-    public function testLocal() {
+    public function testLocal()
+    {
         global $conf;
 
         $this->assertEquals('My Test Wiki', $conf['title'], 'overriden in local.php (values from Config manager)');

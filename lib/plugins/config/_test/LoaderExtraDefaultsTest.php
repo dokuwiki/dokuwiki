@@ -11,13 +11,14 @@ use dokuwiki\plugin\config\core\Loader;
  * @group plugins
  * @group bundled_plugins
  */
-class LoaderExtraDefaultsTest extends \DokuWikiTest {
+class LoaderExtraDefaultsTest extends \DokuWikiTest
+{
 
     protected $pluginsEnabled = ['testing'];
 
     protected $oldSetting = [];
 
-    public function setUp() : void
+    public function setUp(): void
     {
         global $config_cascade;
 
@@ -38,11 +39,13 @@ class LoaderExtraDefaultsTest extends \DokuWikiTest {
 
         parent::setUp();
     }
+
     /**
      * Ensure loading the defaults work, and that the extra default for plugins provided via an extra main default file
      * override the plugin defaults as well
      */
-    public function testDefaultsOverwriting() {
+    public function testDefaultsOverwriting()
+    {
         $loader = new Loader(new ConfigParser());
 
         $conf = $loader->loadDefaults();
@@ -60,7 +63,7 @@ class LoaderExtraDefaultsTest extends \DokuWikiTest {
 
     }
 
-    public function tearDown() : void
+    public function tearDown(): void
     {
         global $config_cascade;
 

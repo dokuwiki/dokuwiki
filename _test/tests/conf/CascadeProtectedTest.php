@@ -1,8 +1,10 @@
 <?php
 
-class CascadeProtectedTest extends DokuWikiTest {
+class CascadeProtectedTest extends DokuWikiTest
+{
 
-    public function setUp() : void {
+    public function setUp(): void
+    {
         global $config_cascade;
 
         $this->pluginsEnabled = [
@@ -21,7 +23,8 @@ class CascadeProtectedTest extends DokuWikiTest {
         parent::setUp();
     }
 
-    public function testDefaults() {
+    public function testDefaults()
+    {
         global $conf;
 
         $this->assertEquals('Protected Title', $conf['title'], 'protected local value, overrides local');
@@ -32,7 +35,7 @@ class CascadeProtectedTest extends DokuWikiTest {
         $this->assertEquals('Protected setting', $testing->getConf('second'), 'protected local value');
     }
 
-    public function tearDown() : void
+    public function tearDown(): void
     {
         global $config_cascade;
 
