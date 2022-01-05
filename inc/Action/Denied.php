@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Extension\Event;
 use dokuwiki\Ui;
 
 /**
@@ -22,11 +23,18 @@ class Denied extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
-        global $INPUT;
-        $this->showBanner();
-        if (empty($INPUT->server->str('REMOTE_USER')) && actionOK('login')) {
-            (new Ui\Login)->show();
+        $data = null;
+        $event = new Event('ACTION_DENIED_TPLCONTENT', $data);
+
+        if ($event->advise_before(true)) {
+            global $INPUT;
+            $this->showBanner();
+            if (empty($INPUT->server->str('REMOTE_USER')) && actionOK('login')) {
+                (new Ui\Login)->show();
+            }
         }
+
+        $event->advise_after();
     }
 
     /**
