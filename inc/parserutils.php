@@ -115,6 +115,7 @@ function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
 function p_locale_xhtml($id){
     //fetch parsed locale
     $html = p_cached_output(localeFN($id));
+    Event::createAndTrigger('PARSER_LOCALE_XHTML', $html);
     return $html;
 }
 
