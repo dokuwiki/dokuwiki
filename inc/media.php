@@ -8,10 +8,16 @@
 
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\HTTP\DokuHTTPClient;
+use dokuwiki\Logger;
 use dokuwiki\Subscriptions\MediaSubscriptionSender;
 use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
+use dokuwiki\Ui\Media\DisplayRow;
+use dokuwiki\Ui\Media\DisplayTile;
+use dokuwiki\Ui\MediaDiff;
+use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
+use splitbrain\slika\Slika;
 
 /**
  * Lists pages which currently use a media file selected for deletion
@@ -181,7 +187,7 @@ function media_metaform($id, $auth) {
         if ($field[2] == 'text') {
             $form->addTextInput(
                 $p['name'],
-                ($lang[$field[1]] ? $lang[$field[1]] : $field[1] . ':')
+                ($lang[$field[1]] ?: $field[1] . ':')
             )->id($p['id'])->addClass($p['class'])->val($value);
         } else {
             $form->addTextarea($p['name'], $lang[$field[1]])->id($p['id'])
@@ -250,7 +256,7 @@ function media_delete($id,$auth){
     // trigger an event - MEDIA_DELETE_FILE
     $data = array();
     $data['id']   = $id;
-    $data['name'] = \dokuwiki\Utf8\PhpString::basename($file);
+    $data['name'] = PhpString::basename($file);
     $data['path'] = $file;
     $data['size'] = (file_exists($file)) ? filesize($file) : 0;
 
@@ -312,7 +318,7 @@ function media_upload_xhr($ns,$auth){
             'mime' => $mime,
             'ext'  => $ext),
         $ns.':'.$id,
-        (($INPUT->get->str('ow') == 'true') ? true : false),
+        ($INPUT->get->str('ow') == 'true'),
         $auth,
         'copy'
     );
@@ -659,14 +665,13 @@ function media_contentcheck($file,$mime){
  * @param string   $file    path to file
  * @param string   $mime    mime type
  * @param bool|int $old_rev revision timestamp or false
- * @return bool
  */
 function media_notify($id,$file,$mime,$old_rev=false,$current_rev=false){
     global $conf;
-    if(empty($conf['notify'])) return false; //notify enabled?
+    if(empty($conf['notify'])) return; //notify enabled?
 
     $subscription = new MediaSubscriptionSender();
-    return $subscription->sendMediaDiff($conf['notify'], 'uploadmail', $id, $old_rev, $current_rev);
+    $subscription->sendMediaDiff($conf['notify'], 'uploadmail', $id, $old_rev, $current_rev);
 }
 
 /**
@@ -711,13 +716,13 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
             foreach($data as $item){
                 if (!$fullscreenview) {
                     //FIXME old call: media_printfile($item,$auth,$jump);
-                    $display = new \dokuwiki\Ui\Media\DisplayRow($item);
+                    $display = new DisplayRow($item);
                     $display->scrollIntoView($jump == $item->getID());
                     $display->show();
                 } else {
                     //FIXME old call: media_printfile_thumbs($item,$auth,$jump);
                     echo '<li>';
-                    $display = new \dokuwiki\Ui\Media\DisplayTile($item);
+                    $display = new DisplayTile($item);
                     $display->scrollIntoView($jump == $item->getID());
                     $display->show();
                     echo '</li>';
@@ -1235,22 +1240,22 @@ function media_details($image, $auth, $rev='', $meta=false) {
  * @param string $ns
  * @param int $auth permission level
  * @param bool $fromajax
- * @return false|null|string
+ *
  * @deprecated 2020-12-31
  */
 function media_diff($image, $ns, $auth, $fromajax = false) {
-    dbg_deprecated('see '. \dokuwiki\Ui\MediaDiff::class .'::show()');
+    dbg_deprecated('see '. MediaDiff::class .'::show()');
 }
 
 /**
  * Callback for media file diff
  *
  * @param array $data event data
- * @return false|null
+ *
  * @deprecated 2020-12-31
  */
 function _media_file_diff($data) {
-    dbg_deprecated('see '. \dokuwiki\Ui\MediaDiff::class .'::show()');
+    dbg_deprecated('see '. MediaDiff::class .'::show()');
 }
 
 /**
@@ -1267,7 +1272,7 @@ function _media_file_diff($data) {
  * @deprecated 2020-12-31
  */
 function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax) {
-    dbg_deprecated('see '. \dokuwiki\Ui\MediaDiff::class .'::showFileDiff()');
+    dbg_deprecated('see '. MediaDiff::class .'::showFileDiff()');
 }
 
 /**
@@ -1285,7 +1290,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax) {
  * @deprecated 2020-12-31
  */
 function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type) {
-    dbg_deprecated('see '. \dokuwiki\Ui\MediaDiff::class .'::showImageDiff()');
+    dbg_deprecated('see '. MediaDiff::class .'::showImageDiff()');
 }
 
 /**
@@ -1380,12 +1385,12 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
         foreach($evdata['data'] as $item){
             if (!$fullscreen) {
                 // FIXME old call: media_printfile($item,$item['perm'],'',true);
-                $display = new \dokuwiki\Ui\Media\DisplayRow($item);
+                $display = new DisplayRow($item);
                 $display->relativeDisplay($ns);
                 $display->show();
             } else {
                 // FIXME old call: media_printfile_thumbs($item,$item['perm'],false,true);
-                $display = new \dokuwiki\Ui\Media\DisplayTile($item);
+                $display = new DisplayTile($item);
                 $display->relativeDisplay($ns);
                 echo '<li>';
                 $display->show();
@@ -1712,13 +1717,13 @@ function media_resize_image($file, $ext, $w, $h=0){
 
     if( $mtime <= (int) @filemtime($file) ) {
         try {
-            \splitbrain\slika\Slika::run($file, $options)
+            Slika::run($file, $options)
                                    ->autorotate()
                                    ->resize($w, $h)
                                    ->save($local, $ext);
             if($conf['fperm']) @chmod($local, $conf['fperm']);
         } catch (\splitbrain\slika\Exception $e) {
-            dbglog($e->getMessage());
+            Logger::debug($e->getMessage());
             return $file;
         }
     }
@@ -1754,13 +1759,13 @@ function media_crop_image($file, $ext, $w, $h=0){
 
     if( $mtime <= (int) @filemtime($file) ) {
         try {
-            \splitbrain\slika\Slika::run($file, $options)
+            Slika::run($file, $options)
                                    ->autorotate()
                                     ->crop($w, $h)
                                     ->save($local, $ext);
             if($conf['fperm']) @chmod($local, $conf['fperm']);
         } catch (\splitbrain\slika\Exception $e) {
-            dbglog($e->getMessage());
+            Logger::debug($e->getMessage());
             return $file;
         }
     }
@@ -2058,9 +2063,9 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
         }
     }
 
-    // destroy GD image ressources
-    if($image) imagedestroy($image);
-    if($newimg) imagedestroy($newimg);
+    // destroy GD image resources
+    imagedestroy($image);
+    imagedestroy($newimg);
 
     return $okay;
 }

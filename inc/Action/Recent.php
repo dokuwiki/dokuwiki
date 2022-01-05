@@ -39,7 +39,7 @@ class Recent extends AbstractAction
     public function tplContent()
     {
         global $INPUT;
-        (new Ui\Recent((int) $INPUT->extract('first')->int('first'), $this->showType))->show();
+        (new Ui\Recent($INPUT->extract('first')->int('first'), $this->showType))->show();
     }
 
 }

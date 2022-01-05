@@ -13,7 +13,7 @@ abstract class ChangeLog
 
     /** @var string */
     protected $id;
-    /** @var int */
+    /** @var false|int */
     protected $currentRevision;
     /** @var array */
     protected $cache;

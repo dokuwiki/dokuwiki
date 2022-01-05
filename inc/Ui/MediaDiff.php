@@ -3,9 +3,8 @@
 namespace dokuwiki\Ui;
 
 use dokuwiki\ChangeLog\MediaChangeLog;
-use dokuwiki\Ui\MediaRevisions;
-use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
+use InvalidArgumentException;
 use JpegMeta;
 
 /**
@@ -21,7 +20,7 @@ class MediaDiff extends Diff
     /* @var array */
     protected $oldRevInfo;
     protected $newRevInfo;
- 
+
     /* @var bool */
     protected $is_img;
 
@@ -33,7 +32,7 @@ class MediaDiff extends Diff
     public function __construct($id)
     {
         if (!isset($id)) {
-            throw new \InvalidArgumentException('media id should not be empty!');
+            throw new InvalidArgumentException('media id should not be empty!');
         }
 
         // init preference
@@ -126,7 +125,7 @@ class MediaDiff extends Diff
         $ns = getNS($this->id);
         $auth = auth_quickaclcheck("$ns:*");
 
-        if ($auth < AUTH_READ || !$this->id || !$conf['mediarevisions']) return '';
+        if ($auth < AUTH_READ || !$this->id || !$conf['mediarevisions']) return;
 
         // retrieve form parameters: rev, rev2, difftype
         $this->handle();
@@ -195,7 +194,7 @@ class MediaDiff extends Diff
     protected function showImageDiff()
     {
         // diff view type: opacity or portions
-        $type = $this->preference['difftype']; 
+        $type = $this->preference['difftype'];
 
         // use '' for current revision
         [$oldRev, $newRev] = [$this->oldRevInfo['rev'], $this->newRevInfo['rev']];
@@ -234,7 +233,6 @@ class MediaDiff extends Diff
     protected function showFileDiff()
     {
         global $lang;
-        $changelog =& $this->changelog;
 
         $ns = getNS($this->id);
         $auth = auth_quickaclcheck("$ns:*");

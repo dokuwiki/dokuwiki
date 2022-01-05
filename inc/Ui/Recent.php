@@ -16,7 +16,7 @@ class Recent extends Ui
     protected $first;
     protected $show_changes;
 
-    /** 
+    /**
      * Recent Ui constructor
      *
      * @param int $first  skip the first n changelog lines
@@ -175,7 +175,7 @@ class Recent extends Ui
      *
      * @param int  $first
      * @param bool $hasNext
-     * @return array  html
+     * @return string html
      */
     protected function htmlNavigation($first, $hasNext)
     {

@@ -48,8 +48,8 @@ class PageChangeLog extends ChangeLog
 
         // add changelog lines
         $logline = $this->buildLogLine($info, $timestamp);
-        io_saveFile(metaFN($this->id,'.changes'), $logline, $append = true);
-        io_saveFile($conf['changelog'], $logline, $append = true); //global changelog cache
+        io_saveFile(metaFN($this->id,'.changes'), $logline, true);
+        io_saveFile($conf['changelog'], $logline, true); //global changelog cache
 
         // update cache
         $this->currentRevision = $info['date'];

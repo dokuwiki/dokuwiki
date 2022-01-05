@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Form\Form;
 
 /**

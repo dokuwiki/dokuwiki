@@ -4,6 +4,7 @@ namespace dokuwiki\Ui;
 
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\Form\Form;
+use InvalidArgumentException;
 
 /**
  * DokuWiki MediaRevisions Interface
@@ -15,7 +16,7 @@ class MediaRevisions extends Revisions
     /* @var MediaChangeLog */
     protected $changelog;
 
-    /** 
+    /**
      * MediaRevisions Ui constructor
      *
      * @param string $id  id of media
@@ -23,7 +24,7 @@ class MediaRevisions extends Revisions
     public function __construct($id)
     {
         if (!$id) {
-            throw new \InvalidArgumentException('media id should not be empty!');
+            throw new InvalidArgumentException('media id should not be empty!');
         }
         parent::__construct($id);
     }

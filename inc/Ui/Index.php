@@ -2,9 +2,6 @@
 
 namespace dokuwiki\Ui;
 
-use dokuwiki\Extension\Event;
-use dokuwiki\Form\Form;
-
 /**
  * DokuWiki Index Interface
  *
@@ -14,7 +11,7 @@ class Index extends Ui
 {
     protected $ns;
 
-    /** 
+    /**
      * Index Ui constructor
      *
      * @param string $ns  namespace
@@ -59,10 +56,9 @@ class Index extends Ui
         $data = array();
         search($data, $conf['datadir'], 'search_index', array('ns' => $ns));
 
-        $html = '<div id="index__tree" class="index__tree">'
+        return '<div id="index__tree" class="index__tree">'
               . html_buildlist($data, 'idx', [$this,'formatListItem'], [$this,'tagListItem'])
               . '</div>';
-        return $html;
     }
 
     /**
