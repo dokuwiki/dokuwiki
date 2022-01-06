@@ -597,7 +597,7 @@ abstract class ChangeLog
             $revInfo = $this->getRevisionInfo($lastRev);
             if ($revInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
                 $this->currentRevision = $lastRev;
-                return $this->getRevisionInfo($lastRev);
+                return $revInfo;
             }
 
             // externally deleted, set revision date as late as possible
@@ -614,7 +614,7 @@ abstract class ChangeLog
             ];
 
         } else {                                     // item file exists, with timestamp $fileRev
-            // here, file timestamp is different with last revision in changelog
+            // here, file timestamp $fileRev is different with last revision timestamp $lastRev in changelog
             $isJustCreated = $lastRev === false || (
                     $fileRev > $lastRev &&
                     $this->getRevisionInfo($lastRev)['type'] == DOKU_CHANGE_TYPE_DELETE
