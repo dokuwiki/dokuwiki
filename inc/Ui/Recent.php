@@ -305,20 +305,21 @@ class Recent extends Ui
                 global $lang;
                 $id = $this->info['id'];
 
+                $href = '';
                 switch ($this->info['item']) {
                     case 'media': // media file revision
                         $revs = (new MediaChangeLog($id))->getRevisions(0, 1);
-                        $diff = (count($revs) && file_exists(mediaFN($id)));
-                        if ($diff) {
+                        $showLink = (count($revs) && file_exists(mediaFN($id)));
+                        if ($showLink) {
                             $href = media_managerURL(
                                 ['tab_details'=>'history', 'mediado'=>'diff', 'image'=> $id, 'ns'=> getNS($id)], '&'
                             );
-                        } else {
-                            $href = '';
                         }
                         break;
                     case 'page': // page revision
-                        $href = wl($id, "do=diff", false, '&');
+                        if($this->info['type'] !== DOKU_CHANGE_TYPE_CREATE) {
+                            $href = wl($id, "do=diff", false, '&');
+                        }
                 }
 
                 if ($href) {
