@@ -290,11 +290,9 @@ class Recent extends Ui
                     case 'media': // media file revision
                         $href = media_managerURL(['tab_details'=>'view', 'image'=> $id, 'ns'=> getNS($id)], '&');
                         $class = file_exists(mediaFN($id)) ? 'wikilink1' : 'wikilink2';
-                        $html = '<a href="'.$href.'" class="'.$class.'">'.$id.'</a>';
-                        return $html;
+                        return '<a href="'.$href.'" class="'.$class.'">'.$id.'</a>';
                     case 'page': // page revision
-                        $html = html_wikilink(':'.$id, (useHeading('navigation') ? null : $id));
-                        return $html;
+                        return html_wikilink(':'.$id, (useHeading('navigation') ? null : $id));
                 }
                 return '';
             }
@@ -345,11 +343,10 @@ class Recent extends Ui
                     case 'page': // page revision
                         $href = wl($id, "do=revisions", false, '&');
                 }
-                $html = '<a href="'.$href.'" class="revisions_link">'
+                return '<a href="'.$href.'" class="revisions_link">'
                       . '<img src="'.DOKU_BASE.'lib/images/history.png" width="12" height="14"'
                       . ' title="'.$lang['btn_revs'].'" alt="'.$lang['btn_revs'].'" />'
                       . '</a>';
-                return $html;
             }
 
             // size change
