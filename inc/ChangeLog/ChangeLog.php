@@ -613,7 +613,7 @@ abstract class ChangeLog
                 'timestamp' => false,
             ];
 
-        } elseif ($fileRev) {                        // item file exist
+        } else {                                     // item file exists, with timestamp $fileRev
             // here, file timestamp is different with last revision in changelog
             $isJustCreated = $lastRev === false || (
                     $fileRev > $lastRev &&
