@@ -35,8 +35,6 @@ abstract class ChangeLog
 
         $this->id = $id;
         $this->setChunkSize($chunk_size);
-        // set property currentRevision and cache prior to getRevisionInfo($currentRev) call
-        $this->getCurrentRevisionInfo();
     }
 
     /**
@@ -121,6 +119,8 @@ abstract class ChangeLog
      * containing the requested changelog line is read.
      *
      * @param int $rev revision timestamp
+     * @param bool $retrieveCurrentRevInfo allows to skip for getting other revision info in the
+     *                                     getCurrentRevisionInfo() where $currentRevision is not yet determined
      * @return bool|array false or array with entries:
      *      - date:  unix timestamp
      *      - ip:    IPv4 address (127.0.0.1)
@@ -134,10 +134,15 @@ abstract class ChangeLog
      * @author Ben Coburn <btcoburn@silicodon.net>
      * @author Kate Arzamastseva <pshns@ukr.net>
      */
-    public function getRevisionInfo($rev)
+    public function getRevisionInfo($rev, $retrieveCurrentRevInfo = true)
     {
         $rev = max(0, $rev);
         if (!$rev) return false;
+
+        //ensure the external edits are cached as well
+        if (!isset($this->currentRevision) && $retrieveCurrentRevInfo) {
+            $this->getCurrentRevisionInfo();
+        }
 
         // check if it's already in the memory cache
         if (isset($this->cache[$this->id]) && isset($this->cache[$this->id][$rev])) {
@@ -594,7 +599,7 @@ abstract class ChangeLog
 
         if (!$fileRev && $lastRev) {                 // item file does not exist
             // check consistency against changelog
-            $revInfo = $this->getRevisionInfo($lastRev);
+            $revInfo = $this->getRevisionInfo($lastRev, false);
             if ($revInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
                 $this->currentRevision = $lastRev;
                 return $revInfo;
@@ -617,7 +622,7 @@ abstract class ChangeLog
             // here, file timestamp $fileRev is different with last revision timestamp $lastRev in changelog
             $isJustCreated = $lastRev === false || (
                     $fileRev > $lastRev &&
-                    $this->getRevisionInfo($lastRev)['type'] == DOKU_CHANGE_TYPE_DELETE
+                    $this->getRevisionInfo($lastRev, false)['type'] == DOKU_CHANGE_TYPE_DELETE
             );
             $filesize_new = filesize($this->getFilename());
             $filesize_old = $isJustCreated ? 0 : io_getSizeFile($this->getFilename($lastRev));
