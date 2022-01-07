@@ -278,7 +278,7 @@ class GetRelativeRevisionTest extends DokuWikiTest {
     function test_RequestRecentestLogline_Next() {
         $rev = 1374261194;  // found at line 24 of changelog
         $direction = 1;
-        $revexpected = false;
+        $revexpected = 1385051947; // external revision set at test_StartAtExactCurrentRev()
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
         $revfound = $pagelog->getRelativeRevision($rev, $direction);
@@ -291,7 +291,7 @@ class GetRelativeRevisionTest extends DokuWikiTest {
     function test_RequestRecentestLogline_Next_Chuncked() {
         $rev = 1374261194;  // found at line 24 of changelog
         $direction = 1;
-        $revexpected = false;
+        $revexpected = 1385051947; // external revision set at test_StartAtExactCurrentRev()
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
         $revfound = $pagelog->getRelativeRevision($rev, $direction);

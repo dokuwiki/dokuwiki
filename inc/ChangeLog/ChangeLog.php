@@ -315,9 +315,9 @@ abstract class ChangeLog
             return false;
         }
 
-        //get lines from changelog
-        list($fp, $lines, $head, $tail, $eof) = $this->readloglines($rev);
-        if (empty($lines)) return false;
+        // get lines from changelog
+        // readloglines() may return false when no changelog file
+        list($fp, $lines, $head, $tail, $eof) = $this->readloglines($rev) ?: array(false, [], 0, 0, 0);
 
         // look for revisions later/earlier than $rev, when founded count till the wanted revision is reached
         // also parse and cache changelog lines for getRevisionInfo().
@@ -325,6 +325,11 @@ abstract class ChangeLog
         $relativerev = false;
         $checkotherchunck = true; //always runs once
         while (!$relativerev && $checkotherchunck) {
+            // append a possible external revision entry to lines
+            if ($tail == $eof && !$this->isLastRevision($this->currentRevision())) {
+                $lines[] = $this->buildLogLine($this->getCurrentRevisionInfo());
+            }
+
             $info = array();
             //parse in normal or reverse order
             $count = count($lines);
@@ -355,8 +360,6 @@ abstract class ChangeLog
 
             if ($checkotherchunck) {
                 list($lines, $head, $tail) = $this->readAdjacentChunk($fp, $head, $tail, $direction);
-
-                if (empty($lines)) break;
             }
         }
         if ($fp) {
