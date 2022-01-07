@@ -61,8 +61,10 @@ class PageDiffTest extends \DokuWikiTest
     }
 
 
-    // test PageDiff::handle() when external deletion happened
-    public function testDiffPairing_ExternalDelete()
+    /**
+     * test PageDiff::handle() when external deletion happened
+     */
+    public function testRevisionPair_ExternalDelete()
     {
         global $INFO;
 
@@ -108,8 +110,10 @@ class PageDiffTest extends \DokuWikiTest
         unset($PageDiff);
     }
 
-    // test PageDiff::handle() when external edit happened
-    public function testDiffPairing_ExternalEdit()
+    /**
+     * test PageDiff::handle() when external edit happened
+     */
+    public function testRevisionPair_ExternalEdit()
     {
         global $INFO;
 

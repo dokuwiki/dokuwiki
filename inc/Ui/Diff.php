@@ -97,34 +97,35 @@ abstract class Diff extends Ui
 
         // difflink icon click, eg. ?rev=123456789&do=diff
         if ($INPUT->has('rev')) {
-            $this->oldRev = $INPUT->int('rev');
-            $this->newRev = $this->changelog->currentRevision();
+            // compare given revision to current
+            $rev2[1] = $this->changelog->currentRevision();
+            $rev2[0] = $INPUT->int('rev');
+            if ($rev2[0] < $rev2[1]) {
+                $this->newRev = $rev2[1];
+                $this->oldRev = $this->changelog->getRelativeRevision($rev2[0] -1, +1);
+            } else {
+                // fallback to compare previous to current
+                unset($rev2);
+            }
         }
 
         // submit button with two checked boxes
         $rev2 = $INPUT->arr('rev2', []);
         if (count($rev2) > 1) {
-            if ($rev2[0] < $rev2[1]) {
-                [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
-            } else {
-                [$this->oldRev, $this->newRev] = [$rev2[1], $rev2[0]];
-            }
+            if ($rev2[1] < $rev2[0]) [$rev2[0], $rev2[1]] = [$rev2[1], $rev2[0]];
+            $this->newRev = $this->changelog->getRelativeRevision($rev2[0] -1, +1);
+            $this->oldRev = $this->changelog->getRelativeRevision($rev2[1] -1, +1);
         }
 
         if (!isset($this->oldRev, $this->newRev) || $this->oldRev == $this->newRev) {
             // no revision was given, compare previous to current
-            // Note: need to chack validity of each revision numbers later
+            // oldRev may become false when only 1 revision or none exists,
+            // newRev may become false when no revision exists, ie. page had never existed.
+            // Note: need to check validity of each revision numbers later
             $this->newRev = $this->changelog->currentRevision();
-            $revs = $this->changelog->getRevisions(-1, 2);
-            if ($this->newRev && !$this->changelog->isLastRevision($this->newRev)) {
-                $revs = array_merge([$this->newRev], $revs);
-            }
-            if (count($revs) < 2) {
-                // impossible compare revision pair, both false when page or media not exists
-                $this->oldRev = $this->newRev;
-            } else {
-                $this->oldRev = $revs[1];
-            }
+            $this->oldRev = ($this->newRev)
+                ? $this->changelog->getRelativeRevision($this->newRev, -1)
+                : false;
         }
     }
 
