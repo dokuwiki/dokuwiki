@@ -15,6 +15,30 @@ vendor/paragonie/random_compat/lib/random_bytes_libsodium.php
 vendor/paragonie/random_compat/lib/random_bytes_libsodium_legacy.php
 vendor/paragonie/random_compat/lib/random_bytes_mcrypt.php
 vendor/paragonie/random_compat/lib/random_int.php
+lib/images/smileys/icon_cool.gif
+lib/images/smileys/icon_eek.gif
+lib/images/smileys/icon_eek.gif
+lib/images/smileys/icon_sad.gif
+lib/images/smileys/icon_smile.gif
+lib/images/smileys/icon_smile2.gif
+lib/images/smileys/icon_doubt.gif
+lib/images/smileys/icon_doubt2.gif
+lib/images/smileys/icon_confused.gif
+lib/images/smileys/icon_biggrin.gif
+lib/images/smileys/icon_razz.gif
+lib/images/smileys/icon_surprised.gif
+lib/images/smileys/icon_surprised.gif
+lib/images/smileys/icon_silenced.gif
+lib/images/smileys/icon_silenced.gif
+lib/images/smileys/icon_neutral.gif
+lib/images/smileys/icon_wink.gif
+lib/images/smileys/facepalm.gif
+lib/images/smileys/icon_fun.gif
+lib/images/smileys/icon_question.gif
+lib/images/smileys/icon_exclaim.gif
+lib/images/smileys/icon_lol.gif
+lib/images/smileys/fixme.gif
+lib/images/smileys/delete.gif
 
 # removed in 2020-06-01
 inc/PluginInterface.php
