@@ -9,7 +9,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
  * - data/pages/mailinglist.txt
  * - data/meta/mailinglist.changes
  */
-class changelog_getrelativerevision_test extends DokuWikiTest {
+class GetRelativeRevisionTest extends DokuWikiTest {
 
     private $logline = "1362525899	127.0.0.1	E	mailinglist	pubcie	[Data entry] 	\n";
     private $pageid = 'mailinglist';
@@ -23,100 +23,98 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
     }
 
     /**
-     * no nonexist.changes meta file available
+     * not available nonexist.changes meta file
      */
-    function test_changemetadatanotexists() {
-        $rev = 1362525899;
-        $dir = 1;
+    function test_ChangeMetadataNotExists() {
+        $rev = 1362525899;  // arbitrary number
+        $direction = 1;
         $id = 'nonexist';
-        $revsexpected = false;
 
         $pagelog = new PageChangeLog($id, $chunk_size = 8192);
-        $revs = $pagelog->getRelativeRevision($rev, $dir);
-        $this->assertEquals($revsexpected, $revs);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
+        $this->assertFalse($revfound);
     }
 
     /**
-     * no nonexist.changes meta file available
+     * not available nonexist.changes meta file
      */
-    function test_nodirection() {
-        $rev = 1362525899;
-        $dir = 0;
-        $revsexpected = false;
+    function test_NoDirection() {
+        $rev = 1362525899;  // arbitrary number
+        $direction = 0;
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
-        $revs = $pagelog->getRelativeRevision($rev, $dir);
-        $this->assertEquals($revsexpected, $revs);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
+        $this->assertFalse($revfound);
     }
 
     /**
      * start at exact current revision of mailinglist page
      *
      */
-    function test_startatexactcurrentrev() {
-        $rev = 1385051947;
-        $dir = 1;
-        $revsexpectedpos = false;
-        $revsexpectedneg = 1374261194;
+    function test_StartAtExactCurrentRev() {
+        $rev = 1385051947;  // newer than last rev in mailinglist.change file
+        $direction = 1;
+        $revexpectedpos = false;
+        $revexpectedneg = 1374261194;  // found at line 24, last revision
 
-        //set a known timestamp
+        //set a known timestamp to emulate external edit
         touch(wikiFN($this->pageid), $rev);
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
-        $revs = $pagelog->getRelativeRevision($rev, $dir);
-        $this->assertEquals($revsexpectedpos, $revs);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
+        $this->assertEquals($revexpectedpos, $revfound);
 
-        $revs = $pagelog->getRelativeRevision($rev, -$dir);
-        $this->assertEquals($revsexpectedneg, $revs);
+        $revfound = $pagelog->getRelativeRevision($rev, -$direction);
+        $this->assertEquals($revexpectedneg, $revfound);
     }
 
     /**
-     * start at exact last revision of mailinglist page
+     * start at exact first revision of mailinglist page
      *
      */
-    function test_startatexactlastrev() {
-        $rev = 1360110636;
-        $dir = 1;
-        $revsexpectedpos = 1361901536;
-        $revsexpectedneg = false;
+    function test_StartAtExactFirstRev() {
+        $rev = 1360110636;  // found at line 1 of changelog
+        $direction = 1;
+        $revexpectedpos = 1361901536;  // found at line 2
+        $revexpectedneg = false;
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
-        $revs = $pagelog->getRelativeRevision($rev, $dir);
-        $this->assertEquals($revsexpectedpos, $revs);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
+        $this->assertEquals($revexpectedpos, $revfound);
 
-        $revs = $pagelog->getRelativeRevision($rev, -$dir);
-        $this->assertEquals($revsexpectedneg, $revs);
+        $revfound = $pagelog->getRelativeRevision($rev, -$direction);
+        $this->assertEquals($revexpectedneg, $revfound);
     }
 
     /**
-     * start at exact one before last revision of mailinglist page
+     * start at exact one before first revision of mailinglist page
      *
      */
-    function test_requestlastrevisions() {
-        $rev = 1361901536;
-        $dir = -1;
-        $revsexpectedlast = 1360110636;
-        $revsexpectedbeforelast = false;
+    function test_RequestFirstRev() {
+        $rev = 1361901536;  // found at line 2 of changelog
+        $direction = -1;
+        $revexpectedlast = 1360110636; // found at line 1
+        $revexpectedbeforelast = false;
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
-        $revs = $pagelog->getRelativeRevision($rev, $dir);
-        $this->assertEquals($revsexpectedlast, $revs);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
+        $this->assertEquals($revexpectedlast, $revfound);
 
-        $revs = $pagelog->getRelativeRevision($rev, 2 * $dir);
-        $this->assertEquals($revsexpectedbeforelast, $revs);
+        $revfound = $pagelog->getRelativeRevision($rev, 2 * $direction);
+        $this->assertEquals($revexpectedbeforelast, $revfound);
     }
 
     /**
      * request existing rev and check cache
      */
-    function test_requestrev_checkcache() {
-        $rev = 1362525359;
-        $dir = 1;
-        $revexpected = 1362525899;
+    function test_RequestRev_CheckCache() {
+        $rev = 1362525359;  // found at line 5 of changelog
+        $direction = 1;
+        $revexpected = 1362525899;  // found at line 6
         $infoexpected = parseChangelogLine($this->logline);
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
 
         //checked info returned from cache
@@ -127,58 +125,58 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
     /**
      * request existing rev
      */
-    function test_requestnextrev() {
-        $rev = 1362525899;
+    function test_RequestNextRev() {
+        $rev = 1362525899;  // found at line 6 of changelog
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
 
-        $dir = 1;
-        $revexpected = 1362525926;
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $direction = 1;
+        $revexpected = 1362525926;  // found at line 7
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
 
-        $dir = 2;
-        $revexpected = 1362526039;
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $direction = 2;
+        $revexpected = 1362526039;  // found at line 8
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
 
-        $dir = -1;
-        $revexpected = 1362525359;
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $direction = -1;
+        $revexpected = 1362525359;  // found at line 5
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
 
-        $dir = -2;
-        $revexpected = 1362525145;
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $direction = -2;
+        $revexpected = 1362525145;  // found at line 4
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
     }
 
     /**
      * request existing rev with chucked reading
      */
-    function test_requestnextrev_chuncked() {
-        $rev = 1362525899;
+    function test_RequestNextRev_Chuncked() {
+        $rev = 1362525899;  // found at line 6 of changelog
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
 
-        $dir = 1;
-        $revexpected = 1362525926;
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $direction = 1;
+        $revexpected = 1362525926;  // found at line 7
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
 
-        $dir = 2;
-        $revexpected = 1362526039;
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $direction = 2;
+        $revexpected = 1362526039;  // found at line 8
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
 
-        $dir = -1;
-        $revexpected = 1362525359;
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $direction = -1;
+        $revexpected = 1362525359;  // found at line 5
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
 
-        $dir = -2;
-        $revexpected = 1362525145;
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $direction = -2;
+        $revexpected = 1362525145;  // found at line 4
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
     }
 
@@ -186,67 +184,67 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
     /**
      * request existing rev with chucked reading, chunk size smaller than line length
      */
-    function test_requestnextrev_chunkshorterthanlines() {
-        $rev = 1362525899;
+    function test_RequestNextRev_ChunkShorterThanLines() {
+        $rev = 1362525899;  // found at line 6 of changelog
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 20);
 
-        $dir = 1;
-        $revexpected = 1362525926;
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $direction = 1;
+        $revexpected = 1362525926;  // found at line 7
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
 
-        $dir = 2;
-        $revexpected = 1362526039;
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $direction = 2;
+        $revexpected = 1362526039;  // found at line 8
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
 
-        $dir = -1;
-        $revexpected = 1362525359;
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $direction = -1;
+        $revexpected = 1362525359;  // found at line 5
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
 
-        $dir = -2;
-        $revexpected = 1362525145;
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $direction = -2;
+        $revexpected = 1362525145;  // found at line 4
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
     }
 
     /**
      * request existing rev
      */
-    function test_requestnextfifthrev() {
-        $rev = 1362525899;
-        $dir = 5;
-        $revexpected = 1362526767;
+    function test_RequestNextFifthRev() {
+        $rev = 1362525899;  // found at line 6 of changelog
+        $direction = 5;
+        $revexpected = 1362526767;  // found at line 11
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
     }
 
     /**
      * request existing rev with chucked reading
      */
-    function test_requestnextfifthrev_chuncked() {
-        $rev = 1362525899;
-        $dir = 5;
-        $revexpected = 1362526767;
+    function test_RequestNextFifthRev_Chuncked() {
+        $rev = 1362525899;  // found at line 6 of changelog
+        $direction = 5;
+        $revexpected = 1362526767;  // found at line 11
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
     }
 
     /**
      * request existing rev
      */
-    function test_requestprevrev() {
-        $rev = 1362525899;
+    function test_RequestPrevRev() {
+        $rev = 1362525899;  // found at line 6 of changelog
         $dir1 = -1;
         $dir5 = -5;
-        $revexpected1 = 1362525359;
-        $revexpected5 = 1360110636;
+        $revexpected1 = 1362525359; // found at line 5
+        $revexpected5 = 1360110636; // found at line 1
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
         $revfound1 = $pagelog->getRelativeRevision($rev, $dir1);
@@ -259,12 +257,12 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
     /**
      * request existing rev with chucked reading
      */
-    function test_requestprevrev_chuncked() {
-        $rev = 1362525899;
+    function test_RequestPrevRev_Chuncked() {
+        $rev = 1362525899;  // found at line 6 of changelog
         $dir1 = -1;
         $dir5 = -5;
-        $revexpected1 = 1362525359;
-        $revexpected5 = 1360110636;
+        $revexpected1 = 1362525359; // found at line 5
+        $revexpected5 = 1360110636; // found at line 1
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
         $revfound1 = $pagelog->getRelativeRevision($rev, $dir1);
@@ -275,54 +273,54 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
     }
 
     /**
-     * request after recentest version in changelog
+     * request after most recent version in changelog
      */
-    function test_requestrecentestlogline_next() {
-        $rev = 1374261194;
-        $dir = 1;
+    function test_RequestRecentestLogline_Next() {
+        $rev = 1374261194;  // found at line 24 of changelog
+        $direction = 1;
         $revexpected = false;
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
     }
 
     /**
-     * request after recentest version in changelog, with chuncked reading
+     * request after most recent version in changelog, with chuncked reading
      */
-    function test_requestrecentestlogline_next_chuncked() {
-        $rev = 1374261194;
-        $dir = 1;
+    function test_RequestRecentestLogline_Next_Chuncked() {
+        $rev = 1374261194;  // found at line 24 of changelog
+        $direction = 1;
         $revexpected = false;
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
     }
 
     /**
      * request before current version
      */
-    function test_requestrecentestlogline_prev() {
-        $rev = 1374261194;
-        $dir = -1;
-        $revexpected = 1371579614;
+    function test_RequestRecentestLogline_Prev() {
+        $rev = 1374261194;  // found at line 24 of changelog
+        $direction = -1;
+        $revexpected = 1371579614;  // found at line 23
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
     }
 
     /**
      * request before current version, with chuncked reading
      */
-    function test_requestrecentestlogline_prev_chuncked() {
-        $rev = 1374261194;
-        $dir = -1;
-        $revexpected = 1371579614;
+    function test_RequestRecentestLogline_Prev_Chuncked() {
+        $rev = 1374261194;  // found at line 24 of changelog
+        $direction = -1;
+        $revexpected = 1371579614;  // found at line 23
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
     }
 
@@ -330,13 +328,13 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
      * Request negative revision
      * looks in positive direction, so it catches the oldest revision
      */
-    function test_negativerev_posdir() {
+    function test_NegativeRev_PosDir() {
         $rev = -10;
-        $dir = 1;
-        $revexpected = 1360110636;
+        $direction = 1;
+        $revexpected = 1360110636;  // found at line 1
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
     }
 
@@ -344,44 +342,48 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
      * Request negative revision
      * looks in negative direction, but there is nothing
      */
-    function test_negativerev_negdir() {
+    function test_NegativeRev_NegDir() {
         $rev = -10;
-        $dir = -1;
+        $direction = -1;
         $revexpected = false;
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
     }
 
     /**
      * Start at non existing revision somewhere between existing revisions
      */
-    function test_startatnotexistingrev_next() {
-        $rev = 1362525890;
-        $dir = 1;
-        $revexpected = 1362525899;
+    function test_StartAtNotExistingRev_Next() {
+        $rev = 1362525890;  // between line 5 and 6
+        $direction = 1;
+        $revexpected = 1362525899;  // found at line 6
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
     }
 
     /**
      * Start at non existing revision somewhere between existing revisions
      */
-    function test_startatnotexistingrev_prev() {
-        $rev = 1362525890;
-        $dir = -1;
-        $revexpected = 1362525359;
+    function test_StartAtNotExistingRev_Prev() {
+        $rev = 1362525890;  // between line 5 and 6
+        $direction = -1;
+        $revexpected = 1362525359;  // found at line 5
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
-        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $revfound = $pagelog->getRelativeRevision($rev, $direction);
         $this->assertEquals($revexpected, $revfound);
     }
 
-    function test_iscurrentpagerevision() {
-        $rev = 1385051947;
+
+    /**
+     * check whether a number is current revision of exsisting page
+     */
+    function test_IsCurrentPageRevision() {
+        $rev = 1385051947;  // newer than last rev in mailinglist.change file
         $currentexpected = true;
 
         //set a known timestamp
@@ -392,8 +394,11 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
         $this->assertEquals($currentexpected, $current);
     }
 
-    function test_isnotcurrentpagerevision() {
-        $rev = 1385051947;
+    /**
+     * check whether a number is not current revision of exsisting page
+     */
+    function test_IsNotCurrentPageRevision() {
+        $rev = 1385051947;  // newer than last rev in mailinglist.change file
         $not_current_rev = $rev - 1;
         $currentexpected = false;
 
@@ -405,8 +410,11 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
         $this->assertEquals($currentexpected, $current);
     }
 
-    function test_notexistingcurrentpage() {
-        $rev = 1385051947;
+    /**
+     * check whether a number is current revision of non-exsisting page
+     */
+    function test_NotExistingCurrentPage() {
+        $rev = 1385051947;  // newer than last rev in mailinglist.change file
         $currentexpected = false;
 
         $pagelog = new PageChangeLog('nonexistingpage', $chunk_size = 8192);
