@@ -1,12 +1,16 @@
 <?php
 
+namespace tests\inc\ChangeLog;
+
+use dokuwiki\ChangeLog\PageChangeLog;
+
 /**
  * Tests for if a page has revisions with hasRevisions()
  *
  * This class uses the files:
  * - data/meta/mailinglist.changes
  */
-class changelog_hasrevisions_test extends DokuWikiTest {
+class hasRevisionsTest extends \DokuWikiTest {
 
     /**
      * test page has revisions

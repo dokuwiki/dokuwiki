@@ -1,11 +1,10 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace tests\inc\Ui;
 
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Ui\PageDiff;
 use \ReflectionClass;
-
 
 /**
  * Class PageDiffTest
@@ -92,7 +91,7 @@ class PageDiffTest extends \DokuWikiTest
         $oldRev= $this->getProperty($PageDiff, 'oldRev');
 
         $this->assertEquals($newmod, $newRev);
-        $this->assertEquals($newmod, $oldRev);
+        $this->assertFalse($oldRev);    // because just created
         $lastmod =$newmod;
 
         // externally delete the page
@@ -130,7 +129,7 @@ class PageDiffTest extends \DokuWikiTest
         $oldRev= $this->getProperty($PageDiff, 'oldRev');
 
         $this->assertEquals($newmod, $newRev);
-        $this->assertEquals($newmod, $oldRev);
+        $this->assertFalse($oldRev);    // because just created
         $lastmod =$newmod;
 
         // externally edit

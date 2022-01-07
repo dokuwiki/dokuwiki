@@ -1,5 +1,7 @@
 <?php
 
+namespace tests\inc\ChangeLog;
+
 use dokuwiki\ChangeLog\PageChangeLog;
 
 /**
@@ -9,7 +11,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
  * - data/pages/mailinglist.txt
  * - data/meta/mailinglist.changes
  */
-class changelog_getrevisions_test extends DokuWikiTest {
+class getRevisionsTest extends \DokuWikiTest {
 
     /**
      * $first counts inclusive zero, after the current page

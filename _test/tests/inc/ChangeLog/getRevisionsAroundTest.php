@@ -1,5 +1,7 @@
 <?php
 
+namespace tests\inc\ChangeLog;
+
 use dokuwiki\ChangeLog\PageChangeLog;
 
 /**
@@ -9,7 +11,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
  * - data/pages/mailinglist.txt
  * - data/meta/mailinglist.changes
  */
-class changelog_getrevisionsaround_test extends DokuWikiTest {
+class getRevisionsAroundTest extends \DokuWikiTest {
 
     /**
      * list of revisions in mailinglist.changes

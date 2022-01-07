@@ -1,5 +1,7 @@
 <?php
 
+namespace tests\inc\ChangeLog;
+
 use dokuwiki\ChangeLog\PageChangeLog;
 
 /**
@@ -9,7 +11,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
  * - data/pages/mailinglist.txt
  * - data/meta/mailinglist.changes
  */
-class changelog_getrevisionsinfo_test extends DokuWikiTest {
+class getRevisionsInfoTest extends \DokuWikiTest {
 
     private $logline = "1362525899	127.0.0.1	E	mailinglist	pubcie	[Data entry] 	\n";
     private $firstlogline = "1374261194	127.0.0.1	E	mailinglist	pubcie		\n";

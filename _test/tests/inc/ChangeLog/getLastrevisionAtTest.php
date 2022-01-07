@@ -1,5 +1,7 @@
 <?php
 
+namespace tests\inc\ChangeLog;
+
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
 
@@ -10,7 +12,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
  * - data/pages/mailinglist.txt
  * - data/meta/mailinglist.changes
  */
-class changelog_getlastrevisionat_test extends DokuWikiTest {
+class getLastRevisionAtTest extends \DokuWikiTest {
 
     private $pageid = 'mailinglist';
 

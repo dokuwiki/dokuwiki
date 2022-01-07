@@ -1,5 +1,7 @@
 <?php
 
+namespace tests\inc\ChangeLog;
+
 use dokuwiki\ChangeLog\PageChangeLog;
 
 /**
@@ -9,7 +11,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
  * - data/pages/mailinglist.txt
  * - data/meta/mailinglist.changes
  */
-class GetRelativeRevisionTest extends DokuWikiTest {
+class GetRelativeRevisionTest extends \DokuWikiTest {
 
     private $logline = "1362525899	127.0.0.1	E	mailinglist	pubcie	[Data entry] 	\n";
     private $pageid = 'mailinglist';
