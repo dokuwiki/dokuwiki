@@ -3,6 +3,7 @@
 namespace dokuwiki\Ui;
 
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\ChangeLog\RevisionInfo;
 use dokuwiki\Form\Form;
 
 /**
@@ -85,15 +86,15 @@ class PageRevisions extends Revisions
             }
             $form->addHTML(' ');
 
-            $objRevInfo = $this->getObjRevInfo($info);
+            $RevInfo = new RevisionInfo($info);
             $html = implode(' ', [
-                $objRevInfo->editDate(),          // edit date and time
-                $objRevInfo->difflink(),          // link to diffview icon
-                $objRevInfo->itemName(),          // name of page or media
-                $objRevInfo->editSummary(),       // edit summary
-                $objRevInfo->editor(),            // editor info
-                $objRevInfo->sizechange(),        // size change indicator
-                $objRevInfo->currentIndicator(),  // current indicator (only when k=1)
+                $RevInfo->editDate(true),      // edit date and time
+                $RevInfo->difflinkRevision(),  // link to diffview icon
+                $RevInfo->itemName(),          // name of page or media
+                $RevInfo->editSummary(),       // edit summary
+                $RevInfo->editor(),            // editor info
+                $RevInfo->sizechange(),        // size change indicator
+                $RevInfo->currentIndicator(),  // current indicator (only when k=1)
             ]);
             $form->addHTML($html);
             $form->addTagClose('div');
