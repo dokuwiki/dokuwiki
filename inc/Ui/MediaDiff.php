@@ -3,6 +3,7 @@
 namespace dokuwiki\Ui;
 
 use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\ChangeLog\RevisionInfo;
 use dokuwiki\Form\Form;
 use InvalidArgumentException;
 use JpegMeta;
@@ -340,8 +341,8 @@ class MediaDiff extends Diff
 
         // supplement
         if (isset($info['date'])) {
-            $objRevInfo = (new MediaRevisions($this->id))->getObjRevInfo($info);
-            $title .= $objRevInfo->editSummary().' '.$objRevInfo->editor();
+            $RevInfo = new RevisionInfo($info);
+            $title .= $RevInfo->editSummary().' '.$RevInfo->editor();
         }
         return $title;
     }
