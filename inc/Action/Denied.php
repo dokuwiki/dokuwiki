@@ -23,17 +23,16 @@ class Denied extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
+        $this->showBanner();
+
         $data = null;
         $event = new Event('ACTION_DENIED_TPLCONTENT', $data);
-
-        if ($event->advise_before(true)) {
+        if ($event->advise_before()) {
             global $INPUT;
-            $this->showBanner();
             if (empty($INPUT->server->str('REMOTE_USER')) && actionOK('login')) {
                 (new Ui\Login)->show();
             }
         }
-
         $event->advise_after();
     }
 
