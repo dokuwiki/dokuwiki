@@ -321,8 +321,8 @@ abstract class ChangeLog
         }
 
         // get lines from changelog
-        // readloglines() may return false when no changelog file
-        list($fp, $lines, $head, $tail, $eof) = $this->readloglines($rev) ?: array(false, [], 0, 0, 0);
+        // readloglines() may return false when no changelog file but page exists
+        list($fp, $lines, $head, $tail, $eof) = $this->readloglines($rev) ?: [false, [], 0, 0, 0];
 
         // look for revisions later/earlier than $rev, when founded count till the wanted revision is reached
         // also parse and cache changelog lines for getRevisionInfo().
@@ -484,8 +484,8 @@ abstract class ChangeLog
         $aftercount = $beforecount = 0;
 
         //get lines from changelog
-        list($fp, $lines, $starthead, $starttail, $eof) = $this->readloglines($rev);
-        if (empty($lines)) return false;
+        // readloglines() may return false when no changelog file but page exists
+        list($fp, $lines, $starthead, $starttail, $eof) = $this->readloglines($rev) ?: [false, [], 0, 0, 0];
 
         //parse changelog lines in chunk, and read forward more chunks until $max/2 is reached
         $head = $starthead;
@@ -510,10 +510,10 @@ abstract class ChangeLog
         $lasttail = $tail;
 
         // add a possible revision of external edit, create or deletion
-        if ($lasttail == $eof && $aftercount <= intval($max / 2) &&
-            count($revs) && !$this->isCurrentRevision($revs[count($revs)-1])
+        if ($lasttail == $eof && $aftercount <= intval($max / 2)
+            && !$this->isLastRevision($this->currentRevision())
         ) {
-            $revs[] = $this->currentRevision;
+            $revs[] = $this->currentRevision();
             $aftercount++;
         }
 
