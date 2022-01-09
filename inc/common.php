@@ -1245,7 +1245,7 @@ function con($pre, $text, $suf, $pretty = false) {
  * @deprecated 2021-11-28
  */
 function detectExternalEdit($id) {
-    dbg_deprecated(\dokuwiki\File\PageFile::class .'::detectExternalEdit()');
+    dbg_deprecated(PageFile::class .'::detectExternalEdit()');
     (new PageFile($id))->detectExternalEdit();
 }
 
@@ -1291,7 +1291,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
  * @deprecated 2021-11-28
  */
 function saveOldRevision($id) {
-    dbg_deprecated(\dokuwiki\File\PageFile::class .'::saveOldRevision()');
+    dbg_deprecated(PageFile::class .'::saveOldRevision()');
     return (new PageFile($id))->saveOldRevision();
 }
 

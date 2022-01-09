@@ -4,6 +4,7 @@ namespace dokuwiki\Ui;
 
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\ChangeLog\RevisionInfo;
 use dokuwiki\Form\Form;
 
 /**
@@ -16,7 +17,7 @@ class Recent extends Ui
     protected $first;
     protected $show_changes;
 
-    /** 
+    /**
      * Recent Ui constructor
      *
      * @param int $first  skip the first n changelog lines
@@ -77,19 +78,19 @@ class Recent extends Ui
             $this->checkCurrentRevision($recent);
             $recent['current'] = true;
 
-            $objRevInfo = $this->getObjRevInfo($recent);
+            $RevInfo = new RevisionInfo($recent);
             $class = ($recent['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor': '';
             $form->addTagOpen('li')->addClass($class);
             $form->addTagOpen('div')->addClass('li');
             $html = implode(' ', [
-                $objRevInfo->itemIcon(),          // filetype icon
-                $objRevInfo->editDate(),          // edit date and time
-                $objRevInfo->difflink(),          // link to diffview icon
-                $objRevInfo->revisionlink(),      // linkto revisions icon
-                $objRevInfo->itemName(),          // name of page or media
-                $objRevInfo->editSummary(),       // edit summary
-                $objRevInfo->editor(),            // editor info
-                $objRevInfo->sizechange(),        // size change indicator
+                $RevInfo->itemIcon(),          // filetype icon
+                $RevInfo->editDate(),          // edit date and time
+                $RevInfo->difflinkRecent(),    // link to diffview icon
+                $RevInfo->revisionlink(),      // linkto revisions icon
+                $RevInfo->itemName(),          // name of page or media
+                $RevInfo->editSummary(),       // edit summary
+                $RevInfo->editor(),            // editor info
+                $RevInfo->sizechange(),        // size change indicator
             ]);
             $form->addHTML($html);
             $form->addTagClose('div');
@@ -161,11 +162,9 @@ class Recent extends Ui
             $changelog = new MediaChangelog($info['id']);
         }
         if (!$changelog->isCurrentRevision($info['date'])) {
+            // the page or media file was externally created, edited or deleted
             $currentRevInfo = $changelog->getCurrentRevisionInfo();
-            if ($currentRevInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
-                // the page or media file was externally deleted
-                $info = array_merge($info, $currentRevInfo);
-            }
+            $info = array_merge($info, $currentRevInfo);
         }
         unset($changelog);
     }
@@ -175,7 +174,7 @@ class Recent extends Ui
      *
      * @param int  $first
      * @param bool $hasNext
-     * @return array  html
+     * @return string html
      */
     protected function htmlNavigation($first, $hasNext)
     {
@@ -224,152 +223,6 @@ class Recent extends Ui
                 ->val($this->show_changes)->addClass('quickselect');
         $form->addButton('do[recent]', $lang['btn_apply'])->attr('type','submit');
         $form->addTagClose('div');
-    }
-
-    /**
-     * Returns instance of objRevInfo
-     * @param array $info  Revision info structure of page or media
-     * @return objRevInfo object (anonymous class)
-     */
-    protected function getObjRevInfo(array $info)
-    {
-        return new class ($info) // anonymous class (objRevInfo)
-        {
-            protected $info;
-
-            public function __construct(array $info)
-            {
-                $info['item'] = strrpos($info['id'], '.') ? 'media' : 'page';
-                $info['current'] = $info['current'] ?? false;
-                $this->info = $info;
-            }
-
-            // fileicon of the page or media file
-            public function itemIcon()
-            {
-                $id = $this->info['id'];
-                switch ($this->info['item']) {
-                    case 'media': // media file revision
-                        $html = media_printicon($id);
-                        break;
-                    case 'page': // page revision
-                        $html = '<img class="icon" src="'.DOKU_BASE.'lib/images/fileicons/file.png" alt="'.$id.'" />';
-                }
-                return $html;
-            }
-
-            // edit date and time of the page or media file
-            public function editDate()
-            {
-                return '<span class="date">'. dformat($this->info['date']) .'</span>';
-            }
-
-            // edit summary
-            public function editSummary()
-            {
-                return '<span class="sum">'.' – '. hsc($this->info['sum']).'</span>';
-            }
-
-            // editor of the page or media file
-            public function editor()
-            {
-                $html = '<span class="user">';
-                if ($this->info['user']) {
-                    $html.= '<bdi>'. editorinfo($this->info['user']) .'</bdi>';
-                    if (auth_ismanager()) $html.= ' <bdo dir="ltr">('. $this->info['ip'] .')</bdo>';
-                } else {
-                    $html.= '<bdo dir="ltr">'. $this->info['ip'] .'</bdo>';
-                }
-                $html.= '</span>';
-                return $html;
-            }
-
-            // name of the page or media file
-            public function itemName()
-            {
-                $id = $this->info['id'];
-                switch ($this->info['item']) {
-                    case 'media': // media file revision
-                        $href = media_managerURL(['tab_details'=>'view', 'image'=> $id, 'ns'=> getNS($id)], '&');
-                        $class = file_exists(mediaFN($id)) ? 'wikilink1' : 'wikilink2';
-                        $html = '<a href="'.$href.'" class="'.$class.'">'.$id.'</a>';
-                        return $html;
-                    case 'page': // page revision
-                        $html = html_wikilink(':'.$id, (useHeading('navigation') ? null : $id));
-                        return $html;
-                }
-                return '';
-            }
-
-            // icon difflink
-            public function difflink()
-            {
-                global $lang;
-                $id = $this->info['id'];
-
-                switch ($this->info['item']) {
-                    case 'media': // media file revision
-                        $revs = (new MediaChangeLog($id))->getRevisions(0, 1);
-                        $diff = (count($revs) && file_exists(mediaFN($id)));
-                        if ($diff) {
-                            $href = media_managerURL(
-                                ['tab_details'=>'history', 'mediado'=>'diff', 'image'=> $id, 'ns'=> getNS($id)], '&'
-                            );
-                        } else {
-                            $href = '';
-                        }
-                        break;
-                    case 'page': // page revision
-                        $href = wl($id, "do=diff", false, '&');
-                }
-
-                if ($href) {
-                    $html = '<a href="'.$href.'" class="diff_link">'
-                          . '<img src="'.DOKU_BASE.'lib/images/diff.png" width="15" height="11"'
-                          . ' title="'.$lang['diff'].'" alt="'.$lang['diff'].'" />'
-                          . '</a>';
-                } else {
-                    $html = '<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />';
-                }
-                return $html;
-            }
-
-            // icon revision link
-            public function revisionlink()
-            {
-                global $lang;
-                $id = $this->info['id'];
-                switch ($this->info['item']) {
-                    case 'media': // media file revision
-                        $href = media_managerURL(['tab_details'=>'history', 'image'=> $id, 'ns'=> getNS($id)], '&');
-                        break;
-                    case 'page': // page revision
-                        $href = wl($id, "do=revisions", false, '&');
-                }
-                $html = '<a href="'.$href.'" class="revisions_link">'
-                      . '<img src="'.DOKU_BASE.'lib/images/history.png" width="12" height="14"'
-                      . ' title="'.$lang['btn_revs'].'" alt="'.$lang['btn_revs'].'" />'
-                      . '</a>';
-                return $html;
-            }
-
-            // size change
-            public function sizeChange()
-            {
-                $class = 'sizechange';
-                $value = filesize_h(abs($this->info['sizechange']));
-                if ($this->info['sizechange'] > 0) {
-                    $class .= ' positive';
-                    $value = '+' . $value;
-                } elseif ($this->info['sizechange'] < 0) {
-                    $class .= ' negative';
-                    $value = '-' . $value;
-                } else {
-                    $value = '±' . $value;
-                }
-                return '<span class="'.$class.'">'.$value.'</span>';
-            }
-        }; // end of anonymous class (objRevInfo)
     }
 
 }

@@ -4,6 +4,7 @@ namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionDisabledException;
+use dokuwiki\Extension\AuthPlugin;
 
 /**
  * Class ProfileDelete
@@ -23,7 +24,7 @@ class ProfileDelete extends AbstractUserAction {
     public function checkPreconditions() {
         parent::checkPreconditions();
 
-        /** @var \dokuwiki\Extension\AuthPlugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
         if(!$auth->canDo('delUser')) throw new ActionDisabledException();
     }

@@ -199,7 +199,7 @@ $lang['deleted']               = 'წაშლილია';
 $lang['created']               = 'შექმნილია';
 $lang['restored']              = 'ძველი ვერსია აღდგენილია (%s)';
 $lang['external_edit']         = 'რედაქტირება';
-$lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">საჭიროა Adobe Flash Plugin</a>';
+$lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">საჭიროა Adobe Flash Plugin</a>';
 $lang['download']              = 'Snippet-ის გადმოწერა';
 $lang['tools']                 = 'ინსტრუმენტები';
 $lang['user_tools']            = 'მომხმარებლის ინსტრუმენტები';

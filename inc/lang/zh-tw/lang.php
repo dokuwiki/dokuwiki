@@ -210,7 +210,7 @@ $lang['created']               = '建立';
 $lang['restored']              = '還原成舊版 (%s)';
 $lang['external_edit']         = '外部編輯';
 $lang['summary']               = '編輯摘要';
-$lang['noflash']               = '顯示此內容需要 <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash 附加元件</a>。';
+$lang['noflash']               = '顯示此內容需要 <a href="http://get.adobe.com/flashplayer">Adobe Flash 附加元件</a>。';
 $lang['download']              = '下載程式碼片段';
 $lang['tools']                 = '工具';
 $lang['user_tools']            = '使用者工具';
@@ -291,7 +291,7 @@ $lang['i_enableacl']           = '啟用 ACL (建議)';
 $lang['i_superuser']           = '超級使用者';
 $lang['i_problems']            = '安裝程式發現如下的問題。您必須修正它們才能繼續。';
 $lang['i_modified']            = '出於安全考量，本腳本只能用於安裝全新且未修改的 Dokuwiki。
-您可以重新解壓下載的封包或查閱完整的<a href=\"http://dokuwiki.org/install\">Dokuwiki 安裝指南</a>';
+您可以重新解壓下載的封包或查閱完整的<a href=\"https://www.dokuwiki.org/install\">Dokuwiki 安裝指南</a>';
 $lang['i_funcna']              = 'PHP 函數 <code>%s</code> 無法使用。也許您的主機供應者基於某些理由停用了它？';
 $lang['i_phpver']              = '您的 PHP 版本 <code>%s</code> 比需要的版本 <code>%s</code> 還低。您必須更新您的PHP。';
 $lang['i_permfail']            = '<code>%s</code> 無法經由 DokuWiki 寫入。您必須修正該目錄的權限！';

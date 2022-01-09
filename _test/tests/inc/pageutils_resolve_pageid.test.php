@@ -57,22 +57,4 @@ class init_resolve_pageid_test extends DokuWikiTest {
         }
     }
 
-    /**
-     * Empty page on homepage should resolve to start page
-     */
-    function test_resolve_pageid_empty_homepage() {
-        global $ID;
-        $ID = '';
-        global $conf;
-        $conf['start'] = 'someverystrangestartname';
-
-        $ns = '';
-        $page = '';
-        $exist = true;
-
-        resolve_pageid($ns, $page, $exist);
-        $this->assertEquals($page, $conf['start']);
-   }
-
 }
-//Setup VIM: ex: et ts=4 :

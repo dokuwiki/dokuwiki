@@ -209,7 +209,7 @@ $lang['created']               = 'crewyd';
 $lang['restored']              = 'adferwyd hen adolygiad (%s)';
 $lang['external_edit']         = 'golygiad allanol';
 $lang['summary']               = 'Crynodeb golygiad';
-$lang['noflash']               = 'Mae angen <a href="http://www.adobe.com/products/flashplayer/">Ategyn Adobe Flash</a> i ddangos y cynnwys hwn.';
+$lang['noflash']               = 'Mae angen <a href="http://get.adobe.com/flashplayer">Ategyn Adobe Flash</a> i ddangos y cynnwys hwn.';
 $lang['download']              = 'Lawrlwytho Darn';
 $lang['tools']                 = 'Teclynnau';
 $lang['user_tools']            = 'Teclynnau Defnyddiwr';
@@ -302,7 +302,7 @@ $lang['i_superuser']           = 'Uwchddefnyddiwr';
 $lang['i_problems']            = 'Gwnaeth yr arsefydlwr ddod o hyd i broblemau, isod. \'Sdim modd parhau nes i chi eu datrys nhw.';
 $lang['i_modified']            = 'Oherwydd rhesymau diogelwch, bydd y sgript hwn dim ond yn gweithio gydag arsefydliad DokuWiki newydd sydd heb ei newid.
                                   Dylech chi naill ai ail-echdynnu\'r ffeiliau o\'r pecyn a lawrlwythwyd neu porwch dros y
-                                  <a href="http://dokuwiki.org/install">canllawiau arsefydylu Dokuwiki</a> cyfan';
+                                  <a href="https://www.dokuwiki.org/install">canllawiau arsefydylu Dokuwiki</a> cyfan';
 $lang['i_funcna']              = 'Swyddogaeth PHP <code>%s</code> ddim ar gael. Posib bod eich gwesteiwr wedi\'i hanalluogi am ryw reswm?';
 $lang['i_phpver']              = 'Mae\'ch fersiwn PHP <code>%s</code> yn is na\'r hyn sydd ei angen <code>%s</code>. Mae angen i chi ddiweddaru eich arsefydliad PHP.';
 $lang['i_mbfuncoverload']      = 'Mae\'n rhaid analluogi mbstring.func_overload mewn php.ini er mwyn rhedeg DokuWiki.';

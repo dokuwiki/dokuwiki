@@ -7,6 +7,7 @@ use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Subscriptions\SubscriberManager;
 use dokuwiki\Extension\Event;
 use dokuwiki\Ui;
+use Exception;
 
 /**
  * Class Subscribe
@@ -39,7 +40,7 @@ class Subscribe extends AbstractUserAction
             $this->handleSubscribeData();
         } catch (ActionAbort $e) {
             throw $e;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             msg($e->getMessage(), -1);
         }
     }
@@ -54,7 +55,7 @@ class Subscribe extends AbstractUserAction
      * Handle page 'subscribe'
      *
      * @author Adrian Lang <lang@cosmocode.de>
-     * @throws \Exception if (un)subscribing fails
+     * @throws Exception if (un)subscribing fails
      * @throws ActionAbort when (un)subscribing worked
      */
     protected function handleSubscribeData()
@@ -99,7 +100,7 @@ class Subscribe extends AbstractUserAction
             throw new ActionAbort('redirect');
         }
 
-        throw new \Exception(
+        throw new Exception(
             sprintf(
                 $lang["subscr_{$action}_error"],
                 hsc($INFO['userinfo']['name']),
@@ -117,7 +118,7 @@ class Subscribe extends AbstractUserAction
      * @author Adrian Lang <lang@cosmocode.de>
      *
      * @param array &$params the parameters: target, style and action
-     * @throws \Exception
+     * @throws Exception
      */
     public function handlePostData(&$params)
     {
@@ -127,7 +128,7 @@ class Subscribe extends AbstractUserAction
 
         // Get and validate parameters.
         if (!isset($params['target'])) {
-            throw new \Exception('no subscription target given');
+            throw new Exception('no subscription target given');
         }
         $target = $params['target'];
         $valid_styles = array('every', 'digest');
@@ -147,7 +148,7 @@ class Subscribe extends AbstractUserAction
         // Check other conditions.
         if ($action === 'subscribe') {
             if ($INFO['userinfo']['mail'] === '') {
-                throw new \Exception($lang['subscr_subscribe_noaddress']);
+                throw new Exception($lang['subscr_subscribe_noaddress']);
             }
         } elseif ($action === 'unsubscribe') {
             $is = false;
@@ -157,7 +158,7 @@ class Subscribe extends AbstractUserAction
                 }
             }
             if ($is === false) {
-                throw new \Exception(
+                throw new Exception(
                     sprintf(
                         $lang['subscr_not_subscribed'],
                         $INPUT->server->str('REMOTE_USER'),

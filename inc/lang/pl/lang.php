@@ -233,7 +233,7 @@ $lang['created']               = 'utworzono';
 $lang['restored']              = 'przywrócono poprzednią wersję (%s)';
 $lang['external_edit']         = 'edycja zewnętrzna';
 $lang['summary']               = 'Opis zmian';
-$lang['noflash']               = 'Plugin <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> jest niezbędny do obejrzenia tej zawartości.';
+$lang['noflash']               = 'Plugin <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> jest niezbędny do obejrzenia tej zawartości.';
 $lang['download']              = 'Pobierz zrzut';
 $lang['tools']                 = 'Narzędzia';
 $lang['user_tools']            = 'Narzędzia użytkownika';
@@ -314,7 +314,7 @@ $lang['i_enableacl']           = 'Włącz mechanizm uprawnień ACL (zalecane)';
 $lang['i_superuser']           = 'Administrator';
 $lang['i_problems']            = 'Instalator napotkał poniższe problemy. Nie można kontynuować póki nie zostaną usunięte.';
 $lang['i_modified']            = 'Ze względów bezpieczeństwa, ten skrypt działa tylko z nową i niezmodyfikowaną instalacją DokuWiki.
-Aby uruchomić instalator ponownie, rozpakuj archiwum DokuWiki lub zapoznaj się z <a href="http://dokuwiki.org/install">instrukcją instalacji Dokuwiki</a>';
+Aby uruchomić instalator ponownie, rozpakuj archiwum DokuWiki lub zapoznaj się z <a href="https://www.dokuwiki.org/install">instrukcją instalacji Dokuwiki</a>';
 $lang['i_funcna']              = 'Funkcja PHP <code>%s</code> jest niedostępna.';
 $lang['i_disabled']            = 'To zostało wyłączone przez twojego dostawcę.';
 $lang['i_phpver']              = 'Wersja PHP <code>%s</code> jest niższa od wymaganej <code>%s</code>. Zaktualizuj instalację PHP.';

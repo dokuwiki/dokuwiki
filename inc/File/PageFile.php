@@ -5,7 +5,9 @@ namespace dokuwiki\File;
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\Event;
+use dokuwiki\Input\Input;
 use dokuwiki\Logger;
+use RuntimeException;
 
 /**
  * Class PageFile : handles wiki text file and its change management for specific page
@@ -72,7 +74,7 @@ class PageFile
      * @param string $text     wikitext being saved
      * @param string $summary  summary of text update
      * @param bool   $minor    mark this saved version as minor update
-     * @return array data of event COMMON_WIKIPAGE_SAVE
+     * @return array|void data of event COMMON_WIKIPAGE_SAVE
      */
     public function saveWikiText($text, $summary, $minor = false)
     {
@@ -107,7 +109,7 @@ class PageFile
             'newRevision'    => 0,         // only available in the after hook
             'newContent'     => $text,
             'summary'        => $summary,
-            'contentChanged' => (bool)($text != $currentContent), // confirm later
+            'contentChanged' => ($text != $currentContent), // confirm later
             'changeInfo'     => '',        // automatically determined by revertFrom
             'sizechange'     => strlen($text) - strlen($currentContent), // TBD
         );
@@ -235,14 +237,14 @@ class PageFile
             $wrong_timestamp = filemtime($fileLastMod);
             if (touch($fileLastMod, $revInfo['date'])) {
                 clearstatcache();
-                $msg = "detectExternalEdit($id): timestamp successfully modified";
+                $msg = "PageFile($this->id)::detectExternalEdit(): timestamp successfully modified";
                 $details = '('.$wrong_timestamp.' -> '.$revInfo['date'].')';
                 Logger::error($msg, $details, $fileLastMod);
             } else {
                 // runtime error
-                $msg = "detectExternalEdit($id): page file should be newer than last revision "
+                $msg = "PageFile($this->id)::detectExternalEdit(): page file should be newer than last revision "
                       .'('.filemtime($fileLastMod).' < '. $this->changelog->lastRevision() .')';
-                throw new \RuntimeException($msg);
+                throw new RuntimeException($msg);
             }
         }
 
@@ -252,7 +254,7 @@ class PageFile
         // store externally edited file to the attic folder
         $this->saveOldRevision();
         // add a changelog entry for externally edited file
-        $revInfo = $this->changelog->addLogEntry($revInfo);
+        $this->changelog->addLogEntry($revInfo);
         // remove soon to be stale instructions
         $cache = new CacheInstructions($this->id, $this->getPath());
         $cache->removeCache();

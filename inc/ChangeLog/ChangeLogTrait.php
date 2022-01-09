@@ -2,6 +2,8 @@
 
 namespace dokuwiki\ChangeLog;
 
+use dokuwiki\Utf8\PhpString;
+
 /**
  * Provides methods for handling of changelog
  */
@@ -26,7 +28,7 @@ trait ChangeLogTrait
     {
         $info = explode("\t", rtrim($line, "\n"));
         if ($info !== false && count($info) > 1) {
-            return $entry = array(
+            return [
                 'date'  => (int)$info[0], // unix timestamp
                 'ip'    => $info[1], // IPv4 address (127.0.0.1)
                 'type'  => $info[2], // log line type
@@ -34,8 +36,8 @@ trait ChangeLogTrait
                 'user'  => $info[4], // user name
                 'sum'   => $info[5], // edit summary (or action reason)
                 'extra' => $info[6], // extra data (varies by line type)
-                'sizechange' => (isset($info[7]) && $info[7] !== '') ? (int)$info[7] : null, // 
-            );
+                'sizechange' => (isset($info[7]) && $info[7] !== '') ? (int)$info[7] : null, //
+            ];
         } else {
             return false;
         }
@@ -57,12 +59,12 @@ trait ChangeLogTrait
             'type'  => str_replace($strip, '', $info['type']),
             'id'    => $info['id'],
             'user'  => $info['user'],
-            'sum'   => \dokuwiki\Utf8\PhpString::substr(str_replace($strip, '', $info['sum']), 0, 255),
+            'sum'   => PhpString::substr(str_replace($strip, '', $info['sum']), 0, 255),
             'extra' => str_replace($strip, '', $info['extra']),
             'sizechange' => $info['sizechange'],
         );
         $info = $entry;
-        return $line = implode("\t", $entry) ."\n";
+        return implode("\t", $entry) ."\n";
     }
 
     /**
@@ -137,7 +139,6 @@ trait ChangeLogTrait
             if ($fp === false) {
                 return false;
             }
-            $head = 0;
             fseek($fp, 0, SEEK_END);
             $eof = ftell($fp);
             $tail = $eof;

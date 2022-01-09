@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\Draft;
 use dokuwiki\Form\Form;
 
 /**
@@ -24,7 +25,7 @@ class PageDraft extends Ui
         global $INFO;
         global $lang;
 
-        $draft = new \dokuwiki\Draft($INFO['id'], $INFO['client']);
+        $draft = new Draft($INFO['id'], $INFO['client']);
         $text  = $draft->getDraftText();
 
         // print intro

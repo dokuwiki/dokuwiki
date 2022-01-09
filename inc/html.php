@@ -6,10 +6,25 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\Action\Denied;
+use dokuwiki\Action\Locked;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
+use dokuwiki\Ui\Backlinks;
+use dokuwiki\Ui\Editor;
+use dokuwiki\Ui\Index;
+use dokuwiki\Ui\Login;
+use dokuwiki\Ui\PageConflict;
+use dokuwiki\Ui\PageDiff;
+use dokuwiki\Ui\PageDraft;
+use dokuwiki\Ui\PageRevisions;
+use dokuwiki\Ui\PageView;
+use dokuwiki\Ui\Recent;
+use dokuwiki\Ui\UserProfile;
+use dokuwiki\Ui\UserRegister;
+use dokuwiki\Ui\UserResendPwd;
+use dokuwiki\Utf8\Clean;
 
 if (!defined('SEC_EDIT_PATTERN')) {
     define('SEC_EDIT_PATTERN', '#<!-- EDIT({.*?}) -->#');
@@ -44,7 +59,7 @@ function html_wikilink($id, $name = null, $search = '') {
  * @deprecated 2020-07-18
  */
 function html_login($svg = false) {
-    dbg_deprecated(\dokuwiki\Ui\Login::class .'::show()');
+    dbg_deprecated(Login::class .'::show()');
     (new dokuwiki\Ui\Login($svg))->show();
 }
 
@@ -52,11 +67,10 @@ function html_login($svg = false) {
 /**
  * Denied page content
  *
- * @return string html
  * @deprecated 2020-07-18 not called anymore, see inc/Action/Denied::tplContent()
  */
 function html_denied() {
-    dbg_deprecated(\dokuwiki\Action\Denied::class .'::showBanner()');
+    dbg_deprecated(Denied::class .'::showBanner()');
     (new dokuwiki\Action\Denied())->showBanner();
 }
 
@@ -94,7 +108,7 @@ function html_secedit_button($matches){
     $json = htmlspecialchars_decode($matches[1], ENT_QUOTES);
     $data = json_decode($json, true);
     if ($data == NULL) {
-        return;
+        return '';
     }
     $data ['target'] = strtolower($data['target']);
     $data ['hid'] = strtolower($data['hid']);
@@ -145,11 +159,10 @@ function html_secedit_get_button($data) {
 function html_topbtn() {
     global $lang;
 
-    $html = '<a class="nolink" href="#dokuwiki__top">'
+    return '<a class="nolink" href="#dokuwiki__top">'
         .'<button class="button" onclick="window.scrollTo(0, 0)" title="'. $lang['btn_top'] .'">'
         . $lang['btn_top']
         .'</button></a>';
-    return $html;
 }
 
 /**
@@ -161,7 +174,7 @@ function html_topbtn() {
  * @param string         $name
  * @param string         $id
  * @param string         $akey   access key
- * @param string[] $params key-value pairs added as hidden inputs
+ * @param string[]       $params key-value pairs added as hidden inputs
  * @param string         $method
  * @param string         $tooltip
  * @param bool|string    $label  label text, false: lookup btn_$name in localization
@@ -221,7 +234,7 @@ function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $l
  * @deprecated 2020-07-18
  */
 function html_showrev() {
-    dbg_deprecated(\dokuwiki\Ui\PageView::class .'::showrev()');
+    dbg_deprecated(PageView::class .'::showrev()');
 }
 
 /**
@@ -233,7 +246,7 @@ function html_showrev() {
  * @deprecated 2020-07-18
  */
 function html_show($txt=null) {
-    dbg_deprecated(\dokuwiki\Ui\PageView::class .'::show()');
+    dbg_deprecated(PageView::class .'::show()');
     (new dokuwiki\Ui\PageView($txt))->show();
 }
 
@@ -244,8 +257,8 @@ function html_show($txt=null) {
  * @deprecated 2020-07-18
  */
 function html_draft() {
-    dbg_deprecated(\dokuwiki\Ui\Draft::class .'::show()');
-    (new dokuwiki\Ui\Draft)->show();
+    dbg_deprecated(PageDraft::class .'::show()');
+    (new dokuwiki\Ui\PageDraft)->show();
 }
 
 /**
@@ -266,16 +279,15 @@ function html_hilight($html, $phrases) {
     $regex = join('|',$phrases);
 
     if ($regex === '') return $html;
-    if (!\dokuwiki\Utf8\Clean::isUtf8($regex)) return $html;
+    if (!Clean::isUtf8($regex)) return $html;
 
-    $html = @preg_replace_callback("/((<[^>]*)|$regex)/ui", function ($match) {
+    return @preg_replace_callback("/((<[^>]*)|$regex)/ui", function ($match) {
         $hlight = unslash($match[0]);
         if (!isset($match[2])) {
             $hlight = '<span class="search_hit">'.$hlight.'</span>';
         }
         return $hlight;
     }, $html);
-    return $html;
 }
 
 /**
@@ -285,7 +297,7 @@ function html_hilight($html, $phrases) {
  * @deprecated 2020-07-18 not called anymore, see inc/Action/Locked::tplContent()
  */
 function html_locked() {
-    dbg_deprecated(\dokuwiki\Action\Locked::class .'::showBanner()');
+    dbg_deprecated(Locked::class .'::showBanner()');
     (new dokuwiki\Action\Locked())->showBanner();
 }
 
@@ -301,7 +313,7 @@ function html_locked() {
  * @deprecated 2020-07-18
  */
 function html_revisions($first = 0, $media_id = '') {
-    dbg_deprecated(\dokuwiki\Ui\PageRevisions::class .'::show()');
+    dbg_deprecated(PageRevisions::class .'::show()');
     if ($media_id) {
         (new dokuwiki\Ui\MediaRevisions($media_id))->show($first);
     } else {
@@ -323,7 +335,7 @@ function html_revisions($first = 0, $media_id = '') {
  * @deprecated 2020-07-18
  */
 function html_recent($first = 0, $show_changes = 'both') {
-    dbg_deprecated(\dokuwiki\Ui\Recent::class .'::show()');
+    dbg_deprecated(Recent::class .'::show()');
     (new dokuwiki\Ui\Recent($first, $show_changes))->show();
 }
 
@@ -336,7 +348,7 @@ function html_recent($first = 0, $show_changes = 'both') {
  * @deprecated 2020-07-18
  */
 function html_index($ns) {
-    dbg_deprecated(\dokuwiki\Ui\Index::class .'::show()');
+    dbg_deprecated(Index::class .'::show()');
     (new dokuwiki\Ui\Index($ns))->show();
 }
 
@@ -352,7 +364,7 @@ function html_index($ns) {
  * @deprecated 2020-07-18
  */
 function html_list_index($item) {
-    dbg_deprecated(\dokuwiki\Ui\Index::class .'::formatListItem()');
+    dbg_deprecated(Index::class .'::formatListItem()');
     return (new dokuwiki\Ui\Index)->formatListItem($item);
 }
 
@@ -370,7 +382,7 @@ function html_list_index($item) {
  * @deprecated 2020-07-18
  */
 function html_li_index($item) {
-    dbg_deprecated(\dokuwiki\Ui\Index::class .'::tagListItem()');
+    dbg_deprecated(Index::class .'::tagListItem()');
     return (new dokuwiki\Ui\Index)->tagListItem($item);
 }
 
@@ -483,7 +495,7 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
  * @deprecated 2020-07-18
  */
 function html_backlinks() {
-    dbg_deprecated(\dokuwiki\Ui\Backlinks::class .'::show()');
+    dbg_deprecated(Backlinks::class .'::show()');
     (new dokuwiki\Ui\Backlinks)->show();
 }
 
@@ -499,7 +511,8 @@ function html_backlinks() {
  * @deprecated 2020-07-18
  */
 function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = false) {
-    dbg_deprecated('see '. \dokuwiki\Ui\PageDiff::class .'::buildDiffHead()');
+    dbg_deprecated('see '. PageDiff::class .'::buildDiffHead()');
+    return ['', '', '', ''];
 }
 
 /**
@@ -514,7 +527,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
  * @deprecated 2020-07-18
  */
 function html_diff($text = '', $intro = true, $type = null) {
-    dbg_deprecated(\dokuwiki\Ui\PageDiff::class .'::show()');
+    dbg_deprecated(PageDiff::class .'::show()');
     global $INFO;
     (new dokuwiki\Ui\PageDiff($INFO['id']))->compareWith($text)->preference([
         'showIntro' => $intro,
@@ -533,7 +546,8 @@ function html_diff($text = '', $intro = true, $type = null) {
  * @deprecated 2020-07-18
  */
 function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
-    dbg_deprecated('see '. \dokuwiki\Ui\PageDiff::class .'::buildRevisionsNavigation()');
+    dbg_deprecated('see '. PageDiff::class .'::buildRevisionsNavigation()');
+    return ['', ''];
 }
 
 /**
@@ -547,7 +561,8 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
  * @deprecated 2020-07-18
  */
 function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
-    dbg_deprecated('see '. \dokuwiki\Ui\PageDiff::class .'::diffViewlink()');
+    dbg_deprecated('see '. PageDiff::class .'::diffViewlink()');
+    return '';
 }
 
 /**
@@ -558,7 +573,7 @@ function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
  * @deprecated 2020-07-18
  */
 function html_insert_softbreaks($diffhtml) {
-    dbg_deprecated(\dokuwiki\Ui\PageDiff::class .'::insertSoftbreaks()');
+    dbg_deprecated(PageDiff::class .'::insertSoftbreaks()');
     return (new dokuwiki\Ui\PageDiff)->insertSoftbreaks($diffhtml);
 }
 
@@ -572,7 +587,7 @@ function html_insert_softbreaks($diffhtml) {
  * @deprecated 2020-07-18
  */
 function html_conflict($text, $summary) {
-    dbg_deprecated(\dokuwiki\Ui\PageConflict::class .'::show()');
+    dbg_deprecated(PageConflict::class .'::show()');
     (new dokuwiki\Ui\PageConflict($text, $summary))->show();
 }
 
@@ -611,7 +626,7 @@ function html_msgarea() {
  * @deprecated 2020-07-18
  */
 function html_register() {
-    dbg_deprecated(\dokuwiki\Ui\UserRegister::class .'::show()');
+    dbg_deprecated(UserRegister::class .'::show()');
     (new dokuwiki\Ui\UserRegister)->show();
 }
 
@@ -623,7 +638,7 @@ function html_register() {
  * @deprecated 2020-07-18
  */
 function html_updateprofile() {
-    dbg_deprecated(\dokuwiki\Ui\UserProfile::class .'::show()');
+    dbg_deprecated(UserProfile::class .'::show()');
     (new dokuwiki\Ui\UserProfile)->show();
 }
 
@@ -635,7 +650,7 @@ function html_updateprofile() {
  * @deprecated 2020-07-18
  */
 function html_edit() {
-    dbg_deprecated(\dokuwiki\Ui\Editor::class .'::show()');
+    dbg_deprecated(Editor::class .'::show()');
     (new dokuwiki\Ui\Editor)->show();
 }
 
@@ -644,12 +659,12 @@ function html_edit() {
  *
  * Is the default action for HTML_EDIT_FORMSELECTION.
  *
- * @param mixed[] $param
+ * @param array $param
  * @deprecated 2020-07-18
  */
 function html_edit_form($param) {
-    dbg_deprecated(\dokuwiki\Ui\Editor::class .'::addTextarea()');
-    return (new dokuwiki\Ui\Editor)->addTextarea($param);
+    dbg_deprecated(Editor::class .'::addTextarea()');
+    (new dokuwiki\Ui\Editor)->addTextarea($param);
 }
 
 /**
@@ -758,7 +773,7 @@ function html_debug() {
  * @deprecated 2020-07-18
  */
 function html_resendpwd() {
-    dbg_deprecated(\dokuwiki\Ui\UserResendPwd::class .'::show()');
+    dbg_deprecated(UserResendPwd::class .'::show()');
     (new dokuwiki\Ui\UserResendPwd)->show();
 }
 

@@ -3,7 +3,9 @@
 namespace dokuwiki\Ui;
 
 use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\ChangeLog\RevisionInfo;
 use dokuwiki\Form\Form;
+use InvalidArgumentException;
 
 /**
  * DokuWiki MediaRevisions Interface
@@ -15,7 +17,7 @@ class MediaRevisions extends Revisions
     /* @var MediaChangeLog */
     protected $changelog;
 
-    /** 
+    /**
      * MediaRevisions Ui constructor
      *
      * @param string $id  id of media
@@ -23,7 +25,7 @@ class MediaRevisions extends Revisions
     public function __construct($id)
     {
         if (!$id) {
-            throw new \InvalidArgumentException('media id should not be empty!');
+            throw new InvalidArgumentException('media id should not be empty!');
         }
         parent::__construct($id);
     }
@@ -83,16 +85,16 @@ class MediaRevisions extends Revisions
             }
             $form->addHTML(' ');
 
-            $objRevInfo = $this->getObjRevInfo($info);
+            $RevInfo = new RevisionInfo($info);
             $html = implode(' ', [
-                $objRevInfo->editDate(),          // edit date and time
-                $objRevInfo->difflink(),          // link to diffview icon
-                $objRevInfo->itemName(),          // name of page or media
+                $RevInfo->editDate(),          // edit date and time
+                $RevInfo->difflink(),          // link to diffview icon
+                $RevInfo->itemName(),          // name of page or media
                 '<div>',
-                $objRevInfo->editSummary(),       // edit summary
-                $objRevInfo->editor(),            // editor info
-                $objRevInfo->sizechange(),        // size change indicator
-                $objRevInfo->currentIndicator(),  // current indicator (only when k=1)
+                $RevInfo->editSummary(),       // edit summary
+                $RevInfo->editor(),            // editor info
+                $RevInfo->sizechange(),        // size change indicator
+                $RevInfo->currentIndicator(),  // current indicator (only when k=1)
                 '</div>',
             ]);
             $form->addHTML($html);

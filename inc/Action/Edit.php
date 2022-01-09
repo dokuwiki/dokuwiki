@@ -83,7 +83,7 @@ class Edit extends AbstractAction
         $lockedby = checklock($ID);
         if ($lockedby) {
             throw new ActionAbort('locked');
-        };
+        }
         lock($ID);
     }
 
