@@ -94,15 +94,15 @@ abstract class Diff extends Ui
     protected function handle()
     {
         global $INPUT;
+        $changelog =& $this->changelog;
 
         // difflink icon click, eg. ?rev=123456789&do=diff
         if ($INPUT->has('rev')) {
             // compare given revision to current
-            $rev2[1] = $this->changelog->currentRevision();
+            $rev2[1] = $changelog->currentRevision();
             $rev2[0] = $INPUT->int('rev');
             if ($rev2[0] < $rev2[1]) {
-                $this->newRev = $rev2[1];
-                $this->oldRev = $this->changelog->getRelativeRevision($rev2[0] -1, +1);
+                [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
             } else {
                 // fallback to compare previous to current
                 unset($rev2);
@@ -113,19 +113,25 @@ abstract class Diff extends Ui
         $rev2 = $INPUT->arr('rev2', []);
         if (count($rev2) > 1) {
             if ($rev2[1] < $rev2[0]) [$rev2[0], $rev2[1]] = [$rev2[1], $rev2[0]];
-            $this->newRev = $this->changelog->getRelativeRevision($rev2[0] -1, +1);
-            $this->oldRev = $this->changelog->getRelativeRevision($rev2[1] -1, +1);
+            // check whether rev2[1] is non-actual revision
+            if ($rev2[1] > $changelog->lastRevision()) {
+                $rev2[1] = $changelog->currentRevision();
+            }
+            [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
         }
 
-        if (!isset($this->oldRev, $this->newRev) || $this->oldRev == $this->newRev) {
+        if (!isset($this->oldRev, $this->newRev)) {
             // no revision was given, compare previous to current
-            // oldRev may become false when only 1 revision or none exists,
-            // newRev may become false when no revision exists, ie. page had never existed.
-            // Note: need to check validity of each revision numbers later
-            $this->newRev = $this->changelog->currentRevision();
-            $this->oldRev = ($this->newRev)
-                ? $this->changelog->getRelativeRevision($this->newRev, -1)
-                : false;
+            // newRev and oldRev may become false when page had never existed.
+            // oldRev may become false when page is just created anyway
+            $rev2[1] = $changelog->currentRevision();
+            if ($rev2[1] > $changelog->lastRevision()) {
+                $rev2[0] = $changelog->lastRevision() ?: false;
+            } else {
+                $revs = $changelog->getRevisions(0, 1);
+                $rev2[0] = count($revs) ? $revs[0] : false;
+            }
+            [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
         }
     }
 }
