@@ -75,9 +75,9 @@ class PageDiff extends Diff
 
             // revision info of newer file (right side)
             $this->newRevInfo = [
-                'date' => null,
+                'date' => false,
               //'ip'   => '127.0.0.1',
-              //'type' => DOKU_CHANGE_TYPE_CREATE,
+                'type' => DOKU_CHANGE_TYPE_CREATE,
                 'id'   => $this->id,
               //'user' => '',
               //'sum'  => '',
@@ -133,37 +133,25 @@ class PageDiff extends Diff
         $changelog =& $this->changelog;
 
         // get revision info array for older and newer sides
-        foreach (['oldRev','newRev'] as $rev) {
-            $revInfo = $rev.'Info';
-            if ($this->$rev !== false) {
-                $this->$revInfo = $changelog->getRevisionInfo($this->$rev);
-            } else {
-                // invalid revision number, set exceptional revInfo array
-                $this->$revInfo = array(
-                    'date' => false,
-                    'type' => '',
-                    'timestamp' => false,
-                    'rev'  => false,
-                    'text' => '',
-                    'navTitle' => '&mdash;',
-                );
-            }
-        }
+        $this->oldRevInfo = ($this->oldRev)
+            ? $changelog->getRevisionInfo($this->oldRev)
+            : ['date' => false, 'type' => ''];
+        $this->newRevInfo = ($this->newRev)
+            ? $changelog->getRevisionInfo($this->newRev)
+            : ['date' => false, 'type' => ''];
 
         foreach ([&$this->oldRevInfo, &$this->newRevInfo] as &$revInfo) {
             // use timestamp and '' properly as $rev for the current file
-            $isCurrent = $changelog->isCurrentRevision($revInfo['date']);
+            $isCurrent = $changelog->isCurrentRevision((int)$revInfo['date']);
             $revInfo += [
                 'current' => $isCurrent,
                 'rev'     => $isCurrent ? '' : $revInfo['date'],
             ];
 
             // headline in the Diff view navigation
-            if (!isset($revInfo['navTitle'])) {
-                $revInfo['navTitle'] = $this->revisionTitle($revInfo);
-            }
+            $revInfo['navTitle'] = $this->revisionTitle($revInfo);
 
-            if ($revInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
+            if (empty($revInfo['type']) || $revInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
                 //attic stores complete last page version for a deleted page
                 $revInfo['text'] = '';
             } else {
@@ -283,14 +271,14 @@ class PageDiff extends Diff
         global $lang;
 
         // use designated title when compare current page source with given text
-        if ($info['extra'] == 'compareWith') {
+        if (isset($info['extra']) && $info['extra'] == 'compareWith') {
             return $lang['yours'];
         }
 
         // revision info may have timestamp key when external edits occurred
         $info['timestamp'] = $info['timestamp'] ?? true;
 
-        if (isset($info['date'])) {
+        if (!empty($info['date'])) {
             $rev = $info['date'];
             if ($info['timestamp'] === false) {
                 // exteranlly deleted or older file restored
@@ -303,7 +291,7 @@ class PageDiff extends Diff
         } else {
             $title = '&mdash;';
         }
-        if ($info['current']) {
+        if (!empty($info['current'])) {
             $title .= '&nbsp;('.$lang['current'].')';
         }
 
@@ -311,7 +299,7 @@ class PageDiff extends Diff
         $title .= ($this->preference['difftype'] === 'inline') ? ' ' : '<br />';
 
         // supplement
-        if (isset($info['date'])) {
+        if (!empty($info['date'])) {
             $RevInfo = new RevisionInfo($info);
             $title .= $RevInfo->showEditSummary().' '.$RevInfo->showEditor();
         }
@@ -326,7 +314,7 @@ class PageDiff extends Diff
         global $lang;
 
         // no revisions selector for PageConflict or PageDraft
-        if ($this->newRevInfo['extra'] == 'compareWith') return;
+        if (($this->newRevInfo['extra'] ?? '') == 'compareWith') return;
 
         // use timestamp for current revision
         [$oldRev, $newRev] = [(int)$this->oldRevInfo['date'], (int)$this->newRevInfo['date']];
@@ -374,7 +362,7 @@ class PageDiff extends Diff
     {
         $changelog =& $this->changelog;
 
-        if ($this->newRevInfo['extra'] == 'compareWith') {
+        if (($this->newRevInfo['extra'] ?? '') == 'compareWith') {
             // no revisions selector for PageConflict or PageDraft
             return array('', '');
         }
