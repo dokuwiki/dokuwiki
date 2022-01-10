@@ -83,14 +83,14 @@ class Recent extends Ui
             $form->addTagOpen('li')->addClass($class);
             $form->addTagOpen('div')->addClass('li');
             $html = implode(' ', [
-                $RevInfo->itemIcon(),          // filetype icon
-                $RevInfo->editDate(),          // edit date and time
-                $RevInfo->difflinkRecent(),    // link to diffview icon
-                $RevInfo->revisionlink(),      // linkto revisions icon
-                $RevInfo->itemName(),          // name of page or media
-                $RevInfo->editSummary(),       // edit summary
-                $RevInfo->editor(),            // editor info
-                $RevInfo->sizechange(),        // size change indicator
+                $RevInfo->showItemIcon(),          // filetype icon
+                $RevInfo->showEditDate(),          // edit date and time
+                $RevInfo->showDifflinkRecent(),    // link to diffview icon
+                $RevInfo->showRevisionlink(),      // linkto revisions icon
+                $RevInfo->showItemName(),          // name of page or media
+                $RevInfo->showEditSummary(),       // edit summary
+                $RevInfo->showEditor(),            // editor info
+                $RevInfo->showSizechange(),        // size change indicator
             ]);
             $form->addHTML($html);
             $form->addTagClose('div');

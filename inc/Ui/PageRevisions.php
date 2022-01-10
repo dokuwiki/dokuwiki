@@ -88,13 +88,13 @@ class PageRevisions extends Revisions
 
             $RevInfo = new RevisionInfo($info);
             $html = implode(' ', [
-                $RevInfo->editDate(true),      // edit date and time
-                $RevInfo->difflinkRevision(),  // link to diffview icon
-                $RevInfo->itemName(),          // name of page or media
-                $RevInfo->editSummary(),       // edit summary
-                $RevInfo->editor(),            // editor info
-                $RevInfo->sizechange(),        // size change indicator
-                $RevInfo->currentIndicator(),  // current indicator (only when k=1)
+                $RevInfo->showEditDate(true),      // edit date and time
+                $RevInfo->showDifflinkRevision(),  // link to diffview icon
+                $RevInfo->showItemName(),          // name of page or media
+                $RevInfo->showEditSummary(),       // edit summary
+                $RevInfo->showEditor(),            // editor info
+                $RevInfo->showSizechange(),        // size change indicator
+                $RevInfo->showCurrentIndicator(),  // current indicator (only when k=1)
             ]);
             $form->addHTML($html);
             $form->addTagClose('div');

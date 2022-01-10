@@ -47,7 +47,7 @@ class RevisionInfo
      *
      * @return string
      */
-    public function itemIcon()
+    public function showItemIcon()
     {
         $id = $this->info['id'];
         switch ($this->info['item']) {
@@ -67,7 +67,7 @@ class RevisionInfo
      * @param bool $checkTimestamp  enable timestamp check, alter formatted string when timestamp is false
      * @return string
      */
-    public function editDate($checkTimestamp = false)
+    public function showEditDate($checkTimestamp = false)
     {
         global $lang;
         $formatted = dformat($this->info['date']);
@@ -85,7 +85,7 @@ class RevisionInfo
      *
      * @return string
      */
-    public function editSummary()
+    public function showEditSummary()
     {
         return '<span class="sum">'.' – '. hsc($this->info['sum']).'</span>';
     }
@@ -96,7 +96,7 @@ class RevisionInfo
      *
      * @return string
      */
-    public function editor()
+    public function showEditor()
     {
         global $lang;
         $html = '<span class="user">';
@@ -116,7 +116,7 @@ class RevisionInfo
      *
      * @return string
      */
-    public function itemName()
+    public function showItemName()
     {
         $id = $this->info['id'];
         $rev = ($this->info['current']) ? '' : $this->info['date'];
@@ -147,7 +147,7 @@ class RevisionInfo
      *
      * @return string
      */
-    public function difflinkRecent()
+    public function showDifflinkRecent()
     {
         global $lang;
         $id = $this->info['id'];
@@ -186,7 +186,7 @@ class RevisionInfo
      *
      * @return string
      */
-    public function difflinkRevision()
+    public function showDifflinkRevision()
     {
         global $lang;
         $id = $this->info['id'];
@@ -225,7 +225,7 @@ class RevisionInfo
      *
      * @return string
      */
-    public function revisionlink()
+    public function showRevisionlink()
     {
         global $lang, $conf;
 
@@ -253,7 +253,7 @@ class RevisionInfo
      *
      * @return string
      */
-    public function sizeChange()
+    public function showSizeChange()
     {
         $class = 'sizechange';
         $value = filesize_h(abs($this->info['sizechange']));
@@ -275,7 +275,7 @@ class RevisionInfo
      *
      * @return string
      */
-    public function currentIndicator()
+    public function showCurrentIndicator()
     {
         global $lang;
         return ($this->info['current']) ? '('.$lang['current'].')' : '';

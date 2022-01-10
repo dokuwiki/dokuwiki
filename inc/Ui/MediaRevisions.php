@@ -87,14 +87,14 @@ class MediaRevisions extends Revisions
 
             $RevInfo = new RevisionInfo($info);
             $html = implode(' ', [
-                $RevInfo->editDate(),          // edit date and time
-                $RevInfo->difflink(),          // link to diffview icon
-                $RevInfo->itemName(),          // name of page or media
+                $RevInfo->showEditDate(),          // edit date and time
+                $RevInfo->showDifflink(),          // link to diffview icon
+                $RevInfo->showItemName(),          // name of page or media
                 '<div>',
-                $RevInfo->editSummary(),       // edit summary
-                $RevInfo->editor(),            // editor info
-                $RevInfo->sizechange(),        // size change indicator
-                $RevInfo->currentIndicator(),  // current indicator (only when k=1)
+                $RevInfo->showEditSummary(),       // edit summary
+                $RevInfo->showEditor(),            // editor info
+                $RevInfo->showSizechange(),        // size change indicator
+                $RevInfo->showCurrentIndicator(),  // current indicator (only when k=1)
                 '</div>',
             ]);
             $form->addHTML($html);
