@@ -2,6 +2,11 @@
 
 namespace dokuwiki;
 
+use dokuwiki\Extension\Event;
+
+/**
+ * Log messages to a daily log file
+ */
 class Logger
 {
     const LOG_ERROR = 'error';
@@ -101,11 +106,48 @@ class Logger
      * @param mixed $details Any details that should be added to the log entry
      * @param string $file A source filename if this is related to a source position
      * @param int $line A line number for the above file
+     * @triggers LOGGER_DATA_FORMAT can be used to change the logged data or intercept it
      * @return bool has a log been written?
      */
     public function log($message, $details = null, $file = '', $line = 0)
     {
-        if(!$this->isLogging) return false;
+        if (!$this->isLogging) return false;
+
+        $datetime = time();
+        $data = [
+            'facility' => $this->facility,
+            'datetime' => $datetime,
+            'message' => $message,
+            'details' => $details,
+            'file' => $file,
+            'line' => $line,
+            'loglines' => [],
+            'logfile' => $this->getLogfile($datetime),
+        ];
+        $event = new Event('LOGGER_DATA_FORMAT', $data);
+
+        if ($event->advise_before()) {
+            $data['loglines'] = $this->formatLogLines($data);
+        }
+        $event->advise_after();
+
+        // only log when any data available
+        if (count($data['loglines'])) {
+            return $this->writeLogLines($data['loglines'], $data['logfile']);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Formats the given data as loglines
+     *
+     * @param array $data Event data from LOGGER_DATA_FORMAT
+     * @return string[] the lines to log
+     */
+    protected function formatLogLines($data)
+    {
+        extract($data);
 
         // details are logged indented
         if ($details) {
@@ -123,15 +165,15 @@ class Logger
         }
 
         // datetime, fileline, message
-        $logline = gmdate('Y-m-d H:i:s') . "\t";
+        $logline = gmdate('Y-m-d H:i:s', $datetime) . "\t";
         if ($file) {
             $logline .= $file;
             if ($line) $logline .= "($line)";
         }
         $logline .= "\t" . $message;
-
         array_unshift($loglines, $logline);
-        return $this->writeLogLines($loglines);
+
+        return $loglines;
     }
 
     /**
@@ -154,11 +196,11 @@ class Logger
      * Write the given lines to today's facility log
      *
      * @param string[] $lines the raw lines to append to the log
+     * @param string $logfile where to write to
      * @return bool true if the log was written
      */
-    protected function writeLogLines($lines)
+    protected function writeLogLines($lines, $logfile)
     {
-        $logfile = $this->getLogfile();
         return io_saveFile($logfile, join("\n", $lines) . "\n", true);
     }
 }
