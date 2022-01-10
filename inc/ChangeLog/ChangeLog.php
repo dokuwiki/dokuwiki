@@ -666,4 +666,17 @@ abstract class ChangeLog
         $this->cache[$this->id][$this->currentRevision] = $revInfo;
         return $this->getRevisionInfo($this->currentRevision);
     }
+
+    /**
+     * Mechanism to trace no-actual external revision
+     * @param int $rev
+     */
+    public function traceExternalRevision($rev);
+    {
+        if ($rev > $this->changelog->lastRevision()) {
+            $rev = $this->changelog->currentRevision();
+        }
+        return $rev;
+    }
+
 }

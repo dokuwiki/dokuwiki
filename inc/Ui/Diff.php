@@ -55,11 +55,10 @@ abstract class Diff extends Ui
      */
     public function compare($oldRev, $newRev)
     {
-        if ($oldRev < $newRev) {
-            [$this->oldRev, $this->newRev] = [$oldRev, $newRev];
-        } else {
-            [$this->oldRev, $this->newRev] = [$newRev, $oldRev];
-        }
+        if ($newRev < $oldRev) [$oldRev, $newRev] = [$newRev, $oldRev];
+        // set correct newRev when it is non-actual revision
+        $newRev = $this->changelog->traceExternalRevision($newRev);
+        [$this->oldRev, $this->newRev] = [$oldRev2, $newRev];
         return $this;
     }
 
@@ -113,15 +112,13 @@ abstract class Diff extends Ui
         $rev2 = $INPUT->arr('rev2', []);
         if (count($rev2) > 1) {
             if ($rev2[1] < $rev2[0]) [$rev2[0], $rev2[1]] = [$rev2[1], $rev2[0]];
-            // check whether rev2[1] is non-actual revision
-            if ($rev2[1] > $changelog->lastRevision()) {
-                $rev2[1] = $changelog->currentRevision();
-            }
+            // set correct rev2[1] when it is non-actual revision
+            $rev2[1] = $changelog->traceExternalRevision($rev2[1]);
             [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
         }
 
+        // no revision was given, compare previous to current
         if (!isset($this->oldRev, $this->newRev)) {
-            // no revision was given, compare previous to current
             // newRev and oldRev may become false when page had never existed.
             // oldRev may become false when page is just created anyway
             $rev2[1] = $changelog->currentRevision();
