@@ -295,13 +295,13 @@ class MediaDiff extends Diff
                 if (!$value) $value = '-';
                 echo '<dt>'.$lang[$tag['tag'][1]].'</dt>';
                 echo '<dd>';
-                if ($tag['highlighted']) echo '<strong>';
+                if (isset($tag['highlighted']) && $tag['highlighted']) echo '<strong>';
                 if ($tag['tag'][2] == 'date') {
                     echo dformat($value);
                 } else {
                     echo hsc($value);
                 }
-                if ($tag['highlighted']) echo '</strong>';
+                if (isset($tag['highlighted']) && $tag['highlighted']) echo '</strong>';
                 echo '</dd>';
             }
             echo '</dl>';
