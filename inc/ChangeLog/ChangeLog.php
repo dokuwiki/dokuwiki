@@ -671,10 +671,10 @@ abstract class ChangeLog
      * Mechanism to trace no-actual external revision
      * @param int $rev
      */
-    public function traceExternalRevision($rev);
+    public function traceExternalRevision($rev)
     {
-        if ($rev > $this->changelog->lastRevision()) {
-            $rev = $this->changelog->currentRevision();
+        if ($rev > $this->lastRevision()) {
+            $rev = $this->currentRevision();
         }
         return $rev;
     }
