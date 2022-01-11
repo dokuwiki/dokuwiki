@@ -97,13 +97,13 @@ abstract class Diff extends Ui
 
         // difflink icon click, eg. ?rev=123456789&do=diff
         if ($INPUT->has('rev')) {
-            // compare given revision to current
+            // compare given revision with current
             $rev2[1] = $changelog->currentRevision();
             $rev2[0] = $INPUT->int('rev');
             if ($rev2[0] < $rev2[1]) {
                 [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
             } else {
-                // fallback to compare previous to current
+                // fallback to compare previous with current revision
                 unset($rev2);
             }
         }
@@ -117,7 +117,7 @@ abstract class Diff extends Ui
             [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
         }
 
-        // no revision was given, compare previous to current
+        // no revision was given, compare previous with current revision
         if (!isset($this->oldRev, $this->newRev)) {
             // newRev and oldRev may become false when page had never existed.
             // oldRev may become false when page is just created anyway

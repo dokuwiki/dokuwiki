@@ -52,12 +52,10 @@ class RevisionInfo
         $id = $this->info['id'];
         switch ($this->info['item']) {
             case 'media': // media file revision
-                $html = media_printicon($id);
-                break;
+                return media_printicon($id);
             case 'page': // page revision
-                $html = '<img class="icon" src="'.DOKU_BASE.'lib/images/fileicons/file.png" alt="'.$id.'" />';
+                return '<img class="icon" src="'.DOKU_BASE.'lib/images/fileicons/file.png" alt="'.$id.'" />';
         }
-        return $html;
     }
 
     /**
@@ -99,15 +97,14 @@ class RevisionInfo
     public function showEditor()
     {
         global $lang;
-        $html = '<span class="user">';
+        $html = '';
         if ($this->info['user']) {
             $html.= '<bdi>'. editorinfo($this->info['user']) .'</bdi>';
-            if (auth_ismanager()) $html.= ' <bdo dir="ltr">('. $this->info['ip'] .')</bdo>';
+            if (auth_ismanager()) $html .= ' <bdo dir="ltr">('. $this->info['ip'] .')</bdo>';
         } else {
             $html.= '<bdo dir="ltr">'. $this->info['ip'] .'</bdo>';
         }
-        $html.= '</span>';
-        return $html;
+        return '<span class="user">'. $html. '</span>';
     }
 
     /**
@@ -126,10 +123,11 @@ class RevisionInfo
                 $params = ['tab_details'=> 'view', 'ns'=> getNS($id), 'image'=> $id];
                 if ($rev) $params += ['rev'=> $rev];
                 $href = media_managerURL($params, '&');
+                $display_name = $id;
                 $class = file_exists(mediaFN($id, $rev)) ? 'wikilink1' : 'wikilink2';
-                return '<a href="'.$href.'" class="'.$class.'">'.$id.'</a>';
+                break;
             case 'page': // page revision
-                $params = ($rev)  ? '' : "rev=$rev";
+                $params = ($rev)  ? [] : ['rev'=> $rev];
                 $href = wl($id, $params, false, '&');
                 $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
                 if (!$display_name) $display_name = $id;
@@ -137,17 +135,17 @@ class RevisionInfo
                 if ($this->info['type'] == DOKU_CHANGE_TYPE_DELETE) {
                     $class = 'wikilink2';
                 }
-                return '<a href="'.$href.'" class="'.$class.'">'.$display_name.'</a>';
         }
+        return '<a href="'.$href.'" class="'.$class.'">'.$display_name.'</a>';
     }
 
     /**
-     * difflink icon in recents list
-     * all items in the recents are "current" revision of the page or media
+     * difflink icon in recents list, to compare (this) current revision with previous one
+     * all items in "recent changes" are current revision of the page or media
      *
      * @return string
      */
-    public function showDifflinkRecent()
+    public function showIconCompareWithPrevious()
     {
         global $lang;
         $id = $this->info['id'];
@@ -155,77 +153,75 @@ class RevisionInfo
         $href = '';
         switch ($this->info['item']) {
             case 'media': // media file revision
+                // unlile page, media file does not copyed to attic when uploaded.
                 $revs = (new MediaChangeLog($id))->getRevisions(0, 1);
-                $showLink = (count($revs) && file_exists(mediaFN($id)));
+                $showLink = (count($revs) && file_exists(mediaFN($id,$revs[0])) && file_exists(mediaFN($id)));
                 if ($showLink) {
-                    $href = media_managerURL(
-                        ['tab_details'=>'history', 'mediado'=>'diff', 'image'=> $id, 'ns'=> getNS($id)], '&'
-                    );
+                    $param = ['tab_details'=>'history', 'mediado'=>'diff', 'ns'=> getNS($id), 'image'=> $id];
+                    $href = media_managerURL($param, '&');
                 }
                 break;
             case 'page': // page revision
+                // when a page just created anyway, it is natural to expect no older revisions
+                // even if it had once existed but deleted before. Simply ignore to check changelog.
                 if($this->info['type'] !== DOKU_CHANGE_TYPE_CREATE) {
-                    $href = wl($id, "do=diff", false, '&');
+                    $href = wl($id, ['do'=>'diff'], false, '&');
                 }
         }
 
         if ($href) {
-            $html = '<a href="'.$href.'" class="diff_link">'
-                  . '<img src="'.DOKU_BASE.'lib/images/diff.png" width="15" height="11"'
-                  . ' title="'.$lang['diff'].'" alt="'.$lang['diff'].'" />'
-                  . '</a>';
+            return '<a href="'.$href.'" class="diff_link">'
+                  .'<img src="'.DOKU_BASE.'lib/images/diff.png" width="15" height="11"'
+                  .' title="'. $lang['diff'] .'" alt="'.$lang['diff'] .'" />'
+                  .'</a>';
         } else {
-            $html = '<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />';
+            return '<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />';
         }
-        return $html;
     }
 
     /**
-     * difflink icon in revsions list
+     * difflink icon in revsions list, compare this revision with current one
      * the icon does not displayed for the current revision
      *
      * @return string
      */
-    public function showDifflinkRevision()
+    public function showIconCompareWithCurrent()
     {
         global $lang;
         $id = $this->info['id'];
         $rev = $this->info['date'];
 
+        $href = '';
         switch ($this->info['item']) {
             case 'media': // media file revision
-                if ($this->info['current'] || !file_exists(mediaFN($id, $rev))) {
-                    $html = '<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />';
-                } else {
-                    $href = media_managerURL(['image'=> $id, 'rev'=> $rev, 'mediado'=>'diff'], '&');
-                    $html = '<a href="'.$href.'" class="diff_link">'
-                          . '<img src="'.DOKU_BASE.'lib/images/diff.png" width="15" height="11"'
-                          . ' title="'. $lang['diff'] .'" alt="'.$lang['diff'] .'" />'
-                          . '</a> ';
+                if (!$this->info['current'] && file_exists(mediaFN($id, $rev))) {
+                    $param = ['mediado'=>'diff', 'image'=> $id, 'rev'=> $rev];
+                    $href = media_managerURL($param, '&');
                 }
-                return $html;
+                break;
             case 'page': // page revision
-                if ($this->info['current'] || !page_exists($id, $rev)) {
-                    $html = '<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />';
-                } else {
-                    $href = wl($id, "rev=$rev,do=diff", false, '&');
-                    $html = '<a href="'.$href.'" class="diff_link">'
-                          . '<img src="'.DOKU_BASE.'lib/images/diff.png" width="15" height="11"'
-                          . ' title="'.$lang['diff'].'" alt="'.$lang['diff'].'" />'
-                          . '</a>';
+                if (!$this->info['current']) {
+                    $href = wl($id, ['rev'=> $rev, 'do'=>'diff'], false, '&');
                 }
-                return $html;
         }
-        return '';
+
+        if ($href) {
+            return '<a href="'.$href.'" class="diff_link">'
+                  .'<img src="'.DOKU_BASE.'lib/images/diff.png" width="15" height="11"'
+                  .' title="'. $lang['diff'] .'" alt="'.$lang['diff'] .'" />'
+                  .'</a>';
+        } else {
+            return '<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />';
+        }
     }
 
     /**
-     * icon revision link
+     * icon for revision action
      * used in [Ui\recent]
      *
      * @return string
      */
-    public function showRevisionlink()
+    public function showIconRevisions()
     {
         global $lang, $conf;
 
@@ -236,10 +232,11 @@ class RevisionInfo
         $id = $this->info['id'];
         switch ($this->info['item']) {
             case 'media': // media file revision
-                $href = media_managerURL(['tab_details'=>'history', 'image'=> $id, 'ns'=> getNS($id)], '&');
+                $param  = ['tab_details'=>'history', 'ns'=> getNS($id), 'image'=> $id];
+                $href = media_managerURL($param, '&');
                 break;
             case 'page': // page revision
-                $href = wl($id, "do=revisions", false, '&');
+                $href = wl($id, ['do'=>'revisions'], false, '&');
         }
         return '<a href="'.$href.'" class="revisions_link">'
               . '<img src="'.DOKU_BASE.'lib/images/history.png" width="12" height="14"'
