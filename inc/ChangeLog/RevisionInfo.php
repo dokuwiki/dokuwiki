@@ -128,7 +128,7 @@ class RevisionInfo
                 $class = file_exists(mediaFN($id, $rev)) ? 'wikilink1' : 'wikilink2';
                 return '<a href="'.$href.'" class="'.$class.'">'.$id.'</a>';
             case 'page': // page revision
-                $params = ($rev)  ? '' : "rev=$rev";
+                $params = $rev ? ['rev'=> $rev] : [];
                 $href = wl($id, $params, false, '&');
                 $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
                 if (!$display_name) $display_name = $id;
