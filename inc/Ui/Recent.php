@@ -76,10 +76,10 @@ class Recent extends Ui
         foreach ($recents as $recent) {
             // check possible external edition for current page or media
             $this->checkCurrentRevision($recent);
-            $recent['current'] = true;
 
             $RevInfo = new RevisionInfo($recent);
-            $class = ($recent['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor': '';
+            $RevInfo->isCurrent(true);
+            $class = ($RevInfo->val('type') === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor': '';
             $form->addTagOpen('li')->addClass($class);
             $form->addTagOpen('div')->addClass('li');
             $html = implode(' ', [

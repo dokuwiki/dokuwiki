@@ -214,7 +214,7 @@ class PageDiff extends Diff
         //navigation and header
         switch ($this->preference['difftype']) {
             case 'inline':
-                if ($this->newRevInfo['rev'] !== false) {
+                if (($this->newRevInfo['extra'] ?? '') !== 'compareWith') {
                     echo '<tr>'
                         .'<td class="diff-lineheader">-</td>'
                         .'<td class="diffnav">'. $navOlderRevisions .'</td>'
@@ -238,7 +238,7 @@ class PageDiff extends Diff
 
             case 'sidebyside':
             default:
-                if ($this->newRevInfo['rev'] !== false) {
+                if (($this->newRevInfo['extra'] ?? '') !== 'compareWith') {
                     echo '<tr>'
                         .'<td colspan="2" class="diffnav">'. $navOlderRevisions .'</td>'
                         .'<td colspan="2" class="diffnav">'. $navNewerRevisions .'</td>'
@@ -275,34 +275,36 @@ class PageDiff extends Diff
             return $lang['yours'];
         }
 
-        // revision info may have timestamp key when external edits occurred
-        $info['timestamp'] = $info['timestamp'] ?? true;
-
-        if (!empty($info['date'])) {
-            $rev = $info['date'];
-            if ($info['timestamp'] === false) {
-                // exteranlly deleted or older file restored
-                $title = '<bdi><a class="wikilink2" href="'.wl($this->id).'">'
-                   . $this->id .' ['. $lang['unknowndate'] .']'.'</a></bdi>';
-            } else {
-                $title = '<bdi><a class="wikilink1" href="'.wl($this->id, ['rev' => $rev]).'">'
-                   . $this->id .' ['. dformat($rev) .']'.'</a></bdi>';
-            }
-        } else {
-            $title = '&mdash;';
+        // illegular revisison info
+        if (empty($info['date'])) {
+            return '&mdash;';
         }
-        if (!empty($info['current'])) {
-            $title .= '&nbsp;('.$lang['current'].')';
+
+        $RevInfo = new RevisionInfo($info);
+        $id = $RevInfo->val('id');
+        $rev = $RevInfo->isCurrent() ? '' : $RevInfo->val('date');
+        $params = ($rev) ? ['rev'=> $rev] : [];
+        $href = wl($id, $params, false, '&');
+        $class = page_exists($id, $rev) ? 'wikilink1' : 'wikilink2';
+        if ($RevInfo->val('type') == DOKU_CHANGE_TYPE_DELETE) {
+            $class = 'wikilink2';
+        }
+        // revision info may have timestamp key when external edits occurred
+        $date = ($RevInfo->val('timestamp') === false)
+            ? $lang['unknowndate']
+            : dformat($RevInfo->val('date'));
+
+        $title = '<bdi><a class="'.$class.'" href="'.$href.'">'.$id.' ['.$date.']'.'</a></bdi>';
+
+        if ($RevInfo->isCurrent()) {
+            $title .= '&nbsp;'. $RevInfo->showCurrentIndicator();
         }
 
         // append separator
         $title .= ($this->preference['difftype'] === 'inline') ? ' ' : '<br />';
 
         // supplement
-        if (!empty($info['date'])) {
-            $RevInfo = new RevisionInfo($info);
-            $title .= $RevInfo->showEditSummary().' '.$RevInfo->showEditor();
-        }
+        $title .= $RevInfo->showEditSummary().' '.$RevInfo->showEditor();
         return $title;
     }
 

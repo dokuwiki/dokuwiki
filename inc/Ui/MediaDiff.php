@@ -324,26 +324,36 @@ class MediaDiff extends Diff
     {
         global $lang, $INFO;
 
-        if (isset($info['date'])) {
-            $rev = $info['date'];
-            $title = '<bdi><a class="wikilink1" href="'.ml($this->id, ['rev' => $rev]).'">'
-                   . dformat($rev).'</a></bdi>';
-        } else {
-            $rev = false;
-            $title = '&mdash;';
+        // illegular revisison info
+        if (empty($info['date'])) {
+            return '&mdash;';
         }
-        if (isset($info['current']) || ($rev && $rev == $INFO['currentrev'])) {
-            $title .= '&nbsp;('.$lang['current'].')';
+
+        $RevInfo = new RevisionInfo($info);
+        $id = $RevInfo->val('id');
+        $rev = $RevInfo->isCurrent() ? '' : $RevInfo->val('date');
+        $params = ($rev) ? ['rev'=> $rev] : [];
+        $href = ml($id, $params, false, '&');
+        $class = file_exists(mediaFN($id, $rev)) ? 'wikilink1' : 'wikilink2';
+        if ($RevInfo->val('type') == DOKU_CHANGE_TYPE_DELETE) {
+            $class = 'wikilink2';
+        }
+        // revision info may have timestamp key when external edits occurred
+        $date = ($RevInfo->val('timestamp') === false)
+            ? $lang['unknowndate']
+            : dformat($RevInfo->val('date'));
+
+        $title = '<bdi><a class="'.$class.'" href="'.$href.'">'.$id.' ['.$date.']'.'</a></bdi>';
+
+        if ($RevInfo->isCurrent()) {
+            $title .= '&nbsp;'. $RevInfo->showCurrentIndicator();
         }
 
         // append separator
         $title .= ($this->preference['difftype'] === 'inline') ? ' ' : '<br />';
 
         // supplement
-        if (isset($info['date'])) {
-            $RevInfo = new RevisionInfo($info);
-            $title .= $RevInfo->showEditSummary().' '.$RevInfo->showEditor();
-        }
+        $title .= $RevInfo->showEditSummary().' '.$RevInfo->showEditor();
         return $title;
     }
 

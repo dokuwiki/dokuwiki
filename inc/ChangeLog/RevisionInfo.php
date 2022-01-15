@@ -12,6 +12,7 @@ namespace dokuwiki\ChangeLog;
  */
 class RevisionInfo
 {
+    /* @var array */
     protected $info;
 
     /**
@@ -26,20 +27,67 @@ class RevisionInfo
      *      - sum:   edit summary (or action reason)
      *      - extra: extra data (varies by line type)
      *      - sizechange: change of filesize
-     *      additionally,
-     *      - current:   (optional) whether current revison or not
      *      - timestamp: (optional) set only when external edits occurred
      */
     public function __construct(array $info)
     {
         $info['item'] = strrpos($info['id'], '.') ? 'media' : 'page';
-        // current is always true for irems shown in Ui\Recents
-        $info['current'] = $info['current'] ?? true;
         // revision info may have timestamp key when external edits occurred
         $info['timestamp'] = $info['timestamp'] ?? true;
 
         $this->info = $info;
     }
+
+    /**
+     * Set or return whether this revison is current page or media file
+     *
+     * This method does not check exactly whether the revision is current or not. Instead,
+     * set value of associated "current" key for internal use. Some UI element like diff
+     * link button depend on relation to current page or media file. A changelog line does
+     * not indicate whether it coresponds to current page or media file.
+     *
+     * @param bool $value true if the revision is current, otherwise false
+     * @return bool
+     */
+    public function isCurrent($value = null)
+    {
+        return $this->val('current', $value);
+    }
+
+    /**
+     * Return or set a value of assosiated key of revision infomation
+     * but does not allow to change values of existing keys
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return string|null
+     */
+    public function val($key, $value = null)
+    {
+        if (isset($value) && !array_key_exists($key, $this->info)) {
+            // setter, only for new keys
+            $this->info[$key] = $value;
+        }
+        if (array_key_exists($key, $this->info)) {
+            // getter
+            return $this->info[$key];
+        }
+        return null;
+    }
+
+    /**
+     * Set extra key-value information to the revision infomation
+     * but does not allow to change values of existing keys
+     * @param array $info
+     * @return void
+     */
+    public function append(array $info)
+    {
+        foreach ($info as $key => $value) {
+            $this->val($key, $value);
+        }
+    }
+
 
     /**
      * fileicon of the page or media file
@@ -49,8 +97,8 @@ class RevisionInfo
      */
     public function showItemIcon()
     {
-        $id = $this->info['id'];
-        switch ($this->info['item']) {
+        $id = $this->val('id');
+        switch ($this->val('item')) {
             case 'media': // media file revision
                 return media_printicon($id);
             case 'page': // page revision
@@ -68,8 +116,8 @@ class RevisionInfo
     public function showEditDate($checkTimestamp = false)
     {
         global $lang;
-        $formatted = dformat($this->info['date']);
-        if ($checkTimestamp && $this->info['timestamp'] === false) {
+        $formatted = dformat($this->val('date'));
+        if ($checkTimestamp && $this->val('timestamp') === false) {
             // exact date is unknown for item has externally deleted or older file restored
             // when unknown, alter formatted string "YYYY-mm-DD HH:MM" to "____-__-__ __:__"
             $formatted = preg_replace('/[0-9a-zA-Z]/','_', $formatted);
@@ -85,7 +133,7 @@ class RevisionInfo
      */
     public function showEditSummary()
     {
-        return '<span class="sum">'.' – '. hsc($this->info['sum']).'</span>';
+        return '<span class="sum">'.' – '. hsc($this->val('sum')).'</span>';
     }
 
     /**
@@ -98,11 +146,11 @@ class RevisionInfo
     {
         global $lang;
         $html = '';
-        if ($this->info['user']) {
-            $html.= '<bdi>'. editorinfo($this->info['user']) .'</bdi>';
-            if (auth_ismanager()) $html .= ' <bdo dir="ltr">('. $this->info['ip'] .')</bdo>';
+        if ($this->val('user')) {
+            $html.= '<bdi>'. editorinfo($this->val('user')) .'</bdi>';
+            if (auth_ismanager()) $html .= ' <bdo dir="ltr">('. $this->val('ip') .')</bdo>';
         } else {
-            $html.= '<bdo dir="ltr">'. $this->info['ip'] .'</bdo>';
+            $html.= '<bdo dir="ltr">'. $this->val('ip') .'</bdo>';
         }
         return '<span class="user">'. $html. '</span>';
     }
@@ -115,10 +163,10 @@ class RevisionInfo
      */
     public function showItemName()
     {
-        $id = $this->info['id'];
-        $rev = ($this->info['current']) ? '' : $this->info['date'];
+        $id = $this->val('id');
+        $rev = $this->isCurrent() ? '' : $this->val('date');
 
-        switch ($this->info['item']) {
+        switch ($this->val('item')) {
             case 'media': // media file revision
                 $params = ['tab_details'=> 'view', 'ns'=> getNS($id), 'image'=> $id];
                 if ($rev) $params += ['rev'=> $rev];
@@ -127,14 +175,14 @@ class RevisionInfo
                 $class = file_exists(mediaFN($id, $rev)) ? 'wikilink1' : 'wikilink2';
                 break;
             case 'page': // page revision
-                $params = ($rev)  ? [] : ['rev'=> $rev];
+                $params = ($rev) ? ['rev'=> $rev] : [];
                 $href = wl($id, $params, false, '&');
                 $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
                 if (!$display_name) $display_name = $id;
                 $class = page_exists($id, $rev) ? 'wikilink1' : 'wikilink2';
-                if ($this->info['type'] == DOKU_CHANGE_TYPE_DELETE) {
-                    $class = 'wikilink2';
-                }
+        }
+        if ($this->val('type') == DOKU_CHANGE_TYPE_DELETE) {
+            $class = 'wikilink2';
         }
         return '<a href="'.$href.'" class="'.$class.'">'.$display_name.'</a>';
     }
@@ -148,10 +196,10 @@ class RevisionInfo
     public function showIconCompareWithPrevious()
     {
         global $lang;
-        $id = $this->info['id'];
+        $id = $this->val('id');
 
         $href = '';
-        switch ($this->info['item']) {
+        switch ($this->val('item')) {
             case 'media': // media file revision
                 // unlile page, media file does not copyed to attic when uploaded.
                 $revs = (new MediaChangeLog($id))->getRevisions(0, 1);
@@ -164,7 +212,7 @@ class RevisionInfo
             case 'page': // page revision
                 // when a page just created anyway, it is natural to expect no older revisions
                 // even if it had once existed but deleted before. Simply ignore to check changelog.
-                if($this->info['type'] !== DOKU_CHANGE_TYPE_CREATE) {
+                if ($this->val('type') !== DOKU_CHANGE_TYPE_CREATE) {
                     $href = wl($id, ['do'=>'diff'], false, '&');
                 }
         }
@@ -188,19 +236,19 @@ class RevisionInfo
     public function showIconCompareWithCurrent()
     {
         global $lang;
-        $id = $this->info['id'];
-        $rev = $this->info['date'];
+        $id = $this->val('id');
+        $rev = $this->isCurrent() ? '' : $this->val('date');
 
         $href = '';
-        switch ($this->info['item']) {
+        switch ($this->val('item')) {
             case 'media': // media file revision
-                if (!$this->info['current'] && file_exists(mediaFN($id, $rev))) {
+                if (!$this->isCurrent() && file_exists(mediaFN($id, $rev))) {
                     $param = ['mediado'=>'diff', 'image'=> $id, 'rev'=> $rev];
                     $href = media_managerURL($param, '&');
                 }
                 break;
             case 'page': // page revision
-                if (!$this->info['current']) {
+                if (!$this->isCurrent()) {
                     $href = wl($id, ['rev'=> $rev, 'do'=>'diff'], false, '&');
                 }
         }
@@ -223,14 +271,14 @@ class RevisionInfo
      */
     public function showIconRevisions()
     {
-        global $lang, $conf;
+        global $lang;
 
         if (!actionOK('revisions')) {
-            return '';  //FIXME check page, media 
+            return '';
         }
 
-        $id = $this->info['id'];
-        switch ($this->info['item']) {
+        $id = $this->val('id');
+        switch ($this->val('item')) {
             case 'media': // media file revision
                 $param  = ['tab_details'=>'history', 'ns'=> getNS($id), 'image'=> $id];
                 $href = media_managerURL($param, '&');
@@ -253,11 +301,11 @@ class RevisionInfo
     public function showSizeChange()
     {
         $class = 'sizechange';
-        $value = filesize_h(abs($this->info['sizechange']));
-        if ($this->info['sizechange'] > 0) {
+        $value = filesize_h(abs($this->val('sizechange')));
+        if ($this->val('sizechange') > 0) {
             $class .= ' positive';
             $value = '+' . $value;
-        } elseif ($this->info['sizechange'] < 0) {
+        } elseif ($this->val('sizechange') < 0) {
             $class .= ' negative';
             $value = '-' . $value;
         } else {
@@ -275,7 +323,7 @@ class RevisionInfo
     public function showCurrentIndicator()
     {
         global $lang;
-        return ($this->info['current']) ? '('.$lang['current'].')' : '';
+        return $this->isCurrent() ? '('.$lang['current'].')' : '';
     }
 
 

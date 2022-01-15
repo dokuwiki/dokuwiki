@@ -69,13 +69,14 @@ class PageRevisions extends Revisions
         $form->addTagOpen('ul');
         foreach ($revisions as $info) {
             $rev = $info['date'];
-            $info['current'] = $changelog->isCurrentRevision($rev);
+            $RevInfo = new RevisionInfo($info);
+            $RevInfo->isCurrent($changelog->isCurrentRevision($rev));
 
-            $class = ($info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor' : '';
+            $class = ($RevInfo->val('type') === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor' : '';
             $form->addTagOpen('li')->addClass($class);
             $form->addTagOpen('div')->addClass('li');
 
-            if (isset($info['current'])) {
+            if ($RevInfo->isCurrent()) {
                 $form->addCheckbox('rev2[]')->val($rev);
             } elseif ($rev == $REV) {
                 $form->addCheckbox('rev2[]')->val($rev)->attr('checked','checked');
@@ -86,7 +87,6 @@ class PageRevisions extends Revisions
             }
             $form->addHTML(' ');
 
-            $RevInfo = new RevisionInfo($info);
             $html = implode(' ', [
                 $RevInfo->showEditDate(true),           // edit date and time
                 $RevInfo->showIconCompareWithCurrent(), // link to diffview icon
