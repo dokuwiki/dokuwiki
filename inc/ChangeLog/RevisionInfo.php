@@ -27,13 +27,13 @@ class RevisionInfo
      *      - extra: extra data (varies by line type)
      *      - sizechange: change of filesize
      *      additionally,
-     *      - current:   (optional) whether current revison or not
+     *      - current:   (optional) whether current revision or not
      *      - timestamp: (optional) set only when external edits occurred
      */
     public function __construct(array $info)
     {
         $info['item'] = strrpos($info['id'], '.') ? 'media' : 'page';
-        // current is always true for irems shown in Ui\Recents
+        // current is always true for items shown in Ui\Recents
         $info['current'] = $info['current'] ?? true;
         // revision info may have timestamp key when external edits occurred
         $info['timestamp'] = $info['timestamp'] ?? true;
@@ -125,16 +125,29 @@ class RevisionInfo
                 $params = ['tab_details'=> 'view', 'ns'=> getNS($id), 'image'=> $id];
                 if ($rev) $params += ['rev'=> $rev];
                 $href = media_managerURL($params, '&');
-                $class = file_exists(mediaFN($id, $rev)) ? 'wikilink1' : 'wikilink2';
+                if(file_exists(mediaFN($id, $rev))) {
+                    $class = 'wikilink1';
+                } else {
+                    $class = 'wikilink2';
+                    if(!$this->info['current']) {
+                        //revision is not in attic
+                        return $id;
+                    }
+                }
                 return '<a href="'.$href.'" class="'.$class.'">'.$id.'</a>';
             case 'page': // page revision
                 $params = $rev ? ['rev'=> $rev] : [];
                 $href = wl($id, $params, false, '&');
                 $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
                 if (!$display_name) $display_name = $id;
-                $class = page_exists($id, $rev) ? 'wikilink1' : 'wikilink2';
-                if ($this->info['type'] == DOKU_CHANGE_TYPE_DELETE) {
+                if(page_exists($id, $rev)) {
+                    $class = 'wikilink1';
+                } else {
                     $class = 'wikilink2';
+                    if(!$this->info['current']) {
+                        //revision is not in attic
+                        return $display_name;
+                    }
                 }
                 return '<a href="'.$href.'" class="'.$class.'">'.$display_name.'</a>';
         }
