@@ -88,7 +88,7 @@ class MediaRevisions extends Revisions
             $RevInfo = new RevisionInfo($info);
             $html = implode(' ', [
                 $RevInfo->editDate(),          // edit date and time
-                $RevInfo->difflink(),          // link to diffview icon
+                $RevInfo->difflinkRevision(),  // link to diffview icon
                 $RevInfo->itemName(),          // name of page or media
                 '<div>',
                 $RevInfo->editSummary(),       // edit summary
