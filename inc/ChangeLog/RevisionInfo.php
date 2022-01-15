@@ -50,6 +50,7 @@ class RevisionInfo
     public function itemIcon()
     {
         $id = $this->info['id'];
+        $html = '';
         switch ($this->info['item']) {
             case 'media': // media file revision
                 $html = media_printicon($id);
@@ -69,7 +70,6 @@ class RevisionInfo
      */
     public function editDate($checkTimestamp = false)
     {
-        global $lang;
         $formatted = dformat($this->info['date']);
         if ($checkTimestamp && $this->info['timestamp'] === false) {
             // exact date is unknown for item has externally deleted or older file restored
@@ -98,7 +98,6 @@ class RevisionInfo
      */
     public function editor()
     {
-        global $lang;
         $html = '<span class="user">';
         if ($this->info['user']) {
             $html.= '<bdi>'. editorinfo($this->info['user']) .'</bdi>';
@@ -139,6 +138,8 @@ class RevisionInfo
                 }
                 return '<a href="'.$href.'" class="'.$class.'">'.$display_name.'</a>';
         }
+
+        return '';
     }
 
     /**
@@ -227,13 +228,14 @@ class RevisionInfo
      */
     public function revisionlink()
     {
-        global $lang, $conf;
+        global $lang;
 
         if (!actionOK('revisions')) {
-            return '';  //FIXME check page, media 
+            return '';  //FIXME check page, media
         }
 
         $id = $this->info['id'];
+        $href = '';
         switch ($this->info['item']) {
             case 'media': // media file revision
                 $href = media_managerURL(['tab_details'=>'history', 'image'=> $id, 'ns'=> getNS($id)], '&');
