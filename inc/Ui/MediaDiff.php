@@ -9,7 +9,9 @@ use InvalidArgumentException;
 use JpegMeta;
 
 /**
- * DokuWiki MediaDiff Interface
+ * DokuWiki MediaDiff
+ *
+ * compare two revisions of the media file
  *
  * @package dokuwiki\Ui
  */
@@ -18,9 +20,10 @@ class MediaDiff extends Diff
     /* @var MediaChangeLog */
     protected $changelog;
 
-    /* @var array */
-    protected $oldRevInfo;
-    protected $newRevInfo;
+    /* @var RevisionInfo older revision */
+    protected $Revision1;
+    /* @var RevisionInfo newer revision */
+    protected $Revision2;
 
     /* @var bool */
     protected $is_img;
@@ -74,38 +77,34 @@ class MediaDiff extends Diff
     protected function preProcess()
     {
         $changelog =& $this->changelog;
+        [$oldRev, $newRev] = [$this->oldRev, $this->newRev];
 
-        // revision info of older file (left side)
-        $this->oldRevInfo = $changelog->getRevisionInfo($this->oldRev);
-        // revision info of newer file (right side)
-        $this->newRevInfo = $changelog->getRevisionInfo($this->newRev);
+        // create revision info object for older and newer sides
+        // RevInfo1 : older, left side
+        // RevInfo2 : newer, right side
+        $this->Revision1 = new RevisionInfo($changelog->getRevisionInfo($oldRev));
+        $this->Revision2 = new RevisionInfo($changelog->getRevisionInfo($newRev));
 
         $this->is_img = preg_match('/\.(jpe?g|gif|png)$/', $this->id);
 
-        foreach ([&$this->oldRevInfo, &$this->newRevInfo] as &$revInfo) {
-            // use timestamp and '' properly as $rev for the current file
-            $isCurrent = $changelog->isCurrentRevision($revInfo['date']);
-            $revInfo += [
-                'current' => $isCurrent,
-                'rev'     => $isCurrent ? '' : $revInfo['date'],
-            ];
-
-            // headline in the Diff view navigation
-            $revInfo['navTitle'] = $this->revisionTitle($revInfo);
+        foreach ([$this->Revision1, $this->Revision2] as $Revision) {
+            $isCurrent = $changelog->isCurrentRevision((int)$Revision->val('date'));
+            $Revision->isCurrent($isCurrent);
 
             if ($this->is_img) {
-                $rev = $revInfo['rev'];
+                $rev = $isCurrent ? '' : $Revision->val('date');
                 $meta = new JpegMeta(mediaFN($this->id, $rev));
                 // get image width and height for the mediamanager preview panel
-                $revInfo['previewSize'] = media_image_preview_size($this->id, $rev, $meta);
+                $Revision->append([
+                    'previewSize' => media_image_preview_size($this->id, $rev, $meta)
+                ]);
             }
         }
-        unset($revInfo);
 
         // re-check image, ensure minimum image width for showImageDiff()
         $this->is_img = ($this->is_img
-            && ($this->oldRevInfo['previewSize'][0] ?? 0) >= 30
-            && ($this->newRevInfo['previewSize'][0] ?? 0) >= 30
+            && ($this->Revision1->val('previewSize')[0] ?? 0) >= 30
+            && ($this->Revision2->val('previewSize')[0] ?? 0) >= 30
         );
         // adjust requested diff view type
         if (!$this->is_img) {
@@ -164,8 +163,8 @@ class MediaDiff extends Diff
      */
     protected function showDiffViewSelector()
     {
-        // use timestamp for current revision
-        [$oldRev, $newRev] = [(int)$this->oldRevInfo['date'], (int)$this->newRevInfo['date']];
+        // revision information object
+        [$Revision1, $Revision2] = [$this->Revision1, $this->Revision2];
 
         echo '<div class="diffoptions group">';
 
@@ -178,8 +177,8 @@ class MediaDiff extends Diff
         $form->addTagOpen('div')->addClass('no');
         $form->setHiddenField('sectok', null);
         $form->setHiddenField('mediado', 'diff');
-        $form->setHiddenField('rev2[0]', $oldRev);
-        $form->setHiddenField('rev2[1]', $newRev);
+        $form->setHiddenField('rev2[0]', (int)$Revision1->val('date'));
+        $form->setHiddenField('rev2[1]', (int)$Revision2->val('date'));
         $form->addTagClose('div');
         echo $form->toHTML();
 
@@ -194,15 +193,18 @@ class MediaDiff extends Diff
      */
     protected function showImageDiff()
     {
+        // revision information object
+        [$Revision1, $Revision2] = [$this->Revision1, $this->Revision2];
+
+        $oldRev = $Revision1->isCurrent() ? '' : $Revision1->val('date');
+        $newRev = $Revision2->isCurrent() ? '' : $Revision2->val('date');
+
         // diff view type: opacity or portions
         $type = $this->preference['difftype'];
 
-        // use '' for current revision
-        [$oldRev, $newRev] = [$this->oldRevInfo['rev'], $this->newRevInfo['rev']];
-
         // adjust image width, right side (newer) has priority
-        $oldRevSize = $this->oldRevInfo['previewSize'];
-        $newRevSize = $this->newRevInfo['previewSize'];
+        $oldRevSize = $Revision1->val('previewSize');
+        $newRevSize = $Revision2->val('previewSize');
         if ($oldRevSize != $newRevSize) {
             if ($newRevSize[0] > $oldRevSize[0]) {
                 $oldRevSize = $newRevSize;
@@ -238,8 +240,21 @@ class MediaDiff extends Diff
         $ns = getNS($this->id);
         $auth = auth_quickaclcheck("$ns:*");
 
-        // use '' for current revision
-        [$oldRev, $newRev] = [$this->oldRevInfo['rev'], $this->newRevInfo['rev']];
+        // revision information object
+        [$Revision1, $Revision2] = [$this->Revision1, $this->Revision2];
+
+        $oldRev = $Revision1->isCurrent() ? '' : (int)$Revision1->val('date');
+        $newRev = $Revision2->isCurrent() ? '' : (int)$Revision2->val('date');
+
+        // revision title
+        $rev1Title = trim($Revision1->showRevisionTitle() .' '. $Revision1->showCurrentIndicator());
+        $rev1Supple = ($Revision1->val('date'))
+            ? $Revision1->showEditSummary() .' '. $Revision1->showEditor()
+            : '';
+        $rev2Title = trim($Revision2->showRevisionTitle() .' '. $Revision2->showCurrentIndicator());
+        $rev2Supple = ($Revision2->val('date'))
+            ? $Revision2->showEditSummary() .' '. $Revision2->showEditor()
+            : '';
 
         $oldRevMeta = new JpegMeta(mediaFN($this->id, $oldRev));
         $newRevMeta = new JpegMeta(mediaFN($this->id, $newRev));
@@ -248,8 +263,8 @@ class MediaDiff extends Diff
         echo '<div class="table">';
         echo '<table>';
         echo '<tr>';
-        echo '<th>'. $this->oldRevInfo['navTitle'] .'</th>';
-        echo '<th>'. $this->newRevInfo['navTitle'] .'</th>';
+        echo '<th>'. $rev1Title .' '. $rev1Supple .'</th>';
+        echo '<th>'. $rev2Title .' '. $rev2Supple .'</th>';
         echo '</tr>';
 
         echo '<tr class="image">';
@@ -286,7 +301,7 @@ class MediaDiff extends Diff
         }
 
         echo '<tr>';
-        foreach (array($l_tags, $r_tags) as $tags) {
+        foreach ([$l_tags, $r_tags] as $tags) {
             echo '<td>';
 
             echo '<dl class="img_tags">';
@@ -312,49 +327,6 @@ class MediaDiff extends Diff
 
         echo '</table>';
         echo '</div>';
-    }
-
-    /**
-     * Revision Title for MediaDiff table headline
-     *
-     * @param array $info  Revision info structure of a media file
-     * @return string
-     */
-    protected function revisionTitle(array $info)
-    {
-        global $lang, $INFO;
-
-        // illegular revisison info
-        if (empty($info['date'])) {
-            return '&mdash;';
-        }
-
-        $RevInfo = new RevisionInfo($info);
-        $id = $RevInfo->val('id');
-        $rev = $RevInfo->isCurrent() ? '' : $RevInfo->val('date');
-        $params = ($rev) ? ['rev'=> $rev] : [];
-        $href = ml($id, $params, false, '&');
-        $class = file_exists(mediaFN($id, $rev)) ? 'wikilink1' : 'wikilink2';
-        if ($RevInfo->val('type') == DOKU_CHANGE_TYPE_DELETE) {
-            $class = 'wikilink2';
-        }
-        // revision info may have timestamp key when external edits occurred
-        $date = ($RevInfo->val('timestamp') === false)
-            ? $lang['unknowndate']
-            : dformat($RevInfo->val('date'));
-
-        $title = '<bdi><a class="'.$class.'" href="'.$href.'">'.$id.' ['.$date.']'.'</a></bdi>';
-
-        if ($RevInfo->isCurrent()) {
-            $title .= '&nbsp;'. $RevInfo->showCurrentIndicator();
-        }
-
-        // append separator
-        $title .= ($this->preference['difftype'] === 'inline') ? ' ' : '<br />';
-
-        // supplement
-        $title .= $RevInfo->showEditSummary().' '.$RevInfo->showEditor();
-        return $title;
     }
 
 }

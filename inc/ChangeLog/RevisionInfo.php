@@ -9,6 +9,8 @@ namespace dokuwiki\ChangeLog;
  *  - Ui\Recent
  *  - Ui\PageRevisions
  *  - Ui\MediaRevisions
+ *  - Ui\PageDiff
+ *  - Ui\MediaDiff
  */
 class RevisionInfo
 {
@@ -29,11 +31,19 @@ class RevisionInfo
      *      - sizechange: change of filesize
      *      - timestamp: (optional) set only when external edits occurred
      */
-    public function __construct(array $info)
+    public function __construct($info = null)
     {
-        $info['item'] = strrpos($info['id'], '.') ? 'media' : 'page';
+        if (is_array($info)) {
+            $info['item'] = strrpos($info['id'], '.') ? 'media' : 'page';
+        } else {
+            $info = [
+                'item' => 'page',
+                'date' => false,
+            ];
+        }
+
         // revision info may have timestamp key when external edits occurred
-        $info['timestamp'] = $info['timestamp'] ?? true;
+//      $info['timestamp'] = $info['timestamp'] ?? true;    // FIXME たぶん不要
 
         $this->info = $info;
     }
@@ -185,6 +195,41 @@ class RevisionInfo
             $class = 'wikilink2';
         }
         return '<a href="'.$href.'" class="'.$class.'">'.$display_name.'</a>';
+    }
+
+    /**
+     * Revision Title for PageDiff table headline
+     *
+     * @return string
+     */
+    public function showRevisionTitle()
+    {
+        global $lang;
+
+        if (!$this->val('date')) return '&mdash;';
+
+        $id = $this->val('id');
+        $rev = $this->isCurrent() ? '' : $this->val('date');
+        $params = ($rev) ? ['rev'=> $rev] : [];
+
+        switch ($this->val('item')) {
+            case 'media': // media file revision
+                $href = ml($id, $params, false, '&');
+                $class = file_exists(mediaFN($id, $rev)) ? 'wikilink1' : 'wikilink2';
+                break;
+            case 'page': // page revision
+                $href = wl($id, $params, false, '&');
+                $class = page_exists($id, $rev) ? 'wikilink1' : 'wikilink2';
+        }
+        if ($this->val('type') == DOKU_CHANGE_TYPE_DELETE) {
+            $class = 'wikilink2';
+        }
+        // revision info may have timestamp key when external edits occurred
+        $date = ($this->val('timestamp') === false)
+            ? $lang['unknowndate']
+            : dformat($this->val('date'));
+
+        return '<bdi><a class="'.$class.'" href="'.$href.'">'.$id.' ['.$date.']'.'</a></bdi>';
     }
 
     /**

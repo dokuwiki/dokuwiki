@@ -5,7 +5,7 @@ namespace dokuwiki\Ui;
 use dokuwiki\ChangeLog\ChangeLog;
 
 /**
- * DokuWiki Diff Interface
+ * DokuWiki Diff
  * parent class of PageDiff and MediaDiff
  *
  * @package dokuwiki\Ui
