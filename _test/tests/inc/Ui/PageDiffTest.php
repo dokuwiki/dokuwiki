@@ -74,11 +74,10 @@ class PageDiffTest extends \DokuWikiTest
 
         $PageDiff = new PageDiff($page);
         $this->doMethod($PageDiff, 'handle');
-        $newRev= $this->getProperty($PageDiff, 'newRev');
-        $oldRev= $this->getProperty($PageDiff, 'oldRev');
+        $revisions = $this->getProperty($PageDiff, 'revisions');
 
-        $this->assertFalse($newRev);
-        $this->assertFalse($oldRev);
+        $this->assertFalse($revisions[1]);
+        $this->assertFalse($revisions[0]);
 
         // create new page
         saveWikiText($page, 'teststring', '1st save', false);
@@ -87,11 +86,10 @@ class PageDiffTest extends \DokuWikiTest
 
         $PageDiff = new PageDiff($page);
         $this->doMethod($PageDiff, 'handle');
-        $newRev= $this->getProperty($PageDiff, 'newRev');
-        $oldRev= $this->getProperty($PageDiff, 'oldRev');
+        $revisions = $this->getProperty($PageDiff, 'revisions');
 
-        $this->assertEquals($newmod, $newRev);
-        $this->assertFalse($oldRev);    // because just created
+        $this->assertEquals($newmod, $revisions[1]);
+        $this->assertFalse($revisions[0]);    // because just created
         $lastmod =$newmod;
 
         // externally delete the page
@@ -100,11 +98,10 @@ class PageDiffTest extends \DokuWikiTest
 
         $PageDiff = new PageDiff($page);
         $this->doMethod($PageDiff, 'handle');
-        $newRev= $this->getProperty($PageDiff, 'newRev');
-        $oldRev= $this->getProperty($PageDiff, 'oldRev');
+        $revisions = $this->getProperty($PageDiff, 'revisions');
 
-        $this->assertNotEquals($lastmod, $newRev);
-        $this->assertEquals($lastmod, $oldRev);
+        $this->assertNotEquals($lastmod, $revisions[1]);
+        $this->assertEquals($lastmod, $revisions[0]);
 
         unset($PageDiff);
     }
@@ -125,11 +122,10 @@ class PageDiffTest extends \DokuWikiTest
 
         $PageDiff = new PageDiff($page);
         $this->doMethod($PageDiff, 'handle');
-        $newRev= $this->getProperty($PageDiff, 'newRev');
-        $oldRev= $this->getProperty($PageDiff, 'oldRev');
+        $revisions = $this->getProperty($PageDiff, 'revisions');
 
-        $this->assertEquals($newmod, $newRev);
-        $this->assertFalse($oldRev);    // because just created
+        $this->assertEquals($newmod, $revisions[1]);
+        $this->assertFalse($revisions[0]);    // because just created
         $lastmod =$newmod;
 
         // externally edit
@@ -140,11 +136,10 @@ class PageDiffTest extends \DokuWikiTest
 
         $PageDiff = new PageDiff($page);
         $this->doMethod($PageDiff, 'handle');
-        $newRev= $this->getProperty($PageDiff, 'newRev');
-        $oldRev= $this->getProperty($PageDiff, 'oldRev');
+        $revisions = $this->getProperty($PageDiff, 'revisions');
 
-        $this->assertEquals($newmod, $newRev);
-        $this->assertEquals($lastmod, $oldRev);
+        $this->assertEquals($newmod, $revisions[1]);
+        $this->assertEquals($lastmod, $revisions[0]);
 
         unset($PageDiff);
     }
