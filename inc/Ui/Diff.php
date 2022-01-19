@@ -15,9 +15,8 @@ abstract class Diff extends Ui
     /* @var string */
     protected $id;   // page id or media id
 
-    /* @var int */
-    protected $oldRev;  // timestamp of older revision
-    protected $newRev;  // timestamp of newer revision
+    /* @var int[] timestamps of older [0] and newer [1] revisions */
+    protected $revisions;
 
     /* @var array */
     protected $preference = [];
@@ -49,16 +48,18 @@ abstract class Diff extends Ui
     /**
      * Set a pair of revisions to be compared
      *
-     * @param int $oldRev
-     * @param int $newRev
+     * @param int $rev1 older revision
+     * @param int $rev2 newer revision
      * @return $this
      */
-    public function compare($oldRev, $newRev)
+    public function compare($rev1, $rev2)
     {
-        if ($newRev < $oldRev) [$oldRev, $newRev] = [$newRev, $oldRev];
-        // set correct newRev when it is non-actual revision
-        $newRev = $this->changelog->traceExternalRevision($newRev);
-        [$this->oldRev, $this->newRev] = [$oldRev2, $newRev];
+        if ($rev2 < $rev1) [$rev1, $rev2] = [$rev2, $rev1];
+        // set correct newer revision when it is non-actual revision
+        $this->revisions = array(
+            0 => $rev1,
+            1 => $this->changelog->traceExternalRevision($rev2)
+        );
         return $this;
     }
 
@@ -98,37 +99,40 @@ abstract class Diff extends Ui
         // difflink icon click, eg. ?rev=123456789&do=diff
         if ($INPUT->has('rev')) {
             // compare given revision with current
-            $rev2[1] = $changelog->currentRevision();
-            $rev2[0] = $INPUT->int('rev');
-            if ($rev2[0] < $rev2[1]) {
-                [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
+            $rev1 = $INPUT->int('rev');
+            $rev2 = $changelog->currentRevision();
+            if ($rev1 < $rev2) {
+                $this->revisions = array(0 => $rev1, 1 => $rev2);
             } else {
                 // fallback to compare previous with current revision
-                unset($rev2);
+                unset($rev1, $rev2);
             }
         }
 
         // submit button with two checked boxes
-        $rev2 = $INPUT->arr('rev2', []);
-        if (count($rev2) > 1) {
-            if ($rev2[1] < $rev2[0]) [$rev2[0], $rev2[1]] = [$rev2[1], $rev2[0]];
-            // set correct rev2[1] when it is non-actual revision
-            $rev2[1] = $changelog->traceExternalRevision($rev2[1]);
-            [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
+        $revs = $INPUT->arr('rev2', []);
+        if (count($revs) > 1) {
+            list($rev1, $rev2) = $revs;
+            if ($rev2 < $rev1) [$rev1, $rev2] = [$rev2, $rev1];
+            // set correct newer revision when it is non-actual revision
+            $this->revisions = array(
+                0 => $rev1,
+                1 => $changelog->traceExternalRevision($rev2)
+            );
         }
 
         // no revision was given, compare previous with current revision
-        if (!isset($this->oldRev, $this->newRev)) {
-            // newRev and oldRev may become false when page had never existed.
-            // oldRev may become false when page is just created anyway
-            $rev2[1] = $changelog->currentRevision();
-            if ($rev2[1] > $changelog->lastRevision()) {
-                $rev2[0] = $changelog->lastRevision() ?: false;
+        if (!isset($this->revisions)) {
+            // rev2 and rev1 may become false when the page had never existed.
+            // rev1 may become false when page is just created anyway.
+            $rev2 = $changelog->currentRevision();
+            if ($rev2 > $changelog->lastRevision()) {
+                $rev1 = $changelog->lastRevision();
             } else {
                 $revs = $changelog->getRevisions(0, 1);
-                $rev2[0] = count($revs) ? $revs[0] : false;
+                $rev1 = count($revs) ? $revs[0] : false;
             }
-            [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
         }
+        $this->revisions = array(0 => $rev1, 1 => $rev2);
     }
 }
