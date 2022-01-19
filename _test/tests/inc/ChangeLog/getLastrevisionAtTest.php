@@ -28,7 +28,7 @@ class getLastRevisionAtTest extends \DokuWikiTest {
     /**
      * no nonexist.changes meta file available
      */
-    function test_changemetadatanotexists() {
+    function testChangeMetadataNotExists() {
         $rev = 1362525899;
         $id = 'nonexist';
         $revsexpected = false;
@@ -42,7 +42,7 @@ class getLastRevisionAtTest extends \DokuWikiTest {
      * start at exact current revision of mailinglist page
      *
      */
-    function test_startatexactcurrentrev() {
+    function testStartAtExactCurrentRev() {
         $rev = 1385051947;
         $revsexpected = '';
 
@@ -59,7 +59,7 @@ class getLastRevisionAtTest extends \DokuWikiTest {
      * test a future revision
      *
      */
-    function test_futurerev() {
+    function testFutureRev() {
         $rev = 1385051947;
         $revsexpected = '';
 
@@ -78,7 +78,7 @@ class getLastRevisionAtTest extends \DokuWikiTest {
      * start at exact last revision of mailinglist page
      *
      */
-    function test_exactlastrev() {
+    function testExactLastRev() {
         $rev = 1360110636;
         $revsexpected = 1360110636;
 
@@ -92,7 +92,7 @@ class getLastRevisionAtTest extends \DokuWikiTest {
      * Request not existing revision
      *
      */
-    function test_olderrev() {
+    function testOlderRev() {
         $rev = 1;
         $revexpected = false;
 
@@ -104,7 +104,7 @@ class getLastRevisionAtTest extends \DokuWikiTest {
     /**
      * Start at non existing revision somewhere between existing revisions
      */
-    function test_notexistingrev() {
+    function testNotExistingRev() {
         $rev = 1362525890;
         $revexpected = 1362525359;
 
@@ -117,7 +117,7 @@ class getLastRevisionAtTest extends \DokuWikiTest {
      * request nonexisting page
      *
      */
-    function test_notexistingpage() {
+    function testNotExistingPage() {
         $rev = 1385051947;
         $currentexpected = false;
 
@@ -130,7 +130,7 @@ class getLastRevisionAtTest extends \DokuWikiTest {
      * test get correct revision on deleted media
      *
      */
-    function test_deletedimage() {
+    function testDeletedImage() {
         global $conf;
         global $AUTH_ACL;
 

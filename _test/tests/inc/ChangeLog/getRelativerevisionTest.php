@@ -11,7 +11,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
  * - data/pages/mailinglist.txt
  * - data/meta/mailinglist.changes
  */
-class GetRelativeRevisionTest extends \DokuWikiTest {
+class getRelativeRevisionTest extends \DokuWikiTest {
 
     private $logline = "1362525899	127.0.0.1	E	mailinglist	pubcie	[Data entry] 	\n";
     private $pageid = 'mailinglist';
@@ -27,7 +27,7 @@ class GetRelativeRevisionTest extends \DokuWikiTest {
     /**
      * not available nonexist.changes meta file
      */
-    function test_ChangeMetadataNotExists() {
+    function testChangeMetadataNotExists() {
         $rev = 1362525899;  // arbitrary number
         $direction = 1;
         $id = 'nonexist';
@@ -40,7 +40,7 @@ class GetRelativeRevisionTest extends \DokuWikiTest {
     /**
      * not available nonexist.changes meta file
      */
-    function test_NoDirection() {
+    function testNoDirection() {
         $rev = 1362525899;  // arbitrary number
         $direction = 0;
 
@@ -53,7 +53,7 @@ class GetRelativeRevisionTest extends \DokuWikiTest {
      * start at exact current revision of mailinglist page
      *
      */
-    function test_StartAtExactCurrentRev() {
+    function testStartAtExactCurrentRev() {
         $rev = 1385051947;  // newer than last rev in mailinglist.change file
         $direction = 1;
         $revexpectedpos = false;

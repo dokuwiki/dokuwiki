@@ -11,7 +11,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
  * - data/pages/mailinglist.txt
  * - data/meta/mailinglist.changes
  */
-class getRevisionsInfoTest extends \DokuWikiTest {
+class getRevisionInfoTest extends \DokuWikiTest {
 
     private $logline = "1362525899	127.0.0.1	E	mailinglist	pubcie	[Data entry] 	\n";
     private $firstlogline = "1374261194	127.0.0.1	E	mailinglist	pubcie		\n";
@@ -28,7 +28,7 @@ class getRevisionsInfoTest extends \DokuWikiTest {
     /**
      * no nonexist.changes meta file available
      */
-    function test_changemetadatanotexists() {
+    function testChangeMetadataNotExists() {
         $rev = 1362525899;
         $id = 'nonexist';
         $revsexpected = false;
@@ -41,7 +41,7 @@ class getRevisionsInfoTest extends \DokuWikiTest {
     /**
      * request existing rev
      */
-    function test_requestrev() {
+    function testRequestRev() {
         $rev = 1362525899;
         $infoexpected = parseChangelogLine($this->logline);
 
@@ -56,7 +56,7 @@ class getRevisionsInfoTest extends \DokuWikiTest {
     /**
      * request existing rev with chucked reading
      */
-    function test_requestrev_chuncked() {
+    function testRequestRev_Chuncked() {
         $rev = 1362525899;
         $infoexpected = parseChangelogLine($this->logline);
 
@@ -68,7 +68,7 @@ class getRevisionsInfoTest extends \DokuWikiTest {
     /**
      * request existing rev with chucked reading
      */
-    function test_requestrev_chunckedsmallerthanlinelength() {
+    function testRequestRev_ChunckedSmallerThanLineLength() {
         $rev = 1362525899;
         $infoexpected = parseChangelogLine($this->logline);
 
@@ -80,7 +80,7 @@ class getRevisionsInfoTest extends \DokuWikiTest {
     /**
      * request current version
      */
-    function test_requestrecentestlogline() {
+    function testRequestRecentestLogLine() {
         $rev = 1374261194;
         $infoexpected = parseChangelogLine($this->firstlogline);
 
@@ -95,7 +95,7 @@ class getRevisionsInfoTest extends \DokuWikiTest {
     /**
      * request current version, with chuncked reading
      */
-    function test_requestrecentestlogline_chuncked() {
+    function testRequestRecentestLogLine_Chuncked() {
         $rev = 1374261194;
         $infoexpected = parseChangelogLine($this->firstlogline);
 
@@ -107,7 +107,7 @@ class getRevisionsInfoTest extends \DokuWikiTest {
     /**
      * request negative revision
      */
-    function test_negativerev() {
+    function testNegativeRev() {
         $rev = -10;
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
@@ -118,7 +118,7 @@ class getRevisionsInfoTest extends \DokuWikiTest {
     /**
      * request non existing revision somewhere between existing revisions
      */
-    function test_notexistingrev() {
+    function testNotExistingRev() {
         $rev = 1362525890;
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
@@ -129,7 +129,7 @@ class getRevisionsInfoTest extends \DokuWikiTest {
     /**
      * sometimes chuncksize is set to true
      */
-    function test_chuncksizetrue() {
+    function testChunckSizeTrue() {
         $rev = 1362525899;
         $infoexpected = parseChangelogLine($this->logline);
 
