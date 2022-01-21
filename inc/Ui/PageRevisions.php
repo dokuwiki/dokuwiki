@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\Ui\RevisionsInterface;
+use dokuwiki\Ui\RevisionsTrait;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\ChangeLog\RevisionInfo;
 use dokuwiki\Form\Form;
@@ -11,10 +13,12 @@ use dokuwiki\Form\Form;
  *
  * @package dokuwiki\Ui
  */
-class PageRevisions extends Revisions
+class PageRevisions implements RevisionsInterface
 {
-    /* @var PageChangeLog */
-    protected $changelog;
+    use RevisionsTrait;
+
+    /* @var string page id */
+    protected $id;
 
     /**
      * PageRevisions Ui constructor
@@ -25,7 +29,10 @@ class PageRevisions extends Revisions
     {
         global $INFO;
         if (!isset($id)) $id = $INFO['id'];
-        parent::__construct($id);
+        $this->id = $id;
+
+        // get access to change log
+        $this->setChangeLog();
     }
 
     /** @inheritdoc */

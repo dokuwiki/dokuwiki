@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\Ui\RevisionsInterface;
+use dokuwiki\Ui\RevisionsTrait;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\RevisionInfo;
 use dokuwiki\Form\Form;
@@ -12,10 +14,12 @@ use InvalidArgumentException;
  *
  * @package dokuwiki\Ui
  */
-class MediaRevisions extends Revisions
+class MediaRevisions implements RevisionsInterface
 {
-    /* @var MediaChangeLog */
-    protected $changelog;
+    use RevisionsTrait;
+
+    /* @var string page id */
+    protected $id;
 
     /**
      * MediaRevisions Ui constructor
@@ -27,7 +31,10 @@ class MediaRevisions extends Revisions
         if (!$id) {
             throw new InvalidArgumentException('media id should not be empty!');
         }
-        parent::__construct($id);
+        $this->id = $id;
+
+        // get access to change log
+        $this->setChangeLog();
     }
 
     /** @inheritdoc */

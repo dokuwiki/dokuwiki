@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\Ui\DiffViewInterface;
+use dokuwiki\Ui\DiffViewTrait;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\ChangeLog\RevisionInfo;
 use dokuwiki\Form\Form;
@@ -18,11 +20,12 @@ use TableDiffFormatter;
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  * @package dokuwiki\Ui
  */
-class PageDiff extends Diff
+class PageDiff implements DiffViewInterface
 {
-    /* @var PageChangeLog */
-    protected $changelog;
+    use DiffViewTrait;
 
+    /* @var string page id */
+    protected $id;
     /* @var RevisionInfo older revision */
     protected $Revision1;
     /* @var RevisionInfo newer revision */
@@ -34,18 +37,25 @@ class PageDiff extends Diff
     /**
      * PageDiff Ui constructor
      *
-     * @param string $id  page id
+     * @param string $id   page id
+     * @param int[]  $revs timestamps of older [0] and newer [1] revisions (optional)
      */
-    public function __construct($id = null)
+    public function __construct($id = null, $revs = null)
     {
         global $INFO;
         if (!isset($id)) $id = $INFO['id'];
+        $this->id = $id;
 
         // init preference
         $this->preference['showIntro'] = true;
         $this->preference['difftype'] = 'sidebyside'; // diff view type: inline or sidebyside
 
-        parent::__construct($id);
+        if (isset($revs)) {
+            $this->setRevisions($revs);
+        }
+
+        // get access to change log
+        $this->setChangeLog();
     }
 
     /** @inheritdoc */
@@ -95,7 +105,7 @@ class PageDiff extends Diff
     }
 
     /**
-     * Handle requested revision(s) and diff view preferences
+     * Handle requested diff view preferences
      *
      * @return void
      */
@@ -104,8 +114,8 @@ class PageDiff extends Diff
         global $INPUT;
 
         // requested rev or rev2
-        if (!isset($this->revisions)) {
-            parent::handle();
+        if (empty($this->revisions)) {
+            $this->setRevisions([]);
         }
 
         // requested diff view type

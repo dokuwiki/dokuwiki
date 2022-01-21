@@ -2,10 +2,11 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\Ui\DiffViewInterface;
+use dokuwiki\Ui\DiffViewTrait;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\RevisionInfo;
 use dokuwiki\Form\Form;
-use InvalidArgumentException;
 use JpegMeta;
 
 /**
@@ -15,11 +16,12 @@ use JpegMeta;
  *
  * @package dokuwiki\Ui
  */
-class MediaDiff extends Diff
+class MediaDiff implements DiffViewInterface
 {
-    /* @var MediaChangeLog */
-    protected $changelog;
+    use DiffViewTrait;
 
+    /* @var string page id */
+    protected $id;
     /* @var RevisionInfo older revision */
     protected $Revision1;
     /* @var RevisionInfo newer revision */
@@ -35,16 +37,15 @@ class MediaDiff extends Diff
      */
     public function __construct($id)
     {
-        if (!isset($id)) {
-            throw new InvalidArgumentException('media id should not be empty!');
-        }
+        $this->id = $id;
 
         // init preference
         $this->preference['fromAjax'] = false;  // see dokuwiki\Ajax::callMediadiff()
         $this->preference['showIntro'] = false;
         $this->preference['difftype'] = 'both'; // diff view type: both, opacity or portions
 
-        parent::__construct($id);
+        // get access to change log
+        $this->setChangeLog();
     }
 
     /** @inheritdoc */
@@ -63,7 +64,9 @@ class MediaDiff extends Diff
         global $INPUT;
 
         // requested rev or rev2
-        parent::handle();
+        if (empty($this->revisions)) {
+            $this->setRevisions([]);
+        }
 
         // requested diff view type
         if ($INPUT->has('difftype')) {
@@ -126,6 +129,11 @@ class MediaDiff extends Diff
         $auth = auth_quickaclcheck("$ns:*");
 
         if ($auth < AUTH_READ || !$this->id || !$conf['mediarevisions']) return;
+
+        // detect ajax request  FIXME could eliminate $this->preference['fromAjax'] ?
+        $isAjaxRequest = (isset($_SERVER['HTTP_X_REQUESTED_WITH'])
+            && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'
+        );
 
         // retrieve form parameters: rev, rev2, difftype
         $this->handle();

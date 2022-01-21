@@ -57,7 +57,7 @@ class PageConflict extends Ui
         print '<br /><br /><br /><br />';
 
         // print difference
-        (new PageDiff($INFO['id']))->compareWith($this->text)->preference('showIntro', false)->show();
+        (new DiffView($INFO['id']))->compareWith($this->text)->preference('showIntro', false)->show();
     }
 
 }

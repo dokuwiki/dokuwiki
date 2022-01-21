@@ -35,7 +35,7 @@ class Diff extends AbstractAction
     public function tplContent()
     {
         global $INFO;
-        (new Ui\PageDiff($INFO['id']))->preference('showIntro', true)->show();
+        (new Ui\DiffView($INFO['id']))->preference('showIntro', true)->show();
     }
 
 }

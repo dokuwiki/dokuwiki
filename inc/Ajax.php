@@ -247,7 +247,7 @@ class Ajax {
 
         $image = '';
         if($INPUT->has('image')) $image = cleanID($INPUT->str('image'));
-        (new Ui\MediaDiff($image))->preference('fromAjax', true)->show();
+        (new Ui\DiffView($image))->preference('fromAjax', true)->show();
     }
 
     /**

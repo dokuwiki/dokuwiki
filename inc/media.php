@@ -14,7 +14,7 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 use dokuwiki\Ui\Media\DisplayRow;
 use dokuwiki\Ui\Media\DisplayTile;
-use dokuwiki\Ui\MediaDiff;
+use dokuwiki\Ui\DiffView;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
 use splitbrain\slika\Slika;
@@ -1002,10 +1002,10 @@ function media_tab_history($image, $ns, $auth=null) {
 
     if ($auth >= AUTH_READ && $image) {
         if ($do == 'diff'){
-            (new dokuwiki\Ui\MediaDiff($image))->show(); //media_diff($image, $ns, $auth);
+            (new dokuwiki\Ui\DiffView($image))->show(); //media_diff($image, $ns, $auth);
         } else {
             $first = $INPUT->int('first');
-            (new dokuwiki\Ui\MediaRevisions($image))->show($first);
+            (new dokuwiki\Ui\Revisions($image))->show($first);
         }
     } else {
         echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
@@ -1244,7 +1244,7 @@ function media_details($image, $auth, $rev='', $meta=false) {
  * @deprecated 2020-12-31
  */
 function media_diff($image, $ns, $auth, $fromajax = false) {
-    dbg_deprecated('see '. MediaDiff::class .'::show()');
+    dbg_deprecated('see '. DiffView::class .'::show()');
 }
 
 /**
@@ -1255,7 +1255,7 @@ function media_diff($image, $ns, $auth, $fromajax = false) {
  * @deprecated 2020-12-31
  */
 function _media_file_diff($data) {
-    dbg_deprecated('see '. MediaDiff::class .'::show()');
+    dbg_deprecated('see '. DiffView::class .'::show()');
 }
 
 /**
@@ -1272,7 +1272,7 @@ function _media_file_diff($data) {
  * @deprecated 2020-12-31
  */
 function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax) {
-    dbg_deprecated('see '. MediaDiff::class .'::showFileDiff()');
+    dbg_deprecated('see '.'dokuwiki\Ui\MediaDiff::showFileDiff()');
 }
 
 /**
@@ -1290,7 +1290,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax) {
  * @deprecated 2020-12-31
  */
 function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type) {
-    dbg_deprecated('see '. MediaDiff::class .'::showImageDiff()');
+    dbg_deprecated('see '.'dokuwiki\Ui\MediaDiff::showImageDiff()');
 }
 
 /**

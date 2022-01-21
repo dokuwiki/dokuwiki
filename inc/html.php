@@ -16,11 +16,11 @@ use dokuwiki\Ui\Editor;
 use dokuwiki\Ui\Index;
 use dokuwiki\Ui\Login;
 use dokuwiki\Ui\PageConflict;
-use dokuwiki\Ui\PageDiff;
 use dokuwiki\Ui\PageDraft;
-use dokuwiki\Ui\PageRevisions;
 use dokuwiki\Ui\PageView;
+use dokuwiki\Ui\Revisions;
 use dokuwiki\Ui\Recent;
+use dokuwiki\Ui\Diff;
 use dokuwiki\Ui\UserProfile;
 use dokuwiki\Ui\UserRegister;
 use dokuwiki\Ui\UserResendPwd;
@@ -313,12 +313,12 @@ function html_locked() {
  * @deprecated 2020-07-18
  */
 function html_revisions($first = 0, $media_id = '') {
-    dbg_deprecated(PageRevisions::class .'::show()');
+    dbg_deprecated(Revisions::class .'::show()');
     if ($media_id) {
-        (new dokuwiki\Ui\MediaRevisions($media_id))->show($first);
+        (new Revisions($media_id))->show($first);
     } else {
         global $INFO;
-        (new dokuwiki\Ui\PageRevisions($INFO['id']))->show($first);
+        (new Revisions($INFO['id']))->show($first);
     }
 }
 
@@ -511,7 +511,7 @@ function html_backlinks() {
  * @deprecated 2020-07-18
  */
 function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = false) {
-    dbg_deprecated('see '. PageDiff::class .'::buildDiffHead()');
+    dbg_deprecated('see '.'dokuwiki\Ui\PageDiff::show()');
     return ['', '', '', ''];
 }
 
@@ -527,9 +527,9 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
  * @deprecated 2020-07-18
  */
 function html_diff($text = '', $intro = true, $type = null) {
-    dbg_deprecated(PageDiff::class .'::show()');
+    dbg_deprecated(DiffView::class .'::show()');
     global $INFO;
-    (new dokuwiki\Ui\PageDiff($INFO['id']))->compareWith($text)->preference([
+    (new dokuwiki\Ui\DiffView($INFO['id']))->compareWith($text)->preference([
         'showIntro' => $intro,
         'difftype'  => $type,
     ])->show();
@@ -546,7 +546,7 @@ function html_diff($text = '', $intro = true, $type = null) {
  * @deprecated 2020-07-18
  */
 function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
-    dbg_deprecated('see '. PageDiff::class .'::buildRevisionsNavigation()');
+    dbg_deprecated('see '.'dokuwiki\Ui\PageDiff::buildRevisionsNavigation()');
     return ['', ''];
 }
 
@@ -561,7 +561,7 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
  * @deprecated 2020-07-18
  */
 function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
-    dbg_deprecated('see '. PageDiff::class .'::diffViewlink()');
+    dbg_deprecated('see '.'dokuwiki\Ui\PageDiff::diffViewlink()');
     return '';
 }
 
@@ -573,7 +573,7 @@ function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
  * @deprecated 2020-07-18
  */
 function html_insert_softbreaks($diffhtml) {
-    dbg_deprecated(PageDiff::class .'::insertSoftbreaks()');
+    dbg_deprecated('see '.'dokuwiki\Ui\PageDiff::insertSoftbreaks()');
     return (new dokuwiki\Ui\PageDiff)->insertSoftbreaks($diffhtml);
 }
 
