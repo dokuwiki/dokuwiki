@@ -162,9 +162,12 @@ class Recent extends Ui
             $changelog = new MediaChangelog($info['id']);
         }
         if (!$changelog->isCurrentRevision($info['date'])) {
-            // the page or media file was externally created, edited or deleted
             $currentRevInfo = $changelog->getCurrentRevisionInfo();
-            $info = array_merge($info, $currentRevInfo);
+            if ($currentRevInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
+                // the page or media file was externally deleted, updated info because the link is already red
+                // externally created and edited not updated because sorting by date is not worth so much changes
+                $info = array_merge($info, $currentRevInfo);
+            }
         }
         unset($changelog);
     }

@@ -29,6 +29,8 @@ class RevisionInfo
      *      - sum:   edit summary (or action reason)
      *      - extra: extra data (varies by line type)
      *      - sizechange: change of filesize
+     *      additionally,
+     *      - current:   (optional) whether current revision or not
      *      - timestamp: (optional) set only when external edits occurred
      */
     public function __construct($info = null)
@@ -41,10 +43,6 @@ class RevisionInfo
                 'date' => false,
             ];
         }
-
-        // revision info may have timestamp key when external edits occurred
-//      $info['timestamp'] = $info['timestamp'] ?? true;    // FIXME たぶん不要
-
         $this->info = $info;
     }
 
@@ -125,7 +123,6 @@ class RevisionInfo
      */
     public function showEditDate($checkTimestamp = false)
     {
-        global $lang;
         $formatted = dformat($this->val('date'));
         if ($checkTimestamp && $this->val('timestamp') === false) {
             // exact date is unknown for item has externally deleted or older file restored
@@ -154,13 +151,11 @@ class RevisionInfo
      */
     public function showEditor()
     {
-        global $lang;
-        $html = '';
         if ($this->val('user')) {
-            $html.= '<bdi>'. editorinfo($this->val('user')) .'</bdi>';
+            $html = '<bdi>'. editorinfo($this->val('user')) .'</bdi>';
             if (auth_ismanager()) $html .= ' <bdo dir="ltr">('. $this->val('ip') .')</bdo>';
         } else {
-            $html.= '<bdo dir="ltr">'. $this->val('ip') .'</bdo>';
+            $html = '<bdo dir="ltr">'. $this->val('ip') .'</bdo>';
         }
         return '<span class="user">'. $html. '</span>';
     }
@@ -185,7 +180,7 @@ class RevisionInfo
                 $class = file_exists(mediaFN($id, $rev)) ? 'wikilink1' : 'wikilink2';
                 break;
             case 'page': // page revision
-                $params = ($rev) ? ['rev'=> $rev] : [];
+                $params = $rev ? ['rev'=> $rev] : [];
                 $href = wl($id, $params, false, '&');
                 $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
                 if (!$display_name) $display_name = $id;
