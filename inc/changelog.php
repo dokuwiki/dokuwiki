@@ -52,9 +52,8 @@ function addLogEntry(
     $sizechange = null)
 {
     // no more used in DokuWiki core, but left for third-party plugins
-    dbg_deprecated('see '. \dokuwiki\File\PageFile::class .'::saveWikiText()');
+    dbg_deprecated('see '. PageFile::class .'::saveWikiText()');
 
-    global $conf, $INFO;
     /** @var Input $INPUT */
     global $INPUT;
 
@@ -113,7 +112,6 @@ function addMediaLogEntry(
     $flags = null,
     $sizechange = null)
 {
-    global $conf;
     /** @var Input $INPUT */
     global $INPUT;
 
@@ -129,7 +127,7 @@ function addMediaLogEntry(
     $sizechange = ($sizechange === null) ? '' : (int)$sizechange;
 
     // update changelog file and get the added entry
-    $logEntry = (new MediaChangeLog($id, 1024))->addLogEntry([
+    (new \dokuwiki\ChangeLog\MediaChangeLog($id, 1024))->addLogEntry([
         'date'       => $date,
         'ip'         => $remote,
         'type'       => $type,
@@ -353,4 +351,3 @@ function _handleRecent($line, $ns, $flags, &$seen) {
 
     return $recent;
 }
- 

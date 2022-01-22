@@ -118,21 +118,4 @@ abstract class Diff extends Ui
             $this->oldRev = ($revs[0] == $this->newRev) ? $revs[1] : $revs[0];
         }
     }
-
-
-
-
-    /**
-     * Build header of diff HTML
-     *
-     * @param string $l_rev   Left revisions
-     * @param string $r_rev   Right revision
-     * @return string[] HTML snippets for diff header
-     * @deprecated 2020-12-31
-     */
-    public function buildDiffHead($l_rev, $r_rev)
-    {
-        dbg_deprecated('not used see '. \dokuwiki\Ui\PageDiff::class .'::show()');
-    }
-
 }

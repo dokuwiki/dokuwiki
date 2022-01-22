@@ -2,7 +2,7 @@
 
 namespace dokuwiki\File;
 
-use dokuwiki\Utf8\PhpString;
+use JpegMeta;
 
 class MediaFile
 {
@@ -157,10 +157,10 @@ class MediaFile
         return auth_quickaclcheck(getNS($this->id).':*');
     }
 
-    /** @return \JpegMeta */
+    /** @return JpegMeta */
     public function getMeta()
     {
-        if($this->meta === null) $this->meta = new \JpegMeta($this->path);
+        if($this->meta === null) $this->meta = new JpegMeta($this->path);
         return $this->meta;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace dokuwiki\Ui;
 
+use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\Utf8\Sort;
 
 /**
@@ -121,7 +122,7 @@ class Admin extends Ui {
         $menu = ['admin' => [], 'manager' => [], 'other' => []];
 
         foreach($pluginlist as $p) {
-            /** @var \dokuwiki\Extension\AdminPlugin $obj */
+            /** @var AdminPlugin $obj */
             if(($obj = plugin_load('admin', $p)) === null) continue;
 
             // check permissions

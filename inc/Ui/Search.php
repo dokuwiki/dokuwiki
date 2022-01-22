@@ -4,6 +4,7 @@ namespace dokuwiki\Ui;
 
 use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
+use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
 
 class Search extends Ui
@@ -43,9 +44,7 @@ class Search extends Ui
      */
     public function show()
     {
-        $searchHTML = '';
-
-        $searchHTML .= $this->getSearchIntroHTML($this->query);
+        $searchHTML = $this->getSearchIntroHTML($this->query);
 
         $searchHTML .= $this->getSearchFormHTML($this->query);
 
@@ -480,13 +479,11 @@ class Search extends Ui
         if (auth_quickaclcheck($queryPagename) >= AUTH_CREATE) {
             $pagecreateinfo = sprintf($lang['searchcreatepage'], $createQueryPageLink);
         }
-        $intro = str_replace(
+        return str_replace(
             array('@QUERY@', '@SEARCH@', '@CREATEPAGEINFO@'),
             array(hsc(rawurlencode($query)), hsc($query), $pagecreateinfo),
             $intro
         );
-
-        return $intro;
     }
 
     /**
@@ -499,7 +496,7 @@ class Search extends Ui
     public function createPagenameFromQuery($parsedQuery)
     {
         $cleanedQuery = cleanID($parsedQuery['query']); // already strtolowered
-        if ($cleanedQuery === \dokuwiki\Utf8\PhpString::strtolower($parsedQuery['query'])) {
+        if ($cleanedQuery === PhpString::strtolower($parsedQuery['query'])) {
             return ':' . $cleanedQuery;
         }
         $pagename = '';

@@ -40,9 +40,7 @@ abstract class Resolver
         $id = str_replace(';', ':', $id);
 
         $id = $this->resolvePrefix($id);
-        $id = $this->resolveRelatives($id);
-
-        return $id;
+        return $this->resolveRelatives($id);
     }
 
     /**
