@@ -600,7 +600,7 @@ function auth_quickaclcheck($id) {
  */
 function auth_aclcheck($id, $user, $groups) {
     $data = array(
-        'id'     => $id,
+        'id'     => $id ?? '',
         'user'   => $user,
         'groups' => $groups
     );
@@ -631,6 +631,7 @@ function auth_aclcheck_cb($data) {
     // if no ACL is used always return upload rights
     if(!$conf['useacl']) return AUTH_UPLOAD;
     if(!$auth) return AUTH_NONE;
+    if(!is_array($AUTH_ACL)) return AUTH_NONE;
 
     //make sure groups is an array
     if(!is_array($groups)) $groups = array();

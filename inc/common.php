@@ -26,7 +26,7 @@ use dokuwiki\Extension\Event;
  * @return string converted string
  */
 function hsc($string) {
-    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, 'UTF-8');
 }
 
 /**
@@ -367,7 +367,7 @@ function buildAttributes($params, $skipEmptyStrings = false) {
         if($white) $url .= ' ';
 
         $url .= $key.'="';
-        $url .= htmlspecialchars($val);
+        $url .= hsc($val);
         $url .= '"';
         $white = true;
     }
@@ -449,6 +449,8 @@ function idfilter($id, $ue = true) {
     global $conf;
     /* @var Input $INPUT */
     global $INPUT;
+
+    $id = (string) $id;
 
     if($conf['useslash'] && $conf['userewrite']) {
         $id = strtr($id, ':', '/');
@@ -1904,7 +1906,7 @@ function set_doku_pref($pref, $val) {
             if ($parts[$i] == $enc_pref) {
                 if (!$seen){
                     if ($val !== false) {
-                        $parts[$i + 1] = rawurlencode($val);
+                        $parts[$i + 1] = rawurlencode($val ?? '');
                     } else {
                         unset($parts[$i]);
                         unset($parts[$i + 1]);

@@ -659,7 +659,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $lang;
         global $INPUT;
 
-        $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language);
+        $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language ?? '');
 
         if($filename) {
             // add icon
@@ -1057,7 +1057,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if($conf['target']['interwiki']) $link['rel'] .= ' noopener';
 
         $link['url']   = $url;
-        $link['title'] = htmlspecialchars($link['url']);
+        $link['title'] = $this->_xmlEntities($link['url']);
 
         // output formatted
         if($returnonly) {
@@ -1743,7 +1743,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @return string
      */
     public function _xmlEntities($string) {
-        return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+        return hsc($string);
     }
 
 
