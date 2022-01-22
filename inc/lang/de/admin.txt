@@ -1,3 +1,1 @@
-====== Administration ======
-
-Folgende administrative Aufgaben stehen in DokuWiki zur Verfügung:
+this is a test please ignore
