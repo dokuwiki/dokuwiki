@@ -76,21 +76,21 @@ class Recent extends Ui
         foreach ($recents as $recent) {
             // check possible external edition for current page or media
             $this->checkCurrentRevision($recent);
-            $recent['current'] = true;
 
             $RevInfo = new RevisionInfo($recent);
-            $class = ($recent['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor': '';
+            $RevInfo->isCurrent(true);
+            $class = ($RevInfo->val('type') === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor': '';
             $form->addTagOpen('li')->addClass($class);
             $form->addTagOpen('div')->addClass('li');
             $html = implode(' ', [
-                $RevInfo->itemIcon(),          // filetype icon
-                $RevInfo->editDate(),          // edit date and time
-                $RevInfo->difflinkRecent(),    // link to diffview icon
-                $RevInfo->revisionlink(),      // linkto revisions icon
-                $RevInfo->itemName(),          // name of page or media
-                $RevInfo->editSummary(),       // edit summary
-                $RevInfo->editor(),            // editor info
-                $RevInfo->sizechange(),        // size change indicator
+                $RevInfo->showFileIcon(),          // filetype icon
+                $RevInfo->showEditDate(),          // edit date and time
+                $RevInfo->showIconCompareWithPrevious(),    // link to diffview icon
+                $RevInfo->showIconRevisions(),     // linkto revisions icon
+                $RevInfo->showFileName(),          // name of page or media
+                $RevInfo->showEditSummary(),       // edit summary
+                $RevInfo->showEditor(),            // editor info
+                $RevInfo->showSizechange(),        // size change indicator
             ]);
             $form->addHTML($html);
             $form->addTagClose('div');

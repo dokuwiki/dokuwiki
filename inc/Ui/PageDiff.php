@@ -314,7 +314,7 @@ class PageDiff extends Diff
         // supplement
         if (isset($info['date'])) {
             $RevInfo = new RevisionInfo($info);
-            $title .= $RevInfo->editSummary().' '.$RevInfo->editor();
+            $title .= $RevInfo->showEditSummary().' '.$RevInfo->showEditor();
         }
         return $title;
     }

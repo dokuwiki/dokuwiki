@@ -332,7 +332,7 @@ class MediaDiff extends Diff
             $rev = false;
             $title = '&mdash;';
         }
-        if (isset($info['current']) || ($rev && $rev == $INFO['currentrev'])) {
+        if (!empty($info['current'])) {
             $title .= '&nbsp;('.$lang['current'].')';
         }
 
@@ -342,7 +342,7 @@ class MediaDiff extends Diff
         // supplement
         if (isset($info['date'])) {
             $RevInfo = new RevisionInfo($info);
-            $title .= $RevInfo->editSummary().' '.$RevInfo->editor();
+            $title .= $RevInfo->showEditSummary().' '.$RevInfo->showEditor();
         }
         return $title;
     }
