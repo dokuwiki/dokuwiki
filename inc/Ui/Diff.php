@@ -49,17 +49,15 @@ abstract class Diff extends Ui
     /**
      * Set a pair of revisions to be compared
      *
-     * @param int $oldRev
-     * @param int $newRev
+     * @param int $rev1 older revision
+     * @param int $rev2 newer revision
      * @return $this
      */
-    public function compare($oldRev, $newRev)
+    public function compare($rev1, $rev2)
     {
-        if ($oldRev < $newRev) {
-            [$this->oldRev, $this->newRev] = [$oldRev, $newRev];
-        } else {
-            [$this->oldRev, $this->newRev] = [$newRev, $oldRev];
-        }
+        if ($rev2 < $rev1) [$rev1, $rev2] = [$rev2, $rev1];
+        $this->oldRev = (int)$rev1;
+        $this->newRev = (int)$this->changelog->traceCurrentRevision($rev2);
         return $this;
     }
 
