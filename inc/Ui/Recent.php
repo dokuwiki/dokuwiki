@@ -21,7 +21,7 @@ class Recent extends Ui
      * Recent Ui constructor
      *
      * @param int $first  skip the first n changelog lines
-     * @param string $show_changes  type of changes to show; pages, mediafiles, or both
+     * @param string $show_changes  type of changes to show; 'pages', 'mediafiles', or 'both'
      */
     public function __construct($first = 0, $show_changes = 'both')
     {
@@ -45,7 +45,7 @@ class Recent extends Ui
         global $conf, $lang;
         global $ID;
 
-        // get recent items, and set correct pagenation parameters (first, hasNext)
+        // get recent items, and set correct pagination parameters (first, hasNext)
         $first = $this->first;
         $hasNext = false;
         $recents = $this->getRecents($first, $hasNext);
@@ -85,8 +85,8 @@ class Recent extends Ui
             $html = implode(' ', [
                 $RevInfo->showFileIcon(),          // filetype icon
                 $RevInfo->showEditDate(),          // edit date and time
-                $RevInfo->showIconCompareWithPrevious(),    // link to diffview icon
-                $RevInfo->showIconRevisions(),     // linkto revisions icon
+                $RevInfo->showIconCompareWithPrevious(),    // link to diff view icon
+                $RevInfo->showIconRevisions(),     // link to revisions icon
                 $RevInfo->showFileName(),          // name of page or media
                 $RevInfo->showEditSummary(),       // edit summary
                 $RevInfo->showEditor(),            // editor info
@@ -100,18 +100,18 @@ class Recent extends Ui
 
         $form->addTagClose('div'); // close div class=no
 
-        // provide navigation for pagenated recent list (of pages and/or media files)
+        // provide navigation for paginated recent list (of pages and/or media files)
         $form->addHTML($this->htmlNavigation($first, $hasNext));
 
         print $form->toHTML('Recent');
     }
 
     /**
-     * Get recent items, and set correct pagenation parameters (first, hasNext)
+     * Get recent items, and set correct pagination parameters (first, hasNext)
      *
      * @param int  $first
      * @param bool $hasNext
-     * @return array  recent items to be shown in a pagenated list
+     * @return array  recent items to be shown in a paginated list
      *
      * @see also dokuwiki\Changelog::getRevisionInfo()
      */
@@ -173,7 +173,7 @@ class Recent extends Ui
     }
 
     /**
-     * Navigation buttons for Pagenation (prev/next)
+     * Navigation buttons for Pagination (prev/next)
      *
      * @param int  $first
      * @param bool $hasNext

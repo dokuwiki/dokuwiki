@@ -52,7 +52,7 @@ class MediaRevisions extends Revisions
         global $lang;
         $changelog =& $this->changelog;
 
-        // get revisions, and set correct pagenation parameters (first, hasNext)
+        // get revisions, and set correct pagination parameters (first, hasNext)
         if ($first === null) $first = 0;
         $hasNext = false;
         $revisions = $this->getRevisions($first, $hasNext);
@@ -88,7 +88,7 @@ class MediaRevisions extends Revisions
 
             $html = implode(' ', [
                 $RevInfo->showEditDate(),          // edit date and time
-                $RevInfo->showIconCompareWithCurrent(),  // link to diffview icon
+                $RevInfo->showIconCompareWithCurrent(),  // link to diff view icon
                 $RevInfo->showFileName(),          // name of page or media
                 '<div>',
                 $RevInfo->showEditSummary(),       // edit summary
@@ -111,7 +111,7 @@ class MediaRevisions extends Revisions
 
         print $form->toHTML('Revisions');
 
-        // provide navigation for pagenated revision list (of pages and/or media files)
+        // provide navigation for paginated revision list (of pages and/or media files)
         print $this->navigation($first, $hasNext, function ($n) {
             return media_managerURL(['first' => $n], '&', false, true);
         });

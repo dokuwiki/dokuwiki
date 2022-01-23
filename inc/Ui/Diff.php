@@ -15,9 +15,9 @@ abstract class Diff extends Ui
     /* @var string */
     protected $id;   // page id or media id
 
-    /* @var int */
+    /* @var int|false */
     protected $rev1;  // timestamp of older revision
-    /* @var int */
+    /* @var int|false */
     protected $rev2;  // timestamp of newer revision
 
     /* @var array */
@@ -94,7 +94,7 @@ abstract class Diff extends Ui
     {
         global $INPUT;
 
-        // difflink icon click, eg. &do=diff&rev=#
+        // diff link icon click, eg. &do=diff&rev=#
         if ($INPUT->has('rev')) {
             $this->rev1 = $INPUT->int('rev');
             $this->rev2 = $this->changelog->currentRevision();

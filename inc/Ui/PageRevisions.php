@@ -50,7 +50,7 @@ class PageRevisions extends Revisions
         global $lang, $REV;
         $changelog =& $this->changelog;
 
-        // get revisions, and set correct pagenation parameters (first, hasNext)
+        // get revisions, and set correct pagination parameters (first, hasNext)
         if ($first === null) $first = 0;
         $hasNext = false;
         $revisions = $this->getRevisions($first, $hasNext);
@@ -89,7 +89,7 @@ class PageRevisions extends Revisions
 
             $html = implode(' ', [
                 $RevInfo->showEditDate(true),      // edit date and time
-                $RevInfo->showIconCompareWithCurrent(),  // link to diffview icon
+                $RevInfo->showIconCompareWithCurrent(),  // link to diff view icon
                 $RevInfo->showFileName(),          // name of page or media
                 $RevInfo->showEditSummary(),       // edit summary
                 $RevInfo->showEditor(),            // editor info

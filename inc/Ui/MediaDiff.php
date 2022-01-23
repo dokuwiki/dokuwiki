@@ -92,7 +92,7 @@ class MediaDiff extends Diff
             if ($this->is_img) {
                 $rev = $isCurrent ? '' : $Revision->val('date');
                 $meta = new JpegMeta(mediaFN($this->id, $rev));
-                // get image width and height for the mediamanager preview panel
+                // get image width and height for the media manager preview panel
                 $Revision->append([
                     'previewSize' => media_image_preview_size($this->id, $rev, $meta)
                 ]);

@@ -31,7 +31,7 @@ function parseChangelogLine($line) {
  * @param String $id        Name of the affected page
  * @param String $type      Type of the change see DOKU_CHANGE_TYPE_*
  * @param String $summary   Summary of the change
- * @param mixed  $extra     In case of a revert the revision (timestmp) of the reverted page
+ * @param mixed  $extra     In case of a revert the revision (timestamp) of the reverted page
  * @param array  $flags     Additional flags in a key value array.
  *                             Available flags:
  *                             - ExternalEdit - mark as an external edit.
@@ -86,7 +86,7 @@ function addLogEntry(
 }
 
 /**
- * Add's an entry to the media changelog
+ * Adds an entry to the media changelog
  *
  * @author Michael Hamann <michael@content-space.de>
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -97,7 +97,7 @@ function addLogEntry(
  * @param String $id        Name of the affected page
  * @param String $type      Type of the change see DOKU_CHANGE_TYPE_*
  * @param String $summary   Summary of the change
- * @param mixed  $extra     In case of a revert the revision (timestmp) of the reverted page
+ * @param mixed  $extra     In case of a revert the revision (timestamp) of the reverted page
  * @param array  $flags     Additional flags in a key value array.
  *                             Available flags:
  *                             - (none, so far)
@@ -343,7 +343,7 @@ function _handleRecent($line, $ns, $flags, &$seen) {
     }
     if ($recent['perms'] < AUTH_READ) return false;
 
-    // check existance
+    // check existence
     if ($flags & RECENTS_SKIP_DELETED) {
         $fn = (($flags & RECENTS_MEDIA_CHANGES) ? mediaFN($recent['id']) : wikiFN($recent['id']));
         if (!file_exists($fn)) return false;

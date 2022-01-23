@@ -5,7 +5,7 @@ namespace dokuwiki\ChangeLog;
 /**
  * Class RevisionInfo
  *
- * Provides methods to show Revision Information in DokuWiki Ui compoments:
+ * Provides methods to show Revision Information in DokuWiki Ui components:
  *  - Ui\Recent
  *  - Ui\PageRevisions
  *  - Ui\MediaRevisions
@@ -18,7 +18,7 @@ class RevisionInfo
     /**
      * Constructor
      *
-     * @param array $info Revision Infomation structure with entries:
+     * @param array $info Revision Information structure with entries:
      *      - date:  unix timestamp
      *      - ip:    IPv4 or IPv6 address
      *      - type:  change type (log line type)
@@ -47,23 +47,23 @@ class RevisionInfo
     }
 
     /**
-     * Set or return whether this revison is current page or media file
+     * Set or return whether this revision is current page or media file
      *
      * This method does not check exactly whether the revision is current or not. Instead,
      * set value of associated "current" key for internal use. Some UI element like diff
      * link button depend on relation to current page or media file. A changelog line does
-     * not indicate whether it coresponds to current page or media file.
+     * not indicate whether it corresponds to current page or media file.
      *
      * @param bool $value true if the revision is current, otherwise false
      * @return bool
      */
     public function isCurrent($value = null)
     {
-        return $this->val('current', $value);
+        return (bool) $this->val('current', $value);
     }
 
     /**
-     * Return or set a value of assosiated key of revision information
+     * Return or set a value of associated key of revision information
      * but does not allow to change values of existing keys
      *
      * @param string $key
@@ -98,7 +98,7 @@ class RevisionInfo
 
 
     /**
-     * fileicon of the page or media file
+     * file icon of the page or media file
      * used in [Ui\recent]
      *
      * @return string
@@ -228,7 +228,7 @@ class RevisionInfo
     }
 
     /**
-     * difflink icon in recents list, to compare (this) current revision with previous one
+     * diff link icon in recent changes list, to compare (this) current revision with previous one
      * all items in "recent changes" are current revision of the page or media
      *
      * @return string
@@ -241,7 +241,7 @@ class RevisionInfo
         $href = '';
         switch ($this->val('mode')) {
             case 'media': // media file revision
-                // unlike page, media file does not copyed to media_attic when uploaded.
+                // unlike page, media file does not copied to media_attic when uploaded.
                 // diff icon will not be shown when external edit occurred
                 // because no attic file to be compared with current.
                 $revs = (new MediaChangeLog($id))->getRevisions(0, 1);
@@ -270,7 +270,7 @@ class RevisionInfo
     }
 
     /**
-     * difflink icon in revsions list, compare this revision with current one
+     * diff link icon in revisions list, compare this revision with current one
      * the icon does not displayed for the current revision
      *
      * @return string
@@ -357,8 +357,8 @@ class RevisionInfo
     }
 
     /**
-     * current indicator, used in revison list
-     * not used in Ui\Recents because recent filess are always current one
+     * current indicator, used in revision list
+     * not used in Ui\Recent because recent files are always current one
      *
      * @return string
      */
