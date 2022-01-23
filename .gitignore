@@ -28,6 +28,7 @@
 /data/cache/*
 /data/index/*
 /data/locks/*
+/data/log/*
 /data/media/*
 /data/media_meta/*
 /data/media_attic/*
