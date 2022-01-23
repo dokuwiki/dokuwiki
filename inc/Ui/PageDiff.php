@@ -388,12 +388,16 @@ class PageDiff extends Diff
         $newerRevisions = $this->buildRevisionOptions('newer', $newRevs);
 
         // determine previous/next revisions
-        $index = array_search($oldRev, $oldRevs);
-        $oldPrevRev = ($index +1 < count($oldRevs)) ? $oldRevs[$index +1] : false;
-        $oldNextRev = ($index > 0)                  ? $oldRevs[$index -1] : false;
-        $index = array_search($newRev, $newRevs);
-        $newPrevRev = ($index +1 < count($newRevs)) ? $newRevs[$index +1] : false;
-        $newNextRev = ($index > 0)                  ? $newRevs[$index -1] : false;
+        $oldPrevRev = $oldNextRev = false;
+        if (($index = array_search($oldRev, $oldRevs)) !== false) {
+            $oldPrevRev = ($index +1 < count($oldRevs)) ? $oldRevs[$index +1] : false;
+            $oldNextRev = ($index > 0)                  ? $oldRevs[$index -1] : false;
+        }
+        $newPrevRev = $newNextRev = false;
+        if (($index = array_search($newRev, $newRevs)) !== false) {
+            $newPrevRev = ($index +1 < count($newRevs)) ? $newRevs[$index +1] : false;
+            $newNextRev = ($index > 0)                  ? $newRevs[$index -1] : false;
+        }
 
         /*
          * navigation UI for older revisions / Left side:
