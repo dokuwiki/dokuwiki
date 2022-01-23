@@ -553,9 +553,9 @@ abstract class ChangeLog
     /**
      * Get the current revision information, considering external edit, create or deletion
      *
-     * When the file has not modified since its last revision, the infomation of the last
+     * When the file has not modified since its last revision, the information of the last
      * change that had already recorded in the changelog is returned as current change info.
-     * Otherwise, the change infomation since the last revision caused outside DokuWiki
+     * Otherwise, the change information since the last revision caused outside DokuWiki
      * should be returned, which is referred as "external revision".
      *
      * The change date of the file can be determined by timestamp as far as the file exists,
