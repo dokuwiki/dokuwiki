@@ -95,27 +95,33 @@ abstract class Diff extends Ui
     {
         global $INPUT;
 
-        // difflink icon click, eg. ?rev=123456789&do=diff
+        // difflink icon click, eg. &do=diff&rev=#
         if ($INPUT->has('rev')) {
             $this->oldRev = $INPUT->int('rev');
             $this->newRev = $this->changelog->currentRevision();
         }
 
-        // submit button with two checked boxes
-        $rev2 = $INPUT->arr('rev2', []);
-        if (count($rev2) > 1) {
-            if ($rev2[0] < $rev2[1]) {
-                [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
-            } else {
-                [$this->oldRev, $this->newRev] = [$rev2[1], $rev2[0]];
-            }
+        // submit button with two checked boxes, eg. &do=diff&rev2[0]=#&rev2[1]=#
+        $revs = $INPUT->arr('rev2', []);
+        if (count($revs) > 1) {
+            list($rev1, $rev2) = $revs;
+            if ($rev2 < $rev1) [$rev1, $rev2] = [$rev2, $rev1];
+            $this->oldRev = (int)$rev1;
+            $this->newRev = (int)$this->changelog->traceCurrentRevision($rev2);
         }
+
 
         if (!isset($this->oldRev, $this->newRev)) {
             // no revision was given, compare previous to current
-            $revs = $this->changelog->getRevisions(-1, 2);
-            $this->newRev = $this->changelog->currentRevision();
-            $this->oldRev = ($revs[0] == $this->newRev) ? $revs[1] : $revs[0];
+            $rev2 = $this->changelog->currentRevision();
+            if ($rev2 > $this->changelog->lastRevision()) {
+                $rev1 = $this->changelog->lastRevision();
+            } else {
+                $revs = $changelog->getRevisions(0, 1);
+                $rev1 = count($revs) ? $revs[0] : false;
+            }
+            $this->oldRev = $rev1;
+            $this->newRev = $rev2;
         }
     }
 }
