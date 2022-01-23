@@ -177,14 +177,26 @@ class RevisionInfo
                 if ($rev) $params += ['rev'=> $rev];
                 $href = media_managerURL($params, '&');
                 $display_name = $id;
-                $class = file_exists(mediaFN($id, $rev)) ? 'wikilink1' : 'wikilink2';
+                $exists = file_exists(mediaFN($id, $rev));
                 break;
             case 'page': // page revision
                 $params = $rev ? ['rev'=> $rev] : [];
                 $href = wl($id, $params, false, '&');
                 $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
                 if (!$display_name) $display_name = $id;
-                $class = page_exists($id, $rev) ? 'wikilink1' : 'wikilink2';
+                $exists = page_exists($id, $rev);
+        }
+
+        if($exists) {
+            $class = 'wikilink1';
+        } else {
+            if($this->isCurrent()) {
+                //show only not-existing link for current page, which allows for directly create a new page/upload
+                $class = 'wikilink2';
+            } else {
+                //revision is not in attic
+                return $display_name;
+            }
         }
         if ($this->val('type') == DOKU_CHANGE_TYPE_DELETE) {
             $class = 'wikilink2';
@@ -207,23 +219,35 @@ class RevisionInfo
         $rev = $this->isCurrent() ? '' : $this->val('date');
         $params = ($rev) ? ['rev'=> $rev] : [];
 
-        switch ($this->val('mode')) {
-            case 'media': // media file revision
-                $href = ml($id, $params, false, '&');
-                $class = file_exists(mediaFN($id, $rev)) ? 'wikilink1' : 'wikilink2';
-                break;
-            case 'page': // page revision
-                $href = wl($id, $params, false, '&');
-                $class = page_exists($id, $rev) ? 'wikilink1' : 'wikilink2';
-        }
-        if ($this->val('type') == DOKU_CHANGE_TYPE_DELETE) {
-            $class = 'wikilink2';
-        }
         // revision info may have timestamp key when external edits occurred
         $date = ($this->val('timestamp') === false)
             ? $lang['unknowndate']
             : dformat($this->val('date'));
 
+
+        switch ($this->val('mode')) {
+            case 'media': // media file revision
+                $href = ml($id, $params, false, '&');
+                $exists = file_exists(mediaFN($id, $rev));
+                break;
+            case 'page': // page revision
+                $href = wl($id, $params, false, '&');
+                $exists = page_exists($id, $rev);
+        }
+        if($exists) {
+            $class = 'wikilink1';
+        } else {
+            if($this->isCurrent()) {
+                //show only not-existing link for current page, which allows for directly create a new page/upload
+                $class = 'wikilink2';
+            } else {
+                //revision is not in attic
+                return $id.' ['.$date.']';
+            }
+        }
+        if ($this->val('type') == DOKU_CHANGE_TYPE_DELETE) {
+            $class = 'wikilink2';
+        }
         return '<bdi><a class="'.$class.'" href="'.$href.'">'.$id.' ['.$date.']'.'</a></bdi>';
     }
 
