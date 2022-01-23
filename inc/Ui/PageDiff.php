@@ -61,8 +61,6 @@ class PageDiff extends Diff
      */
     public function compareWith($text = null)
     {
-        global $lang;
-
         if (isset($text)) {
             $this->text = $text;
             $changelog =& $this->changelog;
@@ -173,6 +171,8 @@ class PageDiff extends Diff
      */
     public function show()
     {
+        global $lang;
+
         if (!isset($this->Rev1, $this->Rev2)) {
             // retrieve form parameters: rev, rev2, difftype
             $this->handle();
