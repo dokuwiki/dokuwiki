@@ -78,7 +78,11 @@ class ApiCore
                 'args' => array('string', 'string', 'array'),
                 'return' => 'bool',
                 'doc' => 'Append text to a wiki page.'
-            ), 'dokuwiki.deleteUsers' => array(
+            ), 'dokuwiki.createUsers' => array(
+                'args' => array('array'),
+                'return' => 'array',
+                'doc' => 'Create one or more users. The result is an array of successfully created users'
+            ),'dokuwiki.deleteUsers' => array(
                 'args' => array('array'),
                 'return' => 'bool',
                 'doc' => 'Remove one or more users from the list of registered users.'
@@ -581,6 +585,67 @@ class ApiCore
         }
         return $this->putPage($id, $currentpage . $text, $params);
     }
+
+    /**
+     * Create one or more users
+     *
+     * @param array[] $users List of users to create
+     *
+     * @return string[] List of created users
+     *
+     * @throws AccessDeniedException
+     * @throws RemoteException
+     */
+    public function createUsers($users)
+    {
+        if (!auth_isadmin()) {
+            throw new AccessDeniedException('Only admins are allowed to create users', 114);
+        }
+
+        /** @var \dokuwiki\Extension\AuthPlugin $auth */
+        global $auth;
+
+        if(!$auth->canDo('addUser')) {
+            throw new AccessDeniedException(
+                sprintf('Authentication backend %s can\'t do addUser', $auth->getPluginName()),
+                114
+            );
+        }
+
+        $validatedUsers = [];
+        foreach ($users as $id => $user) {
+            $user['user'] = trim($auth->cleanUser($user['user'] ?? ''));
+            $user['password'] = $user['password'] ?? '';
+            $user['name'] = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $user['name'] ?? ''));
+            $user['mail'] = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $user['mail'] ?? ''));
+            $user['notify'] = (boolean)$user['notify'] ?? false;
+
+            if(!empty($user['user']) && !empty($user['name']) && mail_isvalid($user['mail'])) {
+                $validatedUsers[] = $user;
+            } else {
+                throw new RemoteException(
+                    sprintf('User number %s has invalid data (check user, name and mail)', $id + 1),
+                    114
+                );
+            }
+        }
+
+        $createdUsers = array();
+        foreach ($validatedUsers as $user) {
+            if(strlen($user['password']) === 0) {
+                $user['password'] = auth_pwgen($user);
+            }
+            $ok = $auth->triggerUserMod('create', array($user['user'], $user['password'], $user['name'], $user['mail'], $user['groups']));
+            if($ok) {
+                $createdUsers[] = $user['user'];
+                if($user['notify']) {
+                    auth_sendPassword($user['user'], $user['password']);
+                }
+            }
+        }
+        return $createdUsers;
+    }
+
 
     /**
      * Remove one or more users from the list of registered users

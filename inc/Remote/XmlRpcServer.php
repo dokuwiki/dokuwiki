@@ -5,6 +5,7 @@ namespace dokuwiki\Remote;
 use IXR\DataType\Base64;
 use IXR\DataType\Date;
 use IXR\Exception\ServerException;
+use IXR\Message\Error;
 use IXR\Server\Server;
 
 /**
@@ -36,13 +37,13 @@ class XmlRpcServer extends Server
         } catch (AccessDeniedException $e) {
             if (!isset($_SERVER['REMOTE_USER'])) {
                 http_status(401);
-                return new ServerException("server error. not authorized to call method $methodname", -32603);
+                return new Error(-32603, "server error. not authorized to call method $methodname");
             } else {
                 http_status(403);
-                return new ServerException("server error. forbidden to call the method $methodname", -32604);
+                return new Error(-32604, "server error. forbidden to call the method $methodname");
             }
         } catch (RemoteException $e) {
-            return new ServerException($e->getMessage(), $e->getCode());
+            return new Error($e->getCode(), $e->getMessage());
         }
     }
 
