@@ -589,9 +589,9 @@ class ApiCore
     /**
      * Create one or more users
      *
-     * @param array[] $users List of users to create
+     * @param array[] $userStruct User struct
      *
-     * @return string[] List of created users
+     * @return boolean Create state
      *
      * @throws AccessDeniedException
      * @throws RemoteException
