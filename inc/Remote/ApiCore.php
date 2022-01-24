@@ -78,10 +78,10 @@ class ApiCore
                 'args' => array('string', 'string', 'array'),
                 'return' => 'bool',
                 'doc' => 'Append text to a wiki page.'
-            ), 'dokuwiki.createUsers' => array(
-                'args' => array('array'),
-                'return' => 'array',
-                'doc' => 'Create one or more users. The result is an array of successfully created users'
+            ), 'dokuwiki.createUser' => array(
+                'args' => array('struct'),
+                'return' => 'bool',
+                'doc' => 'Create a user. The result is boolean'
             ),'dokuwiki.deleteUsers' => array(
                 'args' => array('array'),
                 'return' => 'bool',
@@ -596,7 +596,7 @@ class ApiCore
      * @throws AccessDeniedException
      * @throws RemoteException
      */
-    public function createUsers($users)
+    public function createUser($userStruct)
     {
         if (!auth_isadmin()) {
             throw new AccessDeniedException('Only admins are allowed to create users', 114);
@@ -612,38 +612,47 @@ class ApiCore
             );
         }
 
-        $validatedUsers = [];
-        foreach ($users as $id => $user) {
-            $user['user'] = trim($auth->cleanUser($user['user'] ?? ''));
-            $user['password'] = $user['password'] ?? '';
-            $user['name'] = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $user['name'] ?? ''));
-            $user['mail'] = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $user['mail'] ?? ''));
-            $user['notify'] = (boolean)$user['notify'] ?? false;
+        $user = trim($auth->cleanUser($userStruct['user'] ?? ''));
+        $password = $userStruct['password'] ?? '';
+        $name = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $userStruct['name'] ?? ''));
+        $mail = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $userStruct['mail'] ?? ''));
+        $groups = $userStruct['groups'] ?? [];
 
-            if(!empty($user['user']) && !empty($user['name']) && mail_isvalid($user['mail'])) {
-                $validatedUsers[] = $user;
-            } else {
-                throw new RemoteException(
-                    sprintf('User number %s has invalid data (check user, name and mail)', $id + 1),
-                    114
-                );
+        $notify = (boolean)$userStruct['notify'] ?? false;
+
+        if (empty($user)) {
+            throw new RemoteException('user not supplied', 114);
+        }
+
+        if (empty($name)) {
+            throw new RemoteException('name not supplied', 114);
+        }
+
+        if (!mail_isvalid($mail)) {
+            throw new RemoteException('mail not valid', 114);
+        }
+
+        if(strlen($password) === 0) {
+            $password = auth_pwgen($user);
+        }
+
+        if (!is_array($groups) || count($groups) === 0) {
+            $groups = null;
+        }
+
+        $ok = $auth->triggerUserMod('create', array($user, $password, $name, $mail, $groups));
+
+        if ($ok !== false && $ok !== null) {
+            $ok = true;
+        }
+
+        if($ok) {
+            if($notify) {
+                auth_sendPassword($user, $password);
             }
         }
 
-        $createdUsers = array();
-        foreach ($validatedUsers as $user) {
-            if(strlen($user['password']) === 0) {
-                $user['password'] = auth_pwgen($user);
-            }
-            $ok = $auth->triggerUserMod('create', array($user['user'], $user['password'], $user['name'], $user['mail'], $user['groups']));
-            if($ok) {
-                $createdUsers[] = $user['user'];
-                if($user['notify']) {
-                    auth_sendPassword($user['user'], $user['password']);
-                }
-            }
-        }
-        return $createdUsers;
+        return $ok;
     }
 
 

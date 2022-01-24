@@ -9,7 +9,7 @@ use dokuwiki\test\mock\AuthCreatePlugin;
 /**
  * Class remoteapicore_test
  */
-class remoteapicore_createusers_test extends DokuWikiTest {
+class remoteapicore_createuser_test extends DokuWikiTest {
 
     protected $userinfo;
     protected $oldAuthAcl;
@@ -54,7 +54,7 @@ class remoteapicore_createusers_test extends DokuWikiTest {
     }
 
 
-    public function test_createUsers()
+    public function test_createUser()
     {
         global $conf, $auth;
         $conf['remote'] = 1;
@@ -65,33 +65,24 @@ class remoteapicore_createusers_test extends DokuWikiTest {
         // $user, $pwd, $name, $mail, $grps = null
         $params = [
             [
-                [
-                    'user' => 'user1',
-                    'password' => 'password1',
-                    'name' => 'user1',
-                    'mail' => 'user1@localhost',
-                    'groups' => [
-                        'user',
-                        'test'
-                    ],
-                    'notify' => false
+                'user' => 'user1',
+                'password' => 'password1',
+                'name' => 'user1',
+                'mail' => 'user1@localhost',
+                'groups' => [
+                    'user',
+                    'test'
                 ],
-                [
-                    'user' => 'user2',
-                    'password' => 'password2',
-                    'name' => 'user2',
-                    'mail' => 'user2@localhost',
-                    'groups' => [
-                        'user',
-                        'test'
-                    ],
-                    'notify' => true
-                ],
+                'notify' => false
             ]
         ];
 
-        $actualCallResult = $this->remote->call('dokuwiki.createUsers', $params);
-        $this->assertCount(2, $actualCallResult);
+        $actualCallResult = $this->remote->call('dokuwiki.createUser', $params);
+        $this->assertTrue($actualCallResult);
+
+        // if the user exists, no data is overwritten
+        $actualCallResult = $this->remote->call('dokuwiki.createUser', $params);
+        $this->assertFalse($actualCallResult);
     }
 
     public function test_createUserAuthPlain()
@@ -102,7 +93,6 @@ class remoteapicore_createusers_test extends DokuWikiTest {
         $_SERVER['REMOTE_USER'] = 'testuser';
         $auth = new auth_plugin_authplain();
         $params = [
-            [
                 [
                     'user' => 'user1',
                     'password' => 'password1',
@@ -113,33 +103,30 @@ class remoteapicore_createusers_test extends DokuWikiTest {
                         'test'
                     ],
                     'notify' => false
-                ],
-            ]
+                ]
+
         ];
 
-        $callResult = $this->remote->call('dokuwiki.createUsers', $params);
-        $this->assertEquals('user1', $callResult[0]);
+        $callResult = $this->remote->call('dokuwiki.createUser', $params);
+        $this->assertTrue($callResult);
     }
 
-    public function test_createUserAuthPlainUndefinedParams()
+    public function test_createUserAuthPlainUndefinedUser()
     {
         $this->expectException(RemoteException::class);
-        $this->expectExceptionMessageMatches('/invalid data/');
+        $this->expectExceptionMessageMatches('/user not supplied/');
         global $conf, $auth;
         $conf['remote'] = 1;
         $conf['remoteuser'] = 'testuser';
         $_SERVER['REMOTE_USER'] = 'testuser';
         $auth = new auth_plugin_authplain();
         $params = [
-            [
                 [
                     'user' => ''
                 ],
-            ]
         ];
 
-        $this->remote->call('dokuwiki.createUsers', $params);
-
+        $this->remote->call('dokuwiki.createUser', $params);
     }
 
     public function test_createUserAuthCanNotDoAddUser()
@@ -153,7 +140,6 @@ class remoteapicore_createusers_test extends DokuWikiTest {
 
         $auth = new AuthCreatePlugin(false);
         $params = [
-            [
                 [
                     'user' => 'user1',
                     'password' => 'password1',
@@ -165,9 +151,8 @@ class remoteapicore_createusers_test extends DokuWikiTest {
                     ],
                     'notify' => false
                 ],
-            ]
         ];
-        $this->remote->call('dokuwiki.createUsers', $params);
+        $this->remote->call('dokuwiki.createUser', $params);
     }
 
 }

@@ -21,6 +21,9 @@ class AuthCreatePlugin extends AuthPlugin {
     }
 
     public function createUser($user, $pwd, $name, $mail, $grps = null) {
+        if (isset($this->users[$user])) {
+            return false;
+        }
         $pass = md5($pwd);
         $this->users[$user] = compact('pass', 'name', 'mail', 'grps');
         return true;
