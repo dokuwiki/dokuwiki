@@ -15,8 +15,8 @@ use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/');
-require_once(DOKU_INC.'inc/init.php');
+if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/');
+require_once(DOKU_INC . 'inc/init.php');
 
 //close session
 session_write_close();
@@ -33,7 +33,7 @@ $opt = rss_parseOptions();
 
 // the feed is dynamic - we need a cache for each combo
 // (but most people just use the default feed so it's still effective)
-$key   = join('', array_values($opt)).'$'.$_SERVER['REMOTE_USER'].'$'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'];
+$key   = join('', array_values($opt)) . '$' . $_SERVER['REMOTE_USER'] . '$' . $_SERVER['HTTP_HOST'] . $_SERVER['SERVER_PORT'];
 $cache = new Cache($key, '.feed');
 
 // prepare cache depends
@@ -58,30 +58,31 @@ if($cache->useCache($depends)) {
 
 // create new feed
 $rss                 = new UniversalFeedCreator();
-$rss->title          = $conf['title'].(($opt['namespace']) ? ' '.$opt['namespace'] : '');
+$rss->title          = $conf['title'] . (($opt['namespace']) ? ' ' . $opt['namespace'] : '');
 $rss->link           = DOKU_URL;
-$rss->syndicationURL = DOKU_URL.'feed.php';
-$rss->cssStyleSheet  = DOKU_URL.'lib/exe/css.php?s=feed';
+$rss->syndicationURL = DOKU_URL . 'feed.php';
+$rss->cssStyleSheet  = DOKU_URL . 'lib/exe/css.php?s=feed';
 
 $image        = new FeedImage();
 $image->title = $conf['title'];
-$image->url   = tpl_getMediaFile(array(':wiki:favicon.ico', ':favicon.ico', 'images/favicon.ico'), true);
+$image->url   = tpl_getMediaFile([':wiki:favicon.ico', ':favicon.ico', 'images/favicon.ico'], true);
 $image->link  = DOKU_URL;
 $rss->image   = $image;
 
 $data  = null;
-$modes = array(
+$modes = [
     'list'   => 'rssListNamespace',
     'search' => 'rssSearch',
     'recent' => 'rssRecentChanges'
-);
+];
+
 if(isset($modes[$opt['feed_mode']])) {
     $data = $modes[$opt['feed_mode']]($opt);
 } else {
-    $eventData = array(
+    $eventData = [
         'opt'  => &$opt,
         'data' => &$data,
-    );
+    ];
     $event     = new Event('FEED_MODE_UNKNOWN', $eventData);
     if($event->advise_before(true)) {
         echo sprintf('<error>Unknown feed mode %s</error>', hsc($opt['feed_mode']));
@@ -110,52 +111,52 @@ function rss_parseOptions() {
     global $conf;
     global $INPUT;
 
-    $opt = array();
+    $opt = [];
 
-    foreach(array(
+    foreach([
                 // Basic feed properties
                 // Plugins may probably want to add new values to these
                 // properties for implementing own feeds
 
                 // One of: list, search, recent
-                'feed_mode'    => array('str', 'mode', 'recent'),
+                'feed_mode'    => ['str', 'mode', 'recent'],
                 // One of: diff, page, rev, current
-                'link_to'      => array('str', 'linkto', $conf['rss_linkto']),
+                'link_to'      => ['str', 'linkto', $conf['rss_linkto']],
                 // One of: abstract, diff, htmldiff, html
-                'item_content' => array('str', 'content', $conf['rss_content']),
+                'item_content' => ['str', 'content', $conf['rss_content']],
 
                 // Special feed properties
                 // These are only used by certain feed_modes
 
                 // String, used for feed title, in list and rc mode
-                'namespace'    => array('str', 'ns', null),
+                'namespace'    => ['str', 'ns', null],
                 // Positive integer, only used in rc mode
-                'items'        => array('int', 'num', $conf['recent']),
+                'items'        => ['int', 'num', $conf['recent']],
                 // Boolean, only used in rc mode
-                'show_minor'   => array('bool', 'minor', false),
+                'show_minor'   => ['bool', 'minor', false],
                 // Boolean, only used in rc mode
-                'only_new'     => array('bool', 'onlynewpages', false),
+                'only_new'     => ['bool', 'onlynewpages', false],
                 // String, only used in list mode
-                'sort'         => array('str', 'sort', 'natural'),
+                'sort'         => ['str', 'sort', 'natural'],
                 // String, only used in search mode
-                'search_query' => array('str', 'q', null),
+                'search_query' => ['str', 'q', null],
                 // One of: pages, media, both
-                'content_type' => array('str', 'view', $conf['rss_media'])
+                'content_type' => ['str', 'view', $conf['rss_media']]
 
-            ) as $name => $val) {
+            ] as $name => $val) {
         $opt[$name] = $INPUT->{$val[0]}($val[1], $val[2], true);
     }
 
     $opt['items']      = max(0, (int) $opt['items']);
     $opt['show_minor'] = (bool) $opt['show_minor'];
     $opt['only_new']   = (bool) $opt['only_new'];
-    $opt['sort'] = valid_input_set('sort', array('default' => 'natural', 'date'), $opt);
+    $opt['sort']       = valid_input_set('sort', ['default' => 'natural', 'date'], $opt);
 
     $opt['guardmail'] = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
 
     $type = $INPUT->valid(
         'type',
-        array( 'rss', 'rss2', 'atom', 'atom1', 'rss1'),
+        ['rss', 'rss2', 'atom', 'atom1', 'rss1'],
         $conf['rss_type']
     );
     switch($type) {
@@ -180,9 +181,9 @@ function rss_parseOptions() {
             $opt['mime_type'] = 'application/xml';
     }
 
-    $eventData = array(
+    $eventData = [
         'opt' => &$opt,
-    );
+    ];
     Event::createAndTrigger('FEED_OPTS_POSTPROCESS', $eventData);
     return $opt;
 }
@@ -190,10 +191,10 @@ function rss_parseOptions() {
 /**
  * Add recent changed pages to a feed object
  *
+ * @param FeedCreator $rss  the FeedCreator Object
+ * @param array       $data the items to add
+ * @param array       $opt  the feed options
  * @author Andreas Gohr <andi@splitbrain.org>
- * @param  FeedCreator $rss the FeedCreator Object
- * @param  array       $data the items to add
- * @param  array       $opt  the feed options
  */
 function rss_buildItems(&$rss, &$data, $opt) {
     global $conf;
@@ -201,17 +202,17 @@ function rss_buildItems(&$rss, &$data, $opt) {
     /* @var AuthPlugin $auth */
     global $auth;
 
-    $eventData = array(
+    $eventData = [
         'rss'  => &$rss,
         'data' => &$data,
         'opt'  => &$opt,
-    );
+    ];
     $event     = new Event('FEED_DATA_PROCESS', $eventData);
     if($event->advise_before(false)) {
         foreach($data as $ditem) {
             if(!is_array($ditem)) {
                 // not an array? then only a list of IDs was given
-                $ditem = array('id' => $ditem);
+                $ditem = ['id' => $ditem];
             }
 
             $item = new FeedItem();
@@ -219,15 +220,15 @@ function rss_buildItems(&$rss, &$data, $opt) {
             if(!$ditem['media']) {
                 $meta = p_get_metadata($id);
             } else {
-                $meta = array();
+                $meta = [];
             }
 
             // add date
             if($ditem['date']) {
                 $date = $ditem['date'];
-            } elseif ($ditem['media']) {
+            } elseif($ditem['media']) {
                 $date = @filemtime(mediaFN($id));
-            } elseif (file_exists(wikiFN($id))) {
+            } elseif(file_exists(wikiFN($id))) {
                 $date = @filemtime(wikiFN($id));
             } elseif($meta['date']['modified']) {
                 $date = $meta['date']['modified'];
@@ -243,7 +244,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 $item->title = $ditem['id'];
             }
             if($conf['rss_show_summary'] && !empty($ditem['sum'])) {
-                $item->title .= ' - '.strip_tags($ditem['sum']);
+                $item->title .= ' - ' . strip_tags($ditem['sum']);
             }
 
             // add item link
@@ -251,37 +252,37 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 case 'page':
                     if($ditem['media']) {
                         $item->link = media_managerURL(
-                            array(
-                                 'image' => $id,
-                                 'ns'    => getNS($id),
-                                 'rev'   => $date
-                            ), '&', true
+                            [
+                                'image' => $id,
+                                'ns'    => getNS($id),
+                                'rev'   => $date
+                            ], '&', true
                         );
                     } else {
-                        $item->link = wl($id, 'rev='.$date, true, '&');
+                        $item->link = wl($id, 'rev=' . $date, true, '&');
                     }
                     break;
                 case 'rev':
                     if($ditem['media']) {
                         $item->link = media_managerURL(
-                            array(
-                                 'image'       => $id,
-                                 'ns'          => getNS($id),
-                                 'rev'         => $date,
-                                 'tab_details' => 'history'
-                            ), '&', true
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   [
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    'image'       => $id,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    'ns'    => getNS($id),
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    'rev'   => $date,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    'tab_details' => 'history'
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ], '&', true
                         );
                     } else {
-                        $item->link = wl($id, 'do=revisions&rev='.$date, true, '&');
+                        $item->link = wl($id, 'do=revisions&rev=' . $date, true, '&');
                     }
                     break;
                 case 'current':
                     if($ditem['media']) {
                         $item->link = media_managerURL(
-                            array(
-                                 'image' => $id,
-                                 'ns'    => getNS($id)
-                            ), '&', true
+                               [
+                                'image' => $id,
+                                'ns'    => getNS($id)
+                            ], '&', true
                         );
                     } else {
                         $item->link = wl($id, '', true, '&');
@@ -291,16 +292,16 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 default:
                     if($ditem['media']) {
                         $item->link = media_managerURL(
-                            array(
-                                 'image'       => $id,
-                                 'ns'          => getNS($id),
-                                 'rev'         => $date,
-                                 'tab_details' => 'history',
-                                 'mediado'     => 'diff'
-                            ), '&', true
+                               [
+                                'image'       => $id,
+                                'ns'    => getNS($id),
+                                'rev'   => $date,
+                                'tab_details' => 'history',
+                                'mediado'     => 'diff'
+                            ], '&', true
                         );
                     } else {
-                        $item->link = wl($id, 'rev='.$date.'&do=diff', true, '&');
+                        $item->link = wl($id, 'rev=' . $date . '&do=diff', true, '&');
                     }
             }
 
@@ -310,69 +311,73 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 case 'htmldiff':
                     if($ditem['media']) {
                         $medialog = new MediaChangeLog($id);
-                        $revs  = $medialog->getRevisions(0, 1);
-                        $rev   = $revs[0];
-                        $src_r = '';
-                        $src_l = '';
+                        $revs     = $medialog->getRevisions(0, 1);
+                        $rev      = $revs[0];
+                        $src_r    = '';
+                        $src_l    = '';
 
                         if($size = media_image_preview_size($id, '', new JpegMeta(mediaFN($id)), 300)) {
-                            $more  = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
+                            $more  = 'w=' . $size[0] . '&h=' . $size[1] . '&t=' . @filemtime(mediaFN($id));
                             $src_r = ml($id, $more, true, '&amp;', true);
                         }
                         if($rev && $size = media_image_preview_size($id, $rev, new JpegMeta(mediaFN($id, $rev)), 300)) {
-                            $more  = 'rev='.$rev.'&w='.$size[0].'&h='.$size[1];
+                            $more  = 'rev=' . $rev . '&w=' . $size[0] . '&h=' . $size[1];
                             $src_l = ml($id, $more, true, '&amp;', true);
                         }
                         $content = '';
                         if($src_r) {
                             $content = '<table>';
-                            $content .= '<tr><th width="50%">'.$rev.'</th>';
-                            $content .= '<th width="50%">'.$lang['current'].'</th></tr>';
-                            $content .= '<tr align="center"><td><img src="'.$src_l.'" alt="" /></td><td>';
-                            $content .= '<img src="'.$src_r.'" alt="'.$id.'" /></td></tr>';
+                            $content .= '<tr><th width="50%">' . $rev . '</th>';
+                            $content .= '<th width="50%">' . $lang['current'] . '</th></tr>';
+                            $content .= '<tr align="center"><td><img src="' . $src_l . '" alt="" /></td><td>';
+                            $content .= '<img src="' . $src_r . '" alt="' . $id . '" /></td></tr>';
                             $content .= '</table>';
                         }
 
                     } else {
-                        require_once(DOKU_INC.'inc/DifferenceEngine.php');
+                        require_once(DOKU_INC . 'inc/DifferenceEngine.php');
                         $pagelog = new PageChangeLog($id);
-                        $revs = $pagelog->getRevisions(0, 1);
-                        $rev  = $revs[0];
+                        $revs    = $pagelog->getRevisions(0, 1);
+                        $rev     = $revs[0];
 
                         if($rev) {
-                            $df = new Diff(explode("\n", rawWiki($id, $rev)),
-                                           explode("\n", rawWiki($id, '')));
+                            $df = new Diff(
+                                explode("\n", rawWiki($id, $rev)),
+                                explode("\n", rawWiki($id, ''))
+                            );
                         } else {
-                            $df = new Diff(array(''),
-                                           explode("\n", rawWiki($id, '')));
+                            $df = new Diff(
+                                [''],
+                                explode("\n", rawWiki($id, ''))
+                            );
                         }
 
                         if($opt['item_content'] == 'htmldiff') {
                             // note: no need to escape diff output, TableDiffFormatter provides 'safe' html
                             $tdf     = new TableDiffFormatter();
                             $content = '<table>';
-                            $content .= '<tr><th colspan="2" width="50%">'.$rev.'</th>';
-                            $content .= '<th colspan="2" width="50%">'.$lang['current'].'</th></tr>';
+                            $content .= '<tr><th colspan="2" width="50%">' . $rev . '</th>';
+                            $content .= '<th colspan="2" width="50%">' . $lang['current'] . '</th></tr>';
                             $content .= $tdf->format($df);
                             $content .= '</table>';
                         } else {
                             // note: diff output must be escaped, UnifiedDiffFormatter provides plain text
                             $udf     = new UnifiedDiffFormatter();
-                            $content = "<pre>\n".hsc($udf->format($df))."\n</pre>";
+                            $content = "<pre>\n" . hsc($udf->format($df)) . "\n</pre>";
                         }
                     }
                     break;
                 case 'html':
                     if($ditem['media']) {
                         if($size = media_image_preview_size($id, '', new JpegMeta(mediaFN($id)))) {
-                            $more    = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
-                            $src     = ml($id, $more, true, '&amp;', true);
-                            $content = '<img src="'.$src.'" alt="'.$id.'" />';
+                            $more    = 'w=' . $size[0] . '&h=' . $size[1] . '&t=' . @filemtime(mediaFN($id));
+                            $src  = ml($id, $more, true, '&amp;', true);
+                            $content = '<img src="' . $src . '" alt="' . $id . '" />';
                         } else {
                             $content = '';
                         }
                     } else {
-                        if (@filemtime(wikiFN($id)) === $date) {
+                        if(@filemtime(wikiFN($id)) === $date) {
                             $content = p_wiki_xhtml($id, '', false);
                         } else {
                             $content = p_wiki_xhtml($id, $date, false);
@@ -387,7 +392,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                         // make URLs work when canonical is not set, regexp instead of rerendering!
                         if(!$conf['canonical']) {
                             $base    = preg_quote(DOKU_REL, '/');
-                            $content = preg_replace('/(<a href|<img src)="('.$base.')/s', '$1="'.DOKU_URL, $content);
+                            $content = preg_replace('/(<a href|<img src)="(' . $base . ')/s', '$1="' . DOKU_URL, $content);
                         }
                     }
 
@@ -396,9 +401,9 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 default:
                     if($ditem['media']) {
                         if($size = media_image_preview_size($id, '', new JpegMeta(mediaFN($id)))) {
-                            $more    = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
-                            $src     = ml($id, $more, true, '&amp;', true);
-                            $content = '<img src="'.$src.'" alt="'.$id.'" />';
+                            $more    = 'w=' . $size[0] . '&h=' . $size[1] . '&t=' . @filemtime(mediaFN($id));
+                            $src  = ml($id, $more, true, '&amp;', true);
+                            $content = '<img src="' . $src . '" alt="' . $id . '" />';
                         } else {
                             $content = '';
                         }
@@ -410,12 +415,12 @@ function rss_buildItems(&$rss, &$data, $opt) {
 
             // add user
             # FIXME should the user be pulled from metadata as well?
-            $user         = @$ditem['user']; // the @ spares time repeating lookup
+            $user = @$ditem['user']; // the @ spares time repeating lookup
             if(blank($user)) {
-                $item->author = 'Anonymous';
+                $item->author      = 'Anonymous';
                 $item->authorEmail = 'anonymous@undisclosed.example.com';
             } else {
-                $item->author = $user;
+                $item->author      = $user;
                 $item->authorEmail = $user . '@undisclosed.example.com';
 
                 // get real user name if configured
@@ -446,12 +451,12 @@ function rss_buildItems(&$rss, &$data, $opt) {
             }
 
             // finally add the item to the feed object, after handing it to registered plugins
-            $evdata = array(
+            $evdata = [
                 'item'  => &$item,
-                'opt'   => &$opt,
+                'opt'  => &$opt,
                 'ditem' => &$ditem,
                 'rss'   => &$rss
-            );
+            ];
             $evt    = new Event('FEED_ITEM_ADD', $evdata);
             if($evt->advise_before()) {
                 $rss->addItem($item);
@@ -486,18 +491,18 @@ function rssRecentChanges($opt) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rssListNamespace($opt) {
-    require_once(DOKU_INC.'inc/search.php');
+    require_once(DOKU_INC . 'inc/search.php');
     global $conf;
 
-    $ns = ':'.cleanID($opt['namespace']);
+    $ns = ':' . cleanID($opt['namespace']);
     $ns = utf8_encodeFN(str_replace(':', '/', $ns));
 
-    $data = array();
-    $search_opts = array(
-        'depth' => 1,
+    $data        = [];
+    $search_opts = [
+        'depth'     => 1,
         'pagesonly' => true,
         'listfiles' => true
-    );
+    ];
     search($data, $conf['datadir'], 'search_universal', $search_opts, $ns, $lvl = 1, $opt['sort']);
 
     return $data;
@@ -509,9 +514,9 @@ function rssListNamespace($opt) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rssSearch($opt) {
-    if(!$opt['search_query']) return array();
+    if(!$opt['search_query'] || !actionOK('search')) return [];
 
-    require_once(DOKU_INC.'inc/fulltext.php');
+    require_once(DOKU_INC . 'inc/fulltext.php');
     $data = ft_pageSearch($opt['search_query'], $poswords);
     $data = array_keys($data);
 
