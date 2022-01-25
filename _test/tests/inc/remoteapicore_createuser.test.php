@@ -46,14 +46,6 @@ class remoteapicore_createuser_test extends DokuWikiTest {
         $AUTH_ACL = $this->oldAuthAcl;
     }
 
-    /** Delay writes of old revisions by a second. */
-    public function handle_write(Doku_Event $event, $param) {
-        if ($event->data[3] !== false) {
-            $this->waitForTick();
-        }
-    }
-
-
     public function test_createUser()
     {
         global $conf, $auth;
@@ -113,8 +105,6 @@ class remoteapicore_createuser_test extends DokuWikiTest {
 
     public function test_createUserAuthPlainUndefinedUser()
     {
-        $this->expectException(RemoteException::class);
-        $this->expectExceptionMessageMatches('/user not supplied/');
         global $conf, $auth;
         $conf['remote'] = 1;
         $conf['remoteuser'] = 'testuser';
@@ -126,7 +116,7 @@ class remoteapicore_createuser_test extends DokuWikiTest {
                 ],
         ];
 
-        $this->remote->call('dokuwiki.createUser', $params);
+        $this->assertFalse($this->remote->call('dokuwiki.createUser', $params));
     }
 
     public function test_createUserAuthCanNotDoAddUser()
