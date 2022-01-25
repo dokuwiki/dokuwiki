@@ -618,18 +618,10 @@ class ApiCore
         $mail = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $userStruct['mail'] ?? ''));
         $groups = $userStruct['groups'] ?? [];
 
-        $notify = (boolean)$userStruct['notify'] ?? false;
+        $notify = (bool)$userStruct['notify'] ?? false;
 
-        if (empty($user)) {
-            throw new RemoteException('user not supplied', 114);
-        }
-
-        if (empty($name)) {
-            throw new RemoteException('name not supplied', 114);
-        }
-
-        if (!mail_isvalid($mail)) {
-            throw new RemoteException('mail not valid', 114);
+        if ($user === '' || $name === '' || !mail_isvalid($mail)) {
+            return false;
         }
 
         if(strlen($password) === 0) {
