@@ -19,9 +19,9 @@ class MediaDiff extends Diff
     protected $changelog;
 
     /* @var RevisionInfo older revision */
-    protected $Rev1;
+    protected $RevInfo1;
     /* @var RevisionInfo newer revision */
-    protected $Rev2;
+    protected $RevInfo2;
 
     /* @var bool */
     protected $is_img;
@@ -77,23 +77,22 @@ class MediaDiff extends Diff
         $changelog =& $this->changelog;
 
         // create revision info object for older and newer sides
-        // Rev1 : older, left side
-        // Rev2 : newer, right side
-        $this->Rev1 = new RevisionInfo($changelog->getRevisionInfo($this->rev1));
-        $this->Rev2 = new RevisionInfo($changelog->getRevisionInfo($this->rev2));
-        [$Rev1, $Rev2] = [$this->Rev1, $this->Rev2];
+        // RevInfo1 : older, left side
+        // RevInfo2 : newer, right side
+        $this->RevInfo1 = new RevisionInfo($changelog->getRevisionInfo($this->rev1));
+        $this->RevInfo2 = new RevisionInfo($changelog->getRevisionInfo($this->rev2));
 
         $this->is_img = preg_match('/\.(jpe?g|gif|png)$/', $this->id);
 
-        foreach ([$Rev1, $Rev2] as $Revision) {
-            $isCurrent = $changelog->isCurrentRevision($Revision->val('date'));
-            $Revision->isCurrent($isCurrent);
+        foreach ([$this->RevInfo1, $this->RevInfo2] as $RevInfo) {
+            $isCurrent = $changelog->isCurrentRevision($RevInfo->val('date'));
+            $RevInfo->isCurrent($isCurrent);
 
             if ($this->is_img) {
-                $rev = $isCurrent ? '' : $Revision->val('date');
+                $rev = $isCurrent ? '' : $RevInfo->val('date');
                 $meta = new JpegMeta(mediaFN($this->id, $rev));
                 // get image width and height for the media manager preview panel
-                $Revision->append([
+                $RevInfo->append([
                     'previewSize' => media_image_preview_size($this->id, $rev, $meta)
                 ]);
             }
@@ -101,8 +100,8 @@ class MediaDiff extends Diff
 
         // re-check image, ensure minimum image width for showImageDiff()
         $this->is_img = ($this->is_img
-            && ($Rev1->val('previewSize')[0] ?? 0) >= 30
-            && ($Rev2->val('previewSize')[0] ?? 0) >= 30
+            && ($this->RevInfo1->val('previewSize')[0] ?? 0) >= 30
+            && ($this->RevInfo2->val('previewSize')[0] ?? 0) >= 30
         );
         // adjust requested diff view type
         if (!$this->is_img) {
@@ -161,8 +160,8 @@ class MediaDiff extends Diff
      */
     protected function showDiffViewSelector()
     {
-        // revision information object
-        [$Rev1, $Rev2] = [$this->Rev1, $this->Rev2];
+        // use timestamp for current revision, date may be false when revisions < 2
+        [$rev1, $rev2] = [(int)$this->RevInfo1->val('date'), (int)$this->RevInfo2->val('date')];
 
         echo '<div class="diffoptions group">';
 
@@ -175,8 +174,8 @@ class MediaDiff extends Diff
         $form->addTagOpen('div')->addClass('no');
         $form->setHiddenField('sectok', null);
         $form->setHiddenField('mediado', 'diff');
-        $form->setHiddenField('rev2[0]', (int)$Rev1->val('date'));
-        $form->setHiddenField('rev2[1]', (int)$Rev2->val('date'));
+        $form->setHiddenField('rev2[0]', $rev1);
+        $form->setHiddenField('rev2[1]', $rev2);
         $form->addTagClose('div');
         echo $form->toHTML();
 
@@ -191,18 +190,15 @@ class MediaDiff extends Diff
      */
     protected function showImageDiff()
     {
-        // revision information object
-        [$Rev1, $Rev2] = [$this->Rev1, $this->Rev2];
-
-        $rev1 = $Rev1->isCurrent() ? '' : $Rev1->val('date');
-        $rev2 = $Rev2->isCurrent() ? '' : $Rev2->val('date');
+        $rev1 = $this->RevInfo1->isCurrent() ? '' : $this->RevInfo1->val('date');
+        $rev2 = $this->RevInfo2->isCurrent() ? '' : $this->RevInfo2->val('date');
 
         // diff view type: opacity or portions
         $type = $this->preference['difftype'];
 
         // adjust image width, right side (newer) has priority
-        $rev1Size = $Rev1->val('previewSize');
-        $rev2Size = $Rev2->val('previewSize');
+        $rev1Size = $this->RevInfo1->val('previewSize');
+        $rev2Size = $this->RevInfo2->val('previewSize');
         if ($rev1Size != $rev2Size) {
             if ($rev2Size[0] > $rev1Size[0]) {
                 $rev1Size = $rev2Size;
@@ -238,20 +234,17 @@ class MediaDiff extends Diff
         $ns = getNS($this->id);
         $auth = auth_quickaclcheck("$ns:*");
 
-        // revision information object
-        [$Rev1, $Rev2] = [$this->Rev1, $this->Rev2];
-
-        $rev1 = $Rev1->isCurrent() ? '' : (int)$Rev1->val('date');
-        $rev2 = $Rev2->isCurrent() ? '' : (int)$Rev2->val('date');
+        $rev1 = $this->RevInfo1->isCurrent() ? '' : (int)$this->RevInfo1->val('date');
+        $rev2 = $this->RevInfo2->isCurrent() ? '' : (int)$this->RevInfo2->val('date');
 
         // revision title
-        $rev1Title = trim($Rev1->showRevisionTitle() .' '. $Rev1->showCurrentIndicator());
-        $rev1Summary = ($Rev1->val('date'))
-            ? $Rev1->showEditSummary() .' '. $Rev1->showEditor()
+        $rev1Title = trim($this->RevInfo1->showRevisionTitle() .' '. $this->RevInfo1->showCurrentIndicator());
+        $rev1Summary = ($this->RevInfo1->val('date'))
+            ? $this->RevInfo1->showEditSummary() .' '. $this->RevInfo1->showEditor()
             : '';
-        $rev2Title = trim($Rev2->showRevisionTitle() .' '. $Rev2->showCurrentIndicator());
-        $rev2Summary = ($Rev2->val('date'))
-            ? $Rev2->showEditSummary() .' '. $Rev2->showEditor()
+        $rev2Title = trim($this->RevInfo2->showRevisionTitle() .' '. $this->RevInfo2->showCurrentIndicator());
+        $rev2Summary = ($this->RevInfo2->val('date'))
+            ? $this->RevInfo2->showEditSummary() .' '. $this->RevInfo2->showEditor()
             : '';
 
         $rev1Meta = new JpegMeta(mediaFN($this->id, $rev1));
