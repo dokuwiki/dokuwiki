@@ -185,16 +185,16 @@ class PageDiff extends Diff
 
         // revision title
         $rev1Title = trim($Rev1->showRevisionTitle() .' '. $Rev1->showCurrentIndicator());
-        $rev1Supple = ($Rev1->val('date'))
+        $rev1Summary = ($Rev1->val('date'))
             ? $Rev1->showEditSummary() .' '. $Rev1->showEditor()
             : '';
 
         if ($Rev2->val('extra') == 'compareWith') {
             $rev2Title = $lang['yours'];
-            $rev2Supple = '';
+            $rev2Summary = '';
         } else {
             $rev2Title = trim($Rev2->showRevisionTitle() .' '. $Rev2->showCurrentIndicator());
-            $rev2Supple = ($Rev2->val('date'))
+            $rev2Summary = ($Rev2->val('date'))
                 ? $Rev2->showEditSummary() .' '. $Rev2->showEditor()
                 : '';
         }
@@ -226,8 +226,8 @@ class PageDiff extends Diff
         //navigation and header
         switch ($this->preference['difftype']) {
             case 'inline':
-                $title1 = $rev1Title . ($rev1Supple ? '<br />'.$rev1Supple : '');
-                $title2 = $rev2Title . ($rev2Supple ? '<br />'.$rev2Supple : '');
+                $title1 = $rev1Title . ($rev1Summary ? '<br />'.$rev1Summary : '');
+                $title2 = $rev2Title . ($rev2Summary ? '<br />'.$rev2Summary : '');
                 // no navigation for PageConflict or PageDraft
                 if ($Rev2->val('extra') !== 'compareWith') {
                     echo '<tr>'
@@ -253,8 +253,8 @@ class PageDiff extends Diff
 
             case 'sidebyside':
             default:
-                $title1 = $rev1Title . ($rev1Supple ? ' '.$rev1Supple : '');
-                $title2 = $rev2Title . ($rev2Supple ? ' '.$rev2Supple : '');
+                $title1 = $rev1Title . ($rev1Summary ? ' '.$rev1Summary : '');
+                $title2 = $rev2Title . ($rev2Summary ? ' '.$rev2Summary : '');
                 // no navigation for PageConflict or PageDraft
                 if ($Rev2->val('extra') !== 'compareWith') {
                     echo '<tr>'
