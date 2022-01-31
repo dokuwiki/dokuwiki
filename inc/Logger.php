@@ -111,6 +111,7 @@ class Logger
      */
     public function log($message, $details = null, $file = '', $line = 0)
     {
+        global $EVENT_HANDLER;
         if (!$this->isLogging) return false;
 
         $datetime = time();
@@ -124,12 +125,18 @@ class Logger
             'loglines' => [],
             'logfile' => $this->getLogfile($datetime),
         ];
-        $event = new Event('LOGGER_DATA_FORMAT', $data);
 
-        if ($event->advise_before()) {
+        if ($EVENT_HANDLER !== null) {
+            $event = new Event('LOGGER_DATA_FORMAT', $data);
+            if ($event->advise_before()) {
+                $data['loglines'] = $this->formatLogLines($data);
+            }
+            $event->advise_after();
+        } else {
+            // The event system is not yet available, to ensure the log isn't lost even on
+            // fatal errors, the default action is executed
             $data['loglines'] = $this->formatLogLines($data);
         }
-        $event->advise_after();
 
         // only log when any data available
         if (count($data['loglines'])) {
