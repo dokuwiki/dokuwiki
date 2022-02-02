@@ -1,6 +1,6 @@
 <?php
 
-require_once DOKU_INC . 'inc/parser/renderer.php';
+use dokuwiki\test\mock\Doku_Renderer;
 
 /**
  * Tests for Doku_Renderer::_resolveInterWiki()
@@ -43,13 +43,27 @@ class Test_resolveInterwiki extends DokuWikiTest {
     function testNonexisting() {
         $Renderer = new Doku_Renderer();
         $Renderer->interwiki = getInterwiki();
+        unset($Renderer->interwiki['default']);
 
         $shortcut = 'nonexisting';
         $reference = 'foo @+%/';
         $url = $Renderer->_resolveInterWiki($shortcut, $reference);
-        $expected = 'https://www.google.com/search?q=foo%20%40%2B%25%2F&amp;btnI=lucky';
 
-        $this->assertEquals($expected, $url);
+        $this->assertEquals('', $url);
+        $this->assertEquals('', $shortcut);
+    }
+
+    function testNonexistingWithDefault() {
+        $Renderer = new Doku_Renderer();
+        $Renderer->interwiki = getInterwiki();
+        $Renderer->interwiki['default'] = 'https://en.wikipedia.org/wiki/{NAME}';
+
+        $shortcut = 'nonexisting';
+        $reference = 'foo';
+        $url = $Renderer->_resolveInterWiki($shortcut, $reference);
+
+        $this->assertEquals('https://en.wikipedia.org/wiki/foo', $url);
+        $this->assertEquals('default', $shortcut);
     }
 
 }

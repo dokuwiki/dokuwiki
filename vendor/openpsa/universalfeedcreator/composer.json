@@ -1,0 +1,24 @@
+{
+    "name": "openpsa/universalfeedcreator",
+    "type": "library",
+    "description": "RSS and Atom feed generator by Kai Blankenhorn",
+    "keywords": ["rss", "atom", "pie", "opml", "gpx", "georss"],
+    "license": "LGPL-2.1-or-later",
+    "authors": [
+        {
+            "name": "Andreas Flack",
+            "email": "flack@contentcontrol-berlin.de",
+            "homepage": "http://www.contentcontrol-berlin.de/"
+        }
+    ],
+    "require": {
+        "php": ">=5.0"
+    },
+    "autoload": {
+        "classmap": ["lib"],
+        "files": ["lib/constants.php"]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
+}

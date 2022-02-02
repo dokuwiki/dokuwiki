@@ -6,22 +6,19 @@
  * @author  Andreas Gohr <gohr@cosmocode.de>
  */
 
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
 /**
  * Class action_plugin_addomain
  */
-class action_plugin_authad extends DokuWiki_Action_Plugin {
+class action_plugin_authad extends DokuWiki_Action_Plugin
+{
 
     /**
      * Registers a callback function for a given event
      */
-    public function register(Doku_Event_Handler $controller) {
-
-        $controller->register_hook('AUTH_LOGIN_CHECK', 'BEFORE', $this, 'handle_auth_login_check');
-        $controller->register_hook('HTML_LOGINFORM_OUTPUT', 'BEFORE', $this, 'handle_html_loginform_output');
-
+    public function register(Doku_Event_Handler $controller)
+    {
+        $controller->register_hook('AUTH_LOGIN_CHECK', 'BEFORE', $this, 'handleAuthLoginCheck');
+        $controller->register_hook('FORM_LOGIN_OUTPUT', 'BEFORE', $this, 'handleFormLoginOutput');
     }
 
     /**
@@ -30,17 +27,18 @@ class action_plugin_authad extends DokuWiki_Action_Plugin {
      * @param Doku_Event $event
      * @param array      $param
      */
-    public function handle_auth_login_check(Doku_Event &$event, $param) {
+    public function handleAuthLoginCheck(Doku_Event $event, $param)
+    {
         global $INPUT;
 
         /** @var auth_plugin_authad $auth */
         global $auth;
-        if(!is_a($auth, 'auth_plugin_authad')) return; // AD not even used
+        if (!is_a($auth, 'auth_plugin_authad')) return; // AD not even used
 
-        if($INPUT->str('dom')) {
+        if ($INPUT->str('dom')) {
             $usr = $auth->cleanUser($event->data['user']);
-            $dom = $auth->_userDomain($usr);
-            if(!$dom) {
+            $dom = $auth->getUserDomain($usr);
+            if (!$dom) {
                 $usr = "$usr@".$INPUT->str('dom');
             }
             $INPUT->post->set('u', $usr);
@@ -54,38 +52,39 @@ class action_plugin_authad extends DokuWiki_Action_Plugin {
      * @param Doku_Event $event
      * @param array      $param
      */
-    public function handle_html_loginform_output(Doku_Event &$event, $param) {
+    public function handleFormLoginOutput(Doku_Event $event, $param)
+    {
         global $INPUT;
         /** @var auth_plugin_authad $auth */
         global $auth;
-        if(!is_a($auth, 'auth_plugin_authad')) return; // AD not even used
-        $domains = $auth->_getConfiguredDomains();
-        if(count($domains) <= 1) return; // no choice at all
+        if (!is_a($auth, 'auth_plugin_authad')) return; // AD not even used
+        $domains = $auth->getConfiguredDomains();
+        if (count($domains) <= 1) return; // no choice at all
 
-        /** @var Doku_Form $form */
+        /** @var dokuwiki\Form\Form $form */
         $form =& $event->data;
 
+        // find the username input box
+        $pos = $form->findPositionByAttribute('name', 'u');
+        if ($pos === false) return;
+
         // any default?
-        $dom = '';
-        if($INPUT->has('u')) {
+        if ($INPUT->has('u')) {
             $usr = $auth->cleanUser($INPUT->str('u'));
-            $dom = $auth->_userDomain($usr);
+            $dom = $auth->getUserDomain($usr);
 
             // update user field value
-            if($dom) {
-                $usr          = $auth->_userName($usr);
-                $pos          = $form->findElementByAttribute('name', 'u');
-                $ele          =& $form->getElementAt($pos);
-                $ele['value'] = $usr;
+            if ($dom) {
+                $usr = $auth->getUserName($usr);
+                $element = $form->getElementAt($pos);
+                $element->val($usr);
             }
         }
 
-        // add select box
-        $element = form_makeListboxField('dom', $domains, $dom, $this->getLang('domain'), '', 'block');
-        $pos     = $form->findElementByAttribute('name', 'p');
-        $form->insertElement($pos + 1, $element);
+        // add locate domain selector just after the username input box
+        $element = $form->addDropdown('dom', $domains, $this->getLang('domain'), $pos +1);
+        $element->addClass('block');
     }
-
 }
 
 // vim:ts=4:sw=4:et:

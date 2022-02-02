@@ -1,0 +1,8 @@
+*.iml
+.idea/
+composer.phar
+vendor/
+composer.lock
+apigen.phar
+docs/
+.phpunit.result.cache

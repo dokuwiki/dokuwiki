@@ -11,6 +11,9 @@
  * (scheme.conf & stopwords.conf), e.g.
  * !gopher
  */
+
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\Event;
 const DOKU_CONF_NEGATION = '!';
 
 /**
@@ -145,19 +148,23 @@ function getCdnUrls() {
         'versions' => $versions,
         'src' => &$src
     );
-    $event = new Doku_Event('CONFUTIL_CDN_SELECT', $data);
+    $event = new Event('CONFUTIL_CDN_SELECT', $data);
     if($event->advise_before()) {
         if(!$conf['jquerycdn']) {
             $jqmod = md5(join('-', $versions));
             $src[] = DOKU_BASE . 'lib/exe/jquery.php' . '?tseed=' . $jqmod;
         } elseif($conf['jquerycdn'] == 'jquery') {
             $src[] = sprintf('https://code.jquery.com/jquery-%s.min.js', $versions['JQ_VERSION']);
-            $src[] = sprintf('https://code.jquery.com/jquery-migrate-%s.min.js', $versions['JQM_VERSION']);
             $src[] = sprintf('https://code.jquery.com/ui/%s/jquery-ui.min.js', $versions['JQUI_VERSION']);
         } elseif($conf['jquerycdn'] == 'cdnjs') {
-            $src[] = sprintf('https://cdnjs.cloudflare.com/ajax/libs/jquery/%s/jquery.min.js', $versions['JQ_VERSION']);
-            $src[] = sprintf('https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/%s/jquery-migrate.min.js', $versions['JQM_VERSION']);
-            $src[] = sprintf('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/%s/jquery-ui.min.js', $versions['JQUI_VERSION']);
+            $src[] = sprintf(
+                'https://cdnjs.cloudflare.com/ajax/libs/jquery/%s/jquery.min.js',
+                $versions['JQ_VERSION']
+            );
+            $src[] = sprintf(
+                'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/%s/jquery-ui.min.js',
+                $versions['JQUI_VERSION']
+            );
         }
     }
     $event->advise_after();
@@ -208,22 +215,23 @@ function getSchemes() {
  *
  * @return array
  */
-function linesToHash($lines, $lower=false) {
+function linesToHash($lines, $lower = false) {
     $conf = array();
     // remove BOM
-    if (isset($lines[0]) && substr($lines[0],0,3) == pack('CCC',0xef,0xbb,0xbf))
-        $lines[0] = substr($lines[0],3);
-    foreach ( $lines as $line ) {
+    if(isset($lines[0]) && substr($lines[0], 0, 3) == pack('CCC', 0xef, 0xbb, 0xbf))
+        $lines[0] = substr($lines[0], 3);
+    foreach($lines as $line) {
         //ignore comments (except escaped ones)
-        $line = preg_replace('/(?<![&\\\\])#.*$/','',$line);
-        $line = str_replace('\\#','#',$line);
+        $line = preg_replace('/(?<![&\\\\])#.*$/', '', $line);
+        $line = str_replace('\\#', '#', $line);
         $line = trim($line);
-        if(empty($line)) continue;
-        $line = preg_split('/\s+/',$line,2);
+        if($line === '') continue;
+        $line = preg_split('/\s+/', $line, 2);
+        $line = array_pad($line, 2, '');
         // Build the associative array
-        if($lower){
+        if($lower) {
             $conf[strtolower($line[0])] = $line[1];
-        }else{
+        } else {
             $conf[$line[0]] = $line[1];
         }
     }
@@ -252,6 +260,25 @@ function confToHash($file,$lower=false) {
     if ( !$lines ) return $conf;
 
     return linesToHash($lines, $lower);
+}
+
+/**
+ * Read a json config file into an array
+ *
+ * @param string $file
+ * @return array
+ */
+function jsonToArray($file)
+{
+    $json = file_get_contents($file);
+
+    $conf = json_decode($json, true);
+
+    if ($conf === null) {
+        return [];
+    }
+
+    return $conf;
 }
 
 /**
@@ -321,7 +348,7 @@ function actionOK($action){
     static $disabled = null;
     if(is_null($disabled) || defined('SIMPLE_TEST')){
         global $conf;
-        /** @var DokuWiki_Auth_Plugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
 
         // prepare disabled actions array and handle legacy options

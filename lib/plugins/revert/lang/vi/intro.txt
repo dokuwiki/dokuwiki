@@ -1,0 +1,3 @@
+====== Quản lý lùi lại ======
+
+Trang này giúp bạn lùi lại tự động các cuộc spam tấn công. Để tìm danh sách các trang spam, trước tiên, hãy nhập chuỗi tìm kiếm (ví dụ: URL spam), sau đó xác nhận rằng các trang tìm thấy thực sự là spam và lùi lại các sửa đổi.

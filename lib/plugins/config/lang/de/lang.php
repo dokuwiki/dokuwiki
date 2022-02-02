@@ -3,14 +3,22 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Markus Glaser <glaser@hallowelt.com>
+ * @author Axel Schwarzer <SchwarzerA@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Eric Haberstroh <ehaberstroh@gmail.com>
+ * @author C!own77 <clown77@posteo.de>
+ * @author Alex Beck <alex@4becks.com>
+ * @author Jürgen Fredriksson <jfriedrich@gmx.at>
+ * @author Michael Bohn <mjbohn@gmail.com>
+ * @author Joel Strasser <strasser999@gmail.com>
  * @author Michael Klier <chi@chimeric.de>
  * @author Leo Moll <leo@yeasoft.com>
  * @author Florian Anderiasch <fa@art-core.org>
  * @author Robin Kluth <commi1993@gmail.com>
  * @author Arne Pelka <mail@arnepelka.de>
  * @author Dirk Einecke <dirk@dirkeinecke.de>
- * @author Blitzi94@gmx.de
+ * @author Blitzi94 <Blitzi94@gmx.de>
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Niels Lange <niels@boldencursief.nl>
  * @author Christian Wichmann <nospam@zone0.de>
@@ -48,6 +56,7 @@ $lang['_advanced']             = 'Erweitert';
 $lang['_network']              = 'Netzwerk';
 $lang['_msg_setting_undefined'] = 'Keine Konfigurationsmetadaten.';
 $lang['_msg_setting_no_class'] = 'Keine Konfigurationsklasse.';
+$lang['_msg_setting_no_known_class'] = 'Setting-Klasse nicht verfügbar.';
 $lang['_msg_setting_no_default'] = 'Kein Standardwert.';
 $lang['title']                 = 'Titel des Wikis';
 $lang['start']                 = 'Startseitenname';
@@ -127,15 +136,21 @@ $lang['subscribe_time']        = 'Zeit nach der Zusammenfassungs- und Änderungs
 $lang['notify']                = 'Änderungsmitteilungen an diese E-Mail-Adresse versenden';
 $lang['registernotify']        = 'Information über neu registrierte Benutzer an diese E-Mail-Adresse senden';
 $lang['mailfrom']              = 'Absender-E-Mail-Adresse für automatische Mails';
+$lang['mailreturnpath']        = 'Empfänger-E-Mail-Adresse für Unzustellbarkeitsnachricht';
 $lang['mailprefix']            = 'Präfix für E-Mail-Betreff beim automatischen Versand von Benachrichtigungen (Leer lassen um den Wiki-Titel zu verwenden)';
 $lang['htmlmail']              = 'Versendet optisch angenehmere, aber größere E-Mails im HTML-Format (multipart). Deaktivieren, um Text-Mails zu versenden.';
+$lang['dontlog']               = 'Protokollierung für diese Logtypen deaktivieren.';
 $lang['sitemap']               = 'Google Sitemap erzeugen (Tage). Mit 0 deaktivieren.';
 $lang['rss_type']              = 'XML-Feed-Format';
 $lang['rss_linkto']            = 'XML-Feed verlinken auf';
 $lang['rss_content']           = 'Welche Inhalte sollen im XML-Feed dargestellt werden?';
 $lang['rss_update']            = 'XML-Feed Aktualisierungsintervall (Sekunden)';
 $lang['rss_show_summary']      = 'Bearbeitungs-Zusammenfassung im XML-Feed anzeigen';
+$lang['rss_show_deleted']      = 'XML-Feed: Gelöschte Feeds anzeigen';
 $lang['rss_media']             = 'Welche Änderungen sollen im XML-Feed angezeigt werden?';
+$lang['rss_media_o_both']      = 'beide';
+$lang['rss_media_o_pages']     = 'Seiten';
+$lang['rss_media_o_media']     = 'Medien';
 $lang['updatecheck']           = 'Automatisch auf Updates und Sicherheitswarnungen prüfen? DokuWiki muss sich dafür mit update.dokuwiki.org verbinden.';
 $lang['userewrite']            = 'Schöne Seitenadressen (URL rewriting)';
 $lang['useslash']              = 'Schrägstrich (/) als Namensraumtrenner in URLs verwenden';
@@ -153,8 +168,17 @@ $lang['xsendfile']             = 'Den X-Sendfile-Header nutzen, um Dateien direk
 $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wiki-Ausgabe.';
 $lang['renderer__core']        = '%s (DokuWiki Kern)';
 $lang['renderer__plugin']      = '%s (Plugin)';
+$lang['search_nslimit']        = 'Beschränke die Suche auf die jetzigen X Namensräume. Wenn eine Suche von einer Seite in einem tieferen Namensraum aus ausgeführt wird, werden die ersten X Namensräume als Filter hinzugefügt';
+$lang['search_fragment']       = 'Spezifiziere das vorgegebenen Fragment-Suchverhalten';
+$lang['search_fragment_o_exact'] = 'genaue Treffer';
+$lang['search_fragment_o_starts_with'] = 'beginnt mit';
+$lang['search_fragment_o_ends_with'] = 'endet mit';
+$lang['search_fragment_o_contains'] = 'enthält';
+$lang['trustedproxy']          = 'Vertrauen Sie Weiterleitungs-Proxys, welche dem regulärem Ausdruck entsprechen, hinsichtlich der angegebenen Client-ID. Der Standardwert entspricht dem lokalem Netzwerk. Leer lassen um jedem Proxy zu vertrauen.';
+$lang['_feature_flags']        = 'Feature-Flags';
+$lang['defer_js']              = 'JavaScript-Ausführung verzögern bis das HTML der gesamten Seite verarbeitet wurde. Erhöht die gefühlte Geschwindigkeit des Seitenaufbaus, kann aber mit einigen wenigen Plugins inkompatibel sein.';
 $lang['dnslookups']            = 'DokuWiki löst die IP-Adressen von Benutzern zu deren Hostnamen auf. Wenn Sie einen langsamen oder unzuverlässigen DNS-Server verwenden oder die Funktion nicht benötigen, dann sollte diese Option deaktiviert sein.';
-$lang['jquerycdn']             = 'Sollen jQuery und jQuery UI Skriptdateien von einem CDN (Contend Delivery Network) geladen werden? Dadurch entstehen zusätzliche HTTP-Anfragen, aber die Daten werden voraussichtlich schneller geladen und eventuell sind sie auch schon beim Benutzer im Cache.';
+$lang['jquerycdn']             = 'Sollen jQuery und jQuery UI Skriptdateien von einem CDN (Content Delivery Network) geladen werden? Dadurch entstehen zusätzliche HTTP-Anfragen, aber die Daten werden voraussichtlich schneller geladen und eventuell sind sie auch schon beim Benutzer im Cache.';
 $lang['jquerycdn_o_0']         = 'Kein CDN, ausschließlich lokale Auslieferung';
 $lang['jquerycdn_o_jquery']    = 'CDN von code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN von cdnjs.com';
@@ -164,12 +188,6 @@ $lang['proxy____user']         = 'Proxy Benutzername';
 $lang['proxy____pass']         = 'Proxy Passwort';
 $lang['proxy____ssl']          = 'SSL bei Verbindung zum Proxy verwenden';
 $lang['proxy____except']       = 'Regulärer Ausdruck für URLs, bei denen kein Proxy verwendet werden soll';
-$lang['safemodehack']          = 'Safemodehack verwenden';
-$lang['ftp____host']           = 'FTP-Host für Safemodehack';
-$lang['ftp____port']           = 'FTP-Port für Safemodehack';
-$lang['ftp____user']           = 'FTP Benutzername für Safemodehack';
-$lang['ftp____pass']           = 'FTP Passwort für Safemodehack';
-$lang['ftp____root']           = 'FTP Wurzelverzeichnis für Safemodehack';
 $lang['license_o_']            = 'Keine gewählt';
 $lang['typography_o_0']        = 'keine';
 $lang['typography_o_1']        = 'ohne einfache Anführungszeichen';

@@ -3,6 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Axel Kirch <axel@globeglotter.com>
+ * @author MaWi <drmaxxis@gmail.com>
+ * @author lp <spam@lukpopp.ch>
+ * @author Martin <martin@andev.de>
+ * @author F. Mueller-Donath <j.felix@mueller-donath.de>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Christof <gagi@fin.de>
  * @author Anika Henke <anika@selfthinker.org>
@@ -23,7 +28,6 @@
  * @author Volker Bödker <volker@boedker.de>
  * @author Janosch <janosch@moinzen.de>
  * @author rnck <dokuwiki@rnck.de>
- * @author Felix <j.felix@mueller-donath.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -33,10 +37,10 @@ $lang['singlequoteopening']    = '‚';
 $lang['singlequoteclosing']    = '‘';
 $lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Diese Seite bearbeiten';
-$lang['btn_source']            = 'Zeige Quelltext';
+$lang['btn_source']            = 'Quelltext anzeigen';
 $lang['btn_show']              = 'Seite anzeigen';
 $lang['btn_create']            = 'Seite anlegen';
-$lang['btn_search']            = 'Suche';
+$lang['btn_search']            = 'Suchen';
 $lang['btn_save']              = 'Speichern';
 $lang['btn_preview']           = 'Vorschau';
 $lang['btn_top']               = 'Nach oben';
@@ -51,14 +55,14 @@ $lang['btn_secedit']           = 'Bearbeiten';
 $lang['btn_login']             = 'Anmelden';
 $lang['btn_logout']            = 'Abmelden';
 $lang['btn_admin']             = 'Admin';
-$lang['btn_update']            = 'Updaten';
+$lang['btn_update']            = 'Aktualisieren';
 $lang['btn_delete']            = 'Löschen';
 $lang['btn_back']              = 'Zurück';
 $lang['btn_backlink']          = 'Links hierher';
 $lang['btn_subscribe']         = 'Aboverwaltung';
 $lang['btn_profile']           = 'Benutzerprofil';
 $lang['btn_reset']             = 'Zurücksetzen';
-$lang['btn_resendpwd']         = 'Setze neues Passwort';
+$lang['btn_resendpwd']         = 'Neues Passwort festlegen';
 $lang['btn_draft']             = 'Entwurf bearbeiten';
 $lang['btn_recover']           = 'Entwurf wiederherstellen';
 $lang['btn_draftdel']          = 'Entwurf löschen';
@@ -82,9 +86,64 @@ $lang['profile']               = 'Benutzerprofil';
 $lang['badlogin']              = 'Benutzername oder Passwort sind falsch.';
 $lang['badpassconfirm']        = 'Das Passwort war falsch.';
 $lang['minoredit']             = 'Kleine Änderung';
-$lang['draftdate']             = 'Entwurf gespeichert am';
-$lang['nosecedit']             = 'Diese Seite wurde in der Zwischenzeit geändert, da das Sektionsinfo veraltet ist. Die ganze Seite wird stattdessen geladen.';
-$lang['searchcreatepage']      = 'Falls der gesuchte Begriff nicht gefunden wurde, kannst du direkt eine neue Seite für den Suchbegriff anlegen, indem du auf den Knopf **\'\'[Seite anlegen]\'\'** drückst.';
+$lang['draftdate']             = 'Entwurf automatisch gesichert am';
+$lang['nosecedit']             = 'Diese Seite wurde inzwischen geändert. Weil deshalb ein oder mehrere Abschnitte veraltet sind, wurde die Seite komplett neu geladen.';
+$lang['searchcreatepage']      = 'Falls der gesuchte Begriff nicht gefunden wurde, kannst du die nach deiner Anfrage benannte Seite %s umgehend neu anlegen.';
+$lang['search_fullresults']    = 'Volltextergebnisse';
+$lang['js']['search_toggle_tools'] = 'Suchwerkzeuge umschalten';
+$lang['js']['willexpire']      = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, solltest du sie durch einen Klick auf den Vorschau-Knopf verlängern.';
+$lang['js']['notsavedyet']     = 'Nicht gespeicherte Änderungen gehen verloren!';
+$lang['js']['searchmedia']     = 'Suche nach Dateien';
+$lang['js']['keepopen']        = 'Fenster nach Auswahl nicht schließen';
+$lang['js']['hidedetails']     = 'Details ausblenden';
+$lang['js']['mediatitle']      = 'Link-Eigenschaften';
+$lang['js']['mediadisplay']    = 'Linktyp';
+$lang['js']['mediaalign']      = 'Ausrichtung';
+$lang['js']['mediasize']       = 'Bildgröße';
+$lang['js']['mediatarget']     = 'Linkziel';
+$lang['js']['mediaclose']      = 'Schließen';
+$lang['js']['mediainsert']     = 'Einfügen';
+$lang['js']['mediadisplayimg'] = 'Bild anzeigen';
+$lang['js']['mediadisplaylnk'] = 'Nur den Link anzeigen';
+$lang['js']['mediasmall']      = 'Bild in kleiner Auflösung';
+$lang['js']['mediamedium']     = 'Bild in mittlerer Auflösung';
+$lang['js']['medialarge']      = 'Bild in hoher Auflösung';
+$lang['js']['mediaoriginal']   = 'Originalauflösung';
+$lang['js']['medialnk']        = 'Link zur Detailseite';
+$lang['js']['mediadirect']     = 'Direkter Link zum Original';
+$lang['js']['medianolnk']      = 'Kein Link';
+$lang['js']['medianolink']     = 'Bild nicht verlinken';
+$lang['js']['medialeft']       = 'Bild linksbündig ausrichten.';
+$lang['js']['mediaright']      = 'Bild rechtsbündig ausrichten.';
+$lang['js']['mediacenter']     = 'Bild horizontal zentriert ausrichten';
+$lang['js']['medianoalign']    = 'Bild ohne bestimmte Ausrichtung lassen';
+$lang['js']['nosmblinks']      = 'Das Verlinken von Windows-Freigaben funktioniert nur im Microsoft Internet-Explorer.\nDer Link kann jedoch zum Einfügen kopiert werden.';
+$lang['js']['linkwiz']         = 'Link-Assistent';
+$lang['js']['linkto']          = 'Link zu:';
+$lang['js']['del_confirm']     = 'Die ausgewählten Dateien wirklich löschen?';
+$lang['js']['restore_confirm'] = 'Wirklich diese Version wiederherstellen?';
+$lang['js']['media_diff']      = 'Unterschiede anzeigen:';
+$lang['js']['media_diff_both'] = 'Nebeneinander';
+$lang['js']['media_diff_opacity'] = 'Überblenden';
+$lang['js']['media_diff_portions'] = 'Übergang';
+$lang['js']['media_select']    = 'Dateien auswählen…';
+$lang['js']['media_upload_btn'] = 'Hochladen';
+$lang['js']['media_done_btn']  = 'Fertig';
+$lang['js']['media_drop']      = 'Dateien hier hinziehen um sie hochzuladen';
+$lang['js']['media_cancel']    = 'Entfernen';
+$lang['js']['media_overwrt']   = 'Existierende Dateien überschreiben';
+$lang['search_exact_match']    = 'Genaue Treffer';
+$lang['search_starts_with']    = 'Beginnt mit';
+$lang['search_ends_with']      = 'Endet mit';
+$lang['search_contains']       = 'Enthält';
+$lang['search_custom_match']   = 'Angepasst ';
+$lang['search_any_ns']         = 'Alle Namensräume';
+$lang['search_any_time']       = 'Jederzeit';
+$lang['search_past_7_days']    = 'Letzte Woche';
+$lang['search_past_month']     = 'Letzter Monat';
+$lang['search_past_year']      = 'Letztes Jahr';
+$lang['search_sort_by_hits']   = 'Sortiere nach Treffer';
+$lang['search_sort_by_mtime']  = 'Sortiere nach letzter Änderung';
 $lang['regmissing']            = 'Alle Felder müssen ausgefüllt werden';
 $lang['reguexists']            = 'Der Benutzername existiert leider schon.';
 $lang['regsuccess']            = 'Der neue Benutzer wurde angelegt und das Passwort per E-Mail versandt.';
@@ -121,49 +180,9 @@ $lang['txt_upload']            = 'Datei zum Hochladen auswählen:';
 $lang['txt_filename']          = 'Hochladen als (optional):';
 $lang['txt_overwrt']           = 'Bestehende Datei überschreiben';
 $lang['maxuploadsize']         = 'Max. %s pro Datei-Upload.';
+$lang['allowedmime']           = 'Liste der erlaubten Dateiendungen';
 $lang['lockedby']              = 'Momentan gesperrt von:';
 $lang['lockexpire']            = 'Sperre läuft ab am:';
-$lang['js']['willexpire']      = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, solltest du sie durch einen Klick auf den Vorschau-Knopf verlängern.';
-$lang['js']['notsavedyet']     = 'Nicht gespeicherte Änderungen gehen verloren!';
-$lang['js']['searchmedia']     = 'Suche nach Dateien';
-$lang['js']['keepopen']        = 'Fenster nach Auswahl nicht schließen';
-$lang['js']['hidedetails']     = 'Details ausblenden';
-$lang['js']['mediatitle']      = 'Link-Eigenschaften';
-$lang['js']['mediadisplay']    = 'Linktyp';
-$lang['js']['mediaalign']      = 'Ausrichtung';
-$lang['js']['mediasize']       = 'Bildgröße';
-$lang['js']['mediatarget']     = 'Linkziel';
-$lang['js']['mediaclose']      = 'Schließen';
-$lang['js']['mediainsert']     = 'Einfügen';
-$lang['js']['mediadisplayimg'] = 'Bild anzeigen.';
-$lang['js']['mediadisplaylnk'] = 'Nur den Link anzeigen.';
-$lang['js']['mediasmall']      = 'Kleine Version';
-$lang['js']['mediamedium']     = 'Mittelgroße Version';
-$lang['js']['medialarge']      = 'Große Version';
-$lang['js']['mediaoriginal']   = 'Original Version';
-$lang['js']['medialnk']        = 'Link zu der Detailseite';
-$lang['js']['mediadirect']     = 'Direkter Link zum Original';
-$lang['js']['medianolnk']      = 'Kein link';
-$lang['js']['medianolink']     = 'Keine Verlinkung des Bildes';
-$lang['js']['medialeft']       = 'Bild nach links ausrichten.';
-$lang['js']['mediaright']      = 'Bild nach rechts ausrichten.';
-$lang['js']['mediacenter']     = 'Bild in der Mitte ausrichten';
-$lang['js']['medianoalign']    = 'Keine Ausrichtung des Bildes.';
-$lang['js']['nosmblinks']      = 'Das Verlinken von Windows-Freigaben funktioniert nur im Microsoft Internet-Explorer.\nDer Link kann jedoch durch Kopieren und Einfügen verwendet werden.';
-$lang['js']['linkwiz']         = 'Link-Assistent';
-$lang['js']['linkto']          = 'Link zu:';
-$lang['js']['del_confirm']     = 'Die ausgewählten Dateien wirklich löschen?';
-$lang['js']['restore_confirm'] = 'Wirklich diese Version wiederherstellen?';
-$lang['js']['media_diff']      = 'Unterschiede anzeigen:';
-$lang['js']['media_diff_both'] = 'Seite für Seite';
-$lang['js']['media_diff_opacity'] = 'Überblenden';
-$lang['js']['media_diff_portions'] = 'Übergang';
-$lang['js']['media_select']    = 'Dateien auswählen…';
-$lang['js']['media_upload_btn'] = 'Hochladen';
-$lang['js']['media_done_btn']  = 'Fertig';
-$lang['js']['media_drop']      = 'Dateien hier hinziehen um sie hochzuladen';
-$lang['js']['media_cancel']    = 'Entfernen';
-$lang['js']['media_overwrt']   = 'Existierende Dateien überschreiben';
 $lang['rssfailed']             = 'Es ist ein Fehler beim Laden des Feeds aufgetreten: ';
 $lang['nothingfound']          = 'Nichts gefunden.';
 $lang['mediaselect']           = 'Dateiauswahl';
@@ -199,7 +218,7 @@ $lang['diff2']                 = 'Zeige Unterschiede der ausgewählten Versionen
 $lang['difflink']              = 'Link zu der Vergleichsansicht';
 $lang['diff_type']             = 'Unterschiede anzeigen:';
 $lang['diff_inline']           = 'Inline';
-$lang['diff_side']             = 'Side by Side';
+$lang['diff_side']             = 'Nebeneinander';
 $lang['diffprevrev']           = 'Vorherige Überarbeitung';
 $lang['diffnextrev']           = 'Nächste Überarbeitung';
 $lang['difflastrev']           = 'Letzte Überarbeitung';
@@ -215,7 +234,7 @@ $lang['created']               = 'angelegt';
 $lang['restored']              = 'alte Version wiederhergestellt (%s)';
 $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
-$lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
+$lang['noflash']               = 'Das <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
 $lang['download']              = 'Schnipsel herunterladen';
 $lang['tools']                 = 'Werkzeuge';
 $lang['user_tools']            = 'Benutzer-Werkzeuge';
@@ -292,13 +311,16 @@ $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich.
 $lang['i_chooselang']          = 'Wähle deine Sprache';
 $lang['i_installer']           = 'DokuWiki-Installation';
 $lang['i_wikiname']            = 'Wiki-Name';
-$lang['i_enableacl']           = 'Zugangskontrolle (ACL) aktivieren (empfohlen)';
+$lang['i_enableacl']           = 'Zugriffskontrolle (ACL) aktivieren (empfohlen)';
 $lang['i_superuser']           = 'Benutzername des Administrators';
 $lang['i_problems']            = 'Das Installationsprogramm hat unten aufgeführte Probleme festgestellt, die zunächst behoben werden müssen, bevor du mit der Installation fortfahren kannst.';
-$lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki-Installation. Du solltest entweder alle Dateien noch einmal frisch installieren oder die <a href="http://dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
+$lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki-Installation. Du solltest entweder alle Dateien noch einmal frisch installieren oder die <a href="https://www.dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
 $lang['i_funcna']              = 'Die PHP-Funktion <code>%s</code> ist nicht verfügbar. Unter Umständen wurde sie von deinem Hoster deaktiviert?';
+$lang['i_disabled']            = 'Es wurde von deinem Provider deaktiviert.';
+$lang['i_funcnmail']           = '<b>Hinweis:</b> Die PHP-Funktion "mail()" ist nicht verfügbar. %s Alternativ kansnt du das <a href="https://www.dokuwiki.org/plugin:smtp">SMTP-Plugin</a> installieren.';
 $lang['i_phpver']              = 'Deine PHP-Version <code>%s</code> ist niedriger als die benötigte Version <code>%s</code>. Bitte aktualisiere deine PHP-Installation.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload muss in php.in deaktiviert werden um DokuWiki auszuführen.';
+$lang['i_urandom']             = 'DokuWiki kann keine kryptografisch sicheren Werte für Cookies generieren. Möglicherweise möchtest du die "open_basedir"-Einstellungen in der zutreffenden php.ini auf korrekten Zugriff auf <code>/ dev/urandom</ code> überprüfen.';
 $lang['i_permfail']            = '<code>%s</code> ist nicht durch DokuWiki beschreibbar. Du musst die Berechtigungen dieses Ordners ändern!';
 $lang['i_confexists']          = '<code>%s</code> existiert bereits';
 $lang['i_writeerr']            = '<code>%s</code> konnte nicht erzeugt werden. Du solltest die Verzeichnis-/Datei-Rechte überprüfen und die Datei manuell anlegen.';
@@ -306,7 +328,7 @@ $lang['i_badhash']             = 'Unbekannte oder modifizierte dokuwiki.php (Has
 $lang['i_badval']              = '<code>%s</code> - unerlaubter oder leerer Wert';
 $lang['i_success']             = 'Die Konfiguration wurde erfolgreich abgeschlossen. Du kannst jetzt die install.php löschen. Dein <a href="doku.php?id=wiki:welcome">neues DokuWiki</a> ist jetzt für dich bereit.';
 $lang['i_failure']             = 'Es sind Fehler beim Schreiben der Konfigurationsdateien aufgetreten. Du musst diese von Hand beheben, bevor du dein <a href="doku.php?id=wiki:welcome">neues DokuWiki</a> nutzen kannst.';
-$lang['i_policy']              = 'Anfangseinstellungen der Zugangskontrolle (ACL)';
+$lang['i_policy']              = 'Anfangseinstellungen der Zugriffskontrolle (ACL)';
 $lang['i_pol0']                = 'Offenes Wiki (lesen, schreiben und hochladen für alle Benutzer)';
 $lang['i_pol1']                = 'Öffentliches Wiki (Lesen für alle, Schreiben und Hochladen nur für registrierte Benutzer)';
 $lang['i_pol2']                = 'Geschlossenes Wiki (Lesen, Schreiben und Hochladen nur für registrierte Benutzer)';
@@ -349,10 +371,12 @@ $lang['media_perm_upload']     = 'Du besitzt nicht die notwendigen Berechtigunge
 $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
 $lang['media_acl_warning']     = 'Diese Liste ist möglicherweise nicht vollständig. Versteckte und durch ACL gesperrte Seiten werden nicht angezeigt.';
+$lang['email_fail']            = 'PHP-Funktion "mail ()" fehlt oder ist deaktiviert. Die folgende E-Mail wurde nicht gesendet:';
 $lang['currentns']             = 'Aktueller Namensraum';
 $lang['searchresult']          = 'Suchergebnis';
 $lang['plainhtml']             = 'Reines HTML';
 $lang['wikimarkup']            = 'Wiki Markup';
 $lang['page_nonexist_rev']     = 'Seite existierte nicht an der Stelle %s. Sie wurde an folgende Stelle erstellt: <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';
 $lang['email_signature_text']  = 'Diese E-Mail wurde erzeugt vom DokuWiki unter
 @DOKUWIKIURL@';

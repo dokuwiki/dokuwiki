@@ -3,12 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Viktor Horváth <horvath.viktor@forrastrend.hu>
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
- * @author schilling.janos@gmail.com
+ * @author schilling.janos <schilling.janos@gmail.com>
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
- * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
- * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  * @author Marton Sebok <sebokmarton@gmail.com>
  */
 $lang['menu']                  = 'Beállítóközpont';
@@ -151,12 +150,6 @@ $lang['proxy____user']         = 'Proxy felhasználó név';
 $lang['proxy____pass']         = 'Proxy jelszó';
 $lang['proxy____ssl']          = 'SSL használata a proxyhoz csatlakozáskor';
 $lang['proxy____except']       = 'URL szabály azokra a webcímekre, amit szeretnél, hogy ne kezeljen a proxy.';
-$lang['safemodehack']          = 'A PHP safemode beállítás megkerülésének engedélyezése';
-$lang['ftp____host']           = 'FTP szerver a safemode megkerüléshez';
-$lang['ftp____port']           = 'FTP port a safemode megkerüléshez';
-$lang['ftp____user']           = 'FTP felhasználó név a safemode megkerüléshez';
-$lang['ftp____pass']           = 'FTP jelszó a safemode megkerüléshez';
-$lang['ftp____root']           = 'FTP gyökérkönyvtár a safemode megkerüléshez';
 $lang['license_o_']            = 'Nincs kiválasztva';
 $lang['typography_o_0']        = 'nem';
 $lang['typography_o_1']        = 'Csak a dupla idézőjelet';

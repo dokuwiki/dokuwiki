@@ -38,10 +38,22 @@ class css_at_import_less_test extends DokuWikiTest {
         $this->assertEquals($expected_less, $less);
     }
 
+    /**
+     * makes proper relative path to be used in CSS @import
+     * @param string $path
+     * @return string
+     */
+    private function importPath($path) {
+        if (isWindows()) {
+            return preg_replace('#(^.*[\\\\])#','', $path);
+        }
+        return preg_replace('#(^.*[/])#','', $path);
+    }
+
     public function test_basic() {
         $this->setUpFiles();
 
-        $import = preg_replace('#(^.*[/])#','',$this->import);
+        $import = $this->importPath($this->import);
         $in_css = '@import "'.$import.'";';
         $in_less = '@foo: "bar";
 content: @foo;';
@@ -56,19 +68,19 @@ content: @foo;';
     public function test_subdirectory() {
         $this->setUpFiles('/foo/bar');
 
-        $import = preg_replace('#(^.*[/])#','',$this->import);
+        $import = $this->importPath($this->import);
         $in_css = '@import "'.$import.'";';
         $in_less = '@foo: "bar";
 content: @foo;';
 
-        $expected_css = '@import "/foo/bar/'.$import.'";';
+        $expected_css = isWindows() ? '@import "\\foo\\bar/'.$import.'";' : '@import "/foo/bar/'.$import.'";';
         $expected_less = 'content: "bar";';
 
         io_saveFile($this->import, $in_less);
         $this->csstest($in_css, $expected_css, $expected_less);
     }
 
-    public function tearDown() {
+    public function tearDown() : void {
         unlink($this->file);
         unlink($this->import);
         unset($this->file, $this->import);

@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
+use dokuwiki\Utf8\Sort;
 
 /**
  * Recurse directory
@@ -20,7 +20,8 @@ if(!defined('DOKU_INC')) die('meh.');
  * @param   array     $opts option array will be given to the Callback
  * @param   string    $dir  Current directory beyond $base
  * @param   int       $lvl  Recursion Level
- * @param   mixed     $sort 'natural' to use natural order sorting (default); 'date' to sort by filemtime; leave empty to skip sorting.
+ * @param   mixed     $sort 'natural' to use natural order sorting (default);
+ *                          'date' to sort by filemtime; leave empty to skip sorting.
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
@@ -50,9 +51,9 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
         if ($sort == 'date') {
             @array_multisort(array_map('filemtime', $filepaths), SORT_NUMERIC, SORT_DESC, $files);
         } else /* natural */ {
-            natsort($files);
+            Sort::asortFN($files);
         }
-        natsort($dirs);
+        Sort::asortFN($dirs);
     }
 
     //give directories to userfunction then recurse
@@ -131,13 +132,14 @@ function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
  */
 function search_index(&$data,$base,$file,$type,$lvl,$opts){
     global $conf;
+    $ns = isset($opts['ns']) ? $opts['ns'] : '';
     $opts = array(
         'pagesonly' => true,
         'listdirs' => true,
         'listfiles' => empty($opts['nofiles']),
         'sneakyacl' => $conf['sneaky_index'],
         // Hacky, should rather use recmatch
-        'depth' => preg_match('#^'.preg_quote($file, '#').'(/|$)#','/'.$opts['ns']) ? 0 : -1
+        'depth' => preg_match('#^'.preg_quote($file, '#').'(/|$)#','/'.$ns) ? 0 : -1
     );
 
     return search_universal($data, $base, $file, $type, $lvl, $opts);
@@ -212,7 +214,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
         return false;
     }
 
-    $info['file']     = utf8_basename($file);
+    $info['file']     = \dokuwiki\Utf8\PhpString::basename($file);
     $info['size']     = filesize($base.'/'.$file);
     $info['mtime']    = filemtime($base.'/'.$file);
     $info['writable'] = is_writable($base.'/'.$file);
@@ -230,6 +232,58 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
 
     return false;
 }
+
+/**
+ * List all mediafiles in a namespace
+ *   $opts['depth']     recursion level, 0 for all
+ *   $opts['showmsg']   shows message if invalid media id is used
+ *   $opts['skipacl']   skip acl checking
+ *   $opts['pattern']   check given pattern
+ *   $opts['hash']      add hashes to result list
+ *
+ * @todo This is a temporary copy of search_media returning a list of MediaFile intances
+ *
+ * @param array $data
+ * @param string $base
+ * @param string $file
+ * @param string $type
+ * @param integer $lvl
+ * @param array $opts
+ *
+ * @return bool
+ */
+function search_mediafiles(&$data,$base,$file,$type,$lvl,$opts){
+
+    //we do nothing with directories
+    if($type == 'd') {
+        if(empty($opts['depth'])) return true; // recurse forever
+        $depth = substr_count($file,'/');
+        if($depth >= $opts['depth']) return false; // depth reached
+        return true;
+    }
+
+    $id   = pathID($file,true);
+    if($id != cleanID($id)){
+        if($opts['showmsg'])
+            msg(hsc($id).' is not a valid file name for DokuWiki - skipped',-1);
+        return false; // skip non-valid files
+    }
+
+    //check ACL for namespace (we have no ACL for mediafiles)
+    $info['perm'] = auth_quickaclcheck(getNS($id).':*');
+    if(empty($opts['skipacl']) && $info['perm'] < AUTH_READ){
+        return false;
+    }
+
+    //check pattern filter
+    if(!empty($opts['pattern']) && !@preg_match($opts['pattern'], $id)){
+        return false;
+    }
+
+    $data[] = new \dokuwiki\File\MediaFile($id);
+    return false;
+}
+
 
 /**
  * This function just lists documents (for RSS namespace export)
@@ -333,14 +387,14 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
 
     $item = array();
     $item['id']   = pathID($file);
-    if(!$opts['skipacl'] && auth_quickaclcheck($item['id']) < AUTH_READ){
+    if(empty($opts['skipacl']) && auth_quickaclcheck($item['id']) < AUTH_READ){
         return false;
     }
 
     $item['rev']   = filemtime($base.'/'.$file);
     $item['mtime'] = $item['rev'];
     $item['size']  = filesize($base.'/'.$file);
-    if($opts['hash']){
+    if(!empty($opts['hash'])){
         $item['hash'] = md5(trim(rawWiki($item['id'])));
     }
 
@@ -369,7 +423,7 @@ function sort_search_fulltext($a,$b){
     }elseif($a['count'] < $b['count']){
         return 1;
     }else{
-        return strcmp($a['id'],$b['id']);
+        return Sort::strcmp($a['id'],$b['id']);
     }
 }
 
@@ -479,7 +533,8 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     // are we done here maybe?
     if($type == 'd'){
         if(empty($opts['listdirs'])) return $return;
-        if(empty($opts['skipacl']) && !empty($opts['sneakyacl']) && $item['perm'] < AUTH_READ) return false; //neither list nor recurse
+        //neither list nor recurse forbidden items:
+        if(empty($opts['skipacl']) && !empty($opts['sneakyacl']) && $item['perm'] < AUTH_READ) return false;
         if(!empty($opts['dirmatch']) && !preg_match('/'.$opts['dirmatch'].'/',$file)) return $return;
         if(!empty($opts['nsmatch']) && !preg_match('/'.$opts['nsmatch'].'/',$item['ns'])) return $return;
     }else{
@@ -497,7 +552,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     $item['open']  = $return;
 
     if(!empty($opts['meta'])){
-        $item['file']       = utf8_basename($file);
+        $item['file']       = \dokuwiki\Utf8\PhpString::basename($file);
         $item['size']       = filesize($base.'/'.$file);
         $item['mtime']      = filemtime($base.'/'.$file);
         $item['rev']        = $item['mtime'];

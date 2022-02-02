@@ -10,8 +10,8 @@ class testable_auth_plugin_authpdo extends auth_plugin_authpdo {
         return 'authpdo';
     }
 
-    public function _selectGroups() {
-        return parent::_selectGroups();
+    public function selectGroups() {
+        return parent::selectGroups();
     }
 
     public function addGroup($group) {
@@ -36,7 +36,7 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $this->assertTrue(true); // avoid being marked as risky for having no assertion
     }
 
-    public function setUp() {
+    public function setUp() : void {
         parent::setUp();
         $this->dbfile = tempnam('/tmp/', 'pluginpdo_test_');
         copy(__DIR__ . '/test.sqlite3', $this->dbfile);
@@ -85,7 +85,7 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $conf['plugin']['authpdo']['leave-group'] = 'DELETE FROM member WHERE uid = :uid AND gid = :gid';
     }
 
-    public function tearDown() {
+    public function tearDown() : void {
         parent::tearDown();
         unlink($this->dbfile);
     }
@@ -96,7 +96,7 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
     public function test_internals() {
         $auth = new testable_auth_plugin_authpdo();
 
-        $groups = $auth->_selectGroups();
+        $groups = $auth->selectGroups();
         $this->assertArrayHasKey('user', $groups);
         $this->assertEquals(1, $groups['user']['gid']);
         $this->assertArrayHasKey('admin', $groups);
@@ -104,9 +104,9 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
 
         $ok = $auth->addGroup('test');
         $this->assertTrue($ok);
-        $groups = $auth->_selectGroups();
+        $groups = $auth->selectGroups();
         $this->assertArrayHasKey('test', $groups);
-        $this->assertEquals(3, $groups['test']['gid']);
+        $this->assertEquals(4, $groups['test']['gid']);
     }
 
     /**
@@ -131,12 +131,12 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $this->assertEquals('admin', $info['user']);
         $this->assertEquals('The Admin', $info['name']);
         $this->assertEquals('admin@example.com', $info['mail']);
-        $this->assertEquals(array('admin', 'user'), $info['grps']);
+        $this->assertEquals(array('additional', 'admin', 'user'), $info['grps']);
 
         // group retrieval
-        $this->assertEquals(array('admin', 'user'), $auth->retrieveGroups());
-        $this->assertEquals(array('user'), $auth->retrieveGroups(1));
-        $this->assertEquals(array('admin'), $auth->retrieveGroups(0, 1));
+        $this->assertEquals(array('additional', 'admin', 'user'), $auth->retrieveGroups());
+        $this->assertEquals(array('admin', 'user'), $auth->retrieveGroups(1));
+        $this->assertEquals(array('additional'), $auth->retrieveGroups(0, 1));
 
         // user creation
         $auth->createUser('test', 'password', 'A Test user', 'test@example.com', array('newgroup'));
@@ -145,7 +145,7 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $this->assertEquals('A Test user', $info['name']);
         $this->assertEquals('test@example.com', $info['mail']);
         $this->assertEquals(array('newgroup', 'user'), $info['grps']);
-        $this->assertEquals(array('admin', 'newgroup', 'user'), $auth->retrieveGroups());
+        $this->assertEquals(array('additional', 'admin', 'newgroup', 'user'), $auth->retrieveGroups());
 
         // user modification
         $auth->modifyUser('test', array('user' => 'tester', 'name' => 'The Test User', 'pass' => 'secret'));
@@ -166,7 +166,7 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
                 'name' => 'The Admin',
                 'mail' => 'admin@example.com',
                 'uid' => '1',
-                'grps' => array('admin', 'user')
+                'grps' => array('additional', 'admin', 'user')
             ),
             'user' => array(
                 'user' => 'user',

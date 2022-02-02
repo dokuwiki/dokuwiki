@@ -1,12 +1,8 @@
 === Trợ giúp nhanh: ===
 
-Trang này giúp bạn thêm hoặc xóa quyền được cấp cho 1 thư mục hoặc trang wiki của bạn.
+Trên trang này, bạn có thể thêm và xóa quyền cho không gian tên và trang trong wiki của bạn.
+  * Khung bên trái hiển thị tất cả các không gian tên và trang có sẵn
+  * Biểu mẫu trên cho phép bạn xem và sửa đổi các quyền của thành viên hoặc nhóm đã chọn.
+  * Bảng dưới đây hiện thị tất cả các quy tắc kiểm soát truy cập. Bạn có thể sử dụng nó để nhanh chóng xóa hoặc thay đổi nhiều quy tắc.
 
-Của sổ bên trái hiển thị tất cả các thư mục và trang văn bản.
-
-Khung trên đây cho phép bạn xem và sửa quyền của một nhóm hoặc thành viên đã chọn.
-
-Bảng bên dưới hiển thị tất cả các quyền được cấp. Bạn có thể sửa hoặc hóa các quyền đó một cách nhanh chóng.
-
-Đọc [[doku>acl|tài liệu chính thức về ACL]] sẽ giúp bạn hiểu hơn về cách phân quyền ở DokuWiki.
-
+Đọc [[doku>acl|tài liệu chính thức về Danh sách kiểm soát truy cập (ACL)]] có thể giúp bạn hiểu đầy đủ cách thức kiểm soát hoạt động truy cập trong DokuWiki.

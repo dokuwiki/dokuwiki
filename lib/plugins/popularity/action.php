@@ -5,44 +5,49 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
 
-require_once(DOKU_PLUGIN.'action.php');
-require_once(DOKU_PLUGIN.'popularity/admin.php');
-
-class action_plugin_popularity extends Dokuwiki_Action_Plugin {
+class action_plugin_popularity extends DokuWiki_Action_Plugin
+{
 
     /**
      * @var helper_plugin_popularity
      */
-    var $helper;
+    protected $helper;
 
-    function __construct(){
+    public function __construct()
+    {
         $this->helper = $this->loadHelper('popularity', false);
     }
 
-    /**
-     * Register its handlers with the dokuwiki's event controller
-     */
-    function register(Doku_Event_Handler $controller) {
-        $controller->register_hook('INDEXER_TASKS_RUN', 'AFTER',  $this, '_autosubmit', array());
+    /** @inheritdoc */
+    public function register(Doku_Event_Handler $controller)
+    {
+        $controller->register_hook('INDEXER_TASKS_RUN', 'AFTER', $this, 'autosubmit', array());
     }
 
-    function _autosubmit(Doku_Event &$event, $param){
+    /**
+     * Event handler
+     *
+     * @param Doku_Event $event
+     * @param $param
+     */
+    public function autosubmit(Doku_Event &$event, $param)
+    {
         //Do we have to send the data now
-        if ( !$this->helper->isAutosubmitEnabled() || $this->_isTooEarlyToSubmit() ){
+        if (!$this->helper->isAutosubmitEnabled() || $this->isTooEarlyToSubmit()) {
             return;
         }
 
         //Actually send it
-        $status = $this->helper->sendData( $this->helper->gatherAsString() );
+        $status = $this->helper->sendData($this->helper->gatherAsString());
 
-        if ( $status !== '' ){
+        if ($status !== '') {
             //If an error occured, log it
-            io_saveFile( $this->helper->autosubmitErrorFile, $status );
+            io_saveFile($this->helper->autosubmitErrorFile, $status);
         } else {
             //If the data has been sent successfully, previous log of errors are useless
             @unlink($this->helper->autosubmitErrorFile);
             //Update the last time we sent data
-            touch ( $this->helper->autosubmitFile );
+            touch($this->helper->autosubmitFile);
         }
 
         $event->stopPropagation();
@@ -53,7 +58,8 @@ class action_plugin_popularity extends Dokuwiki_Action_Plugin {
      * Check if it's time to send autosubmit data
      * (we should have check if autosubmit is enabled first)
      */
-    function _isTooEarlyToSubmit(){
+    protected function isTooEarlyToSubmit()
+    {
         $lastSubmit = $this->helper->lastSentTime();
         return $lastSubmit + 24*60*60*30 > time();
     }

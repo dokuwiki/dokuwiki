@@ -54,6 +54,9 @@ div.no {
 .leftalign   { text-align: left;   }
 .centeralign { text-align: center; }
 .rightalign  { text-align: right;  }
+[dir=rtl] .leftalign   { text-align: left;   }
+[dir=rtl] .centeralign { text-align: center; }
+[dir=rtl] .rightalign  { text-align: right;  }
 
 /* underline */
 em.u {
@@ -62,4 +65,13 @@ em.u {
 }
 em em.u {
     font-style: italic;
+}
+
+img.icon.smiley {
+    height: 1.2em;
+}
+
+svg {
+    width: auto;
+    height: 1.2em;
 }

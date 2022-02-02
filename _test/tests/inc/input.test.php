@@ -1,7 +1,9 @@
 <?php
 
+use dokuwiki\Input\Input;
+
 /**
- * Tests for the Input class
+ * Tests for the dokuwiki\Input\Input class
  */
 class input_test extends DokuWikiTest {
 
@@ -225,12 +227,12 @@ class input_test extends DokuWikiTest {
         $INPUT    = new Input();
 
         $INPUT->remove('string');
-        $this->assertNull($_REQUEST['string']);
-        $this->assertNull($_POST['string']);
-        $this->assertNull($_GET['string']);
+        $this->assertArrayNotHasKey('string', $_REQUEST);
+        $this->assertArrayNotHasKey('string', $_POST);
+        $this->assertArrayNotHasKey('string', $_GET);
 
         $INPUT->post->remove('int');
-        $this->assertNull($_POST['int']);
+        $this->assertArrayNotHasKey('int', $_POST);
         $this->assertEquals(17, $_GET['int']);
         $this->assertEquals(17, $_REQUEST['int']);
     }
@@ -243,13 +245,13 @@ class input_test extends DokuWikiTest {
 
         $INPUT->set('test','foo');
         $this->assertEquals('foo',$_REQUEST['test']);
-        $this->assertNull($_POST['test']);
-        $this->assertNull($_GET['test']);
+        $this->assertArrayNotHasKey('test', $_POST);
+        $this->assertArrayNotHasKey('test', $_GET);
 
         $INPUT->get->set('test2','foo');
         $this->assertEquals('foo',$_GET['test2']);
         $this->assertEquals('foo',$_REQUEST['test2']);
-        $this->assertNull($_POST['test']);
+        $this->assertArrayNotHasKey('test2', $_POST);
     }
 
     public function test_ref(){

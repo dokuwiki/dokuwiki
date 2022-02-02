@@ -28,6 +28,10 @@ $config_cascade = array_merge(
             'default'   => array(DOKU_CONF . 'license.php'),
             'local'     => array(DOKU_CONF . 'license.local.php'),
         ),
+        'manifest' => array(
+            'default'   => array(DOKU_CONF . 'manifest.json'),
+            'local'     => array(DOKU_CONF . 'manifest.local.json'),
+        ),
         'mediameta' => array(
             'default'   => array(DOKU_CONF . 'mediameta.php'),
             'local'     => array(DOKU_CONF . 'mediameta.local.php'),
@@ -56,6 +60,10 @@ $config_cascade = array_merge(
         ),
         'userscript' => array(
             'default'   => array(DOKU_CONF . 'userscript.js')
+        ),
+        'styleini' => array(
+            'default'   => array(DOKU_INC . 'lib/tpl/%TEMPLATE%/' . 'style.ini'),
+            'local'     => array(DOKU_CONF . 'tpl/%TEMPLATE%/' . 'style.ini')
         ),
         'acl' => array(
             'default'   => DOKU_CONF . 'acl.auth.php',

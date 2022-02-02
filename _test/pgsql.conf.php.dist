@@ -3,7 +3,7 @@
  * This configures the access to a postgres database. The user needs to have permissions
  * to create and drop databases.
  */
-$conf['host'] = 'localhost';
+$conf['host'] = '127.0.0.1';
 $conf['port'] = 5432;
 $conf['user'] = 'postgres';
-$conf['pass'] = '';
+$conf['pass'] = 'postgres';

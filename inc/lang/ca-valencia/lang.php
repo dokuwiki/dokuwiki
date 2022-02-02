@@ -59,7 +59,6 @@ $lang['badlogin']              = 'Disculpe, pero el nom d\'usuari o la contrasen
 $lang['minoredit']             = 'Canvis menors';
 $lang['draftdate']             = 'Borrador gravat el';
 $lang['nosecedit']             = 'La pàgina ha canviat mentres tant, l\'informació de la secció no estava al dia, s\'ha carregat la pàgina sancera.';
-$lang['searchcreatepage']      = 'Si no ha trobat lo que buscava pot crear o editar una pàgina en el mateix nom que el text que ha buscat utilisant el botó corresponent.';
 $lang['regmissing']            = 'Disculpe, pero deu omplir tots els camps.';
 $lang['reguexists']            = 'Disculpe, pero ya existix un usuari en este nom.';
 $lang['regsuccess']            = 'S\'ha creat l\'usuari i se li ha enviat la contrasenya per correu electrònic.';
@@ -139,7 +138,7 @@ $lang['created']               = 'creat';
 $lang['restored']              = 'restaurada l\'última versió (%s)';
 $lang['external_edit']         = 'edició externa';
 $lang['summary']               = 'Editar sumari';
-$lang['noflash']               = 'Necessita el <a href="http://www.adobe.com/products/flashplayer/">plúgin d\'Adobe Flash</a> per a vore este contingut.';
+$lang['noflash']               = 'Necessita el <a href="http://get.adobe.com/flashplayer">plúgin d\'Adobe Flash</a> per a vore este contingut.';
 $lang['download']              = 'Descarregar un tros';
 $lang['mail_newpage']          = 'pàgina afegida:';
 $lang['mail_changed']          = 'pàgina canviada:';
@@ -193,7 +192,7 @@ $lang['i_superuser']           = 'Super-usuari';
 $lang['i_problems']            = 'L\'instalador ha trobat els problemes mostrats més avall. No pot continuar fins que no els arregle.';
 $lang['i_modified']            = 'Per raons de seguritat, este procés només funcionarà en una instalació nova i verge de DokuWiki.
 Deuria tornar a extraure els archius del paquet que ha descarregat o consultar les
-<a href="http://dokuwiki.org/install">instruccions d\'instalació de Dokuwiki</a> completes';
+<a href="https://www.dokuwiki.org/install">instruccions d\'instalació de Dokuwiki</a> completes';
 $lang['i_funcna']              = 'La funció de PHP <code>%s</code> no està disponible. ¿Pot ser que el seu proveïdor d\'hostage l\'haja desactivada per algun motiu?';
 $lang['i_phpver']              = 'La versió de PHP <code>%s</code> és menor que
 la <code>%s</code> que es necessita. Necessita actualitzar PHP.';

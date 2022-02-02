@@ -1,172 +1,143 @@
 <?php
 
-class init_clean_id_test extends DokuWikiTest {
+class init_clean_id_test extends DokuWikiTest
+{
 
-    function teardown() {
+    /** @inheritDoc */
+    function teardown() : void
+    {
         global $cache_cleanid;
         $cache_cleanid = array();
     }
 
-    function test_default(){
-        // we test multiple cases here
-        // format: $id, $ascii, $correct_output
-        $tests   = array();
+    /**
+     * DataProvider
+     *
+     * @return Generator|array
+     * @see testCleanId
+     */
+    public function provideTestData()
+    {
+        // input, expected, optional options array
+        $tests = [
+            ['page', 'page'],
+            ['pa_ge', 'pa_ge'],
+            ['pa%ge', 'pa_ge'],
+            ['pa#ge', 'pa_ge'],
+            ['pàge', 'page'],
+            ['pagĖ', 'page'],
+            ['pa$%^*#ge', 'pa_ge'],
+            ['*page*', 'page'],
+            ['ښ', 'ښ'],
+            ['päge', 'paege'],
+            ['foo bar', 'foo_bar'],
+            ['PÄGÖ', 'paegoe'],
+            ['Faß', 'fass'],
+            ['ښ侧化并곦  β', 'ښ侧化并곦_β'],
+            ['page:page', 'page:page'],
+            ['page;page', 'page:page'],
+            ['page:page 1.2', 'page:page_1.2'],
+            ['page._#!', 'page'],
+            ['._#!page', 'page'],
+            ['page._#!page', 'page._page'],
+            ['ns._#!:page', 'ns:page'],
+            ['ns:._#!page', 'ns:page'],
+            ['ns._#!ns:page', 'ns._ns:page'],
+            ['ns_:page', 'ns:page'],
+            ['page...page', 'page...page'],
+            ['page---page', 'page---page'],
+            ['page___page', 'page_page'],
+            ['page_-.page', 'page_-.page'],
+            [':page', 'page'],
+            [':ns:page', 'ns:page'],
+            ['page:', 'page'],
+            ['ns:page:', 'ns:page'],
 
+            // use-slash handling
+            ['page/page', 'page_page', ['useslash' => 0]],
+            ['page/page', 'page:page', ['useslash' => 1]],
+
+            // different sep-char
+            ['pa-ge', 'pa-ge', ['sepchar' => '-']],
+            ['pa%ge', 'pa-ge', ['sepchar' => '-']],
+
+            // no deaccenting
+            ['pàge', 'pàge', ['deaccent' => 0]],
+            ['pagĖ', 'pagė', ['deaccent' => 0]],
+            ['pagĒēĔĕĖėĘęĚě', 'pagēēĕĕėėęęěě', ['deaccent' => 0]],
+            ['ښ', 'ښ', ['deaccent' => 0]],
+            ['ښ侧化并곦ঝഈ', 'ښ侧化并곦ঝഈ', ['deaccent' => 0]],
+
+            // romanize
+            ['pàge', 'page', ['deaccent' => 2]],
+            ['pagĖ', 'page', ['deaccent' => 2]],
+            ['pagĒēĔĕĖėĘęĚě', 'pageeeeeeeeee', ['deaccent' => 2]],
+            ['ښ', 'ښ', ['deaccent' => 2]],
+            ['ښ侧化并곦ঝഈ', 'ښ侧化并곦ঝഈ', ['deaccent' => 2]],
+
+            // deaccent and force ascii
+            ['pàge', 'page', ['deaccent' => 1, 'ascii' => true]],
+            ['pagĖ', 'page', ['deaccent' => 1, 'ascii' => true]],
+            ['pagĒēĔĕĖėĘęĚě', 'pageeeeeeeeee', ['deaccent' => 1, 'ascii' => true]],
+            ['ښ', '', ['deaccent' => 1, 'ascii' => true]],
+            ['ښ侧化并곦ঝഈ', '', ['deaccent' => 1, 'ascii' => true]],
+
+            // romanize and force ascii
+            ['pàge', 'page', ['deaccent' => 2, 'ascii' => true]],
+            ['pagĖ', 'page', ['deaccent' => 2, 'ascii' => true]],
+            ['pagĒēĔĕĖėĘęĚě', 'pageeeeeeeeee', ['deaccent' => 2, 'ascii' => true]],
+            ['ښ', '', ['deaccent' => 2, 'ascii' => true]],
+            ['ښ侧化并곦ঝഈ', '', ['deaccent' => 2, 'ascii' => true]],
+        ];
+
+        foreach ($tests as $test) {
+            // defaults
+            $sepchar = isset($test[2]['sepchar']) ? $test[2]['sepchar'] :  '_';
+            $deaccent = isset($test[2]['deaccent']) ? $test[2]['deaccent'] : 1;
+            $ascii = isset($test[2]['ascii']) ? $test[2]['ascii'] : false;
+
+            // unless set, test both useslash settings
+            if (isset($test[2]['useslash'])) {
+                yield([$test[0], $test[1], $ascii, $sepchar, $deaccent, $test[2]['useslash']]);
+            } else {
+                yield([$test[0], $test[1], $ascii, $sepchar, $deaccent, 0]);
+                yield([$test[0], $test[1], $ascii, $sepchar, $deaccent, 1]);
+            }
+        }
+    }
+
+    /**
+     * @dataProvider provideTestData
+     * @param string $input
+     * @param string $expected
+     * @param bool $ascii
+     * @param string $sepchar
+     * @param int $deaccent
+     * @param int $useslash
+     */
+    function testCleanId($input, $expected, $ascii, $sepchar, $deaccent, $useslash)
+    {
         // set dokuwiki defaults
         global $conf;
-        $conf['sepchar'] = '_';
-        $conf['deaccent'] = 1;
+        $conf['sepchar'] = $sepchar;
+        $conf['deaccent'] = $deaccent;
+        $conf['useslash'] = $useslash;
 
-        $tests[] = array('page',false,'page');
-        $tests[] = array('pa_ge',false,'pa_ge');
-        $tests[] = array('pa%ge',false,'pa_ge');
-        $tests[] = array('pa#ge',false,'pa_ge');
-        $tests[] = array('pàge',false,'page');
-        $tests[] = array('pagĖ',false,'page');
-        $tests[] = array('pa$%^*#ge',false,'pa_ge');
-        $tests[] = array('*page*',false,'page');
-        $tests[] = array('ښ',false,'ښ');
-        $tests[] = array('päge',false,'paege');
-        $tests[] = array('foo bar',false,'foo_bar');
-        $tests[] = array('PÄGÖ',false,'paegoe');
-        $tests[] = array('Faß','false','fass');
-        $tests[] = array('ښ侧化并곦  β',false,'ښ侧化并곦_β');
-        $tests[] = array('page:page',false,'page:page');
-        $tests[] = array('page;page',false,'page:page');
-        $tests[] = array('page:page 1.2',false,'page:page_1.2');
-
-        $tests[] = array('page._#!','false','page');
-        $tests[] = array('._#!page','false','page');
-        $tests[] = array('page._#!page','false','page._page');
-        $tests[] = array('ns._#!:page','false','ns:page');
-        $tests[] = array('ns:._#!page','false','ns:page');
-        $tests[] = array('ns._#!ns:page','false','ns._ns:page');
-        $tests[] = array('ns_:page',false,'ns:page');
-        $tests[] = array('page...page','false','page...page');
-        $tests[] = array('page---page','false','page---page');
-        $tests[] = array('page___page','false','page_page');
-        $tests[] = array('page_-.page','false','page_-.page');
-        $tests[] = array(':page',false,'page');
-        $tests[] = array(':ns:page',false,'ns:page');
-        $tests[] = array('page:',false,'page');
-        $tests[] = array('ns:page:',false,'ns:page');
-
-        $conf['useslash'] = 0;
-        $tests[] = array('page/page',false,'page_page');
-
-        foreach($tests as $test){
-            $this->assertEquals(cleanID($test[0],$test[1]),$test[2]);
-        }
-
-        $conf['useslash'] = 1;
-        $tests = array();
-        $tests[] = array('page/page',false,'page:page');
-
-        $this->teardown();
-
-        foreach($tests as $test){
-            $this->assertEquals(cleanID($test[0],$test[1]),$test[2]);
-        }
+        $result = cleanID($input, $ascii);
+        $this->assertEquals($expected, $result);
     }
 
-    function test_sepchar(){
-        // we test multiple cases here
-        // format: $id, $ascii, $correct_output
-        $tests   = array();
 
-        global $conf;
-        $conf['sepchar'] = '-';
-        $conf['deaccent'] = 1;
 
-        $tests[] = array('pa-ge',false,'pa-ge');
-        $tests[] = array('pa%ge',false,'pa-ge');
-
-        foreach($tests as $test){
-            $this->assertEquals(cleanID($test[0],$test[1]),$test[2]);
-        }
-    }
-
-    function test_deaccent_keep(){
-        // we test multiple cases here
-        // format: $id, $ascii, $correct_output
-        $tests   = array();
-
-        global $conf;
-        $conf['sepchar'] = '_';
-        $conf['deaccent'] = 0;
-
-        $tests[] = array('pàge',false,'pàge');
-        $tests[] = array('pagĖ',false,'pagė');
-        $tests[] = array('pagĒēĔĕĖėĘęĚě',false,'pagēēĕĕėėęęěě');
-        $tests[] = array('ښ',false,'ښ');
-        $tests[] = array('ښ侧化并곦ঝഈβ',false,'ښ侧化并곦ঝഈβ');
-
-        foreach($tests as $test){
-            $this->assertEquals(cleanID($test[0],$test[1]),$test[2]);
-        }
-    }
-
-    function test_deaccent_romanize(){
-        // we test multiple cases here
-        // format: $id, $ascii, $correct_output
-        $tests   = array();
-
-        global $conf;
-        $conf['sepchar'] = '_';
-        $conf['deaccent'] = 2;
-
-        $tests[] = array('pàge',false,'page');
-        $tests[] = array('pagĖ',false,'page');
-        $tests[] = array('pagĒēĔĕĖėĘęĚě',false,'pageeeeeeeeee');
-        $tests[] = array('ښ',false,'ښ');
-        $tests[] = array('ښ侧化并곦ঝഈβ',false,'ښ侧化并곦ঝഈβ');
-
-        foreach($tests as $test){
-            $this->assertEquals(cleanID($test[0],$test[1]),$test[2]);
-        }
-    }
-
-    function test_deaccent_ascii(){
-        // we test multiple cases here
-        // format: $id, $ascii, $correct_output
-        $tests   = array();
-
-        global $conf;
-        $conf['sepchar'] = '_';
-        $conf['deaccent'] = 0;
-
-        $tests[] = array('pàge',true,'page');
-        $tests[] = array('pagĖ',true,'page');
-        $tests[] = array('pagĒēĔĕĖėĘęĚě',true,'pageeeeeeeeee');
-        $tests[] = array('ښ',true,'');
-        $tests[] = array('ښ侧化并곦ঝഈβ',true,'');
-
-        foreach($tests as $test){
-            $this->assertEquals(cleanID($test[0],$test[1]),$test[2]);
-        }
-
-        $conf['deaccent'] = 1;
-
-        foreach($tests as $test){
-            $this->assertEquals(cleanID($test[0],$test[1]),$test[2]);
-        }
-
-        $conf['deaccent'] = 2;
-
-        foreach($tests as $test){
-            $this->assertEquals(cleanID($test[0],$test[1]),$test[2]);
-        }
-    }
-
-    function test_caching_ascii() {
+    function test_caching_ascii()
+    {
         global $conf;
         $conf['deaccent'] = 0;
-        $this->assertEquals('pàge', cleanID('pàge',false));
-        $this->assertEquals('page', cleanID('pàge',true));
+        $this->assertEquals('pàge', cleanID('pàge', false));
+        $this->assertEquals('page', cleanID('pàge', true));
 
-        $this->assertEquals('page', cleanID('pagĖ',true));
-        $this->assertEquals('pagė', cleanID('pagĖ',false));
+        $this->assertEquals('page', cleanID('pagĖ', true));
+        $this->assertEquals('pagė', cleanID('pagĖ', false));
     }
 
 }
-//Setup VIM: ex: et ts=4 :

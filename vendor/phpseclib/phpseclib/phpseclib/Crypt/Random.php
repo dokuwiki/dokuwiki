@@ -45,6 +45,10 @@ class Random
      */
     static function string($length)
     {
+        if (!$length) {
+            return '';
+        }
+
         if (version_compare(PHP_VERSION, '7.0.0', '>=')) {
             try {
                 return \random_bytes($length);
@@ -62,7 +66,7 @@ class Random
             // method 1. prior to PHP 5.3 this would call rand() on windows hence the function_exists('class_alias') call.
             // ie. class_alias is a function that was introduced in PHP 5.3
             if (extension_loaded('mcrypt') && function_exists('class_alias')) {
-                return mcrypt_create_iv($length);
+                return @mcrypt_create_iv($length);
             }
             // method 2. openssl_random_pseudo_bytes was introduced in PHP 5.3.0 but prior to PHP 5.3.4 there was,
             // to quote <http://php.net/ChangeLog-5.php#5.3.4>, "possible blocking behavior". as of 5.3.4
@@ -93,7 +97,10 @@ class Random
                 $fp = @fopen('/dev/urandom', 'rb');
             }
             if ($fp !== true && $fp !== false) { // surprisingly faster than !is_bool() or is_resource()
-                return fread($fp, $length);
+                $temp = fread($fp, $length);
+                if (strlen($temp) == $length) {
+                    return $temp;
+                }
             }
             // method 3. pretty much does the same thing as method 2 per the following url:
             // https://github.com/php/php-src/blob/7014a0eb6d1611151a286c0ff4f2238f92c120d6/ext/mcrypt/mcrypt.c#L1391
@@ -101,7 +108,7 @@ class Random
             // not doing. regardless, this'll only be called if this PHP script couldn't open /dev/urandom due to open_basedir
             // restrictions or some such
             if (extension_loaded('mcrypt')) {
-                return mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
+                return @mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
             }
         }
         // at this point we have no choice but to use a pure-PHP CSPRNG

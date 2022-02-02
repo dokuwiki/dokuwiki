@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Guy Yakobovitch <guy.yakobovitch@gmail.com>
  * @author גיא שפר <guysoft@ort.org.il>
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Dotan Kamber <kamberd@yahoo.com>
@@ -76,7 +77,6 @@ $lang['badpassconfirm']        = 'מצטערים, הסיסמה שגויה';
 $lang['minoredit']             = 'שינוים מזעריים';
 $lang['draftdate']             = 'הטיוטה נשמרה אוטומטית ב־';
 $lang['nosecedit']             = 'הדף השתנה בינתיים, הקטע שערכת אינו מעודכן - העמוד כולו נטען במקום זאת.';
-$lang['searchcreatepage']      = 'אם לא נמצאו דפים בחיפוש, לחיצה על הכפתור "עריכה" תיצור דף חדש על שם מילת החיפוש שהוזנה.';
 $lang['regmissing']            = 'עליך למלא את כל השדות, עמך הסליחה.';
 $lang['reguexists']            = 'משתמש בשם זה כבר נרשם, עמך הסליחה.';
 $lang['regsuccess']            = 'ההרשמה הצליחה, המשתמש נרשם והודעה נשלחה בדוא״ל.';
@@ -208,7 +208,7 @@ $lang['created']               = 'נוצר';
 $lang['restored']              = 'שוחזר (%s)';
 $lang['external_edit']         = 'עריכה חיצונית';
 $lang['summary']               = 'תקציר העריכה';
-$lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">תוסף פלאש לדפדפן</a> נדרש כדי להציג תוכן זה.';
+$lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">תוסף פלאש לדפדפן</a> נדרש כדי להציג תוכן זה.';
 $lang['download']              = 'הורדת מקטע';
 $lang['tools']                 = 'כלים';
 $lang['user_tools']            = 'כלים של משתמש';
@@ -290,7 +290,7 @@ $lang['i_superuser']           = 'משתמש־על';
 $lang['i_problems']            = 'תכנית ההתקנה זיהתה מספר בעיות המפורטות להלן. אין באפשרותך להמשיך לפני תיקונן.';
 $lang['i_modified']            = 'משיקולי אבטחה סקריפט זה יעבוד אך ורק עם התקנת DokuWiki חדשה שלא עברה כל שינוי.
                          עליך לחלץ שנית את הקבצים מהחבילה שהורדה או להיעזר בדף
-                         <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a>';
+                         <a href="https://www.dokuwiki.org/install">Dokuwiki installation instructions</a>';
 $lang['i_funcna']              = 'פונקציית ה-PHP&#8207; <code>%s</code> אינה זמינה. יתכן כי מארח האתר חסם אותה מסיבה כלשהי?';
 $lang['i_phpver']              = 'גרסת PHP שלך <code>%s</code> נמוכה מ <code>%s</code> הצורך. אתה צריך לשדרג PHP שלך להתקין.';
 $lang['i_mbfuncoverload']      = 'יש לבטל את mbstring.func_overload בphp.ini בכדי להריץ את DokuWiki';
@@ -349,5 +349,5 @@ $lang['searchresult']          = 'תוצאות חיפוש';
 $lang['plainhtml']             = 'HTML פשוט';
 $lang['page_nonexist_rev']     = 'העמוד לא קיים ב%s. העמוד נוצר במקום זאת ב<a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'לא ניתן לפענח פרמטר "%s".';
-$lang['email_signature_text'] = 'הודעת דוא״ל זו נוצרה על ידי ה־DokuWiki הזמין בכתובת
+$lang['email_signature_text']  = 'הודעת דוא״ל זו נוצרה על ידי ה־DokuWiki הזמין בכתובת
 @DOKUWIKIURL@';

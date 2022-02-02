@@ -3,11 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Davor Turkalj <turki.bsc@gmail.com>
  * @author Tomo Krajina <aaa@puzz.info>
  * @author Branko Rihtman <theney@gmail.com>
  * @author Dražen Odobašić <dodobasic@gmail.com>
- * @author Dejan Igrec dejan.igrec@gmail.com
- * @author Davor Turkalj <turki.bsc@gmail.com>
+ * @author Dejan Igrec <dejan.igrec@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -68,45 +68,9 @@ $lang['badpassconfirm']        = 'Nažalost, lozinka nije ispravna';
 $lang['minoredit']             = 'Manje izmjene';
 $lang['draftdate']             = 'Nacrt promjena automatski spremljen u';
 $lang['nosecedit']             = 'Stranica se u međuvremenu promijenila. Informacija o odjeljku je ostarila pa je učitana kompletna stranica.';
-$lang['searchcreatepage']      = 'Ako ne možete naći što tražite, možete urediti ili stvoriti novu stranicu s odgovarajućim alatom.';
-$lang['regmissing']            = 'Morate popuniti sva polja.';
-$lang['reguexists']            = 'Korisnik s tim korisničkim imenom već postoji.';
-$lang['regsuccess']            = 'Korisnik je uspješno stvoren i poslana je lozinka emailom.';
-$lang['regsuccess2']           = 'Korisnik je uspješno kreiran.';
-$lang['regfail']               = 'Korisnik ne može biti kreiran.';
-$lang['regmailfail']           = 'Pojavila se greška prilikom slanja lozinke e-poštom. Kontaktirajte administratora!';
-$lang['regbadmail']            = 'Adresa e-pošte nije ispravna, ukoliko ovo smatrate greškom, kontaktirajte administratora.';
-$lang['regbadpass']            = 'Unesene lozinke nisu jednake, pokušajte ponovno.';
-$lang['regpwmail']             = 'Vaša DokuWiki lozinka';
-$lang['reghere']               = 'Još uvijek nemate korisnički račun? Registrirajte se.';
-$lang['profna']                = 'Ovaj wiki ne dopušta izmjene korisničkog profila.';
-$lang['profnochange']          = 'Nema izmjena.';
-$lang['profnoempty']           = 'Prazno korisničko ime ili e-pošta nisu dopušteni.';
-$lang['profchanged']           = 'Korisnički profil je uspješno izmijenjen.';
-$lang['profnodelete']          = 'Ovaj wiki ne podržava brisanje korisnika';
-$lang['profdeleteuser']        = 'Obriši korisnika';
-$lang['profdeleted']           = 'Vaš korisnik je obrisan s ovog wiki-a';
-$lang['profconfdelete']        = 'Želim ukloniti mojeg korisnika s ovog wiki-a. <br/> Ova akcija se ne može poništiti.';
-$lang['profconfdeletemissing'] = 'Kvačica za potvrdu nije označena';
-$lang['proffail']              = 'Profil korisnika nije izmijenjen.';
-$lang['pwdforget']             = 'Izgubili ste lozinku? Zatražite novu';
-$lang['resendna']              = 'Ovaj wiki ne podržava ponovno slanje lozinke e-poštom.';
-$lang['resendpwd']             = 'Postavi novu lozinku za';
-$lang['resendpwdmissing']      = 'Ispunite sva polja.';
-$lang['resendpwdnouser']       = 'Nije moguće pronaći korisnika.';
-$lang['resendpwdbadauth']      = 'Neispravan autorizacijski kod. Provjerite da li ste koristili potpunu poveznicu za potvrdu.';
-$lang['resendpwdconfirm']      = 'Poveznica za potvrdu je poslana e-poštom.';
-$lang['resendpwdsuccess']      = 'Nova lozinka je poslana e-poštom.';
-$lang['license']               = 'Osim na mjestima gdje je naznačeno drugačije, sadržaj ovog wikija je licenciran sljedećom licencom:';
-$lang['licenseok']             = 'Pažnja: promjenom ovog dokumenta pristajete licencirati sadržaj sljedećom licencom: ';
-$lang['searchmedia']           = 'Traži naziv datoteke:';
-$lang['searchmedia_in']        = 'Traži u %s';
-$lang['txt_upload']            = 'Odaberite datoteku za učitavanje:';
-$lang['txt_filename']          = 'Učitaj kao (nije obavezno):';
-$lang['txt_overwrt']           = 'Prepiši postojeću datoteku';
-$lang['maxuploadsize']         = 'Moguće je učitati maks. %s po datoteci.';
-$lang['lockedby']              = 'Trenutno zaključao:';
-$lang['lockexpire']            = 'Zaključano do:';
+$lang['searchcreatepage']      = 'Ako niste našli ono što ste tražili, možete napraviti ili urediti stranicu %s, imenovanu prema vašoj potrazi.';
+$lang['search_fullresults']    = 'Rezultat u punom tekstu';
+$lang['js']['search_toggle_tools'] = 'Odaberi alat pretrage';
 $lang['js']['willexpire']      = 'Dokument kojeg mijenjate će biti zaključan još 1 minutu.\n Ukoliko želite i dalje raditi izmjene na dokumentu - kliknite na "Pregled".';
 $lang['js']['notsavedyet']     = 'Vaše izmjene će se izgubiti.
 Želite li nastaviti?';
@@ -149,6 +113,56 @@ $lang['js']['media_done_btn']  = 'Gotovo';
 $lang['js']['media_drop']      = 'Ovdje spusti datoteke za učitavanje';
 $lang['js']['media_cancel']    = 'ukloni';
 $lang['js']['media_overwrt']   = 'Prepiši preko postojeće datoteke';
+$lang['search_exact_match']    = 'Potpuno identično';
+$lang['search_starts_with']    = 'Počinje s';
+$lang['search_ends_with']      = 'Završava s';
+$lang['search_contains']       = 'Sadrži';
+$lang['search_custom_match']   = 'Prilagođeno';
+$lang['search_any_ns']         = 'Bilo koji imenski prostor';
+$lang['search_any_time']       = 'Bilo koje vrijeme';
+$lang['search_past_7_days']    = 'Prošli tjedan';
+$lang['search_past_month']     = 'Prošli mjesec';
+$lang['search_past_year']      = 'Prošla godina';
+$lang['search_sort_by_hits']   = 'Poredaj po poklapanju';
+$lang['search_sort_by_mtime']  = 'Poredaj po zadnjoj promjeni';
+$lang['regmissing']            = 'Morate popuniti sva polja.';
+$lang['reguexists']            = 'Korisnik s tim korisničkim imenom već postoji.';
+$lang['regsuccess']            = 'Korisnik je uspješno stvoren i poslana je lozinka emailom.';
+$lang['regsuccess2']           = 'Korisnik je uspješno kreiran.';
+$lang['regfail']               = 'Korisnik ne može biti kreiran.';
+$lang['regmailfail']           = 'Pojavila se greška prilikom slanja lozinke e-poštom. Kontaktirajte administratora!';
+$lang['regbadmail']            = 'Adresa e-pošte nije ispravna, ukoliko ovo smatrate greškom, kontaktirajte administratora.';
+$lang['regbadpass']            = 'Unesene lozinke nisu jednake, pokušajte ponovno.';
+$lang['regpwmail']             = 'Vaša DokuWiki lozinka';
+$lang['reghere']               = 'Još uvijek nemate korisnički račun? Registrirajte se.';
+$lang['profna']                = 'Ovaj wiki ne dopušta izmjene korisničkog profila.';
+$lang['profnochange']          = 'Nema izmjena.';
+$lang['profnoempty']           = 'Prazno korisničko ime ili e-pošta nisu dopušteni.';
+$lang['profchanged']           = 'Korisnički profil je uspješno izmijenjen.';
+$lang['profnodelete']          = 'Ovaj wiki ne podržava brisanje korisnika';
+$lang['profdeleteuser']        = 'Obriši korisnika';
+$lang['profdeleted']           = 'Vaš korisnik je obrisan s ovog wiki-a';
+$lang['profconfdelete']        = 'Želim ukloniti mojeg korisnika s ovog wiki-a. <br/> Ova akcija se ne može poništiti.';
+$lang['profconfdeletemissing'] = 'Kvačica za potvrdu nije označena';
+$lang['proffail']              = 'Profil korisnika nije izmijenjen.';
+$lang['pwdforget']             = 'Izgubili ste lozinku? Zatražite novu';
+$lang['resendna']              = 'Ovaj wiki ne podržava ponovno slanje lozinke e-poštom.';
+$lang['resendpwd']             = 'Postavi novu lozinku za';
+$lang['resendpwdmissing']      = 'Ispunite sva polja.';
+$lang['resendpwdnouser']       = 'Nije moguće pronaći korisnika.';
+$lang['resendpwdbadauth']      = 'Neispravan autorizacijski kod. Provjerite da li ste koristili potpunu poveznicu za potvrdu.';
+$lang['resendpwdconfirm']      = 'Poveznica za potvrdu je poslana e-poštom.';
+$lang['resendpwdsuccess']      = 'Nova lozinka je poslana e-poštom.';
+$lang['license']               = 'Osim na mjestima gdje je naznačeno drugačije, sadržaj ovog wikija je licenciran sljedećom licencom:';
+$lang['licenseok']             = 'Pažnja: promjenom ovog dokumenta pristajete licencirati sadržaj sljedećom licencom: ';
+$lang['searchmedia']           = 'Traži naziv datoteke:';
+$lang['searchmedia_in']        = 'Traži u %s';
+$lang['txt_upload']            = 'Odaberite datoteku za učitavanje:';
+$lang['txt_filename']          = 'Učitaj kao (nije obavezno):';
+$lang['txt_overwrt']           = 'Prepiši postojeću datoteku';
+$lang['maxuploadsize']         = 'Moguće je učitati maks. %s po datoteci.';
+$lang['lockedby']              = 'Trenutno zaključao:';
+$lang['lockexpire']            = 'Zaključano do:';
 $lang['rssfailed']             = 'Došlo je do greške prilikom preuzimanja feed-a: ';
 $lang['nothingfound']          = 'Traženi dokumetni nisu pronađeni.';
 $lang['mediaselect']           = 'Datoteke';
@@ -200,7 +214,7 @@ $lang['created']               = 'stvoreno';
 $lang['restored']              = 'vraćeno na prijašnju izmjenu (%s)';
 $lang['external_edit']         = 'vanjsko uređivanje';
 $lang['summary']               = 'Sažetak izmjena';
-$lang['noflash']               = 'Za prikazivanje ovog sadržaja potreban je <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>';
+$lang['noflash']               = 'Za prikazivanje ovog sadržaja potreban je <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>';
 $lang['download']              = 'Preuzmi isječak';
 $lang['tools']                 = 'Alati';
 $lang['user_tools']            = 'Korisnički alati';
@@ -281,7 +295,7 @@ $lang['i_enableacl']           = 'Omogući ACL (preporučeno)';
 $lang['i_superuser']           = 'Superkorisnik';
 $lang['i_problems']            = 'Instalacija je pronašla probleme koji su naznačeni ispod. Nije moguće nastaviti dok se ti problemi ne riješe.';
 $lang['i_modified']            = 'Zbog sigurnosnih razlog, ova skripta raditi će samo sa novim i neizmijenjenim DokuWiki instalacijama.
-      Molimo ponovno prekopirajte datoteke iz preuzetoga paketa ili pogledajte detaljno <a href="http://dokuwiki.org/install">Uputstvo za postavljanje DokuWiki-a</a>';
+      Molimo ponovno prekopirajte datoteke iz preuzetoga paketa ili pogledajte detaljno <a href="https://www.dokuwiki.org/install">Uputstvo za postavljanje DokuWiki-a</a>';
 $lang['i_funcna']              = 'PHP funkcija <code>%s</code> nije dostupna. Možda ju je vaš pružatelj hostinga onemogućio iz nekog razloga?';
 $lang['i_phpver']              = 'Vaša PHP inačica <code>%s</code> je niža od potrebne <code>%s</code>. Trebate nadograditi vašu PHP instalaciju.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload mora biti onemogućena u php.ini da bi ste pokrenuli DokuWiki.';

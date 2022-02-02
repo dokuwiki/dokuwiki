@@ -1,10 +1,14 @@
 <?php
+
+use dokuwiki\Parsing\ParserMode\Eol;
+use dokuwiki\Parsing\ParserMode\Quote;
+
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Quote extends TestOfDoku_Parser {
 
     function testQuote() {
-        $this->P->addMode('quote',new Doku_Parser_Mode_Quote());
+        $this->P->addMode('quote',new Quote());
         $this->P->parse("abc\n> def\n>>ghi\nklm");
         $calls = array (
             array('document_start',array()),
@@ -27,7 +31,7 @@ class TestOfDoku_Parser_Quote extends TestOfDoku_Parser {
     }
 
     function testQuoteWinCr() {
-        $this->P->addMode('quote',new Doku_Parser_Mode_Quote());
+        $this->P->addMode('quote',new Quote());
         $this->P->parse("abc\r\n> def\r\n>>ghi\r\nklm");
         $calls = array (
             array('document_start',array()),
@@ -50,7 +54,7 @@ class TestOfDoku_Parser_Quote extends TestOfDoku_Parser {
     }
 
     function testQuoteMinumumContext() {
-        $this->P->addMode('quote',new Doku_Parser_Mode_Quote());
+        $this->P->addMode('quote',new Quote());
         $this->P->parse("\n> def\n>>ghi\n ");
         $calls = array (
             array('document_start',array()),
@@ -67,8 +71,8 @@ class TestOfDoku_Parser_Quote extends TestOfDoku_Parser {
     }
 
     function testQuoteEol() {
-        $this->P->addMode('quote',new Doku_Parser_Mode_Quote());
-        $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
+        $this->P->addMode('quote',new Quote());
+        $this->P->addMode('eol',new Eol());
         $this->P->parse("abc\n> def\n>>ghi\nklm");
         $calls = array (
             array('document_start',array()),

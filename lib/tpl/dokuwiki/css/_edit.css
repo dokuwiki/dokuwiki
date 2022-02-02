@@ -12,6 +12,7 @@
 /*____________ toolbar ____________*/
 
 .dokuwiki div.toolbar {
+    display: inline-block;
     margin-bottom: .5em;
 }
 #draft__status {

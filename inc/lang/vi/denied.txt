@@ -1,4 +1,3 @@
-====== Không được phép vào ======
+====== Không có quyền thực hiện ======
 
-Rất tiếc là bạn không được phép để tiếp tục.
-
+Xin lỗi, bạn không có đủ quyền để tiếp tục.

@@ -1,5 +1,5 @@
-====== Có phiên bản mới hơn ======
+====== Có phiên bản mới hơn tồn tại ======
 
-Trang bạn đang biên soạn có một phiên bản mới hơn. Việc này xảy ra khi một bạn đổi trang ấy khi bạn đang biên soạn trang này.
+Một phiên bản mới hơn của tài liệu bạn sửa đổi tồn tại. Điều này xảy ra khi một thành viên khác thay đổi tài liệu trong khi bạn đang sửa đổi nó.
 
-Xem kỹ những thay đổi dưới đây, rồi quyết định giữ phiên bản nào. Nếu chọn ''Lưu'', phiên bản của bạn được giữ lại. Bấm ''huỷ'' để giữ phiên bản kia.
+Kiểm tra khác biệt được hiển thị dưới đây, sau đó hãy quyết định giữ phiên bản nào. Nếu bạn chọn ''Lưu'', phiên bản của bạn sẽ được lưu. Nhấn ''Hủy bỏ'' để giữ phiên bản hiện tại.

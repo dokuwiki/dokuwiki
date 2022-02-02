@@ -5,4 +5,5 @@ vendor/
 composer.lock
 apigen.phar
 docs/
-
+nbproject/
+.phpunit.result.cache

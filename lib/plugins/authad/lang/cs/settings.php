@@ -3,7 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author mkucera66@seznam.cz
+ * @author Robert Surý <rsurycz@seznam.cz>
+ * @author mkucera66 <mkucera66@seznam.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Daniel Slováček <danslo@danslo.cz>
  * @author Martin Růžička <martinr@post.cz>
@@ -23,3 +24,4 @@ $lang['expirywarn']            = 'Dny mezi varováním o vypršení hesla uživa
 $lang['additional']            = 'Čárkou oddělený seznam dodatečných atributů získávaných z uživatelských dat. Využito některými pluginy.';
 $lang['update_name']           = 'Povolit uživatelům upravit jejich AD zobrazované jméno?';
 $lang['update_mail']           = 'Povolit uživatelům upravit svou emailovou adresu?';
+$lang['recursive_groups']      = 'Vyřešte vnořené skupiny do jejich příslušných členů (pomalejší).';

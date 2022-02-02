@@ -6,14 +6,13 @@
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
+use dokuwiki\Form\Form;
 
 /**
  * Class helper_plugin_extension_list takes care of the overall GUI
  */
-class helper_plugin_extension_gui extends DokuWiki_Plugin {
-
+class helper_plugin_extension_gui extends DokuWiki_Plugin
+{
     protected $tabs = array('plugins', 'templates', 'search', 'install');
 
     /** @var string the extension that should have an open info window FIXME currently broken */
@@ -24,7 +23,8 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
      *
      * initializes requested info window
      */
-    public function __construct() {
+    public function __construct()
+    {
         global $INPUT;
         $this->infoFor = $INPUT->str('info');
     }
@@ -32,33 +32,37 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
     /**
      * display the plugin tab
      */
-    public function tabPlugins() {
-        /* @var Doku_Plugin_Controller $plugin_controller */
-        global $plugin_controller;
-
+    public function tabPlugins()
+    {
         echo '<div class="panelHeader">';
         echo $this->locale_xhtml('intro_plugins');
         echo '</div>';
 
-        $pluginlist = $plugin_controller->getList('', true);
-        sort($pluginlist);
+        $pluginlist = plugin_list('', true);
         /* @var helper_plugin_extension_extension $extension */
         $extension = $this->loadHelper('extension_extension');
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
-        $list->start_form();
-        foreach($pluginlist as $name) {
+
+        $form = new Form([
+                'action' => $this->tabURL('', [], '&'),
+                'id'  => 'extension__list',
+        ]);
+        $list->startForm();
+        foreach ($pluginlist as $name) {
             $extension->setExtension($name);
-            $list->add_row($extension, $extension->getID() == $this->infoFor);
+            $list->addRow($extension, $extension->getID() == $this->infoFor);
         }
-        $list->end_form();
-        $list->render();
+        $list->endForm();
+        $form->addHTML($list->render(true));
+        echo $form->toHTML();
     }
 
     /**
      * Display the template tab
      */
-    public function tabTemplates() {
+    public function tabTemplates()
+    {
         echo '<div class="panelHeader">';
         echo $this->locale_xhtml('intro_templates');
         echo '</div>';
@@ -72,30 +76,45 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         $extension = $this->loadHelper('extension_extension');
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
-        $list->start_form();
-        foreach($tpllist as $name) {
+
+        $form = new Form([
+                'action' => $this->tabURL('', [], '&'),
+                'id'  => 'extension__list',
+        ]);
+        $list->startForm();
+        foreach ($tpllist as $name) {
             $extension->setExtension("template:$name");
-            $list->add_row($extension, $extension->getID() == $this->infoFor);
+            $list->addRow($extension, $extension->getID() == $this->infoFor);
         }
-        $list->end_form();
-        $list->render();
+        $list->endForm();
+        $form->addHTML($list->render(true));
+        echo $form->toHTML();
     }
 
     /**
      * Display the search tab
      */
-    public function tabSearch() {
+    public function tabSearch()
+    {
         global $INPUT;
         echo '<div class="panelHeader">';
         echo $this->locale_xhtml('intro_search');
         echo '</div>';
 
-        $form = new Doku_Form(array('action' => $this->tabURL('', array(), '&'), 'class' => 'search'));
-        $form->addElement(form_makeTextField('q', $INPUT->str('q'), $this->getLang('search_for')));
-        $form->addElement(form_makeButton('submit', '', $this->getLang('search')));
-        $form->printForm();
+        $form = new Form([
+                'action' => $this->tabURL('', [], '&'),
+                'class'  => 'search',
+        ]);
+        $form->addTagOpen('div')->addClass('no');
+        $form->addTextInput('q', $this->getLang('search_for'))
+            ->addClass('edit')
+            ->val($INPUT->str('q'));
+        $form->addButton('submit', $this->getLang('search'))
+            ->attrs(['type' => 'submit', 'title' => $this->getLang('search')]);
+        $form->addTagClose('div');
+        echo $form->toHTML();
 
-        if(!$INPUT->bool('q')) return;
+        if (!$INPUT->bool('q')) return;
 
         /* @var helper_plugin_extension_repository $repository FIXME should we use some gloabl instance? */
         $repository = $this->loadHelper('extension_repository');
@@ -105,33 +124,56 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         $extension = $this->loadHelper('extension_extension');
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
-        $list->start_form();
-        if($result){
-            foreach($result as $name) {
+
+        $form = new Form([
+                'action' => $this->tabURL('', [], '&'),
+                'id'  => 'extension__list',
+        ]);
+        $list->startForm();
+        if ($result) {
+            foreach ($result as $name) {
                 $extension->setExtension($name);
-                $list->add_row($extension, $extension->getID() == $this->infoFor);
+                $list->addRow($extension, $extension->getID() == $this->infoFor);
             }
         } else {
-            $list->nothing_found();
+            $list->nothingFound();
         }
-        $list->end_form();
-        $list->render();
-
+        $list->endForm();
+        $form->addHTML($list->render(true));
+        echo $form->toHTML();
     }
 
     /**
      * Display the template tab
      */
-    public function tabInstall() {
+    public function tabInstall()
+    {
+        global $lang;
         echo '<div class="panelHeader">';
         echo $this->locale_xhtml('intro_install');
         echo '</div>';
 
-        $form = new Doku_Form(array('action' => $this->tabURL('', array(), '&'), 'enctype' => 'multipart/form-data', 'class' => 'install'));
-        $form->addElement(form_makeTextField('installurl', '', $this->getLang('install_url'), '', 'block'));
-        $form->addElement(form_makeFileField('installfile', $this->getLang('install_upload'), '', 'block'));
-        $form->addElement(form_makeButton('submit', '', $this->getLang('btn_install')));
-        $form->printForm();
+        $form = new Form([
+                'action' => $this->tabURL('', [], '&'),
+                'enctype' => 'multipart/form-data',
+                'class'  => 'install',
+        ]);
+        $form->addTagOpen('div')->addClass('no');
+        $form->addTextInput('installurl', $this->getLang('install_url'))
+            ->addClass('block')
+            ->attrs(['type' => 'url']);
+        $form->addTag('br');
+        $form->addTextInput('installfile', $this->getLang('install_upload'))
+            ->addClass('block')
+            ->attrs(['type' => 'file']);
+        $form->addTag('br');
+        $form->addCheckbox('overwrite', $lang['js']['media_overwrt'])
+            ->addClass('block');
+        $form->addTag('br');
+        $form->addButton('', $this->getLang('btn_install'))
+            ->attrs(['type' => 'submit', 'title' => $this->getLang('btn_install')]);
+        $form->addTagClose('div');
+        echo $form->toHTML();
     }
 
     /**
@@ -139,11 +181,12 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
      *
      * @fixme style active one
      */
-    public function tabNavigation() {
+    public function tabNavigation()
+    {
         echo '<ul class="tabs">';
-        foreach($this->tabs as $tab) {
+        foreach ($this->tabs as $tab) {
             $url = $this->tabURL($tab);
-            if($this->currentTab() == $tab) {
+            if ($this->currentTab() == $tab) {
                 $class = ' active';
             } else {
                 $class = '';
@@ -158,11 +201,12 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
      *
      * @return string
      */
-    public function currentTab() {
+    public function currentTab()
+    {
         global $INPUT;
 
         $tab = $INPUT->str('tab', 'plugins', true);
-        if(!in_array($tab, $this->tabs)) $tab = 'plugins';
+        if (!in_array($tab, $this->tabs)) $tab = 'plugins';
         return $tab;
     }
 
@@ -175,19 +219,19 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
      * @param bool   $absolute create absolute URLs?
      * @return string
      */
-    public function tabURL($tab = '', $params = array(), $sep = '&amp;', $absolute = false) {
+    public function tabURL($tab = '', $params = [], $sep = '&', $absolute = false)
+    {
         global $ID;
         global $INPUT;
 
-        if(!$tab) $tab = $this->currentTab();
+        if (!$tab) $tab = $this->currentTab();
         $defaults = array(
             'do'   => 'admin',
             'page' => 'extension',
             'tab'  => $tab,
         );
-        if($tab == 'search') $defaults['q'] = $INPUT->str('q');
+        if ($tab == 'search') $defaults['q'] = $INPUT->str('q');
 
         return wl($ID, array_merge($defaults, $params), $absolute, $sep);
     }
-
 }

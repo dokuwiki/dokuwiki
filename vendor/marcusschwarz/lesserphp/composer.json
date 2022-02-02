@@ -1,0 +1,38 @@
+{
+    "name": "marcusschwarz/lesserphp",
+    "type": "library",
+    "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
+    "homepage": "http://leafo.net/lessphp/",
+    "license": [
+        "MIT",
+        "GPL-3.0"
+    ],
+    "authors": [
+        {
+            "name": "Leaf Corcoran",
+            "email": "leafot@gmail.com",
+            "homepage": "http://leafo.net"
+        },
+        {
+            "name": "Marcus Schwarz",
+            "email": "github@maswaba.de",
+            "homepage": "https://www.maswaba.de"
+        }
+
+    ],
+    "bin": ["plessc"],
+    "autoload": {
+        "classmap": ["lessc.inc.php"]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.5.1-dev"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=4.8.35 <8"
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}

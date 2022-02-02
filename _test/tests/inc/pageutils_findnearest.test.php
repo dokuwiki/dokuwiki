@@ -1,10 +1,12 @@
 <?php
 
+use dokuwiki\test\mock\AuthPlugin;
+
 class pageutils_findnearest_test extends DokuWikiTest {
 
-    var $oldAuthAcl;
+    protected $oldAuthAcl;
 
-    function setUp() {
+    function setUp() : void {
         parent::setUp();
         global $AUTH_ACL;
         global $auth;
@@ -13,7 +15,7 @@ class pageutils_findnearest_test extends DokuWikiTest {
         $conf['useacl']    = 1;
 
         $this->oldAuthAcl = $AUTH_ACL;
-        $auth = new DokuWiki_Auth_Plugin();
+        $auth = new AuthPlugin();
 
         $AUTH_ACL = array(
             '*           @ALL           1',
@@ -23,7 +25,7 @@ class pageutils_findnearest_test extends DokuWikiTest {
         );
     }
 
-    function tearDown() {
+    function tearDown() : void {
         global $AUTH_ACL;
         $AUTH_ACL = $this->oldAuthAcl;
     }
@@ -34,6 +36,25 @@ class pageutils_findnearest_test extends DokuWikiTest {
         $ID = 'foo:bar:baz:test';
         $sidebar = page_findnearest('sidebar');
         $this->assertEquals(false, $sidebar);
+    }
+
+    function testZeroID() {
+        global $ID;
+
+        saveWikiText('sidebar', 'topsidebar-test', '');
+        saveWikiText('0', 'zero-test', '');
+        saveWikiText('0:0:0', 'zero-test', '');
+
+        $ID = '0:0:0';
+        $sidebar = page_findnearest('sidebar');
+        $this->assertEquals('sidebar', $sidebar);
+
+        $sidebar = page_findnearest('0');
+        $this->assertEquals('0:0:0', $sidebar);
+
+        $ID = '0';
+        $sidebar = page_findnearest('0');
+        $this->assertEquals('0', $sidebar);
     }
 
     function testExistingSidebars() {

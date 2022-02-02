@@ -1,0 +1,60 @@
+<?php
+
+namespace dokuwiki\ChangeLog;
+
+/**
+ * Class MediaChangeLog; handles changelog of a media file
+ */
+class MediaChangeLog extends ChangeLog
+{
+
+    /**
+     * Returns path to changelog
+     *
+     * @return string path to file
+     */
+    protected function getChangelogFilename()
+    {
+        return mediaMetaFN($this->id, '.changes');
+    }
+
+    /**
+     * Returns path to current page/media
+     *
+     * @param string|int $rev empty string or revision timestamp
+     * @return string path to file
+     */
+    protected function getFilename($rev = '')
+    {
+        return mediaFN($this->id, $rev);
+    }
+
+
+
+    /**
+     * Adds an entry to the changelog
+     *
+     * @param array $info    Revision info structure of a media file
+     * @param int $timestamp logline date (optional)
+     * @return array revision info of added logline
+     *
+     * @see also addMediaLogEntry() in inc/changelog.php file
+     */
+    public function addLogEntry(array $info, $timestamp = null)
+    {
+        global $conf;
+
+        if (isset($timestamp)) unset($this->cache[$this->id][$info['date']]);
+
+        // add changelog lines
+        $logline = $this->buildLogLine($info, $timestamp);
+        io_saveFile(mediaMetaFN($this->id,'.changes'), $logline, $append = true);
+        io_saveFile($conf['media_changelog'], $logline, $append = true); //global changelog cache
+
+        // update cache
+        $this->currentRevision = $info['date'];
+        $this->cache[$this->id][$this->currentRevision] = $info;
+        return $info;
+    }
+
+}

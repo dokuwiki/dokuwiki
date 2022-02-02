@@ -9,7 +9,9 @@
  */
 
 // update message version - always use a string to avoid localized floats!
-$updateVersion = "49.2";
+use dokuwiki\Extension\Event;
+
+$updateVersion = "51.3";
 
 //  xdebug_start_profiling();
 
@@ -35,7 +37,7 @@ require_once(DOKU_INC.'inc/init.php');
 
 //import variables
 $INPUT->set('id', str_replace("\xC2\xAD", '', $INPUT->str('id'))); //soft-hyphen
-$QUERY          = trim($INPUT->str('id'));
+$QUERY          = trim($INPUT->str('q'));
 $ID             = getID();
 
 $REV   = $INPUT->int('rev');
@@ -62,7 +64,7 @@ if($DATE_AT) {
     } else { // check for UNIX Timestamp
         $date_parse = @date('Ymd',$DATE_AT);
         if(!$date_parse || $date_parse === '19700101') {
-            msg(sprintf($lang['unable_to_parse_date'], $DATE_AT));
+            msg(sprintf($lang['unable_to_parse_date'], hsc($DATE_AT)));
             $DATE_AT = null;
         }
     }
@@ -70,7 +72,7 @@ if($DATE_AT) {
 
 //check for existing $REV related to $DATE_AT
 if($DATE_AT) {
-    $pagelog = new PageChangeLog($ID);
+    $pagelog = new \dokuwiki\ChangeLog\PageChangeLog($ID);
     $rev_t = $pagelog->getLastRevisionAt($DATE_AT);
     if($rev_t === '') { //current revision
         $REV = null;
@@ -89,10 +91,6 @@ if($DATE_AT) {
 
 //make infos about the selected page available
 $INFO = pageinfo();
-
-//export minimal info to JS, plugins can add more
-$JSINFO['id']        = $ID;
-$JSINFO['namespace'] = (string) $INFO['namespace'];
 
 // handle debugging
 if($conf['allowdebug'] && $ACT == 'debug') {
@@ -115,7 +113,7 @@ if($conf['breadcrumbs']) breadcrumbs();
 checkUpdateMessages();
 
 $tmp = array(); // No event data
-trigger_event('DOKUWIKI_STARTED', $tmp);
+Event::createAndTrigger('DOKUWIKI_STARTED', $tmp);
 
 //close session
 session_write_close();
@@ -124,6 +122,6 @@ session_write_close();
 act_dispatch();
 
 $tmp = array(); // No event data
-trigger_event('DOKUWIKI_DONE', $tmp);
+Event::createAndTrigger('DOKUWIKI_DONE', $tmp);
 
 //  xdebug_dump_function_profile(1);

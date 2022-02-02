@@ -1,5 +1,8 @@
 <?php
 
+use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\ChangeLog\PageChangeLog;
+
 /**
  * Tests for requesting revisioninfo of a revision of a page with getRevisionInfo()
  *
@@ -10,19 +13,15 @@
 class changelog_getlastrevisionat_test extends DokuWikiTest {
 
     private $pageid = 'mailinglist';
-    
-    function setup() {
+
+    function setup() : void {
         parent::setup();
         global $cache_revinfo;
         $cache =& $cache_revinfo;
-        if(isset($cache['nonexist'])) {
-            unset($cache['nonexist']);
-        }
-        if(isset($cache['mailinglist'])) {
-            unset($cache['mailinglist']);
-        }
+        unset($cache['nonexist']);
+        unset($cache['mailinglist']);
     }
-    
+
 
     /**
      * no nonexist.changes meta file available
@@ -53,7 +52,7 @@ class changelog_getlastrevisionat_test extends DokuWikiTest {
         $this->assertEquals($revsexpected, $revs);
 
     }
-    
+
     /**
      * test a future revision
      *
@@ -64,7 +63,7 @@ class changelog_getlastrevisionat_test extends DokuWikiTest {
 
         //set a known timestamp
         touch(wikiFN($this->pageid), $rev);
-        
+
         $rev +=1;
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
@@ -89,7 +88,7 @@ class changelog_getlastrevisionat_test extends DokuWikiTest {
 
     /**
      * Request not existing revision
-     * 
+     *
      */
     function test_olderrev() {
         $rev = 1;
@@ -124,7 +123,7 @@ class changelog_getlastrevisionat_test extends DokuWikiTest {
         $current = $pagelog->getLastRevisionAt($rev);
         $this->assertEquals($currentexpected, $current);
     }
-    
+
     /**
      * test get correct revision on deleted media
      *
@@ -137,7 +136,7 @@ class changelog_getlastrevisionat_test extends DokuWikiTest {
         //save settings
         $oldSuperUser = $conf['superuser'];
         $oldUseacl = $conf['useacl'];
-        $oldRemoteUser = $_SERVER['REMOTE_USER'];
+        $oldRemoteUser = isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : null;
 
         $conf['superuser'] = 'admin';
         $conf['useacl']    = 1;
@@ -154,15 +153,17 @@ class changelog_getlastrevisionat_test extends DokuWikiTest {
 
         $ret = media_delete($image, 0);
 
-        $medialog = new MediaChangelog($image);
+        $medialog = new MediaChangeLog($image);
         $current = $medialog->getLastRevisionAt($rev);
         // as we wait for a tick, we should get something greater than the timestamp
         $this->assertGreaterThan($revexpected, $current);
         // however, it should be less than the current time or equal to it
         $this->assertLessThanOrEqual(time(), $current);
-        
+
         //restore settings
-        $_SERVER['REMOTE_USER'] = $oldRemoteUser;
+        if ($oldRemoteUser !== null) {
+            $_SERVER['REMOTE_USER'] = $oldRemoteUser;
+        }
         $conf['superuser'] = $oldSuperUser;
         $conf['useacl'] = $oldUseacl;
     }

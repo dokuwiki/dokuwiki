@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\HTTP\HTTPClient;
+
 /**
  * Extends the mailer class to expose internal variables for testing
  */
@@ -22,6 +24,9 @@ class TestMailer extends Mailer {
 
 }
 
+/**
+ * @group mailer_class
+ */
 class mailer_test extends DokuWikiTest {
 
 
@@ -73,6 +78,10 @@ class mailer_test extends DokuWikiTest {
     }
 
     function test_addresses(){
+        if (isWindows()) {
+            $this->markTestSkipped();
+        }
+
         $mail = new TestMailer();
 
         $mail->to('andi@splitbrain.org');
@@ -90,10 +99,35 @@ class mailer_test extends DokuWikiTest {
         $headers = $mail->prop('headers');
         $this->assertEquals('Andreas Gohr <andi@splitbrain.org>', $headers['To']);
 
+        $mail->to('"Andreas Gohr" <andi@splitbrain.org>');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('"Andreas Gohr" <andi@splitbrain.org>', $headers['To']);
+
+        $mail->to('andi@splitbrain.org,foo@example.com');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('andi@splitbrain.org,  foo@example.com', $headers['To']);
+
+        $mail->to('andi@splitbrain.org, Text <foo@example.com>');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('andi@splitbrain.org, Text <foo@example.com>', $headers['To']);
+
+        $mail->to('Andreas Gohr <andi@splitbrain.org>,foo@example.com');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('Andreas Gohr <andi@splitbrain.org>,  foo@example.com', $headers['To']);
+
         $mail->to('Andreas Gohr <andi@splitbrain.org> , foo <foo@example.com>');
         $mail->cleanHeaders();
         $headers = $mail->prop('headers');
         $this->assertEquals('Andreas Gohr <andi@splitbrain.org>, foo <foo@example.com>', $headers['To']);
+
+        $mail->to('"Foo, Dr." <foo@example.com> , foo <foo@example.com>');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('=?UTF-8?B?IkZvbywgRHIuIg==?= <foo@example.com>, foo <foo@example.com>', $headers['To']);
 
         $mail->to('Möp <moep@example.com> , foo <foo@example.com>');
         $mail->cleanHeaders();
@@ -329,6 +363,16 @@ A test mail in <strong>html</strong>
 
         $this->assertRegexp('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
 
+    }
+
+    function test_getCleanName() {
+        $mail = new TestMailer();
+        $name = $mail->getCleanName('Foo Bar');
+        $this->assertEquals('Foo Bar', $name);
+        $name = $mail->getCleanName('Foo, Bar');
+        $this->assertEquals('"Foo, Bar"', $name);
+        $name = $mail->getCleanName('Foo" Bar');
+        $this->assertEquals('"Foo\" Bar"', $name);
     }
 }
 //Setup VIM: ex: et ts=4 :

@@ -7,13 +7,14 @@ Eis as alterações:
 @DIFF@
 --------------------------------------------------------
 
-Data : @DATE@
-Utilizador : @USER@
-Sumário de Edição: @SUMMARY@
-Revisão Antiga: @OLDPAGE@
-Revisão Nova: @NEWPAGE@
+Data      : @DATE@
+Usuário     : @USER@
+Sumário de Edição   : @SUMMARY@
+Revisão Antiga      : @OLDPAGE@
+Revisão Nova   : @NEWPAGE@
+Data da Revisão: @DATE@
 
-Para cancelar as notificações de página, inicie sessão no wiki em
-@DOKUWIKIURL@, visite
+Para cancelar as notificações de página, logue-se no wiki em
+@DOKUWIKIURL@, então visite
 @SUBSCRIBE@
-e des-subscreva às alterações de página e/ou espaço de nome.
+e des-subscreva às alterações de página e/ou namespace.

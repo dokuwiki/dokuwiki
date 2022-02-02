@@ -3,11 +3,16 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author pavulondit <pavloo@vp.pl>
+ * @author Bartek S <sadupl@gmail.com>
+ * @author Przemek <p_kudriawcew@o2.pl>
+ * @author Wojciech Lichota <wojciech@lichota.pl>
+ * @author Max <maxrb146@gmail.com>
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
  * @author Sławomir Boczek <slawkens@gmail.com>
- * @author sleshek@wp.pl
+ * @author sleshek <sleshek@wp.pl>
  * @author Leszek Stachowski <shazarre@gmail.com>
  * @author maros <dobrimaros@yahoo.pl>
  * @author Grzegorz Widła <dzesdzes@gmail.com>
@@ -79,45 +84,9 @@ $lang['badpassconfirm']        = 'Niestety, hasło jest niepoprawne.';
 $lang['minoredit']             = 'Mniejsze zmiany';
 $lang['draftdate']             = 'Czas zachowania szkicu';
 $lang['nosecedit']             = 'Strona została zmodyfikowana, sekcje zostały zmienione. Załadowano całą stronę.';
-$lang['searchcreatepage']      = 'Jeśli nie znaleziono szukanego hasła, możesz utworzyć nową stronę, której tytułem będzie poszukiwane hasło.';
-$lang['regmissing']            = 'Wypełnij wszystkie pola.';
-$lang['reguexists']            = 'Użytkownik o tej nazwie już istnieje.';
-$lang['regsuccess']            = 'Utworzono użytkownika. Hasło zostało przesłane pocztą.';
-$lang['regsuccess2']           = 'Utworzono użytkownika.';
-$lang['regfail']               = 'Użytkownik nie mógł zostać utworzony.';
-$lang['regmailfail']           = 'Wystąpił błąd przy wysyłaniu hasła pocztą!';
-$lang['regbadmail']            = 'Adres e-mail jest nieprawidłowy!';
-$lang['regbadpass']            = 'Hasła nie są identyczne, spróbuj ponownie.';
-$lang['regpwmail']             = 'Twoje hasło do DokuWiki';
-$lang['reghere']               = 'Nie masz jeszcze konta? Zdobądź je';
-$lang['profna']                = 'To wiki nie pozwala na zmianę profilu.';
-$lang['profnochange']          = 'Żadnych zmian, nic do zrobienia.';
-$lang['profnoempty']           = 'Pusta nazwa lub adres e-mail nie dozwolone.';
-$lang['profchanged']           = 'Zaktualizowano profil użytkownika.';
-$lang['profnodelete']          = 'Ta wiki nie umożliwia usuwania użytkowników';
-$lang['profdeleteuser']        = 'Usuń konto';
-$lang['profdeleted']           = 'Twoje konto zostało usunięte z tej wiki';
-$lang['profconfdelete']        = 'Chcę usunąć moje konto z tej wiki. <br/> Decyzja nie może być cofnięta.';
-$lang['profconfdeletemissing'] = 'Pole potwierdzenia nie zostało zaznaczone';
-$lang['proffail']              = 'Profil użytkownika nie został uaktualniony.';
-$lang['pwdforget']             = 'Nie pamiętasz hasła? Zdobądź nowe!';
-$lang['resendna']              = 'To wiki nie pozwala na powtórne przesyłanie hasła.';
-$lang['resendpwd']             = 'Podaj nowe hasło dla';
-$lang['resendpwdmissing']      = 'Wypełnij wszystkie pola.';
-$lang['resendpwdnouser']       = 'Nie można znaleźć tego użytkownika w bazie danych.';
-$lang['resendpwdbadauth']      = 'Błędny kod autoryzacji! Upewnij się, że użyłeś(aś) właściwego odnośnika.';
-$lang['resendpwdconfirm']      = 'Prośba o potwierdzenie została przesłana pocztą.';
-$lang['resendpwdsuccess']      = 'Nowe hasło zostało wysłane pocztą.';
-$lang['license']               = 'Wszystkie treści w tym wiki, którym nie przyporządkowano licencji, podlegają licencji:';
-$lang['licenseok']             = 'Uwaga: edytując tę stronę zgadzasz się na publikowanie jej treści pod licencją:';
-$lang['searchmedia']           = 'Szukaj pliku o nazwie:';
-$lang['searchmedia_in']        = 'Szukaj w  %s';
-$lang['txt_upload']            = 'Wybierz plik do wysłania:';
-$lang['txt_filename']          = 'Nazwa pliku (opcjonalnie):';
-$lang['txt_overwrt']           = 'Nadpisać istniejący plik?';
-$lang['maxuploadsize']         = 'Maksymalny rozmiar wysyłanych danych wynosi %s dla jednego pliku.';
-$lang['lockedby']              = 'Aktualnie zablokowane przez:';
-$lang['lockexpire']            = 'Blokada wygasa:';
+$lang['searchcreatepage']      = 'Jeżeli nie znalazłeś tego czego szukałeś możesz stworzyć lub edytować stronę %s, nazwaną tak jak twoja kwerenda';
+$lang['search_fullresults']    = 'Pokaż więcej wyników';
+$lang['js']['search_toggle_tools'] = 'Przełącz narzędzia wyszukiwania';
 $lang['js']['willexpire']      = 'Twoja blokada edycji tej strony wygaśnie w ciągu minuty. \nW celu uniknięcia konfliktów użyj przycisku podglądu aby odnowić blokadę.';
 $lang['js']['notsavedyet']     = 'Nie zapisane zmiany zostaną utracone.
 Czy na pewno kontynuować?';
@@ -161,6 +130,58 @@ $lang['js']['media_done_btn']  = 'Zrobione';
 $lang['js']['media_drop']      = 'Upuść tutaj pliki do przesłania';
 $lang['js']['media_cancel']    = 'usuń';
 $lang['js']['media_overwrt']   = 'Nadpisz istniejące pliki';
+$lang['js']['data_insecure']   = 'OSTRZEŻENIE: Wygląda na to, że twój katalog z danymi nie jest odpowiednio zabezpieczony. Proszę przeczytaj <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
+$lang['search_exact_match']    = 'Dokładne dopasowanie';
+$lang['search_starts_with']    = 'Zaczyna się na';
+$lang['search_ends_with']      = 'Kończy się na';
+$lang['search_contains']       = 'Zwiera';
+$lang['search_custom_match']   = 'Spersonalizowany';
+$lang['search_any_ns']         = 'Jakakolwiek przestrzeń nazw';
+$lang['search_any_time']       = 'Kiedykolwiek';
+$lang['search_past_7_days']    = 'Poprzedni tydzień';
+$lang['search_past_month']     = 'Poprzedni miesiąc';
+$lang['search_past_year']      = 'Poprzedni rok';
+$lang['search_sort_by_hits']   = 'Sortuj według popularności';
+$lang['search_sort_by_mtime']  = 'Sortuj według daty modyfikacji';
+$lang['regmissing']            = 'Wypełnij wszystkie pola.';
+$lang['reguexists']            = 'Użytkownik o tej nazwie już istnieje.';
+$lang['regsuccess']            = 'Utworzono użytkownika. Hasło zostało przesłane pocztą.';
+$lang['regsuccess2']           = 'Utworzono użytkownika.';
+$lang['regfail']               = 'Użytkownik nie mógł zostać utworzony.';
+$lang['regmailfail']           = 'Wystąpił błąd przy wysyłaniu hasła pocztą!';
+$lang['regbadmail']            = 'Adres e-mail jest nieprawidłowy!';
+$lang['regbadpass']            = 'Hasła nie są identyczne, spróbuj ponownie.';
+$lang['regpwmail']             = 'Twoje hasło do DokuWiki';
+$lang['reghere']               = 'Nie masz jeszcze konta? Zdobądź je';
+$lang['profna']                = 'To wiki nie pozwala na zmianę profilu.';
+$lang['profnochange']          = 'Żadnych zmian, nic do zrobienia.';
+$lang['profnoempty']           = 'Pusta nazwa lub adres e-mail nie dozwolone.';
+$lang['profchanged']           = 'Zaktualizowano profil użytkownika.';
+$lang['profnodelete']          = 'Ta wiki nie umożliwia usuwania użytkowników';
+$lang['profdeleteuser']        = 'Usuń konto';
+$lang['profdeleted']           = 'Twoje konto zostało usunięte z tej wiki';
+$lang['profconfdelete']        = 'Chcę usunąć moje konto z tej wiki. <br/> Decyzja nie może być cofnięta.';
+$lang['profconfdeletemissing'] = 'Pole potwierdzenia nie zostało zaznaczone';
+$lang['proffail']              = 'Profil użytkownika nie został uaktualniony.';
+$lang['pwdforget']             = 'Nie pamiętasz hasła? Zdobądź nowe!';
+$lang['resendna']              = 'To wiki nie pozwala na powtórne przesyłanie hasła.';
+$lang['resendpwd']             = 'Podaj nowe hasło dla';
+$lang['resendpwdmissing']      = 'Wypełnij wszystkie pola.';
+$lang['resendpwdnouser']       = 'Nie można znaleźć tego użytkownika w bazie danych.';
+$lang['resendpwdbadauth']      = 'Błędny kod autoryzacji! Upewnij się, że użyłeś(aś) właściwego odnośnika.';
+$lang['resendpwdconfirm']      = 'Prośba o potwierdzenie została przesłana pocztą.';
+$lang['resendpwdsuccess']      = 'Nowe hasło zostało wysłane pocztą.';
+$lang['license']               = 'Wszystkie treści w tym wiki, którym nie przyporządkowano licencji, podlegają licencji:';
+$lang['licenseok']             = 'Uwaga: edytując tę stronę zgadzasz się na publikowanie jej treści pod licencją:';
+$lang['searchmedia']           = 'Szukaj pliku o nazwie:';
+$lang['searchmedia_in']        = 'Szukaj w  %s';
+$lang['txt_upload']            = 'Wybierz plik do wysłania:';
+$lang['txt_filename']          = 'Nazwa pliku (opcjonalnie):';
+$lang['txt_overwrt']           = 'Nadpisać istniejący plik?';
+$lang['maxuploadsize']         = 'Maksymalny rozmiar wysyłanych danych wynosi %s dla jednego pliku.';
+$lang['allowedmime']           = 'Lista dozwolonych rozszerzeń plików';
+$lang['lockedby']              = 'Aktualnie zablokowane przez:';
+$lang['lockexpire']            = 'Blokada wygasa:';
 $lang['rssfailed']             = 'Wystąpił błąd przy pobieraniu tych danych: ';
 $lang['nothingfound']          = 'Nic nie znaleziono.';
 $lang['mediaselect']           = 'Wysyłanie pliku';
@@ -200,6 +221,8 @@ $lang['diff_side']             = 'Jeden obok drugiego';
 $lang['diffprevrev']           = 'Poprzednia wersja';
 $lang['diffnextrev']           = 'Nowa wersja';
 $lang['difflastrev']           = 'Ostatnia wersja';
+$lang['diffbothprevrev']       = 'Poprzednia rewizja po obu stronach';
+$lang['diffbothnextrev']       = 'Następna rewizja po obu stronach';
 $lang['line']                  = 'Linia';
 $lang['breadcrumb']            = 'Ślad:';
 $lang['youarehere']            = 'Jesteś tutaj:';
@@ -210,7 +233,7 @@ $lang['created']               = 'utworzono';
 $lang['restored']              = 'przywrócono poprzednią wersję (%s)';
 $lang['external_edit']         = 'edycja zewnętrzna';
 $lang['summary']               = 'Opis zmian';
-$lang['noflash']               = 'Plugin <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> jest niezbędny do obejrzenia tej zawartości.';
+$lang['noflash']               = 'Plugin <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> jest niezbędny do obejrzenia tej zawartości.';
 $lang['download']              = 'Pobierz zrzut';
 $lang['tools']                 = 'Narzędzia';
 $lang['user_tools']            = 'Narzędzia użytkownika';
@@ -291,8 +314,9 @@ $lang['i_enableacl']           = 'Włącz mechanizm uprawnień ACL (zalecane)';
 $lang['i_superuser']           = 'Administrator';
 $lang['i_problems']            = 'Instalator napotkał poniższe problemy. Nie można kontynuować póki nie zostaną usunięte.';
 $lang['i_modified']            = 'Ze względów bezpieczeństwa, ten skrypt działa tylko z nową i niezmodyfikowaną instalacją DokuWiki.
-Aby uruchomić instalator ponownie, rozpakuj archiwum DokuWiki lub zapoznaj się z <a href="http://dokuwiki.org/install">instrukcją instalacji Dokuwiki</a>';
+Aby uruchomić instalator ponownie, rozpakuj archiwum DokuWiki lub zapoznaj się z <a href="https://www.dokuwiki.org/install">instrukcją instalacji Dokuwiki</a>';
 $lang['i_funcna']              = 'Funkcja PHP <code>%s</code> jest niedostępna.';
+$lang['i_disabled']            = 'To zostało wyłączone przez twojego dostawcę.';
 $lang['i_phpver']              = 'Wersja PHP <code>%s</code> jest niższa od wymaganej <code>%s</code>. Zaktualizuj instalację PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload musi zostać wyłączone w pliku php.ini aby móc uruchomić DokuWiki.';
 $lang['i_permfail']            = 'DokuWiki nie ma prawa zapisu w katalogu <code>%s</code>. Zmień uprawnienia zapisu dla tego katalogu!';
@@ -349,5 +373,7 @@ $lang['currentns']             = 'Obecny katalog';
 $lang['searchresult']          = 'Wyniki wyszukiwania';
 $lang['plainhtml']             = 'Czysty HTML';
 $lang['wikimarkup']            = 'Znaczniki';
+$lang['page_nonexist_rev']     = 'Strona nie istnieje w %s. Została następnie utworzony w <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Nie można przeanalizować parametru "%s".';
 $lang['email_signature_text']  = 'List został wygenerowany przez DokuWiki pod adresem
 @DOKUWIKIURL@';

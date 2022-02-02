@@ -1,0 +1,11 @@
+Một tập tin đã được tải lên DokuWiki của bạn. Đây là những thông tin chi tiết:
+
+Tập tin        : @MEDIA@
+Phiên bản cũ: @OLD@
+Ngày        : @DATE@
+Trình duyệt     : @BROWSER@
+Địa chỉ IP  : @IPADDRESS@
+Tên máy chủ    : @HOSTNAME@
+Kích thước        : @SIZE@
+Loại MIME   : @MIME@
+Thành viên        : @USER@

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Domingo Redal <docxml@gmail.com>
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Eloy <ej.perezgomez@gmail.com>
  * @author Alejandro Nunez <nunez.alejandro@gmail.com>
@@ -18,7 +19,9 @@ $lang['version']               = 'La versión del protocolo a usar. Puede que ne
 $lang['starttls']              = 'Usar conexiones TLS?';
 $lang['referrals']             = '¿Deben ser seguidas las referencias?';
 $lang['deref']                 = '¿Cómo desreferenciar los alias?';
+$lang['binddn']                = 'DN de un usuario de enlace opcional si el enlace anónimo no es suficiente. P. ej. <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']                = 'Contraseña del usuario de arriba.';
+$lang['attributes']            = 'Atributos a recuperar de la búsqueda en LDAP.';
 $lang['userscope']             = 'Limitar ámbito de búsqueda para búsqueda de usuarios';
 $lang['groupscope']            = 'Limitar ámbito de búsqueda para búsqueda de grupos';
 $lang['userkey']               = 'Atributo que denota el nombre de usuario; debe ser coherente con el filtro.';

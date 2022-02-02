@@ -1,9 +1,11 @@
 <?php
+
 /**
- * Basque language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Inko Illarramendi <inko.i.a@gmail.com>
  * @author Zigor Astarbe <astarbe@gmail.com>
+ * @author Osoitz <oelkoro@gmail.com>
  */
 $lang['menu']                  = 'Konfigurazio Ezarpenak';
 $lang['error']                 = 'Ezarpenak ez dira eguneratu balio oker bat dela eta, mesedez errepasatu aldaketak eta berriz bidali. <br />Balio okerra(k) ertz gorriz inguratuak erakutsiko dira. ';
@@ -133,12 +135,6 @@ $lang['proxy____user']         = 'Proxyaren erabiltzaile izena';
 $lang['proxy____pass']         = 'Proxyaren pasahitza ';
 $lang['proxy____ssl']          = 'Erabili SSL Proxyra konektatzeko';
 $lang['proxy____except']       = 'URLak detektatzeko espresio erregularra, zeinentzat Proxy-a sahiestu beharko litzatekeen.';
-$lang['safemodehack']          = 'Gaitu modu segurua hack-a';
-$lang['ftp____host']           = 'FTP zerbitzaria modu seguruarentzat';
-$lang['ftp____port']           = 'FTP portua modu seguruarentzat';
-$lang['ftp____user']           = 'FTP erabiltzailea modu seguruarentzat';
-$lang['ftp____pass']           = 'FTP pasahitza modu seguruarentzat';
-$lang['ftp____root']           = 'FTP erro direktorioa modu seguruarentzat';
 $lang['license_o_']            = 'Bat ere ez hautaturik';
 $lang['typography_o_0']        = 'ezer';
 $lang['typography_o_1']        = 'Komatxo bikoitzak bakarrik';

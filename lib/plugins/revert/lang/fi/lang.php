@@ -2,9 +2,8 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
- * @author otto@valjakko.net
- * @author Otto Vainio <otto@valjakko.net>
+ *
+ * @author otto <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
  * @author Sami Olmari <sami@olmari.fi>
  */

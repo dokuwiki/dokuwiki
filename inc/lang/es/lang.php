@@ -3,6 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Luna Frax <lunafrax@gmail.com>
+ * @author Domingo Redal <docxml@gmail.com>
+ * @author Liliana <lilianasaidon@gmail.com>
+ * @author Alex Cachinero <anarres@protonmail.com>
+ * @author WIRESLINKEA <wireslinkea@gmail.com>
  * @author Zigor Astarbe <zigor@astarbe.com>
  * @author Adrián Ariza <adrian_ariza.ciudad.com.ar>
  * @author Gabiel Molina <gabriel191@gmail.com>
@@ -11,7 +16,7 @@
  * @author Miguel Pagano <miguel.pagano@gmail.com>
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author Gabriel Castillo <gch@pumas.ii.unam.mx>
- * @author oliver@samera.com.py
+ * @author oliver <oliver@samera.com.py>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
  * @author Jordan Mero <hack.jord@gmail.com>
@@ -27,8 +32,7 @@
  * @author Oscar Ciudad <oscar@jacho.net>
  * @author Ruben Figols <ruben.figols@gmail.com>
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
- * @author Mercè López mercelz@gmail.com
- * @author r0sk <r0sk10@gmail.com>
+ * @author Mercè López <mercelz@gmail.com>
  * @author monica <may.dorado@gmail.com>
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Juan De La Cruz <juann.dlc@gmail.com>
@@ -40,7 +44,6 @@
  * @author Álvaro Iradier <airadier@gmail.com>
  * @author Alejandro Nunez <nunez.alejandro@gmail.com>
  * @author Mauricio Segura <maose38@yahoo.es>
- * @author Domingo Redal <docxml@gmail.com>
  * @author solohazlo <solohhazlo@gmail.com>
  * @author Romano <romanocl@outlook.com>
  * @author David Roy <davidroyapp@gmail.com>
@@ -105,45 +108,9 @@ $lang['badpassconfirm']        = 'Lo siento, la contraseña es errónea';
 $lang['minoredit']             = 'Cambios menores';
 $lang['draftdate']             = 'Borrador guardado automáticamente:';
 $lang['nosecedit']             = 'La página ha cambiado en el lapso, la información de sección estaba anticuada, en su lugar se cargó la página completa.';
-$lang['searchcreatepage']      = 'Si no has encontrado lo que buscabas, puedes crear una nueva página con tu consulta utilizando el botón  \'\'Crea esta página\'\'.';
-$lang['regmissing']            = 'Lo siento, tienes que completar todos los campos.';
-$lang['reguexists']            = 'Lo siento, ya existe un usuario con este nombre.';
-$lang['regsuccess']            = 'El usuario ha sido creado y la contraseña se ha enviado por correo.';
-$lang['regsuccess2']           = 'El usuario ha sido creado.';
-$lang['regfail']               = 'No se pudo crear el usuario.';
-$lang['regmailfail']           = 'Parece que ha habido un error al enviar el correo con la contraseña. ¡Por favor, contacta al administrador!';
-$lang['regbadmail']            = 'La dirección de correo no parece válida. Si piensas que esto es un error, contacta al administrador';
-$lang['regbadpass']            = 'Las dos contraseñas no son iguales, por favor inténtalo de nuevo.';
-$lang['regpwmail']             = 'Tu contraseña de DokuWiki';
-$lang['reghere']               = '¿No tienes una cuenta todavía? Consigue una';
-$lang['profna']                = 'Este wiki no permite la modificación del perfil';
-$lang['profnochange']          = 'Sin cambios, nada que hacer.';
-$lang['profnoempty']           = 'No se permite que el nombre o la dirección de correo electrónico estén vacíos.';
-$lang['profchanged']           = 'Se actualizó correctamente el perfil del usuario.';
-$lang['profnodelete']          = 'Este wiki no soporta el borrado de usuarios';
-$lang['profdeleteuser']        = 'Eliminar Cuenta';
-$lang['profdeleted']           = 'Tu cuenta de usuario ha sido eliminada de este wiki';
-$lang['profconfdelete']        = 'Deseo eliminar mi cuenta de este wiki. <br /> Esta acción es irreversible.';
-$lang['profconfdeletemissing'] = 'Casilla de verificación no activada.';
-$lang['proffail']              = 'No se ha actualizado el perfil del usuario.';
-$lang['pwdforget']             = '¿Has olvidado tu contraseña? Consigue una nueva';
-$lang['resendna']              = 'Este wiki no brinda la posibilidad de reenvío de contraseña.';
-$lang['resendpwd']             = 'Establecer nueva contraseña para';
-$lang['resendpwdmissing']      = 'Lo siento, debes completar todos los campos.';
-$lang['resendpwdnouser']       = 'Lo siento, no se encuentra este usuario en nuestra base de datos.';
-$lang['resendpwdbadauth']      = 'Lo siento, este código de autenticación no es válido. Asegúrate de haber usado el enlace de confirmación entero.';
-$lang['resendpwdconfirm']      = 'Un enlace para confirmación ha sido enviado por correo electrónico.';
-$lang['resendpwdsuccess']      = 'Tu nueva contraseña ha sido enviada por correo electrónico.';
-$lang['license']               = 'Excepto donde se indique lo contrario, el contenido de este wiki esta bajo la siguiente licencia:';
-$lang['licenseok']             = 'Nota: Al editar esta página, estás de acuerdo en autorizar su contenido bajo la siguiente licencia:';
-$lang['searchmedia']           = 'Buscar archivo:';
-$lang['searchmedia_in']        = 'Buscar en %s';
-$lang['txt_upload']            = 'Selecciona el archivo a subir:';
-$lang['txt_filename']          = 'Subir como (opcional):';
-$lang['txt_overwrt']           = 'Sobreescribir archivo existente';
-$lang['maxuploadsize']         = 'Peso máximo de %s por archivo';
-$lang['lockedby']              = 'Actualmente bloqueado por:';
-$lang['lockexpire']            = 'El bloqueo expira en:';
+$lang['searchcreatepage']      = 'Si no encontró lo que estaba buscando, puede crear o editar la página %s, nombrada después de su consulta.';
+$lang['search_fullresults']    = 'Resultados de texto completo';
+$lang['js']['search_toggle_tools'] = 'Alternar herramientas de búsqueda';
 $lang['js']['willexpire']      = 'El bloqueo para la edición de esta página expira en un minuto.\nPAra prevenir conflictos uso el botón Previsualizar para restaurar el contador de bloqueo.';
 $lang['js']['notsavedyet']     = 'Los cambios que no se han guardado se perderán.
 ¿Realmente quieres continuar?';
@@ -187,6 +154,57 @@ $lang['js']['media_done_btn']  = 'Hecho';
 $lang['js']['media_drop']      = 'Arrastra los ficheros aquí para cargar';
 $lang['js']['media_cancel']    = 'Eliminar';
 $lang['js']['media_overwrt']   = 'Sobreescribir ficheros exitentes';
+$lang['search_exact_match']    = 'Coincidencia exacta';
+$lang['search_starts_with']    = 'Comienza con';
+$lang['search_ends_with']      = 'Termina con';
+$lang['search_contains']       = 'Contiene';
+$lang['search_custom_match']   = 'Personalizado';
+$lang['search_any_ns']         = 'Cualquier espacio de nombres';
+$lang['search_any_time']       = 'En cualquier momento';
+$lang['search_past_7_days']    = 'La semana pasada';
+$lang['search_past_month']     = 'El mes pasado';
+$lang['search_past_year']      = 'El año pasado';
+$lang['search_sort_by_hits']   = 'Ordenar por relevancia';
+$lang['search_sort_by_mtime']  = 'Ordenar por la última modificación';
+$lang['regmissing']            = 'Lo siento, tienes que completar todos los campos.';
+$lang['reguexists']            = 'Lo siento, ya existe un usuario con este nombre.';
+$lang['regsuccess']            = 'El usuario ha sido creado y la contraseña se ha enviado por correo.';
+$lang['regsuccess2']           = 'El usuario ha sido creado.';
+$lang['regfail']               = 'No se pudo crear el usuario.';
+$lang['regmailfail']           = 'Parece que ha habido un error al enviar el correo con la contraseña. ¡Por favor, contacta al administrador!';
+$lang['regbadmail']            = 'La dirección de correo no parece válida. Si piensas que esto es un error, contacta al administrador';
+$lang['regbadpass']            = 'Las dos contraseñas no son iguales, por favor inténtalo de nuevo.';
+$lang['regpwmail']             = 'Tu contraseña de DokuWiki';
+$lang['reghere']               = '¿No tienes una cuenta todavía? Consigue una';
+$lang['profna']                = 'Este wiki no permite la modificación del perfil';
+$lang['profnochange']          = 'Sin cambios, nada que hacer.';
+$lang['profnoempty']           = 'No se permite que el nombre o la dirección de correo electrónico estén vacíos.';
+$lang['profchanged']           = 'Se actualizó correctamente el perfil del usuario.';
+$lang['profnodelete']          = 'Este wiki no soporta el borrado de usuarios';
+$lang['profdeleteuser']        = 'Eliminar Cuenta';
+$lang['profdeleted']           = 'Tu cuenta de usuario ha sido eliminada de este wiki';
+$lang['profconfdelete']        = 'Deseo eliminar mi cuenta de este wiki. <br /> Esta acción es irreversible.';
+$lang['profconfdeletemissing'] = 'Casilla de verificación no activada.';
+$lang['proffail']              = 'No se ha actualizado el perfil del usuario.';
+$lang['pwdforget']             = '¿Has olvidado tu contraseña? Consigue una nueva';
+$lang['resendna']              = 'Este wiki no brinda la posibilidad de reenvío de contraseña.';
+$lang['resendpwd']             = 'Establecer nueva contraseña para';
+$lang['resendpwdmissing']      = 'Lo siento, debes completar todos los campos.';
+$lang['resendpwdnouser']       = 'Lo siento, no se encuentra este usuario en nuestra base de datos.';
+$lang['resendpwdbadauth']      = 'Lo siento, este código de autenticación no es válido. Asegúrate de haber usado el enlace de confirmación entero.';
+$lang['resendpwdconfirm']      = 'Un enlace para confirmación ha sido enviado por correo electrónico.';
+$lang['resendpwdsuccess']      = 'Tu nueva contraseña ha sido enviada por correo electrónico.';
+$lang['license']               = 'Excepto donde se indique lo contrario, el contenido de este wiki esta bajo la siguiente licencia:';
+$lang['licenseok']             = 'Nota: Al editar esta página, estás de acuerdo en autorizar su contenido bajo la siguiente licencia:';
+$lang['searchmedia']           = 'Buscar archivo:';
+$lang['searchmedia_in']        = 'Buscar en %s';
+$lang['txt_upload']            = 'Selecciona el archivo a subir:';
+$lang['txt_filename']          = 'Subir como (opcional):';
+$lang['txt_overwrt']           = 'Sobreescribir archivo existente';
+$lang['maxuploadsize']         = 'Peso máximo de %s por archivo';
+$lang['allowedmime']           = 'Lista de extensiones de archivo permitidas';
+$lang['lockedby']              = 'Actualmente bloqueado por:';
+$lang['lockexpire']            = 'El bloqueo expira en:';
 $lang['rssfailed']             = 'Se ha producido un error mientras se leían los datos de este feed: ';
 $lang['nothingfound']          = 'No se ha encontrado nada.';
 $lang['mediaselect']           = 'Archivos Multimedia';
@@ -238,7 +256,7 @@ $lang['created']               = 'creado';
 $lang['restored']              = 'se ha restaurado la vieja versión (%s)';
 $lang['external_edit']         = 'editor externo';
 $lang['summary']               = 'Resumen de la edición';
-$lang['noflash']               = 'Para mostrar este contenido es necesario el <a href="http://www.adobe.com/products/flashplayer/">Plugin Adobe Flash</a>.';
+$lang['noflash']               = 'Para mostrar este contenido es necesario el <a href="http://get.adobe.com/flashplayer">Plugin Adobe Flash</a>.';
 $lang['download']              = 'Descargar trozo de código fuente';
 $lang['tools']                 = 'Herramientas';
 $lang['user_tools']            = 'Herramientas de usuario';
@@ -318,10 +336,13 @@ $lang['i_wikiname']            = 'Nombre del wiki';
 $lang['i_enableacl']           = 'Habilitar ACL (recomendado) (ACL: lista de control de acceso)';
 $lang['i_superuser']           = 'Super-usuario';
 $lang['i_problems']            = 'El instalador encontró algunos problemas, se muestran abajo. No se puede continuar la instalación hasta que usted no los corrija.';
-$lang['i_modified']            = 'Por razones de seguridad este script sólo funcionará con una instalación nueva y no modificada de Dokuwiki. Usted debe extraer nuevamente los ficheros del paquete bajado, o bien consultar las <a href="http://dokuwiki.org/install">instrucciones de instalación de Dokuwiki</a> completas.';
+$lang['i_modified']            = 'Por razones de seguridad este script sólo funcionará con una instalación nueva y no modificada de Dokuwiki. Usted debe extraer nuevamente los ficheros del paquete bajado, o bien consultar las <a href="https://www.dokuwiki.org/install">instrucciones de instalación de Dokuwiki</a> completas.';
 $lang['i_funcna']              = 'La función de PHP <code>%s</code> no está disponible. ¿Tal vez su proveedor de hosting la ha deshabilitado por alguna razón?';
+$lang['i_disabled']            = 'Ha sido deshabilitado por su proveedor.';
+$lang['i_funcnmail']           = '<b>Nota:</b> La función de PHP mail() no está disponible. %s si no está disponible, puede instalar el <a href="https://www.dokuwiki.org/plugin:smtp">complemento smtp</a>.';
 $lang['i_phpver']              = 'Su versión de PHP <code>%s</code> es menor que la necesaria <code>%s</code>. Es necesario que actualice su instalación de PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload se debe deshabilitar en php.ini para que funcione DokuWiki.';
+$lang['i_urandom']             = 'DokuWiki no puede crear números criptográficamente seguros para las cookies. Es posible que desee verificar la configuración de open_basedir en php.ini para obtener el acceso apropiado a <code>/dev/urandom</code>.';
 $lang['i_permfail']            = 'DokuWili no puede escribir <code>%s</code>. ¡Es necesario establecer  correctamente los permisos de este directorio!';
 $lang['i_confexists']          = '<code>%s</code> ya existe';
 $lang['i_writeerr']            = 'Imposible crear <code>%s</code>. Se necesita que usted controle los permisos del fichero/directorio y que cree el fichero manualmente.';
@@ -372,6 +393,7 @@ $lang['media_perm_upload']     = 'Disculpa, no tienes los permisos necesarios pa
 $lang['media_update']          = 'Actualizar nueva versión';
 $lang['media_restore']         = 'Restaurar esta versión';
 $lang['media_acl_warning']     = 'Puede que esta lista no esté completa debido a restricciones de la ACL y a las páginas ocultas.';
+$lang['email_fail']            = 'La función de PHP mail() falta o está deshabilitada. No se envió el siguiente correo electrónico:';
 $lang['currentns']             = 'Espacio de nombres actual';
 $lang['searchresult']          = 'Resultado de la búsqueda';
 $lang['plainhtml']             = 'HTML sencillo';

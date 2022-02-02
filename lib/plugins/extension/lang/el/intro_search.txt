@@ -1,0 +1,1 @@
+Σε αυτή την καρτέλα έχετε πρόσβαση σε [[doku>plugins|plugins]] and [[doku>template|templates]]  DokuWiki. Η εγκατάσταση λογισμικού τρίτων δημιουργών αποτελεί **ρίσκο ασφάλειας**, για το οποίο μπορείτε να διαβάσετε το [[doku>security#plugin_security|plugin security]]

@@ -24,7 +24,7 @@ class helper_plugin_authplain_escaping_test extends DokuWikiTest {
         $this->auth = new auth_plugin_authplainharness();
     }
 
-    function setUp() {
+    function setUp() : void {
         global $config_cascade;
         parent::setUp();
         $name = $config_cascade['plainauth.users']['default'];
@@ -32,7 +32,7 @@ class helper_plugin_authplain_escaping_test extends DokuWikiTest {
         $this->reloadUsers();
     }
 
-    function tearDown() {
+    function tearDown() : void {
         global $config_cascade;
         parent::tearDown();
         $name = $config_cascade['plainauth.users']['default'];
@@ -103,6 +103,31 @@ class helper_plugin_authplain_escaping_test extends DokuWikiTest {
             $this->assertEquals($escaped, $result[2]);
         }
     }
+
+    /**
+     * @see testCleaning
+     */
+    public function provideCleaning()
+    {
+        return [
+            ['user', 'user'],
+            ['USER', 'user'],
+            [' USER ', 'user'],
+            [' US ER ', 'us_er'],
+            ['http://foo;bar', 'http_foo_bar'],
+        ];
+    }
+
+    /**
+     * @param string $input
+     * @param string $expected
+     * @dataProvider provideCleaning
+     */
+    public function testCleaning($input, $expected)
+    {
+        $this->assertEquals($expected, $this->auth->cleanUser($input));
+        $this->assertEquals($expected, $this->auth->cleanGroup($input));
+    }
 }
 
 /**
@@ -114,14 +139,14 @@ class auth_plugin_authplainharness extends auth_plugin_authplain {
      * @param boolean $bool
      */
     public function setPregsplit_safe($bool) {
-        $this->_pregsplit_safe = $bool;
+        $this->pregsplit_safe = $bool;
     }
 
     /**
      * @return bool|mixed
      */
     public function getPregsplit_safe(){
-        return $this->_pregsplit_safe;
+        return $this->pregsplit_safe;
     }
 
     /**
@@ -129,6 +154,6 @@ class auth_plugin_authplainharness extends auth_plugin_authplain {
      * @return array
      */
     public function splitUserData($line){
-        return $this->_splitUserData($line);
+        return parent::splitUserData($line);
     }
 }

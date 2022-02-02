@@ -1,3 +1,3 @@
-====== Trang bị khoá ======
+====== Trang bị khóa ======
 
-Trang này đang bị khoá để một bạn khác biên soạn. Bạn cần đợi cho đến khi nào bạn kia đã biên soạn xong, hoặc khoá hết hạn.
+Trang này hiện đang bị khóa do thành viên khác đang sửa đổi. Bạn phải đợi cho đến khi thành viên này hoàn thành sửa đổi hoặc khóa hết hạn.

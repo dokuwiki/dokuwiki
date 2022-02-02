@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Remote\Api;
+
 /**
  * Class remoteapicore_test
  */
@@ -7,7 +9,7 @@ class remoteapicore_aclcheck_test extends DokuWikiTest {
 
     protected $userinfo;
     protected $oldAuthAcl;
-    /** @var  RemoteAPI */
+    /** @var  Api */
     protected $remote;
 
     protected $pluginsEnabled = array('auth_plugin_authplain');
@@ -19,7 +21,7 @@ class remoteapicore_aclcheck_test extends DokuWikiTest {
         $auth = new auth_plugin_authplain();
     }
 
-    public function setUp() {
+    public function setUp() : void {
         global $config_cascade;
         global $conf;
         global $USERINFO;
@@ -38,11 +40,11 @@ class remoteapicore_aclcheck_test extends DokuWikiTest {
         $conf['remoteuser'] = '@user';
         $conf['useacl'] = 0;
 
-        $this->remote = new RemoteAPI();
+        $this->remote = new Api();
 
     }
 
-    public function tearDown() {
+    public function tearDown() : void {
         global $USERINFO;
         global $AUTH_ACL;
         global $config_cascade;

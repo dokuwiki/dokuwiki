@@ -2,7 +2,8 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Tuomo Hartikainen <tuomo.hartikainen@heksia.fi>
  * @author Petteri <petteri@gmail.com>
  * @author Matti Pöllä <mpo@iki.fi>
  * @author Otto Vainio <otto@valjakko.net>
@@ -71,44 +72,6 @@ $lang['badpassconfirm']        = 'Valitan. Salasana oli väärin';
 $lang['minoredit']             = 'Pieni muutos';
 $lang['draftdate']             = 'Luonnos tallennettu automaattisesti';
 $lang['nosecedit']             = 'Sivu on muuttunut välillä ja kappaleen tiedot olivat vanhentuneet. Koko sivu ladattu.';
-$lang['searchcreatepage']      = 'Jos et löytänyt etsimääsi voit luoda uuden sivun tiedustelusi pohjalta käyttämällä \'\'Muokkaa tätä sivua\'\' -napilla.';
-$lang['regmissing']            = 'Kaikki kentät tulee täyttää.';
-$lang['reguexists']            = 'Käyttäjä tällä käyttäjänimellä on jo olemassa.';
-$lang['regsuccess']            = 'Käyttäjä luotiin ja salasana lähetettiin sähköpostilla.';
-$lang['regsuccess2']           = 'Käyttäjänimi on luotu.';
-$lang['regfail']               = 'Valitsemaasi käyttäjää ei voitu luoda.';
-$lang['regmailfail']           = 'Näyttää siltä, että salasanan lähettämisessä tapahtui virhe. Ota yhteys ylläpitäjään!';
-$lang['regbadmail']            = 'Antamasi sähköpostiosoite näyttää epäkelvolta. Jos pidät tätä virheenä ota yhteys ylläpitäjään.';
-$lang['regbadpass']            = 'Annetut kaksi salasanaa eivät täsmää. Yritä uudelleen.';
-$lang['regpwmail']             = 'DokuWiki salasanasi';
-$lang['reghere']               = 'Puuttuuko sinulta käyttäjätili? Hanki sellainen';
-$lang['profna']                = 'Tässä wikissä profiilien muokkaaminen ei ole mahdollista';
-$lang['profnochange']          = 'Ei muutoksia.';
-$lang['profnoempty']           = 'Tyhjä nimi tai sähköpostiosoite ei ole sallittu.';
-$lang['profchanged']           = 'Käyttäjän profiilin päivitys onnistui.';
-$lang['profnodelete']          = 'Tässä wikissä ei voi poistaa käyttäjiä';
-$lang['profdeleteuser']        = 'Poista tili';
-$lang['profdeleted']           = 'Käyttäjätilisi on postettu tästä wikistä';
-$lang['profconfdelete']        = 'Haluan poistaa käyttäjätilini tästä wikistä. <br/> Tätä toimintoa ei voi myöhemmin peruuttaa.';
-$lang['profconfdeletemissing'] = 'Vahvistus rastia ei valittu';
-$lang['pwdforget']             = 'Unohtuiko salasana? Hanki uusi';
-$lang['resendna']              = 'Tämä wiki ei tue salasanan uudelleenlähettämistä.';
-$lang['resendpwd']             = 'Aseta uusisalasana';
-$lang['resendpwdmissing']      = 'Kaikki kentät on täytettävä.';
-$lang['resendpwdnouser']       = 'Käyttäjää ei löydy tietokannastamme.';
-$lang['resendpwdbadauth']      = 'Tunnistuskoodi on virheellinen. Varmista, että käytit koko varmistuslinkkiä.';
-$lang['resendpwdconfirm']      = 'Varmistuslinkki on lähetetty sähköpostilla';
-$lang['resendpwdsuccess']      = 'Uusi salasanasi on lähetetty sähköpostilla.';
-$lang['license']               = 'Jollei muuta ole mainittu, niin sisältö tässä wikissä on lisensoitu seuraavalla lisenssillä:';
-$lang['licenseok']             = 'Huom: Muokkaamalla tätä sivua suostut lisensoimaan sisällön seuraavan lisenssin mukaisesti:';
-$lang['searchmedia']           = 'Etsi tiedostoa nimeltä:';
-$lang['searchmedia_in']        = 'Etsi kohteesta %s';
-$lang['txt_upload']            = 'Valitse tiedosto lähetettäväksi:';
-$lang['txt_filename']          = 'Lähetä nimellä (valinnainen):';
-$lang['txt_overwrt']           = 'Ylikirjoita olemassa oleva';
-$lang['maxuploadsize']         = 'Palvelimelle siirto max. %s / tiedosto.';
-$lang['lockedby']              = 'Tällä hetkellä tiedoston on lukinnut:';
-$lang['lockexpire']            = 'Lukitus päättyy:';
 $lang['js']['willexpire']      = 'Lukituksesi tämän sivun muokkaukseen päättyy minuutin kuluttua.\nRistiriitojen välttämiseksi paina esikatselu-nappia nollataksesi lukitusajan.';
 $lang['js']['notsavedyet']     = 'Dokumentissa on tallentamattomia muutoksia, jotka häviävät.
  Haluatko varmasti jatkaa?';
@@ -152,6 +115,43 @@ $lang['js']['media_done_btn']  = 'Valmis';
 $lang['js']['media_drop']      = 'Pudota lähetettävät tiedostot tähän';
 $lang['js']['media_cancel']    = 'Poista';
 $lang['js']['media_overwrt']   = 'Ylikirjoita olemassa olevat tiedostot';
+$lang['regmissing']            = 'Kaikki kentät tulee täyttää.';
+$lang['reguexists']            = 'Käyttäjä tällä käyttäjänimellä on jo olemassa.';
+$lang['regsuccess']            = 'Käyttäjä luotiin ja salasana lähetettiin sähköpostilla.';
+$lang['regsuccess2']           = 'Käyttäjänimi on luotu.';
+$lang['regfail']               = 'Valitsemaasi käyttäjää ei voitu luoda.';
+$lang['regmailfail']           = 'Näyttää siltä, että salasanan lähettämisessä tapahtui virhe. Ota yhteys ylläpitäjään!';
+$lang['regbadmail']            = 'Antamasi sähköpostiosoite näyttää epäkelvolta. Jos pidät tätä virheenä ota yhteys ylläpitäjään.';
+$lang['regbadpass']            = 'Annetut kaksi salasanaa eivät täsmää. Yritä uudelleen.';
+$lang['regpwmail']             = 'DokuWiki salasanasi';
+$lang['reghere']               = 'Puuttuuko sinulta käyttäjätili? Hanki sellainen';
+$lang['profna']                = 'Tässä wikissä profiilien muokkaaminen ei ole mahdollista';
+$lang['profnochange']          = 'Ei muutoksia.';
+$lang['profnoempty']           = 'Tyhjä nimi tai sähköpostiosoite ei ole sallittu.';
+$lang['profchanged']           = 'Käyttäjän profiilin päivitys onnistui.';
+$lang['profnodelete']          = 'Tässä wikissä ei voi poistaa käyttäjiä';
+$lang['profdeleteuser']        = 'Poista tili';
+$lang['profdeleted']           = 'Käyttäjätilisi on postettu tästä wikistä';
+$lang['profconfdelete']        = 'Haluan poistaa käyttäjätilini tästä wikistä. <br/> Tätä toimintoa ei voi myöhemmin peruuttaa.';
+$lang['profconfdeletemissing'] = 'Vahvistus rastia ei valittu';
+$lang['pwdforget']             = 'Unohtuiko salasana? Hanki uusi';
+$lang['resendna']              = 'Tämä wiki ei tue salasanan uudelleenlähettämistä.';
+$lang['resendpwd']             = 'Aseta uusisalasana';
+$lang['resendpwdmissing']      = 'Kaikki kentät on täytettävä.';
+$lang['resendpwdnouser']       = 'Käyttäjää ei löydy tietokannastamme.';
+$lang['resendpwdbadauth']      = 'Tunnistuskoodi on virheellinen. Varmista, että käytit koko varmistuslinkkiä.';
+$lang['resendpwdconfirm']      = 'Varmistuslinkki on lähetetty sähköpostilla';
+$lang['resendpwdsuccess']      = 'Uusi salasanasi on lähetetty sähköpostilla.';
+$lang['license']               = 'Jollei muuta ole mainittu, niin sisältö tässä wikissä on lisensoitu seuraavalla lisenssillä:';
+$lang['licenseok']             = 'Huom: Muokkaamalla tätä sivua suostut lisensoimaan sisällön seuraavan lisenssin mukaisesti:';
+$lang['searchmedia']           = 'Etsi tiedostoa nimeltä:';
+$lang['searchmedia_in']        = 'Etsi kohteesta %s';
+$lang['txt_upload']            = 'Valitse tiedosto lähetettäväksi:';
+$lang['txt_filename']          = 'Lähetä nimellä (valinnainen):';
+$lang['txt_overwrt']           = 'Ylikirjoita olemassa oleva';
+$lang['maxuploadsize']         = 'Palvelimelle siirto max. %s / tiedosto.';
+$lang['lockedby']              = 'Tällä hetkellä tiedoston on lukinnut:';
+$lang['lockexpire']            = 'Lukitus päättyy:';
 $lang['rssfailed']             = 'Virhe tapahtui noudettaessa tätä syötettä: ';
 $lang['nothingfound']          = 'Mitään ei löytynyt.';
 $lang['mediaselect']           = 'Mediatiedoston valinta';
@@ -201,7 +201,7 @@ $lang['created']               = 'luotu';
 $lang['restored']              = 'vanha versio palautettu (%s)';
 $lang['external_edit']         = 'ulkoinen muokkaus';
 $lang['summary']               = 'Yhteenveto muokkauksesta';
-$lang['noflash']               = 'Tarvitset <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash-liitännäisen</a> nähdäksesi tämän sisällön.';
+$lang['noflash']               = 'Tarvitset <a href="http://get.adobe.com/flashplayer">Adobe Flash-liitännäisen</a> nähdäksesi tämän sisällön.';
 $lang['download']              = 'Lataa palanen';
 $lang['tools']                 = 'Työkalut';
 $lang['user_tools']            = 'Käyttäjän työkalut';
@@ -281,7 +281,7 @@ $lang['i_wikiname']            = 'Wikin nimi';
 $lang['i_enableacl']           = 'Käytä käyttöoikeuksien hallintaa (ACL) (Suositeltu)';
 $lang['i_superuser']           = 'Pääkäyttäjä';
 $lang['i_problems']            = 'Asennusohjelma löysi alla listattuja ongelmia ongelmia. Et voi jatkaa ennen kuin ne on korjattu.';
-$lang['i_modified']            = 'Turvallisuussyistä tämä ohjelma toimii vain uusien ja muokkaamattomien Dokuwiki-asennusten kanssa. Pura tiedostot uudestaan asennuspaketista, tai lue <a href="http://dokuwiki.org/install">Dokuwikin asennusohje (englanniksi)</a>';
+$lang['i_modified']            = 'Turvallisuussyistä tämä ohjelma toimii vain uusien ja muokkaamattomien Dokuwiki-asennusten kanssa. Pura tiedostot uudestaan asennuspaketista, tai lue <a href="https://www.dokuwiki.org/install">Dokuwikin asennusohje (englanniksi)</a>';
 $lang['i_funcna']              = 'PHP:n funktio <code>%s</code> ei ole käytettävissä. Palveluntarjoajasi on saattanut poistaa sen jostain syystä.';
 $lang['i_phpver']              = 'Käyttämäsi PHP-ohjelmiston versio <code>%s</code> on pienempi, kuin tarvitaan <code>%s</code>. PHP-asennuksesi pitää päivittää.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload pitää ottaa pois käytöstä php.ini -tiedostosta käyttääksesi DokuWikiä';
@@ -339,5 +339,5 @@ $lang['searchresult']          = 'Haun tulokset';
 $lang['plainhtml']             = 'pelkkä HTML';
 $lang['wikimarkup']            = 'Wiki markup';
 $lang['unable_to_parse_date']  = 'Parametrin "%s" jäsennys ei onnistu.';
-$lang['email_signature_text'] = 'Tämän postin loi DokuWiki osoitteessa
+$lang['email_signature_text']  = 'Tämän postin loi DokuWiki osoitteessa
 @DOKUWIKIURL@';

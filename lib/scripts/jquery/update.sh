@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 #
 # This script loads the latest jQuery and jQuery-UI 1.* versions from jQuery's CDN
 #
@@ -17,8 +17,6 @@ JQUI_GIT="https://raw.githubusercontent.com/jquery/jquery-ui/$JQUI_VERSION/ui"
 wget -nv https://code.jquery.com/jquery-${JQ_VERSION}.min.js      -O jquery.min.js
 # load jQuery-UI
 wget -nv "$JQUI_HOST/jquery-ui.min.js" -O jquery-ui.min.js
-# load jQuery Migrate
-wget -nv https://code.jquery.com/jquery-migrate-${JQM_VERSION}.min.js      -O jquery-migrate.min.js
 
 # load the smoothness theme
 mkdir -p jquery-ui-theme/images

@@ -34,10 +34,13 @@ class Zip extends Archive
      *
      * @param int $level Compression level (0 to 9)
      * @param int $type  Type of compression to use ignored for ZIP
-     * @return mixed
+     * @throws ArchiveIllegalCompressionException
      */
     public function setCompression($level = 9, $type = Archive::COMPRESS_AUTO)
     {
+        if ($level < -1 || $level > 9) {
+            throw new ArchiveIllegalCompressionException('Compression level should be between -1 and 9');
+        }
         $this->complevel = $level;
     }
 
@@ -111,7 +114,7 @@ class Zip extends Archive
      * @throws ArchiveIOException
      * @return FileInfo[]
      */
-    function extract($outdir, $strip = '', $exclude = '', $include = '')
+    public function extract($outdir, $strip = '', $exclude = '', $include = '')
     {
         if ($this->closed || !$this->file) {
             throw new ArchiveIOException('Can not read from a closed archive');
@@ -139,7 +142,7 @@ class Zip extends Archive
             $fileinfo->strip($strip);
 
             // skip unwanted files
-            if (!strlen($fileinfo->getPath()) || !$fileinfo->match($include, $exclude)) {
+            if (!strlen($fileinfo->getPath()) || !$fileinfo->matchExpression($include, $exclude)) {
                 continue;
             }
 
@@ -152,6 +155,9 @@ class Zip extends Archive
 
             // nothing more to do for directories
             if ($fileinfo->getIsdir()) {
+                if(is_callable($this->callback)) {
+                    call_user_func($this->callback, $fileinfo);
+                }
                 continue;
             }
 
@@ -163,7 +169,7 @@ class Zip extends Archive
             }
 
             // open file for writing
-            $fp = fopen($extractto, "wb");
+            $fp = @fopen($extractto, "wb");
             if (!$fp) {
                 throw new ArchiveIOException('Could not open file for writing: '.$extractto);
             }
@@ -226,8 +232,11 @@ class Zip extends Archive
                 unlink($extractto); // remove temporary gz file
             }
 
-            touch($output, $fileinfo->getMtime());
+            @touch($output, $fileinfo->getMtime());
             //FIXME what about permissions?
+            if(is_callable($this->callback)) {
+                call_user_func($this->callback, $fileinfo);
+            }
         }
 
         $this->close();
@@ -271,9 +280,10 @@ class Zip extends Archive
     /**
      * Add a file to the current archive using an existing file in the filesystem
      *
-     * @param string          $file     path to the original file
+     * @param string $file path to the original file
      * @param string|FileInfo $fileinfo either the name to use in archive (string) or a FileInfo oject with all meta data, empty to take from original
      * @throws ArchiveIOException
+     * @throws FileInfoException
      */
     public function addFile($file, $fileinfo = '')
     {
@@ -350,6 +360,10 @@ class Zip extends Archive
             $name,
             (bool) $this->complevel
         );
+
+        if(is_callable($this->callback)) {
+            call_user_func($this->callback, $fileinfo);
+        }
     }
 
     /**
@@ -357,6 +371,7 @@ class Zip extends Archive
      *
      * After a call to this function no more data can be added to the archive, for
      * read access no reading is allowed anymore
+     * @throws ArchiveIOException
      */
     public function close()
     {
@@ -400,6 +415,7 @@ class Zip extends Archive
      * Returns the created in-memory archive data
      *
      * This implicitly calls close() on the Archive
+     * @throws ArchiveIOException
      */
     public function getArchive()
     {
@@ -419,7 +435,7 @@ class Zip extends Archive
      */
     public function save($file)
     {
-        if (!file_put_contents($file, $this->getArchive())) {
+        if (!@file_put_contents($file, $this->getArchive())) {
             throw new ArchiveIOException('Could not write to file: '.$file);
         }
     }
@@ -629,12 +645,14 @@ class Zip extends Archive
      * similar enough. CP437 seems not to be available in mbstring. Lastly falls back to keeping the
      * string as is, which is still better than nothing.
      *
+     * On some systems iconv is available, but the codepage is not. We also check for that.
+     *
      * @param $string
      * @return string
      */
     protected function cpToUtf8($string)
     {
-        if (function_exists('iconv')) {
+        if (function_exists('iconv') && @iconv_strlen('', 'CP437') !== false) {
             return iconv('CP437', 'UTF-8', $string);
         } elseif (function_exists('mb_convert_encoding')) {
             return mb_convert_encoding($string, 'UTF-8', 'CP850');

@@ -20,9 +20,9 @@ error_reporting(DOKU_E_LEVEL);
 set_time_limit(0);
 ini_set('memory_limit','2048M');
 
-// prepare temporary directories
-define('DOKU_INC', dirname(dirname(__FILE__)).'/');
-define('TMP_DIR', sys_get_temp_dir().'/dwtests-'.microtime(true));
+// prepare temporary directories; str_replace is for WIN
+define('DOKU_INC', str_replace('\\', '/', dirname(dirname(__FILE__))) . '/');
+define('TMP_DIR', str_replace('\\', '/', sys_get_temp_dir()) . '/dwtests-'.microtime(true));
 define('DOKU_CONF', TMP_DIR.'/conf/');
 define('DOKU_TMP_DATA', TMP_DIR.'/data/');
 
@@ -88,15 +88,9 @@ if (getenv('PRESERVE_TMP') != 'true') {
     echo ">>>> Preserving temporary directory: ".TMP_DIR."\n";
 }
 
-// populate default dirs
-TestUtils::rcopy(TMP_DIR, DOKU_INC.'/conf');
-TestUtils::rcopy(TMP_DIR, dirname(__FILE__).'/conf');
-mkdir(DOKU_TMP_DATA);
-foreach(array(
-    'attic', 'cache', 'index', 'locks', 'media',
-    'media_attic', 'media_meta', 'meta', 'pages', 'tmp') as $dir){
-    mkdir(DOKU_TMP_DATA.'/'.$dir);
-}
+// populate default dirs for initial setup
+DokuWikiTest::setupDataDir();
+DokuWikiTest::setupConfDir();
 
 // disable all non-default plugins by default
 $dh = dir(DOKU_INC.'lib/plugins/');
@@ -115,6 +109,9 @@ while (false !== ($entry = $dh->read())) {
     }
 }
 $dh->close();
+
+// use no mbstring help during tests
+if (!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING', 1);
 
 // load dw
 require_once(DOKU_INC.'inc/init.php');

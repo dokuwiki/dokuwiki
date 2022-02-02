@@ -1,12 +1,14 @@
-Một trang trên DokuWiki của bạn vừa được bổ sung hoặc thay đổi. Sau đây là chi tiết:
+Một trang trên DokuWiki của bạn vừa được thêm hoặc thay đổi. Đây là những thông tin chi tiết:
 
-Date        : @DATE@
-Browser     : @BROWSER@
-IP-Address  : @IPADDRESS@
-Hostname    : @HOSTNAME@
-Old Revision: @OLDPAGE@
-New Revision: @NEWPAGE@
-Edit Summary: @SUMMARY@
-User        : @USER@
+Trình duyệt             : @BROWSER@
+Địa chỉ IP          : @IPADDRESS@
+Tên máy chủ            : @HOSTNAME@
+Phiên bản cũ        : @OLDPAGE@
+Phiên bản mới        : @NEWPAGE@
+Ngày của phiên bản mới: @DATE@
+Tóm lược sửa đổi        : @SUMMARY@
+Thành viên                : @USER@
+
+Có thể có những thay đổi mới hơn sau khi phiên bản này. Nếu điều này xảy ra, một tin nhắn sẽ được hiển thị trên đầu trang rev.
 
 @DIFF@

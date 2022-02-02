@@ -6,7 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
+use dokuwiki\Extension\Event;
+use dokuwiki\Utf8\Sort;
 
 /**
  * create snippets for the first few results only
@@ -20,17 +21,28 @@ if(!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER',15);
  *
  * refactored into ft_pageSearch(), _ft_pageSearch() and trigger_event()
  *
- * @param string $query
- * @param array $highlight
+ * @param string     $query
+ * @param array      $highlight
+ * @param string     $sort
+ * @param int|string $after  only show results with mtime after this date, accepts timestap or strtotime arguments
+ * @param int|string $before only show results with mtime before this date, accepts timestap or strtotime arguments
+ *
  * @return array
  */
-function ft_pageSearch($query,&$highlight){
+function ft_pageSearch($query,&$highlight, $sort = null, $after = null, $before = null){
 
-    $data = array();
-    $data['query'] = $query;
+    if ($sort === null) {
+        $sort = 'hits';
+    }
+    $data = [
+        'query' => $query,
+        'sort' => $sort,
+        'after' => $after,
+        'before' => $before
+    ];
     $data['highlight'] =& $highlight;
 
-    return trigger_event('SEARCH_QUERY_FULLPAGE', $data, '_ft_pageSearch');
+    return Event::createAndTrigger('SEARCH_QUERY_FULLPAGE', $data, '_ft_pageSearch');
 }
 
 /**
@@ -68,7 +80,9 @@ function _ft_pageSearch(&$data) {
             case 'W-:':
             case 'W_:': // word
                 $word    = substr($token, 3);
-                $stack[] = (array) $lookup[$word];
+                if(isset($lookup[$word])) {
+                    $stack[] = (array)$lookup[$word];
+                }
                 break;
             case 'P+:':
             case 'P-:': // phrase
@@ -84,9 +98,9 @@ function _ft_pageSearch(&$data) {
                         'phrase' => $phrase,
                         'text' => rawWiki($id)
                     );
-                    $evt = new Doku_Event('FULLTEXT_PHRASE_MATCH',$evdata);
+                    $evt = new Event('FULLTEXT_PHRASE_MATCH',$evdata);
                     if ($evt->advise_before() && $evt->result !== true) {
-                        $text = utf8_strtolower($evdata['text']);
+                        $text = \dokuwiki\Utf8\PhpString::strtolower($evdata['text']);
                         if (strpos($text, $phrase) !== false) {
                             $evt->result = true;
                         }
@@ -100,7 +114,7 @@ function _ft_pageSearch(&$data) {
                 break;
             case 'N+:':
             case 'N-:': // namespace
-                $ns = substr($token, 3);
+                $ns = cleanID(substr($token, 3)) . ':';
                 $pages_matched = array();
                 foreach (array_keys($pages_all) as $id) {
                     if (strpos($id, $ns) === 0) {
@@ -134,8 +148,15 @@ function _ft_pageSearch(&$data) {
         }
     }
 
-    // sort docs by count
-    arsort($docs);
+    $docs = _ft_filterResultsByTime($docs, $data['after'], $data['before']);
+
+    if ($data['sort'] === 'mtime') {
+        uksort($docs, 'ft_pagemtimesorter');
+    } else {
+        // sort docs by count
+        uksort($docs, 'ft_pagesorter');
+        arsort($docs);
+    }
 
     return $docs;
 }
@@ -163,7 +184,7 @@ function ft_backlinks($id, $ignore_perms = false){
         }
     }
 
-    sort($result);
+    Sort::sort($result);
     return $result;
 }
 
@@ -194,10 +215,9 @@ function ft_mediause($id, $ignore_perms = false){
         }
     }
 
-    sort($result);
+    Sort::sort($result);
     return $result;
 }
-
 
 
 /**
@@ -210,18 +230,27 @@ function ft_mediause($id, $ignore_perms = false){
  * The function always returns titles as well
  *
  * @triggers SEARCH_QUERY_PAGELOOKUP
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Adrian Lang <lang@cosmocode.de>
+ * @author   Andreas Gohr <andi@splitbrain.org>
+ * @author   Adrian Lang <lang@cosmocode.de>
  *
- * @param string $id        page id
- * @param bool   $in_ns     match against namespace as well?
- * @param bool   $in_title  search in title?
+ * @param string     $id       page id
+ * @param bool       $in_ns    match against namespace as well?
+ * @param bool       $in_title search in title?
+ * @param int|string $after    only show results with mtime after this date, accepts timestap or strtotime arguments
+ * @param int|string $before   only show results with mtime before this date, accepts timestap or strtotime arguments
+ *
  * @return string[]
  */
-function ft_pageLookup($id, $in_ns=false, $in_title=false){
-    $data = compact('id', 'in_ns', 'in_title');
+function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $before = null){
+    $data = [
+        'id' => $id,
+        'in_ns' => $in_ns,
+        'in_title' => $in_title,
+        'after' => $after,
+        'before' => $before
+    ];
     $data['has_titles'] = true; // for plugin backward compatibility check
-    return trigger_event('SEARCH_QUERY_PAGELOOKUP', $data, '_ft_pageLookup');
+    return Event::createAndTrigger('SEARCH_QUERY_PAGELOOKUP', $data, '_ft_pageLookup');
 }
 
 /**
@@ -233,9 +262,15 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false){
 function _ft_pageLookup(&$data){
     // split out original parameters
     $id = $data['id'];
-    if (preg_match('/(?:^| )(?:@|ns:)([\w:]+)/', $id, $matches)) {
-        $ns = cleanID($matches[1]) . ':';
-        $id = str_replace($matches[0], '', $id);
+    $Indexer = idx_get_indexer();
+    $parsedQuery = ft_queryParser($Indexer, $id);
+    if (count($parsedQuery['ns']) > 0) {
+        $ns = cleanID($parsedQuery['ns'][0]) . ':';
+        $id = implode(' ', $parsedQuery['highlight']);
+    }
+    if (count($parsedQuery['notns']) > 0) {
+        $notns = cleanID($parsedQuery['notns'][0]) . ':';
+        $id = implode(' ', $parsedQuery['highlight']);
     }
 
     $in_ns    = $data['in_ns'];
@@ -268,6 +303,13 @@ function _ft_pageLookup(&$data){
             }
         }
     }
+    if (isset($notns)) {
+        foreach (array_keys($pages) as $p_id) {
+            if (strpos($p_id, $notns) === 0) {
+                unset($pages[$p_id]);
+            }
+        }
+    }
 
     // discard hidden pages
     // discard nonexistent pages
@@ -279,8 +321,38 @@ function _ft_pageLookup(&$data){
         }
     }
 
+    $pages = _ft_filterResultsByTime($pages, $data['after'], $data['before']);
+
     uksort($pages,'ft_pagesorter');
     return $pages;
+}
+
+
+/**
+ * @param array      $results search results in the form pageid => value
+ * @param int|string $after   only returns results with mtime after this date, accepts timestap or strtotime arguments
+ * @param int|string $before  only returns results with mtime after this date, accepts timestap or strtotime arguments
+ *
+ * @return array
+ */
+function _ft_filterResultsByTime(array $results, $after, $before) {
+    if ($after || $before) {
+        $after = is_int($after) ? $after : strtotime($after);
+        $before = is_int($before) ? $before : strtotime($before);
+
+        foreach ($results as $id => $value) {
+            $mTime = filemtime(wikiFN($id));
+            if ($after && $after > $mTime) {
+                unset($results[$id]);
+                continue;
+            }
+            if ($before && $before < $mTime) {
+                unset($results[$id]);
+            }
+        }
+    }
+
+    return $results;
 }
 
 /**
@@ -313,7 +385,21 @@ function ft_pagesorter($a, $b){
     }elseif($ac > $bc){
         return 1;
     }
-    return strcmp ($a,$b);
+    return Sort::strcmp($a,$b);
+}
+
+/**
+ * Sort pages by their mtime, from newest to oldest
+ *
+ * @param string $a
+ * @param string $b
+ *
+ * @return int Returns < 0 if $a is newer than $b, > 0 if $b is newer than $a and 0 if they are of the same age
+ */
+function ft_pagemtimesorter($a, $b) {
+    $mtimeA = filemtime(wikiFN($a));
+    $mtimeB = filemtime(wikiFN($b));
+    return $mtimeB - $mtimeA;
 }
 
 /**
@@ -336,15 +422,26 @@ function ft_snippet($id,$highlight){
             'snippet'   => '',
             );
 
-    $evt = new Doku_Event('FULLTEXT_SNIPPET_CREATE',$evdata);
+    $evt = new Event('FULLTEXT_SNIPPET_CREATE',$evdata);
     if ($evt->advise_before()) {
         $match = array();
         $snippets = array();
         $utf8_offset = $offset = $end = 0;
-        $len = utf8_strlen($text);
+        $len = \dokuwiki\Utf8\PhpString::strlen($text);
 
         // build a regexp from the phrases to highlight
-        $re1 = '('.join('|',array_map('ft_snippet_re_preprocess', array_map('preg_quote_cb',array_filter((array) $highlight)))).')';
+        $re1 = '(' .
+            join(
+                '|',
+                array_map(
+                    'ft_snippet_re_preprocess',
+                    array_map(
+                        'preg_quote_cb',
+                        array_filter((array) $highlight)
+                    )
+                )
+            ) .
+            ')';
         $re2 = "$re1.{0,75}(?!\\1)$re1";
         $re3 = "$re1.{0,45}(?!\\1)$re1.{0,45}(?!\\1)(?!\\2)$re1";
 
@@ -360,8 +457,8 @@ function ft_snippet($id,$highlight){
             list($str,$idx) = $match[0];
 
             // convert $idx (a byte offset) into a utf8 character offset
-            $utf8_idx = utf8_strlen(substr($text,0,$idx));
-            $utf8_len = utf8_strlen($str);
+            $utf8_idx = \dokuwiki\Utf8\PhpString::strlen(substr($text,0,$idx));
+            $utf8_len = \dokuwiki\Utf8\PhpString::strlen($str);
 
             // establish context, 100 bytes surrounding the match string
             // first look to see if we can go 100 either side,
@@ -390,9 +487,9 @@ function ft_snippet($id,$highlight){
             $end = $utf8_idx + $utf8_len + $post;      // now set it to the end of this context
 
             if ($append) {
-                $snippets[count($snippets)-1] .= utf8_substr($text,$append,$end-$append);
+                $snippets[count($snippets)-1] .= \dokuwiki\Utf8\PhpString::substr($text,$append,$end-$append);
             } else {
-                $snippets[] = utf8_substr($text,$start,$end-$start);
+                $snippets[] = \dokuwiki\Utf8\PhpString::substr($text,$start,$end-$start);
             }
 
             // set $offset for next match attempt
@@ -401,13 +498,17 @@ function ft_snippet($id,$highlight){
             // this prevents further matching of this snippet but for possible matches of length
             // smaller than match length + context (at least 50 characters) this match is part of the context
             $utf8_offset = $utf8_idx + $utf8_len;
-            $offset = $idx + strlen(utf8_substr($text,$utf8_idx,$utf8_len));
-            $offset = utf8_correctIdx($text,$offset);
+            $offset = $idx + strlen(\dokuwiki\Utf8\PhpString::substr($text,$utf8_idx,$utf8_len));
+            $offset = \dokuwiki\Utf8\Clean::correctIdx($text,$offset);
         }
 
         $m = "\1";
         $snippets = preg_replace('/'.$re1.'/iu',$m.'$1'.$m,$snippets);
-        $snippet = preg_replace('/'.$m.'([^'.$m.']*?)'.$m.'/iu','<strong class="search_hit">$1</strong>',hsc(join('... ',$snippets)));
+        $snippet = preg_replace(
+            '/' . $m . '([^' . $m . ']*?)' . $m . '/iu',
+            '<strong class="search_hit">$1</strong>',
+            hsc(join('... ', $snippets))
+        );
 
         $evdata['snippet'] = $snippet;
     }
@@ -425,9 +526,7 @@ function ft_snippet($id,$highlight){
  */
 function ft_snippet_re_preprocess($term) {
     // do not process asian terms where word boundaries are not explicit
-    if(preg_match('/'.IDX_ASIAN.'/u',$term)){
-        return $term;
-    }
+    if(\dokuwiki\Utf8\Asian::isAsianWords($term)) return $term;
 
     if (UTF8_PROPERTYSUPPORT) {
         // unicode word boundaries
@@ -545,8 +644,8 @@ function ft_resultComplement($args) {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  *
- * @param Doku_Indexer $Indexer
- * @param string $query search query
+ * @param dokuwiki\Search\Indexer $Indexer
+ * @param string                  $query search query
  * @return array of search formulas
  */
 function ft_queryParser($Indexer, $query){
@@ -588,7 +687,8 @@ function ft_queryParser($Indexer, $query){
      */
     $parsed_query = '';
     $parens_level = 0;
-    $terms = preg_split('/(-?".*?")/u', utf8_strtolower($query), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+    $terms = preg_split('/(-?".*?")/u', \dokuwiki\Utf8\PhpString::strtolower($query),
+        -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
     foreach ($terms as $term) {
         $parsed = '';
@@ -779,19 +879,19 @@ function ft_queryParser($Indexer, $query){
  *
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  *
- * @param Doku_Indexer $Indexer
- * @param string       $term
- * @param bool         $consider_asian
- * @param bool         $phrase_mode
+ * @param dokuwiki\Search\Indexer $Indexer
+ * @param string                  $term
+ * @param bool                    $consider_asian
+ * @param bool                    $phrase_mode
  * @return string
  */
 function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = false) {
     $parsed = '';
     if ($consider_asian) {
         // successive asian characters need to be searched as a phrase
-        $words = preg_split('/('.IDX_ASIAN.'+)/u', $term, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+        $words = \dokuwiki\Utf8\Asian::splitAsianWords($term);
         foreach ($words as $word) {
-            $phrase_mode = $phrase_mode ? true : preg_match('/'.IDX_ASIAN.'/u', $word);
+            $phrase_mode = $phrase_mode ? true : \dokuwiki\Utf8\Asian::isAsianWords($word);
             $parsed .= ft_termParser($Indexer, $word, false, $phrase_mode);
         }
     } else {
@@ -811,6 +911,38 @@ function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = f
         }
     }
     return $parsed;
+}
+
+/**
+ * Recreate a search query string based on parsed parts, doesn't support negated phrases and `OR` searches
+ *
+ * @param array $and
+ * @param array $not
+ * @param array $phrases
+ * @param array $ns
+ * @param array $notns
+ *
+ * @return string
+ */
+function ft_queryUnparser_simple(array $and, array $not, array $phrases, array $ns, array $notns) {
+    $query = implode(' ', $and);
+    if (!empty($not)) {
+        $query .= ' -' . implode(' -', $not);
+    }
+
+    if (!empty($phrases)) {
+        $query .= ' "' . implode('" "', $phrases) . '"';
+    }
+
+    if (!empty($ns)) {
+        $query .= ' @' . implode(' @', $ns);
+    }
+
+    if (!empty($notns)) {
+        $query .= ' ^' . implode(' ^', $notns);
+    }
+
+    return $query;
 }
 
 //Setup VIM: ex: et ts=4 :

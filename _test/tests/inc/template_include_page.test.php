@@ -32,7 +32,7 @@ class template_pagetitle_test extends DokuWikiTest {
     }
 
     function test_adminPluginTitle() {
-        global $ID,$ACT,$INPUT,$conf;
+        global $ID,$ACT,$INPUT,$conf,$USERINFO;
 
         if (!plugin_load('admin','revert')) {
             $this->markTestSkipped('Revert plugin not found, unable to test admin plugin titles');
@@ -44,6 +44,7 @@ class template_pagetitle_test extends DokuWikiTest {
         $conf['lang'] = 'en';
         $INPUT->set('page','revert');
 
+        $INPUT->server->set('REMOTE_USER', 'testuser'); // this user is admin
         $this->assertEquals('Revert Manager', tpl_pagetitle(null, true));
     }
 

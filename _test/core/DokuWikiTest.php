@@ -1,30 +1,14 @@
 <?php
 
-
-if(!class_exists('PHPUnit_Framework_TestCase')) {
-    /**
-     * phpunit 5/6 compatibility
-     */
-    class PHPUnit_Framework_TestCase extends PHPUnit\Framework\TestCase {
-        /**
-         * @param string $class
-         * @param null|string $message
-         */
-        public function setExpectedException($class, $message=null) {
-            $this->expectException($class);
-            if(!is_null($message)) {
-                $this->expectExceptionMessage($message);
-            }
-        }
-    }
-}
-
-
-
+use dokuwiki\Extension\PluginController;
+use dokuwiki\Extension\Event;
+use dokuwiki\Extension\EventHandler;
 /**
  * Helper class to provide basic functionality for tests
+ *
+ * @uses PHPUnit_Framework_TestCase and thus PHPUnit 5.7+ is required
  */
-abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
+abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
 
     /**
      * tests can override this
@@ -41,24 +25,30 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
     protected $pluginsDisabled = array();
 
     /**
+     * setExpectedException was deprecated in PHPUnit 6
+     *
+     * @param string $class
+     * @param null|string $message
+     */
+    public function setExpectedException($class, $message=null) {
+        $this->expectException($class);
+        if(!is_null($message)) {
+            $this->expectExceptionMessage($message);
+        }
+    }
+
+    /**
      * Setup the data directory
      *
      * This is ran before each test class
      */
-    public static function setUpBeforeClass() {
+    public static function setUpBeforeClass() : void {
         // just to be safe not to delete something undefined later
         if(!defined('TMP_DIR')) die('no temporary directory');
         if(!defined('DOKU_TMP_DATA')) die('no temporary data directory');
 
-        // remove any leftovers from the last run
-        if(is_dir(DOKU_TMP_DATA)){
-            // clear indexer data and cache
-            idx_get_indexer()->clear();
-            TestUtils::rdelete(DOKU_TMP_DATA);
-        }
-
-        // populate default dirs
-        TestUtils::rcopy(TMP_DIR, dirname(__FILE__).'/../data/');
+        self::setupDataDir();
+        self::setupConfDir();
     }
 
     /**
@@ -68,7 +58,7 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
      * @throws Exception if plugin actions fail
      * @return void
      */
-    public function setUp() {
+    public function setUp() : void {
 
         // reload config
         global $conf, $config_cascade;
@@ -105,12 +95,13 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
             $conf['compression'] = 0;
         }
         // make real paths and check them
+        init_creationmodes();
         init_paths();
         init_files();
 
         // reset loaded plugins
         global $plugin_controller_class, $plugin_controller;
-        /** @var Doku_Plugin_Controller $plugin_controller */
+        /** @var PluginController $plugin_controller */
         $plugin_controller = new $plugin_controller_class();
 
         // disable all non-default plugins
@@ -140,64 +131,135 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
         // reset event handler
         global $EVENT_HANDLER;
-        $EVENT_HANDLER = new Doku_Event_Handler();
+        $EVENT_HANDLER = new EventHandler();
 
         // reload language
         $local = $conf['lang'];
-        trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
+        Event::createAndTrigger('INIT_LANG_LOAD', $local, 'init_lang', true);
 
         global $INPUT;
-        $INPUT = new Input();
+        $INPUT = new \dokuwiki\Input\Input();
     }
 
     /**
-     * Compatibility for older PHPUnit versions
-     *
-     * @param string $originalClassName
-     * @return PHPUnit_Framework_MockObject_MockObject
+     * Reinitialize the data directory for this class run
      */
-    protected function createMock($originalClassName) {
-        if(is_callable(array('parent', 'createMock'))) {
-            return parent::createMock($originalClassName);
-        } else {
-            return $this->getMock($originalClassName);
+    public static function setupDataDir() {
+        // remove any leftovers from the last run
+        if(is_dir(DOKU_TMP_DATA)) {
+            // clear indexer data and cache
+            idx_get_indexer()->clear();
+            TestUtils::rdelete(DOKU_TMP_DATA);
         }
+
+        // populate default dirs
+        TestUtils::rcopy(TMP_DIR, __DIR__ . '/../data/');
     }
 
     /**
-     * Compatibility for older PHPUnit versions
-     *
-     * @param string $originalClassName
-     * @param array $methods
-     * @return PHPUnit_Framework_MockObject_MockObject
+     * Reinitialize the conf directory for this class run
      */
-    protected function createPartialMock($originalClassName, array $methods) {
-        if(is_callable(array('parent', 'createPartialMock'))) {
-            return parent::createPartialMock($originalClassName, $methods);
-        } else {
-            return $this->getMock($originalClassName, $methods);
+    public static function setupConfDir() {
+        $defaults = [
+            'acronyms.conf',
+            'dokuwiki.php',
+            'entities.conf',
+            'interwiki.conf',
+            'license.php',
+            'manifest.json',
+            'mediameta.php',
+            'mime.conf',
+            'plugins.php',
+            'plugins.required.php',
+            'scheme.conf',
+            'smileys.conf',
+            'wordblock.conf'
+        ];
+
+        // clear any leftovers
+        if(is_dir(DOKU_CONF)) {
+            TestUtils::rdelete(DOKU_CONF);
         }
+        mkdir(DOKU_CONF);
+
+        // copy defaults
+        foreach($defaults as $file) {
+            copy(DOKU_INC . '/conf/' . $file, DOKU_CONF . $file);
+        }
+
+        // copy test files
+        TestUtils::rcopy(TMP_DIR, __DIR__ . '/../conf');
     }
 
     /**
      * Waits until a new second has passed
      *
-     * The very first call will return immeadiately, proceeding calls will return
-     * only after at least 1 second after the last call has passed.
+     * This tried to be clever about the passing of time and return early if possible. Unfortunately
+     * this never worked reliably for unknown reasons. To avoid flaky tests, this now always simply
+     * sleeps for a full second on every call.
      *
-     * When passing $init=true it will not return immeadiately but use the current
-     * second as initialization. It might still return faster than a second.
-     *
-     * @param bool $init wait from now on, not from last time
+     * @param bool $init no longer used
      * @return int new timestamp
      */
     protected function waitForTick($init = false) {
-        static $last = 0;
-        if($init) $last = time();
-        while($last === $now = time()) {
-            usleep(100000); //recheck in a 10th of a second
-        }
-        $last = $now;
-        return $now;
+        sleep(1);
+        return time();
+    }
+
+    /**
+     * Allow for testing inaccessible methods (private or protected)
+     *
+     * This makes it easier to test protected methods without needing to create intermediate
+     * classes inheriting and changing the access.
+     *
+     * @link https://stackoverflow.com/a/8702347/172068
+     * @param object $obj Object in which to call the method
+     * @param string $func The method to call
+     * @param array $args The arguments to call the method with
+     * @return mixed
+     * @throws ReflectionException when the given obj/func does not exist
+     */
+    protected static function callInaccessibleMethod($obj, $func, array $args) {
+        $class = new \ReflectionClass($obj);
+        $method = $class->getMethod($func);
+        $method->setAccessible(true);
+        return $method->invokeArgs($obj, $args);
+    }
+
+    /**
+     * Allow for reading inaccessible properties (private or protected)
+     *
+     * This makes it easier to check internals of tested objects. This should generally
+     * be avoided.
+     *
+     * @param object $obj Object on which to access the property
+     * @param string $prop name of the property to access
+     * @return mixed
+     * @throws ReflectionException  when the given obj/prop does not exist
+     */
+    protected static function getInaccessibleProperty($obj, $prop) {
+        $class = new \ReflectionClass($obj);
+        $property = $class->getProperty($prop);
+        $property->setAccessible(true);
+        return $property->getValue($obj);
+    }
+
+    /**
+     * Allow for reading inaccessible properties (private or protected)
+     *
+     * This makes it easier to set internals of tested objects. This should generally
+     * be avoided.
+     *
+     * @param object $obj Object on which to access the property
+     * @param string $prop name of the property to access
+     * @param mixed $value new value to set the property to
+     * @return void
+     * @throws ReflectionException when the given obj/prop does not exist
+     */
+    protected static function setInaccessibleProperty($obj, $prop, $value) {
+        $class = new \ReflectionClass($obj);
+        $property = $class->getProperty($prop);
+        $property->setAccessible(true);
+        $property->setValue($obj, $value);
     }
 }

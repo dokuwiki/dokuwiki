@@ -16,7 +16,7 @@ class httpclient_http_test extends DokuWikiTest {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertFalse($data === false, 'HTTP response '.$http->error);
+        $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('args',$resp);
@@ -33,7 +33,7 @@ class httpclient_http_test extends DokuWikiTest {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertFalse($data === false, 'HTTP response '.$http->error);
+        $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('args',$resp);
@@ -50,7 +50,7 @@ class httpclient_http_test extends DokuWikiTest {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertFalse($data === false, 'HTTP response '.$http->error);
+        $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('gzipped',$resp);
@@ -67,7 +67,7 @@ class httpclient_http_test extends DokuWikiTest {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertFalse($data === false, 'HTTP response '.$http->error);
+        $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('form',$resp);
@@ -78,13 +78,16 @@ class httpclient_http_test extends DokuWikiTest {
      * @group internet
      */
     function test_redirect(){
+        $this->markTestSkipped('disabled while redirect bug in httpbin is being fixed');
+        return;
+
         $http = new HTTPMockClient();
         $data = $http->get($this->server.'/redirect/3');
         if($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertFalse($data === false, 'HTTP response '.$http->error);
+        $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('url',$resp);
@@ -95,13 +98,16 @@ class httpclient_http_test extends DokuWikiTest {
      * @group internet
      */
     function test_relredirect(){
+        $this->markTestSkipped('disabled while redirect bug in httpbin is being fixed');
+        return;
+
         $http = new HTTPMockClient();
         $data = $http->get($this->server.'/relative-redirect/3');
         if($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertFalse($data === false, 'HTTP response '.$http->error);
+        $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('url',$resp);
@@ -112,13 +118,16 @@ class httpclient_http_test extends DokuWikiTest {
      * @group internet
      */
     function test_redirectfail(){
+        $this->markTestSkipped('disabled while redirect bug in httpbin is being fixed');
+        return;
+
         $http = new HTTPMockClient();
         $data = $http->get($this->server.'/redirect/5');
         if($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertTrue($data === false, 'HTTP response '.$http->error);
+        $this->assertTrue($data === false, $http->errorInfo());
         $this->assertEquals('Maximum number of redirects exceeded',$http->error);
     }
 
@@ -138,7 +147,7 @@ class httpclient_http_test extends DokuWikiTest {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertFalse($data === false, 'HTTP response '.$http->error);
+        $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('cookies',$resp);
@@ -155,7 +164,7 @@ class httpclient_http_test extends DokuWikiTest {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertTrue($data === false, 'HTTP response '.$http->error);
+        $this->assertTrue($data === false, $http->errorInfo());
         $this->assertEquals(418,$http->status);
     }
 
@@ -172,7 +181,7 @@ class httpclient_http_test extends DokuWikiTest {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertTrue($data === false, 'HTTP response '.$http->error);
+        $this->assertTrue($data === false, $http->errorInfo());
 
         // this should read just the needed bytes
         $http->max_bodysize_abort = false;
@@ -182,7 +191,7 @@ class httpclient_http_test extends DokuWikiTest {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertFalse($data === false, 'HTTP response '.$http->error);
+        $this->assertFalse($data === false, $http->errorInfo());
         /* should read no more than max_bodysize+1 */
         $this->assertLessThanOrEqual(251,strlen($data));
     }
@@ -198,14 +207,14 @@ class httpclient_http_test extends DokuWikiTest {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertTrue($data !== false, 'HTTP response '.$http->error);
+        $this->assertTrue($data !== false, $http->errorInfo());
         $http->max_bodysize_abort = false;
         $data = $http->get($this->server.'/stream/5');
         if($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertTrue($data !== false, 'HTTP response '.$http->error);
+        $this->assertTrue($data !== false, $http->errorInfo());
     }
 
     /**
@@ -220,7 +229,7 @@ class httpclient_http_test extends DokuWikiTest {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertFalse($data === false, 'HTTP response '.$http->error);
+        $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertEquals(array('authenticated'=>true,'user'=>'user'), $resp);
@@ -238,7 +247,7 @@ class httpclient_http_test extends DokuWikiTest {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertTrue($data === false, 'HTTP response '.$http->error);
+        $this->assertTrue($data === false, $http->errorInfo());
         $this->assertEquals(401,$http->status);
     }
 
@@ -249,7 +258,7 @@ class httpclient_http_test extends DokuWikiTest {
         $http = new HTTPMockClient();
         $http->timeout = 5;
         $data = $http->get($this->server.'/delay/10');
-        $this->assertTrue($data === false, 'HTTP response '.$http->error);
+        $this->assertTrue($data === false, $http->errorInfo());
         $this->assertEquals(-100,$http->status);
     }
 
@@ -263,7 +272,7 @@ class httpclient_http_test extends DokuWikiTest {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertFalse($data === false, 'HTTP response '.$http->error);
+        $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('baz',$http->resp_headers);
@@ -276,13 +285,13 @@ class httpclient_http_test extends DokuWikiTest {
      */
     function test_chunked(){
         $http = new HTTPMockClient();
-        $data = $http->get('http://whoopdedo.org/cgi-bin/chunked/2550');
+        $data = $http->get($this->server.'/stream-bytes/5000?chunk_size=250');
         if($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertFalse($data === false, 'HTTP response '.$http->error);
-        $this->assertEquals(2550,strlen($data));
+        $this->assertFalse($data === false, $http->errorInfo());
+        $this->assertEquals(5000,strlen($data));
     }
 
     /**
@@ -298,9 +307,12 @@ class httpclient_http_test extends DokuWikiTest {
             $this->markTestSkipped('connection timed out');
             return;
         }
-        $this->assertTrue($data !== false, 'HTTP response '.$http->error);
+        $this->assertTrue($data !== false, $http->errorInfo());
     }
 
+    /**
+     * @throws ReflectionException
+     */
     function test_postencode(){
         $http = new HTTPMockClient();
 
@@ -312,7 +324,7 @@ class httpclient_http_test extends DokuWikiTest {
         );
         $this->assertEquals(
             '%C3%B6%C3%A4%3F=%C3%B6%C3%A4%3F&foo=bang',
-            $http->_postEncode($data),
+            $this->callInaccessibleMethod($http, 'postEncode', [$data]),
             'simple'
         );
 
@@ -323,7 +335,7 @@ class httpclient_http_test extends DokuWikiTest {
         );
         $this->assertEquals(
             'foo=bang&%C3%A4rr%5B0%5D=%C3%B6&%C3%A4rr%5B1%5D=b&%C3%A4rr%5B2%5D=c',
-            $http->_postEncode($data),
+            $this->callInaccessibleMethod($http, 'postEncode', [$data]),
             'onelevelnum'
         );
 
@@ -334,7 +346,7 @@ class httpclient_http_test extends DokuWikiTest {
         );
         $this->assertEquals(
             'foo=bang&%C3%A4rr%5B%C3%B6%5D=%C3%A4&%C3%A4rr%5Bb%5D=c',
-            $http->_postEncode($data),
+            $this->callInaccessibleMethod($http, 'postEncode', [$data]),
             'onelevelassoc'
         );
 
@@ -346,7 +358,7 @@ class httpclient_http_test extends DokuWikiTest {
         );
         $this->assertEquals(
             'foo=bang&%C3%A4rr%5B%C3%B6%5D=%C3%A4&%C3%A4rr%5B%C3%A4%5D%5B%C3%B6%5D=%C3%A4',
-            $http->_postEncode($data),
+            $this->callInaccessibleMethod($http, 'postEncode', [$data]),
             'twolevelassoc'
         );
     }

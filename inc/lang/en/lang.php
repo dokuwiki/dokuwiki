@@ -69,7 +69,22 @@ $lang['badpassconfirm']        = 'Sorry, the password was wrong';
 $lang['minoredit']             = 'Minor Changes';
 $lang['draftdate']             = 'Draft autosaved on'; // full dformat date will be added
 $lang['nosecedit']             = 'The page was changed in the meantime, section info was out of date loaded full page instead.';
-$lang['searchcreatepage']      = 'If you didn\'t find what you were looking for, you can create or edit the page named after your query with the appropriate tool.';
+$lang['searchcreatepage']      = 'If you didn\'t find what you were looking for, you can create or edit the page %s, named after your query.';
+
+$lang['search_fullresults']    = 'Fulltext results';
+$lang['js']['search_toggle_tools']   = 'Toggle Search Tools';
+$lang['search_exact_match']    = 'Exact match';
+$lang['search_starts_with']    = 'Starts with';
+$lang['search_ends_with']      = 'Ends with';
+$lang['search_contains']       = 'Contains';
+$lang['search_custom_match']   = 'Custom';
+$lang['search_any_ns']         = 'Any namespace';
+$lang['search_any_time']       = 'Any time';
+$lang['search_past_7_days']    = 'Past week';
+$lang['search_past_month']     = 'Past month';
+$lang['search_past_year']      = 'Past year';
+$lang['search_sort_by_hits']   = 'Sort by hits';
+$lang['search_sort_by_mtime']  = 'Sort by last modified';
 
 $lang['regmissing']            = 'Sorry, you must fill in all fields.';
 $lang['reguexists']            = 'Sorry, a user with this login already exists.';
@@ -111,6 +126,7 @@ $lang['txt_upload']            = 'Select file to upload:';
 $lang['txt_filename']          = 'Upload as (optional):';
 $lang['txt_overwrt']           = 'Overwrite existing file';
 $lang['maxuploadsize']         = 'Upload max. %s per file.';
+$lang['allowedmime']           = 'List of allowed file extensions';
 $lang['lockedby']              = 'Currently locked by:';
 $lang['lockexpire']            = 'Lock expires at:';
 
@@ -155,6 +171,7 @@ $lang['js']['media_done_btn']      = 'Done';
 $lang['js']['media_drop']          = 'Drop files here to upload';
 $lang['js']['media_cancel']        = 'remove';
 $lang['js']['media_overwrt']       = 'Overwrite existing files';
+$lang['js']['data_insecure'] = 'WARNING: It seems your data directory is not properly secured. Please read about <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
 
 $lang['rssfailed']             = 'An error occurred while fetching this feed: ';
 $lang['nothingfound']          = 'Nothing was found.';
@@ -209,7 +226,8 @@ $lang['created']               = 'created';
 $lang['restored']              = 'old revision restored (%s)';
 $lang['external_edit']         = 'external edit';
 $lang['summary']               = 'Edit summary';
-$lang['noflash']               = 'The <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> is needed to display this content.';
+$lang['unknowndate']           = 'Unknown date';
+$lang['noflash']               = 'The <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> is needed to display this content.';
 $lang['download']              = 'Download Snippet';
 $lang['tools']                 = 'Tools';
 $lang['user_tools']            = 'User Tools';
@@ -302,10 +320,14 @@ $lang['i_superuser']           = 'Superuser';
 $lang['i_problems']            = 'The installer found some problems, indicated below. You can not continue until you have fixed them.';
 $lang['i_modified']            = 'For security reasons this script will only work with a new and unmodified Dokuwiki installation.
                                   You should either re-extract the files from the downloaded package or consult the complete
-                                  <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a>';
+                                  <a href="https://www.dokuwiki.org/install">Dokuwiki installation instructions</a>';
 $lang['i_funcna']              = 'PHP function <code>%s</code> is not available. Maybe your hosting provider disabled it for some reason?';
+$lang['i_disabled']            =  'It has been disabled by your provider.';
+$lang['i_funcnmail']           = '<b>Note:</b> The PHP mail function is not available. %s' .
+                                 ' If it remains unavailable, you may install the <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Your PHP version <code>%s</code> is lower than the needed <code>%s</code>. You need to upgrade your PHP install.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload must be disabled in php.ini to run DokuWiki.';
+$lang['i_urandom']             = 'DokuWiki cannot create cryptographically secure numbers for cookies. You may want to check your open_basedir settings in php.ini for proper <code>/dev/urandom</code> access.';
 $lang['i_permfail']            = '<code>%s</code> is not writable by DokuWiki. You need to fix the permission settings of this directory!';
 $lang['i_confexists']          = '<code>%s</code> already exists';
 $lang['i_writeerr']            = 'Unable to create <code>%s</code>. You will need to check directory/file permissions and create the file manually.';
@@ -362,6 +384,7 @@ $lang['media_update']          = 'Upload new version';
 $lang['media_restore']         = 'Restore this version';
 $lang['media_acl_warning']     = 'This list might not be complete due to ACL restrictions and hidden pages.';
 
+$lang['email_fail']            = 'PHP mail() missing or disabled. The following email was not sent: ';
 $lang['currentns']             = 'Current namespace';
 $lang['searchresult']          = 'Search Result';
 $lang['plainhtml']             = 'Plain HTML';
@@ -370,5 +393,5 @@ $lang['page_nonexist_rev']     = 'Page did not exist at %s. It was subsequently 
 $lang['unable_to_parse_date']  = 'Unable to parse at parameter "%s".';
 $lang['email_signature_text'] = 'This mail was generated by DokuWiki at
 @DOKUWIKIURL@';
-$lang['email_signature_html'] = '';
-//Setup VIM: ex: et ts=2 :
+#$lang['email_signature_html'] = ''; # the empty default will copy the text signature, you can override it in a local lang file
+

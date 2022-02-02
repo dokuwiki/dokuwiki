@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schopf <pschopf@gmail.com>
  * @author Victor Westmann <victor.westmann@gmail.com>
  * @author Frederico Guimarães <frederico@teia.bio.br>
  * @author Hudson FAS <hudsonfas@gmail.com>
@@ -19,6 +20,7 @@ $lang['referrals']             = 'Permitir que as referências sejam seguidas?';
 $lang['deref']                 = 'Como dereferenciar os aliases?';
 $lang['binddn']                = 'DN de um vínculo opcional de usuário se vínculo anônimo não for suficiente. Eg. <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']                = 'Senha do usuário acima';
+$lang['attributes']            = 'Atributos a serem recuperados com a pesquisa LDAP.';
 $lang['userscope']             = 'Limitar escopo da busca para busca de usuário';
 $lang['groupscope']            = 'Limitar escopo da busca para busca de grupo';
 $lang['userkey']               = 'Atributo que indica o nome do usuário; deve ser consistente com userfilter.';

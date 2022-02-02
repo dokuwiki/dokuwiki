@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author rusly-id <rusly-id@users.noreply.github.com>
  * @author mubaidillah <mubaidillah@gmail.com>
  * @author Irwan Butar Butar <irwansah.putra@gmail.com>
  * @author Yustinus Waruwu <juswaruwu@gmail.com>
@@ -64,44 +65,6 @@ $lang['badlogin']              = 'Maaf, username atau password salah.';
 $lang['badpassconfirm']        = 'Maaf, password salah';
 $lang['minoredit']             = 'Perubahan Minor';
 $lang['draftdate']             = 'Simpan draft secara otomatis';
-$lang['searchcreatepage']      = 'Jika Anda tidak menemukan apa yang diinginkan, Anda dapat membuat halaman baru, dengan nama sesuai "text pencarian" Anda. Gunakan tombol "Edit halaman ini".';
-$lang['regmissing']            = 'Maaf, Anda harus mengisi semua field.';
-$lang['reguexists']            = 'Maaf, user dengan user login ini telah ada.';
-$lang['regsuccess']            = 'User telah didaftarkan dan password telah dikirim ke email Anda.';
-$lang['regsuccess2']           = 'User telah dibuatkan.';
-$lang['regmailfail']           = 'Kami menemukan kesalahan saat mengirimkan password ke alamat email Anda. Mohon hubungi administrator.';
-$lang['regbadmail']            = 'Alamat email yang Anda masukkan tidak valid - jika menurut Anda hal ini adalah kesalahan sistem, mohon hubungi admin.';
-$lang['regbadpass']            = 'Passwod yang dimasukkan tidak sama. Silahkan ulangi lagi.';
-$lang['regpwmail']             = 'Password DokuWiki Anda';
-$lang['reghere']               = 'Anda belum mempunyai account? silahkan ';
-$lang['profna']                = 'Wiki ini tidak mengijinkan perubahan profil.';
-$lang['profnochange']          = 'Tidak ada perubahan.';
-$lang['profnoempty']           = 'Mohon mengisikan nama atau alamat email.';
-$lang['profchanged']           = 'Profil User berhasil diubah.';
-$lang['profnodelete']          = 'Wiki ini tidak mendukung penghapusan pengguna';
-$lang['profdeleteuser']        = 'Hapus Akun';
-$lang['profdeleted']           = 'Akun anda telah dihapus dari wiki ini';
-$lang['profconfdelete']        = 'Saya berharap menghapus akun saya dari wiki ini.
-Aksi ini tidak bisa diselesaikan.';
-$lang['profconfdeletemissing'] = 'Knfirmasi check box tidak tercentang';
-$lang['pwdforget']             = 'Lupa Password? Dapatkan yang baru';
-$lang['resendna']              = 'Wiki ini tidak mendukung pengiriman ulang password.';
-$lang['resendpwd']             = 'Atur password baru';
-$lang['resendpwdmissing']      = 'Maaf, Anda harus mengisikan semua field.';
-$lang['resendpwdnouser']       = 'Maaf, user ini tidak ditemukan.';
-$lang['resendpwdbadauth']      = 'Maaf, kode autentikasi tidak valid. Pastikan Anda menggunakan keseluruhan link konfirmasi.';
-$lang['resendpwdconfirm']      = 'Link konfirmasi telah dikirim melalui email.';
-$lang['resendpwdsuccess']      = 'Password baru Anda telah dikirim melalui email.';
-$lang['license']               = 'Kecuali jika dinyatakan lain, konten pada wiki ini dilisensikan dibawah lisensi berikut:';
-$lang['licenseok']             = 'Catatan: Dengan menyunting halaman ini, Anda setuju untuk melisensikan konten Anda dibawah lisensi berikut:';
-$lang['searchmedia']           = 'Cari nama file:';
-$lang['searchmedia_in']        = 'Cari di %s';
-$lang['txt_upload']            = 'File yang akan diupload:';
-$lang['txt_filename']          = 'Masukkan nama wiki (opsional):';
-$lang['txt_overwrt']           = 'File yang telah ada akan ditindih';
-$lang['maxuploadsize']         = 'Unggah maks. %s per berkas';
-$lang['lockedby']              = 'Sedang dikunci oleh:';
-$lang['lockexpire']            = 'Penguncian artikel sampai dengan:';
 $lang['js']['willexpire']      = 'Halaman yang sedang Anda kunci akan berakhir dalam waktu kurang lebih satu menit.\nUntuk menghindari konflik, gunakan tombol Preview untuk me-reset timer pengunci.';
 $lang['js']['notsavedyet']     = 'Perubahan yang belum disimpan akan hilang.\nYakin akan dilanjutkan?';
 $lang['js']['searchmedia']     = 'Cari file';
@@ -143,6 +106,43 @@ $lang['js']['media_done_btn']  = 'Selesai';
 $lang['js']['media_drop']      = 'Tarik file disini untuk mengunggah';
 $lang['js']['media_cancel']    = 'Buang';
 $lang['js']['media_overwrt']   = 'Timpa berkas yang ada';
+$lang['regmissing']            = 'Maaf, Anda harus mengisi semua field.';
+$lang['reguexists']            = 'Maaf, user dengan user login ini telah ada.';
+$lang['regsuccess']            = 'User telah didaftarkan dan password telah dikirim ke email Anda.';
+$lang['regsuccess2']           = 'User telah dibuatkan.';
+$lang['regmailfail']           = 'Kami menemukan kesalahan saat mengirimkan password ke alamat email Anda. Mohon hubungi administrator.';
+$lang['regbadmail']            = 'Alamat email yang Anda masukkan tidak valid - jika menurut Anda hal ini adalah kesalahan sistem, mohon hubungi admin.';
+$lang['regbadpass']            = 'Passwod yang dimasukkan tidak sama. Silahkan ulangi lagi.';
+$lang['regpwmail']             = 'Password DokuWiki Anda';
+$lang['reghere']               = 'Anda belum mempunyai account? silahkan ';
+$lang['profna']                = 'Wiki ini tidak mengijinkan perubahan profil.';
+$lang['profnochange']          = 'Tidak ada perubahan.';
+$lang['profnoempty']           = 'Mohon mengisikan nama atau alamat email.';
+$lang['profchanged']           = 'Profil User berhasil diubah.';
+$lang['profnodelete']          = 'Wiki ini tidak mendukung penghapusan pengguna';
+$lang['profdeleteuser']        = 'Hapus Akun';
+$lang['profdeleted']           = 'Akun anda telah dihapus dari wiki ini';
+$lang['profconfdelete']        = 'Saya berharap menghapus akun saya dari wiki ini.
+Aksi ini tidak bisa diselesaikan.';
+$lang['profconfdeletemissing'] = 'Knfirmasi check box tidak tercentang';
+$lang['pwdforget']             = 'Lupa Password? Dapatkan yang baru';
+$lang['resendna']              = 'Wiki ini tidak mendukung pengiriman ulang password.';
+$lang['resendpwd']             = 'Atur password baru';
+$lang['resendpwdmissing']      = 'Maaf, Anda harus mengisikan semua field.';
+$lang['resendpwdnouser']       = 'Maaf, user ini tidak ditemukan.';
+$lang['resendpwdbadauth']      = 'Maaf, kode autentikasi tidak valid. Pastikan Anda menggunakan keseluruhan link konfirmasi.';
+$lang['resendpwdconfirm']      = 'Link konfirmasi telah dikirim melalui email.';
+$lang['resendpwdsuccess']      = 'Password baru Anda telah dikirim melalui email.';
+$lang['license']               = 'Kecuali jika dinyatakan lain, konten pada wiki ini dilisensikan dibawah lisensi berikut:';
+$lang['licenseok']             = 'Catatan: Dengan menyunting halaman ini, Anda setuju untuk melisensikan konten Anda dibawah lisensi berikut:';
+$lang['searchmedia']           = 'Cari nama file:';
+$lang['searchmedia_in']        = 'Cari di %s';
+$lang['txt_upload']            = 'File yang akan diupload:';
+$lang['txt_filename']          = 'Masukkan nama wiki (opsional):';
+$lang['txt_overwrt']           = 'File yang telah ada akan ditindih';
+$lang['maxuploadsize']         = 'Unggah maks. %s per berkas';
+$lang['lockedby']              = 'Sedang dikunci oleh:';
+$lang['lockexpire']            = 'Penguncian artikel sampai dengan:';
 $lang['rssfailed']             = 'Error terjadi saat mengambil feed: ';
 $lang['nothingfound']          = 'Tidak menemukan samasekali.';
 $lang['mediaselect']           = 'Pilihan Mediafile';
@@ -190,7 +190,7 @@ $lang['deleted']               = 'terhapus';
 $lang['created']               = 'dibuat';
 $lang['restored']              = 'revisi lama ditampilkan kembali (%s)';
 $lang['external_edit']         = 'Perubahan eksternal';
-$lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> diperlukan untuk menampilkan konten ini.';
+$lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> diperlukan untuk menampilkan konten ini.';
 $lang['download']              = 'Unduh Cuplikan';
 $lang['tools']                 = 'Alat';
 $lang['user_tools']            = 'Alat Pengguna';
@@ -257,7 +257,7 @@ $lang['i_installer']           = 'Instalasi DokuWiki';
 $lang['i_wikiname']            = 'Nama Wiki';
 $lang['i_enableacl']           = 'Aktifkan ACL (disarankan)';
 $lang['i_problems']            = 'Terdapat beberapa kesalahan seperti berikut. Anda tidak dapat melanjutkan sampai kesalahan tersebut diperbaiki.';
-$lang['i_modified']            = 'Untuk alasan keamanan, skrip ini hanya dapat dijalankan pada instalasi DikuWiki baru dan belum di modifikasi. Silahkan meng-ekstrak kembali berkasi dari halaman dowload, atau lihat   <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a> ';
+$lang['i_modified']            = 'Untuk alasan keamanan, skrip ini hanya dapat dijalankan pada instalasi DikuWiki baru dan belum di modifikasi. Silahkan meng-ekstrak kembali berkasi dari halaman dowload, atau lihat   <a href="https://www.dokuwiki.org/install">Dokuwiki installation instructions</a> ';
 $lang['i_funcna']              = 'Fungsi PHP <code>%s</code> tidak tersedia. Mungkin dinonaktifkan oleh layanan hosting Anda?';
 $lang['i_phpver']              = 'Versi PHP Anda <code>%s</code> lebih rendah dari yang dibutuhkan <code>%s</code>. Mohon melakukan upgrade.';
 $lang['i_permfail']            = '<code>%s</code> tidak dapat ditulis oleh DokuWiki. Anda harus memperbaiki konfigurasi hak akses untuk direktori tersebut.';
@@ -309,5 +309,5 @@ $lang['media_restore']         = 'Kembalikan versi ini';
 $lang['currentns']             = 'Namespace saat ini';
 $lang['searchresult']          = 'Hasil Pencarian';
 $lang['wikimarkup']            = 'Markah Wiki';
-$lang['email_signature_text'] = 'Email ini dibuat otomatis oleh DokuWiki
+$lang['email_signature_text']  = 'Email ini dibuat otomatis oleh DokuWiki
 @DOKUWIKIURL@';

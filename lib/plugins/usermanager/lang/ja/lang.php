@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Chris Smith <chris@jalakai.co.uk>
  * @author Ikuo Obataya <i.obataya@gmail.com>
@@ -11,7 +12,6 @@
  * @author Taisuke Shimamoto <dentostar@gmail.com>
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  * @author Hideaki SAWADA <sawadakun@live.jp>
- * @author Hideaki SAWADA <chuno@live.jp>
  */
 $lang['menu']                  = 'ユーザー管理';
 $lang['noauth']                = '（ユーザー認証が無効です）';
@@ -39,13 +39,13 @@ $lang['export_filtered']       = '抽出したユーザー一覧のエクスポ�
 $lang['import']                = '新規ユーザーのインポート';
 $lang['line']                  = '行番号';
 $lang['error']                 = 'エラーメッセージ';
-$lang['summary']               = 'ユーザー %1$d-%2$d / %3$d, 総ユーザー数 %4$d';
-$lang['nonefound']             = 'ユーザーが見つかりません, 総ユーザー数 %d';
-$lang['delete_ok']             = '%d ユーザーが削除されました';
-$lang['delete_fail']           = '%d ユーザーの削除に失敗しました';
-$lang['update_ok']             = 'ユーザーは更新されました';
+$lang['summary']               = '見つかったユーザー %3$d件中 %1$d-%2$d件目を表示しています。総ユーザー数 %4$d';
+$lang['nonefound']             = 'ユーザーが見つかりません。総ユーザー数 %d';
+$lang['delete_ok']             = '%d 件のユーザーが削除されました';
+$lang['delete_fail']           = '%d 件のユーザーの削除に失敗しました';
+$lang['update_ok']             = 'ユーザーは正常に更新されました';
 $lang['update_fail']           = 'ユーザーの更新に失敗しました';
-$lang['update_exists']         = 'ユーザー名（%s）は既に存在するため、ユーザー名の変更に失敗しました（その他の項目は変更されました）。';
+$lang['update_exists']         = 'ユーザー名（%s）は既に存在するため、ユーザー名の変更に失敗しました（その他の項目は変更されます）。';
 $lang['start']                 = '最初';
 $lang['prev']                  = '前へ';
 $lang['next']                  = '次へ';
@@ -55,7 +55,7 @@ $lang['user_notify']           = 'ユーザーに通知する';
 $lang['note_notify']           = '通知メールは、ユーザーに新たなパスワードが設定された場合のみ送信されます。';
 $lang['note_group']            = 'グループを指定しない場合は、既定のグループ（%s）に配属されます。';
 $lang['note_pass']             = '”ユーザーに通知する”をチェックしてパスワードを空欄にすると、パスワードは自動生成されます。';
-$lang['add_ok']                = 'ユーザーを登録しました';
+$lang['add_ok']                = 'ユーザーを正常に登録しました';
 $lang['add_fail']              = 'ユーザーの登録に失敗しました';
 $lang['notify_ok']             = '通知メールを送信しました';
 $lang['notify_fail']           = '通知メールを送信できませんでした';
@@ -66,14 +66,14 @@ $lang['import_failure_count']  = 'ユーザーインポート：%d件が失敗�
 $lang['import_error_fields']   = '列の不足（４列必要）が%d件ありました。';
 $lang['import_error_baduserid'] = '欠落したユーザーID';
 $lang['import_error_badname']  = '不正なフルネーム';
-$lang['import_error_badmail']  = '不正な電子メールアドレス';
+$lang['import_error_badmail']  = '不正なメールアドレス';
 $lang['import_error_upload']   = 'インポートが失敗しました。CSVファイルをアップロードできなかったか、ファイルが空です。';
 $lang['import_error_readfail'] = 'インポートが失敗しました。アップロードされたファイルが読込できません。';
 $lang['import_error_create']   = 'ユーザーが作成できません。';
-$lang['import_notify_fail']    = '通知メッセージがインポートされたユーザー（%s）・電子メールアドレス（%s）に送信できませんでした。';
+$lang['import_notify_fail']    = '通知メッセージがインポートされたユーザー（%s、メールアドレス：%s）に送信できませんでした。';
 $lang['import_downloadfailures'] = '修正用に失敗を CSVファイルとしてダウンロードする。';
-$lang['addUser_error_missing_pass'] = 'パスワードを設定するかパスワードの自動生成できるようにユーザーへの通知を有効にして下さい。';
-$lang['addUser_error_pass_not_identical'] = '入力されたパスワードは同一ではありません。';
+$lang['addUser_error_missing_pass'] = 'パスワードを設定するか、パスワードを自動生成できるようにユーザーへの通知を有効にして下さい。';
+$lang['addUser_error_pass_not_identical'] = '確認用のパスワードが間違っています。';
 $lang['addUser_error_modPass_disabled'] = 'パスワードの変更は現在無効になっています。';
 $lang['addUser_error_name_missing'] = '新規ユーザーのフルネームを入力してください。';
 $lang['addUser_error_modName_disabled'] = 'フルネームの変更は現在無効になっています。';

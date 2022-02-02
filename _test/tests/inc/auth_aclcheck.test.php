@@ -1,18 +1,20 @@
 <?php
 
+use dokuwiki\test\mock\AuthPlugin;
+
 class auth_acl_test extends DokuWikiTest {
 
-    var $oldAuthAcl;
+    protected $oldAuthAcl;
 
-    function setUp() {
+    function setUp() : void {
         parent::setUp();
         global $AUTH_ACL;
         global $auth;
         $this->oldAuthAcl = $AUTH_ACL;
-        $auth = new DokuWiki_Auth_Plugin();
+        $auth = new AuthPlugin();
     }
 
-    function tearDown() {
+    function tearDown() : void {
         global $AUTH_ACL;
         $AUTH_ACL = $this->oldAuthAcl;
 

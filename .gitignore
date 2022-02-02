@@ -1,3 +1,17 @@
+# Editor and temporary files
+*.swp
+*.bak
+*.old
+*~
+*.DS_Store
+*.iml
+.idea/
+.buildpath
+.project
+.settings/
+
+# DokuWiki
+.htaccess
 /conf/*.local.conf
 /conf/acl.auth.php
 /conf/local.php
@@ -10,23 +24,11 @@
 /conf/plugin_lang/*
 /conf/plugins.local.*
 /conf/tpl/*
-.htaccess
-*.swp
-*.bak
-*.old
-*~
-*.DS_Store
-*.iml
-.idea/
-# Eclipse IDE
-.buildpath
-.project
-.settings/
-# DokuWiki
 /data/attic/*
 /data/cache/*
 /data/index/*
 /data/locks/*
+/data/log/*
 /data/media/*
 /data/media_meta/*
 /data/media_attic/*
@@ -56,6 +58,7 @@
 !/lib/plugins/styling
 !/lib/plugins/testing
 !/lib/plugins/usermanager
+!/lib/plugins/logviewer
 !/lib/plugins/action.php
 !/lib/plugins/admin.php
 !/lib/plugins/auth.php
@@ -67,8 +70,9 @@ lib/images/*/local/*
 # composer default ignores
 composer.phar
 vendor/bin/*
-vendor/*/*/phpunit.xml
+vendor/*/*/phpunit.xml*
 vendor/*/*/.travis.yml
+vendor/*/*/.github
 vendor/*/*/bin/*
 vendor/*/*/tests/*
 vendor/*/*/test/*
@@ -81,3 +85,16 @@ vendor/paragonie/random_compat/build-phar.sh
 vendor/paragonie/random_compat/dist/*
 vendor/paragonie/random_compat/other/*
 vendor/simplepie/simplepie/db.sql
+vendor/marcusschwarz/lesserphp/package.sh
+vendor/marcusschwarz/lesserphp/lessify*
+vendor/marcusschwarz/lesserphp/Makefile
+vendor/marcusschwarz/lesserphp/plessc
+vendor/splitbrain/php-cli/examples/*
+vendor/splitbrain/php-cli/screenshot*
+vendor/splitbrain/php-cli/generate-api.sh
+vendor/splitbrain/php-cli/apigen.neon
+
+# PHPUnit tests
+phpunit.phar
+*.phpunit.result.cache
+_test/data/

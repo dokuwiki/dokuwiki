@@ -1,7 +1,0 @@
-base   authmysql
-author Andreas Gohr
-email  andi@splitbrain.org
-date   2015-07-13
-name   [DEPRECATED] MYSQL Auth Plugin
-desc   ▶This plugin will be removed from DokuWiki in a future release! Use authpdo instead.◀ Provides user authentication against a MySQL database
-url    http://www.dokuwiki.org/plugin:authmysql

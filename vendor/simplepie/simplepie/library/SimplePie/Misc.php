@@ -5,7 +5,7 @@
  * A PHP-Based RSS and Atom Feed Framework.
  * Takes the hard work out of managing a complete RSS/Atom solution.
  *
- * Copyright (c) 2004-2016, Ryan Parman, Geoffrey Sneddon, Ryan McCue, and contributors
+ * Copyright (c) 2004-2016, Ryan Parman, Sam Sneddon, Ryan McCue, and contributors
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
@@ -33,9 +33,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package SimplePie
- * @copyright 2004-2016 Ryan Parman, Geoffrey Sneddon, Ryan McCue
+ * @copyright 2004-2016 Ryan Parman, Sam Sneddon, Ryan McCue
  * @author Ryan Parman
- * @author Geoffrey Sneddon
+ * @author Sam Sneddon
  * @author Ryan McCue
  * @link http://simplepie.org/ SimplePie
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -217,10 +217,8 @@ class SimplePie_Misc
 		{
 			return substr_replace($url, 'itpc', 0, 4);
 		}
-		else
-		{
-			return $url;
-		}
+
+		return $url;
 	}
 
 	public static function array_merge_recursive($array1, $array2)
@@ -234,9 +232,9 @@ class SimplePie_Misc
 			else
 			{
 				$array1[$key] = $value;
-			}            
+			}
 		}
-		
+
 		return $array1;
 	}
 
@@ -276,10 +274,8 @@ class SimplePie_Misc
 		{
 			return chr($integer);
 		}
-		else
-		{
-			return strtoupper($match[0]);
-		}
+
+		return strtoupper($match[0]);
 	}
 
 	/**
@@ -343,11 +339,9 @@ class SimplePie_Misc
 		{
 			return $return;
 		}
+
 		// If we can't do anything, just fail
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 
 	protected static function change_encoding_mbstring($data, $input, $output)
@@ -370,11 +364,12 @@ class SimplePie_Misc
 		}
 
 		// Check that the encoding is supported
-		if (@mb_convert_encoding("\x80", 'UTF-16BE', $input) === "\x00\x80")
+		if (!in_array($input, mb_list_encodings()))
 		{
 			return false;
 		}
-		if (!in_array($input, mb_list_encodings()))
+
+		if (@mb_convert_encoding("\x80", 'UTF-16BE', $input) === "\x00\x80")
 		{
 			return false;
 		}
@@ -1858,10 +1853,8 @@ class SimplePie_Misc
 		{
 			return trim($mime);
 		}
-		else
-		{
-			return trim(substr($mime, 0, $pos));
-		}
+
+		return trim(substr($mime, 0, $pos));
 	}
 
 	public static function atom_03_construct_type($attribs)
@@ -1894,10 +1887,8 @@ class SimplePie_Misc
 					return SIMPLEPIE_CONSTRUCT_NONE | $mode;
 			}
 		}
-		else
-		{
-			return SIMPLEPIE_CONSTRUCT_TEXT | $mode;
-		}
+
+		return SIMPLEPIE_CONSTRUCT_TEXT | $mode;
 	}
 
 	public static function atom_10_construct_type($attribs)
@@ -1947,10 +1938,8 @@ class SimplePie_Misc
 				return SIMPLEPIE_CONSTRUCT_BASE64;
 			}
 		}
-		else
-		{
-			return SIMPLEPIE_CONSTRUCT_TEXT;
-		}
+
+		return SIMPLEPIE_CONSTRUCT_TEXT;
 	}
 
 	public static function is_isegment_nz_nc($string)
@@ -2007,11 +1996,9 @@ class SimplePie_Misc
 		{
 			return chr(0xf0 | ($codepoint >> 18)) . chr(0x80 | (($codepoint >> 12) & 0x3f)) . chr(0x80 | (($codepoint >> 6) & 0x3f)) . chr(0x80 | ($codepoint & 0x3f));
 		}
-		else
-		{
-			// U+FFFD REPLACEMENT CHARACTER
-			return "\xEF\xBF\xBD";
-		}
+
+		// U+FFFD REPLACEMENT CHARACTER
+		return "\xEF\xBF\xBD";
 	}
 
 	/**
@@ -2215,10 +2202,8 @@ function embed_wmedia(width, height, link) {
 		{
 			return filemtime(dirname(__FILE__) . '/Core.php');
 		}
-		else
-		{
-			return filemtime(__FILE__);
-		}
+
+		return filemtime(__FILE__);
 	}
 
 	/**
@@ -2276,4 +2261,3 @@ function embed_wmedia(width, height, link) {
 		// No-op
 	}
 }
-

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Oskars Pakers <oskars.pakers@gmail.com>
  * @author Aivars Miška <allefm@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -64,11 +65,11 @@ $lang['badpassconfirm']        = 'Atvaino, aplama parole';
 $lang['minoredit']             = 'Sīki labojumi';
 $lang['draftdate']             = 'Melnraksts automātiski saglabāts';
 $lang['nosecedit']             = 'Lapa pa šo laiku ir mainījusies, sekcijas informācija novecojusi. Ielādēta lapas  pilnās versija.';
-$lang['searchcreatepage']      = 'Ja neatradi meklēto, nospiežot pogu "Labot lapu", vari izveidot jaunu lapu ar tevis meklētajiem atslēgvārdiem nosaukumā.';
 $lang['regmissing']            = 'Atvaino, jāaizpilda visas ailes.';
 $lang['reguexists']            = 'Atvaino, tāds lietotājs jau ir.';
 $lang['regsuccess']            = 'Lietotājs izveidots. Parole nosūtīta pa pastu.';
 $lang['regsuccess2']           = 'Lietotājs izveidots.';
+$lang['regfail']               = 'Neizdevās izveidot lietotāju.';
 $lang['regmailfail']           = 'Šķiet, ka ir problēmas nosūtīt pastu. Lūdzu sazinies ar administratoru!';
 $lang['regbadmail']            = 'Uzdotā epasta adrese izskatās aplama. Ja tas nav tiesa, sazinies ar administratoru.';
 $lang['regbadpass']            = 'Abas ierakstītās paroles nav vienādas, lūdzu atkārto.';
@@ -83,6 +84,7 @@ $lang['profdeleteuser']        = 'Dzēst kontu';
 $lang['profdeleted']           = 'Jūsu lietotāja konts ir izdzēsts';
 $lang['profconfdelete']        = 'Es vēlos dzēst savu kontu no viki. <br/> Šo darbību vairs nevarēs atsaukt.';
 $lang['profconfdeletemissing'] = 'Nav atzīmēta apstiprinājuma rūtiņa.';
+$lang['proffail']              = 'Neizdevās atjaunot profilu.';
 $lang['pwdforget']             = 'Aizmirsi paroli? Saņem jaunu';
 $lang['resendna']              = 'Paroļu izsūtīšanu nepiedāvāju.';
 $lang['resendpwd']             = 'Uzstādīt jaunu paroli lietotājam';
@@ -195,7 +197,7 @@ $lang['created']               = 'izveidots';
 $lang['restored']              = 'vecā versija atjaunota (%s)';
 $lang['external_edit']         = 'ārpussistēmas labojums';
 $lang['summary']               = 'Anotācija';
-$lang['noflash']               = 'Lai attēlotu lapas saturu, vajag <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
+$lang['noflash']               = 'Lai attēlotu lapas saturu, vajag <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Lejuplādēt «kodiņu»((snippet))';
 $lang['tools']                 = 'Rīki';
 $lang['user_tools']            = 'Lietotāja rīki';
@@ -276,7 +278,7 @@ $lang['i_enableacl']           = 'Lietot ACL (ieteikts)';
 $lang['i_superuser']           = 'Superuser';
 $lang['i_problems']            = 'Instalētājs atrada zemāk minētās problēmas. Kamēr tās nenovērš, nav iespējam turpināt.';
 $lang['i_modified']            = 'Drošības nolūkos šis skripts darbosies tika ar jaunu nemodificētu Dokuwiki instalāciju.
-Vai nu no jauna jāatarhivē faili no lejupielādētās pakas vai jāraugās pēc padoma pilnā Dokuwiki instalācijas instrukcijā <a href="http://dokuwiki.org/install"></a>';
+Vai nu no jauna jāatarhivē faili no lejupielādētās pakas vai jāraugās pēc padoma pilnā Dokuwiki instalācijas instrukcijā <a href="https://www.dokuwiki.org/install"></a>';
 $lang['i_funcna']              = 'PHP funkcija <code>%s</code> nav pieejama. Varbūt jūsu servera īpašnieks to kāda iemesla dēļ atslēdzis?';
 $lang['i_phpver']              = 'Jūsu PHP versija <code>%s</code> ir par vecu. Vajag versiju <code>%s</code>. Atjaunojiet savu PHP instalāciju.';
 $lang['i_mbfuncoverload']      = 'Lai darbinātu  DokuWiki,  php.ini failā ir jāatspējo mbstring.func_overload.';
@@ -333,5 +335,5 @@ $lang['currentns']             = 'Pašreizējā sadaļa';
 $lang['searchresult']          = 'Meklēšanas rezultāti';
 $lang['plainhtml']             = 'Tīrs HTML';
 $lang['wikimarkup']            = 'Viki iezīmēšana valoda';
-$lang['email_signature_text'] = 'Vēstuli nosūtījusi DokuWiki programma no
+$lang['email_signature_text']  = 'Vēstuli nosūtījusi DokuWiki programma no
 @DOKUWIKIURL@';

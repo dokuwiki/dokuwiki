@@ -5,7 +5,7 @@
  * A PHP-Based RSS and Atom Feed Framework.
  * Takes the hard work out of managing a complete RSS/Atom solution.
  *
- * Copyright (c) 2004-2016, Ryan Parman, Geoffrey Sneddon, Ryan McCue, and contributors
+ * Copyright (c) 2004-2017, Ryan Parman, Sam Sneddon, Ryan McCue, and contributors
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
@@ -33,10 +33,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package SimplePie
- * @version 1.4.3
- * @copyright 2004-2016 Ryan Parman, Geoffrey Sneddon, Ryan McCue
+ * @version 1.5.6
+ * @copyright 2004-2017 Ryan Parman, Sam Sneddon, Ryan McCue
  * @author Ryan Parman
- * @author Geoffrey Sneddon
+ * @author Sam Sneddon
  * @author Ryan McCue
  * @link http://simplepie.org/ SimplePie
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -50,7 +50,7 @@ define('SIMPLEPIE_NAME', 'SimplePie');
 /**
  * SimplePie Version
  */
-define('SIMPLEPIE_VERSION', '1.4.3');
+define('SIMPLEPIE_VERSION', '1.5.6');
 
 /**
  * SimplePie Build
@@ -644,6 +644,12 @@ class SimplePie
 	public $strip_htmltags = array('base', 'blink', 'body', 'doctype', 'embed', 'font', 'form', 'frame', 'frameset', 'html', 'iframe', 'input', 'marquee', 'meta', 'noscript', 'object', 'param', 'script', 'style');
 
 	/**
+	 * @var bool Should we throw exceptions, or use the old-style error property?
+	 * @access private
+	 */
+	public $enable_exceptions = false;
+
+	/**
 	 * The SimplePie class contains feed level data and options
 	 *
 	 * To use SimplePie, create the SimplePie object with no parameters. You can
@@ -659,9 +665,9 @@ class SimplePie
 	 */
 	public function __construct()
 	{
-		if (version_compare(PHP_VERSION, '5.3', '<'))
+		if (version_compare(PHP_VERSION, '5.6', '<'))
 		{
-			trigger_error('Please upgrade to PHP 5.3 or newer.');
+			trigger_error('Please upgrade to PHP 5.6 or newer.');
 			die();
 		}
 
@@ -700,7 +706,7 @@ class SimplePie
 	 */
 	public function __destruct()
 	{
-		if ((version_compare(PHP_VERSION, '5.3', '<') || !gc_enabled()) && !ini_get('zend.ze1_compatibility_mode'))
+		if (!gc_enabled())
 		{
 			if (!empty($this->data['items']))
 			{
@@ -804,7 +810,7 @@ class SimplePie
 	}
 
 	/**
-	 * Set the the default timeout for fetching remote feeds
+	 * Set the default timeout for fetching remote feeds
 	 *
 	 * This allows you to change the maximum time the feed's server to respond
 	 * and send the feed back.
@@ -1245,8 +1251,8 @@ class SimplePie
 	/**
 	 * Set the handler to enable the display of cached images.
 	 *
-	 * @param str $page Web-accessible path to the handler_image.php file.
-	 * @param str $qs The query string that the value should be passed to.
+	 * @param string $page Web-accessible path to the handler_image.php file.
+	 * @param string $qs The query string that the value should be passed to.
 	 */
 	public function set_image_handler($page = false, $qs = 'i')
 	{
@@ -1314,6 +1320,11 @@ class SimplePie
 			}
 		}
 
+		// The default sanitize class gets set in the constructor, check if it has
+		// changed.
+		if ($this->registry->get_class('Sanitize') !== 'SimplePie_Sanitize') {
+			$this->sanitize = $this->registry->create('Sanitize');
+		}
 		if (method_exists($this->sanitize, 'set_registry'))
 		{
 			$this->sanitize->set_registry($this->registry);
@@ -1362,7 +1373,8 @@ class SimplePie
 			// Decide whether to enable caching
 			if ($this->cache && $parsed_feed_url['scheme'] !== '')
 			{
-				$cache = $this->registry->call('Cache', 'get_handler', array($this->cache_location, call_user_func($this->cache_name_function, $this->feed_url), 'spc'));
+				$url = $this->feed_url . ($this->force_feed ? '#force_feed' : '');
+				$cache = $this->registry->call('Cache', 'get_handler', array($this->cache_location, call_user_func($this->cache_name_function, $url), 'spc'));
 			}
 
 			// Fetch the data via SimplePie_File into $this->raw_data
@@ -1376,7 +1388,7 @@ class SimplePie
 
 			list($headers, $sniffed) = $fetched;
 		}
-		
+
 		// Empty response check
 		if(empty($this->raw_data)){
 			$this->error = "A feed could not be found at `$this->feed_url`. Empty body.";
@@ -1460,7 +1472,7 @@ class SimplePie
 					// Cache the file if caching is enabled
 					if ($cache && !$cache->save($this))
 					{
-						trigger_error("$this->cache_location is not writeable. Make sure you've set the correct relative or absolute path, and that the location is server-writable.", E_USER_WARNING);
+						trigger_error("$this->cache_location is not writable. Make sure you've set the correct relative or absolute path, and that the location is server-writable.", E_USER_WARNING);
 					}
 					return true;
 				}
@@ -1629,7 +1641,7 @@ class SimplePie
 		if (!$this->force_feed)
 		{
 			// Check if the supplied URL is a feed, if it isn't, look for it.
-			$locate = $this->registry->create('Locator', array(&$file, $this->timeout, $this->useragent, $this->max_checked_feeds));
+			$locate = $this->registry->create('Locator', array(&$file, $this->timeout, $this->useragent, $this->max_checked_feeds, $this->force_fsockopen, $this->curl_options));
 
 			if (!$locate->is_feed($file))
 			{
@@ -1638,33 +1650,18 @@ class SimplePie
 				try
 				{
 					$microformats = false;
-					if (function_exists('Mf2\parse')) {
+					if (class_exists('DOMXpath') && function_exists('Mf2\parse')) {
+						$doc = new DOMDocument();
+						@$doc->loadHTML($file->body);
+						$xpath = new DOMXpath($doc);
 						// Check for both h-feed and h-entry, as both a feed with no entries
 						// and a list of entries without an h-feed wrapper are both valid.
-						$position = 0;
-						while ($position = strpos($file->body, 'h-feed', $position))
-						{
-							$start = $position < 200 ? 0 : $position - 200;
-							$check = substr($file->body, $start, 400);
-							if ($microformats = preg_match('/class="[^"]*h-feed/', $check))
-							{
-								break;
-							}
-							$position += 7;
-						}
-						$position = 0;
-						while ($position = strpos($file->body, 'h-entry', $position))
-						{
-							$start = $position < 200 ? 0 : $position - 200;
-							$check = substr($file->body, $start, 400);
-							if ($microformats = preg_match('/class="[^"]*h-entry/', $check))
-							{
-								break;
-							}
-							$position += 7;
-						}
+						$query = '//*[contains(concat(" ", @class, " "), " h-feed ") or '.
+							'contains(concat(" ", @class, " "), " h-entry ")]';
+						$result = $xpath->query($query);
+						$microformats = $result->length !== 0;
 					}
-					// Now also do feed discovery, but if an h-entry was found don't
+					// Now also do feed discovery, but if microformats were found don't
 					// overwrite the current value of file.
 					$discovered = $locate->find($this->autodiscovery,
 					                            $this->all_discovered_feeds);
@@ -1712,12 +1709,12 @@ class SimplePie
 					$this->data = array('url' => $this->feed_url, 'feed_url' => $file->url, 'build' => SIMPLEPIE_BUILD);
 					if (!$cache->save($this))
 					{
-						trigger_error("$this->cache_location is not writeable. Make sure you've set the correct relative or absolute path, and that the location is server-writable.", E_USER_WARNING);
+						trigger_error("$this->cache_location is not writable. Make sure you've set the correct relative or absolute path, and that the location is server-writable.", E_USER_WARNING);
 					}
 					$cache = $this->registry->call('Cache', 'get_handler', array($this->cache_location, call_user_func($this->cache_name_function, $file->url), 'spc'));
 				}
-				$this->feed_url = $file->url;
 			}
+			$this->feed_url = $file->url;
 			$locate = null;
 		}
 
@@ -1908,14 +1905,15 @@ class SimplePie
 
 	/**
 	 * Get the URL for the feed
-	 * 
+	 *
 	 * When the 'permanent' mode is enabled, returns the original feed URL,
 	 * except in the case of an `HTTP 301 Moved Permanently` status response,
 	 * in which case the location of the first redirection is returned.
 	 *
 	 * When the 'permanent' mode is disabled (default),
 	 * may or may not be different from the URL passed to {@see set_feed_url()},
-	 * depending on whether auto-discovery was used.
+	 * depending on whether auto-discovery was used, and whether there were
+	 * any redirects along the way.
 	 *
 	 * @since Preview Release (previously called `get_feed_url()` since SimplePie 0.8.)
 	 * @todo Support <itunes:new-feed-url>
@@ -2142,10 +2140,8 @@ class SimplePie
 		{
 			return $this->get_link();
 		}
-		else
-		{
-			return $this->subscribe_url();
-		}
+
+		return $this->subscribe_url();
 	}
 
 	/**
@@ -2215,10 +2211,8 @@ class SimplePie
 		{
 			return $this->sanitize($return[0]['data'], SIMPLEPIE_CONSTRUCT_TEXT);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2235,10 +2229,8 @@ class SimplePie
 		{
 			return $categories[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2300,10 +2292,8 @@ class SimplePie
 		{
 			return array_unique($categories);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2320,10 +2310,8 @@ class SimplePie
 		{
 			return $authors[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2398,10 +2386,8 @@ class SimplePie
 		{
 			return array_unique($authors);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2418,10 +2404,8 @@ class SimplePie
 		{
 			return $contributors[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2484,10 +2468,8 @@ class SimplePie
 		{
 			return array_unique($contributors);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2505,10 +2487,8 @@ class SimplePie
 		{
 			return $links[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2600,20 +2580,18 @@ class SimplePie
 			}
 		}
 
-		if (isset($this->data['links'][$rel]))
-		{
-			return $this->data['links'][$rel];
-		}
-		else if (isset($this->data['headers']['link']) &&
-		         preg_match('/<([^>]+)>; rel='.preg_quote($rel).'/',
-		                    $this->data['headers']['link'], $match))
+		if (isset($this->data['headers']['link']) &&
+		    preg_match('/<([^>]+)>; rel='.preg_quote($rel).'/',
+		               $this->data['headers']['link'], $match))
 		{
 			return array($match[1]);
 		}
-		else
+		else if (isset($this->data['links'][$rel]))
 		{
-			return null;
+			return $this->data['links'][$rel];
 		}
+
+		return null;
 	}
 
 	public function get_all_discovered_feeds()
@@ -2668,10 +2646,8 @@ class SimplePie
 		{
 			return $this->sanitize($return[0]['data'], SIMPLEPIE_CONSTRUCT_HTML, $this->get_base($return[0]));
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2704,10 +2680,8 @@ class SimplePie
 		{
 			return $this->sanitize($return[0]['data'], SIMPLEPIE_CONSTRUCT_TEXT);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2748,10 +2722,8 @@ class SimplePie
 		{
 			return $this->sanitize($this->data['headers']['content-language'], SIMPLEPIE_CONSTRUCT_TEXT);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2777,10 +2749,8 @@ class SimplePie
 		{
 			return (float) $match[1];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2809,10 +2779,8 @@ class SimplePie
 		{
 			return (float) $match[2];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2846,10 +2814,8 @@ class SimplePie
 		{
 			return $this->sanitize($return[0]['data'], SIMPLEPIE_CONSTRUCT_TEXT);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2889,10 +2855,8 @@ class SimplePie
 		{
 			return $this->sanitize($return[0]['data'], SIMPLEPIE_CONSTRUCT_IRI, $this->get_base($return[0]));
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 
@@ -2921,10 +2885,8 @@ class SimplePie
 		{
 			return $this->sanitize($return[0]['data'], SIMPLEPIE_CONSTRUCT_IRI, $this->get_base($return[0]));
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2947,10 +2909,8 @@ class SimplePie
 		{
 			return 88.0;
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2973,10 +2933,8 @@ class SimplePie
 		{
 			return 31.0;
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -2996,10 +2954,8 @@ class SimplePie
 		{
 			return $qty;
 		}
-		else
-		{
-			return ($qty > $max) ? $max : $qty;
-		}
+
+		return ($qty > $max) ? $max : $qty;
 	}
 
 	/**
@@ -3021,10 +2977,8 @@ class SimplePie
 		{
 			return $items[$key];
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	/**
@@ -3119,10 +3073,8 @@ class SimplePie
 		{
 			return array_slice($items, $start);
 		}
-		else
-		{
-			return array_slice($items, $start, $end);
-		}
+
+		return array_slice($items, $start, $end);
 	}
 
 	/**
@@ -3149,7 +3101,7 @@ class SimplePie
 
 		if (($url = $this->get_link()) !== null)
 		{
-			return 'http://g.etfv.co/' . urlencode($url);
+			return 'https://www.google.com/s2/favicons?domain=' . urlencode($url);
 		}
 
 		return false;
@@ -3245,16 +3197,12 @@ class SimplePie
 			{
 				return array_slice($items, $start);
 			}
-			else
-			{
-				return array_slice($items, $start, $end);
-			}
+
+			return array_slice($items, $start, $end);
 		}
-		else
-		{
-			trigger_error('Cannot merge zero SimplePie objects', E_USER_WARNING);
-			return array();
-		}
+
+		trigger_error('Cannot merge zero SimplePie objects', E_USER_WARNING);
+		return array();
 	}
 
 	/**

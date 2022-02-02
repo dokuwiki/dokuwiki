@@ -1,4 +1,13 @@
 <?php
+/*><div style="width:60%; margin: auto; background-color: #fcc;
+                border: 1px solid #faa; padding: 0.5em 1em;">
+    <h1 style="font-size: 120%">No PHP Support</h1>
+
+    It seems this server has no PHP support enabled. You will need to
+    enable PHP before you can install and run DokuWiki. Contact your hosting
+    provider if you're unsure what this means.
+
+</div>*/
 /**
  * Dokuwiki installation assistance
  *
@@ -29,30 +38,6 @@ if($LC && $LC != 'en' ) {
 // initialise variables ...
 $error = array();
 
-$dokuwiki_hash = array(
-    '2005-09-22'   => 'e33223e957b0b0a130d0520db08f8fb7',
-    '2006-03-05'   => '51295727f79ab9af309a2fd9e0b61acc',
-    '2006-03-09'   => '51295727f79ab9af309a2fd9e0b61acc',
-    '2006-11-06'   => 'b3a8af76845977c2000d85d6990dd72b',
-    '2007-05-24'   => 'd80f2740c84c4a6a791fd3c7a353536f',
-    '2007-06-26'   => 'b3ca19c7a654823144119980be73cd77',
-    '2008-05-04'   => '1e5c42eac3219d9e21927c39e3240aad',
-    '2009-02-14'   => 'ec8c04210732a14fdfce0f7f6eead865',
-    '2009-12-25'   => '993c4b2b385643efe5abf8e7010e11f4',
-    '2010-11-07'   => '7921d48195f4db21b8ead6d9bea801b8',
-    '2011-05-25'   => '4241865472edb6fa14a1227721008072',
-    '2011-11-10'   => 'b46ff19a7587966ac4df61cbab1b8b31',
-    '2012-01-25'   => '72c083c73608fc43c586901fd5dabb74',
-    '2012-09-10'   => 'eb0b3fc90056fbc12bac6f49f7764df3',
-    '2013-05-10'   => '7b62b75245f57f122d3e0f8ed7989623',
-    '2013-12-08'   => '263c76af309fbf083867c18a34ff5214',
-    '2014-05-05'   => '263c76af309fbf083867c18a34ff5214',
-    '2015-08-10'   => '263c76af309fbf083867c18a34ff5214',
-    '2016-06-26'   => 'fd3abb6d89853dacb032907e619fbd73',
-    '2017-02-19'   => 'e4f2f5a34c9dbcd96a5ecc8f2df25bd9'
-);
-
-
 // begin output
 header('Content-Type: text/html; charset=utf-8');
 ?>
@@ -61,7 +46,7 @@ header('Content-Type: text/html; charset=utf-8');
 <head>
     <meta charset="utf-8" />
     <title><?php echo $lang['i_installer']?></title>
-    <style type="text/css">
+    <style>
         body { width: 90%; margin: 0 auto; font: 84% Verdana, Helvetica, Arial, sans-serif; }
         img { border: none }
         br.cl { clear:both; }
@@ -71,7 +56,7 @@ header('Content-Type: text/html; charset=utf-8');
         select.text, input.text { width: 30em; margin: 0 0.5em; }
         a {text-decoration: none}
     </style>
-    <script type="text/javascript">
+    <script>
         function acltoggle(){
             var cb = document.getElementById('acl');
             var fs = document.getElementById('acldep');
@@ -110,32 +95,39 @@ header('Content-Type: text/html; charset=utf-8');
                 print "</div>\n";
             }
         ?>
-        <a style="background: transparent url(data/security.png) left top no-repeat;
-                  display: block; width:380px; height:73px; border:none; clear:both;"
+        <a style="
+                background: transparent
+                url(data/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png)
+                left top no-repeat;
+                display: block; width:380px; height:73px; border:none; clear:both;"
            target="_blank"
            href="http://www.dokuwiki.org/security#web_access_security"></a>
     </div>
 
     <div style="float: left; width: 58%;">
         <?php
-            if(! (check_functions() && check_permissions()) ){
-                echo '<p>'.$lang['i_problems'].'</p>';
-                print_errors();
-                print_retry();
-            }elseif(!check_configs()){
-                echo '<p>'.$lang['i_modified'].'</p>';
-                print_errors();
-            }elseif(check_data($_REQUEST['d'])){
-                // check_data has sanitized all input parameters
-                if(!store_data($_REQUEST['d'])){
-                    echo '<p>'.$lang['i_failure'].'</p>';
+            try {
+                if(! (check_functions() && check_permissions()) ){
+                    echo '<p>'.$lang['i_problems'].'</p>';
                     print_errors();
+                    print_retry();
+                }elseif(!check_configs()){
+                    echo '<p>'.$lang['i_modified'].'</p>';
+                    print_errors();
+                }elseif(check_data($_REQUEST['d'])){
+                    // check_data has sanitized all input parameters
+                    if(!store_data($_REQUEST['d'])){
+                        echo '<p>'.$lang['i_failure'].'</p>';
+                        print_errors();
+                    }else{
+                        echo '<p>'.$lang['i_success'].'</p>';
+                    }
                 }else{
-                    echo '<p>'.$lang['i_success'].'</p>';
+                    print_errors();
+                    print_form($_REQUEST['d']);
                 }
-            }else{
-                print_errors();
-                print_form($_REQUEST['d']);
+            } catch (Exception $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
             }
         ?>
     </div>
@@ -161,7 +153,7 @@ function print_form($d){
     include(DOKU_CONF.'license.php');
 
     if(!is_array($d)) $d = array();
-    $d = array_map('htmlspecialchars',$d);
+    $d = array_map('hsc',$d);
 
     if(!isset($d['acl'])) $d['acl']=1;
     if(!isset($d['pop'])) $d['pop']=1;
@@ -181,10 +173,12 @@ function print_form($d){
 
             <fieldset id="acldep">
                 <label for="superuser"><?php echo $lang['i_superuser']?></label>
-                <input class="text" type="text" name="d[superuser]" id="superuser" value="<?php echo $d['superuser'] ?>" />
+                <input class="text" type="text" name="d[superuser]" id="superuser"
+                       value="<?php echo $d['superuser'] ?>" />
 
                 <label for="fullname"><?php echo $lang['fullname']?></label>
-                <input class="text" type="text" name="d[fullname]" id="fullname" value="<?php echo $d['fullname'] ?>" />
+                <input class="text" type="text" name="d[fullname]" id="fullname"
+                       value="<?php echo $d['fullname'] ?>" />
 
                 <label for="email"><?php echo $lang['email']?></label>
                 <input class="text" type="text" name="d[email]" id="email" value="<?php echo $d['email'] ?>" />
@@ -197,13 +191,17 @@ function print_form($d){
 
                 <label for="policy"><?php echo $lang['i_policy']?></label>
                 <select class="text" name="d[policy]" id="policy">
-                    <option value="0" <?php echo ($d['policy'] == 0)?'selected="selected"':'' ?>><?php echo $lang['i_pol0']?></option>
-                    <option value="1" <?php echo ($d['policy'] == 1)?'selected="selected"':'' ?>><?php echo $lang['i_pol1']?></option>
-                    <option value="2" <?php echo ($d['policy'] == 2)?'selected="selected"':'' ?>><?php echo $lang['i_pol2']?></option>
+                    <option value="0" <?php echo ($d['policy'] == 0)?'selected="selected"':'' ?>><?php
+                        echo $lang['i_pol0']?></option>
+                    <option value="1" <?php echo ($d['policy'] == 1)?'selected="selected"':'' ?>><?php
+                        echo $lang['i_pol1']?></option>
+                    <option value="2" <?php echo ($d['policy'] == 2)?'selected="selected"':'' ?>><?php
+                        echo $lang['i_pol2']?></option>
                 </select>
 
                 <label for="allowreg">
-                    <input type="checkbox" name="d[allowreg]" id="allowreg" <?php echo(($d['allowreg'] ? ' checked="checked"' : ''));?> />
+                    <input type="checkbox" name="d[allowreg]" id="allowreg" <?php
+                        echo(($d['allowreg'] ? ' checked="checked"' : ''));?> />
                     <?php echo $lang['i_allowreg']?>
                 </label>
             </fieldset>
@@ -216,9 +214,9 @@ function print_form($d){
             if(empty($d['license'])) $d['license'] = 'cc-by-sa';
             foreach($license as $key => $lic){
                 echo '<label for="lic_'.$key.'">';
-                echo '<input type="radio" name="d[license]" value="'.htmlspecialchars($key).'" id="lic_'.$key.'"'.
+                echo '<input type="radio" name="d[license]" value="'.hsc($key).'" id="lic_'.$key.'"'.
                      (($d['license'] === $key)?' checked="checked"':'').'>';
-                echo htmlspecialchars($lic['name']);
+                echo hsc($lic['name']);
                 if($lic['url']) echo ' <a href="'.$lic['url'].'" target="_blank"><sup>[?]</sup></a>';
                 echo '</label>';
             }
@@ -228,8 +226,10 @@ function print_form($d){
         <fieldset>
             <p><?php echo $lang['i_pop_field']?></p>
             <label for="pop">
-                <input type="checkbox" name="d[pop]" id="pop" <?php echo(($d['pop'] ? ' checked="checked"' : ''));?> />
-                <?php echo $lang['i_pop_label']?> <a href="http://www.dokuwiki.org/popularity" target="_blank"><sup>[?]</sup></a>
+                <input type="checkbox" name="d[pop]" id="pop" <?php
+                    echo(($d['pop'] ? ' checked="checked"' : ''));?> />
+                <?php echo $lang['i_pop_label']?>
+                <a href="http://www.dokuwiki.org/popularity" target="_blank"><sup>[?]</sup></a>
             </label>
         </fieldset>
 
@@ -320,6 +320,9 @@ function check_data(&$d){
                 $error[] = sprintf($lang['i_badval'],$lang['email']);
                 $ok      = false;
             }
+        }else{
+            // Since default = 1, browser won't send acl=0 when user untick acl
+            $d['acl'] = '0';
         }
     }
     $d = array_merge($form_default, $d);
@@ -374,13 +377,26 @@ EOT;
 
     if ($d['acl']) {
         // hash the password
-        $phash = new PassHash();
-        $pass = $phash->hash_smd5($d['password']);
+        $phash = new \dokuwiki\PassHash();
+        $pass = $phash->hash_bcrypt($d['password']);
 
         // create users.auth.php
-        // --- user:SMD5password:Real Name:email:groups,comma,seperated
-        $output = join(":",array($d['superuser'], $pass, $d['fullname'], $d['email'], 'admin,user'));
-        $output = @file_get_contents(DOKU_CONF.'users.auth.php.dist')."\n$output\n";
+        $output = <<<EOT
+# users.auth.php
+# <?php exit()?>
+# Don't modify the lines above
+#
+# Userfile
+#
+# Auto-generated by install script
+# Date: $now
+#
+# Format:
+# login:passwordhash:Real Name:email:groups,comma,separated
+
+EOT;
+        // --- user:bcryptpasswordhash:Real Name:email:groups,comma,seperated
+        $output = $output."\n".join(":",array($d['superuser'], $pass, $d['fullname'], $d['email'], 'admin,user'))."\n";
         $ok = $ok && fileWrite(DOKU_LOCAL.'users.auth.php', $output);
 
         // create acl.auth.php
@@ -408,7 +424,7 @@ EOT;
     }
 
     // enable popularity submission
-    if($d['pop']){
+    if(isset($d['pop']) && $d['pop']){
         @touch(DOKU_INC.'data/cache/autosubmit.txt');
     }
 
@@ -469,7 +485,6 @@ function fileWrite($filename, $data) {
 function check_configs(){
     global $error;
     global $lang;
-    global $dokuwiki_hash;
 
     $ok = true;
 
@@ -478,14 +493,6 @@ function check_configs(){
         'users' => DOKU_LOCAL.'users.auth.php',
         'auth'  => DOKU_LOCAL.'acl.auth.php'
     );
-
-    // main dokuwiki config file (conf/dokuwiki.php) must not have been modified
-    $installation_hash = md5(preg_replace("/(\015\012)|(\015)/","\012",
-                             @file_get_contents(DOKU_CONF.'dokuwiki.php')));
-    if (!in_array($installation_hash, $dokuwiki_hash)) {
-        $error[] = sprintf($lang['i_badhash'],$installation_hash);
-        $ok = false;
-    }
 
     // configs shouldn't exist
     foreach ($config_files as $file) {
@@ -558,17 +565,40 @@ function check_functions(){
         $ok = false;
     }
 
+    try {
+        random_bytes(1);
+    } catch (\Exception $th) {
+        // If an appropriate source of randomness cannot be found, an Exception will be thrown by PHP 7+
+        $error[] = $lang['i_urandom'];
+        $ok = false;
+    }
+
+    if(ini_get('mbstring.func_overload') != 0){
+        $error[] = $lang['i_mbfuncoverload'];
+        $ok = false;
+    }
+
     $funcs = explode(' ','addslashes call_user_func chmod copy fgets '.
                          'file file_exists fseek flush filesize ftell fopen '.
-                         'glob header ignore_user_abort ini_get mail mkdir '.
+                         'glob header ignore_user_abort ini_get mkdir '.
                          'ob_start opendir parse_ini_file readfile realpath '.
                          'rename rmdir serialize session_start unlink usleep '.
                          'preg_replace file_get_contents htmlspecialchars_decode '.
-                         'spl_autoload_register stream_select fsockopen pack');
+                         'spl_autoload_register stream_select fsockopen pack xml_parser_create');
 
     if (!function_exists('mb_substr')) {
         $funcs[] = 'utf8_encode';
         $funcs[] = 'utf8_decode';
+    }
+
+    if(!function_exists('mail')){
+        if(strpos(ini_get('disable_functions'),'mail') !== false) {
+            $disabled = $lang['i_disabled'];
+        }
+        else {
+            $disabled = "";
+        }
+        $error[] = sprintf($lang['i_funcnmail'],$disabled);
     }
 
     foreach($funcs as $func){

@@ -1,15 +1,13 @@
-## Enable this to restrict editing to logged in users only
-
 ## You should disable Indexes and MultiViews either here or in the
 ## global config. Symlinks maybe needed for URL rewriting.
 #Options -Indexes -MultiViews +FollowSymLinks
 
 ## make sure nobody gets the htaccess, README, COPYING or VERSION files
 <Files ~ "^([\._]ht|README$|VERSION$|COPYING$)">
-    <IfModule mod_authz_host>
+    <IfModule mod_authz_core.c>
         Require all denied
     </IfModule>
-    <IfModule !mod_authz_host>
+    <IfModule !mod_authz_core.c>
         Order allow,deny
         Deny from all
     </IfModule>

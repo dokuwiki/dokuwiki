@@ -2,21 +2,18 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Patrik K Lundberg <patrik.kotiranta.lundberg@gmail.com>
+ * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
  * @author Håkan Sandell <hakan.sandell@home.se>
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
- * @author emil@sys.nu
  * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
- * @author Tormod Johansson tormod.otter.johansson@gmail.com
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
- * @author mikael@mallander.net
- * @author Smorkster Andersson smorkster@gmail.com
- * @author Tor Härnqvist <tor.harnqvist@gmail.com>
  */
 $lang['menu']                  = 'Hantera användare';
 $lang['noauth']                = '(användarautentisering ej tillgänlig)';
@@ -42,6 +39,7 @@ $lang['filter']                = 'Filter';
 $lang['export_all']            = 'Exportera alla användare (CSV)';
 $lang['export_filtered']       = 'Exportera filtrerade användarlistningen (CSV)';
 $lang['import']                = 'Importera nya användare';
+$lang['line']                  = 'Radnummer.';
 $lang['error']                 = 'Error-meddelande';
 $lang['summary']               = 'Visar användare %1$d-%2$d av %3$d funna. %4$d användare totalt.';
 $lang['nonefound']             = 'Inga användare hittades. %d användare totalt.';
@@ -63,6 +61,7 @@ $lang['add_ok']                = 'Användaren tillagd';
 $lang['add_fail']              = 'Användare kunde inte läggas till';
 $lang['notify_ok']             = 'E-postmeddelande skickat';
 $lang['notify_fail']           = 'E-postmeddelande kunde inte skickas';
+$lang['import_userlistcsv']    = 'Fillista över användare (CSV):';
 $lang['import_success_count']  = 'Användar-import: %d användare funna, %d importerade framgångsrikt.';
 $lang['import_failure_count']  = 'Användar-import: %d misslyckades. Misslyckandena listas nedan.';
 $lang['import_error_baduserid'] = 'Användar-id saknas';
@@ -71,3 +70,12 @@ $lang['import_error_badmail']  = 'Felaktig e-postadress';
 $lang['import_error_upload']   = 'Import misslyckades. Csv-filen kunde inte laddas upp eller är tom.';
 $lang['import_error_readfail'] = 'Import misslyckades. Den uppladdade filen gick inte att läsa.';
 $lang['import_error_create']   = 'Misslyckades att skapa användaren.';
+$lang['import_downloadfailures'] = 'Ladda ner misslyckanden som CSV för korrigering';
+$lang['addUser_error_missing_pass'] = 'Vänligen skapa ett lösenord eller aktivera användarnotifikationer för att aktivera lösenordsgenerering.';
+$lang['addUser_error_pass_not_identical'] = 'De angivna lösenorden var inte identiska.';
+$lang['addUser_error_modPass_disabled'] = 'Ändring av lösenord är för tillfället avaktiverat';
+$lang['addUser_error_name_missing'] = 'Var god fyll i namn på den nya användaren.';
+$lang['addUser_error_modName_disabled'] = 'Ändring av namn är för tillfället avaktiverat';
+$lang['addUser_error_mail_missing'] = 'Var god fyll i e-postadress för den nya användaren.';
+$lang['addUser_error_modMail_disabled'] = 'Ändring av mejladresser är för tillfället avaktiverat';
+$lang['addUser_error_create_event_failed'] = 'Ett plugin förhindrade att den nya användaren lades till. Granska andra möjliga meddelanden för mer information.';

@@ -4,6 +4,7 @@ require_once 'parser.inc.php';
 /**
  * Tests for the implementation of audio and video files
  *
+ * @group parser_media
  * @author  Michael Große <grosse@cosmocode.de>
 */
 class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
@@ -130,5 +131,76 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $rest = '</video>'."\n";
         $substr_start = strlen($url) - strlen($rest);
         $this->assertEquals($rest, substr($url, $substr_start));
+    }
+
+    function testVideoInternalTitle() {
+        $file = 'wiki:kind_zu_katze.ogv';
+        $title = 'Single quote: \' Ampersand: &';
+
+        $Renderer = new Doku_Renderer_xhtml();
+        $url = $Renderer->externalmedia($file, $title, null, null, null, 'cache', 'details', true);
+
+        // make sure the title is escaped just once
+        $this->assertEquals(hsc($title), substr($url, 28, 37));
+    }
+
+    function testSimpleLinkText() {
+        $file = 'wiki:dokuwiki-128.png';
+        $parser_response = p_get_instructions('{{' . $file . '|This is a simple text.}}');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('internalmedia',array($file,'This is a simple text.',null,null,null,'cache','details')),
+            array('cdata',array(null)),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
+    }
+
+    function testLinkTextWithWavedBrackets_1() {
+        $file = 'wiki:dokuwiki-128.png';
+        $parser_response = p_get_instructions('{{' . $file . '|We got a { here.}}');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('internalmedia',array($file,'We got a { here.',null,null,null,'cache','details')),
+            array('cdata',array(null)),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
+    }
+
+    function testLinkTextWithWavedBrackets_2() {
+        $file = 'wiki:dokuwiki-128.png';
+        $parser_response = p_get_instructions('{{' . $file . '|We got a } here.}}');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('internalmedia',array($file,'We got a } here.',null,null,null,'cache','details')),
+            array('cdata',array(null)),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
+    }
+
+    function testLinkTextWithWavedBrackets_3() {
+        $file = 'wiki:dokuwiki-128.png';
+        $parser_response = p_get_instructions('{{' . $file . '|We got a { and a } here.}}');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('internalmedia',array($file,'We got a { and a } here.',null,null,null,'cache','details')),
+            array('cdata',array(null)),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
     }
 }
