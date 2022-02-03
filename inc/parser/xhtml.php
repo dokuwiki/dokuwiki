@@ -204,11 +204,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Render a heading
      *
-     * @param string $text  the text to display
-     * @param int    $level header level
-     * @param int    $pos   byte position in the original source
+     * @param string $text       the text to display
+     * @param int    $level      header level
+     * @param int    $pos        byte position in the original source
+     * @param bool   $returnonly whether to return html or write to doc attribute
+     * @return void|string writes to doc attribute or returns html depends on $returnonly
      */
-    public function header($text, $level, $pos) {
+    public function header($text, $level, $pos, $returnonly = false) {
         global $conf;
 
         if(blank($text)) return; //skip empty headlines
@@ -234,19 +236,25 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $this->finishSectionEdit($pos - 1);
         }
 
-        // write the header
-        $this->doc .= DOKU_LF.'<h'.$level;
+        // build the header
+        $header = DOKU_LF.'<h'.$level;
         if($level <= $conf['maxseclevel']) {
             $data = array();
             $data['target'] = 'section';
             $data['name'] = $text;
             $data['hid'] = $hid;
             $data['codeblockOffset'] = $this->_codeblock;
-            $this->doc .= ' class="'.$this->startSectionEdit($pos, $data).'"';
+            $header .= ' class="'.$this->startSectionEdit($pos, $data).'"';
         }
-        $this->doc .= ' id="'.$hid.'">';
-        $this->doc .= $this->_xmlEntities($text);
-        $this->doc .= "</h$level>".DOKU_LF;
+        $header .= ' id="'.$hid.'">';
+        $header .= $this->_xmlEntities($text);
+        $header .= "</h$level>".DOKU_LF;
+
+        if ($returnonly) {
+            return $header;
+        } else {
+            $this->doc .= $header;
+        }
     }
 
     /**
