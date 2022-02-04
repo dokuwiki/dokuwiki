@@ -7,11 +7,11 @@
  */
 
 use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\Extension\Event;
+use dokuwiki\Form\Form;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Logger;
 use dokuwiki\Subscriptions\MediaSubscriptionSender;
-use dokuwiki\Extension\Event;
-use dokuwiki\Form\Form;
 use dokuwiki\Ui\Media\DisplayRow;
 use dokuwiki\Ui\Media\DisplayTile;
 use dokuwiki\Ui\MediaDiff;
@@ -1690,6 +1690,49 @@ function media_nstree_li($item){
 }
 
 /**
+ * Resizes or crop the given image to the given size
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file filename, path to file
+ * @param string $ext  extension
+ * @param int    $w    desired width
+ * @param int    $h    desired height
+ * @param bool   $crop should a center crop be used?
+ * @return string path to resized or original size if failed
+ */
+function media_mod_image($file, $ext, $w, $h=0, $crop=false)
+{
+    global $conf;
+    if(!$h) $h = $w;
+    // we wont scale up to infinity
+    if($w > 2000 || $h > 2000) return $file;
+
+    $operation = $crop ? 'crop' : 'resize';
+
+    $options = [
+        'quality' => $conf['jpg_quality'],
+        'imconvert' => $conf['im_convert'],
+    ];
+
+    $cache = new \dokuwiki\Cache\CacheImageMod($file, $w, $h, $ext, $crop);
+    if(!$cache->useCache()) {
+        try {
+            Slika::run($file, $options)
+                 ->autorotate()
+                 ->$operation($w, $h)
+                 ->save($cache->cache, $ext);
+            if($conf['fperm']) @chmod($cache->cache, $conf['fperm']);
+        } catch (\splitbrain\slika\Exception $e) {
+            Logger::debug($e->getMessage());
+            return $file;
+        }
+    }
+
+    return $cache->cache;
+}
+
+/**
  * Resizes the given image to the given size
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
@@ -1700,35 +1743,9 @@ function media_nstree_li($item){
  * @param int    $h    desired height
  * @return string path to resized or original size if failed
  */
-function media_resize_image($file, $ext, $w, $h=0){
-    global $conf;
-    if(!$h) $h = $w;
-    // we wont scale up to infinity
-    if($w > 2000 || $h > 2000) return $file;
-
-    //cache
-    $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
-    $mtime = (int) @filemtime($local); // 0 if not exists
-
-    $options = [
-        'quality' => $conf['jpg_quality'],
-        'imconvert' => $conf['im_convert'],
-    ];
-
-    if( $mtime <= (int) @filemtime($file) ) {
-        try {
-            Slika::run($file, $options)
-                                   ->autorotate()
-                                   ->resize($w, $h)
-                                   ->save($local, $ext);
-            if($conf['fperm']) @chmod($local, $conf['fperm']);
-        } catch (\splitbrain\slika\Exception $e) {
-            Logger::debug($e->getMessage());
-            return $file;
-        }
-    }
-
-    return $local;
+function media_resize_image($file, $ext, $w, $h = 0)
+{
+    return media_mod_image($file, $ext, $w, $h, false);
 }
 
 /**
@@ -1742,35 +1759,9 @@ function media_resize_image($file, $ext, $w, $h=0){
  * @param int    $h    desired height
  * @return string path to resized or original size if failed
  */
-function media_crop_image($file, $ext, $w, $h=0){
-    global $conf;
-    if(!$h) $h = $w;
-    // we wont scale up to infinity
-    if($w > 2000 || $h > 2000) return $file;
-
-    //cache
-    $local = getCacheName($file,'.media.'.$w.'x'.$h.'.crop.'.$ext);
-    $mtime = (int) @filemtime($local); // 0 if not exists
-
-    $options = [
-        'quality' => $conf['jpg_quality'],
-        'imconvert' => $conf['im_convert'],
-    ];
-
-    if( $mtime <= (int) @filemtime($file) ) {
-        try {
-            Slika::run($file, $options)
-                                   ->autorotate()
-                                    ->crop($w, $h)
-                                    ->save($local, $ext);
-            if($conf['fperm']) @chmod($local, $conf['fperm']);
-        } catch (\splitbrain\slika\Exception $e) {
-            Logger::debug($e->getMessage());
-            return $file;
-        }
-    }
-
-    return $local;
+function media_crop_image($file, $ext, $w, $h = 0)
+{
+    return media_mod_image($file, $ext, $w, $h, true);
 }
 
 /**
