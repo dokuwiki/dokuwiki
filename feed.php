@@ -334,8 +334,9 @@ function rss_buildItems(&$rss, &$data, $opt)
                             $more  = 'w=' . $size[0] . '&h=' . $size[1] . '&t=' . @filemtime(mediaFN($id));
                             $src_r = ml($id, $more, true, '&amp;', true);
                         }
-                        if ($rev && $size = media_image_preview_size($id, $rev, new JpegMeta(mediaFN($id, $rev)), 300)) {
-                            $more  = 'rev=' . $rev . '&w=' . $size[0] . '&h=' . $size[1];
+                        if ($rev && $size = media_image_preview_size($id, $rev, new JpegMeta(mediaFN($id, $rev)),
+                                300)) {
+                            $more = 'rev=' . $rev . '&w=' . $size[0] . '&h=' . $size[1];
                             $src_l = ml($id, $more, true, '&amp;', true);
                         }
                         $content = '';
@@ -405,7 +406,10 @@ function rss_buildItems(&$rss, &$data, $opt)
                         // make URLs work when canonical is not set, regexp instead of rerendering!
                         if (!$conf['canonical']) {
                             $base    = preg_quote(DOKU_REL, '/');
-                            $content = preg_replace('/(<a href|<img src)="(' . $base . ')/s', '$1="' . DOKU_URL, $content);
+                            $content = preg_replace(
+                                '/(<a href|<img src)="(' . $base . ')/s', '$1="' . DOKU_URL,
+                                $content
+                            );
                         }
                     }
 
