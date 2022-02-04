@@ -19,6 +19,11 @@ class XmlRpcServer extends Server
      */
     public function __construct($wait=false)
     {
+        global $conf;
+        if (!$conf['remote']) {
+            throw new ServerException("XML-RPC server not enabled.", -32605);
+        }
+
         $this->remote = new Api();
         $this->remote->setDateTransformation(array($this, 'toDate'));
         $this->remote->setFileTransformation(array($this, 'toFile'));
