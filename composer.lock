@@ -551,20 +551,20 @@
         },
         {
             "name": "splitbrain/slika",
-            "version": "1.0.4",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/slika.git",
-                "reference": "fda87e816eb150f3608282da962788b4ad509c11"
+                "reference": "be0785cb6b7def847df5d92e0e5fde57def7220f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/slika/zipball/fda87e816eb150f3608282da962788b4ad509c11",
-                "reference": "fda87e816eb150f3608282da962788b4ad509c11",
+                "url": "https://api.github.com/repos/splitbrain/slika/zipball/be0785cb6b7def847df5d92e0e5fde57def7220f",
+                "reference": "be0785cb6b7def847df5d92e0e5fde57def7220f",
                 "shasum": ""
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.0"
+                "phpunit/phpunit": "^8.0"
             },
             "suggest": {
                 "ext-gd": "PHP's builtin image manipulation library. Alternatively use an installation of ImageMagick"
@@ -572,8 +572,8 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "splitbrain\\slika\\tests\\": "tests",
-                    "splitbrain\\slika\\": "src"
+                    "splitbrain\\slika\\": "src",
+                    "splitbrain\\slika\\tests\\": "tests"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -589,9 +589,9 @@
             "description": "Simple image resizing",
             "support": {
                 "issues": "https://github.com/splitbrain/slika/issues",
-                "source": "https://github.com/splitbrain/slika/tree/master"
+                "source": "https://github.com/splitbrain/slika/tree/1.0.5"
             },
-            "time": "2020-09-07T18:35:00+00:00"
+            "time": "2022-02-04T22:41:26+00:00"
         }
     ],
     "packages-dev": [],
@@ -617,5 +617,5 @@
     "platform-overrides": {
         "php": "7.2"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }
