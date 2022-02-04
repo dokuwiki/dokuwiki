@@ -3,17 +3,19 @@
 
 namespace splitbrain\slika;
 
-
+/**
+ * Factory to process an image using an available Adapter
+ */
 class Slika
 {
-    /** @var int rotate an image counter clock wise */
+    /** rotate an image counter clock wise */
     const ROTATE_CCW = 8;
-    /** @var int rotate an image clock wise */
+    /** rotate an image clock wise */
     const ROTATE_CW = 6;
-    /** @var int rotate on it's head */
+    /** rotate on it's head */
     const ROTATE_TOPDOWN = 3;
 
-
+    /** these can be overwritten using the options array in run() */
     const DEFAULT_OPTIONS = [
         'quality' => 92,
         'imconvert' => '/usr/bin/convert',
