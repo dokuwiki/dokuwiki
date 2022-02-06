@@ -98,6 +98,10 @@ abstract class Diff extends Ui
         if ($INPUT->has('rev')) {
             $this->rev1 = $INPUT->int('rev');
             $this->rev2 = $this->changelog->currentRevision();
+            if ($this->rev2 <= $this->rev1) {
+                // fallback to compare previous with current
+                 unset($this->rev1, $this->rev2);
+            }
         }
 
         // submit button with two checked boxes, eg. &do=diff&rev2[0]=#&rev2[1]=#
@@ -109,9 +113,8 @@ abstract class Diff extends Ui
             $this->rev2 = (int)$this->changelog->traceCurrentRevision($rev2);
         }
 
-
+       // no revision was given, compare previous to current
         if (!isset($this->rev1, $this->rev2)) {
-            // no revision was given, compare previous to current
             $rev2 = $this->changelog->currentRevision();
             if ($rev2 > $this->changelog->lastRevision()) {
                 $rev1 = $this->changelog->lastRevision();
