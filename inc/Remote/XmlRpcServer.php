@@ -25,6 +25,16 @@ class XmlRpcServer extends Server
         parent::__construct(false, false, $wait);
     }
 
+    /** @inheritdoc  */
+    public function serve($data = false)
+    {
+        global $conf;
+        if (!$conf['remote']) {
+            throw new ServerException("XML-RPC server not enabled.", -32605);
+        }
+        parent::serve($data);
+    }
+
     /**
      * @inheritdoc
      */
