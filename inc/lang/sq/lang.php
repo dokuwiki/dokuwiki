@@ -159,7 +159,7 @@ $lang['created']               = 'u krijua';
 $lang['restored']              = 'Kthehu tek një version i vjetër (%s)';
 $lang['external_edit']         = 'redaktim i jashtëm';
 $lang['summary']               = 'Përmbledhja redaktimit';
-$lang['noflash']               = 'Nevojitet <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> për të paraqitur këtë përmbajtje.';
+$lang['noflash']               = 'Nevojitet <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> për të paraqitur këtë përmbajtje.';
 $lang['download']              = 'Shkarko Copën';
 $lang['mail_newpage']          = 'faqje u shtua:';
 $lang['mail_changed']          = 'faqja u ndryshua:';
@@ -226,7 +226,7 @@ $lang['i_enableacl']           = 'Aktivizo ACL (rekomanduar)';
 $lang['i_superuser']           = 'Superpërdorues';
 $lang['i_problems']            = 'Installer-i gjeti disa probleme, të shfaqura më poshtë. Nuk mund të vazhdoni derisa t\'i keni rregulluar.';
 $lang['i_modified']            = 'Për arsye sigurie ky skript do të punojë vetëm me një instalim të ri dhe të pamodifikuar DokuWiki.
-Ose duhet të ekstraktoni skedarët nga e para nga pakoja e shkarkimit ose konsultohuni me <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a>';
+Ose duhet të ekstraktoni skedarët nga e para nga pakoja e shkarkimit ose konsultohuni me <a href="https://www.dokuwiki.org/install">Dokuwiki installation instructions</a>';
 $lang['i_funcna']              = 'Funksioni PHP <code>%s</code> nuk është i disponueshëm. Mbase siguruesi juaj i host-it e ka çaktivizuar për ndonjë arsye?';
 $lang['i_phpver']              = 'Versioni juaj i PHP <code>%s</code> është më i vogël se ai i duhuri <code>%s</code>. Duhet të përditësoni instalimin tuaj të PHP-së.';
 $lang['i_permfail']            = '<code>%s</code> nuk është e shkruajtshme nga DokuWiki. Duhet të rregulloni lejet e përdorimit për këtë direktori.';

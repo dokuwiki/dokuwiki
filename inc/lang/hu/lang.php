@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Hamp Gábor <gabor.hamp@gmail.com>
+ * @author Viktor Horváth <horvath.viktor@forrastrend.hu>
  * @author Ziegler Gábor <gziegler@freemail.hu>
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
@@ -121,6 +122,9 @@ $lang['search_past_7_days']    = 'Elmúlt héten';
 $lang['search_past_month']     = 'Elmúlt hónapban';
 $lang['search_past_year']      = 'Az elmúlt évben';
 $lang['search_sort_by_mtime']  = 'Utolsó módosítás időpontja szerint rendezve';
+$lang['search_exact_match']    = 'pontos egyezés';
+$lang['search_custom_match']   = 'egyéni';
+$lang['search_sort_by_hits']   = 'találatok szerinti rendezés';
 $lang['regmissing']            = 'Sajnáljuk, az összes mezőt ki kell töltened.';
 $lang['reguexists']            = 'Sajnáljuk, ilyen azonosítójú felhasználónk már van.';
 $lang['regsuccess']            = 'A felhasználói azonosítót létrehoztuk. A jelszót postáztuk.';
@@ -211,7 +215,7 @@ $lang['created']               = 'létrehozva';
 $lang['restored']              = 'régebbi változat helyreállítva (%s)';
 $lang['external_edit']         = 'külső szerkesztés';
 $lang['summary']               = 'A változások összefoglalása';
-$lang['noflash']               = 'Ennek a tartalomnak a megtekintéséhez <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> szükséges.';
+$lang['noflash']               = 'Ennek a tartalomnak a megtekintéséhez <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> szükséges.';
 $lang['download']              = 'Kódrészlet letöltése';
 $lang['tools']                 = 'Eszközök';
 $lang['user_tools']            = 'Felhasználói eszközök';
@@ -292,7 +296,7 @@ $lang['i_enableacl']           = 'Hozzáférési listák engedélyezése (ajánl
 $lang['i_superuser']           = 'Adminisztrátor';
 $lang['i_problems']            = 'A Beállító Varázsló a következő problémák miatt megakadt. Nem tudjuk folytatni, amíg ezek nincsenek elhárítva!';
 $lang['i_modified']            = 'Biztonsági okokból ez a Varázsló csak új és módosítatlan DokuWiki változaton működik.
-Csomagold ki újra a fájlokat a letöltött csomagból, vagy nézd meg a teljes <a href="http://dokuwiki.org/install">Dokuwiki telepítési útmutatót</a>.';
+Csomagold ki újra a fájlokat a letöltött csomagból, vagy nézd meg a teljes <a href="https://www.dokuwiki.org/install">Dokuwiki telepítési útmutatót</a>.';
 $lang['i_funcna']              = 'A <code>%s</code> PHP funkció nem elérhető. Esetleg a tárhelyszolgáltató letiltotta biztonsági okok miatt?';
 $lang['i_phpver']              = 'A PHP <code>%s</code> verziója alacsonyabb, mint ami szükséges lenne: <code>%s</code>. Frissítsd a PHP-det újabb verzióra!';
 $lang['i_mbfuncoverload']      = 'A DokuWiki futtatásához az mbstring.func_overload opciót ki kell kapcsolni a php.ini-ben.';

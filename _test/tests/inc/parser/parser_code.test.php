@@ -353,4 +353,3 @@ class TestOfDoku_Parser_Code extends TestOfDoku_Parser {
     }
 
 }
-

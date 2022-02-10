@@ -18,12 +18,8 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
         parent::setup();
         global $cache_revinfo;
         $cache =& $cache_revinfo;
-        if(isset($cache['nonexist'])) {
-            unset($cache['nonexist']);
-        }
-        if(isset($cache['mailinglist'])) {
-            unset($cache['mailinglist']);
-        }
+        unset($cache['nonexist']);
+        unset($cache['mailinglist']);
     }
 
     /**

@@ -3,7 +3,9 @@
 
 namespace splitbrain\slika;
 
-
+/**
+ * Image processing adapter for PHP's libGD
+ */
 class GdAdapter extends Adapter
 {
     /** @var resource libGD image */

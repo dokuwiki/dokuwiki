@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Hamp Gábor <gabor.hamp@gmail.com>
+ * @author Viktor Horváth <horvath.viktor@forrastrend.hu>
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos <schilling.janos@gmail.com>

@@ -2,9 +2,6 @@
 
 namespace dokuwiki\Ui;
 
-use dokuwiki\Extension\Event;
-use dokuwiki\Form\Form;
-
 /**
  * DokuWiki Backlinks Interface
  *

@@ -57,8 +57,13 @@ class action_plugin_extension extends DokuWiki_Action_Plugin
         switch ($act) {
             case 'enable':
             case 'disable':
-                $extension->$act(); //enables/disables
+                if(getSecurityToken() != $INPUT->str('sectok')) {
+                    http_status(403);
+                    echo 'Security Token did not match. Possible CSRF attack.';
+                    return;
+                }
 
+                $extension->$act(); //enables/disables
                 $reverse = ($act == 'disable') ? 'enable' : 'disable';
 
                 $return = array(

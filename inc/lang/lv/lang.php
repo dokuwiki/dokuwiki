@@ -197,7 +197,7 @@ $lang['created']               = 'izveidots';
 $lang['restored']              = 'vecā versija atjaunota (%s)';
 $lang['external_edit']         = 'ārpussistēmas labojums';
 $lang['summary']               = 'Anotācija';
-$lang['noflash']               = 'Lai attēlotu lapas saturu, vajag <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
+$lang['noflash']               = 'Lai attēlotu lapas saturu, vajag <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Lejuplādēt «kodiņu»((snippet))';
 $lang['tools']                 = 'Rīki';
 $lang['user_tools']            = 'Lietotāja rīki';
@@ -278,7 +278,7 @@ $lang['i_enableacl']           = 'Lietot ACL (ieteikts)';
 $lang['i_superuser']           = 'Superuser';
 $lang['i_problems']            = 'Instalētājs atrada zemāk minētās problēmas. Kamēr tās nenovērš, nav iespējam turpināt.';
 $lang['i_modified']            = 'Drošības nolūkos šis skripts darbosies tika ar jaunu nemodificētu Dokuwiki instalāciju.
-Vai nu no jauna jāatarhivē faili no lejupielādētās pakas vai jāraugās pēc padoma pilnā Dokuwiki instalācijas instrukcijā <a href="http://dokuwiki.org/install"></a>';
+Vai nu no jauna jāatarhivē faili no lejupielādētās pakas vai jāraugās pēc padoma pilnā Dokuwiki instalācijas instrukcijā <a href="https://www.dokuwiki.org/install"></a>';
 $lang['i_funcna']              = 'PHP funkcija <code>%s</code> nav pieejama. Varbūt jūsu servera īpašnieks to kāda iemesla dēļ atslēdzis?';
 $lang['i_phpver']              = 'Jūsu PHP versija <code>%s</code> ir par vecu. Vajag versiju <code>%s</code>. Atjaunojiet savu PHP instalāciju.';
 $lang['i_mbfuncoverload']      = 'Lai darbinātu  DokuWiki,  php.ini failā ir jāatspējo mbstring.func_overload.';

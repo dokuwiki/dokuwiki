@@ -216,7 +216,7 @@ $lang['created']               = '만듦';
 $lang['restored']              = '이전 판으로 되돌림 (%s)';
 $lang['external_edit']         = '바깥 편집';
 $lang['summary']               = '편집 요약';
-$lang['noflash']               = '이 내용을 표시하기 위해서 <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash 플러그인</a>이 필요합니다.';
+$lang['noflash']               = '이 내용을 표시하기 위해서 <a href="http://get.adobe.com/flashplayer">Adobe Flash 플러그인</a>이 필요합니다.';
 $lang['download']              = '조각 다운로드';
 $lang['tools']                 = '도구';
 $lang['user_tools']            = '사용자 도구';
