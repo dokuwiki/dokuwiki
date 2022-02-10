@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Hamp Gábor <gabor.hamp@gmail.com>
  * @author Viktor Horváth <horvath.viktor@forrastrend.hu>
  * @author Ziegler Gábor <gziegler@freemail.hu>
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
@@ -73,6 +74,7 @@ $lang['badpassconfirm']        = 'Hibás jelszó';
 $lang['minoredit']             = 'Apróbb változások';
 $lang['draftdate']             = 'Piszkozat elmentve:';
 $lang['nosecedit']             = 'Időközben megváltozott az oldal, emiatt a szakasz nem friss. Töltsd újra az egész oldalt!';
+$lang['search_fullresults']    = 'Teljes szöveg';
 $lang['js']['willexpire']      = 'Az oldalszerkesztési zárolásod körülbelül egy percen belül lejár.\nAz ütközések elkerülése végett használd az előnézet gombot a zárolásod frissítéséhez.';
 $lang['js']['notsavedyet']     = 'Elmentetlen változások vannak, amelyek el fognak veszni.
 Tényleg ezt akarod?';
@@ -115,14 +117,14 @@ $lang['js']['media_done_btn']  = 'Kész';
 $lang['js']['media_drop']      = 'Húzd ide a fájlokat a feltöltéshez';
 $lang['js']['media_cancel']    = 'eltávolítás';
 $lang['js']['media_overwrt']   = 'Meglévő fájlok felülírása';
+$lang['search_any_time']       = 'Bármikor';
+$lang['search_past_7_days']    = 'Elmúlt héten';
+$lang['search_past_month']     = 'Elmúlt hónapban';
+$lang['search_past_year']      = 'Az elmúlt évben';
+$lang['search_sort_by_mtime']  = 'Utolsó módosítás időpontja szerint rendezve';
 $lang['search_exact_match']    = 'pontos egyezés';
 $lang['search_custom_match']   = 'egyéni';
-$lang['search_any_time']       = 'bármikor';
-$lang['search_past_7_days']    = 'utolsó hét';
-$lang['search_past_month']     = 'utolsó hónap';
-$lang['search_past_year']      = 'utolsó év';
 $lang['search_sort_by_hits']   = 'találatok szerinti rendezés';
-$lang['search_sort_by_mtime']  = 'utoljára módosítottak szerinti rendezés';
 $lang['regmissing']            = 'Sajnáljuk, az összes mezőt ki kell töltened.';
 $lang['reguexists']            = 'Sajnáljuk, ilyen azonosítójú felhasználónk már van.';
 $lang['regsuccess']            = 'A felhasználói azonosítót létrehoztuk. A jelszót postáztuk.';
@@ -159,7 +161,7 @@ $lang['txt_upload']            = 'Válaszd ki a feltöltendő fájlt:';
 $lang['txt_filename']          = 'Feltöltési név (elhagyható):';
 $lang['txt_overwrt']           = 'Létező fájl felülírása';
 $lang['maxuploadsize']         = 'Maximum %s méretű fájlokat tölthetsz fel.';
-$lang['allowedmime']           = 'engedélyezett fájlkiterjesztések listája';
+$lang['allowedmime']           = 'A megengedett fájlkiterjesztések listája';
 $lang['lockedby']              = 'Jelenleg zárolta:';
 $lang['lockexpire']            = 'A zárolás lejár:';
 $lang['rssfailed']             = 'Hiba történt a hírfolyam betöltésekor: ';
