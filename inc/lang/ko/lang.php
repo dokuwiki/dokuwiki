@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author merefox <admin@homerecz.com>
  * @author pavement <pavement@rael.cc>
  * @author Traend <Traend@ruu.kr>
  * @author Seungheon Song <esketch@gmail.com>
@@ -51,7 +52,7 @@ $lang['btn_back']              = '뒤로';
 $lang['btn_backlink']          = '역링크';
 $lang['btn_subscribe']         = '구독 관리';
 $lang['btn_profile']           = '프로필 업데이트';
-$lang['btn_reset']             = '재';
+$lang['btn_reset']             = '재설정';
 $lang['btn_resendpwd']         = '새 비밀번호 설정';
 $lang['btn_draft']             = '초안 편집';
 $lang['btn_recover']           = '초안 복구';
