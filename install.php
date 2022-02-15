@@ -21,6 +21,7 @@ if (!defined('DOKU_LOCAL')) define('DOKU_LOCAL', DOKU_INC . 'conf/');
 
 // load and initialize the core system
 require_once(DOKU_INC . 'inc/init.php');
+require_once(DOKU_INC . 'inc/pageutils.php');
 
 // check for error reporting override or set error reporting to sane values
 if (!defined('DOKU_E_LEVEL')) {
@@ -306,7 +307,7 @@ function check_data(&$d)
             $ok      = false;
         }
         if (isset($d['acl'])) {
-            if (!preg_match('/^[a-z0-9_]+$/', $d['superuser'])) {
+            if (empty($d['superuser']) || ($d['superuser'] !== cleanID($d['superuser']))) {
                 $error[] = sprintf($lang['i_badval'], $lang['i_superuser']);
                 $ok      = false;
             }
