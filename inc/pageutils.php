@@ -280,6 +280,8 @@ function sectionID($title, &$check)
  */
 function page_exists($id, $rev = '', $clean = true, $date_at = false)
 {
+    $id = (explode('#', $id, 2))[0]; // #3608
+
     if ($rev !== '' && $date_at) {
         $pagelog = new PageChangeLog($id);
         $pagelog_rev = $pagelog->getLastRevisionAt($rev);
