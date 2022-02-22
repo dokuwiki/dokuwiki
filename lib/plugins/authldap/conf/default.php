@@ -20,4 +20,5 @@ $conf['userkey']    = 'uid';
 $conf['groupkey']   = 'cn';
 $conf['debug']      = 0;
 $conf['modPass']    = 1;
+$conf['modPassPlain'] = 0;
 $conf['attributes'] = array();
