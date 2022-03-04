@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author NawanP <saya@nawan.my.id>
  * @author rusly-id <rusly-id@users.noreply.github.com>
  * @author mubaidillah <mubaidillah@gmail.com>
  * @author Irwan Butar Butar <irwansah.putra@gmail.com>
@@ -24,6 +25,7 @@ $lang['btn_show']              = 'Tampilkan halaman';
 $lang['btn_create']            = 'Buat halaman baru';
 $lang['btn_search']            = 'Cari';
 $lang['btn_save']              = 'Simpan';
+$lang['btn_preview']           = 'Pratayang';
 $lang['btn_top']               = 'kembali ke atas';
 $lang['btn_newer']             = '<< lebih lanjut';
 $lang['btn_older']             = 'sebelumnya >>';
@@ -32,6 +34,7 @@ $lang['btn_recent']            = 'Perubahan terbaru';
 $lang['btn_upload']            = 'Upload';
 $lang['btn_cancel']            = 'Batal';
 $lang['btn_index']             = 'Indeks';
+$lang['btn_secedit']           = 'Sunting';
 $lang['btn_login']             = 'Login';
 $lang['btn_logout']            = 'Keluar';
 $lang['btn_admin']             = 'Admin';
@@ -41,7 +44,9 @@ $lang['btn_back']              = 'Kembali';
 $lang['btn_backlink']          = 'Backlinks';
 $lang['btn_subscribe']         = 'Ikuti Perubahan';
 $lang['btn_profile']           = 'Ubah Profil';
+$lang['btn_reset']             = 'Atur ulang';
 $lang['btn_resendpwd']         = 'Atur password baru';
+$lang['btn_draft']             = 'Sunting draf';
 $lang['btn_recover']           = 'Cadangkan draf';
 $lang['btn_draftdel']          = 'Hapus draft';
 $lang['btn_revert']            = 'Kembalikan';
