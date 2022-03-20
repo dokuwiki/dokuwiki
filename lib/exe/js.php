@@ -186,10 +186,12 @@ function js_load($file){
 
         if($ifile[0] != '/') $ifile = dirname($file).'/'.$ifile;
 
+        $idata = '';
         if(file_exists($ifile)){
-            $idata = io_readFile($ifile);
-        }else{
-            $idata = '';
+          $ismin = (substr($ifile,-7) == '.min.js');;
+          if($ismin) $idata .= "\n/* BEGIN NOCOMPRESS */\n";
+          $idata .= io_readFile($ifile);
+          if($ismin) $idata .= "\n/* END NOCOMPRESS */\n";
         }
         $data  = str_replace($match[0],$idata,$data);
     }
@@ -347,14 +349,13 @@ function js_compress($s){
     $result = '';       // we store the final result here
 
     // items that don't need spaces next to them
-    $chars = "^&|!+\-*\/%=\?:;,{}()<>% \t\n\r'\"[]";
+    $chars = "^&|!+\-*\/%=\?:;,{}()<>% \t\n\r'\"`[]~^";
 
     // items which need a space if the sign before and after whitespace is equal.
     // E.g. '+ ++' may not be compressed to '+++' --> syntax error.
-    $ops = "+-";
+    $ops = "+-/";
 
-    $regex_starters = array("(", "=", "[", "," , ":", "!", "&", "|");
-
+    $regex_starters = array("(", "=", "<", ">", "?", "[", "{", ",", ";", ":", "!", "&", "|", "+", "-", "%", "~", "^", "return", "yield", "else", "throw", "await");
     $whitespaces_chars = array(" ", "\t", "\n", "\r", "\0", "\x0B");
 
     while($i < $slen){
@@ -374,8 +375,22 @@ function js_compress($s){
 
             // check if this is a NOCOMPRESS comment
             if(substr($s, $i, $endC+2-$i) == '/* BEGIN NOCOMPRESS */'){
-                $endNC = strpos($s, '/* END NOCOMPRESS */', $endC+2);
-                if($endNC === false) trigger_error('Found invalid NOCOMPRESS comment', E_USER_ERROR);
+                // take nested NOCOMPRESS comments into account
+                $depth = 0;
+                $nextNC = $endC;
+                do {
+                  $beginNC = strpos($s, '/* BEGIN NOCOMPRESS */', $nextNC+2);
+                  $endNC = strpos($s, '/* END NOCOMPRESS */', $nextNC+2);
+
+                  if ($endNC === false) trigger_error('Found invalid NOCOMPRESS comment', E_USER_ERROR);
+                  if ($beginNC !== false && $beginNC < $endNC) {
+                    $depth++;
+                    $nextNC = $beginNC;
+                  } else {
+                    $depth--;
+                    $nextNC = $endNC;
+                  }
+                } while ($depth >= 0);
 
                 // verbatim copy contents, trimming but putting it on its own line
                 $result .= "\n".trim(substr($s, $i + 22, $endNC - ($i + 22)))."\n"; // BEGIN comment = 22 chars
@@ -401,13 +416,27 @@ function js_compress($s){
             while(in_array($s[$i-$j], $whitespaces_chars)){
                 $j = $j + 1;
             }
-            if( in_array($s[$i-$j], $regex_starters) ){
+            if (current(array_filter(
+                $regex_starters,
+                function($e) use ($s, $i, $j) {
+                    $len = strlen($e);
+                    $idx = $i-$j+1-$len;
+                    return substr($s, $idx, $len) ===  $e;
+                }
+            ))) {
                 // yes, this is an re
                 // now move forward and find the end of it
                 $j = 1;
-                while($s[$i+$j] != '/'){
+                // we set this flag when inside a character class definition, enclosed by brackets [] where '/' does not terminate the re
+                $ccd = false;
+                while($ccd || $s[$i+$j] != '/'){
                     if($s[$i+$j] == '\\') $j = $j + 2;
-                    else $j++;
+                    else {
+                      $j++;
+                      // check if we entered/exited a character class definition and set flag accordingly
+                      if ($s[$i+$j-1] == '[') $ccd = true;
+                      else if ($s[$i+$j-1] == ']') $ccd = false;
+                    }
                 }
                 $result .= substr($s,$i,$j+1);
                 $i = $i + $j + 1;
@@ -438,6 +467,24 @@ function js_compress($s){
             $j = 1;
             while( ($i+$j < $slen) && $s[$i+$j] != "'" ){
                 if( $s[$i+$j] == '\\' && ($s[$i+$j+1] == "'" || $s[$i+$j+1] == '\\') ){
+                    $j += 2;
+                }else{
+                    $j += 1;
+                }
+            }
+            $string = substr($s,$i,$j+1);
+            // remove multiline markers:
+            $string  = str_replace("\\\n",'',$string);
+            $result .= $string;
+            $i = $i + $j + 1;
+            continue;
+        }
+
+        // backtick strings
+        if($ch == "`"){
+            $j = 1;
+            while( ($i+$j < $slen) && $s[$i+$j] != "`" ){
+                if( $s[$i+$j] == '\\' && ($s[$i+$j+1] == "`" || $s[$i+$j+1] == '\\') ){
                     $j += 2;
                 }else{
                     $j += 1;
