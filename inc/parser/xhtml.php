@@ -46,6 +46,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /** @var array list of allowed URL schemes */
     protected $schemes = null;
 
+    /** @var int counts the number of footnotes to avoid collisions even if multiple docs are parsed. */
+    public static $fnid = 0;
+
     /**
      * Register a new edit section range
      *
@@ -433,10 +436,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Andreas Gohr
      */
     public function footnote_close() {
-        /** @var $fnid int takes track of seen footnotes, assures they are unique even across multiple docs FS#2841 */
-        static $fnid = 0;
         // assign new footnote id (we start at 1)
-        $fnid++;
+        self::$fnid++;
 
         // recover footnote into the stack and restore old content
         $footnote    = $this->doc;
@@ -448,14 +449,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         if($i === false) {
             // its a new footnote, add it to the $footnotes array
-            $this->footnotes[$fnid] = $footnote;
+            $this->footnotes[self::$fnid] = $footnote;
         } else {
             // seen this one before, save a placeholder
-            $this->footnotes[$fnid] = "@@FNT".($i);
+            $this->footnotes[self::$fnid] = "@@FNT".($i);
         }
 
         // output the footnote reference and link
-        $this->doc .= '<sup><a href="#fn__'.$fnid.'" id="fnt__'.$fnid.'" class="fn_top">'.$fnid.')</a></sup>';
+        $this->doc .= '<sup><a href="#fn__'.self::$fnid.'" id="fnt__'.self::$fnid.'" class="fn_top">'.self::$fnid.')</a></sup>';
     }
 
     /**
