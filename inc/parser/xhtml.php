@@ -456,7 +456,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         // output the footnote reference and link
-        $this->doc .= '<sup><a href="#fn__'.self::$fnid.'" id="fnt__'.self::$fnid.'" class="fn_top">'.self::$fnid.')</a></sup>';
+        $this->doc .= vsprintf(
+            '<sup><a href="#fn__%d" id="fnt__%d" class="fn_top">%d)</a></sup>',
+            array_fill(0, 3, self::$fnid));
     }
 
     /**
