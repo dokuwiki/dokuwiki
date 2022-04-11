@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
@@ -222,7 +222,7 @@ $lang['mediaview']             = 'Afficher le fichier original';
 $lang['mediaroot']             = 'racine';
 $lang['mediaupload']           = 'Envoyez un fichier dans la catégorie actuelle. Pour créer des sous-catégories, préfixez en le nom du fichier séparées par un double-point, après avoir choisis le(s) fichier(s). Le(s) fichier(s) peuvent également être envoyé(s) par glisser-déposer (drag &amp; drop)';
 $lang['mediaextchange']        = 'Extension du fichier modifiée de .%s en .%s !';
-$lang['reference']             = 'Utilisé par';
+$lang['reference']             = 'Utilisé sur';
 $lang['ref_inuse']             = 'Le fichier ne peut être effacé car il est toujours utilisé par les pages suivantes :';
 $lang['ref_hidden']            = 'Des références sont présentes dans des pages que vous ne pouvez pas voir (autorisations insuffisantes)';
 $lang['hits']                  = 'Occurrences trouvées';
