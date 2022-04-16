@@ -772,7 +772,7 @@ class HTTPClient {
         foreach($lines as $line){
             @list($key, $val) = explode(':',$line,2);
             $key = trim($key);
-            $val = trim($val);
+            $val = trim($val ?? '');
             $key = strtolower($key);
             if(!$key) continue;
             if(isset($headers[$key])){

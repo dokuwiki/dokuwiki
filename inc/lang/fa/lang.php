@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Faramarz Karamizadeh <f.karamizadeh@yahoo.com>
  * @author علیرضا ایوز <info@alirezaivaz.ir>
  * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  * @author behrad eslamifar <behrad_es@yahoo.com)
@@ -124,6 +125,7 @@ $lang['js']['media_done_btn']  = 'انجام شد';
 $lang['js']['media_drop']      = 'فایل‌ها را در اینجا قرار دهید تا آپلود شود';
 $lang['js']['media_cancel']    = 'حذف';
 $lang['js']['media_overwrt']   = 'جاینوشت فایل‌های موجود';
+$lang['js']['data_insecure']   = 'هشدار: به نظر می رسد فهرست اطلاعات شما به درستی ایمن نشده است. لطفاً درباره <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a> بخوانید.';
 $lang['search_exact_match']    = 'دقیقا برابر';
 $lang['search_starts_with']    = 'شروع بشود با';
 $lang['search_ends_with']      = 'پایان یابد با';
@@ -172,6 +174,7 @@ $lang['txt_upload']            = 'فایل را برای آپلود انتخاب
 $lang['txt_filename']          = 'ارسال به صورت (اختیاری):';
 $lang['txt_overwrt']           = 'بر روی فایل موجود بنویس';
 $lang['maxuploadsize']         = 'حداکثر %s برای هر فایل مجاز است.';
+$lang['allowedmime']           = 'لیست پسوندهای مجاز فایل';
 $lang['lockedby']              = 'در حال حاضر قفل شده است:';
 $lang['lockexpire']            = 'قفل منقضی می‌شود در:';
 $lang['rssfailed']             = 'بروز خطا در هنگام واکشی این فید:';
@@ -225,7 +228,7 @@ $lang['created']               = 'ایجاد شد';
 $lang['restored']              = 'یک نگارش پیشین واگردانی شد. (%s)';
 $lang['external_edit']         = 'ویرایش خارجی';
 $lang['summary']               = 'پیش‌نمایش';
-$lang['noflash']               = 'برای نمایش محتویات <a href="http://www.adobe.com/products/flashplayer/">افزونه‌ی فلش</a> مورد نیاز است.';
+$lang['noflash']               = 'برای نمایش محتویات <a href="http://get.adobe.com/flashplayer">افزونه‌ی فلش</a> مورد نیاز است.';
 $lang['download']              = 'دیافت فایل منقطع گردید';
 $lang['tools']                 = 'ابزار';
 $lang['user_tools']            = 'ابزار کاربر';
@@ -305,8 +308,10 @@ $lang['i_wikiname']            = 'نام ویکی';
 $lang['i_enableacl']           = 'فعال بودن کنترل دسترسی‌ها (توصیه شده)';
 $lang['i_superuser']           = 'کاربر اصلی';
 $lang['i_problems']            = 'نصب کننده با مشکلات زیر مواجه شد. در صورت رفع این مشکلات، امکان ادامه نصب خواهد بود.';
-$lang['i_modified']            = 'به دلایل امنیتی، این اسکریپت فقط با نصب تازه و بدون تغییر دوکوویکی کار خواهد کرد. شما باید دوباره فایل فشرده را باز کنید <a href="http://dokuwiki.org/install">راهنمای نصب DokuWiki</a> را بررسی کنید.';
+$lang['i_modified']            = 'به دلایل امنیتی، این اسکریپت فقط با نصب تازه و بدون تغییر دوکوویکی کار خواهد کرد. شما باید دوباره فایل فشرده را باز کنید <a href="https://www.dokuwiki.org/install">راهنمای نصب DokuWiki</a> را بررسی کنید.';
 $lang['i_funcna']              = 'تابع <code>%s</code> در پی‌اچ‌پی موجود نیست. ممکن است شرکت خدمات وب شما آن را مسدود کرده باشد.';
+$lang['i_disabled']            = 'توسط ارائه دهنده شما غیرفعال شده است.';
+$lang['i_funcnmail']           = '<b>توجه:</b> PHP mail function در دسترس نیست. %s اگر در دسترس نیست، می‌توانید افزونه <a href="https://www.dokuwiki.org/plugin:smtp">smtp</a> را نصب کنید.';
 $lang['i_phpver']              = 'نگارش پی‌اچ‌پی <code>%s</code> پایین‌تر از نگارش مورد نیاز، یعنی <code>%s</code> است. خواهشمندیم به روز رسانی کنید.';
 $lang['i_mbfuncoverload']      = 'برای اجرای دوکوویکی باید mbstring.func_overload را در php.ini غیرفعال کنید.';
 $lang['i_permfail']            = 'شاخه‌ی <code>%s</code> قابلیت نوشتن ندارد. شما باید دسترسی‌های این شاخه را تنظیم کنید!';
@@ -359,6 +364,7 @@ $lang['media_perm_upload']     = 'متاسفانه شما دسترسی‌های 
 $lang['media_update']          = 'آپلود نسخه‌ی جدید';
 $lang['media_restore']         = 'بازیابی این نسخه';
 $lang['media_acl_warning']     = 'این لیست ممکن است به خاطر محدودیتهای دسترسیهای ACL و صفحات پنهان کامل نباشد.';
+$lang['email_fail']            = 'PHP Mail() یافت نشد یا غیرفعال است. ایمیل زیر ارسال نشد:';
 $lang['currentns']             = 'فضای نام جاری';
 $lang['searchresult']          = 'نتیجه‌ی جستجو';
 $lang['plainhtml']             = 'HTML ساده';

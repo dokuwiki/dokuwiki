@@ -70,3 +70,8 @@ em em.u {
 img.icon.smiley {
     height: 1.2em;
 }
+
+svg {
+    width: auto;
+    height: 1.2em;
+}

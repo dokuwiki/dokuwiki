@@ -141,7 +141,7 @@ $lang['created']               = 'sukurtas';
 $lang['restored']              = 'atstatyta sena versija (%s)';
 $lang['external_edit']         = 'redaguoti papildomomis priemonėmis';
 $lang['summary']               = 'Redaguoti santrauką';
-$lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> reikalingas šios medžiagos peržiūrai.';
+$lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> reikalingas šios medžiagos peržiūrai.';
 $lang['mail_newpage']          = '[DokuWiki] puslapis pridėtas:';
 $lang['mail_changed']          = '[DokuWiki] puslapis pakeistas:';
 $lang['mail_new_user']         = 'naujas vartotojas:';

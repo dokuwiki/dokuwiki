@@ -7,11 +7,17 @@
  */
 
 use dokuwiki\ChangeLog\MediaChangeLog;
-use dokuwiki\HTTP\DokuHTTPClient;
-use dokuwiki\Subscriptions\MediaSubscriptionSender;
 use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
+use dokuwiki\HTTP\DokuHTTPClient;
+use dokuwiki\Logger;
+use dokuwiki\Subscriptions\MediaSubscriptionSender;
+use dokuwiki\Ui\Media\DisplayRow;
+use dokuwiki\Ui\Media\DisplayTile;
+use dokuwiki\Ui\MediaDiff;
+use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
+use splitbrain\slika\Slika;
 
 /**
  * Lists pages which currently use a media file selected for deletion
@@ -181,7 +187,7 @@ function media_metaform($id, $auth) {
         if ($field[2] == 'text') {
             $form->addTextInput(
                 $p['name'],
-                ($lang[$field[1]] ? $lang[$field[1]] : $field[1] . ':')
+                ($lang[$field[1]] ?: $field[1] . ':')
             )->id($p['id'])->addClass($p['class'])->val($value);
         } else {
             $form->addTextarea($p['name'], $lang[$field[1]])->id($p['id'])
@@ -250,7 +256,7 @@ function media_delete($id,$auth){
     // trigger an event - MEDIA_DELETE_FILE
     $data = array();
     $data['id']   = $id;
-    $data['name'] = \dokuwiki\Utf8\PhpString::basename($file);
+    $data['name'] = PhpString::basename($file);
     $data['path'] = $file;
     $data['size'] = (file_exists($file)) ? filesize($file) : 0;
 
@@ -312,7 +318,7 @@ function media_upload_xhr($ns,$auth){
             'mime' => $mime,
             'ext'  => $ext),
         $ns.':'.$id,
-        (($INPUT->get->str('ow') == 'true') ? true : false),
+        ($INPUT->get->str('ow') == 'true'),
         $auth,
         'copy'
     );
@@ -567,11 +573,11 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
  * @param string $id
  * @return int - revision date
  */
-function media_saveOldRevision($id){
+function media_saveOldRevision($id) {
     global $conf, $lang;
 
     $oldf = mediaFN($id);
-    if(!file_exists($oldf)) return '';
+    if (!file_exists($oldf)) return '';
     $date = filemtime($oldf);
     if (!$conf['mediarevisions']) return $date;
 
@@ -592,9 +598,9 @@ function media_saveOldRevision($id){
         }
     }
 
-    $newf = mediaFN($id,$date);
+    $newf = mediaFN($id, $date);
     io_makeFileDir($newf);
-    if(copy($oldf, $newf)) {
+    if (copy($oldf, $newf)) {
         // Set the correct permission here.
         // Always chmod media because they may be saved with different permissions than expected from the php umask.
         // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
@@ -659,14 +665,13 @@ function media_contentcheck($file,$mime){
  * @param string   $file    path to file
  * @param string   $mime    mime type
  * @param bool|int $old_rev revision timestamp or false
- * @return bool
  */
 function media_notify($id,$file,$mime,$old_rev=false,$current_rev=false){
     global $conf;
-    if(empty($conf['notify'])) return false; //notify enabled?
+    if(empty($conf['notify'])) return; //notify enabled?
 
     $subscription = new MediaSubscriptionSender();
-    return $subscription->sendMediaDiff($conf['notify'], 'uploadmail', $id, $old_rev, $current_rev);
+    $subscription->sendMediaDiff($conf['notify'], 'uploadmail', $id, $old_rev, $current_rev);
 }
 
 /**
@@ -711,13 +716,13 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
             foreach($data as $item){
                 if (!$fullscreenview) {
                     //FIXME old call: media_printfile($item,$auth,$jump);
-                    $display = new \dokuwiki\Ui\Media\DisplayRow($item);
+                    $display = new DisplayRow($item);
                     $display->scrollIntoView($jump == $item->getID());
                     $display->show();
                 } else {
                     //FIXME old call: media_printfile_thumbs($item,$auth,$jump);
                     echo '<li>';
-                    $display = new \dokuwiki\Ui\Media\DisplayTile($item);
+                    $display = new DisplayTile($item);
                     $display->scrollIntoView($jump == $item->getID());
                     $display->show();
                     echo '</li>';
@@ -997,10 +1002,10 @@ function media_tab_history($image, $ns, $auth=null) {
 
     if ($auth >= AUTH_READ && $image) {
         if ($do == 'diff'){
-            media_diff($image, $ns, $auth);
+            (new dokuwiki\Ui\MediaDiff($image))->show(); //media_diff($image, $ns, $auth);
         } else {
             $first = $INPUT->int('first');
-            html_revisions($first, $image);
+            (new dokuwiki\Ui\MediaRevisions($image))->show($first);
         }
     } else {
         echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
@@ -1017,7 +1022,7 @@ function media_tab_history($image, $ns, $auth=null) {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_preview($image, $auth, $rev='', $meta=false) {
+function media_preview($image, $auth, $rev = '', $meta = false) {
 
     $size = media_image_preview_size($image, $rev, $meta);
 
@@ -1041,7 +1046,7 @@ function media_preview($image, $auth, $rev='', $meta=false) {
         echo '<img src="'.$src.'" alt="" style="max-width: '.$size[0].'px;" />';
         echo '</a>';
 
-        echo '</div>'.NL;
+        echo '</div>';
     }
 }
 
@@ -1052,12 +1057,12 @@ function media_preview($image, $auth, $rev='', $meta=false) {
  *
  * @param string     $image media id
  * @param int        $auth  permission level
- * @param string|int $rev   revision timestamp, or empty string
+ * @param int|string $rev   revision timestamp, or empty string
  */
 function media_preview_buttons($image, $auth, $rev = '') {
     global $lang, $conf;
 
-    echo '<ul class="actions">'.DOKU_LF;
+    echo '<ul class="actions">';
 
     if ($auth >= AUTH_DELETE && !$rev && file_exists(mediaFN($image))) {
 
@@ -1071,7 +1076,7 @@ function media_preview_buttons($image, $auth, $rev = '') {
         $form->addTagClose('div');
         echo '<li>';
         echo $form->toHTML();
-        echo '</li>'.DOKU_LF;
+        echo '</li>';
     }
 
     $auth_ow = (($conf['mediarevisions']) ? AUTH_UPLOAD : AUTH_DELETE);
@@ -1087,7 +1092,7 @@ function media_preview_buttons($image, $auth, $rev = '') {
         $form->addTagClose('div');
         echo '<li>';
         echo $form->toHTML();
-        echo '</li>'.DOKU_LF;
+        echo '</li>';
     }
 
     if ($auth >= AUTH_UPLOAD && $rev && $conf['mediarevisions'] && file_exists(mediaFN($image, $rev))) {
@@ -1104,10 +1109,10 @@ function media_preview_buttons($image, $auth, $rev = '') {
         $form->addTagClose('div');
         echo '<li>';
         echo $form->toHTML();
-        echo '</li>'.DOKU_LF;
+        echo '</li>';
     }
 
-    echo '</ul>'.DOKU_LF;
+    echo '</ul>';
 }
 
 /**
@@ -1118,16 +1123,18 @@ function media_preview_buttons($image, $auth, $rev = '') {
  * @param int|string     $rev
  * @param JpegMeta|bool  $meta
  * @param int            $size
- * @return array|false
+ * @return array
  */
-function media_image_preview_size($image, $rev, $meta, $size = 500) {
-    if (!preg_match("/\.(jpe?g|gif|png)$/", $image) || !file_exists(mediaFN($image, $rev))) return false;
+function media_image_preview_size($image, $rev, $meta = false, $size = 500) {
+    if (!preg_match("/\.(jpe?g|gif|png)$/", $image)
+      || !file_exists($filename = mediaFN($image, $rev))
+    ) return array();
 
-    $info = getimagesize(mediaFN($image, $rev));
+    $info = getimagesize($filename);
     $w = (int) $info[0];
     $h = (int) $info[1];
 
-    if($meta && ($w > $size || $h > $size)){
+    if ($meta && ($w > $size || $h > $size)) {
         $ratio = $meta->getResizeRatio($size, $size);
         $w = floor($w * $ratio);
         $h = floor($h * $ratio);
@@ -1145,10 +1152,10 @@ function media_image_preview_size($image, $rev, $meta, $size = 500) {
  * @param string   $alt  alternative value
  * @return string
  */
-function media_getTag($tags,$meta,$alt=''){
-    if($meta === false) return $alt;
+function media_getTag($tags, $meta = false, $alt = '') {
+    if (!$meta) return $alt;
     $info = $meta->getField($tags);
-    if($info == false) return $alt;
+    if (!$info) return $alt;
     return $info;
 }
 
@@ -1163,19 +1170,19 @@ function media_getTag($tags,$meta,$alt=''){
 function media_file_tags($meta) {
     // load the field descriptions
     static $fields = null;
-    if(is_null($fields)){
+    if (is_null($fields)) {
         $config_files = getConfigFiles('mediameta');
         foreach ($config_files as $config_file) {
-            if(file_exists($config_file)) include($config_file);
+            if (file_exists($config_file)) include($config_file);
         }
     }
 
     $tags = array();
 
-    foreach($fields as $key => $tag){
+    foreach ($fields as $key => $tag) {
         $t = array();
         if (!empty($tag[0])) $t = array($tag[0]);
-        if(isset($tag[3]) && is_array($tag[3])) $t = array_merge($t,$tag[3]);
+        if (isset($tag[3]) && is_array($tag[3])) $t = array_merge($t,$tag[3]);
         $value = media_getTag($t, $meta);
         $tags[] = array('tag' => $tag, 'value' => $value);
     }
@@ -1233,80 +1240,22 @@ function media_details($image, $auth, $rev='', $meta=false) {
  * @param string $ns
  * @param int $auth permission level
  * @param bool $fromajax
- * @return false|null|string
+ *
+ * @deprecated 2020-12-31
  */
 function media_diff($image, $ns, $auth, $fromajax = false) {
-    global $conf;
-    global $INPUT;
-
-    if ($auth < AUTH_READ || !$image || !$conf['mediarevisions']) return '';
-
-    $rev1 = $INPUT->int('rev');
-
-    $rev2 = $INPUT->ref('rev2');
-    if(is_array($rev2)){
-        $rev1 = (int) $rev2[0];
-        $rev2 = (int) $rev2[1];
-
-        if(!$rev1){
-            $rev1 = $rev2;
-            unset($rev2);
-        }
-    }else{
-        $rev2 = $INPUT->int('rev2');
-    }
-
-    if ($rev1 && !file_exists(mediaFN($image, $rev1))) $rev1 = false;
-    if ($rev2 && !file_exists(mediaFN($image, $rev2))) $rev2 = false;
-
-    if($rev1 && $rev2){            // two specific revisions wanted
-        // make sure order is correct (older on the left)
-        if($rev1 < $rev2){
-            $l_rev = $rev1;
-            $r_rev = $rev2;
-        }else{
-            $l_rev = $rev2;
-            $r_rev = $rev1;
-        }
-    }elseif($rev1){                // single revision given, compare to current
-        $r_rev = '';
-        $l_rev = $rev1;
-    }else{                        // no revision was given, compare previous to current
-        $r_rev = '';
-        $medialog = new MediaChangeLog($image);
-        $revs = $medialog->getRevisions(0, 1);
-        if (file_exists(mediaFN($image, $revs[0]))) {
-            $l_rev = $revs[0];
-        } else {
-            $l_rev = '';
-        }
-    }
-
-    // prepare event data
-    $data = array();
-    $data[0] = $image;
-    $data[1] = $l_rev;
-    $data[2] = $r_rev;
-    $data[3] = $ns;
-    $data[4] = $auth;
-    $data[5] = $fromajax;
-
-    // trigger event
-    return Event::createAndTrigger('MEDIA_DIFF', $data, '_media_file_diff', true);
+    dbg_deprecated('see '. MediaDiff::class .'::show()');
 }
 
 /**
  * Callback for media file diff
  *
  * @param array $data event data
- * @return false|null
+ *
+ * @deprecated 2020-12-31
  */
 function _media_file_diff($data) {
-    if(is_array($data) && count($data)===6) {
-        media_file_diff($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
-    } else {
-        return false;
-    }
+    dbg_deprecated('see '. MediaDiff::class .'::show()');
 }
 
 /**
@@ -1320,120 +1269,10 @@ function _media_file_diff($data) {
  * @param string $ns
  * @param int $auth permission level
  * @param bool $fromajax
+ * @deprecated 2020-12-31
  */
 function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax) {
-    global $lang;
-    global $INPUT;
-
-    $l_meta = new JpegMeta(mediaFN($image, $l_rev));
-    $r_meta = new JpegMeta(mediaFN($image, $r_rev));
-
-    $is_img = preg_match('/\.(jpe?g|gif|png)$/', $image);
-    if ($is_img) {
-        $l_size = media_image_preview_size($image, $l_rev, $l_meta);
-        $r_size = media_image_preview_size($image, $r_rev, $r_meta);
-        $is_img = ($l_size && $r_size && ($l_size[0] >= 30 || $r_size[0] >= 30));
-
-        $difftype = $INPUT->str('difftype');
-
-        if (!$fromajax) {
-            $form = new Form([
-                'id' => 'mediamanager__form_diffview',
-                'action' => media_managerURL([], '&'),
-                'method' => 'get',
-                'class' => 'diffView',
-            ]);
-            $form->addTagOpen('div')->addClass('no');
-            $form->setHiddenField('sectok', null);
-            $form->setHiddenField('mediado', 'diff');
-            $form->setHiddenField('rev2[0]', $l_rev);
-            $form->setHiddenField('rev2[1]', $r_rev);
-            echo $form->toHTML();
-
-            echo NL.'<div id="mediamanager__diff" >'.NL;
-        }
-
-        if ($difftype == 'opacity' || $difftype == 'portions') {
-            media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $difftype);
-            if (!$fromajax) echo '</div>';
-            return;
-        }
-    }
-
-    list($l_head, $r_head) = (new dokuwiki\Ui\Diff)->diffHead($l_rev, $r_rev, $image, true);
-
-    ?>
-    <div class="table">
-    <table>
-      <tr>
-        <th><?php echo $l_head; ?></th>
-        <th><?php echo $r_head; ?></th>
-      </tr>
-    <?php
-
-    echo '<tr class="image">';
-    echo '<td>';
-    media_preview($image, $auth, $l_rev, $l_meta);
-    echo '</td>';
-
-    echo '<td>';
-    media_preview($image, $auth, $r_rev, $r_meta);
-    echo '</td>';
-    echo '</tr>'.NL;
-
-    echo '<tr class="actions">';
-    echo '<td>';
-    media_preview_buttons($image, $auth, $l_rev);
-    echo '</td>';
-
-    echo '<td>';
-    media_preview_buttons($image, $auth, $r_rev);
-    echo '</td>';
-    echo '</tr>'.NL;
-
-    $l_tags = media_file_tags($l_meta);
-    $r_tags = media_file_tags($r_meta);
-    // FIXME r_tags-only stuff
-    foreach ($l_tags as $key => $l_tag) {
-        if ($l_tag['value'] != $r_tags[$key]['value']) {
-            $r_tags[$key]['highlighted'] = true;
-            $l_tags[$key]['highlighted'] = true;
-        } else if (!$l_tag['value'] || !$r_tags[$key]['value']) {
-            unset($r_tags[$key]);
-            unset($l_tags[$key]);
-        }
-    }
-
-    echo '<tr>';
-    foreach(array($l_tags,$r_tags) as $tags){
-        echo '<td>'.NL;
-
-        echo '<dl class="img_tags">';
-        foreach($tags as $tag){
-            $value = cleanText($tag['value']);
-            if (!$value) $value = '-';
-            echo '<dt>'.$lang[$tag['tag'][1]].'</dt>';
-            echo '<dd>';
-            if ($tag['highlighted']) {
-                echo '<strong>';
-            }
-            if ($tag['tag'][2] == 'date') echo dformat($value);
-            else echo hsc($value);
-            if ($tag['highlighted']) {
-                echo '</strong>';
-            }
-            echo '</dd>';
-        }
-        echo '</dl>'.NL;
-
-        echo '</td>';
-    }
-    echo '</tr>'.NL;
-
-    echo '</table>'.NL;
-    echo '</div>'.NL;
-
-    if ($is_img && !$fromajax) echo '</div>';
+    dbg_deprecated('see '. MediaDiff::class .'::showFileDiff()');
 }
 
 /**
@@ -1448,32 +1287,10 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax) {
  * @param array  $l_size  array with width and height
  * @param array  $r_size  array with width and height
  * @param string $type
+ * @deprecated 2020-12-31
  */
 function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type) {
-    if ($l_size != $r_size) {
-        if ($r_size[0] > $l_size[0]) {
-            $l_size = $r_size;
-        }
-    }
-
-    $l_more = array('rev' => $l_rev, 'h' => $l_size[1], 'w' => $l_size[0]);
-    $r_more = array('rev' => $r_rev, 'h' => $l_size[1], 'w' => $l_size[0]);
-
-    $l_src = ml($image, $l_more);
-    $r_src = ml($image, $r_more);
-
-    // slider
-    echo '<div class="slider" style="max-width: '.($l_size[0]-20).'px;" ></div>'.NL;
-
-    // two images in divs
-    echo '<div class="imageDiff ' . $type . '">'.NL;
-    echo '<div class="image1" style="max-width: '.$l_size[0].'px;">';
-    echo '<img src="'.$l_src.'" alt="" />';
-    echo '</div>'.NL;
-    echo '<div class="image2" style="max-width: '.$l_size[0].'px;">';
-    echo '<img src="'.$r_src.'" alt="" />';
-    echo '</div>'.NL;
-    echo '</div>'.NL;
+    dbg_deprecated('see '. MediaDiff::class .'::showImageDiff()');
 }
 
 /**
@@ -1568,12 +1385,12 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
         foreach($evdata['data'] as $item){
             if (!$fullscreen) {
                 // FIXME old call: media_printfile($item,$item['perm'],'',true);
-                $display = new \dokuwiki\Ui\Media\DisplayRow($item);
+                $display = new DisplayRow($item);
                 $display->relativeDisplay($ns);
                 $display->show();
             } else {
                 // FIXME old call: media_printfile_thumbs($item,$item['perm'],false,true);
-                $display = new \dokuwiki\Ui\Media\DisplayTile($item);
+                $display = new DisplayTile($item);
                 $display->relativeDisplay($ns);
                 echo '<li>';
                 $display->show();
@@ -1873,6 +1690,49 @@ function media_nstree_li($item){
 }
 
 /**
+ * Resizes or crop the given image to the given size
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file filename, path to file
+ * @param string $ext  extension
+ * @param int    $w    desired width
+ * @param int    $h    desired height
+ * @param bool   $crop should a center crop be used?
+ * @return string path to resized or original size if failed
+ */
+function media_mod_image($file, $ext, $w, $h=0, $crop=false)
+{
+    global $conf;
+    if(!$h) $h = $w;
+    // we wont scale up to infinity
+    if($w > 2000 || $h > 2000) return $file;
+
+    $operation = $crop ? 'crop' : 'resize';
+
+    $options = [
+        'quality' => $conf['jpg_quality'],
+        'imconvert' => $conf['im_convert'],
+    ];
+
+    $cache = new \dokuwiki\Cache\CacheImageMod($file, $w, $h, $ext, $crop);
+    if(!$cache->useCache()) {
+        try {
+            Slika::run($file, $options)
+                 ->autorotate()
+                 ->$operation($w, $h)
+                 ->save($cache->cache, $ext);
+            if($conf['fperm']) @chmod($cache->cache, $conf['fperm']);
+        } catch (\splitbrain\slika\Exception $e) {
+            Logger::debug($e->getMessage());
+            return $file;
+        }
+    }
+
+    return $cache->cache;
+}
+
+/**
  * Resizes the given image to the given size
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
@@ -1883,35 +1743,9 @@ function media_nstree_li($item){
  * @param int    $h    desired height
  * @return string path to resized or original size if failed
  */
-function media_resize_image($file, $ext, $w, $h=0){
-    global $conf;
-    if(!$h) $h = $w;
-    // we wont scale up to infinity
-    if($w > 2000 || $h > 2000) return $file;
-
-    //cache
-    $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
-    $mtime = (int) @filemtime($local); // 0 if not exists
-
-    $options = [
-        'quality' => $conf['jpg_quality'],
-        'imconvert' => $conf['im_convert'],
-    ];
-
-    if( $mtime <= (int) @filemtime($file) ) {
-        try {
-            \splitbrain\slika\Slika::run($file, $options)
-                                   ->autorotate()
-                                   ->resize($w, $h)
-                                   ->save($local, $ext);
-            if($conf['fperm']) @chmod($local, $conf['fperm']);
-        } catch (\splitbrain\slika\Exception $e) {
-            dbglog($e->getMessage());
-            return $file;
-        }
-    }
-
-    return $local;
+function media_resize_image($file, $ext, $w, $h = 0)
+{
+    return media_mod_image($file, $ext, $w, $h, false);
 }
 
 /**
@@ -1925,35 +1759,9 @@ function media_resize_image($file, $ext, $w, $h=0){
  * @param int    $h    desired height
  * @return string path to resized or original size if failed
  */
-function media_crop_image($file, $ext, $w, $h=0){
-    global $conf;
-    if(!$h) $h = $w;
-    // we wont scale up to infinity
-    if($w > 2000 || $h > 2000) return $file;
-
-    //cache
-    $local = getCacheName($file,'.media.'.$w.'x'.$h.'.crop.'.$ext);
-    $mtime = (int) @filemtime($local); // 0 if not exists
-
-    $options = [
-        'quality' => $conf['jpg_quality'],
-        'imconvert' => $conf['im_convert'],
-    ];
-
-    if( $mtime <= (int) @filemtime($file) ) {
-        try {
-            \splitbrain\slika\Slika::run($file, $options)
-                                   ->autorotate()
-                                    ->crop($w, $h)
-                                    ->save($local, $ext);
-            if($conf['fperm']) @chmod($local, $conf['fperm']);
-        } catch (\splitbrain\slika\Exception $e) {
-            dbglog($e->getMessage());
-            return $file;
-        }
-    }
-
-    return $local;
+function media_crop_image($file, $ext, $w, $h = 0)
+{
+    return media_mod_image($file, $ext, $w, $h, true);
 }
 
 /**
@@ -2246,9 +2054,9 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
         }
     }
 
-    // destroy GD image ressources
-    if($image) imagedestroy($image);
-    if($newimg) imagedestroy($newimg);
+    // destroy GD image resources
+    imagedestroy($image);
+    imagedestroy($newimg);
 
     return $okay;
 }

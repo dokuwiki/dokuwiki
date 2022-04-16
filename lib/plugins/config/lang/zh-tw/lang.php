@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Chun-Chung Chen <cjj@u.washington.edu>
  * @author GHSRobert Ciang <robertus0617@gmail.com>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html

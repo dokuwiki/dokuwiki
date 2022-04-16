@@ -4,6 +4,7 @@ namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionDisabledException;
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Ui;
 
 /**
@@ -26,7 +27,7 @@ class Profile extends AbstractUserAction
     {
         parent::checkPreconditions();
 
-        /** @var \dokuwiki\Extension\AuthPlugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
         if(!$auth->canDo('Profile')) throw new ActionDisabledException();
     }
