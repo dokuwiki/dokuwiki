@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
@@ -193,13 +193,13 @@ $lang['license']               = 'Sauf mention contraire, le contenu de ce wiki 
 $lang['licenseok']             = 'Note : En modifiant cette page, vous acceptez que le contenu soit placé sous les termes de la licence suivante :';
 $lang['searchmedia']           = 'Chercher le nom de fichier :';
 $lang['searchmedia_in']        = 'Chercher dans %s';
-$lang['txt_upload']            = 'Sélectionnez un fichier à envoyer:';
+$lang['txt_upload']            = 'Sélectionnez un fichier à envoyer :';
 $lang['txt_filename']          = 'Envoyer en tant que (optionnel):';
 $lang['txt_overwrt']           = 'Écraser le fichier cible (s\'il existe)';
 $lang['maxuploadsize']         = 'Taille d\'envoi maximale : %s par fichier';
 $lang['allowedmime']           = 'Liste des extensions de fichier autorisées';
-$lang['lockedby']              = 'Actuellement bloqué par:';
-$lang['lockexpire']            = 'Le blocage expire à:';
+$lang['lockedby']              = 'Actuellement bloqué par :';
+$lang['lockexpire']            = 'Le blocage expire à :';
 $lang['rssfailed']             = 'Une erreur s\'est produite en récupérant ce flux : ';
 $lang['nothingfound']          = 'Pas de réponse.';
 $lang['mediaselect']           = 'Sélection de fichiers';
@@ -299,12 +299,12 @@ $lang['metasaveok']            = 'Métadonnées enregistrées';
 $lang['img_title']             = 'Titre:';
 $lang['img_caption']           = 'Légende:';
 $lang['img_date']              = 'Date:';
-$lang['img_fname']             = 'Nom de fichier:';
+$lang['img_fname']             = 'Nom de fichier :';
 $lang['img_fsize']             = 'Taille:';
-$lang['img_artist']            = 'Photographe:';
-$lang['img_copyr']             = 'Copyright:';
-$lang['img_format']            = 'Format:';
-$lang['img_camera']            = 'Appareil photo:';
+$lang['img_artist']            = 'Photographe :';
+$lang['img_copyr']             = 'Copyright :';
+$lang['img_format']            = 'Format :';
+$lang['img_camera']            = 'Appareil photo :';
 $lang['img_keywords']          = 'Mots-clés :';
 $lang['img_width']             = 'Largeur :';
 $lang['img_height']            = 'Hauteur :';
@@ -334,7 +334,7 @@ $lang['i_problems']            = 'L\'installateur a détecté les problèmes ind
 $lang['i_modified']            = 'Pour des raisons de sécurité, ce script ne fonctionne qu\'avec une installation neuve et non modifiée de DokuWiki. Vous devriez ré-extraire les fichiers depuis le paquet téléchargé ou consulter les <a href="http://dokuwiki.org/install">instructions d\'installation de DokuWiki</a>';
 $lang['i_funcna']              = 'La fonction PHP <code>%s</code> n\'est pas disponible. Peut-être que votre hébergeur web l\'a désactivée ?';
 $lang['i_disabled']            = 'Elle a été désactivée par votre hébergeur';
-$lang['i_funcnmail']           = '<b>Note:</b> La fonction PHP mail n\'est pas disponible. %s Si vous ne pouvez pas l\'activer, vous pourriez installer le <a href="http://dokuwiki.org/plugins/smtp">greffon smtp</a>.';
+$lang['i_funcnmail']           = '<b>Note :</b> La fonction PHP mail n\'est pas disponible. %s Si vous ne pouvez pas l\'activer, vous pourriez installer le <a href="http://dokuwiki.org/plugins/smtp">greffon smtp</a>.';
 $lang['i_phpver']              = 'Votre version de PHP (%s) est antérieure à la version requise (%s). Vous devez mettre à jour votre installation de PHP.';
 $lang['i_mbfuncoverload']      = 'Il faut désactiver mbstring.func_overload dans php.ini pour DokuWiki';
 $lang['i_urandom']             = 'DokuWiki ne peut créer de nombres cryptographiquement sûrs pour les cookies. Vous voudrez peut-être vérifier que le réglage open_basedir dans php.ini permet l\'accès à <code>/dev/urandom</code>.';
