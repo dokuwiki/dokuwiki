@@ -32,6 +32,10 @@ class XmlRpcServer extends Server
         if (!$conf['remote']) {
             throw new ServerException("XML-RPC server not enabled.", -32605);
         }
+        if (!empty($conf['remotecors'])) {
+            header('Access-Control-Allow-Origin: ' . $conf['remotecors']);
+        }
+
         parent::serve($data);
     }
 
