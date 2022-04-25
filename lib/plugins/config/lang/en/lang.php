@@ -108,6 +108,7 @@ $lang['auth_security_timeout'] = 'Authentication Security Timeout (seconds)';
 $lang['securecookie'] = 'Should cookies set via HTTPS only be sent via HTTPS by the browser? Disable this option when only the login of your wiki is secured with SSL but browsing the wiki is done unsecured.';
 $lang['remote']      = 'Enable the remote API system. This allows other applications to access the wiki via XML-RPC or other mechanisms.';
 $lang['remoteuser']  = 'Restrict remote API access to the comma separated groups or users given here. Leave empty to give access to everyone.';
+$lang['remotecors']  = 'Enable Cross-Origin Resource Sharing (CORS) for the remote interfaces. Asterisk (*) to allow all origins. Leave empty to deny CORS.';
 
 /* Anti-Spam Settings */
 $lang['usewordblock']= 'Block spam based on wordlist';

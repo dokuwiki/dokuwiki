@@ -93,6 +93,7 @@ $lang['auth_security_timeout'] = 'Zeitüberschreitung bei der Authentifizierung 
 $lang['securecookie']          = 'Sollen Cookies, die via HTTPS gesetzt wurden nur per HTTPS versendet werden? Deaktiviere diese Option, wenn nur der Login deines Wikis mit SSL gesichert ist, aber das Betrachten des Wikis ungesichert geschieht.';
 $lang['remote']                = 'Aktiviert den externen API-Zugang. Diese Option erlaubt es externen Anwendungen von außen auf die XML-RPC-Schnittstelle oder anderweitigen Schnittstellen zuzugreifen.';
 $lang['remoteuser']            = 'Zugriff auf die externen Schnittstellen durch kommaseparierte Angabe von Benutzern oder Gruppen einschränken. Ein leeres Feld erlaubt Zugriff für jeden.';
+$lang['remotecors']            = 'Erlaubt externen Clients API-Zugriff per Cross-Origin Resource Sharing (CORS). Asterisk (*), um alle Quellen zu erlauben. Leer lassen, um CORS zu deaktivieren.';
 $lang['usewordblock']          = 'Blockiere Spam basierend auf der Wortliste';
 $lang['relnofollow']           = 'rel="nofollow" verwenden';
 $lang['indexdelay']            = 'Zeit bevor Suchmaschinenindexierung erlaubt ist';
