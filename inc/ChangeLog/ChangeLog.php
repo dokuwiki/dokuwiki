@@ -637,8 +637,8 @@ abstract class ChangeLog
             } else {
                 // $fileRev is older than $lastRev, that is erroneous/incorrect occurence.
                 $msg = "Warning: current file modification time is older than last revision date";
-                $details = 'File revision: '.$fileRev.' '.strftime("%Y-%m-%d %H:%M:%S", $fileRev)."\n"
-                          .'Last revision: '.$lastRev.' '.strftime("%Y-%m-%d %H:%M:%S", $lastRev);
+                $details = 'File revision: '.$fileRev.' '.dformat($fileRev, "%Y-%m-%d %H:%M:%S")."\n"
+                          .'Last revision: '.$lastRev.' '.dformat($lastRev, "%Y-%m-%d %H:%M:%S");
                 Logger::error($msg, $details, $this->getFilename());
                 $timestamp = false;
                 $sum = $lang['external_edit'].' ('.$lang['unknowndate'].')';

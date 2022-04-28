@@ -1164,7 +1164,7 @@ function parsePageTemplate(&$data) {
     $tpl = preg_replace_callback(
         '/%./',
         function ($m) {
-            return strftime($m[0]);
+            return dformat(null, $m[0]);
         },
         $tpl
     );
