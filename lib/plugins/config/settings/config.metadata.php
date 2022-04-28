@@ -160,6 +160,7 @@ $meta['auth_security_timeout'] = array('numeric');
 $meta['securecookie'] = array('onoff');
 $meta['remote']       = array('onoff','_caution' => 'security');
 $meta['remoteuser']   = array('string');
+$meta['redirect_to_login_after_logout'] = array('onoff');
 
 $meta['_anti_spam']  = array('fieldset');
 $meta['usewordblock']= array('onoff');
