@@ -403,7 +403,13 @@ EOT;
 
 EOT;
         // --- user:bcryptpasswordhash:Real Name:email:groups,comma,seperated
-        $output = $output . "\n" . join(":", array($d['superuser'], $pass, $d['fullname'], $d['email'], 'admin,user')) . "\n";
+        $output = $output . "\n" . join(':', [
+                $d['superuser'],
+                $pass,
+                $d['fullname'],
+                $d['email'],
+                'admin,user',
+            ]) . "\n";
         $ok = $ok && fileWrite(DOKU_LOCAL . 'users.auth.php', $output);
 
         // create acl.auth.php
