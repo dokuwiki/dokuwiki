@@ -140,7 +140,7 @@ class Mapper {
 
         $encoded_sitemap_url = urlencode(wl('', array('do' => 'sitemap'), true, '&'));
         $ping_urls = array(
-            'google'    => 'http://www.google.com/webmasters/sitemaps/ping?sitemap='.$encoded_sitemap_url,
+            'google'    => 'https://www.google.com/ping?sitemap='.$encoded_sitemap_url,
             'microsoft' => 'http://www.bing.com/webmaster/ping.aspx?siteMap='.$encoded_sitemap_url,
             'yandex'    => 'http://blogs.yandex.ru/pings/?status=success&url='.$encoded_sitemap_url
         );
