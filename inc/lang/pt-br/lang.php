@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Paul Nizan <paul_nizan@hormail.com>
  * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author ANDRE BASSANI DE FREITAS <dedebf@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
@@ -208,7 +209,7 @@ $lang['accessdenied']          = 'Você não tem permissão para visualizar esta
 $lang['mediausage']            = 'Use a seguinte sintaxe para referenciar esse arquivo:';
 $lang['mediaview']             = 'Ver o arquivo original';
 $lang['mediaroot']             = 'raiz';
-$lang['mediaupload']           = 'Envie um arquivo para o espaço de nomes atual aqui. Para criar subespaços de nomes, preponha-os ao nome do arquivo no parâmetro "Enviar como", separados por vírgulas.';
+$lang['mediaupload']           = 'Envie um arquivo para o espaço de nomes atual aqui. Para criar subespaços de nomes, preponha-os ao nome do arquivo no parâmetro "Enviar como", separados por dois pontos.';
 $lang['mediaextchange']        = 'A extensão do arquivo mudou de .%s para .%s!';
 $lang['reference']             = 'Referências para';
 $lang['ref_inuse']             = 'O arquivo não pode ser excluído, porque ele ainda está sendo utilizado nas seguintes páginas:';

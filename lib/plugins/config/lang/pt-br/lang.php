@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Paul Nizan <paul_nizan@hormail.com>
  * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author ANDRE BASSANI DE FREITAS <dedebf@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
