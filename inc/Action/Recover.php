@@ -13,7 +13,10 @@ use dokuwiki\Action\Exception\ActionAbort;
  */
 class Recover extends AbstractAliasAction {
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     * @throws ActionAbort
+     */
     public function preProcess() {
         throw new ActionAbort('edit');
     }

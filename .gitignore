@@ -28,6 +28,7 @@
 /data/cache/*
 /data/index/*
 /data/locks/*
+/data/log/*
 /data/media/*
 /data/media_meta/*
 /data/media_attic/*
@@ -95,5 +96,5 @@ vendor/splitbrain/php-cli/apigen.neon
 
 # PHPUnit tests
 phpunit.phar
-.phpunit.result.cache
+*.phpunit.result.cache
 _test/data/

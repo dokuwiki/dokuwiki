@@ -4,6 +4,7 @@ namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionDisabledException;
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Ui;
 
 /**
@@ -26,7 +27,7 @@ class Resendpwd extends AbstractAclAction
     {
         parent::checkPreconditions();
 
-        /** @var \dokuwiki\Extension\AuthPlugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
         global $conf;
         if (isset($conf['resendpasswd']) && !$conf['resendpasswd'])
@@ -66,7 +67,7 @@ class Resendpwd extends AbstractAclAction
     {
         global $lang;
         global $conf;
-        /* @var \dokuwiki\Extension\AuthPlugin $auth */
+        /* @var AuthPlugin $auth */
         global $auth;
         global $INPUT;
 

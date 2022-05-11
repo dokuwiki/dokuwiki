@@ -354,7 +354,8 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
     public function cleanUser($user)
     {
         global $conf;
-        return cleanID(str_replace(':', $conf['sepchar'], $user));
+
+        return cleanID(str_replace([':', '/', ';'], $conf['sepchar'], $user));
     }
 
     /**
@@ -366,7 +367,8 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
     public function cleanGroup($group)
     {
         global $conf;
-        return cleanID(str_replace(':', $conf['sepchar'], $group));
+
+        return cleanID(str_replace([':', '/', ';'], $conf['sepchar'], $group));
     }
 
     /**

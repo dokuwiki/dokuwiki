@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Marton Sebok <sebokmarton@gmail.com>
  * @author Marina Vladi <deldadam@gmail.com>
  */

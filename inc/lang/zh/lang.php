@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author VinnieChow <zsz33@qq.com>
  * @author Lakejason0 <lakesarchive@outlook.com>
  * @author Phy <dokuwiki@phy25.com>
  * @author Jenxi <seow@jenxi.com>
@@ -143,6 +144,7 @@ $lang['js']['media_done_btn']  = '完成';
 $lang['js']['media_drop']      = '拖拽文件到此处来上传';
 $lang['js']['media_cancel']    = '删除';
 $lang['js']['media_overwrt']   = '覆盖已存在的文件';
+$lang['js']['data_insecure']   = '警告： 看起来你的数据集不太安全。 请参考以下链接<a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>。';
 $lang['search_exact_match']    = '精确匹配';
 $lang['search_starts_with']    = '开始于';
 $lang['search_ends_with']      = '结束于';

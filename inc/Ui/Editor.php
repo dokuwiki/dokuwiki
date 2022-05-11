@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\Draft;
 use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
@@ -138,7 +139,7 @@ class Editor extends Ui
                 'href'   => $license[$conf['license']]['url'],
                 'rel'    => 'license',
                 'class'  => 'urlextern',
-                'target' => $conf['target']['extern'] ? $conf['target']['extern'] : '',
+                'target' => $conf['target']['extern'] ?: '',
             );
             $form->addTagOpen('div')->addClass('license');
             $form->addHTML($lang['licenseok']
@@ -171,7 +172,7 @@ class Editor extends Ui
         echo '</div>';
 
         echo '<div id="draft__status" class="draft__status">';
-        $draft = new \dokuwiki\Draft($ID, $INFO['client']);
+        $draft = new Draft($ID, $INFO['client']);
         if ($draft->isDraftAvailable()) {
             echo $draft->getDraftMessage();
         }
@@ -187,7 +188,7 @@ class Editor extends Ui
      *
      * the default action for EDIT_FORM_ADDTEXTAREA
      *
-     * @param mixed[] $data
+     * @param array{wr: bool, media_manager: bool, target: string, intro_locale: string, form: Form} $data
      */
     public function addTextarea(&$data)
     {
@@ -204,7 +205,6 @@ class Editor extends Ui
         $attr['cols'] = '80';
         $attr['rows'] = '10';
 
-        /** @var dokuwiki\Form\Form $data['form'] */
         $data['form']->addTextarea('wikitext','')->attrs($attr)->val($TEXT)
                 ->id('wiki__text')->addClass('edit');
     }

@@ -235,6 +235,9 @@ if (!defined('NOSESSION')) {
 // setup mail system
 mail_setup();
 
+$nil = null;
+Event::createAndTrigger('DOKUWIKI_INIT_DONE', $nil, null, false);
+
 /**
  * Initializes the session
  *

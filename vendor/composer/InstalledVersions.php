@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '4ee6ddae660f9ec72c1f6e2ddb72d6b29d6d8900',
+    'reference' => 'a30be5ec00ba89ade3ec8ffa407fa7e18824943c',
     'name' => 'splitbrain/dokuwiki',
   ),
   'versions' => 
@@ -54,6 +54,15 @@ private static $installed = array (
         1 => '9999999-dev',
       ),
       'reference' => '3c12a7931d509c5e3557c5ed44c9a32e9c917c7d',
+    ),
+    'kissifrot/php-ixr' => 
+    array (
+      'pretty_version' => '1.8.3',
+      'version' => '1.8.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '4477cd1a67416ce5b6a2080f9a79d9eb50a965c1',
     ),
     'marcusschwarz/lesserphp' => 
     array (
@@ -98,7 +107,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '4ee6ddae660f9ec72c1f6e2ddb72d6b29d6d8900',
+      'reference' => 'a30be5ec00ba89ade3ec8ffa407fa7e18824943c',
     ),
     'splitbrain/php-archive' => 
     array (
@@ -120,12 +129,12 @@ private static $installed = array (
     ),
     'splitbrain/slika' => 
     array (
-      'pretty_version' => '1.0.4',
-      'version' => '1.0.4.0',
+      'pretty_version' => '1.0.5',
+      'version' => '1.0.5.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'fda87e816eb150f3608282da962788b4ad509c11',
+      'reference' => 'be0785cb6b7def847df5d92e0e5fde57def7220f',
     ),
   ),
 );
