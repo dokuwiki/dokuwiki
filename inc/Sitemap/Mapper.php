@@ -142,7 +142,7 @@ class Mapper {
         $ping_urls = array(
             'google'    => 'https://www.google.com/ping?sitemap='.$encoded_sitemap_url,
             'microsoft' => 'http://www.bing.com/webmaster/ping.aspx?siteMap='.$encoded_sitemap_url,
-            'yandex'    => 'http://blogs.yandex.ru/pings/?status=success&url='.$encoded_sitemap_url
+            'yandex'    => 'https://webmaster.yandex.com/ping?sitemap='.$encoded_sitemap_url
         );
 
         $data = array('ping_urls' => $ping_urls,
