@@ -203,16 +203,16 @@
         },
         {
             "name": "openpsa/universalfeedcreator",
-            "version": "v1.8.4",
+            "version": "v1.8.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/flack/UniversalFeedCreator.git",
-                "reference": "099817dc9efef33ca2382b04daf9e191b77fed13"
+                "reference": "e4736a68eef454a83acd100230a2e15b424f899f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/099817dc9efef33ca2382b04daf9e191b77fed13",
-                "reference": "099817dc9efef33ca2382b04daf9e191b77fed13",
+                "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/e4736a68eef454a83acd100230a2e15b424f899f",
+                "reference": "e4736a68eef454a83acd100230a2e15b424f899f",
                 "shasum": ""
             },
             "require": {
@@ -223,11 +223,11 @@
             },
             "type": "library",
             "autoload": {
-                "classmap": [
-                    "lib"
-                ],
                 "files": [
                     "lib/constants.php"
+                ],
+                "classmap": [
+                    "lib"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -252,9 +252,9 @@
             ],
             "support": {
                 "issues": "https://github.com/flack/UniversalFeedCreator/issues",
-                "source": "https://github.com/flack/UniversalFeedCreator/tree/v1.8.4"
+                "source": "https://github.com/flack/UniversalFeedCreator/tree/v1.8.4.1"
             },
-            "time": "2020-09-25T08:36:47+00:00"
+            "time": "2022-04-04T10:02:43+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -617,5 +617,5 @@
     "platform-overrides": {
         "php": "7.2"
     },
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.3.0"
 }
