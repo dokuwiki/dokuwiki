@@ -237,7 +237,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
 
         // general user info
         $info['dn'] = $user_result['dn'];
-        $info['gid'] = $user_result['gidnumber'][0];
+        $info['gid'] = $user_result['gidnumber'][0] ?? null;
         $info['mail'] = $user_result['mail'][0];
         $info['name'] = $user_result['cn'][0];
         $info['grps'] = array();
