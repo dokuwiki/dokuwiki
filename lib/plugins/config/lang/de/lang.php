@@ -164,7 +164,7 @@ $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['compress']              = 'JavaScript und Stylesheets komprimieren';
 $lang['cssdatauri']            = 'Größe in Bytes, bis zu der Bilder in CSS-Dateien referenziert werden können, um HTTP-Anfragen zu minimieren. Empfohlene Einstellung: <code>400</code> to <code>600</code> Bytes. Setzen Sie die Einstellung auf <code>0</code> um die Funktion zu deaktivieren.';
 $lang['send404']               = 'Bei nicht vorhandenen Seiten mit 404 Fehlercode antworten';
-$lang['broken_iua']            = 'Falls die Funktion ignore_user_abort auf Ihrem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür. Siehe auch <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
+$lang['broken_iua']            = 'Falls die Funktion ignore_user_abort auf Ihrem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür.';
 $lang['xsendfile']             = 'Den X-Sendfile-Header nutzen, um Dateien direkt vom Webserver ausliefern zu lassen? Ihr Webserver muss dies unterstützen!';
 $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wiki-Ausgabe.';
 $lang['renderer__core']        = '%s (DokuWiki Kern)';
