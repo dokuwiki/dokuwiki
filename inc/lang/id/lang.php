@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Ramdziana F Y <ramdzian@gmail.com>
+ * @author NawanP <saya@nawan.my.id>
  * @author rusly-id <rusly-id@users.noreply.github.com>
  * @author mubaidillah <mubaidillah@gmail.com>
  * @author Irwan Butar Butar <irwansah.putra@gmail.com>
@@ -25,7 +26,7 @@ $lang['btn_show']              = 'Tampilkan halaman';
 $lang['btn_create']            = 'Buat halaman baru';
 $lang['btn_search']            = 'Cari';
 $lang['btn_save']              = 'Simpan';
-$lang['btn_preview']           = 'Pratinjau';
+$lang['btn_preview']           = 'Pratayang';
 $lang['btn_top']               = 'kembali ke atas';
 $lang['btn_newer']             = '<< lebih lanjut';
 $lang['btn_older']             = 'sebelumnya >>';
@@ -34,7 +35,7 @@ $lang['btn_recent']            = 'Perubahan terbaru';
 $lang['btn_upload']            = 'Upload';
 $lang['btn_cancel']            = 'Batal';
 $lang['btn_index']             = 'Indeks';
-$lang['btn_secedit']           = 'Edit';
+$lang['btn_secedit']           = 'Sunting';
 $lang['btn_login']             = 'Login';
 $lang['btn_logout']            = 'Keluar';
 $lang['btn_admin']             = 'Admin';
@@ -44,9 +45,9 @@ $lang['btn_back']              = 'Kembali';
 $lang['btn_backlink']          = 'Backlinks';
 $lang['btn_subscribe']         = 'Ikuti Perubahan';
 $lang['btn_profile']           = 'Ubah Profil';
-$lang['btn_reset']             = 'Reset';
+$lang['btn_reset']             = 'Atur ulang';
 $lang['btn_resendpwd']         = 'Atur password baru';
-$lang['btn_draft']             = 'Edit draf';
+$lang['btn_draft']             = 'Sunting draf';
 $lang['btn_recover']           = 'Cadangkan draf';
 $lang['btn_draftdel']          = 'Hapus draft';
 $lang['btn_revert']            = 'Kembalikan';
@@ -219,7 +220,7 @@ $lang['created']               = 'dibuat';
 $lang['restored']              = 'revisi lama ditampilkan kembali (%s)';
 $lang['external_edit']         = 'Perubahan eksternal';
 $lang['summary']               = 'Edit ringkasan';
-$lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> diperlukan untuk menampilkan konten ini.';
+$lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> diperlukan untuk menampilkan konten ini.';
 $lang['download']              = 'Unduh Cuplikan';
 $lang['tools']                 = 'Alat';
 $lang['user_tools']            = 'Alat Pengguna';
@@ -287,7 +288,7 @@ $lang['i_installer']           = 'Instalasi DokuWiki';
 $lang['i_wikiname']            = 'Nama Wiki';
 $lang['i_enableacl']           = 'Aktifkan ACL (disarankan)';
 $lang['i_problems']            = 'Terdapat beberapa kesalahan seperti berikut. Anda tidak dapat melanjutkan sampai kesalahan tersebut diperbaiki.';
-$lang['i_modified']            = 'Untuk alasan keamanan, skrip ini hanya dapat dijalankan pada instalasi DikuWiki baru dan belum di modifikasi. Silahkan meng-ekstrak kembali berkasi dari halaman dowload, atau lihat   <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a> ';
+$lang['i_modified']            = 'Untuk alasan keamanan, skrip ini hanya dapat dijalankan pada instalasi DikuWiki baru dan belum di modifikasi. Silahkan meng-ekstrak kembali berkasi dari halaman dowload, atau lihat   <a href="https://www.dokuwiki.org/install">Dokuwiki installation instructions</a> ';
 $lang['i_funcna']              = 'Fungsi PHP <code>%s</code> tidak tersedia. Mungkin dinonaktifkan oleh layanan hosting Anda?';
 $lang['i_phpver']              = 'Versi PHP Anda <code>%s</code> lebih rendah dari yang dibutuhkan <code>%s</code>. Mohon melakukan upgrade.';
 $lang['i_permfail']            = '<code>%s</code> tidak dapat ditulis oleh DokuWiki. Anda harus memperbaiki konfigurasi hak akses untuk direktori tersebut.';

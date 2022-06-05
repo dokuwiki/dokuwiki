@@ -106,7 +106,7 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $this->assertTrue($ok);
         $groups = $auth->selectGroups();
         $this->assertArrayHasKey('test', $groups);
-        $this->assertEquals(3, $groups['test']['gid']);
+        $this->assertEquals(4, $groups['test']['gid']);
     }
 
     /**
@@ -131,12 +131,12 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $this->assertEquals('admin', $info['user']);
         $this->assertEquals('The Admin', $info['name']);
         $this->assertEquals('admin@example.com', $info['mail']);
-        $this->assertEquals(array('admin', 'user'), $info['grps']);
+        $this->assertEquals(array('additional', 'admin', 'user'), $info['grps']);
 
         // group retrieval
-        $this->assertEquals(array('admin', 'user'), $auth->retrieveGroups());
-        $this->assertEquals(array('user'), $auth->retrieveGroups(1));
-        $this->assertEquals(array('admin'), $auth->retrieveGroups(0, 1));
+        $this->assertEquals(array('additional', 'admin', 'user'), $auth->retrieveGroups());
+        $this->assertEquals(array('admin', 'user'), $auth->retrieveGroups(1));
+        $this->assertEquals(array('additional'), $auth->retrieveGroups(0, 1));
 
         // user creation
         $auth->createUser('test', 'password', 'A Test user', 'test@example.com', array('newgroup'));
@@ -145,7 +145,7 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $this->assertEquals('A Test user', $info['name']);
         $this->assertEquals('test@example.com', $info['mail']);
         $this->assertEquals(array('newgroup', 'user'), $info['grps']);
-        $this->assertEquals(array('admin', 'newgroup', 'user'), $auth->retrieveGroups());
+        $this->assertEquals(array('additional', 'admin', 'newgroup', 'user'), $auth->retrieveGroups());
 
         // user modification
         $auth->modifyUser('test', array('user' => 'tester', 'name' => 'The Test User', 'pass' => 'secret'));
@@ -166,7 +166,7 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
                 'name' => 'The Admin',
                 'mail' => 'admin@example.com',
                 'uid' => '1',
-                'grps' => array('admin', 'user')
+                'grps' => array('additional', 'admin', 'user')
             ),
             'user' => array(
                 'user' => 'user',

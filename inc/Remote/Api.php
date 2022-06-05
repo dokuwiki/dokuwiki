@@ -344,7 +344,7 @@ class Api
                 $this->coreMethods = $apiCore;
             }
         }
-        return $this->coreMethods->__getRemoteInfo();
+        return $this->coreMethods->getRemoteInfo();
     }
 
     /**

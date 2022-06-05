@@ -168,8 +168,10 @@ class Ajax {
         $client = $_SERVER['REMOTE_USER'];
         if(!$client) $client = clientIP(true);
 
-        $cname = getCacheName($client . $id, '.draft');
-        @unlink($cname);
+        $draft = new Draft($id, $client);
+        if ($draft->isDraftAvailable() && checkSecurityToken()) {
+            $draft->deleteDraft();
+        }
     }
 
     /**
@@ -241,14 +243,11 @@ class Ajax {
      * @author Kate Arzamastseva <pshns@ukr.net>
      */
     protected function callMediadiff() {
-        global $NS;
         global $INPUT;
 
         $image = '';
         if($INPUT->has('image')) $image = cleanID($INPUT->str('image'));
-        $NS = getNS($image);
-        $auth = auth_quickaclcheck("$NS:*");
-        media_diff($image, $NS, $auth, true);
+        (new Ui\MediaDiff($image))->preference('fromAjax', true)->show();
     }
 
     /**
@@ -355,13 +354,20 @@ class Ajax {
             // use index to lookup matching pages
             $pages = ft_pageLookup($id, true);
 
+            // If 'useheading' option is 'always' or 'content',
+            // search page titles with original query as well.
+            if ($conf['useheading'] == '1' || $conf['useheading'] == 'content') { 
+                $pages = array_merge($pages, ft_pageLookup($q, true, true));
+                asort($pages, SORT_STRING);
+            }
+        
             // result contains matches in pages and namespaces
             // we now extract the matching namespaces to show
             // them seperately
             $dirs = array();
 
             foreach($pages as $pid => $title) {
-                if(strpos(noNS($pid), $id) === false) {
+                if(strpos(getNS($pid), $id) !== false) {
                     // match was in the namespace
                     $dirs[getNS($pid)] = 1; // assoc array avoids dupes
                 } else {

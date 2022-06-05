@@ -214,7 +214,7 @@ $lang['created']               = 'kreita';
 $lang['restored']              = 'malnova revizio restarigita (%s)';
 $lang['external_edit']         = 'ekstera redakto';
 $lang['summary']               = 'Bulteno de ŝanĝoj';
-$lang['noflash']               = 'La <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> necesas por montri tiun ĉi enhavon.';
+$lang['noflash']               = 'La <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> necesas por montri tiun ĉi enhavon.';
 $lang['download']              = 'Elŝuti eltiraĵon';
 $lang['tools']                 = 'Iloj';
 $lang['user_tools']            = 'Uzantaj iloj';

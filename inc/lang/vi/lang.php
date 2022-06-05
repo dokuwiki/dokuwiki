@@ -212,7 +212,7 @@ $lang['created']               = 'đã tạo';
 $lang['restored']              = 'đã khôi phục phiên bản cũ (%s)';
 $lang['external_edit']         = 'sửa đổi bên ngoài';
 $lang['summary']               = 'Tóm lược sửa đổi';
-$lang['noflash']               = 'Cần có <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> mới có thể xem được nội dung này.';
+$lang['noflash']               = 'Cần có <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> mới có thể xem được nội dung này.';
 $lang['download']              = 'Tải xuống đoạn trích';
 $lang['tools']                 = 'Công cụ';
 $lang['user_tools']            = 'Công cụ thành viên';
@@ -294,10 +294,10 @@ $lang['i_superuser']           = 'Siêu thành viên';
 $lang['i_problems']            = 'Trình cài đặt tìm thấy một số vấn đề, được chỉ ra bên dưới. Bạn không thể tiếp tục cho đến khi bạn đã sửa chúng.';
 $lang['i_modified']            = 'Vì lý do bảo mật, tập lệnh này sẽ chỉ hoạt động với bản cài đặt Dokuwiki mới và chưa được sửa đổi.
                                   Bạn nên trích xuất lại các tập tin từ gói đã tải xuống hoặc tham khảo
-                    <a href="http://dokuwiki.org/install">Hướng dẫn cài đặt Dokuwiki</a> đầy đủ';
+                    <a href="https://www.dokuwiki.org/install">Hướng dẫn cài đặt Dokuwiki</a> đầy đủ';
 $lang['i_funcna']              = 'Hàm PHP <code>%s</code> không có sẵn. Có lẽ nhà cung cấp dịch vụ lưu trữ của bạn đã vô hiệu hóa nó vì một số lý do?';
 $lang['i_disabled']            = 'Nó đã bị vô hiệu hóa bởi nhà cung cấp của bạn.';
-$lang['i_funcnmail']           = '<b>Lưu ý:</b> Không có sẵn hàm PHP mail. %s Nếu nó vẫn không có sẵn, bạn có thể cài đặt <a href="http://dokuwiki.org/plugins/smtp">smtp plugin</a>.';
+$lang['i_funcnmail']           = '<b>Lưu ý:</b> Không có sẵn hàm PHP mail. %s Nếu nó vẫn không có sẵn, bạn có thể cài đặt <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Phiên bản PHP <code>%s</code> hiện taị thấp hơn mức <code>%s</code> cần thiết. Bạn cần nâng cấp cài đặt PHP của bạn.';
 $lang['i_mbfuncoverload']      = 'mbopes.func_overload phải bị vô hiệu trong php.ini để chạy DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki không thể tạo số mật mã an toàn cho cookie. Bạn có thể muốn kiểm tra cài đặt open_basingir trong php.ini để truy cập <code>/dev/urandom</code> thích hợp.';

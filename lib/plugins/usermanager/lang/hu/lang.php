@@ -2,13 +2,12 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Hamp Gábor <gabor.hamp@gmail.com>
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
- * @author schilling.janos@gmail.com
+ * @author schilling.janos <schilling.janos@gmail.com>
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
- * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
- * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  * @author Marton Sebok <sebokmarton@gmail.com>
  * @author Serenity87HUN <anikototh87@gmail.com>
  * @author Marina Vladi <deldadam@gmail.com>
@@ -72,3 +71,5 @@ $lang['import_error_readfail'] = 'Sikertelen importálás. A feltöltött fájl 
 $lang['import_error_create']   = 'Ez a felhasználó nem hozható létre';
 $lang['import_notify_fail']    = 'Az értesítő e-mail nem küldhető el az alábbi importált felhasználónak: %s e-mailcíme: %s.';
 $lang['import_downloadfailures'] = 'Töltsd le a hibákat tartalmazó fájlt CSV formátumban, hogy ki tudd javítani a hibákat';
+$lang['addUser_error_pass_not_identical'] = 'A begépelt jelszavak különböznek.';
+$lang['addUser_error_modPass_disabled'] = 'A jelszó megváltoztatása jelenleg nem lehetséges.';

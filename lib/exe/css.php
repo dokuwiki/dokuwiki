@@ -328,7 +328,7 @@ function css_interwiki(){
 
     // default style
     echo 'a.interwiki {';
-    echo ' background: transparent url('.DOKU_BASE.'lib/images/interwiki.png) 0 0 no-repeat;';
+    echo ' background: transparent url('.DOKU_BASE.'lib/images/interwiki.svg) 0 0 no-repeat;';
     echo ' background-size: 1.2em;';
     echo ' padding: 0 0 0 1.4em;';
     echo '}';

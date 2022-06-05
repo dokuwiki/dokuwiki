@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author merefox <admin@homerecz.com>
  * @author pavement <pavement@rael.cc>
  * @author Traend <Traend@ruu.kr>
  * @author Seungheon Song <esketch@gmail.com>
@@ -51,7 +52,7 @@ $lang['btn_back']              = '뒤로';
 $lang['btn_backlink']          = '역링크';
 $lang['btn_subscribe']         = '구독 관리';
 $lang['btn_profile']           = '프로필 업데이트';
-$lang['btn_reset']             = '재';
+$lang['btn_reset']             = '재설정';
 $lang['btn_resendpwd']         = '새 비밀번호 설정';
 $lang['btn_draft']             = '초안 편집';
 $lang['btn_recover']           = '초안 복구';
@@ -127,6 +128,10 @@ $lang['search_exact_match']    = '정확히 일치';
 $lang['search_starts_with']    = '시작';
 $lang['search_ends_with']      = '끝';
 $lang['search_any_ns']         = '모든 네임스페이스';
+$lang['search_past_7_days']    = '저번 주';
+$lang['search_past_month']     = '저번 달';
+$lang['search_past_year']      = '저번 년도';
+$lang['search_sort_by_hits']   = '조회수로 정렬';
 $lang['regmissing']            = '죄송하지만 모든 필드를 채워야 합니다.';
 $lang['reguexists']            = '죄송하지만 같은 이름을 사용하는 사용자가 있습니다.';
 $lang['regsuccess']            = '사용자 계정을 만들었으며 비밀번호는 이메일로 보냈습니다.';
@@ -163,6 +168,7 @@ $lang['txt_upload']            = '올릴 파일 선택:';
 $lang['txt_filename']          = '올릴 파일 이름 (선택 사항):';
 $lang['txt_overwrt']           = '기존 파일에 덮어쓰기';
 $lang['maxuploadsize']         = '최대 올리기 용량. 파일당 %s.';
+$lang['allowedmime']           = '허용된 파일 확장자 리스트';
 $lang['lockedby']              = '현재 잠근 사용자:';
 $lang['lockexpire']            = '잠금 해제 시간:';
 $lang['rssfailed']             = '이 피드를 가져오는 동안 오류가 발생했습니다:';
@@ -216,7 +222,7 @@ $lang['created']               = '만듦';
 $lang['restored']              = '이전 판으로 되돌림 (%s)';
 $lang['external_edit']         = '바깥 편집';
 $lang['summary']               = '편집 요약';
-$lang['noflash']               = '이 내용을 표시하기 위해서 <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash 플러그인</a>이 필요합니다.';
+$lang['noflash']               = '이 내용을 표시하기 위해서 <a href="http://get.adobe.com/flashplayer">Adobe Flash 플러그인</a>이 필요합니다.';
 $lang['download']              = '조각 다운로드';
 $lang['tools']                 = '도구';
 $lang['user_tools']            = '사용자 도구';

@@ -2,7 +2,6 @@
 
 namespace dokuwiki\Action;
 
-use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Action\Exception\ActionException;
 use dokuwiki\Action\Exception\FatalException;
 
@@ -69,6 +68,7 @@ abstract class AbstractAction {
      * Output whatever content is wanted within tpl_content();
      *
      * @fixme we may want to return a Ui class here
+     * @throws FatalException
      */
     public function tplContent() {
         throw new FatalException('No content for Action ' . $this->actionname);

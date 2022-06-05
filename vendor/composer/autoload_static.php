@@ -23,6 +23,10 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         array (
             'phpseclib\\' => 10,
         ),
+        'I' => 
+        array (
+            'IXR\\' => 4,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -45,6 +49,10 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         'phpseclib\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+        ),
+        'IXR\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kissifrot/php-ixr/src',
         ),
     );
 
