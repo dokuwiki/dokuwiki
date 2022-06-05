@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Ramdziana F Y <ramdzian@gmail.com>
  * @author NawanP <saya@nawan.my.id>
  * @author rusly-id <rusly-id@users.noreply.github.com>
  * @author mubaidillah <mubaidillah@gmail.com>
@@ -70,6 +71,9 @@ $lang['badlogin']              = 'Maaf, username atau password salah.';
 $lang['badpassconfirm']        = 'Maaf, password salah';
 $lang['minoredit']             = 'Perubahan Minor';
 $lang['draftdate']             = 'Simpan draft secara otomatis';
+$lang['searchcreatepage']      = 'Jika anda tidak menemukan yang anda cari, anda dapat membuat atau mengedit halaman %s, yang dinamai sesuai kueri anda.';
+$lang['search_fullresults']    = 'Hasil teks penuh';
+$lang['js']['search_toggle_tools'] = 'Tombol Alihan Perkakas Telusur';
 $lang['js']['willexpire']      = 'Halaman yang sedang Anda kunci akan berakhir dalam waktu kurang lebih satu menit.\nUntuk menghindari konflik, gunakan tombol Preview untuk me-reset timer pengunci.';
 $lang['js']['notsavedyet']     = 'Perubahan yang belum disimpan akan hilang.\nYakin akan dilanjutkan?';
 $lang['js']['searchmedia']     = 'Cari file';
@@ -105,16 +109,31 @@ $lang['js']['restore_confirm'] = 'Benar-benar ingin mengembalikan versi ini?';
 $lang['js']['media_diff']      = 'Lihat perbedaan:';
 $lang['js']['media_diff_both'] = 'Berdampingan';
 $lang['js']['media_diff_opacity'] = 'Mencolok';
+$lang['js']['media_diff_portions'] = 'Usap';
 $lang['js']['media_select']    = 'Pilih file...';
 $lang['js']['media_upload_btn'] = 'Unggah';
 $lang['js']['media_done_btn']  = 'Selesai';
 $lang['js']['media_drop']      = 'Tarik file disini untuk mengunggah';
 $lang['js']['media_cancel']    = 'Buang';
 $lang['js']['media_overwrt']   = 'Timpa berkas yang ada';
+$lang['js']['data_insecure']   = 'PERINGATAN: Sepertinya direktori data anda belum diamankan. Silakan baca <a href="https://www.dokuwiki.org/security#web_access_security">Keamanan Akses Web di DokuWiki</a>.';
+$lang['search_exact_match']    = 'Tepat sesuai';
+$lang['search_starts_with']    = 'Dimulai dengan';
+$lang['search_ends_with']      = 'Diakhiri dengan';
+$lang['search_contains']       = 'Berisi';
+$lang['search_custom_match']   = 'Kustom';
+$lang['search_any_ns']         = 'Namespace apa saja';
+$lang['search_any_time']       = 'Kapanpun';
+$lang['search_past_7_days']    = 'Pekan lalu';
+$lang['search_past_month']     = 'Bulan lalu';
+$lang['search_past_year']      = 'Tahun lalu';
+$lang['search_sort_by_hits']   = 'Urutkan berdasar hit';
+$lang['search_sort_by_mtime']  = 'Urutkan berdasar perubahan terkini';
 $lang['regmissing']            = 'Maaf, Anda harus mengisi semua field.';
 $lang['reguexists']            = 'Maaf, user dengan user login ini telah ada.';
 $lang['regsuccess']            = 'User telah didaftarkan dan password telah dikirim ke email Anda.';
 $lang['regsuccess2']           = 'User telah dibuatkan.';
+$lang['regfail']               = 'Pengguna tidak dapat dibuat.';
 $lang['regmailfail']           = 'Kami menemukan kesalahan saat mengirimkan password ke alamat email Anda. Mohon hubungi administrator.';
 $lang['regbadmail']            = 'Alamat email yang Anda masukkan tidak valid - jika menurut Anda hal ini adalah kesalahan sistem, mohon hubungi admin.';
 $lang['regbadpass']            = 'Passwod yang dimasukkan tidak sama. Silahkan ulangi lagi.';
@@ -130,6 +149,7 @@ $lang['profdeleted']           = 'Akun anda telah dihapus dari wiki ini';
 $lang['profconfdelete']        = 'Saya berharap menghapus akun saya dari wiki ini.
 Aksi ini tidak bisa diselesaikan.';
 $lang['profconfdeletemissing'] = 'Knfirmasi check box tidak tercentang';
+$lang['proffail']              = 'Profil pengguna tidak diperbarui.';
 $lang['pwdforget']             = 'Lupa Password? Dapatkan yang baru';
 $lang['resendna']              = 'Wiki ini tidak mendukung pengiriman ulang password.';
 $lang['resendpwd']             = 'Atur password baru';
@@ -146,6 +166,7 @@ $lang['txt_upload']            = 'File yang akan diupload:';
 $lang['txt_filename']          = 'Masukkan nama wiki (opsional):';
 $lang['txt_overwrt']           = 'File yang telah ada akan ditindih';
 $lang['maxuploadsize']         = 'Unggah maks. %s per berkas';
+$lang['allowedmime']           = 'Daftar ekstensi berkas yang diizinkan';
 $lang['lockedby']              = 'Sedang dikunci oleh:';
 $lang['lockexpire']            = 'Penguncian artikel sampai dengan:';
 $lang['rssfailed']             = 'Error terjadi saat mengambil feed: ';
@@ -173,6 +194,7 @@ $lang['mediaextchange']        = 'Ektensi file berubah dari .%s ke .%s';
 $lang['reference']             = 'Referensi untuk';
 $lang['ref_inuse']             = 'File tidak dapat dihapus karena sedang digunakan oleh halaman:';
 $lang['ref_hidden']            = 'Beberapa referensi ada didalam halaman yang tidak diijinkan untuk Anda baca.';
+$lang['hits']                  = 'Hit';
 $lang['quickhits']             = 'Matching pagenames';
 $lang['toc']                   = 'Daftar isi';
 $lang['current']               = 'sekarang';
@@ -186,6 +208,8 @@ $lang['diff_side']             = 'Berdampingan';
 $lang['diffprevrev']           = 'Revisi sebelumnya';
 $lang['diffnextrev']           = 'Revisi selanjutnya';
 $lang['difflastrev']           = 'Revisi terakhir';
+$lang['diffbothprevrev']       = 'Kedua sisi revisi sebelumnya';
+$lang['diffbothnextrev']       = 'Kedua sisi revisi setelahnya';
 $lang['line']                  = 'Baris';
 $lang['breadcrumb']            = 'Jejak:';
 $lang['youarehere']            = 'Anda disini:';
@@ -195,6 +219,7 @@ $lang['deleted']               = 'terhapus';
 $lang['created']               = 'dibuat';
 $lang['restored']              = 'revisi lama ditampilkan kembali (%s)';
 $lang['external_edit']         = 'Perubahan eksternal';
+$lang['summary']               = 'Edit ringkasan';
 $lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> diperlukan untuk menampilkan konten ini.';
 $lang['download']              = 'Unduh Cuplikan';
 $lang['tools']                 = 'Alat';
@@ -217,6 +242,7 @@ $lang['qb_italic']             = 'Miring';
 $lang['qb_underl']             = 'Garis Bawah';
 $lang['qb_code']               = 'Kode';
 $lang['qb_strike']             = 'Text Tercoret';
+$lang['qb_h1']                 = 'Tajuk Level 1';
 $lang['qb_hs']                 = 'Pilih Judul';
 $lang['qb_hplus']              = 'Judul Lebih Atas';
 $lang['qb_hminus']             = 'Judul Lebih Bawah';
