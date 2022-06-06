@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
@@ -67,11 +67,11 @@ $lang['template']              = 'Thème (rendu visuel du wiki)';
 $lang['tagline']               = 'Descriptif du site (si le thème utilise cette fonctionnalité)';
 $lang['sidebar']               = 'Nom du panneau latéral (si le thème utilise cette fonctionnalité). Laisser le champ vide désactive le panneau latéral.';
 $lang['license']               = 'Sous quelle licence doit-être placé le contenu ?';
-$lang['savedir']               = 'Répertoire d\'enregistrement des données';
-$lang['basedir']               = 'Répertoire de base du serveur (par exemple : <code>/dokuwiki/</code>). Laisser vide pour une détection automatique.';
+$lang['savedir']               = 'Dossier d\'enregistrement des données';
+$lang['basedir']               = 'Dossier de base du serveur (par exemple : <code>/dokuwiki/</code>). Laisser vide pour une détection automatique.';
 $lang['baseurl']               = 'URL de base du site (par exemple <code>http://www.example.com</code>). Laisser vide pour une détection automatique.';
 $lang['cookiedir']             = 'Chemin des cookies. Laissez vide pour utiliser l\'URL de base.';
-$lang['dmode']                 = 'Mode de création des répertoires';
+$lang['dmode']                 = 'Mode de création des dossiers';
 $lang['fmode']                 = 'Mode de création des fichiers';
 $lang['allowdebug']            = 'Debug (<strong>Ne l\'activez que si vous en avez besoin !</strong>)';
 $lang['recent']                = 'Nombre de lignes à afficher - par page - pour les derniers changements';

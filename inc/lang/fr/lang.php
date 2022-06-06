@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
@@ -148,7 +148,7 @@ $lang['js']['media_done_btn']  = 'Terminé';
 $lang['js']['media_drop']      = 'Déposez des fichiers ici pour les envoyer';
 $lang['js']['media_cancel']    = 'supprimer';
 $lang['js']['media_overwrt']   = 'Écraser les fichiers existants';
-$lang['js']['data_insecure']   = 'ATTENTION : votre répertoire de données ne semble pas correctement sécurisé. Veuillez lire <a href="https://www.dokuwiki.org/fr:security#securite_de_l_acces_web">Sécurité de l\'accès web (en français)</a> ou <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki (en anglais)</a>.';
+$lang['js']['data_insecure']   = 'ATTENTION : votre dossier de données ne semble pas correctement sécurisé. Veuillez lire <a href="https://www.dokuwiki.org/fr:security#securite_de_l_acces_web">Sécurité de l\'accès web (en français)</a> ou <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki (en anglais)</a>.';
 $lang['search_exact_match']    = 'Correspondance exacte';
 $lang['search_starts_with']    = 'Commence par';
 $lang['search_ends_with']      = 'Se termine par';
@@ -338,9 +338,9 @@ $lang['i_funcnmail']           = '<b>Note:</b> La fonction PHP mail n\'est pas d
 $lang['i_phpver']              = 'Votre version de PHP (%s) est antérieure à la version requise (%s). Vous devez mettre à jour votre installation de PHP.';
 $lang['i_mbfuncoverload']      = 'Il faut désactiver mbstring.func_overload dans php.ini pour DokuWiki';
 $lang['i_urandom']             = 'DokuWiki ne peut créer de nombres cryptographiquement sûrs pour les cookies. Vous voudrez peut-être vérifier que le réglage open_basedir dans php.ini permet l\'accès à <code>/dev/urandom</code>.';
-$lang['i_permfail']            = '<code>%s</code> n\'est pas accessible en écriture pour DokuWiki. Vous devez corriger les autorisations de ce répertoire !';
+$lang['i_permfail']            = '<code>%s</code> n\'est pas accessible en écriture pour DokuWiki. Vous devez corriger les autorisations de ce dossier !';
 $lang['i_confexists']          = '<code>%s</code> existe déjà';
-$lang['i_writeerr']            = 'Impossible de créer <code>%s</code>. Vous devez vérifier les autorisations des répertoires/fichiers et créer le fichier manuellement.';
+$lang['i_writeerr']            = 'Impossible de créer <code>%s</code>. Vous devez vérifier les autorisations des dossiers/fichiers et créer le fichier manuellement.';
 $lang['i_badhash']             = 'dokuwiki.php non reconnu ou modifié (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valeur interdite ou vide';
 $lang['i_success']             = 'L\'installation s\'est terminée avec succès. Vous pouvez maintenant supprimer le fichier « install.php ». Continuer avec <a href="doku.php?id=wiki:welcome">votre nouveau DokuWiki</a>.';
