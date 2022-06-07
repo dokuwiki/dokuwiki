@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author tya <tyajuwita07@gmail.com>
  * @author rusly-id <rusly-id@users.noreply.github.com>
  * @author mubaidillah <mubaidillah@gmail.com>
  * @author Irwan Butar Butar <irwansah.putra@gmail.com>
