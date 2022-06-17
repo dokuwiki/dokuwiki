@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marek Adamski <fevbew@wp.pl>
  * @author pavulondit <pavloo@vp.pl>
  * @author Bartek S <sadupl@gmail.com>
  * @author Przemek <p_kudriawcew@o2.pl>
@@ -317,8 +318,10 @@ $lang['i_modified']            = 'Ze względów bezpieczeństwa, ten skrypt dzia
 Aby uruchomić instalator ponownie, rozpakuj archiwum DokuWiki lub zapoznaj się z <a href="https://www.dokuwiki.org/install">instrukcją instalacji Dokuwiki</a>';
 $lang['i_funcna']              = 'Funkcja PHP <code>%s</code> jest niedostępna.';
 $lang['i_disabled']            = 'To zostało wyłączone przez twojego dostawcę.';
+$lang['i_funcnmail']           = '<b>Uwaga:</b> funkcja poczty PHP nie jest dostępna. %s, jeśli pozostanie niedostępna, możesz zainstalować <a href="https://www.dokuwiki.org/plugin:smtp">wtyczkę smtp</a>.';
 $lang['i_phpver']              = 'Wersja PHP <code>%s</code> jest niższa od wymaganej <code>%s</code>. Zaktualizuj instalację PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload musi zostać wyłączone w pliku php.ini aby móc uruchomić DokuWiki.';
+$lang['i_urandom']             = 'DokuWiki nie może tworzyć kryptograficznie bezpiecznych liczb dla plików cookie. Możesz sprawdzić ustawienia open_basedir w php.ini pod kątem prawidłowego dostępu do <code>/dev/urandom</code>.';
 $lang['i_permfail']            = 'DokuWiki nie ma prawa zapisu w katalogu <code>%s</code>. Zmień uprawnienia zapisu dla tego katalogu!';
 $lang['i_confexists']          = '<code>%s</code> już istnieje';
 $lang['i_writeerr']            = 'Nie można utworzyć <code>%s</code>. Sprawdź uprawnienia do katalogu lub pliku i stwórz plik ręcznie.';
@@ -369,6 +372,7 @@ $lang['media_perm_upload']     = 'Przepraszamy, nie masz wystarczających uprawn
 $lang['media_update']          = 'Prześlij nową wersję';
 $lang['media_restore']         = 'Odtwórz tą wersję';
 $lang['media_acl_warning']     = 'Ta lista może nie być kompletna ze względu na ograniczenia ACL oraz ukryte strony.';
+$lang['email_fail']            = 'Brak lub wyłączone PHP mail(). Następujący e-mail nie został wysłany:';
 $lang['currentns']             = 'Obecny katalog';
 $lang['searchresult']          = 'Wyniki wyszukiwania';
 $lang['plainhtml']             = 'Czysty HTML';
