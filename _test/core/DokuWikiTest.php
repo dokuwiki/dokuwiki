@@ -59,6 +59,10 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
      * @return void
      */
     public function setUp() : void {
+        // reset execution time if it's enabled
+        if(ini_get('max_execution_time') > 0) {
+            set_time_limit(90);
+        }
 
         // reload config
         global $conf, $config_cascade;
