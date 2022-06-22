@@ -18,6 +18,8 @@ use dokuwiki\plugin\config\core\Setting\SettingHidden;
  */
 class DocumentationTest extends \DokuWikiTest
 {
+    protected $http;
+
     /**
      * @return \Generator|array[]
      */
@@ -45,10 +47,16 @@ class DocumentationTest extends \DokuWikiTest
      */
     public function testDocs($key, $url)
     {
-        $http = new DokuHTTPClient();
-        $check = $http->get($url);
+        if ($this->http === null) {
+            $this->http = new DokuHTTPClient();
+            $this->http->timeout = 15;
+        }
+
+        echo ini_get('max_execution_time');
+
+        $check = $this->http->get($url);
         $fail = (bool)strpos($check, 'topic does not exist');
         $msg = "Setting '$key' should have documentation at $url.";
-        $this->assertFalse($fail, $msg . ' ' . $http->status . ' ' . $http->error);
+        $this->assertFalse($fail, $msg . ' ' . $this->http->status . ' ' . $this->http->error);
     }
 }

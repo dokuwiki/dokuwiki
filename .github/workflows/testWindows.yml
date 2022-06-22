@@ -22,6 +22,7 @@ jobs:
               with:
                   php-version: ${{ matrix.php-versions }}
                   extensions: mbstring, intl, bz2
+                  ini-values: max_execution_time=0
 
             - name: Setup problem matchers
               run: |
@@ -35,4 +36,4 @@ jobs:
             - name: Run PHPUnit
               run: |
                 cd _test
-                php phpunit.phar --verbose --stderr
+                php -d max_execution_time=1800 phpunit.phar --verbose --debug --stderr

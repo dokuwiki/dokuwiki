@@ -258,7 +258,7 @@ class HTTPClient {
         if (is_null($socket) || feof($socket)) {
             $this->debug('opening connection', $connectionId);
             // open socket
-            $socket = @fsockopen($server,$port,$errno, $errstr, $this->timeout);
+            $socket = fsockopen($server,$port,$errno, $errstr, $this->timeout);
             if (!$socket){
                 $this->status = -100;
                 $this->error = "Could not connect to $server:$port\n$errstr ($errno)";
@@ -687,7 +687,7 @@ class HTTPClient {
             $sel_w = null;
             $sel_e = null;
             // wait for stream ready or timeout (1sec)
-            if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
+            if(stream_select($sel_r,$sel_w,$sel_e,1) === false){
                 usleep(1000);
                 continue;
             }
