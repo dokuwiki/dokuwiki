@@ -620,9 +620,9 @@ class ApiCore
 
         $notify = (bool)$userStruct['notify'] ?? false;
 
-        if ($user === '' || $name === '' || !mail_isvalid($mail)) {
-            return false;
-        }
+        if ($user === '') throw new RemoteException('empty or invalid user', 401);
+        if ($name === '') throw new RemoteException('empty or invalid user name', 402);
+        if (!mail_isvalid($mail)) throw new RemoteException('empty or invalid mail address', 403);
 
         if(strlen($password) === 0) {
             $password = auth_pwgen($user);

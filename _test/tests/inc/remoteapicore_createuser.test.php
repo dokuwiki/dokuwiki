@@ -116,7 +116,47 @@ class remoteapicore_createuser_test extends DokuWikiTest {
                 ],
         ];
 
-        $this->assertFalse($this->remote->call('dokuwiki.createUser', $params));
+        $this->expectException(RemoteException::class);
+        $this->expectExceptionCode(401);
+        $this->remote->call('dokuwiki.createUser', $params);
+    }
+
+    public function test_createUserAuthPlainUndefinedName()
+    {
+        global $conf, $auth;
+        $conf['remote'] = 1;
+        $conf['remoteuser'] = 'testuser';
+        $_SERVER['REMOTE_USER'] = 'testuser';
+        $auth = new auth_plugin_authplain();
+        $params = [
+            [
+                'user' => 'hello'
+            ],
+        ];
+
+        $this->expectException(RemoteException::class);
+        $this->expectExceptionCode(402);
+        $this->remote->call('dokuwiki.createUser', $params);
+    }
+
+    public function test_createUserAuthPlainBadEmail()
+    {
+        global $conf, $auth;
+        $conf['remote'] = 1;
+        $conf['remoteuser'] = 'testuser';
+        $_SERVER['REMOTE_USER'] = 'testuser';
+        $auth = new auth_plugin_authplain();
+        $params = [
+            [
+                'user' => 'hello',
+                'name' => 'A new user',
+                'mail' => 'this is not an email address'
+            ],
+        ];
+
+        $this->expectException(RemoteException::class);
+        $this->expectExceptionCode(403);
+        $this->remote->call('dokuwiki.createUser', $params);
     }
 
     public function test_createUserAuthCanNotDoAddUser()
