@@ -91,7 +91,11 @@ if (defined('SIMPLE_TEST')) {
     //handle image resizing/cropping
     $evt = new Event('MEDIA_RESIZE', $data);
     if($evt->advise_before()) {
-        if((substr($MIME, 0, 5) == 'image') && ($WIDTH || $HEIGHT)) {
+        if(
+            $MIME != 'image/svg+xml' &&
+            (substr($MIME, 0, 5) == 'image') &&
+            ($WIDTH || $HEIGHT)
+        ) {
             if($HEIGHT && $WIDTH) {
                 $data['file'] = $FILE = media_crop_image($data['file'], $EXT, $WIDTH, $HEIGHT);
             } else {
