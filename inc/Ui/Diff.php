@@ -15,9 +15,10 @@ abstract class Diff extends Ui
     /* @var string */
     protected $id;   // page id or media id
 
-    /* @var int */
-    protected $oldRev;  // timestamp of older revision
-    protected $newRev;  // timestamp of newer revision
+    /* @var int|false */
+    protected $rev1;  // timestamp of older revision
+    /* @var int|false */
+    protected $rev2;  // timestamp of newer revision
 
     /* @var array */
     protected $preference = [];
@@ -49,17 +50,15 @@ abstract class Diff extends Ui
     /**
      * Set a pair of revisions to be compared
      *
-     * @param int $oldRev
-     * @param int $newRev
+     * @param int $rev1 older revision
+     * @param int $rev2 newer revision
      * @return $this
      */
-    public function compare($oldRev, $newRev)
+    public function compare($rev1, $rev2)
     {
-        if ($oldRev < $newRev) {
-            [$this->oldRev, $this->newRev] = [$oldRev, $newRev];
-        } else {
-            [$this->oldRev, $this->newRev] = [$newRev, $oldRev];
-        }
+        if ($rev2 < $rev1) [$rev1, $rev2] = [$rev2, $rev1];
+        $this->rev1 = (int)$rev1;
+        $this->rev2 = (int)$this->changelog->traceCurrentRevision($rev2);
         return $this;
     }
 
@@ -95,27 +94,36 @@ abstract class Diff extends Ui
     {
         global $INPUT;
 
-        // difflink icon click, eg. ?rev=123456789&do=diff
+        // diff link icon click, eg. &do=diff&rev=#
         if ($INPUT->has('rev')) {
-            $this->oldRev = $INPUT->int('rev');
-            $this->newRev = $this->changelog->currentRevision();
-        }
-
-        // submit button with two checked boxes
-        $rev2 = $INPUT->arr('rev2', []);
-        if (count($rev2) > 1) {
-            if ($rev2[0] < $rev2[1]) {
-                [$this->oldRev, $this->newRev] = [$rev2[0], $rev2[1]];
-            } else {
-                [$this->oldRev, $this->newRev] = [$rev2[1], $rev2[0]];
+            $this->rev1 = $INPUT->int('rev');
+            $this->rev2 = $this->changelog->currentRevision();
+            if ($this->rev2 <= $this->rev1) {
+                // fallback to compare previous with current
+                 unset($this->rev1, $this->rev2);
             }
         }
 
-        if (!isset($this->oldRev, $this->newRev)) {
-            // no revision was given, compare previous to current
-            $revs = $this->changelog->getRevisions(-1, 2);
-            $this->newRev = $this->changelog->currentRevision();
-            $this->oldRev = ($revs[0] == $this->newRev) ? $revs[1] : $revs[0];
+        // submit button with two checked boxes, eg. &do=diff&rev2[0]=#&rev2[1]=#
+        $revs = $INPUT->arr('rev2', []);
+        if (count($revs) > 1) {
+            list($rev1, $rev2) = $revs;
+            if ($rev2 < $rev1) [$rev1, $rev2] = [$rev2, $rev1];
+            $this->rev1 = (int)$rev1;
+            $this->rev2 = (int)$this->changelog->traceCurrentRevision($rev2);
+        }
+
+       // no revision was given, compare previous to current
+        if (!isset($this->rev1, $this->rev2)) {
+            $rev2 = $this->changelog->currentRevision();
+            if ($rev2 > $this->changelog->lastRevision()) {
+                $rev1 = $this->changelog->lastRevision();
+            } else {
+                $revs = $this->changelog->getRevisions(0, 1);
+                $rev1 = count($revs) ? $revs[0] : false;
+            }
+            $this->rev1 = $rev1;
+            $this->rev2 = $rev2;
         }
     }
 }

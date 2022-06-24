@@ -20,9 +20,10 @@ class PageDiff extends Diff
     /* @var PageChangeLog */
     protected $changelog;
 
-    /* @var array */
-    protected $oldRevInfo;
-    protected $newRevInfo;
+    /* @var RevisionInfo older revision */
+    protected $RevInfo1;
+    /* @var RevisionInfo newer revision */
+    protected $RevInfo2;
 
     /* @var string */
     protected $text;
@@ -60,36 +61,31 @@ class PageDiff extends Diff
      */
     public function compareWith($text = null)
     {
-        global $lang;
-
         if (isset($text)) {
             $this->text = $text;
             $changelog =& $this->changelog;
 
-            // revision info of older file (left side)
-            $this->oldRevInfo = $changelog->getCurrentRevisionInfo() + [
+            // revision info object of older file (left side)
+            $this->RevInfo1 = new RevisionInfo($changelog->getCurrentRevisionInfo());
+            $this->RevInfo1->append([
                 'current' => true,
-                'rev'  => '',
-                'navTitle' => $this->revisionTitle($changelog->getCurrentRevisionInfo()),
                 'text' => rawWiki($this->id),
-            ];
+            ]);
 
-            // revision info of newer file (right side)
-            $this->newRevInfo = [
-                'date' => null,
+            // revision info object of newer file (right side)
+            $this->RevInfo2 = new RevisionInfo();
+            $this->RevInfo2->append([
+                'date' => false,
               //'ip'   => '127.0.0.1',
               //'type' => DOKU_CHANGE_TYPE_CREATE,
                 'id'   => $this->id,
               //'user' => '',
               //'sum'  => '',
-              //'extra' => '',
-                'sizechange' => strlen($this->text) - io_getSizeFile(wikiFN($this->id)),
-                'timestamp' => false,
+                'extra' => 'compareWith',
+              //'sizechange' => strlen($this->text) - io_getSizeFile(wikiFN($this->id)),
                 'current' => false,
-                'rev'  => false,
-                'navTitle' => $lang['yours'],
                 'text' => cleanText($this->text),
-            ];
+            ]);
         }
         return $this;
     }
@@ -103,8 +99,8 @@ class PageDiff extends Diff
     {
         global $INPUT;
 
-        // requested rev or rev2
-        if (!isset($this->oldRevInfo, $this->newRevInfo)) {
+        // retrieve requested rev or rev2
+        if (!isset($this->RevInfo1, $this->RevInfo2)) {
             parent::handle();
         }
 
@@ -120,7 +116,7 @@ class PageDiff extends Diff
         if (!$INPUT->has('rev') && !$INPUT->has('rev2')) {
             global $INFO, $REV;
             if ($this->id == $INFO['id'])
-                $REV = $this->oldRev; // store revision back in $REV
+                $REV = $this->rev1; // store revision back in $REV
         }
     }
 
@@ -133,50 +129,33 @@ class PageDiff extends Diff
 
         $changelog =& $this->changelog;
 
-        // check validity of $this->{oldRev, newRev}
-        foreach (['oldRev','newRev'] as $rev) {
-            $revInfo = $rev.'Info';
-            $this->$revInfo = $changelog->getRevisionInfo((int)$this->$rev);
-            if (!$this->$revInfo) {
-                // invalid revision number, set dummy revInfo
-                $this->$revInfo = array(
-                    'date' => time(),
-                    'type' => '',
-                    'timestamp' => false,
-                    'rev'  => false,
-                    'text' => '',
-                    'navTitle' => '&mdash;',
-                );
+        // create revision info object for older and newer sides
+        // RevInfo1 : older, left side
+        // RevInfo2 : newer, right side
+        $this->RevInfo1 = new RevisionInfo($changelog->getRevisionInfo($this->rev1));
+        $this->RevInfo2 = new RevisionInfo($changelog->getRevisionInfo($this->rev2));
+
+        foreach ([$this->RevInfo1, $this->RevInfo2] as $RevInfo) {
+            $isCurrent = $changelog->isCurrentRevision($RevInfo->val('date'));
+            $RevInfo->isCurrent($isCurrent);
+
+            if ($RevInfo->val('type') == DOKU_CHANGE_TYPE_DELETE || empty($RevInfo->val('type'))) {
+                $text = '';
+            } else {
+                $rev = $isCurrent ? '' : $RevInfo->val('date');
+                $text = rawWiki($this->id, $rev);
             }
+            $RevInfo->append(['text' => $text]);
         }
-        if ($this->newRev === false) {
+
+        // msg could displayed only when wrong url typed in browser address bar
+        if ($this->rev2 === false) {
             msg(sprintf($lang['page_nonexist_rev'],
                 $this->id,
                 wl($this->id, ['do'=>'edit']),
                 $this->id), -1);
-        } elseif ($this->oldRevInfo == $this->newRevInfo) {
+        } elseif (!$this->rev1 || $this->rev1 == $this->rev2) {
             msg('no way to compare when less than two revisions', -1);
-        }
-
-        foreach ([&$this->oldRevInfo, &$this->newRevInfo] as &$revInfo) {
-            // use timestamp and '' properly as $rev for the current file
-            $isCurrent = $changelog->isCurrentRevision($revInfo['date']);
-            $revInfo += [
-                'current' => $isCurrent,
-                'rev'     => $isCurrent ? '' : $revInfo['date'],
-            ];
-
-            // headline in the Diff view navigation
-            if (!isset($revInfo['navTitle'])) {
-                $revInfo['navTitle'] = $this->revisionTitle($revInfo);
-            }
-
-            if ($revInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
-                //attic stores complete last page version for a deleted page
-                $revInfo['text'] = '';
-            } else {
-                $revInfo['text'] = rawWiki($this->id, $revInfo['rev']);
-            }
         }
     }
 
@@ -191,33 +170,49 @@ class PageDiff extends Diff
      */
     public function show()
     {
-        if (!isset($this->oldRevInfo, $this->newRevInfo)) {
+        global $lang;
+
+        if (!isset($this->RevInfo1, $this->RevInfo2)) {
             // retrieve form parameters: rev, rev2, difftype
             $this->handle();
             // prepare revision info of comparison pair, except PageConfrict or PageDraft
             $this->preProcess();
         }
 
+        // revision title
+        $rev1Title = trim($this->RevInfo1->showRevisionTitle() .' '. $this->RevInfo1->showCurrentIndicator());
+        $rev1Summary = ($this->RevInfo1->val('date'))
+            ? $this->RevInfo1->showEditSummary() .' '. $this->RevInfo1->showEditor()
+            : '';
+
+        if ($this->RevInfo2->val('extra') == 'compareWith') {
+            $rev2Title = $lang['yours'];
+            $rev2Summary = '';
+        } else {
+            $rev2Title = trim($this->RevInfo2->showRevisionTitle() .' '. $this->RevInfo2->showCurrentIndicator());
+            $rev2Summary = ($this->RevInfo2->val('date'))
+                ? $this->RevInfo2->showEditSummary() .' '. $this->RevInfo2->showEditor()
+                : '';
+        }
+
         // create difference engine object
         $Difference = new \Diff(
-                explode("\n", $this->oldRevInfo['text']),
-                explode("\n", $this->newRevInfo['text'])
+                explode("\n", $this->RevInfo1->val('text')),
+                explode("\n", $this->RevInfo2->val('text'))
         );
 
         // build paired navigation
-        [$navOlderRevisions, $navNewerRevisions] = $this->buildRevisionsNavigation();
+        [$rev1Navi, $rev2Navi] = $this->buildRevisionsNavigation();
 
         // display intro
         if ($this->preference['showIntro']) echo p_locale_xhtml('diff');
 
         // print form to choose diff view type, and exact url reference to the view
-        if ($this->newRevInfo['rev'] !== false) {
-            $this->showDiffViewSelector();
-        }
+        $this->showDiffViewSelector();
 
         // assign minor edit checker to the variable
-        $classEditType = function ($info) {
-            return ($info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? ' class="minor"' : '';
+        $classEditType = function ($changeType) {
+            return ($changeType === DOKU_CHANGE_TYPE_MINOR_EDIT) ? ' class="minor"' : '';
         };
 
         // display diff view table
@@ -227,23 +222,26 @@ class PageDiff extends Diff
         //navigation and header
         switch ($this->preference['difftype']) {
             case 'inline':
-                if ($this->newRevInfo['rev'] !== false) {
+                $title1 = $rev1Title . ($rev1Summary ? '<br />'.$rev1Summary : '');
+                $title2 = $rev2Title . ($rev2Summary ? '<br />'.$rev2Summary : '');
+                // no navigation for PageConflict or PageDraft
+                if ($this->RevInfo2->val('extra') !== 'compareWith') {
                     echo '<tr>'
                         .'<td class="diff-lineheader">-</td>'
-                        .'<td class="diffnav">'. $navOlderRevisions .'</td>'
+                        .'<td class="diffnav">'. $rev1Navi .'</td>'
                         .'</tr>';
                     echo '<tr>'
                         .'<th class="diff-lineheader">-</th>'
-                        .'<th'.$classEditType($this->oldRevInfo).'>'.$this->oldRevInfo['navTitle'].'</th>'
+                        .'<th'.$classEditType($this->RevInfo1->val('type')).'>'. $title1 .'</th>'
                         .'</tr>';
                 }
                 echo '<tr>'
                     .'<td class="diff-lineheader">+</td>'
-                    .'<td class="diffnav">'. $navNewerRevisions .'</td>'
+                    .'<td class="diffnav">'. $rev2Navi .'</td>'
                     .'</tr>';
                 echo '<tr>'
                     .'<th class="diff-lineheader">+</th>'
-                    .'<th'.$classEditType($this->newRevInfo).'>'.$this->newRevInfo['navTitle'].'</th>'
+                    .'<th'.$classEditType($this->RevInfo2->val('type')).'>'. $title2 .'</th>'
                     .'</tr>';
                 // create formatter object
                 $DiffFormatter = new InlineDiffFormatter();
@@ -251,15 +249,18 @@ class PageDiff extends Diff
 
             case 'sidebyside':
             default:
-                if ($this->newRevInfo['rev'] !== false) {
+                $title1 = $rev1Title . ($rev1Summary ? ' '.$rev1Summary : '');
+                $title2 = $rev2Title . ($rev2Summary ? ' '.$rev2Summary : '');
+                // no navigation for PageConflict or PageDraft
+                if ($this->RevInfo2->val('extra') !== 'compareWith') {
                     echo '<tr>'
-                        .'<td colspan="2" class="diffnav">'. $navOlderRevisions .'</td>'
-                        .'<td colspan="2" class="diffnav">'. $navNewerRevisions .'</td>'
+                        .'<td colspan="2" class="diffnav">'. $rev1Navi .'</td>'
+                        .'<td colspan="2" class="diffnav">'. $rev2Navi .'</td>'
                         .'</tr>';
                 }
                 echo '<tr>'
-                    .'<th colspan="2"'.$classEditType($this->oldRevInfo).'>'.$this->oldRevInfo['navTitle'].'</th>'
-                    .'<th colspan="2"'.$classEditType($this->newRevInfo).'>'.$this->newRevInfo['navTitle'].'</th>'
+                    .'<th colspan="2"'.$classEditType($this->RevInfo1->val('type')).'>'.$title1.'</th>'
+                    .'<th colspan="2"'.$classEditType($this->RevInfo2->val('type')).'>'.$title2.'</th>'
                     .'</tr>';
                 // create formatter object
                 $DiffFormatter = new TableDiffFormatter();
@@ -274,68 +275,25 @@ class PageDiff extends Diff
     }
 
     /**
-     * Revision Title for PageDiff table headline
-     *
-     * @param array $info  Revision info structure of a page
-     * @return string
-     */
-    protected function revisionTitle(array $info)
-    {
-        global $lang;
-
-        // use designated title when compare current page source with given text
-        if (array_key_exists('date', $info) && is_null($info['date'])) {
-            return $lang['yours'];
-        }
-
-        // revision info may have timestamp key when external edits occurred
-        $info['timestamp'] = $info['timestamp'] ?? true;
-
-        if (isset($info['date'])) {
-            $rev = $info['date'];
-            if ($info['timestamp'] === false) {
-                // exteranlly deleted or older file restored
-                $title = '<bdi><a class="wikilink2" href="'.wl($this->id).'">'
-                   . $this->id .' ['. $lang['unknowndate'] .']'.'</a></bdi>';
-            } else {
-                $title = '<bdi><a class="wikilink1" href="'.wl($this->id, ['rev' => $rev]).'">'
-                   . $this->id .' ['. dformat($rev) .']'.'</a></bdi>';
-            }
-        } else {
-            $title = '&mdash;';
-        }
-        if ($info['current']) {
-            $title .= '&nbsp;('.$lang['current'].')';
-        }
-
-        // append separator
-        $title .= ($this->preference['difftype'] === 'inline') ? ' ' : '<br />';
-
-        // supplement
-        if (isset($info['date'])) {
-            $RevInfo = new RevisionInfo($info);
-            $title .= $RevInfo->editSummary().' '.$RevInfo->editor();
-        }
-        return $title;
-    }
-
-    /**
      * Print form to choose diff view type, and exact url reference to the view
      */
     protected function showDiffViewSelector()
     {
         global $lang;
 
-        // use timestamp for current revision
-        [$oldRev, $newRev] = [(int)$this->oldRevInfo['date'], (int)$this->newRevInfo['date']];
+        // no revisions selector for PageConflict or PageDraft
+        if ($this->RevInfo2->val('extra') == 'compareWith') return;
+
+        // use timestamp for current revision, date may be false when revisions < 2
+        [$rev1, $rev2] = [(int)$this->RevInfo1->val('date'), (int)$this->RevInfo2->val('date')];
 
         echo '<div class="diffoptions group">';
 
         // create the form to select difftype
         $form = new Form(['action' => wl()]);
         $form->setHiddenField('id', $this->id);
-        $form->setHiddenField('rev2[0]', $oldRev);
-        $form->setHiddenField('rev2[1]', $newRev);
+        $form->setHiddenField('rev2[0]', $rev1);
+        $form->setHiddenField('rev2[1]', $rev2);
         $form->setHiddenField('do', 'diff');
         $options = array(
                      'sidebyside' => $lang['diff_side'],
@@ -350,14 +308,14 @@ class PageDiff extends Diff
 
         // show exact url reference to the view when it is meaningful
         echo '<p>';
-        if ($oldRev && $newRev) {
+        if ($rev1 && $rev2) {
             // link to exactly this view FS#2835
-            $viewUrl = $this->diffViewlink('difflink', $oldRev, $newRev);
+            $viewUrl = $this->diffViewlink('difflink', $rev1, $rev2);
         }
         echo $viewUrl ?? '<br />';
         echo '</p>';
 
-        echo '</div>'; // .diffoptions
+        echo '</div>';
     }
 
     /**
@@ -372,67 +330,75 @@ class PageDiff extends Diff
     {
         $changelog =& $this->changelog;
 
-        if ($this->newRevInfo['rev'] === false) {
+        if ($this->RevInfo2->val('extra') == 'compareWith') {
             // no revisions selector for PageConflict or PageDraft
             return array('', '');
         }
 
-        // use timestamp for current revision
-        [$oldRev, $newRev] = [(int)$this->oldRevInfo['date'], (int)$this->newRevInfo['date']];
+        // use timestamp for current revision, date may be false when revisions < 2
+        [$rev1, $rev2] = [(int)$this->RevInfo1->val('date'), (int)$this->RevInfo2->val('date')];
 
-        // retrieve revisions with additional info
-        [$oldRevs, $newRevs] = $changelog->getRevisionsAround($oldRev, $newRev);
+        // retrieve revisions used in dropdown selectors, even when rev1 or rev2 is false
+        [$revs1, $revs2] = $changelog->getRevisionsAround(
+            ($rev1 ?: $changelog->currentRevision()),
+            ($rev2 ?: $changelog->currentRevision())
+        );
 
         // build options for dropdown selector
-        $olderRevisions = $this->buildRevisionOptions('older', $oldRevs);
-        $newerRevisions = $this->buildRevisionOptions('newer', $newRevs);
+        $rev1Options = $this->buildRevisionOptions('older', $revs1);
+        $rev2Options = $this->buildRevisionOptions('newer', $revs2);
 
-        // determine previous/next revisions
-        $index = array_search($oldRev, $oldRevs);
-        $oldPrevRev = ($index +1 < count($oldRevs)) ? $oldRevs[$index +1] : false;
-        $oldNextRev = ($index > 0)                  ? $oldRevs[$index -1] : false;
-        $index = array_search($newRev, $newRevs);
-        $newPrevRev = ($index +1 < count($newRevs)) ? $newRevs[$index +1] : false;
-        $newNextRev = ($index > 0)                  ? $newRevs[$index -1] : false;
+        // determine previous/next revisions (older/left side)
+        $rev1Prev = $rev1Next = false;
+        if (($index = array_search($rev1, $revs1)) !== false) {
+            $rev1Prev = ($index +1 < count($revs1)) ? $revs1[$index +1] : false;
+            $rev1Next = ($index > 0)                ? $revs1[$index -1] : false;
+        }
+        // determine previous/next revisions (newer/right side)
+        $rev2Prev = $rev2Next = false;
+        if (($index = array_search($rev2, $revs2)) !== false) {
+            $rev2Prev = ($index +1 < count($revs2)) ? $revs2[$index +1] : false;
+            $rev2Next = ($index > 0)                ? $revs2[$index -1] : false;
+        }
 
         /*
          * navigation UI for older revisions / Left side:
          */
-        $navOlderRevs = '';
+        $rev1Navi = '';
         // move backward both side: ◀◀
-        if ($oldPrevRev && $newPrevRev)
-            $navOlderRevs .= $this->diffViewlink('diffbothprevrev', $oldPrevRev, $newPrevRev);
+        if ($rev1Prev && $rev2Prev)
+            $rev1Navi .= $this->diffViewlink('diffbothprevrev', $rev1Prev, $rev2Prev);
         // move backward left side: ◀
-        if ($oldPrevRev)
-            $navOlderRevs .= $this->diffViewlink('diffprevrev', $oldPrevRev, $newRev);
+        if ($rev1Prev)
+            $rev1Navi .= $this->diffViewlink('diffprevrev', $rev1Prev, $rev2);
         // dropdown
-        $navOlderRevs .= $this->buildDropdownSelector('older', $olderRevisions);
+        $rev1Navi .= $this->buildDropdownSelector('older', $rev1Options);
         // move forward left side: ▶
-        if ($oldNextRev && ($oldNextRev < $newRev))
-            $navOlderRevs .= $this->diffViewlink('diffnextrev', $oldNextRev, $newRev);
+        if ($rev1Next && ($rev1Next < $rev2))
+            $rev1Navi .= $this->diffViewlink('diffnextrev', $rev1Next, $rev2);
 
         /*
          * navigation UI for newer revisions / Right side:
          */
-        $navNewerRevs = '';
+        $rev2Navi = '';
         // move backward right side: ◀
-        if ($newPrevRev && ($oldRev < $newPrevRev))
-            $navNewerRevs .= $this->diffViewlink('diffprevrev', $oldRev, $newPrevRev);
+        if ($rev2Prev && ($rev1 < $rev2Prev))
+            $rev2Navi .= $this->diffViewlink('diffprevrev', $rev1, $rev2Prev);
         // dropdown
-        $navNewerRevs .= $this->buildDropdownSelector('newer', $newerRevisions);
+        $rev2Navi .= $this->buildDropdownSelector('newer', $rev2Options);
         // move forward right side: ▶
-        if ($newNextRev) {
-            if ($changelog->isCurrentRevision($newNextRev)) {
-                $navNewerRevs .= $this->diffViewlink('difflastrev', $oldRev, $newNextRev);
+        if ($rev2Next) {
+            if ($changelog->isCurrentRevision($rev2Next)) {
+                $rev2Navi .= $this->diffViewlink('difflastrev', $rev1, $rev2Next);
             } else {
-                $navNewerRevs .= $this->diffViewlink('diffnextrev', $oldRev, $newNextRev);
+                $rev2Navi .= $this->diffViewlink('diffnextrev', $rev1, $rev2Next);
             }
         }
         // move forward both side: ▶▶
-        if ($oldNextRev && $newNextRev)
-            $navNewerRevs .= $this->diffViewlink('diffbothnextrev', $oldNextRev, $newNextRev);
+        if ($rev1Next && $rev2Next)
+            $rev2Navi .= $this->diffViewlink('diffbothnextrev', $rev1Next, $rev2Next);
 
-        return array($navOlderRevs, $navNewerRevs);
+        return array($rev1Navi, $rev2Navi);
     }
 
     /**
@@ -444,11 +410,11 @@ class PageDiff extends Diff
      */
     protected function buildRevisionOptions($side, $revs)
     {
-        $changelog =& $this->changelog;
-        $revisions = array();
+        // use timestamp for current revision, date may be false when revisions < 2
+        [$rev1, $rev2] = [(int)$this->RevInfo1->val('date'), (int)$this->RevInfo2->val('date')];
 
-        // use timestamp for current revision
-        [$oldRev, $newRev] = [(int)$this->oldRevInfo['date'], (int)$this->newRevInfo['date']];
+        $changelog =& $this->changelog;
+        $options = [];
 
         foreach ($revs as $rev) {
             $info = $changelog->getRevisionInfo($rev);
@@ -459,7 +425,7 @@ class PageDiff extends Diff
                 // exteranlly deleted or older file restored
                 $date = preg_replace('/[0-9a-zA-Z]/','_', $date);
             }
-            $revisions[$rev] = array(
+            $options[$rev] = array(
                 'label' => implode(' ', [
                             $date,
                             editorinfo($info['user'], true),
@@ -467,13 +433,13 @@ class PageDiff extends Diff
                            ]),
                 'attrs' => ['title' => $rev],
             );
-            if (($side == 'older' && ($newRev && $rev >= $newRev))
-              ||($side == 'newer' && ($rev <= $oldRev))
+            if (($side == 'older' && ($rev2 && $rev >= $rev2))
+              ||($side == 'newer' && ($rev <= $rev1))
             ) {
-                $revisions[$rev]['attrs']['disabled'] = 'disabled';
+                $options[$rev]['attrs']['disabled'] = 'disabled';
             }
         }
-        return $revisions;
+        return $options;
     }
 
     /**
@@ -485,25 +451,25 @@ class PageDiff extends Diff
      */
     protected function buildDropdownSelector($side, $options)
     {
+        // use timestamp for current revision, date may be false when revisions < 2
+        [$rev1, $rev2] = [(int)$this->RevInfo1->val('date'), (int)$this->RevInfo2->val('date')];
+
         $form = new Form(['action' => wl($this->id)]);
         $form->setHiddenField('id', $this->id);
         $form->setHiddenField('do', 'diff');
         $form->setHiddenField('difftype', $this->preference['difftype']);
 
-        // use timestamp for current revision
-        [$oldRev, $newRev] = [(int)$this->oldRevInfo['date'], (int)$this->newRevInfo['date']];
-
         switch ($side) {
             case 'older': // left side
-                $form->setHiddenField('rev2[1]', $newRev);
+                $form->setHiddenField('rev2[1]', $rev2);
                 $input = $form->addDropdown('rev2[0]', $options)
-                    ->val($oldRev)->addClass('quickselect');
+                    ->val($rev1)->addClass('quickselect');
                 $input->useInput(false); // inhibit prefillInput() during toHTML() process
                 break;
             case 'newer': // right side
-                $form->setHiddenField('rev2[0]', $oldRev);
+                $form->setHiddenField('rev2[0]', $rev1);
                 $input = $form->addDropdown('rev2[1]', $options)
-                    ->val($newRev)->addClass('quickselect');
+                    ->val($rev2)->addClass('quickselect');
                 $input->useInput(false); // inhibit prefillInput() during toHTML() process
                 break;
         }
@@ -515,24 +481,26 @@ class PageDiff extends Diff
      * Create html link to a diff view defined by two revisions
      *
      * @param string $linktype
-     * @param int $oldRev older revision
-     * @param int $newRev newer revision or null for diff with current revision
+     * @param int $rev1 older revision
+     * @param int $rev2 newer revision or null for diff with current revision
      * @return string html of link to a diff view
      */
-    protected function diffViewlink($linktype, $oldRev, $newRev = null)
+    protected function diffViewlink($linktype, $rev1, $rev2 = null)
     {
         global $lang;
-        if ($newRev === null) {
+        if ($rev1 === false) return '';
+
+        if ($rev2 === null) {
             $urlparam = array(
                 'do' => 'diff',
-                'rev' => $oldRev,
+                'rev' => $rev1,
                 'difftype' => $this->preference['difftype'],
             );
         } else {
             $urlparam = array(
                 'do' => 'diff',
-                'rev2[0]' => $oldRev,
-                'rev2[1]' => $newRev,
+                'rev2[0]' => $rev1,
+                'rev2[1]' => $rev2,
                 'difftype' => $this->preference['difftype'],
             );
         }

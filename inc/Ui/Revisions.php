@@ -39,7 +39,7 @@ abstract class Revisions extends Ui
      *
      * @param int  $first
      * @param bool $hasNext
-     * @return array  revisions to be shown in a pagenated list
+     * @return array  revisions to be shown in a paginated list
      * @see also https://www.dokuwiki.org/devel:changelog
      */
     protected function getRevisions(&$first, &$hasNext)
@@ -54,7 +54,7 @@ abstract class Revisions extends Ui
 
         $num = $conf['recent'];
         if ($first == 0) {
-            // add extrenal or existing last revision that is excluded from $changelog->getRevisions()
+            // add external or existing last revision that is excluded from $changelog->getRevisions()
             if (array_key_exists('timestamp', $currentRevInfo) || (
                 $currentRevInfo['type'] != DOKU_CHANGE_TYPE_DELETE &&
                 $currentRevInfo['date'] == $changelog->lastRevision() )
@@ -81,7 +81,7 @@ abstract class Revisions extends Ui
             array_pop($revlist); // remove one additional log entry
         }
 
-        // append each revison info array to the revisions
+        // append each revision info array to the revisions
         foreach ($revlist as $rev) {
             $revisions[] = $changelog->getRevisionInfo($rev);
         }
@@ -89,7 +89,7 @@ abstract class Revisions extends Ui
     }
 
     /**
-     * Navigation buttons for Pagenation (prev/next)
+     * Navigation buttons for Pagination (prev/next)
      *
      * @param int  $first
      * @param bool $hasNext

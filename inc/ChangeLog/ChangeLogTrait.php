@@ -12,7 +12,7 @@ trait ChangeLogTrait
     /**
      * Adds an entry to the changelog file
      *
-     * @return array added logline as revision info
+     * @return array added log line as revision info
      */
     abstract public function addLogEntry(array $info, $timestamp = null);
 
@@ -47,7 +47,7 @@ trait ChangeLogTrait
      * Build a changelog line from it's components
      *
      * @param array $info Revision info structure
-     * @param int $timestamp logline date (optional)
+     * @param int $timestamp log line date (optional)
      * @return string changelog line
      */
     public static function buildLogLine(array &$info, $timestamp = null)
@@ -75,7 +75,7 @@ trait ChangeLogTrait
     abstract protected function getChangelogFilename();
 
     /**
-     * Checks if the ID has old revisons
+     * Checks if the ID has old revisions
      * @return boolean
      */
     public function hasRevisions()
@@ -103,7 +103,7 @@ trait ChangeLogTrait
 
     /**
      * Returns lines from changelog.
-     * If file larger than $chuncksize, only chunck is read that could contain $rev.
+     * If file larger than $chunk_size, only chunk is read that could contain $rev.
      *
      * When reference timestamp $rev is outside time range of changelog, readloglines() will return
      * lines in first or last chunk, but they obviously does not contain $rev.
@@ -162,7 +162,7 @@ trait ChangeLogTrait
             }
 
             if ($tail - $head < 1) {
-                // cound not find chunk, assume requested rev is missing
+                // could not find chunk, assume requested rev is missing
                 fclose($fp);
                 return false;
             }
@@ -179,13 +179,13 @@ trait ChangeLogTrait
     }
 
     /**
-     * Read chunk and return array with lines of given chunck.
+     * Read chunk and return array with lines of given chunk.
      * Has no check if $head and $tail are really at a new line
      *
-     * @param resource $fp resource filepointer
-     * @param int $head start point chunck
-     * @param int $tail end point chunck
-     * @return array lines read from chunck
+     * @param resource $fp resource file pointer
+     * @param int $head start point chunk
+     * @param int $tail end point chunk
+     * @return array lines read from chunk
      */
     protected function readChunk($fp, $head, $tail)
     {
@@ -209,7 +209,7 @@ trait ChangeLogTrait
     /**
      * Set pointer to first new line after $finger and return its position
      *
-     * @param resource $fp filepointer
+     * @param resource $fp file pointer
      * @param int $finger a pointer
      * @return int pointer
      */
@@ -225,14 +225,14 @@ trait ChangeLogTrait
     }
 
     /**
-     * Returns the next lines of the changelog  of the chunck before head or after tail
+     * Returns the next lines of the changelog  of the chunk before head or after tail
      *
-     * @param resource $fp filepointer
+     * @param resource $fp file pointer
      * @param int $head position head of last chunk
      * @param int $tail position tail of last chunk
      * @param int $direction positive forward, negative backward
      * @return array with entries:
-     *    - $lines: changelog lines of readed chunk
+     *    - $lines: changelog lines of read chunk
      *    - $head: head of chunk
      *    - $tail: tail of chunk
      */
@@ -261,7 +261,7 @@ trait ChangeLogTrait
             }
         }
 
-        //load next chunck
+        //load next chunk
         $lines = $this->readChunk($fp, $head, $tail);
         return array($lines, $head, $tail);
     }

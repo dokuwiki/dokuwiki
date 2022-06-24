@@ -35,8 +35,8 @@ class MediaChangeLog extends ChangeLog
      * Adds an entry to the changelog
      *
      * @param array $info    Revision info structure of a media file
-     * @param int $timestamp logline date (optional)
-     * @return array revision info of added logline
+     * @param int $timestamp log line date (optional)
+     * @return array revision info of added log line
      *
      * @see also addMediaLogEntry() in inc/changelog.php file
      */

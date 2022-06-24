@@ -52,7 +52,7 @@ class MediaRevisions extends Revisions
         global $lang;
         $changelog =& $this->changelog;
 
-        // get revisions, and set correct pagenation parameters (first, hasNext)
+        // get revisions, and set correct pagination parameters (first, hasNext)
         if ($first === null) $first = 0;
         $hasNext = false;
         $revisions = $this->getRevisions($first, $hasNext);
@@ -70,13 +70,14 @@ class MediaRevisions extends Revisions
         $form->addTagOpen('ul');
         foreach ($revisions as $info) {
             $rev = $info['date'];
-            $info['current'] = $changelog->isCurrentRevision($rev);
+            $RevInfo = new RevisionInfo($info);
+            $RevInfo->isCurrent($changelog->isCurrentRevision($rev));
 
-            $class = ($info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor' : '';
+            $class = ($RevInfo->val('type') === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor' : '';
             $form->addTagOpen('li')->addClass($class);
             $form->addTagOpen('div')->addClass('li');
 
-            if (isset($info['current'])) {
+            if ($RevInfo->isCurrent()) {
                 $form->addCheckbox('rev2[]')->val($rev);
             } elseif (file_exists(mediaFN($this->id, $rev))) {
                 $form->addCheckbox('rev2[]')->val($rev);
@@ -85,16 +86,15 @@ class MediaRevisions extends Revisions
             }
             $form->addHTML(' ');
 
-            $RevInfo = new RevisionInfo($info);
             $html = implode(' ', [
-                $RevInfo->editDate(),          // edit date and time
-                $RevInfo->difflinkRevision(),  // link to diffview icon
-                $RevInfo->itemName(),          // name of page or media
+                $RevInfo->showEditDate(),          // edit date and time
+                $RevInfo->showIconCompareWithCurrent(),  // link to diff view icon
+                $RevInfo->showFileName(),          // name of page or media
                 '<div>',
-                $RevInfo->editSummary(),       // edit summary
-                $RevInfo->editor(),            // editor info
-                $RevInfo->sizechange(),        // size change indicator
-                $RevInfo->currentIndicator(),  // current indicator (only when k=1)
+                $RevInfo->showEditSummary(),       // edit summary
+                $RevInfo->showEditor(),            // editor info
+                $RevInfo->showSizechange(),        // size change indicator
+                $RevInfo->showCurrentIndicator(),  // current indicator (only when k=1)
                 '</div>',
             ]);
             $form->addHTML($html);
@@ -111,7 +111,7 @@ class MediaRevisions extends Revisions
 
         print $form->toHTML('Revisions');
 
-        // provide navigation for pagenated revision list (of pages and/or media files)
+        // provide navigation for paginated revision list (of pages and/or media files)
         print $this->navigation($first, $hasNext, function ($n) {
             return media_managerURL(['first' => $n], '&', false, true);
         });
