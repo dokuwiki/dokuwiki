@@ -8,7 +8,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\Event;
 use dokuwiki\Utf8\Sort;
 
-define('DOKU_API_VERSION', 10);
+define('DOKU_API_VERSION', 11);
 
 /**
  * Provides the core methods for the remote API.
@@ -17,7 +17,7 @@ define('DOKU_API_VERSION', 10);
 class ApiCore
 {
     /** @var int Increased whenever the API is changed */
-    const API_VERSION = 10;
+    const API_VERSION = 11;
 
 
     /** @var Api */
