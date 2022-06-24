@@ -700,7 +700,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         $opts['admin_password'] = conf_decodeString($opts['admin_password']); // deobfuscate
 
         // we can change the password if SSL is set
-        if ($opts['use_ssl'] || $opts['use_tls']) {
+        if ($opts['update_pass'] && ($opts['use_ssl'] || $opts['use_tls'])) {
             $this->cando['modPass'] = true;
         } else {
             $this->cando['modPass'] = false;
