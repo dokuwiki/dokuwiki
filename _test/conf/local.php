@@ -9,3 +9,5 @@ $conf['superuser']   = 'testuser';        //password: testpass
 
 $conf['dnslookups']  = 0;                 //speedup tests
 $conf['updatecheck']  = 0;                //speedup tests
+
+$conf['plugin']['testing']['second'] = 'Local setting';
