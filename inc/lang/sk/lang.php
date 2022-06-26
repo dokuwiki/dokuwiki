@@ -8,8 +8,8 @@
  * auth.class language support 
  * installer strings 
  *
- * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
+ * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik <exusik@gmail.com>
@@ -74,7 +74,7 @@ $lang['badpassconfirm']        = 'Ľutujem, heslo bolo nesprávne.';
 $lang['minoredit']             = 'Menšie zmeny';
 $lang['draftdate']             = 'Koncept automaticky uložený';
 $lang['nosecedit']             = 'Stránka bola medzičasom zmenená, informácie o sekcii sú zastaralé a z tohto dôvodu bola nahraná celá stránka.';
-$lang['searchcreatepage']      = 'Ak ste nenašli, čo ste hľadali, môžete vytvoriť alebo upraviť stránku %s, ktorá bola nazvaná podľa vášho dopytu.';
+$lang['searchcreatepage']      = 'Ak ste nenašli, čo ste hľadali, môžete vytvoriť alebo upraviť stránku %s pomenovanú podľa vášho dopytu.';
 $lang['search_fullresults']    = 'Fulltextové výsledky';
 $lang['js']['search_toggle_tools'] = 'Zobraziť/Skryť vyhľadávacie nástroje';
 $lang['js']['willexpire']      = 'Váš zámok pre editáciu za chvíľu stratí platnosť.\nAby ste predišli konfliktom, stlačte tlačítko Náhľad a zámok sa predĺži.';
@@ -120,7 +120,7 @@ $lang['js']['media_drop']      = 'Pridajte súbory potiahnutím myšou';
 $lang['js']['media_cancel']    = 'odstrániť';
 $lang['js']['media_overwrt']   = 'Prepísať existujúce súbory';
 $lang['search_exact_match']    = 'Presná zhoda';
-$lang['search_starts_with']    = 'Začín na';
+$lang['search_starts_with']    = 'Začína na';
 $lang['search_ends_with']      = 'Končí na';
 $lang['search_contains']       = 'Obsahuje';
 $lang['search_custom_match']   = 'Vlastný';
@@ -128,7 +128,7 @@ $lang['search_any_ns']         = 'Akýkoľvek menný priestor';
 $lang['search_any_time']       = 'Kedykoľvek';
 $lang['search_past_7_days']    = 'Posledný týždeň';
 $lang['search_past_month']     = 'Posledný mesiac';
-$lang['search_past_year']      = 'Posledný  rok';
+$lang['search_past_year']      = 'Posledný rok';
 $lang['search_sort_by_hits']   = 'Zoradiť podľa počtu návštev';
 $lang['search_sort_by_mtime']  = 'Zoradiť podľa posledných úprav';
 $lang['regmissing']            = 'Musíte vyplniť všetky údaje.';
@@ -167,6 +167,7 @@ $lang['txt_upload']            = 'Vyberte súbor ako prílohu:';
 $lang['txt_filename']          = 'Uložiť ako (voliteľné):';
 $lang['txt_overwrt']           = 'Prepísať existujúci súbor';
 $lang['maxuploadsize']         = 'Obmedzenie max. %s na súbor.';
+$lang['allowedmime']           = 'Zoznam povolených prípon súborov';
 $lang['lockedby']              = 'Práve zamknuté:';
 $lang['lockexpire']            = 'Zámok stratí platnosť:';
 $lang['rssfailed']             = 'Nastala chyba pri vytváraní tohto RSS: ';
@@ -220,7 +221,7 @@ $lang['created']               = 'vytvorené';
 $lang['restored']              = 'stará verzia bola obnovená (%s)';
 $lang['external_edit']         = 'externá úprava';
 $lang['summary']               = 'Komentár k úpravám';
-$lang['noflash']               = 'Pre zobrazenie tohto obsahu potrebujete <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
+$lang['noflash']               = 'Pre zobrazenie tohto obsahu potrebujete <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Stiahnuť';
 $lang['tools']                 = 'Nástroje';
 $lang['user_tools']            = 'Nástroje používateľa';
@@ -300,8 +301,9 @@ $lang['i_wikiname']            = 'Názov Wiki';
 $lang['i_enableacl']           = 'Aktivovať ACL (doporučené)';
 $lang['i_superuser']           = 'Správca';
 $lang['i_problems']            = 'Inštalátor narazil na nižšie uvedené problémy. Nemôžete pokračovať, pokiaľ ich neodstránite.';
-$lang['i_modified']            = 'Z bezpečnostných dôvodov bude tento skript fungovať iba s novou, neupravenou inštaláciou Dokuwiki. Môžete buď znovu rozbaliť stiahnutý inštalačný balík alebo preštudovať <a href="http://dokuwiki.org/install"> inštalačné inštrukcie Dokuwiki</a>';
+$lang['i_modified']            = 'Z bezpečnostných dôvodov bude tento skript fungovať iba s novou, neupravenou inštaláciou Dokuwiki. Môžete buď znovu rozbaliť stiahnutý inštalačný balík alebo preštudovať <a href="https://www.dokuwiki.org/install"> inštalačné inštrukcie Dokuwiki</a>';
 $lang['i_funcna']              = 'PHP funkcia <code>%s</code> nie je dostupná. Je možné, že ju z určitých dôvodov zablokoval váš poskytovateľ webhostingu?';
+$lang['i_funcnmail']           = '<b>Note:</b> PHP mail funkcia nie je dostupná. %s Ak zostáva stále nedostupná, možno by ste mohli nainštalovať <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Vaša verzia PHP <code>%s</code> je nižšia ako požadovaná <code>%s</code>. Potrebujete aktualizovať Vašu inštaláciu PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload musí byt zakázaná v php.ini pre bezproblémový chod DokuWiki.';
 $lang['i_permfail']            = '<code>%s</code> nie je zapisovateľný pre DokuWiki. Musíte zmeniť prístupové práva pre tento adresár!';
@@ -354,6 +356,7 @@ $lang['media_perm_upload']     = 'Prepáčte, ale nemáte dostatočné oprávnen
 $lang['media_update']          = 'Nahrať novú verziu';
 $lang['media_restore']         = 'Obnoviť túto verziu';
 $lang['media_acl_warning']     = 'Tento zoznam nemusí byť úplný z dôvodu ACL obmedzení alebo skratých stránok.';
+$lang['email_fail']            = 'PHP funkcia mail() chýba alebo  nie je povolená. Nasledujúci mail nebol poslaný:';
 $lang['currentns']             = 'Aktuálny menný priestor';
 $lang['searchresult']          = 'Výsledky hľadania';
 $lang['plainhtml']             = 'Jednoduché HTML';

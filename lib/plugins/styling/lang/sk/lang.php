@@ -3,10 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
+ * @author Peter Mydliar <peto.mydliar@gmail.com>
  */
 $lang['menu']                  = 'Nastavenie typov šablón';
+$lang['js']['loader']          = 'Nahráva na náhľad...<br />Ak táto správa nezmizne, Vaše údaje môžu byť chybné';
 $lang['js']['popup']           = 'Otvor vo vyskakovacom okne';
 $lang['error']                 = 'Táto šablóna nepodporuje túto funkciu.';
 $lang['btn_preview']           = 'Náhľad zmien';

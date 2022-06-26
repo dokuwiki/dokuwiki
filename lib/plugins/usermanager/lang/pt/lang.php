@@ -3,7 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Paulo Schopf <pschopf@gmail.com>
+ * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
+ * @author Paulo <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
  * @author Maykon Oliveira <maykonoliveira850@gmail.com>
  * @author José Vieira <jmsv63@gmail.com>
@@ -72,12 +73,12 @@ $lang['import_failure_count']  = 'Importar Usuários: %d falharam. As falhas est
 $lang['import_error_fields']   = 'Campos insuficientes, encontrados %d mas requeridos 4.';
 $lang['import_error_baduserid'] = 'Falta id de usuário';
 $lang['import_error_badname']  = 'Nome inválido';
-$lang['import_error_badmail']  = 'E-mail inválido';
+$lang['import_error_badmail']  = 'E-Mail inválido';
 $lang['import_error_upload']   = 'Erro na importação. O arquivo csv não pôde ser importado ou está vazio.';
-$lang['import_error_readfail'] = 'Erro na importação. Não foi possível ler o arquivo submetido.';
-$lang['import_error_create']   = 'Não foi possível criar o usuário';
-$lang['import_notify_fail']    = 'A mensagem de notificação não pôde ser enviada para o usuário importado, %s com e-mail %s.';
-$lang['import_downloadfailures'] = 'Baixar Falhas como CSV para correção';
+$lang['import_error_readfail'] = 'Falhou a importação. Não foi possível ler o arquivo submetido.';
+$lang['import_error_create']   = 'Não foi possível criar o utilizador.';
+$lang['import_notify_fail']    = 'A mensagem de notificação não pôde ser enviada para o utilizador importado, %s com email %s.';
+$lang['import_downloadfailures'] = 'Baixe Falhas como CSV para a correção';
 $lang['addUser_error_missing_pass'] = 'Por favor, defina uma senha ou ative a notificação do usuário para ativar a geração de senha.';
 $lang['addUser_error_pass_not_identical'] = 'As senhas digitadas não são idênticas.';
 $lang['addUser_error_modPass_disabled'] = 'A alteração de senhas está desativada no momento';

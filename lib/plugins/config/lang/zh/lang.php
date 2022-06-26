@@ -3,10 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author VinnieChow <zsz33@qq.com>
+ * @author Lakejason0 <lakesarchive@outlook.com>
+ * @author Phy <dokuwiki@phy25.com>
+ * @author Jenxi <seow@jenxi.com>
  * @author FENG.JIE <ahx@qq.com>
  * @author Xin <chenxin1034@gmail.com>
  * @author HaoNan <haonan@zhuoming.info>
- * @author Phy <dokuwiki@phy25.com>
  * @author Aaron Zhou <iradio@163.com>
  * @author lempel <riverlempel@hotmail.com>
  * @author ZDYX <zhangduyixiong@gmail.com>
@@ -64,7 +67,7 @@ $lang['sidebar']               = '侧边栏的页面名称 （如果模板支持
 $lang['license']               = '您愿意让你贡献的内容在何种许可方式下发布？';
 $lang['savedir']               = '保存数据的目录';
 $lang['basedir']               = '根目录';
-$lang['baseurl']               = '根路径（URL）';
+$lang['baseurl']               = '根路径（URL，比如 <code>http://www.yourserver.com</code>）。留空将使用自动检测。';
 $lang['cookiedir']             = 'Cookie 路径。留空以使用 baseurl。';
 $lang['dmode']                 = '文件夹的创建模式';
 $lang['fmode']                 = '文件的创建模式';
@@ -137,6 +140,7 @@ $lang['mailfrom']              = '自动发送邮件时使用的邮件地址';
 $lang['mailreturnpath']        = '非投递通知的收件人邮箱地址';
 $lang['mailprefix']            = '自动发送邮件时使用的邮件地址前缀';
 $lang['htmlmail']              = '发送更加美观，但体积更大的 HTML 多部分邮件。禁用则发送纯文本邮件。';
+$lang['dontlog']               = '为这些种类的日志禁用日志记录。';
 $lang['sitemap']               = '生成 Google sitemap（天）';
 $lang['rss_type']              = 'XML feed 类型';
 $lang['rss_linkto']            = 'XML feed 链接到';
@@ -148,7 +152,7 @@ $lang['rss_media']             = '在 XML 源中应该列出何种类型的更�
 $lang['rss_media_o_both']      = '两者均可';
 $lang['rss_media_o_pages']     = '页面';
 $lang['rss_media_o_media']     = '媒体';
-$lang['updatecheck']           = '自动检查更新并接收安全警告吗？开启该功能后 DokuWiki 将自动访问 splitbrain.org。';
+$lang['updatecheck']           = '自动检查更新并接收安全警告吗？开启该功能后 DokuWiki 将自动访问 update.dokuwiki.org。';
 $lang['userewrite']            = '使用更整洁的 URL';
 $lang['useslash']              = '在 URL 中使用斜杠作为命名空间的分隔符';
 $lang['sepchar']               = '页面名称中的单词分隔符';
@@ -178,8 +182,8 @@ $lang['dnslookups']            = 'DokuWiki 将会查询用户编辑页面的远�
 $lang['jquerycdn']             = 'jQuery和jQuery UI脚本文件应该从CDN加载吗?
 这会增加额外的HTTP请求，但文件加载可能会更快，且用户可能已经缓存过。';
 $lang['jquerycdn_o_0']         = '不使用CDN，只使用本地库';
-$lang['jquerycdn_o_jquery']    = '在code.jquery.com上的CDN';
-$lang['jquerycdn_o_cdnjs']     = '在cdnjs.com上的CDN';
+$lang['jquerycdn_o_jquery']    = 'code.jquery.com 的 CDN';
+$lang['jquerycdn_o_cdnjs']     = 'cdnjs.com 的 CDN';
 $lang['proxy____host']         = '代理服务器的名称';
 $lang['proxy____port']         = '代理服务器的端口';
 $lang['proxy____user']         = '代理服务器的用户名';

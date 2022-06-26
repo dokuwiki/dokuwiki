@@ -199,6 +199,9 @@ if (empty($plugin_controller_class)) $plugin_controller_class = dokuwiki\Extensi
 require_once(DOKU_INC.'vendor/autoload.php');
 require_once(DOKU_INC.'inc/load.php');
 
+// from now on everything is an exception
+\dokuwiki\ErrorHandler::register();
+
 // disable gzip if not available
 define('DOKU_HAS_BZIP', function_exists('bzopen'));
 define('DOKU_HAS_GZIP', function_exists('gzopen'));
@@ -231,6 +234,9 @@ if (!defined('NOSESSION')) {
 
 // setup mail system
 mail_setup();
+
+$nil = null;
+Event::createAndTrigger('DOKUWIKI_INIT_DONE', $nil, null, false);
 
 /**
  * Initializes the session
@@ -266,16 +272,19 @@ function init_session() {
 function init_paths(){
     global $conf;
 
-    $paths = array('datadir'   => 'pages',
-            'olddir'    => 'attic',
-            'mediadir'  => 'media',
-            'mediaolddir' => 'media_attic',
-            'metadir'   => 'meta',
-            'mediametadir' => 'media_meta',
-            'cachedir'  => 'cache',
-            'indexdir'  => 'index',
-            'lockdir'   => 'locks',
-            'tmpdir'    => 'tmp');
+    $paths = [
+        'datadir'   => 'pages',
+        'olddir'    => 'attic',
+        'mediadir'  => 'media',
+        'mediaolddir' => 'media_attic',
+        'metadir'   => 'meta',
+        'mediametadir' => 'media_meta',
+        'cachedir'  => 'cache',
+        'indexdir'  => 'index',
+        'lockdir'   => 'locks',
+        'tmpdir'    => 'tmp',
+        'logdir'    => 'log',
+    ];
 
     foreach($paths as $c => $p) {
         $path = empty($conf[$c]) ? $conf['savedir'].'/'.$p : $conf[$c];
@@ -396,8 +405,9 @@ function init_creationmodes(){
     unset($conf['dmask']);
     unset($conf['fmask']);
     unset($conf['umask']);
-    unset($conf['fperm']);
-    unset($conf['dperm']);
+
+    $conf['fperm'] = false;
+    $conf['dperm'] = false;
 
     // get system umask, fallback to 0 if none available
     $umask = @umask();
@@ -405,12 +415,12 @@ function init_creationmodes(){
 
     // check what is set automatically by the system on file creation
     // and set the fperm param if it's not what we want
-    $auto_fmode = $conf['fmode'] & ~$umask;
+    $auto_fmode = 0666 & ~$umask;
     if($auto_fmode != $conf['fmode']) $conf['fperm'] = $conf['fmode'];
 
-    // check what is set automatically by the system on file creation
-    // and set the dperm param if it's not what we want
-    $auto_dmode = $conf['dmode'] & ~$umask;
+    // check what is set automatically by the system on directory creation
+    // and set the dperm param if it's not what we want.
+    $auto_dmode = 0777 & ~$umask;
     if($auto_dmode != $conf['dmode']) $conf['dperm'] = $conf['dmode'];
 }
 

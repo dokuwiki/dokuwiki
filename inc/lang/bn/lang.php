@@ -195,7 +195,7 @@ $lang['created']               = 'তৈরি করা';
 $lang['restored']              = 'পুরানো সংস্করণের পুনঃস্থাপন (%s)';
 $lang['external_edit']         = 'বাহ্যিক সম্পাদনা';
 $lang['summary']               = 'সম্পাদনা সারাংশ';
-$lang['noflash']               = 'এ href="http://www.adobe.com/products/flashplayer/"> অ্যাডোবি ফ্ল্যাশ প্লাগইন </a> এই সামগ্রী প্রদর্শন করার জন্য প্রয়োজন হয়.';
+$lang['noflash']               = 'এ href="http://get.adobe.com/flashplayer"> অ্যাডোবি ফ্ল্যাশ প্লাগইন </a> এই সামগ্রী প্রদর্শন করার জন্য প্রয়োজন হয়.';
 $lang['download']              = 'ডাউনলোড স্নিপেট ';
 $lang['tools']                 = 'সরঞ্জামসমূহ';
 $lang['user_tools']            = 'ব্যবহারকারীর সরঞ্জামসমূহ';

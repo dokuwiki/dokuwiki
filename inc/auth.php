@@ -56,7 +56,7 @@ function auth_setup() {
 
     if ($auth->success == false) {
         // degrade to unauthenticated user
-        unset($auth);
+        $auth = null;
         auth_logoff();
         msg($lang['authtempfail'], -1);
         return false;
@@ -245,19 +245,21 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
             // we got a cookie - see if we can trust it
 
             // get session info
-            $session = $_SESSION[DOKU_COOKIE]['auth'];
-            if(isset($session) &&
-                $auth->useSessionCache($user) &&
-                ($session['time'] >= time() - $conf['auth_security_timeout']) &&
-                ($session['user'] == $user) &&
-                ($session['pass'] == sha1($pass)) && //still crypted
-                ($session['buid'] == auth_browseruid())
-            ) {
+            if (isset($_SESSION[DOKU_COOKIE])) {
+                $session = $_SESSION[DOKU_COOKIE]['auth'];
+                if (isset($session) &&
+                    $auth->useSessionCache($user) &&
+                    ($session['time'] >= time() - $conf['auth_security_timeout']) &&
+                    ($session['user'] == $user) &&
+                    ($session['pass'] == sha1($pass)) && //still crypted
+                    ($session['buid'] == auth_browseruid())
+                ) {
 
-                // he has session, cookie and browser right - let him in
-                $INPUT->server->set('REMOTE_USER', $user);
-                $USERINFO               = $session['info']; //FIXME move all references to session
-                return true;
+                    // he has session, cookie and browser right - let him in
+                    $INPUT->server->set('REMOTE_USER', $user);
+                    $USERINFO = $session['info']; //FIXME move all references to session
+                    return true;
+                }
             }
             // no we don't trust it yet - recheck pass but silent
             $secret = auth_cookiesalt(!$sticky, true); //bind non-sticky to session
@@ -279,19 +281,23 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
- * @return  string  a MD5 sum of various browser headers
+ * @return  string  a SHA256 sum of various browser headers
  */
 function auth_browseruid() {
     /* @var Input $INPUT */
     global $INPUT;
 
-    $ip  = clientIP(true);
-    $uid = '';
-    $uid .= $INPUT->server->str('HTTP_USER_AGENT');
-    $uid .= $INPUT->server->str('HTTP_ACCEPT_CHARSET');
-    $uid .= substr($ip, 0, strpos($ip, '.'));
-    $uid = strtolower($uid);
-    return md5($uid);
+    $ip = clientIP(true);
+    // convert IP string to packed binary representation
+    $pip = inet_pton($ip);
+
+    $uid = implode("\n", [
+        $INPUT->server->str('HTTP_USER_AGENT'),
+        $INPUT->server->str('HTTP_ACCEPT_LANGUAGE'),
+        $INPUT->server->str('HTTP_ACCEPT_ENCODING'),
+        substr($pip, 0, strlen($pip) / 2), // use half of the IP address (works for both IPv4 and IPv6)
+    ]);
+    return hash('sha256', $uid);
 }
 
 /**
@@ -467,8 +473,14 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false, $recac
             $user = $INPUT->server->str('REMOTE_USER');
         }
     }
-    if(is_null($groups)) {
-        $groups = $USERINFO ? (array) $USERINFO['grps'] : array();
+    if (is_null($groups)) {
+        // checking the logged in user, or another one?
+        if ($USERINFO && $user === $INPUT->server->str('REMOTE_USER')) {
+            $groups =  (array) $USERINFO['grps'];
+        } else {
+            $groups = $auth->getUserData($user);
+            $groups = $groups ? $groups['grps'] : [];
+        }
     }
 
     // prefer cached result
@@ -527,7 +539,7 @@ function auth_isMember($memberlist, $user, array $groups) {
     // clean user and groups
     if(!$auth->isCaseSensitive()) {
         $user   = \dokuwiki\Utf8\PhpString::strtolower($user);
-        $groups = array_map('utf8_strtolower', $groups);
+        $groups = array_map([\dokuwiki\Utf8\PhpString::class, 'strtolower'], $groups);
     }
     $user   = $auth->cleanUser($user);
     $groups = array_map(array($auth, 'cleanGroup'), $groups);
@@ -588,7 +600,7 @@ function auth_quickaclcheck($id) {
  */
 function auth_aclcheck($id, $user, $groups) {
     $data = array(
-        'id'     => $id,
+        'id'     => $id ?? '',
         'user'   => $user,
         'groups' => $groups
     );
@@ -619,6 +631,7 @@ function auth_aclcheck_cb($data) {
     // if no ACL is used always return upload rights
     if(!$conf['useacl']) return AUTH_UPLOAD;
     if(!$auth) return AUTH_NONE;
+    if(!is_array($AUTH_ACL)) return AUTH_NONE;
 
     //make sure groups is an array
     if(!is_array($groups)) $groups = array();

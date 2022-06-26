@@ -8,6 +8,8 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui;
+
 /**
  * Class Show
  *
@@ -15,22 +17,24 @@ namespace dokuwiki\Action;
  *
  * @package dokuwiki\Action
  */
-class Show extends AbstractAction {
-
+class Show extends AbstractAction
+{
     /** @inheritdoc */
     public function minimumPermission() {
         return AUTH_READ;
     }
 
     /** @inheritdoc */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $ID;
         unlock($ID);
     }
 
     /** @inheritdoc */
-    public function tplContent() {
-        html_show();
+    public function tplContent()
+    {
+        (new Ui\PageView())->show();
     }
 
 }

@@ -5,6 +5,7 @@ namespace dokuwiki\Debug;
 
 use Doku_Event;
 use dokuwiki\Extension\EventHandler;
+use dokuwiki\Logger;
 
 class DebugHelper
 {
@@ -13,12 +14,12 @@ class DebugHelper
     /**
      * Log accesses to deprecated fucntions to the debug log
      *
-     * @param string $alternative  (optional) The function or method that should be used instead
-     * @param int    $callerOffset (optional) How far the deprecated method is removed from this one
-     *
+     * @param string $alternative (optional) The function or method that should be used instead
+     * @param int $callerOffset (optional) How far the deprecated method is removed from this one
+     * @param string $thing (optional) The deprecated thing, defaults to the calling method
      * @triggers \dokuwiki\Debug::INFO_DEPRECATION_LOG_EVENT
      */
-    public static function dbgDeprecatedFunction($alternative = '', $callerOffset = 1)
+    public static function dbgDeprecatedFunction($alternative = '', $callerOffset = 1, $thing = '')
     {
         global $conf;
         /** @var EventHandler $EVENT_HANDLER */
@@ -38,17 +39,21 @@ class DebugHelper
 
         list($self, $call) = $backtrace;
 
+        if (!$thing) {
+            $thing = trim(
+                (!empty($self['class']) ? ($self['class'] . '::') : '') .
+                $self['function'] . '()', ':');
+        }
+
         self::triggerDeprecationEvent(
             $backtrace,
             $alternative,
-            trim(
-                (!empty($self['class']) ? ($self['class'] . '::') : '') .
-                $self['function'] . '()', ':'),
+            $thing,
             trim(
                 (!empty($call['class']) ? ($call['class'] . '::') : '') .
                 $call['function'] . '()', ':'),
-            $call['file'],
-            $call['line']
+            $self['file'],
+            $self['line']
         );
     }
 
@@ -160,7 +165,7 @@ class DebugHelper
             if ($event->data['alternative']) {
                 $msg .= ' ' . $event->data['alternative'] . ' should be used instead!';
             }
-            dbglog($msg);
+            Logger::getInstance(Logger::LOG_DEPRECATED)->log($msg);
         }
         $event->advise_after();
     }

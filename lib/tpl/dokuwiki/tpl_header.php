@@ -8,7 +8,7 @@ if (!defined('DOKU_INC')) die();
 ?>
 
 <!-- ********** HEADER ********** -->
-<div id="dokuwiki__header"><div class="pad group">
+<header id="dokuwiki__header"><div class="pad group">
 
     <?php tpl_includeFile('header.html') ?>
 
@@ -17,7 +17,7 @@ if (!defined('DOKU_INC')) die();
             <li><a href="#dokuwiki__content"><?php echo $lang['skip_to_content']; ?></a></li>
         </ul>
 
-        <h1><?php
+        <h1 class="logo"><?php
             // get logo either out of the template images folder or data/media folder
             $logoSize = array();
             $logo = tpl_getMediaFile(array(':wiki:logo.png', ':logo.png', 'images/logo.png'), false, $logoSize);
@@ -26,7 +26,7 @@ if (!defined('DOKU_INC')) die();
             tpl_link(
                 wl(),
                 '<img src="'.$logo.'" '.$logoSize[3].' alt="" /> <span>'.$conf['title'].'</span>',
-                'accesskey="h" title="[H]"'
+                'accesskey="h" title="' . tpl_getLang('home') . ' [h]"'
             );
         ?></h1>
         <?php if ($conf['tagline']): ?>
@@ -78,7 +78,5 @@ if (!defined('DOKU_INC')) die();
         </div>
     <?php endif ?>
 
-
-
     <hr class="a11y" />
-</div></div><!-- /header -->
+</div></header><!-- /header -->

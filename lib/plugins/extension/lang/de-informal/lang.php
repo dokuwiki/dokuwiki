@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author MaWi <drmaxxis@gmail.com>
  * @author Felix <j.felix@mueller-donath.de>
  */
 $lang['menu']                  = 'Erweiterungen verwalten';
@@ -72,6 +73,7 @@ $lang['msg_template_update_success'] = 'Das Update des Templates %s war erfolgre
 $lang['msg_plugin_install_success'] = 'Das Plugin %s wurde erfolgreich installiert';
 $lang['msg_plugin_update_success'] = 'Das Update des Plugins %s war erfolgreich';
 $lang['msg_upload_failed']     = 'Fehler beim Hochladen der Datei';
+$lang['msg_nooverwrite']       = 'Die Erweiterung %s ist bereits vorhanden, sodass sie nicht überschrieben wird. Zum Überschreiben aktiviere die Option "Überschreiben".';
 $lang['missing_dependency']    = '<strong>Fehlende oder deaktivierte Abhängigkeit:<strong>%s';
 $lang['security_issue']        = '<strong>Sicherheitsproblem:</strong> %s';
 $lang['security_warning']      = '<strong>Sicherheitswarnung:</strong> %s';

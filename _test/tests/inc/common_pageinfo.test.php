@@ -6,7 +6,7 @@
  */
 class common_pageinfo_test extends DokuWikiTest {
 
-    function setup(){
+    function setup() : void {
         parent::setup();
 
         global $USERINFO;
@@ -51,7 +51,7 @@ class common_pageinfo_test extends DokuWikiTest {
     /**
      *  check info keys and values for a non-existent page & admin user
      */
-    function test_basic_nonexistentpage(){
+    function test_basic_nonexistentpage() {
         global $ID,$conf;
         $ID = 'wiki:start';
 
@@ -66,11 +66,15 @@ class common_pageinfo_test extends DokuWikiTest {
     /**
      *  check info keys and values for a existing page & admin user
      */
-    function test_basic_existingpage(){
+    function test_basic_existingpage() {
         global $ID,$conf;
         $ID = 'wiki:syntax';
         $filename = $conf['datadir'].'/wiki/syntax.txt';
         $rev = filemtime($filename);
+
+        // run once to prepare meta/wiki/syntax.change file for existing page
+        // because pageinfo() set $info['meta']['last_change'] entry
+        pageinfo();
 
         $info = $this->_get_expected_pageinfo();
         $info['id'] = 'wiki:syntax';
@@ -80,6 +84,13 @@ class common_pageinfo_test extends DokuWikiTest {
         $info['lastmod'] = $rev;
         $info['currentrev'] = $rev;
         $info['meta'] = p_get_metadata($ID);
+        // set from revinfo, $pagelog->getRevisionInfo($info['lastmod'])
+        $info = array_merge($info, array(
+            'ip' => '127.0.0.1',
+            'user' => '',
+            'sum' => 'created - external edit',
+        ));
+        $info['editor'] = '127.0.0.1';
 
         $this->assertEquals($info, pageinfo());
     }
@@ -87,7 +98,7 @@ class common_pageinfo_test extends DokuWikiTest {
     /**
      *  check info keys and values for anonymous user
      */
-    function test_anonymoususer(){
+    function test_anonymoususer() {
         global $ID,$conf,$REV;
 
         unset($_SERVER['REMOTE_USER']);
@@ -106,7 +117,15 @@ class common_pageinfo_test extends DokuWikiTest {
         $info['currentrev'] = $rev;
         $info['meta'] = p_get_metadata($ID);
         $info['rev'] = '';
+        // set from revinfo, $pagelog->getRevisionInfo($info['lastmod'])
+        $info = array_merge($info, array(
+            'ip' => '127.0.0.1',
+            'user' => '',
+            'sum' => 'created - external edit',
+        ));
+        $info['editor'] = '127.0.0.1';
 
+        // anonymous user
         $info = array_merge($info, array(
           'isadmin' => false,
           'ismanager' => false,
@@ -114,6 +133,7 @@ class common_pageinfo_test extends DokuWikiTest {
           'client' => '1.2.3.4',
         ));
         unset($info['userinfo']);
+
         $this->assertEquals($info, pageinfo());
     }
 
@@ -121,7 +141,7 @@ class common_pageinfo_test extends DokuWikiTest {
      *  check info keys and values with $REV
      *  (also see $RANGE tests)
      */
-    function test_rev(){
+    function test_rev() {
         global $ID,$conf,$REV;
 
         $ID = 'wiki:syntax';
@@ -129,7 +149,8 @@ class common_pageinfo_test extends DokuWikiTest {
         $rev = filemtime($filename);
         $REV = $rev - 100;
         $ext = '.txt';
-        if($conf['compression']) {  //compression in $info['filepath'] determined by wikiFN depends also on if the page exist
+        if ($conf['compression']) {
+            //compression in $info['filepath'] determined by wikiFN depends also on if the page exist
             $ext .= "." . $conf['compression']; //.gz or .bz2
         }
 
@@ -148,7 +169,7 @@ class common_pageinfo_test extends DokuWikiTest {
     /**
      *  check info keys and values with $RANGE
      */
-    function test_range(){
+    function test_range() {
         global $ID,$conf,$REV,$RANGE;
 
         $ID = 'wiki:syntax';
@@ -164,6 +185,13 @@ class common_pageinfo_test extends DokuWikiTest {
         $info['currentrev'] = $rev;
         $info['meta'] = p_get_metadata($ID);
         $info['filepath'] = $filename;
+        // set from revinfo, $pagelog->getRevisionInfo($info['lastmod'])
+        $info = array_merge($info, array(
+            'ip' => '127.0.0.1',
+            'user' => '',
+            'sum' => 'created - external edit',
+        ));
+        $info['editor'] = '127.0.0.1';
 
         // check $RANGE without $REV
         // expected result $RANGE unchanged
@@ -171,7 +199,7 @@ class common_pageinfo_test extends DokuWikiTest {
 
         $this->assertEquals($info, pageinfo());
         $this->assertFalse(isset($REV));
-        $this->assertEquals($range,$RANGE);
+        $this->assertEquals($range, $RANGE);
 
         // check $RANGE with $REV = current
         // expected result: $RANGE unchanged, $REV cleared
@@ -180,21 +208,21 @@ class common_pageinfo_test extends DokuWikiTest {
 
         $this->assertEquals($info, pageinfo());
         $this->assertEquals('',$REV);
-        $this->assertEquals($range,$RANGE);
+        $this->assertEquals($range, $RANGE);
 
         // check with a real $REV
         // expected result: $REV and $RANGE are cleared
         $REV = $rev - 100;
 
         $this->assertEquals($info, pageinfo());
-        $this->assertEquals('',$REV);
-        $this->assertEquals('',$RANGE);
+        $this->assertEquals('', $REV);
+        $this->assertEquals('', $RANGE);
     }
 
     /**
      *  test editor entry and external edit
      */
-    function test_editor_and_externaledits(){
+    function test_editor_and_externaledits() {
         global $ID,$conf;
         $ID = 'wiki:syntax';
         $filename = $conf['datadir'].'/wiki/syntax.txt';
@@ -216,24 +244,24 @@ class common_pageinfo_test extends DokuWikiTest {
         addLogEntry($rev, $ID);
 
         $info['meta'] = p_get_metadata($ID);
-        $info['editor'] = $_SERVER['REMOTE_USER'];
-        $info['user'] = $_SERVER['REMOTE_USER'];
         $info['ip'] = $_SERVER['REMOTE_ADDR'];
+        $info['user'] = $_SERVER['REMOTE_USER'];
         $info['sum'] = '';
+        $info['editor'] = $info['user'];
 
         // with an editor ...
         $this->assertEquals($info, pageinfo());
 
         // clear the meta['last_change'] value, pageinfo should restore it
-        p_set_metadata($ID,array('last_change' => false));
+        p_set_metadata($ID, array('last_change' => false));
 
         $this->assertEquals($info, pageinfo());
         $this->assertEquals($info['meta']['last_change'], p_get_metadata($ID,'last_change'));
 
         // fake an external edit, pageinfo should clear the last change from meta data
         // and not return any editor data
-        $now = time()+10;
-        touch($filename,$now);
+        $now = time() + 10;
+        touch($filename, $now);
 
         $info['lastmod'] = $now;
         $info['currentrev'] = $now;
@@ -250,11 +278,15 @@ class common_pageinfo_test extends DokuWikiTest {
     /**
      *  check draft
      */
-    function test_draft(){
+    function test_draft() {
         global $ID,$conf;
         $ID = 'wiki:syntax';
         $filename = $conf['datadir'].'/wiki/syntax.txt';
         $rev = filemtime($filename);
+
+        // run once to prepare meta/wiki/syntax.change file for existing page
+        // because pageinfo() set $info['meta']['last_change'] entry
+        pageinfo();
 
         $info = $this->_get_expected_pageinfo();
         $info['id'] = 'wiki:syntax';
@@ -264,11 +296,23 @@ class common_pageinfo_test extends DokuWikiTest {
         $info['lastmod'] = $rev;
         $info['currentrev'] = $rev;
         $info['meta'] = p_get_metadata($ID);
+//        $info['ip'] = $_SERVER['REMOTE_ADDR'];
+//        $info['user'] = $_SERVER['REMOTE_USER'];
+//        $info['sum'] = '';
+//        $info['editor'] = $info['user'];
+        // set from revinfo, $pagelog->getRevisionInfo($info['lastmod'])
+        $info = array_merge($info, array(
+            'ip' => '127.0.0.1',
+            'user' => '',
+            'sum' => 'external edit',
+        ));
+        $info['editor'] = '127.0.0.1';
 
         // setup a draft, make it more recent than the current page
         // - pageinfo should recognise it and keep it
-        $draft = getCacheName($info['client'].$ID,'.draft');
-        touch($draft,$rev + 10);
+
+        $draft = getCacheName($info['client']."\n".$ID,'.draft');
+        touch($draft, $rev + 10);
 
         $info['draft'] = $draft;
 
@@ -287,7 +331,7 @@ class common_pageinfo_test extends DokuWikiTest {
     /**
      *  check ismobile
      */
-    function test_ismobile(){
+    function test_ismobile() {
         global $ID,$conf;
         $ID = 'wiki:start';
 

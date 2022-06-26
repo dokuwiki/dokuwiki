@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marek Adamski <fevbew@wp.pl>
  * @author Wojciech Lichota <wojciech@lichota.pl>
  * @author Paweł Jan Czochański <czochanski@gmail.com>
  * @author Maciej Helt <geraldziu@gmail.com>
@@ -19,6 +20,7 @@ $lang['referrals']             = 'Czy należy podążać za przekierowaniami?';
 $lang['deref']                 = 'Jak rozwiązywać aliasy?';
 $lang['binddn']                = 'DN opcjonalnego użytkownika powiązanego, jeśli powiązanie anonimowe nie jest wystarczające, np. <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']                = 'Hasło powyższego użytkownika';
+$lang['attributes']            = 'Atrybuty do pobrania za pomocą wyszukiwania LDAP.';
 $lang['userscope']             = 'Ogranicz zakres wyszukiwania do wyszukiwania użytkowników';
 $lang['groupscope']            = 'Ogranicz zakres wyszukiwania do wyszukiwania grup użytkowników';
 $lang['userkey']               = 'Atrybut opisujący nazwę użytkownika; musi być zgodny z filtrem użytkownika.';

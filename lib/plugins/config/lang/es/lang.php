@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Luna Frax <lunafrax@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  * @author Miguel Pagano <miguel.pagano@gmail.com>
  * @author Oscar M. Lage <r0sk10@gmail.com>
@@ -134,6 +135,7 @@ $lang['mailfrom']              = 'Dirección de correo electrónico para emails 
 $lang['mailreturnpath']        = 'Dirección de correo electrónico del destinatario para las notificaciones de no entrega';
 $lang['mailprefix']            = 'Asunto por defecto que se utilizará en mails automáticos.';
 $lang['htmlmail']              = 'Enviar correos electronicos en HTML con mejor aspecto pero mayor peso. Desactivar para enviar correos electronicos en texto plano.';
+$lang['dontlog']               = 'Deshabilitar inicio de sesión para este tipo de registros.';
 $lang['sitemap']               = 'Generar sitemap de Google (días)';
 $lang['rss_type']              = 'Tipo de resumen (feed) XML';
 $lang['rss_linkto']            = 'Feed XML enlaza a';

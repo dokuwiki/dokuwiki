@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Nikita <obraztsov568@gmail.com>
  * @author Анатолий <anatol_m@mail.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
@@ -132,6 +133,7 @@ $lang['mailfrom']              = 'Электронный адрес вики (О
 $lang['mailreturnpath']        = 'Адрес электронной почты для доставки отчёта о недоставленных сообщениях';
 $lang['mailprefix']            = 'Префикс, используемый для автоматического письма, станет темой сообщения. Оставьте поле пустым для использования названия вики.';
 $lang['htmlmail']              = 'Отправлять красивые, но более крупные HTML-письма. Отключите для отправки простых текстовых писем.';
+$lang['dontlog']               = 'Отключить ведение журнала для этих типов записей.';
 $lang['sitemap']               = 'Число дней, через которое нужно создавать (обновлять) карту сайта для поисковиков (Гугл, Яндекс и др.). Укажите 0 (ноль) для отключения.';
 $lang['rss_type']              = 'Тип XML-ленты';
 $lang['rss_linkto']            = 'Ссылки в XML-ленте указывают на';

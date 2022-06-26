@@ -29,6 +29,14 @@ class ConfigParser {
 
         $config = array();
         $contents = @php_strip_whitespace($file);
+
+        // fallback to simply including the file #3271
+        if($contents === null) {
+            $conf = [];
+            include $file;
+            return $conf;
+        }
+
         $pattern = '/\$' . $this->varname . '\[[\'"]([^=]+)[\'"]\] ?= ?(.*?);(?=[^;]*(?:\$' . $this->varname . '|$))/s';
         $matches = array();
         preg_match_all($pattern, $contents, $matches, PREG_SET_ORDER);

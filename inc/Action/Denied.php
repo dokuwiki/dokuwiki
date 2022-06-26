@@ -2,6 +2,9 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Extension\Event;
+use dokuwiki\Ui;
+
 /**
  * Class Denied
  *
@@ -9,15 +12,41 @@ namespace dokuwiki\Action;
  *
  * @package dokuwiki\Action
  */
-class Denied extends AbstractAclAction {
-
+class Denied extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_NONE;
     }
 
-    public function tplContent() {
-        html_denied();
+    /** @inheritdoc */
+    public function tplContent()
+    {
+        $this->showBanner();
+
+        $data = null;
+        $event = new Event('ACTION_DENIED_TPLCONTENT', $data);
+        if ($event->advise_before()) {
+            global $INPUT;
+            if (empty($INPUT->server->str('REMOTE_USER')) && actionOK('login')) {
+                (new Ui\Login)->show();
+            }
+        }
+        $event->advise_after();
+    }
+
+    /**
+     * Display error on denied pages
+     *
+     * @author   Andreas Gohr <andi@splitbrain.org>
+     *
+     * @return void
+     */
+    public function showBanner()
+    {
+        // print intro
+        print p_locale_xhtml('denied');
     }
 
 }

@@ -3,10 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Chun-Chung Chen <cjj@u.washington.edu>
+ * @author GHSRobert Ciang <robertus0617@gmail.com>
  * @author Stan <talktostan@gmail.com>
  * @author June-Hao Hou <junehao@gmail.com>
  * @author lioujheyu <lioujheyu@gmail.com>
- * @author Liou, Jhe-Yu <lioujheyu@gmail.com>
  */
 $lang['menu']                  = '延伸功能管理';
 $lang['tab_plugins']           = '已安裝外掛';
@@ -62,10 +63,10 @@ $lang['status_bundled']        = '已綑綁內附';
 $lang['msg_enabled']           = '外掛 %s 已啟用';
 $lang['msg_disabled']          = '外掛 %s 已禁用';
 $lang['msg_delete_failed']     = '解除安裝 %s 失敗';
-$lang['msg_template_install_success'] = '模板 %s 以成功安裝';
-$lang['msg_template_update_success'] = '模板 %s 以成功更新';
-$lang['msg_plugin_install_success'] = '外掛 %s 以成功安裝';
-$lang['msg_plugin_update_success'] = '外掛 %s 以成功更新';
+$lang['msg_template_install_success'] = '模板 %s 已成功安裝';
+$lang['msg_template_update_success'] = '模板 %s 已成功更新';
+$lang['msg_plugin_install_success'] = '外掛 %s 已成功安裝';
+$lang['msg_plugin_update_success'] = '外掛 %s 已成功更新';
 $lang['msg_upload_failed']     = '上傳檔案失敗';
 $lang['missing_dependency']    = '<strong>遺失或禁用相依性套件:</strong> %s';
 $lang['security_issue']        = '<strong>安全性問題:</strong> %s';

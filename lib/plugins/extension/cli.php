@@ -42,7 +42,9 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
 
         // install
         $options->registerCommand('install', 'Install or upgrade extensions');
-        $options->registerArgument('extensions...', 'One or more extensions to install', true, 'install');
+        $options->registerArgument('extensions...',
+            'One or more extensions to install. Either by name or download URL', true, 'install'
+        );
 
         // uninstall
         $options->registerCommand('uninstall', 'Uninstall a new extension');
@@ -118,7 +120,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
             $ext->setExtension($extname);
             $date = $ext->getInstalledVersion();
             $avail = $ext->getLastUpdate();
-            if ($avail && $avail > $date) {
+            if ($avail && $avail > $date && !$ext->isBundled()) {
                 $ok += $this->cmdInstall([$extname]);
             }
         }
@@ -212,27 +214,41 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
 
         $ok = 0;
         foreach ($extensions as $extname) {
-            $ext->setExtension($extname);
+            $installed = [];
 
-            if (!$ext->getDownloadURL()) {
-                $ok += 1;
-                $this->error(
-                    sprintf('Could not find download for %s', $ext->getID())
-                );
-                continue;
+            if (preg_match("/^https?:\/\//i", $extname)) {
+                try {
+                    $installed = $ext->installFromURL($extname, true);
+                } catch (Exception $e) {
+                    $this->error($e->getMessage());
+                    $ok += 1;
+                }
+            } else {
+                $ext->setExtension($extname);
+
+                if (!$ext->getDownloadURL()) {
+                    $ok += 1;
+                    $this->error(
+                        sprintf('Could not find download for %s', $ext->getID())
+                    );
+                    continue;
+                }
+
+                try {
+                    $installed = $ext->installOrUpdate();
+                } catch (Exception $e) {
+                    $this->error($e->getMessage());
+                    $ok += 1;
+                }
             }
 
-            try {
-                $installed = $ext->installOrUpdate();
-                foreach ($installed as $name => $info) {
-                    $this->success(sprintf(
-                            $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
-                            $info['base'])
-                    );
-                }
-            } catch (Exception $e) {
-                $this->error($e->getMessage());
-                $ok += 1;
+            foreach ($installed as $name => $info) {
+                $this->success(
+                    sprintf(
+                        $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
+                        $info['base']
+                    )
+                );
             }
         }
         return $ok;

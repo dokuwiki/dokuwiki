@@ -1,4 +1,5 @@
 <?php
+
 namespace dokuwiki\Form;
 
 /**
@@ -10,7 +11,8 @@ namespace dokuwiki\Form;
  * @todo figure out how to make wrapping or related label configurable
  * @package dokuwiki\Form
  */
-class InputElement extends Element {
+class InputElement extends Element
+{
     /**
      * @var LabelElement
      */
@@ -26,11 +28,12 @@ class InputElement extends Element {
      * @param string $name The name of this form element
      * @param string $label The label text for this element (will be autoescaped)
      */
-    public function __construct($type, $name, $label = '') {
+    public function __construct($type, $name, $label = '')
+    {
         parent::__construct($type, array('name' => $name));
         $this->attr('name', $name);
         $this->attr('type', $type);
-        if($label) $this->label = new LabelElement($label);
+        if ($label) $this->label = new LabelElement($label);
     }
 
     /**
@@ -38,7 +41,8 @@ class InputElement extends Element {
      *
      * @return LabelElement|null
      */
-    public function getLabel() {
+    public function getLabel()
+    {
         return $this->label;
     }
 
@@ -51,7 +55,8 @@ class InputElement extends Element {
      * @param bool $useinput
      * @return $this
      */
-    public function useInput($useinput) {
+    public function useInput($useinput)
+    {
         $this->useInput = (bool) $useinput;
         return $this;
     }
@@ -62,8 +67,9 @@ class InputElement extends Element {
      * @param null|string $id
      * @return string|$this
      */
-    public function id($id = null) {
-        if($this->label) $this->label->attr('for', $id);
+    public function id($id = null)
+    {
+        if ($this->label) $this->label->attr('for', $id);
         return parent::id($id);
     }
 
@@ -75,8 +81,9 @@ class InputElement extends Element {
      * @param string $class the new class to add
      * @return $this
      */
-    public function addClass($class) {
-        if($this->label) $this->label->addClass($class);
+    public function addClass($class)
+    {
+        if ($this->label) $this->label->addClass($class);
         return parent::addClass($class);
     }
 
@@ -92,14 +99,15 @@ class InputElement extends Element {
      *
      * @return array name and array key (null if not an array)
      */
-    protected function getInputName() {
+    protected function getInputName()
+    {
         $name = $this->attr('name');
         parse_str("$name=1", $parsed);
 
         $name = array_keys($parsed);
         $name = array_shift($name);
 
-        if(is_array($parsed[$name])) {
+        if (isset($parsed[$name]) && is_array($parsed[$name])) {
             $key = array_keys($parsed[$name]);
             $key = array_shift($key);
         } else {
@@ -112,17 +120,18 @@ class InputElement extends Element {
     /**
      * Handles the useInput flag and set the value attribute accordingly
      */
-    protected function prefillInput() {
+    protected function prefillInput()
+    {
         global $INPUT;
 
         list($name, $key) = $this->getInputName();
-        if(!$INPUT->has($name)) return;
+        if (!$INPUT->has($name)) return;
 
-        if($key === null) {
+        if ($key === null) {
             $value = $INPUT->str($name);
         } else {
             $value = $INPUT->arr($name);
-            if(isset($value[$key])) {
+            if (isset($value[$key])) {
                 $value = $value[$key];
             } else {
                 $value = '';
@@ -136,9 +145,10 @@ class InputElement extends Element {
      *
      * @return string
      */
-    protected function mainElementHTML() {
-        if($this->useInput) $this->prefillInput();
-        return '<input ' . buildAttributes($this->attrs()) . ' />';
+    protected function mainElementHTML()
+    {
+        if ($this->useInput) $this->prefillInput();
+        return '<input '. buildAttributes($this->attrs()) .' />';
     }
 
     /**
@@ -146,12 +156,13 @@ class InputElement extends Element {
      *
      * @return string
      */
-    public function toHTML() {
-        if($this->label) {
-            return '<label ' . buildAttributes($this->label->attrs()) . '>' . DOKU_LF .
-            '<span>' . hsc($this->label->val()) . '</span>' . DOKU_LF .
-            $this->mainElementHTML() . DOKU_LF .
-            '</label>';
+    public function toHTML()
+    {
+        if ($this->label) {
+            return '<label '. buildAttributes($this->label->attrs()) .'>'.DOKU_LF
+                .'<span>'. hsc($this->label->val()) .'</span>'.DOKU_LF
+                . $this->mainElementHTML() .DOKU_LF
+                .'</label>';
         } else {
             return $this->mainElementHTML();
         }

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Markus Glaser <glaser@hallowelt.com>
  * @author Axel Schwarzer <SchwarzerA@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Eric Haberstroh <ehaberstroh@gmail.com>
@@ -148,6 +149,7 @@ $lang['js']['media_done_btn']  = 'Fertig';
 $lang['js']['media_drop']      = 'Dateien hier hinziehen, um sie hochzuladen';
 $lang['js']['media_cancel']    = 'Entfernen';
 $lang['js']['media_overwrt']   = 'Existierende Dateien überschreiben';
+$lang['js']['data_insecure']   = 'WARNUNG: Es scheint, als wäre Ihr Datenverzeichnis nicht ausreichend geschützt. Bitte informieren Sie sich zur <a href="https://www.dokuwiki.org/security#web_access_security">Sicherheit von Webzugriffen in DokuWiki</a>';
 $lang['search_exact_match']    = 'Genaue Treffer';
 $lang['search_starts_with']    = 'Beginnt mit';
 $lang['search_ends_with']      = 'Endet mit';
@@ -250,7 +252,7 @@ $lang['created']               = 'angelegt';
 $lang['restored']              = 'alte Version wiederhergestellt (%s)';
 $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
-$lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
+$lang['noflash']               = 'Das <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
 $lang['download']              = 'Schnipsel herunterladen';
 $lang['tools']                 = 'Werkzeuge';
 $lang['user_tools']            = 'Benutzer-Werkzeuge';
@@ -330,7 +332,7 @@ $lang['i_wikiname']            = 'Wiki-Name';
 $lang['i_enableacl']           = 'Zugangskontrolle (ACL) aktivieren (empfohlen)';
 $lang['i_superuser']           = 'Benutzername des Administrators';
 $lang['i_problems']            = 'Das Installationsprogramm hat unten aufgeführte Probleme festgestellt, die zunächst behoben werden müssen bevor Sie mit der Installation fortfahren können.';
-$lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki Installation. Sie sollten entweder alle Dateien noch einmal frisch installieren oder die <a href="http://dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
+$lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki Installation. Sie sollten entweder alle Dateien noch einmal frisch installieren oder die <a href="https://www.dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
 $lang['i_funcna']              = 'Die PHP-Funktion <code>%s</code> ist nicht verfügbar. Unter Umständen wurde sie von Ihrem Hoster deaktiviert?';
 $lang['i_disabled']            = 'Es wurde von Ihrem Provider deaktiviert.';
 $lang['i_funcnmail']           = '<b>Hinweis:</b> Die PHP-Funktion "mail()" ist nicht verfügbar. %s Alternativ können Sie das <a href="https://www.dokuwiki.org/plugin:smtp">SMTP-Plugin</a> installieren.';

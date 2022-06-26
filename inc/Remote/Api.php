@@ -92,7 +92,8 @@ class Api
         if ($args === null) {
             $args = array();
         }
-        list($type, $pluginName, /* $call */) = explode('.', $method, 3);
+        // Ensure we have at least one '.' in $method
+        list($type, $pluginName, /* $call */) = explode('.', $method . '.', 3);
         if ($type === 'plugin') {
             return $this->callPlugin($pluginName, $method, $args);
         }
@@ -128,8 +129,9 @@ class Api
         if (!array_key_exists($method, $customCalls)) {
             throw new RemoteException('Method does not exist', -32603);
         }
-        $customCall = $customCalls[$method];
-        return $this->callPlugin($customCall[0], $customCall[1], $args);
+        list($plugin, $method) = $customCalls[$method];
+        $fullMethod = "plugin.$plugin.$method";
+        return $this->callPlugin($plugin, $fullMethod, $args);
     }
 
     /**
@@ -342,7 +344,7 @@ class Api
                 $this->coreMethods = $apiCore;
             }
         }
-        return $this->coreMethods->__getRemoteInfo();
+        return $this->coreMethods->getRemoteInfo();
     }
 
     /**

@@ -17,7 +17,7 @@ abstract class AbstractUserAction extends AbstractAclAction {
     public function checkPreconditions() {
         parent::checkPreconditions();
         global $INPUT;
-        if(!$INPUT->server->str('REMOTE_USER')) {
+        if($INPUT->server->str('REMOTE_USER') === '') {
             throw new ActionUserRequiredException();
         }
     }

@@ -8,6 +8,7 @@
 
 use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\Extension\Event;
+use dokuwiki\File\PageResolver;
 
 /**
  * Access a template file
@@ -297,7 +298,7 @@ function tpl_metaheaders($alt = true) {
         }
     }
 
-    // setup robot tags apropriate for different modes
+    // setup robot tags appropriate for different modes
     if(($ACT == 'show' || $ACT == 'export_xhtml') && !$REV) {
         if($INFO['exists']) {
             //delay indexing:
@@ -348,7 +349,6 @@ function tpl_metaheaders($alt = true) {
     $jquery = getCdnUrls();
     foreach($jquery as $src) {
         $head['script'][] = array(
-            'charset' => 'utf-8',
             '_data' => '',
             'src' => $src,
         ) + ($conf['defer_js'] ? [ 'defer' => 'defer'] : []);
@@ -356,7 +356,7 @@ function tpl_metaheaders($alt = true) {
 
     // load our javascript dispatcher
     $head['script'][] = array(
-        'charset'=> 'utf-8', '_data'=> '',
+        '_data'=> '',
         'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed,
     ) + ($conf['defer_js'] ? [ 'defer' => 'defer'] : []);
 
@@ -458,12 +458,14 @@ function tpl_pagelink($id, $name = null, $return = false) {
  * @return false|string
  */
 function tpl_getparent($id) {
+    $resolver = new PageResolver('root');
+
     $parent = getNS($id).':';
-    resolve_pageid('', $parent, $exists);
+    $parent = $resolver->resolveId($parent);
     if($parent == $id) {
         $pos    = strrpos(getNS($id), ':');
         $parent = substr($parent, 0, $pos).':';
-        resolve_pageid('', $parent, $exists);
+        $parent = $resolver->resolveId($parent);
         if($parent == $id) return false;
     }
     return $parent;
@@ -705,9 +707,8 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
         $searchForm->addTagClose('div');
     }
     $searchForm->addTagClose('div');
-    Event::createAndTrigger('FORM_QUICKSEARCH_OUTPUT', $searchForm);
 
-    echo $searchForm->toHTML();
+    echo $searchForm->toHTML('QuickSearch');
 
     return true;
 }
@@ -802,11 +803,13 @@ function tpl_youarehere($sep = null, $return = false) {
     }
 
     // print current page, skipping start page, skipping for namespace index
-    resolve_pageid('', $page, $exists);
-    if (isset($page) && $page == $part.$parts[$i]) {
-        if($return) return $out;
-        print $out;
-        return true;
+    if (isset($page)) {
+        $page = (new PageResolver('root'))->resolveId($page);
+        if ($page == $part . $parts[$i]) {
+            if ($return) return $out;
+            print $out;
+            return true;
+        }
     }
     $page = $part.$parts[$i];
     if($page == $conf['start']) {
@@ -1009,11 +1012,13 @@ function tpl_img_getTag($tags, $alt = '', $src = null) {
     global $SRC;
 
     if(is_null($src)) $src = $SRC;
+    if(is_null($src)) return $alt;
 
     static $meta = null;
     if(is_null($meta)) $meta = new JpegMeta($src);
     if($meta === false) return $alt;
     $info = cleanText($meta->getField($tags));
+    $meta = null; // garbage collect and close any file handles. See #3404
     if($info == false) return $alt;
     return $info;
 }
@@ -1068,7 +1073,7 @@ function tpl_get_img_meta() {
         if (!empty($tag[0])) {
             $t = array($tag[0]);
         }
-        if(is_array($tag[3])) {
+        if(isset($tag[3]) && is_array($tag[3])) {
             $t = array_merge($t,$tag[3]);
         }
         $value = tpl_img_getTag($t);
@@ -1273,7 +1278,7 @@ function tpl_getLang($id) {
             }
         }
     }
-    return $lang[$id];
+    return isset($lang[$id]) ? $lang[$id] : '';
 }
 
 /**
@@ -1588,75 +1593,11 @@ function tpl_include_page($pageid, $print = true, $propagate = false, $useacl = 
  * Display the subscribe form
  *
  * @author Adrian Lang <lang@cosmocode.de>
+ * @deprecated 2020-07-23
  */
 function tpl_subscribe() {
-    global $INFO;
-    global $ID;
-    global $lang;
-    global $conf;
-    $stime_days = $conf['subscribe_time'] / 60 / 60 / 24;
-
-    echo p_locale_xhtml('subscr_form');
-    echo '<h2>'.$lang['subscr_m_current_header'].'</h2>';
-    echo '<div class="level2">';
-    if($INFO['subscribed'] === false) {
-        echo '<p>'.$lang['subscr_m_not_subscribed'].'</p>';
-    } else {
-        echo '<ul>';
-        foreach($INFO['subscribed'] as $sub) {
-            echo '<li><div class="li">';
-            if($sub['target'] !== $ID) {
-                echo '<code class="ns">'.hsc(prettyprint_id($sub['target'])).'</code>';
-            } else {
-                echo '<code class="page">'.hsc(prettyprint_id($sub['target'])).'</code>';
-            }
-            $sstl = sprintf($lang['subscr_style_'.$sub['style']], $stime_days);
-            if(!$sstl) $sstl = hsc($sub['style']);
-            echo ' ('.$sstl.') ';
-
-            echo '<a href="'.wl(
-                $ID,
-                array(
-                     'do'        => 'subscribe',
-                     'sub_target'=> $sub['target'],
-                     'sub_style' => $sub['style'],
-                     'sub_action'=> 'unsubscribe',
-                     'sectok'    => getSecurityToken()
-                )
-            ).
-                '" class="unsubscribe">'.$lang['subscr_m_unsubscribe'].
-                '</a></div></li>';
-        }
-        echo '</ul>';
-    }
-    echo '</div>';
-
-    // Add new subscription form
-    echo '<h2>'.$lang['subscr_m_new_header'].'</h2>';
-    echo '<div class="level2">';
-    $ns      = getNS($ID).':';
-    $targets = array(
-        $ID => '<code class="page">'.prettyprint_id($ID).'</code>',
-        $ns => '<code class="ns">'.prettyprint_id($ns).'</code>',
-    );
-    $styles  = array(
-        'every'  => $lang['subscr_style_every'],
-        'digest' => sprintf($lang['subscr_style_digest'], $stime_days),
-        'list'   => sprintf($lang['subscr_style_list'], $stime_days),
-    );
-
-    $form = new Doku_Form(array('id' => 'subscribe__form'));
-    $form->startFieldset($lang['subscr_m_subscribe']);
-    $form->addRadioSet('sub_target', $targets);
-    $form->startFieldset($lang['subscr_m_receive']);
-    $form->addRadioSet('sub_style', $styles);
-    $form->addHidden('sub_action', 'subscribe');
-    $form->addHidden('do', 'subscribe');
-    $form->addHidden('id', $ID);
-    $form->endFieldset();
-    $form->addElement(form_makeButton('submit', 'subscribe', $lang['subscr_m_subscribe']));
-    html_form('SUBSCRIBE', $form);
-    echo '</div>';
+    dbg_deprecated(\dokuwiki\Ui\Subscribe::class .'::show()');
+    (new \dokuwiki\Ui\Subscribe)->show();
 }
 
 /**

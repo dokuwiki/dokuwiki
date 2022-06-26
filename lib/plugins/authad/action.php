@@ -17,9 +17,8 @@ class action_plugin_authad extends DokuWiki_Action_Plugin
      */
     public function register(Doku_Event_Handler $controller)
     {
-
         $controller->register_hook('AUTH_LOGIN_CHECK', 'BEFORE', $this, 'handleAuthLoginCheck');
-        $controller->register_hook('HTML_LOGINFORM_OUTPUT', 'BEFORE', $this, 'handleHtmlLoginformOutput');
+        $controller->register_hook('FORM_LOGIN_OUTPUT', 'BEFORE', $this, 'handleFormLoginOutput');
     }
 
     /**
@@ -53,7 +52,7 @@ class action_plugin_authad extends DokuWiki_Action_Plugin
      * @param Doku_Event $event
      * @param array      $param
      */
-    public function handleHtmlLoginformOutput(Doku_Event $event, $param)
+    public function handleFormLoginOutput(Doku_Event $event, $param)
     {
         global $INPUT;
         /** @var auth_plugin_authad $auth */
@@ -62,28 +61,29 @@ class action_plugin_authad extends DokuWiki_Action_Plugin
         $domains = $auth->getConfiguredDomains();
         if (count($domains) <= 1) return; // no choice at all
 
-        /** @var Doku_Form $form */
+        /** @var dokuwiki\Form\Form $form */
         $form =& $event->data;
 
+        // find the username input box
+        $pos = $form->findPositionByAttribute('name', 'u');
+        if ($pos === false) return;
+
         // any default?
-        $dom = '';
         if ($INPUT->has('u')) {
             $usr = $auth->cleanUser($INPUT->str('u'));
             $dom = $auth->getUserDomain($usr);
 
             // update user field value
             if ($dom) {
-                $usr          = $auth->getUserName($usr);
-                $pos          = $form->findElementByAttribute('name', 'u');
-                $ele          =& $form->getElementAt($pos);
-                $ele['value'] = $usr;
+                $usr = $auth->getUserName($usr);
+                $element = $form->getElementAt($pos);
+                $element->val($usr);
             }
         }
 
-        // add select box
-        $element = form_makeListboxField('dom', $domains, $dom, $this->getLang('domain'), '', 'block');
-        $pos     = $form->findElementByAttribute('name', 'p');
-        $form->insertElement($pos + 1, $element);
+        // add locate domain selector just after the username input box
+        $element = $form->addDropdown('dom', $domains, $this->getLang('domain'), $pos +1);
+        $element->addClass('block');
     }
 }
 

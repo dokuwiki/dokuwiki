@@ -3,20 +3,20 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Chun-Chung Chen <cjj@u.washington.edu>
+ * @author GHSRobert Ciang <robertus0617@gmail.com>
  * @author chinsan <chinsan@mail2000.com.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
  * @author Wayne San <waynesan@zerozone.tw>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Shuo-Ting Jian <shoting@gmail.com>
- * @author syaoranhinata@gmail.com
- * @author Ichirou Uchiki <syaoranhinata@gmail.com>
+ * @author syaoranhinata <syaoranhinata@gmail.com>
  * @author tsangho <ou4222@gmail.com>
  * @author Danny Lin <danny0838@gmail.com>
  * @author Stan <talktostan@gmail.com>
  * @author June-Hao Hou <junehao@gmail.com>
  * @author lioujheyu <lioujheyu@gmail.com>
- * @author Liou, Jhe-Yu <lioujheyu@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -77,42 +77,9 @@ $lang['badpassconfirm']        = '抱歉，這密碼是錯的';
 $lang['minoredit']             = '小修改';
 $lang['draftdate']             = '草稿已自動存檔於';
 $lang['nosecedit']             = '在您編輯期間，其他使用者修改過本頁面。區段資料已逾時，因此系統載入了全頁，以取代之。';
-$lang['regmissing']            = '很抱歉，所有欄位都要填寫。';
-$lang['reguexists']            = '很抱歉，有人已使用了這個帳號。';
-$lang['regsuccess']            = '使用者帳號已建立，密碼已寄發至該電郵。';
-$lang['regsuccess2']           = '使用者帳號已建立。';
-$lang['regmailfail']           = '寄出密碼信似乎有問題，請跟管理員聯絡！';
-$lang['regbadmail']            = '您輸入的電郵地址似乎不正確。若您覺得是正確的，請與管理員聯絡。';
-$lang['regbadpass']            = '兩次輸入的密碼不一致，請再試一次。';
-$lang['regpwmail']             = '您的 DokuWiki 帳號密碼';
-$lang['reghere']               = '您還沒有帳號嗎？註冊一個吧。';
-$lang['profna']                = '本 wiki 不支援修改個人資料。';
-$lang['profnochange']          = '並未作任何變更。';
-$lang['profnoempty']           = '帳號或電郵地址不可空白！';
-$lang['profchanged']           = '個人資料已更新。';
-$lang['profnodelete']          = '本 wiki 不支援刪除使用者';
-$lang['profdeleteuser']        = '刪除帳號';
-$lang['profdeleted']           = '您的使用者帳號已從本 wiki 刪除';
-$lang['profconfdelete']        = '我想把帳號從本 wiki 刪除（不能復原）';
-$lang['profconfdeletemissing'] = '未勾選確認方塊';
-$lang['pwdforget']             = '忘記密碼了？索取新密碼！';
-$lang['resendna']              = '本 wiki 不支援重寄密碼。';
-$lang['resendpwd']             = '設定新密碼供';
-$lang['resendpwdmissing']      = '抱歉，您必須填寫所有欄位。';
-$lang['resendpwdnouser']       = '抱歉，資料庫內找不到這個使用者。';
-$lang['resendpwdbadauth']      = '抱歉，認證碼無效。請確認您使用了完整的確認連結。';
-$lang['resendpwdconfirm']      = '確認連結已通過郵件發送給您了。';
-$lang['resendpwdsuccess']      = '您的新密碼已寄出。';
-$lang['license']               = '若無特別註明，本 wiki 上的內容都是採用以下授權方式：';
-$lang['licenseok']             = '注意：編輯此頁面表示您同意用以下授權方式發布您撰寫的內容：';
-$lang['searchmedia']           = '搜尋檔名：';
-$lang['searchmedia_in']        = '在 %s 裏搜尋';
-$lang['txt_upload']            = '請選擇要上傳的檔案:';
-$lang['txt_filename']          = '請輸入要上傳至本 wiki 的檔案名稱 (非必要):';
-$lang['txt_overwrt']           = '是否要覆蓋原有檔案';
-$lang['maxuploadsize']         = '每個上傳檔案不可大於 %s 。';
-$lang['lockedby']              = '目前已被下列人員鎖定:';
-$lang['lockexpire']            = '預計解除鎖定於:';
+$lang['searchcreatepage']      = '如果你沒找到你所尋找的，你可以以你的查詢為名，建立或編輯%s頁面。';
+$lang['search_fullresults']    = '全文結果';
+$lang['js']['search_toggle_tools'] = '切換搜尋工具';
 $lang['js']['willexpire']      = '本頁的編輯鎖定將在一分鐘內到期。要避免發生衝突，請按「預覽」鍵重設鎖定計時。';
 $lang['js']['notsavedyet']     = '未儲存的變更將會遺失，繼續嗎？';
 $lang['js']['searchmedia']     = '搜尋檔案';
@@ -155,6 +122,58 @@ $lang['js']['media_done_btn']  = '完成';
 $lang['js']['media_drop']      = '拖拉檔案到此上傳';
 $lang['js']['media_cancel']    = '刪除';
 $lang['js']['media_overwrt']   = '覆蓋已存在的檔案';
+$lang['js']['data_insecure']   = '警告：似乎你的資料目錄沒有適當的防護。請閲讀關於<a href="https://www.dokuwiki.org/security#web_access_security">DokuWiki中的網頁存取安全性</a>。';
+$lang['search_exact_match']    = '精準的比對';
+$lang['search_starts_with']    = '起始於';
+$lang['search_ends_with']      = '結尾於';
+$lang['search_contains']       = '包含';
+$lang['search_custom_match']   = '自定';
+$lang['search_any_ns']         = '任何名稱空間';
+$lang['search_any_time']       = '任何時間';
+$lang['search_past_7_days']    = '過去一週';
+$lang['search_past_month']     = '過去一個月';
+$lang['search_past_year']      = '過去一年';
+$lang['search_sort_by_hits']   = '按點擊排序';
+$lang['search_sort_by_mtime']  = '按最後修改排序';
+$lang['regmissing']            = '很抱歉，所有欄位都要填寫。';
+$lang['reguexists']            = '很抱歉，有人已使用了這個帳號。';
+$lang['regsuccess']            = '使用者帳號已建立，密碼已寄發至該電郵。';
+$lang['regsuccess2']           = '使用者帳號已建立。';
+$lang['regfail']               = '無法建立使用者。';
+$lang['regmailfail']           = '寄出密碼信似乎有問題，請跟管理員聯絡！';
+$lang['regbadmail']            = '您輸入的電郵地址似乎不正確。若您覺得是正確的，請與管理員聯絡。';
+$lang['regbadpass']            = '兩次輸入的密碼不一致，請再試一次。';
+$lang['regpwmail']             = '您的 DokuWiki 帳號密碼';
+$lang['reghere']               = '您還沒有帳號嗎？註冊一個吧。';
+$lang['profna']                = '本 wiki 不支援修改個人資料。';
+$lang['profnochange']          = '並未作任何變更。';
+$lang['profnoempty']           = '帳號或電郵地址不可空白！';
+$lang['profchanged']           = '個人資料已更新。';
+$lang['profnodelete']          = '本 wiki 不支援刪除使用者';
+$lang['profdeleteuser']        = '刪除帳號';
+$lang['profdeleted']           = '您的使用者帳號已從本 wiki 刪除';
+$lang['profconfdelete']        = '我想把帳號從本 wiki 刪除（不能復原）';
+$lang['profconfdeletemissing'] = '未勾選確認方塊';
+$lang['proffail']              = '個人資料未更新。';
+$lang['pwdforget']             = '忘記密碼了？索取新密碼！';
+$lang['resendna']              = '本 wiki 不支援重寄密碼。';
+$lang['resendpwd']             = '設定新密碼供';
+$lang['resendpwdmissing']      = '抱歉，您必須填寫所有欄位。';
+$lang['resendpwdnouser']       = '抱歉，資料庫內找不到這個使用者。';
+$lang['resendpwdbadauth']      = '抱歉，認證碼無效。請確認您使用了完整的確認連結。';
+$lang['resendpwdconfirm']      = '確認連結已通過郵件發送給您了。';
+$lang['resendpwdsuccess']      = '您的新密碼已寄出。';
+$lang['license']               = '若無特別註明，本 wiki 上的內容都是採用以下授權方式：';
+$lang['licenseok']             = '注意：編輯此頁面表示您同意用以下授權方式發布您撰寫的內容：';
+$lang['searchmedia']           = '搜尋檔名：';
+$lang['searchmedia_in']        = '在 %s 裏搜尋';
+$lang['txt_upload']            = '請選擇要上傳的檔案:';
+$lang['txt_filename']          = '請輸入要上傳至本 wiki 的檔案名稱 (非必要):';
+$lang['txt_overwrt']           = '是否要覆蓋原有檔案';
+$lang['maxuploadsize']         = '每個上傳檔案不可大於 %s 。';
+$lang['allowedmime']           = '允許的副檔名列表';
+$lang['lockedby']              = '目前已被下列人員鎖定:';
+$lang['lockexpire']            = '預計解除鎖定於:';
 $lang['rssfailed']             = '擷取 RSS 饋送檔時發生錯誤：';
 $lang['nothingfound']          = '沒找到任何結果。';
 $lang['mediaselect']           = '媒體檔案';
@@ -196,6 +215,8 @@ $lang['diffprevrev']           = '前次修改
 $lang['diffnextrev']           = '下次修改';
 $lang['difflastrev']           = '最後一次修改
 ';
+$lang['diffbothprevrev']       = '兩邊的前次修訂版';
+$lang['diffbothnextrev']       = '兩邊的下次修訂版';
 $lang['line']                  = '行';
 $lang['breadcrumb']            = '足跡:';
 $lang['youarehere']            = '您在這裏:';
@@ -206,7 +227,7 @@ $lang['created']               = '建立';
 $lang['restored']              = '還原成舊版 (%s)';
 $lang['external_edit']         = '外部編輯';
 $lang['summary']               = '編輯摘要';
-$lang['noflash']               = '顯示此內容需要 <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash 附加元件</a>。';
+$lang['noflash']               = '顯示此內容需要 <a href="http://get.adobe.com/flashplayer">Adobe Flash 附加元件</a>。';
 $lang['download']              = '下載程式碼片段';
 $lang['tools']                 = '工具';
 $lang['user_tools']            = '使用者工具';
@@ -287,7 +308,7 @@ $lang['i_enableacl']           = '啟用 ACL (建議)';
 $lang['i_superuser']           = '超級使用者';
 $lang['i_problems']            = '安裝程式發現如下的問題。您必須修正它們才能繼續。';
 $lang['i_modified']            = '出於安全考量，本腳本只能用於安裝全新且未修改的 Dokuwiki。
-您可以重新解壓下載的封包或查閱完整的<a href=\"http://dokuwiki.org/install\">Dokuwiki 安裝指南</a>';
+您可以重新解壓下載的封包或查閱完整的<a href=\"https://www.dokuwiki.org/install\">Dokuwiki 安裝指南</a>';
 $lang['i_funcna']              = 'PHP 函數 <code>%s</code> 無法使用。也許您的主機供應者基於某些理由停用了它？';
 $lang['i_phpver']              = '您的 PHP 版本 <code>%s</code> 比需要的版本 <code>%s</code> 還低。您必須更新您的PHP。';
 $lang['i_permfail']            = '<code>%s</code> 無法經由 DokuWiki 寫入。您必須修正該目錄的權限！';
@@ -344,5 +365,5 @@ $lang['currentns']             = '目前的命名空間';
 $lang['searchresult']          = '搜尋結果';
 $lang['plainhtml']             = '純 HTML';
 $lang['wikimarkup']            = 'Wiki 語法標記';
-$lang['email_signature_text'] = '本信件由以下 DokuWiki 網站產生
+$lang['email_signature_text']  = '本信件由以下 DokuWiki 網站產生
 @DOKUWIKIURL@';

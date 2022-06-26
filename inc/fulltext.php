@@ -7,6 +7,7 @@
  */
 
 use dokuwiki\Extension\Event;
+use dokuwiki\Utf8\Sort;
 
 /**
  * create snippets for the first few results only
@@ -79,7 +80,9 @@ function _ft_pageSearch(&$data) {
             case 'W-:':
             case 'W_:': // word
                 $word    = substr($token, 3);
-                $stack[] = (array) $lookup[$word];
+                if(isset($lookup[$word])) {
+                    $stack[] = (array)$lookup[$word];
+                }
                 break;
             case 'P+:':
             case 'P-:': // phrase
@@ -151,6 +154,7 @@ function _ft_pageSearch(&$data) {
         uksort($docs, 'ft_pagemtimesorter');
     } else {
         // sort docs by count
+        uksort($docs, 'ft_pagesorter');
         arsort($docs);
     }
 
@@ -180,7 +184,7 @@ function ft_backlinks($id, $ignore_perms = false){
         }
     }
 
-    sort($result);
+    Sort::sort($result);
     return $result;
 }
 
@@ -211,7 +215,7 @@ function ft_mediause($id, $ignore_perms = false){
         }
     }
 
-    sort($result);
+    Sort::sort($result);
     return $result;
 }
 
@@ -264,6 +268,10 @@ function _ft_pageLookup(&$data){
         $ns = cleanID($parsedQuery['ns'][0]) . ':';
         $id = implode(' ', $parsedQuery['highlight']);
     }
+    if (count($parsedQuery['notns']) > 0) {
+        $notns = cleanID($parsedQuery['notns'][0]) . ':';
+        $id = implode(' ', $parsedQuery['highlight']);
+    }
 
     $in_ns    = $data['in_ns'];
     $in_title = $data['in_title'];
@@ -291,6 +299,13 @@ function _ft_pageLookup(&$data){
     if (isset($ns)) {
         foreach (array_keys($pages) as $p_id) {
             if (strpos($p_id, $ns) !== 0) {
+                unset($pages[$p_id]);
+            }
+        }
+    }
+    if (isset($notns)) {
+        foreach (array_keys($pages) as $p_id) {
+            if (strpos($p_id, $notns) === 0) {
                 unset($pages[$p_id]);
             }
         }
@@ -370,7 +385,7 @@ function ft_pagesorter($a, $b){
     }elseif($ac > $bc){
         return 1;
     }
-    return strcmp ($a,$b);
+    return Sort::strcmp($a,$b);
 }
 
 /**

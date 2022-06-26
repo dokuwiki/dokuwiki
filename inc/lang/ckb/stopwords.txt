@@ -1,0 +1,39 @@
+# ئەمە لیستێکە لە وشەکان کە پێڕستکار پشتگوێی دەخرێن، یەک وشە بۆ هەر هێڵێک
+# کاتێک ئەم فایلە بژار دەکەیت دڵنیابە لە بەکارهێنانی کۆتاییەکانی هێڵی UNIX (تاک هێڵی نوێ)
+پێویست ناکات وشەکان کورتتر لە 3 چار لەخۆ بگرێت- ئەمانە هەرچۆنێک بێت پشتگوێ خراون
+# ئەم لیستە لەسەر بنەمای ئەو لیستەیە کە لە http://www.ranks.nl/stopwords/
+about
+are
+as
+an
+and
+you
+your
+them
+their
+com
+for
+from
+into
+if
+in
+is
+it
+how
+of
+on
+or
+that
+the
+this
+to
+was
+what
+when
+where
+who
+will
+with
+und
+the
+www

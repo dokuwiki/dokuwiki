@@ -114,8 +114,15 @@ function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
  */
 function p_locale_xhtml($id){
     //fetch parsed locale
-    $html = p_cached_output(localeFN($id));
-    return $html;
+    $data = ['id' => $id, 'html' => ''];
+
+    $event = new Event('PARSER_LOCALE_XHTML', $data);
+    if ($event->advise_before()) {
+        $data['html'] = p_cached_output(localeFN($data['id']));
+    }
+    $event->advise_after();
+
+    return $data['html'];
 }
 
 /**
@@ -411,7 +418,7 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
 function p_purge_metadata($id) {
     $meta = p_read_metadata($id);
     foreach($meta['current'] as $key => $value) {
-        if(is_array($meta[$key])) {
+        if(isset($meta[$key]) && is_array($meta[$key])) {
             $meta['current'][$key] = array();
         } else {
             $meta['current'][$key] = '';
@@ -463,7 +470,9 @@ function p_save_metadata($id, $meta) {
     global $cache_metadata, $INFO;
 
     if (isset($cache_metadata[$id])) $cache_metadata[$id] = $meta;
-    if (!empty($INFO) && ($id == $INFO['id'])) { $INFO['meta'] = $meta['current']; }
+    if (!empty($INFO) && isset($INFO['id']) && ($id == $INFO['id'])) {
+        $INFO['meta'] = $meta['current'];
+    }
 
     return io_saveFile(metaFN($id, '.meta'), serialize($meta));
 }

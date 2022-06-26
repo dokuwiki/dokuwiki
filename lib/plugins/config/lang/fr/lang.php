@@ -3,9 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Pierre Henriot <pierre.henriot@gmail.com>
- * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Nicolas Friedli <nicolas@theologique.ch>
+ * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
  * @author Laurent Ponthieu <contact@coopindus.fr>
  * @author Damien Regad <dregad@mantisbt.org>
@@ -30,7 +31,6 @@
  * @author Floriang <antispam@floriang.eu>
  * @author Simon DELAGE <simon.geekitude@gmail.com>
  * @author Eric <ericstevenart@netc.fr>
- * @author Olivier Humbert <trebmuh@tuxfamily.org>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur invalide, vérifiez vos réglages puis réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -67,11 +67,11 @@ $lang['template']              = 'Thème (rendu visuel du wiki)';
 $lang['tagline']               = 'Descriptif du site (si le thème utilise cette fonctionnalité)';
 $lang['sidebar']               = 'Nom du panneau latéral (si le thème utilise cette fonctionnalité). Laisser le champ vide désactive le panneau latéral.';
 $lang['license']               = 'Sous quelle licence doit-être placé le contenu ?';
-$lang['savedir']               = 'Répertoire d\'enregistrement des données';
-$lang['basedir']               = 'Répertoire de base du serveur (par exemple : <code>/dokuwiki/</code>). Laisser vide pour une détection automatique.';
+$lang['savedir']               = 'Dossier d\'enregistrement des données';
+$lang['basedir']               = 'Dossier de base du serveur (par exemple : <code>/dokuwiki/</code>). Laisser vide pour une détection automatique.';
 $lang['baseurl']               = 'URL de base du site (par exemple <code>http://www.example.com</code>). Laisser vide pour une détection automatique.';
 $lang['cookiedir']             = 'Chemin des cookies. Laissez vide pour utiliser l\'URL de base.';
-$lang['dmode']                 = 'Mode de création des répertoires';
+$lang['dmode']                 = 'Mode de création des dossiers';
 $lang['fmode']                 = 'Mode de création des fichiers';
 $lang['allowdebug']            = 'Debug (<strong>Ne l\'activez que si vous en avez besoin !</strong>)';
 $lang['recent']                = 'Nombre de lignes à afficher - par page - pour les derniers changements';
@@ -140,7 +140,8 @@ $lang['registernotify']        = 'Notifier systématiquement les nouveaux utilis
 $lang['mailfrom']              = 'Adresse de courriel de l\'expéditeur des notifications par courriel du wiki';
 $lang['mailreturnpath']        = 'Adresse de courriel du destinataire pour les notifications de non-remise';
 $lang['mailprefix']            = 'Préfixe à utiliser dans les objets des courriels automatiques. Laisser vide pour utiliser le titre du wiki';
-$lang['htmlmail']              = 'Envoyer des courriel HTML multipart (visuellement plus agréable, mais plus lourd). Désactiver pour utiliser uniquement des courriel plain text';
+$lang['htmlmail']              = 'Envoyer des courriels multipart HTML (visuellement plus agréable, mais plus lourd). Désactiver pour utiliser uniquement des courriel en texte seul.';
+$lang['dontlog']               = 'Désactiver l\'enregistrement pour ces types de journaux.';
 $lang['sitemap']               = 'Fréquence de génération du sitemap Google (jours). 0 pour désactiver';
 $lang['rss_type']              = 'Type de flux XML (RSS)';
 $lang['rss_linkto']            = 'Lien du flux XML vers';
@@ -165,7 +166,7 @@ $lang['compress']              = 'Compresser les fichiers CSS et JavaScript';
 $lang['cssdatauri']            = 'Taille maximale en octets pour inclure dans les feuilles de styles CSS les images qui y sont référencées. Cette technique réduit le nombre de requêtes HTTP. Cette fonctionnalité ne fonctionne qu\'à partir de la version 8 d\'Internet Explorer! Nous recommandons une valeur entre <code>400</code> et <code>600</code>. <code>0</code> pour désactiver.';
 $lang['send404']               = 'Renvoyer « HTTP 404/Page Not Found » pour les pages inexistantes';
 $lang['broken_iua']            = 'La fonction ignore_user_abort est-elle opérationnelle sur votre système ? Ceci peut empêcher le fonctionnement de l\'index de recherche. IIS+PHP/
-CGI dysfonctionne. Voir le <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">bug 852</a> pour plus d\'informations.';
+CGI dysfonctionne.';
 $lang['xsendfile']             = 'Utiliser l\'en-tête X-Sendfile pour permettre au serveur web de délivrer les fichiers statiques ? Votre serveur web doit prendre en charge cette technologie.';
 $lang['renderer_xhtml']        = 'Moteur de rendu du format de sortie principal (XHTML)';
 $lang['renderer__core']        = '%s (cœur de DokuWiki)';

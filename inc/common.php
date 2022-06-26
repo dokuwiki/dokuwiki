@@ -9,6 +9,8 @@
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\File\PageFile;
+use dokuwiki\Logger;
 use dokuwiki\Subscriptions\PageSubscriptionSender;
 use dokuwiki\Subscriptions\SubscriberManager;
 use dokuwiki\Extension\AuthPlugin;
@@ -24,7 +26,7 @@ use dokuwiki\Extension\Event;
  * @return string converted string
  */
 function hsc($string) {
-    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, 'UTF-8');
 }
 
 /**
@@ -166,7 +168,7 @@ function basicinfo($id, $htmlClient=true){
         }
 
         // if some outside auth were used only REMOTE_USER is set
-        if(!$info['userinfo']['name']) {
+        if(empty($info['userinfo']['name'])) {
             $info['userinfo']['name'] = $INPUT->server->str('REMOTE_USER');
         }
 
@@ -215,11 +217,12 @@ function pageinfo() {
     $info['filepath']   = wikiFN($ID);
     $info['exists']     = file_exists($info['filepath']);
     $info['currentrev'] = @filemtime($info['filepath']);
-    if($REV) {
+
+    if ($REV) {
         //check if current revision was meant
-        if($info['exists'] && ($info['currentrev'] == $REV)) {
+        if ($info['exists'] && ($info['currentrev'] == $REV)) {
             $REV = '';
-        } elseif($RANGE) {
+        } elseif ($RANGE) {
             //section editing does not work with old revisions!
             $REV   = '';
             $RANGE = '';
@@ -231,9 +234,8 @@ function pageinfo() {
         }
     }
     $info['rev'] = $REV;
-    if($info['exists']) {
-        $info['writable'] = (is_writable($info['filepath']) &&
-            ($info['perm'] >= AUTH_EDIT));
+    if ($info['exists']) {
+        $info['writable'] = (is_writable($info['filepath']) && $info['perm'] >= AUTH_EDIT);
     } else {
         $info['writable'] = ($info['perm'] >= AUTH_CREATE);
     }
@@ -245,41 +247,37 @@ function pageinfo() {
 
     //who's the editor
     $pagelog = new PageChangeLog($ID, 1024);
-    if($REV) {
+    if ($REV) {
         $revinfo = $pagelog->getRevisionInfo($REV);
     } else {
-        if(!empty($info['meta']['last_change']) && is_array($info['meta']['last_change'])) {
+        if (!empty($info['meta']['last_change']) && is_array($info['meta']['last_change'])) {
             $revinfo = $info['meta']['last_change'];
         } else {
             $revinfo = $pagelog->getRevisionInfo($info['lastmod']);
             // cache most recent changelog line in metadata if missing and still valid
-            if($revinfo !== false) {
+            if ($revinfo !== false) {
                 $info['meta']['last_change'] = $revinfo;
                 p_set_metadata($ID, array('last_change' => $revinfo));
             }
         }
     }
     //and check for an external edit
-    if($revinfo !== false && $revinfo['date'] != $info['lastmod']) {
+    if ($revinfo !== false && $revinfo['date'] != $info['lastmod']) {
         // cached changelog line no longer valid
         $revinfo                     = false;
         $info['meta']['last_change'] = $revinfo;
         p_set_metadata($ID, array('last_change' => $revinfo));
     }
 
-    if($revinfo !== false){
+    if ($revinfo !== false) {
         $info['ip']   = $revinfo['ip'];
         $info['user'] = $revinfo['user'];
         $info['sum']  = $revinfo['sum'];
         // See also $INFO['meta']['last_change'] which is the most recent log line for page $ID.
         // Use $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT in place of $info['minor'].
 
-        if($revinfo['user']) {
-            $info['editor'] = $revinfo['user'];
-        } else {
-            $info['editor'] = $revinfo['ip'];
-        }
-    }else{
+        $info['editor'] = $revinfo['user'] ?: $revinfo['ip'];
+    } else {
         $info['ip']     = null;
         $info['user']   = null;
         $info['sum']    = null;
@@ -317,7 +315,7 @@ function jsinfo() {
  *
  * @return array with info about current media item
  */
-function mediainfo(){
+function mediainfo() {
     global $NS;
     global $IMG;
 
@@ -369,7 +367,7 @@ function buildAttributes($params, $skipEmptyStrings = false) {
         if($white) $url .= ' ';
 
         $url .= $key.'="';
-        $url .= htmlspecialchars($val);
+        $url .= hsc($val);
         $url .= '"';
         $white = true;
     }
@@ -451,6 +449,8 @@ function idfilter($id, $ue = true) {
     global $conf;
     /* @var Input $INPUT */
     global $INPUT;
+
+    $id = (string) $id;
 
     if($conf['useslash'] && $conf['userewrite']) {
         $id = strtr($id, ':', '/');
@@ -587,8 +587,10 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
 
     if(is_array($more)) {
         // add token for resized images
-        if(!empty($more['w']) || !empty($more['h']) || $isexternalimage){
-            $more['tok'] = media_get_token($id,$more['w'],$more['h']);
+        $w = isset($more['w']) ? $more['w'] : null;
+        $h = isset($more['h']) ? $more['h'] : null;
+        if($w || $h || $isexternalimage){
+            $more['tok'] = media_get_token($id, $w, $h);
         }
         // strip defaults for shorter URLs
         if(isset($more['cache']) && $more['cache'] == 'cache') unset($more['cache']);
@@ -788,39 +790,15 @@ function clientIP($single = false) {
         $ip = array_merge($ip, explode(',', str_replace(' ', '', $INPUT->server->str('HTTP_X_REAL_IP'))));
     }
 
-    // some IPv4/v6 regexps borrowed from Feyd
-    // see: http://forums.devnetwork.net/viewtopic.php?f=38&t=53479
-    $dec_octet   = '(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|[0-9])';
-    $hex_digit   = '[A-Fa-f0-9]';
-    $h16         = "{$hex_digit}{1,4}";
-    $IPv4Address = "$dec_octet\\.$dec_octet\\.$dec_octet\\.$dec_octet";
-    $ls32        = "(?:$h16:$h16|$IPv4Address)";
-    $IPv6Address =
-        "(?:(?:{$IPv4Address})|(?:".
-            "(?:$h16:){6}$ls32".
-            "|::(?:$h16:){5}$ls32".
-            "|(?:$h16)?::(?:$h16:){4}$ls32".
-            "|(?:(?:$h16:){0,1}$h16)?::(?:$h16:){3}$ls32".
-            "|(?:(?:$h16:){0,2}$h16)?::(?:$h16:){2}$ls32".
-            "|(?:(?:$h16:){0,3}$h16)?::(?:$h16:){1}$ls32".
-            "|(?:(?:$h16:){0,4}$h16)?::$ls32".
-            "|(?:(?:$h16:){0,5}$h16)?::$h16".
-            "|(?:(?:$h16:){0,6}$h16)?::".
-            ")(?:\\/(?:12[0-8]|1[0-1][0-9]|[1-9][0-9]|[0-9]))?)";
-
     // remove any non-IP stuff
     $cnt   = count($ip);
-    $match = array();
     for($i = 0; $i < $cnt; $i++) {
-        if(preg_match("/^$IPv4Address$/", $ip[$i], $match) || preg_match("/^$IPv6Address$/", $ip[$i], $match)) {
-            $ip[$i] = $match[0];
-        } else {
-            $ip[$i] = '';
+        if(filter_var($ip[$i], FILTER_VALIDATE_IP) === false) {
+            unset($ip[$i]);
         }
-        if(empty($ip[$i])) unset($ip[$i]);
     }
     $ip = array_values(array_unique($ip));
-    if(!$ip[0]) $ip[0] = '0.0.0.0'; // for some strange reason we don't have a IP
+    if(empty($ip) || !$ip[0]) $ip[0] = '0.0.0.0'; // for some strange reason we don't have a IP
 
     if(!$single) return join(',', $ip);
 
@@ -942,7 +920,7 @@ function checklock($id) {
 
     //my own lock
     @list($ip, $session) = explode("\n", io_readFile($lock));
-    if($ip == $INPUT->server->str('REMOTE_USER') || $ip == clientIP() || (session_id() && $session == session_id())) {
+    if($ip == $INPUT->server->str('REMOTE_USER') || (session_id() && $session == session_id())) {
         return false;
     }
 
@@ -988,7 +966,7 @@ function unlock($id) {
     $lock = wikiLockFN($id);
     if(file_exists($lock)) {
         @list($ip, $session) = explode("\n", io_readFile($lock));
-        if($ip == $INPUT->server->str('REMOTE_USER') || $ip == clientIP() || $session == session_id()) {
+        if($ip == $INPUT->server->str('REMOTE_USER') || $session == session_id()) {
             @unlink($lock);
             return true;
         }
@@ -1186,7 +1164,7 @@ function parsePageTemplate(&$data) {
     $tpl = preg_replace_callback(
         '/%./',
         function ($m) {
-            return strftime($m[0]);
+            return dformat(null, $m[0]);
         },
         $tpl
     );
@@ -1266,45 +1244,11 @@ function con($pre, $text, $suf, $pretty = false) {
  * wiki, triggered in @see saveWikiText()
  *
  * @param string $id the page ID
+ * @deprecated 2021-11-28
  */
 function detectExternalEdit($id) {
-    global $lang;
-
-    $fileLastMod = wikiFN($id);
-    $lastMod     = @filemtime($fileLastMod); // from page
-    $pagelog     = new PageChangeLog($id, 1024);
-    $lastRev     = $pagelog->getRevisions(-1, 1); // from changelog
-    $lastRev     = (int) (empty($lastRev) ? 0 : $lastRev[0]);
-
-    if(!file_exists(wikiFN($id, $lastMod)) && file_exists($fileLastMod) && $lastMod >= $lastRev) {
-        // add old revision to the attic if missing
-        saveOldRevision($id);
-        // add a changelog entry if this edit came from outside dokuwiki
-        if($lastMod > $lastRev) {
-            $fileLastRev = wikiFN($id, $lastRev);
-            $revinfo = $pagelog->getRevisionInfo($lastRev);
-            if(empty($lastRev) || !file_exists($fileLastRev) || $revinfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
-                $filesize_old = 0;
-            } else {
-                $filesize_old = io_getSizeFile($fileLastRev);
-            }
-            $filesize_new = filesize($fileLastMod);
-            $sizechange = $filesize_new - $filesize_old;
-
-            addLogEntry(
-                $lastMod,
-                $id,
-                DOKU_CHANGE_TYPE_EDIT,
-                $lang['external_edit'],
-                '',
-                array('ExternalEdit' => true),
-                $sizechange
-            );
-            // remove soon to be stale instructions
-            $cache = new CacheInstructions($id, $fileLastMod);
-            $cache->removeCache();
-        }
-    }
+    dbg_deprecated(PageFile::class .'::detectExternalEdit()');
+    (new PageFile($id))->detectExternalEdit();
 }
 
 /**
@@ -1320,117 +1264,19 @@ function detectExternalEdit($id) {
  * @param bool   $minor    mark this saved version as minor update
  */
 function saveWikiText($id, $text, $summary, $minor = false) {
-    /* Note to developers:
-       This code is subtle and delicate. Test the behavior of
-       the attic and changelog with dokuwiki and external edits
-       after any changes. External edits change the wiki page
-       directly without using php or dokuwiki.
-     */
-    global $conf;
-    global $lang;
-    global $REV;
-    /* @var Input $INPUT */
-    global $INPUT;
 
-    // prepare data for event
-    $svdta = array();
-    $svdta['id']             = $id;
-    $svdta['file']           = wikiFN($id);
-    $svdta['revertFrom']     = $REV;
-    $svdta['oldRevision']    = @filemtime($svdta['file']);
-    $svdta['newRevision']    = 0;
-    $svdta['newContent']     = $text;
-    $svdta['oldContent']     = rawWiki($id);
-    $svdta['summary']        = $summary;
-    $svdta['contentChanged'] = ($svdta['newContent'] != $svdta['oldContent']);
-    $svdta['changeInfo']     = '';
-    $svdta['changeType']     = DOKU_CHANGE_TYPE_EDIT;
-    $svdta['sizechange']     = null;
-
-    // select changelog line type
-    if($REV) {
-        $svdta['changeType']  = DOKU_CHANGE_TYPE_REVERT;
-        $svdta['changeInfo'] = $REV;
-    } else if(!file_exists($svdta['file'])) {
-        $svdta['changeType'] = DOKU_CHANGE_TYPE_CREATE;
-    } else if(trim($text) == '') {
-        // empty or whitespace only content deletes
-        $svdta['changeType'] = DOKU_CHANGE_TYPE_DELETE;
-        // autoset summary on deletion
-        if(blank($svdta['summary'])) {
-            $svdta['summary'] = $lang['deleted'];
-        }
-    } else if($minor && $conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
-        //minor edits only for logged in users
-        $svdta['changeType'] = DOKU_CHANGE_TYPE_MINOR_EDIT;
-    }
-
-    $event = new Event('COMMON_WIKIPAGE_SAVE', $svdta);
-    if(!$event->advise_before()) return;
-
-    // if the content has not been changed, no save happens (plugins may override this)
-    if(!$svdta['contentChanged']) return;
-
-    detectExternalEdit($id);
-
-    if(
-        $svdta['changeType'] == DOKU_CHANGE_TYPE_CREATE ||
-        ($svdta['changeType'] == DOKU_CHANGE_TYPE_REVERT && !file_exists($svdta['file']))
-    ) {
-        $filesize_old = 0;
-    } else {
-        $filesize_old = filesize($svdta['file']);
-    }
-    if($svdta['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
-        // Send "update" event with empty data, so plugins can react to page deletion
-        $data = array(array($svdta['file'], '', false), getNS($id), noNS($id), false);
-        Event::createAndTrigger('IO_WIKIPAGE_WRITE', $data);
-        // pre-save deleted revision
-        @touch($svdta['file']);
-        clearstatcache();
-        $svdta['newRevision'] = saveOldRevision($id);
-        // remove empty file
-        @unlink($svdta['file']);
-        $filesize_new = 0;
-        // don't remove old meta info as it should be saved, plugins can use
-        // IO_WIKIPAGE_WRITE for removing their metadata...
-        // purge non-persistant meta data
-        p_purge_metadata($id);
-        // remove empty namespaces
-        io_sweepNS($id, 'datadir');
-        io_sweepNS($id, 'mediadir');
-    } else {
-        // save file (namespace dir is created in io_writeWikiPage)
-        io_writeWikiPage($svdta['file'], $svdta['newContent'], $id);
-        // pre-save the revision, to keep the attic in sync
-        $svdta['newRevision'] = saveOldRevision($id);
-        $filesize_new = filesize($svdta['file']);
-    }
-    $svdta['sizechange'] = $filesize_new - $filesize_old;
-
-    $event->advise_after();
-
-    addLogEntry(
-        $svdta['newRevision'],
-        $svdta['id'],
-        $svdta['changeType'],
-        $svdta['summary'],
-        $svdta['changeInfo'],
-        null,
-        $svdta['sizechange']
-    );
+    // get COMMON_WIKIPAGE_SAVE event data
+    $data = (new PageFile($id))->saveWikiText($text, $summary, $minor);
 
     // send notify mails
-    notify($svdta['id'], 'admin', $svdta['oldRevision'], $svdta['summary'], $minor, $svdta['newRevision']);
-    notify($svdta['id'], 'subscribers', $svdta['oldRevision'], $svdta['summary'], $minor, $svdta['newRevision']);
-
-    // update the purgefile (timestamp of the last time anything within the wiki was changed)
-    io_saveFile($conf['cachedir'].'/purgefile', time());
+    list('oldRevision' => $rev, 'newRevision' => $new_rev, 'summary' => $summary) = $data;
+    notify($id, 'admin', $rev, $summary, $minor, $new_rev);
+    notify($id, 'subscribers', $rev, $summary, $minor, $new_rev);
 
     // if useheading is enabled, purge the cache of all linking pages
-    if(useHeading('content')) {
+    if (useHeading('content')) {
         $pages = ft_backlinks($id, true);
-        foreach($pages as $page) {
+        foreach ($pages as $page) {
             $cache = new CacheRenderer($page, wikiFN($page), 'xhtml');
             $cache->removeCache();
         }
@@ -1438,21 +1284,17 @@ function saveWikiText($id, $text, $summary, $minor = false) {
 }
 
 /**
- * moves the current version to the attic and returns its
- * revision date
+ * moves the current version to the attic and returns its revision date
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $id page id
  * @return int|string revision timestamp
+ * @deprecated 2021-11-28
  */
 function saveOldRevision($id) {
-    $oldf = wikiFN($id);
-    if(!file_exists($oldf)) return '';
-    $date = filemtime($oldf);
-    $newf = wikiFN($id, $date);
-    io_writeWikiPage($newf, rawWiki($id), $id, $date);
-    return $date;
+    dbg_deprecated(PageFile::class .'::saveOldRevision()');
+    return (new PageFile($id))->saveOldRevision();
 }
 
 /**
@@ -1460,7 +1302,7 @@ function saveOldRevision($id) {
  *
  * @param string     $id       The changed page
  * @param string     $who      Who to notify (admin|subscribers|register)
- * @param int|string $rev Old page revision
+ * @param int|string $rev      Old page revision
  * @param string     $summary  What changed
  * @param boolean    $minor    Is this a minor edit?
  * @param string[]   $replace  Additional string substitutions, @KEY@ to be replaced by value
@@ -1475,20 +1317,20 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
     global $INPUT;
 
     // decide if there is something to do, eg. whom to mail
-    if($who == 'admin') {
-        if(empty($conf['notify'])) return false; //notify enabled?
+    if ($who == 'admin') {
+        if (empty($conf['notify'])) return false; //notify enabled?
         $tpl = 'mailtext';
         $to  = $conf['notify'];
-    } elseif($who == 'subscribers') {
-        if(!actionOK('subscribe')) return false; //subscribers enabled?
-        if($conf['useacl'] && $INPUT->server->str('REMOTE_USER') && $minor) return false; //skip minors
+    } elseif ($who == 'subscribers') {
+        if (!actionOK('subscribe')) return false; //subscribers enabled?
+        if ($conf['useacl'] && $INPUT->server->str('REMOTE_USER') && $minor) return false; //skip minors
         $data = array('id' => $id, 'addresslist' => '', 'self' => false, 'replacements' => $replace);
         Event::createAndTrigger(
             'COMMON_NOTIFY_ADDRESSLIST', $data,
             array(new SubscriberManager(), 'notifyAddresses')
         );
         $to = $data['addresslist'];
-        if(empty($to)) return false;
+        if (empty($to)) return false;
         $tpl = 'subscr_single';
     } else {
         return false; //just to be safe
@@ -2064,7 +1906,7 @@ function set_doku_pref($pref, $val) {
             if ($parts[$i] == $enc_pref) {
                 if (!$seen){
                     if ($val !== false) {
-                        $parts[$i + 1] = rawurlencode($val);
+                        $parts[$i + 1] = rawurlencode($val ?? '');
                     } else {
                         unset($parts[$i]);
                         unset($parts[$i + 1]);
@@ -2079,7 +1921,7 @@ function set_doku_pref($pref, $val) {
         }
         $cookieVal = implode('#', $parts);
     } else if ($orig === false && $val !== false) {
-        $cookieVal = ($_COOKIE['DOKU_PREFS'] ? $_COOKIE['DOKU_PREFS'] . '#' : '') .
+        $cookieVal = (isset($_COOKIE['DOKU_PREFS']) ? $_COOKIE['DOKU_PREFS'] . '#' : '') .
             rawurlencode($pref) . '#' . rawurlencode($val);
     }
 

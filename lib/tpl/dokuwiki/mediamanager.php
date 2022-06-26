@@ -7,7 +7,6 @@
  */
 // must be run from within DokuWiki
 if (!defined('DOKU_INC')) die();
-header('X-UA-Compatible: IE=edge,chrome=1');
 
 ?><!DOCTYPE html>
 <html lang="<?php echo $conf['lang']?>" dir="<?php echo $lang['direction'] ?>" class="popup no-js">
@@ -27,18 +26,18 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 <body>
     <div id="media__manager" class="dokuwiki">
         <?php html_msgarea() ?>
-        <div id="mediamgr__aside"><div class="pad">
+        <nav id="mediamgr__aside"><div class="pad">
             <h1><?php echo hsc($lang['mediaselect'])?></h1>
 
             <?php /* keep the id! additional elements are inserted via JS here */?>
             <div id="media__opts"></div>
 
             <?php tpl_mediaTree() ?>
-        </div></div>
+        </div></nav>
 
-        <div id="mediamgr__content"><div class="pad">
+        <main id="mediamgr__content"><div class="pad">
             <?php tpl_mediaContent() ?>
-        </div></div>
+        </div></main>
     </div>
 </body>
 </html>
