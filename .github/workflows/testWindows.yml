@@ -1,6 +1,12 @@
 name: Windows Unit Tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - stable
+      - old-stable
+      - deployment
+  pull_request:
 
 jobs:
     run:
