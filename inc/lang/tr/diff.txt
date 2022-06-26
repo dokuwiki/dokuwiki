@@ -1,4 +1,3 @@
 ====== Farklar ======
 
 Bu sayfanın seçili sürümü ile mevcut sürümü arasındaki farkları gösterir.
-

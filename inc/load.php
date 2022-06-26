@@ -5,17 +5,19 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Extension\PluginController;
+
 // setup class autoloader
 spl_autoload_register('load_autoload');
 
 // require all the common libraries
 // for a few of these order does matter
+require_once(DOKU_INC.'inc/defines.php');
 require_once(DOKU_INC.'inc/actions.php');
 require_once(DOKU_INC.'inc/changelog.php');
 require_once(DOKU_INC.'inc/common.php');
 require_once(DOKU_INC.'inc/confutils.php');
 require_once(DOKU_INC.'inc/pluginutils.php');
-require_once(DOKU_INC.'inc/events.php');
 require_once(DOKU_INC.'inc/form.php');
 require_once(DOKU_INC.'inc/fulltext.php');
 require_once(DOKU_INC.'inc/html.php');
@@ -28,12 +30,13 @@ require_once(DOKU_INC.'inc/media.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 require_once(DOKU_INC.'inc/parserutils.php');
 require_once(DOKU_INC.'inc/search.php');
-require_once(DOKU_INC.'inc/subscription.php');
 require_once(DOKU_INC.'inc/template.php');
 require_once(DOKU_INC.'inc/toolbar.php');
 require_once(DOKU_INC.'inc/utf8.php');
 require_once(DOKU_INC.'inc/auth.php');
 require_once(DOKU_INC.'inc/compatibility.php');
+require_once(DOKU_INC.'inc/deprecated.php');
+require_once(DOKU_INC.'inc/legacy.php');
 
 /**
  * spl_autoload_register callback
@@ -50,10 +53,7 @@ require_once(DOKU_INC.'inc/compatibility.php');
  */
 function load_autoload($name){
     static $classes = null;
-    if(is_null($classes)) $classes = array(
-        'DokuHTTPClient'        => DOKU_INC.'inc/HTTPClient.php',
-        'HTTPClient'            => DOKU_INC.'inc/HTTPClient.php',
-        'JSON'                  => DOKU_INC.'inc/JSON.php',
+    if($classes === null) $classes = array(
         'Diff'                  => DOKU_INC.'inc/DifferenceEngine.php',
         'UnifiedDiffFormatter'  => DOKU_INC.'inc/DifferenceEngine.php',
         'TableDiffFormatter'    => DOKU_INC.'inc/DifferenceEngine.php',
@@ -61,8 +61,6 @@ function load_autoload($name){
         'cache_parser'          => DOKU_INC.'inc/cache.php',
         'cache_instructions'    => DOKU_INC.'inc/cache.php',
         'cache_renderer'        => DOKU_INC.'inc/cache.php',
-        'Doku_Event'            => DOKU_INC.'inc/events.php',
-        'Doku_Event_Handler'    => DOKU_INC.'inc/events.php',
         'Input'                 => DOKU_INC.'inc/Input.class.php',
         'JpegMeta'              => DOKU_INC.'inc/JpegMeta.php',
         'SimplePie'             => DOKU_INC.'inc/SimplePie.php',
@@ -71,29 +69,11 @@ function load_autoload($name){
         'IXR_Client'            => DOKU_INC.'inc/IXR_Library.php',
         'IXR_Error'             => DOKU_INC.'inc/IXR_Library.php',
         'IXR_IntrospectionServer' => DOKU_INC.'inc/IXR_Library.php',
-        'Doku_Plugin_Controller'=> DOKU_INC.'inc/plugincontroller.class.php',
-        'Doku_Parser_Mode'      => DOKU_INC.'inc/parser/parser.php',
-        'Doku_Parser_Mode_Plugin' => DOKU_INC.'inc/parser/parser.php',
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
         'Sitemapper'            => DOKU_INC.'inc/Sitemapper.php',
-        'PassHash'              => DOKU_INC.'inc/PassHash.class.php',
         'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
-        'RemoteAPI'             => DOKU_INC.'inc/remote.php',
-        'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
-        'Subscription'          => DOKU_INC.'inc/subscription.php',
 
-        'DokuWiki_PluginInterface' => DOKU_INC.'inc/PluginInterface.php',
-        'DokuWiki_PluginTrait'     => DOKU_INC.'inc/PluginTrait.php',
-        'DokuWiki_Plugin'          => DOKU_INC.'inc/Plugin.php',
-
-
-        'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
-        'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
-        'DokuWiki_Syntax_Plugin' => DOKU_PLUGIN.'syntax.php',
-        'DokuWiki_Remote_Plugin' => DOKU_PLUGIN.'remote.php',
-        'DokuWiki_Auth_Plugin'   => DOKU_PLUGIN.'auth.php',
-        'DokuWiki_CLI_Plugin'    => DOKU_PLUGIN.'cli.php',
-
+        'Doku_Handler'          => DOKU_INC.'inc/parser/handler.php',
         'Doku_Renderer'          => DOKU_INC.'inc/parser/renderer.php',
         'Doku_Renderer_xhtml'    => DOKU_INC.'inc/parser/xhtml.php',
         'Doku_Renderer_code'     => DOKU_INC.'inc/parser/code.php',
@@ -114,8 +94,17 @@ function load_autoload($name){
     // namespace to directory conversion
     $name = str_replace('\\', '/', $name);
 
+    // test namespace
+    if(substr($name, 0, 14) === 'dokuwiki/test/') {
+        $file = DOKU_INC . '_test/' . substr($name, 14) . '.php';
+        if(file_exists($file)) {
+            require $file;
+            return true;
+        }
+    }
+
     // plugin namespace
-    if(substr($name, 0, 16) == 'dokuwiki/plugin/') {
+    if(substr($name, 0, 16) === 'dokuwiki/plugin/') {
         $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
         $file = DOKU_PLUGIN . substr($name, 16) . '.php';
         if(file_exists($file)) {
@@ -125,7 +114,7 @@ function load_autoload($name){
     }
 
     // template namespace
-    if(substr($name, 0, 18) == 'dokuwiki/template/') {
+    if(substr($name, 0, 18) === 'dokuwiki/template/') {
         $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
         $file = DOKU_INC.'lib/tpl/' . substr($name, 18) . '.php';
         if(file_exists($file)) {
@@ -135,7 +124,7 @@ function load_autoload($name){
     }
 
     // our own namespace
-    if(substr($name, 0, 9) == 'dokuwiki/') {
+    if(substr($name, 0, 9) === 'dokuwiki/') {
         $file = DOKU_INC . 'inc/' . substr($name, 9) . '.php';
         if(file_exists($file)) {
             require $file;
@@ -144,8 +133,13 @@ function load_autoload($name){
     }
 
     // Plugin loading
-    if(preg_match('/^(auth|helper|syntax|action|admin|renderer|remote|cli)_plugin_('.DOKU_PLUGIN_NAME_REGEX.')(?:_([^_]+))?$/',
-                  $name, $m)) {
+    if(preg_match(
+        '/^(' . implode('|', PluginController::PLUGIN_TYPES) . ')_plugin_(' .
+        DOKU_PLUGIN_NAME_REGEX .
+        ')(?:_([^_]+))?$/',
+        $name,
+        $m
+    )) {
         // try to load the wanted plugin file
         $c = ((count($m) === 4) ? "/{$m[3]}" : '');
         $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";

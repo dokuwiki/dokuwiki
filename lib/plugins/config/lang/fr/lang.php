@@ -3,8 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Damien Regad <dregad@mantisbt.org>
+ * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
+ * @author Nicolas Friedli <nicolas@theologique.ch>
+ * @author PaliPalo <palipalo@hotmail.fr>
+ * @author Laurent Ponthieu <contact@coopindus.fr>
+ * @author Damien Regad <dregad@mantisbt.org>
  * @author Michael Bohn <mjbohn@gmail.com>
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
@@ -23,7 +27,6 @@
  * @author Anael Mobilia <contrib@anael.eu>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
- * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Floriang <antispam@floriang.eu>
  * @author Simon DELAGE <simon.geekitude@gmail.com>
  * @author Eric <ericstevenart@netc.fr>
@@ -55,6 +58,7 @@ $lang['_advanced']             = 'Paramètres avancés';
 $lang['_network']              = 'Paramètres réseaux';
 $lang['_msg_setting_undefined'] = 'Pas de définition de métadonnées';
 $lang['_msg_setting_no_class'] = 'Pas de définition de paramètres.';
+$lang['_msg_setting_no_known_class'] = 'Classe de réglage non disponible.';
 $lang['_msg_setting_no_default'] = 'Pas de valeur par défaut.';
 $lang['title']                 = 'Titre du wiki (nom du wiki)';
 $lang['start']                 = 'Nom de la page d\'accueil à utiliser pour toutes les catégories';
@@ -73,7 +77,7 @@ $lang['allowdebug']            = 'Debug (<strong>Ne l\'activez que si vous en av
 $lang['recent']                = 'Nombre de lignes à afficher - par page - pour les derniers changements';
 $lang['recent_days']           = 'Signaler les pages modifiées depuis (en jours)';
 $lang['breadcrumbs']           = 'Nombre de traces à afficher. 0 désactive cette fonctionnalité.';
-$lang['youarehere']            = 'Utiliser des traces hiérarchiques (vous voulez probablement désactiver l\'option ci-dessus)';
+$lang['youarehere']            = 'Utiliser des traces hiérarchiques (vous voudrez probablement désactiver l\'option ci-dessus)';
 $lang['fullpath']              = 'Afficher le chemin complet des pages dans le pied de page';
 $lang['typography']            = 'Effectuer des améliorations typographiques';
 $lang['dformat']               = 'Format de date (cf. fonction <a href="http://php.net/strftime">strftime</a> de PHP)';
@@ -83,7 +87,7 @@ $lang['toptoclevel']           = 'Niveau le plus haut à afficher dans la table 
 $lang['tocminheads']           = 'Nombre minimum de titres pour qu\'une table des matières soit affichée';
 $lang['maxtoclevel']           = 'Niveau maximum pour figurer dans la table des matières';
 $lang['maxseclevel']           = 'Niveau maximum pour modifier des sections';
-$lang['camelcase']             = 'Utiliser l\'affichage «CamelCase » pour les liens';
+$lang['camelcase']             = 'Les mots en CamelCase créent des liens';
 $lang['deaccent']              = 'Retirer les accents dans les noms de pages';
 $lang['useheading']            = 'Utiliser le titre de premier niveau pour le nom de la page';
 $lang['sneaky_index']          = 'Par défaut, DokuWiki affichera toutes les catégories dans la vue par index. Activer cette option permet de cacher les catégories pour lesquelles l\'utilisateur n\'a pas l\'autorisation de lecture. Il peut en résulter le masquage de sous-catégories accessibles. Ceci peut rendre l\'index inutilisable avec certains contrôles d\'accès.';
@@ -143,6 +147,7 @@ $lang['rss_linkto']            = 'Lien du flux XML vers';
 $lang['rss_content']           = 'Quel contenu afficher dans le flux XML?';
 $lang['rss_update']            = 'Fréquence de mise à jour du flux XML (secondes)';
 $lang['rss_show_summary']      = 'Le flux XML affiche le résumé dans le titre';
+$lang['rss_show_deleted']      = 'Le flux XML montre les flux détruits';
 $lang['rss_media']             = 'Quels types de changements doivent être listés dans le flux XML?';
 $lang['rss_media_o_both']      = 'les deux';
 $lang['rss_media_o_pages']     = 'pages';
@@ -171,6 +176,9 @@ $lang['search_fragment_o_exact'] = 'exact';
 $lang['search_fragment_o_starts_with'] = 'commence par';
 $lang['search_fragment_o_ends_with'] = 'se termine par';
 $lang['search_fragment_o_contains'] = 'contient';
+$lang['trustedproxy']          = 'Faire confiance aux mandataires qui correspondent à cette expression régulière pour l\'adresse IP réelle des clients qu\'ils rapportent. La valeur par défaut correspond aux réseaux locaux. Laisser vide pour ne faire confiance à aucun mandataire.';
+$lang['_feature_flags']        = 'Fonctionnalités expérimentales';
+$lang['defer_js']              = 'Attendre que le code HTML des pages soit analysé avant d\'exécuter le javascript. Améliore la vitesse de chargement perçue, mais pourrait casser un petit nombre de greffons.';
 $lang['dnslookups']            = 'DokuWiki effectuera une résolution du nom d\'hôte sur les adresses IP des utilisateurs modifiant des pages. Si vous ne possédez pas de serveur DNS, que ce dernier est lent ou que vous ne souhaitez pas utiliser cette fonctionnalité : désactivez-la.';
 $lang['jquerycdn']             = 'Faut-il distribuer les scripts JQuery et JQuery UI depuis un CDN ? Cela ajoute une requête HTTP, mais les fichiers peuvent se charger plus vite et les internautes les ont peut-être déjà en cache.';
 $lang['jquerycdn_o_0']         = 'Non : utilisation de votre serveur.';
@@ -182,12 +190,6 @@ $lang['proxy____user']         = 'Mandataire - Identifiant';
 $lang['proxy____pass']         = 'Mandataire - Mot de passe';
 $lang['proxy____ssl']          = 'Mandataire - Utilisation de SSL';
 $lang['proxy____except']       = 'Mandataire - Expression régulière de test des URLs pour lesquelles le mandataire (proxy) ne doit pas être utilisé.';
-$lang['safemodehack']          = 'Activer l\'option Mode sans échec';
-$lang['ftp____host']           = 'FTP / Mode sans échec - Serveur hôte';
-$lang['ftp____port']           = 'FTP / Mode sans échec - Port';
-$lang['ftp____user']           = 'FTP / Mode sans échec - Identifiant';
-$lang['ftp____pass']           = 'FTP / Mode sans échec - Mot de passe';
-$lang['ftp____root']           = 'FTP / Mode sans échec - Répertoire racine';
 $lang['license_o_']            = 'Aucune choisie';
 $lang['typography_o_0']        = 'aucun';
 $lang['typography_o_1']        = 'guillemets uniquement';

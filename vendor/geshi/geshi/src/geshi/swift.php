@@ -4,7 +4,7 @@
  * ----------
  * Author: Ken Woo (ikenwoo@gmail.com)
  * Copyright: (c) 2015 Ken Woo
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2015/05/20
  *
  * Swift language file for GeSHi.

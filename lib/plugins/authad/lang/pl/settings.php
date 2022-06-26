@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Bartek S <sadupl@gmail.com>
+ * @author Przemek <p_kudriawcew@o2.pl>
  * @author Wojciech Lichota <wojciech@lichota.pl>
  * @author Max <maxrb146@gmail.com>
  * @author Tomasz Bosak <bosak.tomasz@gmail.com>
@@ -27,3 +29,4 @@ $lang['expirywarn']            = 'Dni poprzedzających powiadomienie użytkownik
 $lang['additional']            = 'Oddzielona przecinkami lista dodatkowych atrybutów AD do pobrania z danych użytkownika. Używane przez niektóre wtyczki.';
 $lang['update_name']           = 'Zezwól użytkownikom na uaktualnianie nazwy wyświetlanej w AD?';
 $lang['update_mail']           = 'Zezwól użytkownikom na uaktualnianie ich adresu email?';
+$lang['recursive_groups']      = 'Rozpatrz grupy zagnieżdżone dla odpowiednich członków (wolniej).';

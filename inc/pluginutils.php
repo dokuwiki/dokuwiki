@@ -7,8 +7,13 @@
  */
 
 // plugin related constants
+use dokuwiki\Extension\AdminPlugin;
+use dokuwiki\Extension\PluginController;
+use dokuwiki\Extension\PluginInterface;
+
 if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
-// note that only [a-z0-9]+ is officially supported, this is only to support plugins that don't follow these conventions, too
+// note that only [a-z0-9]+ is officially supported,
+// this is only to support plugins that don't follow these conventions, too
 if(!defined('DOKU_PLUGIN_NAME_REGEX')) define('DOKU_PLUGIN_NAME_REGEX', '[a-zA-Z0-9\x7f-\xff]+');
 
 /**
@@ -22,10 +27,13 @@ if(!defined('DOKU_PLUGIN_NAME_REGEX')) define('DOKU_PLUGIN_NAME_REGEX', '[a-zA-Z
  * @param bool $all; true to retrieve all, false to retrieve only enabled plugins
  * @return array with plugin names or plugin component names
  */
-function plugin_list($type='',$all=false) {
-    /** @var $plugin_controller Doku_Plugin_Controller */
+function plugin_list($type='',$all=false)
+{
+    /** @var $plugin_controller PluginController */
     global $plugin_controller;
-    return $plugin_controller->getList($type,$all);
+    $plugins = $plugin_controller->getList($type,$all);
+    sort($plugins, SORT_NATURAL|SORT_FLAG_CASE);
+    return $plugins;
 }
 
 /**
@@ -37,10 +45,11 @@ function plugin_list($type='',$all=false) {
  * @param  $name     string name of the plugin to load
  * @param  $new      bool   true to return a new instance of the plugin, false to use an already loaded instance
  * @param  $disabled bool   true to load even disabled plugins
- * @return DokuWiki_PluginInterface|null  the plugin object or null on failure
+ * @return PluginInterface|null  the plugin object or null on failure
  */
-function plugin_load($type,$name,$new=false,$disabled=false) {
-    /** @var $plugin_controller Doku_Plugin_Controller */
+function plugin_load($type,$name,$new=false,$disabled=false)
+{
+    /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->load($type,$name,$new,$disabled);
 }
@@ -51,10 +60,11 @@ function plugin_load($type,$name,$new=false,$disabled=false) {
  * @param string $plugin name of plugin
  * @return bool true disabled, false enabled
  */
-function plugin_isdisabled($plugin) {
-    /** @var $plugin_controller Doku_Plugin_Controller */
+function plugin_isdisabled($plugin)
+{
+    /** @var $plugin_controller PluginController */
     global $plugin_controller;
-    return $plugin_controller->isdisabled($plugin);
+    return !$plugin_controller->isEnabled($plugin);
 }
 
 /**
@@ -63,8 +73,9 @@ function plugin_isdisabled($plugin) {
  * @param string $plugin name of plugin
  * @return bool true saving succeed, false saving failed
  */
-function plugin_enable($plugin) {
-    /** @var $plugin_controller Doku_Plugin_Controller */
+function plugin_enable($plugin)
+{
+    /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->enable($plugin);
 }
@@ -75,8 +86,9 @@ function plugin_enable($plugin) {
  * @param string $plugin name of plugin
  * @return bool  true saving succeed, false saving failed
  */
-function plugin_disable($plugin) {
-    /** @var $plugin_controller Doku_Plugin_Controller */
+function plugin_disable($plugin)
+{
+    /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->disable($plugin);
 }
@@ -86,11 +98,12 @@ function plugin_disable($plugin) {
  *
  * @param string $plugin name of plugin
  * @return string name of directory
+ * @deprecated 2018-07-20
  */
-function plugin_directory($plugin) {
-    /** @var $plugin_controller Doku_Plugin_Controller */
-    global $plugin_controller;
-    return $plugin_controller->get_directory($plugin);
+function plugin_directory($plugin)
+{
+    dbg_deprecated('$plugin directly');
+    return $plugin;
 }
 
 /**
@@ -98,8 +111,9 @@ function plugin_directory($plugin) {
  *
  * @return array with arrays of plugin configs
  */
-function plugin_getcascade() {
-    /** @var $plugin_controller Doku_Plugin_Controller */
+function plugin_getcascade()
+{
+    /** @var $plugin_controller PluginController */
     global $plugin_controller;
     return $plugin_controller->getCascade();
 }
@@ -111,7 +125,8 @@ function plugin_getcascade() {
  *
  * @return Doku_Plugin_Admin
  */
-function plugin_getRequestAdminPlugin(){
+function plugin_getRequestAdminPlugin()
+{
     static $admin_plugin = false;
     global $ACT,$INPUT,$INFO;
 
@@ -120,10 +135,10 @@ function plugin_getRequestAdminPlugin(){
             $pluginlist = plugin_list('admin');
             if (in_array($page, $pluginlist)) {
                 // attempt to load the plugin
-                /** @var $admin_plugin DokuWiki_Admin_Plugin */
+                /** @var $admin_plugin AdminPlugin */
                 $admin_plugin = plugin_load('admin', $page);
                 // verify
-                if ($admin_plugin && $admin_plugin->forAdminOnly() && !$INFO['isadmin']) {
+                if ($admin_plugin && !$admin_plugin->isAccessibleByCurrentUser()) {
                     $admin_plugin = null;
                     $INPUT->remove('page');
                     msg('For admins only',-1);

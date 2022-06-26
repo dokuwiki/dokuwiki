@@ -3,7 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
+ * @author Tibor Repček <tiborepcek@gmail.com>
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik <exusik@gmail.com>
  */
@@ -80,7 +82,9 @@ $lang['disableactions']        = 'Zakázať DokuWiki akcie';
 $lang['disableactions_check']  = 'Skontrolovať';
 $lang['disableactions_subscription'] = 'Povoliť/Zrušiť informovanie o zmenách stránky';
 $lang['disableactions_wikicode'] = 'Pozrieť zdroj/Exportovať zdroj';
+$lang['disableactions_profile_delete'] = 'Zrušenie vlastného účtu';
 $lang['disableactions_other']  = 'Iné akcie (oddelené čiarkou)';
+$lang['disableactions_rss']    = 'RSS';
 $lang['auth_security_timeout'] = 'Časový limit pri prihlasovaní (v sekundách)';
 $lang['securecookie']          = 'Mal by prehliadač posielať cookies nastavené cez HTTPS posielať iba cez HTTPS (bezpečné) pripojenie? Vypnite túto voľbu iba v prípade, ak je prihlasovanie do Vašej wiki zabezpečené SSL, ale prezeranie wiki je nezabezpečené.';
 $lang['remote']                = 'Povolenie vzdialeného API. Umožnuje iným aplikáciám pristupovať k wiki cez XML-RPC alebo iným spôsobom.';
@@ -120,6 +124,9 @@ $lang['rss_content']           = 'Čo zobrazovať v XML feede?';
 $lang['rss_update']            = 'Časový interval obnovy XML feedu (sek.)';
 $lang['rss_show_summary']      = 'XML zdroj ukáže prehľad v názve';
 $lang['rss_media']             = 'Aký typ zmien by mal byť zobrazený v XML feede?';
+$lang['rss_media_o_both']      = 'oboje';
+$lang['rss_media_o_pages']     = 'strany';
+$lang['rss_media_o_media']     = 'média';
 $lang['updatecheck']           = 'Kontrolovať aktualizácie a bezpečnostné upozornenia? DokuWiki potrebuje pre túto funkciu prístup k update.dokuwiki.org.';
 $lang['userewrite']            = 'Používať nice URLs';
 $lang['useslash']              = 'Používať lomku (/) ako oddeľovač v URL';
@@ -137,6 +144,10 @@ $lang['xsendfile']             = 'Používať X-Sendfile hlavičku pre doručeni
 $lang['renderer_xhtml']        = 'Používané vykresľovacie jadro pre hlavný (xhtml) wiki výstup';
 $lang['renderer__core']        = '%s (dokuwiki jadro)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_fragment_o_exact'] = 'presne';
+$lang['search_fragment_o_starts_with'] = 'začína s';
+$lang['search_fragment_o_ends_with'] = 'končí na';
+$lang['search_fragment_o_contains'] = 'obsahuje';
 $lang['dnslookups']            = 'DokuWiki hľadá mená vzdialených IP adries používateľov editujúcich stránky. Ak máte pomalý alebo nefunkčný DNS server alebo nechcete túto možnosť, deaktivujte túto voľbu';
 $lang['jquerycdn']             = 'Mali by byť jQuery a jQuery UI skripty načítané z CDN? Voľba zvýši počet dodatočných HTTP požiadaviek, ale súbory sa môžu načítať rýchlejšie a používatelia ich už môžu mať vo vyrovnávacej pamäti.';
 $lang['jquerycdn_o_0']         = 'Nepoužívať CDN, iba lokálne súbory';
@@ -148,12 +159,6 @@ $lang['proxy____user']         = 'Proxy server - používateľské meno';
 $lang['proxy____pass']         = 'Proxy server - heslo';
 $lang['proxy____ssl']          = 'Proxy server - použiť SSL';
 $lang['proxy____except']       = 'Regulárny výraz popisujúci URL odkazy, pre ktoré by proxy nemala byť použitá.';
-$lang['safemodehack']          = 'Povoliť "safemode hack"';
-$lang['ftp____host']           = 'FTP server pre "safemode hack"';
-$lang['ftp____port']           = 'FTP port pre "safemode hack"';
-$lang['ftp____user']           = 'FTP používateľ pre "safemode hack"';
-$lang['ftp____pass']           = 'FTP heslo pre "safemode hack"';
-$lang['ftp____root']           = 'FTP hlavný adresár pre "safemode hack"';
 $lang['license_o_']            = 'žiadna';
 $lang['typography_o_0']        = 'žiadne';
 $lang['typography_o_1']        = 'okrem jednoduchých úvodzoviek';

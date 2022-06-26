@@ -8,7 +8,7 @@
   -->
   <property file="build.properties" />
 
-  <property name="version"    value="1.0.9.0" />
+  <property name="version"    value="1.0.9.1" />
   <property name="stability"  value="stable" />
   <property name="zipfile"    value="${phing.project.name}-${version}.zip" />
   <property name="gzfile"     value="${phing.project.name}-${version}.tar.gz" />
@@ -19,7 +19,7 @@
   <property name="sffilepath" value="g/ge/geshi/" />
 
   <property name="releasenotes" value="
-Version 1.0.9.0
+Version 1.0.9.1
 " />
 
 

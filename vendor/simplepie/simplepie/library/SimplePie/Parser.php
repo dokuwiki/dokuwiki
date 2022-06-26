@@ -5,7 +5,7 @@
  * A PHP-Based RSS and Atom Feed Framework.
  * Takes the hard work out of managing a complete RSS/Atom solution.
  *
- * Copyright (c) 2004-2016, Ryan Parman, Geoffrey Sneddon, Ryan McCue, and contributors
+ * Copyright (c) 2004-2016, Ryan Parman, Sam Sneddon, Ryan McCue, and contributors
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
@@ -33,9 +33,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package SimplePie
- * @copyright 2004-2016 Ryan Parman, Geoffrey Sneddon, Ryan McCue
+ * @copyright 2004-2016 Ryan Parman, Sam Sneddon, Ryan McCue
  * @author Ryan Parman
- * @author Geoffrey Sneddon
+ * @author Sam Sneddon
  * @author Ryan McCue
  * @link http://simplepie.org/ SimplePie
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -176,76 +176,72 @@ class SimplePie_Parser
 			xml_parser_free($xml);
 			return $return;
 		}
-		else
+
+		libxml_clear_errors();
+		$xml = new XMLReader();
+		$xml->xml($data);
+		while (@$xml->read())
 		{
-			libxml_clear_errors();
-			$xml = new XMLReader();
-			$xml->xml($data);
-			while (@$xml->read())
+			switch ($xml->nodeType)
 			{
-				switch ($xml->nodeType)
-				{
 
-					case constant('XMLReader::END_ELEMENT'):
+				case constant('XMLReader::END_ELEMENT'):
+					if ($xml->namespaceURI !== '')
+					{
+						$tagName = $xml->namespaceURI . $this->separator . $xml->localName;
+					}
+					else
+					{
+						$tagName = $xml->localName;
+					}
+					$this->tag_close(null, $tagName);
+					break;
+				case constant('XMLReader::ELEMENT'):
+					$empty = $xml->isEmptyElement;
+					if ($xml->namespaceURI !== '')
+					{
+						$tagName = $xml->namespaceURI . $this->separator . $xml->localName;
+					}
+					else
+					{
+						$tagName = $xml->localName;
+					}
+					$attributes = array();
+					while ($xml->moveToNextAttribute())
+					{
 						if ($xml->namespaceURI !== '')
 						{
-							$tagName = $xml->namespaceURI . $this->separator . $xml->localName;
+							$attrName = $xml->namespaceURI . $this->separator . $xml->localName;
 						}
 						else
 						{
-							$tagName = $xml->localName;
+							$attrName = $xml->localName;
 						}
+						$attributes[$attrName] = $xml->value;
+					}
+					$this->tag_open(null, $tagName, $attributes);
+					if ($empty)
+					{
 						$this->tag_close(null, $tagName);
-						break;
-					case constant('XMLReader::ELEMENT'):
-						$empty = $xml->isEmptyElement;
-						if ($xml->namespaceURI !== '')
-						{
-							$tagName = $xml->namespaceURI . $this->separator . $xml->localName;
-						}
-						else
-						{
-							$tagName = $xml->localName;
-						}
-						$attributes = array();
-						while ($xml->moveToNextAttribute())
-						{
-							if ($xml->namespaceURI !== '')
-							{
-								$attrName = $xml->namespaceURI . $this->separator . $xml->localName;
-							}
-							else
-							{
-								$attrName = $xml->localName;
-							}
-							$attributes[$attrName] = $xml->value;
-						}
-						$this->tag_open(null, $tagName, $attributes);
-						if ($empty)
-						{
-							$this->tag_close(null, $tagName);
-						}
-						break;
-					case constant('XMLReader::TEXT'):
+					}
+					break;
+				case constant('XMLReader::TEXT'):
 
-					case constant('XMLReader::CDATA'):
-						$this->cdata(null, $xml->value);
-						break;
-				}
-			}
-			if ($error = libxml_get_last_error())
-			{
-				$this->error_code = $error->code;
-				$this->error_string = $error->message;
-				$this->current_line = $error->line;
-				$this->current_column = $error->column;
-				return false;
-			}
-			else
-			{
-				return true;
+				case constant('XMLReader::CDATA'):
+					$this->cdata(null, $xml->value);
+					break;
 			}
 		}
+		if ($error = libxml_get_last_error())
+		{
+			$this->error_code = $error->code;
+			$this->error_string = $error->message;
+			$this->current_line = $error->line;
+			$this->current_column = $error->column;
+			return false;
+		}
+
+		return true;
 	}
 
 	public function get_error_code()

@@ -3,6 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Filippo <abrickslife@gmail.com>
+ * @author Roberto Bellingeri <bellingeri@netguru.it>
+ * @author Eddy <eddy@mail.it>
+ * @author Riccardo <riccardo.furlato@gmail.com>
+ * @author Stefano <stefano.stefano@gmail.com>
  * @author damiano <damiano@spagnuolo.eu>
  * @author Torpedo <dgtorpedo@gmail.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
@@ -12,7 +17,6 @@
  * @author robocap <robocap1@gmail.com>
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  * @author Matteo Pasotti <matteo@xquiet.eu>
- * @author Riccardo <riccardofila@gmail.com>
  * @author Paolo <paolopoz12@gmail.com>
  */
 $lang['menu']                  = 'Configurazione Wiki';
@@ -43,6 +47,7 @@ $lang['_advanced']             = 'Impostazioni Avanzate';
 $lang['_network']              = 'Impostazioni Rete';
 $lang['_msg_setting_undefined'] = 'Nessun metadato definito.';
 $lang['_msg_setting_no_class'] = 'Nessuna classe definita.';
+$lang['_msg_setting_no_known_class'] = 'Classe di impostazioni non disponibile.';
 $lang['_msg_setting_no_default'] = 'Nessun valore predefinito.';
 $lang['title']                 = 'Titolo del wiki';
 $lang['start']                 = 'Nome della pagina iniziale';
@@ -131,6 +136,7 @@ $lang['rss_linkto']            = 'Collega i feed XML a';
 $lang['rss_content']           = 'Cosa mostrare negli elementi dei feed XML?';
 $lang['rss_update']            = 'Intervallo di aggiornamento dei feed XML (sec)';
 $lang['rss_show_summary']      = 'I feed XML riportano un sommario nel titolo';
+$lang['rss_show_deleted']      = 'Feed XML mostra feed cancellati';
 $lang['rss_media']             = 'Quale tipo di cambiamento dovrebbe essere elencato nel feed XML?';
 $lang['rss_media_o_both']      = 'entrambi';
 $lang['rss_media_o_pages']     = 'pagine';
@@ -152,6 +158,13 @@ $lang['xsendfile']             = 'Usare l\'header X-Sendfile per permettere al w
 $lang['renderer_xhtml']        = 'Renderer da usare per la visualizzazione del wiki (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_nslimit']        = 'Limita la ricerca agli attuali spazi dei nomi X. Quando una ricerca viene eseguita da una pagina all\'interno di uno spazio dei nomi più profondo, i primi spazi dei nomi X verranno aggiunti come filtro';
+$lang['search_fragment']       = 'Specificare il comportamento di ricerca del frammento predefinito';
+$lang['search_fragment_o_exact'] = 'esatto';
+$lang['search_fragment_o_starts_with'] = 'inizia con';
+$lang['search_fragment_o_ends_with'] = 'finisce con';
+$lang['search_fragment_o_contains'] = 'contiene';
+$lang['_feature_flags']        = 'Segnalazione di feature';
 $lang['dnslookups']            = 'Dokuwiki farà il lookup dei nomi host per ricavare l\'indirizzo IP remoto degli utenti che modificano le pagine. Se hai un DNS lento o non funzionante o se non vuoi questa funzione, disabilita l\'opzione';
 $lang['jquerycdn']             = 'Vuoi che gli script jQuery e jQuery UI siano caricati da una CDN? Questo richiederà richieste HTTP aggiuntive ma i file potrebbero caricarsi più velocemente e gli utenti potrebbero averli già in cache.';
 $lang['jquerycdn_o_0']         = 'Nessuna CDN, solo consegna locale';
@@ -163,12 +176,6 @@ $lang['proxy____user']         = 'Nome utente proxy';
 $lang['proxy____pass']         = 'Password proxy';
 $lang['proxy____ssl']          = 'Usa SSL per connetterti al proxy';
 $lang['proxy____except']       = 'Espressioni regolari per far corrispondere le URLs per i quali i proxy dovrebbero essere ommessi.';
-$lang['safemodehack']          = 'Abilita safemode hack';
-$lang['ftp____host']           = 'Server FTP per safemode hack';
-$lang['ftp____port']           = 'Porta FTP per safemode hack';
-$lang['ftp____user']           = 'Nome utente FTP per safemode hack';
-$lang['ftp____pass']           = 'Password FTP per safemode hack';
-$lang['ftp____root']           = 'Directory principale FTP per safemode hack';
 $lang['license_o_']            = 'Nessuna scelta';
 $lang['typography_o_0']        = 'nessuno';
 $lang['typography_o_1']        = 'Solo virgolette';

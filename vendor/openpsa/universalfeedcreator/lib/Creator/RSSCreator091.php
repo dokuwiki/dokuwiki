@@ -6,7 +6,6 @@
  * @see     http://my.netscape.com/publish/formats/rss-spec-0.91.html
  * @since   1.3
  * @author  Kai Blankenhorn <kaib@bitfolge.de>
- * @package de.bitfolge.feedcreator
  */
 class RSSCreator091 extends FeedCreator
 {

@@ -1,4 +1,3 @@
-====== Tìm ======
+====== Tìm kiếm ======
 
-Sau đây là kết quả mà bạn đã tìm. @CREATEPAGEINFO@
-
+Bạn có thể tìm thấy kết quả mà bạn tìm kiếm ở bên dưới đây. @CREATEPAGEINFO@

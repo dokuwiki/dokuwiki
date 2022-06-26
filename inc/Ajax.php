@@ -16,11 +16,11 @@ class Ajax {
      * @param string $call name of the ajax call
      */
     public function __construct($call) {
-        $callfn = 'call_' . $call;
+        $callfn = 'call' . ucfirst($call);
         if(method_exists($this, $callfn)) {
             $this->$callfn();
         } else {
-            $evt = new \Doku_Event('AJAX_CALL_UNKNOWN', $call);
+            $evt = new Extension\Event('AJAX_CALL_UNKNOWN', $call);
             if($evt->advise_before()) {
                 print "AJAX call '" . hsc($call) . "' unknown!\n";
             } else {
@@ -35,7 +35,7 @@ class Ajax {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    protected function call_qsearch() {
+    protected function callQsearch() {
         global $lang;
         global $INPUT;
 
@@ -82,7 +82,7 @@ class Ajax {
      * @link   http://www.opensearch.org/Specifications/OpenSearch/Extensions/Suggestions/1.0
      * @author Mike Frysinger <vapier@gentoo.org>
      */
-    protected function call_suggestions() {
+    protected function callSuggestions() {
         global $INPUT;
 
         $query = cleanID($INPUT->post->str('q'));
@@ -107,10 +107,9 @@ class Ajax {
             array(), // no description
             array()  // no urls
         );
-        $json = new \JSON();
 
         header('Content-Type: application/x-suggestions+json');
-        print $json->encode($suggestions);
+        print json_encode($suggestions);
     }
 
     /**
@@ -118,9 +117,7 @@ class Ajax {
      *
      * Andreas Gohr <andi@splitbrain.org>
      */
-    protected function call_lock() {
-        global $conf;
-        global $lang;
+    protected function callLock() {
         global $ID;
         global $INFO;
         global $INPUT;
@@ -130,34 +127,29 @@ class Ajax {
 
         $INFO = pageinfo();
 
+        $response = [
+            'errors' => [],
+            'lock' => '0',
+            'draft' => '',
+        ];
         if(!$INFO['writable']) {
-            echo 'Permission denied';
+            $response['errors'][] = 'Permission to write this page has been denied.';
+            echo json_encode($response);
             return;
         }
 
         if(!checklock($ID)) {
             lock($ID);
-            echo 1;
+            $response['lock'] = '1';
         }
 
-        if($conf['usedraft'] && $INPUT->post->str('wikitext')) {
-            $client = $_SERVER['REMOTE_USER'];
-            if(!$client) $client = clientIP(true);
-
-            $draft = array(
-                'id' => $ID,
-                'prefix' => substr($INPUT->post->str('prefix'), 0, -1),
-                'text' => $INPUT->post->str('wikitext'),
-                'suffix' => $INPUT->post->str('suffix'),
-                'date' => $INPUT->post->int('date'),
-                'client' => $client,
-            );
-            $cname = getCacheName($draft['client'] . $ID, '.draft');
-            if(io_saveFile($cname, serialize($draft))) {
-                echo $lang['draftdate'] . ' ' . dformat();
-            }
+        $draft = new Draft($ID, $INFO['client']);
+        if ($draft->saveDraft()) {
+            $response['draft'] = $draft->getDraftMessage();
+        } else {
+            $response['errors'] = array_merge($response['errors'], $draft->getErrors());
         }
-
+        echo json_encode($response);
     }
 
     /**
@@ -165,7 +157,7 @@ class Ajax {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    protected function call_draftdel() {
+    protected function callDraftdel() {
         global $INPUT;
         $id = cleanID($INPUT->str('id'));
         if(empty($id)) return;
@@ -182,7 +174,7 @@ class Ajax {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    protected function call_medians() {
+    protected function callMedians() {
         global $conf;
         global $INPUT;
 
@@ -205,7 +197,7 @@ class Ajax {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    protected function call_medialist() {
+    protected function callMedialist() {
         global $NS;
         global $INPUT;
 
@@ -224,7 +216,7 @@ class Ajax {
      *
      * @author Kate Arzamastseva <pshns@ukr.net>
      */
-    protected function call_mediadetails() {
+    protected function callMediadetails() {
         global $IMG, $JUMPTO, $REV, $fullscreen, $INPUT;
         $fullscreen = true;
         require_once(DOKU_INC . 'lib/exe/mediamanager.php');
@@ -245,7 +237,7 @@ class Ajax {
      *
      * @author Kate Arzamastseva <pshns@ukr.net>
      */
-    protected function call_mediadiff() {
+    protected function callMediadiff() {
         global $NS;
         global $INPUT;
 
@@ -261,11 +253,11 @@ class Ajax {
      *
      * @author Kate Arzamastseva <pshns@ukr.net>
      */
-    protected function call_mediaupload() {
+    protected function callMediaupload() {
         global $NS, $MSG, $INPUT;
 
         $id = '';
-        if($_FILES['qqfile']['tmp_name']) {
+        if(isset($_FILES['qqfile']['tmp_name'])) {
             $id = $INPUT->post->str('mediaid', $_FILES['qqfile']['name']);
         } elseif($INPUT->get->has('qqfile')) {
             $id = $INPUT->get->str('qqfile');
@@ -281,10 +273,10 @@ class Ajax {
             io_createNamespace("$ns:xxx", 'media');
         }
 
-        if($_FILES['qqfile']['error']) unset($_FILES['qqfile']);
+        if(isset($_FILES['qqfile']['error']) && $_FILES['qqfile']['error']) unset($_FILES['qqfile']);
 
         $res = false;
-        if($_FILES['qqfile']['tmp_name']) $res = media_upload($NS, $AUTH, $_FILES['qqfile']);
+        if(isset($_FILES['qqfile']['tmp_name'])) $res = media_upload($NS, $AUTH, $_FILES['qqfile']);
         if($INPUT->get->has('qqfile')) $res = media_upload_xhr($NS, $AUTH);
 
         if($res) {
@@ -306,9 +298,9 @@ class Ajax {
                 'ns' => $NS
             );
         }
-        $json = new \JSON;
+
         header('Content-Type: application/json');
-        echo $json->encode($result);
+        echo json_encode($result);
     }
 
     /**
@@ -316,7 +308,7 @@ class Ajax {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    protected function call_index() {
+    protected function callIndex() {
         global $conf;
         global $INPUT;
 
@@ -339,7 +331,7 @@ class Ajax {
      *
      * @author Andreas Gohr <gohr@cosmocode.de>
      */
-    protected function call_linkwiz() {
+    protected function callLinkwiz() {
         global $conf;
         global $lang;
         global $INPUT;
@@ -354,7 +346,7 @@ class Ajax {
         $nsd = utf8_encodeFN(str_replace(':', '/', $ns));
 
         $data = array();
-        if($q && !$ns) {
+        if($q !== '' && $ns === '') {
 
             // use index to lookup matching pages
             $pages = ft_pageLookup($id, true);
@@ -422,7 +414,7 @@ class Ajax {
         foreach($data as $item) {
             $even *= -1; //zebra
 
-            if(($item['type'] == 'd' || $item['type'] == 'u') && $item['id']) $item['id'] .= ':';
+            if(($item['type'] == 'd' || $item['type'] == 'u') && $item['id'] !== '') $item['id'] .= ':';
             $link = wl($item['id']);
 
             echo '<div class="' . (($even > 0) ? 'even' : 'odd') . ' type_' . $item['type'] . '">';

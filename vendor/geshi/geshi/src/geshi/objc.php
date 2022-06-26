@@ -5,7 +5,7 @@
  * Author: M. Uli Kusterer (witness.of.teachtext@gmx.net)
  * Contributors: Quinn Taylor (quinntaylor@mac.com)
  * Copyright: (c) 2008 Quinn Taylor, 2004 M. Uli Kusterer, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2004/06/04
  *
  * Objective-C language file for GeSHi.

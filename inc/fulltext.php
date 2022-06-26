@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
+use dokuwiki\Extension\Event;
 
 /**
  * create snippets for the first few results only
@@ -23,8 +23,8 @@ if(!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER',15);
  * @param string     $query
  * @param array      $highlight
  * @param string     $sort
- * @param int|string $after  only show results with an modified time after this date, accepts timestap or strtotime arguments
- * @param int|string $before only show results with an modified time before this date, accepts timestap or strtotime arguments
+ * @param int|string $after  only show results with mtime after this date, accepts timestap or strtotime arguments
+ * @param int|string $before only show results with mtime before this date, accepts timestap or strtotime arguments
  *
  * @return array
  */
@@ -41,7 +41,7 @@ function ft_pageSearch($query,&$highlight, $sort = null, $after = null, $before 
     ];
     $data['highlight'] =& $highlight;
 
-    return trigger_event('SEARCH_QUERY_FULLPAGE', $data, '_ft_pageSearch');
+    return Event::createAndTrigger('SEARCH_QUERY_FULLPAGE', $data, '_ft_pageSearch');
 }
 
 /**
@@ -95,9 +95,9 @@ function _ft_pageSearch(&$data) {
                         'phrase' => $phrase,
                         'text' => rawWiki($id)
                     );
-                    $evt = new Doku_Event('FULLTEXT_PHRASE_MATCH',$evdata);
+                    $evt = new Event('FULLTEXT_PHRASE_MATCH',$evdata);
                     if ($evt->advise_before() && $evt->result !== true) {
-                        $text = utf8_strtolower($evdata['text']);
+                        $text = \dokuwiki\Utf8\PhpString::strtolower($evdata['text']);
                         if (strpos($text, $phrase) !== false) {
                             $evt->result = true;
                         }
@@ -232,8 +232,8 @@ function ft_mediause($id, $ignore_perms = false){
  * @param string     $id       page id
  * @param bool       $in_ns    match against namespace as well?
  * @param bool       $in_title search in title?
- * @param int|string $after    only show results with an modified time after this date, accepts timestap or strtotime arguments
- * @param int|string $before   only show results with an modified time before this date, accepts timestap or strtotime arguments
+ * @param int|string $after    only show results with mtime after this date, accepts timestap or strtotime arguments
+ * @param int|string $before   only show results with mtime before this date, accepts timestap or strtotime arguments
  *
  * @return string[]
  */
@@ -246,7 +246,7 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $befor
         'before' => $before
     ];
     $data['has_titles'] = true; // for plugin backward compatibility check
-    return trigger_event('SEARCH_QUERY_PAGELOOKUP', $data, '_ft_pageLookup');
+    return Event::createAndTrigger('SEARCH_QUERY_PAGELOOKUP', $data, '_ft_pageLookup');
 }
 
 /**
@@ -315,8 +315,8 @@ function _ft_pageLookup(&$data){
 
 /**
  * @param array      $results search results in the form pageid => value
- * @param int|string $after   only returns results with an modified time after this date, accepts timestap or strtotime arguments
- * @param int|string $before  only returns results with an modified time after this date, accepts timestap or strtotime arguments
+ * @param int|string $after   only returns results with mtime after this date, accepts timestap or strtotime arguments
+ * @param int|string $before  only returns results with mtime after this date, accepts timestap or strtotime arguments
  *
  * @return array
  */
@@ -407,15 +407,26 @@ function ft_snippet($id,$highlight){
             'snippet'   => '',
             );
 
-    $evt = new Doku_Event('FULLTEXT_SNIPPET_CREATE',$evdata);
+    $evt = new Event('FULLTEXT_SNIPPET_CREATE',$evdata);
     if ($evt->advise_before()) {
         $match = array();
         $snippets = array();
         $utf8_offset = $offset = $end = 0;
-        $len = utf8_strlen($text);
+        $len = \dokuwiki\Utf8\PhpString::strlen($text);
 
         // build a regexp from the phrases to highlight
-        $re1 = '('.join('|',array_map('ft_snippet_re_preprocess', array_map('preg_quote_cb',array_filter((array) $highlight)))).')';
+        $re1 = '(' .
+            join(
+                '|',
+                array_map(
+                    'ft_snippet_re_preprocess',
+                    array_map(
+                        'preg_quote_cb',
+                        array_filter((array) $highlight)
+                    )
+                )
+            ) .
+            ')';
         $re2 = "$re1.{0,75}(?!\\1)$re1";
         $re3 = "$re1.{0,45}(?!\\1)$re1.{0,45}(?!\\1)(?!\\2)$re1";
 
@@ -431,8 +442,8 @@ function ft_snippet($id,$highlight){
             list($str,$idx) = $match[0];
 
             // convert $idx (a byte offset) into a utf8 character offset
-            $utf8_idx = utf8_strlen(substr($text,0,$idx));
-            $utf8_len = utf8_strlen($str);
+            $utf8_idx = \dokuwiki\Utf8\PhpString::strlen(substr($text,0,$idx));
+            $utf8_len = \dokuwiki\Utf8\PhpString::strlen($str);
 
             // establish context, 100 bytes surrounding the match string
             // first look to see if we can go 100 either side,
@@ -461,9 +472,9 @@ function ft_snippet($id,$highlight){
             $end = $utf8_idx + $utf8_len + $post;      // now set it to the end of this context
 
             if ($append) {
-                $snippets[count($snippets)-1] .= utf8_substr($text,$append,$end-$append);
+                $snippets[count($snippets)-1] .= \dokuwiki\Utf8\PhpString::substr($text,$append,$end-$append);
             } else {
-                $snippets[] = utf8_substr($text,$start,$end-$start);
+                $snippets[] = \dokuwiki\Utf8\PhpString::substr($text,$start,$end-$start);
             }
 
             // set $offset for next match attempt
@@ -472,13 +483,17 @@ function ft_snippet($id,$highlight){
             // this prevents further matching of this snippet but for possible matches of length
             // smaller than match length + context (at least 50 characters) this match is part of the context
             $utf8_offset = $utf8_idx + $utf8_len;
-            $offset = $idx + strlen(utf8_substr($text,$utf8_idx,$utf8_len));
-            $offset = utf8_correctIdx($text,$offset);
+            $offset = $idx + strlen(\dokuwiki\Utf8\PhpString::substr($text,$utf8_idx,$utf8_len));
+            $offset = \dokuwiki\Utf8\Clean::correctIdx($text,$offset);
         }
 
         $m = "\1";
         $snippets = preg_replace('/'.$re1.'/iu',$m.'$1'.$m,$snippets);
-        $snippet = preg_replace('/'.$m.'([^'.$m.']*?)'.$m.'/iu','<strong class="search_hit">$1</strong>',hsc(join('... ',$snippets)));
+        $snippet = preg_replace(
+            '/' . $m . '([^' . $m . ']*?)' . $m . '/iu',
+            '<strong class="search_hit">$1</strong>',
+            hsc(join('... ', $snippets))
+        );
 
         $evdata['snippet'] = $snippet;
     }
@@ -496,9 +511,7 @@ function ft_snippet($id,$highlight){
  */
 function ft_snippet_re_preprocess($term) {
     // do not process asian terms where word boundaries are not explicit
-    if(preg_match('/'.IDX_ASIAN.'/u',$term)){
-        return $term;
-    }
+    if(\dokuwiki\Utf8\Asian::isAsianWords($term)) return $term;
 
     if (UTF8_PROPERTYSUPPORT) {
         // unicode word boundaries
@@ -616,8 +629,8 @@ function ft_resultComplement($args) {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  *
- * @param Doku_Indexer $Indexer
- * @param string $query search query
+ * @param dokuwiki\Search\Indexer $Indexer
+ * @param string                  $query search query
  * @return array of search formulas
  */
 function ft_queryParser($Indexer, $query){
@@ -659,7 +672,8 @@ function ft_queryParser($Indexer, $query){
      */
     $parsed_query = '';
     $parens_level = 0;
-    $terms = preg_split('/(-?".*?")/u', utf8_strtolower($query), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+    $terms = preg_split('/(-?".*?")/u', \dokuwiki\Utf8\PhpString::strtolower($query),
+        -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
     foreach ($terms as $term) {
         $parsed = '';
@@ -850,19 +864,19 @@ function ft_queryParser($Indexer, $query){
  *
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  *
- * @param Doku_Indexer $Indexer
- * @param string       $term
- * @param bool         $consider_asian
- * @param bool         $phrase_mode
+ * @param dokuwiki\Search\Indexer $Indexer
+ * @param string                  $term
+ * @param bool                    $consider_asian
+ * @param bool                    $phrase_mode
  * @return string
  */
 function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = false) {
     $parsed = '';
     if ($consider_asian) {
         // successive asian characters need to be searched as a phrase
-        $words = preg_split('/('.IDX_ASIAN.'+)/u', $term, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+        $words = \dokuwiki\Utf8\Asian::splitAsianWords($term);
         foreach ($words as $word) {
-            $phrase_mode = $phrase_mode ? true : preg_match('/'.IDX_ASIAN.'/u', $word);
+            $phrase_mode = $phrase_mode ? true : \dokuwiki\Utf8\Asian::isAsianWords($word);
             $parsed .= ft_termParser($Indexer, $word, false, $phrase_mode);
         }
     } else {

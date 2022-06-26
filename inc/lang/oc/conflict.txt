@@ -1,0 +1,4 @@
+====== Una version mai recenta existís ======
+Una version mai recenta del document qu’avètz modificat existís. Aquò arriba quand qualqu’un mai càmbia lo document del temps que lo modificatz.
+
+Examinatz las diferéncias mostradas çai-jos, puèi causissètz la version de gardar. Se causissètz « enregistrar », vòstra version serà enregistrada. Quichatz « anullar » per gardar la version actuala.

@@ -3,5 +3,3 @@
 Az általad szerkesztett dokumentumnak egy újabb változata létezik. Ez akkor történik, ha egy másik felhasználó megváltoztatta a dokumentumot, amíg szerkesztetted.
 
 Nézd át gondosan a lenti eltéréseket, aztán dönts arról, melyik változatot tartod meg. Ha ''Mentés'' gombot választod, akkor a Te változatod kerül mentésre. Nyomj ''Mégsem'' gombot a jelenlegi változat megtartásához.
-
-

@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 
 use splitbrain\phpcli\CLI;
@@ -89,17 +89,17 @@ class GitToolCLI extends CLI {
                 echo $options->help();
                 break;
             case 'clone':
-                $this->cmd_clone($args);
+                $this->cmdClone($args);
                 break;
             case 'install':
-                $this->cmd_install($args);
+                $this->cmdInstall($args);
                 break;
             case 'repo':
             case 'repos':
-                $this->cmd_repos();
+                $this->cmdRepos();
                 break;
             default:
-                $this->cmd_git($command, $args);
+                $this->cmdGit($command, $args);
         }
     }
 
@@ -108,7 +108,7 @@ class GitToolCLI extends CLI {
      *
      * @param array $extensions
      */
-    public function cmd_clone($extensions) {
+    public function cmdClone($extensions) {
         $errors = array();
         $succeeded = array();
 
@@ -137,7 +137,7 @@ class GitToolCLI extends CLI {
      *
      * @param array $extensions
      */
-    public function cmd_install($extensions) {
+    public function cmdInstall($extensions) {
         $errors = array();
         $succeeded = array();
 
@@ -171,7 +171,7 @@ class GitToolCLI extends CLI {
      * @param $cmd
      * @param $arg
      */
-    public function cmd_git($cmd, $arg) {
+    public function cmdGit($cmd, $arg) {
         $repos = $this->findRepos();
 
         $shell = array_merge(array('git', $cmd), $arg);
@@ -199,7 +199,7 @@ class GitToolCLI extends CLI {
     /**
      * Simply lists the repositories
      */
-    public function cmd_repos() {
+    public function cmdRepos() {
         $repos = $this->findRepos();
         foreach($repos as $repo) {
             echo "$repo\n";

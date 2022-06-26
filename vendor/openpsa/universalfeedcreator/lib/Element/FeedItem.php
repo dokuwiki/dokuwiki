@@ -5,7 +5,6 @@
  *
  * @author  Kai Blankenhorn <kaib@bitfolge.de>
  * @since   1.3
- * @package de.bitfolge.feedcreator
  */
 class FeedItem extends HtmlDescribable
 {

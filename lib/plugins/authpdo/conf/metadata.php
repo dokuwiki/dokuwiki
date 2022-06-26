@@ -23,5 +23,3 @@ $meta['update-user-pass']   = array('', '_caution' => 'danger');
 $meta['insert-group']       = array('', '_caution' => 'danger');
 $meta['join-group']         = array('', '_caution' => 'danger');
 $meta['leave-group']        = array('', '_caution' => 'danger');
-
-

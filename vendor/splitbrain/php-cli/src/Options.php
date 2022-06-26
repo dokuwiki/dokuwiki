@@ -58,6 +58,14 @@ class Options
 
         $this->options = array();
     }
+    
+    /**
+     * Gets the bin value
+     */
+    public function getBin()
+    {
+        return $this->bin;
+    }
 
     /**
      * Sets the help text for the tool itself
@@ -208,13 +216,13 @@ class Options
             }
 
             // first non-option
-            if ($arg{0} != '-') {
+            if ($arg[0] != '-') {
                 $non_opts = array_merge($non_opts, array_slice($this->args, $i));
                 break;
             }
 
             // long option
-            if (strlen($arg) > 1 && $arg{1} == '-') {
+            if (strlen($arg) > 1 && $arg[1] === '-') {
                 $arg = explode('=', substr($arg, 2), 2);
                 $opt = array_shift($arg);
                 $val = array_shift($arg);

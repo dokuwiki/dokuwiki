@@ -6,8 +6,6 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
 /**
  * Recurse directory
  *
@@ -20,7 +18,8 @@ if(!defined('DOKU_INC')) die('meh.');
  * @param   array     $opts option array will be given to the Callback
  * @param   string    $dir  Current directory beyond $base
  * @param   int       $lvl  Recursion Level
- * @param   mixed     $sort 'natural' to use natural order sorting (default); 'date' to sort by filemtime; leave empty to skip sorting.
+ * @param   mixed     $sort 'natural' to use natural order sorting (default);
+ *                          'date' to sort by filemtime; leave empty to skip sorting.
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
@@ -212,7 +211,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
         return false;
     }
 
-    $info['file']     = utf8_basename($file);
+    $info['file']     = \dokuwiki\Utf8\PhpString::basename($file);
     $info['size']     = filesize($base.'/'.$file);
     $info['mtime']    = filemtime($base.'/'.$file);
     $info['writable'] = is_writable($base.'/'.$file);
@@ -479,7 +478,8 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     // are we done here maybe?
     if($type == 'd'){
         if(empty($opts['listdirs'])) return $return;
-        if(empty($opts['skipacl']) && !empty($opts['sneakyacl']) && $item['perm'] < AUTH_READ) return false; //neither list nor recurse
+        //neither list nor recurse forbidden items:
+        if(empty($opts['skipacl']) && !empty($opts['sneakyacl']) && $item['perm'] < AUTH_READ) return false;
         if(!empty($opts['dirmatch']) && !preg_match('/'.$opts['dirmatch'].'/',$file)) return $return;
         if(!empty($opts['nsmatch']) && !preg_match('/'.$opts['nsmatch'].'/',$item['ns'])) return $return;
     }else{
@@ -497,7 +497,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     $item['open']  = $return;
 
     if(!empty($opts['meta'])){
-        $item['file']       = utf8_basename($file);
+        $item['file']       = \dokuwiki\Utf8\PhpString::basename($file);
         $item['size']       = filesize($base.'/'.$file);
         $item['mtime']      = filemtime($base.'/'.$file);
         $item['rev']        = $item['mtime'];

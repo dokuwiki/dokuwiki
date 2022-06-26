@@ -1,4 +1,3 @@
 ====== Aurkibidea ======
 
 [[doku>namespaces|namespaces]] bitartez ordenatutako aurkibidea da hau.
-

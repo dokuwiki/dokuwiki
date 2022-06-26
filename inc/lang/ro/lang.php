@@ -3,13 +3,14 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Vitalie Ciubotaru <vitalie@ciubotaru.tokyo>
+ * @author Victor <kvp@live.com>
+ * @author Marian Banica <open@banica.eu.org>
  * @author Tiberiu Micu <tibimicu@gmx.net>
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
- * @author Emanuel-Emeric Andrași <em.andrasi@mandrivausers.ro>
  * @author Marius OLAR <olarmariusalex@gmail.com>
- * @author Marius Olar <olarmariusalex@yahoo.com>
- * @author Marian Banica <banica.marian@gmail.com>
  * @author Adrian Vesa <adrianvesa@dotwikis.com>
  * @author valentina_prof <sadoveanu.inform@gmail.com>
  */
@@ -72,43 +73,9 @@ $lang['badpassconfirm']        = 'Ne pare rau, parola este gresita';
 $lang['minoredit']             = 'Modificare minoră';
 $lang['draftdate']             = 'Schiță salvată automat la';
 $lang['nosecedit']             = 'Pagina s-a modificat între timp, secțiunea info a expirat, s-a încărcat pagina întreagă în loc.';
-$lang['regmissing']            = 'Ne pare rău, trebuie să completezi toate cîmpurile.';
-$lang['reguexists']            = 'Ne pare rău, un utilizator cu acest nume este deja autentificat.';
-$lang['regsuccess']            = 'Utilizatorul a fost creat. Parola a fost trimisă prin e-mail.';
-$lang['regsuccess2']           = 'Utilizatorul a fost creat.';
-$lang['regfail']               = 'Utilizatorul nu a putu fi creat.';
-$lang['regmailfail']           = 'Se pare că a fost o eroare la trimiterea parolei prin e-mail. Contactează administratorul!';
-$lang['regbadmail']            = 'Adresa de e-mail este nevalidă - dacă ești de părere că este o eroare contactează administratorul.';
-$lang['regbadpass']            = 'Cele două parole furnizate nu sunt identice; încearcă din nou.';
-$lang['regpwmail']             = 'Parola ta DokuWiki';
-$lang['reghere']               = 'Încă nu ai un cont? Creează unul!';
-$lang['profna']                = 'Acest wiki nu permite modificarea profilului';
-$lang['profnochange']          = 'Nici o modificare; nimic de făcut.';
-$lang['profnoempty']           = 'Nu sunt permise numele sau adresa de e-mail necompletate.';
-$lang['profchanged']           = 'Profilul de utilizator a fost actualizat cu succes.';
-$lang['profnodelete']          = 'Acest wiki nu accepta stergerea conturilor utilizatorilor';
-$lang['profdeleteuser']        = 'Sterge cont';
-$lang['profdeleted']           = 'Contul tau a fost sters de pe acest wiki';
-$lang['profconfdelete']        = 'As dori sa sterf contul meu de pe acest Wiki. <br/> Aceasta actiune nu poate fi anulata.';
-$lang['proffail']              = 'Profilul utilizatorului nu a fost actualizat.';
-$lang['pwdforget']             = 'Parolă uitată? Obține una nouă!';
-$lang['resendna']              = 'Acest wiki nu permite retrimiterea parolei.';
-$lang['resendpwd']             = 'Configurează o parolă nouă pentru';
-$lang['resendpwdmissing']      = 'Ne pare rău, trebuie completate toate câmpurile.';
-$lang['resendpwdnouser']       = 'Ne pare rău, acest utilizator nu poate fi găsit în baza de date.';
-$lang['resendpwdbadauth']      = 'Ne pare rău, acest cod de autorizare nu este corect. Verifică dacă ai folosit întreg link-ul de confirmare.';
-$lang['resendpwdconfirm']      = 'Un link de confirmare a fost trimis prin e-mail.';
-$lang['resendpwdsuccess']      = 'Noua parolă a fost trimisă prin e-mail.';
-$lang['license']               = 'Exceptând locurile unde este altfel specificat, conținutul acestui wiki este licențiat sub următoarea licență:';
-$lang['licenseok']             = 'Notă: Prin editarea acestei pagini ești de acord să publici conțintul sub următoarea licență:';
-$lang['searchmedia']           = 'Caută numele fișierului:';
-$lang['searchmedia_in']        = 'Caută în %s';
-$lang['txt_upload']            = 'Selectează fișierul de încărcat:';
-$lang['txt_filename']          = 'Încarcă fișierul ca (opțional):';
-$lang['txt_overwrt']           = 'Suprascrie fișierul existent';
-$lang['maxuploadsize']         = 'Incarcare maxima %s per fisier.';
-$lang['lockedby']              = 'Momentan blocat de:';
-$lang['lockexpire']            = 'Blocarea expiră la:';
+$lang['searchcreatepage']      = 'Dacă nu găsești ceea ce căuți, poți crea sau modifica pagina %s numită după căutarea ta.';
+$lang['search_fullresults']    = 'Rezultatele textului-complet';
+$lang['js']['search_toggle_tools'] = 'Folosiți instrumentele de căutare';
 $lang['js']['willexpire']      = 'Blocarea pentru editarea paginii expiră intr-un minut.\nPentru a preveni conflictele folosește butonul de previzualizare pentru resetarea blocării.';
 $lang['js']['notsavedyet']     = 'Există modificări nesalvate care se vor pierde.
 Dorești să continui?';
@@ -152,6 +119,56 @@ $lang['js']['media_done_btn']  = 'Gata';
 $lang['js']['media_drop']      = 'Lasă fișierele aici pentru încărcarea lor';
 $lang['js']['media_cancel']    = 'Înlătură';
 $lang['js']['media_overwrt']   = 'Suprascrie fișierele deja existente';
+$lang['search_exact_match']    = 'Potrivire perfecta';
+$lang['search_starts_with']    = 'Începe cu';
+$lang['search_ends_with']      = 'Termină cu';
+$lang['search_contains']       = 'Conţine';
+$lang['search_custom_match']   = 'Personalizat';
+$lang['search_any_ns']         = 'Orice spațiu de nume';
+$lang['search_any_time']       = 'Oricând';
+$lang['search_past_7_days']    = 'Săptămâna trecută';
+$lang['search_past_month']     = 'Luna trecută';
+$lang['search_past_year']      = 'Anul trecut';
+$lang['search_sort_by_hits']   = 'Sortează după popularitate';
+$lang['search_sort_by_mtime']  = 'Sortează după ultima modificare';
+$lang['regmissing']            = 'Ne pare rău, trebuie să completezi toate cîmpurile.';
+$lang['reguexists']            = 'Ne pare rău, un utilizator cu acest nume este deja autentificat.';
+$lang['regsuccess']            = 'Utilizatorul a fost creat. Parola a fost trimisă prin e-mail.';
+$lang['regsuccess2']           = 'Utilizatorul a fost creat.';
+$lang['regfail']               = 'Utilizatorul nu a putut fi creat.';
+$lang['regmailfail']           = 'Se pare că a fost o eroare la trimiterea parolei prin e-mail. Contactează administratorul!';
+$lang['regbadmail']            = 'Adresa de e-mail este nevalidă - dacă ești de părere că este o eroare contactează administratorul.';
+$lang['regbadpass']            = 'Cele două parole furnizate nu sunt identice; încearcă din nou.';
+$lang['regpwmail']             = 'Parola ta DokuWiki';
+$lang['reghere']               = 'Încă nu ai un cont? Creează unul!';
+$lang['profna']                = 'Acest wiki nu permite modificarea profilului';
+$lang['profnochange']          = 'Nici o modificare; nimic de făcut.';
+$lang['profnoempty']           = 'Nu sunt permise numele sau adresa de e-mail necompletate.';
+$lang['profchanged']           = 'Profilul de utilizator a fost actualizat cu succes.';
+$lang['profnodelete']          = 'Acest wiki nu accepta stergerea conturilor utilizatorilor';
+$lang['profdeleteuser']        = 'Sterge cont';
+$lang['profdeleted']           = 'Contul tau a fost sters de pe acest wiki';
+$lang['profconfdelete']        = 'As dori sa sterf contul meu de pe acest Wiki. <br/> Aceasta actiune nu poate fi anulata.';
+$lang['profconfdeletemissing'] = 'Căsuța de confirmare nu este bifată';
+$lang['proffail']              = 'Profilul utilizatorului nu a fost actualizat.';
+$lang['pwdforget']             = 'Parolă uitată? Obține una nouă!';
+$lang['resendna']              = 'Acest wiki nu permite retrimiterea parolei.';
+$lang['resendpwd']             = 'Configurează o parolă nouă pentru';
+$lang['resendpwdmissing']      = 'Ne pare rău, trebuie completate toate câmpurile.';
+$lang['resendpwdnouser']       = 'Ne pare rău, acest utilizator nu poate fi găsit în baza de date.';
+$lang['resendpwdbadauth']      = 'Ne pare rău, acest cod de autorizare nu este corect. Verifică dacă ai folosit întreg link-ul de confirmare.';
+$lang['resendpwdconfirm']      = 'Un link de confirmare a fost trimis prin e-mail.';
+$lang['resendpwdsuccess']      = 'Noua parolă a fost trimisă prin e-mail.';
+$lang['license']               = 'Exceptând locurile unde este altfel specificat, conținutul acestui wiki este licențiat sub următoarea licență:';
+$lang['licenseok']             = 'Notă: Prin editarea acestei pagini ești de acord să publici conțintul sub următoarea licență:';
+$lang['searchmedia']           = 'Caută numele fișierului:';
+$lang['searchmedia_in']        = 'Caută în %s';
+$lang['txt_upload']            = 'Selectează fișierul de încărcat:';
+$lang['txt_filename']          = 'Încarcă fișierul ca (opțional):';
+$lang['txt_overwrt']           = 'Suprascrie fișierul existent';
+$lang['maxuploadsize']         = 'Incarcare maxima %s per fisier.';
+$lang['lockedby']              = 'Momentan blocat de:';
+$lang['lockexpire']            = 'Blocarea expiră la:';
 $lang['rssfailed']             = 'A apărut o eroare in timpul descărcării acestui câmp: ';
 $lang['nothingfound']          = 'Nu am găsit nimic.';
 $lang['mediaselect']           = 'Fișiere media';
@@ -191,6 +208,8 @@ $lang['diff_side']             = 'Alăturate';
 $lang['diffprevrev']           = 'Versiuni anterioare';
 $lang['diffnextrev']           = 'Urmatoarea versiune';
 $lang['difflastrev']           = 'Ultima versiune';
+$lang['diffbothprevrev']       = 'Ambele părți revizuirea anterioară';
+$lang['diffbothnextrev']       = 'Ambele părți următoarea reviziune';
 $lang['line']                  = 'Linia';
 $lang['breadcrumb']            = 'Traseu:';
 $lang['youarehere']            = 'Ești aici:';
@@ -208,6 +227,7 @@ $lang['user_tools']            = 'Unelte utilizator';
 $lang['site_tools']            = 'Unelte site';
 $lang['page_tools']            = 'Unelte pagină';
 $lang['skip_to_content']       = 'mergi la conținut';
+$lang['sidebar']               = 'Bara de navigare';
 $lang['mail_newpage']          = 'pagină adăugată:';
 $lang['mail_changed']          = 'pagină schimbată:';
 $lang['mail_subscribe_list']   = 'pagini modificate în spațiul de nume:';
@@ -283,7 +303,11 @@ $lang['i_problems']            = 'Programul de instalare a găsit câteva proble
 $lang['i_modified']            = 'Din motive de securitate, acest script va funcționa doar cu o instalare nouă și nemodificată a DokuWiki.
 Poți fie să extragi din nou fișierele din arhiva descărcată fie să consulți instrucțiunile de instalare DokuWiki la <a href="http://dokuwiki.org/install">';
 $lang['i_funcna']              = 'Funcția PHP <code>%s</code> nu este disponibilă. Probabil provider-ul tău a dezactivat-o pentru un motiv anume.';
+$lang['i_disabled']            = 'a fost dezactivat de furnizorul tău';
+$lang['i_funcnmail']           = '<b>Notă:</b> Funcția PHP de email nu este disponibilă %s Daca tot rămâne nedisponibilă, trebuie sa instalezi <a href="https://www.dokuwiki.org/plugin:smtp">modulul stmp</a>.	';
 $lang['i_phpver']              = 'Versiunea ta de PHP <code>%s</code> este mai veche decât cea necesară (<code>%s</code>). Trebuie să îți actualizezi instalarea PHP.';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload trebuie să fie dezactivată în php.ini pentru a rula DokuWiki.';
+$lang['i_urandom']             = 'DokuWiki nu poate sa creeze numere sigure criptografice pentru cookie-uri. Poate doriți să verificați setările open_basedir din php.ini pentru acces <code>/dev/urandom</code> adecvat.';
 $lang['i_permfail']            = '<code>%s</code> nu poate fi scris de către DokuWiki. Trebuie să modifici permisiunile pe acest director.';
 $lang['i_confexists']          = '<code>%s</code> există deja';
 $lang['i_writeerr']            = 'Nu s-a putut crea <code>%s</code>. Trebuie să verifici permisiunile directorului/fișierului și să creezi fișierul manual.';
@@ -333,6 +357,12 @@ $lang['media_perm_read']       = 'Ne pare rău, dar nu ai suficiente permisiuni 
 $lang['media_perm_upload']     = 'Ne pare rău, dar nu ai suficiente permisiuni pentru a putea încărca fișiere.';
 $lang['media_update']          = 'Încarcă noua versiune';
 $lang['media_restore']         = 'Restaurează această versiune';
+$lang['media_acl_warning']     = 'Este posibil ca această listă să nu fie completă din cauza restricțiilor ACL și a paginilor ascunse.';
+$lang['email_fail']            = 'PHP mail() lipsește sau este dezactivat. Următorul email nu a fost trimis:';
+$lang['currentns']             = 'Spațiul de nume curent';
 $lang['searchresult']          = 'Rezultatul cautarii';
+$lang['plainhtml']             = 'HTML simplu';
+$lang['page_nonexist_rev']     = 'Pagina nu a existat la %s. Ulterior a fost creat la <a href="%s">%s </a>.';
+$lang['unable_to_parse_date']  = 'Imposibil de analizat la parametrul "%s".';
 $lang['email_signature_text']  = 'Acest e-mail a fost generat de DokuWiki la
 @DOKUWIKIURL@';

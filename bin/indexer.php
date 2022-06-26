@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 
 use splitbrain\phpcli\CLI;
@@ -60,7 +60,7 @@ class IndexerCLI extends CLI {
     /**
      * Update the index
      */
-    function update() {
+    protected function update() {
         global $conf;
         $data = array();
         $this->quietecho("Searching pages... ");
@@ -77,7 +77,7 @@ class IndexerCLI extends CLI {
      *
      * @param string $id
      */
-    function index($id) {
+    protected function index($id) {
         $this->quietecho("$id... ");
         idx_addPage($id, !$this->quiet, $this->clear);
         $this->quietecho("done.\n");
@@ -86,7 +86,7 @@ class IndexerCLI extends CLI {
     /**
      * Clear all index files
      */
-    function clearindex() {
+    protected function clearindex() {
         $this->quietecho("Clearing index... ");
         idx_get_indexer()->clear();
         $this->quietecho("done.\n");
@@ -97,7 +97,7 @@ class IndexerCLI extends CLI {
      *
      * @param string $msg
      */
-    function quietecho($msg) {
+    protected function quietecho($msg) {
         if(!$this->quiet) echo $msg;
     }
 }

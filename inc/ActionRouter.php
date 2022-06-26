@@ -76,7 +76,7 @@ class ActionRouter {
 
         try {
             // give plugins an opportunity to process the actionname
-            $evt = new \Doku_Event('ACTION_ACT_PREPROCESS', $actionname);
+            $evt = new Extension\Event('ACTION_ACT_PREPROCESS', $actionname);
             if ($evt->advise_before()) {
                 $this->action = $this->loadAction($actionname);
                 $this->checkAction($this->action);
@@ -156,7 +156,7 @@ class ActionRouter {
         if(defined('DOKU_UNITTEST')) {
             throw $e;
         }
-        $msg = 'Something unforseen has happened: ' . $e->getMessage();
+        $msg = 'Something unforeseen has happened: ' . $e->getMessage();
         nice_die(hsc($msg));
     }
 

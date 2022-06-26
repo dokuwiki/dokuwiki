@@ -9,7 +9,9 @@
  */
 
 // update message version - always use a string to avoid localized floats!
-$updateVersion = "50.3";
+use dokuwiki\Extension\Event;
+
+$updateVersion = "51.3";
 
 //  xdebug_start_profiling();
 
@@ -70,7 +72,7 @@ if($DATE_AT) {
 
 //check for existing $REV related to $DATE_AT
 if($DATE_AT) {
-    $pagelog = new PageChangeLog($ID);
+    $pagelog = new \dokuwiki\ChangeLog\PageChangeLog($ID);
     $rev_t = $pagelog->getLastRevisionAt($DATE_AT);
     if($rev_t === '') { //current revision
         $REV = null;
@@ -111,7 +113,7 @@ if($conf['breadcrumbs']) breadcrumbs();
 checkUpdateMessages();
 
 $tmp = array(); // No event data
-trigger_event('DOKUWIKI_STARTED', $tmp);
+Event::createAndTrigger('DOKUWIKI_STARTED', $tmp);
 
 //close session
 session_write_close();
@@ -120,6 +122,6 @@ session_write_close();
 act_dispatch();
 
 $tmp = array(); // No event data
-trigger_event('DOKUWIKI_DONE', $tmp);
+Event::createAndTrigger('DOKUWIKI_DONE', $tmp);
 
 //  xdebug_dump_function_profile(1);

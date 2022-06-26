@@ -3,6 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Torgeir Blesvik <bletor@banenor.no>
+ * @author Rut Kristin Aanestad <dark@met.no>
+ * @author ThorPrestboen <thor.erling.prestboen@gmail.com>
+ * @author Christian McKenna <mckchr@banenor.no>
  * @author Reidar Mosvold <Reidar.Mosvold@hit.no>
  * @author Jorge Barrera Grandon <jorge@digitalwolves.org>
  * @author Rune Rasmussen [http://www.syntaxerror.no/]
@@ -15,7 +19,7 @@
  * @author Knut Staring <knutst@gmail.com>
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
- * @author Rune Rasmussen syntaxerror.no@gmail.com
+ * @author Rune Rasmussen <syntaxerror.no@gmail.com>
  * @author Jon Bøe <jonmagneboe@hotmail.com>
  * @author Egil Hansen <egil@rosetta.no>
  * @author Thomas Juberg <Thomas.Juberg@Gmail.com>
@@ -24,7 +28,6 @@
  * @author Patrick <spill.p@hotmail.com>
  * @author Danny Buckhof <daniel.raknes@hotmail.no>
  * @author Arne Hanssen <arne.hanssen@getmail.no>
- * @author Arne Hanssen <arnehans@getmail.no>
  * @author Patrick Sletvold <patricksletvold@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -86,44 +89,8 @@ $lang['badpassconfirm']        = 'Beklager, passordet var feil';
 $lang['minoredit']             = 'Mindre endringer';
 $lang['draftdate']             = 'Kladd autolagret';
 $lang['nosecedit']             = 'Siden er i mellomtiden endret, seksjonsinfo har blitt foreldet - lastet full side istedet.';
-$lang['regmissing']            = 'Vennligst fyll ut alle felt.';
-$lang['reguexists']            = 'Det finnes allerede en konto med dette brukernavnet.';
-$lang['regsuccess']            = 'Brukerkonto har blitt laget og passord har blitt sendt via e-post.';
-$lang['regsuccess2']           = 'Brukeren har blitt laget.';
-$lang['regfail']               = 'Brukeren kan ikke opprettes';
-$lang['regmailfail']           = 'En feil oppstod da passordet ditt skulle sendes via e-post. Vennligst kontakt administratoren!';
-$lang['regbadmail']            = 'Den angitte e-post adressen ser ut til å være ugyldig. Vennligst kontakt administratoren om du anser dette som feilaktig.';
-$lang['regbadpass']            = 'De to angitte passordene er ikke like, vennligst forsøk igjen.';
-$lang['regpwmail']             = 'Ditt DokuWiki passord';
-$lang['reghere']               = 'Har du ikke en konto ennå? Lag deg en';
-$lang['profna']                = 'Denne wikien støtter ikke profilendringer';
-$lang['profnochange']          = 'Ingen endringer, ingenting å gjøre.';
-$lang['profnoempty']           = 'Tomt navn- eller e-postfelt er ikke tillatt.';
-$lang['profchanged']           = 'Brukerprofilen ble vellykket oppdatert.';
-$lang['profnodelete']          = 'Denne wikien støtter ikke sletting av brukere';
-$lang['profdeleteuser']        = 'Slett konto';
-$lang['profdeleted']           = 'Din brukerkonto har blitt slettet fra denne wikien';
-$lang['profconfdelete']        = 'Jeg ønsker å fjerne min konto fra denne wikien. <br/> Denne handlingen kan ikke gjøres om.';
-$lang['profconfdeletemissing'] = 'Boks for bekreftelse ikke avkrysset';
-$lang['proffail']              = 'Brukerprofilen ble ikke oppdatert';
-$lang['pwdforget']             = 'Glemt passordet ditt? Få deg et nytt';
-$lang['resendna']              = 'Denne wikien støtter ikke nyutsending av passord.';
-$lang['resendpwd']             = 'Sett nytt passord for';
-$lang['resendpwdmissing']      = 'Beklager, du må fylle inn alle felt.';
-$lang['resendpwdnouser']       = 'Beklager, vi kan ikke finne denne brukeren i vår database.';
-$lang['resendpwdbadauth']      = 'Beklager, denne autorisasjonskoden er ikke gyldig. Sjekk at du brukte hele bekreftelseslenken.';
-$lang['resendpwdconfirm']      = 'En bekreftelseslenke er blitt sendt på e-post.';
-$lang['resendpwdsuccess']      = 'Ditt nye passord er blitt sendt på e-post.';
-$lang['license']               = 'Der annet ikke er angitt, er innholdet på denne wiki utgitt under følgende lisens:';
-$lang['licenseok']             = 'Merk: Ved å endre på denne siden godtar du at ditt innhold utgis under følgende lisens:';
-$lang['searchmedia']           = 'Søk filnavn';
-$lang['searchmedia_in']        = 'Søk i %s';
-$lang['txt_upload']            = 'Velg fil som skal lastes opp:';
-$lang['txt_filename']          = 'Skriv inn wikinavn (alternativt):';
-$lang['txt_overwrt']           = 'Overskriv eksisterende fil';
-$lang['maxuploadsize']         = 'Opplast maks %s per fil.';
-$lang['lockedby']              = 'Låst av:';
-$lang['lockexpire']            = 'Låsingen utløper:';
+$lang['searchcreatepage']      = 'Hvis du ikke fant det du søkte etter kan du lage eller endre siden %s.';
+$lang['js']['search_toggle_tools'] = 'Søkeverktøy';
 $lang['js']['willexpire']      = 'Din redigeringslås for dette dokumentet kommer snart til å utløpe.\nFor å unngå versjonskonflikter bør du forhåndsvise dokumentet ditt for å forlenge redigeringslåsen.';
 $lang['js']['notsavedyet']     = 'Ulagrede endringer vil gå tapt!
 Vil du fortsette?';
@@ -167,6 +134,49 @@ $lang['js']['media_done_btn']  = 'Ferdig';
 $lang['js']['media_drop']      = 'Dra filer hit for å laste dem opp';
 $lang['js']['media_cancel']    = 'fjern';
 $lang['js']['media_overwrt']   = 'Erstatt eksisterende filer';
+$lang['search_contains']       = 'Inneholder';
+$lang['search_past_7_days']    = 'Sist uke';
+$lang['search_past_month']     = 'Siste måned';
+$lang['search_past_year']      = 'Siste år';
+$lang['search_sort_by_hits']   = 'Sorter etter treff';
+$lang['regmissing']            = 'Vennligst fyll ut alle felt.';
+$lang['reguexists']            = 'Det finnes allerede en konto med dette brukernavnet.';
+$lang['regsuccess']            = 'Brukerkonto har blitt laget og passord har blitt sendt via e-post.';
+$lang['regsuccess2']           = 'Brukeren har blitt laget.';
+$lang['regfail']               = 'Brukeren kan ikke opprettes';
+$lang['regmailfail']           = 'En feil oppstod da passordet ditt skulle sendes via e-post. Vennligst kontakt administratoren!';
+$lang['regbadmail']            = 'Den angitte e-post adressen ser ut til å være ugyldig. Vennligst kontakt administratoren om du anser dette som feilaktig.';
+$lang['regbadpass']            = 'De to angitte passordene er ikke like, vennligst forsøk igjen.';
+$lang['regpwmail']             = 'Ditt DokuWiki passord';
+$lang['reghere']               = 'Har du ikke en konto ennå? Lag deg en';
+$lang['profna']                = 'Denne wikien støtter ikke profilendringer';
+$lang['profnochange']          = 'Ingen endringer, ingenting å gjøre.';
+$lang['profnoempty']           = 'Tomt navn- eller e-postfelt er ikke tillatt.';
+$lang['profchanged']           = 'Brukerprofilen ble vellykket oppdatert.';
+$lang['profnodelete']          = 'Denne wikien støtter ikke sletting av brukere';
+$lang['profdeleteuser']        = 'Slett konto';
+$lang['profdeleted']           = 'Din brukerkonto har blitt slettet fra denne wikien';
+$lang['profconfdelete']        = 'Jeg ønsker å fjerne min konto fra denne wikien. <br/> Denne handlingen kan ikke gjøres om.';
+$lang['profconfdeletemissing'] = 'Boks for bekreftelse ikke avkrysset';
+$lang['proffail']              = 'Brukerprofilen ble ikke oppdatert';
+$lang['pwdforget']             = 'Glemt passordet ditt? Få deg et nytt';
+$lang['resendna']              = 'Denne wikien støtter ikke nyutsending av passord.';
+$lang['resendpwd']             = 'Sett nytt passord for';
+$lang['resendpwdmissing']      = 'Beklager, du må fylle inn alle felt.';
+$lang['resendpwdnouser']       = 'Beklager, vi kan ikke finne denne brukeren i vår database.';
+$lang['resendpwdbadauth']      = 'Beklager, denne autorisasjonskoden er ikke gyldig. Sjekk at du brukte hele bekreftelseslenken.';
+$lang['resendpwdconfirm']      = 'En bekreftelseslenke er blitt sendt på e-post.';
+$lang['resendpwdsuccess']      = 'Ditt nye passord er blitt sendt på e-post.';
+$lang['license']               = 'Der annet ikke er angitt, er innholdet på denne wiki utgitt under følgende lisens:';
+$lang['licenseok']             = 'Merk: Ved å endre på denne siden godtar du at ditt innhold utgis under følgende lisens:';
+$lang['searchmedia']           = 'Søk filnavn';
+$lang['searchmedia_in']        = 'Søk i %s';
+$lang['txt_upload']            = 'Velg fil som skal lastes opp:';
+$lang['txt_filename']          = 'Skriv inn wikinavn (alternativt):';
+$lang['txt_overwrt']           = 'Overskriv eksisterende fil';
+$lang['maxuploadsize']         = 'Opplast maks %s per fil.';
+$lang['lockedby']              = 'Låst av:';
+$lang['lockexpire']            = 'Låsingen utløper:';
 $lang['rssfailed']             = 'En feil oppstod da denne kilden skulle hentes:';
 $lang['nothingfound']          = 'Ingen data funnet.';
 $lang['mediaselect']           = 'Mediefiler';

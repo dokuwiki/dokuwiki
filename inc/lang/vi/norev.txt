@@ -1,3 +1,3 @@
-====== Phiên bản chưa có ======
+====== Không có phiên bản ======
 
-Chưa có phiên bản được chỉ định. Xin bấm nút ''Phiên bản cũ'' để xem danh sách các phiên bản của văn bản này.
+Phiên bản bạn yêu cầu không tồn tại. Nhấn vào "Phiên bản cũ" để biết danh sách phiên bản cũ của tài liệu này.

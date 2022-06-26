@@ -1,4 +1,3 @@
 ====== Recerca ======
 
 Le resultatos de tu recerca se trova hic infra. @CREATEPAGEINFO@
-

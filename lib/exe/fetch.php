@@ -6,6 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Extension\Event;
+
 if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/../../');
 if (!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1);
 require_once(DOKU_INC.'inc/init.php');
@@ -14,7 +16,7 @@ session_write_close(); //close session
 require_once(DOKU_INC.'inc/fetch.functions.php');
 
 if (defined('SIMPLE_TEST')) {
-    $INPUT = new Input();
+    $INPUT = new \dokuwiki\Input\Input();
 }
 
 // BEGIN main
@@ -56,7 +58,7 @@ if (defined('SIMPLE_TEST')) {
     );
 
     // handle the file status
-    $evt = new Doku_Event('FETCH_MEDIA_STATUS', $data);
+    $evt = new Event('FETCH_MEDIA_STATUS', $data);
     if($evt->advise_before()) {
         // redirects
         if($data['status'] > 300 && $data['status'] <= 304) {
@@ -78,16 +80,21 @@ if (defined('SIMPLE_TEST')) {
     unset($evt);
 
     //handle image resizing/cropping
-    if((substr($MIME, 0, 5) == 'image') && ($WIDTH || $HEIGHT)) {
-        if($HEIGHT && $WIDTH) {
-            $data['file'] = $FILE = media_crop_image($data['file'], $EXT, $WIDTH, $HEIGHT);
-        } else {
-            $data['file'] = $FILE = media_resize_image($data['file'], $EXT, $WIDTH, $HEIGHT);
+    $evt = new Event('MEDIA_RESIZE', $data);
+    if($evt->advise_before()) {
+        if((substr($MIME, 0, 5) == 'image') && ($WIDTH || $HEIGHT)) {
+            if($HEIGHT && $WIDTH) {
+                $data['file'] = $FILE = media_crop_image($data['file'], $EXT, $WIDTH, $HEIGHT);
+            } else {
+                $data['file'] = $FILE = media_resize_image($data['file'], $EXT, $WIDTH, $HEIGHT);
+            }
         }
     }
+    $evt->advise_after();
+    unset($evt);
 
     // finally send the file to the client
-    $evt = new Doku_Event('MEDIA_SENDFILE', $data);
+    $evt = new Event('MEDIA_SENDFILE', $data);
     if($evt->advise_before()) {
         sendFile($data['file'], $data['mime'], $data['download'], $data['cache'], $data['ispublic'], $data['orig']);
     }

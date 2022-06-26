@@ -2,10 +2,10 @@
 # Kun muokkaat sivua, varmista että käytät UNIX rivinvaihtoa (yksi newline)
 # Ei tarvitse lisätä alle kolmen merkin sanoja. NE ohitetaan automaattisesti.
 # Jos wikissäsin muita kieliä, lisää sanoja listaan esimerkiksi sivulta http://www.ranks.nl/stopwords/
-www
+com
 eli
-tai
+oli
 sinä
 sinun
-com
-oli
+tai
+www

@@ -3,6 +3,7 @@
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\FatalException;
+use dokuwiki\Sitemap\Mapper;
 
 /**
  * Class Sitemap
@@ -29,11 +30,11 @@ class Sitemap extends AbstractAction {
         global $conf;
 
         if($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) {
-            throw new FatalException(404, 'Sitemap generation is disabled');
+            throw new FatalException('Sitemap generation is disabled', 404);
         }
 
-        $sitemap = \Sitemapper::getFilePath();
-        if(\Sitemapper::sitemapIsCompressed()) {
+        $sitemap = Mapper::getFilePath();
+        if(Mapper::sitemapIsCompressed()) {
             $mime = 'application/x-gzip';
         } else {
             $mime = 'application/xml; charset=utf-8';
@@ -41,13 +42,13 @@ class Sitemap extends AbstractAction {
 
         // Check if sitemap file exists, otherwise create it
         if(!is_readable($sitemap)) {
-            \Sitemapper::generate();
+            Mapper::generate();
         }
 
         if(is_readable($sitemap)) {
             // Send headers
             header('Content-Type: ' . $mime);
-            header('Content-Disposition: attachment; filename=' . utf8_basename($sitemap));
+            header('Content-Disposition: attachment; filename=' . \dokuwiki\Utf8\PhpString::basename($sitemap));
 
             http_conditionalRequest(filemtime($sitemap));
 
@@ -59,7 +60,7 @@ class Sitemap extends AbstractAction {
             exit;
         }
 
-        throw new FatalException(500, 'Could not read the sitemap file - bad permissions?');
+        throw new FatalException('Could not read the sitemap file - bad permissions?');
     }
 
 }

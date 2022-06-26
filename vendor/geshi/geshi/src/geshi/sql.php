@@ -6,7 +6,7 @@
  * Contributors:
  *  - Jürgen Thomas (Juergen.Thomas@vs-polis.de)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2004/06/04
  *
  * SQL language file for GeSHi.
@@ -69,7 +69,7 @@ $language_data = array (
             'CONNECT', 'CONSTRAINT', 'CONVERT', 'COUNT', 'CREATE', 'CROSS', 'CURRENT',
             'CURRENT_DATE', 'CURRENT_TIME', 'CURRENT_TIMESTAMP', 'CURRENT_USER',
             'DATA', 'DATABASE', 'DATABASES', 'DATE', 'DAY', 'DEC', 'DECIMAL', 'DECLARE',
-            'DEFAULT', 'DELAYED', 'DELETE', 'DESC', 'DESCRIBE', 'DISTINCT', 'DOUBLE',
+            'DEFAULT', 'DEFERRABLE', 'DEFERRED', 'DELAYED', 'DELETE', 'DESC', 'DESCRIBE', 'DISTINCT', 'DOUBLE',
             'DOMAIN', 'DROP',
             'ELSE', 'ELSEIF', 'ENCLOSED', 'END', 'ESCAPED', 'EXCEPT', 'EXEC', 'EXECUTE', 'EXISTS',
             'EXP', 'EXPLAIN', 'EXTRACT',
@@ -77,7 +77,7 @@ $language_data = array (
             'FOREIGN', 'FROM', 'FULL', 'FUNCTION',
             'GET', 'GROUP', 'GROUPING', 'GO', 'GOTO', 'GRANT', 'GRANTED',
             'HAVING', 'HOUR',
-            'IDENTIFIED', 'IDENTITY', 'IF', 'IGNORE', 'IN', 'INCREMENT', 'INDEX', 'INFILE', 'INNER',
+            'IDENTIFIED', 'IDENTITY', 'IF', 'IGNORE', 'IMMEDIATE', 'IN', 'INCREMENT', 'INDEX', 'INFILE', 'INITIALLY', 'INNER',
             'INOUT', 'INPUT', 'INSERT', 'INT', 'INTEGER', 'INTERSECT', 'INTERSECTION', 'INTERVAL',
             'INTO', 'IS',
             'JOIN',

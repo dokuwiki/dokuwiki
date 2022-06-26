@@ -1,0 +1,2 @@
+Công cụ này cho phép bạn thay đổi các cài đặt kiểu cách nhất định của chủ đề đang được sử dụng.
+Tất cả các thay đổi được lưu trữ trong một tập tin cấu hình cục bộ và được nâng cấp an toàn.

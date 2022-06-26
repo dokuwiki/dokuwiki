@@ -11,6 +11,9 @@
  * (scheme.conf & stopwords.conf), e.g.
  * !gopher
  */
+
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\Event;
 const DOKU_CONF_NEGATION = '!';
 
 /**
@@ -145,19 +148,23 @@ function getCdnUrls() {
         'versions' => $versions,
         'src' => &$src
     );
-    $event = new Doku_Event('CONFUTIL_CDN_SELECT', $data);
+    $event = new Event('CONFUTIL_CDN_SELECT', $data);
     if($event->advise_before()) {
         if(!$conf['jquerycdn']) {
             $jqmod = md5(join('-', $versions));
             $src[] = DOKU_BASE . 'lib/exe/jquery.php' . '?tseed=' . $jqmod;
         } elseif($conf['jquerycdn'] == 'jquery') {
             $src[] = sprintf('https://code.jquery.com/jquery-%s.min.js', $versions['JQ_VERSION']);
-            $src[] = sprintf('https://code.jquery.com/jquery-migrate-%s.min.js', $versions['JQM_VERSION']);
             $src[] = sprintf('https://code.jquery.com/ui/%s/jquery-ui.min.js', $versions['JQUI_VERSION']);
         } elseif($conf['jquerycdn'] == 'cdnjs') {
-            $src[] = sprintf('https://cdnjs.cloudflare.com/ajax/libs/jquery/%s/jquery.min.js', $versions['JQ_VERSION']);
-            $src[] = sprintf('https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/%s/jquery-migrate.min.js', $versions['JQM_VERSION']);
-            $src[] = sprintf('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/%s/jquery-ui.min.js', $versions['JQUI_VERSION']);
+            $src[] = sprintf(
+                'https://cdnjs.cloudflare.com/ajax/libs/jquery/%s/jquery.min.js',
+                $versions['JQ_VERSION']
+            );
+            $src[] = sprintf(
+                'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/%s/jquery-ui.min.js',
+                $versions['JQUI_VERSION']
+            );
         }
     }
     $event->advise_after();
@@ -341,7 +348,7 @@ function actionOK($action){
     static $disabled = null;
     if(is_null($disabled) || defined('SIMPLE_TEST')){
         global $conf;
-        /** @var DokuWiki_Auth_Plugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
 
         // prepare disabled actions array and handle legacy options

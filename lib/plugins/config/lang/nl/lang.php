@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author PBU <pbu@xs4all.nl>
+ * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Harriet Neitz <harrietneitz@gmail.com>
  * @author mark prins <mprins@users.sf.net>
  * @author Pieter van der Meulen <pieter@vdmeulen.net>
@@ -14,7 +16,6 @@
  * @author Marijn Hofstra <hofstra.m@gmail.com>
  * @author Timon Van Overveldt <timonvo@gmail.com>
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
- * @author Gerrit <klapinklapin@gmail.com>
  * @author Hugo Smet <hugo.smet@scarlet.be>
  */
 $lang['menu']                  = 'Configuratie-instellingen';
@@ -43,6 +44,7 @@ $lang['_advanced']             = 'Geavanceerde instellingen';
 $lang['_network']              = 'Netwerkinstellingen';
 $lang['_msg_setting_undefined'] = 'Geen metadata voor deze instelling.';
 $lang['_msg_setting_no_class'] = 'Geen class voor deze instelling.';
+$lang['_msg_setting_no_known_class'] = 'Setting class niet beschikbaar';
 $lang['_msg_setting_no_default'] = 'Geen standaard waarde.';
 $lang['title']                 = 'Titel van de wiki';
 $lang['start']                 = 'Naam startpagina';
@@ -153,10 +155,12 @@ $lang['renderer_xhtml']        = 'Weergavesysteem voor de standaard (xhtml) wiki
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';
 $lang['search_nslimit']        = 'Beperk het zoeken tot de huidige X namespaces. Wanneer het zoeken wordt uitgevoerd vanaf een pagina binnen een diepere namespace, worden de eerste X aantal namespaces toegevoegd als filter';
+$lang['search_fragment']       = 'Specifeer het standaard zoekgedrag voor fragmenten';
 $lang['search_fragment_o_exact'] = 'exact';
 $lang['search_fragment_o_starts_with'] = 'begint met';
 $lang['search_fragment_o_ends_with'] = 'eindigt op';
 $lang['search_fragment_o_contains'] = 'bevat';
+$lang['trustedproxy']          = 'Vertrouw op doorstuurproxy\'s die overeenkomen met deze reguliere expressie over het echte client-IP dat ze rapporteren. De standaard komt overeen met lokale netwerken. Laat leeg om geen proxy te vertrouwen.';
 $lang['dnslookups']            = 'DokuWiki zoekt de hostnamen van IP-adressen van gebruikers die pagina wijzigen op. Schakel deze optie uit als je geen of een langzame DNS server hebt.';
 $lang['jquerycdn']             = 'Moet er een CDN gebruikt worden om de jQuery en jQuery UI bestanden te laden. Dit zorgt voor extra HTTP verzoeken, maar bestanden laden mogelijk sneller en zitten misschien al in de cache van de gebruiker.';
 $lang['jquerycdn_o_0']         = 'Geen CDN gebruiken';
@@ -168,12 +172,6 @@ $lang['proxy____user']         = 'Proxy gebruikersnaam';
 $lang['proxy____pass']         = 'Proxy wachtwoord';
 $lang['proxy____ssl']          = 'Gebruik SSL om een verbinding te maken met de proxy';
 $lang['proxy____except']       = 'Reguliere expressie om URL\'s te bepalen waarvoor de proxy overgeslagen moet worden.';
-$lang['safemodehack']          = 'Safemode hack aanzetten';
-$lang['ftp____host']           = 'FTP server voor safemode hack';
-$lang['ftp____port']           = 'FTP port voor safemode hack';
-$lang['ftp____user']           = 'FTP gebruikersnaam voor safemode hack';
-$lang['ftp____pass']           = 'FTP wachtwoord voor safemode hack';
-$lang['ftp____root']           = 'FTP root directory voor safemode hack';
 $lang['license_o_']            = 'Geen gekozen';
 $lang['typography_o_0']        = 'geen';
 $lang['typography_o_1']        = 'Alleen dubbele aanhalingstekens';

@@ -4,7 +4,7 @@
  * ----------
  * Author: Lucas Werkmeister (mail@lucaswerkmeister.de)
  * Copyright: (c) 2015 Lucas Werkmeister (http://lucaswerkmeister.de)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2015-01-08
  *
  * Ceylon language file for GeSHi.

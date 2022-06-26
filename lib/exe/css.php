@@ -6,7 +6,10 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
+use dokuwiki\Cache\Cache;
+use dokuwiki\Extension\Event;
+
+if(!defined('DOKU_INC')) define('DOKU_INC', __DIR__ .'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
 if(!defined('NL')) define('NL',"\n");
@@ -45,8 +48,8 @@ function css_out(){
     if(!$tpl) $tpl = $conf['template'];
 
     // load style.ini
-    $styleUtil = new \dokuwiki\StyleUtils();
-    $styleini = $styleUtil->cssStyleini($tpl, $INPUT->bool('preview'));
+    $styleUtil = new \dokuwiki\StyleUtils($tpl, $INPUT->bool('preview'));
+    $styleini = $styleUtil->cssStyleini();
 
     // cache influencers
     $tplinc = tpl_incdir($tpl);
@@ -67,7 +70,8 @@ function css_out(){
 
         // load jQuery-UI theme
         if ($mediatype == 'screen') {
-            $files[DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
+            $files[DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] =
+                DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
         }
         // load plugin styles
         $files = array_merge($files, css_pluginstyles($mediatype));
@@ -76,7 +80,7 @@ function css_out(){
             $files = array_merge($files, $styleini['stylesheets'][$mediatype]);
         }
         // load user styles
-        if(!empty($config_cascade['userstyle'][$mediatype])) {
+        if(is_array($config_cascade['userstyle'][$mediatype])) {
             foreach($config_cascade['userstyle'][$mediatype] as $userstyle) {
                 $files[$userstyle] = DOKU_BASE;
             }
@@ -84,7 +88,7 @@ function css_out(){
 
         // Let plugins decide to either put more styles here or to remove some
         $media_files[$mediatype] = css_filewrapper($mediatype, $files);
-        $CSSEvt = new Doku_Event('CSS_STYLES_INCLUDED', $media_files[$mediatype]);
+        $CSSEvt = new Event('CSS_STYLES_INCLUDED', $media_files[$mediatype]);
 
         // Make it preventable.
         if ( $CSSEvt->advise_before() ) {
@@ -99,8 +103,17 @@ function css_out(){
     }
 
     // The generated script depends on some dynamic options
-    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].$INPUT->bool('preview').DOKU_BASE.$tpl.$type,'.css');
-    $cache->_event = 'CSS_CACHE_USE';
+    $cache = new Cache(
+        'styles' .
+        $_SERVER['HTTP_HOST'] .
+        $_SERVER['SERVER_PORT'] .
+        $INPUT->bool('preview') .
+        DOKU_BASE .
+        $tpl .
+        $type,
+        '.css'
+    );
+    $cache->setEvent('CSS_CACHE_USE');
 
     // check cache age & handle conditional request
     // This may exit if a cache can be used
@@ -114,7 +127,7 @@ function css_out(){
     // plugins decide whether to include the DW default styles.
     // This can be done by preventing the Default.
     $media_files['DW_DEFAULT'] = css_filewrapper('DW_DEFAULT');
-    trigger_event('CSS_STYLES_INCLUDED', $media_files['DW_DEFAULT'], 'css_defaultstyles');
+    Event::createAndTrigger('CSS_STYLES_INCLUDED', $media_files['DW_DEFAULT'], 'css_defaultstyles');
 
     // build the stylesheet
     foreach ($mediatypes as $mediatype) {
@@ -454,18 +467,13 @@ class DokuCssFile {
      */
     public function replacements($match) {
 
-        // not a relative url? - no adjustment required
-        if (preg_match('#^(/|data:|https?://)#',$match[3])) {
+        if (preg_match('#^(/|data:|https?://)#', $match[3])) { // not a relative url? - no adjustment required
             return $match[0];
-        }
-        // a less file import? - requires a file system location
-        else if (substr($match[3],-5) == '.less') {
-            if ($match[3]{0} != '/') {
+        } elseif (substr($match[3], -5) == '.less') { // a less file import? - requires a file system location
+            if ($match[3][0] != '/') {
                 $match[3] = $this->getRelativePath() . '/' . $match[3];
             }
-        }
-        // everything else requires a url adjustment
-        else {
+        } else { // everything else requires a url adjustment
             $match[3] = $this->location . $match[3];
         }
 
@@ -535,10 +543,20 @@ function css_pluginstyles($mediatype='screen'){
  * @return string
  */
 function css_compress($css){
-    //strip comments through a callback
+    // replace quoted strings with placeholder
+    $quote_storage = [];
+
+    $quote_cb = function ($match) use (&$quote_storage) {
+        $quote_storage[] = $match[0];
+        return '"STR'.(count($quote_storage)-1).'"';
+    };
+
+    $css = preg_replace_callback('/(([\'"]).*?(?<!\\\\)\2)/', $quote_cb, $css);
+
+    // strip comments through a callback
     $css = preg_replace_callback('#(/\*)(.*?)(\*/)#s','css_comment_cb',$css);
 
-    //strip (incorrect but common) one line comments
+    // strip (incorrect but common) one line comments
     $css = preg_replace_callback('/^.*\/\/.*$/m','css_onelinecomment_cb',$css);
 
     // strip whitespaces
@@ -547,18 +565,58 @@ function css_compress($css){
     $css = preg_replace('/ ?: /',':',$css);
 
     // number compression
-    $css = preg_replace('/([: ])0+(\.\d+?)0*((?:pt|pc|in|mm|cm|em|ex|px)\b|%)(?=[^\{]*[;\}])/', '$1$2$3', $css); // "0.1em" to ".1em", "1.10em" to "1.1em"
-    $css = preg_replace('/([: ])\.(0)+((?:pt|pc|in|mm|cm|em|ex|px)\b|%)(?=[^\{]*[;\}])/', '$1$2', $css); // ".0em" to "0"
-    $css = preg_replace('/([: ]0)0*(\.0*)?((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1', $css); // "0.0em" to "0"
-    $css = preg_replace('/([: ]\d+)(\.0*)((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1$3', $css); // "1.0em" to "1em"
-    $css = preg_replace('/([: ])0+(\d+|\d*\.\d+)((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1$2$3', $css); // "001em" to "1em"
+    $css = preg_replace(
+        '/([: ])0+(\.\d+?)0*((?:pt|pc|in|mm|cm|em|ex|px)\b|%)(?=[^\{]*[;\}])/',
+        '$1$2$3',
+        $css
+    ); // "0.1em" to ".1em", "1.10em" to "1.1em"
+    $css = preg_replace(
+        '/([: ])\.(0)+((?:pt|pc|in|mm|cm|em|ex|px)\b|%)(?=[^\{]*[;\}])/',
+        '$1$2',
+        $css
+    ); // ".0em" to "0"
+    $css = preg_replace(
+        '/([: ]0)0*(\.0*)?((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/',
+        '$1',
+        $css
+    ); // "0.0em" to "0"
+    $css = preg_replace(
+        '/([: ]\d+)(\.0*)((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/',
+        '$1$3',
+        $css
+    ); // "1.0em" to "1em"
+    $css = preg_replace(
+        '/([: ])0+(\d+|\d*\.\d+)((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/',
+        '$1$2$3',
+        $css
+    ); // "001em" to "1em"
 
     // shorten attributes (1em 1em 1em 1em -> 1em)
-    $css = preg_replace('/(?<![\w\-])((?:margin|padding|border|border-(?:width|radius)):)([\w\.]+)( \2)+(?=[;\}]| !)/', '$1$2', $css); // "1em 1em 1em 1em" to "1em"
-    $css = preg_replace('/(?<![\w\-])((?:margin|padding|border|border-(?:width)):)([\w\.]+) ([\w\.]+) \2 \3(?=[;\}]| !)/', '$1$2 $3', $css); // "1em 2em 1em 2em" to "1em 2em"
+    $css = preg_replace(
+        '/(?<![\w\-])((?:margin|padding|border|border-(?:width|radius)):)([\w\.]+)( \2)+(?=[;\}]| !)/',
+        '$1$2',
+        $css
+    ); // "1em 1em 1em 1em" to "1em"
+    $css = preg_replace(
+        '/(?<![\w\-])((?:margin|padding|border|border-(?:width)):)([\w\.]+) ([\w\.]+) \2 \3(?=[;\}]| !)/',
+        '$1$2 $3',
+        $css
+    ); // "1em 2em 1em 2em" to "1em 2em"
 
     // shorten colors
-    $css = preg_replace("/#([0-9a-fA-F]{1})\\1([0-9a-fA-F]{1})\\2([0-9a-fA-F]{1})\\3(?=[^\{]*[;\}])/", "#\\1\\2\\3", $css);
+    $css = preg_replace(
+        "/#([0-9a-fA-F]{1})\\1([0-9a-fA-F]{1})\\2([0-9a-fA-F]{1})\\3(?=[^\{]*[;\}])/",
+        "#\\1\\2\\3",
+        $css
+    );
+
+    // replace back protected strings
+    $quote_back_cb = function ($match) use (&$quote_storage) {
+        return $quote_storage[$match[1]];
+    };
+
+    $css = preg_replace_callback('/"STR(\d+)"/', $quote_back_cb, $css);
+    $css = trim($css);
 
     return $css;
 }
@@ -600,23 +658,6 @@ function css_onelinecomment_cb($matches) {
             // no more comments, we're done
             $i = $len;
             break;
-        }
-
-        // keep any quoted string that starts before a comment
-        $nextsqt = strpos($line, "'", $i);
-        $nextdqt = strpos($line, '"', $i);
-        if(min($nextsqt, $nextdqt) < $nextcom) {
-            $skipto = false;
-            if($nextsqt !== false && ($nextdqt === false || $nextsqt < $nextdqt)) {
-                $skipto = strpos($line, "'", $nextsqt+1) +1;
-            } else if ($nextdqt !== false) {
-                $skipto = strpos($line, '"', $nextdqt+1) +1;
-            }
-
-            if($skipto !== false) {
-                $i = $skipto;
-                continue;
-            }
         }
 
         if($nexturl === false || $nextcom < $nexturl) {

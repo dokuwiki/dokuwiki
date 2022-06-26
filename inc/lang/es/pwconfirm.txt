@@ -1,11 +1,9 @@
 Hola @FULLNAME@!
 
-Alguien solicitó una nueva contraseña para su nombre de
-usuario @TITLE@ en @DOKUWIKIURL@
+Alguien solicitó una nueva contraseña para su nombre de usuario @TITLE@ en @DOKUWIKIURL@
 
 Si usted no solicitó una nueva contraseña, simplemente ignore este email.
 
-Para confirmar que la solicitud fue realizada realmente por usted,
-por favor use el siguiente enlace.
+Para confirmar que la solicitud fue realizada realmente por usted, por favor use el siguiente enlace.
 
 @CONFIRM@

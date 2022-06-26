@@ -5,6 +5,7 @@
  *
  * All DokuWiki commandline scripts should inherit from this class and implement the abstract methods.
  *
+ * @deprecated 2017-11-10
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 abstract class DokuCLI {
@@ -401,13 +402,13 @@ class DokuCLI_Options {
             }
 
             // first non-option
-            if($arg{0} != '-') {
+            if($arg[0] != '-') {
                 $non_opts = array_merge($non_opts, array_slice($this->args, $i));
                 break;
             }
 
             // long option
-            if(strlen($arg) > 1 && $arg{1} == '-') {
+            if(strlen($arg) > 1 && $arg[1] == '-') {
                 list($opt, $val) = explode('=', substr($arg, 2), 2);
 
                 if(!isset($this->setup[$this->command]['opts'][$opt])) {

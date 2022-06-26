@@ -3,13 +3,15 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Apostolos Tsompanopoulos <info@aptlogs.com>
+ * @author Katerina Katapodi <extragold1234@hotmail.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
  * @author Konstantinos Koryllos <koryllos@gmail.com>
  * @author George Petsagourakis <petsagouris@gmail.com>
  * @author Petros Vidalis <pvidalis@gmail.com>
- * @author Vasileios Karavasilis vasileioskaravasilis@gmail.com
+ * @author Vasileios Karavasilis <vasileioskaravasilis@gmail.com>
  * @author Zacharias Sdregas <zsdregas@sch.gr>
  */
 $lang['menu']                  = 'Ρυθμίσεις';
@@ -85,7 +87,9 @@ $lang['disableactions']        = 'Απενεργοποίηση λειτουργ�
 $lang['disableactions_check']  = 'Έλεγχος';
 $lang['disableactions_subscription'] = 'Εγγραφή/Διαγραφή χρήστη';
 $lang['disableactions_wikicode'] = 'Προβολή κώδικα σελίδας';
+$lang['disableactions_profile_delete'] = 'Διαγραφή Λογαριασμού ';
 $lang['disableactions_other']  = 'Άλλες λειτουργίες (διαχωρίστε τις με κόμμα)';
+$lang['disableactions_rss']    = 'XML Ομαδοποίηση (RSS)';
 $lang['auth_security_timeout'] = 'Διάρκεια χρόνου για ασφάλεια πιστοποίησης (δευτερόλεπτα)';
 $lang['securecookie']          = 'Τα cookies που έχουν οριστεί μέσω HTTPS πρέπει επίσης να αποστέλλονται μόνο μέσω HTTPS από τον φυλλομετρητή? Απενεργοποιήστε αυτή την επιλογή όταν μόνο η είσοδος στο wiki σας διασφαλίζεται μέσω SSL αλλά η περιήγηση γίνεται και χωρίς αυτό.';
 $lang['remote']                = 'Ενεργοποίησης απομακρυσμένης προγραμματιστικής διεπαφής εφαρμογών (API). Με αυτό τον τρόπο επιτρέπεται η πρόσβαση στο wiki με το XML-RPC ή με άλλα πρωτόκολλα επικοινωνίας.';
@@ -116,6 +120,7 @@ $lang['subscribe_time']        = 'Χρόνος μετά τον οποίο οι �
 $lang['notify']                = 'Αποστολή ενημέρωσης για αλλαγές σε αυτή την e-mail διεύθυνση';
 $lang['registernotify']        = 'Αποστολή ενημερωτικών μηνυμάτων σε αυτή την e-mail διεύθυνση κατά την εγγραφή νέων χρηστών';
 $lang['mailfrom']              = 'e-mail διεύθυνση αποστολέα για μηνύματα από την εφαρμογή';
+$lang['mailreturnpath']        = 'Διεύθυνση ηλεκτρονικού ταχυδρομείου λήπτη για μηνύματα που δεν έλαβε';
 $lang['mailprefix']            = 'Πρόθεμα θέματος που να χρησιμοποιείται για τα αυτόματα μηνύματα ηλεκτρονικού ταχυδρομείου.';
 $lang['htmlmail']              = 'Αποστολή οπτικά καλύτερου, αλλά μεγαλύτερου σε μέγεθος email με χρήση HTML. Απενεργοποιήστε το για αποστέλλονται μόνο email απλού κειμένου.';
 $lang['sitemap']               = 'Δημιουργία Google sitemap (ημέρες)';
@@ -125,6 +130,9 @@ $lang['rss_content']           = 'Τι να εμφανίζεται στα XML fe
 $lang['rss_update']            = 'Χρόνος ανανέωσης XML feed (sec)';
 $lang['rss_show_summary']      = 'Να εμφανίζεται σύνοψη του XML feed στον τίτλο';
 $lang['rss_media']             = 'Τι είδους αλλαγές πρέπει να εμφανίζονται στο XLM feed;';
+$lang['rss_media_o_both']      = 'αμφότεροι';
+$lang['rss_media_o_pages']     = 'σελίδες';
+$lang['rss_media_o_media']     = 'μέσα ενημέρωσης ';
 $lang['updatecheck']           = 'Έλεγχος για ύπαρξη νέων εκδόσεων και ενημερώσεων ασφαλείας της εφαρμογής? Απαιτείται η σύνδεση με το update.dokuwiki.org για να λειτουργήσει σωστά αυτή η επιλογή.';
 $lang['userewrite']            = 'Χρήση ωραίων URLs';
 $lang['useslash']              = 'Χρήση slash σαν διαχωριστικό φακέλων στα URLs';
@@ -142,19 +150,23 @@ $lang['xsendfile']             = 'Χρήση της κεφαλίδας X-Sendfil
 $lang['renderer_xhtml']        = 'Πρόγραμμα δημιουργίας βασικής (xhtml) εξόδου wiki.';
 $lang['renderer__core']        = '%s (βασικός κώδικας dokuwiki)';
 $lang['renderer__plugin']      = '%s (επέκταση)';
+$lang['search_nslimit']        = 'Περιορίστε την αναζήτηση στα παρόντα αρχεία που δεν έχουν τίτλο Χ. Όταν η αναζήτηση διεξάγεται από μια σελίδα στα πλαίσια ενός μεγαλύτερου άτιτλου αρχείου, τα πρώτα ονόματα αρχείων Χ θα προστεθούν για να καλύψουν.';
+$lang['search_fragment']       = 'Κάντε την αναζήτηση ορίζοντας το πλαίσιο μη πρόσβασης που λείπει';
+$lang['search_fragment_o_exact'] = 'ακριβής';
+$lang['search_fragment_o_starts_with'] = 'αρχίζει με';
+$lang['search_fragment_o_ends_with'] = 'τελειώνει με';
+$lang['search_fragment_o_contains'] = 'περιέχει';
 $lang['dnslookups']            = 'Το DokuWiki θα ψάξει τα ονόματα υπολογιστών που αντιστοιχούν σε διευθύνσεις IP των χρηστών που γράφουν στις σελίδες. Αν ο DNS είναι αργός, δεν δουλεύει ή δεν χρειάζεστε αυτή την λειτουργία, απενεργοποιήστε την.';
+$lang['jquerycdn']             = 'Πρέπει οι φάκελλοι με περιεχόμενο jQuery και jQuery UI να φορτωθούν από το CDN? Αυτό προσθέτει επιπλέον αιτήματα HTTP , αλλά οι φάκελλοι μπορούν να φορτωθούν ταχύτερα και οι χρήστες μπορεί να τους έχουν κρύψει ήδη.';
+$lang['jquerycdn_o_0']         = 'Δεν υπάρχει CDN, τοπική μετάδοση μόνο';
+$lang['jquerycdn_o_jquery']    = 'CDN στον κωδικό.jquery.com	';
+$lang['jquerycdn_o_cdnjs']     = 'CDN στο cdnjs.com	';
 $lang['proxy____host']         = 'Διακομιστής Proxy';
 $lang['proxy____port']         = 'Θύρα Proxy';
 $lang['proxy____user']         = 'Όνομα χρήστη Proxy';
 $lang['proxy____pass']         = 'Κωδικός χρήστη Proxy';
 $lang['proxy____ssl']          = 'Χρήση ssl για σύνδεση με διακομιστή Proxy';
 $lang['proxy____except']       = 'Regular expression για να πιάνει τα URLs για τα οποία θα παρακάμπτεται το proxy.';
-$lang['safemodehack']          = 'Ενεργοποίηση safemode hack';
-$lang['ftp____host']           = 'Διακομιστής FTP για safemode hack';
-$lang['ftp____port']           = 'Θύρα FTP για safemode hack';
-$lang['ftp____user']           = 'Όνομα χρήστη FTP για safemode hack';
-$lang['ftp____pass']           = 'Κωδικός χρήστη FTP για safemode hack';
-$lang['ftp____root']           = 'Αρχικός φάκελος FTP για safemode hack';
 $lang['license_o_']            = 'Δεν επελέγει άδεια';
 $lang['typography_o_0']        = 'κανένα';
 $lang['typography_o_1']        = 'μόνο διπλά εισαγωγικά';
@@ -190,6 +202,7 @@ $lang['xsendfile_o_2']         = 'Τυπική κεφαλίδα X-Sendfile';
 $lang['xsendfile_o_3']         = 'Ιδιοταγής κεφαλίδα Nginx X-Accel-Redirect ';
 $lang['showuseras_o_loginname'] = 'Όνομα χρήστη';
 $lang['showuseras_o_username'] = 'Ονοματεπώνυμο χρήστη';
+$lang['showuseras_o_username_link'] = 'Το ονοματεπώνυμο του χρήστη ως σύνδεσμος χρήστη interwiki ';
 $lang['showuseras_o_email']    = 'e-mail διεύθυνση χρήστη (εμφανίζεται σύμφωνα με την ρύθμιση για την κωδικοποίηση e-mail διευθύνσεων)';
 $lang['showuseras_o_email_link'] = 'Εμφάνιση e-mail διεύθυνσης χρήστη σαν σύνδεσμος mailto:';
 $lang['useheading_o_0']        = 'Ποτέ';

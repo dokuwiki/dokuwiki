@@ -288,7 +288,6 @@ class FileInfo
      * the prefix will be stripped. It is recommended to give prefixes with a trailing slash.
      *
      * @param  int|string $strip
-     * @return FileInfo
      */
     public function strip($strip)
     {
@@ -339,6 +338,3 @@ class FileInfo
     }
 }
 
-class FileInfoException extends \Exception
-{
-}

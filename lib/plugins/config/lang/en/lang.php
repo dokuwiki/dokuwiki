@@ -46,6 +46,7 @@ $lang['_network'] = 'Network';
 /* --- Undefined Setting Messages --- */
 $lang['_msg_setting_undefined'] = 'No setting metadata.';
 $lang['_msg_setting_no_class'] = 'No setting class.';
+$lang['_msg_setting_no_known_class'] = 'Setting class not available.';
 $lang['_msg_setting_no_default'] = 'No default value.';
 
 /* -------------------- Config Options --------------------------- */
@@ -110,7 +111,7 @@ $lang['remoteuser']  = 'Restrict remote API access to the comma separated groups
 
 /* Anti-Spam Settings */
 $lang['usewordblock']= 'Block spam based on wordlist';
-$lang['relnofollow'] = 'Use rel="nofollow" on external links';
+$lang['relnofollow'] = 'Use rel="ugc nofollow" on external links';
 $lang['indexdelay']  = 'Time delay before indexing (sec)';
 $lang['mailguard']   = 'Obfuscate email addresses';
 $lang['iexssprotect']= 'Check uploaded files for possibly malicious JavaScript or HTML code';
@@ -154,6 +155,7 @@ $lang['rss_linkto']        = 'XML feed links to';
 $lang['rss_content']       = 'What to display in the XML feed items?';
 $lang['rss_update']        = 'XML feed update interval (sec)';
 $lang['rss_show_summary']  = 'XML feed show summary in title';
+$lang['rss_show_deleted']  = 'XML feed Show deleted feeds';
 $lang['rss_media']         = 'What kind of changes should be listed in the XML feed?';
 $lang['rss_media_o_both']  = 'both';
 $lang['rss_media_o_pages'] = 'pages';
@@ -184,6 +186,10 @@ $lang['search_fragment_o_exact'] = 'exact';
 $lang['search_fragment_o_starts_with'] = 'starts with';
 $lang['search_fragment_o_ends_with'] = 'ends with';
 $lang['search_fragment_o_contains'] = 'contains';
+$lang['trustedproxy'] = 'Trust forwarding proxies matching this regular expression about the true client IP they report. The default matches local networks. Leave empty to trust no proxy.';
+
+$lang['_feature_flags'] = 'Feature Flags';
+$lang['defer_js'] = 'Defer javascript to be execute after the page\'s HTML has been parsed. Improves perceived page speed but could break a small number of plugins.';
 
 /* Network Options */
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
@@ -201,14 +207,6 @@ $lang['proxy____user']    = 'Proxy user name';
 $lang['proxy____pass']    = 'Proxy password';
 $lang['proxy____ssl']     = 'Use SSL to connect to proxy';
 $lang['proxy____except']  = 'Regular expression to match URLs for which the proxy should be skipped.';
-
-/* Safemode Hack */
-$lang['safemodehack'] = 'Enable safemode hack';
-$lang['ftp____host'] = 'FTP server for safemode hack';
-$lang['ftp____port'] = 'FTP port for safemode hack';
-$lang['ftp____user'] = 'FTP user name for safemode hack';
-$lang['ftp____pass'] = 'FTP password for safemode hack';
-$lang['ftp____root'] = 'FTP root directory for safemode hack';
 
 /* License Options */
 $lang['license_o_'] = 'None chosen';

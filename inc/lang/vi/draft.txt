@@ -1,0 +1,5 @@
+====== Tìm thấy tập tin nháp ======
+
+Phiên sửa đổi cuối cùng của bạn trên trang này không được hoàn thành chính xác. DokuWiki tự động lưu một bản nháp trong khi bạn đang sửa đổi mà bây giờ bạn có thể sử dụng để tiếp tục sửa đổi. Bạn có thể thấy dữ liệu dưới đây được lưu từ phiên trước của bạn.
+
+Vui lòng quyết định nếu bạn muốn //khôi phục// phiên sửa đổi bị mất của bạn, //xóa// bản nháp được lưu tự động hoặc //hủy bỏ// quá trình sửa đổi.

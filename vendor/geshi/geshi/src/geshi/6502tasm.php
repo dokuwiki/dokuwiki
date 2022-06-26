@@ -4,7 +4,7 @@
  * -------
  * Author: Warren Willmey
  * Copyright: (c) 2010 Warren Willmey.
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2010/06/02
  *
  * MOS 6502 (6510) TASM/64TASS (64TASS being the super set of TASM) language file for GeSHi.

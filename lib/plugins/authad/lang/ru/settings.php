@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Alexander Kh. <001.arx@gmail.com>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
@@ -28,3 +29,4 @@ $lang['expirywarn']            = 'За сколько дней нужно пре
 $lang['additional']            = 'Дополнительные AD-атрибуты, разделённые запятой, для выборки из данных пользователя. Используется некоторыми плагинами.';
 $lang['update_name']           = 'Разрешить пользователям редактировать свое AD-имя?';
 $lang['update_mail']           = 'Разрешить пользователям редактировать свой электронный адрес?';
+$lang['recursive_groups']      = 'Разрешить вложенные группы их соответствующим членам.';

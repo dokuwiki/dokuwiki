@@ -10,7 +10,6 @@
  *
  * @author  Pascal Van Hecke
  * @since   1.7
- * @package de.bitfolge.feedcreator
  */
 class HTMLCreator extends FeedCreator
 {

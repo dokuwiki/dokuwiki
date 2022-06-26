@@ -306,20 +306,20 @@ class idna_convert
                 if ($this->_strict_mode) {
                    $this->_error('Neither email addresses nor URLs are allowed in strict mode.');
                    return false;
-                } else {
-                    // Skip first char
-                    if ($k) {
-                        $encoded = '';
-                        $encoded = $this->_encode(array_slice($decoded, $last_begin, (($k)-$last_begin)));
-                        if ($encoded) {
-                            $output .= $encoded;
-                        } else {
-                            $output .= $this->_ucs4_to_utf8(array_slice($decoded, $last_begin, (($k)-$last_begin)));
-                        }
-                        $output .= chr($decoded[$k]);
-                    }
-                    $last_begin = $k + 1;
                 }
+
+                // Skip first char
+                if ($k) {
+                    $encoded = '';
+                    $encoded = $this->_encode(array_slice($decoded, $last_begin, (($k)-$last_begin)));
+                    if ($encoded) {
+                        $output .= $encoded;
+                    } else {
+                        $output .= $this->_ucs4_to_utf8(array_slice($decoded, $last_begin, (($k)-$last_begin)));
+                    }
+                    $output .= chr($decoded[$k]);
+                }
+                $last_begin = $k + 1;
             }
         }
         // Catch the rest of the string
@@ -333,13 +333,13 @@ class idna_convert
                 $output .= $this->_ucs4_to_utf8(array_slice($decoded, $last_begin, (($inp_len)-$last_begin)));
             }
             return $output;
-        } else {
-            if ($output = $this->_encode($decoded)) {
-                return $output;
-            } else {
-                return $this->_ucs4_to_utf8($decoded);
-            }
         }
+
+        if ($output = $this->_encode($decoded)) {
+            return $output;
+        }
+
+        return $this->_ucs4_to_utf8($decoded);
     }
 
     /**

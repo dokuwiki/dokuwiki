@@ -3,8 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Pierre Henriot <pierre.henriot@gmail.com>
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Damien Regad <dregad@mantisbt.org>
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Yves Grandvalet <Yves.Grandvalet@laposte.net>
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
  * @author Nicolas Friedli <nicolas@theologique.ch>
@@ -43,11 +44,11 @@ $lang['bugs_features']         = 'Bogues';
 $lang['tags']                  = 'Étiquettes :';
 $lang['author_hint']           = 'Chercher les extensions de cet auteur';
 $lang['installed']             = 'Installés :';
-$lang['downloadurl']           = 'URL de téléchargement :';
+$lang['downloadurl']           = 'Téléchargement :';
 $lang['repository']            = 'Dépôt : ';
 $lang['unknown']               = '<em>inconnu</em>';
 $lang['installed_version']     = 'Version installée :';
-$lang['install_date']          = 'Votre dernière mise à jour :';
+$lang['install_date']          = 'Dernière mise à jour :';
 $lang['available_version']     = 'Version disponible :';
 $lang['compatible']            = 'Compatible avec :';
 $lang['depends']               = 'Dépend de :';
@@ -76,12 +77,13 @@ $lang['msg_template_update_success'] = 'Thème %s mis à jour avec succès';
 $lang['msg_plugin_install_success'] = 'Greffon %s installé avec succès';
 $lang['msg_plugin_update_success'] = 'Greffon %s mis à jour avec succès';
 $lang['msg_upload_failed']     = 'Téléversement échoué';
+$lang['msg_nooverwrite']       = 'L\'extension %s existe déjà et ne sera pas remplacée. Pour la remplacer, cocher l\'option de remplacement d\'extension.';
 $lang['missing_dependency']    = '<strong>Dépendance absente ou désactivée :</strong> %s';
 $lang['security_issue']        = '<strong>Problème de sécurité :</strong> %s';
 $lang['security_warning']      = '<strong>Avertissement de sécurité :</strong> %s';
 $lang['update_available']      = '<strong>Mise à jour :</strong> la version %s est disponible.';
 $lang['wrong_folder']          = '<strong>Greffon installé incorrectement :</strong> renommer le dossier du greffon "%s" en "%s".';
-$lang['url_change']            = '<strong>URL modifié :</strong> L\'URL de téléchargement a changé depuis le dernier téléchargement. Vérifiez si l\'URL est valide avant de mettre à jour l\'extension.<br />Nouvel URL : %s<br />Ancien : %s';
+$lang['url_change']            = '<strong>URL modifiée :</strong> L\'URL de téléchargement a changé depuis le dernier téléchargement. Vérifiez si l\'URL est valide avant de mettre à jour l\'extension.<br />Nouvelle URL : %s<br />Ancien : %s';
 $lang['error_badurl']          = 'Les URL doivent commencer par http ou https';
 $lang['error_dircreate']       = 'Impossible de créer le dossier temporaire pour le téléchargement.';
 $lang['error_download']        = 'Impossible de télécharger le fichier : %s';

@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<ruleset name="DokuWiki Coding Standard Standard" namespace="DokuWiki\CS\Standard">
+    <description>Coding Standard used for DokuWiki</description>
+
+    <!-- default config -->
+    <arg name="colors"/>
+    <arg value="sp"/>
+    <arg name="extensions" value="php"/>
+
+    <ini name="memory_limit" value="-1"/>
+
+    <!-- where to look -->
+    <file>../inc</file>
+    <file>../lib</file>
+    <file>../bin</file>
+    <file>../doku.php</file>
+    <file>../index.php</file>
+    <file>../feed.php</file>
+    <file>../install.php</file>
+
+    <!-- skip these completely -->
+    <exclude-pattern>*/lang/*/lang.php</exclude-pattern>
+    <exclude-pattern>*/lang/*/settings.php</exclude-pattern>
+    <exclude-pattern>*/_test/*</exclude-pattern>
+
+    <!-- 3rd party libs, these should be moved to composer some day -->
+    <exclude-pattern>*/inc/DifferenceEngine.php</exclude-pattern>
+    <exclude-pattern>*/inc/IXR_Library.php</exclude-pattern>
+    <exclude-pattern>*/inc/JSON.php</exclude-pattern>
+    <exclude-pattern>*/inc/JpegMeta.php</exclude-pattern>
+    <exclude-pattern>*/lib/plugins/authad/adLDAP</exclude-pattern>
+
+    <!-- deprecated files to be removed soon -->
+    <exclude-pattern>*/inc/cli.php</exclude-pattern>
+    <exclude-pattern>*/inc/parser/*</exclude-pattern>
+
+    <!-- rules on top of PSR-12 -->
+    <rule ref="PSR12">
+        <!-- This rule breaks the single line guard pattern that we prefer to keep using -->
+        <exclude name="Generic.ControlStructures.InlineControlStructure.NotAllowed"/>
+
+        <!-- we have lots of legacy classes without name spaces -->
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
+    </rule>
+
+    <!-- disable some rules for certain paths, for legacy support -->
+    <rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
+        <exclude-pattern>*/inc/Plugin.php</exclude-pattern>
+        <exclude-pattern>*/inc/PluginInterface.php</exclude-pattern>
+        <exclude-pattern>*/inc/PluginTrait.php</exclude-pattern>
+
+        <exclude-pattern>*/lib/plugins/*.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/action.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/action/*.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/admin.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/admin/*.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/auth.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/auth/*.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/cli.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/cli/*.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/helper.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/helper/*.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/remote.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/remote/*.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/syntax.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/syntax/*.php</exclude-pattern>
+    </rule>
+
+    <!-- underscore skips exposing public methods to remote api -->
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+        <exclude-pattern>*/inc/Extension/RemotePlugin.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/remote.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/remote/*.php</exclude-pattern>
+    </rule>
+
+    <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+        <exclude-pattern>*/inc/Extension/PluginInterface.php</exclude-pattern>
+        <exclude-pattern>*/inc/Extension/PluginTrait.php</exclude-pattern>
+    </rule>
+</ruleset>

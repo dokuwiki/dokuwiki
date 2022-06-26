@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Roberto Bellingeri <bellingeri@netguru.it>
  * @author Edmondo Di Tucci <snarchio@gmail.com>
  * @author Torpedo <dgtorpedo@gmail.com>
  */
@@ -21,3 +22,4 @@ $lang['expirywarn']            = 'Giorni di preavviso per la scadenza della pass
 $lang['additional']            = 'Valori separati da virgola di attributi AD addizionali da caricare dai dati utente. Usato da alcuni plugin.';
 $lang['update_name']           = 'Permettere agli utenti di aggiornare il loro nome AD visualizzato? ';
 $lang['update_mail']           = 'Permettere agli utenti di aggiornare il loro indirizzo e-mail?';
+$lang['recursive_groups']      = 'Risolvi i gruppi nidificati ai rispettivi membri (più lento).';

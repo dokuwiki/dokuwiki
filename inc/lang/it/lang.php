@@ -3,6 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Filippo <abrickslife@gmail.com>
+ * @author Roberto Bellingeri <bellingeri@netguru.it>
+ * @author Eddy <eddy@mail.it>
+ * @author Riccardo <riccardo.furlato@gmail.com>
+ * @author Stefano <stefano.stefano@gmail.com>
  * @author damiano <damiano@spagnuolo.eu>
  * @author Torpedo <dgtorpedo@gmail.com>
  * @author Giorgio Vecchiocattivi <giorgio@vecchio.it>
@@ -21,7 +26,6 @@
  * @author Francesco <francesco.cavalli@hotmail.com>
  * @author Fabio <fabioslurp@yahoo.it>
  * @author Maurizio <mcannavo@katamail.com>
- * @author Riccardo <riccardofila@gmail.com>
  * @author Paolo <paolopoz12@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -135,6 +139,11 @@ $lang['search_contains']       = 'Contiene';
 $lang['search_custom_match']   = 'Personalizza';
 $lang['search_any_ns']         = 'Qualsiasi spazio dei nomi';
 $lang['search_any_time']       = 'Ogni volta';
+$lang['search_past_7_days']    = 'scorsa settimana';
+$lang['search_past_month']     = 'scorso mese';
+$lang['search_past_year']      = 'scorso anno';
+$lang['search_sort_by_hits']   = 'ordinato per selezione';
+$lang['search_sort_by_mtime']  = 'ordinato per ultima modifica';
 $lang['regmissing']            = 'Devi riempire tutti i campi.';
 $lang['reguexists']            = 'Il nome utente inserito esiste già.';
 $lang['regsuccess']            = 'L\'utente è stato creato. La password è stata spedita via email.';
@@ -308,8 +317,11 @@ $lang['i_modified']            = 'Per motivi di sicurezza questa procedura funzi
 Prova a estrarre di nuovo i file dal pacchetto scaricato oppure consulta le
 <a href="http://dokuwiki.org/install">istruzioni per l\'installazione di Dokuwiki</a>';
 $lang['i_funcna']              = 'La funzione PHP <code>%s</code> non è disponibile. Forse è stata disabilitata dal tuo provider per qualche motivo?';
+$lang['i_disabled']            = 'E\' stato disabilitato dal tuo provider di servizi.';
+$lang['i_funcnmail']           = '<b>Nota:</b> La funzione mail PHP non è disponibile. %s Se rimane non disponibile, puoi provare ad installare <a href="http://dokuwiki.org/plugins/smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'La versione di PHP <code>%s</code> è inferiore a quella richiesta <code>%s</code>. Devi aggiornare l\'installazione di PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload deve essere disabilitato in php.ini per eseguire DokuWiki.';
+$lang['i_urandom']             = 'DokuWiki non può creare un numero crittograficamente sicuro di cookies. Puoi provare a controllare sulle impostazioni open_basedir su php.ini per un corretto <code>/dev/urandom</code> accesso.';
 $lang['i_permfail']            = 'DokuWiki non può scrivere <code>%s</code>. E\' necessario correggere i permessi per questa directory!';
 $lang['i_confexists']          = '<code>%s</code> esiste già';
 $lang['i_writeerr']            = 'Impossibile creare <code>%s</code>. E\' necessario verificare i permessi della directory o del file oppure creare il file manualmente.';
@@ -360,6 +372,7 @@ $lang['media_perm_upload']     = 'Spiacente, non hai abbastanza privilegi per ca
 $lang['media_update']          = 'Carica nuova versione';
 $lang['media_restore']         = 'Ripristina questa versione';
 $lang['media_acl_warning']     = 'Questa lista potrebbe non essere completa a causa di restrizioni ACL e pagine nascoste.';
+$lang['email_fail']            = 'PHP mail () è assente o disabilitato. La seguente email non è stata inviata:';
 $lang['currentns']             = 'Namespace corrente';
 $lang['searchresult']          = 'Risultati della ricerca';
 $lang['plainhtml']             = 'HTML';

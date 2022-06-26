@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Petr Kajzar <petr.kajzar@lf1.cuni.cz>
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
@@ -75,7 +76,7 @@ $lang['import_error_upload']   = 'Import selhal. CSV soubor nemohl být nahrán 
 $lang['import_error_readfail'] = 'Import selhal. Nelze číst nahraný soubor.';
 $lang['import_error_create']   = 'Nelze vytvořit uživatele';
 $lang['import_notify_fail']    = 'Importovanému uživateli %s s e-mailem %s nemohlo být zasláno upozornění.';
-$lang['import_downloadfailures'] = 'Stáhnout chyby pro nápravu jako CVS';
+$lang['import_downloadfailures'] = 'Stáhnout chyby pro nápravu jako CSV';
 $lang['addUser_error_missing_pass'] = 'Buď prosím nastavte heslo nebo aktivujte upozorňování uživatel aby fungovalo vytváření hesel.';
 $lang['addUser_error_pass_not_identical'] = 'Zadaná hesla nebyla shodná.';
 $lang['addUser_error_modPass_disabled'] = 'Změna hesel je momentálně zakázána.';

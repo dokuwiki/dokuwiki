@@ -6,16 +6,13 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) die('meh.');
-
-/**
- * These constants are used with the recents function
- */
-define('RECENTS_SKIP_DELETED', 2);
-define('RECENTS_SKIP_MINORS', 4);
-define('RECENTS_SKIP_SUBSPACES', 8);
-define('RECENTS_MEDIA_CHANGES', 16);
-define('RECENTS_MEDIA_PAGES_MIXED', 32);
+use dokuwiki\Cache\CacheInstructions;
+use dokuwiki\Cache\CacheRenderer;
+use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Subscriptions\PageSubscriptionSender;
+use dokuwiki\Subscriptions\SubscriberManager;
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Extension\Event;
 
 /**
  * Wrapper around htmlspecialchars()
@@ -100,7 +97,7 @@ function getSecurityToken() {
 
     // CSRF checks are only for logged in users - do not generate for anonymous
     if(trim($user) == '' || trim($session) == '') return '';
-    return PassHash::hmac('md5', $session.$user, auth_cookiesalt());
+    return \dokuwiki\PassHash::hmac('md5', $session.$user, auth_cookiesalt());
 }
 
 /**
@@ -211,12 +208,8 @@ function pageinfo() {
     $info['id']  = $ID;
     $info['rev'] = $REV;
 
-    if($INPUT->server->has('REMOTE_USER')) {
-        $sub = new Subscription();
-        $info['subscribed'] = $sub->user_subscription();
-    } else {
-        $info['subscribed'] = false;
-    }
+    $subManager = new SubscriberManager();
+    $info['subscribed'] = $subManager->userSubscription();
 
     $info['locked']     = checklock($ID);
     $info['filepath']   = wikiFN($ID);
@@ -274,27 +267,29 @@ function pageinfo() {
         p_set_metadata($ID, array('last_change' => $revinfo));
     }
 
-    $info['ip']   = $revinfo['ip'];
-    $info['user'] = $revinfo['user'];
-    $info['sum']  = $revinfo['sum'];
-    // See also $INFO['meta']['last_change'] which is the most recent log line for page $ID.
-    // Use $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT in place of $info['minor'].
+    if($revinfo !== false){
+        $info['ip']   = $revinfo['ip'];
+        $info['user'] = $revinfo['user'];
+        $info['sum']  = $revinfo['sum'];
+        // See also $INFO['meta']['last_change'] which is the most recent log line for page $ID.
+        // Use $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT in place of $info['minor'].
 
-    if($revinfo['user']) {
-        $info['editor'] = $revinfo['user'];
-    } else {
-        $info['editor'] = $revinfo['ip'];
+        if($revinfo['user']) {
+            $info['editor'] = $revinfo['user'];
+        } else {
+            $info['editor'] = $revinfo['ip'];
+        }
+    }else{
+        $info['ip']     = null;
+        $info['user']   = null;
+        $info['sum']    = null;
+        $info['editor'] = null;
     }
 
     // draft
-    $draft = getCacheName($info['client'].$ID, '.draft');
-    if(file_exists($draft)) {
-        if(@filemtime($draft) < @filemtime(wikiFN($ID))) {
-            // remove stale draft
-            @unlink($draft);
-        } else {
-            $info['draft'] = $draft;
-        }
+    $draft = new \dokuwiki\Draft($ID, $info['client']);
+    if ($draft->isDraftAvailable()) {
+        $info['draft'] = $draft->getDraftFilename();
     }
 
     return $info;
@@ -311,7 +306,7 @@ function jsinfo() {
     }
     //export minimal info to JS, plugins can add more
     $JSINFO['id']                    = $ID;
-    $JSINFO['namespace']             = (string) $INFO['namespace'];
+    $JSINFO['namespace']             = isset($INFO) ? (string) $INFO['namespace'] : '';
     $JSINFO['ACT']                   = act_clean($ACT);
     $JSINFO['useHeadingNavigation']  = (int) useHeading('navigation');
     $JSINFO['useHeadingContent']     = (int) useHeading('content');
@@ -361,16 +356,16 @@ function buildURLparams($params, $sep = '&amp;') {
  *
  * @author Andreas Gohr
  *
- * @param array $params    array with (attribute name-attribute value) pairs
- * @param bool  $skipempty skip empty string values?
+ * @param array $params           array with (attribute name-attribute value) pairs
+ * @param bool  $skipEmptyStrings skip empty string values?
  * @return string
  */
-function buildAttributes($params, $skipempty = false) {
+function buildAttributes($params, $skipEmptyStrings = false) {
     $url   = '';
     $white = false;
     foreach($params as $key => $val) {
-        if($key{0} == '_') continue;
-        if($val === '' && $skipempty) continue;
+        if($key[0] == '_') continue;
+        if($val === '' && $skipEmptyStrings) continue;
         if($white) $url .= ' ';
 
         $url .= $key.'="';
@@ -396,12 +391,13 @@ function breadcrumbs() {
     global $ID;
     global $ACT;
     global $conf;
+    global $INFO;
 
     //first visit?
     $crumbs = isset($_SESSION[DOKU_COOKIE]['bc']) ? $_SESSION[DOKU_COOKIE]['bc'] : array();
-    //we only save on show and existing visible wiki documents
+    //we only save on show and existing visible readable wiki documents
     $file = wikiFN($ID);
-    if($ACT != 'show' || isHiddenPage($ID) || !file_exists($file)) {
+    if($ACT != 'show' || $INFO['perm'] < AUTH_READ || isHiddenPage($ID) || !file_exists($file)) {
         $_SESSION[DOKU_COOKIE]['bc'] = $crumbs;
         return $crumbs;
     }
@@ -490,7 +486,9 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
     global $conf;
     if(is_array($urlParameters)) {
         if(isset($urlParameters['rev']) && !$urlParameters['rev']) unset($urlParameters['rev']);
-        if(isset($urlParameters['at']) && $conf['date_at_format']) $urlParameters['at'] = date($conf['date_at_format'],$urlParameters['at']);
+        if(isset($urlParameters['at']) && $conf['date_at_format']) {
+            $urlParameters['at'] = date($conf['date_at_format'], $urlParameters['at']);
+        }
         $urlParameters = buildURLparams($urlParameters, $separator);
     } else {
         $urlParameters = str_replace(',', $separator, $urlParameters);
@@ -511,7 +509,7 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
     } elseif($conf['userewrite']) {
         $xlink .= $id;
         if($urlParameters) $xlink .= '?'.$urlParameters;
-    } elseif($id) {
+    } elseif($id !== '') {
         $xlink .= DOKU_SCRIPT.'?id='.$id;
         if($urlParameters) $xlink .= $separator.$urlParameters;
     } else {
@@ -714,7 +712,13 @@ function checkwordblock($text = '') {
     if(!$text) $text = "$PRE $TEXT $SUF $SUM";
 
     // we prepare the text a tiny bit to prevent spammers circumventing URL checks
-    $text = preg_replace('!(\b)(www\.[\w.:?\-;,]+?\.[\w.:?\-;,]+?[\w/\#~:.?+=&%@\!\-.:?\-;,]+?)([.:?\-;,]*[^\w/\#~:.?+=&%@\!\-.:?\-;,])!i', '\1http://\2 \2\3', $text);
+    // phpcs:disable Generic.Files.LineLength.TooLong
+    $text = preg_replace(
+        '!(\b)(www\.[\w.:?\-;,]+?\.[\w.:?\-;,]+?[\w/\#~:.?+=&%@\!\-.:?\-;,]+?)([.:?\-;,]*[^\w/\#~:.?+=&%@\!\-.:?\-;,])!i',
+        '\1http://\2 \2\3',
+        $text
+    );
+    // phpcs:enable
 
     $wordblocks = getWordblocks();
     // how many lines to read at once (to work around some PCRE limits)
@@ -750,7 +754,7 @@ function checkwordblock($text = '') {
             $callback = function () {
                 return true;
             };
-            return trigger_event('COMMON_WORDBLOCK_BLOCKED', $data, $callback, true);
+            return Event::createAndTrigger('COMMON_WORDBLOCK_BLOCKED', $data, $callback, true);
         }
     }
     return false;
@@ -773,7 +777,7 @@ function checkwordblock($text = '') {
  */
 function clientIP($single = false) {
     /* @var Input $INPUT */
-    global $INPUT;
+    global $INPUT, $conf;
 
     $ip   = array();
     $ip[] = $INPUT->server->str('REMOTE_ADDR');
@@ -820,17 +824,18 @@ function clientIP($single = false) {
 
     if(!$single) return join(',', $ip);
 
-    // decide which IP to use, trying to avoid local addresses
-    $ip = array_reverse($ip);
+    // skip trusted local addresses
     foreach($ip as $i) {
-        if(preg_match('/^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)/', $i)) {
+        if(!empty($conf['trustedproxy']) && preg_match('/'.$conf['trustedproxy'].'/', $i)) {
             continue;
         } else {
             return $i;
         }
     }
-    // still here? just use the first (last) address
-    return $ip[0];
+
+    // still here? just use the last address
+    // this case all ips in the list are trusted
+    return $ip[count($ip)-1];
 }
 
 /**
@@ -840,6 +845,7 @@ function clientIP($single = false) {
  *
  * @link http://www.brainhandles.com/2007/10/15/detecting-mobile-browsers/#code
  *
+ * @deprecated 2018-04-27 you probably want media queries instead anyway
  * @return bool if true, client is mobile browser; otherwise false
  */
 function clientismobile() {
@@ -852,7 +858,18 @@ function clientismobile() {
 
     if(!$INPUT->server->has('HTTP_USER_AGENT')) return false;
 
-    $uamatches = 'midp|j2me|avantg|docomo|novarra|palmos|palmsource|240x320|opwv|chtml|pda|windows ce|mmp\/|blackberry|mib\/|symbian|wireless|nokia|hand|mobi|phone|cdm|up\.b|audio|SIE\-|SEC\-|samsung|HTC|mot\-|mitsu|sagem|sony|alcatel|lg|erics|vx|NEC|philips|mmm|xx|panasonic|sharp|wap|sch|rover|pocket|benq|java|pt|pg|vox|amoi|bird|compal|kg|voda|sany|kdd|dbt|sendo|sgh|gradi|jb|\d\d\di|moto';
+    $uamatches = join(
+        '|',
+        [
+            'midp', 'j2me', 'avantg', 'docomo', 'novarra', 'palmos', 'palmsource', '240x320', 'opwv',
+            'chtml', 'pda', 'windows ce', 'mmp\/', 'blackberry', 'mib\/', 'symbian', 'wireless', 'nokia',
+            'hand', 'mobi', 'phone', 'cdm', 'up\.b', 'audio', 'SIE\-', 'SEC\-', 'samsung', 'HTC', 'mot\-',
+            'mitsu', 'sagem', 'sony', 'alcatel', 'lg', 'erics', 'vx', 'NEC', 'philips', 'mmm', 'xx',
+            'panasonic', 'sharp', 'wap', 'sch', 'rover', 'pocket', 'benq', 'java', 'pt', 'pg', 'vox',
+            'amoi', 'bird', 'compal', 'kg', 'voda', 'sany', 'kdd', 'dbt', 'sendo', 'sgh', 'gradi', 'jb',
+            '\d\d\di', 'moto'
+        ]
+    );
 
     if(preg_match("/$uamatches/i", $INPUT->server->str('HTTP_USER_AGENT'))) return true;
 
@@ -996,7 +1013,7 @@ function cleanText($text) {
     // if the text is not valid UTF-8 we simply assume latin1
     // this won't break any worse than it breaks with the wrong encoding
     // but might actually fix the problem in many cases
-    if(!utf8_check($text)) $text = utf8_encode($text);
+    if(!\dokuwiki\Utf8\Clean::isUtf8($text)) $text = utf8_encode($text);
 
     return $text;
 }
@@ -1065,7 +1082,7 @@ function pageTemplate($id) {
         'doreplace' => true // should wildcard replacements be done on the text?
     );
 
-    $evt = new Doku_Event('COMMON_PAGETPL_LOAD', $data);
+    $evt = new Event('COMMON_PAGETPL_LOAD', $data);
     if($evt->advise_before(true)) {
         // the before event might have loaded the content already
         if(empty($data['tpl'])) {
@@ -1129,6 +1146,9 @@ function parsePageTemplate(&$data) {
              '@ID@',
              '@NS@',
              '@CURNS@',
+             '@!CURNS@',
+             '@!!CURNS@',
+             '@!CURNS!@',
              '@FILE@',
              '@!FILE@',
              '@!FILE!@',
@@ -1145,16 +1165,19 @@ function parsePageTemplate(&$data) {
              $id,
              getNS($id),
              curNS($id),
+             \dokuwiki\Utf8\PhpString::ucfirst(curNS($id)),
+             \dokuwiki\Utf8\PhpString::ucwords(curNS($id)),
+             \dokuwiki\Utf8\PhpString::strtoupper(curNS($id)),
              $file,
-             utf8_ucfirst($file),
-             utf8_strtoupper($file),
+             \dokuwiki\Utf8\PhpString::ucfirst($file),
+             \dokuwiki\Utf8\PhpString::strtoupper($file),
              $page,
-             utf8_ucfirst($page),
-             utf8_ucwords($page),
-             utf8_strtoupper($page),
+             \dokuwiki\Utf8\PhpString::ucfirst($page),
+             \dokuwiki\Utf8\PhpString::ucwords($page),
+             \dokuwiki\Utf8\PhpString::strtoupper($page),
              $INPUT->server->str('REMOTE_USER'),
-             $USERINFO['name'],
-             $USERINFO['mail'],
+             $USERINFO ? $USERINFO['name'] : '',
+             $USERINFO ? $USERINFO['mail'] : '',
              $conf['dformat'],
         ), $tpl
     );
@@ -1268,9 +1291,17 @@ function detectExternalEdit($id) {
             $filesize_new = filesize($fileLastMod);
             $sizechange = $filesize_new - $filesize_old;
 
-            addLogEntry($lastMod, $id, DOKU_CHANGE_TYPE_EDIT, $lang['external_edit'], '', array('ExternalEdit'=> true), $sizechange);
+            addLogEntry(
+                $lastMod,
+                $id,
+                DOKU_CHANGE_TYPE_EDIT,
+                $lang['external_edit'],
+                '',
+                array('ExternalEdit' => true),
+                $sizechange
+            );
             // remove soon to be stale instructions
-            $cache = new cache_instructions($id, $fileLastMod);
+            $cache = new CacheInstructions($id, $fileLastMod);
             $cache->removeCache();
         }
     }
@@ -1334,7 +1365,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         $svdta['changeType'] = DOKU_CHANGE_TYPE_MINOR_EDIT;
     }
 
-    $event = new Doku_Event('COMMON_WIKIPAGE_SAVE', $svdta);
+    $event = new Event('COMMON_WIKIPAGE_SAVE', $svdta);
     if(!$event->advise_before()) return;
 
     // if the content has not been changed, no save happens (plugins may override this)
@@ -1353,7 +1384,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     if($svdta['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
         // Send "update" event with empty data, so plugins can react to page deletion
         $data = array(array($svdta['file'], '', false), getNS($id), noNS($id), false);
-        trigger_event('IO_WIKIPAGE_WRITE', $data);
+        Event::createAndTrigger('IO_WIKIPAGE_WRITE', $data);
         // pre-save deleted revision
         @touch($svdta['file']);
         clearstatcache();
@@ -1361,7 +1392,8 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         // remove empty file
         @unlink($svdta['file']);
         $filesize_new = 0;
-        // don't remove old meta info as it should be saved, plugins can use IO_WIKIPAGE_WRITE for removing their metadata...
+        // don't remove old meta info as it should be saved, plugins can use
+        // IO_WIKIPAGE_WRITE for removing their metadata...
         // purge non-persistant meta data
         p_purge_metadata($id);
         // remove empty namespaces
@@ -1378,11 +1410,19 @@ function saveWikiText($id, $text, $summary, $minor = false) {
 
     $event->advise_after();
 
-    addLogEntry($svdta['newRevision'], $svdta['id'], $svdta['changeType'], $svdta['summary'], $svdta['changeInfo'], null, $svdta['sizechange']);
+    addLogEntry(
+        $svdta['newRevision'],
+        $svdta['id'],
+        $svdta['changeType'],
+        $svdta['summary'],
+        $svdta['changeInfo'],
+        null,
+        $svdta['sizechange']
+    );
 
     // send notify mails
-    notify($svdta['id'], 'admin', $svdta['oldRevision'], $svdta['summary'], $minor);
-    notify($svdta['id'], 'subscribers', $svdta['oldRevision'], $svdta['summary'], $minor);
+    notify($svdta['id'], 'admin', $svdta['oldRevision'], $svdta['summary'], $minor, $svdta['newRevision']);
+    notify($svdta['id'], 'subscribers', $svdta['oldRevision'], $svdta['summary'], $minor, $svdta['newRevision']);
 
     // update the purgefile (timestamp of the last time anything within the wiki was changed)
     io_saveFile($conf['cachedir'].'/purgefile', time());
@@ -1391,7 +1431,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     if(useHeading('content')) {
         $pages = ft_backlinks($id, true);
         foreach($pages as $page) {
-            $cache = new cache_renderer($page, wikiFN($page), 'xhtml');
+            $cache = new CacheRenderer($page, wikiFN($page), 'xhtml');
             $cache->removeCache();
         }
     }
@@ -1424,11 +1464,12 @@ function saveOldRevision($id) {
  * @param string     $summary  What changed
  * @param boolean    $minor    Is this a minor edit?
  * @param string[]   $replace  Additional string substitutions, @KEY@ to be replaced by value
+ * @param int|string $current_rev  New page revision
  * @return bool
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = array()) {
+function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = array(), $current_rev = false) {
     global $conf;
     /* @var Input $INPUT */
     global $INPUT;
@@ -1442,9 +1483,9 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
         if(!actionOK('subscribe')) return false; //subscribers enabled?
         if($conf['useacl'] && $INPUT->server->str('REMOTE_USER') && $minor) return false; //skip minors
         $data = array('id' => $id, 'addresslist' => '', 'self' => false, 'replacements' => $replace);
-        trigger_event(
+        Event::createAndTrigger(
             'COMMON_NOTIFY_ADDRESSLIST', $data,
-            array(new Subscription(), 'notifyaddresses')
+            array(new SubscriberManager(), 'notifyAddresses')
         );
         $to = $data['addresslist'];
         if(empty($to)) return false;
@@ -1454,8 +1495,8 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
     }
 
     // prepare content
-    $subscription = new Subscription();
-    return $subscription->send_diff($to, $tpl, $id, $rev, $summary);
+    $subscription = new PageSubscriptionSender();
+    return $subscription->sendPageDiff($to, $tpl, $id, $rev, $summary, $current_rev);
 }
 
 /**
@@ -1479,11 +1520,7 @@ function getGoogleQuery() {
     if(!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/',$url['host'])) return '';
 
     $query = array();
-    // temporary workaround against PHP bug #49733
-    // see http://bugs.php.net/bug.php?id=49733
-    if(UTF8_MBSTRING) $enc = mb_internal_encoding();
     parse_str($url['query'], $query);
-    if(UTF8_MBSTRING) mb_internal_encoding($enc);
 
     $q = '';
     if(isset($query['q'])){
@@ -1496,6 +1533,8 @@ function getGoogleQuery() {
     $q = trim($q);
 
     if(!$q) return '';
+    // ignore if query includes a full URL
+    if(strpos($q, '//') !== false) return '';
     $q = preg_split('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/', $q, -1, PREG_SPLIT_NO_EMPTY);
     return $q;
 }
@@ -1616,12 +1655,7 @@ function obfuscate($email) {
             return strtr($email, $obfuscate);
 
         case 'hex' :
-            $encode = '';
-            $len    = strlen($email);
-            for($x = 0; $x < $len; $x++) {
-                $encode .= '&#x'.bin2hex($email{$x}).';';
-            }
-            return $encode;
+            return \dokuwiki\Utf8\Conversion::toHtml($email, true);
 
         case 'none' :
         default :
@@ -1645,34 +1679,27 @@ function unslash($string, $char = "'") {
 /**
  * Convert php.ini shorthands to byte
  *
- * @author <gilthans dot NO dot SPAM at gmail dot com>
- * @link   http://php.net/manual/en/ini.core.php#79564
+ * On 32 bit systems values >= 2GB will fail!
  *
- * @param string $v shorthands
- * @return int|string
+ * -1 (infinite size) will be reported as -1
+ *
+ * @link   https://www.php.net/manual/en/faq.using.php#faq.using.shorthandbytes
+ * @param string $value PHP size shorthand
+ * @return int
  */
-function php_to_byte($v) {
-    $l   = substr($v, -1);
-    $ret = substr($v, 0, -1);
-    switch(strtoupper($l)) {
-        /** @noinspection PhpMissingBreakStatementInspection */
-        case 'P':
-            $ret *= 1024;
-        /** @noinspection PhpMissingBreakStatementInspection */
-        case 'T':
-            $ret *= 1024;
-        /** @noinspection PhpMissingBreakStatementInspection */
+function php_to_byte($value) {
+    switch (strtoupper(substr($value,-1))) {
         case 'G':
-            $ret *= 1024;
-        /** @noinspection PhpMissingBreakStatementInspection */
-        case 'M':
-            $ret *= 1024;
-        /** @noinspection PhpMissingBreakStatementInspection */
-        case 'K':
-            $ret *= 1024;
+            $ret = intval(substr($value, 0, -1)) * 1024 * 1024 * 1024;
             break;
-        default;
-            $ret *= 10;
+        case 'M':
+            $ret = intval(substr($value, 0, -1)) * 1024 * 1024;
+            break;
+        case 'K':
+            $ret = intval(substr($value, 0, -1)) * 1024;
+            break;
+        default:
+            $ret = intval($value);
             break;
     }
     return $ret;
@@ -1704,12 +1731,15 @@ function preg_quote_cb($string) {
  * @return string
  */
 function shorten($keep, $short, $max, $min = 9, $char = '…') {
-    $max = $max - utf8_strlen($keep);
+    $max = $max - \dokuwiki\Utf8\PhpString::strlen($keep);
     if($max < $min) return $keep;
-    $len = utf8_strlen($short);
+    $len = \dokuwiki\Utf8\PhpString::strlen($short);
     if($len <= $max) return $keep.$short;
     $half = floor($max / 2);
-    return $keep.utf8_substr($short, 0, $half - 1).$char.utf8_substr($short, $len - $half);
+    return $keep .
+        \dokuwiki\Utf8\PhpString::substr($short, 0, $half - 1) .
+        $char .
+        \dokuwiki\Utf8\PhpString::substr($short, $len - $half);
 }
 
 /**
@@ -1737,7 +1767,7 @@ function editorinfo($username, $textonly = false) {
  */
 function userlink($username = null, $textonly = false) {
     global $conf, $INFO;
-    /** @var DokuWiki_Auth_Plugin $auth */
+    /** @var AuthPlugin $auth */
     global $auth;
     /** @var Input $INPUT */
     global $INPUT;
@@ -1764,11 +1794,12 @@ function userlink($username = null, $textonly = false) {
         if($textonly){
             $data['name'] = $INFO['userinfo']['name']. ' (' . $INPUT->server->str('REMOTE_USER') . ')';
         }else {
-            $data['name'] = '<bdi>' . hsc($INFO['userinfo']['name']) . '</bdi> (<bdi>' . hsc($INPUT->server->str('REMOTE_USER')) . '</bdi>)';
+            $data['name'] = '<bdi>' . hsc($INFO['userinfo']['name']) . '</bdi> '.
+                '(<bdi>' . hsc($INPUT->server->str('REMOTE_USER')) . '</bdi>)';
         }
     }
 
-    $evt = new Doku_Event('COMMON_USER_LINK', $data);
+    $evt = new Event('COMMON_USER_LINK', $data);
     if($evt->advise_before(true)) {
         if(empty($data['name'])) {
             if($auth) $info = $auth->getUserData($username);
@@ -1887,6 +1918,7 @@ function license_img($type) {
 function is_mem_available($mem, $bytes = 1048576) {
     $limit = trim(ini_get('memory_limit'));
     if(empty($limit)) return true; // no limit set!
+    if($limit == -1) return true; // unlimited
 
     // parse limit to bytes
     $limit = php_to_byte($limit);
@@ -1997,7 +2029,10 @@ function get_doku_pref($pref, $default) {
     if(isset($_COOKIE['DOKU_PREFS']) && strpos($_COOKIE['DOKU_PREFS'], $enc_pref) !== false) {
         $parts = explode('#', $_COOKIE['DOKU_PREFS']);
         $cnt   = count($parts);
-        for($i = 0; $i < $cnt; $i += 2) {
+
+        // due to #2721 there might be duplicate entries,
+        // so we read from the end
+        for($i = $cnt-2; $i >= 0; $i -= 2) {
             if($parts[$i] == $enc_pref) {
                 return urldecode($parts[$i + 1]);
             }
@@ -2019,29 +2054,39 @@ function set_doku_pref($pref, $val) {
     $orig = get_doku_pref($pref, false);
     $cookieVal = '';
 
-    if($orig && ($orig != $val)) {
+    if($orig !== false && ($orig !== $val)) {
         $parts = explode('#', $_COOKIE['DOKU_PREFS']);
         $cnt   = count($parts);
         // urlencode $pref for the comparison
         $enc_pref = rawurlencode($pref);
-        for($i = 0; $i < $cnt; $i += 2) {
-            if($parts[$i] == $enc_pref) {
-                if ($val !== false) {
-                    $parts[$i + 1] = rawurlencode($val);
+        $seen = false;
+        for ($i = 0; $i < $cnt; $i += 2) {
+            if ($parts[$i] == $enc_pref) {
+                if (!$seen){
+                    if ($val !== false) {
+                        $parts[$i + 1] = rawurlencode($val);
+                    } else {
+                        unset($parts[$i]);
+                        unset($parts[$i + 1]);
+                    }
+                    $seen = true;
                 } else {
+                    // no break because we want to remove duplicate entries
                     unset($parts[$i]);
                     unset($parts[$i + 1]);
                 }
-                break;
             }
         }
         $cookieVal = implode('#', $parts);
-    } else if (!$orig && $val !== false) {
-        $cookieVal = ($_COOKIE['DOKU_PREFS'] ? $_COOKIE['DOKU_PREFS'].'#' : '').rawurlencode($pref).'#'.rawurlencode($val);
+    } else if ($orig === false && $val !== false) {
+        $cookieVal = ($_COOKIE['DOKU_PREFS'] ? $_COOKIE['DOKU_PREFS'] . '#' : '') .
+            rawurlencode($pref) . '#' . rawurlencode($val);
     }
 
-    if (!empty($cookieVal)) {
-        $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
+    $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
+    if(defined('DOKU_UNITTEST')) {
+        $_COOKIE['DOKU_PREFS'] = $cookieVal;
+    }else{
         setcookie('DOKU_PREFS', $cookieVal, time()+365*24*3600, $cookieDir, '', ($conf['securecookie'] && is_ssl()));
     }
 }

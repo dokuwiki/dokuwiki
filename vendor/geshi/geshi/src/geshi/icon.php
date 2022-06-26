@@ -4,7 +4,7 @@
  * --------
  * Author: Matt Oates (mattoates@gmail.com)
  * Copyright: (c) 2010 Matt Oates (http://mattoates.co.uk)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2010/04/24
  *
  * Icon language file for GeSHi.

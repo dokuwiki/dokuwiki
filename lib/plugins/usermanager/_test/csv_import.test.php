@@ -14,13 +14,14 @@ require_once(dirname(__FILE__).'/mocks.class.php');
  *
  *  At present, users imported in individual tests remain in the user list for subsequent tests
  */
-class plugin_usermanager_csv_import_test extends DokuWikiTest {
-
+class plugin_usermanager_csv_import_test extends DokuWikiTest
+{
     private $old_files;
     protected $usermanager;
     protected $importfile;
 
-    function setUp() {
+    public function setUp()
+    {
         $this->importfile = tempnam(TMP_DIR, 'csv');
 
         $this->old_files = $_FILES;
@@ -38,22 +39,27 @@ class plugin_usermanager_csv_import_test extends DokuWikiTest {
         parent::setUp();
     }
 
-    function tearDown() {
+    public function tearDown()
+    {
         $_FILES = $this->old_files;
         parent::tearDown();
     }
 
-    function doImportTest($importCsv, $expectedResult, $expectedNewUsers, $expectedFailures) {
+    public function doImportTest($importCsv, $expectedResult, $expectedNewUsers, $expectedFailures)
+    {
         global $auth;
         $before_users = $auth->retrieveUsers();
 
-        io_savefile($this->importfile, $importCsv);
+        io_saveFile($this->importfile, $importCsv);
         $result = $this->usermanager->tryImport();
 
         $after_users = $auth->retrieveUsers();
+
+        $before_users = array_map('serialize', $before_users);
+        $after_users = array_map('serialize', $after_users);
         $import_count = count($after_users) - count($before_users);
-        $new_users = array_diff_key($after_users, $before_users);
-        $diff_users = array_diff_assoc($after_users, $before_users);
+        $new_users = array_map('unserialize', array_diff_key($after_users, $before_users));
+        $diff_users = array_map('unserialize', array_diff_assoc($after_users, $before_users));
 
         $expectedCount = count($expectedNewUsers);
 
@@ -66,7 +72,8 @@ class plugin_usermanager_csv_import_test extends DokuWikiTest {
         $this->assertEquals($expectedFailures, $this->usermanager->getImportFailures());     // failures as expected
     }
 
-    function test_cantImport(){
+    public function test_cantImport()
+    {
         global $auth;
         $oldauth = $auth;
 
@@ -82,7 +89,8 @@ importuser,"Ford Prefect",ford@example.com,user
         $auth = $oldauth;
     }
 
-    function test_import() {
+    public function test_import()
+    {
         $csv = 'User,"Real Name",Email,Groups
 importuser,"Ford Prefect",ford@example.com,user
 ';
@@ -97,7 +105,8 @@ importuser,"Ford Prefect",ford@example.com,user
         $this->doImportTest($csv, true, $expected, array());
     }
 
-    function test_importExisting() {
+    public function test_importExisting()
+    {
         $csv = 'User,"Real Name",Email,Groups
 importuser,"Ford Prefect",ford@example.com,user
 ';
@@ -117,7 +126,8 @@ importuser,"Ford Prefect",ford@example.com,user
         $this->doImportTest($csv, true, array(), $failures);
     }
 
-    function test_importUtf8() {
+    public function test_importUtf8()
+    {
         $csv = 'User,"Real Name",Email,Groups
 importutf8,"Førd Prefect",ford@example.com,user
 ';
@@ -135,7 +145,8 @@ importutf8,"Førd Prefect",ford@example.com,user
     /**
      *  utf8: u+00F8 (ø) <=> 0xF8 :iso-8859-1
      */
-    function test_importIso8859() {
+    public function test_importIso8859()
+    {
         $csv = 'User,"Real Name",Email,Groups
 importiso8859,"F'.chr(0xF8).'rd Prefect",ford@example.com,user
 ';
@@ -150,14 +161,16 @@ importiso8859,"F'.chr(0xF8).'rd Prefect",ford@example.com,user
         $this->doImportTest($csv, true, $expected, array());
     }
 
-    private function stripPasswords($array){
+    private function stripPasswords($array)
+    {
         foreach ($array as $user => $data) {
             unset($array[$user]['pass']);
         }
         return $array;
     }
 
-    private function countPasswords($array){
+    private function countPasswords($array)
+    {
         $count = 0;
         foreach ($array as $user => $data) {
             if (!empty($data['pass'])) {
@@ -166,6 +179,4 @@ importiso8859,"F'.chr(0xF8).'rd Prefect",ford@example.com,user
         }
         return $count;
     }
-
 }
-

@@ -1,6 +1,7 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 
+use dokuwiki\Extension\PluginController;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Colors;
 use splitbrain\phpcli\Options;
@@ -51,7 +52,7 @@ class PluginCLI extends CLI {
      * List available plugins
      */
     protected function listPlugins() {
-        /** @var Doku_Plugin_Controller $plugin_controller */
+        /** @var PluginController $plugin_controller */
         global $plugin_controller;
 
         echo "\n";
@@ -85,10 +86,9 @@ class PluginCLI extends CLI {
      * Instantiate a CLI plugin
      *
      * @param string $name
-     * @return DokuWiki_CLI_Plugin|null
+     * @return \dokuwiki\Extension\CLIPlugin|null
      */
-    protected
-    function loadPlugin($name) {
+    protected function loadPlugin($name) {
         // execute the plugin CLI
         $class = "cli_plugin_$name";
         if(class_exists($class)) {

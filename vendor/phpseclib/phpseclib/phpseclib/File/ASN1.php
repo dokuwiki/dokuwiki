@@ -244,9 +244,10 @@ class ASN1
             $tag = 0;
             // process septets (since the eighth bit is ignored, it's not an octet)
             do {
-                $loop = ord($encoded[0]) >> 7;
+                $temp = ord($encoded[$encoded_pos++]);
+                $loop = $temp >> 7;
                 $tag <<= 7;
-                $tag |= ord($encoded[$encoded_pos++]) & 0x7F;
+                $tag |= $temp & 0x7F;
                 $start++;
             } while ($loop);
         }
@@ -308,6 +309,9 @@ class ASN1
                 $remainingLength = $length;
                 while ($remainingLength > 0) {
                     $temp = $this->_decode_ber($content, $start, $content_pos);
+                    if ($temp === false) {
+                        break;
+                    }
                     $length = $temp['length'];
                     // end-of-content octets - see paragraph 8.1.5
                     if (substr($content, $content_pos + $length, 2) == "\0\0") {
@@ -359,6 +363,9 @@ class ASN1
                     $current['content'] = substr($content, $content_pos);
                 } else {
                     $temp = $this->_decode_ber($content, $start, $content_pos);
+                    if ($temp === false) {
+                        return false;
+                    }
                     $length-= (strlen($content) - $content_pos);
                     $last = count($temp) - 1;
                     for ($i = 0; $i < $last; $i++) {
@@ -383,6 +390,9 @@ class ASN1
                     $length = 0;
                     while (substr($content, $content_pos, 2) != "\0\0") {
                         $temp = $this->_decode_ber($content, $length + $start, $content_pos);
+                        if ($temp === false) {
+                            return false;
+                        }
                         $content_pos += $temp['length'];
                         // all subtags should be octet strings
                         //if ($temp['type'] != self::TYPE_OCTET_STRING) {
@@ -415,30 +425,16 @@ class ASN1
                         break 2;
                     }
                     $temp = $this->_decode_ber($content, $start + $offset, $content_pos);
+                    if ($temp === false) {
+                        return false;
+                    }
                     $content_pos += $temp['length'];
                     $current['content'][] = $temp;
                     $offset+= $temp['length'];
                 }
                 break;
             case self::TYPE_OBJECT_IDENTIFIER:
-                $temp = ord($content[$content_pos++]);
-                $current['content'] = sprintf('%d.%d', floor($temp / 40), $temp % 40);
-                $valuen = 0;
-                // process septets
-                $content_len = strlen($content);
-                while ($content_pos < $content_len) {
-                    $temp = ord($content[$content_pos++]);
-                    $valuen <<= 7;
-                    $valuen |= $temp & 0x7F;
-                    if (~$temp & 0x80) {
-                        $current['content'].= ".$valuen";
-                        $valuen = 0;
-                    }
-                }
-                // the eighth bit of the last byte should not be 1
-                //if ($temp >> 7) {
-                //    return false;
-                //}
+                $current['content'] = $this->_decodeOID(substr($content, $content_pos));
                 break;
             /* Each character string type shall be encoded as if it had been declared:
                [UNIVERSAL x] IMPLICIT OCTET STRING
@@ -497,6 +493,10 @@ class ASN1
      */
     function asn1map($decoded, $mapping, $special = array())
     {
+        if (!is_array($decoded)) {
+            return false;
+        }
+
         if (isset($mapping['explicit']) && is_array($decoded['content'])) {
             $decoded = $decoded['content'][0];
         }
@@ -706,7 +706,14 @@ class ASN1
                 return isset($this->oids[$decoded['content']]) ? $this->oids[$decoded['content']] : $decoded['content'];
             case self::TYPE_UTC_TIME:
             case self::TYPE_GENERALIZED_TIME:
-                if (isset($mapping['implicit'])) {
+                // for explicitly tagged optional stuff
+                if (is_array($decoded['content'])) {
+                    $decoded['content'] = $decoded['content'][0]['content'];
+                }
+                // for implicitly tagged optional stuff
+                // in theory, doing isset($mapping['implicit']) would work but malformed certs do exist
+                // in the wild that OpenSSL decodes without issue so we'll support them as well
+                if (!is_object($decoded['content'])) {
                     $decoded['content'] = $this->_decodeTime($decoded['content'], $decoded['type']);
                 }
                 return $decoded['content'] ? $decoded['content']->format($this->format) : false;
@@ -847,7 +854,7 @@ class ASN1
                     if ($mapping['type'] == self::TYPE_SET) {
                         sort($value);
                     }
-                    $value = implode($value, '');
+                    $value = implode('', $value);
                     break;
                 }
 
@@ -1001,27 +1008,7 @@ class ASN1
                 $value = base64_decode($source);
                 break;
             case self::TYPE_OBJECT_IDENTIFIER:
-                $oid = preg_match('#(?:\d+\.)+#', $source) ? $source : array_search($source, $this->oids);
-                if ($oid === false) {
-                    user_error('Invalid OID');
-                    return false;
-                }
-                $value = '';
-                $parts = explode('.', $oid);
-                $value = chr(40 * $parts[0] + $parts[1]);
-                for ($i = 2; $i < count($parts); $i++) {
-                    $temp = '';
-                    if (!$parts[$i]) {
-                        $temp = "\0";
-                    } else {
-                        while ($parts[$i]) {
-                            $temp = chr(0x80 | ($parts[$i] & 0x7F)) . $temp;
-                            $parts[$i] >>= 7;
-                        }
-                        $temp[strlen($temp) - 1] = $temp[strlen($temp) - 1] & chr(0x7F);
-                    }
-                    $value.= $temp;
-                }
+                $value = $this->_encodeOID($source);
                 break;
             case self::TYPE_ANY:
                 $loc = $this->location;
@@ -1118,6 +1105,108 @@ class ASN1
 
         $temp = ltrim(pack('N', $length), chr(0));
         return pack('Ca*', 0x80 | strlen($temp), $temp);
+    }
+
+    /**
+     * BER-decode the OID
+     *
+     * Called by _decode_ber()
+     *
+     * @access private
+     * @param string $content
+     * @return string
+     */
+    function _decodeOID($content)
+    {
+        static $eighty;
+        if (!$eighty) {
+            $eighty = new BigInteger(80);
+        }
+
+        $oid = array();
+        $pos = 0;
+        $len = strlen($content);
+        $n = new BigInteger();
+        while ($pos < $len) {
+            $temp = ord($content[$pos++]);
+            $n = $n->bitwise_leftShift(7);
+            $n = $n->bitwise_or(new BigInteger($temp & 0x7F));
+            if (~$temp & 0x80) {
+                $oid[] = $n;
+                $n = new BigInteger();
+            }
+        }
+        $part1 = array_shift($oid);
+        $first = floor(ord($content[0]) / 40);
+        /*
+          "This packing of the first two object identifier components recognizes that only three values are allocated from the root
+           node, and at most 39 subsequent values from nodes reached by X = 0 and X = 1."
+
+          -- https://www.itu.int/ITU-T/studygroups/com17/languages/X.690-0207.pdf#page=22
+        */
+        if ($first <= 2) { // ie. 0 <= ord($content[0]) < 120 (0x78)
+            array_unshift($oid, ord($content[0]) % 40);
+            array_unshift($oid, $first);
+        } else {
+            array_unshift($oid, $part1->subtract($eighty));
+            array_unshift($oid, 2);
+        }
+
+        return implode('.', $oid);
+    }
+
+    /**
+     * DER-encode the OID
+     *
+     * Called by _encode_der()
+     *
+     * @access private
+     * @param string $content
+     * @return string
+     */
+    function _encodeOID($source)
+    {
+        static $mask, $zero, $forty;
+        if (!$mask) {
+            $mask = new BigInteger(0x7F);
+            $zero = new BigInteger();
+            $forty = new BigInteger(40);
+        }
+
+        $oid = preg_match('#(?:\d+\.)+#', $source) ? $source : array_search($source, $this->oids);
+        if ($oid === false) {
+            user_error('Invalid OID');
+            return false;
+        }
+        $parts = explode('.', $oid);
+        $part1 = array_shift($parts);
+        $part2 = array_shift($parts);
+
+        $first = new BigInteger($part1);
+        $first = $first->multiply($forty);
+        $first = $first->add(new BigInteger($part2));
+
+        array_unshift($parts, $first->toString());
+
+        $value = '';
+        foreach ($parts as $part) {
+            if (!$part) {
+                $temp = "\0";
+            } else {
+                $temp = '';
+                $part = new BigInteger($part);
+                while (!$part->equals($zero)) {
+                    $submask = $part->bitwise_and($mask);
+                    $submask->setPrecision(8);
+                    $temp = (chr(0x80) | $submask->toBytes()) . $temp;
+                    $part = $part->bitwise_rightShift(7);
+                }
+                $temp[strlen($temp) - 1] = $temp[strlen($temp) - 1] & chr(0x7F);
+            }
+            $value.= $temp;
+        }
+
+        return $value;
     }
 
     /**

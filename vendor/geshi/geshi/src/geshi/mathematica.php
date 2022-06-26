@@ -4,7 +4,7 @@
  * --------
  * Author: Connor Glosser (glosser1@gmail.com)
  * Copyright: (c) 2014 Connor Glosser (http://www.msu.edu/~glosser1)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2014/08/11
  *
  * Mathematica language file for GeSHi.
