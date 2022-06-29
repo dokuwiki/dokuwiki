@@ -193,7 +193,9 @@ class Logger
     {
         global $conf;
 
-        if ($date !== null) $date = strtotime($date);
+        if($date !== null && !is_numeric($date)) {
+            $date = strtotime($date);
+        }
         if (!$date) $date = time();
 
         return $conf['logdir'] . '/' . $this->facility . '/' . date('Y-m-d', $date) . '.log';
