@@ -294,7 +294,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      */
     public function quote_open()
     {
-        $this->cdata(DOKU_LF.DOKU_TAB.'"');
+        $this->cdata(DOKU_LF.DOKU_TAB.'“');
     }
 
     /**
@@ -302,7 +302,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      */
     public function quote_close()
     {
-        $this->cdata('"'.DOKU_LF);
+        $this->cdata('”'.DOKU_LF);
     }
 
     /**
