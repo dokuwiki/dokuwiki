@@ -70,6 +70,7 @@ class Editor extends Ui
         $form->setHiddenField('prefix', $PRE .'.');
         $form->setHiddenField('suffix', $SUF);
         $form->setHiddenField('changecheck', $check);
+        $form->setHiddenField('haschanged', $INPUT->int('haschanged')); // set by JavaScript
 
         // prepare data for EDIT_FORM_ALTERNATE event
         $data = array(
