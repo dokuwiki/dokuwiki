@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author ANDRE BASSANI DE FREITAS <dedebf@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Davi Jorge <davimoises2015@hotmail.com>
@@ -135,6 +136,7 @@ $lang['js']['media_done_btn']  = 'Concluído';
 $lang['js']['media_drop']      = 'Arraste os arquivos até aqui para enviar';
 $lang['js']['media_cancel']    = 'remover';
 $lang['js']['media_overwrt']   = 'Sobrescrever arquivos existentes';
+$lang['js']['data_insecure']   = 'AVISO: Parece que seu diretório data não está devidamente protegido. Por favor, leia sobre <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
 $lang['search_exact_match']    = 'Correspondência exata';
 $lang['search_starts_with']    = 'Começa com';
 $lang['search_ends_with']      = 'Termina com';
