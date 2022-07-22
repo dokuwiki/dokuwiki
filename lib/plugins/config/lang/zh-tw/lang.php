@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Winston Sung <winston21.sung@gmail.com>
  * @author GHSRobert Ciang <robertus0617@gmail.com>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
@@ -143,6 +144,7 @@ $lang['xsendfile']             = '使用 X-Sendfile 頭讓網頁伺服器發送�
 $lang['renderer_xhtml']        = '主要 wiki 輸出 (xhtml) 的渲染器';
 $lang['renderer__core']        = '%s (dokuwiki 核心)';
 $lang['renderer__plugin']      = '%s (附加元件)';
+$lang['search_fragment_o_contains'] = '包含';
 $lang['dnslookups']            = 'Dokuwiki 將查詢使用者編輯頁面的遠程 IP 位址主機名稱。若您的 DNS 伺服器速度較慢、失效，或者您不想要此功能，请停用此選項';
 $lang['proxy____host']         = 'Proxy 伺服器名稱';
 $lang['proxy____port']         = 'Proxy 連接埠';

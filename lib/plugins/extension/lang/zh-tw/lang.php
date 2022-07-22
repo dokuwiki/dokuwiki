@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Winston Sung <winston21.sung@gmail.com>
  * @author GHSRobert Ciang <robertus0617@gmail.com>
  * @author Stan <talktostan@gmail.com>
  * @author June-Hao Hou <junehao@gmail.com>
@@ -28,6 +29,7 @@ $lang['btn_disable']           = '停用';
 $lang['btn_install']           = '安裝';
 $lang['btn_reinstall']         = '重新安裝';
 $lang['js']['reallydel']       = '確定要移除此延伸功能？';
+$lang['js']['display_viewoptions'] = '檢視選項：';
 $lang['js']['display_enabled'] = '啟用';
 $lang['js']['display_disabled'] = '禁用';
 $lang['js']['display_updatable'] = '可更新';
