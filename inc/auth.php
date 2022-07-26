@@ -56,7 +56,7 @@ function auth_setup() {
 
     if ($auth->success == false) {
         // degrade to unauthenticated user
-        unset($auth);
+        $auth = null;
         auth_logoff();
         msg($lang['authtempfail'], -1);
         return false;
@@ -281,19 +281,23 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
- * @return  string  a MD5 sum of various browser headers
+ * @return  string  a SHA256 sum of various browser headers
  */
 function auth_browseruid() {
     /* @var Input $INPUT */
     global $INPUT;
 
-    $ip  = clientIP(true);
-    $uid = '';
-    $uid .= $INPUT->server->str('HTTP_USER_AGENT');
-    $uid .= $INPUT->server->str('HTTP_ACCEPT_CHARSET');
-    $uid .= substr($ip, 0, strpos($ip, '.'));
-    $uid = \dokuwiki\Utf8\PhpString::strtolower($uid);
-    return md5($uid);
+    $ip = clientIP(true);
+    // convert IP string to packed binary representation
+    $pip = inet_pton($ip);
+
+    $uid = implode("\n", [
+        $INPUT->server->str('HTTP_USER_AGENT'),
+        $INPUT->server->str('HTTP_ACCEPT_LANGUAGE'),
+        $INPUT->server->str('HTTP_ACCEPT_ENCODING'),
+        substr($pip, 0, strlen($pip) / 2), // use half of the IP address (works for both IPv4 and IPv6)
+    ]);
+    return hash('sha256', $uid);
 }
 
 /**
@@ -596,7 +600,7 @@ function auth_quickaclcheck($id) {
  */
 function auth_aclcheck($id, $user, $groups) {
     $data = array(
-        'id'     => $id,
+        'id'     => $id ?? '',
         'user'   => $user,
         'groups' => $groups
     );
@@ -627,6 +631,7 @@ function auth_aclcheck_cb($data) {
     // if no ACL is used always return upload rights
     if(!$conf['useacl']) return AUTH_UPLOAD;
     if(!$auth) return AUTH_NONE;
+    if(!is_array($AUTH_ACL)) return AUTH_NONE;
 
     //make sure groups is an array
     if(!is_array($groups)) $groups = array();

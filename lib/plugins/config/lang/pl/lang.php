@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marek Adamski <fevbew@wp.pl>
  * @author pavulondit <pavloo@vp.pl>
  * @author Bartek S <sadupl@gmail.com>
  * @author Wojciech Lichota <wojciech@lichota.pl>
@@ -46,6 +47,7 @@ $lang['_advanced']             = 'Zaawansowane';
 $lang['_network']              = 'Sieć';
 $lang['_msg_setting_undefined'] = 'Brak danych o ustawieniu.';
 $lang['_msg_setting_no_class'] = 'Brak kategorii ustawień.';
+$lang['_msg_setting_no_known_class'] = 'Klasa ustawień niedostępna.';
 $lang['_msg_setting_no_default'] = 'Brak wartości domyślnej.';
 $lang['title']                 = 'Tytuł wiki';
 $lang['start']                 = 'Tytuł strony początkowej';
@@ -135,6 +137,7 @@ $lang['rss_linkto']            = 'Odnośniki w RSS';
 $lang['rss_content']           = 'Rodzaj informacji wyświetlanych w RSS ';
 $lang['rss_update']            = 'Okres aktualizacji RSS (w sekundach)';
 $lang['rss_show_summary']      = 'Podsumowanie w tytule';
+$lang['rss_show_deleted']      = 'Pokaż usunięte kanały';
 $lang['rss_media']             = 'Rodzaj zmian wyświetlanych w RSS';
 $lang['rss_media_o_both']      = 'oba';
 $lang['rss_media_o_pages']     = 'strony';
@@ -156,11 +159,15 @@ $lang['xsendfile']             = 'Użyj nagłówka HTTP X-Sendfile w celu przesy
 $lang['renderer_xhtml']        = 'Mechanizm renderowania głównej treści strony (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki)';
 $lang['renderer__plugin']      = '%s (wtyczka)';
+$lang['search_nslimit']        = 'Ogranicz wyszukiwanie do bieżących przestrzeni nazw X. Gdy wyszukiwanie jest wykonywane ze strony w głębszej przestrzeni nazw, pierwsze przestrzenie nazw X zostaną dodane jako filtr';
 $lang['search_fragment']       = 'Określ domyślne zachowanie wyszukiwania fragmentów';
 $lang['search_fragment_o_exact'] = 'dokładny';
 $lang['search_fragment_o_starts_with'] = 'zaczyna się z';
 $lang['search_fragment_o_ends_with'] = 'kończy się z';
 $lang['search_fragment_o_contains'] = 'zawiera';
+$lang['trustedproxy']          = 'Zaufaj serwerom proxy odpowiadającym temu wyrażeniu regularnemu co do prawdziwego adresu IP klienta, który zgłaszają. Domyślnie dotyczy sieci lokalnych. Pozostaw puste, aby nie ufać żadnym serwerom proxy.';
+$lang['_feature_flags']        = 'Flagi funkcji';
+$lang['defer_js']              = 'Odrocz wykonanie skryptu JavaScript po przeanalizowaniu kodu HTML strony. Poprawia postrzeganą szybkość strony, ale może zepsuć niewielką liczbę wtyczek.';
 $lang['dnslookups']            = 'DokiWiki wyszuka nazwy hostów dla zdalnych adresów IP użytkowników edytujących strony. Jeśli twój serwer DNS działa zbyt wolno, uległ awarii lub nie chcesz używać wyszukiwania, wyłącz tę opcję.';
 $lang['jquerycdn']             = 'Czy pliki skryptów jQuery i jQuery UI powinny być ładowane z CDN? Powoduje to dodanie dodatkowych żądań HTTP, ale pliki mogą być ładowane szybciej, a użytkownicy mogą już je mieć zbuforowane.';
 $lang['jquerycdn_o_0']         = 'Bez CDN, tylko lokalne zasoby';

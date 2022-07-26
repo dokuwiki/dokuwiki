@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Marc Zulet <marczulet@gmail.com>
+ * @author Joan <aseques@gmail.com>
  * @author David Surroca <davidsurrocaestrada@gmail.com>
  * @author Adolfo Jayme Barrientos <fito@libreoffice.org>
  * @author Carles Bellver <carles.bellver@cent.uji.es>
@@ -221,7 +222,7 @@ $lang['created']               = 'creat';
 $lang['restored']              = 's\'ha restaurat una versió anterior %s';
 $lang['external_edit']         = 'edició externa';
 $lang['summary']               = 'Resum d\'edició';
-$lang['noflash']               = 'Per a visualitzar aquest contingut necessiteu el <a href="http://www.adobe.com/products/flashplayer/">connector d\'Adobe Flash</a>.';
+$lang['noflash']               = 'Per a visualitzar aquest contingut necessiteu el <a href="http://get.adobe.com/flashplayer">connector d\'Adobe Flash</a>.';
 $lang['download']              = 'Baixa el fragment';
 $lang['tools']                 = 'Eines';
 $lang['user_tools']            = 'Eines de l\'usuari';
@@ -301,7 +302,7 @@ $lang['i_wikiname']            = 'Nom del wiki';
 $lang['i_enableacl']           = 'Habilita ACL (recomanat)';
 $lang['i_superuser']           = 'Superusuari';
 $lang['i_problems']            = 'L\'instal·lador ha trobat alguns problemes, que s\'indiquen més avall. No podeu continuar fins que no els hàgiu solucionat.';
-$lang['i_modified']            = 'Per raons de seguretat aquesta seqüència només funciona amb una instal·lació nova i no modificada de Dokuwiki. Hauríeu de tornar a baixar el paquet i/o descomprimir-lo o consultar les <a href="http://dokuwiki.org/install">instruccions d\'instal·lació de Dokuwiki</a> completes';
+$lang['i_modified']            = 'Per raons de seguretat aquesta seqüència només funciona amb una instal·lació nova i no modificada de Dokuwiki. Hauríeu de tornar a baixar el paquet i/o descomprimir-lo o consultar les <a href="https://www.dokuwiki.org/install">instruccions d\'instal·lació de Dokuwiki</a> completes';
 $lang['i_funcna']              = 'La funció PHP <code>%s</code> no està disponible. Potser el vostre proveïdor de serveis l\'ha inhabilitada per alguna raó';
 $lang['i_disabled']            = 'El vostre proveïdor l\'ha desactivat.';
 $lang['i_funcnmail']           = '<b>Nota:</b> La funció de correu PHP no està disponible. %s Si es manté no disponible, podeu instal·lar el <a href="https://www.dokuwiki.org/plugin:smtp">connector smtp</a>.';

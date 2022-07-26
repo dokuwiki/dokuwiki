@@ -114,8 +114,15 @@ function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
  */
 function p_locale_xhtml($id){
     //fetch parsed locale
-    $html = p_cached_output(localeFN($id));
-    return $html;
+    $data = ['id' => $id, 'html' => ''];
+
+    $event = new Event('PARSER_LOCALE_XHTML', $data);
+    if ($event->advise_before()) {
+        $data['html'] = p_cached_output(localeFN($data['id']));
+    }
+    $event->advise_after();
+
+    return $data['html'];
 }
 
 /**

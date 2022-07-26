@@ -13,7 +13,10 @@ use dokuwiki\Action\Exception\ActionAbort;
  */
 class Cancel extends AbstractAliasAction {
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     * @throws ActionAbort
+     */
     public function preProcess() {
         global $ID;
         unlock($ID);

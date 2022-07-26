@@ -48,7 +48,7 @@ class DisplayRow extends DisplayTile
         echo '<div class="example" id="ex_' . str_replace(':', '_', $id) . '">';
         echo $lang['mediausage'] . ' <code>{{:' . $id . '}}</code>';
         echo '</div>';
-        if ($this->mediaFile->getWidth()) $this->showDetails();
+        if ($this->mediaFile->isImage()) $this->showDetails();
         echo '<div class="clearer"></div>' . NL;
         echo '</div>' . NL;
 

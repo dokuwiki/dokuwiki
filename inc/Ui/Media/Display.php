@@ -39,7 +39,14 @@ class Display
             $src = $this->getIconUrl();
         }
 
-        return '<img src="' . $src . '" alt="' . hsc($this->mediaFile->getDisplayName()) . '" loading="lazy" />';
+        $attr = [
+            'alt' => $this->mediaFile->getDisplayName(),
+            'loading' => 'lazy',
+            'width' => $w,
+            'height' => $h,
+        ];
+
+        return '<img src="' . $src . '" ' . buildAttributes($attr) . ' />';
     }
 
     /**

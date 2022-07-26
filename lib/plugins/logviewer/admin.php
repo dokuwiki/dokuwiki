@@ -103,10 +103,10 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
                 echo '<dd>';
                 while ($line[0] === ' ' && $line[1] === ' ') {
                     echo hsc(substr($line, 2)) . '<br />';
-                    $line = $lines[$i++];
+                    $line = $lines[++$i];
                 }
                 echo '</dd>';
-                $i -= 2; // rewind the counter
+                $i -= 1; // rewind the counter
             } else {
                 // other lines are actual log lines in three parts
                 list($dt, $file, $msg) = explode("\t", $line, 3);

@@ -96,6 +96,7 @@ $lang['auth_security_timeout'] = 'Zeitüberschreitung bei der Authentifizierung 
 $lang['securecookie']          = 'Sollen Cookies, die via HTTPS gesetzt wurden nur per HTTPS versendet werden? Deaktiviere diese Option, wenn nur der Login deines Wikis mit SSL gesichert ist, aber das Betrachten des Wikis ungesichert geschieht.';
 $lang['remote']                = 'Aktiviert den externen API-Zugang. Diese Option erlaubt es externen Anwendungen von außen auf die XML-RPC-Schnittstelle oder anderweitigen Schnittstellen zuzugreifen.';
 $lang['remoteuser']            = 'Zugriff auf die externen Schnittstellen durch kommaseparierte Angabe von Benutzern oder Gruppen einschränken. Ein leeres Feld erlaubt Zugriff für jeden.';
+$lang['remotecors']            = 'Erlaubt externen Clients API-Zugriff per Cross-Origin Resource Sharing (CORS). Asterisk (*), um alle Quellen zu erlauben. Leer lassen, um CORS zu deaktivieren.';
 $lang['usewordblock']          = 'Blockiere Spam basierend auf der Wortliste';
 $lang['relnofollow']           = 'rel="nofollow" verwenden';
 $lang['indexdelay']            = 'Zeit bevor Suchmaschinenindexierung erlaubt ist';
@@ -149,7 +150,7 @@ $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['compress']              = 'JavaScript und Stylesheets komprimieren';
 $lang['cssdatauri']            = 'Größe in Bytes, bis zu der Bilder in css-Dateien referenziert werden können, um HTTP-Anfragen zu minimieren. <code>400</code> bis <code>600</code> Bytes sind gute Werte. Setze <code>0</code> für inaktive Funktion.';
 $lang['send404']               = 'Sende "HTTP 404/Seite nicht gefunden" für nicht existierende Seiten';
-$lang['broken_iua']            = 'Falls die Funktion ignore_user_abort auf deinem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür. Siehe auch <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
+$lang['broken_iua']            = 'Falls die Funktion ignore_user_abort auf deinem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür.';
 $lang['xsendfile']             = 'Den X-Sendfile-Header nutzen, um Dateien direkt vom Webserver ausliefern zu lassen? Dein Webserver muss dies unterstützen!';
 $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wiki-Ausgabe.';
 $lang['renderer__core']        = '%s (DokuWiki Kern)';

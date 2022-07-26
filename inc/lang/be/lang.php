@@ -209,7 +209,7 @@ $lang['created']               = 'створана';
 $lang['restored']              = 'старая версія адноўлена (%s)';
 $lang['external_edit']         = 'знешняе змена';
 $lang['summary']               = 'Зводка змяненняў';
-$lang['noflash']               = 'Для прагляду змесціва гэтага патрабуецца <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
+$lang['noflash']               = 'Для прагляду змесціва гэтага патрабуецца <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Спампаваць фрагмент кода';
 $lang['tools']                 = 'Інструменты';
 $lang['user_tools']            = 'Інструменты карыстальніка';

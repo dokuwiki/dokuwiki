@@ -52,8 +52,8 @@ class DebugHelper
             trim(
                 (!empty($call['class']) ? ($call['class'] . '::') : '') .
                 $call['function'] . '()', ':'),
-            $call['file'],
-            $call['line']
+            $self['file'],
+            $self['line']
         );
     }
 

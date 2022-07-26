@@ -26,7 +26,7 @@ if (!defined('DOKU_INC')) die();
             tpl_link(
                 wl(),
                 '<img src="'.$logo.'" '.$logoSize[3].' alt="" /> <span>'.$conf['title'].'</span>',
-                'accesskey="h" title="[H]"'
+                'accesskey="h" title="' . tpl_getLang('home') . ' [h]"'
             );
         ?></h1>
         <?php if ($conf['tagline']): ?>

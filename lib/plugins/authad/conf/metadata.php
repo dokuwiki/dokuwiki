@@ -15,4 +15,5 @@ $meta['expirywarn']         = array('numeric', '_min'=>0,'_caution' => 'danger')
 $meta['additional']         = array('string','_caution' => 'danger');
 $meta['update_name']        = array('onoff','_caution' => 'danger');
 $meta['update_mail']        = array('onoff','_caution' => 'danger');
+$meta['update_pass']        = array('onoff','_caution' => 'danger');
 $meta['recursive_groups']   = array('onoff','_caution' => 'danger');
