@@ -177,7 +177,7 @@ class form_dropdownelement_test extends DokuWikiTest {
     /**
      * check that posted values overwrite preset default
      */
-    function test_prefill() {
+    public function test_prefill() {
         global $INPUT;
         $INPUT->post->set('foo', 'second');
 
@@ -193,5 +193,25 @@ class form_dropdownelement_test extends DokuWikiTest {
         $this->assertTrue($option->length == 1);
         $this->assertEquals('second', $option->val());
         $this->assertEquals('The second Label', $option->text());
+    }
+
+
+    public function test_multiple() {
+        $form = new Form\Form();
+
+        $options = array ('first'=>'A first Label', 'second'=>'The second Label', 'third'=>'Just 3');
+        $element = $form->addDropdown('foo', $options, 'label text')->attr('multiple', '1');
+
+        // only two of these values are valid
+        $element->val(['first', 'third', 'fourth']);
+        $this->assertEquals(['first', 'third'], $element->val());
+
+        // check HTML
+        $html = $form->toHTML();
+        $pq = phpQuery::newDocumentXHTML($html);
+        $option = $pq->find('option[selected=selected]');
+
+        $this->assertEquals('A first Label', $option->get(0)->textContent);
+        $this->assertEquals('Just 3', $option->get(1)->textContent);
     }
 }
