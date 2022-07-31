@@ -1,6 +1,11 @@
 name: Linux Unit Tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - stable
+      - old-stable
+  pull_request:
 
 jobs:
     run:

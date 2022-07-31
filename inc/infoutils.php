@@ -89,7 +89,7 @@ function getVersionData(){
             $subDir = substr($headCommit, 0, 2);
             $fileName = substr($headCommit, 2);
             $gitCommitObject = DOKU_INC . ".git/objects/$subDir/$fileName";
-            if (file_exists($gitCommitObject) && method_exists(zlib_decode)) {
+            if (file_exists($gitCommitObject) && function_exists('zlib_decode')) {
                 $commit = zlib_decode(file_get_contents($gitCommitObject));
                 $committerLine = explode("\n", $commit)[3];
                 $committerData = explode(' ', $committerLine);
