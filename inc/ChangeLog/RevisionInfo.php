@@ -34,9 +34,10 @@ class RevisionInfo
      */
     public function __construct($info = null)
     {
+        global $INPUT;
         if (is_array($info) && isset($info['id'])) {
             // define strategy context
-            $info['mode'] = strrpos($info['id'], '.') ? 'media' : 'page';
+            $info['mode'] = ($INPUT->post->str('call') == 'mediadetails' || $INPUT->get->str('show_changes') == 'mediafiles') ? 'media' : 'page';
         } else {
             $info = [
                 'mode' => 'page',
@@ -170,21 +171,22 @@ class RevisionInfo
     {
         $id = $this->val('id');
         $rev = $this->isCurrent() ? '' : $this->val('date');
-
-        switch ($this->val('mode')) {
-            case 'media': // media file revision
-                $params = ['tab_details'=> 'view', 'ns'=> getNS($id), 'image'=> $id];
-                if ($rev) $params += ['rev'=> $rev];
-                $href = media_managerURL($params, '&');
-                $display_name = $id;
-                $exists = file_exists(mediaFN($id, $rev));
-                break;
-            case 'page': // page revision
-                $params = $rev ? ['rev'=> $rev] : [];
-                $href = wl($id, $params, false, '&');
-                $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
-                if (!$display_name) $display_name = $id;
-                $exists = page_exists($id, $rev);
+        $is_media = ($this->val('mode') == 'media' || $this->val('media')) ? true : false;
+        
+        if($is_media) { 
+            // media file revision
+            $params = ['tab_details'=> 'view', 'ns'=> getNS($id), 'image'=> $id];
+            if ($rev) $params += ['rev'=> $rev];
+            $href = media_managerURL($params, '&');
+            $display_name = $id;
+            $exists = file_exists(mediaFN($id, $rev));
+        } else {
+            // page revision
+            $params = $rev ? ['rev'=> $rev] : [];
+            $href = wl($id, $params, false, '&');
+            $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
+            if (!$display_name) $display_name = $id;
+            $exists = page_exists($id, $rev);
         }
 
         if($exists) {
