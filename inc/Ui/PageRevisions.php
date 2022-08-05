@@ -69,6 +69,7 @@ class PageRevisions extends Revisions
         $form->addTagOpen('ul');
         foreach ($revisions as $info) {
             $rev = $info['date'];
+            $info['media'] = false;
             $RevInfo = new RevisionInfo($info);
             $RevInfo->isCurrent($changelog->isCurrentRevision($rev));
 
