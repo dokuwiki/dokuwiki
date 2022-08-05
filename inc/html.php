@@ -111,7 +111,7 @@ function html_secedit_button($matches){
         return '';
     }
     $data ['target'] = strtolower($data['target']);
-    $data ['hid'] = strtolower($data['hid']);
+    $data ['hid'] = strtolower($data['hid'] ?? '');
 
     return Event::createAndTrigger('HTML_SECEDIT_BUTTON', $data,
                          'html_secedit_get_button');
