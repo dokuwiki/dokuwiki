@@ -109,7 +109,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
      * @return array
      * @see searchCountCallback
      */
-    function initEmptySearchList()
+    protected function initEmptySearchList()
     {
         return $list = array_fill_keys([
             'file_count',
