@@ -192,6 +192,7 @@ $lang['trustedproxy'] = 'Trust forwarding proxies matching this regular expressi
 
 $lang['_feature_flags'] = 'Feature Flags';
 $lang['defer_js'] = 'Defer javascript to be execute after the page\'s HTML has been parsed. Improves perceived page speed but could break a small number of plugins.';
+$lang['hidewarnings'] = 'Do not display any warnings issued by PHP. This may ease the transisition to PHP8+. Warnings will still be logged in the error log and should be reported.';
 
 /* Network Options */
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
