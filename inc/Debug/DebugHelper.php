@@ -46,7 +46,7 @@ class DebugHelper
 
         $backtrace = debug_backtrace();
         for ($i = 0; $i < $callerOffset; $i += 1) {
-            array_shift($backtrace);
+            if(count($backtrace) > 1) array_shift($backtrace);
         }
 
         list($self, $call) = $backtrace;
@@ -64,8 +64,8 @@ class DebugHelper
             trim(
                 (!empty($call['class']) ? ($call['class'] . '::') : '') .
                 $call['function'] . '()', ':'),
-            $self['file'],
-            $self['line']
+            $call['file'],
+            $call['line']
         );
     }
 
