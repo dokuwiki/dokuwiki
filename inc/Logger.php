@@ -147,6 +147,16 @@ class Logger
     }
 
     /**
+     * Is this logging instace actually logging?
+     *
+     * @return bool
+     */
+    public function isLogging()
+    {
+        return $this->isLogging;
+    }
+
+    /**
      * Formats the given data as loglines
      *
      * @param array $data Event data from LOGGER_DATA_FORMAT
@@ -193,7 +203,7 @@ class Logger
     {
         global $conf;
 
-        if($date !== null && !is_numeric($date)) {
+        if ($date !== null && !is_numeric($date)) {
             $date = strtotime($date);
         }
         if (!$date) $date = time();
