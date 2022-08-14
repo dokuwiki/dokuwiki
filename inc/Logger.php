@@ -220,6 +220,9 @@ class Logger
      */
     protected function writeLogLines($lines, $logfile)
     {
+        if (defined('DOKU_UNITTEST')) {
+            fwrite(STDERR, "\n[" . $this->facility . '] ' . join("\n", $lines) . "\n");
+        }
         return io_saveFile($logfile, join("\n", $lines) . "\n", true);
     }
 }
