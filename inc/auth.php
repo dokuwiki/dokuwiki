@@ -643,7 +643,7 @@ function auth_aclcheck_cb($data) {
 
     if(!$auth->isCaseSensitive()) {
         $user   = \dokuwiki\Utf8\PhpString::strtolower($user);
-        $groups = array_map('utf8_strtolower', $groups);
+        $groups = array_map([\dokuwiki\Utf8\PhpString::class, 'strtolower'], $groups);
     }
     $user   = auth_nameencode($auth->cleanUser($user));
     $groups = array_map(array($auth, 'cleanGroup'), (array) $groups);
