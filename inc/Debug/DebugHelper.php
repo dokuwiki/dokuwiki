@@ -146,11 +146,11 @@ class DebugHelper
      */
     private static function triggerDeprecationEvent(
         array $backtrace,
-              $alternative,
-              $deprecatedThing,
-              $caller,
-              $file,
-              $line
+        $alternative,
+        $deprecatedThing,
+        $caller,
+        $file,
+        $line
     )
     {
         $data = [
