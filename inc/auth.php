@@ -294,7 +294,6 @@ function auth_browseruid() {
     $uid = implode("\n", [
         $INPUT->server->str('HTTP_USER_AGENT'),
         $INPUT->server->str('HTTP_ACCEPT_LANGUAGE'),
-        $INPUT->server->str('HTTP_ACCEPT_ENCODING'),
         substr($pip, 0, strlen($pip) / 2), // use half of the IP address (works for both IPv4 and IPv6)
     ]);
     return hash('sha256', $uid);
