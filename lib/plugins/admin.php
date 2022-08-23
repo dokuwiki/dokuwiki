@@ -1,4 +1,4 @@
 <?php
 \dokuwiki\Debug\DebugHelper::dbgDeprecatedFunction(
-    'Do not require() files yourself. Autoloading', 0, basename(__FILE__)
+    'Autoloading', 1, 'require(' . basename(__FILE__) . ')'
 );

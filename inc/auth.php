@@ -294,7 +294,6 @@ function auth_browseruid() {
     $uid = implode("\n", [
         $INPUT->server->str('HTTP_USER_AGENT'),
         $INPUT->server->str('HTTP_ACCEPT_LANGUAGE'),
-        $INPUT->server->str('HTTP_ACCEPT_ENCODING'),
         substr($pip, 0, strlen($pip) / 2), // use half of the IP address (works for both IPv4 and IPv6)
     ]);
     return hash('sha256', $uid);
@@ -643,7 +642,7 @@ function auth_aclcheck_cb($data) {
 
     if(!$auth->isCaseSensitive()) {
         $user   = \dokuwiki\Utf8\PhpString::strtolower($user);
-        $groups = array_map('utf8_strtolower', $groups);
+        $groups = array_map([\dokuwiki\Utf8\PhpString::class, 'strtolower'], $groups);
     }
     $user   = auth_nameencode($auth->cleanUser($user));
     $groups = array_map(array($auth, 'cleanGroup'), (array) $groups);

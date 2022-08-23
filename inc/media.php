@@ -1704,7 +1704,7 @@ function media_nstree_li($item){
 function media_mod_image($file, $ext, $w, $h=0, $crop=false)
 {
     global $conf;
-    if(!$h) $h = $w;
+    if(!$h) $h = 0;
     // we wont scale up to infinity
     if($w > 2000 || $h > 2000) return $file;
 

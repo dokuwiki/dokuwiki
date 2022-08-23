@@ -242,6 +242,7 @@ $meta['trustedproxy'] = array('regex');
 
 $meta['_feature_flags'] = ['fieldset'];
 $meta['defer_js']       = ['onoff'];
+$meta['hidewarnings']   = ['onoff'];
 
 $meta['_network']    = array('fieldset');
 $meta['dnslookups']  = array('onoff');

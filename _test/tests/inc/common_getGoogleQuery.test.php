@@ -1,5 +1,7 @@
 <?php
 
+use \dokuwiki\Input\Input;
+
 class common_getGoogleQuery_test extends DokuWikiTest {
 
     /**

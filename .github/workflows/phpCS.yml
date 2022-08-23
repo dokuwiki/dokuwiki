@@ -1,6 +1,11 @@
 name: PHP Code Style
 
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - stable
+      - old-stable
+  pull_request:
 
 jobs:
     phpcs:

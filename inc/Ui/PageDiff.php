@@ -132,9 +132,14 @@ class PageDiff extends Diff
         // create revision info object for older and newer sides
         // RevInfo1 : older, left side
         // RevInfo2 : newer, right side
-        $this->RevInfo1 = new RevisionInfo($changelog->getRevisionInfo($this->rev1));
-        $this->RevInfo2 = new RevisionInfo($changelog->getRevisionInfo($this->rev2));
+        
+        $changelogRev1 = $changelog->getRevisionInfo($this->rev1);
+        $changelogRev2 = $changelog->getRevisionInfo($this->rev2);
+        $changelogRev1['media'] = $changelogRev2['media'] = false;
 
+        $this->RevInfo1 = new RevisionInfo($changelogRev1);
+        $this->RevInfo2 = new RevisionInfo($changelogRev2);
+        
         foreach ([$this->RevInfo1, $this->RevInfo2] as $RevInfo) {
             $isCurrent = $changelog->isCurrentRevision($RevInfo->val('date'));
             $RevInfo->isCurrent($isCurrent);

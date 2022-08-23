@@ -1,5 +1,7 @@
 <?php
 
+use \dokuwiki\ChangeLog\PageChangeLog;
+
 /**
  * Tests for if a page has revisions with hasRevisions()
  *
@@ -18,7 +20,7 @@ class changelog_hasrevisions_test extends DokuWikiTest {
         $result = $pagelog->hasRevisions();
         $this->assertTrue($result);
     }
-    
+
     /**
      * test page has no revisions
      */

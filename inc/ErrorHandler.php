@@ -19,6 +19,7 @@ class ErrorHandler
         if (!defined('DOKU_UNITTEST')) {
             set_exception_handler([ErrorHandler::class, 'fatalException']);
             register_shutdown_function([ErrorHandler::class, 'fatalShutdown']);
+            set_error_handler([ErrorHandler::class, 'logWarning'], E_WARNING);
         }
     }
 
@@ -100,12 +101,47 @@ EOT;
      */
     public static function logException($e)
     {
+        if (is_a($e, \ErrorException::class) && $e->getSeverity() === E_WARNING) {
+            $prefix = 'Warning';
+        } else {
+            $prefix = get_class($e);
+        }
+
+
         return Logger::getInstance()->log(
-            get_class($e) . ': ' . $e->getMessage(),
+            $prefix . ': ' . $e->getMessage(),
             $e->getTraceAsString(),
             $e->getFile(),
             $e->getLine()
         );
+    }
+
+    /**
+     * Log a warning
+     *
+     * @param int $errno
+     * @param string $errstr
+     * @param string $errfile
+     * @param int $errline
+     * @return bool
+     */
+    public static function logWarning($errno, $errstr, $errfile, $errline)
+    {
+        global $conf;
+
+        // ignore supressed warnings
+        if (!(error_reporting() & $errno)) return false;
+
+        $ex = new \ErrorException(
+            $errstr,
+            0,
+            $errno,
+            $errfile,
+            $errline
+        );
+        self::logException($ex);
+
+        return (bool)$conf['hidewarnings'];
     }
 
     /**
