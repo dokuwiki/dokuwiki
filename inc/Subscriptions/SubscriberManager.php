@@ -196,6 +196,11 @@ class SubscriberManager
                     continue;
                 }
 
+                // if no last sent is set, use 0
+                if (!isset($m[3])) {
+                    $m[3] = 0;
+                }
+
                 $u = rawurldecode($m[1]); // decode the user name
                 if (!isset($result[$target])) {
                     $result[$target] = [];
