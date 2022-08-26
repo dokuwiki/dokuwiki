@@ -30,6 +30,26 @@ function hsc($string) {
 }
 
 /**
+ * A safer explode for fixed length lists
+ *
+ * This works just like explode(), but will always return the wanted number of elements.
+ * If the $input string does not contain enough elements, the missing elements will be
+ * filled up with the $default value. If the input string contains more elements, the last
+ * one will NOT be split up and will still contain $separator
+ *
+ * @param string $separator The boundary string
+ * @param string $string The input string
+ * @param int $limit The number of expected elements
+ * @param mixed $default The value to use when filling up missing elements
+ * @see explode
+ * @return array
+ */
+function sexplode($separator, $string, $limit, $default = null)
+{
+    return array_pad(explode($separator, $string, $limit), $limit, $default);
+}
+
+/**
  * Checks if the given input is blank
  *
  * This is similar to empty() but will return false for "0".
