@@ -107,14 +107,17 @@ function html_secedit($text, $show = true) {
 function html_secedit_button($matches){
     $json = htmlspecialchars_decode($matches[1], ENT_QUOTES);
     $data = json_decode($json, true);
-    if ($data == NULL) {
+    if ($data === null) {
         return '';
     }
-    $data ['target'] = strtolower($data['target']);
-    $data ['hid'] = strtolower($data['hid']);
+    $data['target'] = strtolower($data['target']);
+    $data['hid'] = strtolower($data['hid'] ?? '');
 
-    return Event::createAndTrigger('HTML_SECEDIT_BUTTON', $data,
-                         'html_secedit_get_button');
+    return Event::createAndTrigger(
+        'HTML_SECEDIT_BUTTON',
+        $data,
+        'html_secedit_get_button'
+    );
 }
 
 /**
