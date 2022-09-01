@@ -763,57 +763,65 @@ function checkwordblock($text = '') {
 }
 
 /**
- * Return the IP of the client
+ * Return the IP of the client.
  *
- * Honours X-Forwarded-For and X-Real-IP Proxy Headers
+ * The IP is sourced from, in order of preference:
  *
- * It returns a comma separated list of IPs if the above mentioned
- * headers are set. If the single parameter is set, it tries to return
- * a routable public address, prefering the ones suplied in the X
- * headers
+ *   - The X-Real-IP header if $conf[realip] is true.
+ *   - The X-Forwarded-For header if all the proxies are trusted by $conf[trustedproxy].
+ *   - The TCP/IP connection remote address.
+ *   - 0.0.0.0 if all else fails.
  *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * The 'realip' config value should only be set to true if the X-Real-IP header
+ * is being added by the web server, otherwise it may be spoofed by the client.
+ *
+ * The 'trustedproxy' setting must not allow any IP, otherwise the X-Forwarded-For
+ * may be spoofed by the client.
+ *
+ * @author Zebra North <mrzebra@mrzebra.co.uk>
  *
  * @param  boolean $single If set only a single IP is returned
- * @return string
+ * @return string Returns an IP address if 'single' is true, or a comma-separated list
+ *                of IP addresses otherwise.
  */
 function clientIP($single = false) {
     /* @var Input $INPUT */
     global $INPUT, $conf;
 
-    $ip   = array();
-    $ip[] = $INPUT->server->str('REMOTE_ADDR');
-    if($INPUT->server->str('HTTP_X_FORWARDED_FOR')) {
-        $ip = array_merge($ip, explode(',', str_replace(' ', '', $INPUT->server->str('HTTP_X_FORWARDED_FOR'))));
-    }
-    if($INPUT->server->str('HTTP_X_REAL_IP')) {
-        $ip = array_merge($ip, explode(',', str_replace(' ', '', $INPUT->server->str('HTTP_X_REAL_IP'))));
-    }
+    // IPs in order of most to least preferred.
+    $ips = [];
 
-    // remove any non-IP stuff
-    $cnt   = count($ip);
-    for($i = 0; $i < $cnt; $i++) {
-        if(filter_var($ip[$i], FILTER_VALIDATE_IP) === false) {
-            unset($ip[$i]);
-        }
-    }
-    $ip = array_values(array_unique($ip));
-    if(empty($ip) || !$ip[0]) $ip[0] = '0.0.0.0'; // for some strange reason we don't have a IP
-
-    if(!$single) return join(',', $ip);
-
-    // skip trusted local addresses
-    foreach($ip as $i) {
-        if(!empty($conf['trustedproxy']) && preg_match('/'.$conf['trustedproxy'].'/', $i)) {
-            continue;
-        } else {
-            return $i;
-        }
+    // Use the X-Real-IP header if it is enabled by the configuration.
+    if (!empty($conf['realip']) && $INPUT->server->str('HTTP_X_REAL_IP')) {
+        $ips[] = $INPUT->server->str('HTTP_X_REAL_IP');
     }
 
-    // still here? just use the last address
-    // this case all ips in the list are trusted
-    return $ip[count($ip)-1];
+    // Get the client address from the X-Forwarded-For header.
+    // X-Forwarded-For: <client> [, <proxy>]...
+    $forwardedFor = explode(',', str_replace(' ', '', $INPUT->server->str('HTTP_X_FORWARDED_FOR')));
+    $remoteAddr = $INPUT->server->str('REMOTE_ADDR');
+
+    // Add the X-Forwarded-For address if the header was set by a trusted proxy.
+    if ($forwardedFor[0] && !empty($conf['trustedproxy']) && preg_match('/' . $conf['trustedproxy'] . '/', $remoteAddr)) {
+        $ips = array_merge($ips, $forwardedFor);
+    }
+
+    // Add the TCP/IP connection endpoint.
+    $ips[] = $remoteAddr;
+
+    // Remove invalid IPs.
+    $ips = array_filter($ips, function ($ip)  { return filter_var($ip, FILTER_VALIDATE_IP); });
+
+    // Remove duplicated IPs.
+    $ips = array_values(array_unique($ips));
+
+    // Add a fallback if for some reason there were no valid IPs.
+    if (!$ips) {
+        $ips[] = '0.0.0.0';
+    }
+
+    // Return the first IP in single mode, or all the IPs.
+    return $single ? $ips[0] : join(',', $ips);
 }
 
 /**
