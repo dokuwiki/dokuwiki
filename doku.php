@@ -11,7 +11,7 @@
 // update message version - always use a string to avoid localized floats!
 use dokuwiki\Extension\Event;
 
-$updateVersion = "51.3";
+$updateVersion = "51.4";
 
 //  xdebug_start_profiling();
 

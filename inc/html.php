@@ -1347,7 +1347,7 @@ function html_diff($text = '', $intro = true, $type = null) {
      */
     ?>
     <div class="table">
-    <table class="diff diff_<?php echo $type ?>">
+    <table class="diff diff_<?php echo hsc($type) ?>">
 
         <?php
         //navigation and header
