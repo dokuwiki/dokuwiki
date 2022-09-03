@@ -105,13 +105,14 @@ class PageDiff extends Diff
         }
 
         // requested diff view type
+        $mode = '';
         if ($INPUT->has('difftype')) {
-            $this->preference['difftype'] = $INPUT->str('difftype');
+            $mode = $INPUT->str('difftype');
         } else {
             // read preference from DokuWiki cookie. PageDiff only
             $mode = get_doku_pref('difftype', null);
-            if (isset($mode)) $this->preference['difftype'] = $mode;
         }
+        if(in_array($mode, ['inline','sidebyside'])) $this->preference['difftype'] = $mode;
 
         if (!$INPUT->has('rev') && !$INPUT->has('rev2')) {
             global $INFO, $REV;
@@ -222,7 +223,7 @@ class PageDiff extends Diff
 
         // display diff view table
         echo '<div class="table">';
-        echo '<table class="diff diff_'.$this->preference['difftype'] .'">';
+        echo '<table class="diff diff_'.hsc($this->preference['difftype']) .'">';
 
         //navigation and header
         switch ($this->preference['difftype']) {
