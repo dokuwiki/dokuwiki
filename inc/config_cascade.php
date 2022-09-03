@@ -88,5 +88,5 @@ $defaults = array(
 
 foreach ($defaults as $key => $value) {
     if(empty($config_cascade[$key])) $config_cascade[$key] = array();
-    $config_cascade[$key] = array_merge($config_cascade[$key], $value);
+    $config_cascade[$key] = array_merge($value, $config_cascade[$key]);
 }
