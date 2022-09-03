@@ -66,22 +66,22 @@ function auth_setup() {
     $INPUT->set('http_credentials', false);
     if(!$conf['rememberme']) $INPUT->set('r', false);
 
-    // handle renamed HTTP_AUTHORIZATION variable (can happen when a fix like
-    // the one presented at
+    // handle renamed HTTP_AUTHORIZATION variable (can happen when a fix like the one presented at
     // http://www.besthostratings.com/articles/http-auth-php-cgi.html is used
     // for enabling HTTP authentication with CGI/SuExec)
-    if(isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
-        $_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+    if ($INPUT->server->str('REDIRECT_HTTP_AUTHORIZATION')) {
+        $_SERVER['HTTP_AUTHORIZATION'] = $INPUT->server->str('REDIRECT_HTTP_AUTHORIZATION');
+    }
     // streamline HTTP auth credentials (IIS/rewrite -> mod_php)
-    if(isset($_SERVER['HTTP_AUTHORIZATION'])) {
+    if ($INPUT->server->str('HTTP_AUTHORIZATION')) {
         list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) =
-            explode(':', base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
+            explode(':', base64_decode(substr($INPUT->server->str('HTTP_AUTHORIZATION'), 6)));
     }
 
     // if no credentials were given try to use HTTP auth (for SSO)
-    if(!$INPUT->str('u') && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])) {
-        $INPUT->set('u', $_SERVER['PHP_AUTH_USER']);
-        $INPUT->set('p', $_SERVER['PHP_AUTH_PW']);
+    if (!$INPUT->str('u') && empty($_COOKIE[DOKU_COOKIE]) && !empty($INPUT->server->str('PHP_AUTH_USER'))) {
+        $INPUT->set('u', $INPUT->server->str('PHP_AUTH_USER'));
+        $INPUT->set('p', $INPUT->server->str('PHP_AUTH_PW'));
         $INPUT->set('http_credentials', true);
     }
 
