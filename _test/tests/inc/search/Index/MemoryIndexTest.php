@@ -47,17 +47,23 @@ class MemoryIndexTest extends \DokuWikiTest
     {
         $index = new MemoryIndex(__FUNCTION__);
         $this->assertFileNotExists($index->getFilename());
-        $index->save();
-        $this->assertFileExists($index->getFilename());
-        $this->assertEquals(0, filesize($index->getFilename())); // empty
+        $this->assertFalse($index->isDirty());
 
         $index->changeRow(0, '');
+        $this->assertTrue($index->isDirty());
         $index->save();
+        $this->assertFalse($index->isDirty());
         $this->assertEquals(1, filesize($index->getFilename())); // new line
 
         $index->changeRow(3, 'test');
+        $this->assertTrue($index->isDirty());
         $index->save();
+        $this->assertFalse($index->isDirty());
         $this->assertEquals(8, filesize($index->getFilename())); // 4 new lines + test
+
+        $index->getRowID('test'); // existing entry
+        $index->save();
+        $this->assertFalse($index->isDirty());
     }
 
     public function testGetRowID()

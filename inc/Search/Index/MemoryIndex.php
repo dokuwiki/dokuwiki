@@ -13,9 +13,11 @@ use dokuwiki\Search\Exception\IndexWriteException;
  */
 class MemoryIndex extends AbstractIndex
 {
-
     /** @var string the raw data lines of the index, no newlines */
     protected $data;
+
+    /** @var bool has the index been modified? */
+    protected $dirty = false;
 
     /**
      * Loads the full contents of the index into memory
@@ -27,7 +29,9 @@ class MemoryIndex extends AbstractIndex
         parent::__construct($idx, $suffix);
 
         $this->data = [];
-        if (!file_exists($this->filename)) return;
+        if (!file_exists($this->filename)) {
+            return;
+        }
         $this->data = file($this->filename, FILE_IGNORE_NEW_LINES);
 
     }
@@ -39,12 +43,15 @@ class MemoryIndex extends AbstractIndex
             $this->data = array_pad($this->data, $rid, '');
         }
         $this->data[$rid] = $value;
+        $this->dirty = true;
     }
 
     /** @inheritdoc */
     public function retrieveRow($rid)
     {
-        if (isset($this->data[$rid])) return $this->data[$rid];
+        if (isset($this->data[$rid])) {
+            return $this->data[$rid];
+        }
         $this->changeRow($rid, ''); // add to index
         return '';
     }
@@ -69,6 +76,7 @@ class MemoryIndex extends AbstractIndex
         foreach (array_keys($values) as $value) {
             $this->data[] = $value;
             $result[$value] = $ln++;
+            $this->dirty = true;
         }
 
         return $result;
@@ -77,12 +85,17 @@ class MemoryIndex extends AbstractIndex
     /**
      * Save the changed index back to its file
      *
+     * The method will check the internal dirty state and will only write when the index has actually been changed
+     *
      * @throws IndexWriteException
-     * @fixme store a dirty marker and only save when needed
      */
     public function save()
     {
         global $conf;
+
+        if (!$this->isDirty()) {
+            return;
+        }
 
         $tempname = $this->filename . '.tmp';
 
@@ -103,6 +116,16 @@ class MemoryIndex extends AbstractIndex
         if (!io_rename($tempname, $this->filename)) {
             throw new IndexWriteException("Failed to write {$this->filename}");
         }
+
+        $this->dirty = false;
     }
 
+    /**
+     * Check if the index has been modified and needs to be saved
+     * @return bool
+     */
+    public function isDirty()
+    {
+        return $this->dirty;
+    }
 }
