@@ -85,9 +85,19 @@ abstract class AbstractIndex
      * Searches the Index for all given values and adds them if not found
      *
      * @param string[] $values
-     * @return array the RIDs of the entries
+     * @return array the RIDs of the entries (value => rid)
      */
     abstract public function getRowIDs($values);
+
+    /**
+     * Find all RIDs matching a regular expression
+     *
+     * A full regular expression including delimiters and modifiers is expected
+     *
+     * @param string $re the regular expression to match against
+     * @return array (rid => value)
+     */
+    abstract public function search($re);
 
     /**
      * Clears the index by deleting its file

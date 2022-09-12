@@ -82,6 +82,12 @@ class MemoryIndex extends AbstractIndex
         return $result;
     }
 
+    /** @inheritdoc */
+    public function search($re)
+    {
+        return preg_grep($re, $this->data);
+    }
+
     /**
      * Save the changed index back to its file
      *
