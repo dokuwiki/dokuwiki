@@ -1,21 +1,19 @@
 <?php
 
-use dokuwiki\Search\Index\AbstractIndex;
+namespace dokuwiki\test\Search\Index;
+
 use dokuwiki\Search\Index\FileIndex;
 
-class FileIndexTest extends \DokuWikiTest
+class FileIndexTest extends AbstractIndexTest
 {
-    /**
-     * @return AbstractIndex
-     */
-    protected function getIndex() {
+    protected function getIndex()
+    {
         static $count = 0;
         return new FileIndex('index', $count++);
     }
 
     public function testChangeRow()
     {
-
         $index = $this->getIndex();
 
         $index->changeRow(5, 'test');
@@ -45,27 +43,4 @@ class FileIndexTest extends \DokuWikiTest
         $this->assertEquals(11, count($full));
     }
 
-    public function testGetRowId()
-    {
-        $index = $this->getIndex();
-        $result = $index->getRowID('foo');
-        $this->assertEquals(0, $result);
-
-        $result = $index->getRowID('bar');
-        $this->assertEquals(1, $result);
-
-        $result = $index->getRowID('foo');
-        $this->assertEquals(0, $result);
-    }
-
-    public function testGetRowIDs()
-    {
-        $index = $this->getIndex();
-        $result = $index->getRowIDs(['foo', 'bar', 'baz']);
-        $this->assertEquals(['foo' => 0, 'bar' => 1, 'baz' => 2], $result);
-
-        $result = $index->getRowIDs(['foo', 'bang', 'baz']);
-        $this->assertEquals(['foo' => 0, 'baz' => 2, 'bang' => 3], $result);
-
-    }
 }
