@@ -181,7 +181,7 @@ class FulltextCollection
         // sub-sort by word length: $words = [wordlen => [word => frequency]]
         $tokenList = [];
         foreach ($tokens as $token => $count) {
-            $tokenLength = $this->tokenLength($token);
+            $tokenLength = self::tokenLength($token);
             if (isset($tokenList[$tokenLength])) {
                 $tokenList[$tokenLength][$token] = $count + ($tokenList[$tokenLength][$token] ?? 0);
             } else {
@@ -214,7 +214,7 @@ class FulltextCollection
      * @author Tom N Harris <tnharris@whoopdedo.org>
      *
      */
-    public function tokenLength($token)
+    public static function tokenLength($token)
     {
         $length = strlen($token);
         // If left alone, all chinese "words" will have the same lenght of 3, so the "length" of a "word" is faked
@@ -228,6 +228,71 @@ class FulltextCollection
 
 
     // region oldstuff
+
+    /**
+     * Find pages in the fulltext index containing the words,
+     *
+     * The search words must be pre-tokenized, meaning only letters and
+     * numbers with an optional wildcard
+     *
+     * The returned array will have the original tokens as key. The values
+     * in the returned list is an array with the page names as keys and the
+     * number of times that token appears on the page as value.
+     *
+     * @param array $patterns list of words to search for
+     * @return array         list of page names with usage counts
+     *
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    public function lookupWords(&$patterns)
+    {
+        $result = array();
+        $wids = $this->getIndexWords($patterns, $result);
+        if (empty($wids)) {
+            return array();
+        }
+        // load known words and documents
+        $page_idx = $this->getIndex('page', '');
+        $docs = array();
+        foreach (array_keys($wids) as $wlen) {
+            $wids[$wlen] = array_unique($wids[$wlen]);
+            $index = $this->getIndex('i', $wlen);
+            foreach ($wids[$wlen] as $ixid) {
+                if ($ixid < count($index)) {
+                    $docs["{$wlen}*{$ixid}"] = $this->parseTuples($page_idx, $index[$ixid]);
+                }
+            }
+        }
+        // merge found pages into final result array
+        $final = array();
+        foreach ($result as $word => $res) {
+            $final[$word] = array();
+            foreach ($res as $wid) {
+                // handle the case when ($ixid < count($index)) has been false
+                // and thus $docs[$wid] hasn't been set.
+                if (!isset($docs[$wid])) {
+                    continue;
+                }
+                $hits =& $docs[$wid];
+                foreach ($hits as $hitkey => $hitcnt) {
+                    // make sure the document still exists
+                    if (!page_exists($hitkey, '', false)) {
+                        continue;
+                    }
+                    if (!isset($final[$word][$hitkey])) {
+                        $final[$word][$hitkey] = $hitcnt;
+                    } else {
+                        $final[$word][$hitkey] += $hitcnt;
+                    }
+                }
+            }
+        }
+        return $final;
+    }
+
+
+
 
     /**
      * Delete the contents of a page to the fulltext index
@@ -283,67 +348,7 @@ class FulltextCollection
         return true;
     }
 
-    /**
-     * Find pages in the fulltext index containing the words,
-     *
-     * The search words must be pre-tokenized, meaning only letters and
-     * numbers with an optional wildcard
-     *
-     * The returned array will have the original tokens as key. The values
-     * in the returned list is an array with the page names as keys and the
-     * number of times that token appears on the page as value.
-     *
-     * @param array $tokens list of words to search for
-     * @return array         list of page names with usage counts
-     *
-     * @author Tom N Harris <tnharris@whoopdedo.org>
-     * @author Andreas Gohr <andi@splitbrain.org>
-     */
-    public function lookupWords(&$tokens)
-    {
-        $result = array();
-        $wids = $this->getIndexWords($tokens, $result);
-        if (empty($wids)) {
-            return array();
-        }
-        // load known words and documents
-        $page_idx = $this->getIndex('page', '');
-        $docs = array();
-        foreach (array_keys($wids) as $wlen) {
-            $wids[$wlen] = array_unique($wids[$wlen]);
-            $index = $this->getIndex('i', $wlen);
-            foreach ($wids[$wlen] as $ixid) {
-                if ($ixid < count($index)) {
-                    $docs["{$wlen}*{$ixid}"] = $this->parseTuples($page_idx, $index[$ixid]);
-                }
-            }
-        }
-        // merge found pages into final result array
-        $final = array();
-        foreach ($result as $word => $res) {
-            $final[$word] = array();
-            foreach ($res as $wid) {
-                // handle the case when ($ixid < count($index)) has been false
-                // and thus $docs[$wid] hasn't been set.
-                if (!isset($docs[$wid])) {
-                    continue;
-                }
-                $hits =& $docs[$wid];
-                foreach ($hits as $hitkey => $hitcnt) {
-                    // make sure the document still exists
-                    if (!page_exists($hitkey, '', false)) {
-                        continue;
-                    }
-                    if (!isset($final[$word][$hitkey])) {
-                        $final[$word][$hitkey] = $hitcnt;
-                    } else {
-                        $final[$word][$hitkey] += $hitcnt;
-                    }
-                }
-            }
-        }
-        return $final;
-    }
+
 
     /**
      * Find the index ID of each search term
@@ -353,23 +358,34 @@ class FulltextCollection
      * The $result parameter can be used to merge the index locations with
      * the appropriate query term.
      *
-     * @param array $words The query terms.
+     * @param array $terms The query terms.
      * @param array $result Set to word => array("length*id" ...)
      * @return array         Set to length => array(id ...)
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function getIndexWords(&$words, &$result)
+    protected function getIndexWords($terms)
     {
+        $fcr = new FulltextCollectionResult();
+        foreach ($terms as $term) {
+            $fcr->addTerm($term);
+        }
+
+        foreach ($fcr->exactTerms as $length => $terms) {
+            $idx = new MemoryIndex($this->idxToken, $length);
+            
+        }
+
+
         $tokens = array();
         $tokenlength = array();
         $tokenwild = array();
-        foreach ($words as $word) {
+        foreach ($terms as $word) {
             $result[$word] = array();
             $caret = '^';
             $dollar = '$';
             $xword = $word;
-            $wlen = $this->tokenLength($word);
+            $wlen = self::tokenLength($word);
 
             // check for wildcards
             if (substr($xword, 0, 1) == '*') {
