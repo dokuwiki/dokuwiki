@@ -7,13 +7,8 @@
  */
 
 // end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
-// think different, also PHP >=8.0.14 mail() has changed.
-if(!defined('MAILHEADER_EOL')) {
-    if (version_compare(phpversion(), '8.0.14') < 0)  // See https://github.com/php/php-src/issues/8086
-        define('MAILHEADER_EOL', "\n");
-    else
-        define('MAILHEADER_EOL', "\r\n");
-}
+// think different, but PHP >=8.0.14 mail() has changed and consensus seems to be not to differentiate for earlier versions.
+if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL', "\r\n");
 #define('MAILHEADER_ASCIIONLY',1);
 
 /**
