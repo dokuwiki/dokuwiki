@@ -97,21 +97,21 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         }
 
         // Prepare SSO
-        if (!empty($INPUT->server->str('REMOTE_USER'))) {
+        if (!empty($_SERVER['REMOTE_USER'])) {
             // make sure the right encoding is used
             if ($this->getConf('sso_charset')) {
-                $INPUT->server->set('REMOTE_USER', iconv($this->getConf('sso_charset'), 'UTF-8', $INPUT->server->str('REMOTE_USER')));
-            } elseif (!\dokuwiki\Utf8\Clean::isUtf8($INPUT->server->str('REMOTE_USER'))) {
-                $INPUT->server->set('REMOTE_USER', utf8_encode($INPUT->server->str('REMOTE_USER')));
+                $_SERVER['REMOTE_USER'] = iconv($this->getConf('sso_charset'), 'UTF-8', $_SERVER['REMOTE_USER']);
+            } elseif (!\dokuwiki\Utf8\Clean::isUtf8($_SERVER['REMOTE_USER'])) {
+                $_SERVER['REMOTE_USER'] = utf8_encode($_SERVER['REMOTE_USER']);
             }
 
             // trust the incoming user
             if ($this->conf['sso']) {
-                $INPUT->server->set('REMOTE_USER', $this->cleanUser($INPUT->server->str('REMOTE_USER')));
+                $_SERVER['REMOTE_USER'] = $this->cleanUser($_SERVER['REMOTE_USER']);
 
                 // we need to simulate a login
                 if (empty($_COOKIE[DOKU_COOKIE])) {
-                    $INPUT->set('u', $INPUT->server->str('REMOTE_USER'));
+                    $INPUT->set('u', $_SERVER['REMOTE_USER']);
                     $INPUT->set('p', 'sso_only');
                 }
             }
@@ -131,9 +131,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
      */
     public function canDo($cap)
     {
-        global $INPUT;
         //capabilities depend on config, which may change depending on domain
-        $domain = $this->getUserDomain($INPUT->server->str('REMOTE_USER'));
+        $domain = $this->getUserDomain($_SERVER['REMOTE_USER']);
         $this->loadServerConfig($domain);
         return parent::canDo($cap);
     }
@@ -152,8 +151,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
      */
     public function checkPass($user, $pass)
     {
-        global $INPUT;
-        if ($INPUT->server->str('REMOTE_USER') == $user &&
+        if ($_SERVER['REMOTE_USER'] &&
+            $_SERVER['REMOTE_USER'] == $user &&
             $this->conf['sso']
         ) return true;
 
@@ -198,7 +197,6 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         global $conf;
         global $lang;
         global $ID;
-        global $INPUT;
         $adldap = $this->initAdLdap($this->getUserDomain($user));
         if (!$adldap) return array();
 
@@ -264,7 +262,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
                     $info['expiresin'] = round(($info['expiresat'] - time())/(24*60*60));
 
                     // if this is the current user, warn him (once per request only)
-                    if (($INPUT->server->str('REMOTE_USER') == $user) &&
+                    if (($_SERVER['REMOTE_USER'] == $user) &&
                         ($info['expiresin'] <= $this->conf['expirywarn']) &&
                         !$this->msgshown
                     ) {
