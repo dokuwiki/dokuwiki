@@ -7,4 +7,4 @@
 
 $lang['menu'] = 'Voir les journaux';
 $lang['date'] = 'Date';
-$lang['js']['filter'] = 'Filter les lignes:';
+$lang['js']['filter'] = 'Filtrer les lignes:';
