@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Olivier Humbert <trebmuh@tuxfamily.org>
+ * @author Olivier+Humbert <trebmuh@tuxfamily.org>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
