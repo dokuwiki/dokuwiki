@@ -390,48 +390,6 @@ abstract class Doku_Renderer extends Plugin {
     }
 
     /**
-     * Output inline PHP code
-     *
-     * If $conf['phpok'] is true this should evaluate the given code and append the result
-     * to $doc
-     *
-     * @param string $text The PHP code
-     */
-    public function php($text) {
-    }
-
-    /**
-     * Output block level PHP code
-     *
-     * If $conf['phpok'] is true this should evaluate the given code and append the result
-     * to $doc
-     *
-     * @param string $text The PHP code
-     */
-    public function phpblock($text) {
-    }
-
-    /**
-     * Output raw inline HTML
-     *
-     * If $conf['htmlok'] is true this should add the code as is to $doc
-     *
-     * @param string $text The HTML
-     */
-    public function html($text) {
-    }
-
-    /**
-     * Output raw block-level HTML
-     *
-     * If $conf['htmlok'] is true this should add the code as is to $doc
-     *
-     * @param string $text The HTML
-     */
-    public function htmlblock($text) {
-    }
-
-    /**
      * Output preformatted text
      *
      * @param string $text
