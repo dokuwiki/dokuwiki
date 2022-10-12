@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Nikita <obraztsov568@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Nikita <obraztsov568@gmail.com>
  * @author Анатолий <anatol_m@mail.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Alexander Kh. <001.arx@gmail.com>
@@ -248,6 +248,7 @@ $lang['created']               = 'создано';
 $lang['restored']              = 'старая версия восстановлена (%s)';
 $lang['external_edit']         = 'внешнее изменение';
 $lang['summary']               = 'Сводка изменений';
+$lang['unknowndate']           = 'Дата неизвестна';
 $lang['noflash']               = 'Для просмотра этого содержимого требуется <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Скачать фрагмент кода';
 $lang['tools']                 = 'Инструменты';
