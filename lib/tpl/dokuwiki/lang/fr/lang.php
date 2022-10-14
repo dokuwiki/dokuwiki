@@ -6,6 +6,7 @@
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  */
+$lang['home']                  = 'Accueil';
 $lang['__background_site__']   = 'Couleur du fond (derrière la boîte de contenu)';
 $lang['__link__']              = 'Couleur générale des liens';
 $lang['__existing__']          = 'Couleur des liens pour les pages existantes';
