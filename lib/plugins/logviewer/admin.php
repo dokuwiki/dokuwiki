@@ -110,7 +110,7 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
                 $i -= 1; // rewind the counter
             } else {
                 // other lines are actual log lines in three parts
-                list($dt, $file, $msg) = explode("\t", $line, 3);
+                list($dt, $file, $msg) = sexplode("\t", $line, 3, '');
                 echo '<dt>';
                 echo '<span class="datetime">' . hsc($dt) . '</span>';
                 echo '<span class="log">';

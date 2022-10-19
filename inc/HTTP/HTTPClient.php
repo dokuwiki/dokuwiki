@@ -340,8 +340,8 @@ class HTTPClient {
             $this->resp_headers = $this->parseHeaders($r_headers);
             if(isset($this->resp_headers['set-cookie'])){
                 foreach ((array) $this->resp_headers['set-cookie'] as $cookie){
-                    list($cookie)   = explode(';',$cookie,2);
-                    list($key,$val) = explode('=',$cookie,2);
+                    list($cookie) = sexplode(';', $cookie, 2, '');
+                    list($key, $val) = sexplode('=', $cookie, 2, '');
                     $key = trim($key);
                     if($val == 'deleted'){
                         if(isset($this->cookies[$key])){
@@ -770,9 +770,9 @@ class HTTPClient {
         $lines = explode("\n",$string);
         array_shift($lines); //skip first line (status)
         foreach($lines as $line){
-            @list($key, $val) = explode(':',$line,2);
+            list($key, $val) = sexplode(':', $line, 2, '');
             $key = trim($key);
-            $val = trim($val ?? '');
+            $val = trim($val);
             $key = strtolower($key);
             if(!$key) continue;
             if(isset($headers[$key])){

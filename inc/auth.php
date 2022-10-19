@@ -1281,7 +1281,7 @@ function auth_getCookie() {
     if(!isset($_COOKIE[DOKU_COOKIE])) {
         return array(null, null, null);
     }
-    list($user, $sticky, $pass) = explode('|', $_COOKIE[DOKU_COOKIE], 3);
+    list($user, $sticky, $pass) = sexplode('|', $_COOKIE[DOKU_COOKIE], 3, '');
     $sticky = (bool) $sticky;
     $pass   = base64_decode($pass);
     $user   = base64_decode($user);

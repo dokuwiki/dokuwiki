@@ -821,7 +821,7 @@ abstract class Doku_Renderer extends Plugin {
         global $conf;
 
         //if there is a hash we use the ancor name only
-        @list($name, $hash) = explode('#', $name, 2);
+        list($name, $hash) = sexplode('#', $name, 2);
         if($hash) return $hash;
 
         if($conf['useslash']) {
@@ -893,7 +893,7 @@ abstract class Doku_Renderer extends Plugin {
             $urlparam = null;
             $id = $url;
             if (strpos($url, '?') !== false) {
-                list($id, $urlparam) = explode('?', $url, 2);
+                list($id, $urlparam) = sexplode('?', $url, 2, '');
             }
             $url    = wl(cleanID($id), $urlparam);
             $exists = page_exists($id);

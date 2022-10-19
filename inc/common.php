@@ -1211,7 +1211,7 @@ function rawWikiSlices($range, $id, $rev = '') {
     $text = io_readWikiPage(wikiFN($id, $rev), $id, $rev);
 
     // Parse range
-    list($from, $to) = explode('-', $range, 2);
+    list($from, $to) = sexplode('-', $range, 2);
     // Make range zero-based, use defaults if marker is missing
     $from = !$from ? 0 : ($from - 1);
     $to   = !$to ? strlen($text) : ($to - 1);

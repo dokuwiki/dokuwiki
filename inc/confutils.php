@@ -137,7 +137,7 @@ function getCdnUrls() {
     foreach($lines as $line) {
         $line = trim(preg_replace('/#.*$/', '', $line));
         if($line === '') continue;
-        list($key, $val) = explode('=', $line, 2);
+        list($key, $val) = sexplode('=', $line, 2, '');
         $key = trim($key);
         $val = trim($val);
         $versions[$key] = $val;
