@@ -3,9 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author 小李 <szsd5257@foxmail.com>
  * @author Phy <dokuwiki@phy25.com>
  * @author lainme <lainme993@gmail.com>
  */
+$lang['home']                  = '主页';
 $lang['__background_site__']   = '特别背景的颜色 (内容框后面)';
 $lang['__link__']              = '一般链接的颜色';
 $lang['__existing__']          = '指向存在的页面的链接颜色';
