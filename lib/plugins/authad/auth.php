@@ -318,10 +318,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         $domain = '';
 
         // get NTLM or Kerberos domain part
-        list($dom, $user) = array_pad(explode('\\', $user, 2), 2, '');
+        list($dom, $user) = sexplode('\\', $user, 2, '');
         if (!$user) $user = $dom;
         if ($dom) $domain = $dom;
-        list($user, $dom) = array_pad(explode('@', $user, 2), 2, '');
+        list($user, $dom) = sexplode('@', $user, 2, '');
         if ($dom) $domain = $dom;
 
         // clean up both
@@ -651,7 +651,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
      */
     public function getUserDomain($user)
     {
-        list(, $domain) = array_pad(explode('@', $user, 2), 2, '');
+        list(, $domain) = sexplode('@', $user, 2, '');
         return $domain;
     }
 

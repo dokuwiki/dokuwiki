@@ -918,7 +918,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //keep hash anchor
-        @list($id, $hash) = explode('#', $id, 2);
+        list($id, $hash) = sexplode('#', $id, 2);
         if(!empty($hash)) $hash = $this->_headerToLink($hash);
 
         //prepare for formating
@@ -1181,7 +1181,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                            $height = null, $cache = null, $linking = null, $return = false) {
         global $ID;
         if (strpos($src, '#') !== false) {
-            list($src, $hash) = explode('#', $src, 2);
+            list($src, $hash) = sexplode('#', $src, 2);
         }
         $src = (new MediaResolver($ID))->resolveId($src,$this->date_at,true);
         $exists = media_exists($src);
@@ -1253,7 +1253,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     public function externalmedia($src, $title = null, $align = null, $width = null,
                            $height = null, $cache = null, $linking = null, $return = false) {
         if(link_isinterwiki($src)){
-            list($shortcut, $reference) = explode('>', $src, 2);
+            list($shortcut, $reference) = sexplode('>', $src, 2, '');
             $exists = null;
             $src = $this->_resolveInterWiki($shortcut, $reference, $exists);
             if($src == '' && empty($title)){
@@ -1261,8 +1261,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $title = $reference;
             }
         }
-        // Squelch the warning in case there is no hash in the URL
-        @list($src, $hash) = explode('#', $src, 2);
+        list($src, $hash) = sexplode('#', $src, 2);
         $noLink = false;
         if($src == '') {
             // only output plaintext without link if there is no src
