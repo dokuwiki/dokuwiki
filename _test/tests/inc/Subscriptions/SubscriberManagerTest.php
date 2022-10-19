@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\inc\Subscriptions;
+namespace dokuwiki\test\inc\Subscriptions;
 
 use dokuwiki\Subscriptions\SubscriberManager;
 use DokuWikiTest;
