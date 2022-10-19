@@ -545,58 +545,6 @@ class Doku_Handler {
      * @param int $pos byte position in the original source file
      * @return bool mode handled?
      */
-    public function php($match, $state, $pos) {
-        if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->addCall('php', array($match), $pos);
-        }
-        return true;
-    }
-
-    /**
-     * @param string $match matched syntax
-     * @param int $state a LEXER_STATE_* constant
-     * @param int $pos byte position in the original source file
-     * @return bool mode handled?
-     */
-    public function phpblock($match, $state, $pos) {
-        if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->addCall('phpblock', array($match), $pos);
-        }
-        return true;
-    }
-
-    /**
-     * @param string $match matched syntax
-     * @param int $state a LEXER_STATE_* constant
-     * @param int $pos byte position in the original source file
-     * @return bool mode handled?
-     */
-    public function html($match, $state, $pos) {
-        if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->addCall('html', array($match), $pos);
-        }
-        return true;
-    }
-
-    /**
-     * @param string $match matched syntax
-     * @param int $state a LEXER_STATE_* constant
-     * @param int $pos byte position in the original source file
-     * @return bool mode handled?
-     */
-    public function htmlblock($match, $state, $pos) {
-        if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->addCall('htmlblock', array($match), $pos);
-        }
-        return true;
-    }
-
-    /**
-     * @param string $match matched syntax
-     * @param int $state a LEXER_STATE_* constant
-     * @param int $pos byte position in the original source file
-     * @return bool mode handled?
-     */
     public function preformatted($match, $state, $pos) {
         switch ( $state ) {
             case DOKU_LEXER_ENTER:

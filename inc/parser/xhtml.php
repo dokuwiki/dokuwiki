@@ -544,68 +544,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     /**
-     * Execute PHP code if allowed
-     *
-     * @param  string $text      PHP code that is either executed or printed
-     * @param  string $wrapper   html element to wrap result if $conf['phpok'] is okff
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     */
-    public function php($text, $wrapper = 'code') {
-        global $conf;
-
-        if($conf['phpok']) {
-            ob_start();
-            eval($text);
-            $this->doc .= ob_get_contents();
-            ob_end_clean();
-        } else {
-            $this->doc .= p_xhtml_cached_geshi($text, 'php', $wrapper);
-        }
-    }
-
-    /**
-     * Output block level PHP code
-     *
-     * If $conf['phpok'] is true this should evaluate the given code and append the result
-     * to $doc
-     *
-     * @param string $text The PHP code
-     */
-    public function phpblock($text) {
-        $this->php($text, 'pre');
-    }
-
-    /**
-     * Insert HTML if allowed
-     *
-     * @param  string $text      html text
-     * @param  string $wrapper   html element to wrap result if $conf['htmlok'] is okff
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     */
-    public function html($text, $wrapper = 'code') {
-        global $conf;
-
-        if($conf['htmlok']) {
-            $this->doc .= $text;
-        } else {
-            $this->doc .= p_xhtml_cached_geshi($text, 'html4strict', $wrapper);
-        }
-    }
-
-    /**
-     * Output raw block-level HTML
-     *
-     * If $conf['htmlok'] is true this should add the code as is to $doc
-     *
-     * @param string $text The HTML
-     */
-    public function htmlblock($text) {
-        $this->html($text, 'pre');
-    }
-
-    /**
      * Start a block quote
      */
     public function quote_open() {
@@ -1367,11 +1305,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 }
                 if($params['details']) {
                     $this->doc .= '<div class="detail">';
-                    if($conf['htmlok']) {
-                        $this->doc .= $item->get_description();
-                    } else {
-                        $this->doc .= strip_tags($item->get_description());
-                    }
+                    $this->doc .= strip_tags($item->get_description());
                     $this->doc .= '</div>';
                 }
 
