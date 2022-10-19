@@ -1,6 +1,7 @@
 <?php
 
 use dokuwiki\Form;
+use DOMWrap\Document;
 
 class form_inputelement_test extends DokuWikiTest {
 
@@ -9,15 +10,15 @@ class form_inputelement_test extends DokuWikiTest {
         $form->addTextInput('foo', 'label text')->val('this is text');
 
         $html = $form->toHTML();
-        $pq = phpQuery::newDocumentXHTML($html);
+        $pq = (new Document())->html($html);
 
         $input = $pq->find('input[name=foo]');
-        $this->assertTrue($input->length == 1);
-        $this->assertEquals('this is text', $input->val());
+        $this->assertTrue($input->count() == 1);
+        $this->assertEquals('this is text', $input->attr('value'));
         $this->assertEquals('text', $input->attr('type'));
 
         $label = $pq->find('label');
-        $this->assertTrue($label->length == 1);
+        $this->assertTrue($label->count() == 1);
         $this->assertEquals('label text', $label->find('span')->text());
     }
 
@@ -32,11 +33,11 @@ class form_inputelement_test extends DokuWikiTest {
         $form->addTextInput('foo', 'label text')->val('this is text');
 
         $html = $form->toHTML();
-        $pq = phpQuery::newDocumentXHTML($html);
+        $pq = (new Document())->html($html);
 
         $input = $pq->find('input[name=foo]');
-        $this->assertTrue($input->length == 1);
-        $this->assertEquals('a new text', $input->val());
+        $this->assertTrue($input->count() == 1);
+        $this->assertEquals('a new text', $input->attr('value'));
     }
 
     function test_prefill_empty() {
@@ -47,11 +48,11 @@ class form_inputelement_test extends DokuWikiTest {
         $form->addTextInput('foo', 'label text')->val('this is text');
 
         $html = $form->toHTML();
-        $pq = phpQuery::newDocumentXHTML($html);
+        $pq = (new Document())->html($html);
 
         $input = $pq->find('input[name=foo]');
-        $this->assertTrue($input->length == 1);
-        $this->assertEquals('', $input->val());
+        $this->assertTrue($input->count() == 1);
+        $this->assertEquals('', $input->attr('value'));
     }
 
 
@@ -60,15 +61,15 @@ class form_inputelement_test extends DokuWikiTest {
         $form->addPasswordInput('foo', 'label text')->val('this is text');
 
         $html = $form->toHTML();
-        $pq = phpQuery::newDocumentXHTML($html);
+        $pq = (new Document())->html($html);
 
         $input = $pq->find('input[name=foo]');
-        $this->assertTrue($input->length == 1);
-        $this->assertEquals('this is text', $input->val());
+        $this->assertTrue($input->count() == 1);
+        $this->assertEquals('this is text', $input->attr('value'));
         $this->assertEquals('password', $input->attr('type'));
 
         $label = $pq->find('label');
-        $this->assertTrue($label->length == 1);
+        $this->assertTrue($label->count() == 1);
         $this->assertEquals('label text', $label->find('span')->text());
     }
 }

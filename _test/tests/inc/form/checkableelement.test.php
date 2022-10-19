@@ -1,6 +1,7 @@
 <?php
 
 use dokuwiki\Form;
+use DOMWrap\Document;
 
 class form_checkableelement_test extends DokuWikiTest {
 
@@ -10,20 +11,20 @@ class form_checkableelement_test extends DokuWikiTest {
         $form->addRadioButton('foo', 'label text second')->val('second');
 
         $html = $form->toHTML();
-        $pq = phpQuery::newDocumentXHTML($html);
+        $pq = (new Document())->html($html);
 
         $input = $pq->find('input[name=foo]');
-        $this->assertTrue($input->length == 2);
+        $this->assertTrue($input->count() == 2);
 
         $label = $pq->find('label');
-        $this->assertTrue($label->length == 2);
+        $this->assertTrue($label->count() == 2);
 
         $inputs = $pq->find('input[name=foo]');
-        $this->assertEquals('first', pq($inputs->elements[0])->val());
-        $this->assertEquals('second', pq($inputs->elements[1])->val());
-        $this->assertEquals('checked', pq($inputs->elements[0])->attr('checked'));
-        $this->assertEquals('', pq($inputs->elements[1])->attr('checked'));
-        $this->assertEquals('radio', pq($inputs->elements[0])->attr('type'));
+        $this->assertEquals('first', $inputs->get(0)->attr('value'));
+        $this->assertEquals('second', $inputs->get(1)->attr('value'));
+        $this->assertEquals('checked', $inputs->get(0)->attr('checked'));
+        $this->assertEquals('', $inputs->get(1)->attr('checked'));
+        $this->assertEquals('radio', $inputs->get(0)->attr('type'));
     }
 
     /**
@@ -39,13 +40,13 @@ class form_checkableelement_test extends DokuWikiTest {
         $form->addRadioButton('foo', 'label text second')->val('second');
 
         $html = $form->toHTML();
-        $pq = phpQuery::newDocumentXHTML($html);
+        $pq = (new Document())->html($html);
 
         $inputs = $pq->find('input[name=foo]');
-        $this->assertEquals('first', pq($inputs->elements[0])->val());
-        $this->assertEquals('second', pq($inputs->elements[1])->val());
-        $this->assertEquals('', pq($inputs->elements[0])->attr('checked'));
-        $this->assertEquals('checked', pq($inputs->elements[1])->attr('checked'));
-        $this->assertEquals('radio', pq($inputs->elements[0])->attr('type'));
+        $this->assertEquals('first', $inputs->get(0)->attr('value'));
+        $this->assertEquals('second', $inputs->get(1)->attr('value'));
+        $this->assertEquals('', $inputs->get(0)->attr('checked'));
+        $this->assertEquals('checked', $inputs->get(1)->attr('checked'));
+        $this->assertEquals('radio', $inputs->get(0)->attr('type'));
     }
 }

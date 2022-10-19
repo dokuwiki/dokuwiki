@@ -1,6 +1,7 @@
 <?php
 
 use dokuwiki\Form;
+use DOMWrap\Document;
 
 class form_dropdownelement_test extends DokuWikiTest {
 
@@ -27,22 +28,21 @@ class form_dropdownelement_test extends DokuWikiTest {
 
         // HTML
         $html = $form->toHTML();
-        $pq = phpQuery::newDocumentXHTML($html);
+        $pq = (new Document())->html($html);
 
         $select = $pq->find('select[name=foo]');
-        $this->assertTrue($select->length == 1);
-        $this->assertEquals('first', $select->val());
+        $this->assertTrue($select->count() == 1);
 
         $options = $pq->find('option');
-        $this->assertTrue($options->length == 3);
+        $this->assertTrue($options->count() == 3);
 
         $option = $pq->find('option[selected=selected]');
-        $this->assertTrue($option->length == 1);
-        $this->assertEquals('first', $option->val());
+        $this->assertTrue($option->count() == 1);
+        $this->assertEquals('first', $option->attr('value'));
         $this->assertEquals('A first Label', $option->text());
 
         $label = $pq->find('label');
-        $this->assertTrue($label->length == 1);
+        $this->assertTrue($label->count() == 1);
         $this->assertEquals('label text', $label->find('span')->text());
     }
 
@@ -67,17 +67,17 @@ class form_dropdownelement_test extends DokuWikiTest {
         $form->addDropdown('foo', $options, 'label text');
         // HTML
         $html = $form->toHTML();
-        $pq = phpQuery::newDocumentXHTML($html);
+        $pq = (new Document())->html($html);;
 
         $select = $pq->find('select[name=foo]');
-        $this->assertTrue($select->length == 1);
+        $this->assertTrue($select->count() == 1);
 
         $options = $pq->find('option');
-        $this->assertEquals(3, $options->length);
+        $this->assertEquals(3, $options->count());
 
         $option = $pq->find('option#theID');
-        $this->assertEquals(1, $option->length);
-        $this->assertEquals('first', $option->val());
+        $this->assertEquals(1, $option->count());
+        $this->assertEquals('first', $option->attr('value'));
         $this->assertEquals('the label', $option->text());
         $this->assertEquals('bar', $option->attr('data-foo'));
         $this->assertTrue($option->hasClass('two'));
@@ -116,16 +116,16 @@ class form_dropdownelement_test extends DokuWikiTest {
 
         // HTML
         $html = $form->toHTML();
-        $pq = phpQuery::newDocumentXHTML($html);
+        $pq = (new Document())->html($html);
 
         $optGroupsHTML = $pq->find('optgroup');
-        $this->assertEquals(2, $optGroupsHTML->length);
+        $this->assertEquals(2, $optGroupsHTML->count());
 
         $options = $pq->find('option');
-        $this->assertEquals(4, $options->length);
+        $this->assertEquals(4, $options->count());
 
         $selected = $pq->find('option[selected=selected]');
-        $this->assertEquals('third', $selected->val());
+        $this->assertEquals('third', $selected->attr('value'));
         $this->assertEquals('label of third option', $selected->text());
     }
 
@@ -138,9 +138,9 @@ class form_dropdownelement_test extends DokuWikiTest {
 
         $html = $form->toHTML();
 
-        $pq = phpQuery::newDocumentXHTML($html);
+        $pq = (new Document())->html($html);
         $selected = $pq->find('option[selected=selected]');
-        $this->assertEquals(1, $selected->length);
+        $this->assertEquals(1, $selected->count());
         $this->assertEquals('Auto', $selected->text());
     }
 
@@ -167,9 +167,9 @@ class form_dropdownelement_test extends DokuWikiTest {
 
         // HTML
         $html = $form->toHTML();
-        $pq = phpQuery::newDocumentXHTML($html);
+        $pq = (new Document())->html($html);
         $selected = $pq->find('option[selected=selected]');
-        $this->assertEquals(1, $selected->length);
+        $this->assertEquals(1, $selected->count());
         $this->assertEquals('the label', $selected->text());
     }
 
@@ -187,11 +187,11 @@ class form_dropdownelement_test extends DokuWikiTest {
         $this->assertEquals('third', $element->val());
 
         $html = $form->toHTML();
-        $pq = phpQuery::newDocumentXHTML($html);
+        $pq = (new Document())->html($html);
 
         $option = $pq->find('option[selected=selected]');
-        $this->assertTrue($option->length == 1);
-        $this->assertEquals('second', $option->val());
+        $this->assertTrue($option->count() == 1);
+        $this->assertEquals('second', $option->attr('value'));
         $this->assertEquals('The second Label', $option->text());
     }
 
@@ -208,7 +208,7 @@ class form_dropdownelement_test extends DokuWikiTest {
 
         // check HTML
         $html = $form->toHTML();
-        $pq = phpQuery::newDocumentXHTML($html);
+        $pq = (new Document())->html($html);;
         $option = $pq->find('option[selected=selected]');
 
         $this->assertEquals('A first Label', $option->get(0)->textContent);

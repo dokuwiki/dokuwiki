@@ -97,7 +97,10 @@ class TestResponse {
      * @return phpQueryObject
      */
     public function queryHTML($selector) {
-        if(is_null($this->pq)) $this->pq = phpQuery::newDocument($this->content);
+        if(is_null($this->pq)) {
+            $this->pq = new \DOMWrap\Document();
+            $this->pq->html($this->content);
+        }
         return $this->pq->find($selector);
     }
 
