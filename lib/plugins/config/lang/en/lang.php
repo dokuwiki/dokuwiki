@@ -119,8 +119,6 @@ $lang['iexssprotect']= 'Check uploaded files for possibly malicious JavaScript o
 
 /* Editing Settings */
 $lang['usedraft']    = 'Automatically save a draft while editing';
-$lang['htmlok']      = 'Allow embedded HTML';
-$lang['phpok']       = 'Allow embedded PHP';
 $lang['locktime']    = 'Maximum age for lock files (sec)';
 $lang['cachetime']   = 'Maximum age for cache (sec)';
 

@@ -479,7 +479,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
         // first resolve and clean up the $id
         $resolver = new \dokuwiki\File\PageResolver($ID);
         $id = $resolver->resolveId($id);
-        @list($page) = explode('#', $id, 2);
+        list($page) = sexplode('#', $id, 2);
 
         // set metadata
         $this->meta['relation']['references'][$page] = page_exists($page);

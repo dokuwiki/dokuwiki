@@ -383,7 +383,7 @@ class PluginController
     protected function splitName($name)
     {
         if (!isset($this->masterList[$name])) {
-            return explode('_', $name, 2);
+            return sexplode('_', $name, 2, '');
         }
 
         return array($name, '');

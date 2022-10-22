@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Guillermo Romero <drirr.gato@gmail.com>
  * @author Luna Frax <lunafrax@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  * @author Liliana <lilianasaidon@gmail.com>
@@ -108,10 +109,10 @@ $lang['badpassconfirm']        = 'Lo siento, la contraseña es errónea';
 $lang['minoredit']             = 'Cambios menores';
 $lang['draftdate']             = 'Borrador guardado automáticamente:';
 $lang['nosecedit']             = 'La página ha cambiado en el lapso, la información de sección estaba anticuada, en su lugar se cargó la página completa.';
-$lang['searchcreatepage']      = 'Si no encontró lo que estaba buscando, puede crear o editar la página %s, nombrada después de su consulta.';
+$lang['searchcreatepage']      = 'Si no econtraste lo que estabas buscando, puedes crear o editar la página %s, nombrada después de tu consulta.';
 $lang['search_fullresults']    = 'Resultados de texto completo';
 $lang['js']['search_toggle_tools'] = 'Alternar herramientas de búsqueda';
-$lang['js']['willexpire']      = 'El bloqueo para la edición de esta página expira en un minuto.\nPAra prevenir conflictos uso el botón Previsualizar para restaurar el contador de bloqueo.';
+$lang['js']['willexpire']      = 'El bloqueo para la edición de esta página expira en un minuto.\nPAra prevenir conflictos usa el botón Previsualizar para restaurar el contador de bloqueo.';
 $lang['js']['notsavedyet']     = 'Los cambios que no se han guardado se perderán.
 ¿Realmente quieres continuar?';
 $lang['js']['searchmedia']     = 'Buscar archivos';

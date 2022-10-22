@@ -56,11 +56,11 @@ if (defined('SIMPLE_TEST')) {
         'statusmessage' => $STATUSMESSAGE,
         'ispublic'      => media_ispublic($MEDIA),
         'csp' => [
-            'sandbox' => '',
             'default-src' => "'none'",
             'style-src' => "'unsafe-inline'",
             'media-src' => "'self'",
             'object-src' => "'self'",
+            'font-src' => "'self' data:",
             'form-action' => "'none'",
             'frame-ancestors' => "'self'",
         ],

@@ -390,48 +390,6 @@ abstract class Doku_Renderer extends Plugin {
     }
 
     /**
-     * Output inline PHP code
-     *
-     * If $conf['phpok'] is true this should evaluate the given code and append the result
-     * to $doc
-     *
-     * @param string $text The PHP code
-     */
-    public function php($text) {
-    }
-
-    /**
-     * Output block level PHP code
-     *
-     * If $conf['phpok'] is true this should evaluate the given code and append the result
-     * to $doc
-     *
-     * @param string $text The PHP code
-     */
-    public function phpblock($text) {
-    }
-
-    /**
-     * Output raw inline HTML
-     *
-     * If $conf['htmlok'] is true this should add the code as is to $doc
-     *
-     * @param string $text The HTML
-     */
-    public function html($text) {
-    }
-
-    /**
-     * Output raw block-level HTML
-     *
-     * If $conf['htmlok'] is true this should add the code as is to $doc
-     *
-     * @param string $text The HTML
-     */
-    public function htmlblock($text) {
-    }
-
-    /**
      * Output preformatted text
      *
      * @param string $text
@@ -821,7 +779,7 @@ abstract class Doku_Renderer extends Plugin {
         global $conf;
 
         //if there is a hash we use the ancor name only
-        @list($name, $hash) = explode('#', $name, 2);
+        list($name, $hash) = sexplode('#', $name, 2);
         if($hash) return $hash;
 
         if($conf['useslash']) {
@@ -893,7 +851,7 @@ abstract class Doku_Renderer extends Plugin {
             $urlparam = null;
             $id = $url;
             if (strpos($url, '?') !== false) {
-                list($id, $urlparam) = explode('?', $url, 2);
+                list($id, $urlparam) = sexplode('?', $url, 2, '');
             }
             $url    = wl(cleanID($id), $urlparam);
             $exists = page_exists($id);

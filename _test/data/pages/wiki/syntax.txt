@@ -1,6 +1,6 @@
 ====== Formatting Syntax ======
 
-[[doku>DokuWiki]] supports some simple markup language, which tries to make the datafiles to be as readable as possible. This page contains all possible syntax you may use when editing the pages. Simply have a look at the source of this page by pressing the //Edit this page// button at the top or bottom of the page. If you want to try something, just use the [[playground:playground|playground]] page. The simpler markup is easily accessible via [[doku>toolbar|quickbuttons]], too.
+[[doku>DokuWiki]] supports some simple markup language, which tries to make the datafiles to be as readable as possible. This page contains all possible syntax you may use when editing the pages. Simply have a look at the source of this page by pressing "Edit this page". If you want to try something, just use the [[playground:playground|playground]] page. The simpler markup is easily accessible via [[doku>toolbar|quickbuttons]], too.
 
 ===== Basic Text Formatting =====
 
@@ -83,9 +83,14 @@ Windows shares like [[\\server\share|this]] are recognized, too. Please note tha
 Notes:
 
   * For security reasons direct browsing of windows shares only works in Microsoft Internet Explorer per default (and only in the "local zone").
-  * For Mozilla and Firefox it can be enabled through different workaround mentioned in the [[http://kb.mozillazine.org/Links_to_local_pages_do_not_work|Mozilla Knowledge Base]]. However, there will still be a JavaScript warning about trying to open a Windows Share. To remove this warning (for all users), put the following line in ''conf/local.protected.php'':
-
-  $lang['js']['nosmblinks'] = '';
+  * For Mozilla and Firefox it can be enabled through different workaround mentioned in the [[http://kb.mozillazine.org/Links_to_local_pages_do_not_work|Mozilla Knowledge Base]]. However, there will still be a JavaScript warning about trying to open a Windows Share. To remove this warning (for all users), put the following line in ''conf/lang/en/lang.php'' (more details at [[doku>localization#changing_some_localized_texts_and_strings_in_your_installation|localization]]): <code - conf/lang/en/lang.php>
+<?php
+/**
+ * Customization of the english language file
+ * Copy only the strings that needs to be modified
+ */
+$lang['js']['nosmblinks'] = '';
+</code>
 
 ==== Image Links ====
 
@@ -121,9 +126,9 @@ By using four or more dashes, you can make a horizontal line:
 
 ----
 
-===== Images and Other Files =====
+===== Media Files =====
 
-You can include external and internal [[doku>images]] with curly brackets. Optionally you can specify the size of them.
+You can include external and internal [[doku>images|images, videos and audio files]] with curly brackets. Optionally you can specify the size of them.
 
 Real size:                        {{wiki:dokuwiki-128.png}}
 
@@ -131,12 +136,12 @@ Resize to given width:            {{wiki:dokuwiki-128.png?50}}
 
 Resize to given width and height((when the aspect ratio of the given width and height doesn't match that of the image, it will be cropped to the new ratio before resizing)): {{wiki:dokuwiki-128.png?200x50}}
 
-Resized external image:           {{http://php.net/images/php.gif?200x50}}
+Resized external image:           {{https://secure.php.net/images/php.gif?200x50}}
 
   Real size:                        {{wiki:dokuwiki-128.png}}
   Resize to given width:            {{wiki:dokuwiki-128.png?50}}
   Resize to given width and height: {{wiki:dokuwiki-128.png?200x50}}
-  Resized external image:           {{http://php.net/images/php.gif?200x50}}
+  Resized external image:           {{https://secure.php.net/images/php.gif?200x50}}
 
 
 By using left or right whitespaces you can choose the alignment.
@@ -157,9 +162,36 @@ Of course, you can add a title (displayed as a tooltip by most browsers), too.
 
   {{ wiki:dokuwiki-128.png |This is the caption}}
 
-If you specify a filename (external or internal) that is not an image (''gif, jpeg, png''), then it will be displayed as a link instead.
-
 For linking an image to another page see [[#Image Links]] above.
+
+==== Supported Media Formats ====
+
+DokuWiki can embed the following media formats directly.
+
+| Image | ''gif'', ''jpg'', ''png''  |
+| Video | ''webm'', ''ogv'', ''mp4'' |
+| Audio | ''ogg'', ''mp3'', ''wav''  |
+| Flash | ''swf''                    |
+
+If you specify a filename that is not a supported media format, then it will be displayed as a link instead.
+
+By adding ''?linkonly'' you provide a link to the media without displaying it inline
+
+  {{wiki:dokuwiki-128.png?linkonly}}
+
+{{wiki:dokuwiki-128.png?linkonly}} This is just a link to the image.
+
+==== Fallback Formats ====
+
+Unfortunately not all browsers understand all video and audio formats. To mitigate the problem, you can upload your file in different formats for maximum browser compatibility.
+
+For example consider this embedded mp4 video:
+
+  {{video.mp4|A funny video}}
+
+When you upload a ''video.webm'' and ''video.ogv'' next to the referenced ''video.mp4'', DokuWiki will automatically add them as alternatives so that one of the three files is understood by your browser.
+
+Additionally DokuWiki supports a "poster" image which will be shown before the video has started. That image needs to have the same filename as the video and be either a jpg or png file. In the example above a ''video.jpg'' file would work.
 
 ===== Lists =====
 
@@ -214,6 +246,7 @@ DokuWiki converts commonly used [[wp>emoticon]]s to their graphical equivalents.
   * :-| %%  :-|  %%
   * ;-) %%  ;-)  %%
   * ^_^ %%  ^_^  %%
+  * m(  %%  m(   %%
   * :?: %%  :?:  %%
   * :!: %%  :!:  %%
   * LOL %%  LOL  %%
@@ -240,17 +273,19 @@ There are three exceptions which do not come from that pattern file: multiplicat
 
 Some times you want to mark some text to show it's a reply or comment. You can use the following syntax:
 
-  I think we should do it
-  
-  > No we shouldn't
-  
-  >> Well, I say we should
-  
-  > Really?
-  
-  >> Yes!
-  
-  >>> Then lets do it!
+<code>
+I think we should do it
+
+> No we shouldn't
+
+>> Well, I say we should
+
+> Really?
+
+>> Yes!
+
+>>> Then lets do it!
+</code>
 
 I think we should do it
 
@@ -296,7 +331,7 @@ As you can see, it's the cell separator before a cell which decides about the fo
   ^ Heading 4    | no colspan this time |                    |
   ^ Heading 5    | Row 2 Col 2          | Row 2 Col 3        |
 
-You can have rowspans (vertically connected cells) by adding '':::'' into the cells below the one to which they should connect.
+You can have rowspans (vertically connected cells) by adding ''%%:::%%'' into the cells below the one to which they should connect.
 
 ^ Heading 1      ^ Heading 2                  ^ Heading 3          ^
 | Row 1 Col 1    | this cell spans vertically | Row 1 Col 3        |
@@ -382,11 +417,13 @@ class HelloWorldApp {
 }
 </code>
 
-The following language strings are currently recognized: //4cs, abap, actionscript-french, actionscript, actionscript3, ada, apache, applescript, asm, asp, autoconf, autohotkey, autoit, avisynth, awk, bash, basic4gl, bf, bibtex, blitzbasic, bnf, boo, c, c_mac, caddcl, cadlisp, cfdg, cfm, chaiscript, cil, clojure, cmake, cobol, cpp, cpp-qt, csharp, css, cuesheet, d, dcs, delphi, diff, div, dos, dot, ecmascript, eiffel, email, erlang, fo, fortran, freebasic, fsharp, gambas, genero, genie, gdb, glsl, gml, gnuplot, groovy, gettext, gwbasic, haskell, hicest, hq9plus, html, icon, idl, ini, inno, intercal, io, j, java5, java, javascript, jquery, kixtart, klonec, klonecpp, latex, lisp, locobasic, logtalk, lolcode, lotusformulas, lotusscript, lscript, lsl2, lua, m68k, magiksf, make, mapbasic, matlab, mirc, modula2, modula3, mmix, mpasm, mxml, mysql, newlisp, nsis, oberon2, objc, ocaml-brief, ocaml, oobas, oracle8, oracle11, oxygene, oz, pascal, pcre, perl, perl6, per, pf, php-brief, php, pike, pic16, pixelbender, plsql, postgresql, povray, powerbuilder, powershell, progress, prolog, properties, providex, purebasic, python, q, qbasic, rails, rebol, reg, robots, rpmspec, rsplus, ruby, sas, scala, scheme, scilab, sdlbasic, smalltalk, smarty, sql, systemverilog, tcl, teraterm, text, thinbasic, tsql, typoscript, unicon, vala, vbnet, vb, verilog, vhdl, vim, visualfoxpro, visualprolog, whitespace, winbatch, whois, xbasic, xml, xorg_conf, xpp, z80//
+The following language strings are currently recognized: //4cs 6502acme 6502kickass 6502tasm 68000devpac abap actionscript3 actionscript ada aimms algol68 apache applescript apt_sources arm asm asp asymptote autoconf autohotkey autoit avisynth awk bascomavr bash basic4gl batch bf biblatex bibtex blitzbasic bnf boo caddcl cadlisp ceylon cfdg cfm chaiscript chapel cil c_loadrunner clojure c_mac cmake cobol coffeescript c cpp cpp-qt cpp-winapi csharp css cuesheet c_winapi dart dcl dcpu16 dcs delphi diff div dos dot d ecmascript eiffel email epc e erlang euphoria ezt f1 falcon fo fortran freebasic freeswitch fsharp gambas gdb genero genie gettext glsl gml gnuplot go groovy gwbasic haskell haxe hicest hq9plus html html4strict html5 icon idl ini inno intercal io ispfpanel java5 java javascript jcl j jquery julia kixtart klonec klonecpp kotlin latex lb ldif lisp llvm locobasic logtalk lolcode lotusformulas lotusscript lscript lsl2 lua m68k magiksf make mapbasic mathematica matlab mercury metapost mirc mk-61 mmix modula2 modula3 mpasm mxml mysql nagios netrexx newlisp nginx nimrod nsis oberon2 objc objeck ocaml-brief ocaml octave oobas oorexx oracle11 oracle8 oxygene oz parasail parigp pascal pcre perl6 perl per pf phix php-brief php pic16 pike pixelbender pli plsql postgresql postscript povray powerbuilder powershell proftpd progress prolog properties providex purebasic pycon pys60 python qbasic qml q racket rails rbs rebol reg rexx robots roff rpmspec rsplus ruby rust sas sass scala scheme scilab scl sdlbasic smalltalk smarty spark sparql sql sshconfig standardml stonescript swift systemverilog tclegg tcl teraterm texgraph text thinbasic tsql twig typoscript unicon upc urbi uscript vala vbnet vb vbscript vedit verilog vhdl vim visualfoxpro visualprolog whitespace whois winbatch wolfram xbasic xml xojo xorg_conf xpp yaml z80 zxbasic//
+
+There are additional [[doku>syntax_highlighting|advanced options]] available for syntax highlighting, such as highlighting lines or adding line numbers.
 
 ==== Downloadable Code Blocks ====
 
-When you use the ''%%<code>%%'' or ''%%<file>%%'' syntax as above, you might want to make the shown code available for download as well. You can to this by specifying a file name after language code like this:
+When you use the ''%%<code>%%'' or ''%%<file>%%'' syntax as above, you might want to make the shown code available for download as well. You can do this by specifying a file name after language code like this:
 
 <code>
 <file php myexample.php>
@@ -400,57 +437,6 @@ When you use the ''%%<code>%%'' or ''%%<file>%%'' syntax as above, you might wan
 
 If you don't want any highlighting but want a downloadable file, specify a dash (''-'') as the language code: ''%%<code - myfile.foo>%%''.
 
-
-===== Embedding HTML and PHP =====
-
-You can embed raw HTML or PHP code into your documents by using the ''%%<html>%%'' or ''%%<php>%%'' tags. (Use uppercase tags if you need to enclose block level elements.)
-
-HTML example:
-
-<code>
-<html>
-This is some <span style="color:red;font-size:150%;">inline HTML</span>
-</html>
-<HTML>
-<p style="border:2px dashed red;">And this is some block HTML</p>
-</HTML>
-</code>
-
-<html>
-This is some <span style="color:red;font-size:150%;">inline HTML</span>
-</html>
-<HTML>
-<p style="border:2px dashed red;">And this is some block HTML</p>
-</HTML>
-
-PHP example:
-
-<code>
-<php>
-echo 'A logo generated by PHP:';
-echo '<img src="' . $_SERVER['PHP_SELF'] . '?=' . php_logo_guid() . '" alt="PHP Logo !" />';
-echo '(generated inline HTML)';
-</php>
-<PHP>
-echo '<table class="inline"><tr><td>The same, but inside a block level element:</td>';
-echo '<td><img src="' . $_SERVER['PHP_SELF'] . '?=' . php_logo_guid() . '" alt="PHP Logo !" /></td>';
-echo '</tr></table>';
-</PHP>
-</code>
-
-<php>
-echo 'A logo generated by PHP:';
-echo '<img src="' . $_SERVER['PHP_SELF'] . '?=' . php_logo_guid() . '" alt="PHP Logo !" />';
-echo '(inline HTML)';
-</php>
-<PHP>
-echo '<table class="inline"><tr><td>The same, but inside a block level element:</td>';
-echo '<td><img src="' . $_SERVER['PHP_SELF'] . '?=' . php_logo_guid() . '" alt="PHP Logo !" /></td>';
-echo '</tr></table>';
-</PHP>
-
-**Please Note**: HTML and PHP embedding is disabled by default in the configuration. If disabled, the code is displayed instead of executed.
-
 ===== RSS/ATOM Feed Aggregation =====
 [[DokuWiki]] can integrate data from external XML feeds. For parsing the XML feeds, [[http://simplepie.org/|SimplePie]] is used. All formats understood by SimplePie can be used in DokuWiki as well. You can influence the rendering by multiple additional space separated parameters:
 
@@ -459,10 +445,13 @@ echo '</tr></table>';
 | reverse    | display the last items in the feed first |
 | author     | show item authors names |
 | date       | show item dates |
-| description| show the item description. If [[doku>config:htmlok|HTML]] is disabled all tags will be stripped |
+| description| show the item description. All HTML tags will be stripped |
+| nosort     | do not sort the items in the feed |
 | //n//[dhm] | refresh period, where d=days, h=hours, m=minutes. (e.g. 12h = 12 hours). |
 
 The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. [[wiki:DokuWiki]] will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells [[wiki:DokuWiki]] to re-render the page if it is more than //refresh period// since the page was last rendered.
+
+By default the feed will be sorted by date, newest items first. You can sort it by oldest first using the ''reverse'' parameter, or display the feed as is with ''nosort''.
 
 **Example:**
 

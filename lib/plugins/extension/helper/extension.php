@@ -845,7 +845,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
             $file = @file($managerpath);
             if (!empty($file)) {
                 foreach ($file as $line) {
-                    list($key, $value) = explode('=', trim($line, DOKU_LF), 2);
+                    list($key, $value) = sexplode('=', trim($line, DOKU_LF), 2, '');
                     $key = trim($key);
                     $value = trim($value);
                     // backwards compatible with old plugin manager
