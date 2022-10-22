@@ -780,7 +780,8 @@ function checkwordblock($text = '') {
  *
  * @author Zebra North <mrzebra@mrzebra.co.uk>
  *
- * @param  boolean $single If set only a single IP is returned
+ * @param  bool $single If set only a single IP is returned.
+ *
  * @return string Returns an IP address if 'single' is true, or a comma-separated list
  *                of IP addresses otherwise.
  */
@@ -796,18 +797,11 @@ function clientIP($single = false) {
         $ips[] = $INPUT->server->str('HTTP_X_REAL_IP');
     }
 
-    // Get the client address from the X-Forwarded-For header.
-    // X-Forwarded-For: <client> [, <proxy>]...
-    $forwardedFor = explode(',', str_replace(' ', '', $INPUT->server->str('HTTP_X_FORWARDED_FOR')));
-    $remoteAddr = $INPUT->server->str('REMOTE_ADDR');
-
-    // Add the X-Forwarded-For address if the header was set by a trusted proxy.
-    if ($forwardedFor[0] && !empty($conf['trustedproxy']) && preg_match('/' . $conf['trustedproxy'] . '/', $remoteAddr)) {
-        $ips = array_merge($ips, $forwardedFor);
-    }
+    // Add the X-Forwarded-For addresses if all proxies are trusted.
+    $ips = array_merge($ips, dokuwiki\forwardedFor());
 
     // Add the TCP/IP connection endpoint.
-    $ips[] = $remoteAddr;
+    $ips[] = $INPUT->server->str('REMOTE_ADDR');
 
     // Remove invalid IPs.
     $ips = array_filter($ips, function ($ip)  { return filter_var($ip, FILTER_VALIDATE_IP); });

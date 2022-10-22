@@ -2,12 +2,13 @@
 
 class common_clientIP_test extends DokuWikiTest {
 
-    public function setup() : void {
-        parent::setup();
-
-        global $conf;
-        $conf['trustedproxy'] = '^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)';
-    }
+    /**
+     * @var mixed[] $configs Possible values for $conf['trustedproxy'].
+     */
+    private $configs = [
+        '^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)',
+        ['::1', 'fe80::/10', '127.0.0.0/8', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'],
+    ];
 
     /**
      * The data provider for clientIP() tests.
@@ -50,16 +51,16 @@ class common_clientIP_test extends DokuWikiTest {
             ['A', false, 'B', 'C,E', true, 'A'],
             ['A', true, 'B', 'C,E', true, 'B'],
 
-            // An X-Forwarded-For header with proxies from a trusted proxy.
-            ['D', false, 'B', 'C,E', false, 'C,E,D'],
-            ['D', true, 'B', 'C,E', false, 'B,C,E,D'],
-            ['D', false, 'B', 'C,E', true, 'C'],
+            // An X-Forwarded-For header with untrusted proxies from a trusted proxy.
+            ['D', false, 'B', 'C,E', false, 'D'],
+            ['D', true, 'B', 'C,E', false, 'B,D'],
+            ['D', false, 'B', 'C,E', true, 'D'],
             ['D', true, 'B', 'C,E', true, 'B'],
 
             // An X-Forwarded-For header with an invalid proxy from a trusted proxy.
-            ['D', false, 'B', 'C,invalid,E', false, 'C,E,D'],
-            ['D', true, 'B', 'C,invalid,E', false, 'B,C,E,D'],
-            ['D', false, 'B', 'C,invalid,E', true, 'C'],
+            ['D', false, 'B', 'C,invalid,E', false, 'D'],
+            ['D', true, 'B', 'C,invalid,E', false, 'B,D'],
+            ['D', false, 'B', 'C,invalid,E', true, 'D'],
             ['D', true, 'B', 'C,invalid,E', true, 'B'],
 
             // Malicious X-Real-IP and X-Forwarded-For headers.
@@ -108,7 +109,10 @@ class common_clientIP_test extends DokuWikiTest {
         $_SERVER['HTTP_X_FORWARDED_FOR'] = str_replace(array_keys($addresses), array_values($addresses), $forwardedFor);
         $conf['realip'] = $useRealIp;
 
-        $this->assertEquals(str_replace(array_keys($addresses), array_values($addresses), $expected), clientIP($single));
+        foreach ($this->configs as $config) {
+            $conf['trustedproxy'] = $config;
+            $this->assertEquals(str_replace(array_keys($addresses), array_values($addresses), $expected), clientIP($single));
+        }
     }
 
     /**
@@ -141,8 +145,9 @@ class common_clientIP_test extends DokuWikiTest {
         $_SERVER['HTTP_X_FORWARDED_FOR'] = str_replace(array_keys($addresses), array_values($addresses), $forwardedFor);
         $conf['realip'] = $useRealIp;
 
-        $this->assertEquals(str_replace(array_keys($addresses), array_values($addresses), $expected), clientIP($single));
+        foreach ($this->configs as $config) {
+            $conf['trustedproxy'] = $config;
+            $this->assertEquals(str_replace(array_keys($addresses), array_values($addresses), $expected), clientIP($single));
+        }
     }
 }
-
-//Setup VIM: ex: et ts=4 :
