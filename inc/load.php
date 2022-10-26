@@ -25,7 +25,6 @@ require_once(DOKU_INC.'inc/httputils.php');
 require_once(DOKU_INC.'inc/indexer.php');
 require_once(DOKU_INC.'inc/infoutils.php');
 require_once(DOKU_INC.'inc/io.php');
-require_once(DOKU_INC.'inc/ip.php');
 require_once(DOKU_INC.'inc/mail.php');
 require_once(DOKU_INC.'inc/media.php');
 require_once(DOKU_INC.'inc/pageutils.php');

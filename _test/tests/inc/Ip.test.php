@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Ip;
+
 class ip_test extends DokuWikiTest {
 
     /**
@@ -34,7 +36,7 @@ class ip_test extends DokuWikiTest {
      */
     public function test_ip_to_number(string $ip, int $version, int $upper, int $lower): void
     {
-        $result = dokuwiki\ipToNumber($ip);
+        $result = Ip::ipToNumber($ip);
 
         $this->assertSame($version, $result['version']);
         $this->assertSame($upper, $result['upper']);
@@ -88,7 +90,7 @@ class ip_test extends DokuWikiTest {
      */
     public function test_ip_in_range(string $ip, string $range, bool $expected): void
     {
-        $result = dokuwiki\ipInRange($ip, $range);
+        $result = Ip::ipInRange($ip, $range);
 
         $this->assertSame($expected, $result);
     }
@@ -133,7 +135,7 @@ class ip_test extends DokuWikiTest {
      */
     public function test_ip_matches(string $ip, string $ipOrRange, bool $expected): void
     {
-        $result = dokuwiki\ipMatches($ip, $ipOrRange);
+        $result = Ip::ipMatches($ip, $ipOrRange);
 
         $this->assertSame($expected, $result);
     }
@@ -216,7 +218,7 @@ class ip_test extends DokuWikiTest {
         global $conf;
         $conf['trustedproxy'] = $config;
 
-        $result = dokuwiki\proxyIsTrusted($ip);
+        $result = Ip::proxyIsTrusted($ip);
 
         $this->assertSame($expected, $result);
     }
@@ -326,7 +328,7 @@ class ip_test extends DokuWikiTest {
         $INPUT->server->set('HTTP_X_FORWARDED_FOR', $header);
         $INPUT->server->set('REMOTE_ADDR', $remoteAddr);
 
-        $result = dokuwiki\forwardedFor();
+        $result = Ip::forwardedFor();
 
         $this->assertSame($expected, $result);
     }

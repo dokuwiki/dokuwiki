@@ -10,6 +10,7 @@ use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\File\PageFile;
+use dokuwiki\Ip;
 use dokuwiki\Logger;
 use dokuwiki\Subscriptions\PageSubscriptionSender;
 use dokuwiki\Subscriptions\SubscriberManager;
@@ -806,36 +807,8 @@ function checkwordblock($text = '') {
  *                of IP addresses otherwise.
  */
 function clientIP($single = false) {
-    /* @var Input $INPUT */
-    global $INPUT, $conf;
-
-    // IPs in order of most to least preferred.
-    $ips = [];
-
-    // Use the X-Real-IP header if it is enabled by the configuration.
-    if (!empty($conf['realip']) && $INPUT->server->str('HTTP_X_REAL_IP')) {
-        $ips[] = $INPUT->server->str('HTTP_X_REAL_IP');
-    }
-
-    // Add the X-Forwarded-For addresses if all proxies are trusted.
-    $ips = array_merge($ips, dokuwiki\forwardedFor());
-
-    // Add the TCP/IP connection endpoint.
-    $ips[] = $INPUT->server->str('REMOTE_ADDR');
-
-    // Remove invalid IPs.
-    $ips = array_filter($ips, function ($ip)  { return filter_var($ip, FILTER_VALIDATE_IP); });
-
-    // Remove duplicated IPs.
-    $ips = array_values(array_unique($ips));
-
-    // Add a fallback if for some reason there were no valid IPs.
-    if (!$ips) {
-        $ips[] = '0.0.0.0';
-    }
-
     // Return the first IP in single mode, or all the IPs.
-    return $single ? $ips[0] : join(',', $ips);
+    return $single ? Ip::clientIp() : join(',', Ip::clientIps());
 }
 
 /**
