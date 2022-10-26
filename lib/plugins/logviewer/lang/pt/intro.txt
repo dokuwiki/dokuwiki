@@ -1,0 +1,8 @@
+====== Visualizar registros ======
+
+Esta interface permite visualizar os vários logs que são escritos pelo DokuWiki. Por padrão, não deve haver muito
+aqui (depende das suas [[doku>config:dontlog|configurações de log]]). No entanto, se algo der errado, as chances são altas
+você encontrará informações úteis sobre o problema. Todos os horários são UTC!
+
+Esteja ciente de que **os arquivos de registro podem conter informações confidenciais** como senhas, caminhos ou outros segredos.
+Certifique-se de redigir os registros adequadamente ao publicá-los no fórum ou em relatórios de bugs!
