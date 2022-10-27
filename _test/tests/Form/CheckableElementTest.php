@@ -1,11 +1,15 @@
 <?php
 
+namespace dokuwiki\test\Form;
+
 use dokuwiki\Form;
 use DOMWrap\Document;
 
-class form_checkableelement_test extends DokuWikiTest {
+class CheckableElementTest extends \DokuWikiTest
+{
 
-    function test_defaults() {
+    function testDefaults()
+    {
         $form = new Form\Form();
         $form->addRadioButton('foo', 'label text first')->val('first')->attr('checked', 'checked');
         $form->addRadioButton('foo', 'label text second')->val('second');
@@ -30,10 +34,10 @@ class form_checkableelement_test extends DokuWikiTest {
     /**
      * check that posted values overwrite preset default
      */
-    function test_prefill() {
+    function testPrefill()
+    {
         global $INPUT;
         $INPUT->post->set('foo', 'second');
-
 
         $form = new Form\Form();
         $form->addRadioButton('foo', 'label text first')->val('first')->attr('checked', 'checked');

@@ -1,11 +1,15 @@
 <?php
 
+namespace dokuwiki\test\Form;
+
 use dokuwiki\Form;
 use DOMWrap\Document;
 
-class form_buttonelement_test extends DokuWikiTest {
+class ButtonElementTest extends \DokuWikiTest
+{
 
-    function test_simple() {
+    function testSimple()
+    {
         $form = new Form\Form();
         $form->addButton('foo', 'Hello <b>World</b>')->val('bam')->attr('type', 'submit');
 
@@ -22,7 +26,8 @@ class form_buttonelement_test extends DokuWikiTest {
         $this->assertTrue($b->count() == 0);
     }
 
-    function test_html() {
+    function testHtml()
+    {
         $form = new Form\Form();
         $form->addButtonHTML('foo', 'Hello <b>World</b>')->val('bam')->attr('type', 'submit');
 

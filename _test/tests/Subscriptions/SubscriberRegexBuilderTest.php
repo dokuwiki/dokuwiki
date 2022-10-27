@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\test\inc\Subscriptions;
+namespace dokuwiki\test\Subscriptions;
 
 use dokuwiki\Subscriptions\SubscriberRegexBuilder;
 use DokuWikiTest;

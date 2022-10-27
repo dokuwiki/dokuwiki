@@ -1,11 +1,13 @@
 <?php
 
+namespace dokuwiki\test\Form;
+
 use dokuwiki\Form;
 use DOMWrap\Document;
 
-class form_inputelement_test extends DokuWikiTest {
+class InputElementTest extends \DokuWikiTest {
 
-    function test_defaults() {
+    function testDefaults() {
         $form = new Form\Form();
         $form->addTextInput('foo', 'label text')->val('this is text');
 
@@ -25,7 +27,7 @@ class form_inputelement_test extends DokuWikiTest {
     /**
      * check that posted values overwrite preset default
      */
-    function test_prefill() {
+    function testPrefill() {
         global $INPUT;
         $INPUT->post->set('foo', 'a new text');
 

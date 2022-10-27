@@ -1,15 +1,19 @@
 <?php
 
+namespace dokuwiki\test\Form;
+
 use dokuwiki\Form;
 use DOMWrap\Document;
 
-class form_dropdownelement_test extends DokuWikiTest {
+class DropdownElementTest extends \DokuWikiTest
+{
 
-    function test_defaults() {
+    function testDefaults()
+    {
         $form = new Form\Form();
 
         // basic tests
-        $options = array ('first', 'second', 'third');
+        $options = array('first', 'second', 'third');
         $element = $form->addDropdown('foo', $options, 'label text');
         $this->assertEquals('first', $element->val());
         $element->val('second');
@@ -18,7 +22,7 @@ class form_dropdownelement_test extends DokuWikiTest {
         $this->assertEquals('first', $element->val());
 
         // associative array
-        $options = array ('first'=>'A first Label', 'second'=>'The second Label', 'third'=>'Just 3');
+        $options = array('first' => 'A first Label', 'second' => 'The second Label', 'third' => 'Just 3');
         $element->options($options);
         $this->assertEquals('first', $element->val());
         $element->val('second');
@@ -46,22 +50,23 @@ class form_dropdownelement_test extends DokuWikiTest {
         $this->assertEquals('label text', $label->find('span')->text());
     }
 
-    function test_extended_options() {
+    function testExtendedOptions()
+    {
         $form = new Form\Form();
 
         $options = array(
-            'first' => array (
+            'first' => array(
                 'label' => 'the label',
                 'attrs' => array(
                     'id' => 'theID',
                     'class' => 'two classes',
-                    'data-foo' => 'bar'
-                )
+                    'data-foo' => 'bar',
+                ),
             ),
             'second',
             '3' => array(
                 'label' => 'the label of the complex third option',
-            )
+            ),
         );
 
         $form->addDropdown('foo', $options, 'label text');
@@ -84,20 +89,21 @@ class form_dropdownelement_test extends DokuWikiTest {
         $this->assertTrue($option->hasClass('classes'));
     }
 
-    public function test_optgroups() {
+    public function testOptgroups()
+    {
         $form = new Form\Form();
 
         $options1 = array(
             'first' => 'the label',
-            'second'
+            'second',
         );
 
         $options2 = array(
-            'third' => array (
+            'third' => array(
                 'label' => 'label of third option',
-                'attribute' => 'attribute-value'
+                'attribute' => 'attribute-value',
             ),
-            'fourth'
+            'fourth',
         );
 
         $dropdown = $form->addDropdown('foo', null, 'label text');
@@ -111,7 +117,7 @@ class form_dropdownelement_test extends DokuWikiTest {
         $optGroups = $dropdown->optGroups();
         $this->assertEquals(array(
             'first' => array('label' => 'the label'),
-            'second' => array('label' => 'second')
+            'second' => array('label' => 'second'),
         ), $optGroups['opt1']->options());
 
         // HTML
@@ -132,7 +138,8 @@ class form_dropdownelement_test extends DokuWikiTest {
     /**
      * Prevent double select that might occur because `'Auto' == 0` is true
      */
-    public function test_doubleselect() {
+    public function testDoubleSelect()
+    {
         $form = new Form\Form();
         $form->addDropdown('foo', ['Auto', 0, 1]);
 
@@ -147,17 +154,18 @@ class form_dropdownelement_test extends DokuWikiTest {
     /**
      * Ensure that there is always only a single one selected option
      */
-    public function test_optgroups_doubleselect() {
+    public function testOptgroupsDoubleselect()
+    {
         $form = new Form\Form();
         $options1 = array(
-            'double' => 'the label'
+            'double' => 'the label',
         );
 
         $options2 = array(
-            'double' => array (
+            'double' => array(
                 'label' => 'label of third option',
-                'attribute' => 'attribute-value'
-            )
+                'attribute' => 'attribute-value',
+            ),
         );
 
         $dropdown = $form->addDropdown('foo', null, 'label text');
@@ -173,16 +181,16 @@ class form_dropdownelement_test extends DokuWikiTest {
         $this->assertEquals('the label', $selected->text());
     }
 
-
     /**
      * check that posted values overwrite preset default
      */
-    public function test_prefill() {
+    public function testPrefill()
+    {
         global $INPUT;
         $INPUT->post->set('foo', 'second');
 
         $form = new Form\Form();
-        $options = array ('first'=>'A first Label', 'second'=>'The second Label', 'third'=>'Just 3');
+        $options = array('first' => 'A first Label', 'second' => 'The second Label', 'third' => 'Just 3');
         $element = $form->addDropdown('foo', $options, 'label text')->val('third');
         $this->assertEquals('third', $element->val());
 
@@ -195,11 +203,11 @@ class form_dropdownelement_test extends DokuWikiTest {
         $this->assertEquals('The second Label', $option->text());
     }
 
-
-    public function test_multiple() {
+    public function testMultiple()
+    {
         $form = new Form\Form();
 
-        $options = array ('first'=>'A first Label', 'second'=>'The second Label', 'third'=>'Just 3');
+        $options = array('first' => 'A first Label', 'second' => 'The second Label', 'third' => 'Just 3');
         $element = $form->addDropdown('foo', $options, 'label text')->attr('multiple', '1');
 
         // only two of these values are valid

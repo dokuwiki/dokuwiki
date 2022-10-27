@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\inc\Extension;
+namespace dokuwiki\test\Extension;
 
 use dokuwiki\Extension\Event;
 
@@ -33,11 +33,11 @@ class EventTest extends \DokuWikiTest
     public function testStatic()
     {
         $data = ['test' => 'test'];
-        Event::createAndTrigger('TESTTRIGGER', $data, 'tests\inc\Extension\EventTest::staticFunc');
+        Event::createAndTrigger('TESTTRIGGER', $data, self::class . '::staticFunc');
         $this->assertEquals(['test' => 'TEST'], $data);
 
         $data = ['test' => 'test'];
-        Event::createAndTrigger('TESTTRIGGER', $data, ['tests\inc\Extension\EventTest', 'staticFunc']);
+        Event::createAndTrigger('TESTTRIGGER', $data, [self::class, 'staticFunc']);
         $this->assertEquals(['test' => 'TEST'], $data);
     }
 }

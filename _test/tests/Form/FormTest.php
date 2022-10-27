@@ -1,33 +1,19 @@
 <?php
 
+namespace dokuwiki\test\Form;
+
 use dokuwiki\Form;
 use DOMWrap\Document;
+use dokuwiki\test\Form\Form as TestForm;
 
-/**
- * makes form internals accessible for testing
- */
-class TestForm extends Form\Form {
-    /**
-     * @return array list of element types
-     */
-    function getElementTypeList() {
-        $list = array();
-        foreach($this->elements as $element) $list[] = $element->getType();
-        return $list;
-    }
-
-    public function balanceFieldsets() {
-        parent::balanceFieldsets();
-    }
-
-}
-
-class form_form_test extends DokuWikiTest {
+class FormTest extends \DokuWikiTest
+{
 
     /**
      * checks that an empty form is initialized correctly
      */
-    function test_defaults() {
+    function testDefaults()
+    {
         global $INPUT;
         global $ID;
         $ID = 'some:test';
@@ -45,8 +31,8 @@ class form_form_test extends DokuWikiTest {
         $this->assertTrue($pq->find('input[name=sectok]')->count() == 1);
     }
 
-
-    function test_fieldsetbalance() {
+    function testFieldsetBalance()
+    {
         $form = new TestForm();
         $form->addFieldsetOpen();
         $form->addHTML('ignored');
@@ -57,7 +43,7 @@ class form_form_test extends DokuWikiTest {
             array(
                 'fieldsetopen',
                 'html',
-                'fieldsetclose'
+                'fieldsetclose',
             ),
             $form->getElementTypeList()
         );
@@ -71,11 +57,10 @@ class form_form_test extends DokuWikiTest {
             array(
                 'fieldsetopen',
                 'html',
-                'fieldsetclose'
+                'fieldsetclose',
             ),
             $form->getElementTypeList()
         );
-
 
         $form = new TestForm();
         $form->addFieldsetOpen();
@@ -86,7 +71,7 @@ class form_form_test extends DokuWikiTest {
             array(
                 'fieldsetopen',
                 'html',
-                'fieldsetclose'
+                'fieldsetclose',
             ),
             $form->getElementTypeList()
         );
@@ -107,10 +92,9 @@ class form_form_test extends DokuWikiTest {
                 'html',
                 'fieldsetopen',
                 'html',
-                'fieldsetclose'
+                'fieldsetclose',
             ),
             $form->getElementTypeList()
         );
     }
-
 }

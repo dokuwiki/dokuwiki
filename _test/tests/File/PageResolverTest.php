@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\test\inc\File;
+namespace dokuwiki\test\File;
 
 use dokuwiki\File\PageResolver;
 
@@ -101,7 +101,8 @@ class PageResolverTest extends \DokuWikiTest
      *
      * Please note that a ~ alone is the same as ~:
      */
-    public function testTildeStartPage() {
+    public function testTildeStartPage()
+    {
         $context = 'foo:context';
         $resolver = new PageResolver($context);
 
@@ -126,7 +127,8 @@ class PageResolverTest extends \DokuWikiTest
         $this->assertEquals("$context:start", $resolver->resolveId('~'));
     }
 
-    public function testResolveStartPage() {
+    public function testResolveStartPage()
+    {
 
         $resolver = new PageResolver('arbitrary');
 
@@ -154,7 +156,8 @@ class PageResolverTest extends \DokuWikiTest
      * @return array
      * @see testResolveRelatives
      */
-    public function provideResolveRelatives() {
+    public function provideResolveRelatives()
+    {
         return [
             ['foo', 'foo'],
             ['foo:bar', 'foo:bar'],
@@ -174,7 +177,8 @@ class PageResolverTest extends \DokuWikiTest
      * @param string $input
      * @param string $expected
      */
-    public function testResolveRelatives($input, $expected) {
+    public function testResolveRelatives($input, $expected)
+    {
         $resolver = new PageResolver('arbitrary');
 
         $actual = $this->callInaccessibleMethod($resolver, 'resolveRelatives', [$input]);
@@ -187,7 +191,6 @@ class PageResolverTest extends \DokuWikiTest
 
         $singular = 'some:page';
         $plural = 'some:pages';
-
 
         $actual = $this->callInaccessibleMethod($resolver, 'resolveAutoPlural', [$singular, '', false]);
         $this->assertEquals($singular, $actual); // no pages exist

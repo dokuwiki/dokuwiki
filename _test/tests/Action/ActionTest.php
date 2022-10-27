@@ -1,14 +1,18 @@
 <?php
 
+namespace dokuwiki\test\Action;
+
 use dokuwiki\Action\AbstractAclAction;
 use dokuwiki\Action\AbstractUserAction;
 use dokuwiki\Action\Exception\ActionAclRequiredException;
 use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Action\Exception\ActionUserRequiredException;
 
-class action_general extends DokuWikiTest {
+class ActionTest extends \DokuWikiTest
+{
 
-    public function dataProvider() {
+    public function dataProvider()
+    {
         return array(
             array('Login', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
             array('Logout', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
@@ -69,7 +73,8 @@ class action_general extends DokuWikiTest {
      * @param $expected
      * @param $info
      */
-    public function testMinimumPermissions($name, $expected, $info) {
+    public function testMinimumPermissions($name, $expected, $info)
+    {
         global $INFO;
         $INFO = $info;
 
@@ -86,9 +91,10 @@ class action_general extends DokuWikiTest {
      * @dataProvider dataProvider
      * @param $name
      */
-    public function testBaseClassActionOkPermission($name) {
+    public function testBaseClassActionOkPermission($name)
+    {
         $this->assertTrue(true); // mark as not risky
-        if($name == 'Show') return; // disabling show does not work
+        if ($name == 'Show') return; // disabling show does not work
 
         $classname = 'dokuwiki\\Action\\' . $name;
         /** @var \dokuwiki\Action\AbstractAction $class */
@@ -102,7 +108,7 @@ class action_general extends DokuWikiTest {
 
         try {
             \dokuwiki\ActionRouter::getInstance(true)->checkAction($class);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->assertNotSame(ActionDisabledException::class, get_class($e));
         }
 
@@ -110,7 +116,7 @@ class action_general extends DokuWikiTest {
 
         try {
             \dokuwiki\ActionRouter::getInstance(true)->checkAction($class);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->assertSame(ActionDisabledException::class, get_class($e), $e);
         }
     }
@@ -121,12 +127,13 @@ class action_general extends DokuWikiTest {
      * @dataProvider dataProvider
      * @param $name
      */
-    public function testBaseClassAclPermission($name) {
+    public function testBaseClassAclPermission($name)
+    {
         $classname = 'dokuwiki\\Action\\' . $name;
         /** @var \dokuwiki\Action\AbstractAction $class */
         $class = new $classname();
         $this->assertTrue(true); // mark as not risky
-        if(!is_a($class, AbstractAclAction::class)) return;
+        if (!is_a($class, AbstractAclAction::class)) return;
 
         global $conf;
         $conf['useacl'] = 1;
@@ -134,7 +141,7 @@ class action_general extends DokuWikiTest {
 
         try {
             $class->checkPreconditions();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->assertNotSame(ActionAclRequiredException::class, get_class($e));
         }
 
@@ -142,7 +149,7 @@ class action_general extends DokuWikiTest {
 
         try {
             $class->checkPreconditions();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->assertSame(ActionAclRequiredException::class, get_class($e));
         }
     }
@@ -153,12 +160,13 @@ class action_general extends DokuWikiTest {
      * @dataProvider dataProvider
      * @param $name
      */
-    public function testBaseClassUserPermission($name) {
+    public function testBaseClassUserPermission($name)
+    {
         $classname = 'dokuwiki\\Action\\' . $name;
         /** @var \dokuwiki\Action\AbstractAction $class */
         $class = new $classname();
         $this->assertTrue(true); // mark as not risky
-        if(!is_a($class, AbstractUserAction::class)) return;
+        if (!is_a($class, AbstractUserAction::class)) return;
 
         global $conf;
         $conf['useacl'] = 1;
@@ -167,7 +175,7 @@ class action_general extends DokuWikiTest {
 
         try {
             $class->checkPreconditions();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->assertNotSame(ActionUserRequiredException::class, get_class($e));
         }
 
@@ -175,7 +183,7 @@ class action_general extends DokuWikiTest {
 
         try {
             $class->checkPreconditions();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->assertSame(ActionUserRequiredException::class, get_class($e));
         }
     }

@@ -1,10 +1,8 @@
 <?php
 
-/**
- * Class Search_createPagenameFromQuery
- *
- */
-class Search_createPagenameFromQuery extends DokuWikiTest
+namespace dokuwiki\test\Ui;
+
+class SearchTest extends \DokuWikiTest
 {
 
     /**
