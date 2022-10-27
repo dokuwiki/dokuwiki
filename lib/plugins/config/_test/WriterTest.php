@@ -60,4 +60,11 @@ class WriterTest extends \DokuWikiTest {
         clearstatcache($config);
         $this->assertGreaterThan($old, filemtime($config));
     }
+
+    public function testEmpty() {
+        $writer = new Writer();
+        $this->expectException(\Exception::class);
+        $this->expectErrorMessage('empty config');
+        $writer->save([]);
+    }
 }
