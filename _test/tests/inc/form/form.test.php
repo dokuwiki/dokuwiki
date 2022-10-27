@@ -1,6 +1,7 @@
 <?php
 
 use dokuwiki\Form;
+use DOMWrap\Document;
 
 /**
  * makes form internals accessible for testing
@@ -35,13 +36,13 @@ class form_form_test extends DokuWikiTest {
 
         $form = new Form\Form();
         $html = $form->toHTML();
-        $pq = phpQuery::newDocumentXHTML($html);
+        $pq = (new Document())->html($html);
 
         $this->assertTrue($pq->find('form')->hasClass('doku_form'));
         $this->assertEquals(wl($ID, array('foo' => 'bar'), false, '&'), $pq->find('form')->attr('action'));
         $this->assertEquals('post', $pq->find('form')->attr('method'));
 
-        $this->assertTrue($pq->find('input[name=sectok]')->length == 1);
+        $this->assertTrue($pq->find('input[name=sectok]')->count() == 1);
     }
 
 
