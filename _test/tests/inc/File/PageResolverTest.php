@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\inc\File;
+namespace dokuwiki\test\inc\File;
 
 use dokuwiki\File\PageResolver;
 
