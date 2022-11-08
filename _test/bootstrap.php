@@ -4,7 +4,8 @@
  */
 
 if(!defined('DOKU_UNITTEST')) define('DOKU_UNITTEST',dirname(__FILE__).'/');
-require_once DOKU_UNITTEST.'core/phpQuery-onefile.php';
+require_once DOKU_UNITTEST.'vendor/autoload.php';
+require_once DOKU_UNITTEST.'core/phpQuery-onefile.php'; // deprecated
 require_once DOKU_UNITTEST.'core/DokuWikiTest.php';
 require_once DOKU_UNITTEST.'core/TestResponse.php';
 require_once DOKU_UNITTEST.'core/TestRequest.php';

@@ -1,6 +1,8 @@
 <?php
 
-class CascadeProtectedTest extends DokuWikiTest
+namespace dokuwiki\test\conf;
+
+class CascadeProtectedTest extends \DokuWikiTest
 {
 
     public function setUp(): void

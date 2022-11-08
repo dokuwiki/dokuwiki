@@ -59,26 +59,6 @@ class SettingArray extends Setting {
         return true;
     }
 
-    /**
-     * Escaping
-     *
-     * @param string $string
-     * @return string
-     */
-    protected function escape($string) {
-        $tr = array("\\" => '\\\\', "'" => '\\\'');
-        return "'" . strtr(cleanText($string), $tr) . "'";
-    }
-
-    /** @inheritdoc */
-    public function out($var, $fmt = 'php') {
-        if($fmt != 'php') return '';
-
-        $vals = array_map(array($this, 'escape'), $this->local);
-        $out = '$' . $var . "['" . $this->getArrayKey() . "'] = array(" . join(', ', $vals) . ");\n";
-        return $out;
-    }
-
     /** @inheritdoc */
     public function html(\admin_plugin_config $plugin, $echo = false) {
         $disable = '';

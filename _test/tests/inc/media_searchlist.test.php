@@ -1,5 +1,7 @@
 <?php
 
+use DOMWrap\Document;
+
 class media_searchlist_test extends DokuWikiTest
 {
 
@@ -94,7 +96,7 @@ class media_searchlist_test extends DokuWikiTest
     public function testSearch($query, $expected)
     {
         $result = $this->media_searchlist($query, $this->upload_ns);
-        $pq = phpQuery::newDocument($result);
+        $pq = (new Document())->html($result);
 
         $elements = $pq->find('a.mediafile');
         $actual = [];

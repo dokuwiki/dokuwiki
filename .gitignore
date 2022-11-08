@@ -33,11 +33,9 @@
 /data/media_meta/*
 /data/media_attic/*
 /data/meta/*
-/data/pages/*
 /data/tmp/*
-!/data/pages/wiki/dokuwiki.txt
-!/data/pages/wiki/syntax.txt
-!/data/pages/wiki/welcome.txt
+/data/pages/*
+!data/pages/wiki/
 /lib/tpl/*
 !/lib/tpl/dokuwiki
 !/lib/tpl/index.php
@@ -93,6 +91,8 @@ vendor/splitbrain/php-cli/examples/*
 vendor/splitbrain/php-cli/screenshot*
 vendor/splitbrain/php-cli/generate-api.sh
 vendor/splitbrain/php-cli/apigen.neon
+
+_test/vendor/*/*/tests/*
 
 # PHPUnit tests
 phpunit.phar

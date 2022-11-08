@@ -117,8 +117,6 @@ $lang['iexssprotect']= 'Gwirio ffeiliau a lanlwythwyd am JavaScript neu god HTML
 
 /* Editing Settings */
 $lang['usedraft']    = 'Cadw drafft yn awtomatig wrth olygu';
-$lang['htmlok']      = 'Caniatáu HTML wedi\'i fewnosod';
-$lang['phpok']       = 'Caniatáu PHP wedi\'i fewnosod';
 $lang['locktime']    = 'Oed mwyaf ar gyfer cloi ffeiliau (eil)';
 $lang['cachetime']   = 'Oed mwyaf ar gyfer y storfa (eil)';
 

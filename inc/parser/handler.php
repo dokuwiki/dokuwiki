@@ -545,58 +545,6 @@ class Doku_Handler {
      * @param int $pos byte position in the original source file
      * @return bool mode handled?
      */
-    public function php($match, $state, $pos) {
-        if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->addCall('php', array($match), $pos);
-        }
-        return true;
-    }
-
-    /**
-     * @param string $match matched syntax
-     * @param int $state a LEXER_STATE_* constant
-     * @param int $pos byte position in the original source file
-     * @return bool mode handled?
-     */
-    public function phpblock($match, $state, $pos) {
-        if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->addCall('phpblock', array($match), $pos);
-        }
-        return true;
-    }
-
-    /**
-     * @param string $match matched syntax
-     * @param int $state a LEXER_STATE_* constant
-     * @param int $pos byte position in the original source file
-     * @return bool mode handled?
-     */
-    public function html($match, $state, $pos) {
-        if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->addCall('html', array($match), $pos);
-        }
-        return true;
-    }
-
-    /**
-     * @param string $match matched syntax
-     * @param int $state a LEXER_STATE_* constant
-     * @param int $pos byte position in the original source file
-     * @return bool mode handled?
-     */
-    public function htmlblock($match, $state, $pos) {
-        if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->addCall('htmlblock', array($match), $pos);
-        }
-        return true;
-    }
-
-    /**
-     * @param string $match matched syntax
-     * @param int $state a LEXER_STATE_* constant
-     * @param int $pos byte position in the original source file
-     * @return bool mode handled?
-     */
     public function preformatted($match, $state, $pos) {
         switch ( $state ) {
             case DOKU_LEXER_ENTER:
@@ -674,7 +622,7 @@ class Doku_Handler {
      */
     public function code($match, $state, $pos, $type='code') {
         if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $matches = explode('>',$match,2);
+            $matches = sexplode('>',$match,2,'');
             // Cut out variable options enclosed in []
             preg_match('/\[.*\]/', $matches[0], $options);
             if (!empty($options[0])) {
@@ -833,8 +781,8 @@ class Doku_Handler {
         $link = preg_replace(array('/^\[\[/','/\]\]$/u'),'',$match);
 
         // Split title from URL
-        $link = explode('|',$link,2);
-        if ( !isset($link[1]) ) {
+        $link = sexplode('|',$link,2);
+        if ( $link[1] === null ) {
             $link[1] = null;
         } else if ( preg_match('/^\{\{[^\}]+\}\}$/',$link[1]) ) {
             // If the title is an image, convert it to an array containing the image details
@@ -846,7 +794,7 @@ class Doku_Handler {
 
         if ( link_isinterwiki($link[0]) ) {
             // Interwiki
-            $interwiki = explode('>',$link[0],2);
+            $interwiki = sexplode('>',$link[0],2,'');
             $this->addCall(
                 'interwikilink',
                 array($link[0],$link[1],strtolower($interwiki[0]),$interwiki[1]),
@@ -942,7 +890,7 @@ class Doku_Handler {
         $link = preg_replace(array('/^\{\{rss>/','/\}\}$/'),'',$match);
 
         // get params
-        list($link,$params) = explode(' ',$link,2);
+        list($link, $params) = sexplode(' ', $link, 2, '');
 
         $p = array();
         if(preg_match('/\b(\d+)\b/',$params,$match)){
@@ -1072,7 +1020,7 @@ function Doku_Handler_Parse_Media($match) {
     $link = preg_replace(array('/^\{\{/','/\}\}$/u'),'',$match);
 
     // Split title from URL
-    $link = explode('|',$link,2);
+    $link = sexplode('|', $link, 2);
 
     // Check alignment
     $ralign = (bool)preg_match('/^ /',$link[0]);

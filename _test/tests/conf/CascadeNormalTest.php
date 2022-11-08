@@ -1,6 +1,8 @@
 <?php
 
-class CascadeNormalTest extends DokuWikiTest
+namespace dokuwiki\test\conf;
+
+class CascadeNormalTest extends \DokuWikiTest
 {
 
     public function setUp(): void
