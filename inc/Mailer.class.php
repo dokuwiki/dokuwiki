@@ -11,9 +11,10 @@
 
 use dokuwiki\Extension\Event;
 
-// end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
-// think different
-if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL', "\n");
+// inc/mail.php should have been included at this point to define MAILHEADER_EOL.
+// Make sure that is the case:
+require_once(DOKU_INC.'inc/mail.php');
+
 #define('MAILHEADER_ASCIIONLY',1);
 
 /**
