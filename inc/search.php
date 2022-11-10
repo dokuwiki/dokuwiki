@@ -198,7 +198,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
     $info         = array();
     $info['id']   = pathID($file,true);
     if($info['id'] != cleanID($info['id'])){
-        if($opts['showmsg'])
+        if(!empty($opts['showmsg']))
             msg(hsc($info['id']).' is not a valid file name for DokuWiki - skipped',-1);
         return false; // skip non-valid files
     }

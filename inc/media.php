@@ -308,7 +308,7 @@ function media_upload_xhr($ns,$auth){
     $realSize = stream_copy_to_stream($input, $target);
     fclose($target);
     fclose($input);
-    if (isset($_SERVER["CONTENT_LENGTH"]) && ($realSize != (int)$_SERVER["CONTENT_LENGTH"])){
+    if ($INPUT->server->has('CONTENT_LENGTH') && ($realSize != $INPUT->server->int('CONTENT_LENGTH'))) {
         unlink($path);
         return false;
     }
