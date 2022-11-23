@@ -1,0 +1,6 @@
+====== Ver Logs ======
+
+Essa interface permite a você ver os vários logs que são registrados pelo DokuWiki. Por padrão, não deve haver nada aqui (isso depende das suas [[doku>config:dontlog|configurações de logs]]). Porém, se algo der errado, as chances são grandes de você encontrar informações úteis sobre o problema. Todos os horários estão em UTC!
+
+Por favor, esteja ciente que **arquivos de log podem conter informações confidenciais** como senhas, caminhos de diretório ou outros segredos.
+Certifique-se de formatar os logs corretamente ao postá-los no fórum ou em relatórios de bugs!
