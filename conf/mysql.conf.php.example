@@ -34,15 +34,15 @@ $conf['plugin']['authmysql']['database'] = '';
 $conf['plugin']['authmysql']['debug'] = 0;
 
 /* Normally password encryption is done by DokuWiki (recommended) but for
- * some reasons it might be usefull to let the database do the encryption.
+ * some reasons it might be useful to let the database do the encryption.
  * Set 'forwardClearPass' to '1' and the cleartext password is forwarded to
  * the database, otherwise the encrypted one.
  */
 $conf['plugin']['authmysql']['forwardClearPass'] = 0;
 
-/* Multiple table operations will be protected by locks. This array tolds
+/* Multiple table operations will be protected by locks. This array tells
  * the plugin which tables to lock. If you use any aliases for table names
- * these array must also contain these aliases. Any unamed alias will cause
+ * these array must also contain these aliases. Any unnamed alias will cause
  * a warning during operation. See the example below.
  */
 $conf['plugin']['authmysql']['TablesToLock']= array("users", "users AS u","groups", "groups AS g", "usergroup", "usergroup AS ug");
@@ -76,8 +76,8 @@ $conf['plugin']['authmysql']['checkPass']   = "SELECT pass
  * 'name'  the user's full name
  * 'mail'  the user's email address
  *
- * Keep in mind that Dokuwiki will access thise information through the
- * names listed above so aliasses might be neseccary.
+ * Keep in mind that Dokuwiki will access this information through the
+ * names listed above so aliases might be necessary.
  *
  * Following patters will be replaced:
  *   %{user}    user name
@@ -89,7 +89,7 @@ $conf['plugin']['authmysql']['getUserInfo'] = "SELECT pass, CONCAT(firstname,' '
 /* This statement is used to get all groups a user is member of. The
  * result should be a table containing all groups the given user is
  * member of. The plugin accesses the group name as 'group' so an alias
- * might be nessecary.
+ * might be necessary.
  *
  * Following patters will be replaced:
  *   %{user}    user name
@@ -106,11 +106,11 @@ $conf['plugin']['authmysql']['getGroups']   = "SELECT name as `group`
 
 /* This statement should return a table containing all user login names
  * that meet certain filter criteria. The filter expressions will be added
- * case dependend by the plugin. At the end a sort expression will be added.
+ * case dependent by the plugin. At the end a sort expression will be added.
  * Important is that this list contains no double entries for a user. Each
  * user name is only allowed once in the table.
  *
- * The login name will be accessed as 'user' to an alias might be neseccary.
+ * The login name will be accessed as 'user' to an alias might be necessary.
  * No patterns will be replaced in this statement but following patters
  * will be replaced in the filter expressions:
  *   %{user}    in FilterLogin  user's login name
