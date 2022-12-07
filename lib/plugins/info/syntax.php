@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Info Plugin: Displays information about various DokuWiki internals
  *
@@ -33,7 +34,6 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
         return 155;
     }
 
-
     /**
      * Connect pattern to lexer
      */
@@ -45,10 +45,10 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
     /**
      * Handle the match
      *
-     * @param   string       $match   The text matched by the patterns
-     * @param   int          $state   The lexer state for the match
-     * @param   int          $pos     The character position of the matched text
-     * @param   Doku_Handler $handler The Doku_Handler object
+     * @param string $match The text matched by the patterns
+     * @param int $state The lexer state for the match
+     * @param int $pos The character position of the matched text
+     * @param Doku_Handler $handler The Doku_Handler object
      * @return  array Return an array with all data you want to use in render
      */
     public function handle($match, $state, $pos, Doku_Handler $handler)
@@ -60,9 +60,9 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
     /**
      * Create output
      *
-     * @param string $format   string     output format being rendered
-     * @param Doku_Renderer    $renderer  the current renderer object
-     * @param array            $data      data created by handler()
+     * @param string $format string     output format being rendered
+     * @param Doku_Renderer $renderer the current renderer object
+     * @param array $data data created by handler()
      * @return  boolean                 rendered correctly?
      */
     public function render($format, Doku_Renderer $renderer, $data)
@@ -105,7 +105,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
                     $renderer->doc .= date('r');
                     break;
                 default:
-                    $renderer->doc .= "no info about ".htmlspecialchars($data[0]);
+                    $renderer->doc .= "no info about " . htmlspecialchars($data[0]);
             }
             return true;
         }
@@ -172,31 +172,31 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
             $info = $po->getInfo();
 
             $hid = $this->addToToc($info['name'], 2, $renderer);
-            $doc = '<h2><a name="'.$hid.'" id="'.$hid.'">'.hsc($info['name']).'</a></h2>';
+            $doc = '<h2><a name="' . $hid . '" id="' . $hid . '">' . hsc($info['name']) . '</a></h2>';
             $doc .= '<div class="level2">';
-            $doc .= '<p>'.strtr(hsc($info['desc']), array("\n"=>"<br />")).'</p>';
-            $doc .= '<pre class="code">$'.$p." = plugin_load('helper', '".$p."');</pre>";
+            $doc .= '<p>' . strtr(hsc($info['desc']), array("\n" => "<br />")) . '</p>';
+            $doc .= '<pre class="code">$' . $p . " = plugin_load('helper', '" . $p . "');</pre>";
             $doc .= '</div>';
             foreach ($methods as $method) {
-                $title = '$'.$p.'->'.$method['name'].'()';
+                $title = '$' . $p . '->' . $method['name'] . '()';
                 $hid = $this->addToToc($title, 3, $renderer);
-                $doc .= '<h3><a name="'.$hid.'" id="'.$hid.'">'.hsc($title).'</a></h3>';
+                $doc .= '<h3><a name="' . $hid . '" id="' . $hid . '">' . hsc($title) . '</a></h3>';
                 $doc .= '<div class="level3">';
                 $doc .= '<div class="table"><table class="inline"><tbody>';
-                $doc .= '<tr><th>Description</th><td colspan="2">'.$method['desc'].
+                $doc .= '<tr><th>Description</th><td colspan="2">' . $method['desc'] .
                     '</td></tr>';
                 if ($method['params']) {
                     $c = count($method['params']);
-                    $doc .= '<tr><th rowspan="'.$c.'">Parameters</th><td>';
+                    $doc .= '<tr><th rowspan="' . $c . '">Parameters</th><td>';
                     $params = array();
                     foreach ($method['params'] as $desc => $type) {
-                        $params[] = hsc($desc).'</td><td>'.hsc($type);
+                        $params[] = hsc($desc) . '</td><td>' . hsc($type);
                     }
-                    $doc .= join('</td></tr><tr><td>', $params).'</td></tr>';
+                    $doc .= join('</td></tr><tr><td>', $params) . '</td></tr>';
                 }
                 if ($method['return']) {
-                    $doc .= '<tr><th>Return value</th><td>'.hsc(key($method['return'])).
-                        '</td><td>'.hsc(current($method['return'])).'</td></tr>';
+                    $doc .= '<tr><th>Return value</th><td>' . hsc(key($method['return'])) .
+                        '</td><td>' . hsc(current($method['return'])) . '</td></tr>';
                 }
                 $doc .= '</tbody></table></div>';
                 $doc .= '</div>';
@@ -215,7 +215,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
     protected function renderSyntaxTypes()
     {
         global $PARSER_MODES;
-        $doc  = '';
+        $doc = '';
 
         $doc .= '<div class="table"><table class="inline"><tbody>';
         foreach ($PARSER_MODES as $mode => $modes) {
@@ -245,13 +245,13 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
         foreach ($modes as $mode) {
             $compactmodes[$mode['sort']][] = $mode['mode'];
         }
-        $doc  = '';
+        $doc = '';
         $doc .= '<div class="table"><table class="inline"><tbody>';
 
         foreach ($compactmodes as $sort => $modes) {
             $rowspan = '';
             if (count($modes) > 1) {
-                $rowspan = ' rowspan="'.count($modes).'"';
+                $rowspan = ' rowspan="' . count($modes) . '"';
             }
 
             foreach ($modes as $index => $mode) {
@@ -261,7 +261,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
                 $doc .= '</td>';
 
                 if ($index === 0) {
-                    $doc .= '<td class="rightalign" '.$rowspan.'>';
+                    $doc .= '<td class="rightalign" ' . $rowspan . '>';
                     $doc .= $sort;
                     $doc .= '</td>';
                 }
@@ -287,16 +287,14 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
 
         $hid = '';
         if (($level >= $conf['toptoclevel']) && ($level <= $conf['maxtoclevel'])) {
-            $hid  = $renderer->_headerToLink($text, true);
+            $hid = $renderer->_headerToLink($text, true);
             $renderer->toc[] = array(
-                'hid'   => $hid,
+                'hid' => $hid,
                 'title' => $text,
-                'type'  => 'ul',
-                'level' => $level - $conf['toptoclevel'] + 1
+                'type' => 'ul',
+                'level' => $level - $conf['toptoclevel'] + 1,
             );
         }
         return $hid;
     }
 }
-
-//Setup VIM: ex: et ts=4 :
