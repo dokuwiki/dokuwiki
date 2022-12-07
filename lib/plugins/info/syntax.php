@@ -101,6 +101,9 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
                 case 'helpermethods':
                     $this->renderHelperMethods($renderer);
                     break;
+                case 'hooks':
+                    $this->renderHooks($renderer);
+                    break;
                 case 'datetime':
                     $renderer->doc .= date('r');
                     break;
@@ -271,6 +274,41 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
 
         $doc .= '</tbody></table></div>';
         return $doc;
+    }
+
+    /**
+     * Render all currently registered event handlers
+     *
+     * @param Doku_Renderer $renderer
+     */
+    protected function renderHooks(Doku_Renderer $renderer)
+    {
+        global $EVENT_HANDLER;
+
+        $list = $EVENT_HANDLER->getEventHandlers();
+        ksort($list);
+
+        $renderer->listu_open();
+        foreach ($list as $event => $handlers) {
+            $renderer->listitem_open(1);
+            $renderer->listcontent_open();
+            $renderer->cdata($event);
+            $renderer->listcontent_close();
+
+            $renderer->listo_open();
+            foreach ($handlers as $sequence) {
+                foreach ($sequence as $handler) {
+                    $renderer->listitem_open(2);
+                    $renderer->listcontent_open();
+                    $renderer->cdata(get_class($handler[0]) . '::' . $handler[1] . '()');
+                    $renderer->listcontent_close();
+                    $renderer->listitem_close();
+                }
+            }
+            $renderer->listo_close();
+            $renderer->listitem_close();
+        }
+        $renderer->listu_close();
     }
 
     /**
