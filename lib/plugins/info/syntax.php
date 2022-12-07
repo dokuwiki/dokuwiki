@@ -121,13 +121,11 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
      * uses some of the original renderer methods
      *
      * @param string $type
-     * @param Doku_Renderer_xhtml $renderer
+     * @param Doku_Renderer $renderer
      */
-    protected function renderPlugins($type, Doku_Renderer_xhtml $renderer)
+    protected function renderPlugins($type, Doku_Renderer $renderer)
     {
         global $lang;
-        $renderer->doc .= '<ul>';
-
         $plugins = plugin_list($type);
         $plginfo = array();
 
@@ -139,22 +137,23 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
         }
 
         // list them
+        $renderer->listu_open();
         foreach ($plginfo as $info) {
-            $renderer->doc .= '<li><div class="li">';
+            $renderer->listitem_open(1);
+            $renderer->listcontent_open();
             $renderer->externallink($info['url'], $info['name']);
-            $renderer->doc .= ' ';
-            $renderer->doc .= '<em>'.$info['date'].'</em>';
-            $renderer->doc .= ' ';
-            $renderer->doc .= $lang['by'];
-            $renderer->doc .= ' ';
+            $renderer->cdata(' ');
+            $renderer->emphasis_open();
+            $renderer->cdata($info['date']);
+            $renderer->emphasis_close();
+            $renderer->cdata(' ' . $lang['by'] . ' ');
             $renderer->emaillink($info['email'], $info['author']);
-            $renderer->doc .= '<br />';
-            $renderer->doc .= strtr(hsc($info['desc']), array("\n"=>"<br />"));
-            $renderer->doc .= '</div></li>';
-            unset($po);
+            $renderer->linebreak();
+            $renderer->cdata($info['desc']);
+            $renderer->listcontent_close();
+            $renderer->listitem_close();
         }
-
-        $renderer->doc .= '</ul>';
+        $renderer->listu_close();
     }
 
     /**
