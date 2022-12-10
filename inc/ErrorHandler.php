@@ -12,6 +12,28 @@ use dokuwiki\Exception\FatalException;
 class ErrorHandler
 {
     /**
+     * Standard error codes used in PHP errors
+     * @see https://www.php.net/manual/en/errorfunc.constants.php
+     */
+    const ERRORCODES = [
+        1 => 'E_ERROR',
+        2 => 'E_WARNING',
+        4 => 'E_PARSE',
+        8 => 'E_NOTICE',
+        16 => 'E_CORE_ERROR',
+        32 => 'E_CORE_WARNING',
+        64 => 'E_COMPILE_ERROR',
+        128 => 'E_COMPILE_WARNING',
+        256 => 'E_USER_ERROR',
+        512 => 'E_USER_WARNING',
+        1024 => 'E_USER_NOTICE',
+        2048 => 'E_STRICT',
+        4096 => 'E_RECOVERABLE_ERROR',
+        8192 => 'E_DEPRECATED',
+        16384 => 'E_USER_DEPRECATED',
+    ];
+
+    /**
      * Register the default error handling
      */
     public static function register()
@@ -19,7 +41,10 @@ class ErrorHandler
         if (!defined('DOKU_UNITTEST')) {
             set_exception_handler([ErrorHandler::class, 'fatalException']);
             register_shutdown_function([ErrorHandler::class, 'fatalShutdown']);
-            set_error_handler([ErrorHandler::class, 'logWarning'], E_WARNING);
+            set_error_handler(
+                [ErrorHandler::class, 'errorHandler'],
+                E_WARNING|E_USER_ERROR|E_USER_WARNING|E_RECOVERABLE_ERROR
+            );
         }
     }
 
@@ -101,12 +126,11 @@ EOT;
      */
     public static function logException($e)
     {
-        if (is_a($e, \ErrorException::class) && $e->getSeverity() === E_WARNING) {
-            $prefix = 'Warning';
+        if (is_a($e, \ErrorException::class)) {
+            $prefix = self::ERRORCODES[$e->getSeverity()];
         } else {
             $prefix = get_class($e);
         }
-
 
         return Logger::getInstance()->log(
             $prefix . ': ' . $e->getMessage(),
@@ -117,7 +141,7 @@ EOT;
     }
 
     /**
-     * Log a warning
+     * Error handler to log non-exception errors
      *
      * @param int $errno
      * @param string $errstr
@@ -125,7 +149,7 @@ EOT;
      * @param int $errline
      * @return bool
      */
-    public static function logWarning($errno, $errstr, $errfile, $errline)
+    public static function errorHandler($errno, $errstr, $errfile, $errline)
     {
         global $conf;
 
@@ -141,7 +165,11 @@ EOT;
         );
         self::logException($ex);
 
-        return (bool)$conf['hidewarnings'];
+        if($ex->getSeverity() === E_WARNING && $conf['hidewarnings']) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
