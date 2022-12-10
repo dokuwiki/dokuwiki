@@ -1382,6 +1382,7 @@ function getGoogleQuery() {
     if(!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/',$url['host'])) return '';
 
     $query = array();
+    if(!array_key_exists('query', $url)) return '';
     parse_str($url['query'], $query);
 
     $q = '';
