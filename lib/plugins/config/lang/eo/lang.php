@@ -5,6 +5,7 @@
  *
  * Esperantolanguage file
  *
+ * @author Robin van der Vliet <info@robinvandervliet.com>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author Florian <florianmail55@gmail.com>
  * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
