@@ -28,7 +28,9 @@ class ConfigParser {
         if(!file_exists($file)) return array();
 
         $config = array();
-        $contents = @php_strip_whitespace($file);
+        if(function_exists('php_strip_whitespace')) {
+            $contents = @php_strip_whitespace($file);
+        }
 
         // fallback to simply including the file #3271
         if($contents === null) {
