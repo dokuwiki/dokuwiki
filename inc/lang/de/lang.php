@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Robert Riebisch <rr@bttr-software.de>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Markus Glaser <glaser@hallowelt.com>
  * @author Axel Schwarzer <SchwarzerA@gmail.com>
@@ -17,7 +18,6 @@
  * @author Karl_de_Hall <Karl.Grohmueller@sonnenhof-sha.de>
  * @author Michael Bohn <mjbohn@gmail.com>
  * @author Joel Strasser <strasser999@gmail.com>
- * @author Robert Riebisch <robert.riebisch@googlemail.com>
  * @author Joerg <scooter22@gmx.de>
  * @author Christof <gagi@fin.de>
  * @author Anika Henke <anika@selfthinker.org>
