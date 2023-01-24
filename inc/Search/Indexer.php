@@ -120,10 +120,10 @@ class Indexer {
         }
 
         // arrive here with $words = array(wordlen => array(word => frequency))
-        $word_idx_modified = false;
         $index = array();   //resulting index
         foreach (array_keys($words) as $wlen) {
             $word_idx = $this->getIndex('w', $wlen);
+            $word_idx_modified = false;
             foreach ($words[$wlen] as $word => $freq) {
                 $word = (string)$word;
                 $wid = array_search($word, $word_idx, true);
