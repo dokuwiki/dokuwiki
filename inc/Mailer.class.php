@@ -638,8 +638,8 @@ class Mailer {
 
         $ip   = clientIP();
         $cip  = gethostsbyaddrs($ip);
-        $name = isset($INFO) ? $INFO['userinfo']['name'] : '';
-        $mail = isset($INFO) ? $INFO['userinfo']['mail'] : '';
+        $name = $INFO['userinfo']['name'] ?? '';
+        $mail = $INFO['userinfo']['mail'] ?? '';
 
         $this->replacements['text'] = array(
             'DATE' => dformat(),
