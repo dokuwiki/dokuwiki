@@ -174,6 +174,7 @@ class HTTPClient {
         // don't accept gzip if truncated bodies might occur
         if($this->max_bodysize &&
             !$this->max_bodysize_abort &&
+            isset($this->headers['Accept-encoding']) &&
             $this->headers['Accept-encoding'] == 'gzip'){
             unset($this->headers['Accept-encoding']);
         }
