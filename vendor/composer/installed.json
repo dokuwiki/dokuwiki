@@ -139,32 +139,30 @@
         },
         {
             "name": "marcusschwarz/lesserphp",
-            "version": "v0.5.5",
-            "version_normalized": "0.5.5.0",
+            "version": "v0.6.0",
+            "version_normalized": "0.6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MarcusSchwarz/lesserphp.git",
-                "reference": "77ba82b5218ff228267d3b0e5ec8697be75e86a7"
+                "reference": "64ece57ad81ab1fe4d2a1894729e0d293fce09ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MarcusSchwarz/lesserphp/zipball/77ba82b5218ff228267d3b0e5ec8697be75e86a7",
-                "reference": "77ba82b5218ff228267d3b0e5ec8697be75e86a7",
+                "url": "https://api.github.com/repos/MarcusSchwarz/lesserphp/zipball/64ece57ad81ab1fe4d2a1894729e0d293fce09ef",
+                "reference": "64ece57ad81ab1fe4d2a1894729e0d293fce09ef",
                 "shasum": ""
             },
-            "require-dev": {
-                "phpunit/phpunit": ">=4.8.35 <8"
+            "require": {
+                "php": "^7.2|^7.3|^7.4|^8.0"
             },
-            "time": "2021-03-10T17:56:57+00:00",
+            "require-dev": {
+                "phpunit/phpunit": "^8.0|^9.0"
+            },
+            "time": "2021-03-10T19:14:23+00:00",
             "bin": [
                 "plessc"
             ],
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.5.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "classmap": [
@@ -189,7 +187,11 @@
                 }
             ],
             "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
-            "homepage": "http://leafo.net/lessphp/",
+            "homepage": "https://www.maswaba.de/lesserphpdocs/",
+            "support": {
+                "issues": "https://github.com/MarcusSchwarz/lesserphp/issues",
+                "source": "https://github.com/MarcusSchwarz/lesserphp/tree/v0.6.0"
+            },
             "install-path": "../marcusschwarz/lesserphp"
         },
         {

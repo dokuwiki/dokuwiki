@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09f5f3726c3993d80980df99ab2a59dc",
+    "content-hash": "699d51060d59017efcb5b5d44ccef30e",
     "packages": [
         {
             "name": "aziraphale/email-address-validator",
@@ -147,30 +147,28 @@
         },
         {
             "name": "marcusschwarz/lesserphp",
-            "version": "v0.5.5",
+            "version": "v0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MarcusSchwarz/lesserphp.git",
-                "reference": "77ba82b5218ff228267d3b0e5ec8697be75e86a7"
+                "reference": "64ece57ad81ab1fe4d2a1894729e0d293fce09ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MarcusSchwarz/lesserphp/zipball/77ba82b5218ff228267d3b0e5ec8697be75e86a7",
-                "reference": "77ba82b5218ff228267d3b0e5ec8697be75e86a7",
+                "url": "https://api.github.com/repos/MarcusSchwarz/lesserphp/zipball/64ece57ad81ab1fe4d2a1894729e0d293fce09ef",
+                "reference": "64ece57ad81ab1fe4d2a1894729e0d293fce09ef",
                 "shasum": ""
             },
+            "require": {
+                "php": "^7.2|^7.3|^7.4|^8.0"
+            },
             "require-dev": {
-                "phpunit/phpunit": ">=4.8.35 <8"
+                "phpunit/phpunit": "^8.0|^9.0"
             },
             "bin": [
                 "plessc"
             ],
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.5.1-dev"
-                }
-            },
             "autoload": {
                 "classmap": [
                     "lessc.inc.php"
@@ -194,12 +192,12 @@
                 }
             ],
             "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
-            "homepage": "http://leafo.net/lessphp/",
+            "homepage": "https://www.maswaba.de/lesserphpdocs/",
             "support": {
                 "issues": "https://github.com/MarcusSchwarz/lesserphp/issues",
-                "source": "https://github.com/MarcusSchwarz/lesserphp/tree/v0.5.5"
+                "source": "https://github.com/MarcusSchwarz/lesserphp/tree/v0.6.0"
             },
-            "time": "2021-03-10T17:56:57+00:00"
+            "time": "2021-03-10T19:14:23+00:00"
         },
         {
             "name": "openpsa/universalfeedcreator",

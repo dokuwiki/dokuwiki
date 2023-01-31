@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/MarcusSchwarz/lesserphp.svg)](https://travis-ci.org/MarcusSchwarz/lesserphp)
 
-# lesserphp v0.5.5
+# lesserphp v0.6.0
 ### <http://github.com/MarcusSchwarz/lesserphp>
 
 `lesserphp` is a compiler for LESS written in PHP. It is based on lessphp bei leafo.

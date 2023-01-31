@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'a46a37efcf1638f0307b96eab90ec9138202a230',
+        'reference' => 'c7acaa16b3726be12f4d27c43e8012f9d353f4cc',
         'name' => 'splitbrain/dokuwiki',
         'dev' => true,
     ),
@@ -41,12 +41,12 @@
             'dev_requirement' => false,
         ),
         'marcusschwarz/lesserphp' => array(
-            'pretty_version' => 'v0.5.5',
-            'version' => '0.5.5.0',
+            'pretty_version' => 'v0.6.0',
+            'version' => '0.6.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../marcusschwarz/lesserphp',
             'aliases' => array(),
-            'reference' => '77ba82b5218ff228267d3b0e5ec8697be75e86a7',
+            'reference' => '64ece57ad81ab1fe4d2a1894729e0d293fce09ef',
             'dev_requirement' => false,
         ),
         'openpsa/universalfeedcreator' => array(
@@ -82,7 +82,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'a46a37efcf1638f0307b96eab90ec9138202a230',
+            'reference' => 'c7acaa16b3726be12f4d27c43e8012f9d353f4cc',
             'dev_requirement' => false,
         ),
         'splitbrain/php-archive' => array(
