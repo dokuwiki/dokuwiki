@@ -79,7 +79,11 @@ abstract class Base
     /**
      * Encrypt / decrypt using the Cipher Feedback mode (8bit)
      */
-    const MODE_CFB8 = 38;
+    const MODE_CFB8 = 6;
+    /**
+     * Encrypt / decrypt using the Output Feedback mode (8bit)
+     */
+    const MODE_OFB8 = 7;
     /**
      * Encrypt / decrypt using the Output Feedback mode.
      *
@@ -152,7 +156,7 @@ abstract class Base
      * @var string
      * @access private
      */
-    var $iv;
+    var $iv = '';
 
     /**
      * A "sliding" Initialization Vector
@@ -484,6 +488,7 @@ abstract class Base
             case self::MODE_CTR:
             case self::MODE_CFB:
             case self::MODE_CFB8:
+            case self::MODE_OFB8:
             case self::MODE_OFB:
             case self::MODE_STREAM:
                 $this->mode = $mode;
@@ -495,6 +500,44 @@ abstract class Base
         }
 
         $this->_setEngine();
+
+        // Determining whether inline crypting can be used by the cipher
+        if ($this->use_inline_crypt !== false) {
+            $this->use_inline_crypt = version_compare(PHP_VERSION, '5.3.0') >= 0 || function_exists('create_function');
+        }
+
+        if (!defined('PHP_INT_SIZE')) {
+            define('PHP_INT_SIZE', 4);
+        }
+
+        if (!defined('CRYPT_BASE_USE_REG_INTVAL')) {
+            switch (true) {
+                // PHP_OS & "\xDF\xDF\xDF" == strtoupper(substr(PHP_OS, 0, 3)), but a lot faster
+                case (PHP_OS & "\xDF\xDF\xDF") === 'WIN':
+                case (php_uname('m') & "\xDF\xDF\xDF") != 'ARM':
+                case PHP_INT_SIZE == 8:
+                    define('CRYPT_BASE_USE_REG_INTVAL', true);
+                    break;
+                case (php_uname('m') & "\xDF\xDF\xDF") == 'ARM':
+                    switch (true) {
+                        /* PHP 7.0.0 introduced a bug that affected 32-bit ARM processors:
+
+                           https://github.com/php/php-src/commit/716da71446ebbd40fa6cf2cea8a4b70f504cc3cd
+
+                           altho the changelogs make no mention of it, this bug was fixed with this commit:
+
+                           https://github.com/php/php-src/commit/c1729272b17a1fe893d1a54e423d3b71470f3ee8
+
+                           affected versions of PHP are: 7.0.x, 7.1.0 - 7.1.23 and 7.2.0 - 7.2.11 */
+                        case PHP_VERSION_ID >= 70000 && PHP_VERSION_ID <= 70123:
+                        case PHP_VERSION_ID >= 70200 && PHP_VERSION_ID <= 70211:
+                            define('CRYPT_BASE_USE_REG_INTVAL', false);
+                            break;
+                        default:
+                            define('CRYPT_BASE_USE_REG_INTVAL', true);
+                    }
+            }
+        }
     }
 
     /**
@@ -588,6 +631,10 @@ abstract class Base
      *         $hash, $salt, $count, $dkLen
      *
      *         Where $hash (default = sha1) currently supports the following hashes: see: Crypt/Hash.php
+     *     {@link https://en.wikipedia.org/wiki/Bcrypt bcypt}:
+     *         $salt, $rounds, $keylen
+     *
+     *         This is a modified version of bcrypt used by OpenSSH.
      *
      * @see Crypt/Hash.php
      * @param string $password
@@ -601,6 +648,28 @@ abstract class Base
         $key = '';
 
         switch ($method) {
+            case 'bcrypt':
+                $func_args = func_get_args();
+
+                if (!isset($func_args[2])) {
+                    return false;
+                }
+
+                $salt = $func_args[2];
+
+                $rounds = isset($func_args[3]) ? $func_args[3] : 16;
+                $keylen = isset($func_args[4]) ? $func_args[4] : $this->key_length;
+
+                $bf = new Blowfish();
+                $key = $bf->bcrypt_pbkdf($password, $salt, $keylen + $this->block_size, $rounds);
+                if (!$key) {
+                    return false;
+                }
+
+                $this->setKey(substr($key, 0, $keylen));
+                $this->setIV(substr($key, $keylen));
+
+                return true;
             default: // 'pbkdf2' or 'pbkdf1'
                 $func_args = func_get_args();
 
@@ -773,6 +842,22 @@ abstract class Base
                         }
                     }
                     return $ciphertext;
+                case self::MODE_OFB8:
+                    // OpenSSL has built in support for cfb8 but not ofb8
+                    $ciphertext = '';
+                    $len = strlen($plaintext);
+                    $iv = $this->encryptIV;
+
+                    for ($i = 0; $i < $len; ++$i) {
+                        $xor = openssl_encrypt($iv, $this->cipher_name_openssl_ecb, $this->key, $this->openssl_options, $this->decryptIV);
+                        $ciphertext.= $plaintext[$i] ^ $xor;
+                        $iv = substr($iv, 1) . $xor[0];
+                    }
+
+                    if ($this->continuousBuffer) {
+                        $this->encryptIV = $iv;
+                    }
+                    break;
                 case self::MODE_OFB:
                     return $this->_openssl_ofb_process($plaintext, $this->encryptIV, $this->enbuffer);
             }
@@ -896,8 +981,8 @@ abstract class Base
                         $block = substr($plaintext, $i, $block_size);
                         if (strlen($block) > strlen($buffer['ciphertext'])) {
                             $buffer['ciphertext'].= $this->_encryptBlock($xor);
+                            $this->_increment_str($xor);
                         }
-                        $this->_increment_str($xor);
                         $key = $this->_string_shift($buffer['ciphertext'], $block_size);
                         $ciphertext.= $block ^ $key;
                     }
@@ -959,12 +1044,14 @@ abstract class Base
                 }
                 break;
             case self::MODE_CFB8:
+                // compared to regular CFB, which encrypts a block at a time,
+                // here, we're encrypting a byte at a time
                 $ciphertext = '';
                 $len = strlen($plaintext);
                 $iv = $this->encryptIV;
 
                 for ($i = 0; $i < $len; ++$i) {
-                    $ciphertext .= ($c = $plaintext[$i] ^ $this->_encryptBlock($iv));
+                    $ciphertext.= ($c = $plaintext[$i] ^ $this->_encryptBlock($iv));
                     $iv = substr($iv, 1) . $c;
                 }
 
@@ -974,6 +1061,21 @@ abstract class Base
                     } else {
                         $this->encryptIV = substr($this->encryptIV, $len - $block_size) . substr($ciphertext, -$len);
                     }
+                }
+                break;
+            case self::MODE_OFB8:
+                $ciphertext = '';
+                $len = strlen($plaintext);
+                $iv = $this->encryptIV;
+
+                for ($i = 0; $i < $len; ++$i) {
+                    $xor = $this->_encryptBlock($iv);
+                    $ciphertext.= $plaintext[$i] ^ $xor;
+                    $iv = substr($iv, 1) . $xor[0];
+                }
+
+                if ($this->continuousBuffer) {
+                    $this->encryptIV = $iv;
                 }
                 break;
             case self::MODE_OFB:
@@ -1067,7 +1169,7 @@ abstract class Base
                     $plaintext = '';
                     if ($this->continuousBuffer) {
                         $iv = &$this->decryptIV;
-                        $pos = &$this->buffer['pos'];
+                        $pos = &$this->debuffer['pos'];
                     } else {
                         $iv = $this->decryptIV;
                         $pos = 0;
@@ -1114,6 +1216,21 @@ abstract class Base
                         } else {
                             $this->decryptIV = substr($this->decryptIV, $len - $this->block_size) . substr($ciphertext, -$len);
                         }
+                    }
+                    break;
+                case self::MODE_OFB8:
+                    $plaintext = '';
+                    $len = strlen($ciphertext);
+                    $iv = $this->decryptIV;
+
+                    for ($i = 0; $i < $len; ++$i) {
+                        $xor = openssl_encrypt($iv, $this->cipher_name_openssl_ecb, $this->key, $this->openssl_options, $this->decryptIV);
+                        $plaintext.= $ciphertext[$i] ^ $xor;
+                        $iv = substr($iv, 1) . $xor[0];
+                    }
+
+                    if ($this->continuousBuffer) {
+                        $this->decryptIV = $iv;
                     }
                     break;
                 case self::MODE_OFB:
@@ -1290,7 +1407,7 @@ abstract class Base
                 $iv = $this->decryptIV;
 
                 for ($i = 0; $i < $len; ++$i) {
-                    $plaintext .= $ciphertext[$i] ^ $this->_encryptBlock($iv);
+                    $plaintext.= $ciphertext[$i] ^ $this->_encryptBlock($iv);
                     $iv = substr($iv, 1) . $ciphertext[$i];
                 }
 
@@ -1300,6 +1417,21 @@ abstract class Base
                     } else {
                         $this->decryptIV = substr($this->decryptIV, $len - $block_size) . substr($ciphertext, -$len);
                     }
+                }
+                break;
+            case self::MODE_OFB8:
+                $plaintext = '';
+                $len = strlen($ciphertext);
+                $iv = $this->decryptIV;
+
+                for ($i = 0; $i < $len; ++$i) {
+                    $xor = $this->_encryptBlock($iv);
+                    $plaintext.= $ciphertext[$i] ^ $xor;
+                    $iv = substr($iv, 1) . $xor[0];
+                }
+
+                if ($this->continuousBuffer) {
+                    $this->decryptIV = $iv;
                 }
                 break;
             case self::MODE_OFB:
@@ -1864,6 +1996,7 @@ abstract class Base
                 self::MODE_CFB    => 'ncfb',
                 self::MODE_CFB8   => MCRYPT_MODE_CFB,
                 self::MODE_OFB    => MCRYPT_MODE_NOFB,
+                self::MODE_OFB8   => MCRYPT_MODE_OFB,
                 self::MODE_STREAM => MCRYPT_MODE_STREAM,
             );
 
@@ -2009,6 +2142,13 @@ abstract class Base
      */
     function _increment_str(&$var)
     {
+        if (function_exists('sodium_increment')) {
+            $var = strrev($var);
+            sodium_increment($var);
+            $var = strrev($var);
+            return;
+        }
+
         for ($i = 4; $i <= strlen($var); $i+= 4) {
             $temp = substr($var, -$i, 4);
             switch ($temp) {
@@ -2446,7 +2586,7 @@ abstract class Base
                     for ($_i = 0; $_i < $_len; ++$_i) {
                         $in = $_iv;
                         '.$encrypt_block.'
-                        $_ciphertext .= ($_c = $_text[$_i] ^ $in);
+                        $_ciphertext.= ($_c = $_text[$_i] ^ $in);
                         $_iv = substr($_iv, 1) . $_c;
                     }
 
@@ -2468,7 +2608,7 @@ abstract class Base
                     for ($_i = 0; $_i < $_len; ++$_i) {
                         $in = $_iv;
                         '.$encrypt_block.'
-                        $_plaintext .= $_text[$_i] ^ $in;
+                        $_plaintext.= $_text[$_i] ^ $in;
                         $_iv = substr($_iv, 1) . $_text[$_i];
                     }
 
@@ -2478,6 +2618,44 @@ abstract class Base
                         } else {
                             $self->decryptIV = substr($self->decryptIV, $_len - '.$block_size.') . substr($_text, -$_len);
                         }
+                    }
+
+                    return $_plaintext;
+                    ';
+                break;
+            case self::MODE_OFB8:
+                $encrypt = $init_encrypt . '
+                    $_ciphertext = "";
+                    $_len = strlen($_text);
+                    $_iv = $self->encryptIV;
+
+                    for ($_i = 0; $_i < $_len; ++$_i) {
+                        $in = $_iv;
+                        '.$encrypt_block.'
+                        $_ciphertext.= $_text[$_i] ^ $in;
+                        $_iv = substr($_iv, 1) . $in[0];
+                    }
+
+                    if ($self->continuousBuffer) {
+                        $self->encryptIV = $_iv;
+                    }
+
+                    return $_ciphertext;
+                    ';
+                $decrypt = $init_encrypt . '
+                    $_plaintext = "";
+                    $_len = strlen($_text);
+                    $_iv = $self->decryptIV;
+
+                    for ($_i = 0; $_i < $_len; ++$_i) {
+                        $in = $_iv;
+                        '.$encrypt_block.'
+                        $_plaintext.= $_text[$_i] ^ $in;
+                        $_iv = substr($_iv, 1) . $in[0];
+                    }
+
+                    if ($self->continuousBuffer) {
+                        $self->decryptIV = $_iv;
                     }
 
                     return $_plaintext;
@@ -2684,11 +2862,8 @@ abstract class Base
      */
     function safe_intval($x)
     {
-        switch (true) {
-            case is_int($x):
-            // PHP 5.3, per http://php.net/releases/5_3_0.php, introduced "more consistent float rounding"
-            case (php_uname('m') & "\xDF\xDF\xDF") != 'ARM':
-                return $x;
+        if (is_int($x)) {
+            return $x;
         }
         return (fmod($x, 0x80000000) & 0x7FFFFFFF) |
             ((fmod(floor($x / 0x80000000), 2) & 1) << 31);
@@ -2702,15 +2877,12 @@ abstract class Base
      */
     function safe_intval_inline()
     {
-        switch (true) {
-            case defined('PHP_INT_SIZE') && PHP_INT_SIZE == 8:
-            case (php_uname('m') & "\xDF\xDF\xDF") != 'ARM':
-                return '%s';
-                break;
-            default:
-                $safeint = '(is_int($temp = %s) ? $temp : (fmod($temp, 0x80000000) & 0x7FFFFFFF) | ';
-                return $safeint . '((fmod(floor($temp / 0x80000000), 2) & 1) << 31))';
+        if (CRYPT_BASE_USE_REG_INTVAL) {
+            return PHP_INT_SIZE == 4 ? 'intval(%s)' : '%s';
         }
+
+        $safeint = '(is_int($temp = %s) ? $temp : (fmod($temp, 0x80000000) & 0x7FFFFFFF) | ';
+        return $safeint . '((fmod(floor($temp / 0x80000000), 2) & 1) << 31))';
     }
 
     /**
@@ -2720,5 +2892,16 @@ abstract class Base
      */
     function do_nothing()
     {
+    }
+
+    /**
+     * Is the continuous buffer enabled?
+     *
+     * @access public
+     * @return boolean
+     */
+    function continuousBufferEnabled()
+    {
+        return $this->continuousBuffer;
     }
 }

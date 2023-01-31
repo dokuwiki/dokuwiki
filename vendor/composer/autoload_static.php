@@ -23,6 +23,10 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         array (
             'phpseclib\\' => 10,
         ),
+        'S' => 
+        array (
+            'SimplePie\\' => 10,
+        ),
         'I' => 
         array (
             'IXR\\' => 4,
@@ -49,6 +53,10 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         'phpseclib\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+        ),
+        'SimplePie\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplepie/simplepie/src',
         ),
         'IXR\\' => 
         array (
