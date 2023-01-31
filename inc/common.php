@@ -1028,7 +1028,7 @@ function cleanText($text) {
  * @return string
  */
 function formText($text) {
-    $text = str_replace("\012", "\015\012", $text);
+    $text = str_replace("\012", "\015\012", $text ?? '');
     return htmlspecialchars($text);
 }
 
