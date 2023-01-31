@@ -810,7 +810,7 @@ function media_tab_files_options() {
     foreach (array('list' => array('listType', array('thumbs', 'rows')),
                   'sort' => array('sortBy', array('name', 'date')))
             as $group => $content) {
-        $checked = "_media_get_${group}_type";
+        $checked = "_media_get_{$group}_type";
         $checked = $checked();
 
         $form->addHTML('<li class="'. $content[0] .'">');
