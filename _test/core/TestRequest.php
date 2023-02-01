@@ -4,6 +4,7 @@
  * runtime inspection.
  */
 
+use dokuwiki\Extension\EventHandler;
 use dokuwiki\Input\Input;
 
 /**
@@ -147,6 +148,10 @@ class TestRequest {
         $_GET = $this->get;
         $_POST = $this->post;
         $_REQUEST = array_merge($_GET, $_POST);
+
+        // reset event handler
+        global $EVENT_HANDLER;
+        $EVENT_HANDLER = new EventHandler();
 
         // reset output buffer
         $this->output_buffer = '';
