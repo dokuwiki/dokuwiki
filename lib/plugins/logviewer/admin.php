@@ -98,10 +98,10 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
         for ($i = 0; $i < $cnt; $i++) {
             $line = $lines[$i];
 
-            if ($line[0] === ' ' && $line[1] === ' ') {
+            if (substr($line, 0, 2) === '  ') {
                 // lines indented by two spaces are details, aggregate them
                 echo '<dd>';
-                while (isset($line[0]) && $line[0] === ' ' && isset($line[1]) && $line[1] === ' ') {
+                while (substr($line, 0, 2) === '  ') {
                     echo hsc(substr($line, 2)) . '<br />';
                     $i++;
                     $line = $lines[$i] ?? '';
