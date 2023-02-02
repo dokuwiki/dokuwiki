@@ -1379,6 +1379,7 @@ function getGoogleQuery() {
     $url = parse_url($INPUT->server->str('HTTP_REFERER'));
 
     // only handle common SEs
+    if(!array_key_exists('host', $url)) return '';
     if(!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/',$url['host'])) return '';
 
     $query = array();
