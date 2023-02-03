@@ -85,9 +85,21 @@ function getVersionData(){
             $headCommit = trim(file_get_contents(DOKU_INC . '.git/HEAD'));
             if (strpos($headCommit, 'ref: ') === 0) {
                 // it is something like `ref: refs/heads/master`
-                $pathToHead = substr($headCommit, 5);
-                $headCommit = trim(file_get_contents(DOKU_INC . '.git/' . $pathToHead));
+                $headCommit = substr($headCommit, 5);
+                $pathToHead = DOKU_INC . '.git/' . $headCommit;
+                if (file_exists($pathToHead)) {
+                    $headCommit = trim(file_get_contents($pathToHead));
+                } else {
+                    $packedRefs = file_get_contents(DOKU_INC . '.git/packed-refs');
+                    if (!preg_match("~([[:xdigit:]]+) $headCommit~", $packedRefs, $matches)) {
+                        # ref not found in pack file
+                        return $version;
+                    }
+                    $headCommit = $matches[1];
+                }
             }
+            // At this point $headCommit is a SHA
+            // Get commit date from Git object
             $subDir = substr($headCommit, 0, 2);
             $fileName = substr($headCommit, 2);
             $gitCommitObject = DOKU_INC . ".git/objects/$subDir/$fileName";
