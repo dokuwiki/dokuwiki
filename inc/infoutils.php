@@ -76,9 +76,9 @@ function getVersionData(){
         $version['type'] = 'Git';
         $version['date'] = 'unknown';
 
-        if (function_exists('shell_exec')
-            && $date = shell_exec("git log -1 --pretty=format:'%cd' --date=short")
-        ) {
+        if (function_exists('shell_exec')) {
+            $commitInfo = shell_exec("git log -1 --pretty=format:'%h %cd' --date=short");
+            list($version['sha'], $date) = explode(' ', $commitInfo);
             $version['date'] = hsc($date);
         } else if (file_exists(DOKU_INC . '.git/HEAD')) {
             // we cannot use git on the shell -- let's do it manually!
@@ -99,6 +99,8 @@ function getVersionData(){
                 }
             }
             // At this point $headCommit is a SHA
+            $version['sha'] = $headCommit;
+
             // Get commit date from Git object
             $subDir = substr($headCommit, 0, 2);
             $fileName = substr($headCommit, 2);
@@ -129,7 +131,8 @@ function getVersionData(){
  */
 function getVersion(){
     $version = getVersionData();
-    return $version['type'].' '.$version['date'];
+    $sha = !empty($version['sha']) ? ' (' . $version['sha'] . ')' : '';
+    return $version['type'] . ' ' . $version['date'] . $sha;
 }
 
 /**
