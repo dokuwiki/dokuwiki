@@ -76,7 +76,9 @@ function getVersionData(){
         $version['type'] = 'Git';
         $version['date'] = 'unknown';
 
-        if ($date = shell_exec("git log -1 --pretty=format:'%cd' --date=short")) {
+        if (function_exists('shell_exec')
+            && $date = shell_exec("git log -1 --pretty=format:'%cd' --date=short")
+        ) {
             $version['date'] = hsc($date);
         } else if (file_exists(DOKU_INC . '.git/HEAD')) {
             // we cannot use git on the shell -- let's do it manually!
