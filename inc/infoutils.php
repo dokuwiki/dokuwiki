@@ -76,12 +76,18 @@ function getVersionData(){
         $version['type'] = 'Git';
         $version['date'] = 'unknown';
 
+        // First try to get date and commit hash by calling Git
         if (function_exists('shell_exec')) {
             $commitInfo = shell_exec("git log -1 --pretty=format:'%h %cd' --date=short");
-            list($version['sha'], $date) = explode(' ', $commitInfo);
-            $version['date'] = hsc($date);
-        } else if (file_exists(DOKU_INC . '.git/HEAD')) {
-            // we cannot use git on the shell -- let's do it manually!
+            if ($commitInfo) {
+                list($version['sha'], $date) = explode(' ', $commitInfo);
+                $version['date'] = hsc($date);
+                return $version;
+            }
+        }
+
+        // we cannot use git on the shell -- let's do it manually!
+        if (file_exists(DOKU_INC . '.git/HEAD')) {
             $headCommit = trim(file_get_contents(DOKU_INC . '.git/HEAD'));
             if (strpos($headCommit, 'ref: ') === 0) {
                 // it is something like `ref: refs/heads/master`
