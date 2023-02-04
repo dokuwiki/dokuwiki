@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Simone Perin <simoneperin.92@libero.it>
  * @author Dario <darioriso@virgilio.it>
  * @author Filippo <abrickslife@gmail.com>
  * @author Roberto Bellingeri <bellingeri@netguru.it>
