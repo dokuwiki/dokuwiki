@@ -15,6 +15,7 @@ namespace splitbrain\PHPArchive;
  */
 class Zip extends Archive
 {
+    const LOCAL_FILE_HEADER_CRC_OFFSET = 14;
 
     protected $file = '';
     protected $fh;
@@ -73,11 +74,28 @@ class Zip extends Archive
      */
     public function contents()
     {
+        $result = array();
+
+        foreach ($this->yieldContents() as $fileinfo) {
+            $result[] = $fileinfo;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Read the contents of a ZIP archive and return each entry using yield
+     * for memory efficiency.
+     *
+     * @see contents()
+     * @throws ArchiveIOException
+     * @return FileInfo[]
+     */
+    public function yieldContents()
+    {
         if ($this->closed || !$this->file) {
             throw new ArchiveIOException('Can not read from a closed archive');
         }
-
-        $result = array();
 
         $centd = $this->readCentralDir();
 
@@ -85,11 +103,10 @@ class Zip extends Archive
         @fseek($this->fh, $centd['offset']);
 
         for ($i = 0; $i < $centd['entries']; $i++) {
-            $result[] = $this->header2fileinfo($this->readCentralFileHeader());
+            yield $this->header2fileinfo($this->readCentralFileHeader());
         }
 
         $this->close();
-        return $result;
     }
 
     /**
@@ -295,13 +312,88 @@ class Zip extends Archive
             throw new ArchiveIOException('Archive has been closed, files can no longer be added');
         }
 
-        $data = @file_get_contents($file);
-        if ($data === false) {
+        $fp = @fopen($file, 'rb');
+        if ($fp === false) {
             throw new ArchiveIOException('Could not open file for reading: '.$file);
         }
 
-        // FIXME could we stream writing compressed data? gzwrite on a fopen handle?
-        $this->addData($fileinfo, $data);
+        $offset = $this->dataOffset();
+        $name   = $fileinfo->getPath();
+        $time   = $fileinfo->getMtime();
+
+        // write local file header (temporary CRC and size)
+        $this->writebytes($this->makeLocalFileHeader(
+            $time,
+            0,
+            0,
+            0,
+            $name,
+            (bool) $this->complevel
+        ));
+
+        // we store no encryption header
+
+        // prepare info, compress and write data to archive
+        $deflate_context = deflate_init(ZLIB_ENCODING_DEFLATE, ['level' => $this->complevel]);
+        $crc_context = hash_init('crc32b');
+        $size = $csize = 0;
+
+        while (!feof($fp)) {
+            $block = fread($fp, 512);
+
+            if ($this->complevel) {
+                $is_first_block = $size === 0;
+                $is_last_block = feof($fp);
+
+                if ($is_last_block) {
+                    $c_block = deflate_add($deflate_context, $block, ZLIB_FINISH);
+                    // get rid of the compression footer
+                    $c_block = substr($c_block, 0, -4);
+                } else {
+                    $c_block = deflate_add($deflate_context, $block, ZLIB_NO_FLUSH);
+                }
+
+                // get rid of the compression header
+                if ($is_first_block) {
+                    $c_block = substr($c_block, 2);
+                }
+
+                $csize += strlen($c_block);
+                $this->writebytes($c_block);
+            } else {
+                $this->writebytes($block);
+            }
+
+            $size += strlen($block);
+            hash_update($crc_context, $block);
+        }
+        fclose($fp);
+
+        // update the local file header with the computed CRC and size
+        $crc = hexdec(hash_final($crc_context));
+        $csize = $this->complevel ? $csize : $size;
+        $this->writebytesAt($this->makeCrcAndSize(
+            $crc,
+            $size,
+            $csize
+        ), $offset + self::LOCAL_FILE_HEADER_CRC_OFFSET);
+
+        // we store no data descriptor
+
+        // add info to central file directory
+        $this->ctrl_dir[] = $this->makeCentralFileRecord(
+            $offset,
+            $time,
+            $crc,
+            $size,
+            $csize,
+            $name,
+            (bool) $this->complevel
+        );
+
+        if(is_callable($this->callback)) {
+            call_user_func($this->callback, $fileinfo);
+        }
     }
 
     /**
@@ -710,6 +802,29 @@ class Zip extends Archive
     }
 
     /**
+     * Write to the open filepointer or memory at the specified offset
+     *
+     * @param string $data
+     * @param int $offset
+     * @throws ArchiveIOException
+     * @return int number of bytes written
+     */
+    protected function writebytesAt($data, $offset) {
+        if (!$this->file) {
+            $this->memory .= substr_replace($this->memory, $data, $offset);
+            $written = strlen($data);
+        } else {
+            @fseek($this->fh, $offset);
+            $written = @fwrite($this->fh, $data);
+            @fseek($this->fh, 0, SEEK_END);
+        }
+        if ($written === false) {
+            throw new ArchiveIOException('Failed to write to archive stream');
+        }
+        return $written;
+    }
+
+    /**
      * Current data pointer position
      *
      * @fixme might need a -1
@@ -862,6 +977,22 @@ class Zip extends Archive
         $header .= pack('v', strlen($extra)); // extra field length
         $header .= $name; // file name
         $header .= $extra; // extra (utf-8 filename)
+        return $header;
+    }
+
+    /**
+     * Returns only a part of the local file header containing the CRC, size and compressed size.
+     * Used to update these fields for an already written header.
+     *
+     * @param int $crc CRC32 checksum of the uncompressed data
+     * @param int $len length of the uncompressed data
+     * @param int $clen length of the compressed data
+     * @return string
+     */
+    protected function makeCrcAndSize($crc, $len, $clen) {
+        $header  = pack('V', $crc); // crc-32
+        $header .= pack('V', $clen); // compressed size
+        $header .= pack('V', $len); // uncompressed size
         return $header;
     }
 

@@ -1,0 +1,1 @@
+Không có mục nhật ký log nào cho cơ sở nhật ký log và ngày tháng đã chọn.

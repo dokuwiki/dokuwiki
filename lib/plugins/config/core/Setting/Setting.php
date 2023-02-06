@@ -221,6 +221,17 @@ class Setting {
     }
 
     /**
+     * Escaping
+     *
+     * @param string $string
+     * @return string
+     */
+    protected function escape($string) {
+        $tr = array("\\" => '\\\\', "'" => '\\\'');
+        return "'" . strtr(cleanText($string), $tr) . "'";
+    }
+
+    /**
      * Generate string to save local setting value to file according to $fmt
      *
      * @see shouldBeSaved() to check if this should be called
@@ -229,10 +240,15 @@ class Setting {
      * @return string
      */
     public function out($var, $fmt = 'php') {
-        if($fmt != 'php') return '';
+        if ($fmt != 'php') return '';
 
-        $tr = array("\\" => '\\\\', "'" => '\\\''); // escape the value
-        $out = '$' . $var . "['" . $this->getArrayKey() . "'] = '" . strtr(cleanText($this->local), $tr) . "';\n";
+        if (is_array($this->local)) {
+            $value = 'array(' . join(', ', array_map([$this, 'escape'], $this->local)) . ')';
+        } else {
+            $value = $this->escape($this->local);
+        }
+
+        $out = '$' . $var . "['" . $this->getArrayKey() . "'] = $value;\n";
 
         return $out;
     }

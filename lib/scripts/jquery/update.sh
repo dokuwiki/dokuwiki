@@ -9,7 +9,7 @@
 # @link   http://code.jquery.com/
 
 # load version infor from external file
-source ./versions
+. versions
 JQUI_HOST="https://code.jquery.com/ui/$JQUI_VERSION"
 JQUI_GIT="https://raw.githubusercontent.com/jquery/jquery-ui/$JQUI_VERSION/ui"
 

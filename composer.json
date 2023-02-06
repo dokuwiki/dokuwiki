@@ -13,7 +13,7 @@
         "geshi/geshi": "dev-master as 1.0.x-dev",
         "openpsa/universalfeedcreator": "^1.8",
         "aziraphale/email-address-validator": "^2",
-        "marcusschwarz/lesserphp": "^0.5.1",
+        "marcusschwarz/lesserphp": "^0.6",
         "splitbrain/php-cli": "^1.1",
         "splitbrain/slika": "^1.0",
         "kissifrot/php-ixr": "^1.8"

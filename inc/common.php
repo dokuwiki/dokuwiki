@@ -1028,7 +1028,7 @@ function cleanText($text) {
  * @return string
  */
 function formText($text) {
-    $text = str_replace("\012", "\015\012", $text);
+    $text = str_replace("\012", "\015\012", $text ?? '');
     return htmlspecialchars($text);
 }
 
@@ -1379,9 +1379,11 @@ function getGoogleQuery() {
     $url = parse_url($INPUT->server->str('HTTP_REFERER'));
 
     // only handle common SEs
+    if(!array_key_exists('host', $url)) return '';
     if(!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/',$url['host'])) return '';
 
     $query = array();
+    if(!array_key_exists('query', $url)) return '';
     parse_str($url['query'], $query);
 
     $q = '';

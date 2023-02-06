@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Edney Rossi <prof.edneyrossi@gmail.com>
  * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
  * @author Paulo <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
@@ -228,6 +229,7 @@ $lang['created']               = 'criado';
 $lang['restored']              = 'versão anterior restaurada (%s)';
 $lang['external_edit']         = 'edição externa';
 $lang['summary']               = 'Sumário da edição';
+$lang['unknowndate']           = 'Data desconhecida';
 $lang['noflash']               = 'O <a href="http://get.adobe.com/flashplayer">Plugin Adobe Flash</a> é necessário para exibir este conteúdo.';
 $lang['download']              = 'Baixar Snippet';
 $lang['tools']                 = 'Ferramentas';

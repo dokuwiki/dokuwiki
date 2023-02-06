@@ -92,6 +92,8 @@ vendor/splitbrain/php-cli/screenshot*
 vendor/splitbrain/php-cli/generate-api.sh
 vendor/splitbrain/php-cli/apigen.neon
 
+_test/vendor/*/*/tests/*
+
 # PHPUnit tests
 phpunit.phar
 *.phpunit.result.cache

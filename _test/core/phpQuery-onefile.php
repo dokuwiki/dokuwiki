@@ -10,6 +10,7 @@
  * @author Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  * @package phpQuery
+ * @deprecated 2022-10-19
  */
 
 // class names for instanceof
@@ -1184,6 +1185,8 @@ class phpQueryObject
      * @return phpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      */
     public function __construct($documentID) {
+        dbg_deprecated(\DOMWrap\Document::class);
+
 //      if ($documentID instanceof self)
 //          var_dump($documentID->getDocumentID());
         $id = $documentID instanceof self

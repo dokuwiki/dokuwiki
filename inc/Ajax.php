@@ -165,7 +165,7 @@ class Ajax {
         $id = cleanID($INPUT->str('id'));
         if(empty($id)) return;
 
-        $client = $_SERVER['REMOTE_USER'];
+        $client = $INPUT->server->str('REMOTE_USER');
         if(!$client) $client = clientIP(true);
 
         $draft = new Draft($id, $client);

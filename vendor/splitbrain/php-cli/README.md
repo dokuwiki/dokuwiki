@@ -75,12 +75,12 @@ for further info.
 
 ## Exceptions
 
-By default the CLI class registers an exception handler and will print the exception's message to the end user and
+By default, the CLI class registers an exception handler and will print the exception's message to the end user and
 exit the programm with a non-zero exit code. You can disable this behaviour and catch all exceptions yourself by
 passing false to the constructor.
 
 You can use the provided ``splitbrain\phpcli\Exception`` to signal any problems within your main code yourself. The
-exceptions's code will be used as the exit code then.
+exception's code will be used as the exit code then.
 
 Stacktraces will be printed on log level `debug`. 
 
@@ -129,11 +129,17 @@ The table formatter is used for the automatic help screen accessible when callin
 
 The CLI class is a fully PSR-3 compatible logger (printing colored log data to STDOUT and STDERR). This is useful when
 you call backend code from your CLI that expects a Logger instance to produce any sensible status output while running.
- 
-To use this ability simply inherit from `splitbrain\phpcli\PSR3CLI` instead of `splitbrain\phpcli\CLI`, then pass `$this`
-as the logger instance. Be sure you have the suggested `psr/log` composer package installed.
 
-![Screenshot](screenshot2.png)
+If you need to pass a class implementing the `Psr\Log\LoggerInterface` you can do so by inheriting from one of the two provided classes implementing this interface instead of `splitbrain\phpcli\CLI`.
+
+  * Use `splitbrain\phpcli\PSR3CLI` if you're using version 2 of PSR3 (PHP < 8.0)
+  * Use `splitbrain\phpcli\PSR3CLIv3` if you're using version 3 of PSR3 (PHP >= 8.0) 
+
+The resulting object then can be passed as the logger instance. The difference between the two is in adjusted method signatures (with appropriate type hinting) only. Be sure you have the suggested `psr/log` composer package installed when using these classes.
+
+Note: if your backend code calls for a PSR-3 logger but does not actually type check for the interface (AKA being LoggerAware only) you can also just pass an instance of `splitbrain\phpcli\CLI`.
+
+## Log Levels
 
 You can adjust the verbosity of your CLI tool using the `--loglevel` parameter. Supported loglevels are the PSR-3
 loglevels and our own `success` level:
@@ -141,12 +147,14 @@ loglevels and our own `success` level:
 * debug
 * info
 * notice      
-* success
+* success (this is not defined in PSR-3)
 * warning
 * error
 * critical
 * alert
 * emergency
+
+![Screenshot](screenshot2.png)
 
 Convenience methods for all log levels are available. Placeholder interpolation as described in PSR-3 is available, too.
 Messages from `warning` level onwards are printed to `STDERR` all below are printed to `STDOUT`. 

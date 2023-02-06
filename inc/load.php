@@ -85,10 +85,19 @@ function load_autoload($name){
     // namespace to directory conversion
     $name = str_replace('\\', '/', $name);
 
-    // test namespace
-    if(substr($name, 0, 14) === 'dokuwiki/test/') {
-        $file = DOKU_INC . '_test/' . substr($name, 14) . '.php';
-        if(file_exists($file)) {
+    // test mock namespace
+    if (substr($name, 0, 19) === 'dokuwiki/test/mock/') {
+        $file = DOKU_INC . '_test/mock/' . substr($name, 19) . '.php';
+        if (file_exists($file)) {
+            require $file;
+            return true;
+        }
+    }
+
+    // tests namespace
+    if (substr($name, 0, 14) === 'dokuwiki/test/') {
+        $file = DOKU_INC . '_test/tests/' . substr($name, 14) . '.php';
+        if (file_exists($file)) {
             require $file;
             return true;
         }

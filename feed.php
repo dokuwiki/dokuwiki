@@ -223,7 +223,7 @@ function rss_buildItems(&$rss, &$data, $opt)
 
             $item = new FeedItem();
             $id   = $ditem['id'];
-            if (!isset($ditem['media'])) {
+            if (empty($ditem['media'])) {
                 $meta = p_get_metadata($id);
             } else {
                 $meta = [];

@@ -268,7 +268,7 @@ class BigInteger
             $versions = array();
 
             // avoid generating errors (even with suppression) when phpinfo() is disabled (common in production systems)
-            if (strpos(ini_get('disable_functions'), 'phpinfo') === false) {
+            if (function_exists('phpinfo')) {
                 ob_start();
                 @phpinfo();
                 $content = ob_get_contents();
@@ -372,7 +372,7 @@ class BigInteger
                         break;
                     case self::MODE_BCMATH:
                         // round $len to the nearest 4 (thanks, DavidMJ!)
-                        $len = (strlen($x) + 3) & 0xFFFFFFFC;
+                        $len = (strlen($x) + 3) & ~3;
 
                         $x = str_pad($x, $len, chr(0), STR_PAD_LEFT);
 
