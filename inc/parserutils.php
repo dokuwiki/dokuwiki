@@ -148,7 +148,7 @@ function p_cached_output($file, $format='xhtml', $id='') {
     } else {
         $parsed = p_render($format, p_cached_instructions($file,false,$id), $info);
 
-        if (!empty($info['cache']) && $cache->storeCache($parsed)) {              // storeCache() attempts to save cachefile
+        if (isset($info['cache']) && $info['cache'] && $cache->storeCache($parsed)) {              // storeCache() attempts to save cachefile
             if($conf['allowdebug'] && $format=='xhtml') {
                 $parsed .= "\n<!-- no cachefile used, but created {$cache->cache} -->\n";
             }
