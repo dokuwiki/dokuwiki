@@ -580,7 +580,7 @@ function p_get_parsermodes(){
     // add default modes
     $std_modes = array('listblock','preformatted','notoc','nocache',
             'header','table','linebreak','footnote','hr',
-            'unformatted','php','html','code','file','quote',
+            'unformatted','code','file','quote',
             'internallink','rss','media','externallink',
             'emaillink','windowssharelink','eol');
     if($conf['typography']){
