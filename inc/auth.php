@@ -66,16 +66,12 @@ function auth_setup() {
     $INPUT->set('http_credentials', false);
     if(!$conf['rememberme']) $INPUT->set('r', false);
 
-    // handle renamed HTTP_AUTHORIZATION variable (can happen when a fix like the one presented at
-    // http://www.besthostratings.com/articles/http-auth-php-cgi.html is used
-    // for enabling HTTP authentication with CGI/SuExec)
-    if ($INPUT->server->str('REDIRECT_HTTP_AUTHORIZATION')) {
-        $_SERVER['HTTP_AUTHORIZATION'] = $INPUT->server->str('REDIRECT_HTTP_AUTHORIZATION');
-    }
-    // streamline HTTP auth credentials (IIS/rewrite -> mod_php)
-    if ($INPUT->server->str('HTTP_AUTHORIZATION')) {
-        list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) =
-            explode(':', base64_decode(substr($INPUT->server->str('HTTP_AUTHORIZATION'), 6)));
+    // Populate Basic Auth user/password from Authorization header
+    // Note: with FastCGI, data is in REDIRECT_HTTP_AUTHORIZATION instead of HTTP_AUTHORIZATION
+    $header = $INPUT->server->str('HTTP_AUTHORIZATION') ?: $INPUT->server->str('REDIRECT_HTTP_AUTHORIZATION');
+    if(preg_match( '~^Basic ([a-z\d/+]*={0,2})$~i', $header, $matches )) {
+        $userpass = explode(':', base64_decode($matches[1]));
+        list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = $userpass;
     }
 
     // if no credentials were given try to use HTTP auth (for SSO)
