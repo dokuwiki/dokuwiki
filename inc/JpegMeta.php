@@ -665,7 +665,7 @@ class JpegMeta {
         }
 
         if (@isset($this->_info['exif']['DateTimeOriginal'])) {
-            $dates['ExifDateTimeOriginal'] = $this->_info['exif']['DateTime'];
+            $dates['ExifDateTimeOriginal'] = $this->_info['exif']['DateTimeOriginal'];
 
             $aux = $this->_info['exif']['DateTimeOriginal'];
             $aux[4] = "-";
@@ -684,7 +684,7 @@ class JpegMeta {
         }
 
         if (@isset($this->_info['exif']['DateTimeDigitized'])) {
-            $dates['ExifDateTimeDigitized'] = $this->_info['exif']['DateTime'];
+            $dates['ExifDateTimeDigitized'] = $this->_info['exif']['DateTimeDigitized'];
 
             $aux = $this->_info['exif']['DateTimeDigitized'];
             $aux[4] = "-";
