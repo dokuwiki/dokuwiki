@@ -96,6 +96,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      */
     public function finishSectionEdit($end = null, $hid = null) {
         $data = array_pop($this->sectionedits);
+        if(is_null($data)) {
+            return;
+        }
+
         if(!is_null($end) && $end <= $data['start']) {
             return;
         }
