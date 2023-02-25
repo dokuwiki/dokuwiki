@@ -228,4 +228,5 @@ class changelog_getrevisions_test extends DokuWikiTest {
         $this->assertEquals($revsexpected, $revs);
     }
 
+
 }

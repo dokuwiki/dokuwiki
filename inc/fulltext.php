@@ -845,7 +845,7 @@ function ft_queryParser($Indexer, $query){
     $q['parsed_ary'] = $parsed_ary;
 
     foreach ($q['parsed_ary'] as $token) {
-        if ($token[2] !== ':') continue;
+        if (strlen($token) < 3 || $token[2] !== ':') continue;
         $body = substr($token, 3);
 
         switch (substr($token, 0, 3)) {
