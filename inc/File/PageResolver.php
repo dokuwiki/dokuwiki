@@ -26,7 +26,7 @@ class PageResolver extends Resolver
             $hash = '';
         }
 
-        if ($id !== '') {
+        if ($id !== '' && $id !== null) {
             $id = parent::resolveId($id, $rev, $isDateAt);
             $id = $this->resolveStartPage($id, $rev, $isDateAt);
             if ($conf['autoplural']) {
