@@ -172,7 +172,19 @@ class JpegMeta {
             if(isset($info['val'])){
                 $info = $info['val'];
             }else{
-                $info = join(', ',$info);
+                $arr = array();
+                foreach($info as $part){
+                    if(is_array($part)){
+                        if(isset($part['val'])){
+                            $arr[] = $part['val'];
+                        }else{
+                            $arr[] = join(', ',$part);
+                        }
+                    }else{
+                        $arr[] = $part;
+                    }
+                }
+                $info = join(', ',$arr);
             }
         }
         return trim($info);
@@ -1595,7 +1607,7 @@ class JpegMeta {
 
         if ($values[$i]['type'] == 'complete') {
             // Simple Type property
-            $meta = $values[$i]['value'];
+            $meta = $values[$i]['value'] ?? '';
             return;
         }
 
