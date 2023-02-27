@@ -12,7 +12,7 @@ class Release extends splitbrain\phpcli\CLI
     const TYPES = ['stable', 'hotfix', 'rc'];
 
     // base URL to fetch raw files from the stable branch
-    protected $BASERAW = 'https://raw.githubusercontent.com/splitbrain/dokuwiki/stable/';
+    protected $BASERAW = 'https://raw.githubusercontent.com/dokuwiki/dokuwiki/stable/';
 
     /** @inheritdoc */
     public function __construct($autocatch = true)
