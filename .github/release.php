@@ -19,8 +19,6 @@ class Release extends splitbrain\phpcli\CLI
     {
         parent::__construct($autocatch);
 
-        $this->error(print_r($_ENV, true));
-
         // when running on a clone, use the correct base URL
         $repo = getenv('GITHUB_REPOSITORY');
         if ($repo) {
