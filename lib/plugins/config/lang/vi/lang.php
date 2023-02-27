@@ -85,6 +85,7 @@ $lang['auth_security_timeout'] = 'Thời gian chờ xác thực bảo mật (gi�
 $lang['securecookie']          = 'Có nên gửi cookie qua HTTPS qua trình duyệt HTTPS không? Vô hiệu hóa tùy chọn này khi chỉ đăng nhập wiki của bạn được bảo mật bằng SSL nhưng việc duyệt wiki được thực hiện không bảo mật.';
 $lang['remote']                = 'Kích hoạt hệ thống API từ xa. Cho phép các ứng dụng khác truy cập wiki thông qua XML-RPC hoặc các cơ chế khác.';
 $lang['remoteuser']            = 'Hạn chế quyền truy cập API từ xa đối với các nhóm hoặc thành viên được phân tách bằng dấu phẩy ở đây. Để trống sẽ cho phép mọi người truy cập.';
+$lang['remotecors']            = 'Bật Chia sẻ tài nguyên nguồn gốc chéo (CORS) cho các giao diện từ xa. Dấu hoa thị (*) để cho phép tất cả các nguồn gốc. Để trống để từ chối CORS.';
 $lang['usewordblock']          = 'Chặn spam dựa trên danh sách từ';
 $lang['relnofollow']           = 'Dùng rel="ugc nofollow" cho liên kết ngoài';
 $lang['indexdelay']            = 'Thời gian trễ trước khi lập chỉ mục (giây)';
@@ -149,6 +150,7 @@ $lang['search_fragment_o_contains'] = 'chứa';
 $lang['trustedproxy']          = 'Những proxy chuyển tiếp tin cậy khớp với biểu thức chính quy này về IP máy khách thực mà họ báo cáo. Mặc định phù hợp với những mạng cục bộ. Để trống để tin tưởng không có proxy.';
 $lang['_feature_flags']        = 'Cờ đặc trưng';
 $lang['defer_js']              = 'Trì hoãn javascript được thực thi sau khi HTML của trang được phân tích cú pháp. Cải thiện tốc độ trang nhận thức nhưng có thể phá vỡ một số lượng nhỏ plugin.';
+$lang['hidewarnings']          = 'Không hiển thị bất kỳ cảnh báo nào do PHP đưa ra. Việc này có thể dễ dàng chuyển đổi sang PHP8+. Cảnh báo sẽ vẫn được ghi vào nhật ký lỗi và được báo cáo.';
 $lang['dnslookups']            = 'DokuWiki sẽ tra cứu tên máy chủ cho các địa chỉ IP từ xa của thành viên sửa đổi trang. Nếu bạn có máy chủ DNS chậm hoặc không hoạt động hoặc không muốn tính năng này, hãy tắt tùy chọn này';
 $lang['jquerycdn']             = 'Các tập tin script jQuery và jQuery UI có nên được tải từ CDN không? Việc này thêm các yêu cầu HTTP bổ sung, nhưng có thể tải tập tin nhanh hơn và người dùng có thể đã lưu chúng vào bộ nhớ cache.';
 $lang['jquerycdn_o_0']         = 'Không có CDN, chỉ tải nội bộ';

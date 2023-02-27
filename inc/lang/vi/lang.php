@@ -212,6 +212,7 @@ $lang['created']               = 'đã tạo';
 $lang['restored']              = 'đã khôi phục phiên bản cũ (%s)';
 $lang['external_edit']         = 'sửa đổi bên ngoài';
 $lang['summary']               = 'Tóm lược sửa đổi';
+$lang['unknowndate']           = 'Không rõ ngày';
 $lang['noflash']               = 'Cần có <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> mới có thể xem được nội dung này.';
 $lang['download']              = 'Tải xuống đoạn trích';
 $lang['tools']                 = 'Công cụ';

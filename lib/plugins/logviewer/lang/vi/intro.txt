@@ -1,0 +1,7 @@
+====== Xem Nhật ký ======
+
+Giao diện này cho phép bạn xem các nhật ký khác nhau do DokuWiki ghi nhận. Theo mặc định, những thông tin này không có nhiều
+tại đây (tùy thuộc vào [[doku>config:dontlog|cài đặt nhật ký]] của bạn). Tuy nhiên nếu có gì đó không ổn, rất có thể bạn sẽ tìm thấy thông tin hữu ích về các vấn đề. Tất cả thời gian được ghi lại theo UTC!
+
+Xin lưu ý rằng **tập tin nhật ký có thể chứa thông tin nhạy cảm** như mật khẩu, đường dẫn hoặc các bí mật khác.
+Đảm bảo sắp xếp lại các nhật ký một cách thích hợp khi đăng chúng lên diễn đàn hoặc trong các báo cáo lỗi!
