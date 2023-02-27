@@ -9,6 +9,8 @@ require_once DOKU_INC . 'inc/load.php';
  */
 class Release extends splitbrain\phpcli\CLI
 {
+    const TYPES = ['stable', 'hotfix', 'rc'];
+
     // base URL to fetch raw files from the stable branch
     protected $BASERAW = 'https://raw.githubusercontent.com/splitbrain/dokuwiki/stable/';
 
@@ -32,7 +34,7 @@ class Release extends splitbrain\phpcli\CLI
         $options->setHelp('This tool is used to gather and check data for building a release');
 
         $options->registerCommand('new', 'Get environment for creating a new release');
-        $options->registerOption('type', 'The type of release to build', null, 'stable|hotfix|rc', 'new');
+        $options->registerOption('type', 'The type of release to build', null, join('|', self::TYPES), 'new');
         $options->registerOption('date', 'The date to use for the version. Defaults to today', null, 'YYYY-MM-DD', 'new');
         $options->registerOption('name', 'The codename to use for the version. Defaults to the last used one', null, 'codename', 'new');
 
@@ -87,8 +89,8 @@ class Release extends splitbrain\phpcli\CLI
         if (!$next['codename']) $next['codename'] = $current['codename'];
         $next['codename'] = ucwords(strtolower($next['codename']));
 
-        if (!in_array($next['type'], ['stable', 'hotfix', 'rc'])) {
-            throw new \splitbrain\phpcli\Exception('Invalid release type, use release or rc');
+        if (!in_array($next['type'], self::TYPES)) {
+            throw new \splitbrain\phpcli\Exception('Invalid release type. Use one of ' . join(', ', self::TYPES));
         }
 
         if ($next['type'] === 'hotfix') {
