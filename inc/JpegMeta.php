@@ -3121,6 +3121,10 @@ class JpegMeta {
         }
 
         $rv = substr($data, $pos, $length);
+        if (strlen($rv) != $length) {
+            trigger_error('Damaged image: '.$this->_fileName, E_USER_WARNING);
+            $rv = str_pad($rv, $length, "\0");
+        }
         return $rv;
     }
 
