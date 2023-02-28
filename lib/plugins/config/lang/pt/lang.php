@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Edney Rossi <prof.edneyrossi@gmail.com>
+ * @author Jose Luis Sanches <jose.reis.sanches@gmail.com>
  * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
  * @author Paulo <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
@@ -99,7 +99,6 @@ $lang['auth_security_timeout'] = 'Tempo Limite para Autenticações (segundos)';
 $lang['securecookie']          = 'Os cookies definidos via HTTPS deverão ser enviados para o navegador somente via HTTPS? Desative essa opção quando somente a autenticação do seu wiki for realizada de maneira segura via SSL e a navegação de maneira insegura.';
 $lang['remote']                = 'Ativar o sistema de API remota. Isso permite que outros aplicativos acessem o wiki via XML-RPC ou outros mecanismos.';
 $lang['remoteuser']            = 'Restringe o acesso remoto da API aos grupos separados por vírgula ou aos usuários fornecidos aqui. Deixe em branco para dar acesso a todos.';
-$lang['remotecors']            = 'Habilite o Compartilhamento de Recursos de Origem Cruzada (CORS) para as interfaces remotas. Asterisco (*) para permitir todas as origens. Deixe em branco para negar CORS.';
 $lang['usewordblock']          = 'Bloquear spam baseado em lista de palavras (wordlist)';
 $lang['relnofollow']           = 'Usar rel="nofollow" em links externos';
 $lang['indexdelay']            = 'Tempo de espera antes da indexação (seg)';
@@ -165,7 +164,6 @@ $lang['search_fragment_o_contains'] = 'contém';
 $lang['trustedproxy']          = 'Confie nos proxies de encaminhamento que correspondem a essa expressão regular sobre o verdadeiro IP do cliente que eles relatam. O padrão corresponde às redes locais. Deixe em branco para não confiar em proxy.';
 $lang['_feature_flags']        = 'Sinalizadores de recursos';
 $lang['defer_js']              = 'Adie a execução do javascript para depois da análise do HTML da página. Isso Melhora a velocidade da página, mas pode interromper um pequeno número de plugins.';
-$lang['hidewarnings']          = 'Não exiba nenhum aviso emitido pelo PHP. Isso pode facilitar a transição para o PHP8+. Os avisos ainda serão registrados no log de erros e devem ser relatados.';
 $lang['dnslookups']            = 'O DokuWiki irá procurar nomes de host para endereços IP remotos de usuários editando páginas. Se você tiver um servidor DNS lento, inoperante ou não quiser esse recurso, desabilite essa opção';
 $lang['jquerycdn']             = 'Os arquivos de script jQuery e jQuery UI devem ser carregados de um CDN? Isso gera solicitações HTTP adicionais mas os arquivos são carregados mais rapidamente e os usuários já podem tê-los armazenados em cache.';
 $lang['jquerycdn_o_0']         = 'Sem CDN, somente entrega local';
