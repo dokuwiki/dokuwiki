@@ -11,12 +11,6 @@
 
 use dokuwiki\Extension\Event;
 
-// inc/mail.php should have been included at this point to define MAILHEADER_EOL.
-// Make sure that is the case:
-require_once(DOKU_INC.'inc/mail.php');
-
-#define('MAILHEADER_ASCIIONLY',1);
-
 /**
  * Mail Handling
  */

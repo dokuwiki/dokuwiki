@@ -6,11 +6,6 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-// end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
-// think different, but PHP >=8.0.14 mail() has changed and consensus seems to be not to differentiate
-// for earlier versions.
-if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL', "\r\n");
-#define('MAILHEADER_ASCIIONLY',1);
 
 /**
  * Patterns for use in email detection and validation
