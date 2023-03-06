@@ -3,12 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Vyacheslav Strenadko <bryanskmap@yandex.ru>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Nikita <obraztsov568@gmail.com>
  * @author Анатолий <anatol_m@mail.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Alexander Kh. <001.arx@gmail.com>
+ * @author Vyacheslav Strenadko <vyacheslav.strenadko@gmail.com>
  * @author Wolterhon <hotmottot.1@gmail.com>
  * @author Zhassulan <zyesmukanov@gmail.com>
  * @author Yuri Pimenov <up@ftpsearch.lv>
@@ -331,7 +331,7 @@ $lang['i_superuser']           = 'Суперпользователь';
 $lang['i_problems']            = 'Программа установки столкнулась с проблемами, перечисленными ниже. Чтобы продолжить, вам необходимо их устранить. ';
 $lang['i_modified']            = 'Из соображений безопасности эта программа запускается только на новой, неизменённой установке «Докувики».
                                   Вам нужно либо заново распаковать скачанный пакет установки, либо обратиться к полной
-                                  <a href="http://www.dokuwiki.org/install">инструкции по установке «Докувики»</a>';
+                                  <a href="https://www.dokuwiki.org/install">инструкции по установке «Докувики»</a>';
 $lang['i_funcna']              = 'Функция PHP <code>%s</code> недоступна. Может быть, она по какой-то причине заблокирована вашим хостером?';
 $lang['i_disabled']            = 'Отключено вашим провайдером.';
 $lang['i_funcnmail']           = '<b>Примечание:</ b> PHP-функция mail недоступна. %s Если она по прежнему недоступна, вы можете установить <a href="https://www.dokuwiki.org/plugin:smtp">плагин SMTP</a>.';
