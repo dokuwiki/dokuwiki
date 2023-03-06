@@ -2745,7 +2745,7 @@ class SSH2
             $publickey['n']
         );
 
-        $algos = ['rsa-sha2-256', 'rsa-sha2-512', 'ssh-rsa'];
+        $algos = array('rsa-sha2-256', 'rsa-sha2-512', 'ssh-rsa');
         if (isset($this->preferred['hostkey'])) {
             $algos = array_intersect($this->preferred['hostkey'], $algos);
         }
@@ -2858,6 +2858,16 @@ class SSH2
 
         user_error('Unexpected response to publickey authentication pt 2');
         return $this->_disconnect(NET_SSH2_DISCONNECT_BY_APPLICATION);
+    }
+
+    /**
+     * Return the currently configured timeout
+     *
+     * @return int
+     */
+    function getTimeout()
+    {
+        return $this->timeout;
     }
 
     /**

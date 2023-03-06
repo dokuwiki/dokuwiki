@@ -57,12 +57,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/GeSHi/geshi-1.0.git",
-                "reference": "3c12a7931d509c5e3557c5ed44c9a32e9c917c7d"
+                "reference": "7884d22244c6d2de5ac7ffd919ce4add02b36e66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/3c12a7931d509c5e3557c5ed44c9a32e9c917c7d",
-                "reference": "3c12a7931d509c5e3557c5ed44c9a32e9c917c7d",
+                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/7884d22244c6d2de5ac7ffd919ce4add02b36e66",
+                "reference": "7884d22244c6d2de5ac7ffd919ce4add02b36e66",
                 "shasum": ""
             },
             "require-dev": {
@@ -96,7 +96,7 @@
                 "issues": "https://sourceforge.net/p/geshi/feature-requests/",
                 "source": "https://github.com/GeSHi/geshi-1.0/tree/master"
             },
-            "time": "2020-06-22T15:46:04+00:00"
+            "time": "2023-02-19T12:05:59+00:00"
         },
         {
             "name": "kissifrot/php-ixr",
@@ -256,16 +256,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.41",
+            "version": "2.0.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "7e763c6f97ec1fcb37c46aa8ecfc20a2c71d9c1b"
+                "reference": "665d289f59e646a259ebf13f29be7f6f54cab24b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/7e763c6f97ec1fcb37c46aa8ecfc20a2c71d9c1b",
-                "reference": "7e763c6f97ec1fcb37c46aa8ecfc20a2c71d9c1b",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/665d289f59e646a259ebf13f29be7f6f54cab24b",
+                "reference": "665d289f59e646a259ebf13f29be7f6f54cab24b",
                 "shasum": ""
             },
             "require": {
@@ -346,7 +346,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/2.0.41"
+                "source": "https://github.com/phpseclib/phpseclib/tree/2.0.42"
             },
             "funding": [
                 {
@@ -362,7 +362,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-23T16:44:18+00:00"
+            "time": "2023-03-06T12:45:53+00:00"
         },
         {
             "name": "simplepie/simplepie",
