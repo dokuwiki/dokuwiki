@@ -1009,18 +1009,25 @@ function tpl_pagetitle($id = null, $ret = false) {
  */
 function tpl_img_getTag($tags, $alt = '', $src = null) {
     // Init Exif Reader
-    global $SRC;
+    global $SRC, $imgMeta;
 
     if(is_null($src)) $src = $SRC;
     if(is_null($src)) return $alt;
 
-    static $meta = null;
-    if(is_null($meta)) $meta = new JpegMeta($src);
-    if($meta === false) return $alt;
-    $info = cleanText($meta->getField($tags));
-    $meta = null; // garbage collect and close any file handles. See #3404
+    if(!isset($imgMeta) || $imgMeta === null) $imgMeta = new JpegMeta($src);
+    if($imgMeta === false) return $alt;
+    $info = cleanText($imgMeta->getField($tags));
     if($info == false) return $alt;
     return $info;
+}
+
+
+/**
+ * Garbage collects up the open JpegMeta object.
+ */
+function tpl_img_close(){
+    global $imgMeta;
+    $imgMeta = null;
 }
 
 /**
