@@ -41,6 +41,8 @@ abstract class Doku_Renderer extends Plugin {
     public $acronyms = array();
     /** @var array contains the interwiki configuration, set in p_render() */
     public $interwiki = array();
+    /** @var string|int link pages and media against this revision */
+    public $date_at = '';
 
     /** @var array the list of headers used to create unique link ids */
     protected $headers = array();

@@ -20,9 +20,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /** @var array A stack of section edit data */
     protected $sectionedits = array();
 
-    /** @var string|int link pages and media against this revision */
-    public $date_at = '';
-
     /** @var int last section edit id, used by startSectionEdit */
     protected $lastsecid = 0;
 
