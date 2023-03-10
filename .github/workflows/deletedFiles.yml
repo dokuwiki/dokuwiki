@@ -1,0 +1,39 @@
+# This workflow updates the list of deleted files based on the recent changes and creates a pull request.
+# It compares the current master with the stable branch and adds all deleted files to the data/deleted.files file
+# unless they are already listed there or are excluded from the release archives (export-ignore in .gitattributes).
+
+name: "Update deleted files"
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update:
+    name: Update deleted files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Update deleted files
+        run: |
+          for F in $(git diff origin/stable..HEAD --summary | awk '/^ delete/ && $4 !~ /^(VERSION)/ {print $4}'); do
+            if grep -q "^$F export-ignore" .gitattributes; then
+              continue
+            fi
+            if grep -q "^$F" data/deleted.files; then
+              continue
+            fi
+            echo "$F" >> data/deleted.files
+          done
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: "Update deleted files"
+          title: "Update deleted files"
+          body: "This updates the list of deleted files based on the recent changes."
+          delete-branch: true
