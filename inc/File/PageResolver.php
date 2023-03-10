@@ -17,6 +17,7 @@ class PageResolver extends Resolver
     public function resolveId($id, $rev = '', $isDateAt = false)
     {
         global $conf;
+        $id = (string) $id;
 
         // pages may have a hash attached, we separate it on resolving
         if (strpos($id, '#') !== false) {
@@ -26,7 +27,7 @@ class PageResolver extends Resolver
             $hash = '';
         }
 
-        if ($id !== '' && $id !== null) {
+        if ($id !== '') {
             $id = parent::resolveId($id, $rev, $isDateAt);
             $id = $this->resolveStartPage($id, $rev, $isDateAt);
             if ($conf['autoplural']) {
