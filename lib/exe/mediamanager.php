@@ -116,9 +116,7 @@ use dokuwiki\Extension\Event;
             }
             msg($msg,1);
         } elseif ($res & DOKU_MEDIA_INUSE) {
-            if(!$conf['refshow']) {
-                msg(sprintf($lang['mediainuse'],noNS($DEL)),0);
-            }
+            msg(sprintf($lang['mediainuse'],noNS($DEL)),0);
         } else {
             msg(sprintf($lang['deletefail'],noNS($DEL)),-1);
         }
