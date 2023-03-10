@@ -935,3 +935,9 @@ lib/images/toolbar/list.png
 lib/images/toolbar/list_ul.png
 lib/images/toolbar/rule.png
 lib/tpl/default/images/interwiki.png
+.github/version.php
+.github/workflows/release.yml
+_test/tests/inc/form/checkableelement.test.php
+_test/tests/inc/pageutils_resolve_id.test.php
+inc/Parsing/ParserMode/Html.php
+inc/Parsing/ParserMode/Php.php
