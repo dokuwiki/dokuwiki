@@ -1004,7 +1004,7 @@ function media_tab_history($image, $ns, $auth=null) {
         if ($do == 'diff'){
             (new dokuwiki\Ui\MediaDiff($image))->show(); //media_diff($image, $ns, $auth);
         } else {
-            $first = $INPUT->int('first');
+            $first = $INPUT->int('first',-1);
             (new dokuwiki\Ui\MediaRevisions($image))->show($first);
         }
     } else {
