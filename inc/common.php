@@ -1287,6 +1287,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
 
     // get COMMON_WIKIPAGE_SAVE event data
     $data = (new PageFile($id))->saveWikiText($text, $summary, $minor);
+    if(!$data) return; // save was cancelled (for no changes or by a plugin)
 
     // send notify mails
     list('oldRevision' => $rev, 'newRevision' => $new_rev, 'summary' => $summary) = $data;
