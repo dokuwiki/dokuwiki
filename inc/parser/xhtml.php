@@ -92,6 +92,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Adrian Lang <lang@cosmocode.de>
      */
     public function finishSectionEdit($end = null, $hid = null) {
+        if(count($this->sectionedits) == 0) {
+            return;
+        }
         $data = array_pop($this->sectionedits);
         if(!is_null($end) && $end <= $data['start']) {
             return;

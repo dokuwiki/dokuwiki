@@ -17,6 +17,7 @@ class PageResolver extends Resolver
     public function resolveId($id, $rev = '', $isDateAt = false)
     {
         global $conf;
+        $id = (string) $id;
 
         // pages may have a hash attached, we separate it on resolving
         if (strpos($id, '#') !== false) {
