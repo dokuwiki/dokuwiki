@@ -2395,7 +2395,7 @@ class JpegMeta {
     }
     /*************************************************************/
     function _handleMarkerParsingException($e) {
-        \dokuwiki\Logger::error("Damaged image: ".$this->_fileName, $e->getMessage());
+        \dokuwiki\ErrorHandler::logException($e, $this->_fileName);
     }
 
     /*************************************************************/
@@ -3177,7 +3177,10 @@ class JpegMeta {
 
         $rv = substr($data, $pos, $length);
         if (strlen($rv) != $length) {
-            throw new Exception("Requested string of length ".$length." at offset ".$pos." instead got ".strlen($rv)." bytes.");
+            throw new ErrorException(sprintf(
+                "JPEGMeta failed parsing image metadata of %s. Got %d instead of %d bytes at offset %d.",
+                $this->_fileName, strlen($rv), $length, $pos
+            ), 0, E_WARNING);
         }
         return $rv;
     }
