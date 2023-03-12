@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Yves Nevelsteen <yves.nevelsteen@gmail.com>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author Florian <florianmail55@gmail.com>
  * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
