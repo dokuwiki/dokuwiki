@@ -1,3 +1,0 @@
-
-var  r  =  / a backslash\// ;
-

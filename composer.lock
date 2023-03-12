@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "75d802aaa4efaab39a51e8efb37111f6",
+    "content-hash": "00aee16ef6d6262e150632ca5e0db38d",
     "packages": [
         {
             "name": "aziraphale/email-address-validator",
@@ -554,6 +554,56 @@
                 "source": "https://github.com/splitbrain/php-cli/tree/1.2.1"
             },
             "time": "2022-11-04T11:59:39+00:00"
+        },
+        {
+            "name": "splitbrain/php-jsstrip",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/splitbrain/php-jsstrip.git",
+                "reference": "21254b19b381a25d6f3dd89dbd5c8191373a4d69"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/splitbrain/php-jsstrip/zipball/21254b19b381a25d6f3dd89dbd5c8191373a4d69",
+                "reference": "21254b19b381a25d6f3dd89dbd5c8191373a4d69",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "splitbrain\\JSStrip\\": "src/",
+                    "splitbrain\\JSStrip\\tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Gohr",
+                    "email": "andi@splitbrain.org"
+                }
+            ],
+            "description": "PHP based JavaScript minimizer",
+            "support": {
+                "issues": "https://github.com/splitbrain/php-jsstrip/issues",
+                "source": "https://github.com/splitbrain/php-jsstrip/tree/1.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/splitbrain",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-03-12T10:23:16+00:00"
         },
         {
             "name": "splitbrain/slika",
