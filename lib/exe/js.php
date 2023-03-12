@@ -192,10 +192,12 @@ function js_load($file){
 
         if($ifile[0] != '/') $ifile = dirname($file).'/'.$ifile;
 
-        if(file_exists($ifile)){
-            $idata = io_readFile($ifile);
-        }else{
-            $idata = '';
+        $idata = '';
+        if (file_exists($ifile)) {
+            $ismin = (substr($ifile, -7) == '.min.js');;
+            if ($ismin) $idata .= "\n/* BEGIN NOCOMPRESS */\n";
+            $idata .= io_readFile($ifile);
+            if ($ismin) $idata .= "\n/* END NOCOMPRESS */\n";
         }
         $data  = str_replace($match[0],$idata,$data);
     }
