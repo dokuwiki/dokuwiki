@@ -107,15 +107,15 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
             }
 
             // create the url to log file
-            $pathItem = explode('/', $logfile);
-            foreach($pathItem as $item) {
+            $pathItems = explode('/', $logfile);
+            foreach($pathItems as $item) {
                 if($item != 'data') {
-                    array_shift($pathItem);
+                    array_shift($pathItems);
                 } else {
                     break;
                 }
             }
-            $logURL = '/' . implode('/', $pathItem);
+            $logURL = '/' . implode('/', $pathItems);
             echo "<p><span style='color:red;'>WARNING</span>: the file is too large, <a href='{$logURL}' target='_blank'>click here</a> to see the complete version.</p>";
         } else { // file is small, print it all
             $lines = file($logfile);
