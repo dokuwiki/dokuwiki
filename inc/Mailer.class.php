@@ -329,7 +329,7 @@ class Mailer {
      * @see cleanAddress
      */
     public function getCleanName($name) {
-        $name = trim($name, ' \t"');
+        $name = trim($name, " \t\"");
         $name = str_replace('"', '\"', $name, $count);
         if ($count > 0 || strpos($name, ',') !== false) {
             $name = '"'.$name.'"';
