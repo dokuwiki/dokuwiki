@@ -761,6 +761,7 @@ class Mailer {
             }
 
             // send the thing
+            if($to === '') $to = '(undisclosed-recipients)'; // #1422
             if($this->sendparam === null) {
                 $success = @mail($to, $subject, $body, $headers);
             } else {
