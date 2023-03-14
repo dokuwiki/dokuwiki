@@ -168,13 +168,13 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
         $currentLine = '';
 
         while (count($lines) < $numberOfLinesLimit && (-1 !== fseek($fp, $pos, SEEK_END))) {
-        $char = fgetc($fp);
-        if (PHP_EOL == $char) {
-            $lines[] = $currentLine;
-            $currentLine = '';
-        } else {
-            $currentLine = $char . $currentLine;
-        }
+            $char = fgetc($fp);
+            if (PHP_EOL == $char) {
+                $lines[] = $currentLine;
+                $currentLine = '';
+            } else {
+                $currentLine = $char . $currentLine;
+            }
             $pos--;
         }
 
