@@ -10,6 +10,7 @@ use dokuwiki\Logger;
  */
 class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
 {
+    const MAX_READ_SIZE = 1048576; // 1 MB
 
     protected $facilities;
     protected $facility;
@@ -90,36 +91,8 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
             echo $this->locale_xhtml('nolog');
             return;
         }
-        
-        $logfileSize = filesize($logfile) / 1_048_576; // in MB
-        $lines = [];
 
-        if($logfileSize > 128) { // PHP default memory limit            
-            $lines = $this->readEndOfLogFile($logfile, 1500);
-            
-            // remove incomplete lines from the beginning
-            foreach($lines as $line) {
-                if (substr($line, 0, 2) === '  ') {
-                    array_shift($lines);
-                } else {
-                    break;
-                }
-            }
-
-            // create the url to log file
-            $pathItems = explode('/', $logfile);
-            foreach($pathItems as $item) {
-                if($item != 'data') {
-                    array_shift($pathItems);
-                } else {
-                    break;
-                }
-            }
-            $logURL = '/' . implode('/', $pathItems);
-            echo "<p><span style='color:red;'>WARNING</span>: the file is too large, <a href='{$logURL}' target='_blank'>click here</a> to see the complete version.</p>";
-        } else { // file is small, print it all
-            $lines = file($logfile);
-        }
+        $lines = $this->getLogLines($logfile);
 
         echo '<dl>';
         $this->printLogLines($lines);
@@ -153,38 +126,57 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
         return $facilities;
     }
 
-    private function readEndOfLogFile($logfile, $numberOfLinesLimit)
+    /**
+     * Read the lines of the logfile and return them as an array
+     *
+     * @param string $logfilePath
+     * @return array
+     */
+    protected function getLogLines($logfilePath)
     {
         $lines = [];
-        $fp = fopen($logfile, 'r');
+        $size = filesize($logfilePath);
         
-        fseek($fp, -1, SEEK_END);
-        if(fgetc($fp) == PHP_EOL) { // if the last line is EOL ignore it
-            $pos = -2;
-        } else { // otherwise start from the last character
-            $pos = -1;
-        }
+        if ($size <= self::MAX_READ_SIZE) {
+            $lines = file($logfilePath);
+        } else {
+            $fp = fopen($logfilePath, 'r');
+            if ($fp !== null) {
+                if (fseek($fp, -self::MAX_READ_SIZE, SEEK_END) == 0) {
+                    if (false !== ($d = fread($fp, self::MAX_READ_SIZE))) {
+                        $lines = explode("\n", $d);  // Use the same line delimiter as in
+                                                     // inc/Logger.php
+                        $d = null;  // Free up space.
 
-        $currentLine = '';
+                        // Discard the first line as it is probably truncated:
+                        array_shift($lines);
 
-        while (count($lines) < $numberOfLinesLimit && (-1 !== fseek($fp, $pos, SEEK_END))) {
-            $char = fgetc($fp);
-            if (PHP_EOL == $char) {
-                $lines[] = $currentLine;
-                $currentLine = '';
-            } else {
-                $currentLine = $char . $currentLine;
+                        // Discard indented lines at the start:
+                        while (!empty($lines) && (substr($lines[0], 0, 2) === '  '))
+                            array_shift($lines);
+
+                        // Add a note (as a fake log entry) to indicate that the first
+                        // log lines in the file are not shown.
+                        // The following should probably use a localizable text?
+                        $linesSkippedMsg = 'Log file too large. Previous lines skipped!';
+                        array_unshift($lines, "******\t"."\t".'['.$linesSkippedMsg.']');
+                    }
+                }
+                fclose($fp);
             }
-            $pos--;
         }
 
-        fclose($fp);
-        return array_reverse($lines);
+        return $lines;
     }
 
-    private function printLogLines($lines)
+    /**
+     * Get an array of log lines and print them using appropriate styles 
+     * The default value is 1500 lines
+     * @return array
+     */
+    protected function printLogLines($lines, $numberOfLines = 1500)
     {
-        for ($i = 0; $i < count($lines); $i++) {
+        for ($i = 0; $i < $numberOfLines; $i++) {
             $line = $lines[$i];
             if (substr($line, 0, 2) === '  ') {
                 // lines indented by two spaces are details, aggregate them
