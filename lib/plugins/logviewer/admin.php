@@ -93,10 +93,7 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
         }
 
         $lines = $this->getLogLines($logfile);
-
-        echo '<dl>';
         $this->printLogLines($lines);
-        echo '</dl>';
     }
 
     /**
@@ -134,6 +131,8 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
      */
     protected function getLogLines($logfilePath)
     {
+        global $lang;
+
         $lines = [];
         $size = filesize($logfilePath);
         
@@ -155,27 +154,30 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
                         while (!empty($lines) && (substr($lines[0], 0, 2) === '  '))
                             array_shift($lines);
 
-                        // Add a note (as a fake log entry) to indicate that the first
-                        // log lines in the file are not shown.
-                        // The following should probably use a localizable text?
-                        $linesSkippedMsg = 'Log file too large. Previous lines skipped!';
-                        array_unshift($lines, "******\t"."\t".'['.$linesSkippedMsg.']');
+                        // adding a message to inform users previous lines are skipeed
+                        array_unshift($lines, "******\t" . "\t" . '[' . $lang['log_file_too_large'] . ']');
                     }
+                } else {
+                    msg($lang['log_file_failed_to_read'], 2);
                 }
                 fclose($fp);
+            } else {
+                msg($lang['log_file_failed_to_open'], -1);
             }
         }
-
         return $lines;
     }
 
     /**
      * Get an array of log lines and print them using appropriate styles 
-     * The default value is 1500 lines
-     * @return array
+     *
+     * @param array $lines
      */
-    protected function printLogLines($lines, $numberOfLines = 1500)
+    protected function printLogLines($lines)
     {
+        $numberOfLines = count($lines);
+
+        echo "<dl>";
         for ($i = 0; $i < $numberOfLines; $i++) {
             $line = $lines[$i];
             if (substr($line, 0, 2) === '  ') {
@@ -200,6 +202,7 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
                 echo '</dt>';
             }
         }
+        echo "</dl>";
     }
 }
 
