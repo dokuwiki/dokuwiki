@@ -195,4 +195,3 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
         echo "</dl>";
     }
 }
-
