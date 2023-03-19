@@ -210,6 +210,7 @@ function tpl_metaheaders($alt = true) {
     global $INFO;
     global $JSINFO;
     global $ACT;
+    global $HIGH;
     global $QUERY;
     global $lang;
     global $conf;
@@ -301,8 +302,12 @@ function tpl_metaheaders($alt = true) {
     // setup robot tags appropriate for different modes
     if(($ACT == 'show' || $ACT == 'export_xhtml') && !$REV) {
         if($INFO['exists']) {
+            // if search parameter present
+            if($HIGH) {
+                $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,nofollow');
+            }
             //delay indexing:
-            if((time() - $INFO['lastmod']) >= $conf['indexdelay'] && !isHiddenPage($ID) ) {
+            elseif((time() - $INFO['lastmod']) >= $conf['indexdelay'] && !isHiddenPage($ID) ) {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'index,follow');
             } else {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,nofollow');
