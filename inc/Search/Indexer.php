@@ -179,7 +179,7 @@ class Indexer {
         }
 
         // Special handling for titles so the index file is simpler
-        if (array_key_exists('title', $key)) {
+        if (isset($key['title'])) {
             $value = $key['title'];
             if (is_array($value)) {
                 $value = $value[0];
