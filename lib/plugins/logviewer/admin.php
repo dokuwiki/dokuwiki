@@ -85,50 +85,16 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
      */
     protected function displayLog()
     {
-        global $lang;
-
         $logfile = Logger::getInstance($this->facility)->getLogfile($this->date);
         if (!file_exists($logfile)) {
             echo $this->locale_xhtml('nolog');
             return;
         }
-        
-        $lines = [];
-        $size = filesize($logfile);
 
-        if ($size <= self::MAX_READ_SIZE) {
-            $lines = file($logfile);
-        } else {
-            $fp = fopen($logfile, 'r');
-
-            if (is_null($fp)) {
-                msg($lang['log_file_failed_to_open'], -1);
-                return;
-            }
-
-            fseek($fp, -self::MAX_READ_SIZE, SEEK_END);
-            $logData = fread($fp, self::MAX_READ_SIZE);
-
-            if (!$logData) {
-                msg($lang['log_file_failed_to_read'], -1);
-                return;
-            }
-
-            $lines = explode("\n", $logData);
-            $logData = null;
-
-            array_shift($lines); // Discard the first line
-
-            while (!empty($lines) && (substr($lines[0], 0, 2) === '  '))
-                array_shift($lines); // Discard indented lines
-
-            // A message to inform users that previous lines are skipeed
-            array_unshift($lines, "******\t" . "\t" . '[' . $lang['log_file_too_large'] . ']');
-
-            fclose($fp);
+        $lines = $this->getLogLines($logfile);
+        if($lines) {
+            $this->printLogLines($lines);
         }
-
-        $this->printLogLines($lines);
     }
 
     /**
@@ -156,6 +122,59 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
         $facilities = array_unique($facilities);
 
         return $facilities;
+    }
+
+    /**
+     * Read the lines of the logfile and return them as array
+     *
+     * @param string $logfilePath
+     * @return array
+     */
+    protected function getLogLines($logfilePath)
+    {
+        global $lang;
+
+        $lines = [];
+        $size = filesize($logfilePath);
+        $fp = fopen($logfilePath, 'r');
+
+        if (is_null($fp)) {
+            msg($lang['log_file_failed_to_open'], -1);
+            return;
+        }
+
+        if ($size <= self::MAX_READ_SIZE) {
+            $logData = fread($fp, $size);
+            if (!$logData) {
+                msg($lang['log_file_failed_to_read'], -1);
+                return;
+            }
+            $lines = explode("\n", $logData);
+            $logData = null;
+        } else {
+            fseek($fp, -self::MAX_READ_SIZE, SEEK_END);
+            $logData = fread($fp, self::MAX_READ_SIZE);
+
+            if (!$logData) {
+                msg($lang['log_file_failed_to_read'], -1);
+                return;
+            }
+
+            $lines = explode("\n", $logData);
+            $logData = null;
+
+            array_shift($lines); // Discard the first line
+
+            while (!empty($lines) && (substr($lines[0], 0, 2) === '  '))
+                array_shift($lines); // Discard indented lines
+
+            // A message to inform users that previous lines are skipeed
+            array_unshift($lines, "******\t" . "\t" . '[' . $lang['log_file_too_large'] . ']');
+        }
+
+        fclose($fp);
+
+        return $lines;
     }
 
     /**
