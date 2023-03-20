@@ -79,7 +79,7 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
         }
         echo '</ul>';
     }
-    
+
     /**
      * Read and output the logfile contents
      */
@@ -91,9 +91,11 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
             return;
         }
 
-        $lines = $this->getLogLines($logfile);
-        if ($lines) {
+        try {
+            $lines = $this->getLogLines($logfile);
             $this->printLogLines($lines);
+        } catch (Exception $e) {
+            msg($e->getMessage(), -1);
         }
     }
 
@@ -105,7 +107,6 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
     protected function getFacilities()
     {
         global $conf;
-        $conf['logdir'];
 
         // default facilities first
         $facilities = [
@@ -129,56 +130,45 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
      *
      * @param string $logfilePath
      * @return array
+     * @throws Exception when reading fails
      */
     protected function getLogLines($logfilePath)
     {
         global $lang;
-
-        $lines = [];
         $size = filesize($logfilePath);
         $fp = fopen($logfilePath, 'r');
 
-        if (is_null($fp)) {
-            msg($lang['log_file_failed_to_open'], -1);
-            return;
+        if (!$fp) throw new Exception($lang['log_file_failed_to_open']);
+
+        if ($size < self::MAX_READ_SIZE) {
+            $toread = $size;
+        } else {
+            $toread = self::MAX_READ_SIZE;
+            fseek($fp, -$toread, SEEK_END);
         }
 
-        if ($size <= self::MAX_READ_SIZE) {
-            $logData = fread($fp, $size);
-            if (!$logData) {
-                msg($lang['log_file_failed_to_read'], -1);
-                return;
-            }
-            $lines = explode("\n", $logData);
-            $logData = null;
-        } else {
-            fseek($fp, -self::MAX_READ_SIZE, SEEK_END);
-            $logData = fread($fp, self::MAX_READ_SIZE);
+        $logData = fread($fp, $toread);
+        if (!$logData) throw new Exception($lang['log_file_failed_to_read']);
 
-            if (!$logData) {
-                msg($lang['log_file_failed_to_read'], -1);
-                return;
-            }
+        $lines = explode("\n", $logData);
+        unset($logData); // free memory early
 
-            $lines = explode("\n", $logData);
-            $logData = null;
-
+        if ($toread === self::MAX_READ_SIZE) {
             array_shift($lines); // Discard the first line
-
-            while (!empty($lines) && (substr($lines[0], 0, 2) === '  '))
+            while (!empty($lines) && (substr($lines[0], 0, 2) === '  ')) {
                 array_shift($lines); // Discard indented lines
+            }
 
-            // A message to inform users that previous lines are skipeed
+            // A message to inform users that previous lines are skipped
             array_unshift($lines, "******\t" . "\t" . '[' . $lang['log_file_too_large'] . ']');
         }
 
         fclose($fp);
-
         return $lines;
     }
 
     /**
-     * Get an array of log lines and print them using appropriate styles 
+     * Get an array of log lines and print them using appropriate styles
      *
      * @param array $lines
      */
