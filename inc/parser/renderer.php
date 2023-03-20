@@ -850,7 +850,7 @@ abstract class Doku_Renderer extends Plugin {
         }
         //handle as wiki links
         if($url && $url[0] === ':') {
-            $urlparam = null;
+            $urlparam = '';
             $id = $url;
             if (strpos($url, '?') !== false) {
                 list($id, $urlparam) = sexplode('?', $url, 2, '');

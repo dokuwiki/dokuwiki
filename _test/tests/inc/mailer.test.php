@@ -373,6 +373,9 @@ A test mail in <strong>html</strong>
         $this->assertEquals('"Foo, Bar"', $name);
         $name = $mail->getCleanName('Foo" Bar');
         $this->assertEquals('"Foo\" Bar"', $name);
+        $name = $mail->getCleanName("\tFoo tar ");
+        $this->assertEquals('Foo tar', $name);
+
     }
 }
 //Setup VIM: ex: et ts=4 :

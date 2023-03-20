@@ -11,11 +11,6 @@
 
 use dokuwiki\Extension\Event;
 
-// end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
-// think different
-if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL', "\n");
-#define('MAILHEADER_ASCIIONLY',1);
-
 /**
  * Mail Handling
  */
@@ -334,7 +329,7 @@ class Mailer {
      * @see cleanAddress
      */
     public function getCleanName($name) {
-        $name = trim($name, ' \t"');
+        $name = trim($name, " \t\"");
         $name = str_replace('"', '\"', $name, $count);
         if ($count > 0 || strpos($name, ',') !== false) {
             $name = '"'.$name.'"';
@@ -766,6 +761,7 @@ class Mailer {
             }
 
             // send the thing
+            if($to === '') $to = '(undisclosed-recipients)'; // #1422
             if($this->sendparam === null) {
                 $success = @mail($to, $subject, $body, $headers);
             } else {

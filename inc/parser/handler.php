@@ -31,6 +31,11 @@ class Doku_Handler {
     protected $rewriteBlocks = true;
 
     /**
+     * @var bool are we in a footnote already?
+     */
+    protected $footnote;
+
+    /**
      * Doku_Handler constructor.
      */
     public function __construct() {
@@ -462,29 +467,29 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function footnote($match, $state, $pos) {
-        if (!isset($this->_footnote)) $this->_footnote = false;
+        if (!isset($this->footnote)) $this->footnote = false;
 
         switch ( $state ) {
             case DOKU_LEXER_ENTER:
                 // footnotes can not be nested - however due to limitations in lexer it can't be prevented
                 // we will still enter a new footnote mode, we just do nothing
-                if ($this->_footnote) {
+                if ($this->footnote) {
                     $this->addCall('cdata', array($match), $pos);
                     break;
                 }
-                $this->_footnote = true;
+                $this->footnote = true;
 
                 $this->callWriter = new Nest($this->callWriter, 'footnote_close');
                 $this->addCall('footnote_open', array(), $pos);
             break;
             case DOKU_LEXER_EXIT:
                 // check whether we have already exitted the footnote mode, can happen if the modes were nested
-                if (!$this->_footnote) {
+                if (!$this->footnote) {
                     $this->addCall('cdata', array($match), $pos);
                     break;
                 }
 
-                $this->_footnote = false;
+                $this->footnote = false;
                 $this->addCall('footnote_close', array(), $pos);
 
                 /** @var Nest $reWriter */
