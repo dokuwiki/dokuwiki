@@ -92,7 +92,7 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
         }
 
         $lines = $this->getLogLines($logfile);
-        if($lines) {
+        if ($lines) {
             $this->printLogLines($lines);
         }
     }
