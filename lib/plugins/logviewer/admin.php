@@ -10,6 +10,7 @@ use dokuwiki\Logger;
  */
 class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
 {
+    const MAX_READ_SIZE = 1048576; // 1 MB
 
     protected $facilities;
     protected $facility;
@@ -77,11 +78,10 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
             echo '</li>';
         }
         echo '</ul>';
-
     }
 
     /**
-     * Output the logfile contents
+     * Read and output the logfile contents
      */
     protected function displayLog()
     {
@@ -91,13 +91,94 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
             return;
         }
 
-        // loop through the file an print it
-        echo '<dl>';
-        $lines = file($logfile);
-        $cnt = count($lines);
-        for ($i = 0; $i < $cnt; $i++) {
-            $line = $lines[$i];
+        try {
+            $lines = $this->getLogLines($logfile);
+            $this->printLogLines($lines);
+        } catch (Exception $e) {
+            msg($e->getMessage(), -1);
+        }
+    }
 
+    /**
+     * Get the available logging facilities
+     *
+     * @return array
+     */
+    protected function getFacilities()
+    {
+        global $conf;
+
+        // default facilities first
+        $facilities = [
+            Logger::LOG_ERROR,
+            Logger::LOG_DEPRECATED,
+            Logger::LOG_DEBUG,
+        ];
+
+        // add all other dirs
+        $dirs = glob($conf['logdir'] . '/*', GLOB_ONLYDIR);
+        foreach ($dirs as $dir) {
+            $facilities[] = basename($dir);
+        }
+        $facilities = array_unique($facilities);
+
+        return $facilities;
+    }
+
+    /**
+     * Read the lines of the logfile and return them as array
+     *
+     * @param string $logfilePath
+     * @return array
+     * @throws Exception when reading fails
+     */
+    protected function getLogLines($logfilePath)
+    {
+        global $lang;
+        $size = filesize($logfilePath);
+        $fp = fopen($logfilePath, 'r');
+
+        if (!$fp) throw new Exception($lang['log_file_failed_to_open']);
+
+        if ($size < self::MAX_READ_SIZE) {
+            $toread = $size;
+        } else {
+            $toread = self::MAX_READ_SIZE;
+            fseek($fp, -$toread, SEEK_END);
+        }
+
+        $logData = fread($fp, $toread);
+        if (!$logData) throw new Exception($lang['log_file_failed_to_read']);
+
+        $lines = explode("\n", $logData);
+        unset($logData); // free memory early
+
+        if ($toread === self::MAX_READ_SIZE) {
+            array_shift($lines); // Discard the first line
+            while (!empty($lines) && (substr($lines[0], 0, 2) === '  ')) {
+                array_shift($lines); // Discard indented lines
+            }
+
+            // A message to inform users that previous lines are skipped
+            array_unshift($lines, "******\t" . "\t" . '[' . $lang['log_file_too_large'] . ']');
+        }
+
+        fclose($fp);
+        return $lines;
+    }
+
+    /**
+     * Get an array of log lines and print them using appropriate styles
+     *
+     * @param array $lines
+     */
+    protected function printLogLines($lines)
+    {
+        $numberOfLines = count($lines);
+
+        echo "<dl>";
+        for ($i = 0; $i < $numberOfLines; $i++) {
+            $line = $lines[$i];
             if (substr($line, 0, 2) === '  ') {
                 // lines indented by two spaces are details, aggregate them
                 echo '<dd>';
@@ -120,35 +201,6 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
                 echo '</dt>';
             }
         }
-        echo '</dl>';
+        echo "</dl>";
     }
-
-    /**
-     * Get the available logging facilities
-     *
-     * @return array
-     */
-    protected function getFacilities()
-    {
-        global $conf;
-        $conf['logdir'];
-
-        // default facilities first
-        $facilities = [
-            Logger::LOG_ERROR,
-            Logger::LOG_DEPRECATED,
-            Logger::LOG_DEBUG,
-        ];
-
-        // add all other dirs
-        $dirs = glob($conf['logdir'] . '/*', GLOB_ONLYDIR);
-        foreach ($dirs as $dir) {
-            $facilities[] = basename($dir);
-        }
-        $facilities = array_unique($facilities);
-
-        return $facilities;
-    }
-
 }
-
