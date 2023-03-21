@@ -153,7 +153,7 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
         $lines = explode("\n", $logData);
         unset($logData); // free memory early
 
-        if ($toread === self::MAX_READ_SIZE) {
+        if ($size > self::MAX_READ_SIZE) {
             array_shift($lines); // Discard the first line
             while (!empty($lines) && (substr($lines[0], 0, 2) === '  ')) {
                 array_shift($lines); // Discard indented lines
