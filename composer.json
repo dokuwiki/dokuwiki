@@ -1,5 +1,5 @@
 {
-    "name": "splitbrain/dokuwiki",
+    "name": "dokuwiki/dokuwiki",
     "description": "DokuWiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database",
     "homepage": "https://www.dokuwiki.org",
     "type": "project",

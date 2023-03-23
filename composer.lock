@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "699d51060d59017efcb5b5d44ccef30e",
+    "content-hash": "75d802aaa4efaab39a51e8efb37111f6",
     "packages": [
         {
             "name": "aziraphale/email-address-validator",
