@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author cadetill <cadetill@gmail.com>
  * @author Guillermo Romero <drirr.gato@gmail.com>
  * @author Luna Frax <lunafrax@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
@@ -155,6 +156,7 @@ $lang['js']['media_done_btn']  = 'Hecho';
 $lang['js']['media_drop']      = 'Arrastra los ficheros aquí para cargar';
 $lang['js']['media_cancel']    = 'Eliminar';
 $lang['js']['media_overwrt']   = 'Sobreescribir ficheros exitentes';
+$lang['js']['data_insecure']   = 'ADVERTENCIA: Parece que su directorio de datos no está debidamente protegido. Por favor, lea sobre <a href="https://www.dokuwiki.org/security#web_access_security">Seguridad de acceso web en DokuWiki</a>.';
 $lang['search_exact_match']    = 'Coincidencia exacta';
 $lang['search_starts_with']    = 'Comienza con';
 $lang['search_ends_with']      = 'Termina con';
@@ -257,6 +259,7 @@ $lang['created']               = 'creado';
 $lang['restored']              = 'se ha restaurado la vieja versión (%s)';
 $lang['external_edit']         = 'editor externo';
 $lang['summary']               = 'Resumen de la edición';
+$lang['unknowndate']           = 'Fecha desconocida';
 $lang['noflash']               = 'Para mostrar este contenido es necesario el <a href="http://get.adobe.com/flashplayer">Plugin Adobe Flash</a>.';
 $lang['download']              = 'Descargar trozo de código fuente';
 $lang['tools']                 = 'Herramientas';
