@@ -140,30 +140,33 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
 
         if (!$fp) throw new Exception($lang['log_file_failed_to_open']);
 
-        if ($size < self::MAX_READ_SIZE) {
-            $toread = $size;
-        } else {
-            $toread = self::MAX_READ_SIZE;
-            fseek($fp, -$toread, SEEK_END);
-        }
-
-        $logData = fread($fp, $toread);
-        if (!$logData) throw new Exception($lang['log_file_failed_to_read']);
-
-        $lines = explode("\n", $logData);
-        unset($logData); // free memory early
-
-        if ($toread === self::MAX_READ_SIZE) {
-            array_shift($lines); // Discard the first line
-            while (!empty($lines) && (substr($lines[0], 0, 2) === '  ')) {
-                array_shift($lines); // Discard indented lines
+        try {
+            if ($size < self::MAX_READ_SIZE) {
+                $toread = $size;
+            } else {
+                $toread = self::MAX_READ_SIZE;
+                fseek($fp, -$toread, SEEK_END);
             }
 
-            // A message to inform users that previous lines are skipped
-            array_unshift($lines, "******\t" . "\t" . '[' . $lang['log_file_too_large'] . ']');
+            $logData = fread($fp, $toread);
+            if (!$logData) throw new Exception($lang['log_file_failed_to_read']);
+
+            $lines = explode("\n", $logData);
+            unset($logData); // free memory early
+
+            if ($size >= self::MAX_READ_SIZE) {
+                array_shift($lines); // Discard the first line
+                while (!empty($lines) && (substr($lines[0], 0, 2) === '  ')) {
+                    array_shift($lines); // Discard indented lines
+                }
+
+                // A message to inform users that previous lines are skipped
+                array_unshift($lines, "******\t" . "\t" . '[' . $lang['log_file_too_large'] . ']');
+            }
+        } finally {
+            fclose($fp);
         }
 
-        fclose($fp);
         return $lines;
     }
 
