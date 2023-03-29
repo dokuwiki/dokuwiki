@@ -47,13 +47,13 @@ class MediaRevisions extends Revisions
      * @param int $first  skip the first n changelog lines
      * @return void
      */
-    public function show($first = 0)
+    public function show($first = -1)
     {
         global $lang;
         $changelog =& $this->changelog;
 
         // get revisions, and set correct pagination parameters (first, hasNext)
-        if ($first === null) $first = 0;
+        if ($first === null) $first = -1;
         $hasNext = false;
         $revisions = $this->getRevisions($first, $hasNext);
 
