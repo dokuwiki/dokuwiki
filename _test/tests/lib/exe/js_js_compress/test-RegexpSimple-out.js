@@ -1,1 +1,0 @@
-var r=/simple/g;

@@ -18,6 +18,8 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
             'splitbrain\\slika\\' => 17,
             'splitbrain\\phpcli\\' => 18,
             'splitbrain\\PHPArchive\\' => 22,
+            'splitbrain\\JSStrip\\tests\\' => 25,
+            'splitbrain\\JSStrip\\' => 19,
         ),
         'p' => 
         array (
@@ -49,6 +51,14 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         'splitbrain\\PHPArchive\\' => 
         array (
             0 => __DIR__ . '/..' . '/splitbrain/php-archive/src',
+        ),
+        'splitbrain\\JSStrip\\tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/splitbrain/php-jsstrip/tests',
+        ),
+        'splitbrain\\JSStrip\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/splitbrain/php-jsstrip/src',
         ),
         'phpseclib\\' => 
         array (
