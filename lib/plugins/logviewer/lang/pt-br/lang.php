@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
+ * @author Gilson Caldeira <gilsoncaldeira@gmail.com>
  */
-$lang['menu']                  = 'Ver Logs';
+$lang['menu']                  = 'Exibir registros';
 $lang['date']                  = 'Data';
-$lang['js']['filter']          = 'Filtrar Linhas de Log:';
+$lang['js']['filter']          = 'Filtrar linhas de registro:';
