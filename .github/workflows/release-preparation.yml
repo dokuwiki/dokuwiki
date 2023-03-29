@@ -64,6 +64,8 @@ jobs:
           git merge -s ours origin/stable
           echo '${{ env.next_raw }}' > VERSION
           git add VERSION
+          sed -i 's/\$updateVersion = "[^"]*";/\$updateVersion = "${{ env.next_update }}";/' doku.php
+          git add doku.php
           git commit --amend -m 'Release preparations for ${{ env.next_raw }}'
           git log -1
           git log origin/stable..master --oneline
@@ -77,18 +79,18 @@ jobs:
           destination_branch: stable
           pr_title: Release Preparations for ${{ env.next_raw }}
           pr_body: |
-            With accepting this PR, a the stable branch will be updated and the whole release and
+            With accepting this PR, the stable branch will be updated and the whole release and
             deployment process will be triggered.
 
-            If you're not happy with the contents of this PR, please close it, fix stuff and trigger
-            the workflow again.
+            If you're not happy with the contents of this PR, please close it, delete the branch,
+            fix stuff and trigger the workflow again.
 
             * ${{ env.current_raw }} -> ${{ env.next_raw }}
             * Update Version ${{ env.current_update }} -> ${{ env.next_update }}
 
             Before merging this PR, make sure that:
 
-            - [ ] Ensure all tests pass
+            - [ ] All tests pass on the `master` branch (tests are not executed on PRs created in workflows)
             - [ ] If this is a new stable release, make sure you merged `stable` into `old-stable` first
             - [ ] Check that a meaningful [changelog](https://www.dokuwiki.org/changes) exists
 
