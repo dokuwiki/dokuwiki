@@ -12,6 +12,7 @@
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesSq.php?view=co
  *
+ * @author Valdrin Jonuzi <valdrinj00@gmail.com>
  * @author Endrit Callaki <endrit@callaki.de>
  * @author Leonard Elezi <leonard.elezi@depinfo.info>
  */
@@ -79,6 +80,7 @@ $lang['js']['notsavedyet']     = 'Ndryshimet e paruajtura do të humbasin.\nVazh
 $lang['js']['searchmedia']     = 'Kërko për skedarë';
 $lang['js']['keepopen']        = 'Mbaje dritaren të hapur gjatë përzgjedhjes';
 $lang['js']['hidedetails']     = 'Fshih Detajet';
+$lang['js']['mediadisplay']    = 'Lloji i lidhjes';
 $lang['js']['mediaclose']      = 'Mbylle';
 $lang['js']['mediadisplayimg'] = 'Shiko foton';
 $lang['js']['mediadisplaylnk'] = 'Shiko vetem linkun';
@@ -89,6 +91,10 @@ $lang['js']['nosmblinks']      = 'Lidhja te Windows shares funksionon vetëm në
 $lang['js']['linkwiz']         = 'Magjistari i Link';
 $lang['js']['linkto']          = 'Lidh tek:';
 $lang['js']['del_confirm']     = 'Fshiji vërtetë objektet e përzgjedhura?';
+$lang['js']['media_diff']      = 'Shih dallimet:';
+$lang['js']['media_select']    = 'Zgjedh dosjet...';
+$lang['js']['media_upload_btn'] = 'Ngarko';
+$lang['js']['media_drop']      = 'Lëshoji dosjet këtu për t\'i ngarkuar';
 $lang['regmissing']            = 'Na vjen keq, duhet të plotësoni të gjitha fushat.';
 $lang['reguexists']            = 'Na vjen keq, ekziston një përdorues tjetër me të njëjtin emër.';
 $lang['regsuccess']            = 'Përdoruesi u regjistrua dhe fjalëkalimi u dërgua me email.';

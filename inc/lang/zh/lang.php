@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author better <betterzhubo@live.com>
+ * @author 小李 <szsd5257@foxmail.com>
  * @author VinnieChow <zsz33@qq.com>
  * @author Lakejason0 <lakesarchive@outlook.com>
  * @author Phy <dokuwiki@phy25.com>
@@ -247,6 +249,7 @@ $lang['created']               = '创建';
 $lang['restored']              = '已恢复为旧版 (%s)';
 $lang['external_edit']         = '外部编辑';
 $lang['summary']               = '编辑摘要';
+$lang['unknowndate']           = '未知日期';
 $lang['noflash']               = '需要 <a href="https://get.adobe.com/flashplayer">Adobe Flash 插件</a> 来播放本内容。 ';
 $lang['download']              = '下载片段';
 $lang['tools']                 = '工具';

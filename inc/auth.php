@@ -66,22 +66,18 @@ function auth_setup() {
     $INPUT->set('http_credentials', false);
     if(!$conf['rememberme']) $INPUT->set('r', false);
 
-    // handle renamed HTTP_AUTHORIZATION variable (can happen when a fix like
-    // the one presented at
-    // http://www.besthostratings.com/articles/http-auth-php-cgi.html is used
-    // for enabling HTTP authentication with CGI/SuExec)
-    if(isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
-        $_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
-    // streamline HTTP auth credentials (IIS/rewrite -> mod_php)
-    if(isset($_SERVER['HTTP_AUTHORIZATION'])) {
-        list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) =
-            explode(':', base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
+    // Populate Basic Auth user/password from Authorization header
+    // Note: with FastCGI, data is in REDIRECT_HTTP_AUTHORIZATION instead of HTTP_AUTHORIZATION
+    $header = $INPUT->server->str('HTTP_AUTHORIZATION') ?: $INPUT->server->str('REDIRECT_HTTP_AUTHORIZATION');
+    if(preg_match( '~^Basic ([a-z\d/+]*={0,2})$~i', $header, $matches )) {
+        $userpass = explode(':', base64_decode($matches[1]));
+        list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = $userpass;
     }
 
     // if no credentials were given try to use HTTP auth (for SSO)
-    if(!$INPUT->str('u') && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])) {
-        $INPUT->set('u', $_SERVER['PHP_AUTH_USER']);
-        $INPUT->set('p', $_SERVER['PHP_AUTH_PW']);
+    if (!$INPUT->str('u') && empty($_COOKIE[DOKU_COOKIE]) && !empty($INPUT->server->str('PHP_AUTH_USER'))) {
+        $INPUT->set('u', $INPUT->server->str('PHP_AUTH_USER'));
+        $INPUT->set('p', $INPUT->server->str('PHP_AUTH_PW'));
         $INPUT->set('http_credentials', true);
     }
 
@@ -294,7 +290,6 @@ function auth_browseruid() {
     $uid = implode("\n", [
         $INPUT->server->str('HTTP_USER_AGENT'),
         $INPUT->server->str('HTTP_ACCEPT_LANGUAGE'),
-        $INPUT->server->str('HTTP_ACCEPT_ENCODING'),
         substr($pip, 0, strlen($pip) / 2), // use half of the IP address (works for both IPv4 and IPv6)
     ]);
     return hash('sha256', $uid);
@@ -643,7 +638,7 @@ function auth_aclcheck_cb($data) {
 
     if(!$auth->isCaseSensitive()) {
         $user   = \dokuwiki\Utf8\PhpString::strtolower($user);
-        $groups = array_map('utf8_strtolower', $groups);
+        $groups = array_map([\dokuwiki\Utf8\PhpString::class, 'strtolower'], $groups);
     }
     $user   = auth_nameencode($auth->cleanUser($user));
     $groups = array_map(array($auth, 'cleanGroup'), (array) $groups);
@@ -1282,7 +1277,7 @@ function auth_getCookie() {
     if(!isset($_COOKIE[DOKU_COOKIE])) {
         return array(null, null, null);
     }
-    list($user, $sticky, $pass) = explode('|', $_COOKIE[DOKU_COOKIE], 3);
+    list($user, $sticky, $pass) = sexplode('|', $_COOKIE[DOKU_COOKIE], 3, '');
     $sticky = (bool) $sticky;
     $pass   = base64_decode($pass);
     $user   = base64_decode($user);

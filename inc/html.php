@@ -107,14 +107,17 @@ function html_secedit($text, $show = true) {
 function html_secedit_button($matches){
     $json = htmlspecialchars_decode($matches[1], ENT_QUOTES);
     $data = json_decode($json, true);
-    if ($data == NULL) {
+    if ($data === null) {
         return '';
     }
-    $data ['target'] = strtolower($data['target']);
-    $data ['hid'] = strtolower($data['hid']);
+    $data['target'] = strtolower($data['target']);
+    $data['hid'] = strtolower($data['hid'] ?? '');
 
-    return Event::createAndTrigger('HTML_SECEDIT_BUTTON', $data,
-                         'html_secedit_get_button');
+    return Event::createAndTrigger(
+        'HTML_SECEDIT_BUTTON',
+        $data,
+        'html_secedit_get_button'
+    );
 }
 
 /**
@@ -312,7 +315,7 @@ function html_locked() {
  * @param string $media_id id of media, or empty for current page
  * @deprecated 2020-07-18
  */
-function html_revisions($first = 0, $media_id = '') {
+function html_revisions($first = -1, $media_id = '') {
     dbg_deprecated(PageRevisions::class .'::show()');
     if ($media_id) {
         (new dokuwiki\Ui\MediaRevisions($media_id))->show($first);

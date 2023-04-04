@@ -3,8 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
+ * @author Philippe Verbeke <ph.verbeke@gmail.com>
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
@@ -251,6 +252,7 @@ $lang['created']               = 'créée';
 $lang['restored']              = 'ancienne révision (%s) restaurée';
 $lang['external_edit']         = 'modification externe';
 $lang['summary']               = 'Résumé';
+$lang['unknowndate']           = 'Date inconnue';
 $lang['noflash']               = 'L\'<a href="http://get.adobe.com/flashplayer">extension Adobe Flash</a> est nécessaire pour afficher ce contenu.';
 $lang['download']              = 'Télécharger cet extrait';
 $lang['tools']                 = 'Outils';

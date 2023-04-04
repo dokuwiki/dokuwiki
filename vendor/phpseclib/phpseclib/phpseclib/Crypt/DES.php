@@ -592,6 +592,12 @@ class DES extends Base
     {
         if ($this->key_length_max == 8) {
             if ($engine == self::ENGINE_OPENSSL) {
+                // quoting https://www.openssl.org/news/openssl-3.0-notes.html, OpenSSL 3.0.1
+                // "Moved all variations of the EVP ciphers CAST5, BF, IDEA, SEED, RC2, RC4, RC5, and DES to the legacy provider"
+                // in theory openssl_get_cipher_methods() should catch this but, on GitHub Actions, at least, it does not
+                if (defined('OPENSSL_VERSION_TEXT') && version_compare(preg_replace('#OpenSSL (\d+\.\d+\.\d+) .*#', '$1', OPENSSL_VERSION_TEXT), '3.0.1', '>=')) {
+                    return false;
+                }
                 $this->cipher_name_openssl_ecb = 'des-ecb';
                 $this->cipher_name_openssl = 'des-' . $this->_openssl_translate_mode();
             }
@@ -1246,9 +1252,9 @@ class DES extends Base
                       $pc2mapd3[($d >>  8) & 0xFF] | $pc2mapd4[ $d        & 0xFF];
 
                 // Reorder: odd bytes/even bytes. Push the result in key schedule.
-                $val1 = ( $cp        & 0xFF000000) | (($cp <<  8) & 0x00FF0000) |
+                $val1 = ( $cp        & intval(0xFF000000)) | (($cp <<  8) & 0x00FF0000) |
                         (($dp >> 16) & 0x0000FF00) | (($dp >>  8) & 0x000000FF);
-                $val2 = (($cp <<  8) & 0xFF000000) | (($cp << 16) & 0x00FF0000) |
+                $val2 = (($cp <<  8) & intval(0xFF000000)) | (($cp << 16) & 0x00FF0000) |
                         (($dp >>  8) & 0x0000FF00) | ( $dp        & 0x000000FF);
                 $keys[$des_round][self::ENCRYPT][       ] = $val1;
                 $keys[$des_round][self::DECRYPT][$ki - 1] = $val1;

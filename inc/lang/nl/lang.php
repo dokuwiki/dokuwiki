@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author jan lapere <jan@lapere.nl>
  * @author Mark Prins <mprins@users.sf.net>
  * @author PBU <pbu@xs4all.nl>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
@@ -239,6 +240,7 @@ $lang['created']               = 'aangemaakt';
 $lang['restored']              = 'oude revisie hersteld (%s)';
 $lang['external_edit']         = 'Externe bewerking';
 $lang['summary']               = 'Samenvatting wijziging';
+$lang['unknowndate']           = 'Ongeldige datum';
 $lang['noflash']               = 'De <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> is vereist om de pagina te kunnen weergeven.';
 $lang['download']              = 'Download fragment';
 $lang['tools']                 = 'Hulpmiddelen';
@@ -321,6 +323,7 @@ $lang['i_superuser']           = 'Superuser';
 $lang['i_problems']            = 'De installer vond problemen, hieronder aangegeven. Verhelp deze voor je doorgaat.';
 $lang['i_modified']            = 'Uit veiligheidsoverwegingen werkt dit script alleen met nieuwe en onveranderde DokuWiki-installaties. Pak de bestanden opnieuw uit of raadpleeg de <a href="https://www.dokuwiki.org/install">Dokuwiki installatie-instructies</a>';
 $lang['i_funcna']              = 'PHP functie <code>%s</code> is niet beschikbaar. Wellicht heeft je hosting provider deze uitgeschakeld?';
+$lang['i_disabled']            = 'Niet toegestaan door je provider';
 $lang['i_phpver']              = 'PHP-versie <code>%s</code> is lager dan de vereiste <code>%s</code>. Upgrade PHP.';
 $lang['i_mbfuncoverload']      = 'Om DokuWiki te draaien moet mbstring.func_overload uitgeschakeld zijn in php.ini.';
 $lang['i_permfail']            = '<code>%s</code> is niet schrijfbaar voor DokuWiki. Pas de permissie-instellingen van deze directory aan.';

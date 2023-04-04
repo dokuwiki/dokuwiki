@@ -267,8 +267,12 @@ function toolbar_signature(){
     $sig = $conf['signature'];
     $sig = dformat(null,$sig);
     $sig = str_replace('@USER@',$INPUT->server->str('REMOTE_USER'),$sig);
-    $sig = str_replace('@NAME@',$INFO['userinfo']['name'],$sig);
-    $sig = str_replace('@MAIL@',$INFO['userinfo']['mail'],$sig);
+    if (is_null($INFO)) {
+        $sig = str_replace(['@NAME@', '@MAIL@'], '', $sig);
+    } else {
+        $sig = str_replace('@NAME@', $INFO['userinfo']['name'] ?? "", $sig);
+        $sig = str_replace('@MAIL@', $INFO['userinfo']['mail'] ?? "", $sig);
+    }
     $sig = str_replace('@DATE@',dformat(),$sig);
     $sig = str_replace('\\\\n','\\n',$sig);
     return json_encode($sig);

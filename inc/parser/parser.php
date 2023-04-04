@@ -34,7 +34,7 @@ $PARSER_MODES = array(
 
     // modes which have a start and end token but inside which
     // no other modes should be applied
-    'protected' => array('preformatted', 'code', 'file', 'php', 'html', 'htmlblock', 'phpblock'),
+    'protected' => array('preformatted', 'code', 'file'),
 
     // inside this mode no wiki markup should be applied but lineendings
     // and whitespace isn't preserved

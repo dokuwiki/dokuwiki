@@ -30,6 +30,26 @@ function hsc($string) {
 }
 
 /**
+ * A safer explode for fixed length lists
+ *
+ * This works just like explode(), but will always return the wanted number of elements.
+ * If the $input string does not contain enough elements, the missing elements will be
+ * filled up with the $default value. If the input string contains more elements, the last
+ * one will NOT be split up and will still contain $separator
+ *
+ * @param string $separator The boundary string
+ * @param string $string The input string
+ * @param int $limit The number of expected elements
+ * @param mixed $default The value to use when filling up missing elements
+ * @see explode
+ * @return array
+ */
+function sexplode($separator, $string, $limit, $default = null)
+{
+    return array_pad(explode($separator, $string, $limit), $limit, $default);
+}
+
+/**
  * Checks if the given input is blank
  *
  * This is similar to empty() but will return false for "0".
@@ -433,8 +453,8 @@ function breadcrumbs() {
  * currently used to replace the colon with something else
  * on Windows (non-IIS) systems and to have proper URL encoding
  *
- * See discussions at https://github.com/splitbrain/dokuwiki/pull/84 and
- * https://github.com/splitbrain/dokuwiki/pull/173 why we use a whitelist of
+ * See discussions at https://github.com/dokuwiki/dokuwiki/pull/84 and
+ * https://github.com/dokuwiki/dokuwiki/pull/173 why we use a whitelist of
  * unaffected servers instead of blacklisting affected servers here.
  *
  * Urlencoding is ommitted when the second parameter is false
@@ -1008,7 +1028,7 @@ function cleanText($text) {
  * @return string
  */
 function formText($text) {
-    $text = str_replace("\012", "\015\012", $text);
+    $text = str_replace("\012", "\015\012", $text ?? '');
     return htmlspecialchars($text);
 }
 
@@ -1191,7 +1211,7 @@ function rawWikiSlices($range, $id, $rev = '') {
     $text = io_readWikiPage(wikiFN($id, $rev), $id, $rev);
 
     // Parse range
-    list($from, $to) = explode('-', $range, 2);
+    list($from, $to) = sexplode('-', $range, 2);
     // Make range zero-based, use defaults if marker is missing
     $from = !$from ? 0 : ($from - 1);
     $to   = !$to ? strlen($text) : ($to - 1);
@@ -1267,6 +1287,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
 
     // get COMMON_WIKIPAGE_SAVE event data
     $data = (new PageFile($id))->saveWikiText($text, $summary, $minor);
+    if(!$data) return; // save was cancelled (for no changes or by a plugin)
 
     // send notify mails
     list('oldRevision' => $rev, 'newRevision' => $new_rev, 'summary' => $summary) = $data;
@@ -1359,9 +1380,11 @@ function getGoogleQuery() {
     $url = parse_url($INPUT->server->str('HTTP_REFERER'));
 
     // only handle common SEs
+    if(!array_key_exists('host', $url)) return '';
     if(!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/',$url['host'])) return '';
 
     $query = array();
+    if(!array_key_exists('query', $url)) return '';
     parse_str($url['query'], $query);
 
     $q = '';

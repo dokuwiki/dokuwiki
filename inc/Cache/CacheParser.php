@@ -20,6 +20,8 @@ class CacheParser extends Cache
      */
     public function __construct($id, $file, $mode)
     {
+        global $INPUT;
+
         if ($id) {
             $this->page = $id;
         }
@@ -27,7 +29,7 @@ class CacheParser extends Cache
         $this->mode = $mode;
 
         $this->setEvent('PARSER_CACHE_USE');
-        parent::__construct($file . $_SERVER['HTTP_HOST'] . $_SERVER['SERVER_PORT'], '.' . $mode);
+        parent::__construct($file . $INPUT->server->str('HTTP_HOST') . $INPUT->server->str('SERVER_PORT'), '.' . $mode);
     }
 
     /**
@@ -50,7 +52,7 @@ class CacheParser extends Cache
         // parser cache file dependencies ...
         $files = array(
             $this->file,                              // ... source
-            DOKU_INC . 'inc/parser/Parser.php',                // ... parser
+            DOKU_INC . 'inc/Parsing/Parser.php',                // ... parser
             DOKU_INC . 'inc/parser/handler.php',               // ... handler
         );
         $files = array_merge($files, getConfigFiles('main'));    // ... wiki settings

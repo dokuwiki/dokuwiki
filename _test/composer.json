@@ -1,0 +1,12 @@
+{
+    "require": {
+        "php": ">=7.2",
+        "scotteh/php-dom-wrapper": "^2.0"
+    },
+    "config": {
+        "platform": {
+            "php": "7.2"
+        }
+    },
+    "prefer-stable": true
+}

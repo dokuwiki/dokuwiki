@@ -1,14 +1,14 @@
 <?php
 /**
- * This configures which meta data will be editable through
+ * This configures which metadata will be editable through
  * the media manager. Each field of the array is an array with the
  * following contents:
  *   fieldname - Where data will be saved (EXIF or IPTC field)
  *   label     - key to lookup in the $lang var, if not found printed as is
  *   htmltype  - 'text', 'textarea' or 'date'
- *   lookups   - array additional fields to lookup the data (EXIF or IPTC fields)
+ *   lookups   - array additional fields to look up the data (EXIF or IPTC fields)
  *
- * The fields are not ordered continously to make inserting additional items
+ * The fields are not ordered continuously to make inserting additional items
  * in between simpler.
  *
  * This is a PHP snippet, so PHP syntax applies.
@@ -16,7 +16,7 @@
  * Note: $fields is not a global variable and will not be available to any
  *       other functions or templates later
  *
- * You may extend or overwrite this variable in a optional
+ * You may extend or overwrite this variable in an optional
  * conf/mediameta.local.php file
  *
  * For a list of available EXIF/IPTC fields refer to

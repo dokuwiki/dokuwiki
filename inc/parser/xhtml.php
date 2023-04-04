@@ -20,9 +20,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /** @var array A stack of section edit data */
     protected $sectionedits = array();
 
-    /** @var string|int link pages and media against this revision */
-    public $date_at = '';
-
     /** @var int last section edit id, used by startSectionEdit */
     protected $lastsecid = 0;
 
@@ -95,6 +92,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Adrian Lang <lang@cosmocode.de>
      */
     public function finishSectionEdit($end = null, $hid = null) {
+        if(count($this->sectionedits) == 0) {
+            return;
+        }
         $data = array_pop($this->sectionedits);
         if(!is_null($end) && $end <= $data['start']) {
             return;
@@ -544,68 +544,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     /**
-     * Execute PHP code if allowed
-     *
-     * @param  string $text      PHP code that is either executed or printed
-     * @param  string $wrapper   html element to wrap result if $conf['phpok'] is okff
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     */
-    public function php($text, $wrapper = 'code') {
-        global $conf;
-
-        if($conf['phpok']) {
-            ob_start();
-            eval($text);
-            $this->doc .= ob_get_contents();
-            ob_end_clean();
-        } else {
-            $this->doc .= p_xhtml_cached_geshi($text, 'php', $wrapper);
-        }
-    }
-
-    /**
-     * Output block level PHP code
-     *
-     * If $conf['phpok'] is true this should evaluate the given code and append the result
-     * to $doc
-     *
-     * @param string $text The PHP code
-     */
-    public function phpblock($text) {
-        $this->php($text, 'pre');
-    }
-
-    /**
-     * Insert HTML if allowed
-     *
-     * @param  string $text      html text
-     * @param  string $wrapper   html element to wrap result if $conf['htmlok'] is okff
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     */
-    public function html($text, $wrapper = 'code') {
-        global $conf;
-
-        if($conf['htmlok']) {
-            $this->doc .= $text;
-        } else {
-            $this->doc .= p_xhtml_cached_geshi($text, 'html4strict', $wrapper);
-        }
-    }
-
-    /**
-     * Output raw block-level HTML
-     *
-     * If $conf['htmlok'] is true this should add the code as is to $doc
-     *
-     * @param string $text The HTML
-     */
-    public function htmlblock($text) {
-        $this->html($text, 'pre');
-    }
-
-    /**
      * Start a block quote
      */
     public function quote_open() {
@@ -668,8 +606,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $INPUT;
 
         $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language ?? '');
-
-        $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language);
 
         if($filename) {
             // add icon
@@ -920,7 +856,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //keep hash anchor
-        @list($id, $hash) = explode('#', $id, 2);
+        list($id, $hash) = sexplode('#', $id, 2);
         if(!empty($hash)) $hash = $this->_headerToLink($hash);
 
         //prepare for formating
@@ -1183,7 +1119,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                            $height = null, $cache = null, $linking = null, $return = false) {
         global $ID;
         if (strpos($src, '#') !== false) {
-            list($src, $hash) = explode('#', $src, 2);
+            list($src, $hash) = sexplode('#', $src, 2);
         }
         $src = (new MediaResolver($ID))->resolveId($src,$this->date_at,true);
         $exists = media_exists($src);
@@ -1255,7 +1191,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     public function externalmedia($src, $title = null, $align = null, $width = null,
                            $height = null, $cache = null, $linking = null, $return = false) {
         if(link_isinterwiki($src)){
-            list($shortcut, $reference) = explode('>', $src, 2);
+            list($shortcut, $reference) = sexplode('>', $src, 2, '');
             $exists = null;
             $src = $this->_resolveInterWiki($shortcut, $reference, $exists);
             if($src == '' && empty($title)){
@@ -1263,8 +1199,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $title = $reference;
             }
         }
-        // Squelch the warning in case there is no hash in the URL
-        @list($src, $hash) = explode('#', $src, 2);
+        list($src, $hash) = sexplode('#', $src, 2);
         $noLink = false;
         if($src == '') {
             // only output plaintext without link if there is no src
@@ -1370,11 +1305,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 }
                 if($params['details']) {
                     $this->doc .= '<div class="detail">';
-                    if($conf['htmlok']) {
-                        $this->doc .= $item->get_description();
-                    } else {
-                        $this->doc .= strip_tags($item->get_description());
-                    }
+                    $this->doc .= strip_tags($item->get_description());
                     $this->doc .= '</div>';
                 }
 

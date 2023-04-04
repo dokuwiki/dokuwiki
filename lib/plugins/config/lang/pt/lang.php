@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Jose Luis Sanches <jose.reis.sanches@gmail.com>
  * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
  * @author Paulo <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
@@ -104,8 +105,6 @@ $lang['indexdelay']            = 'Tempo de espera antes da indexação (seg)';
 $lang['mailguard']             = 'Obscurecer endereços de email';
 $lang['iexssprotect']          = 'Verificar os arquivos enviados contra possíveis códigos maliciosos em HTML ou JavaScript';
 $lang['usedraft']              = 'Salvar o rascunho automaticamente durante a edição';
-$lang['htmlok']                = 'Permitir incorporar HTML';
-$lang['phpok']                 = 'Permitir incorporar PHP';
 $lang['locktime']              = 'Idade máxima para arquivos de lock (seg)';
 $lang['cachetime']             = 'Idade máxima para cache (seg)';
 $lang['target____wiki']        = 'Parâmetro "target" para links internos';

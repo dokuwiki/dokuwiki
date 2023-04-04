@@ -10,7 +10,7 @@ We try to fix vulnerabilites as fast as possible, but please keep in mind that t
 
 You have multiple options on reporting vulnerabilities
 
-* Use [huntr.dev](https://www.huntr.dev/bounties/disclose/?target=https%3A%2F%2Fgithub.com%2Fsplitbrain%2Fdokuwiki%2F)
+* Use [huntr.dev](https://www.huntr.dev/repos/dokuwiki/dokuwiki)
 * Send an e-mail to [Andi](mailto:andi@splitbrain.org)
-* Open a [Github Issue](https://github.com/splitbrain/dokuwiki/issues)
+* Open a [Github Issue](https://github.com/dokuwiki/dokuwiki/issues)
 * Send a mail to the [Mailing List](https://www.dokuwiki.org/mailinglist)

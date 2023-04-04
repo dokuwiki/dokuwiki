@@ -3,9 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Simone Perin <simoneperin.92@libero.it>
  * @author Stefano <stefano.stefano@gmail.com>
  * @author Torpedo <dgtorpedo@gmail.com>
  */
+$lang['home']                  = 'Home';
 $lang['__background_site__']   = 'Colore per lo sfondo di livello più basso (dietro il riquadro del contenuto)';
 $lang['__link__']              = 'Colore generale per i link';
 $lang['__existing__']          = 'Colore per i collegamenti alle pagine esistenti';

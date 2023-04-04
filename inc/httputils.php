@@ -20,6 +20,8 @@ define('HTTP_CHUNK_SIZE',16*1024);
  * @returns  void or exits with previously header() commands executed
  */
 function http_conditionalRequest($timestamp){
+    global $INPUT;
+
     // A PHP implementation of conditional get, see
     //   http://fishbowl.pastiche.org/2002/10/21/http_conditional_get_for_rss_hackers/
     $last_modified = substr(gmdate('r', $timestamp), 0, -5).'GMT';
@@ -28,17 +30,8 @@ function http_conditionalRequest($timestamp){
     header("Last-Modified: $last_modified");
     header("ETag: $etag");
     // See if the client has provided the required headers
-    if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])){
-        $if_modified_since = stripslashes($_SERVER['HTTP_IF_MODIFIED_SINCE']);
-    }else{
-        $if_modified_since = false;
-    }
-
-    if (isset($_SERVER['HTTP_IF_NONE_MATCH'])){
-        $if_none_match = stripslashes($_SERVER['HTTP_IF_NONE_MATCH']);
-    }else{
-        $if_none_match = false;
-    }
+    $if_modified_since = $INPUT->server->filter('stripslashes')->str('HTTP_IF_MODIFIED_SINCE', false);
+    $if_none_match = $INPUT->server->filter('stripslashes')->str('HTTP_IF_NONE_MATCH', false);
 
     if (!$if_modified_since && !$if_none_match){
         return;
@@ -102,16 +95,18 @@ function http_sendfile($file) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function http_rangeRequest($fh,$size,$mime){
+    global $INPUT;
+
     $ranges  = array();
     $isrange = false;
 
     header('Accept-Ranges: bytes');
 
-    if(!isset($_SERVER['HTTP_RANGE'])){
+    if(!$INPUT->server->has('HTTP_RANGE')){
         // no range requested - send the whole file
         $ranges[] = array(0,$size,$size);
     }else{
-        $t = explode('=', $_SERVER['HTTP_RANGE']);
+        $t = explode('=', $INPUT->server->str('HTTP_RANGE'));
         if (!$t[0]=='bytes') {
             // we only understand byte ranges - send the whole file
             $ranges[] = array(0,$size,$size);
@@ -288,6 +283,8 @@ function http_get_raw_post_data() {
  * @param string $text
  */
 function http_status($code = 200, $text = '') {
+    global $INPUT;
+
     static $stati = array(
         200 => 'OK',
         201 => 'Created',
@@ -334,7 +331,7 @@ function http_status($code = 200, $text = '') {
         $text = $stati[$code];
     }
 
-    $server_protocol = (isset($_SERVER['SERVER_PROTOCOL'])) ? $_SERVER['SERVER_PROTOCOL'] : false;
+    $server_protocol = $INPUT->server->str('SERVER_PROTOCOL', false);
 
     if(substr(php_sapi_name(), 0, 3) == 'cgi' || defined('SIMPLE_TEST')) {
         header("Status: {$code} {$text}", true);

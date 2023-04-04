@@ -7,6 +7,8 @@
  */
 
 use dokuwiki\Extension\Event;
+use dokuwiki\Utf8\Clean;
+use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
 
 /**
@@ -100,7 +102,7 @@ function _ft_pageSearch(&$data) {
                     );
                     $evt = new Event('FULLTEXT_PHRASE_MATCH',$evdata);
                     if ($evt->advise_before() && $evt->result !== true) {
-                        $text = \dokuwiki\Utf8\PhpString::strtolower($evdata['text']);
+                        $text = PhpString::strtolower($evdata['text']);
                         if (strpos($text, $phrase) !== false) {
                             $evt->result = true;
                         }
@@ -365,7 +367,16 @@ function _ft_filterResultsByTime(array $results, $after, $before) {
  * @return bool
  */
 function _ft_pageLookupTitleCompare($search, $title) {
-    return stripos($title, $search) !== false;
+    if (Clean::isASCII($search)) {
+        $pos = stripos($title, $search);
+    } else {
+        $pos = PhpString::strpos(
+            PhpString::strtolower($title),
+            PhpString::strtolower($search)
+        );
+    }
+
+    return $pos !== false;
 }
 
 /**
@@ -427,7 +438,7 @@ function ft_snippet($id,$highlight){
         $match = array();
         $snippets = array();
         $utf8_offset = $offset = $end = 0;
-        $len = \dokuwiki\Utf8\PhpString::strlen($text);
+        $len = PhpString::strlen($text);
 
         // build a regexp from the phrases to highlight
         $re1 = '(' .
@@ -457,8 +468,8 @@ function ft_snippet($id,$highlight){
             list($str,$idx) = $match[0];
 
             // convert $idx (a byte offset) into a utf8 character offset
-            $utf8_idx = \dokuwiki\Utf8\PhpString::strlen(substr($text,0,$idx));
-            $utf8_len = \dokuwiki\Utf8\PhpString::strlen($str);
+            $utf8_idx = PhpString::strlen(substr($text,0,$idx));
+            $utf8_len = PhpString::strlen($str);
 
             // establish context, 100 bytes surrounding the match string
             // first look to see if we can go 100 either side,
@@ -487,9 +498,9 @@ function ft_snippet($id,$highlight){
             $end = $utf8_idx + $utf8_len + $post;      // now set it to the end of this context
 
             if ($append) {
-                $snippets[count($snippets)-1] .= \dokuwiki\Utf8\PhpString::substr($text,$append,$end-$append);
+                $snippets[count($snippets)-1] .= PhpString::substr($text,$append,$end-$append);
             } else {
-                $snippets[] = \dokuwiki\Utf8\PhpString::substr($text,$start,$end-$start);
+                $snippets[] = PhpString::substr($text,$start,$end-$start);
             }
 
             // set $offset for next match attempt
@@ -498,8 +509,8 @@ function ft_snippet($id,$highlight){
             // this prevents further matching of this snippet but for possible matches of length
             // smaller than match length + context (at least 50 characters) this match is part of the context
             $utf8_offset = $utf8_idx + $utf8_len;
-            $offset = $idx + strlen(\dokuwiki\Utf8\PhpString::substr($text,$utf8_idx,$utf8_len));
-            $offset = \dokuwiki\Utf8\Clean::correctIdx($text,$offset);
+            $offset = $idx + strlen(PhpString::substr($text,$utf8_idx,$utf8_len));
+            $offset = Clean::correctIdx($text,$offset);
         }
 
         $m = "\1";
@@ -687,7 +698,7 @@ function ft_queryParser($Indexer, $query){
      */
     $parsed_query = '';
     $parens_level = 0;
-    $terms = preg_split('/(-?".*?")/u', \dokuwiki\Utf8\PhpString::strtolower($query),
+    $terms = preg_split('/(-?".*?")/u', PhpString::strtolower($query),
         -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
     foreach ($terms as $term) {
@@ -834,7 +845,7 @@ function ft_queryParser($Indexer, $query){
     $q['parsed_ary'] = $parsed_ary;
 
     foreach ($q['parsed_ary'] as $token) {
-        if ($token[2] !== ':') continue;
+        if (strlen($token) < 3 || $token[2] !== ':') continue;
         $body = substr($token, 3);
 
         switch (substr($token, 0, 3)) {

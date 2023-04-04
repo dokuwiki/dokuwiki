@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+    <report>
+      <clover outputFile="build/logs/clover.xml"/>
+      <crap4j outputFile="build/logs/crap4j.xml"/>
+      <html outputDirectory="build/coverage"/>
+      <xml outputDirectory="build/logs/coverage"/>
+    </report>
+  </coverage>
+  <testsuites>
+    <testsuite name="php-dom-wrapper testsuite">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
+  <logging>
+    <junit outputFile="build/logs/junit.xml"/>
+  </logging>
+</phpunit>

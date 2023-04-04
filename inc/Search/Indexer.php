@@ -120,10 +120,10 @@ class Indexer {
         }
 
         // arrive here with $words = array(wordlen => array(word => frequency))
-        $word_idx_modified = false;
         $index = array();   //resulting index
         foreach (array_keys($words) as $wlen) {
             $word_idx = $this->getIndex('w', $wlen);
+            $word_idx_modified = false;
             foreach ($words[$wlen] as $word => $freq) {
                 $word = (string)$word;
                 $wid = array_search($word, $word_idx, true);
@@ -179,7 +179,7 @@ class Indexer {
         }
 
         // Special handling for titles so the index file is simpler
-        if (array_key_exists('title', $key)) {
+        if (isset($key['title'])) {
             $value = $key['title'];
             if (is_array($value)) {
                 $value = $value[0];

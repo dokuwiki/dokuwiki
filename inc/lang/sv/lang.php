@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Gorm <gorm.chandler@gmail.com>
  * @author Patrik K Lundberg <patrik.kotiranta.lundberg@gmail.com>
  * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Joaquim Homrighausen <joho@webbplatsen.se>
@@ -125,6 +126,7 @@ $lang['js']['media_done_btn']  = 'Färdig';
 $lang['js']['media_drop']      = 'Släpp filer här för att ladda upp';
 $lang['js']['media_cancel']    = 'ta bort';
 $lang['js']['media_overwrt']   = 'Skriv över existerande filer';
+$lang['js']['data_insecure']   = 'VARNING! Det tycks som om din datamapp inte har tillräcklig säkerhet. Läs gärna om <a href="https://www.dokuwiki.org/security#web_access_security">Åtkomstsäkerhet i DokuWiki</a>';
 $lang['search_exact_match']    = 'Exakt träff';
 $lang['search_starts_with']    = 'Börjar med';
 $lang['search_ends_with']      = 'Slutar med';
@@ -227,6 +229,7 @@ $lang['created']               = 'skapad';
 $lang['restored']              = 'tidigare version återställd (%s)';
 $lang['external_edit']         = 'extern redigering';
 $lang['summary']               = 'Redigeringskommentar';
+$lang['unknowndate']           = 'Okänt datum';
 $lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> behövs för att visa detta innehåll.';
 $lang['download']              = 'Ladda ner kodfragmentet';
 $lang['tools']                 = 'Verktyg';

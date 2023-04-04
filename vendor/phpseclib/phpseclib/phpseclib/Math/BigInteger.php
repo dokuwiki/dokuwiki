@@ -268,7 +268,7 @@ class BigInteger
             $versions = array();
 
             // avoid generating errors (even with suppression) when phpinfo() is disabled (common in production systems)
-            if (strpos(ini_get('disable_functions'), 'phpinfo') === false) {
+            if (function_exists('phpinfo')) {
                 ob_start();
                 @phpinfo();
                 $content = ob_get_contents();
@@ -372,7 +372,7 @@ class BigInteger
                         break;
                     case self::MODE_BCMATH:
                         // round $len to the nearest 4 (thanks, DavidMJ!)
-                        $len = (strlen($x) + 3) & 0xFFFFFFFC;
+                        $len = (strlen($x) + 3) & ~3;
 
                         $x = str_pad($x, $len, chr(0), STR_PAD_LEFT);
 
@@ -408,7 +408,7 @@ class BigInteger
                     $x = substr($x, 1);
                 }
 
-                $x = preg_replace('#^(?:0x)?([A-Fa-f0-9]*).*#', '$1', $x);
+                $x = preg_replace('#^(?:0x)?([A-Fa-f0-9]*).*#s', '$1', $x);
 
                 $is_negative = false;
                 if ($base < 0 && hexdec($x[0]) >= 8) {
@@ -444,7 +444,7 @@ class BigInteger
                 // (?<!^)(?:-).*: find any -'s that aren't at the beginning and then any characters that follow that
                 // (?<=^|-)0*: find any 0's that are preceded by the start of the string or by a - (ie. octals)
                 // [^-0-9].*: find any non-numeric characters and then any characters that follow that
-                $x = preg_replace('#(?<!^)(?:-).*|(?<=^|-)0*|[^-0-9].*#', '', $x);
+                $x = preg_replace('#(?<!^)(?:-).*|(?<=^|-)0*|[^-0-9].*#s', '', $x);
                 if (!strlen($x) || $x == '-') {
                     $x = '0';
                 }
@@ -486,7 +486,7 @@ class BigInteger
                     $x = substr($x, 1);
                 }
 
-                $x = preg_replace('#^([01]*).*#', '$1', $x);
+                $x = preg_replace('#^([01]*).*#s', '$1', $x);
                 $x = str_pad($x, strlen($x) + (3 * strlen($x)) % 4, 0, STR_PAD_LEFT);
 
                 $str = '0x';

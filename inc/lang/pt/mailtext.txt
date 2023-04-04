@@ -8,9 +8,9 @@ Documento Ant.: @OLDPAGE@
 Documento Novo: @NEWPAGE@
 Data da Revisão: @DATE@
 Resumo da Edição  : @SUMMARY@
-Usuário      : @USER@
+Utilizador      : @USER@
 
 Pode haver alterações mais recentes após esta revisão. Se isto
-acontecer, uma mensagem será mostrada na parte superior da página de revisão.
+acontecer uma mensagem será mostrada na parte superior da página de revisão.
 
 @DIFF@

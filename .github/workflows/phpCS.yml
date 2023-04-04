@@ -7,6 +7,9 @@ on:
       - old-stable
   pull_request:
 
+permissions:
+  contents: read  #  to fetch code (actions/checkout)
+
 jobs:
     phpcs:
         name: PHP CodeSniffer
