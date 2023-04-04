@@ -39,7 +39,7 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin
      * List all ACL config entries
      *
      * @throws AccessDeniedException
-     * @return dictionary {Scope: ACL}, where ACL = dictionnary {user/group: permissions_int}
+     * @return array dictionary {Scope: ACL}, where ACL = dictionary {user/group: permissions_int}
      */
     public function listAcls()
     {
