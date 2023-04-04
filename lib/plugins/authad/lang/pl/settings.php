@@ -31,4 +31,5 @@ $lang['expirywarn']            = 'Dni poprzedzających powiadomienie użytkownik
 $lang['additional']            = 'Oddzielona przecinkami lista dodatkowych atrybutów AD do pobrania z danych użytkownika. Używane przez niektóre wtyczki.';
 $lang['update_name']           = 'Zezwól użytkownikom na uaktualnianie nazwy wyświetlanej w AD?';
 $lang['update_mail']           = 'Zezwól użytkownikom na uaktualnianie ich adresu email?';
+$lang['update_pass']           = 'Zezwolić użytkownikom na aktualizację hasła? Wymaga SSL lub TLS powyżej.';
 $lang['recursive_groups']      = 'Rozpatrz grupy zagnieżdżone dla odpowiednich członków (wolniej).';

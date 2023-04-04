@@ -101,6 +101,7 @@ $lang['auth_security_timeout'] = 'Czas wygaśnięcia uwierzytelnienia (w sekunda
 $lang['securecookie']          = 'Czy ciasteczka wysłane do przeglądarki przez HTTPS powinny być przez nią odsyłane też tylko przez HTTPS? Odznacz tę opcję tylko wtedy, gdy logowanie użytkowników jest zabezpieczone SSL, ale przeglądanie stron odbywa się bez zabezpieczenia.';
 $lang['remote']                = 'Włącz API zdalnego dostępu. Pozwoli to innym aplikacjom na dostęp do wiki poprzez XML-RPC lub inne mechanizmy.';
 $lang['remoteuser']            = 'Ogranicz dostęp poprzez API zdalnego dostępu do podanych grup lub użytkowników, oddzielonych przecinkami. Pozostaw to pole puste by pozwolić na dostęp be ograniczeń.';
+$lang['remotecors']            = 'Włącz udostępnianie zasobów między źródłami (CORS) dla interfejsów zdalnych. Gwiazdka (*), aby zezwolić na wszystkie źródła. Pozostaw puste, aby odrzucić CORS.';
 $lang['usewordblock']          = 'Blokowanie spamu na podstawie słów';
 $lang['relnofollow']           = 'Nagłówek rel="nofollow" dla odnośników zewnętrznych';
 $lang['indexdelay']            = 'Okres indeksowania w sekundach';
@@ -166,6 +167,7 @@ $lang['search_fragment_o_contains'] = 'zawiera';
 $lang['trustedproxy']          = 'Zaufaj serwerom proxy odpowiadającym temu wyrażeniu regularnemu co do prawdziwego adresu IP klienta, który zgłaszają. Domyślnie dotyczy sieci lokalnych. Pozostaw puste, aby nie ufać żadnym serwerom proxy.';
 $lang['_feature_flags']        = 'Flagi funkcji';
 $lang['defer_js']              = 'Odrocz wykonanie skryptu JavaScript po przeanalizowaniu kodu HTML strony. Poprawia postrzeganą szybkość strony, ale może zepsuć niewielką liczbę wtyczek.';
+$lang['hidewarnings']          = 'Nie wyświetlaj żadnych ostrzeżeń wydawanych przez PHP. Może to ułatwić przejście na PHP8+. Ostrzeżenia będą nadal rejestrowane w dzienniku błędów i powinny być zgłaszane.';
 $lang['dnslookups']            = 'DokiWiki wyszuka nazwy hostów dla zdalnych adresów IP użytkowników edytujących strony. Jeśli twój serwer DNS działa zbyt wolno, uległ awarii lub nie chcesz używać wyszukiwania, wyłącz tę opcję.';
 $lang['jquerycdn']             = 'Czy pliki skryptów jQuery i jQuery UI powinny być ładowane z CDN? Powoduje to dodanie dodatkowych żądań HTTP, ale pliki mogą być ładowane szybciej, a użytkownicy mogą już je mieć zbuforowane.';
 $lang['jquerycdn_o_0']         = 'Bez CDN, tylko lokalne zasoby';

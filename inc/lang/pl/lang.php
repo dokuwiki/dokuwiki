@@ -234,6 +234,7 @@ $lang['created']               = 'utworzono';
 $lang['restored']              = 'przywrócono poprzednią wersję (%s)';
 $lang['external_edit']         = 'edycja zewnętrzna';
 $lang['summary']               = 'Opis zmian';
+$lang['unknowndate']           = 'Nieznana data';
 $lang['noflash']               = 'Plugin <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> jest niezbędny do obejrzenia tej zawartości.';
 $lang['download']              = 'Pobierz zrzut';
 $lang['tools']                 = 'Narzędzia';
