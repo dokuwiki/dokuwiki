@@ -31,16 +31,14 @@ class changelog_getrevisions_test extends DokuWikiTest {
     );
     private $pageid = 'mailinglist';
 
-    function setup() {
+    function setup() : void {
         parent::setup();
         global $cache_revinfo;
         $cache =& $cache_revinfo;
-        if(isset($cache['nonexist'])) {
-            unset($cache['nonexist']);
-        }
-        if(isset($cache['mailinglist'])) {
-            unset($cache['mailinglist']);
-        }
+        unset($cache['nonexist']);
+        unset($cache['mailinglist']);
+        // fix filemtime of page source
+        touch(wikiFN($this->pageid), $this->revsexpected[0]);
     }
 
     /**

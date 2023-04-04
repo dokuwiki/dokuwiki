@@ -158,7 +158,7 @@ class Tar extends Archive
             $fileinfo->strip($strip);
 
             // skip unwanted files
-            if (!strlen($fileinfo->getPath()) || !$fileinfo->match($include, $exclude)) {
+            if (!strlen($fileinfo->getPath()) || !$fileinfo->matchExpression($include, $exclude)) {
                 $this->skipbytes(ceil($header['size'] / 512) * 512);
                 continue;
             }
@@ -256,33 +256,36 @@ class Tar extends Archive
             throw new ArchiveIOException('Archive has been closed, files can no longer be added');
         }
 
-        $fp = @fopen($file, 'rb');
-        if (!$fp) {
-            throw new ArchiveIOException('Could not open file for reading: '.$file);
-        }
-
         // create file header
         $this->writeFileHeader($fileinfo);
 
-        // write data
-        $read = 0;
-        while (!feof($fp)) {
-            $data = fread($fp, 512);
-            $read += strlen($data);
-            if ($data === false) {
-                break;
+        // write data, but only if we have data to write.
+        // note: on Windows fopen() on a directory will fail, so we prevent
+        // errors on Windows by testing if we have data to write.
+        if (!$fileinfo->getIsdir() && $fileinfo->getSize() > 0) {
+            $read = 0;
+            $fp = @fopen($file, 'rb');
+            if (!$fp) {
+                throw new ArchiveIOException('Could not open file for reading: ' . $file);
             }
-            if ($data === '') {
-                break;
+            while (!feof($fp)) {
+                $data = fread($fp, 512);
+                $read += strlen($data);
+                if ($data === false) {
+                    break;
+                }
+                if ($data === '') {
+                    break;
+                }
+                $packed = pack("a512", $data);
+                $this->writebytes($packed);
             }
-            $packed = pack("a512", $data);
-            $this->writebytes($packed);
-        }
-        fclose($fp);
+            fclose($fp);
 
-        if($read != $fileinfo->getSize()) {
-            $this->close();
-            throw new ArchiveCorruptedException("The size of $file changed while reading, archive corrupted. read $read expected ".$fileinfo->getSize());
+            if ($read != $fileinfo->getSize()) {
+                $this->close();
+                throw new ArchiveCorruptedException("The size of $file changed while reading, archive corrupted. read $read expected ".$fileinfo->getSize());
+            }
         }
 
         if(is_callable($this->callback)) {
@@ -583,7 +586,7 @@ class Tar extends Archive
 
         $return['checksum'] = OctDec(trim($header['checksum']));
         if ($return['checksum'] != $chks) {
-            throw new ArchiveCorruptedException('Header does not match it\'s checksum');
+            throw new ArchiveCorruptedException('Header does not match its checksum');
         }
 
         $return['filename'] = trim($header['filename']);

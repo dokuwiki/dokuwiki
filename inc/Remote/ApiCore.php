@@ -6,8 +6,9 @@ use Doku_Renderer_xhtml;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\Event;
+use dokuwiki\Utf8\Sort;
 
-define('DOKU_API_VERSION', 10);
+define('DOKU_API_VERSION', 11);
 
 /**
  * Provides the core methods for the remote API.
@@ -16,7 +17,7 @@ define('DOKU_API_VERSION', 10);
 class ApiCore
 {
     /** @var int Increased whenever the API is changed */
-    const API_VERSION = 10;
+    const API_VERSION = 11;
 
 
     /** @var Api */
@@ -35,7 +36,7 @@ class ApiCore
      *
      * @return array
      */
-    public function __getRemoteInfo()
+    public function getRemoteInfo()
     {
         return array(
             'dokuwiki.getVersion' => array(
@@ -77,7 +78,11 @@ class ApiCore
                 'args' => array('string', 'string', 'array'),
                 'return' => 'bool',
                 'doc' => 'Append text to a wiki page.'
-            ), 'dokuwiki.deleteUsers' => array(
+            ), 'dokuwiki.createUser' => array(
+                'args' => array('struct'),
+                'return' => 'bool',
+                'doc' => 'Create a user. The result is boolean'
+            ),'dokuwiki.deleteUsers' => array(
                 'args' => array('array'),
                 'return' => 'bool',
                 'doc' => 'Remove one or more users from the list of registered users.'
@@ -142,11 +147,11 @@ class ApiCore
             ), 'wiki.getRecentChanges' => array(
                 'args' => array('int'),
                 'return' => 'array',
-                'Returns a struct about all recent changes since given timestamp.'
+                'doc' => 'Returns a struct about all recent changes since given timestamp.'
             ), 'wiki.getRecentMediaChanges' => array(
                 'args' => array('int'),
                 'return' => 'array',
-                'Returns a struct about all recent media changes since given timestamp.'
+                'doc' => 'Returns a struct about all recent media changes since given timestamp.'
             ), 'wiki.aclCheck' => array(
                 'args' => array('string', 'string', 'array'),
                 'return' => 'int',
@@ -310,6 +315,7 @@ class ApiCore
         $list = array();
         $pages = idx_get_indexer()->getPages();
         $pages = array_filter(array_filter($pages, 'isVisiblePage'), 'page_exists');
+        Sort::ksort($pages);
 
         foreach (array_keys($pages) as $idx) {
             $perm = auth_quickaclcheck($pages[$idx]);
@@ -579,6 +585,68 @@ class ApiCore
         }
         return $this->putPage($id, $currentpage . $text, $params);
     }
+
+    /**
+     * Create one or more users
+     *
+     * @param array[] $userStruct User struct
+     *
+     * @return boolean Create state
+     *
+     * @throws AccessDeniedException
+     * @throws RemoteException
+     */
+    public function createUser($userStruct)
+    {
+        if (!auth_isadmin()) {
+            throw new AccessDeniedException('Only admins are allowed to create users', 114);
+        }
+
+        /** @var \dokuwiki\Extension\AuthPlugin $auth */
+        global $auth;
+
+        if(!$auth->canDo('addUser')) {
+            throw new AccessDeniedException(
+                sprintf('Authentication backend %s can\'t do addUser', $auth->getPluginName()),
+                114
+            );
+        }
+
+        $user = trim($auth->cleanUser($userStruct['user'] ?? ''));
+        $password = $userStruct['password'] ?? '';
+        $name = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $userStruct['name'] ?? ''));
+        $mail = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $userStruct['mail'] ?? ''));
+        $groups = $userStruct['groups'] ?? [];
+
+        $notify = (bool)$userStruct['notify'] ?? false;
+
+        if ($user === '') throw new RemoteException('empty or invalid user', 401);
+        if ($name === '') throw new RemoteException('empty or invalid user name', 402);
+        if (!mail_isvalid($mail)) throw new RemoteException('empty or invalid mail address', 403);
+
+        if(strlen($password) === 0) {
+            $password = auth_pwgen($user);
+        }
+
+        if (!is_array($groups) || count($groups) === 0) {
+            $groups = null;
+        }
+
+        $ok = $auth->triggerUserMod('create', array($user, $password, $name, $mail, $groups));
+
+        if ($ok !== false && $ok !== null) {
+            $ok = true;
+        }
+
+        if($ok) {
+            if($notify) {
+                auth_sendPassword($user, $password);
+            }
+        }
+
+        return $ok;
+    }
+
 
     /**
      * Remove one or more users from the list of registered users

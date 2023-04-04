@@ -16,7 +16,7 @@ use dokuwiki\Extension\PluginController;
 class helper_plugin_extension_repository extends DokuWiki_Plugin
 {
 
-    const EXTENSION_REPOSITORY_API = 'http://www.dokuwiki.org/lib/plugins/pluginrepo/api.php';
+    const EXTENSION_REPOSITORY_API = 'https://www.dokuwiki.org/lib/plugins/pluginrepo/api.php';
 
     private $loaded_extensions = array();
     private $has_access = null;
@@ -108,8 +108,11 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
             $data = $httpclient->get(self::EXTENSION_REPOSITORY_API.'?fmt=php&ext[]='.urlencode($name));
             if ($data !== false) {
                 $result = unserialize($data);
-                $cache->storeCache(serialize($result[0]));
-                return $result[0];
+                if(count($result)) {
+                    $cache->storeCache(serialize($result[0]));
+                    return $result[0];
+                }
+                return array();
             } else {
                 $this->has_access = false;
             }

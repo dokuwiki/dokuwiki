@@ -13,7 +13,7 @@ abstract class AbstractSettingTest extends \DokuWikiTest {
      * Sets up the proper class to test based on the test's class name
      * @throws \Exception
      */
-    public function setUp() {
+    public function setUp() : void {
         parent::setUp();
         $class = get_class($this);
         $class = substr($class, strrpos($class, '\\') + 1, -4);
@@ -47,7 +47,7 @@ abstract class AbstractSettingTest extends \DokuWikiTest {
 
         $setting = new $this->class('test');
         $this->assertEquals(
-            '<a href="http://www.dokuwiki.org/config:test">test</a>',
+            '<a href="https://www.dokuwiki.org/config:test">test</a>',
             $setting->getPrettyKey(true)
         );
 
@@ -56,7 +56,7 @@ abstract class AbstractSettingTest extends \DokuWikiTest {
 
         $setting = new $this->class('start');
         $this->assertEquals(
-            '<a href="http://www.dokuwiki.org/config:startpage">start</a>',
+            '<a href="https://www.dokuwiki.org/config:startpage">start</a>',
             $setting->getPrettyKey(true)
         );
     }

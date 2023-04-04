@@ -4,6 +4,8 @@ namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionDisabledException;
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Ui;
 
 /**
  * Class Register
@@ -12,34 +14,38 @@ use dokuwiki\Action\Exception\ActionDisabledException;
  *
  * @package dokuwiki\Action
  */
-class Register extends AbstractAclAction {
-
+class Register extends AbstractAclAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_NONE;
     }
 
     /** @inheritdoc */
-    public function checkPreconditions() {
+    public function checkPreconditions()
+    {
         parent::checkPreconditions();
 
-        /** @var \dokuwiki\Extension\AuthPlugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
         global $conf;
-        if(isset($conf['openregister']) && !$conf['openregister']) throw new ActionDisabledException();
-        if(!$auth->canDo('addUser')) throw new ActionDisabledException();
+        if (isset($conf['openregister']) && !$conf['openregister']) throw new ActionDisabledException();
+        if (!$auth->canDo('addUser')) throw new ActionDisabledException();
     }
 
     /** @inheritdoc */
-    public function preProcess() {
-        if(register()) { // FIXME could be moved from auth to here
+    public function preProcess()
+    {
+        if (register()) { // FIXME could be moved from auth to here
             throw new ActionAbort('login');
         }
     }
 
     /** @inheritdoc */
-    public function tplContent() {
-        html_register();
+    public function tplContent()
+    {
+        (new Ui\UserRegister)->show();
     }
 
 }

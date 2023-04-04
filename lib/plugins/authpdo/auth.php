@@ -1,4 +1,6 @@
 <?php
+use dokuwiki\Utf8\Sort;
+
 /**
  * DokuWiki Plugin authpdo (Auth Component)
  *
@@ -599,7 +601,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
         }
 
         $groups = array_unique($groups);
-        sort($groups);
+        Sort::sort($groups);
         return $groups;
     }
 
@@ -632,7 +634,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
             $this->debugMsg("select-groups statement did not return a list of result", -1, __LINE__);
         }
 
-        ksort($groups);
+        Sort::ksort($groups);
         return $groups;
     }
 

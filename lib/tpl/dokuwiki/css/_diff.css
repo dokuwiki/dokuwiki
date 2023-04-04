@@ -58,14 +58,17 @@
 .dokuwiki table.diff .diff-addedline {
     background-color: #cfc;
     color: inherit;
+    width: ~"calc(50% - .7em)";
 }
 .dokuwiki table.diff .diff-deletedline {
     background-color: #fdd;
     color: inherit;
+    width: ~"calc(50% - .7em)";
 }
 .dokuwiki table.diff td.diff-context {
     background-color: #eee;
     color: inherit;
+    width: ~"calc(50% - .7em)";
 }
 .dokuwiki table.diff td.diff-addedline strong,
 .dokuwiki table.diff td.diff-deletedline strong {

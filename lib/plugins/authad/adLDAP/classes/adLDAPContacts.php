@@ -38,6 +38,8 @@
 require_once(dirname(__FILE__) . '/../adLDAP.php');
 require_once(dirname(__FILE__) . '/../collections/adLDAPContactCollection.php');
 
+use dokuwiki\Utf8\Sort;
+
 class adLDAPContacts {
     /**
     * The current adLDAP connection via dependency injection
@@ -271,7 +273,7 @@ class adLDAPContacts {
             }
         }
         if ($sorted) { 
-            asort($usersArray); 
+            Sort::asort($usersArray); 
         }
         return $usersArray;
     }

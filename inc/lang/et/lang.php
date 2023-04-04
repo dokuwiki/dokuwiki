@@ -195,7 +195,7 @@ $lang['created']               = 'tekitatud';
 $lang['restored']              = 'vana versioon taastatud (%s)';
 $lang['external_edit']         = 'väline muutmine';
 $lang['summary']               = 'kokkuvõte muudatustest';
-$lang['noflash']               = 'Sele sisu vaatamisesks on vajalik <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Laiendus</a>.';
+$lang['noflash']               = 'Sele sisu vaatamisesks on vajalik <a href="http://get.adobe.com/flashplayer">Adobe Flash Laiendus</a>.';
 $lang['tools']                 = 'Tööriistad';
 $lang['user_tools']            = 'Kasutaja tarvikud';
 $lang['site_tools']            = 'Lehe tööriistad';
@@ -276,7 +276,7 @@ $lang['i_enableacl']           = 'Kas lubada kasutajate haldus (soovitatav)';
 $lang['i_superuser']           = 'Superkasutaja';
 $lang['i_problems']            = 'Paigaldaja leidis mõned vead, mis on allpool välja toodud. Enne vigade eemaldamist ei saa jätkata.';
 $lang['i_modified']            = 'Õnnetuste vältimiseks läheb see skript käima ainult värskelt paigaldatud ja muutmata Dokuwiki peal.
-                       Sa peaksid ilmselt kogu koodi uuesti lahti pakkima. Vaata ka <a href="http://dokuwiki.org/install">Dokuwiki installeerimis juhendit</a>';
+                       Sa peaksid ilmselt kogu koodi uuesti lahti pakkima. Vaata ka <a href="https://www.dokuwiki.org/install">Dokuwiki installeerimis juhendit</a>';
 $lang['i_funcna']              = 'PHP funktsiooni <code>%s</code> ei ole olemas.võibolla sinu serveri hooldaja on selle mingil põhjusel keelanud?';
 $lang['i_phpver']              = 'Sinu PHP versioon <code>%s</code> on vanem nõutavast <code>%s</code>. Pead oma paigaldatud PHP-d uuendama.';
 $lang['i_permfail']            = 'Dokuwiki ei saa kirjutada faili <code>%s</code>. Kontrolli serveris failide õigused üle.';

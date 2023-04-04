@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author pavulondit <pavloo@vp.pl>
  * @author Wojciech Lichota <wojciech@lichota.pl>
  * @author Max <maxrb146@gmail.com>
  * @author Mati <mackosa@wp.pl>
@@ -74,6 +75,7 @@ $lang['msg_template_update_success'] = 'Szablon %s został zaktualizowany';
 $lang['msg_plugin_install_success'] = 'Dodatek %s został zainstalowany';
 $lang['msg_plugin_update_success'] = 'Dodatek %s został zaktualizowany';
 $lang['msg_upload_failed']     = 'Ładowanie pliku nie powiodło się';
+$lang['msg_nooverwrite']       = 'Rozszerzenie %s już istnieje więc nie zostanie nadpisane; aby nadpisać zaznacz opcję nadpisz.';
 $lang['missing_dependency']    = '<strong>Brakująca lub wyłączona zależność:</strong> %s';
 $lang['security_issue']        = '<strong>Problemy bezpieczeństwa:</strong> %s';
 $lang['security_warning']      = '<strong>Alert Bezpieczeństwa:</strong>%s';

@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui;
+
 /**
  * Class Diff
  *
@@ -9,27 +11,31 @@ namespace dokuwiki\Action;
  *
  * @package dokuwiki\Action
  */
-class Diff extends AbstractAction {
-
+class Diff extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_READ;
     }
 
     /** @inheritdoc */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $INPUT;
 
         // store the selected diff type in cookie
         $difftype = $INPUT->str('difftype');
-        if(!empty($difftype)) {
+        if (!empty($difftype)) {
             set_doku_pref('difftype', $difftype);
         }
     }
 
     /** @inheritdoc */
-    public function tplContent() {
-        html_diff();
+    public function tplContent()
+    {
+        global $INFO;
+        (new Ui\PageDiff($INFO['id']))->preference('showIntro', true)->show();
     }
 
 }

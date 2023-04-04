@@ -1,0 +1,60 @@
+name: Linux Unit Tests
+
+on:
+  push:
+    branches-ignore:
+      - stable
+      - old-stable
+  pull_request:
+
+jobs:
+    run:
+        name: PHP ${{ matrix.php-versions }}
+        runs-on: ubuntu-latest
+        if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
+
+        strategy:
+            matrix:
+                php-versions: ['7.2', '7.3', '7.4', '8.0', '8.1']
+            fail-fast: false
+
+        services:
+            mysql:
+                image: mysql:5.7
+                env:
+                    MYSQL_ALLOW_EMPTY_PASSWORD: yes
+                ports:
+                    - 3306:3306
+            postgres:
+                image: postgres:latest
+                env:
+                    POSTGRES_PASSWORD: postgres
+                ports:
+                    - 5432:5432
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php-versions }}
+                  extensions: mbstring, intl, PDO, pdo_sqlite, pdo_mysql, pdo_pgsql, bz2
+                  ini-values: pcre.jit=0
+
+            - name: Setup problem matchers
+              run: |
+                echo ::add-matcher::${{ runner.tool_cache }}/php.json
+                echo ::add-matcher::${{ runner.tool_cache }}/phpunit.json
+
+            - name: Setup PHPUnit
+              run: |
+                  php _test/fetchphpunit.php
+                  cd _test
+                  cp mysql.conf.php.dist mysql.conf.php
+                  cp pgsql.conf.php.dist pgsql.conf.php
+
+            - name: Run PHPUnit
+              run: |
+                cd _test
+                php phpunit.phar --verbose --stderr

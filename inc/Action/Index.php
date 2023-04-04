@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui;
+
 /**
  * Class Index
  *
@@ -9,17 +11,19 @@ namespace dokuwiki\Action;
  *
  * @package dokuwiki\Action
  */
-class Index extends AbstractAction {
-
+class Index extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_NONE;
     }
 
     /** @inheritdoc */
-    public function tplContent() {
+    public function tplContent()
+    {
         global $IDX;
-        html_index($IDX);
+        (new Ui\Index($IDX))->show();
     }
 
 }

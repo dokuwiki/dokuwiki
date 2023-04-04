@@ -213,7 +213,7 @@ $lang['created']               = 'اُنشئت';
 $lang['restored']              = 'استعيدت نسخة قديمة (%s)';
 $lang['external_edit']         = 'تحرير خارجي';
 $lang['summary']               = 'ملخص التحرير';
-$lang['noflash']               = 'تحتاج إلى<a href="http://www.adobe.com/products/flashplayer/">ملحق فلاش أدوبي</a> لعرض هذا المحتوى.';
+$lang['noflash']               = 'تحتاج إلى<a href="http://get.adobe.com/flashplayer">ملحق فلاش أدوبي</a> لعرض هذا المحتوى.';
 $lang['download']              = 'نزل Snippet';
 $lang['tools']                 = 'أدوات';
 $lang['user_tools']            = 'أدوات المستخدم';
@@ -294,7 +294,7 @@ $lang['i_enableacl']           = 'تفعيل ACL - مفضل';
 $lang['i_superuser']           = 'مشرف';
 $lang['i_problems']            = 'وجد برنامج التنصيب المشاكل التالية، لا يمكنك المتابعة قبل حلها.';
 $lang['i_modified']            = 'لأسباب أمنية هذا البرنامج سيعمل فقط مع تنصيب دوكو ويكي جديد و غير معدّل.
-يجب أن تعيد فك ضغط الملفات مرة أخرى من المكتبة المضغوطة، أو راجع <a href="http://dokuwiki.org/install"> تعليمات تنصيب دوكو ويكي </a> ';
+يجب أن تعيد فك ضغط الملفات مرة أخرى من المكتبة المضغوطة، أو راجع <a href="https://www.dokuwiki.org/install"> تعليمات تنصيب دوكو ويكي </a> ';
 $lang['i_funcna']              = 'دالة PHP التالية غير متوفرة.
 <code>%s</code>
 قد يكون مزود خدمة الاستفادة قد حجبها لسبب ما.';

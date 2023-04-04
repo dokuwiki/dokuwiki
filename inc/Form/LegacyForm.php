@@ -1,4 +1,5 @@
 <?php
+
 namespace dokuwiki\Form;
 
 /**
@@ -11,23 +12,24 @@ namespace dokuwiki\Form;
  *
  * @package dokuwiki\Form
  */
-class LegacyForm extends Form {
-
+class LegacyForm extends Form
+{
     /**
      * Creates a new modern form from an old legacy Doku_Form
      *
      * @param \Doku_Form $oldform
      */
-    public function __construct(\Doku_Form $oldform) {
+    public function __construct(\Doku_Form $oldform)
+    {
         parent::__construct($oldform->params);
 
         $this->hidden = $oldform->_hidden;
 
-        foreach($oldform->_content as $element) {
+        foreach ($oldform->_content as $element) {
             list($ctl, $attr) = $this->parseLegacyAttr($element);
 
-            if(is_array($element)) {
-                switch($ctl['elem']) {
+            if (is_array($element)) {
+                switch ($ctl['elem']) {
                     case 'wikitext':
                         $this->addTextarea('wikitext')
                              ->attrs($attr)
@@ -111,12 +113,13 @@ class LegacyForm extends Form {
      * @param array $legacy
      * @return array
      */
-    protected function parseLegacyAttr($legacy) {
+    protected function parseLegacyAttr($legacy)
+    {
         $attributes = array();
         $control = array();
 
-        foreach($legacy as $key => $val) {
-            if($key[0] == '_') {
+        foreach ($legacy as $key => $val) {
+            if ($key[0] == '_') {
                 $control[substr($key, 1)] = $val;
             } elseif($key == 'name') {
                 $control[$key] = $val;
@@ -136,7 +139,8 @@ class LegacyForm extends Form {
      * @param string $type
      * @return string
      */
-    protected function legacyType($type) {
+    protected function legacyType($type)
+    {
         static $types = array(
             'text' => 'textfield',
             'password' => 'passwordfield',
@@ -147,7 +151,7 @@ class LegacyForm extends Form {
             'fieldsetopen' => 'openfieldset',
             'fieldsetclose' => 'closefieldset',
         );
-        if(isset($types[$type])) return $types[$type];
+        if (isset($types[$type])) return $types[$type];
         return $type;
     }
 
@@ -156,20 +160,21 @@ class LegacyForm extends Form {
      *
      * @return \Doku_Form
      */
-    public function toLegacy() {
+    public function toLegacy()
+    {
         $this->balanceFieldsets();
 
         $legacy = new \Doku_Form($this->attrs());
         $legacy->_hidden = $this->hidden;
-        foreach($this->elements as $element) {
-            if(is_a($element, 'dokuwiki\Form\HTMLElement')) {
+        foreach ($this->elements as $element) {
+            if (is_a($element, 'dokuwiki\Form\HTMLElement')) {
                 $legacy->_content[] = $element->toHTML();
-            } elseif(is_a($element, 'dokuwiki\Form\InputElement')) {
+            } elseif (is_a($element, 'dokuwiki\Form\InputElement')) {
                 /** @var InputElement $element */
                 $data = $element->attrs();
                 $data['_elem'] = $this->legacyType($element->getType());
                 $label = $element->getLabel();
-                if($label) {
+                if ($label) {
                     $data['_class'] = $label->attr('class');
                 }
                 $legacy->_content[] = $data;

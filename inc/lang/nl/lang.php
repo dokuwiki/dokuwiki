@@ -3,11 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Mark Prins <mprins@users.sf.net>
  * @author PBU <pbu@xs4all.nl>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Andy <astolker@icloud.com>
  * @author Harriet Neitz <harrietneitz@gmail.com>
- * @author mark prins <mprins@users.sf.net>
  * @author François Kooman <fkooman.tuxed.net>
  * @author Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
  * @author Riny Heijdendael <riny@heijdendael.nl>
@@ -239,7 +239,7 @@ $lang['created']               = 'aangemaakt';
 $lang['restored']              = 'oude revisie hersteld (%s)';
 $lang['external_edit']         = 'Externe bewerking';
 $lang['summary']               = 'Samenvatting wijziging';
-$lang['noflash']               = 'De <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> is vereist om de pagina te kunnen weergeven.';
+$lang['noflash']               = 'De <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> is vereist om de pagina te kunnen weergeven.';
 $lang['download']              = 'Download fragment';
 $lang['tools']                 = 'Hulpmiddelen';
 $lang['user_tools']            = 'Gebruikershulpmiddelen';
@@ -319,7 +319,7 @@ $lang['i_wikiname']            = 'Wikinaam';
 $lang['i_enableacl']           = 'ACLs inschakelen (aanbevolen)';
 $lang['i_superuser']           = 'Superuser';
 $lang['i_problems']            = 'De installer vond problemen, hieronder aangegeven. Verhelp deze voor je doorgaat.';
-$lang['i_modified']            = 'Uit veiligheidsoverwegingen werkt dit script alleen met nieuwe en onveranderde DokuWiki-installaties. Pak de bestanden opnieuw uit of raadpleeg de <a href="http://dokuwiki.org/install">Dokuwiki installatie-instructies</a>';
+$lang['i_modified']            = 'Uit veiligheidsoverwegingen werkt dit script alleen met nieuwe en onveranderde DokuWiki-installaties. Pak de bestanden opnieuw uit of raadpleeg de <a href="https://www.dokuwiki.org/install">Dokuwiki installatie-instructies</a>';
 $lang['i_funcna']              = 'PHP functie <code>%s</code> is niet beschikbaar. Wellicht heeft je hosting provider deze uitgeschakeld?';
 $lang['i_phpver']              = 'PHP-versie <code>%s</code> is lager dan de vereiste <code>%s</code>. Upgrade PHP.';
 $lang['i_mbfuncoverload']      = 'Om DokuWiki te draaien moet mbstring.func_overload uitgeschakeld zijn in php.ini.';
@@ -373,6 +373,7 @@ $lang['media_perm_upload']     = 'Sorry, u heeft niet voldoende rechten om besta
 $lang['media_update']          = 'Upload nieuwe versie';
 $lang['media_restore']         = 'Deze versie terugzetten';
 $lang['media_acl_warning']     = 'De lijst is mogelijk niet compleet door ACL beperkingen en verborgen pagina\'s.';
+$lang['email_fail']            = 'PHP mail() ontbreekt of is uitgeschakeld. De volgende e-mail is niet verzonden:';
 $lang['currentns']             = 'Huidige namespace';
 $lang['searchresult']          = 'Zoekresultaat';
 $lang['plainhtml']             = 'Alleen HTML';

@@ -1,4 +1,5 @@
 <?php
+
 namespace dokuwiki\Form;
 
 /**
@@ -8,8 +9,8 @@ namespace dokuwiki\Form;
  *
  * @package dokuwiki\Form
  */
-abstract class Element {
-
+abstract class Element
+{
     /**
      * @var array the attributes of this element
      */
@@ -24,7 +25,8 @@ abstract class Element {
      * @param string $type The type of this element
      * @param array $attributes
      */
-    public function __construct($type, $attributes = array()) {
+    public function __construct($type, $attributes = array())
+    {
         $this->type = $type;
         $this->attributes = $attributes;
     }
@@ -34,7 +36,8 @@ abstract class Element {
      *
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
@@ -51,15 +54,16 @@ abstract class Element {
      * @param null|string $value New value to set
      * @return string|$this
      */
-    public function attr($name, $value = null) {
+    public function attr($name, $value = null)
+    {
         // set
-        if($value !== null) {
+        if ($value !== null) {
             $this->attributes[$name] = $value;
             return $this;
         }
 
         // get
-        if(isset($this->attributes[$name])) {
+        if (isset($this->attributes[$name])) {
             return $this->attributes[$name];
         } else {
             return '';
@@ -72,8 +76,9 @@ abstract class Element {
      * @param string $name
      * @return $this
      */
-    public function rmattr($name) {
-        if(isset($this->attributes[$name])) {
+    public function rmattr($name)
+    {
+        if (isset($this->attributes[$name])) {
             unset($this->attributes[$name]);
         }
         return $this;
@@ -85,10 +90,11 @@ abstract class Element {
      * @param array|null $attributes
      * @return array|$this
      */
-    public function attrs($attributes = null) {
+    public function attrs($attributes = null)
+    {
         // set
-        if($attributes) {
-            foreach((array) $attributes as $key => $val) {
+        if ($attributes) {
+            foreach ((array) $attributes as $key => $val) {
                 $this->attr($key, $val);
             }
             return $this;
@@ -105,7 +111,8 @@ abstract class Element {
      * @param string $class the new class to add
      * @return $this
      */
-    public function addClass($class) {
+    public function addClass($class)
+    {
         $classes = explode(' ', $this->attr('class'));
         $classes[] = $class;
         $classes = array_unique($classes);
@@ -122,8 +129,9 @@ abstract class Element {
      * @param null|string $id
      * @return string|$this
      */
-    public function id($id = null) {
-        if(strpos($id, '__') === false) {
+    public function id($id = null)
+    {
+        if (strpos($id, '__') === false) {
             throw new \InvalidArgumentException('IDs in DokuWiki have to contain two subsequent underscores');
         }
 
@@ -138,7 +146,8 @@ abstract class Element {
      * @param null|string $value
      * @return string|$this
      */
-    public function val($value = null) {
+    public function val($value = null)
+    {
         return $this->attr('value', $value);
     }
 

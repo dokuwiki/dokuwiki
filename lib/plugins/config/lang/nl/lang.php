@@ -3,10 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Mark Prins <mprins@users.sf.net>
  * @author PBU <pbu@xs4all.nl>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Harriet Neitz <harrietneitz@gmail.com>
- * @author mark prins <mprins@users.sf.net>
  * @author Pieter van der Meulen <pieter@vdmeulen.net>
  * @author Wouter Schoot <wouter@schoot.org>
  * @author John de Graaff <john@de-graaff.net>
@@ -127,12 +127,14 @@ $lang['mailfrom']              = 'E-mailadres van afzender voor automatische e-m
 $lang['mailreturnpath']        = 'Email adres voor de ontvanger van meldingen van niet-afleverbare berichten';
 $lang['mailprefix']            = 'Te gebruiken voorvoegsel voor onderwerp automatische email. Leeglaten gebruik de wikititel.';
 $lang['htmlmail']              = 'Zend multipart HTML e-mail. Dit ziet er beter uit, maar is groter. Uitschakelen betekent e-mail in platte tekst.';
+$lang['dontlog']               = 'Schakel logging uit voor de volgende opties.';
 $lang['sitemap']               = 'Genereer Google sitemap (dagen). 0 betekent uitschakelen.';
 $lang['rss_type']              = 'XML feed type';
 $lang['rss_linkto']            = 'XML feed linkt naar';
 $lang['rss_content']           = 'Wat moet er in de XML feed items weergegeven worden?';
 $lang['rss_update']            = 'XML feed verversingsinterval (sec)';
 $lang['rss_show_summary']      = 'XML feed samenvatting in titel weergeven';
+$lang['rss_show_deleted']      = 'XML-feed Toon verwijderde feeds';
 $lang['rss_media']             = 'Welk type verandering moet in de XML feed worden weergegeven?';
 $lang['rss_media_o_both']      = 'beide';
 $lang['rss_media_o_pages']     = 'pagina\'s';
@@ -161,6 +163,8 @@ $lang['search_fragment_o_starts_with'] = 'begint met';
 $lang['search_fragment_o_ends_with'] = 'eindigt op';
 $lang['search_fragment_o_contains'] = 'bevat';
 $lang['trustedproxy']          = 'Vertrouw op doorstuurproxy\'s die overeenkomen met deze reguliere expressie over het echte client-IP dat ze rapporteren. De standaard komt overeen met lokale netwerken. Laat leeg om geen proxy te vertrouwen.';
+$lang['_feature_flags']        = 'Functievlaggen';
+$lang['defer_js']              = 'Stel uitvoeren van javascript uit todat de HTML van de pagina is geparsed. Verbetert de waargenomen paginasnelheid, maar kan bij een klein aantal plug-ins voor problemen zorgen.';
 $lang['dnslookups']            = 'DokuWiki zoekt de hostnamen van IP-adressen van gebruikers die pagina wijzigen op. Schakel deze optie uit als je geen of een langzame DNS server hebt.';
 $lang['jquerycdn']             = 'Moet er een CDN gebruikt worden om de jQuery en jQuery UI bestanden te laden. Dit zorgt voor extra HTTP verzoeken, maar bestanden laden mogelijk sneller en zitten misschien al in de cache van de gebruiker.';
 $lang['jquerycdn_o_0']         = 'Geen CDN gebruiken';

@@ -12,10 +12,12 @@ use dokuwiki\Action\Exception\ActionException;
  *
  * @package dokuwiki\Action
  */
-class Revert extends AbstractAction {
+class Revert extends AbstractUserAction
+{
 
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_EDIT;
     }
 
@@ -26,8 +28,9 @@ class Revert extends AbstractAction {
      * @throws ActionException
      * @todo check for writability of the current page ($INFO might do it wrong and check the attic version)
      */
-    public function preProcess() {
-        if(!checkSecurityToken()) throw new ActionException();
+    public function preProcess()
+    {
+        if (!checkSecurityToken()) throw new ActionException();
 
         global $ID;
         global $REV;
@@ -37,14 +40,14 @@ class Revert extends AbstractAction {
         // FIXME this feature is not exposed in the GUI currently
         $text = '';
         $sum = $lang['deleted'];
-        if($REV) {
+        if ($REV) {
             $text = rawWiki($ID, $REV);
-            if(!$text) throw new ActionException(); //something went wrong
+            if (!$text) throw new ActionException(); //something went wrong
             $sum = sprintf($lang['restored'], dformat($REV));
         }
 
         // spam check
-        if(checkwordblock($text)) {
+        if (checkwordblock($text)) {
             msg($lang['wordblock'], -1);
             throw new ActionException('edit');
         }

@@ -12,15 +12,16 @@ class BulkSubscriptionsSenderTest extends DokuWikiTest
 
     private $originalSubscriptionConfig;
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         global $conf;
         $this->originalSubscriptionConfig = $conf['subscribers'];
         $conf['subscribers'] = true;
+        $conf['mailfromnobody'] = 'phpunit@example.com';
     }
 
-    protected function tearDown()
+    protected function tearDown() : void
     {
         global $conf;
         $conf['subscribers'] = $this->originalSubscriptionConfig;

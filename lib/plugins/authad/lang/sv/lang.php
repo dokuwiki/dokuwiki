@@ -4,7 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Tor Härnqvist <tor@harnqvist.se>
- * @author Smorkster Andersson smorkster@gmail.com
+ * @author Smorkster Andersson <smorkster@gmail.com>
  */
 $lang['domain']                = 'Inloggningsdomän';
 $lang['authpwdexpire']         = 'Ditt lösenord kommer att bli ogiltigt om %d dagar, du bör ändra det snart.';

@@ -3,6 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Paul Nizan <paul_nizan@hormail.com>
+ * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
+ * @author ANDRE BASSANI DE FREITAS <dedebf@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Davi Jorge <davimoises2015@hotmail.com>
  * @author Schopf <pschopf@gmail.com>
@@ -133,6 +136,7 @@ $lang['mailfrom']              = 'Endereço de e-mail a ser utilizado para mensa
 $lang['mailreturnpath']        = 'Endereço de e-mail do destinatário para notificações de falha de entrega';
 $lang['mailprefix']            = 'Prefixo do assunto dos e-mails de envio automático';
 $lang['htmlmail']              = 'Enviar e-mail HTML multipartes, que têm uma aparência melhor, mas um tamanho maior. Desabilite para enviar e-mails em texto puro.';
+$lang['dontlog']               = 'Desabilita o registro de log para os seguintes tipos de logs.';
 $lang['sitemap']               = 'Gerar Google Sitemap (dias)';
 $lang['rss_type']              = 'Tipo de fonte XML';
 $lang['rss_linkto']            = 'Os links da fonte XML apontam para';

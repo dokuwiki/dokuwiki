@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Extension;
 
+use dokuwiki\ErrorHandler;
+
 /**
  * Class to encapsulate access to dokuwiki plugins
  *
@@ -90,42 +92,49 @@ class PluginController
 
         $class = $type . '_plugin_' . $name;
 
-        //plugin already loaded?
-        if (!empty($DOKU_PLUGINS[$type][$name])) {
-            if ($new || !$DOKU_PLUGINS[$type][$name]->isSingleton()) {
-                return class_exists($class, true) ? new $class : null;
+        try {
+            //plugin already loaded?
+            if (!empty($DOKU_PLUGINS[$type][$name])) {
+                if ($new || !$DOKU_PLUGINS[$type][$name]->isSingleton()) {
+
+                    return class_exists($class, true) ? new $class : null;
+                }
+
+                return $DOKU_PLUGINS[$type][$name];
             }
 
-            return $DOKU_PLUGINS[$type][$name];
-        }
-
-        //construct class and instantiate
-        if (!class_exists($class, true)) {
-
-            # the plugin might be in the wrong directory
-            $inf = confToHash(DOKU_PLUGIN . "$plugin/plugin.info.txt");
-            if ($inf['base'] && $inf['base'] != $plugin) {
-                msg(
-                    sprintf(
-                        "Plugin installed incorrectly. Rename plugin directory '%s' to '%s'.",
-                        hsc($plugin),
-                        hsc(
-                            $inf['base']
-                        )
-                    ), -1
-                );
-            } elseif (preg_match('/^' . DOKU_PLUGIN_NAME_REGEX . '$/', $plugin) !== 1) {
-                msg(
-                    sprintf(
-                        "Plugin name '%s' is not a valid plugin name, only the characters a-z and 0-9 are allowed. " .
-                        'Maybe the plugin has been installed in the wrong directory?', hsc($plugin)
-                    ), -1
-                );
+            //construct class and instantiate
+            if (!class_exists($class, true)) {
+                # the plugin might be in the wrong directory
+                $inf = confToHash(DOKU_PLUGIN . "$plugin/plugin.info.txt");
+                if ($inf['base'] && $inf['base'] != $plugin) {
+                    msg(
+                        sprintf(
+                            "Plugin installed incorrectly. Rename plugin directory '%s' to '%s'.",
+                            hsc($plugin),
+                            hsc(
+                                $inf['base']
+                            )
+                        ), -1
+                    );
+                } elseif (preg_match('/^' . DOKU_PLUGIN_NAME_REGEX . '$/', $plugin) !== 1) {
+                    msg(
+                        sprintf(
+                            "Plugin name '%s' is not a valid plugin name, only the characters a-z ".
+                            "and 0-9 are allowed. " .
+                            'Maybe the plugin has been installed in the wrong directory?', hsc($plugin)
+                        ), -1
+                    );
+                }
+                return null;
             }
+            $DOKU_PLUGINS[$type][$name] = new $class;
+
+        } catch (\Throwable $e) {
+            ErrorHandler::showExceptionMsg($e, sprintf('Failed to load plugin %s', $plugin));
             return null;
         }
 
-        $DOKU_PLUGINS[$type][$name] = new $class;
         return $DOKU_PLUGINS[$type][$name];
     }
 
@@ -265,7 +274,7 @@ class PluginController
                 $backup = $file . '.bak';
                 if (file_exists($backup)) @unlink($backup);
                 if (!@copy($file, $backup)) return false;
-                if (!empty($conf['fperm'])) chmod($backup, $conf['fperm']);
+                if ($conf['fperm']) chmod($backup, $conf['fperm']);
             }
             //check if can open for writing, else restore
             return io_saveFile($file, $out);

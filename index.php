@@ -17,7 +17,7 @@ if (php_sapi_name() != 'cli-server') {
     if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/');
     require_once(DOKU_INC . 'inc/init.php');
 
-    send_redirect(DOKU_URL . 'doku.php');
+    send_redirect(wl($conf['start']));
 }
 
 // ROUTER starts below

@@ -1,0 +1,50 @@
+name: Build and Publish
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+
+      - name: Get the version
+        id: get_version
+        run: php .github/version.php "${GITHUB_REF}"
+
+      - name: Build TGZ
+        run: |
+          rm -rf .gitignore
+          rm -rf .git
+          rm -rf .github
+          rm -rf .gitattributes
+          rm -rf _test
+          rm -f .editorconfig
+          mkdir -p data/pages/playground
+          echo "====== PlayGround ======" > data/pages/playground/playground.txt
+          cd ..
+          mv dokuwiki "dokuwiki-${{ steps.get_version.outputs.VERSION }}"
+          tar -czvf "dokuwiki-${{ steps.get_version.outputs.VERSION }}.tgz" dokuwiki-${{ steps.get_version.outputs.VERSION }}
+          rm -rf "dokuwiki-${{ steps.get_version.outputs.VERSION }}"
+          mkdir dokuwiki
+          mv "dokuwiki-${{ steps.get_version.outputs.VERSION }}.tgz" dokuwiki/
+
+      - name: Setup SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # generate with ssh-keyscan -H <server>
+          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+
+      - name: Deploy to Server
+        run: |
+          scp "dokuwiki-${{ steps.get_version.outputs.VERSION }}.tgz" ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:htdocs/src/dokuwiki/
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd htdocs/src/dokuwiki/ && tar -xzvf dokuwiki-${{ steps.get_version.outputs.VERSION }}.tgz"

@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui;
+
 /**
  * Class Recent
  *
@@ -9,21 +11,23 @@ namespace dokuwiki\Action;
  *
  * @package dokuwiki\Action
  */
-class Recent extends AbstractAction {
-
+class Recent extends AbstractAction
+{
     /** @var string what type of changes to show */
     protected $showType = 'both';
 
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_NONE;
     }
 
     /** @inheritdoc */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $INPUT;
         $show_changes = $INPUT->str('show_changes');
-        if(!empty($show_changes)) {
+        if (!empty($show_changes)) {
             set_doku_pref('show_changes', $show_changes);
             $this->showType = $show_changes;
         } else {
@@ -32,9 +36,10 @@ class Recent extends AbstractAction {
     }
 
     /** @inheritdoc */
-    public function tplContent() {
+    public function tplContent()
+    {
         global $INPUT;
-        html_recent((int) $INPUT->extract('first')->int('first'), $this->showType);
+        (new Ui\Recent($INPUT->extract('first')->int('first'), $this->showType))->show();
     }
 
 }

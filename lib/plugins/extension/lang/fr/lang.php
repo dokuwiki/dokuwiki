@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
- * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Damien Regad <dregad@mantisbt.org>
  * @author Yves Grandvalet <Yves.Grandvalet@laposte.net>
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
@@ -48,7 +48,7 @@ $lang['downloadurl']           = 'Téléchargement :';
 $lang['repository']            = 'Dépôt : ';
 $lang['unknown']               = '<em>inconnu</em>';
 $lang['installed_version']     = 'Version installée :';
-$lang['install_date']          = 'Dernière mise à jour :';
+$lang['install_date']          = 'Dernière mise à jour :';
 $lang['available_version']     = 'Version disponible :';
 $lang['compatible']            = 'Compatible avec :';
 $lang['depends']               = 'Dépend de :';

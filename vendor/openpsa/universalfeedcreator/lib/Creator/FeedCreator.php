@@ -171,8 +171,8 @@ abstract class FeedCreator extends HtmlDescribable
     abstract public function createFeed();
 
     /**
-     * Generate a filename for the feed cache file. The result will be $_SERVER["PHP_SELF"] with the extension changed
-     * to .xml. For example: echo $_SERVER["PHP_SELF"]."\n"; echo FeedCreator::_generateFilename(); would produce:
+     * Generate a filename for the feed cache file. The result will be $_SERVER["SCRIPT_NAME"] with the extension changed
+     * to .xml. For example: echo $_SERVER["SCRIPT_NAME"]."\n"; echo FeedCreator::_generateFilename(); would produce:
      * /rss/latestnews.php
      * latestnews.xml
      *
@@ -182,7 +182,7 @@ abstract class FeedCreator extends HtmlDescribable
      */
     protected function _generateFilename()
     {
-        $fileInfo = pathinfo($_SERVER["PHP_SELF"]);
+        $fileInfo = pathinfo($_SERVER["SCRIPT_NAME"]);
 
         return substr($fileInfo["basename"], 0, -(strlen($fileInfo["extension"]) + 1)).".xml";
     }
@@ -227,7 +227,7 @@ abstract class FeedCreator extends HtmlDescribable
      *
      * @since 1.4
      * @param string $filename optional    the filename where a recent version of the feed is saved. If not specified,
-     *                         the filename is $_SERVER["PHP_SELF"] with the extension changed to .xml (see
+     *                         the filename is $_SERVER["SCRIPT_NAME"] with the extension changed to .xml (see
      *                         _generateFilename()).
      * @param int $timeout     optional    the timeout in seconds before a cached version is refreshed (defaults to
      *                         3600 = 1 hour)
@@ -249,7 +249,7 @@ abstract class FeedCreator extends HtmlDescribable
      *
      * @since 1.4
      * @param string $filename      optional    the filename where a recent version of the feed is saved. If not
-     *                              specified, the filename is $_SERVER["PHP_SELF"] with the extension changed to .xml
+     *                              specified, the filename is $_SERVER["SCRIPT_NAME"] with the extension changed to .xml
      *                              (see _generateFilename()).
      * @param bool $displayContents optional    send an HTTP redirect header or not. If true, the user will be
      *                              automatically redirected to the created file.

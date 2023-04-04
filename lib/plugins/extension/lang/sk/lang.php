@@ -75,6 +75,7 @@ $lang['msg_template_update_success'] = 'Šablóna %s úspešne aktualizovaná';
 $lang['msg_plugin_install_success'] = 'Plugin %s úspešne nainštalovaný';
 $lang['msg_plugin_update_success'] = 'Plugin %s úspešne aktualizovaný';
 $lang['msg_upload_failed']     = 'Nahrávanie súboru zlyhalo';
+$lang['msg_nooverwrite']       = 'Rozšírenie %s už existuje a nebude prepísané; aby ste ho prepísali, povoľte príslušnú voľbu';
 $lang['missing_dependency']    = '<strong>Chýbajúca alebo nepovolená závislosť:</strong> %s';
 $lang['security_issue']        = '<strong>Bezpečnostný problém:</strong> %s';
 $lang['security_warning']      = '<strong>Bezpečnostné upozornenie:</strong> %s';

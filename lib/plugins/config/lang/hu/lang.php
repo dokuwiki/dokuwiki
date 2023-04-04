@@ -3,12 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Hamp Gábor <gabor.hamp@gmail.com>
+ * @author Viktor Horváth <horvath.viktor@forrastrend.hu>
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
- * @author schilling.janos@gmail.com
+ * @author schilling.janos <schilling.janos@gmail.com>
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
- * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
- * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  * @author Marton Sebok <sebokmarton@gmail.com>
  */
 $lang['menu']                  = 'Beállítóközpont';
@@ -127,6 +127,8 @@ $lang['rss_content']           = 'Mit mutassunk az XML hírfolyam elemekben?';
 $lang['rss_update']            = 'Hány másodpercenként frissítsük az XML hírfolyamot?';
 $lang['rss_show_summary']      = 'A hírfolyam címébe összefoglaló helyezése';
 $lang['rss_media']             = 'Milyen változások legyenek felsorolva az XML hírfolyamban?';
+$lang['rss_media_o_both']      = 'mindkettő';
+$lang['rss_media_o_pages']     = 'oldalak';
 $lang['updatecheck']           = 'Frissítések és biztonsági figyelmeztetések figyelése. Ehhez a DokuWikinek kapcsolatba kell lépnie a update.dokuwiki.org-gal.';
 $lang['userewrite']            = 'Szép URL-ek használata';
 $lang['useslash']              = 'Per-jel használata névtér-elválasztóként az URL-ekben';
@@ -144,6 +146,8 @@ $lang['xsendfile']             = 'Használjuk az X-Sendfile fejlécet, hogy a we
 $lang['renderer_xhtml']        = 'Az elsődleges (xhtml) wiki kimenet generálója';
 $lang['renderer__core']        = '%s (dokuwiki mag)';
 $lang['renderer__plugin']      = '%s (bővítmény)';
+$lang['search_fragment_o_exact'] = 'pontosan';
+$lang['search_fragment_o_contains'] = 'tartalmaz';
 $lang['dnslookups']            = 'A DokuWiki megpróbál hosztneveket keresni a távoli IP-címekhez. Amennyiben lassú, vagy nem működő DNS-szervered van vagy csak nem szeretnéd ezt a funkciót, tiltsd le ezt az opciót!';
 $lang['proxy____host']         = 'Proxy-szerver neve';
 $lang['proxy____port']         = 'Proxy port';

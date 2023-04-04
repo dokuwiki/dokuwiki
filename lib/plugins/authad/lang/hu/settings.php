@@ -2,7 +2,8 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author Hamp Gábor <gabor.hamp@gmail.com>
  * @author Marton Sebok <sebokmarton@gmail.com>
  * @author Marina Vladi <deldadam@gmail.com>
  */
@@ -19,3 +20,4 @@ $lang['use_tls']               = 'TLS használata? Ha használjuk, tiltsuk le az
 $lang['debug']                 = 'További hibakeresési üzenetek megjelenítése hiba esetén';
 $lang['expirywarn']            = 'Felhasználók értesítése ennyi nappal a jelszavuk lejárata előtt. 0 a funkció kikapcsolásához.';
 $lang['additional']            = 'Vesszővel elválasztott lista a további AD attribútumok lekéréséhez. Néhány bővítmény használhatja.';
+$lang['update_mail']           = 'A felhasználók frissíthetik (megváltozatathatják) az emailcímüket?';

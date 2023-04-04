@@ -3,7 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Paulo Schopf <pschopf@gmail.com>
+ * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
+ * @author Paulo <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
  * @author Maykon Oliveira <maykonoliveira850@gmail.com>
  * @author José Vieira <jmsv63@gmail.com>
@@ -124,6 +125,7 @@ $lang['js']['media_done_btn']  = 'Feito';
 $lang['js']['media_drop']      = 'Largue arquivo aqui para enviar';
 $lang['js']['media_cancel']    = 'excluir';
 $lang['js']['media_overwrt']   = 'Escrever por cima de arquivos existentes';
+$lang['js']['data_insecure']   = 'AVISO: Parece que seu diretório de dados não está devidamente protegido. Por favor leia sobre <a href="https://www.dokuwiki.org/security#web_access_security">Segurança de acesso à web em DokuWiki</a>.';
 $lang['search_exact_match']    = 'Correspondência exata';
 $lang['search_starts_with']    = 'Começa por';
 $lang['search_ends_with']      = 'Termina em';
@@ -172,6 +174,7 @@ $lang['txt_upload']            = 'Escolha arquivo a carregar:';
 $lang['txt_filename']          = 'Carregar como (opcional):';
 $lang['txt_overwrt']           = 'Sobrescrever arquivo';
 $lang['maxuploadsize']         = 'Enviar %s max. por arquivo.';
+$lang['allowedmime']           = 'Lista de extensões de arquivo permitidas';
 $lang['lockedby']              = 'Bloqueado por:';
 $lang['lockexpire']            = 'Expira em:';
 $lang['rssfailed']             = 'Erro ao buscar informação deste feed:';
@@ -225,7 +228,7 @@ $lang['created']               = 'criado';
 $lang['restored']              = 'versão anterior restaurada (%s)';
 $lang['external_edit']         = 'edição externa';
 $lang['summary']               = 'Sumário da edição';
-$lang['noflash']               = 'O <a href="http://www.adobe.com/products/flashplayer/">Plugin Adobe Flash</a> é necessário para exibir este conteúdo.';
+$lang['noflash']               = 'O <a href="http://get.adobe.com/flashplayer">Plugin Adobe Flash</a> é necessário para exibir este conteúdo.';
 $lang['download']              = 'Baixar Snippet';
 $lang['tools']                 = 'Ferramentas';
 $lang['user_tools']            = 'Ferramentas de Usuário';
@@ -305,10 +308,10 @@ $lang['i_wikiname']            = 'Nome Wiki';
 $lang['i_enableacl']           = 'Ativar ACL (recomendado)';
 $lang['i_superuser']           = 'Superusuário';
 $lang['i_problems']            = 'O instalador encontrou alguns problemas, indicados abaixo. Não pode continuar até que sejam corrigidos.';
-$lang['i_modified']            = 'Por razões de segurança, este script só funciona em novas e não-modificadas instalações do Dokuwiki. Você deve re-extrair os arquivos do pacote que baixou ou então consultar as <a href="http://dokuwiki.org/install">instruções de instalação do Dokuwiki</a>';
+$lang['i_modified']            = 'Por razões de segurança, este script só funciona em novas e não-modificadas instalações do Dokuwiki. Você deve re-extrair os arquivos do pacote que baixou ou então consultar as <a href="https://www.dokuwiki.org/install">instruções de instalação do Dokuwiki</a>';
 $lang['i_funcna']              = 'A função PHP <code>%s</code> não está disponível. Talvez o host a tenha desativado-a por alguma razão?';
 $lang['i_disabled']            = 'Isso foi desativado pelo seu provedor.';
-$lang['i_funcnmail']           = '<b>Nota:</b> A função mail do PHP não está disponível. %s Se ela permanecer indisponível, instale o <a href="http://dokuwiki.org/plugins/smtp">plugin smtp</a>.';
+$lang['i_funcnmail']           = '<b>Nota:</b> A função mail do PHP não está disponível. %s Se ela permanecer indisponível, instale o <a href="https://www.dokuwiki.org/plugin:smtp">plugin smtp</a>.';
 $lang['i_phpver']              = 'A versão de PHP actual <code>%s</code> é inferior à versão mínima <code>%s</code>. É preciso atualizar a instalação PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload deve ser desativada no php.ini para executar o DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki não pode criar números criptograficamente seguros para cookies. Verifique a configuração open_basedir no php.ini para um acesso <code>/dev/urandom</code> adequado.';

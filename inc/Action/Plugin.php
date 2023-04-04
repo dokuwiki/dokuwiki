@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Extension\Event;
+
 /**
  * Class Plugin
  *
@@ -23,7 +25,7 @@ class Plugin extends AbstractAction {
      * @triggers TPL_ACT_UNKNOWN
      */
     public function tplContent() {
-        $evt = new \dokuwiki\Extension\Event('TPL_ACT_UNKNOWN', $this->actionname);
+        $evt = new Event('TPL_ACT_UNKNOWN', $this->actionname);
         if($evt->advise_before()) {
             msg('Failed to handle action: ' . hsc($this->actionname), -1);
         }

@@ -7,6 +7,10 @@
  * @author Clarence Lee <clarencedglee@gmail.com>
  */
 
+.dokuwiki.export {
+    background-color: @ini_background;
+}
+
 /* header
 ********************************************************************/
 
@@ -22,10 +26,11 @@
         margin-top: .2em;
     }
 
-    h1 {
+    .logo {
         margin: 0;
         font-size: 1.5em;
         font-weight: normal;
+        line-height: 1.2;
 
         img {
             float: left;
@@ -56,7 +61,7 @@
     }
 }
 
-[dir=rtl] #dokuwiki__header h1 img {
+[dir=rtl] #dokuwiki__header .logo img {
     float: right;
     margin-left: .5em;
     margin-right: 0;
@@ -298,6 +303,7 @@ form.search {
 .dokuwiki .docInfo {
     font-size: 0.875em;
     text-align: right;
+    overflow-wrap: break-word;
 }
 
 /* license note under edit window */

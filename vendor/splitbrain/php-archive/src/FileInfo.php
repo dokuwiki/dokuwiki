@@ -38,6 +38,24 @@ class FileInfo
     }
 
     /**
+     * Handle calls to deprecated methods
+     *
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     */
+    public function __call($name, $arguments)
+    {
+        if($name === 'match') {
+            trigger_error('FileInfo::match() is deprecated, use FileInfo::matchExpression() instead.', E_USER_NOTICE);
+            return call_user_func_array([$this, $name], $arguments);
+        }
+
+        trigger_error('Call to undefined method FileInfo::'.$name.'()', E_USER_ERROR);
+        return null;
+    }
+
+    /**
      * Factory to build FileInfo from existing file or directory
      *
      * @param string $path path to a file on the local file system
@@ -324,7 +342,7 @@ class FileInfo
      * @param string $exclude Regular expression of files to exclude
      * @return bool
      */
-    public function match($include = '', $exclude = '')
+    public function matchExpression($include = '', $exclude = '')
     {
         $extract = true;
         if ($include && !preg_match($include, $this->getPath())) {

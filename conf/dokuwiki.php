@@ -66,6 +66,7 @@ $conf['auth_security_timeout'] = 900;    //time (seconds) auth data is considere
 $conf['securecookie'] = 1;               //never send HTTPS cookies via HTTP
 $conf['remote']      = 0;                //Enable/disable remote interfaces
 $conf['remoteuser']  = '!!not set!!';    //user/groups that have access to remote interface (comma separated). leave empty to allow all users
+$conf['remotecors']  = '';               //enable Cross-Origin Resource Sharing (CORS) for the remote interfaces. Asterisk (*) to allow all origins. leave empty to deny.
 
 /* Antispam Features */
 $conf['usewordblock']= 1;                //block spam based on words? 0|1
@@ -111,6 +112,7 @@ $conf['mailfrom']    = '';               //use this email when sending mails
 $conf['mailreturnpath']    = '';         //use this email as returnpath for bounce mails
 $conf['mailprefix']  = '';               //use this as prefix of outgoing mails
 $conf['htmlmail']    = 1;                //send HTML multipart mails
+$conf['dontlog'] = 'debug';              //logging facilites that should be disabled
 
 /* Syndication Settings */
 $conf['sitemap']     = 0;                //Create a google sitemap? How often? In days.

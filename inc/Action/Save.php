@@ -44,7 +44,10 @@ class Save extends AbstractAction {
             throw new ActionException('edit');
         }
         //conflict check
-        if($DATE != 0 && $INFO['meta']['date']['modified'] > $DATE) {
+        if($DATE != 0
+            && isset($INFO['meta']['date']['modified'])
+            && $INFO['meta']['date']['modified'] > $DATE
+        ) {
             throw new ActionException('conflict');
         }
 

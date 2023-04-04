@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Dario <darioriso@virgilio.it>
  * @author Filippo <abrickslife@gmail.com>
  * @author Roberto Bellingeri <bellingeri@netguru.it>
  * @author Eddy <eddy@mail.it>
@@ -180,6 +181,7 @@ $lang['txt_upload']            = 'Seleziona un file da caricare:';
 $lang['txt_filename']          = 'Carica come (opzionale):';
 $lang['txt_overwrt']           = 'Sovrascrivi file esistente';
 $lang['maxuploadsize']         = 'Upload max. %s per ogni file.';
+$lang['allowedmime']           = 'Elenco delle estensioni di file consentite';
 $lang['lockedby']              = 'Attualmente bloccato da:';
 $lang['lockexpire']            = 'Il blocco scade alle:';
 $lang['rssfailed']             = 'Si è verificato un errore cercando questo feed: ';
@@ -233,7 +235,7 @@ $lang['created']               = 'creata';
 $lang['restored']              = 'versione precedente ripristinata (%s)';
 $lang['external_edit']         = 'modifica esterna';
 $lang['summary']               = 'Oggetto della modifica';
-$lang['noflash']               = 'E\' necessario <a href="http://www.adobe.com/products/flashplayer/">il plugin Adobe Flash</a> per visualizzare questo contenuto.';
+$lang['noflash']               = 'E\' necessario <a href="http://get.adobe.com/flashplayer">il plugin Adobe Flash</a> per visualizzare questo contenuto.';
 $lang['download']              = 'Scarica lo "snippet"';
 $lang['tools']                 = 'Strumenti';
 $lang['user_tools']            = 'Strumenti Utente';
@@ -315,10 +317,10 @@ $lang['i_superuser']           = 'Amministratore';
 $lang['i_problems']            = 'Si sono verificati problemi durante l\'installazione, indicati di seguito. Non è possibile continuare finché non saranno risolti.';
 $lang['i_modified']            = 'Per motivi di sicurezza questa procedura funziona solamente con un\'installazione Dokuwiki nuova e non modificata.
 Prova a estrarre di nuovo i file dal pacchetto scaricato oppure consulta le
-<a href="http://dokuwiki.org/install">istruzioni per l\'installazione di Dokuwiki</a>';
+<a href="https://www.dokuwiki.org/install">istruzioni per l\'installazione di Dokuwiki</a>';
 $lang['i_funcna']              = 'La funzione PHP <code>%s</code> non è disponibile. Forse è stata disabilitata dal tuo provider per qualche motivo?';
 $lang['i_disabled']            = 'E\' stato disabilitato dal tuo provider di servizi.';
-$lang['i_funcnmail']           = '<b>Nota:</b> La funzione mail PHP non è disponibile. %s Se rimane non disponibile, puoi provare ad installare <a href="http://dokuwiki.org/plugins/smtp">smtp plugin</a>.';
+$lang['i_funcnmail']           = '<b>Nota:</b> La funzione mail PHP non è disponibile. %s Se rimane non disponibile, puoi provare ad installare <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'La versione di PHP <code>%s</code> è inferiore a quella richiesta <code>%s</code>. Devi aggiornare l\'installazione di PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload deve essere disabilitato in php.ini per eseguire DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki non può creare un numero crittograficamente sicuro di cookies. Puoi provare a controllare sulle impostazioni open_basedir su php.ini per un corretto <code>/dev/urandom</code> accesso.';

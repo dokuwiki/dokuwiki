@@ -23,8 +23,10 @@ class Externallink extends AbstractMode
             $this->patterns[] = '\b(?i)'.$scheme.'(?-i)://['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
         }
 
-        $this->patterns[] = '(?<=\s)(?i)www?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
-        $this->patterns[] = '(?<=\s)(?i)ftp?(?-i)\.['.$host.']+?\.['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
+        $this->patterns[] = '(?<![/\\\\])\b(?i)www?(?-i)\.['.$host.']+?\.'.
+                            '['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
+        $this->patterns[] = '(?<![/\\\\])\b(?i)ftp?(?-i)\.['.$host.']+?\.'.
+                            '['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
     }
 
     /** @inheritdoc */
@@ -40,5 +42,13 @@ class Externallink extends AbstractMode
     public function getSort()
     {
         return 330;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPatterns()
+    {
+        return $this->patterns;
     }
 }

@@ -34,7 +34,8 @@ $showSidebar = $hasSidebar && ($ACT=='show');
 
             <?php if($showSidebar): ?>
                 <!-- ********** ASIDE ********** -->
-                <div id="dokuwiki__aside"><div class="pad aside include group">
+                <nav id="dokuwiki__aside" aria-label="<?php echo $lang['sidebar']
+                    ?>"><div class="pad aside include group">
                     <h3 class="toggle"><?php echo $lang['sidebar'] ?></h3>
                     <div class="content"><div class="group">
                         <?php tpl_flush() ?>
@@ -42,11 +43,11 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                         <?php tpl_include_page($conf['sidebar'], true, true) ?>
                         <?php tpl_includeFile('sidebarfooter.html') ?>
                     </div></div>
-                </div></div><!-- /aside -->
+                </div></nav><!-- /aside -->
             <?php endif; ?>
 
             <!-- ********** CONTENT ********** -->
-            <div id="dokuwiki__content"><div class="pad group">
+            <main id="dokuwiki__content"><div class="pad group">
                 <?php html_msgarea() ?>
 
                 <div class="pageId"><span><?php echo hsc($ID) ?></span></div>
@@ -63,19 +64,19 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                 <div class="docInfo"><?php tpl_pageinfo() ?></div>
 
                 <?php tpl_flush() ?>
-            </div></div><!-- /content -->
 
-            <hr class="a11y" />
+                <hr class="a11y" />
+            </div></main><!-- /content -->
 
             <!-- PAGE ACTIONS -->
-            <div id="dokuwiki__pagetools">
-                <h3 class="a11y"><?php echo $lang['page_tools']; ?></h3>
+            <nav id="dokuwiki__pagetools" aria-labelledby="dokuwiki__pagetools__heading">
+                <h3 class="a11y" id="dokuwiki__pagetools__heading"><?php echo $lang['page_tools']; ?></h3>
                 <div class="tools">
                     <ul>
                         <?php echo (new \dokuwiki\Menu\PageMenu())->getListItems(); ?>
                     </ul>
                 </div>
-            </div>
+            </nav>
         </div><!-- /wrapper -->
 
         <?php include('tpl_footer.php') ?>

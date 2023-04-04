@@ -52,6 +52,9 @@ function act_clean($act){
         list($act) = array_keys($act);
     }
 
+    // no action given
+    if($act === null) return 'show';
+
     //remove all bad chars
     $act = strtolower($act);
     $act = preg_replace('/[^1-9a-z_]+/','',$act);

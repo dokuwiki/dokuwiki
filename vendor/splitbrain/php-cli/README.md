@@ -12,8 +12,6 @@ It takes care of
 
 It is lightweight and has **no 3rd party dependencies**. Note: this is for non-interactive scripts only. It has no readline or similar support.
 
-[![Build Status](https://travis-ci.org/splitbrain/php-cli.svg)](https://travis-ci.org/splitbrain/php-cli)
-
 ## Installation
 
 Use composer:

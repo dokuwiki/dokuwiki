@@ -1,6 +1,8 @@
 <?php
 
 use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\File\MediaResolver;
+use dokuwiki\File\PageResolver;
 
 /**
  * Renderer for XHTML output
@@ -202,11 +204,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Render a heading
      *
-     * @param string $text  the text to display
-     * @param int    $level header level
-     * @param int    $pos   byte position in the original source
+     * @param string $text       the text to display
+     * @param int    $level      header level
+     * @param int    $pos        byte position in the original source
+     * @param bool   $returnonly whether to return html or write to doc attribute
+     * @return void|string writes to doc attribute or returns html depends on $returnonly
      */
-    public function header($text, $level, $pos) {
+    public function header($text, $level, $pos, $returnonly = false) {
         global $conf;
 
         if(blank($text)) return; //skip empty headlines
@@ -232,19 +236,25 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $this->finishSectionEdit($pos - 1);
         }
 
-        // write the header
-        $this->doc .= DOKU_LF.'<h'.$level;
+        // build the header
+        $header = DOKU_LF.'<h'.$level;
         if($level <= $conf['maxseclevel']) {
             $data = array();
             $data['target'] = 'section';
             $data['name'] = $text;
             $data['hid'] = $hid;
             $data['codeblockOffset'] = $this->_codeblock;
-            $this->doc .= ' class="'.$this->startSectionEdit($pos, $data).'"';
+            $header .= ' class="'.$this->startSectionEdit($pos, $data).'"';
         }
-        $this->doc .= ' id="'.$hid.'">';
-        $this->doc .= $this->_xmlEntities($text);
-        $this->doc .= "</h$level>".DOKU_LF;
+        $header .= ' id="'.$hid.'">';
+        $header .= $this->_xmlEntities($text);
+        $header .= "</h$level>".DOKU_LF;
+
+        if ($returnonly) {
+            return $header;
+        } else {
+            $this->doc .= $header;
+        }
     }
 
     /**
@@ -657,7 +667,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $lang;
         global $INPUT;
 
-        $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language);
+        $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language ?? '');
 
         $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language);
 
@@ -736,10 +746,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param string $smiley
      */
     public function smiley($smiley) {
-        if(array_key_exists($smiley, $this->smileys)) {
-            $this->doc .= '<img src="'.DOKU_BASE.'lib/images/smileys/'.$this->smileys[$smiley].
-                '" class="icon" alt="'.
-                $this->_xmlEntities($smiley).'" />';
+        if (isset($this->smileys[$smiley])) {
+            $this->doc .= '<img src="' . DOKU_BASE . 'lib/images/smileys/' . $this->smileys[$smiley] .
+                '" class="icon smiley" alt="' . $this->_xmlEntities($smiley) . '" />';
         } else {
             $this->doc .= $this->_xmlEntities($smiley);
         }
@@ -894,7 +903,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $default = $this->_simpleTitle($id);
 
         // now first resolve and clean up the $id
-        resolve_pageid(getNS($ID), $id, $exists, $this->date_at, true);
+        $id = (new PageResolver($ID))->resolveId($id, $this->date_at, true);
+        $exists = page_exists($id, $this->date_at, false, true);
 
         $link = array();
         $name = $this->_getLinkTitle($name, $default, $isImage, $id, $linktype);
@@ -1057,7 +1067,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if($conf['target']['interwiki']) $link['rel'] .= ' noopener';
 
         $link['url']   = $url;
-        $link['title'] = htmlspecialchars($link['url']);
+        $link['title'] = $this->_xmlEntities($link['url']);
 
         // output formatted
         if($returnonly) {
@@ -1175,7 +1185,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if (strpos($src, '#') !== false) {
             list($src, $hash) = explode('#', $src, 2);
         }
-        resolve_mediaid(getNS($ID), $src, $exists, $this->date_at, true);
+        $src = (new MediaResolver($ID))->resolveId($src,$this->date_at,true);
+        $exists = media_exists($src);
 
         $noLink = false;
         $render = ($linking == 'linkonly') ? false : true;
@@ -1252,7 +1263,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $title = $reference;
             }
         }
-        list($src, $hash) = explode('#', $src, 2);
+        // Squelch the warning in case there is no hash in the URL
+        @list($src, $hash) = explode('#', $src, 2);
         $noLink = false;
         if($src == '') {
             // only output plaintext without link if there is no src
@@ -1660,6 +1672,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     )
                 ) . '"';
             $ret .= ' class="media'.$align.'"';
+            $ret .= ' loading="lazy"';
 
             if($title) {
                 $ret .= ' title="'.$title.'"';
@@ -1740,7 +1753,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @return string
      */
     public function _xmlEntities($string) {
-        return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+        return hsc($string);
     }
 
 
@@ -1788,7 +1801,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         // see internalmedia() and externalmedia()
         list($img['src']) = explode('#', $img['src'], 2);
         if($img['type'] == 'internalmedia') {
-            resolve_mediaid(getNS($ID), $img['src'], $exists ,$this->date_at, true);
+            $img['src'] = (new MediaResolver($ID))->resolveId($img['src'], $this->date_at, true);
         }
 
         return $this->_media(
@@ -1889,7 +1902,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $url = ml($file, '', true, '&');
                 $linkType = 'internalmedia';
             }
-            $title = $atts['title'] ? $atts['title'] : $this->_xmlEntities(\dokuwiki\Utf8\PhpString::basename(noNS($file)));
+            $title = !empty($atts['title'])
+                ? $atts['title']
+                : $this->_xmlEntities(\dokuwiki\Utf8\PhpString::basename(noNS($file)));
 
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
             // alternative content (just a link to the file)
@@ -1987,10 +2002,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @access protected
      * @return string revision ('' for current)
      */
-    protected function _getLastMediaRevisionAt($media_id){
-        if(!$this->date_at || media_isexternal($media_id)) return '';
-        $pagelog = new MediaChangeLog($media_id);
-        return $pagelog->getLastRevisionAt($this->date_at);
+    protected function _getLastMediaRevisionAt($media_id) {
+        if (!$this->date_at || media_isexternal($media_id)) return '';
+        $changelog = new MediaChangeLog($media_id);
+        return $changelog->getLastRevisionAt($this->date_at);
     }
 
     #endregion

@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+use dokuwiki\Utf8\Sort;
+use dokuwiki\File\PageResolver;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
@@ -77,13 +79,13 @@ class WantedPagesCLI extends CLI {
         foreach($this->getPages($startdir) as $page) {
             $this->internalLinks($page);
         }
-        ksort($this->result);
+        Sort::ksort($this->result);
         foreach($this->result as $main => $subs) {
             if($this->skip) {
                 print "$main\n";
             } else {
                 $subs = array_unique($subs);
-                sort($subs);
+                Sort::sort($subs);
                 foreach($subs as $sub) {
                     printf("%-40s %s\n", $main, $sub);
                 }
@@ -160,14 +162,12 @@ class WantedPagesCLI extends CLI {
     protected function internalLinks($page) {
         global $conf;
         $instructions = p_get_instructions(file_get_contents($page['file']));
-        $cns = getNS($page['id']);
-        $exists = false;
+        $resolver = new PageResolver($page['id']);
         $pid = $page['id'];
         foreach($instructions as $ins) {
             if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink')) {
-                $mid = $ins[1][0];
-                resolve_pageid($cns, $mid, $exists);
-                if(!$exists) {
+                $mid = $resolver->resolveId($ins[1][0]);
+                if(!page_exists($mid)) {
                     list($mid) = explode('#', $mid); //record pages without hashes
 
                     if($this->sort == 'origin') {

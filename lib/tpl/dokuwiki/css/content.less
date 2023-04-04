@@ -88,6 +88,7 @@
 .dokuwiki div.table {
     overflow-x: auto;
     margin-bottom: 1.4em;
+    min-width: 50%;
 }
 
 .dokuwiki div.table table {
@@ -294,6 +295,16 @@
     margin: -1.556em 1.4em .5em -2em;
     border-left-width: 0;
     border-right: 1px solid @ini_border;
+}
+
+.dokuwiki.export #dw__toc {
+    margin-top: 0;
+    margin-right: 0;
+}
+
+[dir=rtl] .dokuwiki.export #dw__toc {
+    margin-top: 0;
+    margin-left: 0;
 }
 
 .dokuwiki h3.toggle {

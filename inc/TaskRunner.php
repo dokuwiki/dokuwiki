@@ -5,6 +5,7 @@ namespace dokuwiki;
 use dokuwiki\Extension\Event;
 use dokuwiki\Sitemap\Mapper;
 use dokuwiki\Subscriptions\BulkSubscriptionSender;
+use dokuwiki\ChangeLog\ChangeLog;
 
 /**
  * Class TaskRunner
@@ -120,7 +121,7 @@ class TaskRunner
             $out_lines = [];
             $old_lines = [];
             for ($i = 0; $i < count($lines); $i++) {
-                $log = parseChangelogLine($lines[$i]);
+                $log = ChangeLog::parseLogLine($lines[$i]);
                 if ($log === false) {
                     continue; // discard junk
                 }

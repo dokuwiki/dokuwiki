@@ -1,4 +1,6 @@
 <?php
+use dokuwiki\Utf8\Sort;
+use dokuwiki\Logger;
 
 /**
  * Active Directory authentication backend for DokuWiki
@@ -383,7 +385,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
     {
         $adldap = $this->initAdLdap(null);
         if (!$adldap) {
-            dbglog("authad/auth.php getUserCount(): _adldap not set.");
+            Logger::debug("authad/auth.php getUserCount(): _adldap not set.");
             return -1;
         }
         if ($filter == array()) {
@@ -698,7 +700,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         $opts['admin_password'] = conf_decodeString($opts['admin_password']); // deobfuscate
 
         // we can change the password if SSL is set
-        if ($opts['use_ssl'] || $opts['use_tls']) {
+        if ($opts['update_pass'] && ($opts['use_ssl'] || $opts['use_tls'])) {
             $this->cando['modPass'] = true;
         } else {
             $this->cando['modPass'] = false;
@@ -739,7 +741,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
                 $domains[$key] = ltrim($val['account_suffix'], '@');
             }
         }
-        ksort($domains);
+        Sort::ksort($domains);
 
         return $domains;
     }

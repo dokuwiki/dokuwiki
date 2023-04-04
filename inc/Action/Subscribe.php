@@ -6,6 +6,8 @@ use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Subscriptions\SubscriberManager;
 use dokuwiki\Extension\Event;
+use dokuwiki\Ui;
+use Exception;
 
 /**
  * Class Subscribe
@@ -14,15 +16,17 @@ use dokuwiki\Extension\Event;
  *
  * @package dokuwiki\Action
  */
-class Subscribe extends AbstractUserAction {
-
+class Subscribe extends AbstractUserAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_READ;
     }
 
     /** @inheritdoc */
-    public function checkPreconditions() {
+    public function checkPreconditions()
+    {
         parent::checkPreconditions();
 
         global $conf;
@@ -30,43 +34,46 @@ class Subscribe extends AbstractUserAction {
     }
 
     /** @inheritdoc */
-    public function preProcess() {
+    public function preProcess()
+    {
         try {
             $this->handleSubscribeData();
-        } catch(ActionAbort $e) {
+        } catch (ActionAbort $e) {
             throw $e;
-        } catch(\Exception $e) {
+        } catch (Exception $e) {
             msg($e->getMessage(), -1);
         }
     }
 
     /** @inheritdoc */
-    public function tplContent() {
-        tpl_subscribe();
+    public function tplContent()
+    {
+        (new Ui\Subscribe)->show();
     }
 
     /**
      * Handle page 'subscribe'
      *
      * @author Adrian Lang <lang@cosmocode.de>
-     * @throws \Exception if (un)subscribing fails
+     * @throws Exception if (un)subscribing fails
      * @throws ActionAbort when (un)subscribing worked
      */
-    protected function handleSubscribeData() {
+    protected function handleSubscribeData()
+    {
         global $lang;
         global $INFO;
         global $INPUT;
 
         // get and preprocess data.
         $params = array();
-        foreach(array('target', 'style', 'action') as $param) {
-            if($INPUT->has("sub_$param")) {
+        foreach (array('target', 'style', 'action') as $param) {
+            if ($INPUT->has("sub_$param")) {
                 $params[$param] = $INPUT->str("sub_$param");
             }
         }
 
         // any action given? if not just return and show the subscription page
-        if(empty($params['action']) || !checkSecurityToken()) return;
+        if (empty($params['action']) || !checkSecurityToken()) return;
 
         // Handle POST data, may throw exception.
         Event::createAndTrigger('ACTION_HANDLE_SUBSCRIBE', $params, array($this, 'handlePostData'));
@@ -77,13 +84,13 @@ class Subscribe extends AbstractUserAction {
 
         // Perform action.
         $subManager = new SubscriberManager();
-        if($action === 'unsubscribe') {
+        if ($action === 'unsubscribe') {
             $ok = $subManager->remove($target, $INPUT->server->str('REMOTE_USER'), $style);
         } else {
             $ok = $subManager->add($target, $INPUT->server->str('REMOTE_USER'), $style);
         }
 
-        if($ok) {
+        if ($ok) {
             msg(
                 sprintf(
                     $lang["subscr_{$action}_success"], hsc($INFO['userinfo']['name']),
@@ -93,7 +100,7 @@ class Subscribe extends AbstractUserAction {
             throw new ActionAbort('redirect');
         }
 
-        throw new \Exception(
+        throw new Exception(
             sprintf(
                 $lang["subscr_{$action}_error"],
                 hsc($INFO['userinfo']['name']),
@@ -111,20 +118,21 @@ class Subscribe extends AbstractUserAction {
      * @author Adrian Lang <lang@cosmocode.de>
      *
      * @param array &$params the parameters: target, style and action
-     * @throws \Exception
+     * @throws Exception
      */
-    public function handlePostData(&$params) {
+    public function handlePostData(&$params)
+    {
         global $INFO;
         global $lang;
         global $INPUT;
 
         // Get and validate parameters.
-        if(!isset($params['target'])) {
-            throw new \Exception('no subscription target given');
+        if (!isset($params['target'])) {
+            throw new Exception('no subscription target given');
         }
         $target = $params['target'];
         $valid_styles = array('every', 'digest');
-        if(substr($target, -1, 1) === ':') {
+        if (substr($target, -1, 1) === ':') {
             // Allow “list” subscribe style since the target is a namespace.
             $valid_styles[] = 'list';
         }
@@ -138,19 +146,19 @@ class Subscribe extends AbstractUserAction {
         );
 
         // Check other conditions.
-        if($action === 'subscribe') {
-            if($INFO['userinfo']['mail'] === '') {
-                throw new \Exception($lang['subscr_subscribe_noaddress']);
+        if ($action === 'subscribe') {
+            if ($INFO['userinfo']['mail'] === '') {
+                throw new Exception($lang['subscr_subscribe_noaddress']);
             }
-        } elseif($action === 'unsubscribe') {
+        } elseif ($action === 'unsubscribe') {
             $is = false;
-            foreach($INFO['subscribed'] as $subscr) {
-                if($subscr['target'] === $target) {
+            foreach ($INFO['subscribed'] as $subscr) {
+                if ($subscr['target'] === $target) {
                     $is = true;
                 }
             }
-            if($is === false) {
-                throw new \Exception(
+            if ($is === false) {
+                throw new Exception(
                     sprintf(
                         $lang['subscr_not_subscribed'],
                         $INPUT->server->str('REMOTE_USER'),

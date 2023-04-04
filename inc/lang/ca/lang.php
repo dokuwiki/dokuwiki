@@ -3,6 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marc Zulet <marczulet@gmail.com>
+ * @author Joan <aseques@gmail.com>
+ * @author David Surroca <davidsurrocaestrada@gmail.com>
  * @author Adolfo Jayme Barrientos <fito@libreoffice.org>
  * @author Carles Bellver <carles.bellver@cent.uji.es>
  * @author daniel <daniel@6temes.cat>
@@ -10,7 +13,6 @@
  * @author controlonline.net <controlonline.net@gmail.com>
  * @author Pauet <pauet@gmx.com>
  * @author Àngel Pérez Beroy <aperezberoy@gmail.com>
- * @author David Surroca <david.tb303@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -117,6 +119,7 @@ $lang['js']['media_done_btn']  = 'Fet';
 $lang['js']['media_drop']      = 'Arrossega aquí els arxius a pujar';
 $lang['js']['media_cancel']    = 'esborra';
 $lang['js']['media_overwrt']   = 'Sobreescriu els arxius existents';
+$lang['js']['data_insecure']   = 'ADVERTÈNCIA: Sembla que el vostre directori de dades no està degudament protegit. Si us plau, llegiu sobre <a href="https://www.dokuwiki.org/security#web_access_security">Seguretat de l\'Accés Web a DokuWiki</a>.';
 $lang['search_exact_match']    = 'Coincidència exacta';
 $lang['search_starts_with']    = 'Comença per';
 $lang['search_ends_with']      = 'Termina per';
@@ -165,6 +168,7 @@ $lang['txt_upload']            = 'Trieu el fitxer que voleu penjar:';
 $lang['txt_filename']          = 'Introduïu el nom wiki (opcional):';
 $lang['txt_overwrt']           = 'Sobreescriu el fitxer actual';
 $lang['maxuploadsize']         = 'Puja com a màxim %s per arxiu.';
+$lang['allowedmime']           = 'Llista d\'extensions permeses';
 $lang['lockedby']              = 'Actualment blocat per:';
 $lang['lockexpire']            = 'Venciment del blocatge:';
 $lang['rssfailed']             = 'S\'ha produït un error en recollir aquesta alimentació: ';
@@ -218,7 +222,7 @@ $lang['created']               = 'creat';
 $lang['restored']              = 's\'ha restaurat una versió anterior %s';
 $lang['external_edit']         = 'edició externa';
 $lang['summary']               = 'Resum d\'edició';
-$lang['noflash']               = 'Per a visualitzar aquest contingut necessiteu el <a href="http://www.adobe.com/products/flashplayer/">connector d\'Adobe Flash</a>.';
+$lang['noflash']               = 'Per a visualitzar aquest contingut necessiteu el <a href="http://get.adobe.com/flashplayer">connector d\'Adobe Flash</a>.';
 $lang['download']              = 'Baixa el fragment';
 $lang['tools']                 = 'Eines';
 $lang['user_tools']            = 'Eines de l\'usuari';
@@ -298,10 +302,13 @@ $lang['i_wikiname']            = 'Nom del wiki';
 $lang['i_enableacl']           = 'Habilita ACL (recomanat)';
 $lang['i_superuser']           = 'Superusuari';
 $lang['i_problems']            = 'L\'instal·lador ha trobat alguns problemes, que s\'indiquen més avall. No podeu continuar fins que no els hàgiu solucionat.';
-$lang['i_modified']            = 'Per raons de seguretat aquesta seqüència només funciona amb una instal·lació nova i no modificada de Dokuwiki. Hauríeu de tornar a baixar el paquet i/o descomprimir-lo o consultar les <a href="http://dokuwiki.org/install">instruccions d\'instal·lació de Dokuwiki</a> completes';
+$lang['i_modified']            = 'Per raons de seguretat aquesta seqüència només funciona amb una instal·lació nova i no modificada de Dokuwiki. Hauríeu de tornar a baixar el paquet i/o descomprimir-lo o consultar les <a href="https://www.dokuwiki.org/install">instruccions d\'instal·lació de Dokuwiki</a> completes';
 $lang['i_funcna']              = 'La funció PHP <code>%s</code> no està disponible. Potser el vostre proveïdor de serveis l\'ha inhabilitada per alguna raó';
+$lang['i_disabled']            = 'El vostre proveïdor l\'ha desactivat.';
+$lang['i_funcnmail']           = '<b>Nota:</b> La funció de correu PHP no està disponible. %s Si es manté no disponible, podeu instal·lar el <a href="https://www.dokuwiki.org/plugin:smtp">connector smtp</a>.';
 $lang['i_phpver']              = 'La vostra versió de PHP <code>%s</code> és inferior a la requerida <code>%s</code>. Necessiteu actualitzar la vostra instal·lació de PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload cal que sigui deshabilitada en php.ini perquè funcioni DokuWiki';
+$lang['i_urandom']             = 'DokuWiki no pot crear números criptogràficament segurs per a les galetes. És possible que vulgueu comprovar la vostra configuració d\'open_basedir al php.ini per un accés correcte a <code>/dev/urandom</code>.';
 $lang['i_permfail']            = 'DokuWiki no pot escriure <code>%s</code>. Heu d\'arreglar els permisos d\'aquest directori';
 $lang['i_confexists']          = '<code>%s</code> ja existeix';
 $lang['i_writeerr']            = 'No es pot crear <code>%s</code>. Comproveu els permisos del directori i/o del fitxer i creeu el fitxer manualment.';
@@ -352,6 +359,7 @@ $lang['media_perm_upload']     = 'No teniu permisos suficients per a pujar arxiu
 $lang['media_update']          = 'Puja la nova versió';
 $lang['media_restore']         = 'Restaura aquesta versió';
 $lang['media_acl_warning']     = 'Aquesta llista pot no estar completa per restriccions ACL i per llistes ocultes';
+$lang['email_fail']            = 'Falta el correu PHP () o està desactivat. No s\'ha enviat el correu electrònic següent:';
 $lang['currentns']             = 'Espai de noms actual';
 $lang['searchresult']          = 'Resultats cerca';
 $lang['plainhtml']             = 'HTML pla';

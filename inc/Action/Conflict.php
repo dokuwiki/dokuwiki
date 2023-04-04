@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui;
+
 /**
  * Class Conflict
  *
@@ -9,26 +11,29 @@ namespace dokuwiki\Action;
  *
  * @package dokuwiki\Action
  */
-class Conflict extends AbstractAction {
-
+class Conflict extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         global $INFO;
-        if($INFO['exists']) {
+        if ($INFO['exists']) {
             return AUTH_EDIT;
         } else {
             return AUTH_CREATE;
         }
     }
 
-    public function tplContent() {
+    /** @inheritdoc */
+    public function tplContent()
+    {
         global $PRE;
         global $TEXT;
         global $SUF;
         global $SUM;
 
-        html_conflict(con($PRE, $TEXT, $SUF), $SUM);
-        html_diff(con($PRE, $TEXT, $SUF), false);
+        $text = con($PRE, $TEXT, $SUF);
+        (new Ui\PageConflict($text, $SUM))->show();
     }
 
 }

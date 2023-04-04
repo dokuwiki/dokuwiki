@@ -99,7 +99,7 @@ class StyleUtils
                 if (file_exists($inifile)) {
                     $config = parse_ini_file($inifile, true);
 
-                    if (is_array($config['stylesheets'])) {
+                    if (isset($config['stylesheets']) && is_array($config['stylesheets'])) {
                         foreach ($config['stylesheets'] as $inifile => $mode) {
                             // validate and include style files
                             $stylesheets = array_merge(
@@ -110,7 +110,7 @@ class StyleUtils
                         }
                     }
 
-                    if (is_array($config['replacements'])) {
+                    if (isset($config['replacements']) && is_array($config['replacements'])) {
                         $replacements = array_replace(
                             $replacements,
                             $this->cssFixreplacementurls($config['replacements'], $webbase)

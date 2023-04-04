@@ -80,7 +80,7 @@ function css_out(){
             $files = array_merge($files, $styleini['stylesheets'][$mediatype]);
         }
         // load user styles
-        if(is_array($config_cascade['userstyle'][$mediatype])) {
+        if(isset($config_cascade['userstyle'][$mediatype]) and is_array($config_cascade['userstyle'][$mediatype])) {
             foreach($config_cascade['userstyle'][$mediatype] as $userstyle) {
                 $files[$userstyle] = DOKU_BASE;
             }
@@ -328,22 +328,24 @@ function css_interwiki(){
 
     // default style
     echo 'a.interwiki {';
-    echo ' background: transparent url('.DOKU_BASE.'lib/images/interwiki.png) 0px 1px no-repeat;';
-    echo ' padding: 1px 0px 1px 16px;';
+    echo ' background: transparent url('.DOKU_BASE.'lib/images/interwiki.svg) 0 0 no-repeat;';
+    echo ' background-size: 1.2em;';
+    echo ' padding: 0 0 0 1.4em;';
     echo '}';
 
     // additional styles when icon available
     $iwlinks = getInterwiki();
-    foreach(array_keys($iwlinks) as $iw){
-        $class = preg_replace('/[^_\-a-z0-9]+/i','_',$iw);
-        if(file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.png')){
-            echo "a.iw_$class {";
-            echo '  background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$iw.'.png)';
-            echo '}';
-        }elseif(file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.gif')){
-            echo "a.iw_$class {";
-            echo '  background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$iw.'.gif)';
-            echo '}';
+    foreach (array_keys($iwlinks) as $iw) {
+        $class = preg_replace('/[^_\-a-z0-9]+/i', '_', $iw);
+        foreach (['svg', 'png', 'gif'] as $ext) {
+            $file = 'lib/images/interwiki/' . $iw . '.' . $ext;
+
+            if (file_exists(DOKU_INC . $file)) {
+                echo "a.iw_$class {";
+                echo '  background-image: url(' . DOKU_BASE . $file . ')';
+                echo '}';
+                break;
+            }
         }
     }
 }
@@ -357,30 +359,26 @@ function css_filetypes(){
 
     // default style
     echo '.mediafile {';
-    echo ' background: transparent url('.DOKU_BASE.'lib/images/fileicons/file.png) 0px 1px no-repeat;';
-    echo ' padding-left: 18px;';
-    echo ' padding-bottom: 1px;';
+    echo ' background: transparent url('.DOKU_BASE.'lib/images/fileicons/svg/file.svg) 0px 1px no-repeat;';
+    echo ' background-size: 1.2em;';
+    echo ' padding-left: 1.5em;';
     echo '}';
 
     // additional styles when icon available
     // scan directory for all icons
     $exts = array();
-    if($dh = opendir(DOKU_INC.'lib/images/fileicons')){
+    if($dh = opendir(DOKU_INC.'lib/images/fileicons/svg')){
         while(false !== ($file = readdir($dh))){
-            if(preg_match('/([_\-a-z0-9]+(?:\.[_\-a-z0-9]+)*?)\.(png|gif)/i',$file,$match)){
-                $ext = strtolower($match[1]);
-                $type = '.'.strtolower($match[2]);
-                if($ext!='file' && (!isset($exts[$ext]) || $type=='.png')){
-                    $exts[$ext] = $type;
-                }
+            if(preg_match('/(.*?)\.svg$/i',$file, $match)){
+                $exts[] = strtolower($match[1]);
             }
         }
         closedir($dh);
     }
-    foreach($exts as $ext=>$type){
+    foreach($exts as $ext){
         $class = preg_replace('/[^_\-a-z0-9]+/','_',$ext);
         echo ".mf_$class {";
-        echo '  background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$ext.$type.')';
+        echo '  background-image: url('.DOKU_BASE.'lib/images/fileicons/svg/'.$ext.'.svg)';
         echo '}';
     }
 }

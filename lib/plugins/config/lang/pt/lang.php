@@ -3,7 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Paulo Schopf <pschopf@gmail.com>
+ * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
+ * @author Paulo <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
  * @author Maykon Oliveira <maykonoliveira850@gmail.com>
  * @author José Vieira <jmsv63@gmail.com>
@@ -126,6 +127,7 @@ $lang['mailfrom']              = 'Endereço de e-mail a ser utilizado para mensa
 $lang['mailreturnpath']        = 'Endereço de e-mail do destinatário para notificações não entregues';
 $lang['mailprefix']            = 'Prefixo de e-mail a ser utilizado para mensagens automáticas. Deixe em branco para usar o título do wiki';
 $lang['htmlmail']              = 'Envie e-mails multipartes em HTML para uma melhor aparência, mas maiores em tamanho. Desative para mensagens em texto simples.';
+$lang['dontlog']               = 'Desabilite a gravação de relatórios para estes tipos de relatórios.';
 $lang['sitemap']               = 'Gerar sitemap Google frequentemente (dias). 0 para desativar';
 $lang['rss_type']              = 'Tipo de feed XML';
 $lang['rss_linkto']            = 'Links de feed XML para';
@@ -141,16 +143,16 @@ $lang['updatecheck']           = 'Verificar por atualizações e avisos de segur
 $lang['userewrite']            = 'Usar URLs SEO';
 $lang['useslash']              = 'Usar a barra como separador de namespaces nas URLs';
 $lang['sepchar']               = 'Separador de palavras no nome da página';
-$lang['canonical']             = 'Usar URLs absolutas';
+$lang['canonical']             = 'Usar URLs absolutas (http://servidor/caminho)';
 $lang['fnencode']              = 'Método de codificar nomes de arquivo não-ASCII.';
 $lang['autoplural']            = 'Verificar formas plurais nos links';
 $lang['compression']           = 'Método de compressão para arquivos attic';
 $lang['gzip_output']           = 'Usar Content-Encoding do gzip para código xhtml';
 $lang['compress']              = 'Compactar as saídas de CSS e JavaScript';
-$lang['cssdatauri']            = 'Tamanho em bytes até ao qual as imagens referenciadas em arquivos CSS devem ser embutidas diretamente no CSS para reduzir carga extra de pedidos HTTP. <code>400</code> a <code>600</code> bytes é um bom valor. Defina <code>0</code> para desativar.';
-$lang['send404']               = 'Enviar "HTTP 404/Página não encontrada" para páginas inexistentes';
-$lang['broken_iua']            = 'A função ignore_user_abort não está funcionando no seu sistema? Isso pode causar um índice de busca defeituoso. Sistemas com IIS+PHP/CGI são conhecidos por possuírem este problema. Veja o <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">Bug 852</a> para mais informações.';
-$lang['xsendfile']             = 'Usar o cabeçalho X-Sendfile para permitir o servidor de internet encaminhar arquivos estáticos? O seu servidor de internet precisa ter suporte a isso.';
+$lang['cssdatauri']            = 'Tamanho em bytes até ao qual as imagens referenciadas em arquivos CSS devem ser embutidas diretamente no CSS para reduzir a carga de pedidos HTTP extra. <code>400</code> a <code>600</code> bytes é um bom valor. Escolher <code>0</code> para desativar.';
+$lang['send404']               = 'Enviar "HTTP 404/Página não encontrada" para páginas não existentes';
+$lang['broken_iua']            = 'A função "ignore_user_abort" não está a funcionar no seu sistema? Isso pode causar um índice de busca defeituoso. Sistemas com IIS+PHP/CGI são conhecidos por possuírem este problema. Veja o <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">bug 852</a> para mais informações.';
+$lang['xsendfile']             = 'Usar o cabeçalho "X-Sendfile" para permitir o servidor de internet encaminhar arquivos estáticos? O seu servidor de internet precisa ter suporte a isso.';
 $lang['renderer_xhtml']        = 'Renderizador a ser utilizado para a saída principal do wiki (xhtml)';
 $lang['renderer__core']        = '%s (núcleo dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';

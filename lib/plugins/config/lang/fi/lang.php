@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Pasi <zazuu@zazuu.net>
  * @author Tuomo Hartikainen <tuomo.hartikainen@heksia.fi>
  * @author otto <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>

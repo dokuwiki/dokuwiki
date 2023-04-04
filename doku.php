@@ -11,7 +11,7 @@
 // update message version - always use a string to avoid localized floats!
 use dokuwiki\Extension\Event;
 
-$updateVersion = "51.4";
+$updateVersion = "53";
 
 //  xdebug_start_profiling();
 
@@ -79,10 +79,14 @@ if($DATE_AT) {
         $DATE_AT = null;
     } else if ($rev_t === false) { //page did not exist
         $rev_n = $pagelog->getRelativeRevision($DATE_AT,+1);
-        msg(sprintf($lang['page_nonexist_rev'],
-            strftime($conf['dformat'],$DATE_AT),
-            wl($ID, array('rev' => $rev_n)),
-            strftime($conf['dformat'],$rev_n)));
+        msg(
+            sprintf(
+                $lang['page_nonexist_rev'],
+                dformat($DATE_AT),
+                wl($ID, array('rev' => $rev_n)),
+                dformat($rev_n)
+            )
+        );
         $REV = $DATE_AT; //will result in a page not exists message
     } else {
         $REV = $rev_t;

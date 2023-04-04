@@ -9,7 +9,6 @@
 
 // must be run from within DokuWiki
 if (!defined('DOKU_INC')) die();
-header('X-UA-Compatible: IE=edge,chrome=1');
 
 ?><!DOCTYPE html>
 <html lang="<?php echo $conf['lang']?>" dir="<?php echo $lang['direction'] ?>" class="no-js">
@@ -34,7 +33,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
         <div class="wrapper group" id="dokuwiki__detail">
 
             <!-- ********** CONTENT ********** -->
-            <div id="dokuwiki__content"><div class="pad group">
+            <main id="dokuwiki__content"><div class="pad group">
                 <?php html_msgarea() ?>
 
                 <?php if(!$ERROR): ?>
@@ -82,20 +81,20 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                 <div class="docInfo"><?php tpl_pageinfo(); ?></div>
                 */ ?>
 
-            </div></div><!-- /content -->
+            </div></main><!-- /content -->
 
             <hr class="a11y" />
 
             <!-- PAGE ACTIONS -->
             <?php if (!$ERROR): ?>
-                <div id="dokuwiki__pagetools">
-                    <h3 class="a11y"><?php echo $lang['page_tools']; ?></h3>
+                <nav id="dokuwiki__pagetools" aria-labelledby="dokuwiki__pagetools__heading">
+                    <h3 class="a11y" id="dokuwiki__pagetools__heading"><?php echo $lang['page_tools']; ?></h3>
                     <div class="tools">
                         <ul>
                             <?php echo (new \dokuwiki\Menu\DetailMenu())->getListItems(); ?>
                         </ul>
                     </div>
-                </div>
+                </nav>
             <?php endif; ?>
         </div><!-- /wrapper -->
 

@@ -3,6 +3,7 @@
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionException;
+use dokuwiki\Ui;
 
 /**
  * Class Login
@@ -11,26 +12,29 @@ use dokuwiki\Action\Exception\ActionException;
  *
  * @package dokuwiki\Action
  */
-class Login extends AbstractAclAction {
-
+class Login extends AbstractAclAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_NONE;
     }
 
     /** @inheritdoc */
-    public function checkPreconditions() {
+    public function checkPreconditions()
+    {
         global $INPUT;
         parent::checkPreconditions();
-        if($INPUT->server->has('REMOTE_USER')) {
+        if ($INPUT->server->has('REMOTE_USER')) {
             // nothing to do
             throw new ActionException();
         }
     }
 
     /** @inheritdoc */
-    public function tplContent() {
-        html_login();
+    public function tplContent()
+    {
+        (new Ui\Login)->show();
     }
 
 }

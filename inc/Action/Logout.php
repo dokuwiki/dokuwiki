@@ -4,6 +4,7 @@ namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Action\Exception\ActionException;
+use dokuwiki\Extension\AuthPlugin;
 
 /**
  * Class Logout
@@ -23,7 +24,7 @@ class Logout extends AbstractUserAction {
     public function checkPreconditions() {
         parent::checkPreconditions();
 
-        /** @var \dokuwiki\Extension\AuthPlugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
         if(!$auth->canDo('logout')) throw new ActionDisabledException();
     }
@@ -32,6 +33,8 @@ class Logout extends AbstractUserAction {
     public function preProcess() {
         global $ID;
         global $INPUT;
+
+        if (!checkSecurityToken()) throw new ActionException();
 
         // when logging out during an edit session, unlock the page
         $lockedby = checklock($ID);

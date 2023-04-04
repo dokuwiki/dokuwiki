@@ -7,15 +7,18 @@ namespace dokuwiki\Menu\Item;
  *
  * Quick revert to the currently shown page revision
  */
-class Revert extends AbstractItem {
+class Revert extends AbstractItem
+{
 
     /** @inheritdoc */
-    public function __construct() {
+    public function __construct()
+    {
         global $REV;
         global $INFO;
+        global $INPUT;
         parent::__construct();
 
-        if(!$REV || !$INFO['writable']) {
+        if (!$REV || !$INFO['writable'] || $INPUT->server->str('REMOTE_USER') === '') {
             throw new \RuntimeException('revert not available');
         }
         $this->params['rev'] = $REV;

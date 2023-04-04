@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Petr Kajzar <petr.kajzar@lf1.cuni.cz>
+ * @author Petr Kajzar <petr.kajzar@centrum.cz>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Robert Surý <rsurycz@seznam.cz>
  * @author Martin Hořínek <hev@hev.cz>
@@ -131,6 +131,7 @@ $lang['js']['media_done_btn']  = 'Hotovo';
 $lang['js']['media_drop']      = 'Sem přetáhněte soubory pro nahrátí';
 $lang['js']['media_cancel']    = 'odstranit';
 $lang['js']['media_overwrt']   = 'Přepsat existující soubory';
+$lang['js']['data_insecure']   = 'UPOZORNĚNÍ: Zdá se, že váš datový adresář není správně zabezpečen. Prosím, přečtěte si o <a href="https://www.dokuwiki.org/security#web_access_security">zabezpečení přístupu v DokuWiki</a>.';
 $lang['search_exact_match']    = 'Přesná shoda';
 $lang['search_starts_with']    = 'Začíná s';
 $lang['search_ends_with']      = 'Končí s';
@@ -179,6 +180,7 @@ $lang['txt_upload']            = 'Vyberte soubor jako přílohu:';
 $lang['txt_filename']          = 'Wiki jméno (volitelné):';
 $lang['txt_overwrt']           = 'Přepsat existující soubor';
 $lang['maxuploadsize']         = 'Max. velikost souboru %s';
+$lang['allowedmime']           = 'Seznam povolených přípon souboru';
 $lang['lockedby']              = 'Právě zamknuto:';
 $lang['lockexpire']            = 'Zámek vyprší:';
 $lang['rssfailed']             = 'Nastala chyba při vytváření tohoto RSS: ';
@@ -232,7 +234,7 @@ $lang['created']               = 'vytvořeno';
 $lang['restored']              = 'stará verze byla obnovena (%s)';
 $lang['external_edit']         = 'upraveno mimo DokuWiki';
 $lang['summary']               = 'Komentář k úpravám';
-$lang['noflash']               = 'Pro přehrání obsahu potřebujete <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
+$lang['noflash']               = 'Pro přehrání obsahu potřebujete <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Stáhnout snippet';
 $lang['tools']                 = 'Nástroje';
 $lang['user_tools']            = 'Uživatelské nástroje';
@@ -312,7 +314,7 @@ $lang['i_wikiname']            = 'Název wiki';
 $lang['i_enableacl']           = 'Zapnout ACL (doporučeno)';
 $lang['i_superuser']           = 'Správce';
 $lang['i_problems']            = 'Instalátor narazil na níže popsané problémy. Nelze pokračovat v instalaci, dokud je neopravíte.';
-$lang['i_modified']            = 'Instalátor bude z bezpečnostních důvodů pracovat pouze s čistou a ještě neupravenou instalací DokuWiki. Buď znovu rozbalte soubory z instalačního balíčku, nebo zkuste prostudovat <a href="http://dokuwiki.org/install">instrukce pro instalaci DokuWiki</a>.';
+$lang['i_modified']            = 'Instalátor bude z bezpečnostních důvodů pracovat pouze s čistou a ještě neupravenou instalací DokuWiki. Buď znovu rozbalte soubory z instalačního balíčku, nebo zkuste prostudovat <a href="https://www.dokuwiki.org/install">instrukce pro instalaci DokuWiki</a>.';
 $lang['i_funcna']              = 'PHP funkce <code>%s</code> není dostupná. Váš webhosting ji možná z nějakého důvodu vypnul.';
 $lang['i_disabled']            = 'Bylo zakázáno vaším poskytovatelem.';
 $lang['i_funcnmail']           = '<b>Poznámka:</b> Funkce mail() není v PHP dostupná. %s Pokud tento problém přetrvává, zkuste nainstalovat <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';

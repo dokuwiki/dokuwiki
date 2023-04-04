@@ -1,8 +1,10 @@
 ===== Importação de Usuários em Massa =====
 
-Requer um arquivo CSV de usuários com pelo menos quatro colunas.
-As colunas têm de conter, em ordem: id do usuário, nome completo, e-mail e grupos.
-Os campos CSV devem ser separados por vírgulas (,) e as strings delimitadas por aspas (%%""%%). A contra-barra (\) pode ser usada para escapar algum caractere.
+
+Requer um arquivoCSV de usuários com pelo menos quatro colunas.
+As colunas têm de conter, em ordem: id de usuário, nome completo, e-mail e grupos.
+Os campos CSV devem ser separados por vírgulas (,) e as strings delimitadas por aspas (%%""%%). A contra-barra (\) pode ser usada para escapar.
+
 Para um exemplo de um arquivo adequado, tente a função "Exportar Usuários" acima.
 Ids de usuário duplicados serão ignorados.
 

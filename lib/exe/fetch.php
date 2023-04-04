@@ -55,6 +55,15 @@ if (defined('SIMPLE_TEST')) {
         'status'        => $STATUS,
         'statusmessage' => $STATUSMESSAGE,
         'ispublic'      => media_ispublic($MEDIA),
+        'csp' => [
+            'sandbox' => '',
+            'default-src' => "'none'",
+            'style-src' => "'unsafe-inline'",
+            'media-src' => "'self'",
+            'object-src' => "'self'",
+            'form-action' => "'none'",
+            'frame-ancestors' => "'self'",
+        ],
     );
 
     // handle the file status
@@ -82,7 +91,11 @@ if (defined('SIMPLE_TEST')) {
     //handle image resizing/cropping
     $evt = new Event('MEDIA_RESIZE', $data);
     if($evt->advise_before()) {
-        if((substr($MIME, 0, 5) == 'image') && ($WIDTH || $HEIGHT)) {
+        if(
+            $MIME != 'image/svg+xml' &&
+            (substr($MIME, 0, 5) == 'image') &&
+            ($WIDTH || $HEIGHT)
+        ) {
             if($HEIGHT && $WIDTH) {
                 $data['file'] = $FILE = media_crop_image($data['file'], $EXT, $WIDTH, $HEIGHT);
             } else {
@@ -96,7 +109,15 @@ if (defined('SIMPLE_TEST')) {
     // finally send the file to the client
     $evt = new Event('MEDIA_SENDFILE', $data);
     if($evt->advise_before()) {
-        sendFile($data['file'], $data['mime'], $data['download'], $data['cache'], $data['ispublic'], $data['orig']);
+        sendFile(
+            $data['file'],
+            $data['mime'],
+            $data['download'],
+            $data['cache'],
+            $data['ispublic'],
+            $data['orig'],
+            $data['csp']
+        );
     }
     // Do something after the download finished.
     $evt->advise_after();  // will not be emitted on 304 or x-sendfile

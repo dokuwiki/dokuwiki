@@ -408,9 +408,9 @@ function io_lock($file){
     do {
         //waited longer than 3 seconds? -> stale lock
         if ((time() - $timeStart) > 3) break;
-        $locked = @mkdir($lockDir, $conf['dmode']);
+        $locked = @mkdir($lockDir);
         if($locked){
-            if(!empty($conf['dperm'])) chmod($lockDir, $conf['dperm']);
+            if($conf['dperm']) chmod($lockDir, $conf['dperm']);
             break;
         }
         usleep(50);
@@ -504,7 +504,7 @@ function io_mkdir_p($target){
     if (file_exists($target) && !is_dir($target)) return 0;
     //recursion
     if (io_mkdir_p(substr($target,0,strrpos($target,'/')))){
-        $ret = @mkdir($target,$conf['dmode']); // crawl back up & create dir tree
+        $ret = @mkdir($target); // crawl back up & create dir tree
         if($ret && !empty($conf['dperm'])) chmod($target, $conf['dperm']);
         return $ret;
     }

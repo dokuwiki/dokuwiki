@@ -37,6 +37,8 @@
 require_once(dirname(__FILE__) . '/../adLDAP.php');
 require_once(dirname(__FILE__) . '/../collections/adLDAPUserCollection.php');
 
+use dokuwiki\Utf8\Sort;
+
 /**
 * USER FUNCTIONS
 */
@@ -517,7 +519,7 @@ class adLDAPUsers {
     {
         $password="\"".$password."\"";
         $encoded="";
-        for ($i=0; $i <strlen($password); $i++){ $encoded.="{$password{$i}}\000"; }
+        for ($i=0; $i <strlen($password); $i++){ $encoded.="{$password[$i]}\000"; }
         return $encoded;
     }
      
@@ -568,7 +570,7 @@ class adLDAPUsers {
             }
         }
         if ($sorted) { 
-            asort($usersArray); 
+            Sort::asort($usersArray); 
         }
         return $usersArray;
     }
@@ -631,7 +633,7 @@ class adLDAPUsers {
             }
         }
         if ($sorted){ 
-          asort($usersArray); 
+          Sort::asort($usersArray); 
         }
         return ($usersArray);
     }

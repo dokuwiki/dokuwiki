@@ -171,6 +171,7 @@ $lang['js']['media_done_btn']      = 'Done';
 $lang['js']['media_drop']          = 'Drop files here to upload';
 $lang['js']['media_cancel']        = 'remove';
 $lang['js']['media_overwrt']       = 'Overwrite existing files';
+$lang['js']['data_insecure'] = 'WARNING: It seems your data directory is not properly secured. Please read about <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
 
 $lang['rssfailed']             = 'An error occurred while fetching this feed: ';
 $lang['nothingfound']          = 'Nothing was found.';
@@ -225,6 +226,7 @@ $lang['created']               = 'created';
 $lang['restored']              = 'old revision restored (%s)';
 $lang['external_edit']         = 'external edit';
 $lang['summary']               = 'Edit summary';
+$lang['unknowndate']           = 'Unknown date';
 $lang['noflash']               = 'The <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> is needed to display this content.';
 $lang['download']              = 'Download Snippet';
 $lang['tools']                 = 'Tools';

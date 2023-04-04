@@ -28,7 +28,7 @@ class Draftdel extends AbstractAction {
     public function preProcess() {
         global $INFO, $ID;
         $draft = new \dokuwiki\Draft($ID, $INFO['client']);
-        if ($draft->isDraftAvailable()) {
+        if ($draft->isDraftAvailable() && checkSecurityToken()) {
             $draft->deleteDraft();
         }
 

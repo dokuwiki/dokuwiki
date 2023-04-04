@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui;
+
 /**
  * Class Revisions
  *
@@ -9,16 +11,18 @@ namespace dokuwiki\Action;
  *
  * @package dokuwiki\Action
  */
-class Revisions extends AbstractAction {
-
+class Revisions extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_READ;
     }
 
     /** @inheritdoc */
-    public function tplContent() {
-        global $INPUT;
-        html_revisions($INPUT->int('first'));
+    public function tplContent()
+    {
+        global $INFO, $INPUT;
+        (new Ui\PageRevisions($INFO['id']))->show($INPUT->int('first'));
     }
 }

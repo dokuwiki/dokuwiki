@@ -1,8 +1,11 @@
 <?php
+
 /**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * Albanian language file
  *
- * @author Leonard Elezi leonard.elezi@depinfo.info
+ * @author Leonard Elezi <leonard.elezi@depinfo.info>
  */
 $lang['admin_acl']             = 'Menaxhimi i Listës së Kontrollit të Aksesit';
 $lang['acl_group']             = 'Grup:';

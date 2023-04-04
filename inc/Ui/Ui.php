@@ -1,4 +1,5 @@
 <?php
+
 namespace dokuwiki\Ui;
 
 /**
@@ -8,8 +9,8 @@ namespace dokuwiki\Ui;
  *
  * @package dokuwiki\Ui
  */
-abstract class Ui {
-
+abstract class Ui
+{
     /**
      * Display the UI element
      *

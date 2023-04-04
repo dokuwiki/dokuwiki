@@ -91,7 +91,7 @@ Authors and contributors
 * [Michael Shipley][] (Submitter of patches, support)
 * [Steve Minutillo][] (Submitter of patches)
 
-[Malcolm Blaney]: https://unicyclic.com/mal
+[Malcolm Blaney]: https://mblaney.xyz
 [Ryan McCue]: http://ryanmccue.info
 [Ryan Parman]: http://ryanparman.com
 [Sam Sneddon]: https://gsnedders.com

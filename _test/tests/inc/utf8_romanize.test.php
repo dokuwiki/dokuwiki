@@ -33,5 +33,13 @@ class utf8_romanize_test extends DokuWikiTest {
     function test_deaccented(){
         $this->assertEquals("a A a A a o O",\dokuwiki\Utf8\Clean::romanize("å Å ä Ä ä ö Ö"));
     }
+
+    /**
+     * Greeklish romanization
+     */
+    function test_greeklish(){
+        $this->assertEquals('kalimera pos eiste',\dokuwiki\Utf8\Clean::romanize('Καλημέρα πώς είστε'));
+    }
+
 }
-//Setup VIM: ex: et ts=4 :
+

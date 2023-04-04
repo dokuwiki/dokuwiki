@@ -3,6 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marc Zulet <marczulet@gmail.com>
+ * @author Joan <aseques@gmail.com>
+ * @author David Surroca <davidsurrocaestrada@gmail.com>
  * @author Adolfo Jayme Barrientos <fito@libreoffice.org>
  * @author Carles Bellver <carles.bellver@gmail.com>
  * @author carles.bellver <carles.bellver@cent.uji.es>
@@ -10,7 +13,6 @@
  * @author controlonline.net <controlonline.net@gmail.com>
  * @author Pauet <pauet@gmx.com>
  * @author Àngel Pérez Beroy <aperezberoy@gmail.com>
- * @author David Surroca <david.tb303@gmail.com>
  */
 $lang['menu']                  = 'Paràmetres de configuració';
 $lang['error']                 = 'Els paràmetres no s\'han pogut actualitzar per causa d\'un valor incorrecte Reviseu els canvis i torneu a enviar-los.<br />Els valors incorrectes es ressaltaran amb un marc vermell.';

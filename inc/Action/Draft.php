@@ -3,6 +3,7 @@
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionException;
+use dokuwiki\Ui;
 
 /**
  * Class Draft
@@ -12,12 +13,13 @@ use dokuwiki\Action\Exception\ActionException;
  * @package dokuwiki\Action
  * @fixme combine with Recover?
  */
-class Draft extends AbstractAction {
-
+class Draft extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         global $INFO;
-        if($INFO['exists']) {
+        if ($INFO['exists']) {
             return AUTH_EDIT;
         } else {
             return AUTH_CREATE;
@@ -25,15 +27,17 @@ class Draft extends AbstractAction {
     }
 
     /** @inheritdoc */
-    public function checkPreconditions() {
+    public function checkPreconditions()
+    {
         parent::checkPreconditions();
         global $INFO;
-        if(!file_exists($INFO['draft'])) throw new ActionException('edit');
+        if (!file_exists($INFO['draft'])) throw new ActionException('edit');
     }
 
     /** @inheritdoc */
-    public function tplContent() {
-        html_draft();
+    public function tplContent()
+    {
+        (new Ui\PageDraft)->show();
     }
 
 }

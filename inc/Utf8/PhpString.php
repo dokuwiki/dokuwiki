@@ -268,6 +268,7 @@ class PhpString
      */
     public static function strtolower($string)
     {
+        if($string === null) return ''; // pre-8.1 behaviour
         if (UTF8_MBSTRING) {
             if (class_exists('Normalizer', $autoload = false)) {
                 return \Normalizer::normalize(mb_strtolower($string, 'utf-8'));

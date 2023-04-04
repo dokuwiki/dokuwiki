@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
+ * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Ondrej Végh <ov@vsieti.sk>
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik <exusik@gmail.com>
@@ -68,9 +68,11 @@ $lang['import_error_readfail'] = 'Import neúspešný. Nie je možné prečíta�
 $lang['import_error_create']   = 'Nie je možné vytvoriť pouzívateľa';
 $lang['import_notify_fail']    = 'Správa nemohla byť zaslaná importovanému používatelovi, %s s emailom %s.';
 $lang['import_downloadfailures'] = 'Stiahnuť chyby vo formáte CSV za účelom opravy';
+$lang['addUser_error_missing_pass'] = 'Nastavte heslo alebo aktivujte upozornenie používateľa o možnosti vytvorenia hesla.';
 $lang['addUser_error_pass_not_identical'] = 'Zadané heslo nie je identické.';
 $lang['addUser_error_modPass_disabled'] = 'Zmena hesla nie je momentálne povolená';
 $lang['addUser_error_name_missing'] = 'Prosím zadajte meno nového používateľa.';
 $lang['addUser_error_modName_disabled'] = 'Zmena mena nie je momentálne povolená.';
 $lang['addUser_error_mail_missing'] = 'Prosím zadajte emailovú adresu nového používateľa.';
 $lang['addUser_error_modMail_disabled'] = 'Zmena emailovej adresy nie je momentálne povolená.';
+$lang['addUser_error_create_event_failed'] = 'Plugin zabránil pridaniu nového používateľa. Pre viac informácií prezrite ďalšie možné správy.';

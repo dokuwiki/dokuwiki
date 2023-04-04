@@ -6,6 +6,9 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\ChangeLog\ChangeLog;
+use dokuwiki\File\PageFile;
+
 /**
  * parses a changelog line into it's components
  *
@@ -15,36 +18,20 @@
  * @return array|bool parsed line or false
  */
 function parseChangelogLine($line) {
-    $line = rtrim($line, "\n");
-    $tmp = explode("\t", $line);
-    if ($tmp!==false && count($tmp)>1) {
-        $info = array();
-        $info['date']  = (int)$tmp[0]; // unix timestamp
-        $info['ip']    = $tmp[1]; // IPv4 address (127.0.0.1)
-        $info['type']  = $tmp[2]; // log line type
-        $info['id']    = $tmp[3]; // page id
-        $info['user']  = $tmp[4]; // user name
-        $info['sum']   = $tmp[5]; // edit summary (or action reason)
-        $info['extra'] = $tmp[6]; // extra data (varies by line type)
-        if(isset($tmp[7]) && $tmp[7] !== '') { //last item has line-end||
-            $info['sizechange'] = (int) $tmp[7];
-        } else {
-            $info['sizechange'] = null;
-        }
-        return $info;
-    } else {
-        return false;
-    }
+    return ChangeLog::parseLogLine($line);
 }
 
 /**
- * Add's an entry to the changelog and saves the metadata for the page
+ * Adds an entry to the changelog and saves the metadata for the page
+ *
+ * Note: timestamp of the change might not be unique especially after very quick
+ *       repeated edits (e.g. change checkbox via do plugin)
  *
  * @param int    $date      Timestamp of the change
  * @param String $id        Name of the affected page
  * @param String $type      Type of the change see DOKU_CHANGE_TYPE_*
  * @param String $summary   Summary of the change
- * @param mixed  $extra     In case of a revert the revision (timestmp) of the reverted page
+ * @param mixed  $extra     In case of a revert the revision (timestamp) of the reverted page
  * @param array  $flags     Additional flags in a key value array.
  *                             Available flags:
  *                             - ExternalEdit - mark as an external edit.
@@ -53,83 +40,53 @@ function parseChangelogLine($line) {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Esther Brunner <wikidesign@gmail.com>
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @deprecated 2021-11-28
  */
-function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extra='', $flags=null, $sizechange = null){
-    global $conf, $INFO;
+function addLogEntry(
+    $date,
+    $id,
+    $type = DOKU_CHANGE_TYPE_EDIT,
+    $summary = '',
+    $extra = '',
+    $flags = null,
+    $sizechange = null)
+{
+    // no more used in DokuWiki core, but left for third-party plugins
+    dbg_deprecated('see '. PageFile::class .'::saveWikiText()');
+
     /** @var Input $INPUT */
     global $INPUT;
 
     // check for special flags as keys
-    if (!is_array($flags)) { $flags = array(); }
+    if (!is_array($flags)) $flags = array();
     $flagExternalEdit = isset($flags['ExternalEdit']);
 
     $id = cleanid($id);
-    $file = wikiFN($id);
-    $created = @filectime($file);
-    $minor = ($type===DOKU_CHANGE_TYPE_MINOR_EDIT);
-    $wasRemoved = ($type===DOKU_CHANGE_TYPE_DELETE);
 
-    if(!$date) $date = time(); //use current time if none supplied
-    $remote = (!$flagExternalEdit)?clientIP(true):'127.0.0.1';
-    $user   = (!$flagExternalEdit)?$INPUT->server->str('REMOTE_USER'):'';
-    if($sizechange === null) {
-        $sizechange = '';
-    } else {
-        $sizechange = (int) $sizechange;
-    }
+    if (!$date) $date = time(); //use current time if none supplied
+    $remote = (!$flagExternalEdit) ? clientIP(true) : '127.0.0.1';
+    $user   = (!$flagExternalEdit) ? $INPUT->server->str('REMOTE_USER') : '';
+    $sizechange = ($sizechange === null) ? '' : (int)$sizechange;
 
-    $strip = array("\t", "\n");
-    $logline = array(
+    // update changelog file and get the added entry that is also to be stored in metadata
+    $pageFile = new PageFile($id);
+    $logEntry = $pageFile->changelog->addLogEntry([
         'date'       => $date,
         'ip'         => $remote,
-        'type'       => str_replace($strip, '', $type),
+        'type'       => $type,
         'id'         => $id,
         'user'       => $user,
-        'sum'        => \dokuwiki\Utf8\PhpString::substr(str_replace($strip, '', $summary), 0, 255),
-        'extra'      => str_replace($strip, '', $extra),
-        'sizechange' => $sizechange
-    );
+        'sum'        => $summary,
+        'extra'      => $extra,
+        'sizechange' => $sizechange,
+    ]);
 
-    $wasCreated = ($type===DOKU_CHANGE_TYPE_CREATE);
-    $wasReverted = ($type===DOKU_CHANGE_TYPE_REVERT);
     // update metadata
-    if (!$wasRemoved) {
-        $oldmeta = p_read_metadata($id);
-        $meta    = array();
-        if (
-            $wasCreated && (
-                empty($oldmeta['persistent']['date']['created']) ||
-                $oldmeta['persistent']['date']['created'] === $created
-            )
-        ){
-            // newly created
-            $meta['date']['created'] = $created;
-            if ($user){
-                $meta['creator'] = isset($INFO) ? $INFO['userinfo']['name'] : null;
-                $meta['user']    = $user;
-            }
-        } elseif (($wasCreated || $wasReverted) && !empty($oldmeta['persistent']['date']['created'])) {
-            // re-created / restored
-            $meta['date']['created']  = $oldmeta['persistent']['date']['created'];
-            $meta['date']['modified'] = $created; // use the files ctime here
-            $meta['creator'] = $oldmeta['persistent']['creator'];
-            if ($user) $meta['contributor'][$user] = isset($INFO) ? $INFO['userinfo']['name'] : null;
-        } elseif (!$minor) {   // non-minor modification
-            $meta['date']['modified'] = $date;
-            if ($user) $meta['contributor'][$user] = isset($INFO) ? $INFO['userinfo']['name'] : null;
-        }
-        $meta['last_change'] = $logline;
-        p_set_metadata($id, $meta);
-    }
-
-    // add changelog lines
-    $logline = implode("\t", $logline)."\n";
-    io_saveFile(metaFN($id,'.changes'),$logline,true); //page changelog
-    io_saveFile($conf['changelog'],$logline,true); //global changelog cache
+    $pageFile->updateMetadata($logEntry);
 }
 
 /**
- * Add's an entry to the media changelog
+ * Adds an entry to the media changelog
  *
  * @author Michael Hamann <michael@content-space.de>
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -140,7 +97,7 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
  * @param String $id        Name of the affected page
  * @param String $type      Type of the change see DOKU_CHANGE_TYPE_*
  * @param String $summary   Summary of the change
- * @param mixed  $extra     In case of a revert the revision (timestmp) of the reverted page
+ * @param mixed  $extra     In case of a revert the revision (timestamp) of the reverted page
  * @param array  $flags     Additional flags in a key value array.
  *                             Available flags:
  *                             - (none, so far)
@@ -149,48 +106,41 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
 function addMediaLogEntry(
     $date,
     $id,
-    $type=DOKU_CHANGE_TYPE_EDIT,
-    $summary='',
-    $extra='',
-    $flags=null,
+    $type = DOKU_CHANGE_TYPE_EDIT,
+    $summary = '',
+    $extra = '',
+    $flags = null,
     $sizechange = null)
 {
-    global $conf;
     /** @var Input $INPUT */
     global $INPUT;
 
+    // check for special flags as keys
+    if (!is_array($flags)) $flags = array();
+    $flagExternalEdit = isset($flags['ExternalEdit']);
+
     $id = cleanid($id);
 
-    if(!$date) $date = time(); //use current time if none supplied
-    $remote = clientIP(true);
-    $user   = $INPUT->server->str('REMOTE_USER');
-    if($sizechange === null) {
-        $sizechange = '';
-    } else {
-        $sizechange = (int) $sizechange;
-    }
+    if (!$date) $date = time(); //use current time if none supplied
+    $remote = (!$flagExternalEdit) ? clientIP(true) : '127.0.0.1';
+    $user   = (!$flagExternalEdit) ? $INPUT->server->str('REMOTE_USER') : '';
+    $sizechange = ($sizechange === null) ? '' : (int)$sizechange;
 
-    $strip = array("\t", "\n");
-    $logline = array(
+    // update changelog file and get the added entry
+    (new \dokuwiki\ChangeLog\MediaChangeLog($id, 1024))->addLogEntry([
         'date'       => $date,
         'ip'         => $remote,
-        'type'       => str_replace($strip, '', $type),
+        'type'       => $type,
         'id'         => $id,
         'user'       => $user,
-        'sum'        => \dokuwiki\Utf8\PhpString::substr(str_replace($strip, '', $summary), 0, 255),
-        'extra'      => str_replace($strip, '', $extra),
-        'sizechange' => $sizechange
-    );
-
-    // add changelog lines
-    $logline = implode("\t", $logline)."\n";
-    io_saveFile($conf['media_changelog'],$logline,true); //global media changelog cache
-    io_saveFile(mediaMetaFN($id,'.changes'),$logline,true); //media file's changelog
+        'sum'        => $summary,
+        'extra'      => $extra,
+        'sizechange' => $sizechange,
+    ]);
 }
 
 /**
- * returns an array of recently changed files using the
- * changelog
+ * returns an array of recently changed files using the changelog
  *
  * The following constants can be used to control which changes are
  * included. Add them together as needed.
@@ -211,12 +161,12 @@ function addMediaLogEntry(
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function getRecents($first,$num,$ns='',$flags=0){
+function getRecents($first, $num, $ns = '', $flags = 0) {
     global $conf;
     $recent = array();
     $count  = 0;
 
-    if(!$num)
+    if (!$num)
         return $recent;
 
     // read all recent changes. (kept short)
@@ -228,7 +178,7 @@ function getRecents($first,$num,$ns='',$flags=0){
     if (!is_array($lines)) {
         $lines = array();
     }
-    $lines_position = count($lines)-1;
+    $lines_position = count($lines) - 1;
     $media_lines_position = 0;
     $media_lines = array();
 
@@ -237,13 +187,13 @@ function getRecents($first,$num,$ns='',$flags=0){
         if (!is_array($media_lines)) {
             $media_lines = array();
         }
-        $media_lines_position = count($media_lines)-1;
+        $media_lines_position = count($media_lines) - 1;
     }
 
     $seen = array(); // caches seen lines, _handleRecent() skips them
 
     // handle lines
-    while ($lines_position >= 0 || (($flags & RECENTS_MEDIA_PAGES_MIXED) && $media_lines_position >=0)) {
+    while ($lines_position >= 0 || (($flags & RECENTS_MEDIA_PAGES_MIXED) && $media_lines_position >= 0)) {
         if (empty($rec) && $lines_position >= 0) {
             $rec = _handleRecent(@$lines[$lines_position], $ns, $flags, $seen);
             if (!$rec) {
@@ -274,11 +224,11 @@ function getRecents($first,$num,$ns='',$flags=0){
             if ($flags & RECENTS_MEDIA_CHANGES) $x['media'] = true;
             $rec = false;
         }
-        if(--$first >= 0) continue; // skip first entries
+        if (--$first >= 0) continue; // skip first entries
         $recent[] = $x;
         $count++;
         // break when we have enough entries
-        if($count >= $num){ break; }
+        if ($count >= $num) { break; }
     }
     return $recent;
 }
@@ -305,11 +255,11 @@ function getRecents($first,$num,$ns='',$flags=0){
  * @author Michael Hamann <michael@content-space.de>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function getRecentsSince($from,$to=null,$ns='',$flags=0){
+function getRecentsSince($from, $to = null, $ns = '', $flags = 0) {
     global $conf;
     $recent = array();
 
-    if($to && $to < $from)
+    if ($to && $to < $from)
         return $recent;
 
     // read all recent changes. (kept short)
@@ -318,7 +268,7 @@ function getRecentsSince($from,$to=null,$ns='',$flags=0){
     } else {
         $lines = @file($conf['changelog']);
     }
-    if(!$lines) return $recent;
+    if (!$lines) return $recent;
 
     // we start searching at the end of the list
     $lines = array_reverse($lines);
@@ -326,9 +276,9 @@ function getRecentsSince($from,$to=null,$ns='',$flags=0){
     // handle lines
     $seen = array(); // caches seen lines, _handleRecent() skips them
 
-    foreach($lines as $line){
+    foreach ($lines as $line) {
         $rec = _handleRecent($line, $ns, $flags, $seen);
-        if($rec !== false) {
+        if ($rec !== false) {
             if ($rec['date'] >= $from) {
                 if (!$to || $rec['date'] <= $to) {
                     $recent[] = $rec;
@@ -357,30 +307,30 @@ function getRecentsSince($from,$to=null,$ns='',$flags=0){
  * @param array  $seen   listing of seen pages
  * @return array|bool    false or array with info about a change
  */
-function _handleRecent($line,$ns,$flags,&$seen){
-    if(empty($line)) return false;   //skip empty lines
+function _handleRecent($line, $ns, $flags, &$seen) {
+    if (empty($line)) return false;   //skip empty lines
 
     // split the line into parts
-    $recent = parseChangelogLine($line);
-    if ($recent===false) { return false; }
+    $recent = ChangeLog::parseLogLine($line);
+    if ($recent === false) return false;
 
     // skip seen ones
-    if(isset($seen[$recent['id']])) return false;
+    if (isset($seen[$recent['id']])) return false;
 
     // skip changes, of only new items are requested
-    if($recent['type']!==DOKU_CHANGE_TYPE_CREATE && ($flags & RECENTS_ONLY_CREATION)) return false;
+    if ($recent['type'] !== DOKU_CHANGE_TYPE_CREATE && ($flags & RECENTS_ONLY_CREATION)) return false;
 
     // skip minors
-    if($recent['type']===DOKU_CHANGE_TYPE_MINOR_EDIT && ($flags & RECENTS_SKIP_MINORS)) return false;
+    if ($recent['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT && ($flags & RECENTS_SKIP_MINORS)) return false;
 
     // remember in seen to skip additional sights
     $seen[$recent['id']] = 1;
 
     // check if it's a hidden page
-    if(isHiddenPage($recent['id'])) return false;
+    if (isHiddenPage($recent['id'])) return false;
 
     // filter namespace
-    if (($ns) && (strpos($recent['id'],$ns.':') !== 0)) return false;
+    if (($ns) && (strpos($recent['id'], $ns.':') !== 0)) return false;
 
     // exclude subnamespaces
     if (($flags & RECENTS_SKIP_SUBSPACES) && (getNS($recent['id']) != $ns)) return false;
@@ -393,10 +343,10 @@ function _handleRecent($line,$ns,$flags,&$seen){
     }
     if ($recent['perms'] < AUTH_READ) return false;
 
-    // check existance
-    if($flags & RECENTS_SKIP_DELETED){
+    // check existence
+    if ($flags & RECENTS_SKIP_DELETED) {
         $fn = (($flags & RECENTS_MEDIA_CHANGES) ? mediaFN($recent['id']) : wikiFN($recent['id']));
-        if(!file_exists($fn)) return false;
+        if (!file_exists($fn)) return false;
     }
 
     return $recent;

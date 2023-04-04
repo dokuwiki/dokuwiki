@@ -47,9 +47,18 @@ function farm_confpath($farm) {
 
     // htaccess based or cli
     // cli usage example: animal=your_animal bin/indexer.php
-    if(isset($_REQUEST['animal']) || ('cli' == php_sapi_name() && isset($_SERVER['animal']))) {
-        $mode = isset($_REQUEST['animal']) ? 'htaccess' : 'cli';
-        $animal = $mode == 'htaccess' ? $_REQUEST['animal'] : $_SERVER['animal'];
+    if(isset($_GET['animal']) || ('cli' == php_sapi_name() && isset($_SERVER['animal']))) {
+        $mode = isset($_GET['animal']) ? 'htaccess' : 'cli';
+        $animal = $mode == 'htaccess' ? $_GET['animal'] : $_SERVER['animal'];
+        if(isset($_GET['animal'])) {
+            // now unset the parameter to not leak into new queries
+            // code by @splitbrain from farmer plugin
+            unset($_GET['animal']);
+            $params = [];
+            parse_str($_SERVER['QUERY_STRING'], $params);
+            if (isset($params['animal'])) unset($params['animal']);
+            $_SERVER['QUERY_STRING'] = http_build_query($params);
+        }
         // check that $animal is a string and just a directory name and not a path
         if (!is_string($animal) || strpbrk($animal, '\\/') !== false)
             nice_die('Sorry! Invalid animal name!');

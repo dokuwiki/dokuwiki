@@ -168,6 +168,9 @@ class HTTPClient {
         $this->resp_body = '';
         $this->resp_headers = array();
 
+        // save unencoded data for recursive call
+        $unencodedData = $data;
+
         // don't accept gzip if truncated bodies might occur
         if($this->max_bodysize &&
             !$this->max_bodysize_abort &&
@@ -178,10 +181,9 @@ class HTTPClient {
         // parse URL into bits
         $uri = parse_url($url);
         $server = $uri['host'];
-        $path   = $uri['path'];
-        if(empty($path)) $path = '/';
+        $path   = !empty($uri['path']) ? $uri['path'] : '/';
+        $uriPort = !empty($uri['port']) ? $uri['port'] : null;
         if(!empty($uri['query'])) $path .= '?'.$uri['query'];
-        if(!empty($uri['port'])) $port = $uri['port'];
         if(isset($uri['user'])) $this->user = $uri['user'];
         if(isset($uri['pass'])) $this->pass = $uri['pass'];
 
@@ -194,7 +196,7 @@ class HTTPClient {
             $use_tls     = $this->proxy_ssl;
         }else{
             $request_url = $path;
-            if (!isset($port)) $port = ($uri['scheme'] == 'https') ? 443 : 80;
+            $port = $uriPort ?: ($uri['scheme'] == 'https' ? 443 : 80);
             $use_tls     = ($uri['scheme'] == 'https');
         }
 
@@ -209,8 +211,8 @@ class HTTPClient {
 
         // prepare headers
         $headers               = $this->headers;
-        $headers['Host']       = $uri['host'];
-        if(!empty($uri['port'])) $headers['Host'].= ':'.$uri['port'];
+        $headers['Host']       = $uri['host']
+            . ($uriPort ? ':' . $uriPort : '');
         $headers['User-Agent'] = $this->agent;
         $headers['Referer']    = $this->referer;
 
@@ -354,7 +356,7 @@ class HTTPClient {
             $this->debug('Object headers',$this->resp_headers);
 
             // check server status code to follow redirect
-            if($this->status == 301 || $this->status == 302 ){
+            if(in_array($this->status, [301, 302, 303, 307, 308])){
                 if (empty($this->resp_headers['location'])){
                     throw new HTTPClientException('Redirect but no Location Header found');
                 }elseif($this->redirect_count == $this->max_redirect){
@@ -370,15 +372,20 @@ class HTTPClient {
                     // handle non-RFC-compliant relative redirects
                     if (!preg_match('/^http/i', $this->resp_headers['location'])){
                         if($this->resp_headers['location'][0] != '/'){
-                            $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].':'.$uri['port'].
-                                dirname($uri['path']).'/'.$this->resp_headers['location'];
+                            $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].':'.$uriPort.
+                                dirname($path).'/'.$this->resp_headers['location'];
                         }else{
-                            $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].':'.$uri['port'].
+                            $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].':'.$uriPort.
                                 $this->resp_headers['location'];
                         }
                     }
-                    // perform redirected request, always via GET (required by RFC)
-                    return $this->sendRequest($this->resp_headers['location'],array(),'GET');
+                    if($this->status == 307 || $this->status == 308) {
+                        // perform redirected request, same method as before (required by RFC)
+                        return $this->sendRequest($this->resp_headers['location'],$unencodedData,$method);
+                    }else{
+                        // perform redirected request, always via GET (required by RFC)
+                        return $this->sendRequest($this->resp_headers['location'],array(),'GET');
+                    }
                 }
             }
 
@@ -511,7 +518,7 @@ class HTTPClient {
         if(!$this->useProxyForUrl($requesturl)) return false;
         $requestinfo = parse_url($requesturl);
         if($requestinfo['scheme'] != 'https') return false;
-        if(!$requestinfo['port']) $requestinfo['port'] = 443;
+        if(empty($requestinfo['port'])) $requestinfo['port'] = 443;
 
         // build request
         $request  = "CONNECT {$requestinfo['host']}:{$requestinfo['port']} HTTP/1.0".HTTP_NL;
@@ -765,7 +772,7 @@ class HTTPClient {
         foreach($lines as $line){
             @list($key, $val) = explode(':',$line,2);
             $key = trim($key);
-            $val = trim($val);
+            $val = trim($val ?? '');
             $key = strtolower($key);
             if(!$key) continue;
             if(isset($headers[$key])){

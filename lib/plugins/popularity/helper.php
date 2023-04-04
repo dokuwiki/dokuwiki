@@ -13,7 +13,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
     /**
      * The url where the data should be sent
      */
-    public $submitUrl = 'http://update.dokuwiki.org/popularity.php';
+    public $submitUrl = 'https://update.dokuwiki.org/popularity.php';
 
     /**
      * Name of the file which determine if the the autosubmit is enabled,

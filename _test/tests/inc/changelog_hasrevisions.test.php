@@ -13,7 +13,7 @@ class changelog_hasrevisions_test extends DokuWikiTest {
      */
     function test_hasrevisions() {
         $id = 'mailinglist';
-        
+
         $pagelog = new PageChangeLog($id);
         $result = $pagelog->hasRevisions();
         $this->assertTrue($result);
@@ -24,7 +24,7 @@ class changelog_hasrevisions_test extends DokuWikiTest {
      */
     function test_norevisions() {
         $id = 'nonexist';
-        
+
         $pagelog = new PageChangeLog($id);
         $result = $pagelog->hasRevisions();
         $this->assertFalse($result);

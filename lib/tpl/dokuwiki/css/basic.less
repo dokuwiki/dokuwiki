@@ -218,7 +218,7 @@ img {
     color: #666;
     background-color: transparent;
     font-style: italic;
-    height: auto;
+    object-fit: cover;
 }
 video {
     height: auto;
@@ -234,6 +234,9 @@ audio {
 button img {
     max-width: none;
 }
+table img {
+    max-width: 50vw;
+}
 
 hr {
     border-top: solid @ini_border;
@@ -248,6 +251,7 @@ acronym,
 abbr {
     cursor: help;
     border-bottom: 1px dotted;
+    text-decoration: none;
     font-style: normal;
 }
 em acronym,

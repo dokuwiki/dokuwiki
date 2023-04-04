@@ -151,7 +151,7 @@ $lang['created']               = 'yaranıb';
 $lang['restored']              = 'köhnə versiya qaytarıldı (%s)';
 $lang['external_edit']         = 'bayırdan dəyişik';
 $lang['summary']               = 'Dəyişiklər xülasəsi';
-$lang['noflash']               = 'Bu məzmuna baxmaq üçün <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> tələb olunur.';
+$lang['noflash']               = 'Bu məzmuna baxmaq üçün <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> tələb olunur.';
 $lang['download']              = 'Kodu yüklə';
 $lang['mail_newpage']          = 'səhifə əlavə olundu:';
 $lang['mail_changed']          = 'səhifəyə düzəliş edildi:';
@@ -203,7 +203,7 @@ $lang['i_enableacl']           = 'Haqlar kontrolu siyahısının istifadəsinə 
 $lang['i_superuser']           = 'Super-istifadəci';
 $lang['i_problems']            = 'Quraşdırma proqramı aşağıdakı problemlər ilə üzləşdi. Davam etmək üçün onları həll etmək lazımdır. ';
 $lang['i_modified']            = 'Təhlükəsizlik baxımından bu proqram ancaq yeni, dəyişməmiş halda olan DokuWiki üzərində işləyir.
-                         Siz ya yüklənmiş quraşdırma paketini yenidən açmalısınız, ya da <a href="http://dokuwiki.org/install">DokuWiki-nin tam quraşdırma instruksiyasına</a> müraciyət etməlisiniz';
+                         Siz ya yüklənmiş quraşdırma paketini yenidən açmalısınız, ya da <a href="https://www.dokuwiki.org/install">DokuWiki-nin tam quraşdırma instruksiyasına</a> müraciyət etməlisiniz';
 $lang['i_funcna']              = 'PHP-nin <code>%s</code> funksiyası mövcud deyil. Bəlkə, o hansı sa səbəbdən sizin host-unuz tərəfindən blok edilib?';
 $lang['i_phpver']              = 'Sizin PHP-nin versiyası (<code>%s</code>) tələb olunan versiyadan aşagıdır (<code>%s</code>). Quraşdırılmış PHP-nin versiyasını yeniləyin.';
 $lang['i_permfail']            = '<code>%s</code> DokuWiki-yə yazı üçün bağlıdır. Bu qovluğun giriş haqlarını yoxlamaq lazımdır!';
