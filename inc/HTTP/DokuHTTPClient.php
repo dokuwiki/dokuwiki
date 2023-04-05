@@ -9,6 +9,7 @@ namespace dokuwiki\HTTP;
  * Adds DokuWiki specific configs to the HTTP client
  *
  * @author Andreas Goetz <cpuidle@gmx.de>
+ * @link https://www.dokuwiki.org/devel:httpclient
  */
 class DokuHTTPClient extends HTTPClient {
 
@@ -74,4 +75,3 @@ class DokuHTTPClient extends HTTPClient {
     }
 
 }
-

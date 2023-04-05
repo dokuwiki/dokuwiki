@@ -9,10 +9,10 @@ define('HTTP_NL',"\r\n");
  * This class implements a basic HTTP client
  *
  * It supports POST and GET, Proxy usage, basic authentication,
- * handles cookies and referers. It is based upon the httpclient
+ * handles cookies and referrers. It is based upon the httpclient
  * function from the VideoDB project.
  *
- * @link   http://www.splitbrain.org/go/videodb
+ * @link   https://www.splitbrain.org/projects/videodb
  * @author Andreas Goetz <cpuidle@gmx.de>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Tobias Sarnowski <sarnowski@new-thoughts.org>
@@ -266,7 +266,7 @@ class HTTPClient {
                 return false;
             }
 
-            // try establish a CONNECT tunnel for SSL
+            // try to establish a CONNECT tunnel for SSL
             try {
                 if($this->ssltunnel($socket, $request_url)){
                     // no keep alive for tunnels
