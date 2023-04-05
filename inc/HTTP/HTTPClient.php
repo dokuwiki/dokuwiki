@@ -162,7 +162,7 @@ class HTTPClient {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     public function sendRequest($url,$data='',$method='GET'){
-        $this->start  = $this->time();
+        $this->start  = microtime(true);
         $this->error  = '';
         $this->status = 0;
         $this->resp_body = '';
@@ -583,7 +583,7 @@ class HTTPClient {
         $written = 0;
         while($written < $towrite){
             // check timeout
-            $time_used = $this->time() - $this->start;
+            $time_used = microtime(true) - $this->start;
             if($time_used > $this->timeout)
                 throw new HTTPClientException(sprintf('Timeout while sending %s (%.3fs)',$message, $time_used), -100);
             if(feof($socket))
@@ -628,7 +628,7 @@ class HTTPClient {
         if ($nbytes < 0) $nbytes = 0;
         $to_read = $nbytes;
         do {
-            $time_used = $this->time() - $this->start;
+            $time_used = microtime(true) - $this->start;
             if ($time_used > $this->timeout)
                 throw new HTTPClientException(
                     sprintf('Timeout while reading %s after %d bytes (%.3fs)', $message,
@@ -675,7 +675,7 @@ class HTTPClient {
     protected function readLine($socket, $message) {
         $r_data = '';
         do {
-            $time_used = $this->time() - $this->start;
+            $time_used = microtime(true) - $this->start;
             if ($time_used > $this->timeout)
                 throw new HTTPClientException(
                     sprintf('Timeout while reading %s (%.3fs) >%s<', $message, $time_used, $r_data),
@@ -724,7 +724,7 @@ class HTTPClient {
      * @param mixed  $var
      */
     protected function debugHtml($info, $var=null){
-        print '<b>'.$info.'</b> '.($this->time() - $this->start).'s<br />';
+        print '<b>'.$info.'</b> '.(microtime(true) - $this->start).'s<br />';
         if(!is_null($var)){
             ob_start();
             print_r($var);
@@ -741,18 +741,9 @@ class HTTPClient {
      * @param mixed  $var
      */
     protected function debugText($info, $var=null){
-        print '*'.$info.'* '.($this->time() - $this->start)."s\n";
+        print '*'.$info.'* '.(microtime(true) - $this->start)."s\n";
         if(!is_null($var)) print_r($var);
         print "\n-----------------------------------------------\n";
-    }
-
-    /**
-     * Return current timestamp in microsecond resolution
-     *
-     * @return float
-     */
-    protected static function time(){
-        return microtime(true);
     }
 
     /**
