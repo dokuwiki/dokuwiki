@@ -1,0 +1,6 @@
+====== Wyświetl dzienniki ======
+
+Ten interfejs umożliwia przeglądanie różnych dzienników zapisywanych przez DokuWiki. Domyślnie nie powinno ich być tutaj dużo (zależy to od Twoich [[doku>config:dontlog|ustawień dzienników]]). Jeśli jednak coś pójdzie nie tak, szanse są dueż, że znajdziesz przydatne informacje o problemie. Wszystkie czasy są UTC!
+
+Należy pamiętać, że **pliki dziennika mogą zawierać poufne informacje**, takie jak hasła, ścieżki lub inne tajemnice.
+Pamiętaj, aby odpowiednio zredagować dzienniki podczas publikowania ich na forum lub w raportach o błędach!
