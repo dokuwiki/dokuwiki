@@ -374,7 +374,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
     /**
      * Load all user data
      *
-     * loads the user file into a datastructure
+     * loads the user file into a datastructures
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
      */

@@ -780,7 +780,7 @@ function auth_nameencode_callback($matches) {
 }
 
 /**
- * Create a pronouncable password
+ * Create a pronounceable password
  *
  * The $foruser variable might be used by plugins to run additional password
  * policy checks, but is not used by the default implementation
@@ -805,7 +805,7 @@ function auth_pwgen($foruser = '') {
         $a = $c.$v; //both
         $s = '!$%&?+*~#-_:.;,'; // specials
 
-        //use thre syllables...
+        //use three syllables...
         for($i = 0; $i < 3; $i++) {
             $data['password'] .= $c[auth_random(0, strlen($c) - 1)];
             $data['password'] .= $v[auth_random(0, strlen($v) - 1)];
