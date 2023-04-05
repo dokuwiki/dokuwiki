@@ -203,7 +203,7 @@ class HTTPClient {
 
         // add SSL stream prefix if needed - needs SSL support in PHP
         if($use_tls) {
-            if(!in_array('ssl', stream_get_transports())) {
+            if(!in_array('ssl', stream_get_transports(), true)) {
                 $this->status = -200;
                 $this->error = 'This PHP version does not support SSL - cannot connect to server';
             }
