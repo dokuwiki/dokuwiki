@@ -17,7 +17,7 @@ trait ChangeLogTrait
     abstract public function addLogEntry(array $info, $timestamp = null);
 
     /**
-     * Parses a changelog line into it's components
+     * Parses a changelog line into its components
      *
      * @author Ben Coburn <btcoburn@silicodon.net>
      *
@@ -44,7 +44,7 @@ trait ChangeLogTrait
     }
 
     /**
-     * Build a changelog line from it's components
+     * Build a changelog line from its components
      *
      * @param array $info Revision info structure
      * @param int $timestamp log line date (optional)
