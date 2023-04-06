@@ -59,7 +59,7 @@ trait ChangeLogTrait
             'type'  => str_replace($strip, '', $info['type']),
             'id'    => $info['id'],
             'user'  => $info['user'],
-            'sum'   => PhpString::substr(str_replace($strip, '', $info['sum']), 0, 255),
+            'sum'   => PhpString::substr(str_replace($strip, '', $info['sum'] ?? ''), 0, 255),
             'extra' => str_replace($strip, '', $info['extra']),
             'sizechange' => $info['sizechange'],
         );
