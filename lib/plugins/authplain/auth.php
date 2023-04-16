@@ -90,7 +90,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
     public function getUserData($user, $requireGroups = true)
     {
         if ($this->users === null) $this->loadUserData();
-        return isset($this->users[$user]) ? $this->users[$user] : false;
+        return $this->users[$user] ?? false;
     }
 
     /**
