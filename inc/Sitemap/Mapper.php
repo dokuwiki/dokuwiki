@@ -78,7 +78,7 @@ class Mapper {
     /**
      * Builds the sitemap XML string from the given array auf SitemapItems.
      *
-     * @param $items array The SitemapItems that shall be included in the sitemap.
+     * @param Item[] $items Sitemap Items that shall be included in the sitemap.
      * @return string The sitemap XML.
      *
      * @author Michael Hamann
@@ -88,7 +88,6 @@ class Mapper {
         echo '<?xml version="1.0" encoding="UTF-8"?>'.NL;
         echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.NL;
         foreach ($items as $item) {
-            /** @var Item $item */
             echo $item->toXML();
         }
         echo '</urlset>'.NL;
@@ -162,4 +161,3 @@ class Mapper {
         return true;
     }
 }
-
