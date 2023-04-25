@@ -91,21 +91,24 @@ function auth_setup()
         $INPUT->set('p', stripctl($INPUT->str('p')));
     }
 
-    $ok = null;
-    if ($auth instanceof AuthPlugin && $auth->canDo('external')) {
-        $ok = $auth->trustExternal($INPUT->str('u'), $INPUT->str('p'), $INPUT->bool('r'));
-    }
+    if(!auth_tokenlogin()) {
+        $ok = null;
 
-    if ($ok === null) {
-        // external trust mechanism not in place, or returns no result,
-        // then attempt auth_login
-        $evdata = [
-            'user'     => $INPUT->str('u'),
-            'password' => $INPUT->str('p'),
-            'sticky'   => $INPUT->bool('r'),
-            'silent'   => $INPUT->bool('http_credentials')
-        ];
-        Event::createAndTrigger('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
+        if ($auth instanceof AuthPlugin && $auth->canDo('external')) {
+            $ok = $auth->trustExternal($INPUT->str('u'), $INPUT->str('p'), $INPUT->bool('r'));
+        }
+
+        if ($ok === null) {
+            // external trust mechanism not in place, or returns no result,
+            // then attempt auth_login
+            $evdata = [
+                'user' => $INPUT->str('u'),
+                'password' => $INPUT->str('p'),
+                'sticky' => $INPUT->bool('r'),
+                'silent' => $INPUT->bool('http_credentials')
+            ];
+            Event::createAndTrigger('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
+        }
     }
 
     //load ACL into a global array XXX
@@ -163,6 +166,53 @@ function auth_loadACL()
     }
 
     return $out;
+}
+
+/**
+ * Try a token login
+ *
+ * @return bool true if token login succeeded
+ */
+function auth_tokenlogin() {
+    global $USERINFO;
+    global $INPUT;
+    /** @var DokuWiki_Auth_Plugin $auth */
+    global $auth;
+    if(!$auth) return false;
+
+    // see if header has token
+    $header = '';
+    if(function_exists('apache_request_headers')) {
+        // Authorization headers are not in $_SERVER for mod_php
+        $headers = apache_request_headers();
+        if(isset($headers['Authorization'])) $header = $headers['Authorization'];
+    } else {
+        $header = $INPUT->server->str('HTTP_AUTHORIZATION');
+    }
+    if(!$header) return false;
+    list($type, $token) = sexplode(' ', $header, 2);
+    if($type !== 'Bearer') return false;
+
+    // check token
+    try {
+        $authtoken = \dokuwiki\JWT::validate($token);
+    } catch (Exception $e) {
+        msg(hsc($e->getMessage()), -1);
+        return false;
+    }
+
+    // fetch user info from backend
+    $user = $authtoken->getUser();
+    $USERINFO = $auth->getUserData($user);
+    if(!$USERINFO) return false;
+
+    // the code is correct, set up user
+    $INPUT->server->set('REMOTE_USER', $user);
+    $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
+    $_SESSION[DOKU_COOKIE]['auth']['pass'] = 'nope';
+    $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
+
+    return true;
 }
 
 /**
