@@ -512,7 +512,7 @@ class Indexer {
 
         $wordlist = explode(' ', $text);
         foreach ($wordlist as $i => $word) {
-            $wordlist[$i] = (preg_match('/[^0-9A-Za-z]/u', $word)) ?
+            $wordlist[$i] = preg_match('/[^0-9A-Za-z]/u', $word) ?
                 \dokuwiki\Utf8\PhpString::strtolower($word) : strtolower($word);
         }
 
