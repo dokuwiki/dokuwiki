@@ -518,7 +518,7 @@ class Indexer {
 
         foreach ($wordlist as $i => $word) {
             if ((!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
-                || array_search($word, $stopwords, true) !== false)
+                || in_array($word, $stopwords, true))
                 unset($wordlist[$i]);
         }
         return array_values($wordlist);
