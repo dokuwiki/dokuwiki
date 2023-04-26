@@ -45,7 +45,7 @@ class JWT
      */
     public static function validate($token)
     {
-        [$header, $payload, $signature] = sexplode('.', $token, 3);
+        [$header, $payload, $signature] = sexplode('.', $token, 3, '');
         $signature = base64_decode($signature);
 
         if (!hash_equals($signature, hash_hmac('sha256', "$header.$payload", self::getSecret(), true))) {
@@ -73,9 +73,13 @@ class JWT
         }
 
         $user = $payload['sub'];
-        $file = getCacheName($user, '.token');
+        $file = self::getStorageFile($user);
         if (!file_exists($file)) {
             throw new \Exception('JWT not found, maybe it expired?');
+        }
+
+        if(file_get_contents($file) !== $token) {
+            throw new \Exception('JWT invalid, maybe it expired?');
         }
 
         return new self($user, $payload['iat']);
@@ -91,7 +95,7 @@ class JWT
      */
     public static function fromUser($user)
     {
-        $file = getCacheName($user, '.token');
+        $file = self::getStorageFile($user);
 
         if (file_exists($file)) {
             try {
@@ -137,8 +141,7 @@ class JWT
     public function save()
     {
         $this->issued = time();
-        $file = getCacheName($this->user, '.token');
-        io_saveFile($file, $this->getToken());
+        io_saveFile(self::getStorageFile($this->user), $this->getToken());
     }
 
     /**
@@ -159,5 +162,18 @@ class JWT
     public function getIssued()
     {
         return $this->issued;
+    }
+
+    /**
+     * Get the storage file for this token
+     *
+     * Tokens are stored to be able to invalidate them
+     *
+     * @param string $user The user the token is for
+     * @return string
+     */
+    public static function getStorageFile($user)
+    {
+        return getCacheName($user, '.token');
     }
 }
