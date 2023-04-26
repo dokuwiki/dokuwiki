@@ -554,7 +554,7 @@ class HTTPClient {
             }
 
             if (@stream_socket_enable_crypto($socket, true, $cryptoMethod)) {
-                $requesturl = $requestinfo['path'].
+                $requesturl = ($requestinfo['path'] ?? '/').
                     (!empty($requestinfo['query'])?'?'.$requestinfo['query']:'');
                 return true;
             }

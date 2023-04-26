@@ -34,6 +34,10 @@ jobs:
                     POSTGRES_PASSWORD: postgres
                 ports:
                     - 5432:5432
+            squid:
+              image: ubuntu/squid
+              ports:
+                    - 3128:3128
         steps:
             - name: Checkout
               uses: actions/checkout@v3
@@ -56,6 +60,7 @@ jobs:
                   cd _test
                   cp mysql.conf.php.dist mysql.conf.php
                   cp pgsql.conf.php.dist pgsql.conf.php
+                  cp proxy.conf.php.dist proxy.conf.php
 
             - name: Run PHPUnit
               run: |
