@@ -111,6 +111,7 @@ $lang['auth_security_timeout'] = 'Časový limit pro autentikaci (v sekundách)'
 $lang['securecookie']          = 'Má prohlížeč posílat cookies nastavené přes HTTPS opět jen přes HTTPS? Vypněte tuto volbu, pokud chcete, aby bylo pomocí SSL zabezpečeno pouze přihlašování do wiki, ale obsah budete prohlížet nezabezpečeně.';
 $lang['remote']                = 'Zapne API systému, umožňující jiným aplikacím vzdálený přístup k wiki pomoci XML-RPC nebo jiných mechanizmů.';
 $lang['remoteuser']            = 'Omezit přístup k API na tyto uživatelské skupiny či uživatele (seznam oddělený čárkami). Prázdné pole povolí přístup všem.';
+$lang['remotecors']            = 'Povolit sdílené zdroje odjinud (CORS) pro vzdálená rozhraní. Hvězdičkou (*) povolíte všechny zdroje. Ponechte prázdné, chcete-li zakázat CORS.';
 $lang['usewordblock']          = 'Blokovat spam za použití seznamu známých spamových slov';
 $lang['relnofollow']           = 'Používat rel="nofollow" na externí odkazy';
 $lang['indexdelay']            = 'Časová prodleva před indexací (v sekundách)';
@@ -176,6 +177,7 @@ $lang['search_fragment_o_contains'] = 'obsahuje';
 $lang['trustedproxy']          = 'Důvěřovat proxy serverům odpovídajícím tomuto regulárním výrazu ohledně skutečné IP adresy klienta, kterou hlásí. Výchozí hodnota odpovídá místním sítím. Ponechejte prázdné, pokud nechcete důvěřovat žádné proxy.';
 $lang['_feature_flags']        = 'Feature flags';
 $lang['defer_js']              = 'Odložit spuštění javascriptu až po zpracování HTML kódu stránky. Zlepšuje vnímanou rychlost načtení stránky, ale může narušit funkci některých zásuvných modulů.';
+$lang['hidewarnings']          = 'Nezobrazovat žádná varování PHP. To může usnadnit přechod na PHP8+. Varování budou stále zaznamenána v protokolu chyb a měla by být hlášena.';
 $lang['dnslookups']            = 'DokuWiki zjišťuje DNS jména pro vzdálené IP adresy uživatelů, kteří editují stránky. Pokud máte pomalý, nebo nefunkční DNS server, nebo nepotřebujete tuto funkci, tak tuto volbu zrušte.';
 $lang['jquerycdn']             = 'Mají být skripty jQuery a jQuery UI načítány z CDN?
 Vzniknou tím další HTTP dotazy, ale soubory se mohou načíst rychleji a uživatelé je už mohou mít ve vyrovnávací paměti.';
