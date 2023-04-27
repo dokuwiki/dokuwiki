@@ -277,7 +277,7 @@ class Api
             return true;
         }
 
-        return auth_isMember($conf['remoteuser'], $INPUT->server->str('REMOTE_USER'), (array) $USERINFO['grps']);
+        return auth_isMember($conf['remoteuser'], $INPUT->server->str('REMOTE_USER'), (array) ($USERINFO['grps'] ?? []));
     }
 
     /**
