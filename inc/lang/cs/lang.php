@@ -234,6 +234,7 @@ $lang['created']               = 'vytvořeno';
 $lang['restored']              = 'stará verze byla obnovena (%s)';
 $lang['external_edit']         = 'upraveno mimo DokuWiki';
 $lang['summary']               = 'Komentář k úpravám';
+$lang['unknowndate']           = 'Neznámé datum';
 $lang['noflash']               = 'Pro přehrání obsahu potřebujete <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Stáhnout snippet';
 $lang['tools']                 = 'Nástroje';
