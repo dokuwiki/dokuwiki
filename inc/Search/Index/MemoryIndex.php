@@ -57,6 +57,17 @@ class MemoryIndex extends AbstractIndex
     }
 
     /** @inheritdoc */
+    public function retrieveRows($rids)
+    {
+        $result = [];
+        foreach ($rids as $rid) {
+            if (isset($this->data[$rid])) $result[$rid] = $this->data[$rid];
+        }
+
+        return $result;
+    }
+
+    /** @inheritdoc */
     public function getRowIDs($values)
     {
         $values = array_map('trim', $values);

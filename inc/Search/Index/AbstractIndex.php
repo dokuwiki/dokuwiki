@@ -63,11 +63,21 @@ abstract class AbstractIndex
     abstract public function retrieveRow($rid);
 
     /**
+     * Retrieve multiple lines from the index
+     *
+     * Ignores non-existing lines, eg the result array may be smaller than the input $rids
+     *
+     * @param int[] $rids
+     * @return array [rid => value]
+     */
+    abstract public function retrieveRows($rids);
+
+    /**
      * Searches the Index for a given value and adds it if not found
      *
      * Entries previously marked as deleted will be restored.
      *
-     * Note the existance of an entry in the index does not say anything about the exististance
+     * Note the existence of an entry in the index does not say anything about the existence
      * of the real world object (eg. a page)
      *
      * You should preferable use accessCachedValue() instead.

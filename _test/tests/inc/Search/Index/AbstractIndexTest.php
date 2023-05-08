@@ -35,6 +35,18 @@ abstract class AbstractIndexTest extends \DokuWikiTest
         $this->assertEquals(['foo' => 0, 'baz' => 2, 'bang' => 3], $result);
     }
 
+    public function testRetrieve()
+    {
+        $index = $this->getIndex();
+        $index->getRowIDs(['foo', 'bar', 'baz']); // add data
+
+        $this->assertEquals('bar', $index->retrieveRow(1));
+        $this->assertEquals('', $index->retrieveRow(5)); // non existent, but will be created with padding
+
+        // rows up to 5 exist now, 7 does not and is ignored
+        $this->assertEquals([0 => 'foo', 2 => 'baz', 4 => ''], $index->retrieveRows([0, 2, 4, 7]));
+    }
+
     public function testSearch()
     {
         $index = $this->getIndex();

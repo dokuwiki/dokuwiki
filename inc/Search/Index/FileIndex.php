@@ -77,7 +77,7 @@ class FileIndex extends AbstractIndex
         while (($line = fgets($fh)) !== false) {
             if (++$ln == $rid) {
                 fclose($fh);
-                return rtrim((string) $line);
+                return rtrim((string)$line);
             }
         }
         fclose($fh);
@@ -90,6 +90,33 @@ class FileIndex extends AbstractIndex
 
         return '';
     }
+
+    /** @inheritdoc */
+    public function retrieveRows($rids)
+    {
+        $result = [];
+        sort($rids);
+        $next = array_shift($rids);
+
+        if (!file_exists($this->filename)) {
+            return $result;
+        }
+        $fh = @fopen($this->filename, 'r');
+        if (!$fh) {
+            return $result;
+        }
+        $ln = -1;
+        while (($line = fgets($fh)) !== false) {
+            if (++$ln === $next) {
+                $result[$ln] = rtrim((string)$line);
+                $next = array_shift($rids);
+                if ($next === false) break;
+            }
+        }
+        fclose($fh);
+        return $result;
+    }
+
 
     /**
      * @inheritdoc
