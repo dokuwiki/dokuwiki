@@ -3,6 +3,7 @@
 namespace dokuwiki\Search\Index;
 
 use dokuwiki\Search\Exception\IndexAccessException;
+use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Exception\IndexWriteException;
 
 /**
@@ -20,11 +21,14 @@ class FileIndex extends AbstractIndex
     /**
      * @inheritdoc
      * @throws IndexWriteException
+     * @throws IndexLockException
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function changeRow($rid, $value)
     {
         global $conf;
+
+        if (!$this->isWritable) throw new IndexLockException();
 
         if (substr($value, -1) !== "\n") {
             $value .= "\n";
@@ -62,6 +66,7 @@ class FileIndex extends AbstractIndex
 
     /**
      * @inheritdoc
+     * @throws IndexWriteException
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function retrieveRow($rid)
@@ -81,6 +86,8 @@ class FileIndex extends AbstractIndex
             }
         }
         fclose($fh);
+
+        if(!$this->isWritable) return '';
 
         // still here? pad the index for the given ID
         // we do not simply call changeRow() here because appending is faster than line-by-line copying
@@ -121,6 +128,7 @@ class FileIndex extends AbstractIndex
     /**
      * @inheritdoc
      * @throws IndexAccessException
+     * @throws IndexWriteException
      */
     public function getRowIDs($values)
     {
@@ -146,9 +154,13 @@ class FileIndex extends AbstractIndex
             fclose($fh);
         }
 
+        if(!$this->isWritable) return $result;
+
         // if there are still values, they have not been found and will be appended
         foreach (array_keys($values) as $value) {
-            file_put_contents($this->filename, "$value\n", FILE_APPEND);
+            if (!file_put_contents($this->filename, "$value\n", FILE_APPEND)) {
+                throw new IndexWriteException("Failed to write {$this->filename}");
+            }
             $result[$value] = $ln++;
         }
 

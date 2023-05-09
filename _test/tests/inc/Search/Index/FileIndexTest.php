@@ -9,7 +9,7 @@ class FileIndexTest extends AbstractIndexTest
     protected function getIndex()
     {
         static $count = 0;
-        return new FileIndex('index', $count++);
+        return new FileIndex('index', $count++, true);
     }
 
     public function testChangeRow()

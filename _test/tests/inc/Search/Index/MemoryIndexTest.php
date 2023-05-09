@@ -9,7 +9,7 @@ class MemoryIndexTest extends AbstractIndexTest
     protected function getIndex()
     {
         static $count = 0;
-        return new MemoryIndex('index', $count++);
+        return new MemoryIndex('index', $count++, true);
     }
 
     public function testChangeRow()

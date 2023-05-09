@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Search\Index;
 
+use dokuwiki\Search\Exception\IndexLockException;
+use dokuwiki\Search\Exception\IndexUsageException;
 use dokuwiki\Search\Exception\IndexWriteException;
 
 /**
@@ -24,9 +26,9 @@ class MemoryIndex extends AbstractIndex
      *
      * @inheritdoc
      */
-    public function __construct($idx, $suffix = '')
+    public function __construct($idx, $suffix = '', $isWritable = false)
     {
-        parent::__construct($idx, $suffix);
+        parent::__construct($idx, $suffix, $isWritable);
 
         $this->data = [];
         if (!file_exists($this->filename)) {
@@ -36,9 +38,24 @@ class MemoryIndex extends AbstractIndex
 
     }
 
-    /** @inheritdoc */
+    /**
+     * Warn developer when they forgot to save their changes
+     */
+    public function __destruct()
+    {
+        if ($this->isDirty()) {
+            throw new IndexUsageException('MemoryIndex destroyed in dirty state - forgot to call save()?');
+        }
+    }
+
+    /**
+     * @inheritdoc
+     * @throws IndexLockException
+     */
     public function changeRow($rid, $value)
     {
+        if (!$this->isWritable) throw new IndexLockException();
+
         if ($rid > count($this->data)) {
             $this->data = array_pad($this->data, $rid, '');
         }
@@ -46,13 +63,18 @@ class MemoryIndex extends AbstractIndex
         $this->dirty = true;
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     * @throws IndexLockException
+     */
     public function retrieveRow($rid)
     {
         if (isset($this->data[$rid])) {
             return $this->data[$rid];
         }
-        $this->changeRow($rid, ''); // add to index
+        if ($this->isWritable) {
+            $this->changeRow($rid, ''); // add to index
+        }
         return '';
     }
 
@@ -83,6 +105,8 @@ class MemoryIndex extends AbstractIndex
             }
         }
 
+        if (!$this->isWritable) return $result;
+
         // if there are still values, they have not been found and will be appended
         foreach (array_keys($values) as $value) {
             $this->data[] = $value;
@@ -105,6 +129,7 @@ class MemoryIndex extends AbstractIndex
      * The method will check the internal dirty state and will only write when the index has actually been changed
      *
      * @throws IndexWriteException
+     * @throws IndexLockException
      */
     public function save()
     {
@@ -113,6 +138,8 @@ class MemoryIndex extends AbstractIndex
         if (!$this->isDirty()) {
             return;
         }
+
+        if (!$this->isWritable) throw new IndexLockException();
 
         $tempname = $this->filename . '.tmp';
 
