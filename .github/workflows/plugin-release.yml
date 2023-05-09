@@ -3,14 +3,17 @@
 #
 # Requires DOKUWIKI_USER and DOKUWIKI_PASS secrets be set in GitHub Actions
 
-name: Release
+name: Release Plugin
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "*.info.txt"
+  workflow_call:
+    secrets:
+      GITHUB_TOKEN:
+        required: true
+      DOKUWIKI_USER:
+        required: true
+      DOKUWIKI_PASS:
+        required: true
 
 env:
   INFOTXT: plugin.info.txt
