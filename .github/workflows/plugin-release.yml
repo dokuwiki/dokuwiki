@@ -1,0 +1,75 @@
+# Create release on change to plugin.info.txt version line
+# https://github.com/dokuwiki/dokuwiki/issues/3951
+#
+# Requires DOKUWIKI_USER and DOKUWIKI_PASS secrets be set in GitHub Actions
+
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "*.info.txt"
+
+env:
+  INFOTXT: plugin.info.txt
+  PHP_VERSION: "8.2"
+
+jobs:
+  release:
+    name: Create release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup name and version
+        id: version
+        run: |
+          VERSION=$(awk '$1 == "date" {print $2}' $INFOTXT)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          BASE=$(awk '$1 == "base" {print $2}' $INFOTXT)
+          echo "BASE=$BASE" >> $GITHUB_ENV
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.VERSION }}
+          release_name: Release ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+
+      - name: Setup PHP ${{ env.PHP_VERSION }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+
+      - name: Checkout dokuwiki versionfix tool
+        uses: actions/checkout@v3
+        with:
+          repository: splitbrain/dokuwiki-versionfix
+          path: versionfix
+
+      - name: Setup versionfix tool
+        working-directory: ./versionfix
+        env:
+          CONFIG_HOME: ${{ github.workspace }}
+        run: |
+          composer install --no-dev
+          cat <<EOF > $CONFIG_HOME/.dwversionfix.conf
+          dokuwiki_user  ${{ secrets.DOKUWIKI_USER }}
+          dokuwiki_pass  ${{ secrets.DOKUWIKI_PASS }}
+          github_user    ""
+          github_key     ""
+          EOF
+
+      - name: Run versionfix tool
+        working-directory: ./versionfix
+        env:
+          HOME: ${{ github.workspace }}
+        run: php versionfix.php ${{ env.BASE }}
+
+# vim:ts=2:sw=2:et
