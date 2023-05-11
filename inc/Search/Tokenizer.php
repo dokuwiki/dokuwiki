@@ -110,4 +110,27 @@ class Tokenizer
         }
         return array_values($wordlist);
     }
+
+    /**
+     * Measure the length of a string
+     *
+     * Differs from strlen in handling of asian characters, otherwise byte lengths are used
+     *
+     * @param string $token
+     * @return int
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     *
+     */
+    public static function tokenLength($token)
+    {
+        $length = strlen($token);
+        // If left alone, all chinese "words" will have the same lenght of 3, so the "length" of a "word" is faked
+        if (preg_match_all('/[\xE2-\xEF]/', $token, $leadbytes)) {
+            foreach ($leadbytes[0] as $byte) {
+                $length += ord($byte) - 0xE1;
+            }
+        }
+        return $length;
+    }
+
 }

@@ -47,6 +47,38 @@ abstract class AbstractIndex
     }
 
     /**
+     * Does this index exist, yet?
+     *
+     * @return bool
+     */
+    public function exists()
+    {
+        return file_exists($this->getFilename());
+    }
+
+    /**
+     * Return the largest numeric suffix for the current index
+     *
+     * This is only useful for indexes that use integer based suffixes (like the wordlength indexes)
+     *
+     * @return int 0 if no numeric suffix indexes are found
+     */
+    public function max()
+    {
+        global $conf;
+        $result = 0;
+        $files = glob($conf['indexdir'] . '/' . $this->idx . '*.idx');
+        foreach ($files as $file) {
+            if (preg_match('/(\d)+\.idx$/', $file, $match)) {
+                $num = (int)$match[1];
+                if ($num > $result) $result = $num;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Change a line in the index
      *
      * If the line doesn't exist, it will be added, creating empty

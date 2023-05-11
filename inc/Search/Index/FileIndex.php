@@ -190,12 +190,13 @@ class FileIndex extends AbstractIndex
     }
 
     /**
-     * Cached version of accessCachedValue()
+     * Cached mechanism to retrieve a single value
      *
      * @param string $value
      * @return int the RID of the entry
      * @throws IndexAccessException
      * @throws IndexWriteException
+     * @see getRowID()
      */
     public function accessCachedValue($value)
     {

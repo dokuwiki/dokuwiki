@@ -4,6 +4,8 @@ namespace tests\Search\Collection;
 
 use dokuwiki\Search\Collection\FulltextCollection;
 use dokuwiki\Search\Index\MemoryIndex;
+use dokuwiki\Search\QueryParser;
+use dokuwiki\Search\Tokenizer;
 
 class FullTextCollectionTest extends \DokuWikiTest
 {
@@ -16,12 +18,14 @@ class FullTextCollectionTest extends \DokuWikiTest
         $index = new FulltextCollection('entity', 'token', 'freq', 'reverse');
 
         $tokens = ['one', 'two', 'three', 'four', 'two'];
+        $index->lock();
         $index->addEntity('test', $tokens);
+        $index->unlock();
 
         $idxEntity = new MemoryIndex('entity');
         $this->assertEquals('test', $idxEntity->retrieveRow(0));
 
-        $idxToken = new MemoryIndex('token','3');
+        $idxToken = new MemoryIndex('token', '3');
         $this->assertEquals('one', $idxToken->retrieveRow(0));
         $this->assertEquals('two', $idxToken->retrieveRow(1));
 
@@ -34,10 +38,27 @@ class FullTextCollectionTest extends \DokuWikiTest
 
         // remove one of the tokens
         $tokens = ['two', 'three', 'four', 'two'];
+        $index->lock();
         $index->addEntity('test', $tokens);
+        $index->unlock();
 
         $idxFreq = new MemoryIndex('freq', '3');
         $this->assertEquals('', $idxFreq->retrieveRow(0)); // one is not on page 0
     }
 
+    /**
+     * Test reverse lookup
+     *
+     * A lookup for the page should return the word frequencies
+     */
+    public function testReverse()
+    {
+        $index = new FulltextCollection('page', 'word', 'w', 'pageword');
+        $index->lock();
+        $index->addEntity('wiki:syntax', ['dokuwiki']);
+        $index->unlock();
+
+        $len = strlen('dokuwiki');
+        $this->assertEquals([$len => [0 => 0]], $index->getReverseAssignments('wiki:syntax'));
+    }
 }

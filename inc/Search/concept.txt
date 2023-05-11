@@ -1,0 +1,67 @@
+====== Search Indexing ======
+
+This document is meant to describe the various concepts behind the indexing mechanism. It's work in progress an will be moved to the wiki once the new index code is merged.
+
+===== Uses =====
+
+The indexing mechanism is meant to make information that is normally distributed over several locations (eg. words on pages) available through a central, faster mechanism. The primary goal is to cover fulltext search, but it is also used for other things like page meta data and possibly more in the future.
+
+===== Collections =====
+
+A collection describes how data is aggregated into multiple indexes to make it accessible for a specific use case. Eg. fulltext search for page contents is a usecase covered by a collection.
+
+Please note: because index has a specific meaning in our context (see below) you should avoid using that word, when you're actually talking about a collection. There is no "fulltext index" - that functionality is only achieved by using multiple indexes in a collection.
+
+There are basically two different complexities of collections
+
+  * frequency collections - The same token can appear multiple times in the same entity and searches are usually interested in the number of times it appears. This is the words on pages use case.
+  * lookup collections - A token only appears once per entity. Search results are interested in looking up entities only. This would be used for the meta data search for example. FIXME not implemented yet
+
+A collection works on four indexes:
+
+  * entity - This is the main entity that will be the result of a search. Eg. a page
+  * token - This is the actual information strewn across the entities. Eg. words
+  * frequency - This maps tokens to entities and records their frequency. Eg. freq(words)->page
+  * reverse - This records which tokens are on a specific entities. This is mostly used for internal index cleanup. Eg. page-words
+
+FIXME the above may not be true for all collections
+
+Collections can be searched for one or more ''terms'' via a CollectionSearch class. In the most simple case a term is a single token. But it is also possible to use wildcards signifiers ''*'' at the start and end of a term. In that case, the term refers to a list of tokens. A CollectionSearch will return the frequency with which each term occurs on each entity.
+
+FIXME above will most likely change once we have non-frequency collections
+
+===== Indexes ======
+
+Indexes refer to individual index files that store one kind of information. E.g. a list of all page names or a list of page-word frequencies.
+
+Indexes are row based. The line number is important information of the index. The lines are counted from zero and referred to as ''rid'' in the code.
+
+Index files can be accessed through two classes:
+
+  * \dokuwiki\Search\Index\FileIndex
+  * \dokuwiki\Search\Index\MemoryIndex
+
+Both classes expose the same API, the only difference is their way of accessing the data.
+
+A FileIndex will read through the index file line-by-line without ever loading the full file into memory. Each modification will directly write back to the index.
+
+The MemoryIndex loads the whole file into an internal array. Changes are only written back when explicitly calling the ''save()'' method. A memory index is faster but requires more memory.
+
+Which method to use depends mostly on the size of the file.
+
+Usually indexes are not accessed directly but through a collection. That collection will manage which type of access to use.
+
+Within an index two kinds of data can be stored per row:
+
+  * A single value. Eg. an entity or a token
+  * A list of tuples. Eg. a list of pageIDs and frequencies
+
+The former is straight forward, it's a simple ''rid -> value'' store.  The latter maps to ''rid -> [key -> value, ...]'' where key is usally the ''rid'' in another index.
+
+===== Locking =====
+
+Only one process may write to an index at any time. To ensure this, a locking mechanism has to be employed.
+
+Indexes can be read in write or readonly mode according to the acquired locks. However, managing locks has to be done outside the index. Usually within a collection.
+
+The ''Lock'' class is used to acquire the needed locks.
