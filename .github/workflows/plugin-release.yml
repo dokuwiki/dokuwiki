@@ -8,8 +8,6 @@ name: Release Plugin
 on:
   workflow_call:
     secrets:
-      GITHUB_TOKEN:
-        required: true
       DOKUWIKI_USER:
         required: true
       DOKUWIKI_PASS:
