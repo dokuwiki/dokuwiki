@@ -1,15 +1,20 @@
 <?php
 
-namespace tests\Search\Index;
+namespace dokuwiki\test\Search\Index;
 
 use dokuwiki\Search\Index\MemoryIndex;
 
-class MemoryIndexTest extends \DokuWikiTest
+class MemoryIndexTest extends AbstractIndexTest
 {
+    protected function getIndex()
+    {
+        static $count = 0;
+        return new MemoryIndex('index', $count++, true);
+    }
 
     public function testChangeRow()
     {
-        $index = new MemoryIndex(__FUNCTION__);
+        $index = $this->getIndex();
 
         $index->changeRow(5, 'test');
         $full = $this->getInaccessibleProperty($index, 'data');
@@ -32,7 +37,7 @@ class MemoryIndexTest extends \DokuWikiTest
 
     public function testRetrieveRow()
     {
-        $index = new MemoryIndex(__FUNCTION__);
+        $index = $this->getIndex();
         $index->changeRow(5, 'test');
         $this->assertEquals('test', $index->retrieveRow(5));
 
@@ -45,42 +50,25 @@ class MemoryIndexTest extends \DokuWikiTest
 
     public function testSave()
     {
-        $index = new MemoryIndex(__FUNCTION__);
+        $index = $this->getIndex();
         $this->assertFileNotExists($index->getFilename());
-        $index->save();
-        $this->assertFileExists($index->getFilename());
-        $this->assertEquals(0, filesize($index->getFilename())); // empty
+        $this->assertFalse($index->isDirty());
 
         $index->changeRow(0, '');
+        $this->assertTrue($index->isDirty());
         $index->save();
+        $this->assertFalse($index->isDirty());
         $this->assertEquals(1, filesize($index->getFilename())); // new line
 
         $index->changeRow(3, 'test');
+        $this->assertTrue($index->isDirty());
         $index->save();
+        $this->assertFalse($index->isDirty());
         $this->assertEquals(8, filesize($index->getFilename())); // 4 new lines + test
-    }
 
-    public function testGetRowID()
-    {
-        $index = new MemoryIndex(__FUNCTION__);
-        $result = $index->getRowID('foo');
-        $this->assertEquals(0, $result);
-
-        $result = $index->getRowID('bar');
-        $this->assertEquals(1, $result);
-
-        $result = $index->getRowID('foo');
-        $this->assertEquals(0, $result);
-    }
-
-    public function testGetRowIDs()
-    {
-        $index = new MemoryIndex(__FUNCTION__);
-        $result = $index->getRowIDs(['foo', 'bar', 'baz']);
-        $this->assertEquals(['foo' => 0, 'bar' => 1, 'baz' => 2], $result);
-
-        $result = $index->getRowIDs(['foo', 'bang', 'baz']);
-        $this->assertEquals(['foo' => 0, 'baz' => 2, 'bang' => 3], $result);
+        $index->getRowID('test'); // existing entry
+        $index->save();
+        $this->assertFalse($index->isDirty());
     }
 
 }

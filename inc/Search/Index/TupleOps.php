@@ -64,14 +64,15 @@ class TupleOps
      * respective real values. The result will contain the counts associated with the
      * mapped keys.
      *
+     * If no $filtermap is given (null), all tuples are returned keeping their original keys
+     *
      * @param string $record The row value to parse
-     * @param array $filtermap Associative array of ($key => $mapping)
+     * @param array|null $filtermap Associative array of ($key => $mapping), null for all tuples
      * @return array mapped counts
      * @author Andreas Gohr <andi@splitbrain.org>
-     *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public static function parseTuples($record, $filtermap)
+    public static function parseTuples($record, $filtermap = null)
     {
         $result = array();
         if ($record == '') return $result;
@@ -80,8 +81,12 @@ class TupleOps
             if ($tuple === '') continue;
             list($key, $cnt) = explode('*', $tuple);
             if (!$cnt) continue;
-            if (empty($filtermap[$key])) continue;
-            $mapped = $filtermap[$key];
+            if (is_array($filtermap)) {
+                if (!isset($filtermap[$key])) continue;
+                $mapped = $filtermap[$key];
+            } else {
+                $mapped = $key;
+            }
             $result[$mapped] = $cnt;
         }
         return $result;

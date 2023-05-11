@@ -3,6 +3,7 @@
 namespace dokuwiki\Search\Index;
 
 use dokuwiki\Search\Exception\IndexAccessException;
+use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Exception\IndexWriteException;
 
 /**
@@ -20,11 +21,14 @@ class FileIndex extends AbstractIndex
     /**
      * @inheritdoc
      * @throws IndexWriteException
+     * @throws IndexLockException
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function changeRow($rid, $value)
     {
         global $conf;
+
+        if (!$this->isWritable) throw new IndexLockException();
 
         if (substr($value, -1) !== "\n") {
             $value .= "\n";
@@ -32,7 +36,9 @@ class FileIndex extends AbstractIndex
 
         $tempname = $this->filename . '.tmp';
         $fh = @fopen($tempname, 'w');
-        if (!$fh) throw new IndexWriteException("Failed to write {$tempname}");
+        if (!$fh) {
+            throw new IndexWriteException("Failed to write {$tempname}");
+        }
         $ih = @fopen($this->filename, 'r');
 
         $ln = -1; // line counter
@@ -60,13 +66,18 @@ class FileIndex extends AbstractIndex
 
     /**
      * @inheritdoc
+     * @throws IndexWriteException
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     public function retrieveRow($rid)
     {
-        if (!file_exists($this->filename)) return '';
+        if (!file_exists($this->filename)) {
+            return '';
+        }
         $fh = @fopen($this->filename, 'r');
-        if (!$fh) return '';
+        if (!$fh) {
+            return '';
+        }
         $ln = -1;
         while (($line = fgets($fh)) !== false) {
             if (++$ln == $rid) {
@@ -75,6 +86,8 @@ class FileIndex extends AbstractIndex
             }
         }
         fclose($fh);
+
+        if(!$this->isWritable) return '';
 
         // still here? pad the index for the given ID
         // we do not simply call changeRow() here because appending is faster than line-by-line copying
@@ -85,9 +98,37 @@ class FileIndex extends AbstractIndex
         return '';
     }
 
+    /** @inheritdoc */
+    public function retrieveRows($rids)
+    {
+        $result = [];
+        sort($rids);
+        $next = array_shift($rids);
+
+        if (!file_exists($this->filename)) {
+            return $result;
+        }
+        $fh = @fopen($this->filename, 'r');
+        if (!$fh) {
+            return $result;
+        }
+        $ln = -1;
+        while (($line = fgets($fh)) !== false) {
+            if (++$ln === $next) {
+                $result[$ln] = rtrim((string)$line);
+                $next = array_shift($rids);
+                if ($next === false) break;
+            }
+        }
+        fclose($fh);
+        return $result;
+    }
+
+
     /**
      * @inheritdoc
      * @throws IndexAccessException
+     * @throws IndexWriteException
      */
     public function getRowIDs($values)
     {
@@ -99,7 +140,9 @@ class FileIndex extends AbstractIndex
         $ln = 0;
         if (file_exists($this->filename)) {
             $fh = @fopen($this->filename, 'r');
-            if (!$fh) throw new IndexAccessException("Failed to read {$this->filename}");
+            if (!$fh) {
+                throw new IndexAccessException("Failed to read {$this->filename}");
+            }
             while (($line = fgets($fh)) !== false && $values) {
                 $line = trim($line);
                 if (isset($values[$line])) {
@@ -111,31 +154,62 @@ class FileIndex extends AbstractIndex
             fclose($fh);
         }
 
+        if(!$this->isWritable) return $result;
+
         // if there are still values, they have not been found and will be appended
         foreach (array_keys($values) as $value) {
-            file_put_contents($this->filename, "$value\n", FILE_APPEND);
+            if (!file_put_contents($this->filename, "$value\n", FILE_APPEND)) {
+                throw new IndexWriteException("Failed to write {$this->filename}");
+            }
             $result[$value] = $ln++;
         }
 
         return $result;
     }
 
+    /** @inheritdoc */
+    public function search($re)
+    {
+        $result = [];
+        $ln = 0;
+        if (file_exists($this->filename)) {
+            $fh = @fopen($this->filename, 'r');
+            if (!$fh) {
+                throw new IndexAccessException("Failed to read {$this->filename}");
+            }
+            while (($line = fgets($fh)) !== false) {
+                $line = trim($line);
+                if (preg_match($re, $line)) {
+                    $result[$ln] = $line;
+                }
+                $ln++;
+            }
+            fclose($fh);
+        }
+        return $result;
+    }
+
     /**
-     * Cached version of accessCachedValue()
+     * Cached mechanism to retrieve a single value
      *
      * @param string $value
      * @return int the RID of the entry
      * @throws IndexAccessException
      * @throws IndexWriteException
+     * @see getRowID()
      */
     public function accessCachedValue($value)
     {
-        if (isset(static::$ridCache['value'])) return static::$ridCache['value'];
+        if (isset(static::$ridCache['value'])) {
+            return static::$ridCache['value'];
+        }
 
         // limit cache to 10 entries by discarding the oldest element
         // as in DokuWiki usually only the most recently
         // added item will be requested again
-        if (count(static::$ridCache) > 10) array_shift(static::$ridCache);
+        if (count(static::$ridCache) > 10) {
+            array_shift(static::$ridCache);
+        }
         static::$ridCache[$value] = $this->getRowID($value);
         return static::$ridCache[$value];
     }

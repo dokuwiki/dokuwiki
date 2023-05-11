@@ -16,6 +16,9 @@ abstract class AbstractIndex
     /** @var string full filename to the index */
     protected $filename;
 
+    /** @var bool is this index opened for writing? */
+    protected $isWritable = false;
+
     /**
      * Initialize the index
      *
@@ -24,13 +27,15 @@ abstract class AbstractIndex
      *
      * @param string $idx name of the index
      * @param string $suffix subpart identifier
+     * @param bool $isWritable has a sufficient lock been acquired to write to this index?
      */
-    public function __construct($idx, $suffix = '')
+    public function __construct($idx, $suffix = '', $isWritable = false)
     {
         global $conf;
         $this->filename = $conf['indexdir'] . '/' . $idx . $suffix . '.idx';
         $this->idx = $idx;
         $this->suffix = $suffix;
+        $this->isWritable = $isWritable;
     }
 
     /**
@@ -39,6 +44,38 @@ abstract class AbstractIndex
     public function getFilename()
     {
         return $this->filename;
+    }
+
+    /**
+     * Does this index exist, yet?
+     *
+     * @return bool
+     */
+    public function exists()
+    {
+        return file_exists($this->getFilename());
+    }
+
+    /**
+     * Return the largest numeric suffix for the current index
+     *
+     * This is only useful for indexes that use integer based suffixes (like the wordlength indexes)
+     *
+     * @return int 0 if no numeric suffix indexes are found
+     */
+    public function max()
+    {
+        global $conf;
+        $result = 0;
+        $files = glob($conf['indexdir'] . '/' . $this->idx . '*.idx');
+        foreach ($files as $file) {
+            if (preg_match('/(\d)+\.idx$/', $file, $match)) {
+                $num = (int)$match[1];
+                if ($num > $result) $result = $num;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -63,31 +100,56 @@ abstract class AbstractIndex
     abstract public function retrieveRow($rid);
 
     /**
-     * Searches the Index for a given value and adds it if not found
+     * Retrieve multiple lines from the index
      *
-     * Entries previously marked as deleted will be restored.
+     * Ignores non-existing lines, eg the result array may be smaller than the input $rids
      *
-     * Note the existance of an entry in the index does not say anything about the exististance
+     * @param int[] $rids
+     * @return array [rid => value]
+     */
+    abstract public function retrieveRows($rids);
+
+    /**
+     * Searches the Index for a given value
+     *
+     * If the index is writable and the value is not found it will be added. Otherwise null is returned.
+     *
+     * Entries previously marked as deleted will be restored.  FIXME is that true?
+     *
+     * Note the existence of an entry in the index does not say anything about the existence
      * of the real world object (eg. a page)
      *
      * You should preferable use accessCachedValue() instead.
      *
      * @param string $value
-     * @return int the RID of the entry
+     *
+     * @return int|null the RID of the entry, null if not found and not added
      */
     public function getRowID($value)
     {
         $result = $this->getRowIDs([$value]);
-        return $result[$value];
+        return $result[$value] ?? null;
     }
 
     /**
-     * Searches the Index for all given values and adds them if not found
+     * Searches the Index for all given values
+     *
+     * If the index is writable, not found values are added
      *
      * @param string[] $values
-     * @return array the RIDs of the entries
+     * @return array the RIDs of the entries (value => rid)
      */
     abstract public function getRowIDs($values);
+
+    /**
+     * Find all RIDs matching a regular expression
+     *
+     * A full regular expression including delimiters and modifiers is expected
+     *
+     * @param string $re the regular expression to match against
+     * @return array (rid => value)
+     */
+    abstract public function search($re);
 
     /**
      * Clears the index by deleting its file
@@ -98,4 +160,14 @@ abstract class AbstractIndex
         @unlink($this->filename);
     }
 
+    /**
+     * Saves the index if needed
+     *
+     * The default implementation does nothing and is only for streamlining the API of
+     * the different index classes
+     * @return void
+     */
+    public function save()
+    {
+    }
 }
