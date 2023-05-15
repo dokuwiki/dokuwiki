@@ -1345,17 +1345,15 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             for($x = $start; $x != $end; $x += $mod) {
                 $item = $feed->get_item($x);
                 $this->doc .= '<li><div class="li">';
-                // support feeds without links
+
                 $lnkurl = $item->get_permalink();
+                $title = html_entity_decode($item->get_title(), ENT_QUOTES, 'UTF-8');
+
+                // support feeds without links
                 if($lnkurl) {
-                    // title is escaped by SimplePie, we unescape here because it
-                    // is escaped again in externallink() FS#1705
-                    $this->externallink(
-                        $item->get_permalink(),
-                        html_entity_decode($item->get_title(), ENT_QUOTES, 'UTF-8')
-                    );
+                    $this->externallink($item->get_permalink(), $title);
                 } else {
-                    $this->doc .= ' '.$item->get_title();
+                    $this->doc .= ' '.hsc($item->get_title());
                 }
                 if($params['author']) {
                     $author = $item->get_author(0);
@@ -1369,11 +1367,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     $this->doc .= ' ('.$item->get_local_date($conf['dformat']).')';
                 }
                 if($params['details']) {
+                    $desc = $item->get_description();
+                    $desc = strip_tags($desc);
+                    $desc = html_entity_decode($desc, ENT_QUOTES, 'UTF-8');
                     $this->doc .= '<div class="detail">';
                     if($conf['htmlok']) {
-                        $this->doc .= $item->get_description();
+                        $this->doc .= hsc($item->get_description());
                     } else {
-                        $this->doc .= strip_tags($item->get_description());
+                        $this->doc .= hsc($desc);
                     }
                     $this->doc .= '</div>';
                 }
