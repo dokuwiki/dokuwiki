@@ -184,8 +184,8 @@ function auth_tokenlogin() {
     $header = '';
     if(function_exists('apache_request_headers')) {
         // Authorization headers are not in $_SERVER for mod_php
-        $headers = apache_request_headers();
-        if(isset($headers['Authorization'])) $header = $headers['Authorization'];
+        $headers = array_change_key_case(apache_request_headers());
+        if(isset($headers['authorization'])) $header = $headers['authorization'];
     } else {
         $header = $INPUT->server->str('HTTP_AUTHORIZATION');
     }
