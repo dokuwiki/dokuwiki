@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Mykhailo <mvkorobkov@gmail.com>
  * @author velmyshanovnyi <velmyshanovnyi@gmail.com>
  * @author Dmytro Marchenko <dmytro.marchenko1989@gmail.com>
  * @author Oleksii <alexey.furashev@gmail.com>
@@ -227,7 +228,7 @@ $lang['summary']               = 'Підсумок змін';
 $lang['noflash']               = 'Для перегляду цієї сторінки необхідно встановити <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Завантажити фрагмент';
 $lang['tools']                 = 'Налаштування';
-$lang['user_tools']            = 'Користувальницькькі налаштування';
+$lang['user_tools']            = 'Користувальницькі налаштування';
 $lang['site_tools']            = 'Налаштування сайту';
 $lang['page_tools']            = 'Налаштування сторінки';
 $lang['skip_to_content']       = 'Перейти до змісту';
