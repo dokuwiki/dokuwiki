@@ -232,7 +232,7 @@ function rss_buildItems(&$rss, &$data, $opt)
             // add date
             if (isset($ditem['date'])) {
                 $date = $ditem['date'];
-            } elseif ($ditem['media']) {
+            } elseif (isset($ditem['media'])) {
                 $date = @filemtime(mediaFN($id));
             } elseif (file_exists(wikiFN($id))) {
                 $date = @filemtime(wikiFN($id));
@@ -302,7 +302,7 @@ function rss_buildItems(&$rss, &$data, $opt)
                     break;
                 case 'diff':
                 default:
-                    if ($ditem['media']) {
+                    if (isset($ditem['media'])) {
                         $item->link = media_managerURL(
                             [
                                 'image'       => $id,
