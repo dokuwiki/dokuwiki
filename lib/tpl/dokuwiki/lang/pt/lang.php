@@ -3,8 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author Paulo Ricardo Schopf <pschopf@gmail.com>
  */
+$lang['home']                  = 'Página Inicial';
 $lang['__background_site__']   = 'A cor para o fundo (atrás da caixa de conteúdo)';
 $lang['__link__']              = 'A cor para links gerais';
 $lang['__existing__']          = 'A cor para links de páginas existentes';
