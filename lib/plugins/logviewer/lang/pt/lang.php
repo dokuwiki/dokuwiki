@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Edney Rossi <prof.edneyrossi@gmail.com>
+ * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  */
-$lang['menu']                  = 'Ver registros';
+$lang['menu']                  = 'Exibir Logs';
 $lang['date']                  = 'Data';
-$lang['js']['filter']          = 'Filtrar linhas de registro';
+$lang['js']['filter']          = 'Filtrar Linhas de Log:';

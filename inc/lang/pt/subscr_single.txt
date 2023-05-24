@@ -8,7 +8,7 @@ Eis as alterações:
 --------------------------------------------------------
 
 Data      : @DATE@
-Utilizador     : @USER@
+Usuário     : @USER@
 Sumário de Edição   : @SUMMARY@
 Revisão Antiga      : @OLDPAGE@
 Revisão Nova   : @NEWPAGE@
