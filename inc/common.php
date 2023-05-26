@@ -937,7 +937,7 @@ function checklock($id)
     }
 
     //my own lock
-    @[$ip, $session] = explode("\n", io_readFile($lock));
+    [$ip, $session] = sexplode("\n", io_readFile($lock), 2);
     if ($ip == $INPUT->server->str('REMOTE_USER') || (session_id() && $session === session_id())) {
         return false;
     }
