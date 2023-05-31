@@ -149,7 +149,7 @@ class Resendpwd extends AbstractAclAction
             }
 
             $userinfo = $auth->getUserData($user, $requireGroups = false);
-            if (!$userinfo['mail']) {
+            if (($userinfo === false) || !$userinfo['mail']) {
                 msg($lang['resendpwdnouser'], -1);
                 return false;
             }
