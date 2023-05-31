@@ -258,7 +258,7 @@ function check(){
         msg('Debugging support is disabled',1);
     }
 
-    if(is_array($INFO['userinfo']) && array_key_exists('name', $INFO['userinfo']) && $INFO['userinfo']['name']){
+    if(!empty($INFO['userinfo']['name'])){
         msg('You are currently logged in as '.$INPUT->server->str('REMOTE_USER').' ('.$INFO['userinfo']['name'].')',0);
         msg('You are part of the groups '.implode(', ', $INFO['userinfo']['grps']),0);
     }else{
