@@ -244,7 +244,7 @@ function rss_buildItems(&$rss, &$data, $opt)
             if ($date) $item->date = date('r', $date);
 
             // add title
-            if ($conf['useheading'] && $meta['title'] ?? '') {
+            if ($conf['useheading'] && ($meta['title'] ?? '')) {
                 $item->title = $meta['title'];
             } else {
                 $item->title = $ditem['id'];
