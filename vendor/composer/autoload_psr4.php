@@ -14,5 +14,6 @@ return array(
     'splitbrain\\JSStrip\\' => array($vendorDir . '/splitbrain/php-jsstrip/src'),
     'phpseclib\\' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'SimplePie\\' => array($vendorDir . '/simplepie/simplepie/src'),
+    'IXR\\tests\\' => array($vendorDir . '/kissifrot/php-ixr/tests'),
     'IXR\\' => array($vendorDir . '/kissifrot/php-ixr/src'),
 );

@@ -18,7 +18,7 @@ class UniversalFeedCreator extends FeedCreator
      */
     protected function _setFormat($format)
     {
-        switch (strtoupper($format)) {
+        switch (strtoupper((string) $format)) {
 
             case "BASE":
                 $this->format = $format;
