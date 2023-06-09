@@ -1952,7 +1952,12 @@ function set_doku_pref($pref, $val) {
     if(defined('DOKU_UNITTEST')) {
         $_COOKIE['DOKU_PREFS'] = $cookieVal;
     }else{
-        setcookie('DOKU_PREFS', $cookieVal, time()+365*24*3600, $cookieDir, '', ($conf['securecookie'] && is_ssl()));
+        setcookie('DOKU_PREFS', $cookieVal, [
+            'expires' => time() + 365 * 24 * 3600,
+            'path' => $cookieDir,
+            'secure' => ($conf['securecookie'] && is_ssl()),
+            'samesite' => 'Lax'
+        ]);
     }
 }
 

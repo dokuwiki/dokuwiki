@@ -249,13 +249,14 @@ Event::createAndTrigger('DOKUWIKI_INIT_DONE', $nil, null, false);
 function init_session() {
     global $conf;
     session_name(DOKU_SESSION_NAME);
-    session_set_cookie_params(
-        DOKU_SESSION_LIFETIME,
-        DOKU_SESSION_PATH,
-        DOKU_SESSION_DOMAIN,
-        ($conf['securecookie'] && is_ssl()),
-        true
-    );
+    session_set_cookie_params([
+        'lifetime' => DOKU_SESSION_LIFETIME,
+        'path' => DOKU_SESSION_PATH,
+        'domain' => DOKU_SESSION_DOMAIN,
+        'secure' => ($conf['securecookie'] && is_ssl()),
+        'httponly' => true,
+        'samesite' => 'Lax',
+    ]);
 
     // make sure the session cookie contains a valid session ID
     if(isset($_COOKIE[DOKU_SESSION_NAME]) && !preg_match('/^[-,a-zA-Z0-9]{22,256}$/', $_COOKIE[DOKU_SESSION_NAME])) {
