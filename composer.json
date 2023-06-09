@@ -5,7 +5,7 @@
     "type": "project",
     "license": "GPL v2",
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "ext-json": "*",
         "splitbrain/php-archive": "~1.0",
         "phpseclib/phpseclib": "~2.0",
@@ -21,7 +21,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.2"
+            "php": "7.4"
         }
     },
     "suggest": {
