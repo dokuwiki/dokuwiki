@@ -28,6 +28,8 @@ class JsonRpcServer
     public function serve()
     {
         global $conf;
+        global $INPUT;
+
         if (!$conf['remote']) {
             http_status(404);
             throw new RemoteException("JSON-RPC server not enabled.", -32605);
@@ -35,8 +37,15 @@ class JsonRpcServer
         if (!empty($conf['remotecors'])) {
             header('Access-Control-Allow-Origin: ' . $conf['remotecors']);
         }
-
-        global $INPUT;
+        if ($INPUT->server->str('REQUEST_METHOD') !== 'POST') {
+            http_status(405);
+            header('Allow: POST');
+            throw new RemoteException("JSON-RPC server only accepts POST requests.", -32606);
+        }
+        if ($INPUT->server->str('CONTENT_TYPE') !== 'application/json') {
+            http_status(415);
+            throw new RemoteException("JSON-RPC server only accepts application/json requests.", -32606);
+        }
 
         $call = $INPUT->server->str('PATH_INFO');
         $call = trim($call, '/');
