@@ -1071,6 +1071,9 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
 
         // cleanup
         if ($tmp) io_rmdir($tmp, true);
+        if (function_exists('opcache_reset')) {
+            opcache_reset();
+        }
 
         return $installed_extensions;
     }
