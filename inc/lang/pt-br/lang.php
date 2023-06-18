@@ -389,3 +389,6 @@ $lang['page_nonexist_rev']     = 'Página não encontrada em %s. Foi criada post
 $lang['unable_to_parse_date']  = 'Impossível analisar em "%s".';
 $lang['email_signature_text']  = 'Essa mensagem foi gerada pelo DokuWiki em
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Arquivo de registro muito grande. As linhas anteriores foram ignoradas!';
+$lang['log_file_failed_to_open'] = 'Falha ao abrir o arquivo de log.';
+$lang['log_file_failed_to_read'] = 'Ocorreu um erro ao ler o log.';
