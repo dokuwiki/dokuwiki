@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author KAWASHIMA,Y <darknmatta@gmail.com>
  * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
  * @author lempel <riverlempel@hotmail.com>
  * @author Yuji Takenaka <webmaster@davilin.com>
