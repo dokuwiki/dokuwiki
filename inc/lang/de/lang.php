@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Xrizzy <xrizzy@web.de>
  * @author Kurt Singer <webmaster@kurt-singer.com>
  * @author Robert Riebisch <rr@bttr-software.de>
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -400,3 +401,6 @@ $lang['page_nonexist_rev']     = 'Die Seite exitiert nicht unter %s. Sie wurde a
 $lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';
 $lang['email_signature_text']  = 'Diese E-Mail wurde erzeugt vom DokuWiki unter
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Protokolldatei (Log file) zu groß. Vorherige Zeilen wurden übersprungen!';
+$lang['log_file_failed_to_open'] = 'Protokolldatei (Log file) konnte nicht geöffnet werden.';
+$lang['log_file_failed_to_read'] = 'Beim Lesen des Protokolls ist ein Fehler aufgetreten.';
