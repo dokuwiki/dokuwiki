@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author zhaoerdong <zhaoerdong@dobest.com>
  * @author better <betterzhubo@live.com>
  * @author 小李 <szsd5257@foxmail.com>
  * @author VinnieChow <zsz33@qq.com>
