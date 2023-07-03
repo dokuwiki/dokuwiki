@@ -198,7 +198,7 @@ class auth_plugin_authad extends AuthPlugin
      * @author  James Van Lommel <james@nosq.com>
      * @param string $user
      * @param bool $requireGroups (optional) - ignored, groups are always supplied by this plugin
-     * @return array
+     * @return array|false
      */
     public function getUserData($user, $requireGroups = true)
     {
@@ -207,9 +207,8 @@ class auth_plugin_authad extends AuthPlugin
         global $ID;
         global $INPUT;
         $adldap = $this->initAdLdap($this->getUserDomain($user));
-        if (!$adldap) return [];
-
-        if ($user == '') return [];
+        if (!$adldap) return false;
+        if ($user == '') return false;
 
         $fields = ['mail', 'displayname', 'samaccountname', 'lastpwd', 'pwdlastset', 'useraccountcontrol'];
 
@@ -221,7 +220,7 @@ class auth_plugin_authad extends AuthPlugin
         //get info for given user
         $result = $adldap->user()->info($this->getUserName($user), $fields);
         if ($result == false) {
-            return [];
+            return false;
         }
 
         //general user info
@@ -249,10 +248,12 @@ class auth_plugin_authad extends AuthPlugin
             foreach ($info['grps'] as $ndx => $group) {
                 $info['grps'][$ndx] = $this->cleanGroup($group);
             }
+        } else {
+            $info['grps'] = [];
         }
 
         // always add the default group to the list of groups
-        if (!is_array($info['grps']) || !in_array($conf['defaultgroup'], $info['grps'])) {
+        if (!in_array($conf['defaultgroup'], $info['grps'])) {
             $info['grps'][] = $conf['defaultgroup'];
         }
 
