@@ -201,9 +201,9 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         global $ID;
         global $INPUT;
         $adldap = $this->initAdLdap($this->getUserDomain($user));
-        if (!$adldap) return array();
+        if (!$adldap) return false;
 
-        if ($user == '') return array();
+        if ($user == '') return false;
 
         $fields = array('mail', 'displayname', 'samaccountname', 'lastpwd', 'pwdlastset', 'useraccountcontrol');
 
@@ -215,7 +215,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         //get info for given user
         $result = $adldap->user()->info($this->getUserName($user), $fields);
         if ($result == false) {
-            return array();
+            return false;
         }
 
         //general user info
