@@ -336,7 +336,7 @@ class Form extends Element
      */
     public function addLabelHTML($content, $for='', $pos = -1)
     {
-        $element = new LabelElement(hsc($content));
+        $element = new LabelElement($content);
 
         if (is_a($for, '\dokuwiki\Form\Element')) {
             /** @var Element $for */
