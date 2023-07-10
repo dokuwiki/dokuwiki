@@ -310,7 +310,7 @@ function p_get_metadata($id, $key = '', $render = METADATA_RENDER_USING_CACHE)
         $recursion = false;
     }
 
-    $val = $meta['current'];
+    $val = $meta['current'] ?? null;
 
     // filter by $key
     foreach (preg_split('/\s+/', $key, 2, PREG_SPLIT_NO_EMPTY) as $cur_key) {
