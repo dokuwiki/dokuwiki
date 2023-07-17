@@ -478,6 +478,16 @@ class JpegMeta {
 
         $w = $this->getField('File.Width');
         $h = $this->getField('File.Height');
+        $o = $this->getField('Exif.Orientation', 'Exif.TIFFOrientation');
+
+        /* Swap width and height if Exif orientation is one of the
+         * landscape orientations
+         */
+        if(in_array($o, [5, 6, 7, 8])){
+            $oldw = $w;
+	    $w = $h;
+	    $h = $oldw;
+	}
 
         $ratio = 1;
         if($w >= $h){

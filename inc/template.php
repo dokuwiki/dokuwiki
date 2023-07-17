@@ -1110,6 +1110,16 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     global $REV;
     $w = (int) tpl_img_getTag('File.Width');
     $h = (int) tpl_img_getTag('File.Height');
+    $o = (int) tpl_img_getTag(['Exif.Orientation', 'Exif.TIFFOrientation']);
+
+    /* Swap width and height if Exif orientation is one of the
+     * landscape orientations
+     */
+    if(in_array($o, [5, 6, 7, 8])){
+        $oldw = $w;
+        $w = $h;
+        $h = $oldw;
+    }
 
     //resize to given max values
     $ratio = 1;
