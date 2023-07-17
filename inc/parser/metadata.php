@@ -724,7 +724,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
         if (!media_isexternal($src)) {
             $src = (new \dokuwiki\File\MediaResolver($ID))->resolveId($src);
         }
-        if (preg_match('/.(jpe?g|gif|png)$/i', $src)) {
+        if (preg_match('/.(jpe?g|gif|png|webp|svg)$/i', $src)) {
             $this->firstimage = $src;
         }
     }
