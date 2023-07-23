@@ -3,9 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Philippe Verbeke <ph.verbeke@gmail.com>
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
@@ -399,3 +399,6 @@ $lang['page_nonexist_rev']     = 'La page n\'existait pas le %s. Elle a été cr
 $lang['unable_to_parse_date']  = 'Impossible d\'analyser le paramètre temporel at "%s".';
 $lang['email_signature_text']  = 'Courriel envoyé par DokuWiki depuis
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Fichier journal trop grand. Lignes précédentes sautées !';
+$lang['log_file_failed_to_open'] = 'Impossible d\'ouvrir le fichier journal.';
+$lang['log_file_failed_to_read'] = 'Une erreur s\'est produite lors de la lecture du journal.';
