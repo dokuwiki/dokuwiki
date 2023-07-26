@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author take <take@ruu.kr>
  * @author merefox <admin@homerecz.com>
  * @author pavement <pavement@rael.cc>
  * @author Traend <Traend@ruu.kr>
@@ -124,6 +125,7 @@ $lang['js']['media_done_btn']  = '완료';
 $lang['js']['media_drop']      = '올릴 파일을 여기에 끌어넣으세요';
 $lang['js']['media_cancel']    = '제거';
 $lang['js']['media_overwrt']   = '기존 파일에 덮어쓰기';
+$lang['js']['data_insecure']   = '경고: 데이터 디렉터리가 제대로 보호되지 않은 것 같습니다. <a href="https://www.dokuwiki.org/security#web_access_security">도쿠위키의 웹 엑세스 보안</a>에 대해 읽어보세요.';
 $lang['search_exact_match']    = '정확히 일치';
 $lang['search_starts_with']    = '시작';
 $lang['search_ends_with']      = '끝';
@@ -366,3 +368,5 @@ $lang['wikimarkup']            = '위키 문법';
 $lang['page_nonexist_rev']     = '문서가 %s에 존재하지 않았습니다. 그 뒤로 <a href="%s">%s</a>에 만들어졌습니다.';
 $lang['unable_to_parse_date']  = '"%s" 변수에서 구문 분석할 수 없습니다.';
 $lang['email_signature_text']  = '이 메일은 @DOKUWIKIURL@에서 도쿠위키가 생성했습니다';
+$lang['log_file_failed_to_open'] = '로그 파일을 열지 못했습니다.';
+$lang['log_file_failed_to_read'] = '로그를 읽는 동안 오류가 발생했습니다.';
