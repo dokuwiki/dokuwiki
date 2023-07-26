@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Rafael Fernandes <rafa.fernan10@gmail.com>
  * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
  * @author Paulo <pschopf@gmail.com>
@@ -376,3 +377,5 @@ $lang['page_nonexist_rev']     = 'Página não existia no %s. Posteriormente, fo
 $lang['unable_to_parse_date']  = 'Não é possível analisar o parâmetro "%s".';
 $lang['email_signature_text']  = 'Este email foi gerado por DokuWiki em
 @DOKUWIKIURL@';
+$lang['log_file_failed_to_open'] = 'Falha na abertura do arquivo de log.';
+$lang['log_file_failed_to_read'] = 'Um erro ocorreu na leitura do log.';
