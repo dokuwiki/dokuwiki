@@ -63,24 +63,31 @@ abstract class SubscriptionSender
     {
         global $lang;
         global $conf;
+        $success = true;
 
         $text = rawLocale($template);
         $subject = $lang['mail_' . $subject] . ' ' . $context;
         $mail = $this->mailer;
-        $mail->bcc($subscriber_mail);
-        $mail->subject($subject);
-        $mail->setBody($text, $trep, $hrep);
-        if (in_array($template, ['subscr_list', 'subscr_digest'])) {
-            $mail->from($conf['mailfromnobody']);
-        }
-        if (isset($trep['SUBSCRIBE'])) {
-            $mail->setHeader('List-Unsubscribe', '<' . $trep['SUBSCRIBE'] . '>', false);
+        $addresses = $mail->splitAddress($subscriber_mail);
+
+        foreach($addresses as $address) {
+            $mail->to($address);
+            $mail->subject($subject);
+            $mail->setBody($text, $trep, $hrep);
+            if (in_array($template, ['subscr_list', 'subscr_digest'])) {
+                $mail->from($conf['mailfromnobody']);
+            }
+            if (isset($trep['SUBSCRIBE'])) {
+                $mail->setHeader('List-Unsubscribe', '<' . $trep['SUBSCRIBE'] . '>', false);
+            }
+
+            foreach ($headers as $header => $value) {
+                $mail->setHeader($header, $value);
+            }
+
+            $success &= $mail->send();
         }
 
-        foreach ($headers as $header => $value) {
-            $mail->setHeader($header, $value);
-        }
-
-        return $mail->send();
+        return $success;
     }
 }

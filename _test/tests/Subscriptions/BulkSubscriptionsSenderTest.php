@@ -46,7 +46,7 @@ class BulkSubscriptionsSenderTest extends DokuWikiTest
 
         // should trigger a mail
         $this->assertEquals(1, $sub->sendBulk('sub1:test'));
-        $this->assertEquals(['arthur@example.com'], array_column($mailerMock->mails, 'Bcc'));
+        $this->assertEquals(['arthur@example.com'], array_column($mailerMock->mails, 'To'));
 
         $mailerMock->mails = [];
 
@@ -57,7 +57,7 @@ class BulkSubscriptionsSenderTest extends DokuWikiTest
 
         // should not trigger a mail, because the subscription time has not been reached, yet
         $this->assertEquals(0, $sub->sendBulk('sub1:test'));
-        $this->assertEquals([], array_column($mailerMock->mails, 'Bcc'));
+        $this->assertEquals([], array_column($mailerMock->mails, 'To'));
 
         // reset the subscription time
         $manager->add('sub1:', 'testuser', 'digest', '978328800'); // last mod 2001-01-01
@@ -66,7 +66,7 @@ class BulkSubscriptionsSenderTest extends DokuWikiTest
         $this->assertEquals(3, $sub->sendBulk('sub1:test'));
         $this->assertEquals(
             ['arthur@example.com', 'arthur@example.com', 'arthur@example.com'],
-            array_column($mailerMock->mails, 'Bcc')
+            array_column($mailerMock->mails, 'To')
         );
     }
 
@@ -88,7 +88,7 @@ class BulkSubscriptionsSenderTest extends DokuWikiTest
 
         // should trigger a mail
         $this->assertEquals(1, $sub->sendBulk('sub1:test'));
-        $this->assertEquals(['arthur@example.com'], array_column($mailerMock->mails, 'Bcc'));
+        $this->assertEquals(['arthur@example.com'], array_column($mailerMock->mails, 'To'));
 
         $mailerMock->mails = [];
 
@@ -99,13 +99,13 @@ class BulkSubscriptionsSenderTest extends DokuWikiTest
 
         // should not trigger a mail, because the subscription time has not been reached, yet
         $this->assertEquals(0, $sub->sendBulk('sub1:test'));
-        $this->assertEquals([], array_column($mailerMock->mails, 'Bcc'));
+        $this->assertEquals([], array_column($mailerMock->mails, 'To'));
 
         // reset the subscription time
         $manager->add('sub1:', 'testuser', 'list', '978328800'); // last mod 2001-01-01
 
         // we now should get a single mail for all three changes
         $this->assertEquals(1, $sub->sendBulk('sub1:test'));
-        $this->assertEquals(['arthur@example.com'], array_column($mailerMock->mails, 'Bcc'));
+        $this->assertEquals(['arthur@example.com'], array_column($mailerMock->mails, 'To'));
     }
 }
