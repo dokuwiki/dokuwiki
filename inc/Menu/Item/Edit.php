@@ -38,6 +38,7 @@ class Edit extends AbstractItem {
                 $this->accesskey = 'v';
             }
         } else {
+            if (auth_quickaclcheck($INFO['id']) < AUTH_READ) throw new \RuntimeException("no permission to read");
             $this->params = array('do' => '');
             $this->type = 'show';
             $this->accesskey = 'v';
