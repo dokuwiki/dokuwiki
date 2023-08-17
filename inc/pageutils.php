@@ -244,7 +244,7 @@ function noNSorNS($id)
  */
 function sectionID($title, &$check)
 {
-    $title = str_replace(array(':','.'), '', cleanID($title));
+    $title = cleanID($title);
     $new = ltrim($title, '0123456789_-');
     if (empty($new)) {
         $title = 'section' . preg_replace('/[^0-9]+/', '', $title); //keep numbers from headline
