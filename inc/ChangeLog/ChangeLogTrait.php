@@ -26,17 +26,17 @@ trait ChangeLogTrait
      */
     public static function parseLogLine($line)
     {
-        $info = explode("\t", rtrim($line, "\n"));
-        if ($info !== false && count($info) > 1) {
+        $info = sexplode("\t", rtrim($line, "\n"), 7);
+        if ($info[3]) { // we need at least the page id to consider it a valid line
             return [
                 'date'  => (int)$info[0], // unix timestamp
-                'ip'    => $info[1], // IPv4 address (127.0.0.1)
+                'ip'    => $info[1], // IP address (127.0.0.1)
                 'type'  => $info[2], // log line type
                 'id'    => $info[3], // page id
                 'user'  => $info[4], // user name
                 'sum'   => $info[5], // edit summary (or action reason)
                 'extra' => $info[6], // extra data (varies by line type)
-                'sizechange' => (isset($info[7]) && $info[7] !== '') ? (int)$info[7] : null, //
+                'sizechange' => ($info[7] != '') ? (int)$info[7] : null, // size difference in bytes
             ];
         } else {
             return false;
