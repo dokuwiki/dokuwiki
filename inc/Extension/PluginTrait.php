@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Extension;
 
+use dokuwiki\Logger;
+
 /**
  * Provides standard DokuWiki plugin behaviour
  */
@@ -17,20 +19,39 @@ trait PluginTrait
      */
     public function getInfo()
     {
-        $parts = explode('_', get_class($this));
-        $info = DOKU_PLUGIN . '/' . $parts[2] . '/plugin.info.txt';
-        if (file_exists($info)) return confToHash($info);
+        $class = get_class($this);
+        $parts = sexplode('_', $class, 3);
+        $ext = $parts[2];
 
-        msg(
-            'getInfo() not implemented in ' . get_class($this) . ' and ' . $info . ' not found.<br />' .
-            'Verify you\'re running the latest version of the plugin. If the problem persists, send a ' .
-            'bug report to the author of the ' . $parts[2] . ' plugin.',
-            -1
-        );
-        return [
+        if (empty($ext)) {
+            throw new \RuntimeException('Class does not follow the plugin naming convention');
+        }
+
+        $base = [
+            'base' => $ext,
+            'author' => 'Unknown',
+            'email' => 'unknown@example.com',
             'date' => '0000-00-00',
-            'name' => $parts[2] . ' plugin'
+            'name' => $ext . ' plugin',
+            'desc' => 'Unknown purpose - bad plugin.info.txt',
+            'url' => 'https://www.dokuwiki.org/plugins/' . $ext,
         ];
+
+        $file = DOKU_PLUGIN . '/' . $ext . '/plugin.info.txt';
+        if (file_exists($file)) {
+            $raw = confToHash($file);
+
+            // check if all required fields are present
+            $msg = 'Extension %s does not provide a valid %s in %s';
+            foreach (array_keys($base) as $line) {
+                if (empty($raw[$line])) Logger::error(sprintf($msg, [$ext, $line, $file]));
+            }
+
+            return array_merge($base, $raw);
+        }
+
+        Logger::error(sprintf('Extension %s does not provide a plugin.info.txt in %s', $ext, $file));
+        return $base;
     }
 
     /**
