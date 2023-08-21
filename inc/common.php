@@ -743,17 +743,10 @@ function checkwordblock($text = '') {
     // phpcs:enable
 
     $wordblocks = getWordblocks();
-    // how many lines to read at once (to work around some PCRE limits)
-    if(version_compare(phpversion(), '4.3.0', '<')) {
-        // old versions of PCRE define a maximum of parenthesises even if no
-        // backreferences are used - the maximum is 99
-        // this is very bad performancewise and may even be too high still
-        $chunksize = 40;
-    } else {
-        // read file in chunks of 200 - this should work around the
-        // MAX_PATTERN_SIZE in modern PCRE
-        $chunksize = 200;
-    }
+    // read file in chunks of 200 - this should work around the
+    // MAX_PATTERN_SIZE in modern PCRE
+    $chunksize = 200;
+
     while($blocks = array_splice($wordblocks, 0, $chunksize)) {
         $re = array();
         // build regexp from blocks
@@ -1952,7 +1945,12 @@ function set_doku_pref($pref, $val) {
     if(defined('DOKU_UNITTEST')) {
         $_COOKIE['DOKU_PREFS'] = $cookieVal;
     }else{
-        setcookie('DOKU_PREFS', $cookieVal, time()+365*24*3600, $cookieDir, '', ($conf['securecookie'] && is_ssl()));
+        setcookie('DOKU_PREFS', $cookieVal, [
+            'expires' => time() + 365 * 24 * 3600,
+            'path' => $cookieDir,
+            'secure' => ($conf['securecookie'] && is_ssl()),
+            'samesite' => 'Lax'
+        ]);
     }
 }
 

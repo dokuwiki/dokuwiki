@@ -27,6 +27,7 @@ abstract class FeedCreator extends HtmlDescribable
      */
     public $xslStyleSheet = "";
 
+    public $cssStyleSheet = "";
 
     /** @var FeedItem[] */
     public $items = Array();
