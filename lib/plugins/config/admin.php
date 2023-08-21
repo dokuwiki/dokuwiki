@@ -62,6 +62,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             send_redirect(wl($ID, array('do' => 'admin', 'page' => 'config'), true, '&'));
         } else {
             $this->hasErrors = true;
+            msg($this->getLang('error'), -1);
         }
     }
 
