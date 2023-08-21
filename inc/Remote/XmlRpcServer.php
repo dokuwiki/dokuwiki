@@ -25,7 +25,7 @@ class XmlRpcServer extends Server
         parent::__construct(false, false, $wait);
     }
 
-    /** @inheritdoc  */
+    /** @inheritdoc */
     public function serve($data = false)
     {
         global $conf;
@@ -34,6 +34,15 @@ class XmlRpcServer extends Server
         }
         if (!empty($conf['remotecors'])) {
             header('Access-Control-Allow-Origin: ' . $conf['remotecors']);
+        }
+        if (
+            !isset($_SERVER['CONTENT_TYPE']) ||
+            (
+                strtolower($_SERVER['CONTENT_TYPE']) !== 'text/xml' &&
+                strtolower($_SERVER['CONTENT_TYPE']) !== 'application/xml'
+            )
+        ) {
+            throw new ServerException('XML-RPC server accepts XML requests only.', -32606);
         }
 
         parent::serve($data);
