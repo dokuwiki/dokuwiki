@@ -978,3 +978,5 @@ _test/tests/lib/exe/js_js_compress/test-StringDoubleQuotes-in.js
 _test/tests/lib/exe/js_js_compress/test-StringDoubleQuotes-out.js
 _test/tests/lib/exe/js_js_compress/test-StringSingleQuotes-in.js
 _test/tests/lib/exe/js_js_compress/test-StringSingleQuotes-out.js
+vendor/kissifrot/php-ixr/.editorconfig
+vendor/kissifrot/php-ixr/.gitignore
