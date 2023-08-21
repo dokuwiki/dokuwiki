@@ -434,7 +434,7 @@ function auth_logoff($keepbc = false) {
         'path' => $cookieDir,
         'secure' => ($conf['securecookie'] && is_ssl()),
         'httponly' => true,
-        'samesite' => 'Lax',
+        'samesite' => $conf['samesitecookie'] ?: null, // null means browser default
     ]);
 
     if($auth) $auth->logOff();
@@ -1267,7 +1267,7 @@ function auth_setCookie($user, $pass, $sticky) {
         'path' => $cookieDir,
         'secure' => ($conf['securecookie'] && is_ssl()),
         'httponly' => true,
-        'samesite' => 'Lax',
+        'samesite' => $conf['samesitecookie'] ?: null, // null means browser default
     ]);
 
     // set session

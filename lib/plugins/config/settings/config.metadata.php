@@ -158,6 +158,7 @@ $meta['disableactions'] = array(
 );
 $meta['auth_security_timeout'] = array('numeric');
 $meta['securecookie'] = array('onoff');
+$meta['samesitecookie'] = array('multichoice','_choices' => array('','Lax','Strict','None'));
 $meta['remote']       = array('onoff','_caution' => 'security');
 $meta['remoteuser']   = array('string');
 $meta['remotecors']   = array('string', '_caution' => 'security');
