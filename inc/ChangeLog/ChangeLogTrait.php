@@ -26,7 +26,7 @@ trait ChangeLogTrait
      */
     public static function parseLogLine($line)
     {
-        $info = sexplode("\t", rtrim($line, "\n"), 7);
+        $info = sexplode("\t", rtrim($line, "\n"), 8);
         if ($info[3]) { // we need at least the page id to consider it a valid line
             return [
                 'date'  => (int)$info[0], // unix timestamp
