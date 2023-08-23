@@ -109,6 +109,7 @@ $lang['disableactions_other']  = 'Další akce (oddělené čárkou)';
 $lang['disableactions_rss']    = 'XMS syndikace (RSS)';
 $lang['auth_security_timeout'] = 'Časový limit pro autentikaci (v sekundách)';
 $lang['securecookie']          = 'Má prohlížeč posílat cookies nastavené přes HTTPS opět jen přes HTTPS? Vypněte tuto volbu, pokud chcete, aby bylo pomocí SSL zabezpečeno pouze přihlašování do wiki, ale obsah budete prohlížet nezabezpečeně.';
+$lang['samesitecookie']        = 'Atribut samesite cookie, který se má použít. Pokud pole ponecháte prázdné, prohlížeč rozhodne o zásadách samesite.';
 $lang['remote']                = 'Zapne API systému, umožňující jiným aplikacím vzdálený přístup k wiki pomoci XML-RPC nebo jiných mechanizmů.';
 $lang['remoteuser']            = 'Omezit přístup k API na tyto uživatelské skupiny či uživatele (seznam oddělený čárkami). Prázdné pole povolí přístup všem.';
 $lang['remotecors']            = 'Povolit sdílené zdroje odjinud (CORS) pro vzdálená rozhraní. Hvězdičkou (*) povolíte všechny zdroje. Ponechte prázdné, chcete-li zakázat CORS.';
