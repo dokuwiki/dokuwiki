@@ -14,6 +14,7 @@ use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
 use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
+use Rector\CodingStyle\Rector\FuncCall\StrictArraySearchRector;
 use Rector\CodingStyle\Rector\PostInc\PostIncDecToPreIncDecRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\CodingStyle\Rector\String_\SymplifyQuoteEscapeRector;
@@ -87,5 +88,6 @@ return static function (RectorConfig $rectorConfig): void {
         RemoveParentCallWithoutParentRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,
         SimplifyIfReturnBoolRector::class,
+        StrictArraySearchRector::class, // we cannot assume strict search is always wanted
     ]);
 };
