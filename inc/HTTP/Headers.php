@@ -28,7 +28,7 @@ class Headers
         $cspheader = 'Content-Security-Policy:';
         foreach ($policy as $key => $values) {
             if ($values) {
-                $cspheader .= " $key " . join(' ', $values) . ';';
+                $cspheader .= " $key " . implode(' ', $values) . ';';
             } else {
                 $cspheader .= " $key;";
             }
