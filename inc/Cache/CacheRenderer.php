@@ -70,9 +70,7 @@ class CacheRenderer extends CacheParser
         }
 
         // renderer cache file dependencies ...
-        $files = array(
-            DOKU_INC . 'inc/parser/' . $this->mode . '.php',       // ... the renderer
-        );
+        $files = [DOKU_INC . 'inc/parser/' . $this->mode . '.php'];
 
         // page implies metadata and possibly some other dependencies
         if (isset($this->page)) {
@@ -85,9 +83,9 @@ class CacheRenderer extends CacheParser
             }
         }
 
-        $this->depends['files'] = !empty($this->depends['files']) ?
-            array_merge($files, $this->depends['files']) :
-            $files;
+        $this->depends['files'] = empty($this->depends['files']) ?
+            $files :
+            array_merge($files, $this->depends['files']);
 
         parent::addDependencies();
     }

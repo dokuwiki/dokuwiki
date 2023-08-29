@@ -35,31 +35,30 @@ class CacheParser extends Cache
     /**
      * method contains cache use decision logic
      *
-     * @return bool               see useCache()
+     * @return bool see useCache()
      */
     public function makeDefaultCacheDecision()
     {
-
         if (!file_exists($this->file)) {
+            // source exists?
             return false;
-        }                   // source exists?
+        }
         return parent::makeDefaultCacheDecision();
     }
 
     protected function addDependencies()
     {
-
         // parser cache file dependencies ...
-        $files = array(
-            $this->file,                              // ... source
-            DOKU_INC . 'inc/Parsing/Parser.php',                // ... parser
-            DOKU_INC . 'inc/parser/handler.php',               // ... handler
-        );
-        $files = array_merge($files, getConfigFiles('main'));    // ... wiki settings
+        $files = [
+            $this->file, // source
+            DOKU_INC . 'inc/Parsing/Parser.php', // parser
+            DOKU_INC . 'inc/parser/handler.php', // handler
+        ];
+        $files = array_merge($files, getConfigFiles('main')); // wiki settings
 
-        $this->depends['files'] = !empty($this->depends['files']) ?
-            array_merge($files, $this->depends['files']) :
-            $files;
+        $this->depends['files'] = empty($this->depends['files']) ?
+            $files :
+            array_merge($files, $this->depends['files']);
         parent::addDependencies();
     }
 
