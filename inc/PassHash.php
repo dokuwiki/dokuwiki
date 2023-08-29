@@ -803,8 +803,10 @@ class PassHash {
         }
 
         for($i = 0; $i < strlen($key) - 1; $i++) {
-            $opad[$i] ^= $key[$i];
-            $ipad[$i] ^= $key[$i];
+            $ochar = $opad[$i] ^ $key[$i];
+            $ichar = $ipad[$i] ^ $key[$i];
+            $opad[$i] = $ochar;
+            $ipad[$i] = $ichar;
         }
 
         $output = $algo($opad . pack($pack, $algo($ipad . $data)));
