@@ -27,22 +27,19 @@ class Redirect extends AbstractAliasAction {
         global $ID;
         global $ACT;
 
-        $opts = array(
-            'id' => $ID,
-            'preact' => $ACT
-        );
+        $opts = ['id' => $ID, 'preact' => $ACT];
         //get section name when coming from section edit
-        if($INPUT->has('hid')) {
+        if ($INPUT->has('hid')) {
             // Use explicitly transmitted header id
             $opts['fragment'] = $INPUT->str('hid');
-        } else if($PRE && preg_match('/^\s*==+([^=\n]+)/', $TEXT, $match)) {
+        } elseif ($PRE && preg_match('/^\s*==+([^=\n]+)/', $TEXT, $match)) {
             // Fallback to old mechanism
             $check = false; //Byref
             $opts['fragment'] = sectionID($match[0], $check);
         }
 
         // execute the redirect
-        Event::createAndTrigger('ACTION_SHOW_REDIRECT', $opts, array($this, 'redirect'));
+        Event::createAndTrigger('ACTION_SHOW_REDIRECT', $opts, [$this, 'redirect']);
 
         // should never be reached
         throw new ActionAbort('show');

@@ -13,9 +13,9 @@ use dokuwiki\Action\Exception\ActionAbort;
  */
 class Search extends AbstractAction {
 
-    protected $pageLookupResults = array();
-    protected $fullTextResults = array();
-    protected $highlight = array();
+    protected $pageLookupResults = [];
+    protected $fullTextResults = [];
+    protected $highlight = [];
 
     /** @inheritdoc */
     public function minimumPermission() {

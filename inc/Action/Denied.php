@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\Login;
 use dokuwiki\Extension\Event;
 use dokuwiki\Ui;
 
@@ -30,7 +31,7 @@ class Denied extends AbstractAction
         if ($event->advise_before()) {
             global $INPUT;
             if (empty($INPUT->server->str('REMOTE_USER')) && actionOK('login')) {
-                (new Ui\Login)->show();
+                (new Login)->show();
             }
         }
         $event->advise_after();

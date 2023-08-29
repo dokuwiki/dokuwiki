@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\UserProfile;
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Extension\AuthPlugin;
@@ -45,7 +46,7 @@ class Profile extends AbstractUserAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\UserProfile)->show();
+        (new UserProfile)->show();
     }
 
 }

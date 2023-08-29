@@ -42,7 +42,7 @@ class Export extends AbstractAction {
 
         $pre = '';
         $post = '';
-        $headers = array();
+        $headers = [];
 
         // search engines: never cache exported docs! (Google only currently)
         $headers['X-Robots-Tag'] = 'noindex';
@@ -91,7 +91,7 @@ class Export extends AbstractAction {
         }
 
         // prepare event data
-        $data = array();
+        $data = [];
         $data['id'] = $ID;
         $data['mode'] = $mode;
         $data['headers'] = $headers;
