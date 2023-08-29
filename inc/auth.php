@@ -8,7 +8,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
+use phpseclib\Crypt\AES;
+use dokuwiki\Utf8\PhpString;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Extension\PluginController;
@@ -37,7 +38,7 @@ function auth_setup() {
     global $lang;
     /* @var PluginController $plugin_controller */
     global $plugin_controller;
-    $AUTH_ACL = array();
+    $AUTH_ACL = [];
 
     if(!$conf['useacl']) return false;
 
@@ -71,7 +72,7 @@ function auth_setup() {
     $header = $INPUT->server->str('HTTP_AUTHORIZATION') ?: $INPUT->server->str('REDIRECT_HTTP_AUTHORIZATION');
     if(preg_match( '~^Basic ([a-z\d/+]*={0,2})$~i', $header, $matches )) {
         $userpass = explode(':', base64_decode($matches[1]));
-        list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = $userpass;
+        [$_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']] = $userpass;
     }
 
     // if no credentials were given try to use HTTP auth (for SSO)
@@ -95,12 +96,12 @@ function auth_setup() {
     if ($ok === null) {
         // external trust mechanism not in place, or returns no result,
         // then attempt auth_login
-        $evdata = array(
+        $evdata = [
             'user'     => $INPUT->str('u'),
             'password' => $INPUT->str('p'),
             'sticky'   => $INPUT->bool('r'),
             'silent'   => $INPUT->bool('http_credentials')
-        );
+        ];
         Event::createAndTrigger('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
     }
 
@@ -123,15 +124,15 @@ function auth_loadACL() {
     /* @var Input $INPUT */
     global $INPUT;
 
-    if(!is_readable($config_cascade['acl']['default'])) return array();
+    if(!is_readable($config_cascade['acl']['default'])) return [];
 
     $acl = file($config_cascade['acl']['default']);
 
-    $out = array();
+    $out = [];
     foreach($acl as $line) {
         $line = trim($line);
         if(empty($line) || ($line[0] == '#')) continue; // skip blank lines & comments
-        list($id,$rest) = preg_split('/[ \t]+/',$line,2);
+        [$id, $rest] = preg_split('/[ \t]+/',$line,2);
 
         // substitute user wildcard first (its 1:1)
         if(strstr($line, '%USER%')){
@@ -213,8 +214,6 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
     /* @var Input $INPUT */
     global $INPUT;
 
-    $sticky ? $sticky = true : $sticky = false; //sanity check
-
     if(!$auth) return false;
 
     if(!empty($user)) {
@@ -236,7 +235,7 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
         }
     } else {
         // read cookie information
-        list($user, $sticky, $pass) = auth_getCookie();
+        [$user, $sticky, $pass] = auth_getCookie();
         if($user && $pass) {
             // we got a cookie - see if we can trust it
 
@@ -366,7 +365,7 @@ function auth_random($min, $max) {
  */
 function auth_encrypt($data, $secret) {
     $iv     = auth_randombytes(16);
-    $cipher = new \phpseclib\Crypt\AES();
+    $cipher = new AES();
     $cipher->setPassword($secret);
 
     /*
@@ -389,7 +388,7 @@ function auth_encrypt($data, $secret) {
  */
 function auth_decrypt($ciphertext, $secret) {
     $iv     = substr($ciphertext, 0, 16);
-    $cipher = new \phpseclib\Crypt\AES();
+    $cipher = new AES();
     $cipher->setPassword($secret);
     $cipher->setIV($iv);
 
@@ -539,11 +538,11 @@ function auth_isMember($memberlist, $user, array $groups) {
 
     // clean user and groups
     if(!$auth->isCaseSensitive()) {
-        $user   = \dokuwiki\Utf8\PhpString::strtolower($user);
-        $groups = array_map([\dokuwiki\Utf8\PhpString::class, 'strtolower'], $groups);
+        $user   = PhpString::strtolower($user);
+        $groups = array_map([PhpString::class, 'strtolower'], $groups);
     }
     $user   = $auth->cleanUser($user);
-    $groups = array_map(array($auth, 'cleanGroup'), $groups);
+    $groups = array_map([$auth, 'cleanGroup'], $groups);
 
     // extract the memberlist
     $members = explode(',', $memberlist);
@@ -554,7 +553,7 @@ function auth_isMember($memberlist, $user, array $groups) {
     // compare cleaned values
     foreach($members as $member) {
         if($member == '@ALL' ) return true;
-        if(!$auth->isCaseSensitive()) $member = \dokuwiki\Utf8\PhpString::strtolower($member);
+        if(!$auth->isCaseSensitive()) $member = PhpString::strtolower($member);
         if($member[0] == '@') {
             $member = $auth->cleanGroup(substr($member, 1));
             if(in_array($member, $groups)) return true;
@@ -585,7 +584,7 @@ function auth_quickaclcheck($id) {
     global $INPUT;
     # if no ACL is used always return upload rights
     if(!$conf['useacl']) return AUTH_UPLOAD;
-    return auth_aclcheck($id, $INPUT->server->str('REMOTE_USER'), is_array($USERINFO) ? $USERINFO['grps'] : array());
+    return auth_aclcheck($id, $INPUT->server->str('REMOTE_USER'), is_array($USERINFO) ? $USERINFO['grps'] : []);
 }
 
 /**
@@ -600,11 +599,11 @@ function auth_quickaclcheck($id) {
  * @return int             permission level
  */
 function auth_aclcheck($id, $user, $groups) {
-    $data = array(
+    $data = [
         'id'     => $id ?? '',
         'user'   => $user,
         'groups' => $groups
-    );
+    ];
 
     return Event::createAndTrigger('AUTH_ACL_CHECK', $data, 'auth_aclcheck_cb');
 }
@@ -635,7 +634,7 @@ function auth_aclcheck_cb($data) {
     if(!is_array($AUTH_ACL)) return AUTH_NONE;
 
     //make sure groups is an array
-    if(!is_array($groups)) $groups = array();
+    if(!is_array($groups)) $groups = [];
 
     //if user is superuser or in superusergroup return 255 (acl_admin)
     if(auth_isadmin($user, $groups)) {
@@ -643,11 +642,11 @@ function auth_aclcheck_cb($data) {
     }
 
     if(!$auth->isCaseSensitive()) {
-        $user   = \dokuwiki\Utf8\PhpString::strtolower($user);
-        $groups = array_map([\dokuwiki\Utf8\PhpString::class, 'strtolower'], $groups);
+        $user   = PhpString::strtolower($user);
+        $groups = array_map([PhpString::class, 'strtolower'], $groups);
     }
     $user   = auth_nameencode($auth->cleanUser($user));
-    $groups = array_map(array($auth, 'cleanGroup'), (array) $groups);
+    $groups = array_map([$auth, 'cleanGroup'], $groups);
 
     //prepend groups with @ and nameencode
     foreach($groups as &$group) {
@@ -670,7 +669,7 @@ function auth_aclcheck_cb($data) {
             $match = preg_replace('/#.*$/', '', $match); //ignore comments
             $acl   = preg_split('/[ \t]+/', $match);
             if(!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
-                $acl[1] = \dokuwiki\Utf8\PhpString::strtolower($acl[1]);
+                $acl[1] = PhpString::strtolower($acl[1]);
             }
             if(!in_array($acl[1], $groups)) {
                 continue;
@@ -700,7 +699,7 @@ function auth_aclcheck_cb($data) {
                 $match = preg_replace('/#.*$/', '', $match); //ignore comments
                 $acl   = preg_split('/[ \t]+/', $match);
                 if(!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
-                    $acl[1] = \dokuwiki\Utf8\PhpString::strtolower($acl[1]);
+                    $acl[1] = PhpString::strtolower($acl[1]);
                 }
                 if(!in_array($acl[1], $groups)) {
                     continue;
@@ -799,10 +798,10 @@ function auth_nameencode_callback($matches) {
  * @return string  pronouncable password
  */
 function auth_pwgen($foruser = '') {
-    $data = array(
+    $data = [
         'password' => '',
         'foruser'  => $foruser
-    );
+    ];
 
     $evt = new Event('AUTH_PASSWORD_GENERATE', $data);
     if($evt->advise_before(true)) {
@@ -846,11 +845,11 @@ function auth_sendPassword($user, $password) {
     if(!$userinfo['mail']) return false;
 
     $text = rawLocale('password');
-    $trep = array(
+    $trep = [
         'FULLNAME' => $userinfo['name'],
         'LOGIN'    => $user,
         'PASSWORD' => $password
-    );
+    ];
 
     $mail = new Mailer();
     $mail->to($mail->getCleanName($userinfo['name']).' <'.$userinfo['mail'].'>');
@@ -907,7 +906,7 @@ function register() {
     }
 
     //okay try to create the user
-    if(!$auth->triggerUserMod('create', array($login, $pass, $fullname, $email))) {
+    if(!$auth->triggerUserMod('create', [$login, $pass, $fullname, $email])) {
         msg($lang['regfail'], -1);
         return false;
     }
@@ -953,7 +952,7 @@ function updateprofile() {
         return false;
     }
 
-    $changes         = array();
+    $changes         = [];
     $changes['pass'] = $INPUT->post->str('newpass');
     $changes['name'] = $INPUT->post->str('fullname');
     $changes['mail'] = $INPUT->post->str('email');
@@ -988,7 +987,7 @@ function updateprofile() {
     if(!$auth->canDo('modPass')) unset($changes['pass']);
 
     // anything to do?
-    if(!count($changes)) {
+    if($changes === []) {
         msg($lang['profnochange'], -1);
         return false;
     }
@@ -1000,14 +999,14 @@ function updateprofile() {
         }
     }
 
-    if(!$auth->triggerUserMod('modify', array($INPUT->server->str('REMOTE_USER'), &$changes))) {
+    if(!$auth->triggerUserMod('modify', [$INPUT->server->str('REMOTE_USER'), &$changes])) {
         msg($lang['proffail'], -1);
         return false;
     }
 
     if($changes['pass']) {
         // update cookie and session with the changed data
-        list( /*user*/, $sticky, /*pass*/) = auth_getCookie();
+        [, $sticky, ] = auth_getCookie();
         $pass = auth_encrypt($changes['pass'], auth_cookiesalt(!$sticky, true));
         auth_setCookie($INPUT->server->str('REMOTE_USER'), $pass, (bool) $sticky);
     } else {
@@ -1055,9 +1054,9 @@ function auth_deleteprofile(){
         }
     }
 
-    $deleted = array();
+    $deleted = [];
     $deleted[] = $INPUT->server->str('REMOTE_USER');
-    if($auth->triggerUserMod('delete', array($deleted))) {
+    if($auth->triggerUserMod('delete', [$deleted])) {
         // force and immediate logout including removing the sticky cookie
         auth_logoff();
         return true;
@@ -1130,7 +1129,7 @@ function act_resendpwd() {
             }
 
             // change it
-            if(!$auth->triggerUserMod('modify', array($user, array('pass' => $pass)))) {
+            if(!$auth->triggerUserMod('modify', [$user, ['pass' => $pass]])) {
                 msg($lang['proffail'], -1);
                 return false;
             }
@@ -1138,7 +1137,7 @@ function act_resendpwd() {
         } else { // autogenerate the password and send by mail
 
             $pass = auth_pwgen($user);
-            if(!$auth->triggerUserMod('modify', array($user, array('pass' => $pass)))) {
+            if(!$auth->triggerUserMod('modify', [$user, ['pass' => $pass]])) {
                 msg($lang['proffail'], -1);
                 return false;
             }
@@ -1174,16 +1173,12 @@ function act_resendpwd() {
         // generate auth token
         $token = md5(auth_randombytes(16)); // random secret
         $tfile = $conf['cachedir'].'/'.$token[0].'/'.$token.'.pwauth';
-        $url   = wl('', array('do'=> 'resendpwd', 'pwauth'=> $token), true, '&');
+        $url   = wl('', ['do'=> 'resendpwd', 'pwauth'=> $token], true, '&');
 
         io_saveFile($tfile, $user);
 
         $text = rawLocale('pwconfirm');
-        $trep = array(
-            'FULLNAME' => $userinfo['name'],
-            'LOGIN'    => $user,
-            'CONFIRM'  => $url
-        );
+        $trep = ['FULLNAME' => $userinfo['name'], 'LOGIN'    => $user, 'CONFIRM'  => $url];
 
         $mail = new Mailer();
         $mail->to($userinfo['name'].' <'.$userinfo['mail'].'>');
@@ -1287,13 +1282,13 @@ function auth_setCookie($user, $pass, $sticky) {
  */
 function auth_getCookie() {
     if(!isset($_COOKIE[DOKU_COOKIE])) {
-        return array(null, null, null);
+        return [null, null, null];
     }
-    list($user, $sticky, $pass) = sexplode('|', $_COOKIE[DOKU_COOKIE], 3, '');
+    [$user, $sticky, $pass] = sexplode('|', $_COOKIE[DOKU_COOKIE], 3, '');
     $sticky = (bool) $sticky;
     $pass   = base64_decode($pass);
     $user   = base64_decode($user);
-    return array($user, $sticky, $pass);
+    return [$user, $sticky, $pass];
 }
 
 //Setup VIM: ex: et ts=2 :

@@ -126,7 +126,7 @@ EOT;
      */
     public static function logException($e)
     {
-        if (is_a($e, \ErrorException::class)) {
+        if ($e instanceof \ErrorException) {
             $prefix = self::ERRORCODES[$e->getSeverity()];
         } else {
             $prefix = get_class($e);

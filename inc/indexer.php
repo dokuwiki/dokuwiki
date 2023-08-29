@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Tom N Harris <tnharris@whoopdedo.org>
  */
-
+use dokuwiki\Utf8\Clean;
 use dokuwiki\Extension\Event;
 use dokuwiki\Search\Indexer;
 
@@ -36,7 +36,7 @@ function idx_get_version(){
         $version = INDEXER_VERSION;
 
         // DokuWiki version is included for the convenience of plugins
-        $data = array('dokuwiki'=>$version);
+        $data = ['dokuwiki'=>$version];
         Event::createAndTrigger('INDEXER_VERSION_GET', $data, null, false);
         unset($data['dokuwiki']); // this needs to be first
         ksort($data);
@@ -97,7 +97,7 @@ function & idx_get_stopwords() {
         if(file_exists($swfile)){
             $stopwords = file($swfile, FILE_IGNORE_NEW_LINES);
         }else{
-            $stopwords = array();
+            $stopwords = [];
         }
     }
     return $stopwords;
@@ -167,19 +167,19 @@ function idx_addPage($page, $verbose=false, $force=false) {
         return false;
     }
     $body = '';
-    $metadata = array();
+    $metadata = [];
     $metadata['title'] = p_get_metadata($page, 'title', METADATA_RENDER_UNLIMITED);
     if (($references = p_get_metadata($page, 'relation references', METADATA_RENDER_UNLIMITED)) !== null)
         $metadata['relation_references'] = array_keys($references);
     else
-        $metadata['relation_references'] = array();
+        $metadata['relation_references'] = [];
 
     if (($media = p_get_metadata($page, 'relation media', METADATA_RENDER_UNLIMITED)) !== null)
         $metadata['relation_media'] = array_keys($media);
     else
-        $metadata['relation_media'] = array();
+        $metadata['relation_media'] = [];
 
-    $data = compact('page', 'body', 'metadata', 'pid');
+    $data = ['page' => $page, 'body' => $body, 'metadata' => $metadata, 'pid' => $pid];
     $evt = new Event('INDEXER_PAGE_ADD', $data);
     if ($evt->advise_before()) $data['body'] = $data['body'] . " " . rawWiki($page);
     $evt->advise_after();
@@ -253,7 +253,7 @@ function idx_tokenizer($string, $wc=false) {
 function idx_getIndex($idx, $suffix) {
     global $conf;
     $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
-    if (!file_exists($fn)) return array();
+    if (!file_exists($fn)) return [];
     return file($fn);
 }
 
@@ -280,7 +280,7 @@ function idx_listIndexLengths() {
                 ($lengths = @file($conf['indexdir'].'/lengths.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))
                 !== false
             ) {
-                $idx = array();
+                $idx = [];
                 foreach ($lengths as $length) {
                     $idx[] = (int)$length;
                 }
@@ -293,8 +293,8 @@ function idx_listIndexLengths() {
     if ($conf['readdircache'] == 0 || $docache) {
         $dir = @opendir($conf['indexdir']);
         if ($dir === false)
-            return array();
-        $idx = array();
+            return [];
+        $idx = [];
         while (($f = readdir($dir)) !== false) {
             if (substr($f, 0, 1) == 'i' && substr($f, -4) == '.idx') {
                 $i = substr($f, 1, -4);
@@ -313,7 +313,7 @@ function idx_listIndexLengths() {
         return $idx;
     }
 
-    return array();
+    return [];
 }
 
 /**
@@ -329,17 +329,17 @@ function idx_listIndexLengths() {
  */
 function idx_indexLengths($filter) {
     global $conf;
-    $idx = array();
+    $idx = [];
     if (is_array($filter)) {
         // testing if index files exist only
         $path = $conf['indexdir']."/i";
-        foreach ($filter as $key => $value) {
+        foreach (array_keys($filter) as $key) {
             if (file_exists($path.$key.'.idx'))
                 $idx[] = $key;
         }
     } else {
         $lengths = idx_listIndexLengths();
-        foreach ($lengths as $key => $length) {
+        foreach ($lengths as $length) {
             // keep all the values equal or superior
             if ((int)$length >= (int)$filter)
                 $idx[] = $length;
@@ -360,7 +360,7 @@ function idx_indexLengths($filter) {
  * @return string
  */
 function idx_cleanName($name) {
-    $name = \dokuwiki\Utf8\Clean::romanize(trim((string)$name));
+    $name = Clean::romanize(trim((string)$name));
     $name = preg_replace('#[ \./\\:-]+#', '_', $name);
     $name = preg_replace('/[^A-Za-z0-9_]/', '', $name);
     return strtolower($name);

@@ -32,20 +32,20 @@ function mimetype($file, $knownonly=true){
     $mtypes = getMimeTypes();     // known mimetypes
     $ext    = strrpos($file, '.');
     if ($ext === false) {
-        return array(false, false, false);
+        return [false, false, false];
     }
     $ext = strtolower(substr($file, $ext + 1));
     if (!isset($mtypes[$ext])){
         if ($knownonly) {
-            return array(false, false, false);
+            return [false, false, false];
         } else {
-            return array($ext, 'application/octet-stream', true);
+            return [$ext, 'application/octet-stream', true];
         }
     }
     if($mtypes[$ext][0] == '!'){
-        return array($ext, substr($mtypes[$ext],1), true);
+        return [$ext, substr($mtypes[$ext],1), true];
     }else{
-        return array($ext, $mtypes[$ext], false);
+        return [$ext, $mtypes[$ext], false];
     }
 }
 
@@ -113,7 +113,7 @@ function getEntities() {
 function getInterwiki() {
     static $wikis = null;
     if ( !$wikis ) {
-        $wikis = retrieveConfig('interwiki','confToHash',array(true));
+        $wikis = retrieveConfig('interwiki','confToHash',[true]);
         $wikis = array_filter($wikis, 'strlen');
 
         //add sepecial case 'this'
@@ -132,26 +132,23 @@ function getCdnUrls() {
     global $conf;
 
     // load version info
-    $versions = array();
+    $versions = [];
     $lines = file(DOKU_INC . 'lib/scripts/jquery/versions');
     foreach($lines as $line) {
         $line = trim(preg_replace('/#.*$/', '', $line));
         if($line === '') continue;
-        list($key, $val) = sexplode('=', $line, 2, '');
+        [$key, $val] = sexplode('=', $line, 2, '');
         $key = trim($key);
         $val = trim($val);
         $versions[$key] = $val;
     }
 
-    $src = array();
-    $data = array(
-        'versions' => $versions,
-        'src' => &$src
-    );
+    $src = [];
+    $data = ['versions' => $versions, 'src' => &$src];
     $event = new Event('CONFUTIL_CDN_SELECT', $data);
     if($event->advise_before()) {
         if(!$conf['jquerycdn']) {
-            $jqmod = md5(join('-', $versions));
+            $jqmod = md5(implode('-', $versions));
             $src[] = DOKU_BASE . 'lib/exe/jquery.php' . '?tseed=' . $jqmod;
         } elseif($conf['jquerycdn'] == 'jquery') {
             $src[] = sprintf('https://code.jquery.com/jquery-%s.min.js', $versions['JQ_VERSION']);
@@ -216,9 +213,9 @@ function getSchemes() {
  * @return array
  */
 function linesToHash($lines, $lower = false) {
-    $conf = array();
+    $conf = [];
     // remove BOM
-    if(isset($lines[0]) && substr($lines[0], 0, 3) == pack('CCC', 0xef, 0xbb, 0xbf))
+    if(isset($lines[0]) && substr($lines[0], 0, 3) === pack('CCC', 0xef, 0xbb, 0xbf))
         $lines[0] = substr($lines[0], 3);
     foreach($lines as $line) {
         //ignore comments (except escaped ones)
@@ -255,7 +252,7 @@ function linesToHash($lines, $lower = false) {
  * @return array
  */
 function confToHash($file,$lower=false) {
-    $conf = array();
+    $conf = [];
     $lines = @file( $file );
     if ( !$lines ) return $conf;
 
@@ -272,7 +269,7 @@ function jsonToArray($file)
 {
     $json = file_get_contents($file);
 
-    $conf = json_decode($json, true);
+    $conf = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
 
     if ($conf === null) {
         return [];
@@ -299,15 +296,15 @@ function jsonToArray($file)
 function retrieveConfig($type,$fn,$params=null,$combine='array_merge') {
     global $config_cascade;
 
-    if(!is_array($params)) $params = array();
+    if(!is_array($params)) $params = [];
 
-    $combined = array();
+    $combined = [];
     if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "'.$type.'"',E_USER_WARNING);
-    foreach (array('default','local','protected') as $config_group) {
+    foreach (['default', 'local', 'protected'] as $config_group) {
         if (empty($config_cascade[$type][$config_group])) continue;
         foreach ($config_cascade[$type][$config_group] as $file) {
             if (file_exists($file)) {
-                $config = call_user_func_array($fn,array_merge(array($file),$params));
+                $config = call_user_func_array($fn,array_merge([$file],$params));
                 $combined = $combine($combined, $config);
             }
         }
@@ -326,10 +323,10 @@ function retrieveConfig($type,$fn,$params=null,$combine='array_merge') {
  */
 function getConfigFiles($type) {
     global $config_cascade;
-    $files = array();
+    $files = [];
 
     if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "'.$type.'"',E_USER_WARNING);
-    foreach (array('default','local','protected') as $config_group) {
+    foreach (['default', 'local', 'protected'] as $config_group) {
         if (empty($config_cascade[$type][$config_group])) continue;
         $files = array_merge($files, $config_cascade[$type][$config_group]);
     }
@@ -411,7 +408,7 @@ function useHeading($linktype) {
                     $useHeading['navigation'] = true;
             }
         } else {
-            $useHeading = array();
+            $useHeading = [];
         }
     }
 

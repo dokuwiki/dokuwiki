@@ -16,14 +16,14 @@
 function toolbar_JSdefines($varname){
     global $lang;
 
-    $menu = array();
+    $menu = [];
 
     $evt = new Event('TOOLBAR_DEFINE', $menu);
     if ($evt->advise_before()){
 
         // build button array
-        $menu = array_merge($menu, array(
-           array(
+        $menu = array_merge($menu, [
+            [
                 'type'   => 'format',
                 'title'  => $lang['qb_bold'],
                 'icon'   => 'bold.png',
@@ -31,8 +31,8 @@ function toolbar_JSdefines($varname){
                 'open'   => '**',
                 'close'  => '**',
                 'block'  => false
-                ),
-           array(
+            ],
+            [
                 'type'   => 'format',
                 'title'  => $lang['qb_italic'],
                 'icon'   => 'italic.png',
@@ -40,8 +40,8 @@ function toolbar_JSdefines($varname){
                 'open'   => '//',
                 'close'  => '//',
                 'block'  => false
-                ),
-           array(
+            ],
+            [
                 'type'   => 'format',
                 'title'  => $lang['qb_underl'],
                 'icon'   => 'underline.png',
@@ -49,8 +49,8 @@ function toolbar_JSdefines($varname){
                 'open'   => '__',
                 'close'  => '__',
                 'block'  => false
-                ),
-           array(
+            ],
+            [
                 'type'   => 'format',
                 'title'  => $lang['qb_code'],
                 'icon'   => 'mono.png',
@@ -58,8 +58,8 @@ function toolbar_JSdefines($varname){
                 'open'   => "''",
                 'close'  => "''",
                 'block'  => false
-                ),
-           array(
+            ],
+            [
                 'type'   => 'format',
                 'title'  => $lang['qb_strike'],
                 'icon'   => 'strike.png',
@@ -67,9 +67,8 @@ function toolbar_JSdefines($varname){
                 'open'  => '<del>',
                 'close'   => '</del>',
                 'block'  => false
-                ),
-
-           array(
+            ],
+            [
                 'type'   => 'autohead',
                 'title'  => $lang['qb_hequal'],
                 'icon'   => 'hequal.png',
@@ -77,8 +76,8 @@ function toolbar_JSdefines($varname){
                 'text'   => $lang['qb_h'],
                 'mod'    => 0,
                 'block'  => true
-               ),
-           array(
+            ],
+            [
                 'type'   => 'autohead',
                 'title'  => $lang['qb_hminus'],
                 'icon'   => 'hminus.png',
@@ -86,8 +85,8 @@ function toolbar_JSdefines($varname){
                 'text'   => $lang['qb_h'],
                 'mod'    => 1,
                 'block'  => true
-               ),
-           array(
+            ],
+            [
                 'type'   => 'autohead',
                 'title'  => $lang['qb_hplus'],
                 'icon'   => 'hplus.png',
@@ -95,59 +94,57 @@ function toolbar_JSdefines($varname){
                 'text'   => $lang['qb_h'],
                 'mod'    => -1,
                 'block'  => true
-               ),
-
-           array(
+            ],
+            [
                 'type'   => 'picker',
                 'title'  => $lang['qb_hs'],
                 'icon'   => 'h.png',
                 'class'  => 'pk_hl',
-                'list'   => array(
-                               array(
-                                    'type'   => 'format',
-                                    'title'  => $lang['qb_h1'],
-                                    'icon'   => 'h1.png',
-                                    'key'    => '1',
-                                    'open'   => '====== ',
-                                    'close'  => ' ======\n',
-                                    ),
-                               array(
-                                    'type'   => 'format',
-                                    'title'  => $lang['qb_h2'],
-                                    'icon'   => 'h2.png',
-                                    'key'    => '2',
-                                    'open'   => '===== ',
-                                    'close'  => ' =====\n',
-                                    ),
-                               array(
-                                    'type'   => 'format',
-                                    'title'  => $lang['qb_h3'],
-                                    'icon'   => 'h3.png',
-                                    'key'    => '3',
-                                    'open'   => '==== ',
-                                    'close'  => ' ====\n',
-                                    ),
-                               array(
-                                    'type'   => 'format',
-                                    'title'  => $lang['qb_h4'],
-                                    'icon'   => 'h4.png',
-                                    'key'    => '4',
-                                    'open'   => '=== ',
-                                    'close'  => ' ===\n',
-                                    ),
-                               array(
-                                    'type'   => 'format',
-                                    'title'  => $lang['qb_h5'],
-                                    'icon'   => 'h5.png',
-                                    'key'    => '5',
-                                    'open'   => '== ',
-                                    'close'  => ' ==\n',
-                                    ),
-                            ),
+                'list'   => [
+                    [
+                        'type'   => 'format',
+                        'title'  => $lang['qb_h1'],
+                        'icon'   => 'h1.png',
+                        'key'    => '1',
+                        'open'   => '====== ',
+                        'close'  => ' ======\n'
+                    ],
+                    [
+                        'type'   => 'format',
+                        'title'  => $lang['qb_h2'],
+                        'icon'   => 'h2.png',
+                        'key'    => '2',
+                        'open'   => '===== ',
+                        'close'  => ' =====\n'
+                    ],
+                    [
+                        'type'   => 'format',
+                        'title'  => $lang['qb_h3'],
+                        'icon'   => 'h3.png',
+                        'key'    => '3',
+                        'open'   => '==== ',
+                        'close'  => ' ====\n'
+                    ],
+                    [
+                        'type'   => 'format',
+                        'title'  => $lang['qb_h4'],
+                        'icon'   => 'h4.png',
+                        'key'    => '4',
+                        'open'   => '=== ',
+                        'close'  => ' ===\n'
+                    ],
+                    [
+                        'type'   => 'format',
+                        'title'  => $lang['qb_h5'],
+                        'icon'   => 'h5.png',
+                        'key'    => '5',
+                        'open'   => '== ',
+                        'close'  => ' ==\n'
+                    ]
+                ],
                 'block'  => true
-                ),
-
-           array(
+            ],
+            [
                 'type'   => 'linkwiz',
                 'title'  => $lang['qb_link'],
                 'icon'   => 'link.png',
@@ -155,8 +152,8 @@ function toolbar_JSdefines($varname){
                 'open'   => '[[',
                 'close'  => ']]',
                 'block'  => false
-                ),
-           array(
+            ],
+            [
                 'type'   => 'format',
                 'title'  => $lang['qb_extlink'],
                 'icon'   => 'linkextern.png',
@@ -164,8 +161,8 @@ function toolbar_JSdefines($varname){
                 'close'  => ']]',
                 'sample' => 'http://example.com|'.$lang['qb_extlink'],
                 'block'  => false
-                ),
-           array(
+            ],
+            [
                 'type'   => 'formatln',
                 'title'  => $lang['qb_ol'],
                 'icon'   => 'ol.png',
@@ -173,8 +170,8 @@ function toolbar_JSdefines($varname){
                 'close'  => '',
                 'key'    => '-',
                 'block'  => true
-                ),
-           array(
+            ],
+            [
                 'type'   => 'formatln',
                 'title'  => $lang['qb_ul'],
                 'icon'   => 'ul.png',
@@ -182,15 +179,15 @@ function toolbar_JSdefines($varname){
                 'close'  => '',
                 'key'    => '.',
                 'block'  => true
-                ),
-           array(
+            ],
+            [
                 'type'   => 'insert',
                 'title'  => $lang['qb_hr'],
                 'icon'   => 'hr.png',
                 'insert' => '\n----\n',
                 'block'  => true
-                ),
-           array(
+            ],
+            [
                 'type'   => 'mediapopup',
                 'title'  => $lang['qb_media'],
                 'icon'   => 'image.png',
@@ -198,16 +195,16 @@ function toolbar_JSdefines($varname){
                 'name'   => 'mediaselect',
                 'options'=> 'width=750,height=500,left=20,top=20,scrollbars=yes,resizable=yes',
                 'block'  => false
-                ),
-          array(
+            ],
+            [
                 'type'   => 'picker',
                 'title'  => $lang['qb_smileys'],
                 'icon'   => 'smiley.png',
                 'list'   => getSmileys(),
                 'icobase'=> 'smileys',
                 'block'  => false
-               ),
-          array(
+            ],
+            [
                 'type'   => 'picker',
                 'title'  => $lang['qb_chars'],
                 'icon'   => 'chars.png',
@@ -236,21 +233,21 @@ function toolbar_JSdefines($varname){
                     '″', '[', ']', '{', '}', '~', '(', ')', '%', '§', '$', '#', '|', '@'
                 ],
                 'block'  => false
-               ),
-          array(
+            ],
+            [
                 'type'   => 'signature',
                 'title'  => $lang['qb_sig'],
                 'icon'   => 'sig.png',
                 'key'    => 'y',
                 'block'  => false
-               ),
-        ));
+            ]
+        ]);
     } // end event TOOLBAR_DEFINE default action
     $evt->advise_after();
     unset($evt);
 
     // use JSON to build the JavaScript array
-    print "var $varname = ".json_encode($menu).";\n";
+    print "var $varname = ".json_encode($menu, JSON_THROW_ON_ERROR).";\n";
 }
 
 /**
@@ -275,7 +272,7 @@ function toolbar_signature(){
     }
     $sig = str_replace('@DATE@',dformat(),$sig);
     $sig = str_replace('\\\\n','\\n',$sig);
-    return json_encode($sig);
+    return json_encode($sig, JSON_THROW_ON_ERROR);
 }
 
 //Setup VIM: ex: et ts=4 :

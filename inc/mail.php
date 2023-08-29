@@ -45,7 +45,7 @@ function mail_setup(){
     if(!$host) $host = 'example.com';
     $noreply = 'noreply@'.$host;
 
-    $replace = array();
+    $replace = [];
     if(!empty($USERINFO['mail'])){
         $replace['@MAIL@'] = $USERINFO['mail'];
     }else{
@@ -104,7 +104,7 @@ function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true)
 
     for ($i=0;$i<$cnt;$i++) {
         $sLine =& $aLines[$i];
-        if (strlen($sLine)===0) continue; // do nothing, if empty
+        if ($sLine === '') continue; // do nothing, if empty
 
         $sRegExp = '/[^\x09\x20\x21-\x3C\x3E-\x7E]/e';
 

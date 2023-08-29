@@ -22,9 +22,13 @@ use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\CodingStyle\Rector\String_\SymplifyQuoteEscapeRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
+use Rector\DeadCode\Rector\For_\RemoveDeadContinueRector;
+use Rector\DeadCode\Rector\For_\RemoveDeadIfForeachForRector;
+use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
 use Rector\DeadCode\Rector\If_\RemoveUnusedNonEmptyArrayBeforeForeachRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
 use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
+use Rector\DeadCode\Rector\Stmt\RemoveUnreachableStatementRector;
 use Rector\Php71\Rector\ClassConst\PublicConstantVisibilityRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
@@ -34,18 +38,13 @@ use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 
 return static function (RectorConfig $rectorConfig): void {
-    define('DOKU_INC', __DIR__ . '/../');
-    define('DOKU_BASE','/');
-    define('DOKU_URL','http://localhost/');
-    define('DOKU_COOKIE','DWCOOKIE');
-
     $rectorConfig->paths([
         __DIR__ . '/../inc',
         __DIR__ . '/../lib',
     ]);
 
     $rectorConfig->bootstrapFiles([
-        __DIR__ . '/../inc/load.php',
+        __DIR__ . '/../inc/init.php',
     ]);
 
     $rectorConfig->importNames();
@@ -71,6 +70,8 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/../lib/plugins/*/vendor/*',
         __DIR__ . '/../lib/tpl/*/vendor/*',
         __DIR__ . '/../lib/plugins/*/skel/*', // dev plugin
+        __DIR__ . '/../inc/deprecated.php',
+        __DIR__ . '/../inc/form.php',
 
         // third party libs, not yet moved to composer
         __DIR__ . '/../inc/DifferenceEngine.php',
@@ -104,5 +105,6 @@ return static function (RectorConfig $rectorConfig): void {
         JoinStringConcatRector::class, // this does not count variables, so it creates overlong lines
         RemoveExtraParametersRector::class, // this actually broke code
         RemoveUnusedNonEmptyArrayBeforeForeachRector::class, // seems unreliable when checking on array keys
+        RemoveAlwaysTrueIfConditionRector::class, // fails with if(defined(...)) constructs
     ]);
 };

@@ -62,17 +62,11 @@ class PassHash {
             $magic = 'H';
         } elseif(preg_match('/^pbkdf2_(\w+?)\$(\d+)\$(.{12})\$/', $hash, $m)) {
             $method = 'djangopbkdf2';
-            $magic = array(
-                'algo' => $m[1],
-                'iter' => $m[2],
-            );
+            $magic = ['algo' => $m[1], 'iter' => $m[2]];
             $salt = $m[3];
         } elseif(preg_match('/^PBKDF2(SHA\d+)\$(\d+)\$([[:xdigit:]]+)\$([[:xdigit:]]+)$/', $hash, $m)) {
             $method = 'seafilepbkdf2';
-            $magic = array(
-                'algo' => $m[1],
-                'iter' => $m[2],
-            );
+            $magic = ['algo' => $m[1], 'iter' => $m[2]];
             $salt = $m[3];
         } elseif(preg_match('/^sha1\$(.{5})\$/', $hash, $m)) {
             $method = 'djangosha1';
@@ -95,10 +89,7 @@ class PassHash {
         } elseif(preg_match('/^\$(5|6)\$(rounds=\d+)?\$?(.+?)\$/', $hash, $m)) {
             $method = 'sha2';
             $salt   = $m[3];
-            $magic  = array(
-                'prefix' => $m[1],
-                'rounds' => $m[2],
-            );
+            $magic  = ['prefix' => $m[1], 'rounds' => $m[2]];
         } elseif(preg_match('/^\$(argon2id?)/', $hash, $m)) {
             if(!defined('PASSWORD_'.strtoupper($m[1]))) {
                 throw new \Exception('This PHP installation has no '.strtoupper($m[1]).' support');
@@ -406,7 +397,7 @@ class PassHash {
 
         if($iter > 30) {
             throw new \Exception("Too high iteration count ($iter) in ".
-                                    __CLASS__.'::'.__FUNCTION__);
+                                    self::class.'::'.__FUNCTION__);
         }
 
         $iter = 1 << $iter;
@@ -550,7 +541,7 @@ class PassHash {
      * @return string Hashed password
      * @throws Exception when PHP is missing support for the method/algo
      */
-    public function hash_seafilepbkdf2($clear, $salt=null, $opts=array()) {
+    public function hash_seafilepbkdf2($clear, $salt=null, $opts=[]) {
         $this->init_salt($salt, 64);
         if(empty($opts['algo'])) {
             $prefixalgo='SHA256';
@@ -586,7 +577,7 @@ class PassHash {
      * @return string Hashed password
      * @throws \Exception when PHP is missing support for the method/algo
      */
-    public function hash_djangopbkdf2($clear, $salt=null, $opts=array()) {
+    public function hash_djangopbkdf2($clear, $salt=null, $opts=[]) {
         $this->init_salt($salt, 12);
         if(empty($opts['algo'])) {
             $algo = 'sha256';
@@ -618,7 +609,7 @@ class PassHash {
      * @return string Hashed password
      * @throws \Exception when PHP is missing support for the method/algo
      */
-    public function hash_djangopbkdf2_sha256($clear, $salt=null, $opts=array()) {
+    public function hash_djangopbkdf2_sha256($clear, $salt=null, $opts=[]) {
         $opts['algo'] = 'sha256';
         return $this->hash_djangopbkdf2($clear, $salt, $opts);
     }
@@ -632,7 +623,7 @@ class PassHash {
      * @return string Hashed password
      * @throws \Exception when PHP is missing support for the method/algo
      */
-    public function hash_djangopbkdf2_sha1($clear, $salt=null, $opts=array()) {
+    public function hash_djangopbkdf2_sha1($clear, $salt=null, $opts=[]) {
         $opts['algo'] = 'sha1';
         return $this->hash_djangopbkdf2($clear, $salt, $opts);
     }
@@ -655,7 +646,7 @@ class PassHash {
      * @return string Hashed password
      */
     public function hash_bcrypt($clear, $salt = null, $compute = 10) {
-        if(!defined('CRYPT_BLOWFISH') || CRYPT_BLOWFISH != 1) {
+        if(!defined('CRYPT_BLOWFISH') || CRYPT_BLOWFISH !== 1) {
             throw new \Exception('This PHP installation has no bcrypt support');
         }
 
@@ -684,7 +675,7 @@ class PassHash {
      * @return string Hashed password
      * @throws \Exception
      */
-    public function hash_sha2($clear, $salt = null, $opts = array()) {
+    public function hash_sha2($clear, $salt = null, $opts = []) {
         if(empty($opts['prefix'])) {
             $prefix = '6';
         } else {
@@ -695,10 +686,10 @@ class PassHash {
         } else {
             $rounds = $opts['rounds'];
         }
-        if($prefix == '5' && (!defined('CRYPT_SHA256') || CRYPT_SHA256 != 1)) {
+        if($prefix == '5' && (!defined('CRYPT_SHA256') || CRYPT_SHA256 !== 1)) {
             throw new \Exception('This PHP installation has no SHA256 support');
         }
-        if($prefix == '6' && (!defined('CRYPT_SHA512') || CRYPT_SHA512 != 1)) {
+        if($prefix == '6' && (!defined('CRYPT_SHA512') || CRYPT_SHA512 !== 1)) {
             throw new \Exception('This PHP installation has no SHA512 support');
         }
         $this->init_salt($salt, 8, false);
@@ -812,8 +803,8 @@ class PassHash {
         }
 
         for($i = 0; $i < strlen($key) - 1; $i++) {
-            $opad[$i] = $opad[$i] ^ $key[$i];
-            $ipad[$i] = $ipad[$i] ^ $key[$i];
+            $opad[$i] ^= $key[$i];
+            $ipad[$i] ^= $key[$i];
         }
 
         $output = $algo($opad . pack($pack, $algo($ipad . $data)));

@@ -5,7 +5,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
+use dokuwiki\Utf8\PhpString;
+use dokuwiki\File\MediaFile;
 use dokuwiki\Utf8\Sort;
 
 /**
@@ -25,9 +26,9 @@ use dokuwiki\Utf8\Sort;
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
-    $dirs   = array();
-    $files  = array();
-    $filepaths = array();
+    $dirs   = [];
+    $files  = [];
+    $filepaths = [];
 
     // safeguard against runaways #1452
     if($base == '' || $base == '/') {
@@ -58,13 +59,13 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
 
     //give directories to userfunction then recurse
     foreach($dirs as $dir){
-        if (call_user_func_array($func, array(&$data,$base,$dir,'d',$lvl,$opts))){
+        if (call_user_func_array($func, [&$data, $base, $dir, 'd', $lvl, $opts])){
             search($data,$base,$func,$opts,$dir,$lvl+1,$sort);
         }
     }
     //now handle the files
     foreach($files as $file){
-        call_user_func_array($func, array(&$data,$base,$file,'f',$lvl,$opts));
+        call_user_func_array($func, [&$data, $base, $file, 'f', $lvl, $opts]);
     }
 }
 
@@ -106,11 +107,11 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
  * @return bool
  */
 function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
-    $opts = array(
-            'idmatch'   => '(^|:)'.preg_quote($opts['query'],'/').'/',
-            'listfiles' => true,
-            'pagesonly' => true,
-            );
+    $opts = [
+        'idmatch'   => '(^|:)'.preg_quote($opts['query'],'/').'/',
+        'listfiles' => true,
+        'pagesonly' => true
+    ];
     return search_universal($data,$base,$file,$type,$lvl,$opts);
 }
 
@@ -132,15 +133,15 @@ function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
  */
 function search_index(&$data,$base,$file,$type,$lvl,$opts){
     global $conf;
-    $ns = isset($opts['ns']) ? $opts['ns'] : '';
-    $opts = array(
+    $ns = $opts['ns'] ?? '';
+    $opts = [
         'pagesonly' => true,
         'listdirs' => true,
         'listfiles' => empty($opts['nofiles']),
         'sneakyacl' => $conf['sneaky_index'],
         // Hacky, should rather use recmatch
-        'depth' => preg_match('#^'.preg_quote($file, '#').'(/|$)#','/'.$ns) ? 0 : -1
-    );
+        'depth' => preg_match('#^'.preg_quote($file, '#').'(/|$)#','/'.$ns) ? 0 : -1,
+    ];
 
     return search_universal($data, $base, $file, $type, $lvl, $opts);
 }
@@ -160,9 +161,7 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
  * @return bool
  */
 function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
-    $opts = array(
-            'listdirs' => true,
-            );
+    $opts = ['listdirs' => true];
     return search_universal($data,$base,$file,$type,$lvl,$opts);
 }
 
@@ -195,7 +194,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
         return true;
     }
 
-    $info         = array();
+    $info         = [];
     $info['id']   = pathID($file,true);
     if($info['id'] != cleanID($info['id'])){
         if(!empty($opts['showmsg']))
@@ -214,7 +213,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
         return false;
     }
 
-    $info['file']     = \dokuwiki\Utf8\PhpString::basename($file);
+    $info['file']     = PhpString::basename($file);
     $info['size']     = filesize($base.'/'.$file);
     $info['mtime']    = filemtime($base.'/'.$file);
     $info['writable'] = is_writable($base.'/'.$file);
@@ -280,7 +279,7 @@ function search_mediafiles(&$data,$base,$file,$type,$lvl,$opts){
         return false;
     }
 
-    $data[] = new \dokuwiki\File\MediaFile($id);
+    $data[] = new MediaFile($id);
     return false;
 }
 
@@ -338,7 +337,7 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
 
     //simple stringmatching
     if (!empty($opts['query'])){
-        if(strpos($file,$opts['query']) !== false){
+        if(strpos($file,(string) $opts['query']) !== false){
             //check ACL
             $id = pathID($file);
             if(auth_quickaclcheck($id) < AUTH_READ){
@@ -385,7 +384,7 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
     //only search txt files
     if(substr($file,-4) != '.txt') return true;
 
-    $item = array();
+    $item = [];
     $item['id']   = pathID($file);
     if(empty($opts['skipacl']) && auth_quickaclcheck($item['id']) < AUTH_READ){
         return false;
@@ -485,7 +484,7 @@ function pathID($path,$keeptxt=false){
  * @author Andreas Gohr <gohr@cosmocode.de>
  */
 function search_universal(&$data,$base,$file,$type,$lvl,$opts){
-    $item   = array();
+    $item   = [];
     $return = true;
 
     // get ID and check if it is a valid one
@@ -552,7 +551,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     $item['open']  = $return;
 
     if(!empty($opts['meta'])){
-        $item['file']       = \dokuwiki\Utf8\PhpString::basename($file);
+        $item['file']       = PhpString::basename($file);
         $item['size']       = filesize($base.'/'.$file);
         $item['mtime']      = filemtime($base.'/'.$file);
         $item['rev']        = $item['mtime'];

@@ -4,7 +4,7 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-
+use dokuwiki\ErrorHandler;
 use dokuwiki\Extension\PluginController;
 
 // setup class autoloader
@@ -53,7 +53,7 @@ require_once(DOKU_INC.'inc/legacy.php');
  */
 function load_autoload($name){
     static $classes = null;
-    if($classes === null) $classes = array(
+    if($classes === null) $classes = [
         'Diff'                  => DOKU_INC.'inc/DifferenceEngine.php',
         'UnifiedDiffFormatter'  => DOKU_INC.'inc/DifferenceEngine.php',
         'TableDiffFormatter'    => DOKU_INC.'inc/DifferenceEngine.php',
@@ -67,14 +67,13 @@ function load_autoload($name){
         'FeedParser'            => DOKU_INC.'inc/FeedParser.php',
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
         'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
-
         'Doku_Handler'          => DOKU_INC.'inc/parser/handler.php',
         'Doku_Renderer'          => DOKU_INC.'inc/parser/renderer.php',
         'Doku_Renderer_xhtml'    => DOKU_INC.'inc/parser/xhtml.php',
         'Doku_Renderer_code'     => DOKU_INC.'inc/parser/code.php',
         'Doku_Renderer_xhtmlsummary' => DOKU_INC.'inc/parser/xhtmlsummary.php',
-        'Doku_Renderer_metadata' => DOKU_INC.'inc/parser/metadata.php',
-    );
+        'Doku_Renderer_metadata' => DOKU_INC.'inc/parser/metadata.php'
+    ];
 
     if(isset($classes[$name])){
         require ($classes[$name]);
@@ -110,7 +109,7 @@ function load_autoload($name){
             try {
                 require $file;
             } catch (\Throwable $e) {
-                \dokuwiki\ErrorHandler::showExceptionMsg($e, "Error loading plugin $name");
+                ErrorHandler::showExceptionMsg($e, "Error loading plugin $name");
             }
             return true;
         }
@@ -124,7 +123,7 @@ function load_autoload($name){
             try {
                 require $file;
             } catch (\Throwable $e) {
-                \dokuwiki\ErrorHandler::showExceptionMsg($e, "Error loading template $name");
+                ErrorHandler::showExceptionMsg($e, "Error loading template $name");
             }
             return true;
         }
@@ -154,7 +153,7 @@ function load_autoload($name){
             try {
                 require $plg;
             } catch (\Throwable $e) {
-                \dokuwiki\ErrorHandler::showExceptionMsg($e, "Error loading plugin {$m[2]}");
+                ErrorHandler::showExceptionMsg($e, "Error loading plugin {$m[2]}");
             }
         }
         return true;

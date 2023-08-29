@@ -2,6 +2,7 @@
 
 namespace dokuwiki;
 
+use dokuwiki\Extension\Event;
 /**
  * Class Draft
  *
@@ -86,7 +87,7 @@ class Draft
             'cname' => $this->cname,
             'errors' => [],
         ];
-        $event = new Extension\Event('DRAFT_SAVE', $draft);
+        $event = new Event('DRAFT_SAVE', $draft);
         if ($event->advise_before()) {
             $draft['hasBeenSaved'] = io_saveFile($draft['cname'], serialize($draft));
             if ($draft['hasBeenSaved']) {

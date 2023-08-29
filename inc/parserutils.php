@@ -6,7 +6,7 @@
  * @author     Harry Fuecks <hfuecks@gmail.com>
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
+use dokuwiki\Extension\PluginInterface;
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
@@ -91,17 +91,15 @@ function p_wiki_xhtml($id, $rev = '', $excuse = true, $date_at = '')
         } elseif ($excuse) {
             $ret = p_locale_xhtml('norev');
         }
-    } else {
-        if (file_exists($file)) {
-            $ret = p_cached_output($file, 'xhtml', $id);
-        } elseif ($excuse) {
-            //check if the page once existed
-            $changelog = new PageChangeLog($id);
-            if ($changelog->hasRevisions()) {
-                $ret = p_locale_xhtml('onceexisted');
-            } else {
-                $ret = p_locale_xhtml('newpage');
-            }
+    } elseif (file_exists($file)) {
+        $ret = p_cached_output($file, 'xhtml', $id);
+    } elseif ($excuse) {
+        //check if the page once existed
+        $changelog = new PageChangeLog($id);
+        if ($changelog->hasRevisions()) {
+            $ret = p_locale_xhtml('onceexisted');
+        } else {
+            $ret = p_locale_xhtml('newpage');
         }
     }
 
@@ -193,7 +191,7 @@ function p_cached_instructions($file, $cacheonly = false, $id = '')
 
     if ($cacheonly || $cache->useCache() || (isset($run[$file]) && !defined('DOKU_UNITTEST'))) {
         return $cache->retrieveCache();
-    } else if (file_exists($file)) {
+    } elseif (file_exists($file)) {
         // no cache - do some work
         $ins = p_get_instructions(io_readWikiPage($file, $id));
         if ($cache->storeCache($ins)) {
@@ -386,14 +384,14 @@ function p_set_metadata($id, $data, $render = false, $persistent = true)
 
             // these keys, must have subkeys - a legitimate value must be an array
             if (is_array($value)) {
-                $meta['current'][$key] = !empty($meta['current'][$key]) ?
-                    array_replace((array)$meta['current'][$key], $value) :
-                    $value;
+                $meta['current'][$key] = empty($meta['current'][$key]) ?
+                    $value :
+                    array_replace((array)$meta['current'][$key], $value);
 
                 if ($persistent) {
-                    $meta['persistent'][$key] = !empty($meta['persistent'][$key]) ?
-                        array_replace((array)$meta['persistent'][$key], $value) :
-                        $value;
+                    $meta['persistent'][$key] = empty($meta['persistent'][$key]) ?
+                        $value :
+                        array_replace((array)$meta['persistent'][$key], $value);
                 }
             }
 
@@ -576,11 +574,11 @@ function p_get_parsermodes()
 
     // add syntax plugins
     $pluginlist = plugin_list('syntax');
-    if (count($pluginlist)) {
+    if ($pluginlist !== []) {
         global $PARSER_MODES;
         foreach ($pluginlist as $p) {
             /** @var SyntaxPlugin $obj */
-            if (!$obj = plugin_load('syntax', $p)) continue; //attempt to load plugin into $obj
+            if (!($obj = plugin_load('syntax', $p)) instanceof PluginInterface) continue; //attempt to load plugin into $obj
             $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
             //add to modes
             $modes[] = [
@@ -605,11 +603,7 @@ function p_get_parsermodes()
     foreach ($std_modes as $m) {
         $class = 'dokuwiki\\Parsing\\ParserMode\\' . ucfirst($m);
         $obj = new $class();
-        $modes[] = array(
-            'sort' => $obj->getSort(),
-            'mode' => $m,
-            'obj' => $obj
-        );
+        $modes[] = ['sort' => $obj->getSort(), 'mode' => $m, 'obj' => $obj];
     }
 
     // add formatting modes
@@ -618,11 +612,11 @@ function p_get_parsermodes()
     ];
     foreach ($fmt_modes as $m) {
         $obj = new Formatting($m);
-        $modes[] = array(
+        $modes[] = [
             'sort' => $obj->getSort(),
             'mode' => $m,
             'obj' => $obj
-        );
+        ];
     }
 
     // add modes which need files
@@ -656,8 +650,7 @@ function p_get_parsermodes()
  */
 function p_sort_modes($a, $b)
 {
-    if ($a['sort'] == $b['sort']) return 0;
-    return ($a['sort'] < $b['sort']) ? -1 : 1;
+    return $a['sort'] <=> $b['sort'];
 }
 
 /**
@@ -724,7 +717,7 @@ function p_get_renderer($mode)
     /** @var PluginController $plugin_controller */
     global $conf, $plugin_controller;
 
-    $rname = !empty($conf['renderer_' . $mode]) ? $conf['renderer_' . $mode] : $mode;
+    $rname = empty($conf['renderer_' . $mode]) ? $mode : $conf['renderer_' . $mode];
     $rclass = "Doku_Renderer_$rname";
 
     // if requested earlier or a bundled renderer

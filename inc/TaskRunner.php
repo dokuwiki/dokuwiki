@@ -47,12 +47,15 @@ class TaskRunner
         $tmp = []; // No event data
         $evt = new Event('INDEXER_TASKS_RUN', $tmp);
         if ($evt->advise_before()) {
-            $this->runIndexer() or
-            $this->runSitemapper() or
-            $this->sendDigest() or
-            $this->runTrimRecentChanges() or
-            $this->runTrimRecentChanges(true) or
-            $evt->advise_after();
+            if (!(
+                $this->runIndexer() ||
+                $this->runSitemapper() ||
+                $this->sendDigest() ||
+                $this->runTrimRecentChanges() ||
+                $this->runTrimRecentChanges(true))
+            ) {
+                $evt->advise_after();
+            }
         }
 
         if(!$output) {
@@ -120,7 +123,8 @@ class TaskRunner
             $trim_time = time() - $conf['recent_days'] * 86400;
             $out_lines = [];
             $old_lines = [];
-            for ($i = 0; $i < count($lines); $i++) {
+            $counter = count($lines);
+            for ($i = 0; $i < $counter; $i++) {
                 $log = ChangeLog::parseLogLine($lines[$i]);
                 if ($log === false) {
                     continue; // discard junk

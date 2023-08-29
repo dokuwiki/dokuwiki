@@ -5,7 +5,15 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
+use dokuwiki\ActionRouter;
+use dokuwiki\Action\Exception\FatalException;
+use dokuwiki\Extension\PluginInterface;
+use dokuwiki\Ui\Admin;
+use dokuwiki\StyleUtils;
+use dokuwiki\Menu\Item\AbstractItem;
+use dokuwiki\Form\Form;
+use dokuwiki\Menu\MobileMenu;
+use dokuwiki\Ui\Subscribe;
 use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\File\PageResolver;
@@ -95,10 +103,10 @@ function tpl_content($prependTOC = true) {
  * @return bool
  */
 function tpl_content_core() {
-    $router = \dokuwiki\ActionRouter::getInstance();
+    $router = ActionRouter::getInstance();
     try {
         $router->getAction()->tplContent();
-    } catch(\dokuwiki\Action\Exception\FatalException $e) {
+    } catch(FatalException $e) {
         // there was no content for the action
         msg(hsc($e->getMessage()), -1);
         return false;
@@ -125,7 +133,7 @@ function tpl_toc($return = false) {
     global $INFO;
     global $conf;
     global $INPUT;
-    $toc = array();
+    $toc = [];
 
     if(is_array($TOC)) {
         // if a TOC was prepared in global scope, always use it
@@ -138,9 +146,9 @@ function tpl_toc($return = false) {
         } else {
             $tocok = true;
         }
-        $toc = isset($meta['description']['tableofcontents']) ? $meta['description']['tableofcontents'] : null;
+        $toc = $meta['description']['tableofcontents'] ?? null;
         if(!$tocok || !is_array($toc) || !$conf['tocminheads'] || count($toc) < $conf['tocminheads']) {
-            $toc = array();
+            $toc = [];
         }
     } elseif($ACT == 'admin') {
         // try to load admin plugin TOC
@@ -182,12 +190,12 @@ function tpl_admin() {
         }
     }
 
-    if($plugin !== null) {
+    if($plugin instanceof PluginInterface) {
         if(!is_array($TOC)) $TOC = $plugin->getTOC(); //if TOC wasn't requested yet
         if($INFO['prependTOC']) tpl_toc();
         $plugin->html();
     } else {
-        $admin = new dokuwiki\Ui\Admin();
+        $admin = new Admin();
         $admin->show();
     }
     return true;
@@ -218,7 +226,7 @@ function tpl_metaheaders($alt = true) {
     global $INPUT;
 
     // prepare the head array
-    $head = array();
+    $head = [];
 
     // prepare seed for js and css
     $tseed   = $updateVersion;
@@ -228,73 +236,90 @@ function tpl_metaheaders($alt = true) {
     $tseed   = md5($tseed);
 
     // the usual stuff
-    $head['meta'][] = array('name'=> 'generator', 'content'=> 'DokuWiki');
+    $head['meta'][] = ['name'=> 'generator', 'content'=> 'DokuWiki'];
     if(actionOK('search')) {
-        $head['link'][] = array(
-            'rel' => 'search', 'type'=> 'application/opensearchdescription+xml',
-            'href'=> DOKU_BASE.'lib/exe/opensearch.php', 'title'=> $conf['title']
-        );
+        $head['link'][] = [
+            'rel' => 'search',
+            'type'=> 'application/opensearchdescription+xml',
+            'href'=> DOKU_BASE.'lib/exe/opensearch.php',
+            'title'=> $conf['title']
+        ];
     }
 
-    $head['link'][] = array('rel'=> 'start', 'href'=> DOKU_BASE);
+    $head['link'][] = ['rel'=> 'start', 'href'=> DOKU_BASE];
     if(actionOK('index')) {
-        $head['link'][] = array(
-            'rel'  => 'contents', 'href'=> wl($ID, 'do=index', false, '&'),
+        $head['link'][] = [
+            'rel'  => 'contents',
+            'href'=> wl($ID, 'do=index', false, '&'),
             'title'=> $lang['btn_index']
-        );
+        ];
     }
 
     if (actionOK('manifest')) {
-        $head['link'][] = array('rel'=> 'manifest', 'href'=> DOKU_BASE.'lib/exe/manifest.php');
+        $head['link'][] = [
+            'rel'=> 'manifest',
+            'href'=> DOKU_BASE.'lib/exe/manifest.php'
+        ];
     }
 
-    $styleUtil = new \dokuwiki\StyleUtils();
+    $styleUtil = new StyleUtils();
     $styleIni = $styleUtil->cssStyleini();
     $replacements = $styleIni['replacements'];
     if (!empty($replacements['__theme_color__'])) {
-        $head['meta'][] = array('name' => 'theme-color', 'content' => $replacements['__theme_color__']);
+        $head['meta'][] = [
+            'name' => 'theme-color',
+            'content' => $replacements['__theme_color__']
+        ];
     }
 
     if($alt) {
         if(actionOK('rss')) {
-            $head['link'][] = array(
-                'rel'  => 'alternate', 'type'=> 'application/rss+xml',
-                'title'=> $lang['btn_recent'], 'href'=> DOKU_BASE.'feed.php'
-            );
-            $head['link'][] = array(
-                'rel'  => 'alternate', 'type'=> 'application/rss+xml',
+            $head['link'][] = [
+                'rel'  => 'alternate',
+                'type'=> 'application/rss+xml',
+                'title'=> $lang['btn_recent'],
+                'href'=> DOKU_BASE.'feed.php'
+            ];
+            $head['link'][] = [
+                'rel'  => 'alternate',
+                'type'=> 'application/rss+xml',
                 'title'=> $lang['currentns'],
                 'href' => DOKU_BASE.'feed.php?mode=list&ns='.(isset($INFO) ? $INFO['namespace'] : '')
-            );
+            ];
         }
         if(($ACT == 'show' || $ACT == 'search') && $INFO['writable']) {
-            $head['link'][] = array(
+            $head['link'][] = [
                 'rel'  => 'edit',
                 'title'=> $lang['btn_edit'],
                 'href' => wl($ID, 'do=edit', false, '&')
-            );
+            ];
         }
 
         if(actionOK('rss') && $ACT == 'search') {
-            $head['link'][] = array(
-                'rel'  => 'alternate', 'type'=> 'application/rss+xml',
+            $head['link'][] = [
+                'rel'  => 'alternate',
+                'type'=> 'application/rss+xml',
                 'title'=> $lang['searchresult'],
                 'href' => DOKU_BASE.'feed.php?mode=search&q='.$QUERY
-            );
+            ];
         }
 
         if(actionOK('export_xhtml')) {
-            $head['link'][] = array(
-                'rel' => 'alternate', 'type'=> 'text/html', 'title'=> $lang['plainhtml'],
+            $head['link'][] = [
+                'rel' => 'alternate',
+                'type'=> 'text/html',
+                'title'=> $lang['plainhtml'],
                 'href'=> exportlink($ID, 'xhtml', '', false, '&')
-            );
+            ];
         }
 
         if(actionOK('export_raw')) {
-            $head['link'][] = array(
-                'rel' => 'alternate', 'type'=> 'text/plain', 'title'=> $lang['wikimarkup'],
+            $head['link'][] = [
+                'rel' => 'alternate',
+                'type'=> 'text/plain',
+                'title'=> $lang['wikimarkup'],
                 'href'=> exportlink($ID, 'raw', '', false, '&')
-            );
+            ];
         }
     }
 
@@ -303,62 +328,62 @@ function tpl_metaheaders($alt = true) {
         if($INFO['exists']) {
             //delay indexing:
             if((time() - $INFO['lastmod']) >= $conf['indexdelay'] && !isHiddenPage($ID) ) {
-                $head['meta'][] = array('name'=> 'robots', 'content'=> 'index,follow');
+                $head['meta'][] = ['name'=> 'robots', 'content'=> 'index,follow'];
             } else {
-                $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,nofollow');
+                $head['meta'][] = ['name'=> 'robots', 'content'=> 'noindex,nofollow'];
             }
             $canonicalUrl = wl($ID, '', true, '&');
             if ($ID == $conf['start']) {
                 $canonicalUrl = DOKU_URL;
             }
-            $head['link'][] = array('rel'=> 'canonical', 'href'=> $canonicalUrl);
+            $head['link'][] = ['rel'=> 'canonical', 'href'=> $canonicalUrl];
         } else {
-            $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,follow');
+            $head['meta'][] = ['name'=> 'robots', 'content'=> 'noindex,follow'];
         }
     } elseif(defined('DOKU_MEDIADETAIL')) {
-        $head['meta'][] = array('name'=> 'robots', 'content'=> 'index,follow');
+        $head['meta'][] = ['name'=> 'robots', 'content'=> 'index,follow'];
     } else {
-        $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,nofollow');
+        $head['meta'][] = ['name'=> 'robots', 'content'=> 'noindex,nofollow'];
     }
 
     // set metadata
     if($ACT == 'show' || $ACT == 'export_xhtml') {
         // keywords (explicit or implicit)
         if(!empty($INFO['meta']['subject'])) {
-            $head['meta'][] = array('name'=> 'keywords', 'content'=> join(',', $INFO['meta']['subject']));
+            $head['meta'][] = ['name'=> 'keywords', 'content'=> implode(',', $INFO['meta']['subject'])];
         } else {
-            $head['meta'][] = array('name'=> 'keywords', 'content'=> str_replace(':', ',', $ID));
+            $head['meta'][] = ['name'=> 'keywords', 'content'=> str_replace(':', ',', $ID)];
         }
     }
 
     // load stylesheets
-    $head['link'][] = array(
+    $head['link'][] = [
         'rel' => 'stylesheet',
         'href'=> DOKU_BASE.'lib/exe/css.php?t='.rawurlencode($conf['template']).'&tseed='.$tseed
-    );
+    ];
 
     $script = "var NS='".(isset($INFO)?$INFO['namespace']:'')."';";
     if($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
         $script .= "var SIG=".toolbar_signature().";";
     }
     jsinfo();
-    $script .= 'var JSINFO = ' . json_encode($JSINFO).';';
-    $head['script'][] = array('_data'=> $script);
+    $script .= 'var JSINFO = ' . json_encode($JSINFO, JSON_THROW_ON_ERROR).';';
+    $head['script'][] = ['_data'=> $script];
 
     // load jquery
     $jquery = getCdnUrls();
     foreach($jquery as $src) {
-        $head['script'][] = array(
-            '_data' => '',
-            'src' => $src,
-        ) + ($conf['defer_js'] ? [ 'defer' => 'defer'] : []);
+        $head['script'][] = [
+                '_data' => '',
+                'src' => $src
+            ] + ($conf['defer_js'] ? [ 'defer' => 'defer'] : []);
     }
 
     // load our javascript dispatcher
-    $head['script'][] = array(
-        '_data'=> '',
-        'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed,
-    ) + ($conf['defer_js'] ? [ 'defer' => 'defer'] : []);
+    $head['script'][] = [
+            '_data'=> '',
+            'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed
+        ] + ($conf['defer_js'] ? [ 'defer' => 'defer'] : []);
 
     // trigger event here
     Event::createAndTrigger('TPL_METAHEADER_OUTPUT', $head, '_tpl_metaheaders_action', true);
@@ -393,7 +418,7 @@ function _tpl_metaheaders_action($data) {
                         $attr['_data'].
                         "\n/*!]]>*/";
 
-                echo '>', isset($attr['_data']) ? $attr['_data'] : '', '</', $tag, '>';
+                echo '>', $attr['_data'] ?? '', '</', $tag, '>';
             } else {
                 echo '/>';
             }
@@ -549,14 +574,15 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
         if(strpos($caption, '%s')){
             $caption = sprintf($caption, $replacement);
         }
-        $akey    = $addTitle = '';
+        $akey = '';
+        $addTitle = '';
         if($accesskey) {
             $akey     = 'accesskey="'.$accesskey.'" ';
             $addTitle = ' ['.strtoupper($accesskey).']';
         }
         $rel = $nofollow ? 'rel="nofollow" ' : '';
         $out = tpl_link(
-            $linktarget, $pre.(($inner) ? $inner : $caption).$suf,
+            $linktarget, $pre.($inner ?: $caption).$suf,
             'class="action '.$type.'" '.
                 $akey.$rel.
                 'title="'.hsc($caption).$addTitle.'"', true
@@ -587,7 +613,7 @@ function tpl_get_action($type) {
     $class = '\\dokuwiki\\Menu\\Item\\' . ucfirst($type);
     if(class_exists($class)) {
         try {
-            /** @var \dokuwiki\Menu\Item\AbstractItem $item */
+            /** @var AbstractItem $item */
             $item = new $class;
             $data = $item->getLegacyData();
             $unknown = false;
@@ -596,15 +622,15 @@ function tpl_get_action($type) {
         }
     } else {
         global $ID;
-        $data = array(
+        $data = [
             'accesskey' => null,
             'type' => $type,
             'id' => $ID,
             'method' => 'get',
-            'params' => array('do' => $type),
+            'params' => ['do' => $type],
             'nofollow' => true,
-            'replacement' => '',
-        );
+            'replacement' => ''
+        ];
         $unknown = true;
     }
 
@@ -648,7 +674,7 @@ function tpl_action($type, $link = false, $wrapper = false, $return = false, $pr
 
     if($return) return $out;
     print $out;
-    return $out ? true : false;
+    return (bool) $out;
 }
 
 /**
@@ -676,7 +702,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     // don't print the search form if search action has been disabled
     if(!actionOK('search')) return false;
 
-    $searchForm = new dokuwiki\Form\Form([
+    $searchForm = new Form([
         'action' => wl(),
         'method' => 'get',
         'role' => 'search',
@@ -751,7 +777,7 @@ function tpl_breadcrumbs($sep = null, $return = false) {
     }
     if($return) return $out;
     print $out;
-    return $out ? true : false;
+    return (bool) $out;
 }
 
 /**
@@ -821,7 +847,7 @@ function tpl_youarehere($sep = null, $return = false) {
     $out .= tpl_pagelink($page, null, true);
     if($return) return $out;
     print $out;
-    return $out ? true : false;
+    return (bool) $out;
 }
 
 /**
@@ -942,7 +968,7 @@ function tpl_pagetitle($id = null, $ret = false) {
             /** @var $plugin AdminPlugin */
             if ($plugin = plugin_getRequestAdminPlugin()){
                 $plugin_title = $plugin->getMenuText($conf['lang']);
-                $page_title = $plugin_title ? $plugin_title : $plugin->getPluginName();
+                $page_title = $plugin_title ?: $plugin->getPluginName();
             }
             break;
 
@@ -1072,20 +1098,18 @@ function tpl_get_img_meta() {
             include($config_file);
         }
     }
-    /** @var array $fields the included array with metadata */
-
-    $tags = array();
+    $tags = [];
     foreach($fields as $tag){
-        $t = array();
+        $t = [];
         if (!empty($tag[0])) {
-            $t = array($tag[0]);
+            $t = [$tag[0]];
         }
         if(isset($tag[3]) && is_array($tag[3])) {
             $t = array_merge($t,$tag[3]);
         }
         $value = tpl_img_getTag($t);
         if ($value) {
-            $tags[] = array('langkey' => $tag[1], 'type' => $tag[2], 'value' => $value);
+            $tags[] = ['langkey' => $tag[1], 'type' => $tag[2], 'value' => $value];
         }
     }
     return $tags;
@@ -1113,18 +1137,16 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
 
     //resize to given max values
     $ratio = 1;
-    if($w >= $h) {
+    if ($w >= $h) {
         if($maxwidth && $w >= $maxwidth) {
             $ratio = $maxwidth / $w;
         } elseif($maxheight && $h > $maxheight) {
             $ratio = $maxheight / $h;
         }
-    } else {
-        if($maxheight && $h >= $maxheight) {
-            $ratio = $maxheight / $h;
-        } elseif($maxwidth && $w > $maxwidth) {
-            $ratio = $maxwidth / $w;
-        }
+    } elseif ($maxheight && $h >= $maxheight) {
+        $ratio = $maxheight / $h;
+    } elseif($maxwidth && $w > $maxwidth) {
+        $ratio = $maxwidth / $w;
     }
     if($ratio) {
         $w = floor($ratio * $w);
@@ -1132,13 +1154,13 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     }
 
     //prepare URLs
-    $url = ml($IMG, array('cache'=> $INPUT->str('cache'),'rev'=>$REV), true, '&');
-    $src = ml($IMG, array('cache'=> $INPUT->str('cache'),'rev'=>$REV, 'w'=> $w, 'h'=> $h), true, '&');
+    $url = ml($IMG, ['cache'=> $INPUT->str('cache'), 'rev'=>$REV], true, '&');
+    $src = ml($IMG, ['cache'=> $INPUT->str('cache'), 'rev'=>$REV, 'w'=> $w, 'h'=> $h], true, '&');
 
     //prepare attributes
     $alt = tpl_img_getTag('Simple.Title');
     if(is_null($params)) {
-        $p = array();
+        $p = [];
     } else {
         $p = $params;
     }
@@ -1153,7 +1175,7 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     }
     $p['src'] = $src;
 
-    $data = array('url'=> ($link ? $url : null), 'params'=> $p);
+    $data = ['url'=> ($link ? $url : null), 'params'=> $p];
     return Event::createAndTrigger('TPL_IMG_DISPLAY', $data, '_tpl_img_action', true);
 }
 
@@ -1184,7 +1206,7 @@ function _tpl_img_action($data) {
 function tpl_indexerWebBug() {
     global $ID;
 
-    $p           = array();
+    $p           = [];
     $p['src']    = DOKU_BASE.'lib/exe/taskrunner.php?id='.rawurlencode($ID).
         '&'.time();
     $p['width']  = 2; //no more 1x1 px image because we live in times of ad blockers...
@@ -1221,11 +1243,7 @@ function tpl_getConf($id, $notset=false) {
         }
     }
 
-    if(isset($conf['tpl'][$tpl][$id])){
-        return $conf['tpl'][$tpl][$id];
-    }
-
-    return $notset;
+    return $conf['tpl'][$tpl][$id] ?? $notset;
 }
 
 /**
@@ -1239,7 +1257,7 @@ function tpl_getConf($id, $notset=false) {
 function tpl_loadConfig() {
 
     $file = tpl_incdir().'/conf/default.php';
-    $conf = array();
+    $conf = [];
 
     if(!file_exists($file)) return false;
 
@@ -1259,14 +1277,14 @@ function tpl_loadConfig() {
  * @return string
  */
 function tpl_getLang($id) {
-    static $lang = array();
+    static $lang = [];
 
     if(count($lang) === 0) {
         global $conf, $config_cascade; // definitely don't invoke "global $lang"
 
         $path = tpl_incdir() . 'lang/';
 
-        $lang = array();
+        $lang = [];
 
         // don't include once
         @include($path . 'en/lang.php');
@@ -1285,7 +1303,7 @@ function tpl_getLang($id) {
             }
         }
     }
-    return isset($lang[$id]) ? $lang[$id] : '';
+    return $lang[$id] ?? '';
 }
 
 /**
@@ -1344,7 +1362,7 @@ function tpl_mediaContent($fromajax = false, $sort='natural') {
     global $INPUT;
 
     $do = $INPUT->extract('do')->str('do');
-    if(in_array($do, array('save', 'cancel'))) $do = '';
+    if(in_array($do, ['save', 'cancel'])) $do = '';
 
     if(!$do) {
         if($INPUT->bool('edit')) {
@@ -1358,7 +1376,7 @@ function tpl_mediaContent($fromajax = false, $sort='natural') {
 
     // output the content pane, wrapped in an event.
     if(!$fromajax) ptln('<div id="media__content">');
-    $data = array('do' => $do);
+    $data = ['do' => $do];
     $evt  = new Event('MEDIAMANAGER_CONTENT_OUTPUT', $data);
     if($evt->advise_before()) {
         $do = $data['do'];
@@ -1394,7 +1412,7 @@ function tpl_mediaFileList() {
     global $INPUT;
 
     $opened_tab = $INPUT->str('tab_files');
-    if(!$opened_tab || !in_array($opened_tab, array('files', 'upload', 'search'))) $opened_tab = 'files';
+    if(!$opened_tab || !in_array($opened_tab, ['files', 'upload', 'search'])) $opened_tab = 'files';
     if($INPUT->str('mediado') == 'update') $opened_tab = 'upload';
 
     echo '<h2 class="a11y">'.$lang['mediaselect'].'</h2>'.NL;
@@ -1403,7 +1421,7 @@ function tpl_mediaFileList() {
 
     echo '<div class="panelHeader">'.NL;
     echo '<h3>';
-    $tabTitle = ($NS) ? $NS : '['.$lang['mediaroot'].']';
+    $tabTitle = $NS ?: '['.$lang['mediaroot'].']';
     printf($lang['media_'.$opened_tab], '<strong>'.hsc($tabTitle).'</strong>');
     echo '</h3>'.NL;
     if($opened_tab === 'search' || $opened_tab === 'files') {
@@ -1450,8 +1468,8 @@ function tpl_mediaFileDetails($image, $rev) {
 
     $opened_tab = $INPUT->str('tab_details');
 
-    $tab_array = array('view');
-    list(, $mime) = mimetype($image);
+    $tab_array = ['view'];
+    [, $mime] = mimetype($image);
     if($mime == 'image/jpeg') {
         $tab_array[] = 'edit';
     }
@@ -1466,9 +1484,10 @@ function tpl_mediaFileDetails($image, $rev) {
     media_tabs_details($image, $opened_tab);
 
     echo '<div class="panelHeader"><h3>';
-    list($ext) = mimetype($image, false);
+    [$ext] = mimetype($image, false);
     $class    = preg_replace('/[^_\-a-z0-9]+/i', '_', $ext);
     $class    = 'select mediafile mf_'.$class;
+
     $attributes = $rev ? ['rev' => $rev] : [];
     $tabTitle = '<strong><a href="'.ml($image, $attributes).'" class="'.$class.'" title="'.$lang['mediaview'].'">'.
         $image.'</a>'.'</strong>';
@@ -1522,7 +1541,7 @@ function tpl_mediaTree() {
  */
 function tpl_actiondropdown($empty = '', $button = '&gt;') {
     dbg_deprecated('see devel:menus');
-    $menu = new \dokuwiki\Menu\MobileMenu();
+    $menu = new MobileMenu();
     echo $menu->getDropdown($empty, $button);
 }
 
@@ -1603,8 +1622,8 @@ function tpl_include_page($pageid, $print = true, $propagate = false, $useacl = 
  * @deprecated 2020-07-23
  */
 function tpl_subscribe() {
-    dbg_deprecated(\dokuwiki\Ui\Subscribe::class .'::show()');
-    (new \dokuwiki\Ui\Subscribe)->show();
+    dbg_deprecated(Subscribe::class .'::show()');
+    (new Subscribe)->show();
 }
 
 /**
@@ -1654,7 +1673,7 @@ function tpl_getMediaFile($search, $abs = false, &$imginfo = null, $fallback = t
     // manage non existing target
     if (!file_exists($file)) {
         // give result for fallback image
-        if ($fallback === true) {
+        if ($fallback) {
             $file = DOKU_INC . 'lib/images/blank.gif';
             // stop process if false result is required (if $fallback is false)
         } else {
@@ -1698,7 +1717,7 @@ function tpl_getMediaFile($search, $abs = false, &$imginfo = null, $fallback = t
  */
 function tpl_includeFile($file) {
     global $config_cascade;
-    foreach(array('protected', 'local', 'default') as $config_group) {
+    foreach(['protected', 'local', 'default'] as $config_group) {
         if(empty($config_cascade['main'][$config_group])) continue;
         foreach($config_cascade['main'][$config_group] as $conf_file) {
             $dir = dirname($conf_file);
@@ -1724,23 +1743,23 @@ function tpl_includeFile($file) {
  * @param  array $types - list of icon types to display (favicon|mobile|generic)
  * @return string
  */
-function tpl_favicon($types = array('favicon')) {
+function tpl_favicon($types = ['favicon']) {
 
     $return = '';
 
     foreach($types as $type) {
         switch($type) {
             case 'favicon':
-                $look = array(':wiki:favicon.ico', ':favicon.ico', 'images/favicon.ico');
+                $look = [':wiki:favicon.ico', ':favicon.ico', 'images/favicon.ico'];
                 $return .= '<link rel="shortcut icon" href="'.tpl_getMediaFile($look).'" />'.NL;
                 break;
             case 'mobile':
-                $look = array(':wiki:apple-touch-icon.png', ':apple-touch-icon.png', 'images/apple-touch-icon.png');
+                $look = [':wiki:apple-touch-icon.png', ':apple-touch-icon.png', 'images/apple-touch-icon.png'];
                 $return .= '<link rel="apple-touch-icon" href="'.tpl_getMediaFile($look).'" />'.NL;
                 break;
             case 'generic':
                 // ideal world solution, which doesn't work in any browser yet
-                $look = array(':wiki:favicon.svg', ':favicon.svg', 'images/favicon.svg');
+                $look = [':wiki:favicon.svg', ':favicon.svg', 'images/favicon.svg'];
                 $return .= '<link rel="icon" href="'.tpl_getMediaFile($look).'" type="image/svg+xml" />'.NL;
                 break;
         }
@@ -1804,15 +1823,15 @@ function tpl_classes() {
     /** @var Input $INPUT */
     global $INPUT;
 
-    $classes = array(
+    $classes = [
         'dokuwiki',
         'mode_'.$ACT,
         'tpl_'.$conf['template'],
         $INPUT->server->bool('REMOTE_USER') ? 'loggedIn' : '',
         (isset($INFO['exists']) && $INFO['exists']) ? '' : 'notFound',
-        ($ID == $conf['start']) ? 'home' : '',
-    );
-    return join(' ', $classes);
+        ($ID == $conf['start']) ? 'home' : ''
+    ];
+    return implode(' ', $classes);
 }
 
 /**
@@ -1826,15 +1845,12 @@ function tpl_classes() {
  */
 function tpl_toolsevent($toolsname, $items, $view = 'main') {
     dbg_deprecated('see devel:menus');
-    $data = array(
-        'view' => $view,
-        'items' => $items
-    );
+    $data = ['view' => $view, 'items' => $items];
 
     $hook = 'TEMPLATE_' . strtoupper($toolsname) . '_DISPLAY';
     $evt = new Event($hook, $data);
     if($evt->advise_before()) {
-        foreach($evt->data['items'] as $k => $html) echo $html;
+        foreach($evt->data['items'] as $html) echo $html;
     }
     $evt->advise_after();
 }

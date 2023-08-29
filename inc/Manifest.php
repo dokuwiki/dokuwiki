@@ -30,7 +30,7 @@ class Manifest
             $manifest['start_url'] = DOKU_REL;
         }
 
-        $styleUtil = new \dokuwiki\StyleUtils();
+        $styleUtil = new StyleUtils();
         $styleIni = $styleUtil->cssStyleini();
         $replacements = $styleIni['replacements'];
 
@@ -39,9 +39,9 @@ class Manifest
         }
 
         if (empty($manifest['theme_color'])) {
-            $manifest['theme_color'] = !empty($replacements['__theme_color__'])
-                ? $replacements['__theme_color__']
-                : $replacements['__background_alt__'];
+            $manifest['theme_color'] = empty($replacements['__theme_color__'])
+                ? $replacements['__background_alt__']
+                : $replacements['__theme_color__'];
         }
 
         if (empty($manifest['icons'])) {
@@ -79,6 +79,6 @@ class Manifest
         Event::createAndTrigger('MANIFEST_SEND', $manifest);
 
         header('Content-Type: application/manifest+json');
-        echo json_encode($manifest);
+        echo json_encode($manifest, JSON_THROW_ON_ERROR);
     }
 }
