@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
+use dokuwiki\StyleUtils;
 use dokuwiki\Cache\Cache;
 use dokuwiki\Extension\Event;
 
@@ -36,10 +36,10 @@ function css_out(){
     global $INPUT;
 
     if ($INPUT->str('s') == 'feed') {
-        $mediatypes = array('feed');
+        $mediatypes = ['feed'];
         $type = 'feed';
     } else {
-        $mediatypes = array('screen', 'all', 'print', 'speech');
+        $mediatypes = ['screen', 'all', 'print', 'speech'];
         $type = '';
     }
 
@@ -48,22 +48,22 @@ function css_out(){
     if(!$tpl) $tpl = $conf['template'];
 
     // load style.ini
-    $styleUtil = new \dokuwiki\StyleUtils($tpl, $INPUT->bool('preview'));
+    $styleUtil = new StyleUtils($tpl, $INPUT->bool('preview'));
     $styleini = $styleUtil->cssStyleini();
 
     // cache influencers
     $tplinc = tpl_incdir($tpl);
     $cache_files = getConfigFiles('main');
     $cache_files[] = $tplinc.'style.ini';
-    $cache_files[] = DOKU_CONF."tpl/$tpl/style.ini";
+    $cache_files[] = DOKU_CONF."tpl/{$tpl}/style.ini";
     $cache_files[] = __FILE__;
     if($INPUT->bool('preview')) $cache_files[] = $conf['cachedir'].'/preview.ini';
 
     // Array of needed files and their web locations, the latter ones
     // are needed to fix relative paths in the stylesheets
-    $media_files = array();
+    $media_files = [];
     foreach($mediatypes as $mediatype) {
-        $files = array();
+        $files = [];
 
         // load core styles
         $files[DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
@@ -80,7 +80,7 @@ function css_out(){
             $files = array_merge($files, $styleini['stylesheets'][$mediatype]);
         }
         // load user styles
-        if(isset($config_cascade['userstyle'][$mediatype]) and is_array($config_cascade['userstyle'][$mediatype])) {
+        if(isset($config_cascade['userstyle'][$mediatype]) && is_array($config_cascade['userstyle'][$mediatype])) {
             foreach($config_cascade['userstyle'][$mediatype] as $userstyle) {
                 $files[$userstyle] = DOKU_BASE;
             }
@@ -117,7 +117,7 @@ function css_out(){
 
     // check cache age & handle conditional request
     // This may exit if a cache can be used
-    $cache_ok = $cache->useCache(array('files' => $cache_files));
+    $cache_ok = $cache->useCache(['files' => $cache_files]);
     http_cached($cache->cache, $cache_ok);
 
     // start output buffering
@@ -147,7 +147,7 @@ function css_out(){
         // load files
         foreach($cssData['files'] as $file => $location){
             $display = str_replace(fullpath(DOKU_INC), '', fullpath($file));
-            print "\n/* XXXXXXXXX $display XXXXXXXXX */\n";
+            print "\n/* XXXXXXXXX {$display} XXXXXXXXX */\n";
             print css_loadfile($file, $location);
         }
 
@@ -197,7 +197,7 @@ function css_parseless($css) {
     global $conf;
 
     $less = new lessc();
-    $less->importDir = array(DOKU_INC);
+    $less->importDir = [DOKU_INC];
     $less->setPreserveComments(!$conf['compress']);
 
     if (defined('DOKU_UNITTEST')){
@@ -208,7 +208,7 @@ function css_parseless($css) {
         return $less->compile($css);
     } catch(Exception $e) {
         // get exception message
-        $msg = str_replace(array("\n", "\r", "'"), array(), $e->getMessage());
+        $msg = str_replace(["\n", "\r", "'"], [], $e->getMessage());
 
         // try to use line number to find affected file
         if(preg_match('/line: (\d+)$/', $msg, $m)){
@@ -232,7 +232,7 @@ function css_parseless($css) {
             'might be broken and you should try disabling it again. ['.$msg.']';
 
         echo ".dokuwiki:before {
-            content: '$error';
+            content: '{$error}';
             background-color: red;
             display: block;
             background-color: #fcc;
@@ -265,7 +265,7 @@ function css_applystyle($css, $replacements) {
     foreach((array) $replacements as $key => $value) {
         $lkey = trim($key, '_');
         $lkey = '@ini_'.$lkey;
-        $less .= "$lkey: $value;\n";
+        $less .= "{$lkey}: {$value};\n";
 
         $replacements[$key] = $lkey;
     }
@@ -287,13 +287,8 @@ function css_applystyle($css, $replacements) {
  * @param array $files set of files that define the current mediatype
  * @return array
  */
-function css_filewrapper($mediatype, $files=array()){
-    return array(
-            'files'                 => $files,
-            'mediatype'             => $mediatype,
-            'encapsulate'           => $mediatype != 'all',
-            'encapsulationPrefix'   => '@media '.$mediatype
-        );
+function css_filewrapper($mediatype, $files=[]){
+    return ['files'                 => $files, 'mediatype'             => $mediatype, 'encapsulate'           => $mediatype != 'all', 'encapsulationPrefix'   => '@media '.$mediatype];
 }
 
 /**
@@ -341,7 +336,7 @@ function css_interwiki(){
             $file = 'lib/images/interwiki/' . $iw . '.' . $ext;
 
             if (file_exists(DOKU_INC . $file)) {
-                echo "a.iw_$class {";
+                echo "a.iw_{$class} {";
                 echo '  background-image: url(' . DOKU_BASE . $file . ')';
                 echo '}';
                 break;
@@ -366,7 +361,7 @@ function css_filetypes(){
 
     // additional styles when icon available
     // scan directory for all icons
-    $exts = array();
+    $exts = [];
     if($dh = opendir(DOKU_INC.'lib/images/fileicons/svg')){
         while(false !== ($file = readdir($dh))){
             if(preg_match('/(.*?)\.svg$/i',$file, $match)){
@@ -377,7 +372,7 @@ function css_filetypes(){
     }
     foreach($exts as $ext){
         $class = preg_replace('/[^_\-a-z0-9]+/','_',$ext);
-        echo ".mf_$class {";
+        echo ".mf_{$class} {";
         echo '  background-image: url('.DOKU_BASE.'lib/images/fileicons/svg/'.$ext.'.svg)';
         echo '}';
     }
@@ -405,7 +400,7 @@ class DokuCssFile {
 
     protected $filepath;             // file system path to the CSS/Less file
     protected $location;             // base url location of the CSS/Less file
-    protected $relative_path = null;
+    protected $relative_path;
 
     public function __construct($file) {
         $this->filepath = $file;
@@ -427,8 +422,8 @@ class DokuCssFile {
 
         $this->location = $location;
 
-        $css = preg_replace_callback('#(url\( *)([\'"]?)(.*?)(\2)( *\))#',array($this,'replacements'),$css);
-        $css = preg_replace_callback('#(@import\s+)([\'"])(.*?)(\2)#',array($this,'replacements'),$css);
+        $css = preg_replace_callback('#(url\( *)([\'"]?)(.*?)(\2)( *\))#',[$this, 'replacements'],$css);
+        $css = preg_replace_callback('#(@import\s+)([\'"])(.*?)(\2)#',[$this, 'replacements'],$css);
 
         return $css;
     }
@@ -441,7 +436,7 @@ class DokuCssFile {
     protected function getRelativePath(){
 
         if (is_null($this->relative_path)) {
-            $basedir = array(DOKU_INC);
+            $basedir = [DOKU_INC];
 
             // during testing, files may be found relative to a second base dir, TMP_DIR
             if (defined('DOKU_UNITTEST')) {
@@ -449,7 +444,7 @@ class DokuCssFile {
             }
 
             $basedir = array_map('preg_quote_cb', $basedir);
-            $regex = '/^('.join('|',$basedir).')/';
+            $regex = '/^('.implode('|',$basedir).')/';
             $this->relative_path = preg_replace($regex, '', dirname($this->filepath));
         }
 
@@ -475,7 +470,7 @@ class DokuCssFile {
             $match[3] = $this->location . $match[3];
         }
 
-        return join('',array_slice($match,1));
+        return implode('',array_slice($match,1));
     }
 }
 
@@ -518,15 +513,15 @@ function css_datauri($match){
  * @return array
  */
 function css_pluginstyles($mediatype='screen'){
-    $list = array();
+    $list = [];
     $plugins = plugin_list();
     foreach ($plugins as $p){
-        $list[DOKU_PLUGIN."$p/$mediatype.css"]  = DOKU_BASE."lib/plugins/$p/";
-        $list[DOKU_PLUGIN."$p/$mediatype.less"]  = DOKU_BASE."lib/plugins/$p/";
+        $list[DOKU_PLUGIN."{$p}/{$mediatype}.css"]  = DOKU_BASE."lib/plugins/{$p}/";
+        $list[DOKU_PLUGIN."{$p}/{$mediatype}.less"]  = DOKU_BASE."lib/plugins/{$p}/";
         // alternative for screen.css
         if ($mediatype=='screen') {
-            $list[DOKU_PLUGIN."$p/style.css"]  = DOKU_BASE."lib/plugins/$p/";
-            $list[DOKU_PLUGIN."$p/style.less"]  = DOKU_BASE."lib/plugins/$p/";
+            $list[DOKU_PLUGIN."{$p}/style.css"]  = DOKU_BASE."lib/plugins/{$p}/";
+            $list[DOKU_PLUGIN."{$p}/style.less"]  = DOKU_BASE."lib/plugins/{$p}/";
         }
     }
     return $list;

@@ -17,17 +17,7 @@ class StyleUtils
     /** @var bool $preview preview mode */
     protected $preview;
     /** @var array default replacements to be merged with custom style configs */
-    protected $defaultReplacements = array(
-        '__text__' => "#000",
-        '__background__' => "#fff",
-        '__text_alt__' => "#999",
-        '__background_alt__' => "#eee",
-        '__text_neu__' => "#666",
-        '__background_neu__' => "#ddd",
-        '__border__' => "#ccc",
-        '__highlight__' => "#ff9",
-        '__link__' => "#00f",
-    );
+    protected $defaultReplacements = ['__text__' => "#000", '__background__' => "#fff", '__text_alt__' => "#999", '__background_alt__' => "#eee", '__text_neu__' => "#666", '__background_neu__' => "#ddd", '__border__' => "#ccc", '__highlight__' => "#ff9", '__link__' => "#00f"];
 
     /**
      * StyleUtils constructor.
@@ -66,7 +56,7 @@ class StyleUtils
 
         global $conf;
         global $config_cascade;
-        $stylesheets = array(); // mode, file => base
+        $stylesheets = []; // mode, file => base
 
         // guaranteed placeholder => value
         $replacements = $this->defaultReplacements;
@@ -84,7 +74,7 @@ class StyleUtils
         $combined['stylesheets'] = [];
         $combined['replacements'] = [];
 
-        foreach (array('default', 'local', 'protected') as $config_group) {
+        foreach (['default', 'local', 'protected'] as $config_group) {
             if (empty($config_cascade['styleini'][$config_group])) continue;
 
             // set proper server dirs
@@ -138,16 +128,16 @@ class StyleUtils
     {
         global $conf;
         if (!file_exists($incbase . $file)) {
-            list($extension, $basename) = array_map('strrev', sexplode('.', strrev($file), 2, ''));
+            [$extension, $basename] = array_map('strrev', sexplode('.', strrev($file), 2, ''));
             $newExtension = $extension === 'css' ? 'less' : 'css';
             if (file_exists($incbase . $basename . '.' . $newExtension)) {
                 $stylesheets[$mode][$incbase . $basename . '.' . $newExtension] = $webbase;
                 if ($conf['allowdebug']) {
-                    msg("Stylesheet $file not found, using $basename.$newExtension instead. " .
+                    msg("Stylesheet {$file} not found, using {$basename}.{$newExtension} instead. " .
                         "Please contact developer of \"$this->tpl\" template.", 2);
                 }
             } elseif ($conf['allowdebug']) {
-                msg("Stylesheet $file not found, please contact the developer of \"$this->tpl\" template.", 2);
+                msg("Stylesheet {$file} not found, please contact the developer of \"$this->tpl\" template.", 2);
             }
         }
         $stylesheets[$mode][fullpath($incbase . $file)] = $webbase;

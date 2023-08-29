@@ -94,7 +94,7 @@ abstract class Resolver
                 array_pop($result);
                 continue;
             }
-            array_push($result, $dir);
+            $result[] = $dir;
         }
 
         $id = implode(':', $result);

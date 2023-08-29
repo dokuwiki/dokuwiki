@@ -1,6 +1,7 @@
 <?php
 namespace dokuwiki\Ui;
 
+use dokuwiki\Extension\PluginInterface;
 use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\Utf8\Sort;
 
@@ -15,10 +16,10 @@ use dokuwiki\Utf8\Sort;
  */
 class Admin extends Ui {
 
-    protected $forAdmins = array('usermanager', 'acl', 'extension', 'config', 'logviewer', 'styling');
-    protected $forManagers = array('revert', 'popularity');
+    protected $forAdmins = ['usermanager', 'acl', 'extension', 'config', 'logviewer', 'styling'];
+    protected $forManagers = ['revert', 'popularity'];
     /** @var array[] */
-    protected $menu;
+    protected $menu = [];
 
     /**
      * Display the UI element
@@ -53,7 +54,7 @@ class Admin extends Ui {
             $class = 'admin_tasks';
         }
 
-        echo "<ul class=\"$class\">";
+        echo "<ul class=\"{$class}\">";
         foreach ($this->menu[$type] as $item) {
             $this->showMenuItem($item);
         }
@@ -123,7 +124,7 @@ class Admin extends Ui {
 
         foreach($pluginlist as $p) {
             /** @var AdminPlugin $obj */
-            if(($obj = plugin_load('admin', $p)) === null) continue;
+            if(!($obj = plugin_load('admin', $p)) instanceof PluginInterface) continue;
 
             // check permissions
             if (!$obj->isAccessibleByCurrentUser()) continue;
@@ -136,12 +137,7 @@ class Admin extends Ui {
                 $type = 'other';
             }
 
-            $menu[$type][$p] = array(
-                'plugin' => $p,
-                'prompt' => $obj->getMenuText($conf['lang']),
-                'icon' => $obj->getMenuIcon(),
-                'sort' => $obj->getMenuSort(),
-            );
+            $menu[$type][$p] = ['plugin' => $p, 'prompt' => $obj->getMenuText($conf['lang']), 'icon' => $obj->getMenuIcon(), 'sort' => $obj->getMenuSort()];
         }
 
         // sort by name, then sort
@@ -164,7 +160,6 @@ class Admin extends Ui {
     protected function menuSort($a, $b) {
         $strcmp = Sort::strcmp($a['prompt'], $b['prompt']);
         if($strcmp != 0) return $strcmp;
-        if($a['sort'] === $b['sort']) return 0;
-        return ($a['sort'] < $b['sort']) ? -1 : 1;
+        return $a['sort'] <=> $b['sort'];
     }
 }

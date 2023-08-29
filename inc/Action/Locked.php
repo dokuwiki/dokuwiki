@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\Editor;
 use dokuwiki\Ui;
 
 /**
@@ -23,7 +24,7 @@ class Locked extends AbstractAction
     public function tplContent()
     {
         $this->showBanner();
-        (new Ui\Editor)->show();
+        (new Editor)->show();
     }
 
     /**

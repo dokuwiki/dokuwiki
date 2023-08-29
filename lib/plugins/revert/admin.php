@@ -93,11 +93,9 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin
             $data = '';
             $pagelog = new PageChangeLog($id);
             $old  = $pagelog->getRevisions(0, $this->max_revs);
-            if (count($old)) {
-                foreach ($old as $REV) {
-                    $data = rawWiki($id, $REV);
-                    if (strpos($data, $filter) === false) break;
-                }
+            foreach ($old as $REV) {
+                $data = rawWiki($id, $REV);
+                if (strpos($data, (string) $filter) === false) break;
             }
 
             if ($data) {
@@ -133,7 +131,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin
         $cnt = 0;
         foreach ($recents as $recent) {
             if ($filter) {
-                if (strpos(rawWiki($recent['id']), $filter) === false) continue;
+                if (strpos(rawWiki($recent['id']), (string) $filter) === false) continue;
             }
 
             $cnt++;
@@ -146,25 +144,25 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin
             echo ' <label for="revert__'.$cnt.'">'.$date.'</label> ';
 
             echo '<a href="'.wl($recent['id'], "do=diff").'">';
-            $p = array();
+            $p = [];
             $p['src']    = DOKU_BASE.'lib/images/diff.png';
             $p['width']  = 15;
             $p['height'] = 11;
             $p['title']  = $lang['diff'];
             $p['alt']    = $lang['diff'];
             $att = buildAttributes($p);
-            echo "<img $att />";
+            echo "<img {$att} />";
             echo '</a> ';
 
             echo '<a href="'.wl($recent['id'], "do=revisions").'">';
-            $p = array();
+            $p = [];
             $p['src']    = DOKU_BASE.'lib/images/history.png';
             $p['width']  = 12;
             $p['height'] = 14;
             $p['title']  = $lang['btn_revs'];
             $p['alt']    = $lang['btn_revs'];
             $att = buildAttributes($p);
-            echo "<img $att />";
+            echo "<img {$att} />";
             echo '</a> ';
 
             echo html_wikilink(':'.$recent['id'], (useHeading('navigation'))?null:$recent['id']);

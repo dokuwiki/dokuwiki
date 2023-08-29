@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
+use dokuwiki\Utf8\PhpString;
 use dokuwiki\Cache\Cache;
 use dokuwiki\Extension\Event;
 use splitbrain\JSStrip\Exception as JSStripException;
@@ -42,32 +42,32 @@ function js_out(){
     if(!$tpl) $tpl = $conf['template'];
 
     // array of core files
-    $files = array(
-                DOKU_INC.'lib/scripts/jquery/jquery.cookie.js',
-                DOKU_INC.'inc/lang/'.$conf['lang'].'/jquery.ui.datepicker.js',
-                DOKU_INC."lib/scripts/fileuploader.js",
-                DOKU_INC."lib/scripts/fileuploaderextended.js",
-                DOKU_INC.'lib/scripts/helpers.js',
-                DOKU_INC.'lib/scripts/delay.js',
-                DOKU_INC.'lib/scripts/cookie.js',
-                DOKU_INC.'lib/scripts/script.js',
-                DOKU_INC.'lib/scripts/qsearch.js',
-                DOKU_INC.'lib/scripts/search.js',
-                DOKU_INC.'lib/scripts/tree.js',
-                DOKU_INC.'lib/scripts/index.js',
-                DOKU_INC.'lib/scripts/textselection.js',
-                DOKU_INC.'lib/scripts/toolbar.js',
-                DOKU_INC.'lib/scripts/edit.js',
-                DOKU_INC.'lib/scripts/editor.js',
-                DOKU_INC.'lib/scripts/locktimer.js',
-                DOKU_INC.'lib/scripts/linkwiz.js',
-                DOKU_INC.'lib/scripts/media.js',
-                DOKU_INC.'lib/scripts/compatibility.js',
-# disabled for FS#1958                DOKU_INC.'lib/scripts/hotkeys.js',
-                DOKU_INC.'lib/scripts/behaviour.js',
-                DOKU_INC.'lib/scripts/page.js',
-                tpl_incdir($tpl).'script.js',
-            );
+    $files = [
+        DOKU_INC.'lib/scripts/jquery/jquery.cookie.js',
+        DOKU_INC.'inc/lang/'.$conf['lang'].'/jquery.ui.datepicker.js',
+        DOKU_INC."lib/scripts/fileuploader.js",
+        DOKU_INC."lib/scripts/fileuploaderextended.js",
+        DOKU_INC.'lib/scripts/helpers.js',
+        DOKU_INC.'lib/scripts/delay.js',
+        DOKU_INC.'lib/scripts/cookie.js',
+        DOKU_INC.'lib/scripts/script.js',
+        DOKU_INC.'lib/scripts/qsearch.js',
+        DOKU_INC.'lib/scripts/search.js',
+        DOKU_INC.'lib/scripts/tree.js',
+        DOKU_INC.'lib/scripts/index.js',
+        DOKU_INC.'lib/scripts/textselection.js',
+        DOKU_INC.'lib/scripts/toolbar.js',
+        DOKU_INC.'lib/scripts/edit.js',
+        DOKU_INC.'lib/scripts/editor.js',
+        DOKU_INC.'lib/scripts/locktimer.js',
+        DOKU_INC.'lib/scripts/linkwiz.js',
+        DOKU_INC.'lib/scripts/media.js',
+        DOKU_INC.'lib/scripts/compatibility.js',
+        # disabled for FS#1958                DOKU_INC.'lib/scripts/hotkeys.js',
+        DOKU_INC.'lib/scripts/behaviour.js',
+        DOKU_INC.'lib/scripts/page.js',
+        tpl_incdir($tpl).'script.js',
+    ];
 
     // add possible plugin scripts and userscript
     $files   = array_merge($files,js_pluginscripts());
@@ -89,7 +89,7 @@ function js_out(){
 
     // check cache age & handle conditional request
     // This may exit if a cache can be used
-    $cache_ok = $cache->useCache(array('files' => $cache_files));
+    $cache_ok = $cache->useCache(['files' => $cache_files]);
     http_cached($cache->cache, $cache_ok);
 
     // start output buffering and build the script
@@ -99,10 +99,7 @@ function js_out(){
     print "var DOKU_BASE   = '".DOKU_BASE."';";
     print "var DOKU_TPL    = '".tpl_basedir($tpl)."';";
     print "var DOKU_COOKIE_PARAM = " . json_encode(
-            array(
-                 'path' => empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'],
-                 'secure' => $conf['securecookie'] && is_ssl()
-            )).";";
+            ['path' => empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'], 'secure' => $conf['securecookie'] && is_ssl()], JSON_THROW_ON_ERROR).";";
     // FIXME: Move those to JSINFO
     print "Object.defineProperty(window, 'DOKU_UHN', { get: function() {".
           "console.warn('Using DOKU_UHN is deprecated. Please use JSINFO.useHeadingNavigation instead');".
@@ -117,7 +114,7 @@ function js_out(){
     if(!empty($templatestrings)) {
         $lang['js']['template'] = $templatestrings;
     }
-    echo 'LANG = '.json_encode($lang['js']).";\n";
+    echo 'LANG = '.json_encode($lang['js'], JSON_THROW_ON_ERROR).";\n";
 
     // load toolbar
     toolbar_JSdefines('toolbar');
@@ -156,7 +153,7 @@ function js_out(){
         try {
             $js = (new JSStrip())->compress($js);
         } catch (JSStripException $e) {
-            $js .= "\nconsole.error(".json_encode($e->getMessage()).");\n";
+            $js .= "\nconsole.error(".json_encode($e->getMessage(), JSON_THROW_ON_ERROR).");\n";
         }
     }
 
@@ -174,7 +171,7 @@ function js_out(){
  */
 function js_load($file){
     if(!file_exists($file)) return;
-    static $loaded = array();
+    static $loaded = [];
 
     $data = io_readFile($file);
     while(preg_match('#/\*\s*DOKUWIKI:include(_once)?\s+([\w\.\-_/]+)\s*\*/#',$data,$match)){
@@ -182,7 +179,7 @@ function js_load($file){
 
         // is it a include_once?
         if($match[1]){
-            $base = \dokuwiki\Utf8\PhpString::basename($ifile);
+            $base = PhpString::basename($ifile);
             if(array_key_exists($base, $loaded) && $loaded[$base] === true){
                 $data  = str_replace($match[0], '' ,$data);
                 continue;
@@ -201,7 +198,7 @@ function js_load($file){
         }
         $data  = str_replace($match[0],$idata,$data);
     }
-    echo "$data\n";
+    echo "{$data}\n";
 }
 
 /**
@@ -212,10 +209,10 @@ function js_load($file){
  * @return array
  */
 function js_pluginscripts(){
-    $list = array();
+    $list = [];
     $plugins = plugin_list();
     foreach ($plugins as $p){
-        $list[] = DOKU_PLUGIN."$p/script.js";
+        $list[] = DOKU_PLUGIN."{$p}/script.js";
     }
     return $list;
 }
@@ -232,7 +229,7 @@ function js_pluginscripts(){
  */
 function js_pluginstrings() {
     global $conf, $config_cascade;
-    $pluginstrings = array();
+    $pluginstrings = [];
     $plugins = plugin_list();
     foreach($plugins as $p) {
         $path = DOKU_PLUGIN . $p . '/lang/';
@@ -278,7 +275,7 @@ function js_templatestrings($tpl) {
 
     $path = tpl_incdir() . 'lang/';
 
-    $templatestrings = array();
+    $templatestrings = [];
     if(file_exists($path . "en/lang.php")) {
         include $path . "en/lang.php";
     }
@@ -328,5 +325,5 @@ function js_escape($string){
  * @param string $func
  */
 function js_runonstart($func){
-    echo "jQuery(function(){ $func; });".NL;
+    echo "jQuery(function(){ {$func}; });".NL;
 }

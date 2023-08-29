@@ -20,7 +20,7 @@ class Footnote extends AbstractMode
             $PARSER_MODES['disabled']
         );
 
-        unset($this->allowedModes[array_search('footnote', $this->allowedModes)]);
+        unset($this->allowedModes[array_search('footnote', $this->allowedModes, true)]);
     }
 
     /** @inheritdoc */

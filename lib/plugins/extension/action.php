@@ -66,14 +66,15 @@ class action_plugin_extension extends DokuWiki_Action_Plugin
                 $extension->$act(); //enables/disables
                 $reverse = ($act == 'disable') ? 'enable' : 'disable';
 
-                $return = array(
-                    'state'   => $act.'d', // isn't English wonderful? :-)
+                $return = [
+                    'state'   => $act.'d',
+                    // isn't English wonderful? :-)
                     'reverse' => $reverse,
-                    'label'   => $extension->getLang('btn_'.$reverse)
-                );
+                    'label'   => $extension->getLang('btn_'.$reverse),
+                ];
 
                 header('Content-Type: application/json');
-                echo json_encode($return);
+                echo json_encode($return, JSON_THROW_ON_ERROR);
                 break;
 
             case 'info':

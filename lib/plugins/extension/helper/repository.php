@@ -18,8 +18,8 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
 
     const EXTENSION_REPOSITORY_API = 'https://www.dokuwiki.org/lib/plugins/pluginrepo/api.php';
 
-    private $loaded_extensions = array();
-    private $has_access = null;
+    private array $loaded_extensions = [];
+    private ?bool $has_access = null;
 
     /**
      * Initialize the repository (cache), fetches data for all installed plugins
@@ -30,14 +30,14 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
         global $plugin_controller;
         if ($this->hasAccess()) {
             $list = $plugin_controller->getList('', true);
-            $request_data = array('fmt' => 'php');
+            $request_data = ['fmt' => 'php'];
             $request_needed = false;
             foreach ($list as $name) {
                 $cache = new Cache('##extension_manager##'.$name, '.repo');
 
                 if (!isset($this->loaded_extensions[$name]) &&
                     $this->hasAccess() &&
-                    !$cache->useCache(array('age' => 3600 * 24))
+                    !$cache->useCache(['age' => 3600 * 24])
                 ) {
                     $this->loaded_extensions[$name] = true;
                     $request_data['ext'][] = $name;
@@ -71,7 +71,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
         if ($this->has_access === null) {
             $cache = new Cache('##extension_manager###hasAccess', '.repo');
 
-            if (!$cache->useCache(array('age' => 60*10, 'purge' => !$usecache))) {
+            if (!$cache->useCache(['age' => 60*10, 'purge' => !$usecache])) {
                 $httpclient = new DokuHTTPClient();
                 $httpclient->timeout = 5;
                 $data = $httpclient->get(self::EXTENSION_REPOSITORY_API.'?cmd=ping');
@@ -101,18 +101,18 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
 
         if (!isset($this->loaded_extensions[$name]) &&
             $this->hasAccess() &&
-            !$cache->useCache(array('age' => 3600 * 24))
+            !$cache->useCache(['age' => 3600 * 24])
         ) {
             $this->loaded_extensions[$name] = true;
             $httpclient = new DokuHTTPClient();
             $data = $httpclient->get(self::EXTENSION_REPOSITORY_API.'?fmt=php&ext[]='.urlencode($name));
             if ($data !== false) {
                 $result = unserialize($data);
-                if(count($result)) {
+                if(is_countable($result) ? count($result) : 0) {
                     $cache->storeCache(serialize($result[0]));
                     return $result[0];
                 }
-                return array();
+                return [];
             } else {
                 $this->has_access = false;
             }
@@ -120,7 +120,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
         if (file_exists($cache->cache)) {
             return unserialize($cache->retrieveCache(false));
         }
-        return array();
+        return [];
     }
 
     /**
@@ -136,10 +136,10 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
 
         $httpclient = new DokuHTTPClient();
         $data = $httpclient->post(self::EXTENSION_REPOSITORY_API, $query);
-        if ($data === false) return array();
+        if ($data === false) return [];
         $result = unserialize($data);
 
-        $ids = array();
+        $ids = [];
 
         // store cache info for each extension
         foreach ($result as $ext) {
@@ -160,12 +160,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin
      */
     protected function parseQuery($q)
     {
-        $parameters = array(
-            'tag'  => array(),
-            'mail' => array(),
-            'type' => array(),
-            'ext'  => array()
-        );
+        $parameters = ['tag'  => [], 'mail' => [], 'type' => [], 'ext'  => []];
 
         // extract tags
         if (preg_match_all('/(^|\s)(tag:([\S]+))/', $q, $matches, PREG_SET_ORDER)) {

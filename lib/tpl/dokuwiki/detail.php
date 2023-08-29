@@ -21,14 +21,14 @@ if (!defined('DOKU_INC')) die();
     <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
     <?php tpl_metaheaders()?>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <?php echo tpl_favicon(array('favicon', 'mobile')) ?>
+    <?php echo tpl_favicon(['favicon', 'mobile']) ?>
     <?php tpl_includeFile('meta.html') ?>
 </head>
 
 <body>
     <div id="dokuwiki__site"><div id="dokuwiki__top" class="site <?php echo tpl_classes(); ?>">
 
-        <?php include('tpl_header.php') ?>
+        <?php include(__DIR__ . '/tpl_header.php') ?>
 
         <div class="wrapper group" id="dokuwiki__detail">
 
@@ -59,7 +59,7 @@ if (!defined('DOKU_INC')) die();
                             <?php
                             echo '<dt>'.$lang['reference'].':</dt>';
                             $media_usage = ft_mediause($IMG,true);
-                            if(count($media_usage) > 0){
+                            if($media_usage !== []){
                                 foreach($media_usage as $path){
                                     echo '<dd>'.html_wikilink($path).'</dd>';
                                 }
@@ -71,7 +71,7 @@ if (!defined('DOKU_INC')) die();
                             <p><?php echo $lang['media_acl_warning']; ?></p>
                         </div>
                         <?php //Comment in for Debug// dbg(tpl_img_getTag('Simple.Raw'));?>
-                    <?php endif; ?>
+<?php endif; ?>
                 </div>
                 <!-- detail stop -->
                 <?php tpl_includeFile('pagefooter.html') ?>
@@ -98,7 +98,7 @@ if (!defined('DOKU_INC')) die();
             <?php endif; ?>
         </div><!-- /wrapper -->
 
-        <?php include('tpl_footer.php') ?>
+        <?php include(__DIR__ . '/tpl_footer.php') ?>
     </div></div><!-- /site -->
 </body>
 </html>

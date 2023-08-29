@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
+use dokuwiki\Utf8\PhpString;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Extension\Event;
 
@@ -26,8 +26,8 @@ use dokuwiki\Extension\Event;
  */
 function io_sweepNS($id,$basedir='datadir'){
     global $conf;
-    $types = array ('datadir'=>'pages', 'mediadir'=>'media');
-    $ns_type = (isset($types[$basedir])?$types[$basedir]:false);
+    $types = ['datadir'=>'pages', 'mediadir'=>'media'];
+    $ns_type = ($types[$basedir] ?? false);
 
     $delone = false;
 
@@ -38,7 +38,7 @@ function io_sweepNS($id,$basedir='datadir'){
         //try to delete dir else return
         if(@rmdir($dir)) {
             if ($ns_type!==false) {
-                $data = array($id, $ns_type);
+                $data = [$id, $ns_type];
                 $delone = true; // we deleted at least one dir
                 Event::createAndTrigger('IO_NAMESPACE_DELETED', $data);
             }
@@ -69,7 +69,7 @@ function io_sweepNS($id,$basedir='datadir'){
  */
 function io_readWikiPage($file, $id, $rev=false) {
     if (empty($rev)) { $rev = false; }
-    $data = array(array($file, true), getNS($id), noNS($id), $rev);
+    $data = [[$file, true], getNS($id), noNS($id), $rev];
     return Event::createAndTrigger('IO_WIKIPAGE_READ', $data, '_io_readWikiPage_action', false);
 }
 
@@ -83,7 +83,7 @@ function io_readWikiPage($file, $id, $rev=false) {
  */
 function _io_readWikiPage_action($data) {
     if (is_array($data) && is_array($data[0]) && count($data[0])===2) {
-        return call_user_func_array('io_readFile', $data[0]);
+        return io_readFile(...$data[0]);
     } else {
         return ''; //callback error
     }
@@ -106,14 +106,14 @@ function _io_readWikiPage_action($data) {
 function io_readFile($file,$clean=true){
     $ret = '';
     if(file_exists($file)){
-        if(substr($file,-3) == '.gz'){
+        if (substr($file,-3) == '.gz') {
             if(!DOKU_HAS_GZIP) return false;
             $ret = gzfile($file);
-            if(is_array($ret)) $ret = join('', $ret);
-        }else if(substr($file,-4) == '.bz2'){
+            if(is_array($ret)) $ret = implode('', $ret);
+        } elseif (substr($file,-4) == '.bz2') {
             if(!DOKU_HAS_BZIP) return false;
             $ret = bzfile($file);
-        }else{
+        } else{
             $ret = file_get_contents($file);
         }
     }
@@ -138,7 +138,7 @@ function bzfile($file, $array=false) {
     $bz = bzopen($file,"r");
     if($bz === false) return false;
 
-    if($array) $lines = array();
+    if($array) $lines = [];
     $str = '';
     while (!feof($bz)) {
         //8192 seems to be the maximum buffersize?
@@ -146,7 +146,7 @@ function bzfile($file, $array=false) {
         if(($buffer === false) || (bzerrno($bz) !== 0)) {
             return false;
         }
-        $str = $str . $buffer;
+        $str .= $buffer;
         if($array) {
             $pos = strpos($str, "\n");
             while($pos !== false) {
@@ -189,7 +189,7 @@ function bzfile($file, $array=false) {
 function io_writeWikiPage($file, $content, $id, $rev=false) {
     if (empty($rev)) { $rev = false; }
     if ($rev===false) { io_createNamespace($id); } // create namespaces as needed
-    $data = array(array($file, $content, false), getNS($id), noNS($id), $rev);
+    $data = [[$file, $content, false], getNS($id), noNS($id), $rev];
     return Event::createAndTrigger('IO_WIKIPAGE_WRITE', $data, '_io_writeWikiPage_action', false);
 }
 
@@ -202,7 +202,7 @@ function io_writeWikiPage($file, $content, $id, $rev=false) {
  */
 function _io_writeWikiPage_action($data) {
     if (is_array($data) && is_array($data[0]) && count($data[0])===3) {
-        $ok = call_user_func_array('io_saveFile', $data[0]);
+        $ok = io_saveFile(...$data[0]);
         // for attic files make sure the file has the mtime of the revision
         if($ok && is_int($data[3]) && $data[3] > 0) {
             @touch($data[0][0], $data[3]);
@@ -228,13 +228,13 @@ function _io_saveFile($file, $content, $append) {
     $mode = ($append) ? 'ab' : 'wb';
     $fileexists = file_exists($file);
 
-    if(substr($file,-3) == '.gz'){
+    if (substr($file,-3) == '.gz') {
         if(!DOKU_HAS_GZIP) return false;
         $fh = @gzopen($file,$mode.'9');
         if(!$fh) return false;
         gzwrite($fh, $content);
         gzclose($fh);
-    }else if(substr($file,-4) == '.bz2'){
+    } elseif (substr($file,-4) == '.bz2') {
         if(!DOKU_HAS_BZIP) return false;
         if($append) {
             $bzcontent = bzfile($file);
@@ -245,14 +245,14 @@ function _io_saveFile($file, $content, $append) {
         if(!$fh) return false;
         bzwrite($fh, $content);
         bzclose($fh);
-    }else{
+    } else{
         $fh = @fopen($file,$mode);
         if(!$fh) return false;
         fwrite($fh, $content);
         fclose($fh);
     }
 
-    if(!$fileexists and $conf['fperm']) chmod($file, $conf['fperm']);
+    if(!$fileexists && $conf['fperm']) chmod($file, $conf['fperm']);
     return true;
 }
 
@@ -276,7 +276,7 @@ function io_saveFile($file, $content, $append=false) {
     io_makeFileDir($file);
     io_lock($file);
     if(!_io_saveFile($file, $content, $append)) {
-        msg("Writing $file failed",-1);
+        msg("Writing {$file} failed",-1);
         io_unlock($file);
         return false;
     }
@@ -321,13 +321,13 @@ function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) 
     io_lock($file);
 
     // load into array
-    if(substr($file,-3) == '.gz'){
+    if (substr($file,-3) == '.gz') {
         if(!DOKU_HAS_GZIP) return false;
         $lines = gzfile($file);
-    }else if(substr($file,-4) == '.bz2'){
+    } elseif (substr($file,-4) == '.bz2') {
         if(!DOKU_HAS_BZIP) return false;
         $lines = bzfile($file, true);
-    }else{
+    } else{
         $lines = file($file);
     }
 
@@ -345,9 +345,8 @@ function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) 
             $lines[$i] = preg_replace($pattern, $replace, $line, -1, $matched);
             if ($matched) $count++;
         }
-    } else if ($maxlines == 0) {
+    } elseif ($maxlines == 0) {
         $lines = preg_grep($pattern, $lines, PREG_GREP_INVERT);
-
         if ((string)$newline !== ''){
             $lines[] = $newline;
         }
@@ -355,9 +354,9 @@ function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) 
         $lines = preg_replace($pattern, $replace, $lines);
     }
 
-    if(count($lines)){
-        if(!_io_saveFile($file, join('',$lines), false)) {
-            msg("Removing content from $file failed",-1);
+    if($lines === null ? 0 : count($lines)){
+        if(!_io_saveFile($file, implode('',$lines), false)) {
+            msg("Removing content from {$file} failed",-1);
             io_unlock($file);
             return false;
         }
@@ -447,13 +446,13 @@ function io_unlock($file){
  */
 function io_createNamespace($id, $ns_type='pages') {
     // verify ns_type
-    $types = array('pages'=>'wikiFN', 'media'=>'mediaFN');
+    $types = ['pages'=>'wikiFN', 'media'=>'mediaFN'];
     if (!isset($types[$ns_type])) {
         trigger_error('Bad $ns_type parameter for io_createNamespace().');
         return;
     }
     // make event list
-    $missing = array();
+    $missing = [];
     $ns_stack = explode(':', $id);
     $ns = $id;
     $tmp = dirname( $file = call_user_func($types[$ns_type], $ns) );
@@ -469,7 +468,7 @@ function io_createNamespace($id, $ns_type='pages') {
     // send the events
     $missing = array_reverse($missing); // inside out
     foreach ($missing as $ns) {
-        $data = array($ns, $ns_type);
+        $data = [$ns, $ns_type];
         Event::createAndTrigger('IO_NAMESPACE_CREATED', $data);
     }
 }
@@ -484,7 +483,7 @@ function io_createNamespace($id, $ns_type='pages') {
 function io_makeFileDir($file){
     $dir = dirname($file);
     if(!@is_dir($dir)){
-        io_mkdir_p($dir) || msg("Creating directory $dir failed",-1);
+        io_mkdir_p($dir) || msg("Creating directory {$dir} failed",-1);
     }
 }
 
@@ -523,39 +522,35 @@ function io_rmdir($path, $removefiles = false) {
     if(!is_string($path) || $path == "") return false;
     if(!file_exists($path)) return true; // it's already gone or was never there, count as success
 
-    if(is_dir($path) && !is_link($path)) {
-        $dirs  = array();
-        $files = array();
-
+    if (is_dir($path) && !is_link($path)) {
+        $dirs  = [];
+        $files = [];
         if(!$dh = @opendir($path)) return false;
         while(false !== ($f = readdir($dh))) {
             if($f == '..' || $f == '.') continue;
 
             // collect dirs and files first
-            if(is_dir("$path/$f") && !is_link("$path/$f")) {
-                $dirs[] = "$path/$f";
-            } else if($removefiles) {
-                $files[] = "$path/$f";
+            if (is_dir("{$path}/{$f}") && !is_link("{$path}/{$f}")) {
+                $dirs[] = "{$path}/{$f}";
+            } elseif ($removefiles) {
+                $files[] = "{$path}/{$f}";
             } else {
                 return false; // abort when non empty
             }
 
         }
         closedir($dh);
-
         // now traverse into  directories first
         foreach($dirs as $dir) {
             if(!io_rmdir($dir, $removefiles)) return false; // abort on any error
         }
-
         // now delete files
         foreach($files as $file) {
             if(!@unlink($file)) return false; //abort on any error
         }
-
         // remove self
         return @rmdir($path);
-    } else if($removefiles) {
+    } elseif ($removefiles) {
         return @unlink($path);
     }
     return false;
@@ -573,7 +568,7 @@ function io_mktmpdir() {
     global $conf;
 
     $base = $conf['tmpdir'];
-    $dir  = md5(uniqid(mt_rand(), true));
+    $dir  = md5(uniqid(random_int(0, mt_getrandmax()), true));
     $tmpdir = $base.'/'.$dir;
 
     if(io_mkdir_p($tmpdir)) {
@@ -605,7 +600,7 @@ function io_mktmpdir() {
  * @param int    $maxSize       maximum file size
  * @return bool|string          if failed false, otherwise true or the name of the file in the given dir
  */
-function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=2097152){
+function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=2_097_152){
     global $conf;
     $http = new DokuHTTPClient();
     $http->max_bodysize = $maxSize;
@@ -619,11 +614,11 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=20
     if ($useAttachment) {
         if (isset($http->resp_headers['content-disposition'])) {
             $content_disposition = $http->resp_headers['content-disposition'];
-            $match=array();
+            $match=[];
             if (is_string($content_disposition) &&
                     preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)) {
 
-                $name = \dokuwiki\Utf8\PhpString::basename($match[1]);
+                $name = PhpString::basename($match[1]);
             }
 
         }
@@ -633,7 +628,7 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=20
             $name = $defaultName;
         }
 
-        $file = $file.$name;
+        $file .= $name;
     }
 
     $fileexists = file_exists($file);
@@ -641,7 +636,7 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=20
     if(!$fp) return false;
     fwrite($fp,$data);
     fclose($fp);
-    if(!$fileexists and $conf['fperm']) chmod($file, $conf['fperm']);
+    if(!$fileexists && $conf['fperm']) chmod($file, $conf['fperm']);
     if ($useAttachment) return $name;
     return true;
 }
@@ -681,10 +676,7 @@ function io_rename($from,$to){
  * @return int exit code from process
  */
 function io_exec($cmd, $input, &$output){
-    $descspec = array(
-            0=>array("pipe","r"),
-            1=>array("pipe","w"),
-            2=>array("pipe","w"));
+    $descspec = [0=>["pipe", "r"], 1=>["pipe", "w"], 2=>["pipe", "w"]];
     $ph = proc_open($cmd, $descspec, $pipes);
     if(!$ph) return -1;
     fclose($pipes[2]); // ignore stderr
@@ -712,7 +704,7 @@ function io_exec($cmd, $input, &$output){
 function io_grep($file,$pattern,$max=0,$backref=false){
     $fh = @fopen($file,'r');
     if(!$fh) return false;
-    $matches = array();
+    $matches = [];
 
     $cnt  = 0;
     $line = '';
@@ -749,21 +741,18 @@ function io_grep($file,$pattern,$max=0,$backref=false){
 function io_getSizeFile($file) {
     if (!file_exists($file)) return 0;
 
-    if(substr($file,-3) == '.gz'){
+    if (substr($file,-3) == '.gz') {
         $fp = @fopen($file, "rb");
         if($fp === false) return 0;
-
         fseek($fp, -4, SEEK_END);
         $buffer = fread($fp, 4);
         fclose($fp);
         $array = unpack("V", $buffer);
         $uncompressedsize = end($array);
-    }else if(substr($file,-4) == '.bz2'){
+    } elseif (substr($file,-4) == '.bz2') {
         if(!DOKU_HAS_BZIP) return 0;
-
         $bz = bzopen($file,"r");
         if($bz === false) return 0;
-
         $uncompressedsize = 0;
         while (!feof($bz)) {
             //8192 seems to be the maximum buffersize?
@@ -773,7 +762,7 @@ function io_getSizeFile($file) {
             }
             $uncompressedsize += strlen($buffer);
         }
-    }else{
+    } else{
         $uncompressedsize = filesize($file);
     }
 

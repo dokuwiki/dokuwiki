@@ -125,7 +125,7 @@ class MediaDiff extends Diff
         global $conf;
 
         $ns = getNS($this->id);
-        $auth = auth_quickaclcheck("$ns:*");
+        $auth = auth_quickaclcheck("{$ns}:*");
 
         if ($auth < AUTH_READ || !$this->id || !$conf['mediarevisions']) return;
 
@@ -237,7 +237,7 @@ class MediaDiff extends Diff
         global $lang;
 
         $ns = getNS($this->id);
-        $auth = auth_quickaclcheck("$ns:*");
+        $auth = auth_quickaclcheck("{$ns}:*");
 
         $rev1 = $this->RevInfo1->isCurrent() ? '' : (int)$this->RevInfo1->val('date');
         $rev2 = $this->RevInfo2->isCurrent() ? '' : (int)$this->RevInfo2->val('date');

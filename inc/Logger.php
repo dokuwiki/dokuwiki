@@ -14,7 +14,7 @@ class Logger
     const LOG_DEBUG = 'debug';
 
     /** @var Logger[] */
-    static protected $instances;
+    static protected $instances = [];
 
     /** @var string what kind of log is this */
     protected $facility;
@@ -139,7 +139,7 @@ class Logger
         }
 
         // only log when any data available
-        if (count($data['loglines'])) {
+        if (is_countable($data['loglines']) ? count($data['loglines']) : 0) {
             return $this->writeLogLines($data['loglines'], $data['logfile']);
         } else {
             return false;
@@ -172,9 +172,7 @@ class Logger
                 $details = json_encode($details, JSON_PRETTY_PRINT);
             }
             $details = explode("\n", $details);
-            $loglines = array_map(function ($line) {
-                return '  ' . $line;
-            }, $details);
+            $loglines = array_map(static fn($line) => '  ' . $line, $details);
         } elseif ($details) {
             $loglines = [$details];
         } else {
@@ -185,7 +183,7 @@ class Logger
         $logline = gmdate('Y-m-d H:i:s', $datetime) . "\t";
         if ($file) {
             $logline .= $file;
-            if ($line) $logline .= "($line)";
+            if ($line) $logline .= "({$line})";
         }
         $logline .= "\t" . $message;
         array_unshift($loglines, $logline);
@@ -221,8 +219,8 @@ class Logger
     protected function writeLogLines($lines, $logfile)
     {
         if (defined('DOKU_UNITTEST')) {
-            fwrite(STDERR, "\n[" . $this->facility . '] ' . join("\n", $lines) . "\n");
+            fwrite(STDERR, "\n[" . $this->facility . '] ' . implode("\n", $lines) . "\n");
         }
-        return io_saveFile($logfile, join("\n", $lines) . "\n", true);
+        return io_saveFile($logfile, implode("\n", $lines) . "\n", true);
     }
 }

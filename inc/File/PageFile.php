@@ -99,20 +99,26 @@ class PageFile
         $currentSize = file_exists($pagefile) ? filesize($pagefile) : 0;
 
         // prepare data for event COMMON_WIKIPAGE_SAVE
-        $data = array(
-            'id'             => $this->id, // should not be altered by any handlers
-            'file'           => $pagefile, // same above
-            'changeType'     => null,      // set prior to event, and confirm later
+        $data = [
+            'id'             => $this->id,
+            // should not be altered by any handlers
+            'file'           => $pagefile,
+            // same above
+            'changeType'     => null,
+            // set prior to event, and confirm later
             'revertFrom'     => $REV,
             'oldRevision'    => $currentRevision,
             'oldContent'     => $currentContent,
-            'newRevision'    => 0,         // only available in the after hook
+            'newRevision'    => 0,
+            // only available in the after hook
             'newContent'     => $text,
             'summary'        => $summary,
-            'contentChanged' => ($text != $currentContent), // confirm later
-            'changeInfo'     => '',        // automatically determined by revertFrom
-            'sizechange'     => strlen($text) - strlen($currentContent), // TBD
-        );
+            'contentChanged' => ($text != $currentContent),
+            // confirm later
+            'changeInfo'     => '',
+            // automatically determined by revertFrom
+            'sizechange'     => strlen($text) - strlen($currentContent),
+        ];
 
         // determine tentatively change type and relevant elements of event data
         if ($data['revertFrom']) {
@@ -166,7 +172,7 @@ class PageFile
                 $data['summary'] = $lang['deleted'];
             }
             // send "update" event with empty data, so plugins can react to page deletion
-            $ioData = array([$pagefile, '', false], getNS($this->id), noNS($this->id), false);
+            $ioData = [[$pagefile, '', false], getNS($this->id), noNS($this->id), false];
             Event::createAndTrigger('IO_WIKIPAGE_WRITE', $ioData);
             // pre-save deleted revision
             @touch($pagefile);
@@ -286,11 +292,7 @@ class PageFile
     {
         global $INFO;
 
-        list(
-            'date' => $date,
-            'type' => $changeType,
-            'user' => $user,
-        ) = $logEntry;
+        ['date' => $date, 'type' => $changeType, 'user' => $user, ] = $logEntry;
 
         $wasRemoved   = ($changeType === DOKU_CHANGE_TYPE_DELETE);
         $wasCreated   = ($changeType === DOKU_CHANGE_TYPE_CREATE);
@@ -302,7 +304,7 @@ class PageFile
         if ($wasRemoved) return;
 
         $oldmeta = p_read_metadata($this->id)['persistent'];
-        $meta    = array();
+        $meta    = [];
 
         if ($wasCreated &&
             (empty($oldmeta['date']['created']) || $oldmeta['date']['created'] === $createdDate)

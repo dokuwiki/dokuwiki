@@ -7,7 +7,7 @@ namespace dokuwiki\plugin\config\core\Setting;
  */
 class SettingNumericopt extends SettingNumeric {
     // just allow an empty config
-    protected $pattern = '/^(|[-]?[0-9]+(?:[-+*][0-9]+)*)$/';
+    protected $pattern = '/^(|[-]?\d+(?:[-+*]\d+)*)$/';
 
     /**
      * @inheritdoc

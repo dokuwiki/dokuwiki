@@ -21,7 +21,7 @@ class PageResolver extends Resolver
 
         // pages may have a hash attached, we separate it on resolving
         if (strpos($id, '#') !== false) {
-            list($id, $hash) = sexplode('#', $id, 2);
+            [$id, $hash] = sexplode('#', $id, 2);
             $hash = cleanID($hash);
         } else {
             $hash = '';
@@ -39,7 +39,7 @@ class PageResolver extends Resolver
 
         $id = cleanID($id); // FIXME always? or support parameter
         // readd hash if any
-        if ($hash !== '') $id .= "#$hash";
+        if ($hash !== '') $id .= "#{$hash}";
         return $id;
     }
 

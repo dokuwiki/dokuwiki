@@ -10,49 +10,12 @@ class Formatting extends AbstractMode
 {
     protected $type;
 
-    protected $formatting = array(
-        'strong' => array(
-            'entry' => '\*\*(?=.*\*\*)',
-            'exit' => '\*\*',
-            'sort' => 70
-        ),
-
-        'emphasis' => array(
-            'entry' => '//(?=[^\x00]*[^:])', //hack for bugs #384 #763 #1468
-            'exit' => '//',
-            'sort' => 80
-        ),
-
-        'underline' => array(
-            'entry' => '__(?=.*__)',
-            'exit' => '__',
-            'sort' => 90
-        ),
-
-        'monospace' => array(
-            'entry' => '\x27\x27(?=.*\x27\x27)',
-            'exit' => '\x27\x27',
-            'sort' => 100
-        ),
-
-        'subscript' => array(
-            'entry' => '<sub>(?=.*</sub>)',
-            'exit' => '</sub>',
-            'sort' => 110
-        ),
-
-        'superscript' => array(
-            'entry' => '<sup>(?=.*</sup>)',
-            'exit' => '</sup>',
-            'sort' => 120
-        ),
-
-        'deleted' => array(
-            'entry' => '<del>(?=.*</del>)',
-            'exit' => '</del>',
-            'sort' => 130
-        ),
-    );
+    protected $formatting = ['strong' => ['entry' => '\*\*(?=.*\*\*)', 'exit' => '\*\*', 'sort' => 70], 'emphasis' => [
+        'entry' => '//(?=[^\x00]*[^:])',
+        //hack for bugs #384 #763 #1468
+        'exit' => '//',
+        'sort' => 80,
+    ], 'underline' => ['entry' => '__(?=.*__)', 'exit' => '__', 'sort' => 90], 'monospace' => ['entry' => '\x27\x27(?=.*\x27\x27)', 'exit' => '\x27\x27', 'sort' => 100], 'subscript' => ['entry' => '<sub>(?=.*</sub>)', 'exit' => '</sub>', 'sort' => 110], 'superscript' => ['entry' => '<sup>(?=.*</sup>)', 'exit' => '</sup>', 'sort' => 120], 'deleted' => ['entry' => '<del>(?=.*</del>)', 'exit' => '</del>', 'sort' => 130]];
 
     /**
      * @param string $type
@@ -69,7 +32,7 @@ class Formatting extends AbstractMode
 
         // formatting may contain other formatting but not it self
         $modes = $PARSER_MODES['formatting'];
-        $key = array_search($type, $modes);
+        $key = array_search($type, $modes, true);
         if (is_int($key)) {
             unset($modes[$key]);
         }

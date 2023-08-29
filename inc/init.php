@@ -2,7 +2,9 @@
 /**
  * Initialize some defaults needed for DokuWiki
  */
-
+use dokuwiki\Extension\PluginController;
+use dokuwiki\ErrorHandler;
+use dokuwiki\Input\Input;
 use dokuwiki\Extension\Event;
 use dokuwiki\Extension\EventHandler;
 
@@ -19,14 +21,14 @@ function delta_time($start=0) {
 define('DOKU_START_TIME', delta_time());
 
 global $config_cascade;
-$config_cascade = array();
+$config_cascade = [];
 
 // if available load a preload config file
-$preload = fullpath(dirname(__FILE__)).'/preload.php';
+$preload = fullpath(__DIR__).'/preload.php';
 if (file_exists($preload)) include($preload);
 
 // define the include path
-if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
+if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(__DIR__.'/../').'/');
 
 // define Plugin dir
 if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
@@ -49,15 +51,15 @@ header('Vary: Cookie');
 
 // init memory caches
 global $cache_revinfo;
-       $cache_revinfo = array();
+       $cache_revinfo = [];
 global $cache_wikifn;
-       $cache_wikifn = array();
+       $cache_wikifn = [];
 global $cache_cleanid;
-       $cache_cleanid = array();
+       $cache_cleanid = [];
 global $cache_authname;
-       $cache_authname = array();
+       $cache_authname = [];
 global $cache_metadata;
-       $cache_metadata = array();
+       $cache_metadata = [];
 
 // always include 'inc/config_cascade.php'
 // previously in preload.php set fields of $config_cascade will be merged with the defaults
@@ -65,31 +67,11 @@ include(DOKU_INC.'inc/config_cascade.php');
 
 //prepare config array()
 global $conf;
-$conf = array();
-
-// load the global config file(s)
-foreach (array('default','local','protected') as $config_group) {
-    if (empty($config_cascade['main'][$config_group])) continue;
-    foreach ($config_cascade['main'][$config_group] as $config_file) {
-        if (file_exists($config_file)) {
-            include($config_file);
-        }
-    }
-}
+$conf = [];
 
 //prepare license array()
 global $license;
-$license = array();
-
-// load the license file(s)
-foreach (array('default','local') as $config_group) {
-    if (empty($config_cascade['license'][$config_group])) continue;
-    foreach ($config_cascade['license'][$config_group] as $config_file) {
-        if(file_exists($config_file)){
-            include($config_file);
-        }
-    }
-}
+$license = [];
 
 // set timezone (as in pre 5.3.0 days)
 date_default_timezone_set(@date_default_timezone_get());
@@ -112,7 +94,7 @@ if(!defined('DOKU_TAB')) define ('DOKU_TAB',"\t");
 
 // define cookie and session id, append server port when securecookie is configured FS#1664
 if (!defined('DOKU_COOKIE')) {
-    $serverPort = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : '';
+    $serverPort = $_SERVER['SERVER_PORT'] ?? '';
     define('DOKU_COOKIE', 'DW' . md5(DOKU_REL . (($conf['securecookie']) ? $serverPort : '')));
     unset($serverPort);
 }
@@ -146,7 +128,7 @@ if(!defined('DOKU_TPLINC')) {
 @ini_set('pcre.backtrack_limit', '20971520');
 
 // enable gzip compression if supported
-$httpAcceptEncoding = isset($_SERVER['HTTP_ACCEPT_ENCODING']) ? $_SERVER['HTTP_ACCEPT_ENCODING'] : '';
+$httpAcceptEncoding = $_SERVER['HTTP_ACCEPT_ENCODING'] ?? '';
 $conf['gzip_output'] &= (strpos($httpAcceptEncoding, 'gzip') !== false);
 global $ACT;
 if ($conf['gzip_output'] &&
@@ -193,14 +175,14 @@ init_files();
 
 // setup plugin controller class (can be overwritten in preload.php)
 global $plugin_controller_class, $plugin_controller;
-if (empty($plugin_controller_class)) $plugin_controller_class = dokuwiki\Extension\PluginController::class;
+if (empty($plugin_controller_class)) $plugin_controller_class = PluginController::class;
 
 // load libraries
 require_once(DOKU_INC.'vendor/autoload.php');
 require_once(DOKU_INC.'inc/load.php');
 
 // from now on everything is an exception
-\dokuwiki\ErrorHandler::register();
+ErrorHandler::register();
 
 // disable gzip if not available
 define('DOKU_HAS_BZIP', function_exists('bzopen'));
@@ -214,7 +196,7 @@ if($conf['compression'] == 'gz' && !DOKU_HAS_GZIP) {
 
 // input handle class
 global $INPUT;
-$INPUT = new \dokuwiki\Input\Input();
+$INPUT = new Input();
 
 // initialize plugin controller
 $plugin_controller = new $plugin_controller_class();
@@ -292,7 +274,7 @@ function init_paths(){
         $conf[$c] = init_path($path);
         if(empty($conf[$c])) {
             $path = fullpath($path);
-            nice_die("The $c ('$p') at $path is not found, isn't accessible or writable.
+            nice_die("The {$c} ('{$p}') at {$path} is not found, isn't accessible or writable.
                 You should check your config and permission settings.
                 Or maybe you want to <a href=\"install.php\">run the
                 installer</a>?");
@@ -301,7 +283,7 @@ function init_paths(){
 
     // path to old changelog only needed for upgrading
     $conf['changelog_old'] = init_path(
-        (isset($conf['changelog'])) ? ($conf['changelog']) : ($conf['savedir'] . '/changes.log')
+        $conf['changelog'] ?? $conf['savedir'] . '/changes.log'
     );
     if ($conf['changelog_old']=='') { unset($conf['changelog_old']); }
     // hardcoded changelog because it is now a cache that lives in meta
@@ -317,7 +299,7 @@ function init_paths(){
 function init_lang($langCode) {
     //prepare language array
     global $lang, $config_cascade;
-    $lang = array();
+    $lang = [];
 
     //load the language files
     require(DOKU_INC.'inc/lang/en/lang.php');
@@ -328,12 +310,12 @@ function init_lang($langCode) {
     }
 
     if ($langCode && $langCode != 'en') {
-        if (file_exists(DOKU_INC."inc/lang/$langCode/lang.php")) {
-            require(DOKU_INC."inc/lang/$langCode/lang.php");
+        if (file_exists(DOKU_INC."inc/lang/{$langCode}/lang.php")) {
+            require(DOKU_INC."inc/lang/{$langCode}/lang.php");
         }
         foreach ($config_cascade['lang']['core'] as $config_file) {
-            if (file_exists($config_file . "$langCode/lang.php")) {
-                include($config_file . "$langCode/lang.php");
+            if (file_exists($config_file . "{$langCode}/lang.php")) {
+                include($config_file . "{$langCode}/lang.php");
             }
         }
     }
@@ -345,7 +327,7 @@ function init_lang($langCode) {
 function init_files(){
     global $conf;
 
-    $files = array($conf['indexdir'].'/page.idx');
+    $files = [$conf['indexdir'].'/page.idx'];
 
     foreach($files as $file){
         if(!file_exists($file)){
@@ -354,7 +336,7 @@ function init_files(){
                 fclose($fh);
                 if($conf['fperm']) chmod($file, $conf['fperm']);
             }else{
-                nice_die("$file is not writable. Check your permissions settings!");
+                nice_die("{$file} is not writable. Check your permissions settings!");
             }
         }
     }
@@ -388,7 +370,7 @@ function init_path($path){
     }
 
     // check accessability (execute bit) for directories
-    if(@is_dir($p) && !file_exists("$p/.")){
+    if(@is_dir($p) && !file_exists("{$p}/.")){
         return '';
     }
 
@@ -461,7 +443,7 @@ function getBaseURL($abs=null){
     }
 
     $dir = str_replace('\\','/',$dir);             // bugfix for weird WIN behaviour
-    $dir = preg_replace('#//+#','/',"/$dir/");     // ensure leading and trailing slashes
+    $dir = preg_replace('#//+#','/',"/{$dir}/");     // ensure leading and trailing slashes
 
     //handle script in lib/exe dir
     $dir = preg_replace('!lib/exe/$!','',$dir);
@@ -478,12 +460,12 @@ function getBaseURL($abs=null){
     //split hostheader into host and port
     if(isset($_SERVER['HTTP_HOST'])){
         $parsed_host = parse_url('http://'.$_SERVER['HTTP_HOST']);
-        $host = isset($parsed_host['host']) ? $parsed_host['host'] : null;
-        $port = isset($parsed_host['port']) ? $parsed_host['port'] : null;
+        $host = $parsed_host['host'] ?? null;
+        $port = $parsed_host['port'] ?? null;
     }elseif(isset($_SERVER['SERVER_NAME'])){
         $parsed_host = parse_url('http://'.$_SERVER['SERVER_NAME']);
-        $host = isset($parsed_host['host']) ? $parsed_host['host'] : null;
-        $port = isset($parsed_host['port']) ? $parsed_host['port'] : null;
+        $host = $parsed_host['host'] ?? null;
+        $port = $parsed_host['port'] ?? null;
     }else{
         $host = php_uname('n');
         $port = '';
@@ -540,7 +522,7 @@ function is_ssl() {
  * @return bool
  */
 function isWindows() {
-    return (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? true : false;
+    return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
 }
 
 /**
@@ -557,7 +539,7 @@ function nice_die($msg){
     <div style="width:60%; margin: auto; background-color: #fcc;
                 border: 1px solid #faa; padding: 0.5em 1em;">
         <h1 style="font-size: 120%">DokuWiki Setup Error</h1>
-        <p>$msg</p>
+        <p>{$msg}</p>
     </div>
 </body>
 </html>
@@ -593,10 +575,10 @@ function fullpath($path,$exists=false){
         $root = '/';
     }elseif($iswin){
         // match drive letter and UNC paths
-        if(preg_match('!^([a-zA-z]:)(.*)!',$path,$match)){
+        if (preg_match('!^([a-zA-z]:)(.*)!',$path,$match)) {
             $root = $match[1].'/';
             $path = $match[2];
-        }else if(preg_match('!^(\\\\\\\\[^\\\\/]+\\\\[^\\\\/]+[\\\\/])(.*)!',$path,$match)){
+        } elseif (preg_match('!^(\\\\\\\\[^\\\\/]+\\\\[^\\\\/]+[\\\\/])(.*)!',$path,$match)) {
             $root = $match[1];
             $path = $match[2];
         }
@@ -616,14 +598,14 @@ function fullpath($path,$exists=false){
 
     // canonicalize
     $path=explode('/', $path);
-    $newpath=array();
+    $newpath=[];
     foreach($path as $p) {
         if ($p === '' || $p === '.') continue;
         if ($p==='..') {
             array_pop($newpath);
             continue;
         }
-        array_push($newpath, $p);
+        $newpath[] = $p;
     }
     $finalpath = $root.implode('/', $newpath);
 

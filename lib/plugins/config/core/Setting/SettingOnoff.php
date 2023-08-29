@@ -40,7 +40,7 @@ class SettingOnoff extends SettingNumeric {
         $label = '<label for="config___' . $key . '">' . $this->prompt($plugin) . '</label>';
         $input = '<div class="input"><input id="config___' . $key . '" name="config[' . $key .
             ']" type="checkbox" class="checkbox" value="1"' . $checked . $disable . '/></div>';
-        return array($label, $input);
+        return [$label, $input];
     }
 
     /** @inheritdoc */

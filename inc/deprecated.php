@@ -3,7 +3,28 @@
 /**
  * These classes and functions are deprecated and will be removed in future releases
  */
-
+use dokuwiki\Remote\AccessDeniedException;
+use dokuwiki\Parsing\Lexer\Lexer;
+use dokuwiki\plugin\config\core\Setting\Setting;
+use dokuwiki\plugin\config\core\Setting\SettingAuthtype;
+use dokuwiki\plugin\config\core\Setting\SettingString;
+use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\Input\Post;
+use dokuwiki\Input\Get;
+use dokuwiki\Input\Server;
+use dokuwiki\Extension\Event;
+use dokuwiki\Extension\PluginController;
+use dokuwiki\Search\Indexer;
+use dokuwiki\Remote\IXR\Client;
+use IXR\Client\ClientMulticall;
+use IXR\Server\IntrospectionServer;
+use IXR\Request\Request;
+use IXR\Message\Message;
+use IXR\Message\Error;
+use IXR\DataType\Date;
+use IXR\DataType\Base64;
+use IXR\DataType\Value;
 use dokuwiki\Debug\DebugHelper;
 use dokuwiki\Subscriptions\BulkSubscriptionSender;
 use dokuwiki\Subscriptions\MediaSubscriptionSender;
@@ -15,12 +36,12 @@ use dokuwiki\Subscriptions\SubscriberManager;
  * @inheritdoc
  * @deprecated 2018-05-07
  */
-class RemoteAccessDeniedException extends \dokuwiki\Remote\AccessDeniedException
+class RemoteAccessDeniedException extends AccessDeniedException
 {
     /** @inheritdoc */
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
-        dbg_deprecated(\dokuwiki\Remote\AccessDeniedException::class);
+        dbg_deprecated(AccessDeniedException::class);
         parent::__construct($message, $code, $previous);
     }
 
@@ -50,20 +71,20 @@ class RemoteException extends \dokuwiki\Remote\RemoteException
  */
 function Doku_Lexer_Escape($str)
 {
-    dbg_deprecated('\\dokuwiki\\Parsing\\Lexer\\Lexer::escape()');
-    return \dokuwiki\Parsing\Lexer\Lexer::escape($str);
+    dbg_deprecated(Lexer::class . '::escape()');
+    return Lexer::escape($str);
 }
 
 /**
  * @inheritdoc
  * @deprecated 2018-06-01
  */
-class setting extends \dokuwiki\plugin\config\core\Setting\Setting
+class setting extends Setting
 {
     /** @inheritdoc */
     public function __construct($key, array $params = null)
     {
-        dbg_deprecated(\dokuwiki\plugin\config\core\Setting\Setting::class);
+        dbg_deprecated(Setting::class);
         parent::__construct($key, $params);
     }
 }
@@ -72,12 +93,12 @@ class setting extends \dokuwiki\plugin\config\core\Setting\Setting
  * @inheritdoc
  * @deprecated 2018-06-01
  */
-class setting_authtype extends \dokuwiki\plugin\config\core\Setting\SettingAuthtype
+class setting_authtype extends SettingAuthtype
 {
     /** @inheritdoc */
     public function __construct($key, array $params = null)
     {
-        dbg_deprecated(\dokuwiki\plugin\config\core\Setting\SettingAuthtype::class);
+        dbg_deprecated(SettingAuthtype::class);
         parent::__construct($key, $params);
     }
 }
@@ -86,12 +107,12 @@ class setting_authtype extends \dokuwiki\plugin\config\core\Setting\SettingAutht
  * @inheritdoc
  * @deprecated 2018-06-01
  */
-class setting_string extends \dokuwiki\plugin\config\core\Setting\SettingString
+class setting_string extends SettingString
 {
     /** @inheritdoc */
     public function __construct($key, array $params = null)
     {
-        dbg_deprecated(\dokuwiki\plugin\config\core\Setting\SettingString::class);
+        dbg_deprecated(SettingString::class);
         parent::__construct($key, $params);
     }
 }
@@ -100,12 +121,12 @@ class setting_string extends \dokuwiki\plugin\config\core\Setting\SettingString
  * @inheritdoc
  * @deprecated 2018-06-15
  */
-class PageChangelog extends \dokuwiki\ChangeLog\PageChangeLog
+class PageChangelog extends PageChangeLog
 {
     /** @inheritdoc */
     public function __construct($id, $chunk_size = 8192)
     {
-        dbg_deprecated(\dokuwiki\ChangeLog\PageChangeLog::class);
+        dbg_deprecated(PageChangeLog::class);
         parent::__construct($id, $chunk_size);
     }
 }
@@ -114,12 +135,12 @@ class PageChangelog extends \dokuwiki\ChangeLog\PageChangeLog
  * @inheritdoc
  * @deprecated 2018-06-15
  */
-class MediaChangelog extends \dokuwiki\ChangeLog\MediaChangeLog
+class MediaChangelog extends MediaChangeLog
 {
     /** @inheritdoc */
     public function __construct($id, $chunk_size = 8192)
     {
-        dbg_deprecated(\dokuwiki\ChangeLog\MediaChangeLog::class);
+        dbg_deprecated(MediaChangeLog::class);
         parent::__construct($id, $chunk_size);
     }
 }
@@ -157,7 +178,7 @@ class JSON
     public function encode($var)
     {
         dbg_deprecated('json_encode');
-        return json_encode($var);
+        return json_encode($var, JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -180,7 +201,7 @@ class JSON
     public function decode($str)
     {
         dbg_deprecated('json_encode');
-        return json_decode($str, ($this->use == JSON_LOOSE_TYPE));
+        return json_decode($str, ($this->use == JSON_LOOSE_TYPE), 512, JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -215,14 +236,14 @@ class Input extends \dokuwiki\Input\Input {
  * @inheritdoc
  * @deprecated 2019-02-19
  */
-class PostInput extends \dokuwiki\Input\Post {
+class PostInput extends Post {
     /**
      * @inheritdoc
      * @deprecated 2019-02-19
      */
     public function __construct()
     {
-        dbg_deprecated(\dokuwiki\Input\Post::class);
+        dbg_deprecated(Post::class);
         parent::__construct();
     }
 }
@@ -231,14 +252,14 @@ class PostInput extends \dokuwiki\Input\Post {
  * @inheritdoc
  * @deprecated 2019-02-19
  */
-class GetInput extends \dokuwiki\Input\Get {
+class GetInput extends Get {
     /**
      * @inheritdoc
      * @deprecated 2019-02-19
      */
     public function __construct()
     {
-        dbg_deprecated(\dokuwiki\Input\Get::class);
+        dbg_deprecated(Get::class);
         parent::__construct();
     }
 }
@@ -247,14 +268,14 @@ class GetInput extends \dokuwiki\Input\Get {
  * @inheritdoc
  * @deprecated 2019-02-19
  */
-class ServerInput extends \dokuwiki\Input\Server {
+class ServerInput extends Server {
     /**
      * @inheritdoc
      * @deprecated 2019-02-19
      */
     public function __construct()
     {
-        dbg_deprecated(\dokuwiki\Input\Server::class);
+        dbg_deprecated(Server::class);
         parent::__construct();
     }
 }
@@ -337,19 +358,19 @@ class DokuHTTPClient extends \dokuwiki\HTTP\DokuHTTPClient
  * @deprecated 2018-06-15
  */
 function trigger_event($name, &$data, $action=null, $canPreventDefault=true) {
-    dbg_deprecated('\dokuwiki\Extension\Event::createAndTrigger');
-    return \dokuwiki\Extension\Event::createAndTrigger($name, $data, $action, $canPreventDefault);
+    dbg_deprecated(Event::class . '::createAndTrigger');
+    return Event::createAndTrigger($name, $data, $action, $canPreventDefault);
 }
 
 /**
  * @inheritdoc
  * @deprecated 2018-06-15
  */
-class Doku_Plugin_Controller extends \dokuwiki\Extension\PluginController {
+class Doku_Plugin_Controller extends PluginController {
     /** @inheritdoc */
     public function __construct()
     {
-        dbg_deprecated(\dokuwiki\Extension\PluginController::class);
+        dbg_deprecated(PluginController::class);
         parent::__construct();
     }
 }
@@ -374,7 +395,7 @@ class Subscription {
      * @deprecated 2019-04-20 \dokuwiki\Subscriptions\SubscriberManager::isenabled
      */
     public function isenabled() {
-        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\SubscriberManager::isenabled');
+        DebugHelper::dbgDeprecatedFunction(SubscriberManager::class . '::isenabled');
         $subscriberManager = new SubscriberManager();
         return $subscriberManager->isenabled();
     }
@@ -396,7 +417,7 @@ class Subscription {
      * @deprecated 2019-04-20 \dokuwiki\Subscriptions\SubscriberManager::subscribers
      */
     public function subscribers($page, $user = null, $style = null, $data = null) {
-        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\SubscriberManager::subscribers');
+        DebugHelper::dbgDeprecatedFunction(SubscriberManager::class . '::subscribers');
         $manager = new SubscriberManager();
         return $manager->subscribers($page, $user, $style, $data);
     }
@@ -418,7 +439,7 @@ class Subscription {
      * @deprecated 2019-04-20 \dokuwiki\Subscriptions\SubscriberManager::add
      */
     public function add($id, $user, $style, $data = '') {
-        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\SubscriberManager::add');
+        DebugHelper::dbgDeprecatedFunction(SubscriberManager::class . '::add');
         $manager = new SubscriberManager();
         return $manager->add($id, $user, $style, $data);
     }
@@ -439,7 +460,7 @@ class Subscription {
      * @deprecated 2019-04-20 \dokuwiki\Subscriptions\SubscriberManager::remove
      */
     public function remove($id, $user = null, $style = null, $data = null) {
-        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\SubscriberManager::remove');
+        DebugHelper::dbgDeprecatedFunction(SubscriberManager::class . '::remove');
         $manager = new SubscriberManager();
         return $manager->remove($id, $user, $style, $data);
     }
@@ -459,7 +480,7 @@ class Subscription {
      * @deprecated 2019-04-20 \dokuwiki\Subscriptions\SubscriberManager::userSubscription
      */
     public function user_subscription($id = '', $user = '') {
-        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\SubscriberManager::userSubscription');
+        DebugHelper::dbgDeprecatedFunction(SubscriberManager::class . '::userSubscription');
         $manager = new SubscriberManager();
         return $manager->userSubscription($id, $user);
     }
@@ -478,7 +499,7 @@ class Subscription {
      * @deprecated 2019-04-20 \dokuwiki\Subscriptions\BulkSubscriptionSender::sendBulk
      */
     public function send_bulk($page) {
-        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\BulkSubscriptionSender::sendBulk');
+        DebugHelper::dbgDeprecatedFunction(BulkSubscriptionSender::class . '::sendBulk');
         $subscriptionSender = new BulkSubscriptionSender();
         return $subscriptionSender->sendBulk($page);
     }
@@ -496,7 +517,7 @@ class Subscription {
      * @deprecated 2019-04-20 \dokuwiki\Subscriptions\PageSubscriptionSender::sendPageDiff
      */
     public function send_diff($subscriber_mail, $template, $id, $rev = null, $summary = '') {
-        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\PageSubscriptionSender::sendPageDiff');
+        DebugHelper::dbgDeprecatedFunction(PageSubscriptionSender::class . '::sendPageDiff');
         $subscriptionSender = new PageSubscriptionSender();
         return $subscriptionSender->sendPageDiff($subscriber_mail, $template, $id, $rev, $summary);
     }
@@ -514,7 +535,7 @@ class Subscription {
      * @deprecated 2019-04-20 \dokuwiki\Subscriptions\MediaSubscriptionSender::sendMediaDiff
      */
     public function send_media_diff($subscriber_mail, $template, $id, $rev = false) {
-        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\MediaSubscriptionSender::sendMediaDiff');
+        DebugHelper::dbgDeprecatedFunction(MediaSubscriptionSender::class . '::sendMediaDiff');
         $subscriptionSender = new MediaSubscriptionSender();
         return $subscriptionSender->sendMediaDiff($subscriber_mail, $template, $id, $rev);
     }
@@ -532,7 +553,7 @@ class Subscription {
      * @deprecated 2019-04-20 \dokuwiki\Subscriptions\RegistrationSubscriptionSender::sendRegister
      */
     public function send_register($login, $fullname, $email) {
-        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\RegistrationSubscriptionSender::sendRegister');
+        DebugHelper::dbgDeprecatedFunction(RegistrationSubscriptionSender::class . '::sendRegister');
         $subscriptionSender = new RegistrationSubscriptionSender();
         return $subscriptionSender->sendRegister($login, $fullname, $email);
     }
@@ -558,7 +579,7 @@ class Subscription {
      * @deprecated 2019-04-20 \dokuwiki\Subscriptions\SubscriberManager::notifyAddresses
      */
     public function notifyaddresses(&$data) {
-        DebugHelper::dbgDeprecatedFunction('\dokuwiki\Subscriptions\SubscriberManager::notifyAddresses');
+        DebugHelper::dbgDeprecatedFunction(SubscriberManager::class . '::notifyAddresses');
         $manager = new SubscriberManager();
         $manager->notifyAddresses($data);
     }
@@ -567,12 +588,12 @@ class Subscription {
 /**
  * @deprecated 2019-12-29 use \dokuwiki\Search\Indexer
  */
-class Doku_Indexer extends \dokuwiki\Search\Indexer {};
+class Doku_Indexer extends Indexer {};
 
 /**
  * @deprecated since 2021-11-11 use \dokuwiki\Remote\IXR\Client instead!
  */
-class IXR_Client extends \dokuwiki\Remote\IXR\Client
+class IXR_Client extends Client
 {
     /**
      * @inheritdoc
@@ -580,14 +601,14 @@ class IXR_Client extends \dokuwiki\Remote\IXR\Client
      */
     public function __construct($server, $path = false, $port = 80, $timeout = 15, $timeout_io = null)
     {
-        DebugHelper::dbgDeprecatedFunction(dokuwiki\Remote\IXR\Client::class);
+        DebugHelper::dbgDeprecatedFunction(Client::class);
         parent::__construct($server, $path, $port, $timeout, $timeout_io);
     }
 }
 /**
  * @deprecated since 2021-11-11 use \IXR\Client\ClientMulticall instead!
  */
-class IXR_ClientMulticall extends \IXR\Client\ClientMulticall
+class IXR_ClientMulticall extends ClientMulticall
 {
     /**
      * @inheritdoc
@@ -595,7 +616,7 @@ class IXR_ClientMulticall extends \IXR\Client\ClientMulticall
      */
     public function __construct($server, $path = false, $port = 80)
     {
-        DebugHelper::dbgDeprecatedFunction(IXR\Client\ClientMulticall::class);
+        DebugHelper::dbgDeprecatedFunction(ClientMulticall::class);
         parent::__construct($server, $path, $port);
     }
 }
@@ -617,7 +638,7 @@ class IXR_Server extends \IXR\Server\Server
 /**
  * @deprecated since 2021-11-11 use \IXR\Server\IntrospectionServer instead!
  */
-class IXR_IntrospectionServer extends \IXR\Server\IntrospectionServer
+class IXR_IntrospectionServer extends IntrospectionServer
 {
     /**
      * @inheritdoc
@@ -625,14 +646,14 @@ class IXR_IntrospectionServer extends \IXR\Server\IntrospectionServer
      */
     public function __construct()
     {
-        DebugHelper::dbgDeprecatedFunction(IXR\Server\IntrospectionServer::class);
+        DebugHelper::dbgDeprecatedFunction(IntrospectionServer::class);
         parent::__construct();
     }
 }
 /**
  * @deprecated since 2021-11-11 use \IXR\Request\Request instead!
  */
-class IXR_Request extends \IXR\Request\Request
+class IXR_Request extends Request
 {
     /**
      * @inheritdoc
@@ -640,14 +661,14 @@ class IXR_Request extends \IXR\Request\Request
      */
     public function __construct($method, $args)
     {
-        DebugHelper::dbgDeprecatedFunction(IXR\Request\Request::class);
+        DebugHelper::dbgDeprecatedFunction(Request::class);
         parent::__construct($method, $args);
     }
 }
 /**
  * @deprecated since 2021-11-11 use \IXR\Message\Message instead!
  */
-class IXR_Message extends IXR\Message\Message
+class IXR_Message extends Message
 {
     /**
      * @inheritdoc
@@ -655,14 +676,14 @@ class IXR_Message extends IXR\Message\Message
      */
     public function __construct($message)
     {
-        DebugHelper::dbgDeprecatedFunction(IXR\Message\Message::class);
+        DebugHelper::dbgDeprecatedFunction(Message::class);
         parent::__construct($message);
     }
 }
 /**
  * @deprecated since 2021-11-11 use \IXR\Message\Error instead!
  */
-class IXR_Error extends \IXR\Message\Error
+class IXR_Error extends Error
 {
     /**
      * @inheritdoc
@@ -670,14 +691,14 @@ class IXR_Error extends \IXR\Message\Error
      */
     public function __construct($code, $message)
     {
-        DebugHelper::dbgDeprecatedFunction(IXR\Message\Error::class);
+        DebugHelper::dbgDeprecatedFunction(Error::class);
         parent::__construct($code, $message);
     }
 }
 /**
  * @deprecated since 2021-11-11 use \IXR\DataType\Date instead!
  */
-class IXR_Date extends \IXR\DataType\Date
+class IXR_Date extends Date
 {
     /**
      * @inheritdoc
@@ -685,14 +706,14 @@ class IXR_Date extends \IXR\DataType\Date
      */
     public function __construct($time)
     {
-        DebugHelper::dbgDeprecatedFunction(IXR\DataType\Date::class);
+        DebugHelper::dbgDeprecatedFunction(Date::class);
         parent::__construct($time);
     }
 }
 /**
  * @deprecated since 2021-11-11 use \IXR\DataType\Base64 instead!
  */
-class IXR_Base64 extends \IXR\DataType\Base64
+class IXR_Base64 extends Base64
 {
     /**
      * @inheritdoc
@@ -700,14 +721,14 @@ class IXR_Base64 extends \IXR\DataType\Base64
      */
     public function __construct($data)
     {
-        DebugHelper::dbgDeprecatedFunction(IXR\DataType\Base64::class);
+        DebugHelper::dbgDeprecatedFunction(Base64::class);
         parent::__construct($data);
     }
 }
 /**
  * @deprecated since 2021-11-11 use \IXR\DataType\Value instead!
  */
-class IXR_Value extends \IXR\DataType\Value
+class IXR_Value extends Value
 {
     /**
      * @inheritdoc
@@ -715,7 +736,7 @@ class IXR_Value extends \IXR\DataType\Value
      */
     public function __construct($data, $type = null)
     {
-        DebugHelper::dbgDeprecatedFunction(IXR\DataType\Value::class);
+        DebugHelper::dbgDeprecatedFunction(Value::class);
         parent::__construct($data, $type);
     }
 }

@@ -72,13 +72,7 @@ class Editor extends Ui
         $form->setHiddenField('changecheck', $check);
 
         // prepare data for EDIT_FORM_ALTERNATE event
-        $data = array(
-            'form' => $form,
-            'wr'   => $wr,
-            'media_manager' => true,
-            'target' => ($INPUT->has('target') && $wr) ? $INPUT->str('target') : 'section',
-            'intro_locale' => $intro,
-        );
+        $data = ['form' => $form, 'wr'   => $wr, 'media_manager' => true, 'target' => ($INPUT->has('target') && $wr) ? $INPUT->str('target') : 'section', 'intro_locale' => $intro];
 
         if ($data['target'] !== 'section') {
             // Only emit event if page is writable, section edit data is valid and
@@ -135,12 +129,7 @@ class Editor extends Ui
 
         // license note
         if ($wr && $conf['license']) {
-            $attr = array(
-                'href'   => $license[$conf['license']]['url'],
-                'rel'    => 'license',
-                'class'  => 'urlextern',
-                'target' => $conf['target']['extern'] ?: '',
-            );
+            $attr = ['href'   => $license[$conf['license']]['url'], 'rel'    => 'license', 'class'  => 'urlextern', 'target' => $conf['target']['extern'] ?: ''];
             $form->addTagOpen('div')->addClass('license');
             $form->addHTML($lang['licenseok']
                 .' <a '.buildAttributes($attr, true).'>'.$license[$conf['license']]['name'].'</a>'
@@ -151,7 +140,7 @@ class Editor extends Ui
         // start editor html output
         if ($wr) {
             // sets changed to true when previewed
-            echo '<script>/*<![CDATA[*/'.'textChanged = '. ($mod ? 'true' : 'false') .'/*!]]>*/</script>';
+            echo '<script>/*<![CDATA[*/textChanged = '. ($mod ? 'true' : 'false') .'/*!]]>*/</script>';
         }
 
         // print intro locale text (edit, rditrev, or read.txt)
@@ -199,7 +188,7 @@ class Editor extends Ui
         }
 
         // set textarea attributes
-        $attr = array('tabindex' => '1');
+        $attr = ['tabindex' => '1'];
         if (!$data['wr']) $attr['readonly'] = 'readonly';
         $attr['dir']  = 'auto';
         $attr['cols'] = '80';

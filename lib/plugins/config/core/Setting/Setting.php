@@ -12,19 +12,19 @@ class Setting {
     protected $key = '';
 
     /** @var mixed the default value of this setting */
-    protected $default = null;
+    protected $default;
     /** @var mixed the local value of this setting */
-    protected $local = null;
+    protected $local;
     /** @var mixed the protected value of this setting */
-    protected $protected = null;
+    protected $protected;
 
     /** @var array valid alerts, images matching the alerts are in the plugin's images directory */
-    static protected $validCautions = array('warning', 'danger', 'security');
+    static protected $validCautions = ['warning', 'danger', 'security'];
 
     protected $pattern = '';
     protected $error = false;            // only used by those classes which error check
-    protected $input = null;             // only used by those classes which error check
-    protected $caution = null;           // used by any setting to provide an alert along with the setting
+    protected $input;             // only used by those classes which error check
+    protected $caution;           // used by any setting to provide an alert along with the setting
 
     /**
      * Constructor.
@@ -168,9 +168,9 @@ class Setting {
      * @return string
      */
     public function getType() {
-        if(substr($this->getKey(), 0, 10) == 'plugin' . Configuration::KEYMARKER) {
+        if (substr($this->getKey(), 0, 10) == 'plugin' . Configuration::KEYMARKER) {
             return 'plugin';
-        } else if(substr($this->getKey(), 0, 7) == 'tpl' . Configuration::KEYMARKER) {
+        } elseif (substr($this->getKey(), 0, 7) == 'tpl' . Configuration::KEYMARKER) {
             return 'template';
         } else {
             return 'dokuwiki';
@@ -187,15 +187,13 @@ class Setting {
     public function html(\admin_plugin_config $plugin, $echo = false) {
         $disable = '';
 
-        if($this->isProtected()) {
+        if ($this->isProtected()) {
             $value = $this->protected;
             $disable = 'disabled="disabled"';
+        } elseif ($echo && $this->error) {
+            $value = $this->input;
         } else {
-            if($echo && $this->error) {
-                $value = $this->input;
-            } else {
-                $value = is_null($this->local) ? $this->default : $this->local;
-            }
+            $value = is_null($this->local) ? $this->default : $this->local;
         }
 
         $key = htmlspecialchars($this->key);
@@ -204,7 +202,7 @@ class Setting {
         $label = '<label for="config___' . $key . '">' . $this->prompt($plugin) . '</label>';
         $input = '<textarea rows="3" cols="40" id="config___' . $key .
             '" name="config[' . $key . ']" class="edit" ' . $disable . '>' . $value . '</textarea>';
-        return array($label, $input);
+        return [$label, $input];
     }
 
     /**
@@ -216,8 +214,7 @@ class Setting {
     public function shouldBeSaved() {
         if($this->isProtected()) return false;
         if($this->local === null) return false;
-        if($this->default == $this->local) return false;
-        return true;
+        return $this->default != $this->local;
     }
 
     /**
@@ -227,7 +224,7 @@ class Setting {
      * @return string
      */
     protected function escape($string) {
-        $tr = array("\\" => '\\\\', "'" => '\\\'');
+        $tr = ["\\" => '\\\\', "'" => '\\\''];
         return "'" . strtr(cleanText($string), $tr) . "'";
     }
 
@@ -243,12 +240,12 @@ class Setting {
         if ($fmt != 'php') return '';
 
         if (is_array($this->local)) {
-            $value = 'array(' . join(', ', array_map([$this, 'escape'], $this->local)) . ')';
+            $value = 'array(' . implode(', ', array_map([$this, 'escape'], $this->local)) . ')';
         } else {
             $value = $this->escape($this->local);
         }
 
-        $out = '$' . $var . "['" . $this->getArrayKey() . "'] = $value;\n";
+        $out = '$' . $var . "['" . $this->getArrayKey() . "'] = {$value};\n";
 
         return $out;
     }
@@ -261,7 +258,7 @@ class Setting {
      */
     public function prompt(\admin_plugin_config $plugin) {
         $prompt = $plugin->getLang($this->key);
-        if(!$prompt) $prompt = htmlspecialchars(str_replace(array('____', '_'), ' ', $this->key));
+        if(!$prompt) $prompt = htmlspecialchars(str_replace(['____', '_'], ' ', $this->key));
         return $prompt;
     }
 

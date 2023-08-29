@@ -50,16 +50,18 @@ class CacheParser extends Cache
     {
 
         // parser cache file dependencies ...
-        $files = array(
-            $this->file,                              // ... source
-            DOKU_INC . 'inc/Parsing/Parser.php',                // ... parser
-            DOKU_INC . 'inc/parser/handler.php',               // ... handler
-        );
+        $files = [
+            $this->file,
+            // ... source
+            DOKU_INC . 'inc/Parsing/Parser.php',
+            // ... parser
+            DOKU_INC . 'inc/parser/handler.php',
+        ];
         $files = array_merge($files, getConfigFiles('main'));    // ... wiki settings
 
-        $this->depends['files'] = !empty($this->depends['files']) ?
-            array_merge($files, $this->depends['files']) :
-            $files;
+        $this->depends['files'] = empty($this->depends['files']) ?
+            $files :
+            array_merge($files, $this->depends['files']);
         parent::addDependencies();
     }
 

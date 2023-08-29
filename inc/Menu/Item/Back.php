@@ -21,7 +21,7 @@ class Back extends AbstractItem {
         }
 
         $this->id = $parent;
-        $this->params = array('do' => '');
+        $this->params = ['do' => ''];
         $this->accesskey = 'b';
         $this->svg = DOKU_INC . 'lib/images/menu/12-back_arrow-left.svg';
     }

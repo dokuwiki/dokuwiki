@@ -217,11 +217,7 @@ class Recent extends Ui
         global $lang;
 
         $form->addTagOpen('div')->addClass('changeType');
-        $options = array(
-                    'pages'      => $lang['pages_changes'],
-                    'mediafiles' => $lang['media_changes'],
-                    'both'       => $lang['both_changes'],
-        );
+        $options = ['pages'      => $lang['pages_changes'], 'mediafiles' => $lang['media_changes'], 'both'       => $lang['both_changes']];
         $form->addDropdown('show_changes', $options, $lang['changes_type'])
                 ->val($this->show_changes)->addClass('quickselect');
         $form->addButton('do[recent]', $lang['btn_apply'])->attr('type','submit');

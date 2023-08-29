@@ -57,6 +57,7 @@ class UserResendPwd extends Ui
         $form->addFieldsetOpen($lang['btn_resendpwd']);
         $form->setHiddenField('token', $token);
         $form->setHiddenField('do', 'resendpwd');
+
         $input = $form->addPasswordInput('pass', $lang['pass'])->attr('size', '50')->addClass('edit');
         $input->getLabel()->attr('class', 'block');
         $form->addHTML("<br>\n");
@@ -85,6 +86,7 @@ class UserResendPwd extends Ui
         $form->setHiddenField('do', 'resendpwd');
         $form->setHiddenField('save', '1');
         $form->addHTML("<br>\n");
+
         $input = $form->addTextInput('login', $lang['user'])->addClass('edit');
         $input->getLabel()->attr('class', 'block');
         $form->addHTML("<br>\n");

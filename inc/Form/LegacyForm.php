@@ -26,7 +26,7 @@ class LegacyForm extends Form
         $this->hidden = $oldform->_hidden;
 
         foreach ($oldform->_content as $element) {
-            list($ctl, $attr) = $this->parseLegacyAttr($element);
+            [$ctl, $attr] = $this->parseLegacyAttr($element);
 
             if (is_array($element)) {
                 switch ($ctl['elem']) {
@@ -95,7 +95,6 @@ class LegacyForm extends Form
                     case 'menufield':
                     case 'listboxfield':
                         throw new \UnexpectedValueException('Unsupported legacy field ' . $ctl['elem']);
-                        break;
                     default:
                         throw new \UnexpectedValueException('Unknown legacy field ' . $ctl['elem']);
 
@@ -115,8 +114,8 @@ class LegacyForm extends Form
      */
     protected function parseLegacyAttr($legacy)
     {
-        $attributes = array();
-        $control = array();
+        $attributes = [];
+        $control = [];
 
         foreach ($legacy as $key => $val) {
             if ($key[0] == '_') {
@@ -130,7 +129,7 @@ class LegacyForm extends Form
             }
         }
 
-        return array($control, $attributes);
+        return [$control, $attributes];
     }
 
     /**
@@ -141,18 +140,8 @@ class LegacyForm extends Form
      */
     protected function legacyType($type)
     {
-        static $types = array(
-            'text' => 'textfield',
-            'password' => 'passwordfield',
-            'checkbox' => 'checkboxfield',
-            'radio' => 'radiofield',
-            'tagopen' => 'opentag',
-            'tagclose' => 'closetag',
-            'fieldsetopen' => 'openfieldset',
-            'fieldsetclose' => 'closefieldset',
-        );
-        if (isset($types[$type])) return $types[$type];
-        return $type;
+        static $types = ['text' => 'textfield', 'password' => 'passwordfield', 'checkbox' => 'checkboxfield', 'radio' => 'radiofield', 'tagopen' => 'opentag', 'tagclose' => 'closetag', 'fieldsetopen' => 'openfieldset', 'fieldsetclose' => 'closefieldset'];
+        return $types[$type] ?? $type;
     }
 
     /**
@@ -174,7 +163,7 @@ class LegacyForm extends Form
                 $data = $element->attrs();
                 $data['_elem'] = $this->legacyType($element->getType());
                 $label = $element->getLabel();
-                if ($label) {
+                if ($label instanceof LabelElement) {
                     $data['_class'] = $label->attr('class');
                 }
                 $legacy->_content[] = $data;

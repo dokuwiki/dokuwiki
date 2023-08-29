@@ -23,7 +23,7 @@ class MediaSubscriptionSender extends SubscriptionSender
         global $conf;
 
         $file = mediaFN($id);
-        list($mime, /* $ext */) = mimetype($id);
+        [$mime, ] = mimetype($id);
 
         $trep = [
             'MIME' => $mime,
@@ -32,7 +32,7 @@ class MediaSubscriptionSender extends SubscriptionSender
         ];
 
         if ($rev && $conf['mediarevisions']) {
-            $trep['OLD'] = ml($id, "rev=$rev", true, '&', true);
+            $trep['OLD'] = ml($id, "rev={$rev}", true, '&', true);
         } else {
             $trep['OLD'] = '---';
         }

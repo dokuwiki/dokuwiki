@@ -8,6 +8,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\PageView;
 use dokuwiki\Ui;
 
 /**
@@ -34,7 +35,7 @@ class Show extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\PageView())->show();
+        (new PageView())->show();
     }
 
 }

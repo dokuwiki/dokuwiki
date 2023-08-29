@@ -116,7 +116,7 @@ abstract class AdminPlugin extends Plugin
      */
     public function getTOC()
     {
-        return array();
+        return [];
     }
 
 }

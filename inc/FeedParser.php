@@ -1,12 +1,13 @@
 <?php
 
+use SimplePie\SimplePie;
 use dokuwiki\FeedParserFile;
 use SimplePie\File;
 
 /**
  * We override some methods of the original SimplePie class here
  */
-class FeedParser extends \SimplePie\SimplePie {
+class FeedParser extends SimplePie {
 
     /**
      * Constructor. Set some defaults

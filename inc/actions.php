@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
+use dokuwiki\ActionRouter;
 use dokuwiki\Extension\Event;
 
 /**
@@ -13,9 +13,9 @@ use dokuwiki\Extension\Event;
  */
 function act_dispatch(){
     // always initialize on first dispatch (test request may dispatch mutliple times on one request)
-    $router = \dokuwiki\ActionRouter::getInstance(true);
+    $router = ActionRouter::getInstance(true);
 
-    $headers = array('Content-Type: text/html; charset=utf-8');
+    $headers = ['Content-Type: text/html; charset=utf-8'];
     Event::createAndTrigger('ACTION_HEADERS_SEND',$headers,'act_sendheaders');
 
     // clear internal variables
@@ -49,7 +49,7 @@ function act_sendheaders($headers) {
 function act_clean($act){
     // check if the action was given as array key
     if(is_array($act)){
-        list($act) = array_keys($act);
+        [$act] = array_keys($act);
     }
 
     // no action given

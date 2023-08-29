@@ -14,9 +14,9 @@ if(!function_exists('ctype_space')) {
      * @return bool
      */
     function ctype_space($text) {
-        if(!is_string($text)) return false; #FIXME original treats between -128 and 255 inclusive as ASCII chars
-        if(trim($text) === '') return true;
-        return false;
+        if(!is_string($text)) return false;
+        #FIXME original treats between -128 and 255 inclusive as ASCII chars
+        return trim($text) === '';
     }
 }
 
@@ -29,9 +29,9 @@ if(!function_exists('ctype_digit')) {
      * @return bool
      */
     function ctype_digit($text) {
-        if(!is_string($text)) return false; #FIXME original treats between -128 and 255 inclusive as ASCII chars
-        if(preg_match('/^\d+$/', $text)) return true;
-        return false;
+        if(!is_string($text)) return false;
+        #FIXME original treats between -128 and 255 inclusive as ASCII chars
+        return (bool) preg_match('/^\d+$/', $text);
     }
 }
 

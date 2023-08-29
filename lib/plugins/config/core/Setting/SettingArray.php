@@ -28,7 +28,7 @@ class SettingArray extends Setting {
      * @return string
      */
     protected function fromArray($array) {
-        return join(', ', (array) $array);
+        return implode(', ', (array) $array);
     }
 
     /**
@@ -63,15 +63,13 @@ class SettingArray extends Setting {
     public function html(\admin_plugin_config $plugin, $echo = false) {
         $disable = '';
 
-        if($this->isProtected()) {
+        if ($this->isProtected()) {
             $value = $this->protected;
             $disable = 'disabled="disabled"';
+        } elseif ($echo && $this->error) {
+            $value = $this->input;
         } else {
-            if($echo && $this->error) {
-                $value = $this->input;
-            } else {
-                $value = is_null($this->local) ? $this->default : $this->local;
-            }
+            $value = is_null($this->local) ? $this->default : $this->local;
         }
 
         $key = htmlspecialchars($this->key);
@@ -80,6 +78,6 @@ class SettingArray extends Setting {
         $label = '<label for="config___' . $key . '">' . $this->prompt($plugin) . '</label>';
         $input = '<input id="config___' . $key . '" name="config[' . $key .
             ']" type="text" class="edit" value="' . $value . '" ' . $disable . '/>';
-        return array($label, $input);
+        return [$label, $input];
     }
 }

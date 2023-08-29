@@ -22,7 +22,7 @@ class CacheImageMod extends Cache
     {
         $fullext = '.media.' . $w . 'x' . $h;
         $fullext .= $crop ? '.crop' : '';
-        $fullext .= ".$ext";
+        $fullext .= ".{$ext}";
 
         $this->file = $file;
 

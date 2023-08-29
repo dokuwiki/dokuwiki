@@ -1,4 +1,7 @@
 <?php
+
+use dokuwiki\Utf8\PhpString;
+use dokuwiki\Utf8\Clean;
 /**
  * A simple renderer that allows downloading of code and file snippets
  *
@@ -21,8 +24,8 @@ class Doku_Renderer_code extends Doku_Renderer {
         if(!$language) $language = 'txt';
         $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language);
         if(!$filename) $filename = 'snippet.'.$language;
-        $filename = \dokuwiki\Utf8\PhpString::basename($filename);
-        $filename = \dokuwiki\Utf8\Clean::stripspecials($filename, '_');
+        $filename = PhpString::basename($filename);
+        $filename = Clean::stripspecials($filename, '_');
 
         // send CRLF to Windows clients
         if(strpos($INPUT->server->str('HTTP_USER_AGENT'), 'Windows') !== false) {
@@ -31,7 +34,7 @@ class Doku_Renderer_code extends Doku_Renderer {
 
         if($this->_codeblock == $INPUT->str('codeblock')) {
             header("Content-Type: text/plain; charset=utf-8");
-            header("Content-Disposition: attachment; filename=$filename");
+            header("Content-Disposition: attachment; filename={$filename}");
             header("X-Robots-Tag: noindex");
             echo trim($text, "\r\n");
             exit;

@@ -22,7 +22,7 @@ class StateStack
      */
     public function __construct($start)
     {
-        $this->stack = array($start);
+        $this->stack = [$start];
     }
 
     /**
@@ -31,7 +31,7 @@ class StateStack
      */
     public function getCurrent()
     {
-        return $this->stack[count($this->stack) - 1];
+        return $this->stack[(is_countable($this->stack) ? count($this->stack) : 0) - 1];
     }
 
     /**
@@ -41,7 +41,7 @@ class StateStack
      */
     public function enter($state)
     {
-        array_push($this->stack, $state);
+        $this->stack[] = $state;
     }
 
     /**
@@ -51,7 +51,7 @@ class StateStack
      */
     public function leave()
     {
-        if (count($this->stack) == 1) {
+        if ((is_countable($this->stack) ? count($this->stack) : 0) == 1) {
             return false;
         }
         array_pop($this->stack);

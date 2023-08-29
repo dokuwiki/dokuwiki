@@ -2,6 +2,7 @@
 
 namespace dokuwiki;
 
+use dokuwiki\Extension\Event;
 use dokuwiki\Action\AbstractAction;
 use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Action\Exception\ActionException;
@@ -19,7 +20,7 @@ class ActionRouter {
     protected $action;
 
     /** @var  ActionRouter */
-    protected static $instance = null;
+    protected static $instance;
 
     /** @var int transition counter */
     protected $transitions = 0;
@@ -42,7 +43,6 @@ class ActionRouter {
 
         $this->disabled = explode(',', $conf['disableactions']);
         $this->disabled = array_map('trim', $this->disabled);
-        $this->transitions = 0;
 
         $ACT = act_clean($ACT);
         $this->setupAction($ACT);
@@ -56,7 +56,7 @@ class ActionRouter {
      * @return ActionRouter
      */
     public static function getInstance($reinit = false) {
-        if((self::$instance === null) || $reinit) {
+        if((!self::$instance instanceof \dokuwiki\ActionRouter) || $reinit) {
             self::$instance = new ActionRouter();
         }
         return self::$instance;
@@ -76,7 +76,7 @@ class ActionRouter {
 
         try {
             // give plugins an opportunity to process the actionname
-            $evt = new Extension\Event('ACTION_ACT_PREPROCESS', $actionname);
+            $evt = new Event('ACTION_ACT_PREPROCESS', $actionname);
             if ($evt->advise_before()) {
                 $this->action = $this->loadAction($actionname);
                 $this->checkAction($this->action);
@@ -92,7 +92,7 @@ class ActionRouter {
             $actionname = $e->getNewAction();
 
             // this one should trigger a user message
-            if(is_a($e, ActionDisabledException::class)) {
+            if($e instanceof ActionDisabledException) {
                 msg('Action disabled: ' . hsc($presetup), -1);
             }
 
@@ -147,8 +147,8 @@ class ActionRouter {
      * @param \Exception|FatalException $e
      * @throws FatalException during unit testing
      */
-    protected function handleFatalException(\Exception $e) {
-        if(is_a($e, FatalException::class)) {
+    protected function handleFatalException(\Throwable $e) {
+        if($e instanceof FatalException) {
             http_status($e->getCode());
         } else {
             http_status(500);
@@ -178,8 +178,8 @@ class ActionRouter {
     public function loadAction($actionname) {
         $actionname = strtolower($actionname); // FIXME is this needed here? should we run a cleanup somewhere else?
         $parts = explode('_', $actionname);
-        while(!empty($parts)) {
-            $load = join('_', $parts);
+        while($parts !== []) {
+            $load = implode('_', $parts);
             $class = 'dokuwiki\\Action\\' . str_replace('_', '', ucwords($load, '_'));
             if(class_exists($class)) {
                 return new $class($actionname);

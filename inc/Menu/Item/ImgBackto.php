@@ -16,7 +16,7 @@ class ImgBackto extends AbstractItem {
 
         $this->svg = DOKU_INC . 'lib/images/menu/12-back_arrow-left.svg';
         $this->type = 'img_backto';
-        $this->params = array();
+        $this->params = [];
         $this->accesskey = 'b';
         $this->replacement = $ID;
     }

@@ -2,7 +2,7 @@
 
 use dokuwiki\Extension\Event;
 
-    if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
+    if(!defined('DOKU_INC')) define('DOKU_INC',__DIR__.'/../../');
     define('DOKU_MEDIAMANAGER',1);
 
     // for multi uploader:
@@ -35,16 +35,16 @@ use dokuwiki\Extension\Event;
     }
 
     global $INFO, $JSINFO;
-    $INFO = !empty($INFO) ? array_merge($INFO, mediainfo()) : mediainfo();
+    $INFO = empty($INFO) ? mediainfo() : array_merge($INFO, mediainfo());
     $JSINFO['id']        = '';
     $JSINFO['namespace'] = '';
     $AUTH = $INFO['perm'];    // shortcut for historical reasons
 
     // If this page is directly opened it means we are in popup mode not fullscreen
     // $fullscreen isn't defined by default it might lead to some PHP warnings
-    $fullscreen = isset($fullscreen) ? $fullscreen : false;
+    $fullscreen ??= false;
 
-    $tmp = array();
+    $tmp = [];
     Event::createAndTrigger('MEDIAMANAGER_STARTED', $tmp);
     session_write_close();  //close session
 

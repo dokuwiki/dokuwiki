@@ -35,7 +35,7 @@ abstract class AbstractItem {
     /** @var string the method to be used when this action is used in a form */
     protected $method = 'get';
     /** @var array parameters for the action (should contain the do parameter) */
-    protected $params = array();
+    protected $params = [];
     /** @var bool when true, a rel=nofollow should be used */
     protected $nofollow = true;
     /** @var string this item's label may contain a placeholder, which is replaced with this */
@@ -129,10 +129,7 @@ abstract class AbstractItem {
      * @return array
      */
     public function getLinkAttributes($classprefix = 'menuitem ') {
-        $attr = array(
-            'href' => $this->getLink(),
-            'title' => $this->getTitle(),
-        );
+        $attr = ['href' => $this->getLink(), 'title' => $this->getTitle()];
         if($this->isNofollow()) $attr['rel'] = 'nofollow';
         if($this->getAccesskey()) {
             $attr['accesskey'] = $this->getAccesskey();
@@ -154,7 +151,7 @@ abstract class AbstractItem {
      */
     public function asHtmlLink($classprefix = 'menuitem ', $svg = true) {
         $attr = buildAttributes($this->getLinkAttributes($classprefix));
-        $html = "<a $attr>";
+        $html = "<a {$attr}>";
         if($svg) {
             $html .= '<span>' . hsc($this->getLabel()) . '</span>';
             $html .= inlineSVG($this->getSvg());
@@ -240,14 +237,6 @@ abstract class AbstractItem {
      * @return array
      */
     public function getLegacyData() {
-        return array(
-            'accesskey' => $this->accesskey ?: null,
-            'type' => $this->type,
-            'id' => $this->id,
-            'method' => $this->method,
-            'params' => $this->params,
-            'nofollow' => $this->nofollow,
-            'replacement' => $this->replacement
-        );
+        return ['accesskey' => $this->accesskey ?: null, 'type' => $this->type, 'id' => $this->id, 'method' => $this->method, 'params' => $this->params, 'nofollow' => $this->nofollow, 'replacement' => $this->replacement];
     }
 }

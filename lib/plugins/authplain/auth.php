@@ -13,11 +13,19 @@ use dokuwiki\Utf8\Sort;
  */
 class auth_plugin_authplain extends DokuWiki_Auth_Plugin
 {
+    /**
+     * @var bool
+     */
+    public $success;
+    /**
+     * @var array<string, bool>
+     */
+    public $cando = [];
     /** @var array user cache */
-    protected $users = null;
+    protected $users;
 
     /** @var array filter pattern */
-    protected $pattern = array();
+    protected $pattern = [];
 
     /** @var bool safe version of preg_split */
     protected $pregsplit_safe = false;
@@ -90,7 +98,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
     public function getUserData($user, $requireGroups = true)
     {
         if ($this->users === null) $this->loadUserData();
-        return isset($this->users[$user]) ? $this->users[$user] : false;
+        return $this->users[$user] ?? false;
     }
 
     /**
@@ -107,11 +115,11 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
      */
     protected function createUserLine($user, $pass, $name, $mail, $grps)
     {
-        $groups   = join(',', $grps);
-        $userline = array($user, $pass, $name, $mail, $groups);
+        $groups   = implode(',', $grps);
+        $userline = [$user, $pass, $name, $mail, $groups];
         $userline = str_replace('\\', '\\\\', $userline); // escape \ as \\
         $userline = str_replace(':', '\\:', $userline); // escape : as \:
-        $userline = join(':', $userline)."\n";
+        $userline = implode(':', $userline)."\n";
         return $userline;
     }
 
@@ -148,7 +156,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
         $pass = auth_cryptPassword($pwd);
 
         // set default group if no groups specified
-        if (!is_array($grps)) $grps = array($conf['defaultgroup']);
+        if (!is_array($grps)) $grps = [$conf['defaultgroup']];
 
         // prepare user line
         $userline = $this->createUserLine($user, $pass, $name, $mail, $grps);
@@ -158,7 +166,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
             return null;
         }
 
-        $this->users[$user] = compact('pass', 'name', 'mail', 'grps');
+        $this->users[$user] = ['pass' => $pass, 'name' => $name, 'mail' => $mail, 'grps' => $grps];
         return $pwd;
     }
 
@@ -187,7 +195,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
             return false;
         }
 
-        if (!is_array($changes) || !count($changes)) return true;
+        if (!is_array($changes) || $changes === []) return true;
 
         // update userinfo with new data, remembering to encrypt any password
         $newuser = $user;
@@ -231,11 +239,11 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
     {
         global $config_cascade;
 
-        if (!is_array($users) || empty($users)) return 0;
+        if (!is_array($users) || $users === []) return 0;
 
         if ($this->users === null) $this->loadUserData();
 
-        $deleted = array();
+        $deleted = [];
         foreach ($users as $user) {
             // don't delete protected users
             if (!empty($this->users[$user]['protected'])) {
@@ -245,18 +253,18 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
             if (isset($this->users[$user])) $deleted[] = preg_quote($user, '/');
         }
 
-        if (empty($deleted)) return 0;
+        if ($deleted === []) return 0;
 
-        $pattern = '/^('.join('|', $deleted).'):/';
+        $pattern = '/^('.implode('|', $deleted).'):/';
         if (!io_deleteFromFile($config_cascade['plainauth.users']['default'], $pattern, true)) {
             msg($this->getLang('writefail'), -1);
             return 0;
         }
 
         // reload the user list and count the difference
-        $count = count($this->users);
+        $count = count((array) $this->users);
         $this->loadUserData();
-        $count -= count($this->users);
+        $count -= count((array) $this->users);
         return $count;
     }
 
@@ -268,12 +276,12 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
      * @param array $filter
      * @return int
      */
-    public function getUserCount($filter = array())
+    public function getUserCount($filter = [])
     {
 
         if ($this->users === null) $this->loadUserData();
 
-        if (!count($filter)) return count($this->users);
+        if ($filter === []) return count((array) $this->users);
 
         $count = 0;
         $this->constructPattern($filter);
@@ -295,7 +303,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
      * @param   array $filter array of field/pattern pairs
      * @return  array userinfo (refer getUserData for internal userinfo details)
      */
-    public function retrieveUsers($start = 0, $limit = 0, $filter = array())
+    public function retrieveUsers($start = 0, $limit = 0, $filter = [])
     {
 
         if ($this->users === null) $this->loadUserData();
@@ -304,7 +312,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
 
         $i     = 0;
         $count = 0;
-        $out   = array();
+        $out   = [];
         $this->constructPattern($filter);
 
         foreach ($this->users as $user => $info) {
@@ -334,7 +342,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
         $groups = [];
 
         if ($this->users === null) $this->loadUserData();
-        foreach($this->users as $user => $info) {
+        foreach($this->users as $info) {
             $groups = array_merge($groups, array_diff($info['grps'], $groups));
         }
         Sort::ksort($groups);
@@ -404,7 +412,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
      */
     protected function readUserFile($file)
     {
-        $users = array();
+        $users = [];
         if (!file_exists($file)) return $users;
 
         $lines = file($file);
@@ -436,7 +444,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
     protected function splitUserData($line)
     {
         $data = preg_split('/(?<![^\\\\]\\\\)\:/', $line, 5);       // allow for : escaped as \:
-        if(count($data) < 5) {
+        if((is_countable($data) ? count($data) : 0) < 5) {
             $data = array_pad($data, 5, '');
             Logger::error('User line with less than 5 fields. Possibly corruption in your user file', $data);
         }
@@ -458,9 +466,9 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
             if ($item == 'user') {
                 if (!preg_match($pattern, $user)) return false;
             } elseif ($item == 'grps') {
-                if (!count(preg_grep($pattern, $info['grps']))) return false;
-            } else {
-                if (!preg_match($pattern, $info[$item])) return false;
+                if (!(is_countable(preg_grep($pattern, $info['grps'])) ? count(preg_grep($pattern, $info['grps'])) : 0)) return false;
+            } elseif (!preg_match($pattern, $info[$item])) {
+                return false;
             }
         }
         return true;
@@ -473,7 +481,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin
      */
     protected function constructPattern($filter)
     {
-        $this->pattern = array();
+        $this->pattern = [];
         foreach ($filter as $item => $pattern) {
             $this->pattern[$item] = '/'.str_replace('/', '\/', $pattern).'/i'; // allow regex characters
         }

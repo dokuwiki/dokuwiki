@@ -16,7 +16,7 @@ class Top extends AbstractItem {
 
         $this->svg = DOKU_INC . 'lib/images/menu/10-top_arrow-up.svg';
         $this->accesskey = 't';
-        $this->params = array('do' => '');
+        $this->params = ['do' => ''];
         $this->id = '#dokuwiki__top';
         $this->context = self::CTX_DESKTOP;
     }

@@ -16,7 +16,7 @@ class FieldsetOpenElement extends TagOpenElement
      * @param string $legend
      * @param array $attributes
      */
-    public function __construct($legend='', $attributes = array())
+    public function __construct($legend='', $attributes = [])
     {
         // this is a bit messy and we just do it for the nicer class hierarchy
         // the parent would expect the tag in $value but we're storing the

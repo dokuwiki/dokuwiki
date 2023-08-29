@@ -20,7 +20,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
     <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
     <?php tpl_metaheaders() ?>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <?php echo tpl_favicon(array('favicon', 'mobile')) ?>
+    <?php echo tpl_favicon(['favicon', 'mobile']) ?>
     <?php tpl_includeFile('meta.html') ?>
 </head>
 
@@ -28,7 +28,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
     <div id="dokuwiki__site"><div id="dokuwiki__top" class="site <?php echo tpl_classes(); ?> <?php
         echo ($showSidebar) ? 'showSidebar' : ''; ?> <?php echo ($hasSidebar) ? 'hasSidebar' : ''; ?>">
 
-        <?php include('tpl_header.php') ?>
+        <?php include(__DIR__ . '/tpl_header.php') ?>
 
         <div class="wrapper group">
 
@@ -79,7 +79,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
             </nav>
         </div><!-- /wrapper -->
 
-        <?php include('tpl_footer.php') ?>
+        <?php include(__DIR__ . '/tpl_footer.php') ?>
     </div></div><!-- /site -->
 
     <div class="no"><?php tpl_indexerWebBug() /* provide DokuWiki housekeeping, required in all templates */ ?></div>

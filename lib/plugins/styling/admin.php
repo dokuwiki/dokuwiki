@@ -1,4 +1,5 @@
 <?php
+use dokuwiki\StyleUtils;
 /**
  * DokuWiki Plugin styling (Admin Component)
  *
@@ -61,14 +62,14 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
         global $conf;
         global $ID;
 
-        $styleUtil = new \dokuwiki\StyleUtils($conf['template'], true, true);
+        $styleUtil = new StyleUtils($conf['template'], true, true);
         $styleini     = $styleUtil->cssStyleini();
         $replacements = $styleini['replacements'];
 
         if ($this->ispopup) {
             $target = DOKU_BASE.'lib/plugins/styling/popup.php';
         } else {
-            $target = wl($ID, array('do' => 'admin', 'page' => 'styling'));
+            $target = wl($ID, ['do' => 'admin', 'page' => 'styling']);
         }
 
         if (empty($replacements)) {
@@ -219,7 +220,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
         }
 
         io_makeFileDir($ini);
-        io_saveFile($ini, "$old\n\n$new");
+        io_saveFile($ini, "{$old}\n\n{$new}");
     }
 }
 

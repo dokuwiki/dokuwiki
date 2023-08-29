@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Remote;
 
+use dokuwiki\Extension\PluginInterface;
+use dokuwiki\Input\Input;
 use dokuwiki\Extension\Event;
 use dokuwiki\Extension\RemotePlugin;
 
@@ -37,16 +39,9 @@ use dokuwiki\Extension\RemotePlugin;
 class Api
 {
 
-    /**
-     * @var ApiCore
-     */
-    private $coreMethods = null;
+    private ?ApiCore $coreMethods = null;
 
-    /**
-     * @var array remote methods provided by dokuwiki plugins - will be filled lazy via
-     * {@see dokuwiki\Remote\RemoteAPI#getPluginMethods}
-     */
-    private $pluginMethods = null;
+    private ?array $pluginMethods = null;
 
     /**
      * @var array contains custom calls to the api. Plugins can use the XML_CALL_REGISTER event.
@@ -54,7 +49,7 @@ class Api
      *
      * The remote method name is the same as in the remote name returned by _getMethods().
      */
-    private $pluginCustomCalls = null;
+    private array $pluginCustomCalls = [];
 
     private $dateTransformation;
     private $fileTransformation;
@@ -64,8 +59,8 @@ class Api
      */
     public function __construct()
     {
-        $this->dateTransformation = array($this, 'dummyTransformation');
-        $this->fileTransformation = array($this, 'dummyTransformation');
+        $this->dateTransformation = [$this, 'dummyTransformation'];
+        $this->fileTransformation = [$this, 'dummyTransformation'];
     }
 
     /**
@@ -87,13 +82,13 @@ class Api
      * @return mixed result of method call, must be a primitive type.
      * @throws RemoteException
      */
-    public function call($method, $args = array())
+    public function call($method, $args = [])
     {
         if ($args === null) {
-            $args = array();
+            $args = [];
         }
         // Ensure we have at least one '.' in $method
-        list($type, $pluginName, /* $call */) = sexplode('.', $method . '.', 3, '');
+        [$type, $pluginName, ] = sexplode('.', $method . '.', 3, '');
         if ($type === 'plugin') {
             return $this->callPlugin($pluginName, $method, $args);
         }
@@ -129,8 +124,8 @@ class Api
         if (!array_key_exists($method, $customCalls)) {
             throw new RemoteException('Method does not exist', -32603);
         }
-        list($plugin, $method) = $customCalls[$method];
-        $fullMethod = "plugin.$plugin.$method";
+        [$plugin, $method] = $customCalls[$method];
+        $fullMethod = "plugin.{$plugin}.{$method}";
         return $this->callPlugin($plugin, $fullMethod, $args);
     }
 
@@ -142,8 +137,8 @@ class Api
      */
     private function getCustomCallPlugins()
     {
-        if ($this->pluginCustomCalls === null) {
-            $data = array();
+        if ($this->pluginCustomCalls === []) {
+            $data = [];
             Event::createAndTrigger('RPC_CALL_ADD', $data);
             $this->pluginCustomCalls = $data;
         }
@@ -163,14 +158,14 @@ class Api
     {
         $plugin = plugin_load('remote', $pluginName);
         $methods = $this->getPluginMethods();
-        if (!$plugin) {
+        if (!$plugin instanceof PluginInterface) {
             throw new RemoteException('Method does not exist', -32603);
         }
         $this->checkAccess($methods[$method]);
         $name = $this->getMethodName($methods, $method);
         try {
-            set_error_handler(array($this, "argumentWarningHandler"), E_WARNING); // for PHP <7.1
-            return call_user_func_array(array($plugin, $name), $args);
+            set_error_handler([$this, "argumentWarningHandler"], E_WARNING); // for PHP <7.1
+            return call_user_func_array([$plugin, $name], $args);
         } catch (\ArgumentCountError $th) {
             throw new RemoteException('Method does not exist - wrong parameter count.', -32603);
         } finally {
@@ -195,8 +190,8 @@ class Api
         }
         $this->checkArgumentLength($coreMethods[$method], $args);
         try {
-            set_error_handler(array($this, "argumentWarningHandler"), E_WARNING); // for PHP <7.1
-            return call_user_func_array(array($this->coreMethods, $this->getMethodName($coreMethods, $method)), $args);
+            set_error_handler([$this, "argumentWarningHandler"], E_WARNING); // for PHP <7.1
+            return call_user_func_array([$this->coreMethods, $this->getMethodName($coreMethods, $method)], $args);
         } catch (\ArgumentCountError $th) {
             throw new RemoteException('Method does not exist - wrong parameter count.', -32603);
         } finally {
@@ -214,10 +209,8 @@ class Api
     {
         if (!isset($methodMeta['public'])) {
             $this->forceAccess();
-        } else {
-            if ($methodMeta['public'] == '0') {
-                $this->forceAccess();
-            }
+        } elseif ($methodMeta['public'] == '0') {
+            $this->forceAccess();
         }
     }
 
@@ -230,7 +223,7 @@ class Api
      */
     private function checkArgumentLength($methodMeta, $args)
     {
-        if (count($methodMeta['args']) < count($args)) {
+        if ((is_countable($methodMeta['args']) ? count($methodMeta['args']) : 0) < count($args)) {
             throw new RemoteException('Method does not exist - wrong parameter count.', -32603);
         }
     }
@@ -261,7 +254,7 @@ class Api
     {
         global $conf;
         global $USERINFO;
-        /** @var \dokuwiki\Input\Input $INPUT */
+        /** @var Input $INPUT */
         global $INPUT;
 
         if (!$conf['remote']) {
@@ -302,7 +295,7 @@ class Api
     public function getPluginMethods()
     {
         if ($this->pluginMethods === null) {
-            $this->pluginMethods = array();
+            $this->pluginMethods = [];
             $plugins = plugin_list('remote');
 
             foreach ($plugins as $pluginName) {
@@ -310,7 +303,7 @@ class Api
                 $plugin = plugin_load('remote', $pluginName);
                 if (!is_subclass_of($plugin, 'dokuwiki\Extension\RemotePlugin')) {
                     throw new RemoteException(
-                        "Plugin $pluginName does not implement dokuwiki\Plugin\DokuWiki_Remote_Plugin"
+                        "Plugin {$pluginName} does not implement dokuwiki\Plugin\DokuWiki_Remote_Plugin"
                     );
                 }
 
@@ -321,7 +314,7 @@ class Api
                 }
 
                 foreach ($methods as $method => $meta) {
-                    $this->pluginMethods["plugin.$pluginName.$method"] = $meta;
+                    $this->pluginMethods["plugin.{$pluginName}.{$method}"] = $meta;
                 }
             }
         }
@@ -337,8 +330,8 @@ class Api
      */
     public function getCoreMethods($apiCore = null)
     {
-        if ($this->coreMethods === null) {
-            if ($apiCore === null) {
+        if (!$this->coreMethods instanceof ApiCore) {
+            if (!$apiCore instanceof ApiCore) {
                 $this->coreMethods = new ApiCore($this);
             } else {
                 $this->coreMethods = $apiCore;

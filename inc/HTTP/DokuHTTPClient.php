@@ -60,9 +60,7 @@ class DokuHTTPClient extends HTTPClient {
      * @return bool
      */
     public function sendRequest($url,$data='',$method='GET'){
-        $httpdata = array('url'    => $url,
-            'data'   => $data,
-            'method' => $method);
+        $httpdata = ['url'    => $url, 'data'   => $data, 'method' => $method];
         $evt = new \Doku_Event('HTTPCLIENT_REQUEST_SEND',$httpdata);
         if($evt->advise_before()){
             $url    = $httpdata['url'];

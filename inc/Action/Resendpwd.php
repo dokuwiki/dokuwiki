@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\UserResendPwd;
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Extension\AuthPlugin;
@@ -46,7 +47,7 @@ class Resendpwd extends AbstractAclAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\UserResendPwd)->show();
+        (new UserResendPwd)->show();
     }
 
     /**
@@ -113,7 +114,7 @@ class Resendpwd extends AbstractAclAction
                 }
 
                 // change it
-                if (!$auth->triggerUserMod('modify', array($user, array('pass' => $pass)))) {
+                if (!$auth->triggerUserMod('modify', [$user, ['pass' => $pass]])) {
                     msg($lang['proffail'], -1);
                     return false;
                 }
@@ -121,7 +122,7 @@ class Resendpwd extends AbstractAclAction
             } else { // autogenerate the password and send by mail
 
                 $pass = auth_pwgen($user);
-                if (!$auth->triggerUserMod('modify', array($user, array('pass' => $pass)))) {
+                if (!$auth->triggerUserMod('modify', [$user, ['pass' => $pass]])) {
                     msg($lang['proffail'], -1);
                     return false;
                 }
@@ -157,16 +158,12 @@ class Resendpwd extends AbstractAclAction
             // generate auth token
             $token = md5(auth_randombytes(16)); // random secret
             $tfile = $conf['cachedir'] .'/'. $token[0] .'/'. $token .'.pwauth';
-            $url = wl('', array('do' => 'resendpwd', 'pwauth' => $token), true, '&');
+            $url = wl('', ['do' => 'resendpwd', 'pwauth' => $token], true, '&');
 
             io_saveFile($tfile, $user);
 
             $text = rawLocale('pwconfirm');
-            $trep = array(
-                'FULLNAME' => $userinfo['name'],
-                'LOGIN' => $user,
-                'CONFIRM' => $url
-            );
+            $trep = ['FULLNAME' => $userinfo['name'], 'LOGIN' => $user, 'CONFIRM' => $url];
 
             $mail = new \Mailer();
             $mail->to($userinfo['name'] .' <'. $userinfo['mail'] .'>');

@@ -111,8 +111,6 @@ class PageRevisions extends Revisions
         print $form->toHTML('Revisions');
 
         // provide navigation for paginated revision list (of pages and/or media files)
-        print $this->navigation($first, $hasNext, function ($n) {
-            return array('do' => 'revisions', 'first' => $n);
-        });
+        print $this->navigation($first, $hasNext, static fn($n) => ['do' => 'revisions', 'first' => $n]);
     }
 }

@@ -4,8 +4,8 @@ namespace dokuwiki\Parsing\ParserMode;
 
 class Externallink extends AbstractMode
 {
-    protected $schemes = array();
-    protected $patterns = array();
+    protected $schemes = [];
+    protected $patterns = [];
 
     /** @inheritdoc */
     public function preConnect()

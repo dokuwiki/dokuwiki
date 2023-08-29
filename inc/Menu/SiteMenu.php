@@ -11,10 +11,6 @@ class SiteMenu extends AbstractMenu {
 
     protected $view = 'site';
 
-    protected $types = array(
-        'Recent',
-        'Media',
-        'Index'
-    );
+    protected $types = ['Recent', 'Media', 'Index'];
 
 }

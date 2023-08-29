@@ -8,7 +8,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
+if(!defined('DOKU_INC')) define('DOKU_INC',__DIR__.'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 if(!defined('NL')) define('NL',"\n");
 require_once(DOKU_INC.'inc/init.php');

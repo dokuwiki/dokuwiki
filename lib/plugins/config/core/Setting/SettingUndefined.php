@@ -34,7 +34,7 @@ class SettingUndefined extends SettingHidden {
             'conf' . '[\'' . $this->getArrayKey() . '\']</span>';
         $input = $plugin->getLang($this->errorMessage);
 
-        return array($label, $input);
+        return [$label, $input];
     }
 
 }

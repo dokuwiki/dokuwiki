@@ -37,7 +37,7 @@ class action_plugin_styling extends DokuWiki_Action_Plugin
         if (!$admin->isAccessibleByCurrentUser()) return;
 
         // set preview
-        $len = count($event->data['link']);
+        $len = is_countable($event->data['link']) ? count($event->data['link']) : 0;
         for ($i = 0; $i < $len; $i++) {
             if ($event->data['link'][$i]['rel'] == 'stylesheet' &&
                 strpos($event->data['link'][$i]['href'], 'lib/exe/css.php') !== false

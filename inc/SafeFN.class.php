@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\Utf8\Unicode;
 /**
  * Class to safely store UTF-8 in a Filename
  *
@@ -16,9 +17,9 @@
 class SafeFN {
 
     // 'safe' characters are a superset of $plain, $pre_indicator and $post_indicator
-    private static $plain = '-./[_0123456789abcdefghijklmnopqrstuvwxyz'; // these characters aren't converted
-    private static $pre_indicator = '%';
-    private static $post_indicator = ']';
+    private static string $plain = '-./[_0123456789abcdefghijklmnopqrstuvwxyz'; // these characters aren't converted
+    private static string $pre_indicator = '%';
+    private static string $post_indicator = ']';
 
     /**
      * Convert an UTF-8 string to a safe ASCII String
@@ -45,7 +46,7 @@ class SafeFN {
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
     public static function encode($filename) {
-        return self::unicodeToSafe(\dokuwiki\Utf8\Unicode::fromUtf8($filename));
+        return self::unicodeToSafe(Unicode::fromUtf8($filename));
     }
 
     /**
@@ -74,7 +75,7 @@ class SafeFN {
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
     public static function decode($filename) {
-        return \dokuwiki\Utf8\Unicode::toUtf8(self::safeToUnicode(strtolower($filename)));
+        return Unicode::toUtf8(self::safeToUnicode(strtolower($filename)));
     }
 
     public static function validatePrintableUtf8($printable_utf8) {
@@ -105,8 +106,7 @@ class SafeFN {
                     $converted = false;
                 }
                 $safe .= chr($codepoint);
-
-            } else if ($codepoint == ord(self::$pre_indicator)) {
+            } elseif ($codepoint == ord(self::$pre_indicator)) {
                 $safe .= self::$pre_indicator;
                 $converted = true;
             } else {
@@ -128,7 +128,7 @@ class SafeFN {
      */
     private static function safeToUnicode($safe) {
 
-        $unicode = array();
+        $unicode = [];
         $split = preg_split('#(?=['.self::$post_indicator.self::$pre_indicator.'])#',$safe,-1,PREG_SPLIT_NO_EMPTY);
 
         $converted = false;
@@ -141,7 +141,7 @@ class SafeFN {
                     $unicode[] = ord($sub[$i]);
                 }
                 $converted = false;
-            } else if ($len==1) {
+            } elseif ($len==1) {
                 // a pre_indicator character in the real data
                 $unicode[] = ord($sub);
                 $converted = true;

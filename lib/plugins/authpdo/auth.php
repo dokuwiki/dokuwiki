@@ -1,4 +1,5 @@
 <?php
+use dokuwiki\PassHash;
 use dokuwiki\Utf8\Sort;
 
 /**
@@ -14,11 +15,19 @@ use dokuwiki\Utf8\Sort;
 class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
 {
 
+    /**
+     * @var bool
+     */
+    public $success;
+    /**
+     * @var array<string, bool>
+     */
+    public $cando;
     /** @var PDO */
     protected $pdo;
 
     /** @var null|array The list of all groups */
-    protected $groupcache = null;
+    protected $groupcache;
 
     /**
      * Constructor.
@@ -44,11 +53,13 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
                 $this->getConf('dsn'),
                 $this->getConf('user'),
                 conf_decodeString($this->getConf('pass')),
-                array(
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // always fetch as array
-                    PDO::ATTR_EMULATE_PREPARES => true, // emulating prepares allows us to reuse param names
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // we want exceptions, not error codes
-                )
+                [
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    // always fetch as array
+                    PDO::ATTR_EMULATE_PREPARES => true,
+                    // emulating prepares allows us to reuse param names
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                ]
             );
         } catch (PDOException $e) {
             $this->debugMsg($e);
@@ -59,94 +70,52 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
 
         // can Users be created?
         $this->cando['addUser'] = $this->checkConfig(
-            array(
-                'select-user',
-                'select-user-groups',
-                'select-groups',
-                'insert-user',
-                'insert-group',
-                'join-group'
-            )
+            ['select-user', 'select-user-groups', 'select-groups', 'insert-user', 'insert-group', 'join-group']
         );
 
         // can Users be deleted?
         $this->cando['delUser'] = $this->checkConfig(
-            array(
-                'select-user',
-                'select-user-groups',
-                'select-groups',
-                'leave-group',
-                'delete-user'
-            )
+            ['select-user', 'select-user-groups', 'select-groups', 'leave-group', 'delete-user']
         );
 
         // can login names be changed?
         $this->cando['modLogin'] = $this->checkConfig(
-            array(
-                'select-user',
-                'select-user-groups',
-                'update-user-login'
-            )
+            ['select-user', 'select-user-groups', 'update-user-login']
         );
 
         // can passwords be changed?
         $this->cando['modPass'] = $this->checkConfig(
-            array(
-                'select-user',
-                'select-user-groups',
-                'update-user-pass'
-            )
+            ['select-user', 'select-user-groups', 'update-user-pass']
         );
 
         // can real names be changed?
         $this->cando['modName'] = $this->checkConfig(
-            array(
-                'select-user',
-                'select-user-groups',
-                'update-user-info:name'
-            )
+            ['select-user', 'select-user-groups', 'update-user-info:name']
         );
 
         // can real email be changed?
         $this->cando['modMail'] = $this->checkConfig(
-            array(
-                'select-user',
-                'select-user-groups',
-                'update-user-info:mail'
-            )
+            ['select-user', 'select-user-groups', 'update-user-info:mail']
         );
 
         // can groups be changed?
         $this->cando['modGroups'] = $this->checkConfig(
-            array(
-                'select-user',
-                'select-user-groups',
-                'select-groups',
-                'leave-group',
-                'join-group',
-                'insert-group'
-            )
+            ['select-user', 'select-user-groups', 'select-groups', 'leave-group', 'join-group', 'insert-group']
         );
 
         // can a filtered list of users be retrieved?
         $this->cando['getUsers'] = $this->checkConfig(
-            array(
-                'list-users'
-            )
+            ['list-users']
         );
 
         // can the number of users be retrieved?
         $this->cando['getUserCount'] = $this->checkConfig(
-            array(
-                'count-users'
-            )
+            ['count-users']
         );
 
         // can a list of available groups be retrieved?
         $this->cando['getGroups'] = $this->checkConfig(
-            array(
-                'select-groups'
-            )
+            ['select-groups']
         );
 
         $this->success = true;
@@ -166,18 +135,18 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
         if ($userdata == false) return false;
 
         // password checking done in SQL?
-        if ($this->checkConfig(array('check-pass'))) {
+        if ($this->checkConfig(['check-pass'])) {
             $userdata['clear'] = $pass;
             $userdata['hash'] = auth_cryptPassword($pass);
             $result = $this->query($this->getConf('check-pass'), $userdata);
             if ($result === false) return false;
-            return (count($result) == 1);
+            return ((is_countable($result) ? count($result) : 0) == 1);
         }
 
         // we do password checking on our own
         if (isset($userdata['hash'])) {
             // hashed password
-            $passhash = new \dokuwiki\PassHash();
+            $passhash = new PassHash();
             return $passhash->verify_hash($pass, $userdata['hash']);
         } else {
             // clear text password in the database O_o
@@ -243,11 +212,11 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
         }
 
         // prepare data
-        if ($grps == null) $grps = array();
+        if ($grps == null) $grps = [];
         array_unshift($grps, $conf['defaultgroup']);
         $grps = array_unique($grps);
         $hash = auth_cryptPassword($clear);
-        $userdata = compact('user', 'clear', 'hash', 'name', 'mail');
+        $userdata = ['user' => $user, 'clear' => $clear, 'hash' => $hash, 'name' => $name, 'mail' => $mail];
 
         // action protected by transaction
         $this->pdo->beginTransaction();
@@ -276,13 +245,6 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
         }
         $this->pdo->commit();
         return true;
-
-        // something went wrong, rollback
-        FAIL:
-        $this->pdo->rollBack();
-        $this->debugMsg('Transaction rolled back', 0, __LINE__);
-        msg($this->getLang('writefail'), -1);
-        return null; // return error
     }
 
     /**
@@ -367,13 +329,6 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
         }
         $this->pdo->commit();
         return true;
-
-        // something went wrong, rollback
-        FAIL:
-        $this->pdo->rollBack();
-        $this->debugMsg('Transaction rolled back', 0, __LINE__);
-        msg($this->getLang('writefail'), -1);
-        return false; // return error
     }
 
     /**
@@ -406,10 +361,10 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
     public function retrieveUsers($start = 0, $limit = -1, $filter = null)
     {
         if ($limit < 0) $limit = 10000; // we don't support no limit
-        if (is_null($filter)) $filter = array();
+        if (is_null($filter)) $filter = [];
 
         if (isset($filter['grps'])) $filter['group'] = $filter['grps'];
-        foreach (array('user', 'name', 'mail', 'group') as $key) {
+        foreach (['user', 'name', 'mail', 'group'] as $key) {
             if (!isset($filter[$key])) {
                 $filter[$key] = '%';
             } else {
@@ -421,13 +376,13 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
         $filter['limit'] = (int)$limit;
 
         $result = $this->query($this->getConf('list-users'), $filter);
-        if (!$result) return array();
-        $users = array();
+        if (!$result) return [];
+        $users = [];
         if (is_array($result)) {
             foreach ($result as $row) {
                 if (!isset($row['user'])) {
                     $this->debugMsg("list-users statement did not return 'user' attribute", -1, __LINE__);
-                    return array();
+                    return [];
                 }
                 $users[] = $this->getUserData($row['user']);
             }
@@ -443,12 +398,12 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
      * @param array $filter array of field/pattern pairs, empty array for no filter
      * @return int
      */
-    public function getUserCount($filter = array())
+    public function getUserCount($filter = [])
     {
-        if (is_null($filter)) $filter = array();
+        if (is_null($filter)) $filter = [];
 
         if (isset($filter['grps'])) $filter['group'] = $filter['grps'];
-        foreach (array('user', 'name', 'mail', 'group') as $key) {
+        foreach (['user', 'name', 'mail', 'group'] as $key) {
             if (!isset($filter[$key])) {
                 $filter[$key] = '%';
             } else {
@@ -473,10 +428,9 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
     {
         $sql = $this->getConf('insert-group');
 
-        $result = $this->query($sql, array(':group' => $group));
+        $result = $this->query($sql, [':group' => $group]);
         $this->clearGroupCache();
-        if ($result === false) return false;
-        return true;
+        return $result !== false;
     }
 
     /**
@@ -491,7 +445,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
     public function retrieveGroups($start = 0, $limit = 0)
     {
         $groups = array_keys($this->selectGroups());
-        if ($groups === false) return array();
+        if ($groups === false) return [];
 
         if (!$limit) {
             return array_splice($groups, $start);
@@ -510,10 +464,10 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
     {
         $sql = $this->getConf('select-user');
 
-        $result = $this->query($sql, array(':user' => $user));
+        $result = $this->query($sql, [':user' => $user]);
         if (!$result) return false;
 
-        if (count($result) > 1) {
+        if ((is_countable($result) ? count($result) : 0) > 1) {
             $this->debugMsg('Found more than one matching user', -1, __LINE__);
             return false;
         }
@@ -525,7 +479,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
             $this->debugMsg("Statement did not return 'user' attribute", -1, __LINE__);
             $dataok = false;
         }
-        if (!isset($data['hash']) && !isset($data['clear']) && !$this->checkConfig(array('check-pass'))) {
+        if (!isset($data['hash']) && !isset($data['clear']) && !$this->checkConfig(['check-pass'])) {
             $this->debugMsg("Statement did not return 'clear' or 'hash' attribute", -1, __LINE__);
             $dataok = false;
         }
@@ -568,10 +522,6 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
         }
         $this->pdo->commit();
         return true;
-
-        FAIL:
-        $this->pdo->rollBack();
-        return false;
     }
 
     /**
@@ -587,7 +537,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
         $result = $this->query($sql, $userdata);
         if ($result === false) return false;
 
-        $groups = array($conf['defaultgroup']); // always add default config
+        $groups = [$conf['defaultgroup']]; // always add default config
         if (is_array($result)) {
             foreach ($result as $row) {
                 if (!isset($row['group'])) {
@@ -618,7 +568,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
         $result = $this->query($sql);
         if ($result === false) return false;
 
-        $groups = array();
+        $groups = [];
         if (is_array($result)) {
             foreach ($result as $row) {
                 if (!isset($row['group'])) {
@@ -658,8 +608,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
         $data = array_merge($userdata, $groupdata);
         $sql = $this->getConf('join-group');
         $result = $this->query($sql, $data);
-        if ($result === false) return false;
-        return true;
+        return $result !== false;
     }
 
     /**
@@ -674,8 +623,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
         $data = array_merge($userdata, $groupdata);
         $sql = $this->getConf('leave-group');
         $result = $this->query($sql, $data);
-        if ($result === false) return false;
-        return true;
+        return $result !== false;
     }
 
     /**
@@ -685,7 +633,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
      * @param array $arguments Named parameters to be used in the statement
      * @return array|int|bool The result as associative array for SELECTs, affected rows for others, false on error
      */
-    protected function query($sql, $arguments = array())
+    protected function query($sql, $arguments = [])
     {
         $sql = trim($sql);
         if (empty($sql)) {
@@ -694,7 +642,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
         }
 
         // execute
-        $params = array();
+        $params = [];
         $sth = $this->pdo->prepare($sql);
         $result = false;
         try {
@@ -702,8 +650,8 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
             foreach ($arguments as $key => $value) {
                 if (is_array($value)) continue;
                 if (is_object($value)) continue;
-                if ($key[0] != ':') $key = ":$key"; // prefix with colon if needed
-                if (strpos($sql, $key) === false) continue; // skip if parameter is missing
+                if ($key[0] != ':') $key = ":{$key}"; // prefix with colon if needed
+                if (strpos($sql, (string) $key) === false) continue; // skip if parameter is missing
 
                 if (is_int($value)) {
                     $sth->bindValue($key, $value, PDO::PARAM_INT);
@@ -739,10 +687,9 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
             $line = $trace[0]['line'];
             $dsql = $this->debugSQL($sql, $params, !defined('DOKU_UNITTEST'));
             $this->debugMsg($e, -1, $line);
-            $this->debugMsg("SQL: <pre>$dsql</pre>", -1, $line);
+            $this->debugMsg("SQL: <pre>{$dsql}</pre>", -1, $line);
         }
         $sth->closeCursor();
-        $sth = null;
 
         return $result;
     }
@@ -791,7 +738,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
             if (!$sql) return false;
             // check if needed params are there
             foreach ($params as $param) {
-                if (strpos($sql, ":$param") === false) return false;
+                if (strpos($sql, ":{$param}") === false) return false;
             }
         }
 

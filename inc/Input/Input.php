@@ -206,7 +206,7 @@ class Input
         if (!isset($this->access[$name])) return $default;
         if (is_array($this->access[$name])) return $default; // we don't allow arrays
         $value = $this->applyfilter($this->access[$name]);
-        $found = array_search($value, $valids);
+        $found = array_search($value, $valids, true);
         if ($found !== false) return $valids[$found]; // return the valid value for type safety
         return $default;
     }
@@ -240,13 +240,13 @@ class Input
      * @param bool $nonempty Return $default if parameter is set but empty()
      * @return array
      */
-    public function arr($name, $default = array(), $nonempty = false)
+    public function arr($name, $default = [], $nonempty = false)
     {
         if (!isset($this->access[$name])) return $default;
         if (!is_array($this->access[$name])) return $default;
         if ($nonempty && empty($this->access[$name])) return $default;
 
-        return (array)$this->access[$name];
+        return $this->access[$name];
     }
 
     /**

@@ -28,24 +28,25 @@ define('PREG_PATTERN_VALID_LANGUAGE', '#[^a-zA-Z0-9\-_]#');
  */
 abstract class Doku_Renderer extends Plugin {
     /** @var array Settings, control the behavior of the renderer */
-    public $info = array(
-        'cache' => true, // may the rendered result cached?
-        'toc'   => true, // render the TOC?
-    );
+    public $info = [
+        'cache' => true,
+        // may the rendered result cached?
+        'toc'   => true,
+    ];
 
     /** @var array contains the smiley configuration, set in p_render() */
-    public $smileys = array();
+    public $smileys = [];
     /** @var array contains the entity configuration, set in p_render() */
-    public $entities = array();
+    public $entities = [];
     /** @var array contains the acronym configuration, set in p_render() */
-    public $acronyms = array();
+    public $acronyms = [];
     /** @var array contains the interwiki configuration, set in p_render() */
-    public $interwiki = array();
+    public $interwiki = [];
     /** @var string|int link pages and media against this revision */
     public $date_at = '';
 
     /** @var array the list of headers used to create unique link ids */
-    protected $headers = array();
+    protected $headers = [];
 
     /**
      * @var string the rendered document, this will be cached after the renderer ran through
@@ -59,7 +60,7 @@ abstract class Doku_Renderer extends Plugin {
      * completely reset the state of the renderer to be reused for a new document
      */
     public function reset(){
-        $this->headers = array();
+        $this->headers = [];
         $this->doc           = '';
         $this->info['cache'] = true;
         $this->info['toc']   = true;
@@ -130,7 +131,7 @@ abstract class Doku_Renderer extends Plugin {
         foreach($instructions as $instruction) {
             // execute the callback against ourself
             if(method_exists($this, $instruction[0])) {
-                call_user_func_array(array($this, $instruction[0]), $instruction[1] ? $instruction[1] : array());
+                call_user_func_array([$this, $instruction[0]], $instruction[1] ?: []);
             }
         }
     }
@@ -781,7 +782,7 @@ abstract class Doku_Renderer extends Plugin {
         global $conf;
 
         //if there is a hash we use the ancor name only
-        list($name, $hash) = sexplode('#', $name, 2);
+        [$name, $hash] = sexplode('#', $name, 2);
         if($hash) return $hash;
 
         if($conf['useslash']) {
@@ -822,14 +823,12 @@ abstract class Doku_Renderer extends Plugin {
         }
 
         //replace placeholder
-        if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#', $url)) {
+        if (preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#', $url)) {
             //use placeholders
             $url    = str_replace('{URL}', rawurlencode($reference), $url);
             //wiki names will be cleaned next, otherwise urlencode unsafe chars
             $url    = str_replace('{NAME}', ($url[0] === ':') ? $reference :
-                                  preg_replace_callback('/[[\\\\\]^`{|}#%]/', function($match) {
-                                    return rawurlencode($match[0]);
-                                  }, $reference), $url);
+                                  preg_replace_callback('/[[\\\\\]^`{|}#%]/', static fn($match) => rawurlencode($match[0]), $reference), $url);
             $parsed = parse_url($reference);
             if (empty($parsed['scheme'])) $parsed['scheme'] = '';
             if (empty($parsed['host'])) $parsed['host'] = '';
@@ -843,17 +842,17 @@ abstract class Doku_Renderer extends Plugin {
                 '{PATH}' => $parsed['path'],
                 '{QUERY}' => $parsed['query'] ,
             ]);
-        } else if($url != '') {
+        } elseif ($url != '') {
             // make sure when no url is defined, we keep it null
             // default
-            $url = $url.rawurlencode($reference);
+            $url .= rawurlencode($reference);
         }
         //handle as wiki links
         if($url && $url[0] === ':') {
             $urlparam = '';
             $id = $url;
             if (strpos($url, '?') !== false) {
-                list($id, $urlparam) = sexplode('?', $url, 2, '');
+                [$id, $urlparam] = sexplode('?', $url, 2, '');
             }
             $url    = wl(cleanID($id), $urlparam);
             $exists = page_exists($id);

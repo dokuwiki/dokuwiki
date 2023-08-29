@@ -17,12 +17,12 @@
 $GAMMA = 0.8;
 $OPTIPNG = '/usr/bin/optipng';
 
-if('cli' != php_sapi_name()) die('please run from commandline');
+if('cli' != PHP_SAPI) die('please run from commandline');
 
 // load input images
 $input = glob('pagetools/*.png');
 sort($input);
-$cnt   = count($input);
+$cnt   = is_countable($input) ? count($input) : 0;
 if(!$cnt){
     die("No input images found. This script needs to be called from within the image directory!\n");
 }
@@ -65,7 +65,7 @@ imagedestroy($DST);
 
 // optimize if possible
 if(is_executable($OPTIPNG)){
-    system("$OPTIPNG -o5 'pagetools-sprite.png'");
+    system("{$OPTIPNG} -o5 'pagetools-sprite.png'");
 }
 
 /**
@@ -86,11 +86,7 @@ function hex2rgb($hex) {
     }
 
     // calc rgb
-    return array(
-       'r' => hexdec(substr($hex, 0, 2)),
-       'g' => hexdec(substr($hex, 2, 2)),
-       'b' => hexdec(substr($hex, 4, 2))
-    );
+    return ['r' => hexdec(substr($hex, 0, 2)), 'g' => hexdec(substr($hex, 2, 2)), 'b' => hexdec(substr($hex, 4, 2))];
 }
 
 /**

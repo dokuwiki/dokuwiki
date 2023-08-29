@@ -24,8 +24,8 @@ class UserRegister extends Ui
         global $conf;
         global $INPUT;
 
-        $base_attrs = array('size' => '50', 'required' => 'required');
-        $email_attrs = $base_attrs + array('type' => 'email');
+        $base_attrs = ['size' => '50', 'required' => 'required'];
+        $email_attrs = $base_attrs + ['type' => 'email'];
 
         // print intro
         print p_locale_xhtml('register');

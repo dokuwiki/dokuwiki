@@ -14,7 +14,6 @@ class Filelink extends AbstractMode
         $ltrs = '\w';
         $gunk = '/\#~:.?+=&%@!\-';
         $punc = '.:?\-;,';
-        $host = $ltrs.$punc;
         $any  = $ltrs.$gunk.$punc;
 
         $this->pattern = '\b(?i)file(?-i)://['.$any.']+?['.

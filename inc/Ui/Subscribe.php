@@ -50,13 +50,7 @@ class Subscribe extends Ui
 
                 echo '<a href="'.wl(
                     $ID,
-                    array(
-                         'do'        => 'subscribe',
-                         'sub_target'=> $sub['target'],
-                         'sub_style' => $sub['style'],
-                         'sub_action'=> 'unsubscribe',
-                         'sectok'    => getSecurityToken()
-                    )
+                    ['do'        => 'subscribe', 'sub_target'=> $sub['target'], 'sub_style' => $sub['style'], 'sub_action'=> 'unsubscribe', 'sectok'    => getSecurityToken()]
                 ).
                     '" class="unsubscribe">'.$lang['subscr_m_unsubscribe'].
                     '</a></div></li>';
@@ -87,6 +81,7 @@ class Subscribe extends Ui
         $form->setHiddenField('sub_action', 'subscribe');
 
         $form->addFieldsetOpen($lang['subscr_m_subscribe']);
+
         $value = (array_key_exists($INPUT->post->str('sub_target'), $targets)) ?
                  $INPUT->str('sub_target') : key($targets);
         foreach ($targets as $val => $label) {
@@ -96,6 +91,7 @@ class Subscribe extends Ui
         $form->addFieldsetClose();
 
         $form->addFieldsetOpen($lang['subscr_m_receive']);
+
         $value = (array_key_exists($INPUT->post->str('sub_style'), $styles)) ?
                  $INPUT->str('sub_style') : key($styles);
         foreach ($styles as $val => $label) {

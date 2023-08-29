@@ -18,16 +18,7 @@ class Asian
      * http://en.wikipedia.org/wiki/Unicode_block
      */
     const REGEXP =
-        '(?:' .
-
-        '[\x{0E00}-\x{0E7F}]' . // Thai
-
-        '|' .
-
-        '[' .
-        '\x{2E80}-\x{3040}' .  // CJK -> Hangul
-        '\x{309D}-\x{30A0}' .
-        '\x{30FD}-\x{31EF}\x{3200}-\x{D7AF}' .
+        '(?:[\x{0E00}-\x{0E7F}]|[\x{2E80}-\x{3040}\x{309D}-\x{30A0}\x{30FD}-\x{31EF}\x{3200}-\x{D7AF}' .
         '\x{F900}-\x{FAFF}' .  // CJK Compatibility Ideographs
         '\x{FE30}-\x{FE4F}' .  // CJK Compatibility Forms
         "\xF0\xA0\x80\x80-\xF0\xAA\x9B\x9F" . // CJK Extension B

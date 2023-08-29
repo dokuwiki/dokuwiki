@@ -43,7 +43,7 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml {
         }
         $this->doc .= DOKU_LF.'<h'.$level.'>';
         $this->doc .= $this->_xmlEntities($text);
-        $this->doc .= "</h$level>".DOKU_LF;
+        $this->doc .= "</h{$level}>".DOKU_LF;
     }
 
     /** @inheritdoc */

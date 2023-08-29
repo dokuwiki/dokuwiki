@@ -1,4 +1,5 @@
 <?php
+use dokuwiki\TaskRunner;
 /**
  * DokuWiki indexer
  *
@@ -12,5 +13,5 @@ define('DOKU_DISABLE_GZIP_OUTPUT',1);
 require_once DOKU_INC.'inc/init.php';
 session_write_close();  //close session
 
-$taskRunner = new \dokuwiki\TaskRunner();
+$taskRunner = new TaskRunner();
 $taskRunner->run();

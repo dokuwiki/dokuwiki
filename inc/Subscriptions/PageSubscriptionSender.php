@@ -38,7 +38,7 @@ class PageSubscriptionSender extends SubscriptionSender
 
         if ($rev) {
             $subject = 'changed';
-            $trep['OLDPAGE'] = wl($id, "rev=$rev", true, '&');
+            $trep['OLDPAGE'] = wl($id, "rev={$rev}", true, '&');
 
             $old_content = rawWiki($id, $rev);
             $new_content = rawWiki($id);

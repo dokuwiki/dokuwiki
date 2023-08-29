@@ -15,7 +15,7 @@ use dokuwiki\Menu\Item\AbstractItem;
 abstract class AbstractMenu implements MenuInterface {
 
     /** @var string[] list of Item classes to load */
-    protected $types = array();
+    protected $types = [];
 
     /** @var int the context this menu is used in */
     protected $context = AbstractItem::CTX_DESKTOP;
@@ -39,11 +39,8 @@ abstract class AbstractMenu implements MenuInterface {
      * @triggers MENU_ITEMS_ASSEMBLY
      */
     public function getItems() {
-        $data = array(
-            'view' => $this->view,
-            'items' => array(),
-        );
-        Event::createAndTrigger('MENU_ITEMS_ASSEMBLY', $data, array($this, 'loadItems'));
+        $data = ['view' => $this->view, 'items' => []];
+        Event::createAndTrigger('MENU_ITEMS_ASSEMBLY', $data, [$this, 'loadItems']);
         return $data['items'];
     }
 
@@ -56,7 +53,7 @@ abstract class AbstractMenu implements MenuInterface {
     public function loadItems(&$data) {
         foreach($this->types as $class) {
             try {
-                $class = "\\dokuwiki\\Menu\\Item\\$class";
+                $class = "\\dokuwiki\\Menu\\Item\\{$class}";
                 /** @var AbstractItem $item */
                 $item = new $class();
                 if(!$item->visibleInContext($this->context)) continue;
@@ -86,7 +83,7 @@ abstract class AbstractMenu implements MenuInterface {
                 $class = '';
             }
 
-            $html .= "<li$class>";
+            $html .= "<li{$class}>";
             $html .= $item->asHtmlLink(false, $svg);
             $html .= '</li>';
         }

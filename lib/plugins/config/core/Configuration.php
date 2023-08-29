@@ -20,9 +20,9 @@ class Configuration {
     const KEYMARKER = '____';
 
     /** @var Setting[] metadata as array of Settings objects */
-    protected $settings = array();
+    protected $settings = [];
     /** @var Setting[] undefined and problematic settings */
-    protected $undefined = array();
+    protected $undefined = [];
 
     /** @var array all metadata */
     protected $metadata;
@@ -102,7 +102,7 @@ class Configuration {
         $ok = true;
 
         foreach($this->settings as $key => $obj) {
-            $value = isset($input[$key]) ? $input[$key] : null;
+            $value = $input[$key] ?? null;
             if($obj->update($value)) {
                 $this->changed = true;
             }
@@ -148,12 +148,7 @@ class Configuration {
      * Initalizes the $settings and $undefined properties
      */
     protected function initSettings() {
-        $keys = array_merge(
-            array_keys($this->metadata),
-            array_keys($this->default),
-            array_keys($this->local),
-            array_keys($this->protected)
-        );
+        $keys = [...array_keys($this->metadata), ...array_keys($this->default), ...array_keys($this->local), ...array_keys($this->protected)];
         $keys = array_unique($keys);
 
         foreach($keys as $key) {
@@ -163,9 +158,9 @@ class Configuration {
                 $this->undefined[$key] = new SettingNoDefault($key);
             }
 
-            $d = isset($this->default[$key]) ? $this->default[$key] : null;
-            $l = isset($this->local[$key]) ? $this->local[$key] : null;
-            $p = isset($this->protected[$key]) ? $this->protected[$key] : null;
+            $d = $this->default[$key] ?? null;
+            $l = $this->local[$key] ?? null;
+            $p = $this->protected[$key] ?? null;
 
             $obj->initialize($d, $l, $p);
         }

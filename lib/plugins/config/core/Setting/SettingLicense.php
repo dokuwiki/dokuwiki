@@ -7,7 +7,7 @@ namespace dokuwiki\plugin\config\core\Setting;
  */
 class SettingLicense extends SettingMultichoice {
 
-    protected $choices = array('');      // none choosen
+    protected $choices = [''];      // none choosen
 
     /** @inheritdoc */
     public function initialize($default = null, $local = null, $protected = null) {

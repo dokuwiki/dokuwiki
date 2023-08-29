@@ -53,8 +53,8 @@ class Index extends Ui
             if ($ns === false) $ns = '';
         }
         $ns = utf8_encodeFN(str_replace(':', '/', $ns));
-        $data = array();
-        search($data, $conf['datadir'], 'search_index', array('ns' => $ns));
+        $data = [];
+        search($data, $conf['datadir'], 'search_index', ['ns' => $ns]);
 
         return '<div id="index__tree" class="index__tree">'
               . html_buildlist($data, 'idx', [$this,'formatListItem'], [$this,'tagListItem'])

@@ -18,13 +18,13 @@ namespace dokuwiki\Parsing\Lexer;
 class Lexer
 {
     /** @var ParallelRegex[] */
-    protected $regexes;
+    protected $regexes = [];
     /** @var \Doku_Handler */
     protected $handler;
     /** @var StateStack */
     protected $modeStack;
     /** @var array mode "rewrites" */
-    protected $mode_handlers;
+    protected $mode_handlers = [];
     /** @var bool case sensitive? */
     protected $case;
 
@@ -38,10 +38,8 @@ class Lexer
     public function __construct($handler, $start = "accept", $case = false)
     {
         $this->case = $case;
-        $this->regexes = array();
         $this->handler = $handler;
         $this->modeStack = new StateStack($start);
-        $this->mode_handlers = array();
     }
 
     /**
@@ -109,7 +107,7 @@ class Lexer
         if (! isset($this->regexes[$mode])) {
             $this->regexes[$mode] = new ParallelRegex($this->case);
         }
-        $this->regexes[$mode]->addPattern($pattern, "_$special");
+        $this->regexes[$mode]->addPattern($pattern, "_{$special}");
     }
 
     /**
@@ -141,13 +139,13 @@ class Lexer
         $length = $initialLength;
         $pos = 0;
         while (is_array($parsed = $this->reduce($raw))) {
-            list($unmatched, $matched, $mode) = $parsed;
+            [$unmatched, $matched, $mode] = $parsed;
             $currentLength = strlen($raw);
             $matchPos = $initialLength - $currentLength - strlen($matched);
             if (! $this->dispatchTokens($unmatched, $matched, $mode, $pos, $matchPos)) {
                 return false;
             }
-            if ($currentLength == $length) {
+            if ($currentLength === $length) {
                 return false;
             }
             $length = $currentLength;
@@ -266,7 +264,7 @@ class Lexer
         // modes starting with plugin_ are all handled by the same
         // handler but with an additional parameter
         if (substr($handler, 0, 7)=='plugin_') {
-            list($handler,$plugin) = sexplode('_', $handler, 2, '');
+            [$handler, $plugin] = sexplode('_', $handler, 2, '');
             return $this->handler->$handler($content, $is_match, $pos, $plugin);
         }
 
@@ -291,8 +289,8 @@ class Lexer
             return true;
         }
         if ($action = $this->regexes[$this->modeStack->getCurrent()]->split($raw, $split)) {
-            list($unparsed, $match, $raw) = $split;
-            return array($unparsed, $match, $action);
+            [$unparsed, $match, $raw] = $split;
+            return [$unparsed, $match, $action];
         }
         return true;
     }
@@ -305,45 +303,9 @@ class Lexer
      */
     public static function escape($str)
     {
-        $chars = array(
-            '/\\\\/',
-            '/\./',
-            '/\+/',
-            '/\*/',
-            '/\?/',
-            '/\[/',
-            '/\^/',
-            '/\]/',
-            '/\$/',
-            '/\{/',
-            '/\}/',
-            '/\=/',
-            '/\!/',
-            '/\</',
-            '/\>/',
-            '/\|/',
-            '/\:/'
-        );
+        $chars = ['/\\\\/', '/\./', '/\+/', '/\*/', '/\?/', '/\[/', '/\^/', '/\]/', '/\$/', '/\{/', '/\}/', '/\=/', '/\!/', '/\</', '/\>/', '/\|/', '/\:/'];
 
-        $escaped = array(
-            '\\\\\\\\',
-            '\.',
-            '\+',
-            '\*',
-            '\?',
-            '\[',
-            '\^',
-            '\]',
-            '\$',
-            '\{',
-            '\}',
-            '\=',
-            '\!',
-            '\<',
-            '\>',
-            '\|',
-            '\:'
-        );
+        $escaped = ['\\\\\\\\', '\.', '\+', '\*', '\?', '\[', '\^', '\]', '\$', '\{', '\}', '\=', '\!', '\<', '\>', '\|', '\:'];
         return preg_replace($chars, $escaped, $str);
     }
 }

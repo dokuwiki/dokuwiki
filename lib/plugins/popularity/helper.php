@@ -64,7 +64,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
     {
         $error = '';
         $httpClient = new DokuHTTPClient();
-        $status = $httpClient->sendRequest($this->submitUrl, array('data' => $data), 'POST');
+        $status = $httpClient->sendRequest($this->submitUrl, ['data' => $data], 'POST');
         if (! $status) {
             $error = $httpClient->error;
         }
@@ -132,7 +132,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         global $conf;
         /** @var $auth DokuWiki_Auth_Plugin */
         global $auth;
-        $data = array();
+        $data = [];
         $phptime = ini_get('max_execution_time');
         @set_time_limit(0);
         $pluginInfo = $this->getInfo();
@@ -152,7 +152,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
 
         // number and size of pages
         $list = $this->initEmptySearchList();
-        search($list, $conf['datadir'], array($this, 'searchCountCallback'), array('all'=>false), '');
+        search($list, $conf['datadir'], [$this, 'searchCountCallback'], ['all'=>false], '');
         $data['page_count']    = $list['file_count'];
         $data['page_size']     = $list['file_size'];
         $data['page_biggest']  = $list['file_max'];
@@ -165,7 +165,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
 
         // number and size of media
         $list = $this->initEmptySearchList();
-        search($list, $conf['mediadir'], array($this, 'searchCountCallback'), array('all'=>true));
+        search($list, $conf['mediadir'], [$this, 'searchCountCallback'], ['all'=>true]);
         $data['media_count']    = $list['file_count'];
         $data['media_size']     = $list['file_size'];
         $data['media_biggest']  = $list['file_max'];
@@ -177,7 +177,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
 
         // number and size of cache
         $list = $this->initEmptySearchList();
-        search($list, $conf['cachedir'], array($this, 'searchCountCallback'), array('all'=>true));
+        search($list, $conf['cachedir'], [$this, 'searchCountCallback'], ['all'=>true]);
         $data['cache_count']    = $list['file_count'];
         $data['cache_size']     = $list['file_size'];
         $data['cache_biggest']  = $list['file_max'];
@@ -187,7 +187,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
 
         // number and size of index
         $list = $this->initEmptySearchList();
-        search($list, $conf['indexdir'], array($this, 'searchCountCallback'), array('all'=>true));
+        search($list, $conf['indexdir'], [$this, 'searchCountCallback'], ['all'=>true]);
         $data['index_count']    = $list['file_count'];
         $data['index_size']     = $list['file_size'];
         $data['index_biggest']  = $list['file_max'];
@@ -197,7 +197,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
 
         // number and size of meta
         $list = $this->initEmptySearchList();
-        search($list, $conf['metadir'], array($this, 'searchCountCallback'), array('all'=>true));
+        search($list, $conf['metadir'], [$this, 'searchCountCallback'], ['all'=>true]);
         $data['meta_count']    = $list['file_count'];
         $data['meta_size']     = $list['file_size'];
         $data['meta_biggest']  = $list['file_max'];
@@ -207,7 +207,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
 
         // number and size of attic
         $list = $this->initEmptySearchList();
-        search($list, $conf['olddir'], array($this, 'searchCountCallback'), array('all'=>true));
+        search($list, $conf['olddir'], [$this, 'searchCountCallback'], ['all'=>true]);
         $data['attic_count']    = $list['file_count'];
         $data['attic_size']     = $list['file_size'];
         $data['attic_biggest']  = $list['file_max'];
@@ -244,7 +244,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         $data['os'] = PHP_OS;
         $data['webserver'] = $_SERVER['SERVER_SOFTWARE'];
         $data['php_version'] = phpversion();
-        $data['php_sapi'] = php_sapi_name();
+        $data['php_sapi'] = PHP_SAPI;
         $data['php_memory'] = php_to_byte(ini_get('memory_limit'));
         $data['php_exectime'] = $phptime;
         $data['php_extension'] = get_loaded_extensions();
@@ -262,7 +262,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
      */
     protected function addPluginUsageData(&$data)
     {
-        $pluginsData = array();
+        $pluginsData = [];
         Event::createAndTrigger('PLUGIN_POPULARITY_DATA_SETUP', $pluginsData);
         foreach ($pluginsData as $plugin => $d) {
             if (is_array($d)) {

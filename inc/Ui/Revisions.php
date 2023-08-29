@@ -62,7 +62,7 @@ abstract class Revisions extends Ui
          * see also Ui\Recent::getRecents()
          */
         $revlist = $changelog->getRevisions($first, $num + 1);
-        if (count($revlist) == 0 && $first > -1) {
+        if ((is_countable($revlist) ? count($revlist) : 0) == 0 && $first > -1) {
             // resets to zero if $first requested a too high number
             $first = -1;
             return $this->getRevisions($first, $hasNext);
@@ -70,7 +70,7 @@ abstract class Revisions extends Ui
 
         // decide if this is the last page or is there another one
         $hasNext = false;
-        if (count($revlist) > $num) {
+        if ((is_countable($revlist) ? count($revlist) : 0) > $num) {
             $hasNext = true;
             array_pop($revlist); // remove one additional log entry
         }

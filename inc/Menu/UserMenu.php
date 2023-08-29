@@ -11,11 +11,6 @@ class UserMenu extends AbstractMenu {
 
     protected $view = 'user';
 
-    protected $types = array(
-        'Profile',
-        'Admin',
-        'Register',
-        'Login',
-    );
+    protected $types = ['Profile', 'Admin', 'Register', 'Login'];
 
 }

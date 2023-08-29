@@ -39,7 +39,7 @@ class Edit extends AbstractItem {
             }
         } else {
             if (auth_quickaclcheck($INFO['id']) < AUTH_READ) throw new \RuntimeException("no permission to read");
-            $this->params = array('do' => '');
+            $this->params = ['do' => ''];
             $this->type = 'show';
             $this->accesskey = 'v';
         }
@@ -51,13 +51,7 @@ class Edit extends AbstractItem {
      * change the icon according to what type the edit button has
      */
     protected function setIcon() {
-        $icons = array(
-            'edit' => '01-edit_pencil.svg',
-            'create' => '02-create_pencil.svg',
-            'draft' => '03-draft_android-studio.svg',
-            'show' => '04-show_file-document.svg',
-            'source' => '05-source_file-xml.svg',
-        );
+        $icons = ['edit' => '01-edit_pencil.svg', 'create' => '02-create_pencil.svg', 'draft' => '03-draft_android-studio.svg', 'show' => '04-show_file-document.svg', 'source' => '05-source_file-xml.svg'];
         if(isset($icons[$this->type])) {
             $this->svg = DOKU_INC . 'lib/images/menu/' . $icons[$this->type];
         }

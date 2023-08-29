@@ -13,13 +13,13 @@ class Event
     /** @var string READONLY  event name, objects must register against this name to see the event */
     public $name = '';
     /** @var mixed|null READWRITE data relevant to the event, no standardised format, refer to event docs */
-    public $data = null;
+    public $data;
     /**
      * @var mixed|null READWRITE the results of the event action, only relevant in "_AFTER" advise
      *                 event handlers may modify this if they are preventing the default action
      *                 to provide the after event handlers with event results
      */
-    public $result = null;
+    public $result;
     /** @var bool READONLY  if true, event handlers can prevent the events default action */
     public $canPreventDefault = true;
 

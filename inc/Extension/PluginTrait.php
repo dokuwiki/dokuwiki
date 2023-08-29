@@ -9,9 +9,9 @@ trait PluginTrait
 {
 
     protected $localised = false;        // set to true by setupLocale() after loading language dependent strings
-    protected $lang = array();           // array to hold language dependent strings, best accessed via ->getLang()
+    protected $lang = [];           // array to hold language dependent strings, best accessed via ->getLang()
     protected $configloaded = false;     // set to true by loadConfig() after loading plugin configuration variables
-    protected $conf = array();           // array to hold plugin settings, best accessed via ->getConf()
+    protected $conf = [];           // array to hold plugin settings, best accessed via ->getConf()
 
     /**
      * @see PluginInterface::getInfo()
@@ -27,10 +27,7 @@ trait PluginTrait
             'Verify you\'re running the latest version of the plugin. If the problem persists, send a ' .
             'bug report to the author of the ' . $parts[2] . ' plugin.', -1
         );
-        return array(
-            'date' => '0000-00-00',
-            'name' => $parts[2] . ' plugin',
-        );
+        return ['date' => '0000-00-00', 'name' => $parts[2] . ' plugin'];
     }
 
     /**
@@ -47,7 +44,7 @@ trait PluginTrait
     public function loadHelper($name, $msg = true)
     {
         $obj = plugin_load('helper', $name);
-        if (is_null($obj) && $msg) msg("Helper plugin $name is not available or invalid.", -1);
+        if (is_null($obj) && $msg) msg("Helper plugin {$name} is not available or invalid.", -1);
         return $obj;
     }
 
@@ -58,7 +55,7 @@ trait PluginTrait
      */
     public function getPluginType()
     {
-        list($t) = explode('_', get_class($this), 2);
+        [$t] = explode('_', get_class($this), 2);
         return $t;
     }
 
@@ -67,7 +64,7 @@ trait PluginTrait
      */
     public function getPluginName()
     {
-        list(/* $t */, /* $p */, $n) = sexplode('_', get_class($this), 4, '');
+        [, , $n] = sexplode('_', get_class($this), 4, '');
         return $n;
     }
 
@@ -76,7 +73,7 @@ trait PluginTrait
      */
     public function getPluginComponent()
     {
-        list(/* $t */, /* $p */, /* $n */, $c) = sexplode('_', get_class($this), 4, '');
+        [, , , $c] = sexplode('_', get_class($this), 4, '');
         return $c;
     }
 
@@ -90,7 +87,7 @@ trait PluginTrait
     {
         if (!$this->localised) $this->setupLocale();
 
-        return (isset($this->lang[$id]) ? $this->lang[$id] : '');
+        return ($this->lang[$id] ?? '');
     }
 
     /**
@@ -129,7 +126,7 @@ trait PluginTrait
         global $conf, $config_cascade; // definitely don't invoke "global $lang"
         $path = DOKU_PLUGIN . $this->getPluginName() . '/lang/';
 
-        $lang = array();
+        $lang = [];
 
         // don't include once, in case several plugin components require the same language file
         @include($path . 'en/lang.php');
@@ -201,7 +198,7 @@ trait PluginTrait
     {
 
         $path = DOKU_PLUGIN . $this->getPluginName() . '/conf/';
-        $conf = array();
+        $conf = [];
 
         if (file_exists($path . 'default.php')) {
             include($path . 'default.php');
@@ -221,8 +218,8 @@ trait PluginTrait
         if (!$email) return $name;
         $email = obfuscate($email);
         if (!$name) $name = $email;
-        $class = "class='" . ($class ? $class : 'mail') . "'";
-        return "<a href='mailto:$email' $class title='$email' $more>$name</a>";
+        $class = "class='" . ($class ?: 'mail') . "'";
+        return "<a href='mailto:{$email}' {$class} title='{$email}' {$more}>{$name}</a>";
     }
 
     /**
@@ -237,11 +234,11 @@ trait PluginTrait
         if (!$target) $target = $conf['target']['extern'];
         if ($conf['relnofollow']) $more .= ' rel="nofollow"';
 
-        if ($class) $class = " class='$class'";
-        if ($target) $target = " target='$target'";
+        if ($class) $class = " class='{$class}'";
+        if ($target) $target = " target='{$target}'";
         if ($more) $more = " " . trim($more);
 
-        return "<a href='$link'$class$target$more>$title</a>";
+        return "<a href='{$link}'{$class}$target{$more}>{$title}</a>";
     }
 
     /**

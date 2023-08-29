@@ -26,7 +26,7 @@ class Conversion
             if ($cp < 0x80 && !$all) {
                 $ret .= chr($cp);
             } elseif ($cp < 0x100) {
-                $ret .= "&#$cp;";
+                $ret .= "&#{$cp};";
             } else {
                 $ret .= '&#x' . dechex($cp) . ';';
             }
@@ -58,14 +58,14 @@ class Conversion
         if (!$entities) {
             return preg_replace_callback(
                 '/(&#([Xx])?([0-9A-Za-z]+);)/m',
-                [__CLASS__, 'decodeNumericEntity'],
+                [self::class, 'decodeNumericEntity'],
                 $str
             );
         }
 
         return preg_replace_callback(
             '/&(#)?([Xx])?([0-9A-Za-z]+);/m',
-            [__CLASS__, 'decodeAnyEntity'],
+            [self::class, 'decodeAnyEntity'],
             $str
         );
     }
@@ -84,9 +84,7 @@ class Conversion
             $table = get_html_translation_table(HTML_ENTITIES);
             $table = array_flip($table);
             $table = array_map(
-                static function ($c) {
-                    return Unicode::toUtf8(array(ord($c)));
-                },
+                static fn($c) => Unicode::toUtf8([ord($c)]),
                 $table
             );
         }
@@ -116,10 +114,10 @@ class Conversion
                 $cp = hexdec($ent[3]);
                 break;
             default:
-                $cp = intval($ent[3]);
+                $cp = (int) $ent[3];
                 break;
         }
-        return Unicode::toUtf8(array($cp));
+        return Unicode::toUtf8([$cp]);
     }
 
     /**

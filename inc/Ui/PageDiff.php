@@ -217,9 +217,7 @@ class PageDiff extends Diff
         $this->showDiffViewSelector();
 
         // assign minor edit checker to the variable
-        $classEditType = function ($changeType) {
-            return ($changeType === DOKU_CHANGE_TYPE_MINOR_EDIT) ? ' class="minor"' : '';
-        };
+        $classEditType = static fn($changeType) => ($changeType === DOKU_CHANGE_TYPE_MINOR_EDIT) ? ' class="minor"' : '';
 
         // display diff view table
         echo '<div class="table">';
@@ -232,22 +230,14 @@ class PageDiff extends Diff
                 $title2 = $rev2Title . ($rev2Summary ? '<br />'.$rev2Summary : '');
                 // no navigation for PageConflict or PageDraft
                 if ($this->RevInfo2->val('extra') !== 'compareWith') {
-                    echo '<tr>'
-                        .'<td class="diff-lineheader">-</td>'
-                        .'<td class="diffnav">'. $rev1Navi .'</td>'
+                    echo '<tr><td class="diff-lineheader">-</td><td class="diffnav">'. $rev1Navi .'</td>'
                         .'</tr>';
-                    echo '<tr>'
-                        .'<th class="diff-lineheader">-</th>'
-                        .'<th'.$classEditType($this->RevInfo1->val('type')).'>'. $title1 .'</th>'
+                    echo '<tr><th class="diff-lineheader">-</th><th'.$classEditType($this->RevInfo1->val('type')).'>'. $title1 .'</th>'
                         .'</tr>';
                 }
-                echo '<tr>'
-                    .'<td class="diff-lineheader">+</td>'
-                    .'<td class="diffnav">'. $rev2Navi .'</td>'
+                echo '<tr><td class="diff-lineheader">+</td><td class="diffnav">'. $rev2Navi .'</td>'
                     .'</tr>';
-                echo '<tr>'
-                    .'<th class="diff-lineheader">+</th>'
-                    .'<th'.$classEditType($this->RevInfo2->val('type')).'>'. $title2 .'</th>'
+                echo '<tr><th class="diff-lineheader">+</th><th'.$classEditType($this->RevInfo2->val('type')).'>'. $title2 .'</th>'
                     .'</tr>';
                 // create formatter object
                 $DiffFormatter = new InlineDiffFormatter();
@@ -259,13 +249,11 @@ class PageDiff extends Diff
                 $title2 = $rev2Title . ($rev2Summary ? ' '.$rev2Summary : '');
                 // no navigation for PageConflict or PageDraft
                 if ($this->RevInfo2->val('extra') !== 'compareWith') {
-                    echo '<tr>'
-                        .'<td colspan="2" class="diffnav">'. $rev1Navi .'</td>'
+                    echo '<tr><td colspan="2" class="diffnav">'. $rev1Navi .'</td>'
                         .'<td colspan="2" class="diffnav">'. $rev2Navi .'</td>'
                         .'</tr>';
                 }
-                echo '<tr>'
-                    .'<th colspan="2"'.$classEditType($this->RevInfo1->val('type')).'>'.$title1.'</th>'
+                echo '<tr><th colspan="2"'.$classEditType($this->RevInfo1->val('type')).'>'.$title1.'</th>'
                     .'<th colspan="2"'.$classEditType($this->RevInfo2->val('type')).'>'.$title2.'</th>'
                     .'</tr>';
                 // create formatter object
@@ -301,10 +289,8 @@ class PageDiff extends Diff
         $form->setHiddenField('rev2[0]', $rev1);
         $form->setHiddenField('rev2[1]', $rev2);
         $form->setHiddenField('do', 'diff');
-        $options = array(
-                     'sidebyside' => $lang['diff_side'],
-                     'inline' => $lang['diff_inline'],
-        );
+
+        $options = ['sidebyside' => $lang['diff_side'], 'inline' => $lang['diff_inline']];
         $input = $form->addDropdown('difftype', $options, $lang['diff_type'])
             ->val($this->preference['difftype'])
             ->addClass('quickselect');
@@ -338,7 +324,7 @@ class PageDiff extends Diff
 
         if ($this->RevInfo2->val('extra') == 'compareWith') {
             // no revisions selector for PageConflict or PageDraft
-            return array('', '');
+            return ['', ''];
         }
 
         // use timestamp for current revision, date may be false when revisions < 2
@@ -353,17 +339,18 @@ class PageDiff extends Diff
         // build options for dropdown selector
         $rev1Options = $this->buildRevisionOptions('older', $revs1);
         $rev2Options = $this->buildRevisionOptions('newer', $revs2);
-
         // determine previous/next revisions (older/left side)
-        $rev1Prev = $rev1Next = false;
-        if (($index = array_search($rev1, $revs1)) !== false) {
-            $rev1Prev = ($index +1 < count($revs1)) ? $revs1[$index +1] : false;
+        $rev1Prev = false;
+        $rev1Next = false;
+        if (($index = array_search($rev1, $revs1, true)) !== false) {
+            $rev1Prev = ($index +1 < (is_countable($revs1) ? count($revs1) : 0)) ? $revs1[$index +1] : false;
             $rev1Next = ($index > 0)                ? $revs1[$index -1] : false;
         }
         // determine previous/next revisions (newer/right side)
-        $rev2Prev = $rev2Next = false;
-        if (($index = array_search($rev2, $revs2)) !== false) {
-            $rev2Prev = ($index +1 < count($revs2)) ? $revs2[$index +1] : false;
+        $rev2Prev = false;
+        $rev2Next = false;
+        if (($index = array_search($rev2, $revs2, true)) !== false) {
+            $rev2Prev = ($index +1 < (is_countable($revs2) ? count($revs2) : 0)) ? $revs2[$index +1] : false;
             $rev2Next = ($index > 0)                ? $revs2[$index -1] : false;
         }
 
@@ -404,7 +391,7 @@ class PageDiff extends Diff
         if ($rev1Next && $rev2Next)
             $rev2Navi .= $this->diffViewlink('diffbothnextrev', $rev1Next, $rev2Next);
 
-        return array($rev1Navi, $rev2Navi);
+        return [$rev1Navi, $rev2Navi];
     }
 
     /**
@@ -425,20 +412,17 @@ class PageDiff extends Diff
         foreach ($revs as $rev) {
             $info = $changelog->getRevisionInfo($rev);
             // revision info may have timestamp key when external edits occurred
-            $info['timestamp'] = $info['timestamp'] ?? true;
+            $info['timestamp'] ??= true;
             $date = dformat($info['date']);
             if ($info['timestamp'] === false) {
                 // exteranlly deleted or older file restored
                 $date = preg_replace('/[0-9a-zA-Z]/','_', $date);
             }
-            $options[$rev] = array(
-                'label' => implode(' ', [
-                            $date,
-                            editorinfo($info['user'], true),
-                            $info['sum'],
-                           ]),
-                'attrs' => ['title' => $rev],
-            );
+            $options[$rev] = ['label' => implode(' ', [
+                        $date,
+                        editorinfo($info['user'], true),
+                        $info['sum'],
+                       ]), 'attrs' => ['title' => $rev]];
             if (($side == 'older' && ($rev2 && $rev >= $rev2))
               ||($side == 'newer' && ($rev <= $rev1))
             ) {
@@ -465,19 +449,18 @@ class PageDiff extends Diff
         $form->setHiddenField('do', 'diff');
         $form->setHiddenField('difftype', $this->preference['difftype']);
 
-        switch ($side) {
-            case 'older': // left side
-                $form->setHiddenField('rev2[1]', $rev2);
-                $input = $form->addDropdown('rev2[0]', $options)
-                    ->val($rev1)->addClass('quickselect');
-                $input->useInput(false); // inhibit prefillInput() during toHTML() process
-                break;
-            case 'newer': // right side
-                $form->setHiddenField('rev2[0]', $rev1);
-                $input = $form->addDropdown('rev2[1]', $options)
-                    ->val($rev2)->addClass('quickselect');
-                $input->useInput(false); // inhibit prefillInput() during toHTML() process
-                break;
+        if ($side == 'older') {
+            // left side
+            $form->setHiddenField('rev2[1]', $rev2);
+            $input = $form->addDropdown('rev2[0]', $options)
+                ->val($rev1)->addClass('quickselect');
+            $input->useInput(false);
+        } elseif ($side == 'newer') {
+            // right side
+            $form->setHiddenField('rev2[0]', $rev1);
+            $input = $form->addDropdown('rev2[1]', $options)
+                ->val($rev2)->addClass('quickselect');
+            $input->useInput(false);
         }
         $form->addButton('do[diff]', 'Go')->attr('type','submit');
         return $form->toHTML();
@@ -497,24 +480,11 @@ class PageDiff extends Diff
         if ($rev1 === false) return '';
 
         if ($rev2 === null) {
-            $urlparam = array(
-                'do' => 'diff',
-                'rev' => $rev1,
-                'difftype' => $this->preference['difftype'],
-            );
+            $urlparam = ['do' => 'diff', 'rev' => $rev1, 'difftype' => $this->preference['difftype']];
         } else {
-            $urlparam = array(
-                'do' => 'diff',
-                'rev2[0]' => $rev1,
-                'rev2[1]' => $rev2,
-                'difftype' => $this->preference['difftype'],
-            );
+            $urlparam = ['do' => 'diff', 'rev2[0]' => $rev1, 'rev2[1]' => $rev2, 'difftype' => $this->preference['difftype']];
         }
-        $attr = array(
-            'class' => $linktype,
-            'href'  => wl($this->id, $urlparam, true, '&'),
-            'title' => $lang[$linktype],
-        );
+        $attr = ['class' => $linktype, 'href'  => wl($this->id, $urlparam, true, '&'), 'title' => $lang[$linktype]];
         return '<a '. buildAttributes($attr) .'><span>'. $lang[$linktype] .'</span></a>';
     }
 

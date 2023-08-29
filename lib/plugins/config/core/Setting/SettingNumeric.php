@@ -9,9 +9,9 @@ class SettingNumeric extends SettingString {
     // This allows for many PHP syntax errors...
     // var $_pattern = '/^[-+\/*0-9 ]*$/';
     // much more restrictive, but should eliminate syntax errors.
-    protected $pattern = '/^[-+]? *[0-9]+ *(?:[-+*] *[0-9]+ *)*$/';
-    protected $min = null;
-    protected $max = null;
+    protected $pattern = '/^[-+]? *\d+ *(?:[-+*] *\d+ *)*$/';
+    protected $min;
+    protected $max;
 
     /** @inheritdoc */
     public function update($input) {

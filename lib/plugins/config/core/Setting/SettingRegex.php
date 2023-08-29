@@ -22,7 +22,7 @@ class SettingRegex extends SettingString {
         $regex = $this->delimiter . $input . $this->delimiter . $this->pregflags;
         $lastError = error_get_last();
         @preg_match($regex, 'testdata');
-        if(preg_last_error() != PREG_NO_ERROR || error_get_last() != $lastError) {
+        if(preg_last_error() != PREG_NO_ERROR || error_get_last() !== $lastError) {
             $this->input = $input;
             $this->error = true;
             return false;

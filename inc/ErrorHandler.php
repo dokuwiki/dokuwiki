@@ -68,13 +68,13 @@ class ErrorHandler
         echo <<<EOT
 <!DOCTYPE html>
 <html>
-<head><title>$title</title></head>
+<head><title>{$title}</title></head>
 <body style="font-family: Arial, sans-serif">
     <div style="width:60%; margin: auto; background-color: #fcc;
                 border: 1px solid #faa; padding: 0.5em 1em;">
-        <h1 style="font-size: 120%">$title</h1>
-        <p>$msg</p>
-        <p>$logged</p>
+        <h1 style="font-size: 120%">{$title}</h1>
+        <p>{$msg}</p>
+        <p>{$logged}</p>
     </div>
 </body>
 </html>
@@ -126,7 +126,7 @@ EOT;
      */
     public static function logException($e)
     {
-        if (is_a($e, \ErrorException::class)) {
+        if ($e instanceof \ErrorException) {
             $prefix = self::ERRORCODES[$e->getSeverity()];
         } else {
             $prefix = get_class($e);
@@ -164,12 +164,7 @@ EOT;
             $errline
         );
         self::logException($ex);
-
-        if($ex->getSeverity() === E_WARNING && $conf['hidewarnings']) {
-            return true;
-        }
-
-        return false;
+        return $ex->getSeverity() === E_WARNING && $conf['hidewarnings'];
     }
 
     /**

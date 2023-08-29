@@ -39,7 +39,7 @@ class action_plugin_authad extends DokuWiki_Action_Plugin
             $usr = $auth->cleanUser($event->data['user']);
             $dom = $auth->getUserDomain($usr);
             if (!$dom) {
-                $usr = "$usr@".$INPUT->str('dom');
+                $usr = "{$usr}@".$INPUT->str('dom');
             }
             $INPUT->post->set('u', $usr);
             $event->data['user'] = $usr;

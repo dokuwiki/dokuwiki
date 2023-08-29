@@ -13,7 +13,7 @@ class SettingDirchoice extends SettingMultichoice {
     public function initialize($default = null, $local = null, $protected = null) {
 
         // populate $this->_choices with a list of directories
-        $list = array();
+        $list = [];
 
         if($dh = @opendir($this->dir)) {
             while(false !== ($entry = readdir($dh))) {

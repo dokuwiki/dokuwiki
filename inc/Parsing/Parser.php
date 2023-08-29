@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Parsing;
 
+use dokuwiki\Debug\DebugHelper;
 use Doku_Handler;
 use dokuwiki\Parsing\Lexer\Lexer;
 use dokuwiki\Parsing\ParserMode\Base;
@@ -20,7 +21,7 @@ class Parser {
     protected $lexer;
 
     /** @var ModeInterface[] $modes */
-    protected $modes = array();
+    protected $modes = [];
 
     /** @var bool mode connections may only be set up once */
     protected $connected = false;
@@ -111,7 +112,7 @@ class Parser {
         if (!method_exists($this->handler, 'finalize')) {
             /** @deprecated 2019-10 we have a legacy handler from a plugin, assume legacy _finalize exists */
 
-            \dokuwiki\Debug\DebugHelper::dbgCustomDeprecationEvent(
+            DebugHelper::dbgCustomDeprecationEvent(
                 'finalize()',
                 get_class($this->handler) . '::_finalize()',
                 __METHOD__,

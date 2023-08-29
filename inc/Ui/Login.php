@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\Menu\Item\Register;
+use dokuwiki\Menu\Item\Resendpwd;
 use dokuwiki\Form\Form;
 
 /**
@@ -49,7 +51,7 @@ class Login extends Ui
         $form->setHiddenField('do', 'login');
 
         $input = $form->addTextInput('u', $lang['user'])->id('focus__this')->addClass('edit')
-            ->val((!$INPUT->bool('http_credentials')) ? $INPUT->str('u') : '');
+            ->val(($INPUT->bool('http_credentials')) ? '' : $INPUT->str('u'));
         $input->getLabel()->attr('class', 'block');
         $form->addHTML("<br>\n");
 
@@ -65,12 +67,12 @@ class Login extends Ui
         $form->addTagClose('div');
 
         if(actionOK('register')){
-            $registerLink = (new \dokuwiki\Menu\Item\Register())->asHtmlLink('', $this->showIcon);
+            $registerLink = (new Register())->asHtmlLink('', $this->showIcon);
             $form->addHTML('<p>'.$lang['reghere'].': '. $registerLink .'</p>');
         }
 
         if (actionOK('resendpwd')) {
-            $resendPwLink = (new \dokuwiki\Menu\Item\Resendpwd())->asHtmlLink('', $this->showIcon);
+            $resendPwLink = (new Resendpwd())->asHtmlLink('', $this->showIcon);
             $form->addHTML('<p>'.$lang['pwdforget'].': '. $resendPwLink .'</p>');
         }
 

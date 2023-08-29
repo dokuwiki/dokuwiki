@@ -13,9 +13,9 @@ use dokuwiki\Action\Exception\ActionAbort;
  */
 class Search extends AbstractAction {
 
-    protected $pageLookupResults = array();
-    protected $fullTextResults = array();
-    protected $highlight = array();
+    protected $pageLookupResults = [];
+    protected $fullTextResults = [];
+    protected $highlight = [];
 
     /** @inheritdoc */
     public function minimumPermission() {
@@ -92,7 +92,7 @@ class Search extends AbstractAction {
                 if (getNS($ID) !== false) {
                     $nsParts = explode(':', getNS($ID));
                     $ns = implode(':', array_slice($nsParts, 0, $conf['search_nslimit']));
-                    $QUERY .= " @$ns";
+                    $QUERY .= " @{$ns}";
                 }
             }
         }

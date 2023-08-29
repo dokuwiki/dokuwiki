@@ -15,24 +15,24 @@ class Quotes extends AbstractMode
 
         if ($conf['typography'] == 2) {
             $this->Lexer->addSpecialPattern(
-                "(?<=^|[$ws])'(?=[^$ws$punc])",
+                "(?<=^|[{$ws}])'(?=[^{$ws}$punc])",
                 $mode,
                 'singlequoteopening'
             );
             $this->Lexer->addSpecialPattern(
-                "(?<=^|[^$ws]|[$punc])'(?=$|[$ws$punc])",
+                "(?<=^|[^{$ws}]|[{$punc}])'(?=$|[{$ws}$punc])",
                 $mode,
                 'singlequoteclosing'
             );
             $this->Lexer->addSpecialPattern(
-                "(?<=^|[^$ws$punc])'(?=$|[^$ws$punc])",
+                "(?<=^|[^{$ws}$punc])'(?=$|[^{$ws}$punc])",
                 $mode,
                 'apostrophe'
             );
         }
 
         $this->Lexer->addSpecialPattern(
-            "(?<=^|[$ws])\"(?=[^$ws$punc])",
+            "(?<=^|[{$ws}])\"(?=[^{$ws}$punc])",
             $mode,
             'doublequoteopening'
         );

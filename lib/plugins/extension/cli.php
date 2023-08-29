@@ -1,5 +1,7 @@
 <?php
 
+use splitbrain\phpcli\Options;
+use splitbrain\phpcli\TableFormatter;
 use splitbrain\phpcli\Colors;
 
 /**
@@ -12,14 +14,17 @@ use splitbrain\phpcli\Colors;
  */
 class cli_plugin_extension extends DokuWiki_CLI_Plugin
 {
+    public $colors;
     /** @inheritdoc */
-    protected function setup(\splitbrain\phpcli\Options $options)
+    protected function setup(Options $options)
     {
         // general setup
         $options->setHelp(
-            "Manage plugins and templates for this DokuWiki instance\n\n" .
-            "Status codes:\n" .
-            "   i - installed\n" .
+            'Manage plugins and templates for this DokuWiki instance
+
+Status codes:
+   i - installed
+' .
             "   b - bundled with DokuWiki\n" .
             "   g - installed via git\n" .
             "   d - disabled\n" .
@@ -62,7 +67,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
     }
 
     /** @inheritdoc */
-    protected function main(\splitbrain\phpcli\Options $options)
+    protected function main(Options $options)
     {
         /** @var helper_plugin_extension_repository $repo */
         $repo = plugin_load('helper', 'extension_repository');
@@ -145,7 +150,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
             $ext->setExtension($extname);
             if (!$ext->isInstalled()) {
                 $this->error(sprintf('Extension %s is not installed', $ext->getID()));
-                $ok += 1;
+                ++$ok;
                 continue;
             }
 
@@ -159,7 +164,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
 
             if ($status !== true) {
                 $this->error($status);
-                $ok += 1;
+                ++$ok;
                 continue;
             } else {
                 $this->success(sprintf($this->getLang($msg), $ext->getID()));
@@ -185,7 +190,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
             $ext->setExtension($extname);
             if (!$ext->isInstalled()) {
                 $this->error(sprintf('Extension %s is not installed', $ext->getID()));
-                $ok += 1;
+                ++$ok;
                 continue;
             }
 
@@ -221,13 +226,13 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
                     $installed = $ext->installFromURL($extname, true);
                 } catch (Exception $e) {
                     $this->error($e->getMessage());
-                    $ok += 1;
+                    ++$ok;
                 }
             } else {
                 $ext->setExtension($extname);
 
                 if (!$ext->getDownloadURL()) {
-                    $ok += 1;
+                    ++$ok;
                     $this->error(
                         sprintf('Could not find download for %s', $ext->getID())
                     );
@@ -238,11 +243,11 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
                     $installed = $ext->installOrUpdate();
                 } catch (Exception $e) {
                     $this->error($e->getMessage());
-                    $ok += 1;
+                    ++$ok;
                 }
             }
 
-            foreach ($installed as $name => $info) {
+            foreach ($installed as $info) {
                 $this->success(
                     sprintf(
                         $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
@@ -301,9 +306,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
         global $plugin_controller;
         $pluginlist = $plugin_controller->getList('', true);
         $tpllist = glob(DOKU_INC . 'lib/tpl/*', GLOB_ONLYDIR);
-        $tpllist = array_map(function ($path) {
-            return 'template:' . basename($path);
-        }, $tpllist);
+        $tpllist = array_map(static fn($path) => 'template:' . basename($path), $tpllist);
         $list = array_merge($pluginlist, $tpllist);
         sort($list);
         return $list;
@@ -321,7 +324,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
     {
         /** @var helper_plugin_extension_extension $ext */
         $ext = $this->loadHelper('extension_extension');
-        $tr = new \splitbrain\phpcli\TableFormatter($this->colors);
+        $tr = new TableFormatter($this->colors);
 
 
         foreach ($list as $name) {

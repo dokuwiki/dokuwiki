@@ -65,10 +65,10 @@ class Subscribe extends AbstractUserAction
         global $INPUT;
 
         // get and preprocess data.
-        $params = array();
-        foreach (array('target', 'style', 'action') as $param) {
-            if ($INPUT->has("sub_$param")) {
-                $params[$param] = $INPUT->str("sub_$param");
+        $params = [];
+        foreach (['target', 'style', 'action'] as $param) {
+            if ($INPUT->has("sub_{$param}")) {
+                $params[$param] = $INPUT->str("sub_{$param}");
             }
         }
 
@@ -76,7 +76,7 @@ class Subscribe extends AbstractUserAction
         if (empty($params['action']) || !checkSecurityToken()) return;
 
         // Handle POST data, may throw exception.
-        Event::createAndTrigger('ACTION_HANDLE_SUBSCRIBE', $params, array($this, 'handlePostData'));
+        Event::createAndTrigger('ACTION_HANDLE_SUBSCRIBE', $params, [$this, 'handlePostData']);
 
         $target = $params['target'];
         $style = $params['style'];
@@ -131,7 +131,7 @@ class Subscribe extends AbstractUserAction
             throw new Exception('no subscription target given');
         }
         $target = $params['target'];
-        $valid_styles = array('every', 'digest');
+        $valid_styles = ['every', 'digest'];
         if (substr($target, -1, 1) === ':') {
             // Allow “list” subscribe style since the target is a namespace.
             $valid_styles[] = 'list';
@@ -141,7 +141,7 @@ class Subscribe extends AbstractUserAction
             'invalid subscription style given'
         );
         $action = valid_input_set(
-            'action', array('subscribe', 'unsubscribe'),
+            'action', ['subscribe', 'unsubscribe'],
             $params, 'invalid subscription action given'
         );
 
@@ -170,7 +170,7 @@ class Subscribe extends AbstractUserAction
             $style = null;
         }
 
-        $params = compact('target', 'style', 'action');
+        $params = ['target' => $target, 'style' => $style, 'action' => $action];
     }
 
 }

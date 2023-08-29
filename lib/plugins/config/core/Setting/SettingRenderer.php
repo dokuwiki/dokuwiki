@@ -11,8 +11,8 @@ namespace dokuwiki\plugin\config\core\Setting;
  * Class setting_renderer
  */
 class SettingRenderer extends SettingMultichoice {
-    protected $prompts = array();
-    protected $format = null;
+    protected $prompts = [];
+    protected $format;
 
     /** @inheritdoc */
     public function initialize($default = null, $local = null, $protected = null) {

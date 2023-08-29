@@ -1,4 +1,6 @@
 <?php
+use dokuwiki\HTTP\Headers;
+use dokuwiki\Utf8\PhpString;
 /**
  * Functions used by lib/exe/fetch.php
  * (not included by other parts of dokuwiki)
@@ -28,17 +30,19 @@
 function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp=[]) {
     global $conf;
     // send mime headers
-    header("Content-Type: $mime");
+    header("Content-Type: {$mime}");
 
     // send security policy if given
-    if (!empty($csp)) dokuwiki\HTTP\Headers::contentSecurityPolicy($csp);
+    if (!empty($csp)) Headers::contentSecurityPolicy($csp);
 
     // calculate cache times
-    if($cache == -1) {
-        $maxage  = max($conf['cachetime'], 3600); // cachetime or one hour
+    if ($cache == -1) {
+        $maxage  = max($conf['cachetime'], 3600);
+        // cachetime or one hour
         $expires = time() + $maxage;
-    } else if($cache > 0) {
-        $maxage  = $cache; // given time
+    } elseif ($cache > 0) {
+        $maxage  = $cache;
+        // given time
         $expires = time() + $maxage;
     } else { // $cache == 0
         $maxage  = 0;
@@ -74,11 +78,11 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
     //download or display?
     if ($dl) {
         header('Content-Disposition: attachment;' . rfc2231_encode(
-                'filename', \dokuwiki\Utf8\PhpString::basename($orig)) . ';'
+                'filename', PhpString::basename($orig)) . ';'
         );
     } else {
         header('Content-Disposition: inline;' . rfc2231_encode(
-                'filename', \dokuwiki\Utf8\PhpString::basename($orig)) . ';'
+                'filename', PhpString::basename($orig)) . ';'
         );
     }
 
@@ -91,7 +95,7 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
         http_rangeRequest($fp, filesize($file), $mime);
     } else {
         http_status(500);
-        print "Could not read $file - bad permissions?";
+        print "Could not read {$file} - bad permissions?";
     }
 }
 
@@ -114,9 +118,7 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
 function rfc2231_encode($name, $value, $charset='utf-8', $lang='en') {
     $internal = preg_replace_callback(
         '/[\x00-\x20*\'%()<>@,;:\\\\"\/[\]?=\x80-\xFF]/',
-        function ($match) {
-            return rawurlencode($match[0]);
-        },
+        static fn($match) => rawurlencode($match[0]),
         $value
     );
     if ( $value != $internal ) {
@@ -148,37 +150,37 @@ function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
     if(media_isexternal($media)) {
         //check token for external image and additional for resized and cached images
         if(media_get_token($media, $width, $height) !== $INPUT->str('tok')) {
-            return array(412, 'Precondition Failed');
+            return [412, 'Precondition Failed'];
         }
         //handle external images
         if(strncmp($MIME, 'image/', 6) == 0) $file = media_get_from_URL($media, $EXT, $CACHE);
         if(!$file) {
             //download failed - redirect to original URL
-            return array(302, $media);
+            return [302, $media];
         }
     } else {
         $media = cleanID($media);
         if(empty($media)) {
-            return array(400, 'Bad request');
+            return [400, 'Bad request'];
         }
         // check token for resized images
         if (($width || $height) && media_get_token($media, $width, $height) !== $INPUT->str('tok')) {
-            return array(412, 'Precondition Failed');
+            return [412, 'Precondition Failed'];
         }
 
         //check permissions (namespace only)
         if(auth_quickaclcheck(getNS($media).':X') < AUTH_READ) {
-            return array(403, 'Forbidden');
+            return [403, 'Forbidden'];
         }
         $file = mediaFN($media, $rev);
     }
 
     //check file existance
     if(!file_exists($file)) {
-        return array(404, 'Not Found');
+        return [404, 'Not Found'];
     }
 
-    return array(200, null);
+    return [200, null];
 }
 
 /**

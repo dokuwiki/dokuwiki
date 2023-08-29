@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\Extension\PluginInterface;
 /**
  * Info Plugin: Displays information about various DokuWiki internals
  *
@@ -10,6 +11,7 @@
 class syntax_plugin_info extends DokuWiki_Syntax_Plugin
 {
 
+    public $Lexer;
     /**
      * What kind of syntax are we?
      */
@@ -54,7 +56,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
     public function handle($match, $state, $pos, Doku_Handler $handler)
     {
         $match = substr($match, 7, -2); //strip ~~INFO: from start and ~~ from end
-        return array(strtolower($match));
+        return [strtolower($match)];
     }
 
     /**
@@ -127,12 +129,12 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
     {
         global $lang;
         $plugins = plugin_list($type);
-        $plginfo = array();
+        $plginfo = [];
 
         // remove subparts
         foreach ($plugins as $p) {
-            if (!$po = plugin_load($type, $p)) continue;
-            list($name,/* $part */) = explode('_', $p, 2);
+            if (!($po = plugin_load($type, $p)) instanceof PluginInterface) continue;
+            [$name, ] = explode('_', $p, 2);
             $plginfo[$name] = $po->getInfo();
         }
 
@@ -167,7 +169,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
     {
         $plugins = plugin_list('helper');
         foreach ($plugins as $p) {
-            if (!$po = plugin_load('helper', $p)) continue;
+            if (!($po = plugin_load('helper', $p)) instanceof PluginInterface) continue;
 
             if (!method_exists($po, 'getMethods')) continue;
             $methods = $po->getMethods();
@@ -176,7 +178,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
             $hid = $this->addToToc($info['name'], 2, $renderer);
             $doc = '<h2><a name="' . $hid . '" id="' . $hid . '">' . hsc($info['name']) . '</a></h2>';
             $doc .= '<div class="level2">';
-            $doc .= '<p>' . strtr(hsc($info['desc']), array("\n" => "<br />")) . '</p>';
+            $doc .= '<p>' . strtr(hsc($info['desc']), ["\n" => "<br />"]) . '</p>';
             $doc .= '<pre class="code">$' . $p . " = plugin_load('helper', '" . $p . "');</pre>";
             $doc .= '</div>';
             foreach ($methods as $method) {
@@ -188,13 +190,13 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
                 $doc .= '<tr><th>Description</th><td colspan="2">' . $method['desc'] .
                     '</td></tr>';
                 if ($method['params']) {
-                    $c = count($method['params']);
+                    $c = is_countable($method['params']) ? count($method['params']) : 0;
                     $doc .= '<tr><th rowspan="' . $c . '">Parameters</th><td>';
-                    $params = array();
+                    $params = [];
                     foreach ($method['params'] as $desc => $type) {
                         $params[] = hsc($desc) . '</td><td>' . hsc($type);
                     }
-                    $doc .= join('</td></tr><tr><td>', $params) . '</td></tr>';
+                    $doc .= implode('</td></tr><tr><td>', $params) . '</td></tr>';
                 }
                 if ($method['return']) {
                     $doc .= '<tr><th>Return value</th><td>' . hsc(key($method['return'])) .
@@ -226,7 +228,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
             $doc .= $mode;
             $doc .= '</td>';
             $doc .= '<td class="leftalign">';
-            $doc .= join(', ', $modes);
+            $doc .= implode(', ', $modes);
             $doc .= '</td>';
             $doc .= '</tr>';
         }
@@ -243,7 +245,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
     {
         $modes = p_get_parsermodes();
 
-        $compactmodes = array();
+        $compactmodes = [];
         foreach ($modes as $mode) {
             $compactmodes[$mode['sort']][] = $mode['mode'];
         }
@@ -325,12 +327,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin
         $hid = '';
         if (($level >= $conf['toptoclevel']) && ($level <= $conf['maxtoclevel'])) {
             $hid = $renderer->_headerToLink($text, true);
-            $renderer->toc[] = array(
-                'hid' => $hid,
-                'title' => $text,
-                'type' => 'ul',
-                'level' => $level - $conf['toptoclevel'] + 1,
-            );
+            $renderer->toc[] = ['hid' => $hid, 'title' => $text, 'type' => 'ul', 'level' => $level - $conf['toptoclevel'] + 1];
         }
         return $hid;
     }

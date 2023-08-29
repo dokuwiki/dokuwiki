@@ -113,9 +113,7 @@ class MediaRevisions extends Revisions
         print $form->toHTML('Revisions');
 
         // provide navigation for paginated revision list (of pages and/or media files)
-        print $this->navigation($first, $hasNext, function ($n) {
-            return media_managerURL(['first' => $n], '&', false, true);
-        });
+        print $this->navigation($first, $hasNext, static fn($n) => media_managerURL(['first' => $n], '&', false, true));
     }
 
 }

@@ -1,4 +1,7 @@
 <?php
+use dokuwiki\Utf8\PhpString;
+use dokuwiki\File\PageResolver;
+use dokuwiki\File\MediaResolver;
 /**
  * The MetaData Renderer
  *
@@ -19,13 +22,13 @@ class Doku_Renderer_metadata extends Doku_Renderer
     const ABSTRACT_MAX = 500;
 
     /** @var array transient meta data, will be reset on each rendering */
-    public $meta = array();
+    public $meta = [];
 
     /** @var array persistent meta data, will be kept until explicitly deleted */
-    public $persistent = array();
+    public $persistent = [];
 
     /** @var array the list of headers used to create unique link ids */
-    protected $headers = array();
+    protected $headers = [];
 
     /** @var string temporary $doc store */
     protected $store = '';
@@ -61,7 +64,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
     {
         global $ID;
 
-        $this->headers = array();
+        $this->headers = [];
 
         // external pages are missing create date
         if (!isset($this->persistent['date']['created']) || !$this->persistent['date']['created']) {
@@ -93,7 +96,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
             // cut off too long abstracts
             $this->doc = trim($this->doc);
             if (strlen($this->doc) > self::ABSTRACT_MAX) {
-                $this->doc = \dokuwiki\Utf8\PhpString::substr($this->doc, 0, self::ABSTRACT_MAX).'…';
+                $this->doc = PhpString::substr($this->doc, 0, self::ABSTRACT_MAX).'…';
             }
             $this->meta['description']['abstract'] = $this->doc;
         }
@@ -141,12 +144,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
         //only add items within configured levels
         if ($level >= $conf['toptoclevel'] && $level <= $conf['maxtoclevel']) {
             // the TOC is one of our standard ul list arrays ;-)
-            $this->meta['description']['tableofcontents'][] = array(
-                'hid'   => $id,
-                'title' => $text,
-                'type'  => 'ul',
-                'level' => $level - $conf['toptoclevel'] + 1
-            );
+            $this->meta['description']['tableofcontents'][] = ['hid'   => $id, 'title' => $text, 'type'  => 'ul', 'level' => $level - $conf['toptoclevel'] + 1];
         }
     }
 
@@ -477,9 +475,9 @@ class Doku_Renderer_metadata extends Doku_Renderer
         $default = $this->_simpleTitle($id);
 
         // first resolve and clean up the $id
-        $resolver = new \dokuwiki\File\PageResolver($ID);
+        $resolver = new PageResolver($ID);
         $id = $resolver->resolveId($id);
-        list($page) = sexplode('#', $id, 2);
+        [$page] = sexplode('#', $id, 2);
 
         // set metadata
         $this->meta['relation']['references'][$page] = page_exists($page);
@@ -533,7 +531,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
         }
 
         if ($this->capture) {
-            list($wikiUri) = explode('#', $wikiUri, 2);
+            [$wikiUri] = explode('#', $wikiUri, 2);
             $name = $this->_getLinkTitle($name, $wikiUri);
             $this->doc .= $name;
         }
@@ -720,9 +718,9 @@ class Doku_Renderer_metadata extends Doku_Renderer
             return;
         }
 
-        list($src) = explode('#', $src, 2);
+        [$src] = explode('#', $src, 2);
         if (!media_isexternal($src)) {
-            $src = (new \dokuwiki\File\MediaResolver($ID))->resolveId($src);
+            $src = (new MediaResolver($ID))->resolveId($src);
         }
         if (preg_match('/.(jpe?g|gif|png|webp|svg)$/i', $src)) {
             $this->firstimage = $src;
@@ -738,11 +736,11 @@ class Doku_Renderer_metadata extends Doku_Renderer
     {
         global $ID;
 
-        list ($src) = explode('#', $src, 2);
+        [$src] = explode('#', $src, 2);
         if (media_isexternal($src)) {
             return;
         }
-        $src = (new \dokuwiki\File\MediaResolver($ID))->resolveId($src);
+        $src = (new MediaResolver($ID))->resolveId($src);
         $file = mediaFN($src);
         $this->meta['relation']['media'][$src] = file_exists($file);
     }

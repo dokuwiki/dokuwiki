@@ -5,7 +5,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
+use dokuwiki\Ui\MediaRevisions;
+use dokuwiki\Form\Form;
 use dokuwiki\Action\Denied;
 use dokuwiki\Action\Locked;
 use dokuwiki\ChangeLog\PageChangeLog;
@@ -60,7 +61,7 @@ function html_wikilink($id, $name = null, $search = '') {
  */
 function html_login($svg = false) {
     dbg_deprecated(Login::class .'::show()');
-    (new dokuwiki\Ui\Login($svg))->show();
+    (new Login($svg))->show();
 }
 
 
@@ -71,7 +72,7 @@ function html_login($svg = false) {
  */
 function html_denied() {
     dbg_deprecated(Denied::class .'::showBanner()');
-    (new dokuwiki\Action\Denied())->showBanner();
+    (new Denied())->showBanner();
 }
 
 /**
@@ -106,7 +107,7 @@ function html_secedit($text, $show = true) {
  */
 function html_secedit_button($matches){
     $json = htmlspecialchars_decode($matches[1], ENT_QUOTES);
-    $data = json_decode($json, true);
+    $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
     if ($data === null) {
         return '';
     }
@@ -142,7 +143,7 @@ function html_secedit_get_button($data) {
     unset($data['secid']);
 
     $params = array_merge(
-           array('do'  => 'edit', 'rev' => $INFO['lastmod'], 'summary' => '['.$name.'] '),
+           ['do'  => 'edit', 'rev' => $INFO['lastmod'], 'summary' => '['.$name.'] '],
            $data
     );
 
@@ -250,7 +251,7 @@ function html_showrev() {
  */
 function html_show($txt=null) {
     dbg_deprecated(PageView::class .'::show()');
-    (new dokuwiki\Ui\PageView($txt))->show();
+    (new PageView($txt))->show();
 }
 
 /**
@@ -261,7 +262,7 @@ function html_show($txt=null) {
  */
 function html_draft() {
     dbg_deprecated(PageDraft::class .'::show()');
-    (new dokuwiki\Ui\PageDraft)->show();
+    (new PageDraft)->show();
 }
 
 /**
@@ -279,12 +280,13 @@ function html_hilight($html, $phrases) {
     $phrases = array_map('preg_quote_cb', $phrases);
     $phrases = array_map('ft_snippet_re_preprocess', $phrases);
     $phrases = array_filter($phrases);
-    $regex = join('|',$phrases);
+
+    $regex = implode('|',$phrases);
 
     if ($regex === '') return $html;
     if (!Clean::isUtf8($regex)) return $html;
 
-    return @preg_replace_callback("/((<[^>]*)|$regex)/ui", function ($match) {
+    return @preg_replace_callback("/((<[^>]*)|{$regex})/ui", function ($match) {
         $hlight = unslash($match[0]);
         if (!isset($match[2])) {
             $hlight = '<span class="search_hit">'.$hlight.'</span>';
@@ -301,7 +303,7 @@ function html_hilight($html, $phrases) {
  */
 function html_locked() {
     dbg_deprecated(Locked::class .'::showBanner()');
-    (new dokuwiki\Action\Locked())->showBanner();
+    (new Locked())->showBanner();
 }
 
 /**
@@ -318,10 +320,10 @@ function html_locked() {
 function html_revisions($first = -1, $media_id = '') {
     dbg_deprecated(PageRevisions::class .'::show()');
     if ($media_id) {
-        (new dokuwiki\Ui\MediaRevisions($media_id))->show($first);
+        (new MediaRevisions($media_id))->show($first);
     } else {
         global $INFO;
-        (new dokuwiki\Ui\PageRevisions($INFO['id']))->show($first);
+        (new PageRevisions($INFO['id']))->show($first);
     }
 }
 
@@ -339,7 +341,7 @@ function html_revisions($first = -1, $media_id = '') {
  */
 function html_recent($first = 0, $show_changes = 'both') {
     dbg_deprecated(Recent::class .'::show()');
-    (new dokuwiki\Ui\Recent($first, $show_changes))->show();
+    (new Recent($first, $show_changes))->show();
 }
 
 /**
@@ -352,7 +354,7 @@ function html_recent($first = 0, $show_changes = 'both') {
  */
 function html_index($ns) {
     dbg_deprecated(Index::class .'::show()');
-    (new dokuwiki\Ui\Index($ns))->show();
+    (new Index($ns))->show();
 }
 
 /**
@@ -368,7 +370,7 @@ function html_index($ns) {
  */
 function html_list_index($item) {
     dbg_deprecated(Index::class .'::formatListItem()');
-    return (new dokuwiki\Ui\Index)->formatListItem($item);
+    return (new Index)->formatListItem($item);
 }
 
 /**
@@ -386,7 +388,7 @@ function html_list_index($item) {
  */
 function html_li_index($item) {
     dbg_deprecated(Index::class .'::tagListItem()');
-    return (new dokuwiki\Ui\Index)->tagListItem($item);
+    return (new Index)->tagListItem($item);
 }
 
 /**
@@ -426,7 +428,7 @@ function html_li_default($item){
  * @return string html of an unordered list
  */
 function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = false) {
-    if (count($data) === 0) {
+    if ($data === []) {
         return '';
     }
 
@@ -438,9 +440,7 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
 
     // set callback function to build the <li> tag, formerly defined as html_li_default()
     if (!is_callable($lifunc)) {
-       $lifunc = function ($item) {
-           return '<li class="level'.$item['level'].'">';
-       };
+       $lifunc = static fn($item) => '<li class="level'.$item['level'].'">';
     }
 
     foreach ($data as $item) {
@@ -499,7 +499,7 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
  */
 function html_backlinks() {
     dbg_deprecated(Backlinks::class .'::show()');
-    (new dokuwiki\Ui\Backlinks)->show();
+    (new Backlinks)->show();
 }
 
 /**
@@ -532,7 +532,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
 function html_diff($text = '', $intro = true, $type = null) {
     dbg_deprecated(PageDiff::class .'::show()');
     global $INFO;
-    (new dokuwiki\Ui\PageDiff($INFO['id']))->compareWith($text)->preference([
+    (new PageDiff($INFO['id']))->compareWith($text)->preference([
         'showIntro' => $intro,
         'difftype'  => $type,
     ])->show();
@@ -577,7 +577,7 @@ function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
  */
 function html_insert_softbreaks($diffhtml) {
     dbg_deprecated(PageDiff::class .'::insertSoftbreaks()');
-    return (new dokuwiki\Ui\PageDiff)->insertSoftbreaks($diffhtml);
+    return (new PageDiff)->insertSoftbreaks($diffhtml);
 }
 
 /**
@@ -591,7 +591,7 @@ function html_insert_softbreaks($diffhtml) {
  */
 function html_conflict($text, $summary) {
     dbg_deprecated(PageConflict::class .'::show()');
-    (new dokuwiki\Ui\PageConflict($text, $summary))->show();
+    (new PageConflict($text, $summary))->show();
 }
 
 /**
@@ -607,7 +607,7 @@ function html_msgarea() {
 
     if (!isset($MSG)) return;
 
-    $shown = array();
+    $shown = [];
     foreach ($MSG as $msg) {
         $hash = md5($msg['msg']);
         if (isset($shown[$hash])) continue; // skip double messages
@@ -630,7 +630,7 @@ function html_msgarea() {
  */
 function html_register() {
     dbg_deprecated(UserRegister::class .'::show()');
-    (new dokuwiki\Ui\UserRegister)->show();
+    (new UserRegister)->show();
 }
 
 /**
@@ -642,7 +642,7 @@ function html_register() {
  */
 function html_updateprofile() {
     dbg_deprecated(UserProfile::class .'::show()');
-    (new dokuwiki\Ui\UserProfile)->show();
+    (new UserProfile)->show();
 }
 
 /**
@@ -654,7 +654,7 @@ function html_updateprofile() {
  */
 function html_edit() {
     dbg_deprecated(Editor::class .'::show()');
-    (new dokuwiki\Ui\Editor)->show();
+    (new Editor)->show();
 }
 
 /**
@@ -667,7 +667,7 @@ function html_edit() {
  */
 function html_edit_form($param) {
     dbg_deprecated(Editor::class .'::addTextarea()');
-    (new dokuwiki\Ui\Editor)->addTextarea($param);
+    (new Editor)->addTextarea($param);
 }
 
 /**
@@ -754,7 +754,7 @@ function html_debug() {
     print '</pre>';
 
     if (function_exists('apache_get_version')) {
-        $apache = array();
+        $apache = [];
         $apache['version'] = apache_get_version();
 
         if (function_exists('apache_get_modules')) {
@@ -777,7 +777,7 @@ function html_debug() {
  */
 function html_resendpwd() {
     dbg_deprecated(UserResendPwd::class .'::show()');
-    (new dokuwiki\Ui\UserResendPwd)->show();
+    (new UserResendPwd)->show();
 }
 
 /**
@@ -789,7 +789,7 @@ function html_resendpwd() {
  * @return string html
  */
 function html_TOC($toc) {
-    if (!count($toc)) return '';
+    if ($toc === []) return '';
     global $lang;
     $out  = '<!-- TOC START -->'.DOKU_LF;
     $out .= '<div id="dw__toc" class="dw__toc">'.DOKU_LF;
@@ -831,12 +831,7 @@ function html_list_toc($item) {
  * @return array the toc item
  */
 function html_mktocitem($link, $text, $level, $hash='#') {
-    return  array(
-            'link'  => $hash.$link,
-            'title' => $text,
-            'type'  => 'ul',
-            'level' => $level
-    );
+    return  ['link'  => $hash.$link, 'title' => $text, 'type'  => 'ul', 'level' => $level];
 }
 
 /**
@@ -866,7 +861,7 @@ function html_form($name, $form) {
  * @deprecated 2020-07-18
  */
 function html_form_output($form) {
-    dbg_deprecated('use dokuwiki\Form\Form::toHTML()');
+    dbg_deprecated('use ' . Form::class . '::toHTML()');
     $form->printForm();
 }
 
@@ -899,7 +894,7 @@ function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts
     $out = '';
 
     // prepare the object attributes
-    if(is_null($atts)) $atts = array();
+    if(is_null($atts)) $atts = [];
     $atts['width']  = (int) $width;
     $atts['height'] = (int) $height;
     if(!$atts['width'])  $atts['width']  = 425;
@@ -1012,7 +1007,7 @@ function html_sizechange($sizechange, $form = null) {
         if (!isset($form)) {
             return '<span class="'.$class.'">'.$value.'</span>';
         } else { // Doku_Form
-            $form->addElement(form_makeOpenTag('span', array('class' => $class)));
+            $form->addElement(form_makeOpenTag('span', ['class' => $class]));
             $form->addElement($value);
             $form->addElement(form_makeCloseTag('span'));
         }

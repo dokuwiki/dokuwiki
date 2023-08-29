@@ -58,7 +58,7 @@ class SubscriberManager
             $data = time();
         } //always add current time for new subscriptions
 
-        $line = "$user $style $data\n";
+        $line = "{$user} {$style} {$data}\n";
         $file = $this->file($id);
         return io_saveFile($file, $line, true);
     }
@@ -130,7 +130,7 @@ class SubscriberManager
         }
 
         $subs = $this->subscribers($id, $user);
-        if (!count($subs)) {
+        if ($subs === []) {
             return false;
         }
 
@@ -247,7 +247,7 @@ class SubscriberManager
         $subscriptions = $this->subscribers($id, null, 'every');
 
         $result = [];
-        foreach ($subscriptions as $target => $users) {
+        foreach ($subscriptions as $users) {
             foreach ($users as $user => $info) {
                 $userinfo = $auth->getUserData($user);
                 if ($userinfo === false) {

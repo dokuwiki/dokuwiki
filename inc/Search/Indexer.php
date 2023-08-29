@@ -2,6 +2,9 @@
 
 namespace dokuwiki\Search;
 
+use dokuwiki\Utf8\Asian;
+use dokuwiki\Utf8\Clean;
+use dokuwiki\Utf8\PhpString;
 use dokuwiki\Extension\Event;
 
 /**
@@ -13,7 +16,7 @@ class Indexer {
     /**
      * @var array $pidCache Cache for getPID()
      */
-    protected $pidCache = array();
+    protected $pidCache = [];
 
     /**
      * Adds the contents of a page to the fulltext index
@@ -39,7 +42,7 @@ class Indexer {
             return false;
         }
 
-        $pagewords = array();
+        $pagewords = [];
         // get word usage in page
         $words = $this->getPageWords($text);
         if ($words === false) {
@@ -53,7 +56,7 @@ class Indexer {
                 foreach ($words[$wlen] as $wid => $freq) {
                     $idx = ($wid<count($index)) ? $index[$wid] : '';
                     $index[$wid] = $this->updateTuple($idx, $pid, $freq);
-                    $pagewords[] = "$wlen*$wid";
+                    $pagewords[] = "{$wlen}*{$wid}";
                 }
                 if (!$this->saveIndex('i', $wlen, $index)) {
                     $this->unlock();
@@ -67,10 +70,10 @@ class Indexer {
         if ($pageword_idx !== '') {
             $oldwords = explode(':',$pageword_idx);
             $delwords = array_diff($oldwords, $pagewords);
-            $upwords = array();
+            $upwords = [];
             foreach ($delwords as $word) {
                 if ($word != '') {
-                    list($wlen, $wid) = explode('*', $word);
+                    [$wlen, $wid] = explode('*', $word);
                     $wid = (int)$wid;
                     $upwords[$wlen][] = $wid;
                 }
@@ -84,7 +87,7 @@ class Indexer {
             }
         }
         // Save the reverse index
-        $pageword_idx = join(':', $pagewords);
+        $pageword_idx = implode(':', $pagewords);
         if (!$this->saveIndexKey('pageword', '', $pid, $pageword_idx)) {
             $this->unlock();
             return false;
@@ -109,18 +112,18 @@ class Indexer {
         $tokens = $this->tokenizer($text);
         $tokens = array_count_values($tokens);  // count the frequency of each token
 
-        $words = array();
+        $words = [];
         foreach ($tokens as $w=>$c) {
             $l = wordlen($w);
             if (isset($words[$l])){
-                $words[$l][$w] = $c + (isset($words[$l][$w]) ? $words[$l][$w] : 0);
+                $words[$l][$w] = $c + ($words[$l][$w] ?? 0);
             }else{
-                $words[$l] = array($w => $c);
+                $words[$l] = [$w => $c];
             }
         }
 
         // arrive here with $words = array(wordlen => array(word => frequency))
-        $index = array();   //resulting index
+        $index = [];   //resulting index
         foreach (array_keys($words) as $wlen) {
             $word_idx = $this->getIndex('w', $wlen);
             $word_idx_modified = false;
@@ -133,7 +136,7 @@ class Indexer {
                     $word_idx_modified = true;
                 }
                 if (!isset($index[$wlen]))
-                    $index[$wlen] = array();
+                    $index[$wlen] = [];
                 $index[$wlen][$wid] = $freq;
             }
             // save back the word index
@@ -162,7 +165,7 @@ class Indexer {
      */
     public function addMetaKeys($page, $key, $value=null) {
         if (!is_array($key)) {
-            $key = array($key => $value);
+            $key = [$key => $value];
         } elseif (!is_null($value)) {
             // $key is array, but $value is not null
             trigger_error("array passed to addMetaKeys but value is not null", E_USER_WARNING);
@@ -195,7 +198,7 @@ class Indexer {
             $metawords = $this->getIndex($metaname.'_w', '');
             $addwords = false;
 
-            if (!is_array($values)) $values = array($values);
+            if (!is_array($values)) $values = [$values];
 
             $val_idx = $this->getIndexKey($metaname.'_p', '', $pid);
             if ($val_idx !== '') {
@@ -203,7 +206,7 @@ class Indexer {
                 // -1 means remove, 0 keep, 1 add
                 $val_idx = array_combine($val_idx, array_fill(0, count($val_idx), -1));
             } else {
-                $val_idx = array();
+                $val_idx = [];
             }
 
             foreach ($values as $val) {
@@ -278,11 +281,11 @@ class Indexer {
         $new_id = array_search($newpage, $pages, true);
         if ($new_id !== false) {
             // make sure the page is not in the index anymore
-            if ($this->deletePageNoLock($newpage) !== true) {
+            if (!$this->deletePageNoLock($newpage)) {
                 return false;
             }
 
-            $pages[$new_id] = 'deleted:'.time().rand(0, 9999);
+            $pages[$new_id] = 'deleted:'.time().random_int(0, 9999);
         }
 
         $pages[$id] = $newpage;
@@ -294,7 +297,7 @@ class Indexer {
         }
 
         // reset the pid cache
-        $this->pidCache = array();
+        $this->pidCache = [];
 
         $this->unlock();
         return true;
@@ -328,15 +331,15 @@ class Indexer {
                     $pagekeys     = $this->getIndex($key.'_p', '');
                     $parts = explode(':', $indexline);
                     foreach ($parts as $part) {
-                        list($id, $count) = explode('*', $part);
+                        [$id, $count] = explode('*', $part);
                         $newindexline =  $this->updateTuple($newindexline, $id, $count);
 
                         $keyline = explode(':', $pagekeys[$id]);
                         // remove old meta value
-                        $keyline = array_diff($keyline, array($oldid));
+                        $keyline = array_diff($keyline, [$oldid]);
                         // add new meta value when not already present
                         if (!in_array($newid, $keyline)) {
-                            array_push($keyline, $newid);
+                            $keyline[] = $newid;
                         }
                         $pagekeys[$id] = implode(':', $keyline);
                     }
@@ -400,10 +403,10 @@ class Indexer {
         $pageword_idx = $this->getIndexKey('pageword', '', $pid);
         if ($pageword_idx !== '') {
             $delwords = explode(':',$pageword_idx);
-            $upwords = array();
+            $upwords = [];
             foreach ($delwords as $word) {
                 if ($word != '') {
-                    list($wlen,$wid) = explode('*', $word);
+                    [$wlen, $wid] = explode('*', $word);
                     $wid = (int)$wid;
                     $upwords[$wlen][] = $wid;
                 }
@@ -457,13 +460,13 @@ class Indexer {
                 if(substr($f,-4)=='.idx' &&
                     (substr($f,0,1)=='i' || substr($f,0,1)=='w'
                         || substr($f,-6)=='_w.idx' || substr($f,-6)=='_i.idx' || substr($f,-6)=='_p.idx'))
-                    @unlink($conf['indexdir']."/$f");
+                    @unlink($conf['indexdir']."/{$f}");
             }
         }
         @unlink($conf['indexdir'].'/lengths.idx');
 
         // clear the pid cache
-        $this->pidCache = array();
+        $this->pidCache = [];
 
         $this->unlock();
         return true;
@@ -493,32 +496,27 @@ class Indexer {
         $evt = new Event('INDEXER_TEXT_PREPARE', $text);
         if ($evt->advise_before(true)) {
             if (preg_match('/[^0-9A-Za-z ]/u', $text)) {
-                $text = \dokuwiki\Utf8\Asian::separateAsianWords($text);
+                $text = Asian::separateAsianWords($text);
             }
         }
         $evt->advise_after();
         unset($evt);
 
         $text = strtr($text,
-                      array(
-                          "\r" => ' ',
-                          "\n" => ' ',
-                          "\t" => ' ',
-                          "\xC2\xAD" => '', //soft-hyphen
-                      )
+                      ["\r" => ' ', "\n" => ' ', "\t" => ' ', "\xC2\xAD" => '']
         );
         if (preg_match('/[^0-9A-Za-z ]/u', $text))
-            $text = \dokuwiki\Utf8\Clean::stripspecials($text, ' ', '\._\-:'.$wc);
+            $text = Clean::stripspecials($text, ' ', '\._\-:'.$wc);
 
         $wordlist = explode(' ', $text);
         foreach ($wordlist as $i => $word) {
             $wordlist[$i] = (preg_match('/[^0-9A-Za-z]/u', $word)) ?
-                \dokuwiki\Utf8\PhpString::strtolower($word) : strtolower($word);
+                PhpString::strtolower($word) : strtolower($word);
         }
 
         foreach ($wordlist as $i => $word) {
             if ((!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
-                || array_search($word, $stopwords, true) !== false)
+                || in_array($word, $stopwords, true))
                 unset($wordlist[$i]);
         }
         return array_values($wordlist);
@@ -593,24 +591,24 @@ class Indexer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     public function lookup(&$tokens) {
-        $result = array();
+        $result = [];
         $wids = $this->getIndexWords($tokens, $result);
-        if (empty($wids)) return array();
+        if (empty($wids)) return [];
         // load known words and documents
         $page_idx = $this->getIndex('page', '');
-        $docs = array();
+        $docs = [];
         foreach (array_keys($wids) as $wlen) {
             $wids[$wlen] = array_unique($wids[$wlen]);
             $index = $this->getIndex('i', $wlen);
             foreach($wids[$wlen] as $ixid) {
                 if ($ixid < count($index))
-                    $docs["$wlen*$ixid"] = $this->parseTuples($page_idx, $index[$ixid]);
+                    $docs["{$wlen}*{$ixid}"] = $this->parseTuples($page_idx, $index[$ixid]);
             }
         }
         // merge found pages into final result array
-        $final = array();
+        $final = [];
         foreach ($result as $word => $res) {
-            $final[$word] = array();
+            $final[$word] = [];
             foreach ($res as $wid) {
                 // handle the case when ($ixid < count($index)) has been false
                 // and thus $docs[$wid] hasn't been set.
@@ -649,12 +647,12 @@ class Indexer {
      */
     public function lookupKey($key, &$value, $func=null) {
         if (!is_array($value))
-            $value_array = array($value);
+            $value_array = [$value];
         else
             $value_array =& $value;
 
         // the matching ids for the provided value(s)
-        $value_ids = array();
+        $value_ids = [];
 
         $metaname = idx_cleanName($key);
 
@@ -668,7 +666,7 @@ class Indexer {
         if (!is_null($func)) {
             foreach ($value_array as $val) {
                 foreach ($words as $i => $word) {
-                    if (call_user_func_array($func, array($val, $word)))
+                    if (call_user_func_array($func, [$val, $word]))
                         $value_ids[$i][] = $val;
                 }
             }
@@ -690,9 +688,8 @@ class Indexer {
                     $re = $caret.preg_quote($xval, '/').$dollar;
                     foreach(array_keys(preg_grep('/'.$re.'/', $words)) as $i)
                         $value_ids[$i][] = $val;
-                } else {
-                    if (($i = array_search($val, $words, true)) !== false)
-                        $value_ids[$i][] = $val;
+                } elseif (($i = array_search($val, $words, true)) !== false) {
+                    $value_ids[$i][] = $val;
                 }
             }
         }
@@ -700,9 +697,9 @@ class Indexer {
         unset($words); // free the used memory
 
         // initialize the result so it won't be null
-        $result = array();
+        $result = [];
         foreach ($value_array as $val) {
-            $result[$val] = array();
+            $result[$val] = [];
         }
 
         $page_idx = $this->getIndex('page', '');
@@ -724,7 +721,7 @@ class Indexer {
                 // is an array with page_id => 1, page2_id => 1 etc. so take the keys only
                 $pages = array_keys($this->parseTuples($page_idx, $lines[$value_id]));
                 foreach ($val_list as $val) {
-                    $result[$val] = array_merge($result[$val], $pages);
+                    $result[$val] = [...$result[$val], ...$pages];
                 }
             }
         }
@@ -747,11 +744,11 @@ class Indexer {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function getIndexWords(&$words, &$result) {
-        $tokens = array();
-        $tokenlength = array();
-        $tokenwild = array();
+        $tokens = [];
+        $tokenlength = [];
+        $tokenwild = [];
         foreach ($words as $word) {
-            $result[$word] = array();
+            $result[$word] = [];
             $caret = '^';
             $dollar = '$';
             $xword = $word;
@@ -761,12 +758,12 @@ class Indexer {
             if (substr($xword, 0, 1) == '*') {
                 $xword = substr($xword, 1);
                 $caret = '';
-                $wlen -= 1;
+                --$wlen;
             }
             if (substr($xword, -1, 1) == '*') {
                 $xword = substr($xword, 0, -1);
                 $dollar = '';
-                $wlen -= 1;
+                --$wlen;
             }
             if ($wlen < IDX_MINWORDLENGTH && $caret && $dollar && !is_numeric($xword))
                 continue;
@@ -774,22 +771,22 @@ class Indexer {
                 $tokenlength[$wlen][] = $xword;
             if (!$caret || !$dollar) {
                 $re = $caret.preg_quote($xword, '/').$dollar;
-                $tokens[$xword][] = array($word, '/'.$re.'/');
+                $tokens[$xword][] = [$word, '/'.$re.'/'];
                 if (!isset($tokenwild[$xword]))
                     $tokenwild[$xword] = $wlen;
             } else {
-                $tokens[$xword][] = array($word, null);
+                $tokens[$xword][] = [$word, null];
             }
         }
         asort($tokenwild);
         // $tokens = array( base word => array( [ query term , regexp ] ... ) ... )
         // $tokenlength = array( base word length => base word ... )
         // $tokenwild = array( base word => base word length ... )
-        $length_filter = empty($tokenwild) ? $tokenlength : min(array_keys($tokenlength));
+        $length_filter = $tokenwild === [] ? $tokenlength : min(array_keys($tokenlength));
         $indexes_known = $this->indexLengths($length_filter);
-        if (!empty($tokenwild)) sort($indexes_known);
+        if ($tokenwild !== []) sort($indexes_known);
         // get word IDs
-        $wids = array();
+        $wids = [];
         foreach ($indexes_known as $ixlen) {
             $word_idx = $this->getIndex('w', $ixlen);
             // handle exact search
@@ -799,7 +796,7 @@ class Indexer {
                     if ($wid !== false) {
                         $wids[$ixlen][] = $wid;
                         foreach ($tokens[$xword] as $w)
-                            $result[$w[0]][] = "$ixlen*$wid";
+                            $result[$w[0]][] = "{$ixlen}*{$wid}";
                     }
                 }
             }
@@ -810,7 +807,7 @@ class Indexer {
                     if (is_null($w[1])) continue;
                     foreach(array_keys(preg_grep($w[1], $word_idx)) as $wid) {
                         $wids[$ixlen][] = $wid;
-                        $result[$w[0]][] = "$ixlen*$wid";
+                        $result[$w[0]][] = "{$ixlen}*{$wid}";
                     }
                 }
             }
@@ -842,7 +839,7 @@ class Indexer {
             return array_values($page_idx);
         }
 
-        $pages = array();
+        $pages = [];
         $lines = $this->getIndex($metaname.'_i', '');
         foreach ($lines as $line) {
             $pages = array_merge($pages, $this->parseTuples($page_idx, $line));
@@ -867,7 +864,7 @@ class Indexer {
         if ($max < $min)
             $max = 0;
 
-        $result = array();
+        $result = [];
 
         if ($key == 'title') {
             $index = $this->getIndex('title', '');
@@ -880,7 +877,7 @@ class Indexer {
         elseif (!is_null($key)) {
             $metaname = idx_cleanName($key);
             $index = $this->getIndex($metaname.'_i', '');
-            $val_idx = array();
+            $val_idx = [];
             foreach ($index as $wid => $line) {
                 $freq = $this->countTuples($line);
                 if ($freq >= $min && (!$max || $freq <= $max))
@@ -977,7 +974,7 @@ class Indexer {
     protected function getIndex($idx, $suffix) {
         global $conf;
         $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
-        if (!file_exists($fn)) return array();
+        if (!file_exists($fn)) return [];
         return file($fn, FILE_IGNORE_NEW_LINES);
     }
 
@@ -996,7 +993,7 @@ class Indexer {
         $fn = $conf['indexdir'].'/'.$idx.$suffix;
         $fh = @fopen($fn.'.tmp', 'w');
         if (!$fh) return false;
-        fwrite($fh, join("\n", $lines));
+        fwrite($fh, implode("\n", $lines));
         if (!empty($lines))
             fwrite($fh, "\n");
         fclose($fh);
@@ -1090,7 +1087,7 @@ class Indexer {
             $id = count($index);
             $index[$id] = $value;
             if (!$this->saveIndex($idx, $suffix, $index)) {
-                trigger_error("Failed to write $idx index", E_USER_ERROR);
+                trigger_error("Failed to write {$idx} index", E_USER_ERROR);
                 return false;
             }
         }
@@ -1124,17 +1121,17 @@ class Indexer {
      */
     protected function indexLengths($filter) {
         global $conf;
-        $idx = array();
+        $idx = [];
         if (is_array($filter)) {
             // testing if index files exist only
             $path = $conf['indexdir']."/i";
-            foreach ($filter as $key => $value) {
+            foreach (array_keys($filter) as $key) {
                 if (file_exists($path.$key.'.idx'))
                     $idx[] = $key;
             }
         } else {
             $lengths = idx_listIndexLengths();
-            foreach ($lengths as $key => $length) {
+            foreach ($lengths as $length) {
                 // keep all the values equal or superior
                 if ((int)$length >= (int)$filter)
                     $idx[] = $length;
@@ -1160,9 +1157,9 @@ class Indexer {
         $line = trim($line, ':');
         if ($count) {
             if ($line) {
-                return "$id*$count:".$line;
+                return "{$id}*{$count}:".$line;
             } else {
-                return "$id*$count";
+                return "{$id}*{$count}";
             }
         }
         return $line;
@@ -1179,12 +1176,12 @@ class Indexer {
      * @return array
      */
     protected function parseTuples(&$keys, $line) {
-        $result = array();
+        $result = [];
         if ($line == '') return $result;
         $parts = explode(':', $line);
         foreach ($parts as $tuple) {
             if ($tuple === '') continue;
-            list($key, $cnt) = explode('*', $tuple);
+            [$key, $cnt] = explode('*', $tuple);
             if (!$cnt) continue;
             if (isset($keys[$key])) {
                 $key = $keys[$key];
@@ -1208,7 +1205,7 @@ class Indexer {
         $parts = explode(':', $line);
         foreach ($parts as $tuple) {
             if ($tuple === '') continue;
-            list(/* $pid */, $cnt) = explode('*', $tuple);
+            [, $cnt] = explode('*', $tuple);
             $freq += (int)$cnt;
         }
         return $freq;

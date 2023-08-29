@@ -5,10 +5,10 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
+use dokuwiki\Input\Input;
 use dokuwiki\Extension\Event;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/../../');
+if(!defined('DOKU_INC')) define('DOKU_INC', __DIR__.'/../../');
 if (!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1);
 require_once(DOKU_INC.'inc/init.php');
 session_write_close(); //close session
@@ -16,7 +16,7 @@ session_write_close(); //close session
 require_once(DOKU_INC.'inc/fetch.functions.php');
 
 if (defined('SIMPLE_TEST')) {
-    $INPUT = new \dokuwiki\Input\Input();
+    $INPUT = new Input();
 }
 
 // BEGIN main
@@ -31,7 +31,7 @@ if (defined('SIMPLE_TEST')) {
     //sanitize revision
     $REV = preg_replace('/[^0-9]/', '', $REV);
 
-    list($EXT, $MIME, $DL) = mimetype($MEDIA, false);
+    [$EXT, $MIME, $DL] = mimetype($MEDIA, false);
     if($EXT === false) {
         $EXT  = 'unknown';
         $MIME = 'application/octet-stream';
@@ -39,32 +39,18 @@ if (defined('SIMPLE_TEST')) {
     }
 
     // check for permissions, preconditions and cache external files
-    list($STATUS, $STATUSMESSAGE) = checkFileStatus($MEDIA, $FILE, $REV, $WIDTH, $HEIGHT);
+    [$STATUS, $STATUSMESSAGE] = checkFileStatus($MEDIA, $FILE, $REV, $WIDTH, $HEIGHT);
 
     // prepare data for plugin events
-    $data = array(
-        'media'         => $MEDIA,
-        'file'          => $FILE,
-        'orig'          => $FILE,
-        'mime'          => $MIME,
-        'download'      => $DL,
-        'cache'         => $CACHE,
-        'ext'           => $EXT,
-        'width'         => $WIDTH,
-        'height'        => $HEIGHT,
-        'status'        => $STATUS,
-        'statusmessage' => $STATUSMESSAGE,
-        'ispublic'      => media_ispublic($MEDIA),
-        'csp' => [
-            'default-src' => "'none'",
-            'style-src' => "'unsafe-inline'",
-            'media-src' => "'self'",
-            'object-src' => "'self'",
-            'font-src' => "'self' data:",
-            'form-action' => "'none'",
-            'frame-ancestors' => "'self'",
-        ],
-    );
+    $data = ['media'         => $MEDIA, 'file'          => $FILE, 'orig'          => $FILE, 'mime'          => $MIME, 'download'      => $DL, 'cache'         => $CACHE, 'ext'           => $EXT, 'width'         => $WIDTH, 'height'        => $HEIGHT, 'status'        => $STATUS, 'statusmessage' => $STATUSMESSAGE, 'ispublic'      => media_ispublic($MEDIA), 'csp' => [
+        'default-src' => "'none'",
+        'style-src' => "'unsafe-inline'",
+        'media-src' => "'self'",
+        'object-src' => "'self'",
+        'font-src' => "'self' data:",
+        'form-action' => "'none'",
+        'frame-ancestors' => "'self'",
+    ]];
 
     // handle the file status
     $evt = new Event('FETCH_MEDIA_STATUS', $data);

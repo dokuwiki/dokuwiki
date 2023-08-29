@@ -5,7 +5,9 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
+use dokuwiki\Extension\Event;
+use dokuwiki\Utf8\PhpString;
+use dokuwiki\Debug\DebugHelper;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Logger;
 
@@ -66,7 +68,7 @@ function checkUpdateMessages(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getVersionData(){
-    $version = array();
+    $version = [];
     //import version string
     if(file_exists(DOKU_INC.'VERSION')){
         //official release
@@ -80,7 +82,7 @@ function getVersionData(){
         if (function_exists('shell_exec')) {
             $commitInfo = shell_exec("git log -1 --pretty=format:'%h %cd' --date=short");
             if ($commitInfo) {
-                list($version['sha'], $date) = explode(' ', $commitInfo);
+                [$version['sha'], $date] = explode(' ', $commitInfo);
                 $version['date'] = hsc($date);
                 return $version;
             }
@@ -97,7 +99,7 @@ function getVersionData(){
                     $headCommit = trim(file_get_contents($pathToHead));
                 } else {
                     $packedRefs = file_get_contents(DOKU_INC . '.git/packed-refs');
-                    if (!preg_match("~([[:xdigit:]]+) $headCommit~", $packedRefs, $matches)) {
+                    if (!preg_match("~([[:xdigit:]]+) {$headCommit}~", $packedRefs, $matches)) {
                         # ref not found in pack file
                         return $version;
                     }
@@ -110,7 +112,7 @@ function getVersionData(){
             // Get commit date from Git object
             $subDir = substr($headCommit, 0, 2);
             $fileName = substr($headCommit, 2);
-            $gitCommitObject = DOKU_INC . ".git/objects/$subDir/$fileName";
+            $gitCommitObject = DOKU_INC . ".git/objects/{$subDir}/{$fileName}";
             if (file_exists($gitCommitObject) && function_exists('zlib_decode')) {
                 $commit = zlib_decode(file_get_contents($gitCommitObject));
                 $committerLine = explode("\n", $commit)[3];
@@ -137,7 +139,7 @@ function getVersionData(){
  */
 function getVersion(){
     $version = getVersionData();
-    $sha = !empty($version['sha']) ? ' (' . $version['sha'] . ')' : '';
+    $sha = empty($version['sha']) ? '' : ' (' . $version['sha'] . ')';
     return $version['type'] . ' ' . $version['date'] . $sha;
 }
 
@@ -152,31 +154,28 @@ function check(){
     /* @var Input $INPUT */
     global $INPUT;
 
-    if ($INFO['isadmin'] || $INFO['ismanager']){
+    if ($INFO['isadmin'] || $INFO['ismanager']) {
         msg('DokuWiki version: '.getVersion(),1);
-
         if(version_compare(phpversion(),'7.4.0','<')){
             msg('Your PHP version is too old ('.phpversion().' vs. 7.4+ needed)',-1);
         }else{
             msg('PHP version '.phpversion(),1);
         }
-    } else {
-        if(version_compare(phpversion(),'7.4.0','<')){
-            msg('Your PHP version is too old',-1);
-        }
+    } elseif (version_compare(phpversion(),'7.4.0','<')) {
+        msg('Your PHP version is too old',-1);
     }
 
-    $mem = (int) php_to_byte(ini_get('memory_limit'));
+    $mem = php_to_byte(ini_get('memory_limit'));
     if($mem){
         if ($mem === -1) {
             msg('PHP memory is unlimited', 1);
-        } else if ($mem < 16777216) {
+        } elseif ($mem < 16_777_216) {
             msg('PHP is limited to less than 16MB RAM (' . filesize_h($mem) . ').
             Increase memory_limit in php.ini', -1);
-        } else if ($mem < 20971520) {
+        } elseif ($mem < 20_971_520) {
             msg('PHP is limited to less than 20MB RAM (' . filesize_h($mem) . '),
                 you might encounter problems with bigger pages. Increase memory_limit in php.ini', -1);
-        } else if ($mem < 33554432) {
+        } elseif ($mem < 33_554_432) {
             msg('PHP is limited to less than 32MB RAM (' . filesize_h($mem) . '),
                 but that should be enough in most cases. If not, increase memory_limit in php.ini', 0);
         } else {
@@ -184,12 +183,10 @@ function check(){
         }
     }
 
-    if(is_writable($conf['changelog'])){
+    if (is_writable($conf['changelog'])) {
         msg('Changelog is writable',1);
-    }else{
-        if (file_exists($conf['changelog'])) {
-            msg('Changelog is not writable',-1);
-        }
+    } elseif (file_exists($conf['changelog'])) {
+        msg('Changelog is not writable',-1);
     }
 
     if (isset($conf['changelog_old']) && file_exists($conf['changelog_old'])) {
@@ -198,9 +195,9 @@ function check(){
 
     if (file_exists($conf['changelog'].'_failed')) {
         msg('Importing old changelog failed', -1);
-    } else if (file_exists($conf['changelog'].'_importing')) {
+    } elseif (file_exists($conf['changelog'].'_importing')) {
         msg('Importing old changelog now.', 0);
-    } else if (file_exists($conf['changelog'].'_import_ok')) {
+    } elseif (file_exists($conf['changelog'].'_import_ok')) {
         msg('Old changelog imported', 1);
         if (!plugin_isdisabled('importoldchangelog')) {
             msg('Importoldchangelog plugin not disabled after import', -1);
@@ -285,14 +282,14 @@ function check(){
     $lengths = idx_listIndexLengths();
     $index_corrupted = false;
     foreach ($lengths as $length) {
-        if (count(idx_getIndex('w', $length)) != count(idx_getIndex('i', $length))) {
+        if (count(idx_getIndex('w', $length)) !== count(idx_getIndex('i', $length))) {
             $index_corrupted = true;
             break;
         }
     }
 
     foreach (idx_getIndex('metadata', '') as $index) {
-        if (count(idx_getIndex($index.'_w', '')) != count(idx_getIndex($index.'_i', ''))) {
+        if (count(idx_getIndex($index.'_w', '')) !== count(idx_getIndex($index.'_i', ''))) {
             $index_corrupted = true;
             break;
         }
@@ -369,15 +366,15 @@ function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
         'file' => $file,
     ];
 
-    $evt = new \dokuwiki\Extension\Event('INFOUTIL_MSG_SHOW', $msgdata);
+    $evt = new Event('INFOUTIL_MSG_SHOW', $msgdata);
     if ($evt->advise_before()) {
         /* Show msg normally - event could suppress message show */
         if($msgdata['line'] || $msgdata['file']) {
-            $basename = \dokuwiki\Utf8\PhpString::basename($msgdata['file']);
+            $basename = PhpString::basename($msgdata['file']);
             $msgdata['msg'] .=' ['.$basename.':'.$msgdata['line'].']';
         }
 
-        if(!isset($MSG)) $MSG = array();
+        if(!isset($MSG)) $MSG = [];
         $MSG[] = $msgdata;
         if(isset($MSG_shown) || headers_sent()){
             if(function_exists('html_msgarea')){
@@ -426,8 +423,6 @@ function info_msg_allowed($msg){
                           E_USER_WARNING);
             return $INFO['isadmin'];
     }
-
-    return false;
 }
 
 /**
@@ -481,7 +476,7 @@ function dbglog($msg,$header=''){
  * @triggers INFO_DEPRECATION_LOG
  */
 function dbg_deprecated($alternative = '') {
-    \dokuwiki\Debug\DebugHelper::dbgDeprecatedFunction($alternative, 2);
+    DebugHelper::dbgDeprecatedFunction($alternative, 2);
 }
 
 /**
@@ -497,14 +492,14 @@ function dbg_backtrace(){
     array_shift($backtrace);
 
     // Iterate backtrace
-    $calls = array();
+    $calls = [];
     $depth = count($backtrace) - 1;
     foreach ($backtrace as $i => $call) {
         $location = $call['file'] . ':' . $call['line'];
         $function = (isset($call['class'])) ?
             $call['class'] . $call['type'] . $call['function'] : $call['function'];
 
-        $params = array();
+        $params = [];
         if (isset($call['args'])){
             foreach($call['args'] as $arg){
                 if(is_object($arg)){
@@ -514,7 +509,7 @@ function dbg_backtrace(){
                 }elseif(is_null($arg)){
                     $params[] = '[NULL]';
                 }else{
-                    $params[] = (string) '"'.$arg.'"';
+                    $params[] = '"'.$arg.'"';
                 }
             }
         }

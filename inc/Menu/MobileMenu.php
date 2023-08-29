@@ -23,11 +23,7 @@ class MobileMenu implements MenuInterface {
         $sitemenu = new SiteMenu(AbstractItem::CTX_MOBILE);
         $usermenu = new UserMenu(AbstractItem::CTX_MOBILE);
 
-        return array(
-            'page' => $pagemenu->getItems(),
-            'site' => $sitemenu->getItems(),
-            'user' => $usermenu->getItems()
-        );
+        return ['page' => $pagemenu->getItems(), 'site' => $sitemenu->getItems(), 'user' => $usermenu->getItems()];
     }
 
     /**
@@ -39,7 +35,7 @@ class MobileMenu implements MenuInterface {
      */
     public function getItems() {
         $menu = $this->getGroupedItems();
-        return call_user_func_array('array_merge', array_values($menu));
+        return array_merge(...array_values($menu));
     }
 
     /**
@@ -70,7 +66,7 @@ class MobileMenu implements MenuInterface {
         $html .= '<option value="">' . $empty . '</option>';
 
         foreach($this->getGroupedItems() as $tools => $items) {
-            if (count($items)) {
+            if ($items !== []) {
                 $html .= '<optgroup label="' . $lang[$tools . '_tools'] . '">';
                 foreach($items as $item) {
                     $params = $item->getParams();

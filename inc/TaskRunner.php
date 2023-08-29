@@ -47,12 +47,9 @@ class TaskRunner
         $tmp = []; // No event data
         $evt = new Event('INDEXER_TASKS_RUN', $tmp);
         if ($evt->advise_before()) {
-            $this->runIndexer() or
-            $this->runSitemapper() or
-            $this->sendDigest() or
-            $this->runTrimRecentChanges() or
-            $this->runTrimRecentChanges(true) or
-            $evt->advise_after();
+            if (!($this->runIndexer() || $this->runSitemapper() || $this->sendDigest() || $this->runTrimRecentChanges() || $this->runTrimRecentChanges(true))) {
+                $evt->advise_after();
+            }
         }
 
         if(!$output) {
@@ -95,7 +92,7 @@ class TaskRunner
     {
         global $conf;
 
-        echo "runTrimRecentChanges($media_changes): started" . NL;
+        echo "runTrimRecentChanges({$media_changes}): started" . NL;
 
         $fn = ($media_changes ? $conf['media_changelog'] : $conf['changelog']);
 
@@ -109,10 +106,10 @@ class TaskRunner
             @touch($fn . '.trimmed');
             io_lock($fn);
             $lines = file($fn);
-            if (count($lines) <= $conf['recent']) {
+            if ((is_countable($lines) ? count($lines) : 0) <= $conf['recent']) {
                 // nothing to trim
                 io_unlock($fn);
-                echo "runTrimRecentChanges($media_changes): finished" . NL;
+                echo "runTrimRecentChanges({$media_changes}): finished" . NL;
                 return false;
             }
 
@@ -120,7 +117,7 @@ class TaskRunner
             $trim_time = time() - $conf['recent_days'] * 86400;
             $out_lines = [];
             $old_lines = [];
-            for ($i = 0; $i < count($lines); $i++) {
+            for ($i = 0; $i < (is_countable($lines) ? count($lines) : 0); $i++) {
                 $log = ChangeLog::parseLogLine($lines[$i]);
                 if ($log === false) {
                     continue; // discard junk
@@ -128,18 +125,18 @@ class TaskRunner
 
                 if ($log['date'] < $trim_time) {
                     // keep old lines for now (append .$i to prevent key collisions)
-                    $old_lines[$log['date'] . ".$i"] = $lines[$i];
+                    $old_lines[$log['date'] . ".{$i}"] = $lines[$i];
                 } else {
                     // definitely keep these lines
-                    $out_lines[$log['date'] . ".$i"] = $lines[$i];
+                    $out_lines[$log['date'] . ".{$i}"] = $lines[$i];
                 }
             }
 
-            if (count($lines) == count($out_lines)) {
+            if ((is_countable($lines) ? count($lines) : 0) == count($out_lines)) {
                 // nothing to trim
                 @unlink($fn . '_tmp');
                 io_unlock($fn);
-                echo "runTrimRecentChanges($media_changes): finished" . NL;
+                echo "runTrimRecentChanges({$media_changes}): finished" . NL;
                 return false;
             }
 
@@ -171,12 +168,12 @@ class TaskRunner
             } else {
                 io_unlock($fn);
             }
-            echo "runTrimRecentChanges($media_changes): finished" . NL;
+            echo "runTrimRecentChanges({$media_changes}): finished" . NL;
             return true;
         }
 
         // nothing done
-        echo "runTrimRecentChanges($media_changes): finished" . NL;
+        echo "runTrimRecentChanges({$media_changes}): finished" . NL;
         return false;
     }
 
@@ -234,7 +231,7 @@ class TaskRunner
         $sub = new BulkSubscriptionSender();
         $sent = $sub->sendBulk($ID);
 
-        echo "sendDigest(): sent $sent mails" . NL;
+        echo "sendDigest(): sent {$sent} mails" . NL;
         echo 'sendDigest(): finished' . NL;
         return (bool)$sent;
     }

@@ -20,20 +20,31 @@ abstract class AuthPlugin extends Plugin
      * do. The things a backend can do need to be set to true
      * in the constructor.
      */
-    protected $cando = array(
-        'addUser' => false, // can Users be created?
-        'delUser' => false, // can Users be deleted?
-        'modLogin' => false, // can login names be changed?
-        'modPass' => false, // can passwords be changed?
-        'modName' => false, // can real names be changed?
-        'modMail' => false, // can emails be changed?
-        'modGroups' => false, // can groups be changed?
-        'getUsers' => false, // can a (filtered) list of users be retrieved?
-        'getUserCount' => false, // can the number of users be retrieved?
-        'getGroups' => false, // can a list of available groups be retrieved?
-        'external' => false, // does the module do external auth checking?
-        'logout' => true, // can the user logout again? (eg. not possible with HTTP auth)
-    );
+    protected $cando = [
+        'addUser' => false,
+        // can Users be created?
+        'delUser' => false,
+        // can Users be deleted?
+        'modLogin' => false,
+        // can login names be changed?
+        'modPass' => false,
+        // can passwords be changed?
+        'modName' => false,
+        // can real names be changed?
+        'modMail' => false,
+        // can emails be changed?
+        'modGroups' => false,
+        // can groups be changed?
+        'getUsers' => false,
+        // can a (filtered) list of users be retrieved?
+        'getUserCount' => false,
+        // can the number of users be retrieved?
+        'getGroups' => false,
+        // can a list of available groups be retrieved?
+        'external' => false,
+        // does the module do external auth checking?
+        'logout' => true,
+    ];
 
     /**
      * Constructor.
@@ -90,7 +101,6 @@ abstract class AuthPlugin extends Plugin
                 return ($this->cando['modPass'] ||
                     $this->cando['modName'] ||
                     $this->cando['modMail']);
-                break;
             case 'UserMod':
                 // can at least anything be changed?
                 return ($this->cando['modPass'] ||
@@ -99,11 +109,10 @@ abstract class AuthPlugin extends Plugin
                     $this->cando['modLogin'] ||
                     $this->cando['modGroups'] ||
                     $this->cando['modMail']);
-                break;
             default:
                 // print a helping message for developers
                 if (!isset($this->cando[$cap])) {
-                    msg("Check for unknown capability '$cap' - Do you use an outdated Plugin?", -1);
+                    msg("Check for unknown capability '{$cap}' - Do you use an outdated Plugin?", -1);
                 }
                 return $this->cando[$cap];
         }
@@ -124,20 +133,16 @@ abstract class AuthPlugin extends Plugin
      */
     public function triggerUserMod($type, $params)
     {
-        $validTypes = array(
-            'create' => 'createUser',
-            'modify' => 'modifyUser',
-            'delete' => 'deleteUsers',
-        );
+        $validTypes = ['create' => 'createUser', 'modify' => 'modifyUser', 'delete' => 'deleteUsers'];
         if (empty($validTypes[$type])) {
             return false;
         }
 
         $result = false;
-        $eventdata = array('type' => $type, 'params' => $params, 'modification_result' => null);
+        $eventdata = ['type' => $type, 'params' => $params, 'modification_result' => null];
         $evt = new Event('AUTH_USER_CHANGE', $eventdata);
         if ($evt->advise_before(true)) {
-            $result = call_user_func_array(array($this, $validTypes[$type]), $evt->data['params']);
+            $result = call_user_func_array([$this, $validTypes[$type]], $evt->data['params']);
             $evt->data['modification_result'] = $result;
         }
         $evt->advise_after();
@@ -323,7 +328,7 @@ abstract class AuthPlugin extends Plugin
      * @param  array $filter array of field/pattern pairs, empty array for no filter
      * @return int
      */
-    public function getUserCount($filter = array())
+    public function getUserCount($filter = [])
     {
         msg("authorisation method does not provide user counts", -1);
         return 0;
@@ -343,7 +348,7 @@ abstract class AuthPlugin extends Plugin
     public function retrieveUsers($start = 0, $limit = 0, $filter = null)
     {
         msg("authorisation method does not support mass retrieval of user data", -1);
-        return array();
+        return [];
     }
 
     /**
@@ -374,7 +379,7 @@ abstract class AuthPlugin extends Plugin
     public function retrieveGroups($start = 0, $limit = 0)
     {
         msg("authorisation method does not support group list retrieval", -1);
-        return array();
+        return [];
     }
 
     /**

@@ -5,7 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
+use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\ChangeLog;
 use dokuwiki\File\PageFile;
 
@@ -58,14 +58,14 @@ function addLogEntry(
     global $INPUT;
 
     // check for special flags as keys
-    if (!is_array($flags)) $flags = array();
+    if (!is_array($flags)) $flags = [];
     $flagExternalEdit = isset($flags['ExternalEdit']);
 
     $id = cleanid($id);
 
     if (!$date) $date = time(); //use current time if none supplied
-    $remote = (!$flagExternalEdit) ? clientIP(true) : '127.0.0.1';
-    $user   = (!$flagExternalEdit) ? $INPUT->server->str('REMOTE_USER') : '';
+    $remote = ($flagExternalEdit) ? '127.0.0.1' : clientIP(true);
+    $user   = ($flagExternalEdit) ? '' : $INPUT->server->str('REMOTE_USER');
     $sizechange = ($sizechange === null) ? '' : (int)$sizechange;
 
     // update changelog file and get the added entry that is also to be stored in metadata
@@ -116,18 +116,18 @@ function addMediaLogEntry(
     global $INPUT;
 
     // check for special flags as keys
-    if (!is_array($flags)) $flags = array();
+    if (!is_array($flags)) $flags = [];
     $flagExternalEdit = isset($flags['ExternalEdit']);
 
     $id = cleanid($id);
 
     if (!$date) $date = time(); //use current time if none supplied
-    $remote = (!$flagExternalEdit) ? clientIP(true) : '127.0.0.1';
-    $user   = (!$flagExternalEdit) ? $INPUT->server->str('REMOTE_USER') : '';
+    $remote = ($flagExternalEdit) ? '127.0.0.1' : clientIP(true);
+    $user   = ($flagExternalEdit) ? '' : $INPUT->server->str('REMOTE_USER');
     $sizechange = ($sizechange === null) ? '' : (int)$sizechange;
 
     // update changelog file and get the added entry
-    (new \dokuwiki\ChangeLog\MediaChangeLog($id, 1024))->addLogEntry([
+    (new MediaChangeLog($id, 1024))->addLogEntry([
         'date'       => $date,
         'ip'         => $remote,
         'type'       => $type,
@@ -163,7 +163,7 @@ function addMediaLogEntry(
  */
 function getRecents($first, $num, $ns = '', $flags = 0) {
     global $conf;
-    $recent = array();
+    $recent = [];
     $count  = 0;
 
     if (!$num)
@@ -176,21 +176,21 @@ function getRecents($first, $num, $ns = '', $flags = 0) {
         $lines = @file($conf['changelog']) ?: [];
     }
     if (!is_array($lines)) {
-        $lines = array();
+        $lines = [];
     }
     $lines_position = count($lines) - 1;
     $media_lines_position = 0;
-    $media_lines = array();
+    $media_lines = [];
 
     if ($flags & RECENTS_MEDIA_PAGES_MIXED) {
         $media_lines = @file($conf['media_changelog']) ?: [];
         if (!is_array($media_lines)) {
-            $media_lines = array();
+            $media_lines = [];
         }
         $media_lines_position = count($media_lines) - 1;
     }
 
-    $seen = array(); // caches seen lines, _handleRecent() skips them
+    $seen = []; // caches seen lines, _handleRecent() skips them
 
     // handle lines
     while ($lines_position >= 0 || (($flags & RECENTS_MEDIA_PAGES_MIXED) && $media_lines_position >= 0)) {
@@ -261,7 +261,7 @@ function getRecents($first, $num, $ns = '', $flags = 0) {
  */
 function getRecentsSince($from, $to = null, $ns = '', $flags = 0) {
     global $conf;
-    $recent = array();
+    $recent = [];
 
     if ($to && $to < $from)
         return $recent;
@@ -278,7 +278,7 @@ function getRecentsSince($from, $to = null, $ns = '', $flags = 0) {
     $lines = array_reverse($lines);
 
     // handle lines
-    $seen = array(); // caches seen lines, _handleRecent() skips them
+    $seen = []; // caches seen lines, _handleRecent() skips them
 
     foreach ($lines as $line) {
         $rec = _handleRecent($line, $ns, $flags, $seen);

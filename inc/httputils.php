@@ -27,8 +27,8 @@ function http_conditionalRequest($timestamp){
     $last_modified = substr(gmdate('r', $timestamp), 0, -5).'GMT';
     $etag = '"'.md5($last_modified).'"';
     // Send the headers
-    header("Last-Modified: $last_modified");
-    header("ETag: $etag");
+    header("Last-Modified: {$last_modified}");
+    header("ETag: {$etag}");
     // See if the client has provided the required headers
     $if_modified_since = $INPUT->server->filter('stripslashes')->str('HTTP_IF_MODIFIED_SINCE', false);
     $if_none_match = $INPUT->server->filter('stripslashes')->str('HTTP_IF_NONE_MATCH', false);
@@ -67,17 +67,17 @@ function http_sendfile($file) {
 
     //use x-sendfile header to pass the delivery to compatible web servers
     if($conf['xsendfile'] == 1){
-        header("X-LIGHTTPD-send-file: $file");
+        header("X-LIGHTTPD-send-file: {$file}");
         ob_end_clean();
         exit;
     }elseif($conf['xsendfile'] == 2){
-        header("X-Sendfile: $file");
+        header("X-Sendfile: {$file}");
         ob_end_clean();
         exit;
     }elseif($conf['xsendfile'] == 3){
         // FS#2388 nginx just needs the relative path.
         $file = DOKU_REL.substr($file, strlen(fullpath(DOKU_INC)) + 1);
-        header("X-Accel-Redirect: $file");
+        header("X-Accel-Redirect: {$file}");
         ob_end_clean();
         exit;
     }
@@ -97,19 +97,19 @@ function http_sendfile($file) {
 function http_rangeRequest($fh,$size,$mime){
     global $INPUT;
 
-    $ranges  = array();
+    $ranges  = [];
     $isrange = false;
 
     header('Accept-Ranges: bytes');
 
     if(!$INPUT->server->has('HTTP_RANGE')){
         // no range requested - send the whole file
-        $ranges[] = array(0,$size,$size);
+        $ranges[] = [0, $size, $size];
     }else{
         $t = explode('=', $INPUT->server->str('HTTP_RANGE'));
         if (!$t[0]=='bytes') {
             // we only understand byte ranges - send the whole file
-            $ranges[] = array(0,$size,$size);
+            $ranges[] = [0, $size, $size];
         }else{
             $isrange = true;
             // handle multiple ranges
@@ -125,7 +125,7 @@ function http_rangeRequest($fh,$size,$mime){
                     exit;
                 }
                 $len = $end - $start + 1;
-                $ranges[] = array($start,$end,$len);
+                $ranges[] = [$start, $end, $len];
             }
         }
     }
@@ -133,11 +133,11 @@ function http_rangeRequest($fh,$size,$mime){
 
     // now send the type and length headers
     if(!$isrange){
-        header("Content-Type: $mime",true);
+        header("Content-Type: {$mime}",true);
     }else{
         header('HTTP/1.1 206 Partial Content');
         if($parts == 1){
-            header("Content-Type: $mime",true);
+            header("Content-Type: {$mime}",true);
         }else{
             header('Content-Type: multipart/byteranges; boundary='.HTTP_MULTIPART_BOUNDARY,true);
         }
@@ -145,18 +145,18 @@ function http_rangeRequest($fh,$size,$mime){
 
     // send all ranges
     for($i=0; $i<$parts; $i++){
-        list($start,$end,$len) = $ranges[$i];
+        [$start, $end, $len] = $ranges[$i];
 
         // multipart or normal headers
         if($parts > 1){
             echo HTTP_HEADER_LF.'--'.HTTP_MULTIPART_BOUNDARY.HTTP_HEADER_LF;
-            echo "Content-Type: $mime".HTTP_HEADER_LF;
-            echo "Content-Range: bytes $start-$end/$size".HTTP_HEADER_LF;
+            echo "Content-Type: {$mime}".HTTP_HEADER_LF;
+            echo "Content-Range: bytes {$start}-{$end}/{$size}".HTTP_HEADER_LF;
             echo HTTP_HEADER_LF;
         }else{
-            header("Content-Length: $len");
+            header("Content-Length: {$len}");
             if($isrange){
-                header("Content-Range: bytes $start-$end/$size");
+                header("Content-Range: bytes {$start}-{$end}/{$size}");
             }
         }
 
@@ -221,7 +221,7 @@ function http_cached($cache, $cache_ok) {
     header('Pragma: public');
     if($cache_ok){
         http_conditionalRequest(filemtime($cache));
-        if($conf['allowdebug']) header("X-CacheUsed: $cache");
+        if($conf['allowdebug']) header("X-CacheUsed: {$cache}");
 
         // finally send output
         if ($conf['gzip_output'] && http_gzip_valid($cache)) {
@@ -249,7 +249,7 @@ function http_cached_finish($file, $content) {
 
     // save cache file
     io_saveFile($file, $content);
-    if(DOKU_HAS_GZIP) io_saveFile("$file.gz",$content);
+    if(DOKU_HAS_GZIP) io_saveFile("{$file}.gz",$content);
 
     // finally send output
     if ($conf['gzip_output'] && DOKU_HAS_GZIP) {
@@ -285,47 +285,7 @@ function http_get_raw_post_data() {
 function http_status($code = 200, $text = '') {
     global $INPUT;
 
-    static $stati = array(
-        200 => 'OK',
-        201 => 'Created',
-        202 => 'Accepted',
-        203 => 'Non-Authoritative Information',
-        204 => 'No Content',
-        205 => 'Reset Content',
-        206 => 'Partial Content',
-
-        300 => 'Multiple Choices',
-        301 => 'Moved Permanently',
-        302 => 'Found',
-        304 => 'Not Modified',
-        305 => 'Use Proxy',
-        307 => 'Temporary Redirect',
-
-        400 => 'Bad Request',
-        401 => 'Unauthorized',
-        403 => 'Forbidden',
-        404 => 'Not Found',
-        405 => 'Method Not Allowed',
-        406 => 'Not Acceptable',
-        407 => 'Proxy Authentication Required',
-        408 => 'Request Timeout',
-        409 => 'Conflict',
-        410 => 'Gone',
-        411 => 'Length Required',
-        412 => 'Precondition Failed',
-        413 => 'Request Entity Too Large',
-        414 => 'Request-URI Too Long',
-        415 => 'Unsupported Media Type',
-        416 => 'Requested Range Not Satisfiable',
-        417 => 'Expectation Failed',
-
-        500 => 'Internal Server Error',
-        501 => 'Not Implemented',
-        502 => 'Bad Gateway',
-        503 => 'Service Unavailable',
-        504 => 'Gateway Timeout',
-        505 => 'HTTP Version Not Supported'
-    );
+    static $stati = [200 => 'OK', 201 => 'Created', 202 => 'Accepted', 203 => 'Non-Authoritative Information', 204 => 'No Content', 205 => 'Reset Content', 206 => 'Partial Content', 300 => 'Multiple Choices', 301 => 'Moved Permanently', 302 => 'Found', 304 => 'Not Modified', 305 => 'Use Proxy', 307 => 'Temporary Redirect', 400 => 'Bad Request', 401 => 'Unauthorized', 403 => 'Forbidden', 404 => 'Not Found', 405 => 'Method Not Allowed', 406 => 'Not Acceptable', 407 => 'Proxy Authentication Required', 408 => 'Request Timeout', 409 => 'Conflict', 410 => 'Gone', 411 => 'Length Required', 412 => 'Precondition Failed', 413 => 'Request Entity Too Large', 414 => 'Request-URI Too Long', 415 => 'Unsupported Media Type', 416 => 'Requested Range Not Satisfiable', 417 => 'Expectation Failed', 500 => 'Internal Server Error', 501 => 'Not Implemented', 502 => 'Bad Gateway', 503 => 'Service Unavailable', 504 => 'Gateway Timeout', 505 => 'HTTP Version Not Supported'];
 
     if($text == '' && isset($stati[$code])) {
         $text = $stati[$code];
@@ -333,9 +293,9 @@ function http_status($code = 200, $text = '') {
 
     $server_protocol = $INPUT->server->str('SERVER_PROTOCOL', false);
 
-    if(substr(php_sapi_name(), 0, 3) == 'cgi' || defined('SIMPLE_TEST')) {
+    if(substr(PHP_SAPI, 0, 3) == 'cgi' || defined('SIMPLE_TEST')) {
         header("Status: {$code} {$text}", true);
-    } elseif($server_protocol == 'HTTP/1.1' OR $server_protocol == 'HTTP/1.0') {
+    } elseif($server_protocol == 'HTTP/1.1' || $server_protocol == 'HTTP/1.0') {
         header($server_protocol." {$code} {$text}", true, $code);
     } else {
         header("HTTP/1.1 {$code} {$text}", true, $code);

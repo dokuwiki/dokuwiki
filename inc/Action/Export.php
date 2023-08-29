@@ -42,7 +42,7 @@ class Export extends AbstractAction {
 
         $pre = '';
         $post = '';
-        $headers = array();
+        $headers = [];
 
         // search engines: never cache exported docs! (Google only currently)
         $headers['X-Robots-Tag'] = 'noindex';
@@ -86,12 +86,12 @@ class Export extends AbstractAction {
                 break;
             default:
                 $output = p_cached_output(wikiFN($ID, $REV), $mode, $ID);
-                $headers = p_get_metadata($ID, "format $mode");
+                $headers = p_get_metadata($ID, "format {$mode}");
                 break;
         }
 
         // prepare event data
-        $data = array();
+        $data = [];
         $data['id'] = $ID;
         $data['mode'] = $mode;
         $data['headers'] = $headers;
@@ -101,7 +101,7 @@ class Export extends AbstractAction {
 
         if(!empty($data['output'])) {
             if(is_array($data['headers'])) foreach($data['headers'] as $key => $val) {
-                header("$key: $val");
+                header("{$key}: {$val}");
             }
             print $pre . $data['output'] . $post;
             exit;

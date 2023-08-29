@@ -16,7 +16,7 @@ abstract class ChangeLog
     /** @var false|int */
     protected $currentRevision;
     /** @var array */
-    protected $cache;
+    protected $cache = [];
 
     /**
      * Constructor
@@ -30,7 +30,7 @@ abstract class ChangeLog
 
         $this->cache =& $cache_revinfo;
         if (!isset($this->cache[$id])) {
-            $this->cache[$id] = array();
+            $this->cache[$id] = [];
         }
 
         $this->id = $id;
@@ -107,7 +107,7 @@ abstract class ChangeLog
     {
         if (!is_array($info)) return false;
         //$this->cache[$this->id][$info['date']] ??= $info; // since php 7.4
-        $this->cache[$this->id][$info['date']] = $this->cache[$this->id][$info['date']] ?? $info;
+        $this->cache[$this->id][$info['date']] ??= $info;
         return true;
     }
 
@@ -150,7 +150,7 @@ abstract class ChangeLog
         }
 
         //read lines from changelog
-        list($fp, $lines) = $this->readloglines($rev);
+        [$fp, $lines] = $this->readloglines($rev);
         if ($fp) {
             fclose($fp);
         }
@@ -158,7 +158,7 @@ abstract class ChangeLog
 
         // parse and cache changelog lines
         foreach ($lines as $value) {
-            $info = $this->parseLogLine($value);
+            $info = static::parseLogLine($value);
             $this->cacheRevisionInfo($info);
         }
         if (!isset($this->cache[$this->id][$rev])) {
@@ -192,8 +192,8 @@ abstract class ChangeLog
      */
     public function getRevisions($first, $num)
     {
-        $revs = array();
-        $lines = array();
+        $revs = [];
+        $lines = [];
         $count = 0;
 
         $logfile = $this->getChangelogFilename();
@@ -259,7 +259,7 @@ abstract class ChangeLog
 
                 // combine with previous chunk
                 $count += count($tmp);
-                $lines = array_merge($tmp, $lines);
+                $lines = [...$tmp, ...$lines];
 
                 // next chunk
                 if ($finger == 0) {
@@ -284,7 +284,7 @@ abstract class ChangeLog
 
         // handle lines in reverse order
         for ($i = count($lines) - 1; $i >= 0; $i--) {
-            $info = $this->parseLogLine($lines[$i]);
+            $info = static::parseLogLine($lines[$i]);
             if ($this->cacheRevisionInfo($info)) {
                 $revs[] = $info['date'];
             }
@@ -321,7 +321,7 @@ abstract class ChangeLog
         }
 
         //get lines from changelog
-        list($fp, $lines, $head, $tail, $eof) = $this->readloglines($rev);
+        [$fp, $lines, $head, $tail, $eof] = $this->readloglines($rev);
         if (empty($lines)) return false;
 
         // look for revisions later/earlier than $rev, when founded count till the wanted revision is reached
@@ -330,9 +330,9 @@ abstract class ChangeLog
         $relativeRev = false;
         $checkOtherChunk = true; //always runs once
         while (!$relativeRev && $checkOtherChunk) {
-            $info = array();
+            $info = [];
             //parse in normal or reverse order
-            $count = count($lines);
+            $count = is_countable($lines) ? count($lines) : 0;
             if ($direction > 0) {
                 $start = 0;
                 $step = 1;
@@ -340,8 +340,8 @@ abstract class ChangeLog
                 $start = $count - 1;
                 $step = -1;
             }
-            for ($i = $start; $i >= 0 && $i < $count; $i = $i + $step) {
-                $info = $this->parseLogLine($lines[$i]);
+            for ($i = $start; $i >= 0 && $i < $count; $i += $step) {
+                $info = static::parseLogLine($lines[$i]);
                 if ($this->cacheRevisionInfo($info)) {
                     //look for revs older/earlier then reference $rev and select $direction-th one
                     if (($direction > 0 && $info['date'] > $rev) || ($direction < 0 && $info['date'] < $rev)) {
@@ -356,10 +356,10 @@ abstract class ChangeLog
             //true when $rev is found, but not the wanted follow-up.
             $checkOtherChunk = $fp
                 && ($info['date'] == $rev || ($revCounter > 0 && !$relativeRev))
-                && !(($tail == $eof && $direction > 0) || ($head == 0 && $direction < 0));
+                && (!($tail == $eof && $direction > 0) && !($head == 0 && $direction < 0));
 
             if ($checkOtherChunk) {
-                list($lines, $head, $tail) = $this->readAdjacentChunk($fp, $head, $tail, $direction);
+                [$lines, $head, $tail] = $this->readAdjacentChunk($fp, $head, $tail, $direction);
 
                 if (empty($lines)) break;
             }
@@ -382,7 +382,7 @@ abstract class ChangeLog
      */
     public function getRevisionsAround($rev1, $rev2, $max = 50)
     {
-        $max = intval(abs($max) / 2) * 2 + 1;
+        $max = (int) (abs($max) / 2) * 2 + 1;
         $rev1 = max($rev1, 0);
         $rev2 = max($rev2, 0);
 
@@ -397,41 +397,41 @@ abstract class ChangeLog
             $rev2 = $this->currentRevision();
         }
         //collect revisions around rev2
-        list($revs2, $allRevs, $fp, $lines, $head, $tail) = $this->retrieveRevisionsAround($rev2, $max);
+        [$revs2, $allRevs, $fp, $lines, $head, $tail] = $this->retrieveRevisionsAround($rev2, $max);
 
-        if (empty($revs2)) return array(array(), array());
+        if (empty($revs2)) return [[], []];
 
         //collect revisions around rev1
-        $index = array_search($rev1, $allRevs);
+        $index = array_search($rev1, $allRevs, true);
         if ($index === false) {
             //no overlapping revisions
-            list($revs1, , , , ,) = $this->retrieveRevisionsAround($rev1, $max);
-            if (empty($revs1)) $revs1 = array();
+            [$revs1, , , , , ] = $this->retrieveRevisionsAround($rev1, $max);
+            if (empty($revs1)) $revs1 = [];
         } else {
             //revisions overlaps, reuse revisions around rev2
             $lastRev = array_pop($allRevs); //keep last entry that could be external edit
             $revs1 = $allRevs;
             while ($head > 0) {
-                for ($i = count($lines) - 1; $i >= 0; $i--) {
-                    $info = $this->parseLogLine($lines[$i]);
+                for ($i = (is_countable($lines) ? count($lines) : 0) - 1; $i >= 0; $i--) {
+                    $info = static::parseLogLine($lines[$i]);
                     if ($this->cacheRevisionInfo($info)) {
                         $revs1[] = $info['date'];
                         $index++;
 
-                        if ($index > intval($max / 2)) break 2;
+                        if ($index > (int) ($max / 2)) break 2;
                     }
                 }
 
-                list($lines, $head, $tail) = $this->readAdjacentChunk($fp, $head, $tail, -1);
+                [$lines, $head, $tail] = $this->readAdjacentChunk($fp, $head, $tail, -1);
             }
             sort($revs1);
             $revs1[] = $lastRev; //push back last entry
 
             //return wanted selection
-            $revs1 = array_slice($revs1, max($index - intval($max / 2), 0), $max);
+            $revs1 = array_slice($revs1, max($index - (int) ($max / 2), 0), $max);
         }
 
-        return array(array_reverse($revs1), array_reverse($revs2));
+        return [array_reverse($revs1), array_reverse($revs2)];
     }
 
     /**
@@ -447,12 +447,11 @@ abstract class ChangeLog
         //requested date_at(timestamp) younger or equal then modified_time($this->id) => load current
         if (file_exists($fileLastMod) && $date_at >= @filemtime($fileLastMod)) {
             return '';
+        } elseif ($rev = $this->getRelativeRevision($date_at + 1, -1)) {
+            //+1 to get also the requested date revision
+            return $rev;
         } else {
-            if ($rev = $this->getRelativeRevision($date_at + 1, -1)) { //+1 to get also the requested date revision
-                return $rev;
-            } else {
-                return false;
-            }
+            return false;
         }
     }
 
@@ -477,19 +476,20 @@ abstract class ChangeLog
      */
     protected function retrieveRevisionsAround($rev, $max)
     {
-        $revs = array();
-        $afterCount = $beforeCount = 0;
+        $revs = [];
+        $afterCount = 0;
+        $beforeCount = 0;
 
         //get lines from changelog
-        list($fp, $lines, $startHead, $startTail, $eof) = $this->readloglines($rev);
+        [$fp, $lines, $startHead, $startTail, $eof] = $this->readloglines($rev);
         if (empty($lines)) return false;
 
         //parse changelog lines in chunk, and read forward more chunks until $max/2 is reached
         $head = $startHead;
         $tail = $startTail;
-        while (count($lines) > 0) {
+        while ((is_countable($lines) ? count($lines) : 0) > 0) {
             foreach ($lines as $line) {
-                $info = $this->parseLogLine($line);
+                $info = static::parseLogLine($line);
                 if ($this->cacheRevisionInfo($info)) {
                     $revs[] = $info['date'];
                     if ($info['date'] >= $rev) {
@@ -498,16 +498,16 @@ abstract class ChangeLog
                         if ($afterCount == 1) $beforeCount = count($revs);
                     }
                     //enough revs after reference $rev?
-                    if ($afterCount > intval($max / 2)) break 2;
+                    if ($afterCount > (int) ($max / 2)) break 2;
                 }
             }
             //retrieve next chunk
-            list($lines, $head, $tail) = $this->readAdjacentChunk($fp, $head, $tail, 1);
+            [$lines, $head, $tail] = $this->readAdjacentChunk($fp, $head, $tail, 1);
         }
         $lastTail = $tail;
 
         // add a possible revision of external edit, create or deletion
-        if ($lastTail == $eof && $afterCount <= intval($max / 2) &&
+        if ($lastTail == $eof && $afterCount <= (int) ($max / 2) &&
             count($revs) && !$this->isCurrentRevision($revs[count($revs)-1])
         ) {
             $revs[] = $this->currentRevision;
@@ -520,22 +520,20 @@ abstract class ChangeLog
         }
 
         //read more chunks backward until $max/2 is reached and total number of revs is equal to $max
-        $lines = array();
+        $lines = [];
         $i = 0;
-        if ($afterCount > 0) {
-            $head = $startHead;
-            $tail = $startTail;
-            while ($head > 0) {
-                list($lines, $head, $tail) = $this->readAdjacentChunk($fp, $head, $tail, -1);
+        $head = $startHead;
+        $tail = $startTail;
+        while ($head > 0) {
+            [$lines, $head, $tail] = $this->readAdjacentChunk($fp, $head, $tail, -1);
 
-                for ($i = count($lines) - 1; $i >= 0; $i--) {
-                    $info = $this->parseLogLine($lines[$i]);
-                    if ($this->cacheRevisionInfo($info)) {
-                        $revs[] = $info['date'];
-                        $beforeCount++;
-                        //enough revs before reference $rev?
-                        if ($beforeCount > max(intval($max / 2), $max - $afterCount)) break 2;
-                    }
+            for ($i = (is_countable($lines) ? count($lines) : 0) - 1; $i >= 0; $i--) {
+                $info = static::parseLogLine($lines[$i]);
+                if ($this->cacheRevisionInfo($info)) {
+                    $revs[] = $info['date'];
+                    $beforeCount++;
+                    //enough revs before reference $rev?
+                    if ($beforeCount > max((int) ($max / 2), $max - $afterCount)) break 2;
                 }
             }
         }
@@ -547,7 +545,7 @@ abstract class ChangeLog
         //trunk desired selection
         $requestedRevs = array_slice($revs, -$max, $max);
 
-        return array($requestedRevs, $revs, $fp, $lines, $head, $lastTail);
+        return [$requestedRevs, $revs, $fp, $lines, $head, $lastTail];
     }
 
     /**
@@ -614,7 +612,7 @@ abstract class ChangeLog
                 'user' => '',
                 'sum'  => $lang['deleted'].' - '.$lang['external_edit'].' ('.$lang['unknowndate'].')',
                 'extra' => '',
-                'sizechange' => -io_getSizeFile($this->getFilename($lastRev)),
+                'sizechange' => -io_getSizeFile($this->getFilename()),
                 'timestamp' => false,
             ];
 
@@ -625,7 +623,7 @@ abstract class ChangeLog
                     $this->getRevisionInfo($lastRev, false)['type'] == DOKU_CHANGE_TYPE_DELETE
             );
             $filesize_new = filesize($this->getFilename());
-            $filesize_old = $isJustCreated ? 0 : io_getSizeFile($this->getFilename($lastRev));
+            $filesize_old = $isJustCreated ? 0 : io_getSizeFile($this->getFilename());
             $sizechange = $filesize_new - $filesize_old;
 
             if ($isJustCreated) {

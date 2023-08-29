@@ -68,10 +68,10 @@ trait PropertyDeprecationHelper
         $qualifiedName = get_class() . '::$' . $name;
         if ($this->deprecationHelperGetPropertyOwner($name)) {
             // Someone tried to access a normal non-public property. Try to behave like PHP would.
-            trigger_error("Cannot access non-public property $qualifiedName", E_USER_ERROR);
+            trigger_error("Cannot access non-public property {$qualifiedName}", E_USER_ERROR);
         } else {
             // Non-existing property. Try to behave like PHP would.
-            trigger_error("Undefined property: $qualifiedName", E_USER_NOTICE);
+            trigger_error("Undefined property: {$qualifiedName}", E_USER_NOTICE);
         }
         return null;
     }
@@ -88,7 +88,7 @@ trait PropertyDeprecationHelper
         $qualifiedName = get_class() . '::$' . $name;
         if ($this->deprecationHelperGetPropertyOwner($name)) {
             // Someone tried to access a normal non-public property. Try to behave like PHP would.
-            trigger_error("Cannot access non-public property $qualifiedName", E_USER_ERROR);
+            trigger_error("Cannot access non-public property {$qualifiedName}", E_USER_ERROR);
         } else {
             // Non-existing property. Try to behave like PHP would.
             $this->$name = $value;
@@ -108,7 +108,7 @@ trait PropertyDeprecationHelper
             // The class name is not necessarily correct here but getting the correct class
             // name would be expensive, this will work most of the time and getting it
             // wrong is not a big deal.
-            return __CLASS__;
+            return self::class;
         }
         // property_exists() returns false when the property does exist but is private (and not
         // defined by the current class, for some value of "current" that differs slightly
@@ -117,14 +117,14 @@ trait PropertyDeprecationHelper
         // allows public access to undefined properties, we need to detect this case as well.
         // Reflection is slow so use array cast hack to check for that:
         $obfuscatedProps = array_keys((array)$this);
-        $obfuscatedPropTail = "\0$property";
+        $obfuscatedPropTail = "\0{$property}";
         foreach ($obfuscatedProps as $obfuscatedProp) {
             // private props are in the form \0<classname>\0<propname>
             if (strpos($obfuscatedProp, $obfuscatedPropTail, 1) !== false) {
                 $classname = substr($obfuscatedProp, 1, -strlen($obfuscatedPropTail));
                 if ($classname === '*') {
                     // sanity; this shouldn't be possible as protected properties were handled earlier
-                    $classname = __CLASS__;
+                    $classname = self::class;
                 }
                 return $classname;
             }

@@ -106,8 +106,8 @@ abstract class Diff extends Ui
 
         // submit button with two checked boxes, eg. &do=diff&rev2[0]=#&rev2[1]=#
         $revs = $INPUT->arr('rev2', []);
-        if (count($revs) > 1) {
-            list($rev1, $rev2) = $revs;
+        if ((is_countable($revs) ? count($revs) : 0) > 1) {
+            [$rev1, $rev2] = $revs;
             if ($rev2 < $rev1) [$rev1, $rev2] = [$rev2, $rev1];
             $this->rev1 = (int)$rev1;
             $this->rev2 = (int)$this->changelog->traceCurrentRevision($rev2);
@@ -120,7 +120,7 @@ abstract class Diff extends Ui
                 $rev1 = $this->changelog->lastRevision();
             } else {
                 $revs = $this->changelog->getRevisions(0, 1);
-                $rev1 = count($revs) ? $revs[0] : false;
+                $rev1 = (is_countable($revs) ? count($revs) : 0) ? $revs[0] : false;
             }
             $this->rev1 = $rev1;
             $this->rev2 = $rev2;

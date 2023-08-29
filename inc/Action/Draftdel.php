@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Draft;
 use dokuwiki\Action\Exception\ActionAbort;
 
 /**
@@ -27,7 +28,7 @@ class Draftdel extends AbstractAction {
      */
     public function preProcess() {
         global $INFO, $ID;
-        $draft = new \dokuwiki\Draft($ID, $INFO['client']);
+        $draft = new Draft($ID, $INFO['client']);
         if ($draft->isDraftAvailable() && checkSecurityToken()) {
             $draft->deleteDraft();
         }

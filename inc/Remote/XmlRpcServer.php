@@ -20,8 +20,8 @@ class XmlRpcServer extends Server
     public function __construct($wait=false)
     {
         $this->remote = new Api();
-        $this->remote->setDateTransformation(array($this, 'toDate'));
-        $this->remote->setFileTransformation(array($this, 'toFile'));
+        $this->remote->setDateTransformation([$this, 'toDate']);
+        $this->remote->setFileTransformation([$this, 'toFile']);
         parent::__construct(false, false, $wait);
     }
 
@@ -51,7 +51,7 @@ class XmlRpcServer extends Server
     /**
      * @inheritdoc
      */
-    public function call($methodname, $args)
+    protected function call($methodname, $args)
     {
         try {
             $result = $this->remote->call($methodname, $args);
@@ -59,10 +59,10 @@ class XmlRpcServer extends Server
         } catch (AccessDeniedException $e) {
             if (!isset($_SERVER['REMOTE_USER'])) {
                 http_status(401);
-                return new ServerException("server error. not authorized to call method $methodname", -32603);
+                return new ServerException("server error. not authorized to call method {$methodname}", -32603);
             } else {
                 http_status(403);
-                return new ServerException("server error. forbidden to call the method $methodname", -32604);
+                return new ServerException("server error. forbidden to call the method {$methodname}", -32604);
             }
         } catch (RemoteException $e) {
             return new ServerException($e->getMessage(), $e->getCode());

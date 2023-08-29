@@ -16,16 +16,13 @@ use dokuwiki\Parsing\Handler\Table;
  */
 class Doku_Handler {
     /** @var CallWriterInterface */
-    protected $callWriter = null;
+    protected $callWriter;
 
     /** @var array The current CallWriter will write directly to this list of calls, Parser reads it */
-    public $calls = array();
+    public $calls = [];
 
     /** @var array internal status holders for some modes */
-    protected $status = array(
-        'section' => false,
-        'doublequote' => 0,
-    );
+    protected $status = ['section' => false, 'doublequote' => 0];
 
     /** @var bool should blocks be rewritten? FIXME seems to always be true */
     protected $rewriteBlocks = true;
@@ -50,7 +47,7 @@ class Doku_Handler {
      * @param int $pos  byte position in the original source file
      */
     public function addCall($handler, $args, $pos) {
-        $call = array($handler,$args, $pos);
+        $call = [$handler, $args, $pos];
         $this->callWriter->writeCall($call);
     }
 
@@ -109,7 +106,7 @@ class Doku_Handler {
      * @param string $match matched syntax
      */
     public function addPluginCall($plugin, $args, $state, $pos, $match) {
-        $call = array('plugin',array($plugin, $args, $state, $match), $pos);
+        $call = ['plugin', [$plugin, $args, $state, $match], $pos];
         $this->callWriter->writeCall($call);
     }
 
@@ -126,7 +123,7 @@ class Doku_Handler {
 
         if ( $this->status['section'] ) {
             $last_call = end($this->calls);
-            array_push($this->calls,array('section_close',array(), $last_call[2]));
+            $this->calls[] = ['section_close', [], $last_call[2]];
         }
 
         if ( $this->rewriteBlocks ) {
@@ -136,9 +133,9 @@ class Doku_Handler {
 
         Event::createAndTrigger('PARSER_HANDLER_DONE',$this);
 
-        array_unshift($this->calls,array('document_start',array(),0));
+        array_unshift($this->calls,['document_start', [], 0]);
         $last_call = end($this->calls);
-        array_push($this->calls,array('document_end',array(),$last_call[2]));
+        $this->calls[] = ['document_end', [], $last_call[2]];
     }
 
     /**
@@ -170,7 +167,7 @@ class Doku_Handler {
      *                        or null if no entries found
      */
     protected function parse_highlight_options($options) {
-        $result = array();
+        $result = [];
         preg_match_all('/(\w+(?:="[^"]*"))|(\w+(?:=[^\s]*))|(\w+[^=\s\]])(?:\s*)/', $options, $matches, PREG_SET_ORDER);
         foreach ($matches as $match) {
             $equal_sign = strpos($match [0], '=');
@@ -192,11 +189,7 @@ class Doku_Handler {
         // Check for supported options
         $result = array_intersect_key(
             $result,
-            array_flip(array(
-                           'enable_line_numbers',
-                           'start_line_numbers_at',
-                           'highlight_lines_extra',
-                           'enable_keyword_links')
+            array_flip(['enable_line_numbers', 'start_line_numbers_at', 'highlight_lines_extra', 'enable_keyword_links']
             )
         );
 
@@ -239,13 +232,13 @@ class Doku_Handler {
     protected function nestingTag($match, $state, $pos, $name) {
         switch ( $state ) {
             case DOKU_LEXER_ENTER:
-                $this->addCall($name.'_open', array(), $pos);
+                $this->addCall($name.'_open', [], $pos);
                 break;
             case DOKU_LEXER_EXIT:
-                $this->addCall($name.'_close', array(), $pos);
+                $this->addCall($name.'_close', [], $pos);
                 break;
             case DOKU_LEXER_UNMATCHED:
-                $this->addCall('cdata', array($match), $pos);
+                $this->addCall('cdata', [$match], $pos);
                 break;
         }
     }
@@ -277,7 +270,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function plugin($match, $state, $pos, $pluginname){
-        $data = array($match);
+        $data = [$match];
         /** @var SyntaxPlugin $plugin */
         $plugin = plugin_load('syntax',$pluginname);
         if($plugin != null){
@@ -296,11 +289,9 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function base($match, $state, $pos) {
-        switch ( $state ) {
-            case DOKU_LEXER_UNMATCHED:
-                $this->addCall('cdata', array($match), $pos);
-                return true;
-            break;
+        if ($state === DOKU_LEXER_UNMATCHED) {
+            $this->addCall('cdata', [$match], $pos);
+            return true;
         }
         return false;
     }
@@ -319,11 +310,11 @@ class Doku_Handler {
         $title = trim($title,'=');
         $title = trim($title);
 
-        if ($this->status['section']) $this->addCall('section_close', array(), $pos);
+        if ($this->status['section']) $this->addCall('section_close', [], $pos);
 
-        $this->addCall('header', array($title, $level, $pos), $pos);
+        $this->addCall('header', [$title, $level, $pos], $pos);
 
-        $this->addCall('section_open', array($level), $pos);
+        $this->addCall('section_open', [$level], $pos);
         $this->status['section'] = true;
         return true;
     }
@@ -335,7 +326,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function notoc($match, $state, $pos) {
-        $this->addCall('notoc', array(), $pos);
+        $this->addCall('notoc', [], $pos);
         return true;
     }
 
@@ -346,7 +337,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function nocache($match, $state, $pos) {
-        $this->addCall('nocache', array(), $pos);
+        $this->addCall('nocache', [], $pos);
         return true;
     }
 
@@ -357,7 +348,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function linebreak($match, $state, $pos) {
-        $this->addCall('linebreak', array(), $pos);
+        $this->addCall('linebreak', [], $pos);
         return true;
     }
 
@@ -368,7 +359,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function eol($match, $state, $pos) {
-        $this->addCall('eol', array(), $pos);
+        $this->addCall('eol', [], $pos);
         return true;
     }
 
@@ -379,7 +370,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function hr($match, $state, $pos) {
-        $this->addCall('hr', array(), $pos);
+        $this->addCall('hr', [], $pos);
         return true;
     }
 
@@ -474,30 +465,30 @@ class Doku_Handler {
                 // footnotes can not be nested - however due to limitations in lexer it can't be prevented
                 // we will still enter a new footnote mode, we just do nothing
                 if ($this->footnote) {
-                    $this->addCall('cdata', array($match), $pos);
+                    $this->addCall('cdata', [$match], $pos);
                     break;
                 }
                 $this->footnote = true;
 
                 $this->callWriter = new Nest($this->callWriter, 'footnote_close');
-                $this->addCall('footnote_open', array(), $pos);
+                $this->addCall('footnote_open', [], $pos);
             break;
             case DOKU_LEXER_EXIT:
                 // check whether we have already exitted the footnote mode, can happen if the modes were nested
                 if (!$this->footnote) {
-                    $this->addCall('cdata', array($match), $pos);
+                    $this->addCall('cdata', [$match], $pos);
                     break;
                 }
 
                 $this->footnote = false;
-                $this->addCall('footnote_close', array(), $pos);
+                $this->addCall('footnote_close', [], $pos);
 
                 /** @var Nest $reWriter */
                 $reWriter = $this->callWriter;
                 $this->callWriter = $reWriter->process();
             break;
             case DOKU_LEXER_UNMATCHED:
-                $this->addCall('cdata', array($match), $pos);
+                $this->addCall('cdata', [$match], $pos);
             break;
         }
         return true;
@@ -513,19 +504,19 @@ class Doku_Handler {
         switch ( $state ) {
             case DOKU_LEXER_ENTER:
                 $this->callWriter = new Lists($this->callWriter);
-                $this->addCall('list_open', array($match), $pos);
+                $this->addCall('list_open', [$match], $pos);
             break;
             case DOKU_LEXER_EXIT:
-                $this->addCall('list_close', array(), $pos);
+                $this->addCall('list_close', [], $pos);
                 /** @var Lists $reWriter */
                 $reWriter = $this->callWriter;
                 $this->callWriter = $reWriter->process();
             break;
             case DOKU_LEXER_MATCHED:
-                $this->addCall('list_item', array($match), $pos);
+                $this->addCall('list_item', [$match], $pos);
             break;
             case DOKU_LEXER_UNMATCHED:
-                $this->addCall('cdata', array($match), $pos);
+                $this->addCall('cdata', [$match], $pos);
             break;
         }
         return true;
@@ -539,7 +530,7 @@ class Doku_Handler {
      */
     public function unformatted($match, $state, $pos) {
         if ( $state == DOKU_LEXER_UNMATCHED ) {
-            $this->addCall('unformatted', array($match), $pos);
+            $this->addCall('unformatted', [$match], $pos);
         }
         return true;
     }
@@ -554,19 +545,19 @@ class Doku_Handler {
         switch ( $state ) {
             case DOKU_LEXER_ENTER:
                 $this->callWriter = new Preformatted($this->callWriter);
-                $this->addCall('preformatted_start', array(), $pos);
+                $this->addCall('preformatted_start', [], $pos);
             break;
             case DOKU_LEXER_EXIT:
-                $this->addCall('preformatted_end', array(), $pos);
+                $this->addCall('preformatted_end', [], $pos);
                 /** @var Preformatted $reWriter */
                 $reWriter = $this->callWriter;
                 $this->callWriter = $reWriter->process();
             break;
             case DOKU_LEXER_MATCHED:
-                $this->addCall('preformatted_newline', array(), $pos);
+                $this->addCall('preformatted_newline', [], $pos);
             break;
             case DOKU_LEXER_UNMATCHED:
-                $this->addCall('preformatted_content', array($match), $pos);
+                $this->addCall('preformatted_content', [$match], $pos);
             break;
         }
 
@@ -585,22 +576,22 @@ class Doku_Handler {
 
             case DOKU_LEXER_ENTER:
                 $this->callWriter = new Quote($this->callWriter);
-                $this->addCall('quote_start', array($match), $pos);
+                $this->addCall('quote_start', [$match], $pos);
             break;
 
             case DOKU_LEXER_EXIT:
-                $this->addCall('quote_end', array(), $pos);
+                $this->addCall('quote_end', [], $pos);
                 /** @var Lists $reWriter */
                 $reWriter = $this->callWriter;
                 $this->callWriter = $reWriter->process();
             break;
 
             case DOKU_LEXER_MATCHED:
-                $this->addCall('quote_newline', array($match), $pos);
+                $this->addCall('quote_newline', [$match], $pos);
             break;
 
             case DOKU_LEXER_UNMATCHED:
-                $this->addCall('cdata', array($match), $pos);
+                $this->addCall('cdata', [$match], $pos);
             break;
 
         }
@@ -634,7 +625,7 @@ class Doku_Handler {
                 $matches[0] = str_replace($options[0], '', $matches[0]);
             }
             $param = preg_split('/\s+/', $matches[0], 2, PREG_SPLIT_NO_EMPTY);
-            while(count($param) < 2) array_push($param, null);
+            while((is_countable($param) ? count($param) : 0) < 2) $param[] = null;
             // We shortcut html here.
             if ($param[0] == 'html') $param[0] = 'html4strict';
             if ($param[0] == '-') $param[0] = null;
@@ -654,7 +645,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function acronym($match, $state, $pos) {
-        $this->addCall('acronym', array($match), $pos);
+        $this->addCall('acronym', [$match], $pos);
         return true;
     }
 
@@ -665,7 +656,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function smiley($match, $state, $pos) {
-        $this->addCall('smiley', array($match), $pos);
+        $this->addCall('smiley', [$match], $pos);
         return true;
     }
 
@@ -676,7 +667,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function wordblock($match, $state, $pos) {
-        $this->addCall('wordblock', array($match), $pos);
+        $this->addCall('wordblock', [$match], $pos);
         return true;
     }
 
@@ -687,7 +678,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function entity($match, $state, $pos) {
-        $this->addCall('entity', array($match), $pos);
+        $this->addCall('entity', [$match], $pos);
         return true;
     }
 
@@ -699,7 +690,7 @@ class Doku_Handler {
      */
     public function multiplyentity($match, $state, $pos) {
         preg_match_all('/\d+/',$match,$matches);
-        $this->addCall('multiplyentity', array($matches[0][0], $matches[0][1]), $pos);
+        $this->addCall('multiplyentity', [$matches[0][0], $matches[0][1]], $pos);
         return true;
     }
 
@@ -710,7 +701,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function singlequoteopening($match, $state, $pos) {
-        $this->addCall('singlequoteopening', array(), $pos);
+        $this->addCall('singlequoteopening', [], $pos);
         return true;
     }
 
@@ -721,7 +712,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function singlequoteclosing($match, $state, $pos) {
-        $this->addCall('singlequoteclosing', array(), $pos);
+        $this->addCall('singlequoteclosing', [], $pos);
         return true;
     }
 
@@ -732,7 +723,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function apostrophe($match, $state, $pos) {
-        $this->addCall('apostrophe', array(), $pos);
+        $this->addCall('apostrophe', [], $pos);
         return true;
     }
 
@@ -743,7 +734,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function doublequoteopening($match, $state, $pos) {
-        $this->addCall('doublequoteopening', array(), $pos);
+        $this->addCall('doublequoteopening', [], $pos);
         $this->status['doublequote']++;
         return true;
     }
@@ -758,7 +749,7 @@ class Doku_Handler {
         if ($this->status['doublequote'] <= 0) {
             $this->doublequoteopening($match, $state, $pos);
         } else {
-            $this->addCall('doublequoteclosing', array(), $pos);
+            $this->addCall('doublequoteclosing', [], $pos);
             $this->status['doublequote'] = max(0, --$this->status['doublequote']);
         }
         return true;
@@ -771,7 +762,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function camelcaselink($match, $state, $pos) {
-        $this->addCall('camelcaselink', array($match), $pos);
+        $this->addCall('camelcaselink', [$match], $pos);
         return true;
     }
 
@@ -783,13 +774,13 @@ class Doku_Handler {
      */
     public function internallink($match, $state, $pos) {
         // Strip the opening and closing markup
-        $link = preg_replace(array('/^\[\[/','/\]\]$/u'),'',$match);
+        $link = preg_replace(['/^\[\[/', '/\]\]$/u'],'',$match);
 
         // Split title from URL
         $link = sexplode('|',$link,2);
-        if ( $link[1] === null ) {
+        if ($link[1] === null) {
             $link[1] = null;
-        } else if ( preg_match('/^\{\{[^\}]+\}\}$/',$link[1]) ) {
+        } elseif (preg_match('/^\{\{[^\}]+\}\}$/',$link[1])) {
             // If the title is an image, convert it to an array containing the image details
             $link[1] = Doku_Handler_Parse_Media($link[1]);
         }
@@ -802,42 +793,42 @@ class Doku_Handler {
             $interwiki = sexplode('>',$link[0],2,'');
             $this->addCall(
                 'interwikilink',
-                array($link[0],$link[1],strtolower($interwiki[0]),$interwiki[1]),
+                [$link[0], $link[1], strtolower($interwiki[0]), $interwiki[1]],
                 $pos
                 );
         }elseif ( preg_match('/^\\\\\\\\[^\\\\]+?\\\\/u',$link[0]) ) {
             // Windows Share
             $this->addCall(
                 'windowssharelink',
-                array($link[0],$link[1]),
+                [$link[0], $link[1]],
                 $pos
                 );
         }elseif ( preg_match('#^([a-z0-9\-\.+]+?)://#i',$link[0]) ) {
             // external link (accepts all protocols)
             $this->addCall(
                     'externallink',
-                    array($link[0],$link[1]),
+                    [$link[0], $link[1]],
                     $pos
                     );
         }elseif ( preg_match('<'.PREG_PATTERN_VALID_EMAIL.'>',$link[0]) ) {
             // E-Mail (pattern above is defined in inc/mail.php)
             $this->addCall(
                 'emaillink',
-                array($link[0],$link[1]),
+                [$link[0], $link[1]],
                 $pos
                 );
         }elseif ( preg_match('!^#.+!',$link[0]) ){
             // local link
             $this->addCall(
                 'locallink',
-                array(substr($link[0],1),$link[1]),
+                [substr($link[0],1), $link[1]],
                 $pos
                 );
         }else{
             // internal link
             $this->addCall(
                 'internallink',
-                array($link[0],$link[1]),
+                [$link[0], $link[1]],
                 $pos
                 );
         }
@@ -852,7 +843,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function filelink($match, $state, $pos) {
-        $this->addCall('filelink', array($match, null), $pos);
+        $this->addCall('filelink', [$match, null], $pos);
         return true;
     }
 
@@ -863,7 +854,7 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function windowssharelink($match, $state, $pos) {
-        $this->addCall('windowssharelink', array($match, null), $pos);
+        $this->addCall('windowssharelink', [$match, null], $pos);
         return true;
     }
 
@@ -878,8 +869,7 @@ class Doku_Handler {
 
         $this->addCall(
               $p['type'],
-              array($p['src'], $p['title'], $p['align'], $p['width'],
-                     $p['height'], $p['cache'], $p['linking']),
+              [$p['src'], $p['title'], $p['align'], $p['width'], $p['height'], $p['cache'], $p['linking']],
               $pos
              );
         return true;
@@ -892,12 +882,12 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function rss($match, $state, $pos) {
-        $link = preg_replace(array('/^\{\{rss>/','/\}\}$/'),'',$match);
+        $link = preg_replace(['/^\{\{rss>/', '/\}\}$/'],'',$match);
 
         // get params
-        list($link, $params) = sexplode(' ', $link, 2, '');
+        [$link, $params] = sexplode(' ', $link, 2, '');
 
-        $p = array();
+        $p = [];
         if(preg_match('/\b(\d+)\b/',$params,$match)){
             $p['max'] = $match[1];
         }else{
@@ -910,13 +900,13 @@ class Doku_Handler {
         $p['nosort']  = (preg_match('/\b(nosort)\b/',$params));
 
         if (preg_match('/\b(\d+)([dhm])\b/',$params,$match)) {
-            $period = array('d' => 86400, 'h' => 3600, 'm' => 60);
+            $period = ['d' => 86400, 'h' => 3600, 'm' => 60];
             $p['refresh'] = max(600,$match[1]*$period[$match[2]]);  // n * period in seconds, minimum 10 minutes
         } else {
             $p['refresh'] = 14400;   // default to 4 hours
         }
 
-        $this->addCall('rss', array($link, $p), $pos);
+        $this->addCall('rss', [$link, $p], $pos);
         return true;
     }
 
@@ -940,7 +930,7 @@ class Doku_Handler {
             $url = 'http://'.$url;
         }
 
-        $this->addCall('externallink', array($url, $title), $pos);
+        $this->addCall('externallink', [$url, $title], $pos);
         return true;
     }
 
@@ -951,8 +941,8 @@ class Doku_Handler {
      * @return bool mode handled?
      */
     public function emaillink($match, $state, $pos) {
-        $email = preg_replace(array('/^</','/>$/'),'',$match);
-        $this->addCall('emaillink', array($email, null), $pos);
+        $email = preg_replace(['/^</', '/>$/'],'',$match);
+        $this->addCall('emaillink', [$email, null], $pos);
         return true;
     }
 
@@ -969,16 +959,16 @@ class Doku_Handler {
 
                 $this->callWriter = new Table($this->callWriter);
 
-                $this->addCall('table_start', array($pos + 1), $pos);
+                $this->addCall('table_start', [$pos + 1], $pos);
                 if ( trim($match) == '^' ) {
-                    $this->addCall('tableheader', array(), $pos);
+                    $this->addCall('tableheader', [], $pos);
                 } else {
-                    $this->addCall('tablecell', array(), $pos);
+                    $this->addCall('tablecell', [], $pos);
                 }
             break;
 
             case DOKU_LEXER_EXIT:
-                $this->addCall('table_end', array($pos), $pos);
+                $this->addCall('table_end', [$pos], $pos);
                 /** @var Table $reWriter */
                 $reWriter = $this->callWriter;
                 $this->callWriter = $reWriter->process();
@@ -986,29 +976,29 @@ class Doku_Handler {
 
             case DOKU_LEXER_UNMATCHED:
                 if ( trim($match) != '' ) {
-                    $this->addCall('cdata', array($match), $pos);
+                    $this->addCall('cdata', [$match], $pos);
                 }
             break;
 
             case DOKU_LEXER_MATCHED:
-                if ( $match == ' ' ){
-                    $this->addCall('cdata', array($match), $pos);
-                } else if ( preg_match('/:::/',$match) ) {
-                    $this->addCall('rowspan', array($match), $pos);
-                } else if ( preg_match('/\t+/',$match) ) {
-                    $this->addCall('table_align', array($match), $pos);
-                } else if ( preg_match('/ {2,}/',$match) ) {
-                    $this->addCall('table_align', array($match), $pos);
-                } else if ( $match == "\n|" ) {
-                    $this->addCall('table_row', array(), $pos);
-                    $this->addCall('tablecell', array(), $pos);
-                } else if ( $match == "\n^" ) {
-                    $this->addCall('table_row', array(), $pos);
-                    $this->addCall('tableheader', array(), $pos);
-                } else if ( $match == '|' ) {
-                    $this->addCall('tablecell', array(), $pos);
-                } else if ( $match == '^' ) {
-                    $this->addCall('tableheader', array(), $pos);
+                if ($match == ' ') {
+                    $this->addCall('cdata', [$match], $pos);
+                } elseif (preg_match('/:::/',$match)) {
+                    $this->addCall('rowspan', [$match], $pos);
+                } elseif (preg_match('/\t+/',$match)) {
+                    $this->addCall('table_align', [$match], $pos);
+                } elseif (preg_match('/ {2,}/',$match)) {
+                    $this->addCall('table_align', [$match], $pos);
+                } elseif ($match == "\n|") {
+                    $this->addCall('table_row', [], $pos);
+                    $this->addCall('tablecell', [], $pos);
+                } elseif ($match == "\n^") {
+                    $this->addCall('table_row', [], $pos);
+                    $this->addCall('tableheader', [], $pos);
+                } elseif ($match == '|') {
+                    $this->addCall('tablecell', [], $pos);
+                } elseif ($match == '^') {
+                    $this->addCall('tableheader', [], $pos);
                 }
             break;
         }
@@ -1022,7 +1012,7 @@ class Doku_Handler {
 function Doku_Handler_Parse_Media($match) {
 
     // Strip the opening and closing markup
-    $link = preg_replace(array('/^\{\{/','/\}\}$/u'),'',$match);
+    $link = preg_replace(['/^\{\{/', '/\}\}$/u'],'',$match);
 
     // Split title from URL
     $link = sexplode('|', $link, 2);
@@ -1032,11 +1022,11 @@ function Doku_Handler_Parse_Media($match) {
     $lalign = (bool)preg_match('/ $/',$link[0]);
 
     // Logic = what's that ;)...
-    if ( $lalign & $ralign ) {
+    if ($lalign & $ralign) {
         $align = 'center';
-    } else if ( $ralign ) {
+    } elseif ($ralign) {
         $align = 'right';
-    } else if ( $lalign ) {
+    } elseif ($lalign) {
         $align = 'left';
     } else {
         $align = null;
@@ -1062,21 +1052,21 @@ function Doku_Handler_Parse_Media($match) {
 
     //parse width and height
     if(preg_match('#(\d+)(x(\d+))?#i',$param,$size)){
-        !empty($size[1]) ? $w = $size[1] : $w = null;
-        !empty($size[3]) ? $h = $size[3] : $h = null;
+        $w = empty($size[1]) ? null : $size[1];
+        $h = empty($size[3]) ? null : $size[3];
     } else {
         $w = null;
         $h = null;
     }
 
     //get linking command
-    if(preg_match('/nolink/i',$param)){
+    if (preg_match('/nolink/i',$param)) {
         $linking = 'nolink';
-    }else if(preg_match('/direct/i',$param)){
+    } elseif (preg_match('/direct/i',$param)) {
         $linking = 'direct';
-    }else if(preg_match('/linkonly/i',$param)){
+    } elseif (preg_match('/linkonly/i',$param)) {
         $linking = 'linkonly';
-    }else{
+    } else{
         $linking = 'details';
     }
 
@@ -1094,16 +1084,7 @@ function Doku_Handler_Parse_Media($match) {
         $call = 'internalmedia';
     }
 
-    $params = array(
-        'type'=>$call,
-        'src'=>$src,
-        'title'=>$link[1],
-        'align'=>$align,
-        'width'=>$w,
-        'height'=>$h,
-        'cache'=>$cache,
-        'linking'=>$linking,
-    );
+    $params = ['type'=>$call, 'src'=>$src, 'title'=>$link[1], 'align'=>$align, 'width'=>$w, 'height'=>$h, 'cache'=>$cache, 'linking'=>$linking];
 
     return $params;
 }

@@ -36,13 +36,14 @@ class SubscriberRegexBuilder
 
         // quote
         $user = array_map('preg_quote_cb', $user);
+
         $style = array_map('preg_quote_cb', $style);
         $data = array_map('preg_quote_cb', $data);
 
         // join
-        $user = join('|', $user);
-        $style = join('|', $style);
-        $data = join('|', $data);
+        $user = implode('|', $user);
+        $style = implode('|', $style);
+        $data = implode('|', $data);
 
         // any data at all?
         if ($user . $style . $data === '') {
@@ -65,6 +66,6 @@ class SubscriberRegexBuilder
         }
 
         // assemble
-        return "/^($user)(?:\\s+($style))$sopt(?:\\s+($data))$dopt$/";
+        return "/^({$user})(?:\\s+({$style})){$sopt}(?:\\s+({$data})){$dopt}$/";
     }
 }

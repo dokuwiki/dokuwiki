@@ -45,7 +45,7 @@ function mail_setup(){
     if(!$host) $host = 'example.com';
     $noreply = 'noreply@'.$host;
 
-    $replace = array();
+    $replace = [];
     if(!empty($USERINFO['mail'])){
         $replace['@MAIL@'] = $USERINFO['mail'];
     }else{
@@ -100,11 +100,11 @@ function mail_isvalid($email) {
 function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true) {
     // split text into lines
     $aLines= preg_split("/(?:\r\n|\r|\n)/", $sText);
-    $cnt = count($aLines);
+    $cnt = is_countable($aLines) ? count($aLines) : 0;
 
     for ($i=0;$i<$cnt;$i++) {
         $sLine =& $aLines[$i];
-        if (strlen($sLine)===0) continue; // do nothing, if empty
+        if ($sLine === '') continue; // do nothing, if empty
 
         $sRegExp = '/[^\x09\x20\x21-\x3C\x3E-\x7E]/e';
 
@@ -126,7 +126,7 @@ function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true)
             // here is, where I don't agree with imap_8_bit,
             // please correct me, if I'm wrong,
             // or comment next line for RFC2045 conformance, if you like
-            if (!($bEmulate_imap_8bit && ($i==count($aLines)-1))){
+            if (!($bEmulate_imap_8bit && ($i==(is_countable($aLines) ? count($aLines) : 0)-1))){
                 if (($iLastChar==0x09)||($iLastChar==0x20)) {
                     $sLine[$iLength-1]='=';
                     $sLine .= ($iLastChar==0x09)?'09':'20';
