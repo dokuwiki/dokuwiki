@@ -9,7 +9,7 @@ use dokuwiki\Parsing\Lexer\Lexer;
  */
 class Wordblock extends AbstractMode
 {
-    protected $badwords = array();
+    protected $badwords = [];
     protected $pattern = '';
 
     /**

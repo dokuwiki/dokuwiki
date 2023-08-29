@@ -6,7 +6,7 @@ use dokuwiki\Parsing\Lexer\Lexer;
 
 class Smiley extends AbstractMode
 {
-    protected $smileys = array();
+    protected $smileys = [];
     protected $pattern = '';
 
     /**

@@ -5,21 +5,21 @@ namespace dokuwiki\Parsing\Handler;
 class Table extends AbstractRewriter
 {
 
-    protected $tableCalls = array();
+    protected $tableCalls = [];
     protected $maxCols = 0;
     protected $maxRows = 1;
     protected $currentCols = 0;
     protected $firstCell = false;
     protected $lastCellType = 'tablecell';
     protected $inTableHead = true;
-    protected $currentRow = array('tableheader' => 0, 'tablecell' => 0);
+    protected $currentRow = ['tableheader' => 0, 'tablecell' => 0];
     protected $countTableHeadRows = 0;
 
     /** @inheritdoc */
     public function finalise()
     {
         $last_call = end($this->calls);
-        $this->writeCall(array('table_end',array(), $last_call[2]));
+        $this->writeCall(['table_end', [], $last_call[2]]);
 
         $this->process();
         $this->callWriter->finalise();
@@ -36,7 +36,7 @@ class Table extends AbstractRewriter
                     break;
                 case 'table_row':
                     $this->tableRowClose($call);
-                    $this->tableRowOpen(array('tablerow_open',$call[1],$call[2]));
+                    $this->tableRowOpen(['tablerow_open', $call[1], $call[2]]);
                     break;
                 case 'tableheader':
                 case 'tablecell':
@@ -58,14 +58,14 @@ class Table extends AbstractRewriter
 
     protected function tableStart($call)
     {
-        $this->tableCalls[] = array('table_open',$call[1],$call[2]);
-        $this->tableCalls[] = array('tablerow_open',array(),$call[2]);
+        $this->tableCalls[] = ['table_open', $call[1], $call[2]];
+        $this->tableCalls[] = ['tablerow_open', [], $call[2]];
         $this->firstCell = true;
     }
 
     protected function tableEnd($call)
     {
-        $this->tableCalls[] = array('table_close',$call[1],$call[2]);
+        $this->tableCalls[] = ['table_close', $call[1], $call[2]];
         $this->finalizeTable();
     }
 
@@ -77,7 +77,7 @@ class Table extends AbstractRewriter
         $this->lastCellType = 'tablecell';
         $this->maxRows++;
         if ($this->inTableHead) {
-            $this->currentRow = array('tablecell' => 0, 'tableheader' => 0);
+            $this->currentRow = ['tablecell' => 0, 'tableheader' => 0];
         }
     }
 
@@ -95,7 +95,7 @@ class Table extends AbstractRewriter
                 $this->currentRow[$discard[0]]--;
             }
         }
-        $this->tableCalls[] = array('tablerow_close', array(), $call[2]);
+        $this->tableCalls[] = ['tablerow_close', [], $call[2]];
 
         if ($this->currentCols > $this->maxCols) {
             $this->maxCols = $this->currentCols;
@@ -124,14 +124,14 @@ class Table extends AbstractRewriter
 
             // A cell call which follows an open cell means an empty cell so span
             if ($lastCall[0] == 'tablecell_open' || $lastCall[0] == 'tableheader_open') {
-                $this->tableCalls[] = array('colspan',array(),$call[2]);
+                $this->tableCalls[] = ['colspan', [], $call[2]];
             }
 
-            $this->tableCalls[] = array($this->lastCellType.'_close',array(),$call[2]);
-            $this->tableCalls[] = array($call[0].'_open',array(1,null,1),$call[2]);
+            $this->tableCalls[] = [$this->lastCellType.'_close', [], $call[2]];
+            $this->tableCalls[] = [$call[0].'_open', [1, null, 1], $call[2]];
             $this->lastCellType = $call[0];
         } else {
-            $this->tableCalls[] = array($call[0].'_open',array(1,null,1),$call[2]);
+            $this->tableCalls[] = [$call[0].'_open', [1, null, 1], $call[2]];
             $this->lastCellType = $call[0];
             $this->firstCell = false;
         }
@@ -159,8 +159,8 @@ class Table extends AbstractRewriter
 
         $lastRow = 0;
         $lastCell = 0;
-        $cellKey = array();
-        $toDelete = array();
+        $cellKey = [];
+        $toDelete = [];
 
         // if still in tableheader, then there can be no table header
         // as all rows can't be within <THEAD>
@@ -168,18 +168,21 @@ class Table extends AbstractRewriter
             $this->inTableHead = false;
             $this->countTableHeadRows = 0;
         }
+        // Look for the colspan elements and increment the colspan on the
+        // previous non-empty opening cell. Once done, delete all the cells
+        // that contain colspans
+        $counter = count($this->tableCalls);
 
         // Look for the colspan elements and increment the colspan on the
         // previous non-empty opening cell. Once done, delete all the cells
         // that contain colspans
-        for ($key = 0; $key < count($this->tableCalls); ++$key) {
+        for ($key = 0; $key < $counter; ++$key) {
             $call = $this->tableCalls[$key];
 
             switch ($call[0]) {
                 case 'table_open':
                     if ($this->countTableHeadRows) {
-                        array_splice($this->tableCalls, $key+1, 0, array(
-                                                          array('tablethead_open', array(), $call[2])));
+                        array_splice($this->tableCalls, $key+1, 0, [['tablethead_open', [], $call[2]]]);
                     }
                     break;
 
@@ -195,8 +198,8 @@ class Table extends AbstractRewriter
                     break;
 
                 case 'table_align':
-                    $prev = in_array($this->tableCalls[$key-1][0], array('tablecell_open', 'tableheader_open'));
-                    $next = in_array($this->tableCalls[$key+1][0], array('tablecell_close', 'tableheader_close'));
+                    $prev = in_array($this->tableCalls[$key-1][0], ['tablecell_open', 'tableheader_open']);
+                    $next = in_array($this->tableCalls[$key+1][0], ['tablecell_close', 'tableheader_close']);
                     // If the cell is empty, align left
                     if ($prev && $next) {
                         $this->tableCalls[$key-1][1][1] = 'left';
@@ -277,11 +280,11 @@ class Table extends AbstractRewriter
 
                 case 'tablerow_close':
                     // Fix broken tables by adding missing cells
-                    $moreCalls = array();
+                    $moreCalls = [];
                     while (++$lastCell < $this->maxCols) {
-                        $moreCalls[] = array('tablecell_open', array(1, null, 1), $call[2]);
-                        $moreCalls[] = array('cdata', array(''), $call[2]);
-                        $moreCalls[] = array('tablecell_close', array(), $call[2]);
+                        $moreCalls[] = ['tablecell_open', [1, null, 1], $call[2]];
+                        $moreCalls[] = ['cdata', [''], $call[2]];
+                        $moreCalls[] = ['tablecell_close', [], $call[2]];
                     }
                     $moreCallsLength = count($moreCalls);
                     if ($moreCallsLength) {
@@ -290,8 +293,7 @@ class Table extends AbstractRewriter
                     }
 
                     if ($this->countTableHeadRows == $lastRow) {
-                        array_splice($this->tableCalls, $key+1, 0, array(
-                            array('tablethead_close', array(), $call[2])));
+                        array_splice($this->tableCalls, $key+1, 0, [['tablethead_close', [], $call[2]]]);
                     }
                     break;
             }

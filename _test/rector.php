@@ -22,6 +22,7 @@ use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\CodingStyle\Rector\String_\SymplifyQuoteEscapeRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
+use Rector\DeadCode\Rector\If_\RemoveUnusedNonEmptyArrayBeforeForeachRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
 use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
 use Rector\Php71\Rector\ClassConst\PublicConstantVisibilityRector;
@@ -102,5 +103,6 @@ return static function (RectorConfig $rectorConfig): void {
         TypedPropertyFromAssignsRector::class, // maybe?
         JoinStringConcatRector::class, // this does not count variables, so it creates overlong lines
         RemoveExtraParametersRector::class, // this actually broke code
+        RemoveUnusedNonEmptyArrayBeforeForeachRector::class, // seems unreliable when checking on array keys
     ]);
 };

@@ -22,7 +22,7 @@ class StateStack
      */
     public function __construct($start)
     {
-        $this->stack = array($start);
+        $this->stack = [$start];
     }
 
     /**
@@ -41,7 +41,7 @@ class StateStack
      */
     public function enter($state)
     {
-        array_push($this->stack, $state);
+        $this->stack[] = $state;
     }
 
     /**
