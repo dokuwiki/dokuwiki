@@ -66,7 +66,6 @@ function load_autoload($name){
         'SimplePie'             => DOKU_INC.'inc/SimplePie.php',
         'FeedParser'            => DOKU_INC.'inc/FeedParser.php',
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
-        'Sitemapper'            => DOKU_INC.'inc/Sitemapper.php',
         'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
 
         'Doku_Handler'          => DOKU_INC.'inc/parser/handler.php',
