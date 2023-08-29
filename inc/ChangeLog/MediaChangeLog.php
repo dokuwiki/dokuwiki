@@ -47,7 +47,7 @@ class MediaChangeLog extends ChangeLog
         if (isset($timestamp)) unset($this->cache[$this->id][$info['date']]);
 
         // add changelog lines
-        $logline = $this->buildLogLine($info, $timestamp);
+        $logline = static::buildLogLine($info, $timestamp);
         io_saveFile(mediaMetaFN($this->id,'.changes'), $logline, $append = true);
         io_saveFile($conf['media_changelog'], $logline, $append = true); //global changelog cache
 

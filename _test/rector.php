@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\Array_\CallableThisArrayToAnonymousFunctionRector;
-use Rector\CodeQuality\Rector\For_\ForRepeatedCountToOwnVariableRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
@@ -22,6 +21,7 @@ use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
 use Rector\Php71\Rector\ClassConst\PublicConstantVisibilityRector;
+use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
@@ -83,7 +83,7 @@ return static function (RectorConfig $rectorConfig): void {
         PostIncDecToPreIncDecRector::class,
         RemoveUselessParamTagRector::class,
         DisallowedEmptyRuleFixerRector::class,
-        ForRepeatedCountToOwnVariableRector::class, // adds unwanted is_countable checks?
+        CountOnNullRector::class, // adds unwanted is_countable checks?
         RemoveParentCallWithoutParentRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,
         SimplifyIfReturnBoolRector::class,

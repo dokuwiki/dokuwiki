@@ -106,11 +106,12 @@ class RevisionInfo
     public function showFileIcon()
     {
         $id = $this->val('id');
-        switch ($this->val('mode')) {
-            case 'media': // media file revision
-                return media_printicon($id);
-            case 'page': // page revision
-                return '<img class="icon" src="'.DOKU_BASE.'lib/images/fileicons/file.png" alt="'.$id.'" />';
+        if ($this->val('mode') == 'media') {
+            // media file revision
+            return media_printicon($id);
+        } elseif ($this->val('mode') == 'page') {
+            // page revision
+            return '<img class="icon" src="'.DOKU_BASE.'lib/images/fileicons/file.png" alt="'.$id.'" />';
         }
     }
 
@@ -171,32 +172,30 @@ class RevisionInfo
         $id = $this->val('id');
         $rev = $this->isCurrent() ? '' : $this->val('date');
 
-        switch ($this->val('mode')) {
-            case 'media': // media file revision
-                $params = ['tab_details'=> 'view', 'ns'=> getNS($id), 'image'=> $id];
-                if ($rev) $params += ['rev'=> $rev];
-                $href = media_managerURL($params, '&');
-                $display_name = $id;
-                $exists = file_exists(mediaFN($id, $rev));
-                break;
-            case 'page': // page revision
-                $params = $rev ? ['rev'=> $rev] : [];
-                $href = wl($id, $params, false, '&');
-                $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
-                if (!$display_name) $display_name = $id;
-                $exists = page_exists($id, $rev);
+        if ($this->val('mode') == 'media') {
+            // media file revision
+            $params = ['tab_details'=> 'view', 'ns'=> getNS($id), 'image'=> $id];
+            if ($rev) $params += ['rev'=> $rev];
+            $href = media_managerURL($params, '&');
+            $display_name = $id;
+            $exists = file_exists(mediaFN($id, $rev));
+        } elseif ($this->val('mode') == 'page') {
+            // page revision
+            $params = $rev ? ['rev'=> $rev] : [];
+            $href = wl($id, $params, false, '&');
+            $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
+            if (!$display_name) $display_name = $id;
+            $exists = page_exists($id, $rev);
         }
 
-        if($exists) {
+        if ($exists) {
             $class = 'wikilink1';
+        } elseif ($this->isCurrent()) {
+            //show only not-existing link for current page, which allows for directly create a new page/upload
+            $class = 'wikilink2';
         } else {
-            if($this->isCurrent()) {
-                //show only not-existing link for current page, which allows for directly create a new page/upload
-                $class = 'wikilink2';
-            } else {
-                //revision is not in attic
-                return $display_name;
-            }
+            //revision is not in attic
+            return $display_name;
         }
         if ($this->val('type') == DOKU_CHANGE_TYPE_DELETE) {
             $class = 'wikilink2';
@@ -225,25 +224,23 @@ class RevisionInfo
             : dformat($this->val('date'));
 
 
-        switch ($this->val('mode')) {
-            case 'media': // media file revision
-                $href = ml($id, $params, false, '&');
-                $exists = file_exists(mediaFN($id, $rev));
-                break;
-            case 'page': // page revision
-                $href = wl($id, $params, false, '&');
-                $exists = page_exists($id, $rev);
+        if ($this->val('mode') == 'media') {
+            // media file revision
+            $href = ml($id, $params, false, '&');
+            $exists = file_exists(mediaFN($id, $rev));
+        } elseif ($this->val('mode') == 'page') {
+            // page revision
+            $href = wl($id, $params, false, '&');
+            $exists = page_exists($id, $rev);
         }
-        if($exists) {
+        if ($exists) {
             $class = 'wikilink1';
+        } elseif ($this->isCurrent()) {
+            //show only not-existing link for current page, which allows for directly create a new page/upload
+            $class = 'wikilink2';
         } else {
-            if($this->isCurrent()) {
-                //show only not-existing link for current page, which allows for directly create a new page/upload
-                $class = 'wikilink2';
-            } else {
-                //revision is not in attic
-                return $id.' ['.$date.']';
-            }
+            //revision is not in attic
+            return $id.' ['.$date.']';
         }
         if ($this->val('type') == DOKU_CHANGE_TYPE_DELETE) {
             $class = 'wikilink2';
@@ -263,24 +260,24 @@ class RevisionInfo
         $id = $this->val('id');
 
         $href = '';
-        switch ($this->val('mode')) {
-            case 'media': // media file revision
-                // unlike page, media file does not copied to media_attic when uploaded.
-                // diff icon will not be shown when external edit occurred
-                // because no attic file to be compared with current.
-                $revs = (new MediaChangeLog($id))->getRevisions(0, 1);
-                $showLink = (count($revs) && file_exists(mediaFN($id,$revs[0])) && file_exists(mediaFN($id)));
-                if ($showLink) {
-                    $param = ['tab_details'=>'history', 'mediado'=>'diff', 'ns'=> getNS($id), 'image'=> $id];
-                    $href = media_managerURL($param, '&');
-                }
-                break;
-            case 'page': // page revision
-                // when a page just created anyway, it is natural to expect no older revisions
-                // even if it had once existed but deleted before. Simply ignore to check changelog.
-                if ($this->val('type') !== DOKU_CHANGE_TYPE_CREATE) {
-                    $href = wl($id, ['do'=>'diff'], false, '&');
-                }
+        if ($this->val('mode') == 'media') {
+            // media file revision
+            // unlike page, media file does not copied to media_attic when uploaded.
+            // diff icon will not be shown when external edit occurred
+            // because no attic file to be compared with current.
+            $revs = (new MediaChangeLog($id))->getRevisions(0, 1);
+            $showLink = (count($revs) && file_exists(mediaFN($id,$revs[0])) && file_exists(mediaFN($id)));
+            if ($showLink) {
+                $param = ['tab_details'=>'history', 'mediado'=>'diff', 'ns'=> getNS($id), 'image'=> $id];
+                $href = media_managerURL($param, '&');
+            }
+        } elseif ($this->val('mode') == 'page') {
+            // page revision
+            // when a page just created anyway, it is natural to expect no older revisions
+            // even if it had once existed but deleted before. Simply ignore to check changelog.
+            if ($this->val('type') !== DOKU_CHANGE_TYPE_CREATE) {
+                $href = wl($id, ['do'=>'diff'], false, '&');
+            }
         }
 
         if ($href) {
@@ -306,17 +303,17 @@ class RevisionInfo
         $rev = $this->isCurrent() ? '' : $this->val('date');
 
         $href = '';
-        switch ($this->val('mode')) {
-            case 'media': // media file revision
-                if (!$this->isCurrent() && file_exists(mediaFN($id, $rev))) {
-                    $param = ['mediado'=>'diff', 'image'=> $id, 'rev'=> $rev];
-                    $href = media_managerURL($param, '&');
-                }
-                break;
-            case 'page': // page revision
-                if (!$this->isCurrent()) {
-                    $href = wl($id, ['rev'=> $rev, 'do'=>'diff'], false, '&');
-                }
+        if ($this->val('mode') == 'media') {
+            // media file revision
+            if (!$this->isCurrent() && file_exists(mediaFN($id, $rev))) {
+                $param = ['mediado'=>'diff', 'image'=> $id, 'rev'=> $rev];
+                $href = media_managerURL($param, '&');
+            }
+        } elseif ($this->val('mode') == 'page') {
+            // page revision
+            if (!$this->isCurrent()) {
+                $href = wl($id, ['rev'=> $rev, 'do'=>'diff'], false, '&');
+            }
         }
 
         if ($href) {
@@ -344,13 +341,13 @@ class RevisionInfo
         }
 
         $id = $this->val('id');
-        switch ($this->val('mode')) {
-            case 'media': // media file revision
-                $param  = ['tab_details'=>'history', 'ns'=> getNS($id), 'image'=> $id];
-                $href = media_managerURL($param, '&');
-                break;
-            case 'page': // page revision
-                $href = wl($id, ['do'=>'revisions'], false, '&');
+        if ($this->val('mode') == 'media') {
+            // media file revision
+            $param  = ['tab_details'=>'history', 'ns'=> getNS($id), 'image'=> $id];
+            $href = media_managerURL($param, '&');
+        } elseif ($this->val('mode') == 'page') {
+            // page revision
+            $href = wl($id, ['do'=>'revisions'], false, '&');
         }
         return '<a href="'.$href.'" class="revisions_link">'
               . '<img src="'.DOKU_BASE.'lib/images/history.png" width="12" height="14"'
