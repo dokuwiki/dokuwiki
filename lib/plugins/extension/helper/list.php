@@ -155,13 +155,13 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
         } else {
             $linktype = 'extern';
         }
-        $param = array(
+        $param = [
             'href'   => $url,
             'title'  => $url,
             'class'  => ($linktype == 'extern') ? 'urlextern' : 'interwiki iw_doku',
             'target' => $conf['target'][$linktype],
-            'rel'    => ($linktype == 'extern') ? 'noopener' : '',
-        );
+            'rel'    => ($linktype == 'extern') ? 'noopener' : ''
+        ];
         if ($linktype == 'extern' && $conf['relnofollow']) {
             $param['rel'] = implode(' ', [$param['rel'], 'ugc nofollow']);
         }
@@ -201,7 +201,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
         if ($extension->getAuthor()) {
             $mailid = $extension->getEmailID();
             if ($mailid) {
-                $url = $this->gui->tabURL('search', array('q' => 'authorid:'.$mailid));
+                $url = $this->gui->tabURL('search', ['q' => 'authorid:'.$mailid]);
                 $html = '<a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" >'.
                     '<img src="//www.gravatar.com/avatar/'.$mailid.
                     '?s=20&amp;d=mm" width="20" height="20" alt="" /> '.
@@ -288,7 +288,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
             $url = $this->gui->tabURL('');
             $class = 'close';
         } else {
-            $url = $this->gui->tabURL('', array('info' => $extension->getID()));
+            $url = $this->gui->tabURL('', ['info' => $extension->getID()]);
             $class = '';
         }
         $html .= ' <a href="'.$url.'#extensionplugin__'.$extension->getID().
@@ -322,13 +322,13 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
             } else {
                 $linktype = 'extern';
             }
-            $param = array(
+            $param = [
                 'href'   => $bugtrackerURL,
                 'title'  => $bugtrackerURL,
                 'class'  => 'bugs',
                 'target' => $conf['target'][$linktype],
-                'rel'    => ($linktype == 'extern') ? 'noopener' : '',
-            );
+                'rel'    => ($linktype == 'extern') ? 'noopener' : ''
+            ];
             if ($conf['relnofollow']) {
                 $param['rel'] = implode(' ', [$param['rel'], 'ugc nofollow']);
             }
@@ -544,7 +544,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
         $html = '';
         foreach ($ext as $link) {
             $html .= '<bdi><a href="'.
-                $this->gui->tabURL('search', array('q'=>'ext:'.$link)).'">'.
+                $this->gui->tabURL('search', ['q'=>'ext:'.$link]).'">'.
                 hsc($link).'</a></bdi>, ';
         }
         return rtrim($html, ', ');
@@ -577,7 +577,6 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
             } else {
                 $errors .= '<p class="permerror">'.$this->getLang($canmod).'</p>';
             }
-
             if (!$extension->isProtected() && !$extension->isTemplate()) { // no enable/disable for templates
                 if ($extension->isEnabled()) {
                     $html .= $this->makeAction('disable', $extension);
@@ -585,25 +584,21 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
                     $html .= $this->makeAction('enable', $extension);
                 }
             }
-
             if ($extension->isGitControlled()) {
                 $errors .= '<p class="permerror">'.$this->getLang('git').'</p>';
             }
-
             if ($extension->isEnabled() &&
                 in_array('Auth', $extension->getTypes()) &&
                 $conf['authtype'] != $extension->getID()
             ) {
                 $errors .= '<p class="permerror">'.$this->getLang('auth').'</p>';
             }
-        } else {
-            if (($canmod = $extension->canModify()) === true) {
-                if ($extension->getDownloadURL()) {
-                    $html .= $this->makeAction('install', $extension);
-                }
-            } else {
-                $errors .= '<div class="permerror">'.$this->getLang($canmod).'</div>';
+        } elseif (($canmod = $extension->canModify()) === true) {
+            if ($extension->getDownloadURL()) {
+                $html .= $this->makeAction('install', $extension);
             }
+        } else {
+            $errors .= '<div class="permerror">'.$this->getLang($canmod).'</div>';
         }
 
         if (!$extension->isInstalled() && $extension->getDownloadURL()) {
@@ -627,11 +622,8 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
     {
         $title = '';
 
-        switch ($action) {
-            case 'install':
-            case 'reinstall':
-                $title = 'title="'.hsc($extension->getDownloadURL()).'"';
-                break;
+        if ($action == 'install' || $action == 'reinstall') {
+            $title = 'title="'.hsc($extension->getDownloadURL()).'"';
         }
 
         $classes = 'button '.$action;
@@ -650,7 +642,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin
      */
     public function makeStatus(helper_plugin_extension_extension $extension)
     {
-        $status = array();
+        $status = [];
 
         if ($extension->isInstalled()) {
             $status[] = $this->getLang('status_installed');

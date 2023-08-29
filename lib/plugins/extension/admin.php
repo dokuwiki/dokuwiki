@@ -11,7 +11,7 @@
  */
 class admin_plugin_extension extends DokuWiki_Admin_Plugin
 {
-    protected $infoFor = null;
+    protected $infoFor;
     /** @var  helper_plugin_extension_gui */
     protected $gui;
 
@@ -76,7 +76,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
                             case 'update':
                                 $extension->setExtension($extname);
                                 $installed = $extension->installOrUpdate();
-                                foreach ($installed as $ext => $info) {
+                                foreach ($installed as $info) {
                                     msg(sprintf(
                                         $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
                                         $info['base']), 1
@@ -130,7 +130,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
                 $installed = $extension->installFromURL(
                     $INPUT->post->str('installurl'),
                     $INPUT->post->bool('overwrite'));
-                foreach ($installed as $ext => $info) {
+                foreach ($installed as $info) {
                     msg(sprintf(
                         $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
                         $info['base']), 1
@@ -139,7 +139,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
                 send_redirect($this->gui->tabURL('', [], '&', true));
             } elseif (isset($_FILES['installfile']) && checkSecurityToken()) {
                 $installed = $extension->installFromUpload('installfile', $INPUT->post->bool('overwrite'));
-                foreach ($installed as $ext => $info) {
+                foreach ($installed as $info) {
                     msg(sprintf(
                         $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
                         $info['base']), 1

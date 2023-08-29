@@ -13,7 +13,7 @@ use dokuwiki\Form\Form;
  */
 class helper_plugin_extension_gui extends DokuWiki_Plugin
 {
-    protected $tabs = array('plugins', 'templates', 'search', 'install');
+    protected $tabs = ['plugins', 'templates', 'search', 'install'];
 
     /** @var string the extension that should have an open info window FIXME currently broken */
     protected $infoFor = '';
@@ -225,11 +225,11 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         global $INPUT;
 
         if (!$tab) $tab = $this->currentTab();
-        $defaults = array(
+        $defaults = [
             'do'   => 'admin',
             'page' => 'extension',
-            'tab'  => $tab,
-        );
+            'tab'  => $tab
+        ];
         if ($tab == 'search') $defaults['q'] = $INPUT->str('q');
 
         return wl($ID, array_merge($defaults, $params), $absolute, $sep);
