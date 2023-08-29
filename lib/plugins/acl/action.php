@@ -78,8 +78,8 @@ class action_plugin_acl extends DokuWiki_Action_Plugin
             echo html_buildlist(
                 $data,
                 'acl',
-                array($acl, 'makeTreeItem'),
-                array($acl, 'makeListItem')
+                [$acl, 'makeTreeItem'],
+                [$acl, 'makeListItem']
             );
         }
     }

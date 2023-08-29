@@ -16,8 +16,8 @@ use dokuwiki\Utf8\Sort;
  */
 class admin_plugin_acl extends DokuWiki_Admin_Plugin
 {
-    public $acl = null;
-    protected $ns  = null;
+    public $acl;
+    protected $ns;
     /**
      * The currently selected item, associative array with id and type.
      * Populated from (in this order):
@@ -26,10 +26,10 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
      * $ns
      * $ID
      */
-    protected $current_item = null;
+    protected $current_item;
     protected $who = '';
-    protected $usersgroups = array();
-    protected $specials = array();
+    protected $usersgroups = [];
+    protected $specials = [];
 
     /**
      * return prompt for admin menu
@@ -73,13 +73,13 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
         }
 
         if ($INPUT->str('current_ns')) {
-            $this->current_item = array('id' => cleanID($INPUT->str('current_ns')), 'type' => 'd');
+            $this->current_item = ['id' => cleanID($INPUT->str('current_ns')), 'type' => 'd'];
         } elseif ($INPUT->str('current_id')) {
-            $this->current_item = array('id' => cleanID($INPUT->str('current_id')), 'type' => 'f');
+            $this->current_item = ['id' => cleanID($INPUT->str('current_id')), 'type' => 'f'];
         } elseif ($this->ns) {
-            $this->current_item = array('id' => $this->ns, 'type' => 'd');
+            $this->current_item = ['id' => $this->ns, 'type' => 'd'];
         } else {
-            $this->current_item = array('id' => $ID, 'type' => 'f');
+            $this->current_item = ['id' => $ID, 'type' => 'f'];
         }
 
         // user or group choosen?
@@ -131,7 +131,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
                         unset($acl[$where][$who]);
                 }
                 // prepare lines
-                $lines = array();
+                $lines = [];
                 // keep header
                 foreach ($AUTH_ACL as $line) {
                     if ($line[0] == '#') {
@@ -144,7 +144,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
                 foreach ($acl as $where => $opt) {
                     foreach ($opt as $who => $perm) {
                         if ($who[0]=='@') {
-                            if ($who!='@ALL') {
+                            if ($who != '@ALL') {
                                 $who = '@'.ltrim($auth->cleanGroup($who), '@');
                             }
                         } elseif ($who != '%USER%' && $who != '%GROUP%') { #keep wildcard as is
@@ -155,7 +155,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
                     }
                 }
                 // save it
-                io_saveFile($config_cascade['acl']['default'], join('', $lines));
+                io_saveFile($config_cascade['acl']['default'], implode('', $lines));
             }
 
             // reload ACL config
@@ -211,10 +211,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
      */
     protected function getLinkOptions($addopts = null)
     {
-        $opts = array(
-                    'do'=>'admin',
-                    'page'=>'acl',
-                );
+        $opts = ['do'=>'admin', 'page'=>'acl'];
         if ($this->ns) $opts['ns'] = $this->ns;
         if ($this->who) $opts['acl_w'] = $this->who;
 
@@ -245,14 +242,19 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
         $data = $this->makeTree($ns);
 
         // wrap a list with the root level around the other namespaces
-        array_unshift($data, array( 'level' => 0, 'id' => '*', 'type' => 'd',
-                   'open' =>'true', 'label' => '['.$lang['mediaroot'].']'));
+        array_unshift($data, [
+            'level' => 0,
+            'id' => '*',
+            'type' => 'd',
+            'open' =>'true',
+            'label' => '['.$lang['mediaroot'].']'
+        ]);
 
         echo html_buildlist(
             $data,
             'acl',
-            array($this, 'makeTreeItem'),
-            array($this, 'makeListItem')
+            [$this, 'makeTreeItem'],
+            [$this, 'makeListItem']
         );
     }
 
@@ -270,15 +272,15 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
         global $conf;
 
         // read tree structure from pages and media
-        $data = array();
-        search($data, $conf['datadir'], 'search_index', array('ns' => $folder), $limit);
-        $media = array();
-        search($media, $conf['mediadir'], 'search_index', array('ns' => $folder, 'nofiles' => true), $limit);
+        $data = [];
+        search($data, $conf['datadir'], 'search_index', ['ns' => $folder], $limit);
+        $media = [];
+        search($media, $conf['mediadir'], 'search_index', ['ns' => $folder, 'nofiles' => true], $limit);
         $data = array_merge($data, $media);
         unset($media);
 
         // combine by sorting and removing duplicates
-        usort($data, array($this, 'treeSort'));
+        usort($data, [$this, 'treeSort']);
         $count = count($data);
         if ($count>0) for ($i=1; $i<$count; $i++) {
             if ($data[$i-1]['id'] == $data[$i]['id'] && $data[$i-1]['type'] == $data[$i]['type']) {
@@ -311,14 +313,14 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
                 // if one of the components is the last component and is a file
                 // and the other one is either of a deeper level or a directory,
                 // the file has to come after the deeper level or directory
-                if (empty($a_ids) && $a['type'] == 'f' && (count($b_ids) || $b['type'] == 'd')) return 1;
-                if (empty($b_ids) && $b['type'] == 'f' && (count($a_ids) || $a['type'] == 'd')) return -1;
+                if ($a_ids === [] && $a['type'] == 'f' && (count($b_ids) || $b['type'] == 'd')) return 1;
+                if ($b_ids === [] && $b['type'] == 'f' && (count($a_ids) || $a['type'] == 'd')) return -1;
                 return $cur_result;
             }
         }
         // The two ids seem to be equal. One of them might however refer
         // to a page, one to a namespace, the namespace needs to be first.
-        if (empty($a_ids) && empty($b_ids)) {
+        if ($a_ids === [] && $b_ids === []) {
             if ($a['type'] == $b['type']) return 0;
             if ($a['type'] == 'f') return 1;
             return -1;
@@ -327,8 +329,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
         // that obviously needs to be after the namespace
         // Or it is the namespace that contains the other part and should be
         // before that other part.
-        if (empty($a_ids)) return ($a['type'] == 'd') ? -1 : 1;
-        if (empty($b_ids)) return ($b['type'] == 'd') ? 1 : -1;
+        if ($a_ids === []) return ($a['type'] == 'd') ? -1 : 1;
+        if ($b_ids === []) return ($b['type'] == 'd') ? 1 : -1;
         return 0; //shouldn't happen
     }
 
@@ -447,12 +449,12 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
         // prepare who to check
         if ($who[0] == '@') {
             $user   = '';
-            $groups = array(ltrim($who, '@'));
+            $groups = [ltrim($who, '@')];
         } else {
             $user = $who;
             $info = $auth->getUserData($user);
             if ($info === false) {
-                $groups = array();
+                $groups = [];
             } else {
                 $groups = $info['grps'];
             }
@@ -462,7 +464,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
         $perm = auth_aclcheck($check, $user, $groups);
 
         // build array of named permissions
-        $names = array();
+        $names = [];
         if ($perm) {
             if ($ns) {
                 if ($perm >= AUTH_DELETE) $names[] = $this->getLang('acl_perm16');
@@ -480,16 +482,14 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
         echo '<p>';
         if ($user) {
             if ($ns) {
-                printf($this->getLang('p_user_ns'), hsc($who), hsc($ns), join(', ', $names));
+                printf($this->getLang('p_user_ns'), hsc($who), hsc($ns), implode(', ', $names));
             } else {
-                printf($this->getLang('p_user_id'), hsc($who), hsc($ID), join(', ', $names));
+                printf($this->getLang('p_user_id'), hsc($who), hsc($ID), implode(', ', $names));
             }
+        } elseif ($ns) {
+            printf($this->getLang('p_group_ns'), hsc(ltrim($who, '@')), hsc($ns), implode(', ', $names));
         } else {
-            if ($ns) {
-                printf($this->getLang('p_group_ns'), hsc(ltrim($who, '@')), hsc($ns), join(', ', $names));
-            } else {
-                printf($this->getLang('p_group_id'), hsc(ltrim($who, '@')), hsc($ID), join(', ', $names));
-            }
+            printf($this->getLang('p_group_id'), hsc(ltrim($who, '@')), hsc($ID), implode(', ', $names));
         }
         echo '</p>';
 
@@ -538,13 +538,13 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
             }
             $ret .= '<img src="'.$img.'" alt="'.$alt.'" />';
             $ret .= '<a href="'.
-                wl('', $this->getLinkOptions(array('ns'=> $item['id'], 'sectok'=>getSecurityToken()))).
+                wl('', $this->getLinkOptions(['ns'=> $item['id'], 'sectok'=>getSecurityToken()])).
                 '" class="idx_dir'.$cl.'">';
             $ret .= $base;
             $ret .= '</a>';
         } else {
             $ret .= '<a href="'.
-                wl('', $this->getLinkOptions(array('id'=> $item['id'], 'ns'=>'', 'sectok'=>getSecurityToken()))).
+                wl('', $this->getLinkOptions(['id'=> $item['id'], 'ns'=>'', 'sectok'=>getSecurityToken()])).
                 '" class="wikilink1'.$cl.'">';
             $ret .= noNS($item['id']);
             $ret .= '</a>';
@@ -574,8 +574,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
     {
         global $AUTH_ACL;
         global $conf;
-        $acl_config=array();
-        $usersgroups = array();
+        $acl_config=[];
+        $usersgroups = [];
 
         // get special users and groups
         $this->specials[] = '@ALL';
@@ -769,14 +769,16 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
 
         if ($ispage && $setperm > AUTH_EDIT) $setperm = AUTH_EDIT;
 
-        foreach (array(AUTH_NONE,AUTH_READ,AUTH_EDIT,AUTH_CREATE,AUTH_UPLOAD,AUTH_DELETE) as $perm) {
-            $label += 1;
+        foreach ([AUTH_NONE, AUTH_READ, AUTH_EDIT, AUTH_CREATE, AUTH_UPLOAD, AUTH_DELETE] as $perm) {
+            ++$label;
 
             //general checkbox attributes
-            $atts = array( 'type'  => 'radio',
-                           'id'    => 'pbox'.$label,
-                           'name'  => $name,
-                           'value' => $perm );
+            $atts = [
+                'type'  => 'radio',
+                'id'    => 'pbox'.$label,
+                'name'  => $name,
+                'value' => $perm
+            ];
             //dynamic attributes
             if (!is_null($setperm) && $setperm == $perm) $atts['checked']  = 'checked';
             if ($ispage && $perm > AUTH_EDIT) {
