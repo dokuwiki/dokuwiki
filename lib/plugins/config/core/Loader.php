@@ -42,7 +42,7 @@ class Loader {
      */
     public function loadMeta() {
         // load main file
-        $meta = array();
+        $meta = [];
         include DOKU_PLUGIN . 'config/settings/config.metadata.php';
 
         // plugins
@@ -81,7 +81,7 @@ class Loader {
     {
 
         // initialize array
-        $conf = array();
+        $conf = [];
 
         // plugins
         foreach ($this->plugins as $plugin) {
@@ -121,7 +121,7 @@ class Loader {
      * @return array
      */
     public function loadLangs() {
-        $lang = array();
+        $lang = [];
 
         // plugins
         foreach($this->plugins as $plugin) {
@@ -175,7 +175,7 @@ class Loader {
      * @return array
      */
     protected function loadConfigs($files) {
-        $conf = array();
+        $conf = [];
         foreach($files as $file) {
             $conf = array_merge($conf, $this->parser->parse($file));
         }
@@ -193,16 +193,16 @@ class Loader {
      * @return array
      */
     protected function loadExtensionMeta($file, $type, $extname) {
-        if(!file_exists($file)) return array();
+        if(!file_exists($file)) return [];
         $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
 
         // include file
-        $meta = array();
+        $meta = [];
         include $file;
-        if(empty($meta)) return array();
+        if($meta === []) return [];
 
         // read data
-        $data = array();
+        $data = [];
         $data[$prefix . $type . '_settings_name'] = ['fieldset'];
         foreach($meta as $key => $value) {
             if($value[0] == 'fieldset') continue; //plugins only get one fieldset
@@ -223,15 +223,15 @@ class Loader {
      * @return array
      */
     protected function loadExtensionConf($file, $type, $extname) {
-        if(!file_exists($file)) return array();
+        if(!file_exists($file)) return [];
         $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
 
         // parse file
         $conf = $this->parser->parse($file);
-        if(empty($conf)) return array();
+        if(empty($conf)) return [];
 
         // read data
-        $data = array();
+        $data = [];
         foreach($conf as $key => $value) {
             $data[$prefix . $key] = $value;
         }
@@ -253,7 +253,7 @@ class Loader {
         $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
 
         // include files
-        $lang = array();
+        $lang = [];
         if(file_exists($dir . 'lang/en/settings.php')) {
             include $dir . 'lang/en/settings.php';
         }
@@ -262,7 +262,7 @@ class Loader {
         }
 
         // set up correct keys
-        $strings = array();
+        $strings = [];
         foreach($lang as $key => $val) {
             $strings[$prefix . $key] = $val;
         }

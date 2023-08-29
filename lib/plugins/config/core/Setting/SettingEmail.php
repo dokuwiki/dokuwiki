@@ -33,7 +33,7 @@ class SettingEmail extends SettingString {
         if($this->multiple) {
             $mails = array_filter(array_map('trim', explode(',', $mail)));
         } else {
-            $mails = array($mail);
+            $mails = [$mail];
         }
 
         // check them all

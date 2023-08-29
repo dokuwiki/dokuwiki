@@ -25,9 +25,9 @@ class ConfigParser {
      * @return array
      */
     public function parse($file) {
-        if(!file_exists($file)) return array();
+        if(!file_exists($file)) return [];
 
-        $config = array();
+        $config = [];
         $contents = @php_strip_whitespace($file);
 
         // fallback to simply including the file #3271
@@ -38,10 +38,11 @@ class ConfigParser {
         }
 
         $pattern = '/\$' . $this->varname . '\[[\'"]([^=]+)[\'"]\] ?= ?(.*?);(?=[^;]*(?:\$' . $this->varname . '|$))/s';
-        $matches = array();
+        $matches = [];
         preg_match_all($pattern, $contents, $matches, PREG_SET_ORDER);
+        $counter = count($matches);
 
-        for($i = 0; $i < count($matches); $i++) {
+        for($i = 0; $i < $counter; $i++) {
             $value = $matches[$i][2];
 
             // merge multi-dimensional array indices using the keymarker
@@ -77,11 +78,11 @@ class ConfigParser {
      */
     protected function readValue($value) {
         $removequotes_pattern = '/^(\'|")(.*)(?<!\\\\)\1$/s';
-        $unescape_pairs = array(
+        $unescape_pairs = [
             '\\\\' => '\\',
             '\\\'' => '\'',
             '\\"' => '"'
-        );
+        ];
 
         if($value == 'true') {
             $value = true;

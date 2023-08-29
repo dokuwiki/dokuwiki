@@ -59,7 +59,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             } catch(Exception $e) {
                 msg($this->getLang('error'), -1);
             }
-            send_redirect(wl($ID, array('do' => 'admin', 'page' => 'config'), true, '&'));
+            send_redirect(wl($ID, ['do' => 'admin', 'page' => 'config'], true, '&'));
         } else {
             $this->hasErrors = true;
             msg($this->getLang('error'), -1);
@@ -96,9 +96,9 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         $first_plugin_fieldset = true;
         $first_template_fieldset = true;
         foreach($this->configuration->getSettings() as $setting) {
-            if(is_a($setting, SettingHidden::class)) {
+            if ($setting instanceof SettingHidden) {
                 continue;
-            } else if(is_a($setting, settingFieldset::class)) {
+            } elseif ($setting instanceof SettingFieldset) {
                 // config setting group
                 if($in_fieldset) {
                     echo '</table>';
@@ -107,10 +107,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 } else {
                     $in_fieldset = true;
                 }
-                if($first_plugin_fieldset && $setting->getType() == 'plugin') {
+                if ($first_plugin_fieldset && $setting->getType() == 'plugin') {
                     $this->printH1('plugin_settings', $this->getLang('_header_plugin'));
                     $first_plugin_fieldset = false;
-                } else if($first_template_fieldset && $setting->getType() == 'template') {
+                } elseif ($first_template_fieldset && $setting->getType() == 'template') {
                     $this->printH1('template_settings', $this->getLang('_header_template'));
                     $first_template_fieldset = false;
                 }
@@ -120,7 +120,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 echo '<table class="inline">';
             } else {
                 // config settings
-                list($label, $input) = $setting->html($this, $this->hasErrors);
+                [$label, $input] = $setting->html($this, $this->hasErrors);
 
                 $class = $setting->isDefault()
                     ? ' class="default"'
@@ -169,7 +169,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             echo '<div class="table">';
             echo '<table class="inline">';
             foreach($undefined_settings as $setting) {
-                list($label, $input) = $setting->html($this);
+                [$label, $input] = $setting->html($this);
                 echo '<tr>';
                 echo '<td class="label">' . $label . '</td>';
                 echo '<td>' . $input . '</td>';
@@ -218,13 +218,13 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         $this->setupLocale(true);
 
         $allow_debug = $GLOBALS['conf']['allowdebug']; // avoid global $conf; here.
-        $toc = array();
+        $toc = [];
         $check = false;
 
         // gather settings data into three sub arrays
         $labels = ['dokuwiki' => [], 'plugin' => [], 'template' => []];
         foreach($this->configuration->getSettings() as $setting) {
-            if(is_a($setting, SettingFieldset::class)) {
+            if($setting instanceof SettingFieldset) {
                 $labels[$setting->getType()][] = $setting;
             }
         }

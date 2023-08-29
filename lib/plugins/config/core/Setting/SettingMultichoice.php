@@ -6,7 +6,7 @@ namespace dokuwiki\plugin\config\core\Setting;
  * Class setting_multichoice
  */
 class SettingMultichoice extends SettingString {
-    protected $choices = array();
+    protected $choices = [];
     public $lang; //some custom language strings are stored in setting
 
     /** @inheritdoc */
@@ -52,7 +52,7 @@ class SettingMultichoice extends SettingString {
         $input .= "</select> $nochoice \n";
         $input .= "</div>\n";
 
-        return array($label, $input);
+        return [$label, $input];
     }
 
     /** @inheritdoc */

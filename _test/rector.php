@@ -67,8 +67,8 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/../lib/tpl/*/_test/*',
         __DIR__ . '/../lib/plugins/*/lang/*',
         __DIR__ . '/../lib/tpl/*/lang/*',
-        __DIR__ . '/../lib/plugins/*/conf/*',
-        __DIR__ . '/../lib/tpl/*/conf/*',
+        __DIR__ . '/../lib/plugins/*/conf/*', // maybe later
+        __DIR__ . '/../lib/tpl/*/conf/*',  // maybe later
         __DIR__ . '/../lib/plugins/*/vendor/*',
         __DIR__ . '/../lib/tpl/*/vendor/*',
         __DIR__ . '/../lib/plugins/*/skel/*', // dev plugin

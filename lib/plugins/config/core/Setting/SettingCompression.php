@@ -7,7 +7,7 @@ namespace dokuwiki\plugin\config\core\Setting;
  */
 class SettingCompression extends SettingMultichoice {
 
-    protected $choices = array('0');      // 0 = no compression, always supported
+    protected $choices = ['0'];      // 0 = no compression, always supported
 
     /** @inheritdoc */
     public function initialize($default = null, $local = null, $protected = null) {
