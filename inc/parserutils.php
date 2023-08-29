@@ -578,7 +578,7 @@ function p_get_parsermodes()
         global $PARSER_MODES;
         foreach ($pluginlist as $p) {
             /** @var SyntaxPlugin $obj */
-            if (!($obj = plugin_load('syntax', $p)) instanceof PluginInterface) continue; //attempt to load plugin into $obj
+            if (!($obj = plugin_load('syntax', $p)) instanceof PluginInterface) continue;
             $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
             //add to modes
             $modes[] = [

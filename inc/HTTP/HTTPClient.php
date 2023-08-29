@@ -423,7 +423,10 @@ class HTTPClient
                         $this->readData($socket, 2, 'chunk'); // read trailing \r\n
                     }
                 } while ($chunk_size && !$abort);
-            } elseif (isset($this->resp_headers['content-length']) && !isset($this->resp_headers['transfer-encoding'])) {
+            } elseif (
+                isset($this->resp_headers['content-length']) &&
+                !isset($this->resp_headers['transfer-encoding'])
+            ) {
                 /* RFC 2616
                  * If a message is received with both a Transfer-Encoding header field and a Content-Length
                  * header field, the latter MUST be ignored.
@@ -519,7 +522,8 @@ class HTTPClient
         $request = "CONNECT {$requestinfo['host']}:{$requestinfo['port']} HTTP/1.0" . HTTP_NL;
         $request .= "Host: {$requestinfo['host']}" . HTTP_NL;
         if ($this->proxy_user) {
-            $request .= 'Proxy-Authorization: Basic ' . base64_encode($this->proxy_user . ':' . $this->proxy_pass) . HTTP_NL;
+            $request .= 'Proxy-Authorization: Basic ' .
+                base64_encode($this->proxy_user . ':' . $this->proxy_pass) . HTTP_NL;
         }
         $request .= HTTP_NL;
 
