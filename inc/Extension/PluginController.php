@@ -118,12 +118,10 @@ class PluginController
                         ), -1
                     );
                 } elseif (preg_match('/^' . DOKU_PLUGIN_NAME_REGEX . '$/', $plugin) !== 1) {
-                    msg(
-                        sprintf(
-                            'Plugin name \'%s\' is not a valid plugin name, only the characters a-z and 0-9 are allowed. ' .
-                            'Maybe the plugin has been installed in the wrong directory?', hsc($plugin)
-                        ), -1
-                    );
+                    msg(sprintf(
+                        'Plugin name \'%s\' is not a valid plugin name, only the characters a-z and 0-9 are allowed. ' .
+                        'Maybe the plugin has been installed in the wrong directory?', hsc($plugin)
+                    ), -1);
                 }
                 return null;
             }
