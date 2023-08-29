@@ -612,7 +612,7 @@ abstract class ChangeLog
                 'user' => '',
                 'sum'  => $lang['deleted'].' - '.$lang['external_edit'].' ('.$lang['unknowndate'].')',
                 'extra' => '',
-                'sizechange' => -io_getSizeFile($this->getFilename()),
+                'sizechange' => -io_getSizeFile($this->getFilename($lastRev)),
                 'timestamp' => false,
             ];
 
@@ -623,7 +623,7 @@ abstract class ChangeLog
                     $this->getRevisionInfo($lastRev, false)['type'] == DOKU_CHANGE_TYPE_DELETE
             );
             $filesize_new = filesize($this->getFilename());
-            $filesize_old = $isJustCreated ? 0 : io_getSizeFile($this->getFilename());
+            $filesize_old = $isJustCreated ? 0 : io_getSizeFile($this->getFilename($lastRev));
             $sizechange = $filesize_new - $filesize_old;
 
             if ($isJustCreated) {

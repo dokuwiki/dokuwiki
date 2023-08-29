@@ -26,6 +26,7 @@ use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
 use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
 use Rector\Php71\Rector\ClassConst\PublicConstantVisibilityRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
+use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
@@ -99,5 +100,6 @@ return static function (RectorConfig $rectorConfig): void {
         RemoveUselessVarTagRector::class,
         TypedPropertyFromAssignsRector::class, // maybe?
         JoinStringConcatRector::class, // this does not count variables, so it creates overlong lines
+        RemoveExtraParametersRector::class, // this actually broke code
     ]);
 };
