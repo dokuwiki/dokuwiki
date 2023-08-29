@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The summary XHTML form selects either up to the first two paragraphs
  * it find in a page or the first section (whichever comes first)
@@ -14,7 +15,8 @@
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @todo   Is this currently used anywhere? Should it?
  */
-class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml {
+class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml
+{
 
     // Namespace these variables to
     // avoid clashes with parent classes
@@ -25,54 +27,61 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml {
     protected $sum_pageTitle = false;
 
     /** @inheritdoc */
-    public function document_start() {
-        $this->doc .= DOKU_LF.'<div>'.DOKU_LF;
+    public function document_start()
+    {
+        $this->doc .= DOKU_LF . '<div>' . DOKU_LF;
     }
 
     /** @inheritdoc */
-    public function document_end() {
+    public function document_end()
+    {
         $this->doc = $this->sum_summary;
-        $this->doc .= DOKU_LF.'</div>'.DOKU_LF;
+        $this->doc .= DOKU_LF . '</div>' . DOKU_LF;
     }
 
     /** @inheritdoc */
-    public function header($text, $level, $pos) {
-        if ( !$this->sum_pageTitle ) {
+    public function header($text, $level, $pos)
+    {
+        if (!$this->sum_pageTitle) {
             $this->info['sum_pagetitle'] = $text;
             $this->sum_pageTitle = true;
         }
-        $this->doc .= DOKU_LF.'<h'.$level.'>';
+        $this->doc .= DOKU_LF . '<h' . $level . '>';
         $this->doc .= $this->_xmlEntities($text);
-        $this->doc .= "</h$level>".DOKU_LF;
+        $this->doc .= "</h$level>" . DOKU_LF;
     }
 
     /** @inheritdoc */
-    public function section_open($level) {
-        if ( $this->sum_capture ) {
+    public function section_open($level)
+    {
+        if ($this->sum_capture) {
             $this->sum_inSection = true;
         }
     }
 
     /** @inheritdoc */
-    public function section_close() {
-        if ( $this->sum_capture && $this->sum_inSection ) {
+    public function section_close()
+    {
+        if ($this->sum_capture && $this->sum_inSection) {
             $this->sum_summary .= $this->doc;
             $this->sum_capture = false;
         }
     }
 
     /** @inheritdoc */
-    public function p_open() {
-        if ( $this->sum_capture && $this->sum_paragraphs < 2 ) {
+    public function p_open()
+    {
+        if ($this->sum_capture && $this->sum_paragraphs < 2) {
             $this->sum_paragraphs++;
         }
-        parent :: p_open();
+        parent:: p_open();
     }
 
     /** @inheritdoc */
-    public function p_close() {
-        parent :: p_close();
-        if ( $this->sum_capture && $this->sum_paragraphs >= 2 ) {
+    public function p_close()
+    {
+        parent:: p_close();
+        if ($this->sum_capture && $this->sum_paragraphs >= 2) {
             $this->sum_summary .= $this->doc;
             $this->sum_capture = false;
         }

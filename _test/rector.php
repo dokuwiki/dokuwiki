@@ -35,6 +35,7 @@ use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 return static function (RectorConfig $rectorConfig): void {
     define('DOKU_INC', __DIR__ . '/../');
     define('DOKU_BASE','/');
+    define('DOKU_URL','http://localhost/');
     define('DOKU_COOKIE','DWCOOKIE');
 
     $rectorConfig->paths([
