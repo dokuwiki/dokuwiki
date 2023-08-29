@@ -27,7 +27,7 @@ class MediaFile
         $this->id = $id; //FIXME should it be cleaned?
         $this->path = mediaFN($id, $rev);
 
-        list($this->ext, $this->mime, $this->downloadable) = mimetype($this->path, false);
+        [$this->ext, $this->mime, $this->downloadable] = mimetype($this->path, false);
     }
 
     /** @return string */
@@ -121,7 +121,7 @@ class MediaFile
         if (!$this->isImage()) return;
         $info = getimagesize($this->path);
         if ($info === false) return;
-        list($this->width, $this->height) = $info;
+        [$this->width, $this->height] = $info;
     }
 
     /**
