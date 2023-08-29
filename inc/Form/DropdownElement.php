@@ -65,7 +65,7 @@ class DropdownElement extends InputElement
         if (!is_array($optGroups)) {
             throw new \InvalidArgumentException(hsc('Argument must be an associative array of label => [options]!'));
         }
-        $this->optGroups = array();
+        $this->optGroups = [];
         foreach ($optGroups as $label => $options) {
             $this->addOptGroup($label, $options);
         }
@@ -189,9 +189,7 @@ class DropdownElement extends InputElement
         $html = '<select ' . buildAttributes($attr) . '>';
         $html = array_reduce(
             $this->optGroups,
-            function ($html, OptGroup $optGroup) {
-                return $html . $optGroup->toHTML();
-            },
+            static fn($html, OptGroup $optGroup) => $html . $optGroup->toHTML(),
             $html
         );
         $html .= '</select>';

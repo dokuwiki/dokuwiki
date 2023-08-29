@@ -20,7 +20,7 @@ class ButtonElement extends Element
      */
     public function __construct($name, $content = '')
     {
-        parent::__construct('button', array('name' => $name, 'value' => 1));
+        parent::__construct('button', ['name' => $name, 'value' => 1]);
         $this->content = $content;
     }
 

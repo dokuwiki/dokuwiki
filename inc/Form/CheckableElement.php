@@ -29,7 +29,7 @@ class CheckableElement extends InputElement
     protected function prefillInput()
     {
         global $INPUT;
-        list($name, $key) = $this->getInputName();
+        [$name, $key] = $this->getInputName();
         $myvalue = $this->val();
 
         if (!$INPUT->has($name)) return;
