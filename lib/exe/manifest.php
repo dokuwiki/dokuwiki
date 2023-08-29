@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\Manifest;
 if (!defined('DOKU_INC')) {
     define('DOKU_INC', __DIR__ . '/../../');
 }
@@ -11,5 +12,5 @@ if (!actionOK('manifest')) {
     exit();
 }
 
-$manifest = new \dokuwiki\Manifest();
+$manifest = new Manifest();
 $manifest->sendManifest();

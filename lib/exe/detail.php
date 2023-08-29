@@ -2,7 +2,7 @@
 
 use dokuwiki\Extension\Event;
 
-if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
+if(!defined('DOKU_INC')) define('DOKU_INC',__DIR__.'/../../');
 if(!defined('DOKU_MEDIADETAIL')) define('DOKU_MEDIADETAIL',1);
 
 // define all DokuWiki globals here (needed within test requests but also helps to keep track)
@@ -18,7 +18,7 @@ $REV  = $INPUT->int('rev');
 // "parent" page
 $INFO = array_merge(pageinfo(),mediainfo());
 
-$tmp = array();
+$tmp = [];
 Event::createAndTrigger('DETAIL_STARTED', $tmp);
 
 //close session

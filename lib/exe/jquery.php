@@ -2,7 +2,7 @@
 
 use dokuwiki\Cache\Cache;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/../../');
+if(!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
 if(!defined('NOSESSION')) define('NOSESSION', true); // we do not use a session or authentication here (better caching)
 if(!defined('NL')) define('NL', "\n");
 if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1); // we gzip ourself here
@@ -22,16 +22,16 @@ jquery_out();
  */
 function jquery_out() {
     $cache = new Cache('jquery', '.js');
-    $files = array(
+    $files = [
         DOKU_INC . 'lib/scripts/jquery/jquery.min.js',
-        DOKU_INC . 'lib/scripts/jquery/jquery-ui.min.js',
-    );
+        DOKU_INC . 'lib/scripts/jquery/jquery-ui.min.js'
+    ];
     $cache_files = $files;
     $cache_files[] = __FILE__;
 
     // check cache age & handle conditional request
     // This may exit if a cache can be used
-    $cache_ok = $cache->useCache(array('files' => $cache_files));
+    $cache_ok = $cache->useCache(['files' => $cache_files]);
     http_cached($cache->cache, $cache_ok);
 
     $js = '';
