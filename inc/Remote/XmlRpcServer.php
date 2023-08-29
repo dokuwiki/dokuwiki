@@ -20,8 +20,8 @@ class XmlRpcServer extends Server
     public function __construct($wait=false)
     {
         $this->remote = new Api();
-        $this->remote->setDateTransformation(array($this, 'toDate'));
-        $this->remote->setFileTransformation(array($this, 'toFile'));
+        $this->remote->setDateTransformation([$this, 'toDate']);
+        $this->remote->setFileTransformation([$this, 'toFile']);
         parent::__construct(false, false, $wait);
     }
 
@@ -51,7 +51,7 @@ class XmlRpcServer extends Server
     /**
      * @inheritdoc
      */
-    public function call($methodname, $args)
+    protected function call($methodname, $args)
     {
         try {
             $result = $this->remote->call($methodname, $args);
