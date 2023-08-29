@@ -29,7 +29,7 @@ abstract class Diff extends Ui
     /**
      * Diff Ui constructor
      *
-     * @param string $id  page id or media id
+     * @param string $id page id or media id
      */
     public function __construct($id)
     {
@@ -65,8 +65,8 @@ abstract class Diff extends Ui
     /**
      * Gets or Sets preference of the Ui\Diff object
      *
-     * @param string|array $prefs  a key name or key-value pair(s)
-     * @param mixed $value         value used when the first args is string
+     * @param string|array $prefs a key name or key-value pair(s)
+     * @param mixed $value value used when the first args is string
      * @return array|$this
      */
     public function preference($prefs = null, $value = null)
@@ -100,20 +100,20 @@ abstract class Diff extends Ui
             $this->rev2 = $this->changelog->currentRevision();
             if ($this->rev2 <= $this->rev1) {
                 // fallback to compare previous with current
-                 unset($this->rev1, $this->rev2);
+                unset($this->rev1, $this->rev2);
             }
         }
 
         // submit button with two checked boxes, eg. &do=diff&rev2[0]=#&rev2[1]=#
         $revs = $INPUT->arr('rev2', []);
         if (count($revs) > 1) {
-            list($rev1, $rev2) = $revs;
+            [$rev1, $rev2] = $revs;
             if ($rev2 < $rev1) [$rev1, $rev2] = [$rev2, $rev1];
             $this->rev1 = (int)$rev1;
             $this->rev2 = (int)$this->changelog->traceCurrentRevision($rev2);
         }
 
-       // no revision was given, compare previous to current
+        // no revision was given, compare previous to current
         if (!isset($this->rev1, $this->rev2)) {
             $rev2 = $this->changelog->currentRevision();
             if ($rev2 > $this->changelog->lastRevision()) {

@@ -13,10 +13,10 @@ class PageView extends Ui
 {
     protected $text;
 
-    /** 
+    /**
      * PageView Ui constructor
      *
-     * @param null|string $text  wiki text or null for showing $ID
+     * @param null|string $text wiki text or null for showing $ID
      */
     public function __construct($text = null)
     {
@@ -26,10 +26,10 @@ class PageView extends Ui
     /**
      * Show a wiki page
      *
+     * @return void
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
      * @triggers HTML_SHOWREV_OUTPUT
-     * @return void
      */
     public function show()
     {
@@ -62,7 +62,7 @@ class PageView extends Ui
         } else {
             if ($REV || $DATE_AT) {
                 // print intro for old revisions
-                $data = array('rev' => &$REV, 'date_at' => &$DATE_AT);
+                $data = ['rev' => &$REV, 'date_at' => &$DATE_AT];
                 Event::createAndTrigger('HTML_SHOWREV_OUTPUT', $data, [$this, 'showrev']);
             }
             $html = p_wiki_xhtml($ID, $REV, true, $DATE_AT);

@@ -14,24 +14,24 @@ class PageConflict extends Ui
     protected $text;
     protected $summary;
 
-    /** 
+    /**
      * PageConflict Ui constructor
      *
-     * @param string $text     wiki text
-     * @param string $summary  edit summary
-    */
+     * @param string $text wiki text
+     * @param string $summary edit summary
+     */
     public function __construct($text = '', $summary = '')
     {
-        $this->text    = $text;
+        $this->text = $text;
         $this->summary = $summary;
     }
 
     /**
      * Show conflict form to ask whether save anyway or cancel the page edits
      *
+     * @return void
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @return void
      */
     public function show()
     {
@@ -48,8 +48,8 @@ class PageConflict extends Ui
         $form->setHiddenField('wikitext', $this->text);
         $form->setHiddenField('summary', $this->summary);
 
-        $form->addButton('do[save]', $lang['btn_save'] )->attrs(['type' => 'submit', 'accesskey' => 's']);
-        $form->addButton('do[cancel]', $lang['btn_cancel'] )->attrs(['type' => 'submit']);
+        $form->addButton('do[save]', $lang['btn_save'])->attrs(['type' => 'submit', 'accesskey' => 's']);
+        $form->addButton('do[cancel]', $lang['btn_cancel'])->attrs(['type' => 'submit']);
         $form->addTagClose('div');
 
         print $form->toHTML('Conflict');

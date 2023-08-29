@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\Array_\CallableThisArrayToAnonymousFunctionRector;
+use Rector\CodeQuality\Rector\Concat\JoinStringConcatRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
@@ -95,5 +96,6 @@ return static function (RectorConfig $rectorConfig): void {
         AddArrayDefaultToArrayPropertyRector::class, // may break code differentiating between null and empty array
         RemoveUselessVarTagRector::class,
         TypedPropertyFromAssignsRector::class, // maybe?
+        JoinStringConcatRector::class, // this does not count variables, so it creates overlong lines
     ]);
 };

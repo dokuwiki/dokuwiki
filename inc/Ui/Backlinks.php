@@ -12,10 +12,10 @@ class Backlinks extends Ui
     /**
      * Display backlinks
      *
-     * @author   Andreas Gohr <andi@splitbrain.org>
+     * @return void
      * @author   Michael Klier <chi@chimeric.de>
      *
-     * @return void
+     * @author   Andreas Gohr <andi@splitbrain.org>
      */
     public function show()
     {
@@ -31,12 +31,12 @@ class Backlinks extends Ui
             print '<ul class="idx">';
             foreach ($data as $blink) {
                 print '<li><div class="li">';
-                print html_wikilink(':'.$blink,useHeading('navigation') ? null : $blink);
+                print html_wikilink(':' . $blink, useHeading('navigation') ? null : $blink);
                 print '</div></li>';
             }
             print '</ul>';
         } else {
-            print '<div class="level1"><p>'. $lang['nothingfound'] .'</p></div>';
+            print '<div class="level1"><p>' . $lang['nothingfound'] . '</p></div>';
         }
     }
 
