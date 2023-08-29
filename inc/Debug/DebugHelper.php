@@ -24,7 +24,7 @@ class DebugHelper
         global $EVENT_HANDLER;
         if (
             !Logger::getInstance(Logger::LOG_DEPRECATED)->isLogging() &&
-            ($EVENT_HANDLER === null || !$EVENT_HANDLER->hasHandlerForEvent('INFO_DEPRECATION_LOG'))
+            (!$EVENT_HANDLER instanceof EventHandler || !$EVENT_HANDLER->hasHandlerForEvent('INFO_DEPRECATION_LOG'))
         ) {
             // avoid any work if no one cares
             return false;
@@ -45,15 +45,15 @@ class DebugHelper
         if (!self::isEnabled()) return;
 
         $backtrace = debug_backtrace();
-        for ($i = 0; $i < $callerOffset; $i += 1) {
+        for ($i = 0; $i < $callerOffset; ++$i) {
             if(count($backtrace) > 1) array_shift($backtrace);
         }
 
-        list($self, $call) = $backtrace;
+        [$self, $call] = $backtrace;
 
         if (!$thing) {
             $thing = trim(
-                (!empty($self['class']) ? ($self['class'] . '::') : '') .
+                (empty($self['class']) ? ('') : $self['class'] . '::') .
                 $self['function'] . '()', ':');
         }
 
@@ -62,7 +62,7 @@ class DebugHelper
             $alternative,
             $thing,
             trim(
-                (!empty($call['class']) ? ($call['class'] . '::') : '') .
+                (empty($call['class']) ? ('') : $call['class'] . '::') .
                 $call['function'] . '()', ':'),
             $self['file'] ?? $call['file'] ?? '',
             $self['line'] ?? $call['line'] ?? 0

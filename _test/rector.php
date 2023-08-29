@@ -9,6 +9,7 @@ use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
+use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Isset_\IssetOnPropertyObjectToPropertyExistsRector;
 use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
 use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
@@ -26,9 +27,15 @@ use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 
 return static function (RectorConfig $rectorConfig): void {
+    define('DOKU_INC', __DIR__ . '/../');
+
     $rectorConfig->paths([
         __DIR__ . '/../inc',
         __DIR__ . '/../lib',
+    ]);
+
+    $rectorConfig->bootstrapFiles([
+        __DIR__ . '/../inc/load.php',
     ]);
 
     $rectorConfig->importNames();
@@ -79,5 +86,6 @@ return static function (RectorConfig $rectorConfig): void {
         ForRepeatedCountToOwnVariableRector::class, // adds unwanted is_countable checks?
         RemoveParentCallWithoutParentRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,
+        SimplifyIfReturnBoolRector::class,
     ]);
 };
