@@ -23,7 +23,7 @@ class MediaSubscriptionSender extends SubscriptionSender
         global $conf;
 
         $file = mediaFN($id);
-        list($mime, /* $ext */) = mimetype($id);
+        [$mime, ] = mimetype($id);
 
         $trep = [
             'MIME' => $mime,

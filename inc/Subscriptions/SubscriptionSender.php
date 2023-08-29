@@ -10,7 +10,7 @@ abstract class SubscriptionSender
 
     public function __construct(Mailer $mailer = null)
     {
-        if ($mailer === null) {
+        if (!$mailer instanceof \Mailer) {
             $mailer = new Mailer();
         }
         $this->mailer = $mailer;
@@ -29,7 +29,7 @@ abstract class SubscriptionSender
         static $listid = null;
         if (is_null($listid)) {
             $server = parse_url(DOKU_URL, PHP_URL_HOST);
-            $listid = join('.', array_reverse(explode('/', DOKU_BASE))) . $server;
+            $listid = implode('.', array_reverse(explode('/', DOKU_BASE))) . $server;
             $listid = urlencode($listid);
             $listid = strtolower(trim($listid, '.'));
         }

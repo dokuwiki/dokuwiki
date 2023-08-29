@@ -50,7 +50,7 @@ class BulkSubscriptionSender extends SubscriptionSender
             }
 
             foreach ($users as $user => $info) {
-                list($style, $lastupdate) = $info;
+                [$style, $lastupdate] = $info;
 
                 $lastupdate = (int)$lastupdate;
                 if ($lastupdate + $conf['subscribe_time'] > time()) {
@@ -91,7 +91,7 @@ class BulkSubscriptionSender extends SubscriptionSender
                             $rev['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT)
                     ) {
                         $revisions = $pagelog->getRevisions($n++, 1);
-                        $rev = (count($revisions) > 0) ? $pagelog->getRevisionInfo($revisions[0]) : null;
+                        $rev = ($revisions !== []) ? $pagelog->getRevisionInfo($revisions[0]) : null;
                     }
 
                     if (!is_null($rev) && $rev['date'] >= $lastupdate) {
@@ -110,11 +110,9 @@ class BulkSubscriptionSender extends SubscriptionSender
                         );
                         $count++;
                     }
-                } else {
-                    if ($style === 'list') {
-                        $this->sendList($USERINFO['mail'], $change_ids, $target);
-                        $count++;
-                    }
+                } elseif ($style === 'list') {
+                    $this->sendList($USERINFO['mail'], $change_ids, $target);
+                    $count++;
                 }
                 // TODO: Handle duplicate subscriptions.
 
@@ -199,7 +197,7 @@ class BulkSubscriptionSender extends SubscriptionSender
         $n = 0;
         do {
             $rev = $pagelog->getRevisions($n++, 1);
-            $rev = (count($rev) > 0) ? $rev[0] : null;
+            $rev = ($rev !== []) ? $rev[0] : null;
         } while (!is_null($rev) && $rev > $lastupdate);
 
         // TODO I'm not happy with the following line and passing $this->mailer around. Not sure how to solve it better
@@ -227,7 +225,7 @@ class BulkSubscriptionSender extends SubscriptionSender
      */
     protected function sendList($subscriber_mail, $ids, $ns_id)
     {
-        if (count($ids) === 0) {
+        if ($ids === []) {
             return false;
         }
 
