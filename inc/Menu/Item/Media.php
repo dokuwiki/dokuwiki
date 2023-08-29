@@ -7,10 +7,12 @@ namespace dokuwiki\Menu\Item;
  *
  * Opens the media manager
  */
-class Media extends AbstractItem {
+class Media extends AbstractItem
+{
 
     /** @inheritdoc */
-    public function __construct() {
+    public function __construct()
+    {
         global $ID;
         parent::__construct();
 
