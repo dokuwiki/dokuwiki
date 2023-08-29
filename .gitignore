@@ -98,3 +98,4 @@ _test/vendor/*/*/tests/*
 phpunit.phar
 *.phpunit.result.cache
 _test/data/
+_test/.rector-cache/

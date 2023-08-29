@@ -37,3 +37,4 @@ jobs:
           title: "Update deleted files"
           body: "This updates the list of deleted files based on the recent changes."
           delete-branch: true
+          branch: "bot/deletedFiles"

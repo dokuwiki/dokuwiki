@@ -1,0 +1,41 @@
+name: "Auto-Fix code"
+on:
+  push:
+    branches:
+      - autofix
+
+jobs:
+  autofix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: phpcbf, rector
+
+      - name: Setup Cache
+        uses: actions/cache@v3
+        with:
+          path: _test/.rector-cache
+          key: ${{ runner.os }}-rector-${{ hashFiles('_test/rector.php') }}
+
+      - name: Run Rector
+        run: rector process --config _test/rector.php --no-diffs
+
+      - name: Run PHP CodeSniffer autofixing
+        run: phpcbf --standard=_test/phpcs_MigrationAdjustments.xml
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: "Rector and PHPCS fixes"
+          title: "Rector and PHPCS fixes"
+          body: "These changes were made automatically by running rector and phpcbf. Note this is currently WIP and should not be merged!"
+          delete-branch: true
+          branch: "bot/autofix"
