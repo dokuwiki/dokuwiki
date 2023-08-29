@@ -40,7 +40,7 @@ class Api
 {
 
     /**
-     * @var ApiCore
+     * @var ApiCore|\RemoteAPICoreTest
      */
     private $coreMethods;
 
@@ -331,14 +331,14 @@ class Api
     /**
      * Collects all the core methods
      *
-     * @param ApiCore $apiCore this parameter is used for testing. Here you can pass a non-default RemoteAPICore
-     *                         instance. (for mocking)
+     * @param ApiCore|\RemoteAPICoreTest $apiCore this parameter is used for testing.
+     *        Here you can pass a non-default RemoteAPICore instance. (for mocking)
      * @return array all core methods.
      */
     public function getCoreMethods($apiCore = null)
     {
-        if (!$this->coreMethods instanceof ApiCore) {
-            if (!$apiCore instanceof ApiCore) {
+        if ($this->coreMethods === null) {
+            if ($apiCore === null) {
                 $this->coreMethods = new ApiCore($this);
             } else {
                 $this->coreMethods = $apiCore;
