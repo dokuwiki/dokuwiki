@@ -2,10 +2,10 @@
 
 use dokuwiki\Cache\Cache;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
-if(!defined('NOSESSION')) define('NOSESSION', true); // we do not use a session or authentication here (better caching)
-if(!defined('NL')) define('NL', "\n");
-if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1); // we gzip ourself here
+if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
+if (!defined('NOSESSION')) define('NOSESSION', true); // we do not use a session or authentication here (better caching)
+if (!defined('NL')) define('NL', "\n");
+if (!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1); // we gzip ourself here
 require_once(DOKU_INC . 'inc/init.php');
 
 // MAIN
@@ -36,8 +36,8 @@ function jquery_out()
     http_cached($cache->cache, $cache_ok);
 
     $js = '';
-    foreach($files as $file) {
-        $js .= file_get_contents($file)."\n";
+    foreach ($files as $file) {
+        $js .= file_get_contents($file) . "\n";
     }
     stripsourcemaps($js);
 
