@@ -11,7 +11,7 @@ use dokuwiki\Logger;
  */
 class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
 {
-    const MAX_READ_SIZE = 1_048_576; // 1 MB
+    public const MAX_READ_SIZE = 1_048_576; // 1 MB
 
     protected $facilities;
     protected $facility;

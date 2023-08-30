@@ -17,7 +17,7 @@ use dokuwiki\plugin\config\core\Setting\SettingUndefined;
  */
 class Configuration {
 
-    const KEYMARKER = '____';
+    public const KEYMARKER = '____';
 
     /** @var Setting[] metadata as array of Settings objects */
     protected $settings = [];
