@@ -1,6 +1,4 @@
 <?php
-
-use dokuwiki\PassHash;
 /*><div style="width:60%; margin: auto; background-color: #fcc;
                 border: 1px solid #faa; padding: 0.5em 1em;">
     <h1 style="font-size: 120%">No PHP Support</h1>
@@ -10,11 +8,8 @@ use dokuwiki\PassHash;
     provider if you're unsure what this means.
 
 </div>*/
-/**
- * Dokuwiki installation assistance
- *
- * @author      Chris Smith <chris@jalakai.co.uk>
- */
+
+use dokuwiki\PassHash;
 
 if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
 if (!defined('DOKU_CONF')) define('DOKU_CONF', DOKU_INC . 'conf/');
