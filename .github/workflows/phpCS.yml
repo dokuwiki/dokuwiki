@@ -27,4 +27,4 @@ jobs:
                   tools: cs2pr, phpcs
 
             - name: run PHP codesniffer
-              run: phpcs -q --standard=_test/phpcs_MigrationAdjustments.xml --report=checkstyle | cs2pr
+              run: phpcs -q --standard=_test/phpcs_MigrationAdjustments.xml

@@ -34,8 +34,19 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
-          commit-message: "Rector and PHPCS fixes"
-          title: "Rector and PHPCS fixes"
-          body: "These changes were made automatically by running rector and phpcbf. Note this is currently WIP and should not be merged!"
+          commit-message: "🤖 Rector and PHPCS fixes"
+          title: "🤖 Automatic code style fixes"
+          body: |
+            Currently work in progress, do not merge!
+
+            These changes were made automatically by running rector and phpcbf.
+
+            Please carefully check the changes before merging. Please note that
+            unit tests are not run for automated pull requests - so if in doubt,
+            manually test the branch before merging.
+
+            If you disagree with the changes, simply clean the code yourself and
+            create a new pull request. This PR automatically closes when no more
+            changes are suggested by rector and phpcbf.
           delete-branch: true
           branch: "bot/autofix"
