@@ -93,9 +93,11 @@ class Subscribe extends AbstractUserAction
         if ($ok) {
             msg(
                 sprintf(
-                    $lang["subscr_{$action}_success"], hsc($INFO['userinfo']['name']),
+                    $lang["subscr_{$action}_success"],
+                    hsc($INFO['userinfo']['name']),
                     prettyprint_id($target)
-                ), 1
+                ),
+                1
             );
             throw new ActionAbort('redirect');
         }
@@ -137,12 +139,16 @@ class Subscribe extends AbstractUserAction
             $valid_styles[] = 'list';
         }
         $style = valid_input_set(
-            'style', $valid_styles, $params,
+            'style',
+            $valid_styles,
+            $params,
             'invalid subscription style given'
         );
         $action = valid_input_set(
-            'action', ['subscribe', 'unsubscribe'],
-            $params, 'invalid subscription action given'
+            'action',
+            ['subscribe', 'unsubscribe'],
+            $params,
+            'invalid subscription action given'
         );
 
         // Check other conditions.

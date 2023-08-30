@@ -63,7 +63,10 @@ class Logger
     static public function error($message, $details = null, $file = '', $line = 0)
     {
         return self::getInstance(self::LOG_ERROR)->log(
-            $message, $details, $file, $line
+            $message,
+            $details,
+            $file,
+            $line
         );
     }
 
@@ -79,7 +82,10 @@ class Logger
     static public function debug($message, $details = null, $file = '', $line = 0)
     {
         return self::getInstance(self::LOG_DEBUG)->log(
-            $message, $details, $file, $line
+            $message,
+            $details,
+            $file,
+            $line
         );
     }
 
@@ -95,7 +101,10 @@ class Logger
     static public function deprecated($message, $details = null, $file = '', $line = 0)
     {
         return self::getInstance(self::LOG_DEPRECATED)->log(
-            $message, $details, $file, $line
+            $message,
+            $details,
+            $file,
+            $line
         );
     }
 

@@ -143,8 +143,7 @@ class Editor extends Ui
             ];
             $form->addTagOpen('div')->addClass('license');
             $form->addHTML($lang['licenseok']
-                . ' <a ' . buildAttributes($attr, true) . '>' . $license[$conf['license']]['name'] . '</a>'
-            );
+                . ' <a ' . buildAttributes($attr, true) . '>' . $license[$conf['license']]['name'] . '</a>');
             $form->addTagClose('div');
         }
 

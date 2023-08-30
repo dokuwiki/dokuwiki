@@ -95,8 +95,11 @@ function html_secedit($text, $show = true)
         return preg_replace(SEC_EDIT_PATTERN, '', $text);
     }
 
-    return preg_replace_callback(SEC_EDIT_PATTERN,
-                'html_secedit_button', $text);
+    return preg_replace_callback(
+        SEC_EDIT_PATTERN,
+        'html_secedit_button',
+        $text
+    );
 }
 
 /**
@@ -149,8 +152,8 @@ function html_secedit_get_button($data)
     unset($data['secid']);
 
     $params = array_merge(
-           ['do'  => 'edit', 'rev' => $INFO['lastmod'], 'summary' => '['.$name.'] '],
-           $data
+        ['do'  => 'edit', 'rev' => $INFO['lastmod'], 'summary' => '['.$name.'] '],
+        $data
     );
 
     $html = '<div class="secedit editbutton_'.$data['target'] .' editbutton_'.$secid .'">';

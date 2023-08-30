@@ -304,7 +304,8 @@ function check()
             'The search index is corrupted. It might produce wrong results and most
                 probably needs to be rebuilt. See
                 <a href="http://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
-                for ways to rebuild the search index.', -1
+                for ways to rebuild the search index.',
+            -1
         );
     } elseif(!empty($lengths)) {
         msg('The search index seems to be working', 1);
@@ -425,8 +426,10 @@ function info_msg_allowed($msg)
             return $INFO['isadmin'];
 
         default:
-            trigger_error('invalid msg allow restriction.  msg="'.$msg['msg'].'" allow='.$msg['allow'].'"',
-                          E_USER_WARNING);
+            trigger_error(
+                'invalid msg allow restriction.  msg="'.$msg['msg'].'" allow='.$msg['allow'].'"',
+                E_USER_WARNING
+            );
             return $INFO['isadmin'];
     }
 }
@@ -473,7 +476,8 @@ function dbglog($msg, $header = '')
     }
 
     Logger::getInstance(Logger::LOG_DEBUG)->log(
-        $header, $msg
+        $header,
+        $msg
     );
 }
 
@@ -525,10 +529,12 @@ function dbg_backtrace()
         }
         $params = implode(', ', $params);
 
-        $calls[$depth - $i] = sprintf('%s(%s) called at %s',
-                $function,
-                str_replace("\n", '\n', $params),
-                $location);
+        $calls[$depth - $i] = sprintf(
+            '%s(%s) called at %s',
+            $function,
+            str_replace("\n", '\n', $params),
+            $location
+        );
     }
     ksort($calls);
 

@@ -974,9 +974,10 @@ class helper_plugin_extension_extension extends Plugin
         // download
         if (!$file = $this->downloadToFile($url, $tmp.'/', $file)) {
             io_rmdir($tmp, true);
-            throw new Exception(sprintf($this->getLang('error_download'),
-                '<bdi>'.hsc($url).'</bdi>')
-            );
+            throw new Exception(sprintf(
+                $this->getLang('error_download'),
+                '<bdi>'.hsc($url).'</bdi>'
+            ));
         }
 
         return $tmp.'/'.$file;
@@ -1069,9 +1070,10 @@ class helper_plugin_extension_extension extends Plugin
                     'action' => $action
                 ];
             } else {
-                throw new Exception(sprintf($this->getLang('error_copy').DOKU_LF,
-                    '<bdi>'.$item['base'].'</bdi>')
-                );
+                throw new Exception(sprintf(
+                    $this->getLang('error_copy').DOKU_LF,
+                    '<bdi>'.$item['base'].'</bdi>'
+                ));
             }
         }
 

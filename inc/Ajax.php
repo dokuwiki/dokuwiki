@@ -411,7 +411,8 @@ class Ajax
             // add back to upper
             if($ns) {
                 array_unshift(
-                    $data, ['id' => getNS($ns), 'type' => 'u']
+                    $data,
+                    ['id' => getNS($ns), 'type' => 'u']
                 );
             }
         }

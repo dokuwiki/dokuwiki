@@ -727,8 +727,15 @@ function media_filelist($ns, $auth = null, $jump = '', $fullscreenview = false, 
 
         $dir = utf8_encodeFN(str_replace(':', '/', $ns));
         $data = [];
-        search($data, $conf['mediadir'], 'search_mediafiles',
-                ['showmsg'=>true, 'depth'=>1], $dir, 1, $sort);
+        search(
+            $data,
+            $conf['mediadir'],
+            'search_mediafiles',
+            ['showmsg'=>true, 'depth'=>1],
+            $dir,
+            1,
+            $sort
+        );
 
         if(!count($data)){
             echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
@@ -1367,12 +1374,14 @@ function media_restore($image, $rev, $auth)
     if (!$image || (!file_exists(mediaFN($image)) && !$removed)) return false;
     if (!$rev || !file_exists(mediaFN($image, $rev))) return false;
     [, $imime, ] = mimetype($image);
-    $res = media_upload_finish(mediaFN($image, $rev),
+    $res = media_upload_finish(
+        mediaFN($image, $rev),
         mediaFN($image),
         $image,
         $imime,
         true,
-        'copy');
+        'copy'
+    );
     if (is_array($res)) {
         msg($res[0], $res[1]);
         return false;
@@ -1417,13 +1426,15 @@ function media_searchlist($query, $ns, $auth = null, $fullscreen = false, $sort 
             if ($count > 0) $quoted = '^([^:]*:)*'.$quoted.'$';
 
             $pattern = '/'.$quoted.'/i';
-            search($evdata['data'],
-                    $conf['mediadir'],
-                    'search_mediafiles',
-                    ['showmsg'=>false, 'pattern'=>$pattern],
-                    $dir,
-                    1,
-                    $sort);
+            search(
+                $evdata['data'],
+                $conf['mediadir'],
+                'search_mediafiles',
+                ['showmsg'=>false, 'pattern'=>$pattern],
+                $dir,
+                1,
+                $sort
+            );
         }
         $evt->advise_after();
         unset($evt);
@@ -2057,7 +2068,7 @@ function media_resize_imageGD($ext, $from, $from_w, $from_h, $to, $to_w, $to_h, 
 
     $newimg = false;
     if(($conf['gdlib']>1) && function_exists("imagecreatetruecolor") && $ext != 'gif'){
-        $newimg = @imagecreatetruecolor ($to_w, $to_h);
+        $newimg = @imagecreatetruecolor($to_w, $to_h);
     }
     if(!$newimg) $newimg = @imagecreate($to_w, $to_h);
     if(!$newimg){

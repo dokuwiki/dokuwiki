@@ -109,9 +109,9 @@ if(!defined('DOKU_BASE')){
 }
 
 // define whitespace
-if(!defined('NL')) define ('NL', "\n");
-if(!defined('DOKU_LF')) define ('DOKU_LF', "\n");
-if(!defined('DOKU_TAB')) define ('DOKU_TAB', "\t");
+if(!defined('NL')) define('NL', "\n");
+if(!defined('DOKU_LF')) define('DOKU_LF', "\n");
+if(!defined('DOKU_TAB')) define('DOKU_TAB', "\t");
 
 // define cookie and session id, append server port when securecookie is configured FS#1664
 if (!defined('DOKU_COOKIE')) {
@@ -163,13 +163,13 @@ if ($conf['gzip_output'] &&
 
 // init session
 if(!headers_sent() && !defined('NOSESSION')) {
-    if(!defined('DOKU_SESSION_NAME'))     define ('DOKU_SESSION_NAME', "DokuWiki");
-    if(!defined('DOKU_SESSION_LIFETIME')) define ('DOKU_SESSION_LIFETIME', 0);
+    if(!defined('DOKU_SESSION_NAME'))     define('DOKU_SESSION_NAME', "DokuWiki");
+    if(!defined('DOKU_SESSION_LIFETIME')) define('DOKU_SESSION_LIFETIME', 0);
     if(!defined('DOKU_SESSION_PATH')) {
         $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
-        define ('DOKU_SESSION_PATH', $cookieDir);
+        define('DOKU_SESSION_PATH', $cookieDir);
     }
-    if(!defined('DOKU_SESSION_DOMAIN'))   define ('DOKU_SESSION_DOMAIN', '');
+    if(!defined('DOKU_SESSION_DOMAIN'))   define('DOKU_SESSION_DOMAIN', '');
 
     // start the session
     init_session();
@@ -463,8 +463,11 @@ function getBaseURL($abs = null)
     }elseif(substr($_SERVER['PHP_SELF'], -4) == '.php'){
         $dir = dirname($_SERVER['PHP_SELF']);
     }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']){
-        $dir = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'], '/').'/', '',
-                $_SERVER['SCRIPT_FILENAME']);
+        $dir = preg_replace(
+            '/^'.preg_quote($_SERVER['DOCUMENT_ROOT'], '/').'/',
+            '',
+            $_SERVER['SCRIPT_FILENAME']
+        );
         $dir = dirname('/'.$dir);
     }else{
         $dir = '.'; //probably wrong

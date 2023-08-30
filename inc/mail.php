@@ -63,9 +63,11 @@ function mail_setup()
     }
 
     // apply replacements
-    $from = str_replace(array_keys($replace),
-                        array_values($replace),
-                        $conf['mailfrom']);
+    $from = str_replace(
+        array_keys($replace),
+        array_values($replace),
+        $conf['mailfrom']
+    );
 
     // any replacements done? set different mailfromnone
     if($from != $conf['mailfrom']){
@@ -117,7 +119,7 @@ function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit =
         if ($bEmulate_imap_8bit)
             $sRegExp = '/[^\x20\x21-\x3C\x3E-\x7E]/';
 
-        $sLine = preg_replace_callback( $sRegExp, 'mail_quotedprintable_encode_callback', $sLine );
+        $sLine = preg_replace_callback($sRegExp, 'mail_quotedprintable_encode_callback', $sLine);
 
         // encode x09,x20 at lineends
         {
@@ -151,8 +153,8 @@ function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit =
         // and after soft linebreaks, as well,
         // but this wouldn't be caught by such an easy RegExp
         if($maxlen){
-            preg_match_all( '/.{1,'.($maxlen - 2).'}([^=]{0,2})?/', $sLine, $aMatch );
-            $sLine = implode( '=' . MAILHEADER_EOL, $aMatch[0] ); // add soft crlf's
+            preg_match_all('/.{1,'.($maxlen - 2).'}([^=]{0,2})?/', $sLine, $aMatch);
+            $sLine = implode('=' . MAILHEADER_EOL, $aMatch[0]); // add soft crlf's
         }
     }
 
@@ -162,5 +164,5 @@ function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit =
 
 function mail_quotedprintable_encode_callback($matches)
 {
-    return sprintf( "=%02X", ord ( $matches[0] ) ) ;
+    return sprintf("=%02X", ord($matches[0])) ;
 }

@@ -596,10 +596,12 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
         }
         $rel = $nofollow ? 'rel="nofollow" ' : '';
         $out = tpl_link(
-            $linktarget, $pre.($inner ?: $caption).$suf,
+            $linktarget,
+            $pre.($inner ?: $caption).$suf,
             'class="action '.$type.'" '.
                 $akey.$rel.
-                'title="'.hsc($caption).$addTitle.'"', true
+                'title="'.hsc($caption).$addTitle.'"',
+            true
         );
     }
     if($return) return $out;

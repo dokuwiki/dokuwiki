@@ -343,12 +343,12 @@ class PageCLI extends CLI
     protected function getUser()
     {
         $user = getenv('USER');
-        if(empty ($user)) {
+        if(empty($user)) {
             $user = getenv('USERNAME');
         } else {
             return $user;
         }
-        if(empty ($user)) {
+        if(empty($user)) {
             $user = 'admin';
         }
         return $user;

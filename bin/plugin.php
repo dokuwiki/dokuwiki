@@ -82,7 +82,6 @@ class PluginCLI extends CLI
                     [2, '30%', '*'],
                     ['', $name, $info['desc']],
                     ['', Colors::C_CYAN, '']
-
                 );
             }
         }

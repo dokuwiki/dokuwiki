@@ -469,7 +469,7 @@ function io_createNamespace($id, $ns_type = 'pages')
     $missing = [];
     $ns_stack = explode(':', $id);
     $ns = $id;
-    $tmp = dirname( $file = call_user_func($types[$ns_type], $ns) );
+    $tmp = dirname($file = call_user_func($types[$ns_type], $ns));
     while (!@is_dir($tmp) && !(file_exists($tmp) && !is_dir($tmp))) {
         array_pop($ns_stack);
         $ns = implode(':', $ns_stack);

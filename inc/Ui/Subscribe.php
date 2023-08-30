@@ -49,15 +49,15 @@ class Subscribe extends Ui
                 echo ' (' . $sstl . ') ';
 
                 echo '<a href="' . wl(
-                        $ID,
-                        [
+                    $ID,
+                    [
                             'do' => 'subscribe',
                             'sub_target' => $sub['target'],
                             'sub_style' => $sub['style'],
                             'sub_action' => 'unsubscribe',
                             'sectok' => getSecurityToken()
                         ]
-                    ) .
+                ) .
                     '" class="unsubscribe">' . $lang['subscr_m_unsubscribe'] .
                     '</a></div></li>';
             }

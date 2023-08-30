@@ -71,7 +71,7 @@ function auth_setup()
     // Populate Basic Auth user/password from Authorization header
     // Note: with FastCGI, data is in REDIRECT_HTTP_AUTHORIZATION instead of HTTP_AUTHORIZATION
     $header = $INPUT->server->str('HTTP_AUTHORIZATION') ?: $INPUT->server->str('REDIRECT_HTTP_AUTHORIZATION');
-    if(preg_match( '~^Basic ([a-z\d/+]*={0,2})$~i', $header, $matches )) {
+    if(preg_match('~^Basic ([a-z\d/+]*={0,2})$~i', $header, $matches)) {
         $userpass = explode(':', base64_decode($matches[1]));
         [$_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']] = $userpass;
     }
@@ -779,12 +779,14 @@ function auth_nameencode($name, $skip_group = false)
         if($skip_group && $name[0] == '@') {
             $cache[$name][$skip_group] = '@'.preg_replace_callback(
                 '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/',
-                'auth_nameencode_callback', substr($name, 1)
+                'auth_nameencode_callback',
+                substr($name, 1)
             );
         } else {
             $cache[$name][$skip_group] = preg_replace_callback(
                 '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/',
-                'auth_nameencode_callback', $name
+                'auth_nameencode_callback',
+                $name
             );
         }
     }

@@ -45,8 +45,11 @@ class cli_plugin_extension extends CLIPlugin
 
         // install
         $options->registerCommand('install', 'Install or upgrade extensions');
-        $options->registerArgument('extensions...',
-            'One or more extensions to install. Either by name or download URL', true, 'install'
+        $options->registerArgument(
+            'extensions...',
+            'One or more extensions to install. Either by name or download URL',
+            true,
+            'install'
         );
 
         // uninstall
@@ -365,10 +368,10 @@ class cli_plugin_extension extends CLIPlugin
                     $status,
                     $date,
                     strip_tags(sprintf(
-                            $this->getLang('extensionby'),
-                            $ext->getDisplayName(),
-                            $this->colors->wrap($ext->getAuthor(), Colors::C_PURPLE))
-                    )
+                        $this->getLang('extensionby'),
+                        $ext->getDisplayName(),
+                        $this->colors->wrap($ext->getAuthor(), Colors::C_PURPLE)
+                    ))
                 ],
                 [
                     $ecolor,

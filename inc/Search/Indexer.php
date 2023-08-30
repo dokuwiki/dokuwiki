@@ -328,7 +328,7 @@ class Indexer
             $newid = array_search($newvalue, $metavalues, true);
             if ($newid !== false) {
                 // free memory
-                unset ($metavalues);
+                unset($metavalues);
 
                 // okay, now we have two entries for the same value. we need to merge them.
                 $indexline = $this->getIndexKey($key.'_i', '', $oldid);
@@ -512,8 +512,9 @@ class Indexer
         $evt->advise_after();
         unset($evt);
 
-        $text = strtr($text,
-                      ["\r" => ' ', "\n" => ' ', "\t" => ' ', "\xC2\xAD" => '']
+        $text = strtr(
+            $text,
+            ["\r" => ' ', "\n" => ' ', "\t" => ' ', "\xC2\xAD" => '']
         );
         if (preg_match('/[^0-9A-Za-z ]/u', $text))
             $text = Clean::stripspecials($text, ' ', '\._\-:'.$wc);

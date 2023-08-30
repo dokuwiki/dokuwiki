@@ -25,7 +25,8 @@ trait PluginTrait
         msg(
             'getInfo() not implemented in ' . get_class($this) . ' and ' . $info . ' not found.<br />' .
             'Verify you\'re running the latest version of the plugin. If the problem persists, send a ' .
-            'bug report to the author of the ' . $parts[2] . ' plugin.', -1
+            'bug report to the author of the ' . $parts[2] . ' plugin.',
+            -1
         );
         return [
             'date' => '0000-00-00',

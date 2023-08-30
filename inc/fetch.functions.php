@@ -77,12 +77,14 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
     //download or display?
     if ($dl) {
         header('Content-Disposition: attachment;' . rfc2231_encode(
-                'filename', PhpString::basename($orig)) . ';'
-        );
+            'filename',
+            PhpString::basename($orig)
+        ) . ';');
     } else {
         header('Content-Disposition: inline;' . rfc2231_encode(
-                'filename', PhpString::basename($orig)) . ';'
-        );
+            'filename',
+            PhpString::basename($orig)
+        ) . ';');
     }
 
     //use x-sendfile header to pass the delivery to compatible webservers

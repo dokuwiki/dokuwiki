@@ -73,8 +73,10 @@ class admin_plugin_logviewer extends AdminPlugin
             if ($facility == $this->facility) {
                 echo '<strong>' . hsc($facility) . '</strong>';
             } else {
-                $link = wl($ID,
-                    ['do' => 'admin', 'page' => 'logviewer', 'date' => $this->date, 'facility' => $facility]);
+                $link = wl(
+                    $ID,
+                    ['do' => 'admin', 'page' => 'logviewer', 'date' => $this->date, 'facility' => $facility]
+                );
                 echo '<a href="' . $link . '">' . hsc($facility) . '</a>';
             }
             echo '</li>';

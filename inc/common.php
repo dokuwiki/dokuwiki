@@ -1374,7 +1374,8 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
         if ($conf['useacl'] && $INPUT->server->str('REMOTE_USER') && $minor) return false; //skip minors
         $data = ['id' => $id, 'addresslist' => '', 'self' => false, 'replacements' => $replace];
         Event::createAndTrigger(
-            'COMMON_NOTIFY_ADDRESSLIST', $data,
+            'COMMON_NOTIFY_ADDRESSLIST',
+            $data,
             [new SubscriberManager(), 'notifyAddresses']
         );
         $to = $data['addresslist'];

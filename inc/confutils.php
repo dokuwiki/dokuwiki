@@ -264,7 +264,7 @@ function linesToHash($lines, $lower = false)
 function confToHash($file, $lower = false)
 {
     $conf = [];
-    $lines = @file( $file );
+    $lines = @file($file);
     if ( !$lines ) return $conf;
 
     return linesToHash($lines, $lower);

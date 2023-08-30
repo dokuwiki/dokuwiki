@@ -55,8 +55,7 @@ class admin_plugin_extension extends AdminPlugin
         if (!$repository->hasAccess(!$INPUT->bool('purge'))) {
             $url = $this->gui->tabURL('', ['purge' => 1], '&');
             msg($this->getLang('repo_error').
-                ' [<a href="'.$url.'">'.$this->getLang('repo_retry').'</a>]', -1
-            );
+                ' [<a href="'.$url.'">'.$this->getLang('repo_retry').'</a>]', -1);
         }
 
         if (!in_array('ssl', stream_get_transports())) {
@@ -80,8 +79,8 @@ class admin_plugin_extension extends AdminPlugin
                                 foreach ($installed as $info) {
                                     msg(sprintf(
                                         $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
-                                        $info['base']), 1
-                                    );
+                                        $info['base']
+                                    ), 1);
                                 }
                                 break;
                             case 'uninstall':
@@ -90,13 +89,13 @@ class admin_plugin_extension extends AdminPlugin
                                 if ($status) {
                                     msg(sprintf(
                                         $this->getLang('msg_delete_success'),
-                                        hsc($extension->getDisplayName())), 1
-                                    );
+                                        hsc($extension->getDisplayName())
+                                    ), 1);
                                 } else {
                                     msg(sprintf(
                                         $this->getLang('msg_delete_failed'),
-                                        hsc($extension->getDisplayName())), -1
-                                    );
+                                        hsc($extension->getDisplayName())
+                                    ), -1);
                                 }
                                 break;
                             case 'enable':
@@ -107,8 +106,8 @@ class admin_plugin_extension extends AdminPlugin
                                 } else {
                                     msg(sprintf(
                                         $this->getLang('msg_enabled'),
-                                        hsc($extension->getDisplayName())), 1
-                                    );
+                                        hsc($extension->getDisplayName())
+                                    ), 1);
                                 }
                                 break;
                             case 'disable':
@@ -119,8 +118,8 @@ class admin_plugin_extension extends AdminPlugin
                                 } else {
                                     msg(sprintf(
                                         $this->getLang('msg_disabled'),
-                                        hsc($extension->getDisplayName())), 1
-                                    );
+                                        hsc($extension->getDisplayName())
+                                    ), 1);
                                 }
                                 break;
                         }
@@ -130,12 +129,13 @@ class admin_plugin_extension extends AdminPlugin
             } elseif ($INPUT->post->str('installurl') && checkSecurityToken()) {
                 $installed = $extension->installFromURL(
                     $INPUT->post->str('installurl'),
-                    $INPUT->post->bool('overwrite'));
+                    $INPUT->post->bool('overwrite')
+                );
                 foreach ($installed as $info) {
                     msg(sprintf(
                         $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
-                        $info['base']), 1
-                    );
+                        $info['base']
+                    ), 1);
                 }
                 send_redirect($this->gui->tabURL('', [], '&', true));
             } elseif (isset($_FILES['installfile']) && checkSecurityToken()) {
@@ -143,8 +143,8 @@ class admin_plugin_extension extends AdminPlugin
                 foreach ($installed as $info) {
                     msg(sprintf(
                         $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
-                        $info['base']), 1
-                    );
+                        $info['base']
+                    ), 1);
                 }
                 send_redirect($this->gui->tabURL('', [], '&', true));
             }

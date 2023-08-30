@@ -156,10 +156,12 @@ class PageDiff extends Diff
 
         // msg could displayed only when wrong url typed in browser address bar
         if ($this->rev2 === false) {
-            msg(sprintf($lang['page_nonexist_rev'],
+            msg(sprintf(
+                $lang['page_nonexist_rev'],
                 $this->id,
                 wl($this->id, ['do' => 'edit']),
-                $this->id), -1);
+                $this->id
+            ), -1);
         } elseif (!$this->rev1 || $this->rev1 == $this->rev2) {
             msg('no way to compare when less than two revisions', -1);
         }

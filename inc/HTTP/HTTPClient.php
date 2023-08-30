@@ -558,7 +558,8 @@ class HTTPClient
             }
 
             throw new HTTPClientException(
-                'Failed to set up crypto for secure connection to ' . $requestinfo['host'], -151
+                'Failed to set up crypto for secure connection to ' . $requestinfo['host'],
+                -151
             );
         }
 
@@ -631,8 +632,14 @@ class HTTPClient
             $time_used = microtime(true) - $this->start;
             if ($time_used > $this->timeout)
                 throw new HTTPClientException(
-                    sprintf('Timeout while reading %s after %d bytes (%.3fs)', $message,
-                        strlen($r_data), $time_used), -100);
+                    sprintf(
+                        'Timeout while reading %s after %d bytes (%.3fs)',
+                        $message,
+                        strlen($r_data),
+                        $time_used
+                    ),
+                    -100
+                );
             if (feof($socket)) {
                 if (!$ignore_eof)
                     throw new HTTPClientException("Premature End of File (socket) while reading $message");
@@ -680,7 +687,8 @@ class HTTPClient
             if ($time_used > $this->timeout)
                 throw new HTTPClientException(
                     sprintf('Timeout while reading %s (%.3fs) >%s<', $message, $time_used, $r_data),
-                    -100);
+                    -100
+                );
             if (feof($socket))
                 throw new HTTPClientException("Premature End of File (socket) while reading $message");
 

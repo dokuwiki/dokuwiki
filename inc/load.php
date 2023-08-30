@@ -77,7 +77,7 @@ function load_autoload($name)
     ];
 
     if(isset($classes[$name])){
-        require ($classes[$name]);
+        require($classes[$name]);
         return true;
     }
 

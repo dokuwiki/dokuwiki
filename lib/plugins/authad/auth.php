@@ -103,8 +103,10 @@ class auth_plugin_authad extends AuthPlugin
         if (!empty($INPUT->server->str('REMOTE_USER'))) {
             // make sure the right encoding is used
             if ($this->getConf('sso_charset')) {
-                $INPUT->server->set('REMOTE_USER',
-                    iconv($this->getConf('sso_charset'), 'UTF-8', $INPUT->server->str('REMOTE_USER')));
+                $INPUT->server->set(
+                    'REMOTE_USER',
+                    iconv($this->getConf('sso_charset'), 'UTF-8', $INPUT->server->str('REMOTE_USER'))
+                );
             } elseif (!Clean::isUtf8($INPUT->server->str('REMOTE_USER'))) {
                 $INPUT->server->set('REMOTE_USER', utf8_encode($INPUT->server->str('REMOTE_USER')));
             }

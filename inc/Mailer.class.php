@@ -235,7 +235,8 @@ class Mailer
         // embed media from templates
         $html = preg_replace_callback(
             '/@MEDIA\(([^\)]+)\)@/',
-            [$this, 'autoEmbedCallBack'], $html
+            [$this, 'autoEmbedCallBack'],
+            $html
         );
 
         // add default token replacements
