@@ -273,7 +273,7 @@ function html_show($txt = null)
 function html_draft()
 {
     dbg_deprecated(PageDraft::class .'::show()');
-    (new PageDraft)->show();
+    (new PageDraft())->show();
 }
 
 /**
@@ -387,7 +387,7 @@ function html_index($ns)
 function html_list_index($item)
 {
     dbg_deprecated(Index::class .'::formatListItem()');
-    return (new Index)->formatListItem($item);
+    return (new Index())->formatListItem($item);
 }
 
 /**
@@ -406,7 +406,7 @@ function html_list_index($item)
 function html_li_index($item)
 {
     dbg_deprecated(Index::class .'::tagListItem()');
-    return (new Index)->tagListItem($item);
+    return (new Index())->tagListItem($item);
 }
 
 /**
@@ -520,7 +520,7 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
 function html_backlinks()
 {
     dbg_deprecated(Backlinks::class .'::show()');
-    (new Backlinks)->show();
+    (new Backlinks())->show();
 }
 
 /**
@@ -603,7 +603,7 @@ function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null)
 function html_insert_softbreaks($diffhtml)
 {
     dbg_deprecated(PageDiff::class .'::insertSoftbreaks()');
-    return (new PageDiff)->insertSoftbreaks($diffhtml);
+    return (new PageDiff())->insertSoftbreaks($diffhtml);
 }
 
 /**
@@ -659,7 +659,7 @@ function html_msgarea()
 function html_register()
 {
     dbg_deprecated(UserRegister::class .'::show()');
-    (new UserRegister)->show();
+    (new UserRegister())->show();
 }
 
 /**
@@ -672,7 +672,7 @@ function html_register()
 function html_updateprofile()
 {
     dbg_deprecated(UserProfile::class .'::show()');
-    (new UserProfile)->show();
+    (new UserProfile())->show();
 }
 
 /**
@@ -685,7 +685,7 @@ function html_updateprofile()
 function html_edit()
 {
     dbg_deprecated(Editor::class .'::show()');
-    (new Editor)->show();
+    (new Editor())->show();
 }
 
 /**
@@ -699,7 +699,7 @@ function html_edit()
 function html_edit_form($param)
 {
     dbg_deprecated(Editor::class .'::addTextarea()');
-    (new Editor)->addTextarea($param);
+    (new Editor())->addTextarea($param);
 }
 
 /**
@@ -811,7 +811,7 @@ function html_debug()
 function html_resendpwd()
 {
     dbg_deprecated(UserResendPwd::class .'::show()');
-    (new UserResendPwd)->show();
+    (new UserResendPwd())->show();
 }
 
 /**

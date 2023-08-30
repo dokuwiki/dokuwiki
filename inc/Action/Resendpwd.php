@@ -47,7 +47,7 @@ class Resendpwd extends AbstractAclAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new UserResendPwd)->show();
+        (new UserResendPwd())->show();
     }
 
     /**

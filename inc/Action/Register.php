@@ -46,6 +46,6 @@ class Register extends AbstractAclAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new UserRegister)->show();
+        (new UserRegister())->show();
     }
 }

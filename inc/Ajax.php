@@ -337,7 +337,7 @@ class Ajax
         foreach (array_keys($data) as $item) {
             $data[$item]['level'] = $lvl + 1;
         }
-        $idx = new Index;
+        $idx = new Index();
         echo html_buildlist($data, 'idx', [$idx,'formatListItem'], [$idx,'tagListItem']);
     }
 

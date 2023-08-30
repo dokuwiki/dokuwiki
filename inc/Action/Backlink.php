@@ -23,6 +23,6 @@ class Backlink extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Backlinks)->show();
+        (new Backlinks())->show();
     }
 }

@@ -28,7 +28,7 @@ class Preview extends Edit
     public function tplContent()
     {
         global $TEXT;
-        (new Editor)->show();
+        (new Editor())->show();
         (new PageView($TEXT))->show();
     }
 

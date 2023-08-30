@@ -24,7 +24,7 @@ class Locked extends AbstractAction
     public function tplContent()
     {
         $this->showBanner();
-        (new Editor)->show();
+        (new Editor())->show();
     }
 
     /**

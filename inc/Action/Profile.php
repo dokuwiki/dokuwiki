@@ -46,6 +46,6 @@ class Profile extends AbstractUserAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new UserProfile)->show();
+        (new UserProfile())->show();
     }
 }

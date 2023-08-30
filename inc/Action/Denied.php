@@ -31,7 +31,7 @@ class Denied extends AbstractAction
         if ($event->advise_before()) {
             global $INPUT;
             if (empty($INPUT->server->str('REMOTE_USER')) && actionOK('login')) {
-                (new Login)->show();
+                (new Login())->show();
             }
         }
         $event->advise_after();

@@ -744,7 +744,7 @@ function p_get_renderer($mode)
         $msg .= ".<br/>Attempting to fallback to the bundled renderer.";
         msg($msg, -1, '', '', MSG_ADMINS_ONLY);
 
-        $Renderer = new $rclass;
+        $Renderer = new $rclass();
         $Renderer->nocache();     // fallback only (and may include admin alerts), don't cache
         return $Renderer;
     }

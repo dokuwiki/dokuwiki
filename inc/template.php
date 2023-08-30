@@ -629,7 +629,7 @@ function tpl_get_action($type)
     if(class_exists($class)) {
         try {
             /** @var AbstractItem $item */
-            $item = new $class;
+            $item = new $class();
             $data = $item->getLegacyData();
             $unknown = false;
         } catch(\RuntimeException $ignored) {
@@ -1665,7 +1665,7 @@ function tpl_include_page($pageid, $print = true, $propagate = false, $useacl = 
 function tpl_subscribe()
 {
     dbg_deprecated(Subscribe::class .'::show()');
-    (new Subscribe)->show();
+    (new Subscribe())->show();
 }
 
 /**

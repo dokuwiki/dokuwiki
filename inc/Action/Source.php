@@ -36,6 +36,6 @@ class Source extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Editor)->show();
+        (new Editor())->show();
     }
 }

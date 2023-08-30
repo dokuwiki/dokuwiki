@@ -97,7 +97,7 @@ class PluginController
             if (!empty($DOKU_PLUGINS[$type][$name])) {
                 if ($new || !$DOKU_PLUGINS[$type][$name]->isSingleton()) {
 
-                    return class_exists($class, true) ? new $class : null;
+                    return class_exists($class, true) ? new $class() : null;
                 }
 
                 return $DOKU_PLUGINS[$type][$name];
@@ -125,7 +125,7 @@ class PluginController
                 }
                 return null;
             }
-            $DOKU_PLUGINS[$type][$name] = new $class;
+            $DOKU_PLUGINS[$type][$name] = new $class();
 
         } catch (\Throwable $e) {
             ErrorHandler::showExceptionMsg($e, sprintf('Failed to load plugin %s', $plugin));

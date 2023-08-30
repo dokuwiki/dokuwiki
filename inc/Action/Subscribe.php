@@ -48,7 +48,7 @@ class Subscribe extends AbstractUserAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\Subscribe)->show();
+        (new Ui\Subscribe())->show();
     }
 
     /**

@@ -38,6 +38,6 @@ class Draft extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new PageDraft)->show();
+        (new PageDraft())->show();
     }
 }

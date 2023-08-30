@@ -49,7 +49,6 @@
         <exclude name="PSR2.Namespaces.NamespaceDeclaration.BlankLineAfter"/>
         <exclude name="PSR2.Namespaces.UseDeclaration.SpaceAfterLastUse"/>
 
-        <exclude name="PSR12.Classes.ClassInstantiation.MissingParentheses"/>
         <exclude name="PSR12.Classes.OpeningBraceSpace.Found"/>
         <exclude name="PSR12.ControlStructures.BooleanOperatorPlacement.FoundMixed"/>
         <exclude name="PSR12.ControlStructures.ControlStructureSpacing.FirstExpressionLine"/>
