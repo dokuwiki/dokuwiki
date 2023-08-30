@@ -1,6 +1,6 @@
 <?php
 // phpcs:disable PSR1.Files.SideEffects
-if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/../../../');
+if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../../');
 require_once(DOKU_INC . 'inc/init.php');
 //close session
 session_write_close();
@@ -23,7 +23,7 @@ $plugin->handle();
     <title><?php echo $plugin->getLang('menu') ?></title>
     <?php tpl_metaheaders(false) ?>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <?php echo tpl_favicon(array('favicon')) ?>
+    <?php echo tpl_favicon(['favicon']) ?>
 </head>
 <body class="dokuwiki">
     <?php $plugin->html() ?>

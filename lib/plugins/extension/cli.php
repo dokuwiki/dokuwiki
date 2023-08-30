@@ -304,6 +304,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
         $pluginlist = $plugin_controller->getList('', true);
         $tpllist = glob(DOKU_INC . 'lib/tpl/*', GLOB_ONLYDIR);
         $tpllist = array_map(static fn($path) => 'template:' . basename($path), $tpllist);
+
         $list = array_merge($pluginlist, $tpllist);
         sort($list);
         return $list;

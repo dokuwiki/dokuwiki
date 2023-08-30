@@ -1,4 +1,6 @@
 <?php
+
+use dokuwiki\Utf8\Clean;
 /*
  *  User Manager
  *
@@ -10,7 +12,6 @@
  *  @author  neolao <neolao@neolao.com>
  *  @author  Chris Smith <chris@jalakai.co.uk>
  */
-
 /**
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
@@ -19,16 +20,16 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
 {
     const IMAGE_DIR = DOKU_BASE.'lib/plugins/usermanager/images/';
 
-    protected $auth = null;        // auth object
+    protected $auth;        // auth object
     protected $users_total = 0;     // number of registered users
-    protected $filter = array();   // user selection filter(s)
+    protected $filter = [];   // user selection filter(s)
     protected $start = 0;          // index of first user to be displayed
     protected $last = 0;           // index of the last user to be displayed
     protected $pagesize = 20;      // number of users to list on one page
     protected $edit_user = '';     // set to user selected for editing
-    protected $edit_userdata = array();
+    protected $edit_userdata = [];
     protected $disabled = '';      // if disabled set to explanatory string
-    protected $import_failures = array();
+    protected $import_failures = [];
     protected $lastdisabled = false; // set to true if last user is unknown and last button is hence buggy
 
     /**
@@ -265,15 +266,15 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
                  * @var string $mail
                  * @var array  $grps
                  */
-                $groups = join(', ', $grps);
+                $groups = implode(', ', $grps);
                 ptln("    <tr class=\"user_info\">");
                 ptln("      <td class=\"centeralign\"><input type=\"checkbox\" name=\"delete[".hsc($user).
                      "]\" ".$delete_disable." /></td>");
                 if ($editable) {
-                    ptln("    <td><a href=\"".wl($ID, array('fn[edit]['.$user.']' => 1,
-                                                           'do' => 'admin',
-                                                           'page' => 'usermanager',
-                                                           'sectok' => getSecurityToken())).
+                    ptln("    <td><a href=\"".wl($ID, ['fn[edit]['.$user.']' => 1,
+                            'do' => 'admin',
+                            'page' => 'usermanager',
+                            'sectok' => getSecurityToken()]).
                          "\" title=\"".$this->lang['edit_prompt']."\">".hsc($user)."</a></td>");
                 } else {
                     ptln("    <td>".hsc($user)."</td>");
@@ -324,7 +325,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
             print $this->locale_xhtml('add');
             ptln("  <div class=\"level2\">");
 
-            $this->htmlUserForm('add', null, array(), 4);
+            $this->htmlUserForm('add', null, [], 4);
 
             ptln("  </div>");
             ptln("</div>");
@@ -374,18 +375,19 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
      * @param array  $userdata array with name, mail, pass and grps
      * @param int    $indent
      */
-    protected function htmlUserForm($cmd, $user = '', $userdata = array(), $indent = 0)
+    protected function htmlUserForm($cmd, $user = '', $userdata = [], $indent = 0)
     {
         global $conf;
         global $ID;
         global $lang;
-
-        $name = $mail = $groups = '';
-        $notes = array();
+        $name = '';
+        $mail = '';
+        $groups = '';
+        $notes = [];
 
         if ($user) {
             extract($userdata);
-            if (!empty($grps)) $groups = join(',', $grps);
+            if (!empty($grps)) $groups = implode(',', $grps);
         } else {
             $notes[] = sprintf($this->lang['note_group'], $conf['defaultgroup']);
         }
@@ -579,7 +581,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
     {
         global $ID;
 
-        $failure_download_link = wl($ID, array('do'=>'admin','page'=>'usermanager','fn[importfails]'=>1));
+        $failure_download_link = wl($ID, ['do'=>'admin', 'page'=>'usermanager', 'fn[importfails]'=>1]);
 
         ptln('<div class="level2 import_users">', $indent);
         print $this->locale_xhtml('import');
@@ -639,7 +641,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
         if (!checkSecurityToken()) return false;
         if (!$this->auth->canDo('addUser')) return false;
 
-        list($user,$pass,$name,$mail,$grps,$passconfirm) = $this->retrieveUser();
+        [$user, $pass, $name, $mail, $grps, $passconfirm] = $this->retrieveUser();
         if (empty($user)) return false;
 
         if ($this->auth->canDo('modPass')) {
@@ -651,19 +653,15 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
                     msg($this->lang['addUser_error_missing_pass'], -1);
                     return false;
                 }
-            } else {
-                if (!$this->verifyPassword($pass, $passconfirm)) {
-                    msg($this->lang['add_fail'], -1);
-                    msg($this->lang['addUser_error_pass_not_identical'], -1);
-                    return false;
-                }
-            }
-        } else {
-            if (!empty($pass)) {
+            } elseif (!$this->verifyPassword($pass, $passconfirm)) {
                 msg($this->lang['add_fail'], -1);
-                msg($this->lang['addUser_error_modPass_disabled'], -1);
+                msg($this->lang['addUser_error_pass_not_identical'], -1);
                 return false;
             }
+        } elseif (!empty($pass)) {
+            msg($this->lang['add_fail'], -1);
+            msg($this->lang['addUser_error_modPass_disabled'], -1);
+            return false;
         }
 
         if ($this->auth->canDo('modName')) {
@@ -672,12 +670,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
                 msg($this->lang['addUser_error_name_missing'], -1);
                 return false;
             }
-        } else {
-            if (!empty($name)) {
-                msg($this->lang['add_fail'], -1);
-                msg($this->lang['addUser_error_modName_disabled'], -1);
-                return false;
-            }
+        } elseif (!empty($name)) {
+            msg($this->lang['add_fail'], -1);
+            msg($this->lang['addUser_error_modName_disabled'], -1);
+            return false;
         }
 
         if ($this->auth->canDo('modMail')) {
@@ -686,15 +682,13 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
                 msg($this->lang['addUser_error_mail_missing'], -1);
                 return false;
             }
-        } else {
-            if (!empty($mail)) {
-                msg($this->lang['add_fail'], -1);
-                msg($this->lang['addUser_error_modMail_disabled'], -1);
-                return false;
-            }
+        } elseif (!empty($mail)) {
+            msg($this->lang['add_fail'], -1);
+            msg($this->lang['addUser_error_modMail_disabled'], -1);
+            return false;
         }
 
-        if ($ok = $this->auth->triggerUserMod('create', array($user, $pass, $name, $mail, $grps))) {
+        if ($ok = $this->auth->triggerUserMod('create', [$user, $pass, $name, $mail, $grps])) {
             msg($this->lang['add_ok'], 1);
 
             if ($INPUT->has('usernotify') && $pass) {
@@ -729,7 +723,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
             return false;
         }
 
-        $count = $this->auth->triggerUserMod('delete', array($selected));
+        $count = $this->auth->triggerUserMod('delete', [$selected]);
         if ($count == count($selected)) {
             $text = str_replace('%d', $count, $this->lang['delete_ok']);
             msg("$text.", 1);
@@ -787,10 +781,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
         $oldinfo = $this->auth->getUserData($olduser);
 
         // get new user data subject to change
-        list($newuser,$newpass,$newname,$newmail,$newgrps,$passconfirm) = $this->retrieveUser();
+        [$newuser, $newpass, $newname, $newmail, $newgrps, $passconfirm] = $this->retrieveUser();
         if (empty($newuser)) return false;
 
-        $changes = array();
+        $changes = [];
         if ($newuser != $olduser) {
             if (!$this->auth->canDo('modLogin')) {        // sanity check, shouldn't be possible
                 msg($this->lang['update_fail'], -1);
@@ -812,11 +806,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
                 } else {
                     return false;
                 }
-            } else {
+            } elseif ($INPUT->has('usernotify')) {
                 // no new password supplied, check if we need to generate one (or it stays unchanged)
-                if ($INPUT->has('usernotify')) {
-                    $changes['pass'] = auth_pwgen($olduser);
-                }
+                $changes['pass'] = auth_pwgen($olduser);
             }
         }
 
@@ -830,7 +822,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
             $changes['grps'] = $newgrps;
         }
 
-        if ($ok = $this->auth->triggerUserMod('modify', array($olduser, $changes))) {
+        if ($ok = $this->auth->triggerUserMod('modify', [$olduser, $changes])) {
             msg($this->lang['update_ok'], 1);
 
             if ($INPUT->has('usernotify') && !empty($changes['pass'])) {
@@ -866,10 +858,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
             if ($status_alert) {
                 msg($this->lang['notify_ok'], 1);
             }
-        } else {
-            if ($status_alert) {
-                msg($this->lang['notify_fail'], -1);
-            }
+        } elseif ($status_alert) {
+            msg($this->lang['notify_fail'], -1);
         }
 
         return $sent;
@@ -914,7 +904,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
         global $auth;
         global $INPUT;
 
-        $user = array();
+        $user = [];
         $user[0] = ($clean) ? $auth->cleanUser($INPUT->str('userid')) : $INPUT->str('userid');
         $user[1] = $INPUT->str('userpass');
         $user[2] = $INPUT->str('username');
@@ -923,10 +913,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
         $user[5] = $INPUT->str('userpass2');                // repeated password for confirmation
 
         $user[4] = array_map('trim', $user[4]);
-        if ($clean) $user[4] = array_map(array($auth,'cleanGroup'), $user[4]);
+        if ($clean) $user[4] = array_map([$auth, 'cleanGroup'], $user[4]);
         $user[4] = array_filter($user[4]);
         $user[4] = array_unique($user[4]);
-        if (!count($user[4])) $user[4] = null;
+        if ($user[4] === []) $user[4] = null;
 
         return $user;
     }
@@ -939,15 +929,15 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
     protected function setFilter($op)
     {
 
-        $this->filter = array();
+        $this->filter = [];
 
         if ($op == 'new') {
-            list($user,/* $pass */,$name,$mail,$grps) = $this->retrieveUser(false);
+            [$user, , $name, $mail, $grps] = $this->retrieveUser(false);
 
             if (!empty($user)) $this->filter['user'] = $user;
             if (!empty($name)) $this->filter['name'] = $name;
             if (!empty($mail)) $this->filter['mail'] = $mail;
-            if (!empty($grps)) $this->filter['grps'] = join('|', $grps);
+            if (!empty($grps)) $this->filter['grps'] = implode('|', $grps);
         }
     }
 
@@ -963,7 +953,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
         $t_filter = $INPUT->arr('filter');
 
         // messy, but this way we ensure we aren't getting any additional crap from malicious users
-        $filter = array();
+        $filter = [];
 
         if (isset($t_filter['user'])) $filter['user'] = $t_filter['user'];
         if (isset($t_filter['name'])) $filter['name'] = $t_filter['name'];
@@ -997,7 +987,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
 
         $disabled = 'disabled="disabled"';
 
-        $buttons = array();
+        $buttons = [];
         $buttons['start'] = $buttons['prev'] = ($this->start == 0) ? $disabled : '';
 
         if ($this->users_total == -1) {
@@ -1022,12 +1012,12 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
     {
         // list of users for export - based on current filter criteria
         $user_list = $this->auth->retrieveUsers(0, 0, $this->filter);
-        $column_headings = array(
+        $column_headings = [
             $this->lang["user_id"],
             $this->lang["user_name"],
             $this->lang["user_mail"],
             $this->lang["user_groups"]
-        );
+        ];
 
         // ==============================================================================================
         // GENERATE OUTPUT
@@ -1041,7 +1031,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
         $fd = fopen('php://output', 'w');
         fputcsv($fd, $column_headings);
         foreach ($user_list as $user => $info) {
-            $line = array($user, $info['name'], $info['mail'], join(',', $info['grps']));
+            $line = [$user, $info['name'], $info['mail'], implode(',', $info['grps'])];
             fputcsv($fd, $line);
         }
         fclose($fd);
@@ -1073,14 +1063,14 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
             return false;
         }
         // retrieve users from the file
-        $this->import_failures = array();
+        $this->import_failures = [];
         $import_success_count = 0;
         $import_fail_count = 0;
         $line = 0;
         $fd = fopen($_FILES['import']['tmp_name'], 'r');
         if ($fd) {
             while ($csv = fgets($fd)) {
-                if (!\dokuwiki\Utf8\Clean::isUtf8($csv)) {
+                if (!Clean::isUtf8($csv)) {
                     $csv = utf8_encode($csv);
                 }
                 $raw = str_getcsv($csv);
@@ -1092,7 +1082,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
                 if (count($raw) < 4) {                                        // need at least four fields
                     $import_fail_count++;
                     $error = sprintf($this->lang['import_error_fields'], count($raw));
-                    $this->import_failures[$line] = array('error' => $error, 'user' => $raw, 'orig' => $csv);
+                    $this->import_failures[$line] = ['error' => $error, 'user' => $raw, 'orig' => $csv];
                     continue;
                 }
                 array_splice($raw, 1, 0, auth_pwgen());                          // splice in a generated password
@@ -1106,7 +1096,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
                 } else {
                     $import_fail_count++;
                     array_splice($raw, 1, 1);                                  // remove the spliced in password
-                    $this->import_failures[$line] = array('error' => $error, 'user' => $raw, 'orig' => $csv);
+                    $this->import_failures[$line] = ['error' => $error, 'user' => $raw, 'orig' => $csv];
                 }
             }
             msg(
@@ -1152,7 +1142,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
         $INPUT->set('usergroups', $candidate[4]);
 
         $cleaned = $this->retrieveUser();
-        list($user,/* $pass */,$name,$mail,/* $grps */) = $cleaned;
+        [$user, /* pass */ , $name, $mail, /* grps */ ] = $cleaned;
         if (empty($user)) {
             $error = $this->lang['import_error_baduserid'];
             return false;
@@ -1170,11 +1160,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
                 $error = $this->lang['import_error_badmail'];
                 return false;
             }
-        } else {
-            if (!empty($mail)) {
-                $error = $this->lang['import_error_badmail'];
-                return false;
-            }
+        } elseif (!empty($mail)) {
+            $error = $this->lang['import_error_badmail'];
+            return false;
         }
 
         return $cleaned;
@@ -1216,7 +1204,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
         // output the csv
         $fd = fopen('php://output', 'w');
         foreach ($this->import_failures as $fail) {
-            fputs($fd, $fail['orig']);
+            fwrite($fd, $fail['orig']);
         }
         fclose($fd);
         die;

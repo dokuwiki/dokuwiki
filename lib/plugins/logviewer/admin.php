@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\Form\Form;
 use dokuwiki\Logger;
 
 /**
@@ -10,7 +11,7 @@ use dokuwiki\Logger;
  */
 class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
 {
-    const MAX_READ_SIZE = 1048576; // 1 MB
+    const MAX_READ_SIZE = 1_048_576; // 1 MB
 
     protected $facilities;
     protected $facility;
@@ -56,7 +57,7 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
     {
         global $ID;
 
-        $form = new dokuwiki\Form\Form(['method' => 'GET']);
+        $form = new Form(['method' => 'GET']);
         $form->setHiddenField('do', 'admin');
         $form->setHiddenField('page', 'logviewer');
         $form->setHiddenField('facility', $this->facility);
@@ -156,7 +157,7 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
 
             if ($size >= self::MAX_READ_SIZE) {
                 array_shift($lines); // Discard the first line
-                while (!empty($lines) && (substr($lines[0], 0, 2) === '  ')) {
+                while ($lines !== [] && (substr($lines[0], 0, 2) === '  ')) {
                     array_shift($lines); // Discard indented lines
                 }
 
@@ -191,10 +192,10 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
                     $line = $lines[$i] ?? '';
                 }
                 echo '</dd>';
-                $i -= 1; // rewind the counter
+                --$i; // rewind the counter
             } else {
                 // other lines are actual log lines in three parts
-                list($dt, $file, $msg) = sexplode("\t", $line, 3, '');
+                [$dt, $file, $msg] = sexplode("\t", $line, 3, '');
                 echo '<dt>';
                 echo '<span class="datetime">' . hsc($dt) . '</span>';
                 echo '<span class="log">';

@@ -10,7 +10,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin
 
     /** @var helper_plugin_popularity */
     protected $helper;
-    protected $sentStatus = null;
+    protected $sentStatus;
 
     /**
      * admin_plugin_popularity constructor.
@@ -88,7 +88,6 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin
 
         if (! $INPUT->has('data')) {
             echo $this->locale_xhtml('intro');
-
             //If there was an error the last time we tried to autosubmit, warn the user
             if ($this->helper->isAutoSubmitEnabled()) {
                 if (file_exists($this->helper->autosubmitErrorFile)) {
@@ -96,26 +95,21 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin
                     echo io_readFile($this->helper->autosubmitErrorFile);
                 }
             }
-
             flush();
             echo $this->buildForm('server');
-
             //Print the last time the data was sent
             $lastSent = $this->helper->lastSentTime();
             if ($lastSent !== 0) {
                 echo $this->getLang('lastSent') . ' ' . datetime_h($lastSent);
             }
+        } elseif ($this->sentStatus === '') {
+            //If we successfully send the data
+            echo $this->locale_xhtml('submitted');
         } else {
-            //If we just submitted the form
-            if ($this->sentStatus === '') {
-                //If we successfully sent the data
-                echo $this->locale_xhtml('submitted');
-            } else {
-                //If we failed to submit the data, try directly with the browser
-                echo $this->getLang('submissionFailed') . $this->sentStatus . '<br />';
-                echo $this->getLang('submitDirectly');
-                echo $this->buildForm('browser', $INPUT->str('data'));
-            }
+            //If we failed to submit the data, try directly with the browser
+            echo $this->getLang('submissionFailed') . $this->sentStatus . '<br />';
+            echo $this->getLang('submitDirectly');
+            echo $this->buildForm('browser', $INPUT->str('data'));
         }
     }
 
