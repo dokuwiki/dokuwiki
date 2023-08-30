@@ -6,8 +6,6 @@
     <rule ref="./phpcs.xml">
         <!-- Rules with automatic fixes that we want to adhere to, but currently don't -->
         <exclude name="Generic.Formatting.DisallowMultipleStatements.SameLine"/>
-        <exclude name="Generic.PHP.LowerCaseKeyword.Found"/>
-        <exclude name="Generic.PHP.LowerCaseConstant.Found"/>
         <exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact"/>
         <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect"/>
         <exclude name="Generic.WhiteSpace.IncrementDecrementSpacing.SpaceAfterDecrement"/>

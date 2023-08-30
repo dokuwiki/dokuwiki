@@ -419,7 +419,7 @@ class PassHash
         $salt = substr($salt, 1, 8);
 
         // iterate
-        $hash = hash($algo, $salt . $clear, TRUE);
+        $hash = hash($algo, $salt . $clear, true);
         do {
             $hash = hash($algo, $hash.$clear, true);
         } while(--$iter);

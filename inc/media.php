@@ -2169,7 +2169,7 @@ function media_alternativefiles($src, $exts)
  *
  * @author Anika Henke <anika@selfthinker.org>
  */
-function media_supportedav($mime, $type = NULL)
+function media_supportedav($mime, $type = null)
 {
     $supportedAudio = [
         'ogg' => 'audio/ogg',
