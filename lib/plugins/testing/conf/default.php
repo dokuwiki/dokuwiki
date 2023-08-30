@@ -6,4 +6,3 @@
  */
 $conf['schnibble'] = 0;
 $conf['second'] = 'Default value';
-

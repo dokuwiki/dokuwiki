@@ -170,4 +170,3 @@ class Mapper
         return true;
     }
 }
-

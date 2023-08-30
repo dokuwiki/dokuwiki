@@ -31,5 +31,3 @@ class FeedParser extends SimplePie
         $this->set_feed_url($url);
     }
 }
-
-

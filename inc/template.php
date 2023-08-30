@@ -1905,4 +1905,3 @@ function tpl_toolsevent($toolsname, $items, $view = 'main')
 }
 
 //Setup VIM: ex: et ts=4 :
-

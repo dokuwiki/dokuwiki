@@ -38,8 +38,6 @@
         <exclude name="PSR2.ControlStructures.SwitchDeclaration.BodyOnNextLineCASE"/>
         <exclude name="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonDEFAULT"/>
         <exclude name="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE"/>
-        <exclude name="PSR2.Files.EndFileNewline.TooMany"/>
-        <exclude name="PSR2.Files.EndFileNewline.NoneFound"/>
         <exclude name="PSR2.Methods.FunctionCallSignature.Indent"/>
         <exclude name="PSR2.Methods.FunctionCallSignature.EmptyLine"/>
         <exclude name="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket"/>

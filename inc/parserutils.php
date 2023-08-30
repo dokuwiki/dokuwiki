@@ -828,4 +828,3 @@ function p_xhtml_cached_geshi($code, $language, $wrapper = 'pre', array $options
         return $highlighted_code;
     }
 }
-

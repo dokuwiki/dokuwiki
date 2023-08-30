@@ -647,4 +647,3 @@ function fullpath($path, $exists = false)
     }
     return $finalpath;
 }
-
