@@ -40,7 +40,7 @@ class CacheParser extends Cache
     public function makeDefaultCacheDecision()
     {
         if (!file_exists($this->file)) {
-            // source exists?
+            // source doesn't exist
             return false;
         }
         return parent::makeDefaultCacheDecision();

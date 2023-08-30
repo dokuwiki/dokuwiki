@@ -51,22 +51,29 @@ class DebugHelper
 
         [$self, $call] = $backtrace;
 
-        if (!$thing) {
-            $thing = trim(
-                (empty($self['class']) ? ('') : $self['class'] . '::') .
-                $self['function'] . '()', ':');
-        }
-
         self::triggerDeprecationEvent(
             $backtrace,
             $alternative,
-            $thing,
-            trim(
-                (empty($call['class']) ? ('') : $call['class'] . '::') .
-                $call['function'] . '()', ':'),
+            self::formatCall($self),
+            self::formatCall($call),
             $self['file'] ?? $call['file'] ?? '',
             $self['line'] ?? $call['line'] ?? 0
         );
+    }
+
+    /**
+     * Format the given backtrace info into a proper function/method call string
+     * @param array $call
+     * @return string
+     */
+    protected static function formatCall($call)
+    {
+        $thing = '';
+        if(!empty($call['class'])) {
+            $thing .= $call['class'] . '::';
+        }
+        $thing .= $call['function'] . '()';
+        return trim($thing, ':');
     }
 
     /**

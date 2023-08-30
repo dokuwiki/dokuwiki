@@ -83,7 +83,7 @@ class PluginController
         //we keep all loaded plugins available in global scope for reuse
         global $DOKU_PLUGINS;
 
-        [$plugin, ] = $this->splitName($name);
+        [$plugin, /* component */ ] = $this->splitName($name);
 
         // check if disabled
         if (!$disabled && !$this->isEnabled($plugin)) {

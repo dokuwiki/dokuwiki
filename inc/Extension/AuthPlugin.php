@@ -21,29 +21,18 @@ abstract class AuthPlugin extends Plugin
      * in the constructor.
      */
     protected $cando = [
-        'addUser' => false,
-        // can Users be created?
-        'delUser' => false,
-        // can Users be deleted?
-        'modLogin' => false,
-        // can login names be changed?
-        'modPass' => false,
-        // can passwords be changed?
-        'modName' => false,
-        // can real names be changed?
-        'modMail' => false,
-        // can emails be changed?
-        'modGroups' => false,
-        // can groups be changed?
-        'getUsers' => false,
-        // can a (filtered) list of users be retrieved?
-        'getUserCount' => false,
-        // can the number of users be retrieved?
-        'getGroups' => false,
-        // can a list of available groups be retrieved?
-        'external' => false,
-        // does the module do external auth checking?
-        'logout' => true,
+        'addUser' => false, // can Users be created?
+        'delUser' => false, // can Users be deleted?
+        'modLogin' => false, // can login names be changed?
+        'modPass' => false, // can passwords be changed?
+        'modName' => false, // can real names be changed?
+        'modMail' => false, // can emails be changed?
+        'modGroups' => false, // can groups be changed?
+        'getUsers' => false, // can a (filtered) list of users be retrieved?
+        'getUserCount' => false, // can the number of users be retrieved?
+        'getGroups' => false, // can a list of available groups be retrieved?
+        'external' => false, // does the module do external auth checking?
+        'logout' => true, // can the user logout again? (eg. not possible with HTTP auth)
     ];
 
     /**
@@ -133,7 +122,11 @@ abstract class AuthPlugin extends Plugin
      */
     public function triggerUserMod($type, $params)
     {
-        $validTypes = ['create' => 'createUser', 'modify' => 'modifyUser', 'delete' => 'deleteUsers'];
+        $validTypes = [
+            'create' => 'createUser',
+            'modify' => 'modifyUser',
+            'delete' => 'deleteUsers'
+        ];
         if (empty($validTypes[$type])) {
             return false;
         }
