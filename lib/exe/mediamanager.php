@@ -67,17 +67,19 @@ use dokuwiki\Extension\Event;
     }
 
     // give info on PHP caught upload errors
-    if(!empty($_FILES['upload']['error'])){
-    switch($_FILES['upload']['error']){
-        case 1:
+    if (!empty($_FILES['upload']['error'])) {
+        switch ($_FILES['upload']['error']) {
+            case 1:
             case 2:
-            msg(sprintf($lang['uploadsize'],
-            filesize_h(php_to_byte(ini_get('upload_max_filesize')))), -1);
-            break;
-        default:
-            msg($lang['uploadfail'].' ('.$_FILES['upload']['error'].')', -1);
+                msg(sprintf(
+                    $lang['uploadsize'],
+                    filesize_h(php_to_byte(ini_get('upload_max_filesize')))
+                ), -1);
+                break;
+            default:
+                msg($lang['uploadfail'] . ' (' . $_FILES['upload']['error'] . ')', -1);
         }
-    unset($_FILES['upload']);
+        unset($_FILES['upload']);
     }
 
     // handle upload
