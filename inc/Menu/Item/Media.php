@@ -19,5 +19,4 @@ class Media extends AbstractItem
         $this->svg = DOKU_INC . 'lib/images/menu/folder-multiple-image.svg';
         $this->params['ns'] = getNS($ID);
     }
-
 }

@@ -53,5 +53,4 @@ class Locked extends AbstractAction
         print '<li><div class="li"><strong>'.$lang['lockexpire'].'</strong> '.$expire.' ('.$min.' min)</div></li>';
         print '</ul>'.DOKU_LF;
     }
-
 }

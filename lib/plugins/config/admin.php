@@ -16,7 +16,8 @@ use dokuwiki\plugin\config\core\Setting\SettingHidden;
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
  */
-class admin_plugin_config extends AdminPlugin {
+class admin_plugin_config extends AdminPlugin
+{
 
     protected const IMGDIR = DOKU_BASE . 'lib/plugins/config/images/';
 

@@ -15,7 +15,8 @@ use dokuwiki\Extension\Event;
 /**
  * Mail Handling
  */
-class Mailer {
+class Mailer
+{
 
     protected $headers   = [];
     protected $attach    = [];

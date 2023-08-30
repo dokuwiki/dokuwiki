@@ -14,7 +14,8 @@ use dokuwiki\Utf8\Sort;
  * @todo The calls should be refactored out to their own proper classes
  * @package dokuwiki
  */
-class Ajax {
+class Ajax
+{
 
     /**
      * Execute the given call
@@ -435,5 +436,4 @@ class Ajax {
         }
 
     }
-
 }

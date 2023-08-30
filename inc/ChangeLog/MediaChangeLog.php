@@ -56,5 +56,4 @@ class MediaChangeLog extends ChangeLog
         $this->cache[$this->id][$this->currentRevision] = $info;
         return $info;
     }
-
 }

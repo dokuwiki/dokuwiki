@@ -10,7 +10,8 @@ use dokuwiki\Extension\Event;
  * Loads configuration meta data and settings from the various files. Honors the
  * configuration cascade and installed plugins.
  */
-class Loader {
+class Loader
+{
     /** @var ConfigParser */
     protected $parser;
 

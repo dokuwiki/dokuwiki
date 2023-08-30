@@ -5,7 +5,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_savedir
  */
-class SettingSavedir extends SettingString {
+class SettingSavedir extends SettingString
+{
 
     /** @inheritdoc */
     public function update($input) {

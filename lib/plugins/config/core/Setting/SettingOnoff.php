@@ -5,7 +5,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_onoff
  */
-class SettingOnoff extends SettingNumeric {
+class SettingOnoff extends SettingNumeric
+{
 
     /**
      * We treat the strings 'false' and 'off' as false

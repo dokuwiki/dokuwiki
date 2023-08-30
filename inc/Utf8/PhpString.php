@@ -372,6 +372,4 @@ class PhpString
 
         return $length;
     }
-
-
 }

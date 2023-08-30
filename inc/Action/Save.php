@@ -12,7 +12,8 @@ use dokuwiki\Action\Exception\ActionException;
  *
  * @package dokuwiki\Action
  */
-class Save extends AbstractAction {
+class Save extends AbstractAction
+{
 
     /** @inheritdoc */
     public function minimumPermission() {
@@ -59,5 +60,4 @@ class Save extends AbstractAction {
         // continue with draftdel -> redirect -> show
         throw new ActionAbort('draftdel');
     }
-
 }

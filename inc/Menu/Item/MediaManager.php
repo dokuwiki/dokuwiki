@@ -26,5 +26,4 @@ class MediaManager extends AbstractItem
         $this->type = 'mediaManager';
         $this->params = ['ns' => $imgNS, 'image' => $IMG, 'do' => 'media'];
     }
-
 }

@@ -13,7 +13,8 @@ require_once(DOKU_INC . 'inc/init.php');
 /**
  * Find wanted pages
  */
-class WantedPagesCLI extends CLI {
+class WantedPagesCLI extends CLI
+{
 
     protected const DIR_CONTINUE = 1;
     protected const DIR_NS = 2;

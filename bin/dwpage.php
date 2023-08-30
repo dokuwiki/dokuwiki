@@ -12,7 +12,8 @@ require_once(DOKU_INC . 'inc/init.php');
 /**
  * Checkout and commit pages from the command line while maintaining the history
  */
-class PageCLI extends CLI {
+class PageCLI extends CLI
+{
 
     protected $force = false;
     protected $username = '';

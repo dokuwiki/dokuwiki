@@ -182,5 +182,4 @@ class Resendpwd extends AbstractAclAction
         }
         // never reached
     }
-
 }

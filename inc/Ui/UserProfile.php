@@ -122,5 +122,4 @@ class UserProfile extends Ui
 
         print '</div>';
     }
-
 }

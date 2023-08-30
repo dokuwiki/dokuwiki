@@ -48,5 +48,4 @@ class Profile extends AbstractUserAction
     {
         (new UserProfile)->show();
     }
-
 }

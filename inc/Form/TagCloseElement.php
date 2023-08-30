@@ -91,5 +91,4 @@ class TagCloseElement extends ValueElement
     {
         return '</'.$this->val().'>';
     }
-
 }

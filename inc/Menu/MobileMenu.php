@@ -93,5 +93,4 @@ class MobileMenu implements MenuInterface
 
         return $html;
     }
-
 }

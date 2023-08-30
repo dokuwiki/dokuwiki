@@ -25,5 +25,4 @@ class Backlink extends AbstractAction
     {
         (new Backlinks)->show();
     }
-
 }

@@ -5,7 +5,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_disableactions
  */
-class SettingDisableactions extends SettingMulticheckbox {
+class SettingDisableactions extends SettingMulticheckbox
+{
 
     /** @inheritdoc */
     public function html(\admin_plugin_config $plugin, $echo = false) {

@@ -89,5 +89,4 @@ class DisplayRow extends DisplayTile
         }
         echo '</div>';
     }
-
 }

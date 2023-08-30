@@ -70,5 +70,4 @@ class UserRegister extends Ui
 
         print '</div>';
     }
-
 }

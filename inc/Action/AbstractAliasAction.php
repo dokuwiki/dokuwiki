@@ -14,7 +14,8 @@ use dokuwiki\Action\Exception\FatalException;
  *
  * @package dokuwiki\Action
  */
-abstract class AbstractAliasAction extends AbstractAction {
+abstract class AbstractAliasAction extends AbstractAction
+{
 
     /** @inheritdoc */
     public function minimumPermission() {
@@ -27,5 +28,4 @@ abstract class AbstractAliasAction extends AbstractAction {
     public function preProcess() {
         throw new FatalException('Alias Actions need to implement preProcess to load the aliased action');
     }
-
 }

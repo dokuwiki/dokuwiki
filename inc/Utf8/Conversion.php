@@ -156,5 +156,4 @@ class Conversion
         $uni = unpack('n*', $str);
         return Unicode::toUtf8($uni);
     }
-
 }

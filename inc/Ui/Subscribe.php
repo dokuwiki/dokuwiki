@@ -113,5 +113,4 @@ class Subscribe extends Ui
 
         echo '</div>';
     }
-
 }

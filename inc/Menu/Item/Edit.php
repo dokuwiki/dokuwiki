@@ -65,5 +65,4 @@ class Edit extends AbstractItem
             $this->svg = DOKU_INC . 'lib/images/menu/' . $icons[$this->type];
         }
     }
-
 }

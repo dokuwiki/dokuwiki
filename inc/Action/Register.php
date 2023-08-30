@@ -48,5 +48,4 @@ class Register extends AbstractAclAction
     {
         (new UserRegister)->show();
     }
-
 }

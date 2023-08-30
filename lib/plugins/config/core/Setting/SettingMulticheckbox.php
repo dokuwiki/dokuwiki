@@ -5,7 +5,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_multicheckbox
  */
-class SettingMulticheckbox extends SettingString {
+class SettingMulticheckbox extends SettingString
+{
 
     protected $choices = [];
     protected $combine = [];

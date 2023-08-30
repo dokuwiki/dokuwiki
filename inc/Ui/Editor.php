@@ -208,5 +208,4 @@ class Editor extends Ui
         $data['form']->addTextarea('wikitext', '')->attrs($attr)->val($TEXT)
             ->id('wiki__text')->addClass('edit');
     }
-
 }

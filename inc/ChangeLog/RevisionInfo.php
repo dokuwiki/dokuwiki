@@ -388,6 +388,4 @@ class RevisionInfo
         global $lang;
         return $this->isCurrent() ? '('.$lang['current'].')' : '';
     }
-
-
 }

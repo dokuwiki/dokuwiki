@@ -22,5 +22,4 @@ class Resendpwd extends AbstractItem
 
         $this->svg = DOKU_INC . 'lib/images/menu/lock-reset.svg';
     }
-
 }

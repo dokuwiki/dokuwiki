@@ -7,7 +7,8 @@ use dokuwiki\plugin\config\core\Configuration;
 /**
  * Class Setting
  */
-class Setting {
+class Setting
+{
     /** @var string unique identifier of this setting */
     protected $key = '';
 
@@ -304,5 +305,4 @@ class Setting {
         }
         return $this->caution;
     }
-
 }

@@ -84,5 +84,4 @@ class PageSubscriptionSender extends SubscriptionSender
             $headers
         );
     }
-
 }

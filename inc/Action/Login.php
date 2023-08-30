@@ -36,5 +36,4 @@ class Login extends AbstractAclAction
     {
         (new Ui\Login)->show();
     }
-
 }

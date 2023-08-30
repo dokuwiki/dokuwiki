@@ -11,7 +11,8 @@ use dokuwiki\Action\Exception\ActionAbort;
  *
  * @package dokuwiki\Action
  */
-class Check extends AbstractAction {
+class Check extends AbstractAction
+{
 
     /** @inheritdoc */
     public function minimumPermission() {
@@ -22,5 +23,4 @@ class Check extends AbstractAction {
         check();
         throw new ActionAbort();
     }
-
 }

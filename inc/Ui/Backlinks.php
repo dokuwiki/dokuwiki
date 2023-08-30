@@ -39,5 +39,4 @@ class Backlinks extends Ui
             print '<div class="level1"><p>' . $lang['nothingfound'] . '</p></div>';
         }
     }
-
 }

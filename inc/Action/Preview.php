@@ -46,5 +46,4 @@ class Preview extends Edit
             }
         }
     }
-
 }

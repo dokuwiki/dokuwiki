@@ -27,5 +27,4 @@ class Login extends AbstractItem
             $this->svg = DOKU_INC . 'lib/images/menu/logout.svg';
         }
     }
-
 }

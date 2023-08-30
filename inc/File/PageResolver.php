@@ -95,5 +95,4 @@ class PageResolver extends Resolver
         }
         return $id;
     }
-
 }

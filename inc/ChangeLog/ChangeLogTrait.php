@@ -259,5 +259,4 @@ trait ChangeLogTrait
         $lines = $this->readChunk($fp, $head, $tail);
         return [$lines, $head, $tail];
     }
-
 }

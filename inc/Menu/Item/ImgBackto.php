@@ -22,5 +22,4 @@ class ImgBackto extends AbstractItem
         $this->accesskey = 'b';
         $this->replacement = $ID;
     }
-
 }

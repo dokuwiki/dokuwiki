@@ -102,5 +102,4 @@ abstract class Resolver
 
         return $id;
     }
-
 }

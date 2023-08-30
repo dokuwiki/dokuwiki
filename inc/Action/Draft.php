@@ -40,5 +40,4 @@ class Draft extends AbstractAction
     {
         (new PageDraft)->show();
     }
-
 }

@@ -13,5 +13,4 @@ class PageMenu extends AbstractMenu
     protected $view = 'page';
 
     protected $types = ['Edit', 'Revert', 'Revisions', 'Backlink', 'Subscribe', 'Top'];
-
 }

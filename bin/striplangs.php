@@ -11,7 +11,8 @@ require_once(DOKU_INC . 'inc/init.php');
 /**
  * Remove unwanted languages from a DokuWiki install
  */
-class StripLangsCLI extends CLI {
+class StripLangsCLI extends CLI
+{
 
     /**
      * Register options and arguments on the given $options object

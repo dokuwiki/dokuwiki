@@ -37,8 +37,6 @@
         <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.Indent"/>
         <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EndLine"/>
 
-        <exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"/>
-        <exclude name="PSR2.Classes.ClassDeclaration.OpenBraceNewLine"/>
         <exclude name="PSR2.Classes.PropertyDeclaration.StaticBeforeVisibility"/>
         <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
         <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpaceBeforeCloseBrace"/>

@@ -27,5 +27,4 @@ class Back extends AbstractItem
         $this->accesskey = 'b';
         $this->svg = DOKU_INC . 'lib/images/menu/12-back_arrow-left.svg';
     }
-
 }

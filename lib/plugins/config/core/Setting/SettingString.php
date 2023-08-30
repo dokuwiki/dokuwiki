@@ -5,7 +5,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_string
  */
-class SettingString extends Setting {
+class SettingString extends Setting
+{
     /** @inheritdoc */
     public function html(\admin_plugin_config $plugin, $echo = false) {
         $disable = '';

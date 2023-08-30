@@ -326,5 +326,4 @@ class PageFile
         $meta['last_change'] = $logEntry;
         p_set_metadata($this->id, $meta);
     }
-
 }

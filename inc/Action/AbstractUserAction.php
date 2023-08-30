@@ -11,7 +11,8 @@ use dokuwiki\Action\Exception\ActionUserRequiredException;
  *
  * @package dokuwiki\Action
  */
-abstract class AbstractUserAction extends AbstractAclAction {
+abstract class AbstractUserAction extends AbstractAclAction
+{
 
     /** @inheritdoc */
     public function checkPreconditions() {
@@ -21,5 +22,4 @@ abstract class AbstractUserAction extends AbstractAclAction {
             throw new ActionUserRequiredException();
         }
     }
-
 }

@@ -15,7 +15,8 @@ use dokuwiki\plugin\config\core\Setting\SettingUndefined;
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-class Configuration {
+class Configuration
+{
 
     public const KEYMARKER = '____';
 
@@ -215,5 +216,4 @@ class Configuration {
         }
         return '\\dokuwiki\\plugin\\config\\core\\Setting\\Setting';
     }
-
 }

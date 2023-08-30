@@ -25,5 +25,4 @@ class Index extends AbstractItem
             $this->nofollow = false;
         }
     }
-
 }

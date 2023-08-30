@@ -5,7 +5,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_numericopt
  */
-class SettingNumericopt extends SettingNumeric {
+class SettingNumericopt extends SettingNumeric
+{
     // just allow an empty config
     protected $pattern = '/^(|[-]?\d+(?:[-+*]\d+)*)$/';
 

@@ -52,5 +52,4 @@ class CacheImageMod extends Cache
             getConfigFiles('main')
         );
     }
-
 }

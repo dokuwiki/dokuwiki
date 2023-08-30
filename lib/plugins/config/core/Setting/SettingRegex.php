@@ -5,7 +5,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_regex
  */
-class SettingRegex extends SettingString {
+class SettingRegex extends SettingString
+{
 
     protected $delimiter = '/';    // regex delimiter to be used in testing input
     protected $pregflags = 'ui';   // regex pattern modifiers to be used in testing input

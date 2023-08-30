@@ -94,5 +94,4 @@ abstract class AbstractMenu implements MenuInterface
         }
         return $html;
     }
-
 }

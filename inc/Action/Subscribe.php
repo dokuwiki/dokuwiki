@@ -172,5 +172,4 @@ class Subscribe extends AbstractUserAction
 
         $params = ['target' => $target, 'style' => $style, 'action' => $action];
     }
-
 }

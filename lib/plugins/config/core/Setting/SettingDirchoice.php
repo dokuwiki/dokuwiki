@@ -5,7 +5,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_dirchoice
  */
-class SettingDirchoice extends SettingMultichoice {
+class SettingDirchoice extends SettingMultichoice
+{
 
     protected $dir = '';
 

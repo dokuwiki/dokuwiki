@@ -118,6 +118,5 @@ abstract class AdminPlugin extends Plugin
     {
         return [];
     }
-
 }
 

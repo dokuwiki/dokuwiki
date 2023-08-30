@@ -10,7 +10,8 @@ namespace dokuwiki\plugin\config\core;
  *
  * @author  Chris Smith <chris@jalakai.co.uk>
  */
-class ConfigParser {
+class ConfigParser
+{
     /** @var string variable to parse from the file */
     protected $varname = 'conf';
     /** @var string the key to mark sub arrays */
@@ -95,5 +96,4 @@ class ConfigParser {
         }
         return $value;
     }
-
 }

@@ -12,7 +12,8 @@ use dokuwiki\Extension\Event;
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-class Indexer {
+class Indexer
+{
     /**
      * @var array $pidCache Cache for getPID()
      */

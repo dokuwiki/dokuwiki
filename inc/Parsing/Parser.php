@@ -12,7 +12,8 @@ use dokuwiki\Parsing\ParserMode\ModeInterface;
  * Sets up the Lexer with modes and points it to the Handler
  * For an intro to the Lexer see: wiki:parser
  */
-class Parser {
+class Parser
+{
 
     /** @var Doku_Handler */
     protected $handler;
@@ -125,5 +126,4 @@ class Parser {
         }
         return $this->handler->calls;
     }
-
 }

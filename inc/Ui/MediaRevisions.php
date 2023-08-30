@@ -119,5 +119,4 @@ class MediaRevisions extends Revisions
             static fn($n) => media_managerURL(['first' => $n], '&', false, true)
         );
     }
-
 }

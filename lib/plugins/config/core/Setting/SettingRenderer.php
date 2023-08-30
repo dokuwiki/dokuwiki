@@ -10,7 +10,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_renderer
  */
-class SettingRenderer extends SettingMultichoice {
+class SettingRenderer extends SettingMultichoice
+{
     protected $prompts = [];
     protected $format;
 

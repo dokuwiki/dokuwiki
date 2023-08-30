@@ -19,5 +19,4 @@ class Revisions extends AbstractItem
         $this->type = 'revs';
         $this->svg = DOKU_INC . 'lib/images/menu/07-revisions_history.svg';
     }
-
 }

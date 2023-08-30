@@ -11,7 +11,8 @@ use dokuwiki\Extension\Event;
  *
  * @package dokuwiki\Action
  */
-class Plugin extends AbstractAction {
+class Plugin extends AbstractAction
+{
 
     /** @inheritdoc */
     public function minimumPermission() {

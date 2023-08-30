@@ -12,7 +12,8 @@ namespace dokuwiki;
  * @author  Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @license LGPL2
  */
-class PassHash {
+class PassHash
+{
     /**
      * Verifies a cleartext password against a crypted hash
      *

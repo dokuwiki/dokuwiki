@@ -82,6 +82,4 @@ class PageView extends Ui
     {
         print p_locale_xhtml('showrev');
     }
-
-
 }

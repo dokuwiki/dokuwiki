@@ -11,7 +11,8 @@ use dokuwiki\Action\Exception\ActionAbort;
  *
  * @package dokuwiki\Action
  */
-class Search extends AbstractAction {
+class Search extends AbstractAction
+{
 
     protected $pageLookupResults = [];
     protected $fullTextResults = [];

@@ -17,7 +17,8 @@ use dokuwiki\Logger;
  *
  * @author Michael Hamann
  */
-class Mapper {
+class Mapper
+{
     /**
      * Builds a Google Sitemap of all public pages known to the indexer
      *

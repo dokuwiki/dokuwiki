@@ -93,5 +93,4 @@ class Edit extends AbstractAction
     {
         (new Editor)->show();
     }
-
 }

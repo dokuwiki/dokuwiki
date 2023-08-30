@@ -13,7 +13,8 @@ use dokuwiki\Extension\AuthPlugin;
  *
  * @package dokuwiki\Action
  */
-class Logout extends AbstractUserAction {
+class Logout extends AbstractUserAction
+{
 
     /** @inheritdoc */
     public function minimumPermission() {
@@ -49,5 +50,4 @@ class Logout extends AbstractUserAction {
         // should never be reached
         throw new ActionException('login');
     }
-
 }

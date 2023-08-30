@@ -22,5 +22,4 @@ class Register extends AbstractItem
 
         $this->svg = DOKU_INC . 'lib/images/menu/account-plus.svg';
     }
-
 }

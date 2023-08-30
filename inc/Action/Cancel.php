@@ -11,7 +11,8 @@ use dokuwiki\Action\Exception\ActionAbort;
  *
  * @package dokuwiki\Action
  */
-class Cancel extends AbstractAliasAction {
+class Cancel extends AbstractAliasAction
+{
 
     /**
      * @inheritdoc
@@ -24,5 +25,4 @@ class Cancel extends AbstractAliasAction {
         // continue with draftdel -> redirect -> show
         throw new ActionAbort('draftdel');
     }
-
 }

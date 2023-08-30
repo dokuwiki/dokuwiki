@@ -13,7 +13,8 @@ require_once(DOKU_INC . 'inc/init.php');
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-class GitToolCLI extends CLI {
+class GitToolCLI extends CLI
+{
 
     /**
      * Register options and arguments on the given $options object

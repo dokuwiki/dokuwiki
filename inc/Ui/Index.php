@@ -127,5 +127,4 @@ class Index extends Ui
             return '<li class="closed">';
         }
     }
-
 }

@@ -43,5 +43,4 @@ abstract class ValueElement extends Element
         }
         return $this->value;
     }
-
 }

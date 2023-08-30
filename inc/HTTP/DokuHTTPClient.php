@@ -77,5 +77,4 @@ class DokuHTTPClient extends HTTPClient
         unset($evt);
         return parent::sendRequest($url, $data, $method);
     }
-
 }

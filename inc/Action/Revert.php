@@ -59,5 +59,4 @@ class Revert extends AbstractUserAction
         // continue with draftdel -> redirect -> show
         throw new ActionAbort('draftdel');
     }
-
 }

@@ -33,5 +33,4 @@ class ButtonElement extends Element
     {
         return '<button ' . buildAttributes($this->attrs(), true) . '>'.$this->content.'</button>';
     }
-
 }

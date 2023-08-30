@@ -12,7 +12,8 @@ use dokuwiki\Action\Exception\ActionAbort;
  *
  * @package dokuwiki\Action
  */
-class Draftdel extends AbstractAction {
+class Draftdel extends AbstractAction
+{
 
     /** @inheritdoc */
     public function minimumPermission() {
@@ -35,5 +36,4 @@ class Draftdel extends AbstractAction {
 
         throw new ActionAbort('redirect');
     }
-
 }

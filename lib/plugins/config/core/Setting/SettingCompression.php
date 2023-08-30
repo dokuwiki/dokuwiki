@@ -5,7 +5,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_compression
  */
-class SettingCompression extends SettingMultichoice {
+class SettingCompression extends SettingMultichoice
+{
 
     protected $choices = ['0'];      // 0 = no compression, always supported
 

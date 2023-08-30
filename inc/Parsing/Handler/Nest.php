@@ -77,6 +77,4 @@ class Nest extends AbstractRewriter
             $this->calls[] = $call;
         }
     }
-
-
 }

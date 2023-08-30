@@ -5,7 +5,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_numeric
  */
-class SettingNumeric extends SettingString {
+class SettingNumeric extends SettingString
+{
     // This allows for many PHP syntax errors...
     // var $_pattern = '/^[-+\/*0-9 ]*$/';
     // much more restrictive, but should eliminate syntax errors.

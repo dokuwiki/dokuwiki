@@ -96,5 +96,4 @@ class UserResendPwd extends Ui
         $form->addTagClose('div');
         return $form;
     }
-
 }

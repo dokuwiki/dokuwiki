@@ -12,7 +12,8 @@ namespace dokuwiki\Action\Exception;
  *
  * @package dokuwiki\Action\Exception
  */
-class FatalException extends \Exception {
+class FatalException extends \Exception
+{
     /**
      * FatalException constructor.
      *

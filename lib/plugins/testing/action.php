@@ -11,7 +11,8 @@ use dokuwiki\Extension\Event;
  *
  * @author Tobias Sarnowski <tobias@trustedco.de>
  */
-class action_plugin_testing extends ActionPlugin {
+class action_plugin_testing extends ActionPlugin
+{
 
     /** @inheritdoc */
     public function register(EventHandler $controller) {

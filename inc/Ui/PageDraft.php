@@ -51,5 +51,4 @@ class PageDraft extends Ui
 
         print $form->toHTML('Draft');
     }
-
 }

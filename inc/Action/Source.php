@@ -38,5 +38,4 @@ class Source extends AbstractAction
     {
         (new Editor)->show();
     }
-
 }

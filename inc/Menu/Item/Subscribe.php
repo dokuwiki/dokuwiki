@@ -22,5 +22,4 @@ class Subscribe extends AbstractItem
 
         $this->svg = DOKU_INC . 'lib/images/menu/09-subscribe_email-outline.svg';
     }
-
 }

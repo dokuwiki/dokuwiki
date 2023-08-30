@@ -80,5 +80,4 @@ class Login extends Ui
 
         print '</div>';
     }
-
 }

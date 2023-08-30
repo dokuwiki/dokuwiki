@@ -37,5 +37,4 @@ class Show extends AbstractAction
     {
         (new PageView())->show();
     }
-
 }

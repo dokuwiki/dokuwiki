@@ -11,7 +11,8 @@ require_once(DOKU_INC . 'inc/init.php');
 /**
  * Update the Search Index from command line
  */
-class IndexerCLI extends CLI {
+class IndexerCLI extends CLI
+{
 
     private $quiet = false;
     private $clear = false;

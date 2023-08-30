@@ -5,7 +5,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_sepchar
  */
-class SettingSepchar extends SettingMultichoice {
+class SettingSepchar extends SettingMultichoice
+{
 
     /** @inheritdoc */
     public function __construct($key, $param = null) {

@@ -26,5 +26,4 @@ class Admin extends AbstractItem
 
         return parent::visibleInContext($ctx);
     }
-
 }

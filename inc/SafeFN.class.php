@@ -14,7 +14,8 @@ use dokuwiki\Utf8\Unicode;
  * @author   Christopher Smith <chris@jalakai.co.uk>
  * @date     2010-04-02
  */
-class SafeFN {
+class SafeFN
+{
 
     // 'safe' characters are a superset of $plain, $pre_indicator and $post_indicator
     private static $plain = '-./[_0123456789abcdefghijklmnopqrstuvwxyz'; // these characters aren't converted
@@ -154,5 +155,4 @@ class SafeFN {
 
         return $unicode;
     }
-
 }

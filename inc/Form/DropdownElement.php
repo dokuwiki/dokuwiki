@@ -196,5 +196,4 @@ class DropdownElement extends InputElement
 
         return $html;
     }
-
 }

@@ -79,5 +79,4 @@ class CheckableElement extends InputElement
             return $this->mainElementHTML();
         }
     }
-
 }

@@ -545,5 +545,4 @@ REGEX;
             return preg_replace('<' . $regex . '>xu', '\0<wbr>', $match[0]);
         }, $diffhtml);
     }
-
 }

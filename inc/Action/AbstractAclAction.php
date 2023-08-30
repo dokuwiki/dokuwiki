@@ -11,7 +11,8 @@ use dokuwiki\Action\Exception\ActionAclRequiredException;
  *
  * @package dokuwiki\Action
  */
-abstract class AbstractAclAction extends AbstractAction {
+abstract class AbstractAclAction extends AbstractAction
+{
 
     /** @inheritdoc */
     public function checkPreconditions() {
@@ -21,5 +22,4 @@ abstract class AbstractAclAction extends AbstractAction {
         if(!$conf['useacl']) throw new ActionAclRequiredException();
         if(!$auth) throw new ActionAclRequiredException();
     }
-
 }

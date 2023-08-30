@@ -7,7 +7,8 @@ namespace dokuwiki\Sitemap;
  *
  * @author Michael Hamann
  */
-class Item {
+class Item
+{
     public $url;
     public $lastmod;
     public $changefreq;

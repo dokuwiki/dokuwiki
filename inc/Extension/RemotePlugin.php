@@ -118,5 +118,4 @@ abstract class RemotePlugin extends Plugin
     {
         return $this->api;
     }
-
 }

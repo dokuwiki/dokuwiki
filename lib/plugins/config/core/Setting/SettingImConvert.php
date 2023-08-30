@@ -5,7 +5,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_im_convert
  */
-class SettingImConvert extends SettingString {
+class SettingImConvert extends SettingString
+{
 
     /** @inheritdoc */
     public function update($input) {

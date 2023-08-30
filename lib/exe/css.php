@@ -401,7 +401,8 @@ function css_loadfile($file,$location=''){
  *
  *  @author Chris Smith <chris@jalakai.co.uk>
  */
-class DokuCssFile {
+class DokuCssFile
+{
 
     protected $filepath;             // file system path to the CSS/Less file
     protected $location;             // base url location of the CSS/Less file

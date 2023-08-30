@@ -7,7 +7,8 @@ use SimplePie\File;
 /**
  * We override some methods of the original SimplePie class here
  */
-class FeedParser extends SimplePie {
+class FeedParser extends SimplePie
+{
 
     /**
      * Constructor. Set some defaults

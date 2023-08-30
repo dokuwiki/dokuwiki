@@ -5,7 +5,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_multichoice
  */
-class SettingMultichoice extends SettingString {
+class SettingMultichoice extends SettingString
+{
     protected $choices = [];
     public $lang; //some custom language strings are stored in setting
 

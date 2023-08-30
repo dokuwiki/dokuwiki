@@ -9,7 +9,8 @@ namespace dokuwiki\Action;
  *
  * @package dokuwiki\Action
  */
-class Media extends AbstractAction {
+class Media extends AbstractAction
+{
 
     /** @inheritdoc */
     public function minimumPermission() {
@@ -20,5 +21,4 @@ class Media extends AbstractAction {
     public function tplContent() {
         tpl_media();
     }
-
 }

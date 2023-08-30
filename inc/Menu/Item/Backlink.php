@@ -16,5 +16,4 @@ class Backlink extends AbstractItem
         parent::__construct();
         $this->svg = DOKU_INC . 'lib/images/menu/08-backlink_link-variant.svg';
     }
-
 }

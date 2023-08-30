@@ -13,7 +13,8 @@ use dokuwiki\Utf8\PhpString;
  *
  * @package dokuwiki\Action
  */
-class Sitemap extends AbstractAction {
+class Sitemap extends AbstractAction
+{
 
     /** @inheritdoc */
     public function minimumPermission() {
@@ -63,5 +64,4 @@ class Sitemap extends AbstractAction {
 
         throw new FatalException('Could not read the sitemap file - bad permissions?');
     }
-
 }

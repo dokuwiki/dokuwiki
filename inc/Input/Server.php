@@ -15,5 +15,4 @@ class Server extends Input
     {
         $this->access = &$_SERVER;
     }
-
 }

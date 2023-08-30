@@ -38,5 +38,4 @@ class Diff extends AbstractAction
         global $INFO;
         (new PageDiff($INFO['id']))->preference('showIntro', true)->show();
     }
-
 }

@@ -49,5 +49,4 @@ class Denied extends AbstractAction
         // print intro
         print p_locale_xhtml('denied');
     }
-
 }

@@ -332,7 +332,6 @@ class Doku_Form
             $this->addElement(form_makeRadioField($name, $val, $cap, '', '', $data));
         }
     }
-
 }
 
 /**

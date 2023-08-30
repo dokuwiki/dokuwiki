@@ -324,5 +324,4 @@ class MediaDiff extends Diff
         echo '</table>';
         echo '</div>';
     }
-
 }

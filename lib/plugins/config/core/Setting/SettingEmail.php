@@ -5,7 +5,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_email
  */
-class SettingEmail extends SettingString {
+class SettingEmail extends SettingString
+{
     protected $multiple = false;
     protected $placeholders = false;
 

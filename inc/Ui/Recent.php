@@ -227,5 +227,4 @@ class Recent extends Ui
         $form->addButton('do[recent]', $lang['btn_apply'])->attr('type', 'submit');
         $form->addTagClose('div');
     }
-
 }

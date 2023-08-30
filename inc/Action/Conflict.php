@@ -36,5 +36,4 @@ class Conflict extends AbstractAction
         $text = con($PRE, $TEXT, $SUF);
         (new PageConflict($text, $SUM))->show();
     }
-
 }

@@ -61,5 +61,4 @@ class CacheParser extends Cache
             array_merge($files, $this->depends['files']);
         parent::addDependencies();
     }
-
 }

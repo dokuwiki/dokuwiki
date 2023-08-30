@@ -7,7 +7,8 @@ use dokuwiki\Logger;
 /**
  * Writes the settings to the correct local file
  */
-class Writer {
+class Writer
+{
     /** @var string header info */
     protected $header = 'Dokuwiki\'s Main Configuration File - Local Settings';
 

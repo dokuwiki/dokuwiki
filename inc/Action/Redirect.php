@@ -12,7 +12,8 @@ use dokuwiki\Extension\Event;
  *
  * @package dokuwiki\Action
  */
-class Redirect extends AbstractAliasAction {
+class Redirect extends AbstractAliasAction
+{
 
     /**
      * Redirect to the show action, trying to jump to the previously edited section
