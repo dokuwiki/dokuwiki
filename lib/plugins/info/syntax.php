@@ -135,7 +135,7 @@ class syntax_plugin_info extends SyntaxPlugin
         foreach ($plugins as $p) {
             $po = plugin_load($type, $p);
             if (! $po instanceof PluginInterface) continue;
-            [$name, ] = explode('_', $p, 2);
+            [$name, /* part */] = explode('_', $p, 2);
             $plginfo[$name] = $po->getInfo();
         }
 

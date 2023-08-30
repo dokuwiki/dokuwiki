@@ -1236,7 +1236,7 @@ class Indexer
         $parts = explode(':', $line);
         foreach ($parts as $tuple) {
             if ($tuple === '') continue;
-            [, $cnt] = explode('*', $tuple);
+            [/* pid */, $cnt] = explode('*', $tuple);
             $freq += (int)$cnt;
         }
         return $freq;

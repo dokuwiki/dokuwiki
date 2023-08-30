@@ -1895,7 +1895,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
         if ($isExternal) {
             // take direct source for external files
-            [, $srcMime] = mimetype($src);
+            [/* ext */, $srcMime] = mimetype($src);
             $files[$srcMime] = $src;
         } else {
             // prepare alternative formats
@@ -1972,7 +1972,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
         if ($isExternal) {
             // take direct source for external files
-            [, $srcMime] = mimetype($src);
+            [/* ext */, $srcMime] = mimetype($src);
             $files[$srcMime] = $src;
         } else {
             // prepare alternative formats

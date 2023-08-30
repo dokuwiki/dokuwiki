@@ -1031,7 +1031,7 @@ function updateprofile()
 
     if($changes['pass']) {
         // update cookie and session with the changed data
-        [, $sticky, ] = auth_getCookie();
+        [/* user */, $sticky, /* pass */] = auth_getCookie();
         $pass = auth_encrypt($changes['pass'], auth_cookiesalt(!$sticky, true));
         auth_setCookie($INPUT->server->str('REMOTE_USER'), $pass, (bool) $sticky);
     } else {

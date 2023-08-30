@@ -933,7 +933,7 @@ class admin_plugin_usermanager extends AdminPlugin
         $this->filter = [];
 
         if ($op == 'new') {
-            [$user, , $name, $mail, $grps] = $this->retrieveUser(false);
+            [$user, /* pass */, $name, $mail, $grps] = $this->retrieveUser(false);
 
             if (!empty($user)) $this->filter['user'] = $user;
             if (!empty($name)) $this->filter['name'] = $name;

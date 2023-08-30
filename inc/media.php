@@ -2157,14 +2157,14 @@ function media_alternativefiles($src, $exts)
 {
 
     $files = [];
-    [$srcExt, ] = mimetype($src);
+    [$srcExt, /* srcMime */] = mimetype($src);
     $filebase = substr($src, 0, -1 * (strlen($srcExt)+1));
 
     foreach($exts as $ext) {
         $fileid = $filebase.'.'.$ext;
         $file = mediaFN($fileid);
         if(file_exists($file)) {
-            [, $fileMime] = mimetype($file);
+            [/* fileExt */, $fileMime] = mimetype($file);
             $files[$fileMime] = $fileid;
         }
     }

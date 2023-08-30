@@ -68,7 +68,7 @@ trait PluginTrait
      */
     public function getPluginName()
     {
-        [, , $n] = sexplode('_', get_class($this), 4, '');
+        [/* t */, /* p */, $n] = sexplode('_', get_class($this), 4, '');
         return $n;
     }
 
@@ -77,7 +77,7 @@ trait PluginTrait
      */
     public function getPluginComponent()
     {
-        [, , , $c] = sexplode('_', get_class($this), 4, '');
+        [/* t */, /* p */, /* n */, $c] = sexplode('_', get_class($this), 4, '');
         return $c;
     }
 
