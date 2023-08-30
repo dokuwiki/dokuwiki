@@ -2,7 +2,7 @@ name: "Auto-Fix code"
 on:
   push:
     branches:
-      - autofix
+      - master
 
 jobs:
   autofix:
@@ -37,8 +37,6 @@ jobs:
           commit-message: "🤖 Rector and PHPCS fixes"
           title: "🤖 Automatic code style fixes"
           body: |
-            Currently work in progress, do not merge!
-
             These changes were made automatically by running rector and phpcbf.
 
             Please carefully check the changes before merging. Please note that
