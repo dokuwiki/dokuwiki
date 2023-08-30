@@ -131,7 +131,7 @@ header('Content-Type: text/html; charset=utf-8');
                 left top no-repeat;
                 display: block; width:380px; height:73px; border:none; clear:both;"
            target="_blank"
-           href="http://www.dokuwiki.org/security#web_access_security"></a>
+           href="https://www.dokuwiki.org/security#web_access_security"></a>
     </div>
 
     <div style="float: left; width: 58%;">
@@ -164,8 +164,8 @@ header('Content-Type: text/html; charset=utf-8');
 
 
     <div style="clear: both">
-        <a href="http://dokuwiki.org/"><img src="lib/tpl/dokuwiki/images/button-dw.png" alt="driven by DokuWiki"/></a>
-        <a href="http://php.net"><img src="lib/tpl/dokuwiki/images/button-php.gif" alt="powered by PHP"/></a>
+        <a href="https://dokuwiki.org/"><img src="lib/tpl/dokuwiki/images/button-dw.png" alt="driven by DokuWiki"/></a>
+        <a href="https://php.net"><img src="lib/tpl/dokuwiki/images/button-php.gif" alt="powered by PHP"/></a>
     </div>
     </body>
     </html>
@@ -261,7 +261,7 @@ function print_form($d)
                     <input type="checkbox" name="d[pop]" id="pop" <?php
                     echo(($d['pop'] ? ' checked="checked"' : '')); ?> />
                     <?php echo $lang['i_pop_label'] ?>
-                    <a href="http://www.dokuwiki.org/popularity" target="_blank"><sup>[?]</sup></a>
+                    <a href="https://www.dokuwiki.org/popularity" target="_blank"><sup>[?]</sup></a>
                 </label>
             </fieldset>
 
@@ -671,7 +671,7 @@ function langsel()
 
     $langs = [];
     while (($file = readdir($dh)) !== false) {
-        if (preg_match('/^[\._]/', $file)) continue;
+        if (preg_match('/^[._]/', $file)) continue;
         if (is_dir($dir . '/' . $file) && file_exists($dir . '/' . $file . '/lang.php')) {
             $langs[] = $file;
         }
