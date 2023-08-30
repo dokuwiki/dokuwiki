@@ -4,7 +4,7 @@
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
@@ -109,27 +109,25 @@ class GitToolCLI extends CLI {
      * @param array $extensions
      */
     public function cmdClone($extensions) {
-        $errors = array();
-        $succeeded = array();
+        $errors = [];
+        $succeeded = [];
 
         foreach($extensions as $ext) {
             $repo = $this->getSourceRepo($ext);
 
-            if(!$repo) {
+            if (!$repo) {
                 $this->error("could not find a repository for $ext");
                 $errors[] = $ext;
+            } elseif ($this->cloneExtension($ext, $repo)) {
+                $succeeded[] = $ext;
             } else {
-                if($this->cloneExtension($ext, $repo)) {
-                    $succeeded[] = $ext;
-                } else {
-                    $errors[] = $ext;
-                }
+                $errors[] = $ext;
             }
         }
 
         echo "\n";
-        if($succeeded) $this->success('successfully cloned the following extensions: ' . join(', ', $succeeded));
-        if($errors) $this->error('failed to clone the following extensions: ' . join(', ', $errors));
+        if($succeeded) $this->success('successfully cloned the following extensions: ' . implode(', ', $succeeded));
+        if($errors) $this->error('failed to clone the following extensions: ' . implode(', ', $errors));
     }
 
     /**
@@ -138,31 +136,29 @@ class GitToolCLI extends CLI {
      * @param array $extensions
      */
     public function cmdInstall($extensions) {
-        $errors = array();
-        $succeeded = array();
+        $errors = [];
+        $succeeded = [];
 
         foreach($extensions as $ext) {
             $repo = $this->getSourceRepo($ext);
 
-            if(!$repo) {
+            if (!$repo) {
                 $this->info("could not find a repository for $ext");
                 if($this->downloadExtension($ext)) {
                     $succeeded[] = $ext;
                 } else {
                     $errors[] = $ext;
                 }
+            } elseif ($this->cloneExtension($ext, $repo)) {
+                $succeeded[] = $ext;
             } else {
-                if($this->cloneExtension($ext, $repo)) {
-                    $succeeded[] = $ext;
-                } else {
-                    $errors[] = $ext;
-                }
+                $errors[] = $ext;
             }
         }
 
         echo "\n";
-        if($succeeded) $this->success('successfully installed the following extensions: ' . join(', ', $succeeded));
-        if($errors) $this->error('failed to install the following extensions: ' . join(', ', $errors));
+        if($succeeded) $this->success('successfully installed the following extensions: ' . implode(', ', $succeeded));
+        if($errors) $this->error('failed to install the following extensions: ' . implode(', ', $errors));
     }
 
     /**
@@ -174,9 +170,9 @@ class GitToolCLI extends CLI {
     public function cmdGit($cmd, $arg) {
         $repos = $this->findRepos();
 
-        $shell = array_merge(array('git', $cmd), $arg);
+        $shell = array_merge(['git', $cmd], $arg);
         $shell = array_map('escapeshellarg', $shell);
-        $shell = join(' ', $shell);
+        $shell = implode(' ', $shell);
 
         foreach($repos as $repo) {
             if(!@chdir($repo)) {

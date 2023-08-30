@@ -6,7 +6,7 @@ use dokuwiki\File\PageResolver;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
@@ -15,14 +15,14 @@ require_once(DOKU_INC . 'inc/init.php');
  */
 class WantedPagesCLI extends CLI {
 
-    const DIR_CONTINUE = 1;
-    const DIR_NS = 2;
-    const DIR_PAGE = 3;
+    protected const DIR_CONTINUE = 1;
+    protected const DIR_NS = 2;
+    protected const DIR_PAGE = 3;
 
     private $skip = false;
     private $sort = 'wanted';
 
-    private $result = array();
+    private $result = [];
 
     /**
      * Register options and arguments on the given $options object
@@ -134,19 +134,16 @@ class WantedPagesCLI extends CLI {
             throw new DokuCLI_Exception("Unable to read directory $dir");
         }
 
-        $pages = array();
+        $pages = [];
         $dh = opendir($dir);
         while(false !== ($entry = readdir($dh))) {
             $status = $this->dirFilter($entry, $dir);
-            if($status == WantedPagesCLI::DIR_CONTINUE) {
+            if ($status == WantedPagesCLI::DIR_CONTINUE) {
                 continue;
-            } else if($status == WantedPagesCLI::DIR_NS) {
+            } elseif ($status == WantedPagesCLI::DIR_NS) {
                 $pages = array_merge($pages, $this->getPages($dir . '/' . $entry));
             } else {
-                $page = array(
-                    'id' => pathID(substr($dir . '/' . $entry, $trunclen)),
-                    'file' => $dir . '/' . $entry,
-                );
+                $page = ['id' => pathID(substr($dir . '/' . $entry, $trunclen)), 'file' => $dir . '/' . $entry];
                 $pages[] = $page;
             }
         }
@@ -168,7 +165,7 @@ class WantedPagesCLI extends CLI {
             if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink')) {
                 $mid = $resolver->resolveId($ins[1][0]);
                 if(!page_exists($mid)) {
-                    list($mid) = explode('#', $mid); //record pages without hashes
+                    [$mid] = explode('#', $mid); //record pages without hashes
 
                     if($this->sort == 'origin') {
                         $this->result[$pid][] = $mid;

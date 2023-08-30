@@ -13,8 +13,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-if (php_sapi_name() != 'cli-server') {
-    if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/');
+if (PHP_SAPI != 'cli-server') {
+    if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
     require_once(DOKU_INC . 'inc/init.php');
 
     send_redirect(wl($conf['start']));
@@ -49,7 +49,8 @@ if (preg_match('/^\/_media\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
     // existing files
 
     // access limitiations
-    if (preg_match('/\/([._]ht|README$|VERSION$|COPYING$)/', $_SERVER['SCRIPT_NAME']) or
+    if (
+        preg_match('/\/([._]ht|README$|VERSION$|COPYING$)/', $_SERVER['SCRIPT_NAME']) ||
         preg_match('/^\/(data|conf|bin|inc)\//', $_SERVER['SCRIPT_NAME'])
     ) {
         header('HTTP/1.1 403 Forbidden');

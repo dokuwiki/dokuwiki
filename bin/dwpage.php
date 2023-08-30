@@ -3,8 +3,9 @@
 
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
+use dokuwiki\Utf8\PhpString;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
@@ -210,14 +211,14 @@ class PageCLI extends CLI {
         }
 
         if(empty($localfile)) {
-            $localfile = getcwd() . '/' . \dokuwiki\Utf8\PhpString::basename($wiki_fn);
+            $localfile = getcwd() . '/' . PhpString::basename($wiki_fn);
         }
 
         if(!file_exists(dirname($localfile))) {
             $this->fatal("Directory " . dirname($localfile) . " does not exist");
         }
 
-        if(stristr(realpath(dirname($localfile)), realpath($conf['datadir'])) !== false) {
+        if(stristr(realpath(dirname($localfile)), (string) realpath($conf['datadir'])) !== false) {
             $this->fatal("Attempt to check out file into data directory - not allowed");
         }
 

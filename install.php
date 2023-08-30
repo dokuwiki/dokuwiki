@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\PassHash;
 /*><div style="width:60%; margin: auto; background-color: #fcc;
                 border: 1px solid #faa; padding: 0.5em 1em;">
     <h1 style="font-size: 120%">No PHP Support</h1>
@@ -15,7 +16,7 @@
  * @author      Chris Smith <chris@jalakai.co.uk>
  */
 
-if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/');
+if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
 if (!defined('DOKU_CONF')) define('DOKU_CONF', DOKU_INC . 'conf/');
 if (!defined('DOKU_LOCAL')) define('DOKU_LOCAL', DOKU_INC . 'conf/');
 
@@ -41,7 +42,7 @@ if ($LC && $LC != 'en') {
 }
 
 // initialise variables ...
-$error = array();
+$error = [];
 
 // begin output
 header('Content-Type: text/html; charset=utf-8');
@@ -158,7 +159,7 @@ function print_form($d)
 
     include(DOKU_CONF . 'license.php');
 
-    if (!is_array($d)) $d = array();
+    if (!is_array($d)) $d = [];
     $d = array_map('hsc', $d);
 
     if (!isset($d['acl'])) $d['acl'] = 1;
@@ -216,7 +217,7 @@ function print_form($d)
         <fieldset>
             <p><?php echo $lang['i_license']?></p>
             <?php
-            array_push($license, array('name' => $lang['i_license_none'], 'url' => ''));
+            $license[] = ['name' => $lang['i_license_none'], 'url' => ''];
             if (empty($d['license'])) $d['license'] = 'cc-by-sa';
             foreach ($license as $key => $lic) {
                 echo '<label for="lic_' . $key . '">';
@@ -271,7 +272,7 @@ function print_retry()
  */
 function check_data(&$d)
 {
-    static $form_default = array(
+    static $form_default = [
         'title'     => '',
         'acl'       => '1',
         'superuser' => '',
@@ -282,11 +283,11 @@ function check_data(&$d)
         'policy'    => '0',
         'allowreg'  => '0',
         'license'   => 'cc-by-sa'
-    );
+    ];
     global $lang;
     global $error;
 
-    if (!is_array($d)) $d = array();
+    if (!is_array($d)) $d = [];
     foreach ($d as $k => $v) {
         if (is_array($v))
             unset($d[$k]);
@@ -384,7 +385,7 @@ EOT;
 
     if ($d['acl']) {
         // hash the password
-        $phash = new \dokuwiki\PassHash();
+        $phash = new PassHash();
         $pass = $phash->hash_bcrypt($d['password']);
 
         // create users.auth.php
@@ -403,7 +404,7 @@ EOT;
 
 EOT;
         // --- user:bcryptpasswordhash:Real Name:email:groups,comma,seperated
-        $output = $output . "\n" . join(':', [
+        $output = $output . "\n" . implode(':', [
                 $d['superuser'],
                 $pass,
                 $d['fullname'],
@@ -505,11 +506,11 @@ function check_configs()
 
     $ok = true;
 
-    $config_files = array(
+    $config_files = [
         'local' => DOKU_LOCAL . 'local.php',
         'users' => DOKU_LOCAL . 'users.auth.php',
         'auth'  => DOKU_LOCAL . 'acl.auth.php'
-    );
+    ];
 
     // configs shouldn't exist
     foreach ($config_files as $file) {
@@ -535,7 +536,7 @@ function check_permissions()
     global $error;
     global $lang;
 
-    $dirs = array(
+    $dirs = [
         'conf'        => DOKU_LOCAL,
         'data'        => DOKU_INC . 'data',
         'pages'       => DOKU_INC . 'data/pages',
@@ -548,7 +549,7 @@ function check_permissions()
         'locks'       => DOKU_INC . 'data/locks',
         'index'       => DOKU_INC . 'data/index',
         'tmp'         => DOKU_INC . 'data/tmp'
-    );
+    ];
 
     $ok = true;
     foreach ($dirs as $dir) {
@@ -642,7 +643,7 @@ function langsel()
     $dh  = opendir($dir);
     if (!$dh) return;
 
-    $langs = array();
+    $langs = [];
     while (($file = readdir($dh)) !== false) {
         if (preg_match('/^[\._]/', $file)) continue;
         if (is_dir($dir . '/' . $file) && file_exists($dir . '/' . $file . '/lang.php')) {

@@ -39,8 +39,10 @@ use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->paths([
-        __DIR__ . '/../inc',
-        __DIR__ . '/../lib',
+        __DIR__ . '/../inc/',
+        __DIR__ . '/../lib/',
+        __DIR__ . '/../bin/',
+        __DIR__ . '/../*.php',
     ]);
 
     $rectorConfig->bootstrapFiles([

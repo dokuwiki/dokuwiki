@@ -4,7 +4,7 @@
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
@@ -62,9 +62,9 @@ class IndexerCLI extends CLI {
      */
     protected function update() {
         global $conf;
-        $data = array();
+        $data = [];
         $this->quietecho("Searching pages... ");
-        search($data, $conf['datadir'], 'search_allpages', array('skipacl' => true));
+        search($data, $conf['datadir'], 'search_allpages', ['skipacl' => true]);
         $this->quietecho(count($data) . " pages found.\n");
 
         foreach($data as $val) {

@@ -16,7 +16,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/');
+if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
 require_once(DOKU_INC . 'inc/init.php');
 
 //close session
@@ -34,7 +34,7 @@ $opt = rss_parseOptions();
 
 // the feed is dynamic - we need a cache for each combo
 // (but most people just use the default feed so it's still effective)
-$key   = join('', array_values($opt)) . '$' . $INPUT->server->str('REMOTE_USER')
+$key   = implode('', array_values($opt)) . '$' . $INPUT->server->str('REMOTE_USER')
     . '$' . $INPUT->server->str('HTTP_HOST') . $INPUT->server->str('SERVER_PORT');
 $cache = new Cache($key, '.feed');
 

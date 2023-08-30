@@ -4,7 +4,7 @@
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
@@ -52,7 +52,7 @@ class RenderCLI extends CLI {
 
         // do the action
         $source = stream_get_contents(STDIN);
-        $info = array();
+        $info = [];
         $result = p_render($renderer, p_get_instructions($source), $info);
         if(is_null($result)) throw new DokuCLI_Exception("No such renderer $renderer");
         echo $result;

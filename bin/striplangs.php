@@ -4,7 +4,7 @@
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
@@ -52,16 +52,16 @@ class StripLangsCLI extends CLI {
             $keep = explode(',', $options->getOpt('keep'));
             if(!in_array('en', $keep)) $keep[] = 'en';
         } elseif($options->getOpt('english-only')) {
-            $keep = array('en');
+            $keep = ['en'];
         } else {
             echo $options->help();
             exit(0);
         }
 
         // Kill all language directories in /inc/lang and /lib/plugins besides those in $langs array
-        $this->stripDirLangs(realpath(dirname(__FILE__) . '/../inc/lang'), $keep);
-        $this->processExtensions(realpath(dirname(__FILE__) . '/../lib/plugins'), $keep);
-        $this->processExtensions(realpath(dirname(__FILE__) . '/../lib/tpl'), $keep);
+        $this->stripDirLangs(realpath(__DIR__ . '/../inc/lang'), $keep);
+        $this->processExtensions(realpath(__DIR__ . '/../lib/plugins'), $keep);
+        $this->processExtensions(realpath(__DIR__ . '/../lib/tpl'), $keep);
     }
 
     /**
@@ -99,7 +99,7 @@ class StripLangsCLI extends CLI {
         $dir = dir($path);
 
         while(($cur_dir = $dir->read()) !== false) {
-            if($cur_dir != '.' and $cur_dir != '..' and is_dir($path . '/' . $cur_dir)) {
+            if($cur_dir != '.' && $cur_dir != '..' && is_dir($path . '/' . $cur_dir)) {
 
                 if(!in_array($cur_dir, $keep_langs, true)) {
                     io_rmdir($path . '/' . $cur_dir, true);
