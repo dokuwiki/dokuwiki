@@ -2,6 +2,8 @@
 // phpcs:ignoreFile -- this file violates PSR2 by definition
 /**
  * These classes and functions are deprecated and will be removed in future releases
+ *
+ * Note: when adding to this file, please also add appropriate actions to _test/rector.php
  */
 
 use dokuwiki\Debug\DebugHelper;
