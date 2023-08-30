@@ -254,7 +254,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
 
         // add the user's domain to the groups
         $domain = $this->getUserDomain($user);
-        if ($domain && !in_array("domain-$domain", (array) $info['grps'])) {
+        if ($domain && !in_array("domain-$domain", $info['grps'])) {
             $info['grps'][] = $this->cleanGroup("domain-$domain");
         }
 

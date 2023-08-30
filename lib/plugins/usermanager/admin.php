@@ -18,7 +18,7 @@ use dokuwiki\Utf8\Clean;
  */
 class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
 {
-    const IMAGE_DIR = DOKU_BASE.'lib/plugins/usermanager/images/';
+    protected const IMAGE_DIR = DOKU_BASE.'lib/plugins/usermanager/images/';
 
     protected $auth;        // auth object
     protected $users_total = 0;     // number of registered users

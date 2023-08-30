@@ -18,7 +18,7 @@ use dokuwiki\plugin\config\core\Setting\SettingHidden;
  */
 class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
-    const IMGDIR = DOKU_BASE . 'lib/plugins/config/images/';
+    protected const IMGDIR = DOKU_BASE . 'lib/plugins/config/images/';
 
     /** @var Configuration */
     protected $configuration;
