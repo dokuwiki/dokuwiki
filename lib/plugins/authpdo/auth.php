@@ -1,4 +1,5 @@
 <?php
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\PassHash;
 use dokuwiki\Utf8\Sort;
 
@@ -12,7 +13,7 @@ use dokuwiki\Utf8\Sort;
 /**
  * Class auth_plugin_authpdo
  */
-class auth_plugin_authpdo extends DokuWiki_Auth_Plugin
+class auth_plugin_authpdo extends AuthPlugin
 {
 
     /** @var PDO */

@@ -1,12 +1,13 @@
 <?php
 
+use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\ChangeLog\PageChangeLog;
 
 /**
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
  */
-class admin_plugin_revert extends DokuWiki_Admin_Plugin
+class admin_plugin_revert extends AdminPlugin
 {
     protected $cmd;
     // some vars which might need tuning later

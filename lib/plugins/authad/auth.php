@@ -1,4 +1,5 @@
 <?php
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Utf8\Clean;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
@@ -40,7 +41,7 @@ use dokuwiki\Logger;
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @author  Jan Schumann <js@schumann-it.com>
  */
-class auth_plugin_authad extends DokuWiki_Auth_Plugin
+class auth_plugin_authad extends AuthPlugin
 {
 
     /**

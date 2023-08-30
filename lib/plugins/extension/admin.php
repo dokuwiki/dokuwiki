@@ -1,4 +1,5 @@
 <?php
+use dokuwiki\Extension\AdminPlugin;
 /**
  * DokuWiki Plugin extension (Admin Component)
  *
@@ -9,7 +10,7 @@
 /**
  * Admin part of the extension manager
  */
-class admin_plugin_extension extends DokuWiki_Admin_Plugin
+class admin_plugin_extension extends AdminPlugin
 {
     protected $infoFor;
     /** @var  helper_plugin_extension_gui */

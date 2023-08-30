@@ -6,7 +6,7 @@
  * @author     Christopher Smith <chris@jalakai.co.uk>
  * @author     Ben Coburn <btcoburn@silicodon.net>
  */
-
+use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\plugin\config\core\Configuration;
 use dokuwiki\plugin\config\core\Setting\Setting;
 use dokuwiki\plugin\config\core\Setting\SettingFieldset;
@@ -16,7 +16,7 @@ use dokuwiki\plugin\config\core\Setting\SettingHidden;
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
  */
-class admin_plugin_config extends DokuWiki_Admin_Plugin {
+class admin_plugin_config extends AdminPlugin {
 
     protected const IMGDIR = DOKU_BASE . 'lib/plugins/config/images/';
 

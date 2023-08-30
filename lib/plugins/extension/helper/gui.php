@@ -5,13 +5,13 @@
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-
+use dokuwiki\Extension\Plugin;
 use dokuwiki\Form\Form;
 
 /**
  * Class helper_plugin_extension_list takes care of the overall GUI
  */
-class helper_plugin_extension_gui extends DokuWiki_Plugin
+class helper_plugin_extension_gui extends Plugin
 {
     protected $tabs = ['plugins', 'templates', 'search', 'install'];
 

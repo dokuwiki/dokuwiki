@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\Extension\CLIPlugin;
 use dokuwiki\Extension\AuthPlugin;
 use splitbrain\phpcli\Options;
 use splitbrain\phpcli\TableFormatter;
@@ -12,7 +13,7 @@ use splitbrain\phpcli\TableFormatter;
  * @license GPL2
  * @author Karsten Kosmala <karsten.kosmala@gmail.com>
  */
-class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
+class cli_plugin_usermanager extends CLIPlugin
 {
     public function __construct()
     {

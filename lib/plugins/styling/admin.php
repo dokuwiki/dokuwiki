@@ -1,4 +1,5 @@
 <?php
+use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\StyleUtils;
 /**
  * DokuWiki Plugin styling (Admin Component)
@@ -6,7 +7,7 @@ use dokuwiki\StyleUtils;
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-class admin_plugin_styling extends DokuWiki_Admin_Plugin
+class admin_plugin_styling extends AdminPlugin
 {
 
     public $ispopup = false;

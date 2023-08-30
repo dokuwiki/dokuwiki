@@ -1,4 +1,7 @@
 <?php
+use dokuwiki\Extension\ActionPlugin;
+use dokuwiki\Extension\EventHandler;
+use dokuwiki\Extension\Event;
 /**
  * DokuWiki Plugin addomain (Action Component)
  *
@@ -9,13 +12,13 @@
 /**
  * Class action_plugin_addomain
  */
-class action_plugin_authad extends DokuWiki_Action_Plugin
+class action_plugin_authad extends ActionPlugin
 {
 
     /**
      * Registers a callback function for a given event
      */
-    public function register(Doku_Event_Handler $controller)
+    public function register(EventHandler $controller)
     {
         $controller->register_hook('AUTH_LOGIN_CHECK', 'BEFORE', $this, 'handleAuthLoginCheck');
         $controller->register_hook('FORM_LOGIN_OUTPUT', 'BEFORE', $this, 'handleFormLoginOutput');
@@ -27,7 +30,7 @@ class action_plugin_authad extends DokuWiki_Action_Plugin
      * @param Doku_Event $event
      * @param array      $param
      */
-    public function handleAuthLoginCheck(Doku_Event $event, $param)
+    public function handleAuthLoginCheck(Event $event, $param)
     {
         global $INPUT;
 
@@ -52,7 +55,7 @@ class action_plugin_authad extends DokuWiki_Action_Plugin
      * @param Doku_Event $event
      * @param array      $param
      */
-    public function handleFormLoginOutput(Doku_Event $event, $param)
+    public function handleFormLoginOutput(Event $event, $param)
     {
         global $INPUT;
         /** @var auth_plugin_authad $auth */

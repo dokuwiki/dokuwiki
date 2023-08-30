@@ -1,4 +1,5 @@
 <?php
+use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\Utf8\Sort;
 
 /**
@@ -14,7 +15,7 @@ use dokuwiki\Utf8\Sort;
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
  */
-class admin_plugin_acl extends DokuWiki_Admin_Plugin
+class admin_plugin_acl extends AdminPlugin
 {
     public $acl;
     protected $ns;

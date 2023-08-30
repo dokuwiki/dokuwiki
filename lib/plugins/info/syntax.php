@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\Extension\SyntaxPlugin;
 use dokuwiki\Extension\PluginInterface;
 /**
  * Info Plugin: Displays information about various DokuWiki internals
@@ -8,7 +9,7 @@ use dokuwiki\Extension\PluginInterface;
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Esther Brunner <wikidesign@gmail.com>
  */
-class syntax_plugin_info extends DokuWiki_Syntax_Plugin
+class syntax_plugin_info extends SyntaxPlugin
 {
 
     /**

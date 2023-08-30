@@ -5,7 +5,7 @@
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Michael Hamann <michael@content-space.de>
  */
-
+use dokuwiki\Extension\Plugin;
 use dokuwiki\Cache\Cache;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Extension\PluginController;
@@ -13,7 +13,7 @@ use dokuwiki\Extension\PluginController;
 /**
  * Class helper_plugin_extension_repository provides access to the extension repository on dokuwiki.org
  */
-class helper_plugin_extension_repository extends DokuWiki_Plugin
+class helper_plugin_extension_repository extends Plugin
 {
 
     public const EXTENSION_REPOSITORY_API = 'https://www.dokuwiki.org/lib/plugins/pluginrepo/api.php';

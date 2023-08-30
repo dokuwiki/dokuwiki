@@ -1,11 +1,12 @@
 <?php
 
+use dokuwiki\Extension\RemotePlugin;
 use dokuwiki\Remote\AccessDeniedException;
 
 /**
  * Class remote_plugin_acl
  */
-class remote_plugin_acl extends DokuWiki_Remote_Plugin
+class remote_plugin_acl extends RemotePlugin
 {
 
     /**

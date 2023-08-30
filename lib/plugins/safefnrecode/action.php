@@ -1,16 +1,19 @@
 <?php
+
+use dokuwiki\Extension\ActionPlugin;
+use dokuwiki\Extension\EventHandler;
+use dokuwiki\Extension\Event;
 /**
  * DokuWiki Plugin safefnrecode (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-
-class action_plugin_safefnrecode extends DokuWiki_Action_Plugin
+class action_plugin_safefnrecode extends ActionPlugin
 {
 
     /** @inheritdoc */
-    public function register(Doku_Event_Handler $controller)
+    public function register(EventHandler $controller)
     {
         $controller->register_hook('INDEXER_TASKS_RUN', 'BEFORE', $this, 'handleIndexerTasksRun');
     }
@@ -21,7 +24,7 @@ class action_plugin_safefnrecode extends DokuWiki_Action_Plugin
      * @param Doku_Event $event
      * @param $param
      */
-    public function handleIndexerTasksRun(Doku_Event $event, $param)
+    public function handleIndexerTasksRun(Event $event, $param)
     {
         global $conf;
         if ($conf['fnencode'] != 'safe') return;

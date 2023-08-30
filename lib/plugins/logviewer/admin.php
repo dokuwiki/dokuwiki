@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\Form\Form;
 use dokuwiki\Logger;
 
@@ -9,7 +10,7 @@ use dokuwiki\Logger;
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
+class admin_plugin_logviewer extends AdminPlugin
 {
     protected const MAX_READ_SIZE = 1_048_576; // 1 MB
 

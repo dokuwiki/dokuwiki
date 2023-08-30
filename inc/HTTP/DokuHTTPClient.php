@@ -3,7 +3,7 @@
 
 namespace dokuwiki\HTTP;
 
-
+use dokuwiki\Extension\Event;
 /**
  * Adds DokuWiki specific configs to the HTTP client
  *
@@ -67,7 +67,7 @@ class DokuHTTPClient extends HTTPClient
             'data' => $data,
             'method' => $method
         ];
-        $evt = new \Doku_Event('HTTPCLIENT_REQUEST_SEND', $httpdata);
+        $evt = new Event('HTTPCLIENT_REQUEST_SEND', $httpdata);
         if ($evt->advise_before()) {
             $url = $httpdata['url'];
             $data = $httpdata['data'];

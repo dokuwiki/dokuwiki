@@ -1,4 +1,5 @@
 <?php
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\PassHash;
 use dokuwiki\Utf8\Sort;
 
@@ -10,7 +11,7 @@ use dokuwiki\Utf8\Sort;
  * @author    Chris Smith <chris@jalakaic.co.uk>
  * @author    Jan Schumann <js@schumann-it.com>
  */
-class auth_plugin_authldap extends DokuWiki_Auth_Plugin
+class auth_plugin_authldap extends AuthPlugin
 {
     /* @var resource $con holds the LDAP connection */
     protected $con;

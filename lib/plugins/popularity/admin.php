@@ -1,11 +1,13 @@
 <?php
+
+use dokuwiki\Extension\AdminPlugin;
 /**
  * Popularity Feedback Plugin
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-class admin_plugin_popularity extends DokuWiki_Admin_Plugin
+class admin_plugin_popularity extends AdminPlugin
 {
 
     /** @var helper_plugin_popularity */

@@ -5,6 +5,7 @@
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Michael Hamann <michael@content-space.de>
  */
+use dokuwiki\Extension\Plugin;
 use dokuwiki\Extension\PluginInterface;
 use dokuwiki\Utf8\PhpString;
 use splitbrain\PHPArchive\Tar;
@@ -16,7 +17,7 @@ use dokuwiki\Extension\PluginController;
 /**
  * Class helper_plugin_extension_extension represents a single extension (plugin or template)
  */
-class helper_plugin_extension_extension extends DokuWiki_Plugin
+class helper_plugin_extension_extension extends Plugin
 {
     private $id;
     private $base;

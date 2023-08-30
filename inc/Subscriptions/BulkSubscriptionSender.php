@@ -6,7 +6,6 @@ namespace dokuwiki\Subscriptions;
 
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Input\Input;
-use DokuWiki_Auth_Plugin;
 
 class BulkSubscriptionSender extends SubscriptionSender
 {

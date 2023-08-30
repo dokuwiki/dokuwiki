@@ -3,7 +3,6 @@
 namespace dokuwiki\Subscriptions;
 
 use dokuwiki\Input\Input;
-use DokuWiki_Auth_Plugin;
 use Exception;
 
 class SubscriberManager

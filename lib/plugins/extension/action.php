@@ -1,11 +1,14 @@
 <?php
+
+use dokuwiki\Extension\ActionPlugin;
+use dokuwiki\Extension\EventHandler;
+use dokuwiki\Extension\Event;
 /** DokuWiki Plugin extension (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-
-class action_plugin_extension extends DokuWiki_Action_Plugin
+class action_plugin_extension extends ActionPlugin
 {
 
     /**
@@ -14,7 +17,7 @@ class action_plugin_extension extends DokuWiki_Action_Plugin
      * @param Doku_Event_Handler $controller DokuWiki's event controller object
      * @return void
      */
-    public function register(Doku_Event_Handler $controller)
+    public function register(EventHandler $controller)
     {
         $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'info');
     }
@@ -25,7 +28,7 @@ class action_plugin_extension extends DokuWiki_Action_Plugin
      * @param Doku_Event $event
      * @param            $param
      */
-    public function info(Doku_Event $event, $param)
+    public function info(Event $event, $param)
     {
         global $USERINFO;
         global $INPUT;

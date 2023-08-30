@@ -3,7 +3,7 @@
 
 namespace dokuwiki\Debug;
 
-use Doku_Event;
+use dokuwiki\Extension\Event;
 use dokuwiki\Extension\EventHandler;
 use dokuwiki\Logger;
 
@@ -161,7 +161,7 @@ class DebugHelper
             'file' => $file,
             'line' => $line,
         ];
-        $event = new Doku_Event(self::INFO_DEPRECATION_LOG_EVENT, $data);
+        $event = new Event(self::INFO_DEPRECATION_LOG_EVENT, $data);
         if ($event->advise_before()) {
             $msg = $event->data['called'] . ' is deprecated. It was called from ';
             $msg .= $event->data['caller'] . ' in ' . $event->data['file'] . ':' . $event->data['line'];

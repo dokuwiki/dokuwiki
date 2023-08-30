@@ -1,15 +1,16 @@
 <?php
+
+use dokuwiki\Extension\Plugin;
 /**
  * DokuWiki Plugin extension (Helper Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Michael Hamann <michael@content-space.de>
  */
-
 /**
  * Class helper_plugin_extension_list takes care of creating a HTML list of extensions
  */
-class helper_plugin_extension_list extends DokuWiki_Plugin
+class helper_plugin_extension_list extends Plugin
 {
     protected $form = '';
     /** @var  helper_plugin_extension_gui */

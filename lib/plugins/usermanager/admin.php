@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\Utf8\Clean;
 /*
  *  User Manager
@@ -16,7 +17,7 @@ use dokuwiki\Utf8\Clean;
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
  */
-class admin_plugin_usermanager extends DokuWiki_Admin_Plugin
+class admin_plugin_usermanager extends AdminPlugin
 {
     protected const IMAGE_DIR = DOKU_BASE.'lib/plugins/usermanager/images/';
 

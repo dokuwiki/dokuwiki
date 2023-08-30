@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\Extension\CLIPlugin;
 use splitbrain\phpcli\Options;
 use splitbrain\phpcli\TableFormatter;
 use splitbrain\phpcli\Colors;
@@ -12,7 +13,7 @@ use splitbrain\phpcli\Colors;
  * @license GPL2
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-class cli_plugin_extension extends DokuWiki_CLI_Plugin
+class cli_plugin_extension extends CLIPlugin
 {
     /** @inheritdoc */
     protected function setup(Options $options)

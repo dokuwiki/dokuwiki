@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Logger;
 use dokuwiki\Utf8\Sort;
 
@@ -11,7 +12,7 @@ use dokuwiki\Utf8\Sort;
  * @author     Chris Smith <chris@jalakai.co.uk>
  * @author     Jan Schumann <js@schumann-it.com>
  */
-class auth_plugin_authplain extends DokuWiki_Auth_Plugin
+class auth_plugin_authplain extends AuthPlugin
 {
     /** @var array user cache */
     protected $users;
