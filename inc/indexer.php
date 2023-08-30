@@ -41,7 +41,7 @@ function idx_get_version()
         Event::createAndTrigger('INDEXER_VERSION_GET', $data, null, false);
         unset($data['dokuwiki']); // this needs to be first
         ksort($data);
-        foreach ($data as $plugin=>$vers)
+        foreach ($data as $plugin => $vers)
             $version .= '+'.$plugin.'='.$vers;
         $indexer_version = $version;
     }

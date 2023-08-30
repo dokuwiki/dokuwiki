@@ -15,12 +15,6 @@
         <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterKeyword"/>
         <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace"/>
         <exclude name="Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace"/>
-        <exclude name="Squiz.ControlStructures.ForEachLoopDeclaration.NoSpaceBeforeArrow"/>
-        <exclude name="Squiz.ControlStructures.ForEachLoopDeclaration.NoSpaceAfterArrow"/>
-        <exclude name="Squiz.ControlStructures.ForEachLoopDeclaration.SpacingBeforeAs"/>
-        <exclude name="Squiz.ControlStructures.ForLoopDeclaration.SpacingAfterSecond"/>
-        <exclude name="Squiz.ControlStructures.ForLoopDeclaration.NoSpaceAfterSecond"/>
-        <exclude name="Squiz.ControlStructures.ForLoopDeclaration.NoSpaceAfterFirst"/>
         <exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen"/>
         <exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose"/>
         <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore"/>

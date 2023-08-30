@@ -105,7 +105,7 @@ function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit =
     $aLines= preg_split("/(?:\r\n|\r|\n)/", $sText);
     $cnt = count($aLines);
 
-    for ($i=0;$i<$cnt;$i++) {
+    for ($i=0; $i<$cnt; $i++) {
         $sLine =& $aLines[$i];
         if ($sLine === '') continue; // do nothing, if empty
 

@@ -116,7 +116,7 @@ class Indexer
         $tokens = array_count_values($tokens);  // count the frequency of each token
 
         $words = [];
-        foreach ($tokens as $w=>$c) {
+        foreach ($tokens as $w => $c) {
             $l = wordlen($w);
             if (isset($words[$l])){
                 $words[$l][$w] = $c + ($words[$l][$w] ?? 0);
