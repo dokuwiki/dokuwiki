@@ -77,7 +77,6 @@
         <exclude name="PSR12.Files.FileHeader.SpacingAfterBlock"/>
         <exclude name="PSR12.Operators.OperatorSpacing.NoSpaceBefore"/>
         <exclude name="PSR12.Operators.OperatorSpacing.NoSpaceAfter"/>
-        <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
     </rule>
 
     <!-- for now we mix declarations and execution here (mostly for defines) -->

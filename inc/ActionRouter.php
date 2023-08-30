@@ -26,7 +26,7 @@ class ActionRouter {
     protected $transitions = 0;
 
     /** maximum loop */
-    const MAX_TRANSITIONS = 5;
+    protected const MAX_TRANSITIONS = 5;
 
     /** @var string[] the actions disabled in the configuration */
     protected $disabled;

@@ -13,7 +13,7 @@ use dokuwiki\ErrorHandler;
 class PluginController
 {
     /** @var array the types of plugins DokuWiki supports */
-    const PLUGIN_TYPES = ['auth', 'admin', 'syntax', 'action', 'renderer', 'helper', 'remote', 'cli'];
+    public const PLUGIN_TYPES = ['auth', 'admin', 'syntax', 'action', 'renderer', 'helper', 'remote', 'cli'];
 
     protected $listByType = [];
     /** @var array all installed plugins and their enabled state [plugin=>enabled] */

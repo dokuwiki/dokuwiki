@@ -9,7 +9,7 @@ use dokuwiki\Logger;
 
 class DebugHelper
 {
-    const INFO_DEPRECATION_LOG_EVENT = 'INFO_DEPRECATION_LOG';
+    protected const INFO_DEPRECATION_LOG_EVENT = 'INFO_DEPRECATION_LOG';
 
     /**
      * Check if deprecation messages shall be handled

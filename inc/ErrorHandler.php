@@ -15,7 +15,7 @@ class ErrorHandler
      * Standard error codes used in PHP errors
      * @see https://www.php.net/manual/en/errorfunc.constants.php
      */
-    const ERRORCODES = [
+    protected const ERRORCODES = [
         1 => 'E_ERROR',
         2 => 'E_WARNING',
         4 => 'E_PARSE',

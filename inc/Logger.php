@@ -9,9 +9,9 @@ use dokuwiki\Extension\Event;
  */
 class Logger
 {
-    const LOG_ERROR = 'error';
-    const LOG_DEPRECATED = 'deprecated';
-    const LOG_DEBUG = 'debug';
+    public const LOG_ERROR = 'error';
+    public const LOG_DEPRECATED = 'deprecated';
+    public const LOG_DEBUG = 'debug';
 
     /** @var Logger[] */
     static protected $instances;

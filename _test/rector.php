@@ -88,7 +88,6 @@ return static function (RectorConfig $rectorConfig): void {
         IssetOnPropertyObjectToPropertyExistsRector::class, // maybe?
         SymplifyQuoteEscapeRector::class,
         CatchExceptionNameMatchingTypeRector::class,
-        PublicConstantVisibilityRector::class, // open for discussion
         EncapsedStringsToSprintfRector::class,
         CallableThisArrayToAnonymousFunctionRector::class,
         StaticClosureRector::class,

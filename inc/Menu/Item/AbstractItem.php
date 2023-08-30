@@ -21,11 +21,11 @@ abstract class AbstractItem
 {
 
     /** menu item is to be shown on desktop screens only */
-    const CTX_DESKTOP = 1;
+    public const CTX_DESKTOP = 1;
     /** menu item is to be shown on mobile screens only */
-    const CTX_MOBILE = 2;
+    public const CTX_MOBILE = 2;
     /** menu item is to be shown in all contexts */
-    const CTX_ALL = 3;
+    public const CTX_ALL = 3;
 
     /** @var string name of the action, usually the lowercase class name */
     protected $type = '';

@@ -18,10 +18,10 @@ use dokuwiki\Utf8\PhpString;
 class Doku_Renderer_metadata extends Doku_Renderer
 {
     /** the approximate byte lenght to capture for the abstract */
-    const ABSTRACT_LEN = 250;
+    public const ABSTRACT_LEN = 250;
 
     /** the maximum UTF8 character length for the abstract */
-    const ABSTRACT_MAX = 500;
+    public const ABSTRACT_MAX = 500;
 
     /** @var array transient meta data, will be reset on each rendering */
     public $meta = [];

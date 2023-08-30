@@ -18,7 +18,7 @@ define('DOKU_API_VERSION', 11);
 class ApiCore
 {
     /** @var int Increased whenever the API is changed */
-    const API_VERSION = 11;
+    public const API_VERSION = 11;
 
 
     /** @var Api */

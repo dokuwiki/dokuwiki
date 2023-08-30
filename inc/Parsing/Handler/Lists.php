@@ -9,7 +9,7 @@ class Lists extends AbstractRewriter
 
     protected $initialDepth = 0;
 
-    const NODE = 1;
+    public const NODE = 1;
 
     /** @inheritdoc */
     public function finalise()
