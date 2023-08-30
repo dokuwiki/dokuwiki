@@ -803,7 +803,6 @@ class helper_plugin_extension_extension extends Plugin
             }
 
             if ($plugin instanceof PluginInterface) {
-                /* @var DokuWiki_Plugin $plugin */
                 $this->localInfo = $plugin->getInfo();
             }
         }

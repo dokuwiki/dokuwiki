@@ -1,6 +1,7 @@
 <?php
 
 use dokuwiki\Extension\AdminPlugin;
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Utf8\Clean;
 /*
  *  User Manager
@@ -38,7 +39,7 @@ class admin_plugin_usermanager extends AdminPlugin
      */
     public function __construct()
     {
-        /** @var DokuWiki_Auth_Plugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
 
         $this->setupLocale();
@@ -358,7 +359,7 @@ class admin_plugin_usermanager extends AdminPlugin
      */
     public function isAccessibleByCurrentUser()
     {
-        /** @var DokuWiki_Auth_Plugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
         if(!$auth || !$auth->canDo('getUsers') ) {
             return false;
@@ -901,7 +902,7 @@ class admin_plugin_usermanager extends AdminPlugin
      */
     protected function retrieveUser($clean = true)
     {
-        /** @var DokuWiki_Auth_Plugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
         global $INPUT;
 

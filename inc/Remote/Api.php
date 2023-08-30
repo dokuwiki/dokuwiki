@@ -310,7 +310,7 @@ class Api
                 $plugin = plugin_load('remote', $pluginName);
                 if (!is_subclass_of($plugin, 'dokuwiki\Extension\RemotePlugin')) {
                     throw new RemoteException(
-                        "Plugin $pluginName does not implement dokuwiki\Plugin\DokuWiki_Remote_Plugin"
+                        "Plugin $pluginName does not implement dokuwiki\Extension\RemotePlugin"
                     );
                 }
 

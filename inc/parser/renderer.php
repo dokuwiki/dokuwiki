@@ -18,7 +18,7 @@ define('PREG_PATTERN_VALID_LANGUAGE', '#[^a-zA-Z0-9\-_]#');
 /**
  * An empty renderer, produces no output
  *
- * Inherits from dokuwiki\Plugin\DokuWiki_Plugin for giving additional functions to render plugins
+ * Inherits from dokuwiki\Extension\Plugin for giving additional functions to render plugins
  *
  * The renderer transforms the syntax instructions created by the parser and handler into the
  * desired output format. For each instruction a corresponding method defined in this class will

@@ -5,7 +5,9 @@ namespace dokuwiki\Subscriptions;
 
 
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Input\Input;
+use Exception;
 
 class BulkSubscriptionSender extends SubscriptionSender
 {
@@ -19,8 +21,8 @@ class BulkSubscriptionSender extends SubscriptionSender
      * This function is called form lib/exe/indexer.php
      *
      * @param string $page
-     *
      * @return int number of sent mails
+     * @throws Exception
      */
     public function sendBulk($page)
     {
@@ -29,7 +31,7 @@ class BulkSubscriptionSender extends SubscriptionSender
             return 0;
         }
 
-        /** @var DokuWiki_Auth_Plugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
         global $conf;
         global $USERINFO;
