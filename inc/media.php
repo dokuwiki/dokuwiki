@@ -78,7 +78,7 @@ function media_metasave($id,$auth,$data){
         if(empty($val)){
             $meta->deleteField($key);
         }else{
-            $meta->setField($key,$val);
+            $meta->setField($key, $val);
         }
     }
 
@@ -98,10 +98,10 @@ function media_metasave($id,$auth,$data){
         // add a log entry to the media changelog
         addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT, $lang['media_meta_edited'], '', null, $sizechange);
 
-        msg($lang['metasaveok'],1);
+        msg($lang['metasaveok'], 1);
         return $id;
     }else{
-        msg($lang['metasaveerr'],-1);
+        msg($lang['metasaveerr'], -1);
         return false;
     }
 }
@@ -222,7 +222,7 @@ function media_inuse($id) {
     global $conf;
 
     if($conf['refcheck']){
-        $mediareferences = ft_mediause($id,true);
+        $mediareferences = ft_mediause($id, true);
         if($mediareferences === []) {
             return false;
         } else {
@@ -265,7 +265,7 @@ function media_delete($id,$auth){
 
     $data['unl'] = false;
     $data['del'] = false;
-    $evt = new Event('MEDIA_DELETE_FILE',$data);
+    $evt = new Event('MEDIA_DELETE_FILE', $data);
     if ($evt->advise_before()) {
         $old = @filemtime($file);
         if(!file_exists(mediaFN($id, $old)) && file_exists($file)) {
@@ -365,7 +365,7 @@ function media_upload($ns,$auth,$file=false){
         $imime = $fmime;
     }elseif($fext && $fext != $iext){
         // extension was changed, print warning
-        msg(sprintf($lang['mediaextchange'],$fext,$iext));
+        msg(sprintf($lang['mediaextchange'], $fext, $iext));
     }
 
     $res = media_save(
@@ -453,10 +453,10 @@ function media_save($file, $id, $ow, $auth, $move) {
         static fn($q) => preg_quote($q, "/"),
         $types
     );
-    $regex = implode('|',$types);
+    $regex = implode('|', $types);
 
     // because a temp file was created already
-    if(!preg_match('/\.('.$regex.')$/i',$fn)) {
+    if(!preg_match('/\.('.$regex.')$/i', $fn)) {
         return [$lang['uploadwrong'], -1];
     }
 
@@ -469,7 +469,7 @@ function media_save($file, $id, $ow, $auth, $move) {
     // check for valid content
     $ok = media_contentcheck($file['name'], $file['mime']);
     if($ok == -1){
-        return [sprintf($lang['uploadbadcontent'],'.' . $file['ext']), -1];
+        return [sprintf($lang['uploadbadcontent'], '.' . $file['ext']), -1];
     }elseif($ok == -2){
         return [$lang['uploadspam'], -1];
     }elseif($ok == -3){
@@ -538,14 +538,14 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
     $filesize_old = file_exists($fn) ? filesize($fn) : 0;
 
     if($move($fn_tmp, $fn)) {
-        @clearstatcache(true,$fn);
+        @clearstatcache(true, $fn);
         $new = @filemtime($fn);
         // Set the correct permission here.
         // Always chmod media because they may be saved with different permissions than expected from the php umask.
         // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
         chmod($fn, $conf['fmode']);
-        msg($lang['uploadsucc'],1);
-        media_notify($id,$fn,$imime,$old,$new);
+        msg($lang['uploadsucc'], 1);
+        media_notify($id, $fn, $imime, $old, $new);
         // add a log entry to the media changelog
         $filesize_new = filesize($fn);
         $sizechange = $filesize_new - $filesize_old;
@@ -637,12 +637,12 @@ function media_contentcheck($file,$mime){
         if($fh){
             $bytes = fread($fh, 256);
             fclose($fh);
-            if(preg_match('/<(script|a|img|html|body|iframe)[\s>]/i',$bytes)){
+            if(preg_match('/<(script|a|img|html|body|iframe)[\s>]/i', $bytes)){
                 return -3; //XSS: possibly malicious content
             }
         }
     }
-    if(substr($mime,0,6) == 'image/'){
+    if(substr($mime, 0, 6) == 'image/'){
         $info = @getimagesize($file);
         if($mime == 'image/gif' && $info[2] != 1){
             return -1; // uploaded content did not match the file extension
@@ -652,7 +652,7 @@ function media_contentcheck($file,$mime){
             return -1;
         }
         # fixme maybe check other images types as well
-    }elseif(substr($mime,0,5) == 'text/'){
+    }elseif(substr($mime, 0, 5) == 'text/'){
         global $TEXT;
         $TEXT = io_readFile($file);
         if(checkwordblock()){
@@ -708,10 +708,10 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
             media_searchform($ns);
         }
 
-        $dir = utf8_encodeFN(str_replace(':','/',$ns));
+        $dir = utf8_encodeFN(str_replace(':', '/', $ns));
         $data = [];
-        search($data,$conf['mediadir'],'search_mediafiles',
-                ['showmsg'=>true, 'depth'=>1],$dir,1,$sort);
+        search($data, $conf['mediadir'], 'search_mediafiles',
+                ['showmsg'=>true, 'depth'=>1], $dir, 1, $sort);
 
         if(!count($data)){
             echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
@@ -911,7 +911,7 @@ function media_tab_files($ns,$auth=null,$jump='') {
     if($auth < AUTH_READ){
         echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
     }else{
-        media_filelist($ns,$auth,$jump,true,_media_get_sort_type());
+        media_filelist($ns, $auth, $jump, true, _media_get_sort_type());
     }
 }
 
@@ -953,7 +953,7 @@ function media_tab_search($ns,$auth=null) {
 
     media_searchform($ns, $query, true);
     if ($do == 'searchlist' || $query) {
-        media_searchlist($query,$ns,$auth,true,_media_get_sort_type());
+        media_searchlist($query, $ns, $auth, true, _media_get_sort_type());
     }
     echo '</div>'.NL;
 }
@@ -997,7 +997,7 @@ function media_tab_edit($image, $ns, $auth=null) {
 
     if ($image) {
         [, $mime] = mimetype($image);
-        if ($mime == 'image/jpeg') media_metaform($image,$auth);
+        if ($mime == 'image/jpeg') media_metaform($image, $auth);
     }
 }
 
@@ -1021,7 +1021,7 @@ function media_tab_history($image, $ns, $auth=null) {
         if ($do == 'diff'){
             (new MediaDiff($image))->show(); //media_diff($image, $ns, $auth);
         } else {
-            $first = $INPUT->int('first',-1);
+            $first = $INPUT->int('first', -1);
             (new MediaRevisions($image))->show($first);
         }
     } else {
@@ -1199,7 +1199,7 @@ function media_file_tags($meta) {
     foreach ($fields as $tag) {
         $t = [];
         if (!empty($tag[0])) $t = [$tag[0]];
-        if (isset($tag[3]) && is_array($tag[3])) $t = array_merge($t,$tag[3]);
+        if (isset($tag[3]) && is_array($tag[3])) $t = array_merge($t, $tag[3]);
         $value = media_getTag($t, $meta);
         $tags[] = ['tag' => $tag, 'value' => $value];
     }
@@ -1236,7 +1236,7 @@ function media_details($image, $auth, $rev='', $meta=false) {
     echo '</dl>'.NL;
     echo '<dl>'.NL;
     echo '<dt>'.$lang['reference'].':</dt>';
-    $media_usage = ft_mediause($image,true);
+    $media_usage = ft_mediause($image, true);
     if($media_usage !== []){
         foreach($media_usage as $path){
             echo '<dd>'.html_wikilink($path).'</dd>';
@@ -1367,8 +1367,8 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
     if (!blank($query)) {
         $evt = new Event('MEDIA_SEARCH', $evdata);
         if ($evt->advise_before()) {
-            $dir = utf8_encodeFN(str_replace(':','/',$evdata['ns']));
-            $quoted = preg_quote($evdata['query'],'/');
+            $dir = utf8_encodeFN(str_replace(':', '/', $evdata['ns']));
+            $quoted = preg_quote($evdata['query'], '/');
             //apply globbing
             $quoted = str_replace(['\*', '\?'], ['.*', '.'], $quoted, $count);
 
@@ -1389,8 +1389,8 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
     }
 
     if (!$fullscreen) {
-        echo '<h1 id="media__ns">'.sprintf($lang['searchmedia_in'],hsc($ns).':*').'</h1>'.NL;
-        media_searchform($ns,$query);
+        echo '<h1 id="media__ns">'.sprintf($lang['searchmedia_in'], hsc($ns).':*').'</h1>'.NL;
+        media_searchform($ns, $query);
     }
 
     if(!count($evdata['data'])){
@@ -1426,7 +1426,7 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
  * @return string html
  */
 function media_printicon($filename, $size=''){
-    [$ext] = mimetype(mediaFN($filename),false);
+    [$ext] = mimetype(mediaFN($filename), false);
 
     if (file_exists(DOKU_INC.'lib/images/fileicons/'.$size.'/'.$ext.'.png')) {
         $icon = DOKU_BASE.'lib/images/fileicons/'.$size.'/'.$ext.'.png';
@@ -1469,7 +1469,7 @@ function media_managerURL($params = false, $amp = '&amp;', $abs = false, $params
 
     if ($params_array) return $gets;
 
-    return wl($ID,$gets,$abs,$amp);
+    return wl($ID, $gets, $abs, $amp);
 }
 
 /**
@@ -1621,10 +1621,10 @@ function media_nstree($ns){
         $ns = (string)getNS($ID);
     }
 
-    $ns_dir  = utf8_encodeFN(str_replace(':','/',$ns));
+    $ns_dir  = utf8_encodeFN(str_replace(':', '/', $ns));
 
     $data = [];
-    search($data,$conf['mediadir'],'search_index',['ns' => $ns_dir, 'nofiles' => true]);
+    search($data, $conf['mediadir'], 'search_index', ['ns' => $ns_dir, 'nofiles' => true]);
 
     // wrap a list with the root level around the other namespaces
     array_unshift($data, ['level' => 0, 'id' => '', 'open' =>'true', 'label' => '['.$lang['mediaroot'].']']);
@@ -1650,7 +1650,7 @@ function media_nstree($ns){
         }
     }
 
-    echo html_buildlist($data,'idx','media_nstree_item','media_nstree_li');
+    echo html_buildlist($data, 'idx', 'media_nstree_item', 'media_nstree_li');
 }
 
 /**
@@ -1799,7 +1799,7 @@ function media_get_token($id,$w,$h){
         if ($w) $token .= '.'.$w;
         if ($h) $token .= '.'.$h;
 
-        return substr(PassHash::hmac('md5', $token, auth_cookiesalt()),0,6);
+        return substr(PassHash::hmac('md5', $token, auth_cookiesalt()), 0, 6);
     }
 
     return '';
@@ -1826,7 +1826,7 @@ function media_get_from_URL($url,$ext,$cache){
     if ($cache==0)           return false;
     if (!$conf['fetchsize']) return false;
 
-    $local = getCacheName(strtolower($url),".media.$ext");
+    $local = getCacheName(strtolower($url), ".media.$ext");
     $mtime = @filemtime($local); // 0 if not exists
 
     //decide if download needed:
@@ -1869,9 +1869,9 @@ function media_image_download($url,$file){
     if(!$data) return false;
 
     $fileexists = file_exists($file);
-    $fp = @fopen($file,"w");
+    $fp = @fopen($file, "w");
     if(!$fp) return false;
-    fwrite($fp,$data);
+    fwrite($fp, $data);
     fclose($fp);
     if(!$fileexists && $conf['fperm']) chmod($file, $conf['fperm']);
 
@@ -1914,7 +1914,7 @@ function media_resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
     }
     $cmd .= " $from $to";
 
-    @exec($cmd,$out,$retval);
+    @exec($cmd, $out, $retval);
     if ($retval == 0) return true;
     return false;
 }
@@ -1951,7 +1951,7 @@ function media_crop_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x,$o
     }
     $cmd .= " $from $to";
 
-    @exec($cmd,$out,$retval);
+    @exec($cmd, $out, $retval);
     if ($retval == 0) return true;
     return false;
 }
@@ -2013,7 +2013,7 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
     //keep png alpha channel if possible
     if($ext == 'png' && $conf['gdlib']>1 && function_exists('imagesavealpha')){
         imagealphablending($newimg, false);
-        imagesavealpha($newimg,true);
+        imagesavealpha($newimg, true);
     }
 
     //keep gif transparent color if possible

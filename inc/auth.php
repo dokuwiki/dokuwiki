@@ -132,15 +132,15 @@ function auth_loadACL() {
     foreach($acl as $line) {
         $line = trim($line);
         if(empty($line) || ($line[0] == '#')) continue; // skip blank lines & comments
-        [$id, $rest] = preg_split('/[ \t]+/',$line,2);
+        [$id, $rest] = preg_split('/[ \t]+/', $line, 2);
 
         // substitute user wildcard first (its 1:1)
         if(strstr($line, '%USER%')){
             // if user is not logged in, this ACL line is meaningless - skip it
             if (!$INPUT->server->has('REMOTE_USER')) continue;
 
-            $id   = str_replace('%USER%',cleanID($INPUT->server->str('REMOTE_USER')),$id);
-            $rest = str_replace('%USER%',auth_nameencode($INPUT->server->str('REMOTE_USER')),$rest);
+            $id   = str_replace('%USER%', cleanID($INPUT->server->str('REMOTE_USER')), $id);
+            $rest = str_replace('%USER%', auth_nameencode($INPUT->server->str('REMOTE_USER')), $rest);
         }
 
         // substitute group wildcard (its 1:m)
@@ -148,8 +148,8 @@ function auth_loadACL() {
             // if user is not logged in, grps is empty, no output will be added (i.e. skipped)
             if(isset($USERINFO['grps'])){
                 foreach((array) $USERINFO['grps'] as $grp){
-                    $nid   = str_replace('%GROUP%',cleanID($grp),$id);
-                    $nrest = str_replace('%GROUP%','@'.auth_nameencode($grp),$rest);
+                    $nid   = str_replace('%GROUP%', cleanID($grp), $id);
+                    $nrest = str_replace('%GROUP%', '@'.auth_nameencode($grp), $rest);
                     $out[] = "$nid\t$nrest";
                 }
             }
@@ -781,7 +781,7 @@ function auth_nameencode($name, $skip_group = false) {
  * @return string
  */
 function auth_nameencode_callback($matches) {
-    return '%'.dechex(ord(substr($matches[1],-1)));
+    return '%'.dechex(ord(substr($matches[1], -1)));
 }
 
 /**

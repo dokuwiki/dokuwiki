@@ -128,7 +128,7 @@ class RevisionInfo
         if ($checkTimestamp && $this->val('timestamp') === false) {
             // exact date is unknown for externally deleted file
             // when unknown, alter formatted string "YYYY-mm-DD HH:MM" to "____-__-__ __:__"
-            $formatted = preg_replace('/[0-9a-zA-Z]/','_', $formatted);
+            $formatted = preg_replace('/[0-9a-zA-Z]/', '_', $formatted);
         }
         return '<span class="date">'. $formatted .'</span>';
     }
@@ -266,7 +266,7 @@ class RevisionInfo
             // diff icon will not be shown when external edit occurred
             // because no attic file to be compared with current.
             $revs = (new MediaChangeLog($id))->getRevisions(0, 1);
-            $showLink = (count($revs) && file_exists(mediaFN($id,$revs[0])) && file_exists(mediaFN($id)));
+            $showLink = (count($revs) && file_exists(mediaFN($id, $revs[0])) && file_exists(mediaFN($id)));
             if ($showLink) {
                 $param = ['tab_details'=>'history', 'mediado'=>'diff', 'ns'=> getNS($id), 'image'=> $id];
                 $href = media_managerURL($param, '&');

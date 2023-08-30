@@ -2,8 +2,8 @@
 
 use dokuwiki\Extension\Event;
 
-if(!defined('DOKU_INC')) define('DOKU_INC',__DIR__.'/../../');
-if(!defined('DOKU_MEDIADETAIL')) define('DOKU_MEDIADETAIL',1);
+if(!defined('DOKU_INC')) define('DOKU_INC', __DIR__.'/../../');
+if(!defined('DOKU_MEDIADETAIL')) define('DOKU_MEDIADETAIL', 1);
 
 // define all DokuWiki globals here (needed within test requests but also helps to keep track)
 global $INPUT, $IMG, $ID, $REV, $SRC, $ERROR, $AUTH;
@@ -16,7 +16,7 @@ $REV  = $INPUT->int('rev');
 
 // this makes some general info available as well as the info about the
 // "parent" page
-$INFO = array_merge(pageinfo(),mediainfo());
+$INFO = array_merge(pageinfo(), mediainfo());
 
 $tmp = [];
 Event::createAndTrigger('DETAIL_STARTED', $tmp);
@@ -29,7 +29,7 @@ $ERROR = false;
 $AUTH = auth_quickaclcheck($IMG);
 if($AUTH >= AUTH_READ){
     // check if image exists
-    $SRC = mediaFN($IMG,$REV);
+    $SRC = mediaFN($IMG, $REV);
     if(!file_exists($SRC)){
         //doesn't exist!
         http_status(404);

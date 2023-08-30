@@ -623,13 +623,13 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
         $more = buildURLparams($more, $sep);
     } else {
         $matches = [];
-        if (preg_match_all('/\b(w|h)=(\d*)\b/',$more,$matches,PREG_SET_ORDER) || $isexternalimage){
+        if (preg_match_all('/\b(w|h)=(\d*)\b/', $more, $matches, PREG_SET_ORDER) || $isexternalimage){
             $resize = ['w'=>0, 'h'=>0];
             foreach ($matches as $match){
                 $resize[$match[1]] = $match[2];
             }
             $more .= $more === '' ? '' : $sep;
-            $more .= 'tok='.media_get_token($id,$resize['w'],$resize['h']);
+            $more .= 'tok='.media_get_token($id, $resize['w'], $resize['h']);
         }
         $more = str_replace('cache=cache', '', $more); //skip default
         $more = str_replace(',,', ',', $more);
@@ -870,7 +870,7 @@ function clientismobile() {
  * @return bool
  */
 function link_isinterwiki($link){
-    if (preg_match('/^[a-zA-Z0-9\.]+>/u',$link)) return true;
+    if (preg_match('/^[a-zA-Z0-9\.]+>/u', $link)) return true;
     return false;
 }
 
@@ -1369,7 +1369,7 @@ function getGoogleQuery() {
 
     // only handle common SEs
     if(!array_key_exists('host', $url)) return '';
-    if(!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/',$url['host'])) return '';
+    if(!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/', $url['host'])) return '';
 
     $query = [];
     if(!array_key_exists('query', $url)) return '';
@@ -1541,7 +1541,7 @@ function unslash($string, $char = "'") {
  * @return int
  */
 function php_to_byte($value) {
-    switch (strtoupper(substr($value,-1))) {
+    switch (strtoupper(substr($value, -1))) {
         case 'G':
             $ret = (int) substr($value, 0, -1) * 1024 * 1024 * 1024;
             break;
@@ -1979,7 +1979,7 @@ function inlineSVG($file, $maxsize = 2048) {
     if(filesize($file) > $maxsize) return false;
     if(!is_readable($file)) return false;
     $content = file_get_contents($file);
-    $content = preg_replace('/<!--.*?(-->)/s','', $content); // comments
+    $content = preg_replace('/<!--.*?(-->)/s', '', $content); // comments
     $content = preg_replace('/<\?xml .*?\?>/i', '', $content); // xml header
     $content = preg_replace('/<!DOCTYPE .*?>/i', '', $content); // doc type
     $content = preg_replace('/>\s+</s', '><', $content); // newlines between tags

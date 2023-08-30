@@ -43,7 +43,7 @@ function mimetype($file, $knownonly=true){
         }
     }
     if($mtypes[$ext][0] == '!'){
-        return [$ext, substr($mtypes[$ext],1), true];
+        return [$ext, substr($mtypes[$ext], 1), true];
     }else{
         return [$ext, $mtypes[$ext], false];
     }
@@ -57,7 +57,7 @@ function mimetype($file, $knownonly=true){
 function getMimeTypes() {
     static $mime = null;
     if ( !$mime ) {
-        $mime = retrieveConfig('mime','confToHash');
+        $mime = retrieveConfig('mime', 'confToHash');
         $mime = array_filter($mime);
     }
     return $mime;
@@ -71,7 +71,7 @@ function getMimeTypes() {
 function getAcronyms() {
     static $acronyms = null;
     if ( !$acronyms ) {
-        $acronyms = retrieveConfig('acronyms','confToHash');
+        $acronyms = retrieveConfig('acronyms', 'confToHash');
         $acronyms = array_filter($acronyms, 'strlen');
     }
     return $acronyms;
@@ -85,7 +85,7 @@ function getAcronyms() {
 function getSmileys() {
     static $smileys = null;
     if ( !$smileys ) {
-        $smileys = retrieveConfig('smileys','confToHash');
+        $smileys = retrieveConfig('smileys', 'confToHash');
         $smileys = array_filter($smileys, 'strlen');
     }
     return $smileys;
@@ -99,7 +99,7 @@ function getSmileys() {
 function getEntities() {
     static $entities = null;
     if ( !$entities ) {
-        $entities = retrieveConfig('entities','confToHash');
+        $entities = retrieveConfig('entities', 'confToHash');
         $entities = array_filter($entities, 'strlen');
     }
     return $entities;
@@ -113,7 +113,7 @@ function getEntities() {
 function getInterwiki() {
     static $wikis = null;
     if ( !$wikis ) {
-        $wikis = retrieveConfig('interwiki','confToHash',[true]);
+        $wikis = retrieveConfig('interwiki', 'confToHash', [true]);
         $wikis = array_filter($wikis, 'strlen');
 
         //add sepecial case 'this'
@@ -176,7 +176,7 @@ function getCdnUrls() {
 function getWordblocks() {
     static $wordblocks = null;
     if ( !$wordblocks ) {
-        $wordblocks = retrieveConfig('wordblock','file',null,'array_merge_with_removal');
+        $wordblocks = retrieveConfig('wordblock', 'file', null, 'array_merge_with_removal');
     }
     return $wordblocks;
 }
@@ -189,7 +189,7 @@ function getWordblocks() {
 function getSchemes() {
     static $schemes = null;
     if ( !$schemes ) {
-        $schemes = retrieveConfig('scheme','file',null,'array_merge_with_removal');
+        $schemes = retrieveConfig('scheme', 'file', null, 'array_merge_with_removal');
         $schemes = array_map('trim', $schemes);
         $schemes = preg_replace('/^#.*/', '', $schemes);
         $schemes = array_filter($schemes);
@@ -299,12 +299,12 @@ function retrieveConfig($type,$fn,$params=null,$combine='array_merge') {
     if(!is_array($params)) $params = [];
 
     $combined = [];
-    if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "'.$type.'"',E_USER_WARNING);
+    if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "'.$type.'"', E_USER_WARNING);
     foreach (['default', 'local', 'protected'] as $config_group) {
         if (empty($config_cascade[$type][$config_group])) continue;
         foreach ($config_cascade[$type][$config_group] as $file) {
             if (file_exists($file)) {
-                $config = call_user_func_array($fn,array_merge([$file],$params));
+                $config = call_user_func_array($fn, array_merge([$file], $params));
                 $combined = $combine($combined, $config);
             }
         }
@@ -325,7 +325,7 @@ function getConfigFiles($type) {
     global $config_cascade;
     $files = [];
 
-    if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "'.$type.'"',E_USER_WARNING);
+    if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "'.$type.'"', E_USER_WARNING);
     foreach (['default', 'local', 'protected'] as $config_group) {
         if (empty($config_cascade[$type][$config_group])) continue;
         $files = array_merge($files, $config_cascade[$type][$config_group]);
@@ -349,8 +349,8 @@ function actionOK($action){
         global $auth;
 
         // prepare disabled actions array and handle legacy options
-        $disabled = explode(',',$conf['disableactions']);
-        $disabled = array_map('trim',$disabled);
+        $disabled = explode(',', $conf['disableactions']);
+        $disabled = array_map('trim', $disabled);
         if((isset($conf['openregister']) && !$conf['openregister']) || is_null($auth) || !$auth->canDo('addUser')) {
             $disabled[] = 'register';
         }
@@ -375,7 +375,7 @@ function actionOK($action){
         $disabled = array_unique($disabled);
     }
 
-    return !in_array($action,$disabled);
+    return !in_array($action, $disabled);
 }
 
 /**
@@ -438,9 +438,9 @@ function conf_encodeString($str,$code) {
  * @return string             plain text
  */
 function conf_decodeString($str) {
-    switch (substr($str,0,3)) {
-        case '<b>' : return base64_decode(substr($str,3));
-        case '<u>' : return convert_uudecode(substr($str,3));
+    switch (substr($str, 0, 3)) {
+        case '<b>' : return base64_decode(substr($str, 3));
+        case '<u>' : return convert_uudecode(substr($str, 3));
         default:  // not encoded (or unknown)
                      return $str;
     }
@@ -456,8 +456,8 @@ function conf_decodeString($str) {
  */
 function array_merge_with_removal($current, $new) {
     foreach ($new as $val) {
-        if (substr($val,0,1) == DOKU_CONF_NEGATION) {
-            $idx = array_search(trim(substr($val,1)),$current);
+        if (substr($val, 0, 1) == DOKU_CONF_NEGATION) {
+            $idx = array_search(trim(substr($val, 1)), $current);
             if ($idx !== false) {
                 unset($current[$idx]);
             }
@@ -466,6 +466,6 @@ function array_merge_with_removal($current, $new) {
         }
     }
 
-    return array_slice($current,0);
+    return array_slice($current, 0);
 }
 //Setup VIM: ex: et ts=4 :

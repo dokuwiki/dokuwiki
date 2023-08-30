@@ -28,13 +28,13 @@ $preload = fullpath(__DIR__).'/preload.php';
 if (file_exists($preload)) include($preload);
 
 // define the include path
-if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(__DIR__.'/../').'/');
+if(!defined('DOKU_INC')) define('DOKU_INC', fullpath(__DIR__.'/../').'/');
 
 // define Plugin dir
-if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
+if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN', DOKU_INC.'lib/plugins/');
 
 // define config path (packagers may want to change this to /etc/dokuwiki/)
-if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
+if(!defined('DOKU_CONF')) define('DOKU_CONF', DOKU_INC.'conf/');
 
 // check for error reporting override or set error reporting to sane values
 if (!defined('DOKU_E_LEVEL') && file_exists(DOKU_CONF.'report_e_all')) {
@@ -97,20 +97,20 @@ foreach (['default', 'local'] as $config_group) {
 date_default_timezone_set(@date_default_timezone_get());
 
 // define baseURL
-if(!defined('DOKU_REL')) define('DOKU_REL',getBaseURL(false));
-if(!defined('DOKU_URL')) define('DOKU_URL',getBaseURL(true));
+if(!defined('DOKU_REL')) define('DOKU_REL', getBaseURL(false));
+if(!defined('DOKU_URL')) define('DOKU_URL', getBaseURL(true));
 if(!defined('DOKU_BASE')){
     if($conf['canonical']){
-        define('DOKU_BASE',DOKU_URL);
+        define('DOKU_BASE', DOKU_URL);
     }else{
-        define('DOKU_BASE',DOKU_REL);
+        define('DOKU_BASE', DOKU_REL);
     }
 }
 
 // define whitespace
-if(!defined('NL')) define ('NL',"\n");
-if(!defined('DOKU_LF')) define ('DOKU_LF',"\n");
-if(!defined('DOKU_TAB')) define ('DOKU_TAB',"\t");
+if(!defined('NL')) define ('NL', "\n");
+if(!defined('DOKU_LF')) define ('DOKU_LF', "\n");
+if(!defined('DOKU_TAB')) define ('DOKU_TAB', "\t");
 
 // define cookie and session id, append server port when securecookie is configured FS#1664
 if (!defined('DOKU_COOKIE')) {
@@ -120,7 +120,7 @@ if (!defined('DOKU_COOKIE')) {
 }
 
 // define main script
-if(!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT','doku.php');
+if(!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT', 'doku.php');
 
 if(!defined('DOKU_TPL')) {
     /**
@@ -181,7 +181,7 @@ if(!headers_sent() && !defined('NOSESSION')) {
 }
 
 // don't let cookies ever interfere with request vars
-$_REQUEST = array_merge($_GET,$_POST);
+$_REQUEST = array_merge($_GET, $_POST);
 
 // we don't want a purge URL to be digged
 if(isset($_REQUEST['purge']) && !empty($_SERVER['HTTP_REFERER'])) unset($_REQUEST['purge']);
@@ -351,7 +351,7 @@ function init_files(){
 
     foreach($files as $file){
         if(!file_exists($file)){
-            $fh = @fopen($file,'a');
+            $fh = @fopen($file, 'a');
             if($fh){
                 fclose($fh);
                 if($conf['fperm']) chmod($file, $conf['fperm']);
@@ -450,32 +450,32 @@ function getBaseURL($abs=null){
 
     if(!empty($conf['basedir'])){
         $dir = $conf['basedir'];
-    }elseif(substr($_SERVER['SCRIPT_NAME'],-4) == '.php'){
+    }elseif(substr($_SERVER['SCRIPT_NAME'], -4) == '.php'){
         $dir = dirname($_SERVER['SCRIPT_NAME']);
-    }elseif(substr($_SERVER['PHP_SELF'],-4) == '.php'){
+    }elseif(substr($_SERVER['PHP_SELF'], -4) == '.php'){
         $dir = dirname($_SERVER['PHP_SELF']);
     }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']){
-        $dir = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
+        $dir = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'], '/').'/', '',
                 $_SERVER['SCRIPT_FILENAME']);
         $dir = dirname('/'.$dir);
     }else{
         $dir = '.'; //probably wrong
     }
 
-    $dir = str_replace('\\','/',$dir);             // bugfix for weird WIN behaviour
-    $dir = preg_replace('#//+#','/',"/$dir/");     // ensure leading and trailing slashes
+    $dir = str_replace('\\', '/', $dir);             // bugfix for weird WIN behaviour
+    $dir = preg_replace('#//+#', '/', "/$dir/");     // ensure leading and trailing slashes
 
     //handle script in lib/exe dir
-    $dir = preg_replace('!lib/exe/$!','',$dir);
+    $dir = preg_replace('!lib/exe/$!', '', $dir);
 
     //handle script in lib/plugins dir
-    $dir = preg_replace('!lib/plugins/.*$!','',$dir);
+    $dir = preg_replace('!lib/plugins/.*$!', '', $dir);
 
     //finish here for relative URLs
     if(!$abs) return $dir;
 
     //use config if available, trim any slash from end of baseurl to avoid multiple consecutive slashes in the path
-    if(!empty($conf['baseurl'])) return rtrim($conf['baseurl'],'/').$dir;
+    if(!empty($conf['baseurl'])) return rtrim($conf['baseurl'], '/').$dir;
 
     //split hostheader into host and port
     if(isset($_SERVER['HTTP_HOST'])){
@@ -595,15 +595,15 @@ function fullpath($path,$exists=false){
         $root = '/';
     }elseif($iswin){
         // match drive letter and UNC paths
-        if (preg_match('!^([a-zA-z]:)(.*)!',$path,$match)) {
+        if (preg_match('!^([a-zA-z]:)(.*)!', $path, $match)) {
             $root = $match[1].'/';
             $path = $match[2];
-        } elseif (preg_match('!^(\\\\\\\\[^\\\\/]+\\\\[^\\\\/]+[\\\\/])(.*)!',$path,$match)) {
+        } elseif (preg_match('!^(\\\\\\\\[^\\\\/]+\\\\[^\\\\/]+[\\\\/])(.*)!', $path, $match)) {
             $root = $match[1];
             $path = $match[2];
         }
     }
-    $path = str_replace('\\','/',$path);
+    $path = str_replace('\\', '/', $path);
 
     // if the given path wasn't absolute already, prepend the script path and retry
     if(!$root){
@@ -611,7 +611,7 @@ function fullpath($path,$exists=false){
         $path = $base.'/'.$path;
         if($run == 0){ // avoid endless recursion when base isn't absolute for some reason
             $run++;
-            return fullpath($path,$exists);
+            return fullpath($path, $exists);
         }
     }
     $run = 0;

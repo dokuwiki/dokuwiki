@@ -16,7 +16,7 @@ function act_dispatch(){
     $router = ActionRouter::getInstance(true);
 
     $headers = ['Content-Type: text/html; charset=utf-8'];
-    Event::createAndTrigger('ACTION_HEADERS_SEND',$headers,'act_sendheaders');
+    Event::createAndTrigger('ACTION_HEADERS_SEND', $headers, 'act_sendheaders');
 
     // clear internal variables
     unset($router);
@@ -57,7 +57,7 @@ function act_clean($act){
 
     //remove all bad chars
     $act = strtolower($act);
-    $act = preg_replace('/[^1-9a-z_]+/','',$act);
+    $act = preg_replace('/[^1-9a-z_]+/', '', $act);
 
     if($act == 'export_html') $act = 'export_xhtml';
     if($act == 'export_htmlbody') $act = 'export_xhtmlbody';

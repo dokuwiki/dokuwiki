@@ -48,7 +48,7 @@ function html_wikilink($id, $name = null, $search = '') {
         $xhtml_renderer = p_get_renderer('xhtml');
     }
 
-    return $xhtml_renderer->internallink($id,$name,$search,true,'navigation');
+    return $xhtml_renderer->internallink($id, $name, $search, true, 'navigation');
 }
 
 /**
@@ -88,7 +88,7 @@ function html_secedit($text, $show = true) {
     global $INFO;
 
     if ((isset($INFO) && !$INFO['writable']) || !$show || (isset($INFO) && $INFO['rev'])) {
-        return preg_replace(SEC_EDIT_PATTERN,'',$text);
+        return preg_replace(SEC_EDIT_PATTERN, '', $text);
     }
 
     return preg_replace_callback(SEC_EDIT_PATTERN,
@@ -193,7 +193,7 @@ function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $l
         $label = $lang['btn_'.$name];
 
     //filter id (without urlencoding)
-    $id = idfilter($id,false);
+    $id = idfilter($id, false);
 
     //make nice URLs even for buttons
     if ($conf['userewrite'] == 2) {
@@ -281,7 +281,7 @@ function html_hilight($html, $phrases) {
     $phrases = array_map('ft_snippet_re_preprocess', $phrases);
     $phrases = array_filter($phrases);
 
-    $regex = implode('|',$phrases);
+    $regex = implode('|', $phrases);
 
     if ($regex === '') return $html;
     if (!Clean::isUtf8($regex)) return $html;
@@ -725,7 +725,7 @@ function html_debug() {
     print '</pre>';
 
     print '<b>locale:</b><pre>';
-    print setlocale(LC_ALL,0);
+    print setlocale(LC_ALL, 0);
     print '</pre>';
 
     print '<b>encoding:</b><pre>';
@@ -735,7 +735,7 @@ function html_debug() {
     if ($auth) {
         print '<b>Auth backend capabilities:</b><pre>';
         foreach ($auth->getCapabilities() as $cando) {
-            print '   '.str_pad($cando,16) .' => '. (int)$auth->canDo($cando) . DOKU_LF;
+            print '   '.str_pad($cando, 16) .' => '. (int)$auth->canDo($cando) . DOKU_LF;
         }
         print '</pre>';
     }

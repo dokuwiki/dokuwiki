@@ -79,11 +79,11 @@ class SafeFN {
     }
 
     public static function validatePrintableUtf8($printable_utf8) {
-        return !preg_match('#[\x01-\x1f]#',$printable_utf8);
+        return !preg_match('#[\x01-\x1f]#', $printable_utf8);
     }
 
     public static function validateSafe($safe) {
-        return !preg_match('#[^'.self::$plain.self::$post_indicator.self::$pre_indicator.']#',$safe);
+        return !preg_match('#[^'.self::$plain.self::$post_indicator.self::$pre_indicator.']#', $safe);
     }
 
     /**
@@ -100,7 +100,7 @@ class SafeFN {
         $converted = false;
 
         foreach ($unicode as $codepoint) {
-            if ($codepoint < 127 && (strpos(self::$plain.self::$post_indicator,chr($codepoint))!==false)) {
+            if ($codepoint < 127 && (strpos(self::$plain.self::$post_indicator, chr($codepoint))!==false)) {
                 if ($converted) {
                     $safe .= self::$post_indicator;
                     $converted = false;
@@ -110,7 +110,7 @@ class SafeFN {
                 $safe .= self::$pre_indicator;
                 $converted = true;
             } else {
-                $safe .= self::$pre_indicator.base_convert((string)($codepoint-32),10,36);
+                $safe .= self::$pre_indicator.base_convert((string)($codepoint-32), 10, 36);
                 $converted = true;
             }
         }
@@ -129,7 +129,7 @@ class SafeFN {
     private static function safeToUnicode($safe) {
 
         $unicode = [];
-        $split = preg_split('#(?=['.self::$post_indicator.self::$pre_indicator.'])#',$safe,-1,PREG_SPLIT_NO_EMPTY);
+        $split = preg_split('#(?=['.self::$post_indicator.self::$pre_indicator.'])#', $safe, -1, PREG_SPLIT_NO_EMPTY);
 
         $converted = false;
         foreach ($split as $sub) {
@@ -147,7 +147,7 @@ class SafeFN {
                 $converted = true;
             } else {
                 // a single codepoint in base36, adjusted for initial 32 non-printable chars
-                $unicode[] = 32 + (int)base_convert(substr($sub,1),36,10);
+                $unicode[] = 32 + (int)base_convert(substr($sub, 1), 36, 10);
                 $converted = true;
             }
         }

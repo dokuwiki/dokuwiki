@@ -15,7 +15,7 @@ if (!defined('DOKU_INC')) die();
 <head>
     <meta charset="utf-8" />
     <title>
-        <?php echo hsc(tpl_img_getTag('IPTC.Headline',$IMG))?>
+        <?php echo hsc(tpl_img_getTag('IPTC.Headline', $IMG))?>
         [<?php echo strip_tags($conf['title'])?>]
     </title>
     <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
@@ -37,7 +37,7 @@ if (!defined('DOKU_INC')) die();
                 <?php html_msgarea() ?>
 
                 <?php if(!$ERROR): ?>
-                    <div class="pageId"><span><?php echo hsc(tpl_img_getTag('IPTC.Headline',$IMG)); ?></span></div>
+                    <div class="pageId"><span><?php echo hsc(tpl_img_getTag('IPTC.Headline', $IMG)); ?></span></div>
                 <?php endif; ?>
 
                 <div class="page group">
@@ -51,14 +51,14 @@ if (!defined('DOKU_INC')) die();
                         <?php if($REV) echo p_locale_xhtml('showrev');?>
                         <h1><?php echo nl2br(hsc(tpl_img_getTag('simple.title'))); ?></h1>
 
-                        <?php tpl_img(900,700); /* parameters: maximum width, maximum height (and more) */ ?>
+                        <?php tpl_img(900, 700); /* parameters: maximum width, maximum height (and more) */ ?>
 
                         <div class="img_detail">
                             <?php tpl_img_meta(); ?>
                             <dl>
                             <?php
                             echo '<dt>'.$lang['reference'].':</dt>';
-                            $media_usage = ft_mediause($IMG,true);
+                            $media_usage = ft_mediause($IMG, true);
                             if($media_usage !== []){
                                 foreach($media_usage as $path){
                                     echo '<dd>'.html_wikilink($path).'</dd>';

@@ -12,9 +12,9 @@ use splitbrain\JSStrip\Exception as JSStripException;
 use splitbrain\JSStrip\JSStrip;
 
 if(!defined('DOKU_INC')) define('DOKU_INC', __DIR__ .'/../../');
-if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
-if(!defined('NL')) define('NL',"\n");
-if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
+if(!defined('NOSESSION')) define('NOSESSION', true); // we do not use a session or authentication here (better caching)
+if(!defined('NL')) define('NL', "\n");
+if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1); // we gzip ourself here
 require_once(DOKU_INC.'inc/init.php');
 
 // Main (don't run when UNIT test)
@@ -38,7 +38,7 @@ function js_out(){
     global $INPUT;
 
     // decide from where to get the template
-    $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
+    $tpl = trim(preg_replace('/[^\w-]+/', '', $INPUT->str('t')));
     if(!$tpl) $tpl = $conf['template'];
 
     // array of core files
@@ -70,7 +70,7 @@ function js_out(){
     ];
 
     // add possible plugin scripts and userscript
-    $files   = array_merge($files,js_pluginscripts());
+    $files   = array_merge($files, js_pluginscripts());
     if(is_array($config_cascade['userscript']['default'])) {
         foreach($config_cascade['userscript']['default'] as $userscript) {
             $files[] = $userscript;
@@ -81,7 +81,7 @@ function js_out(){
     Event::createAndTrigger('JS_SCRIPT_LIST', $files);
 
     // The generated script depends on some dynamic options
-    $cache = new Cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].md5(serialize($files)),'.js');
+    $cache = new Cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].md5(serialize($files)), '.js');
     $cache->setEvent('JS_CACHE_USE');
 
     $cache_files = array_merge($files, getConfigFiles('main'));
@@ -124,7 +124,7 @@ function js_out(){
     // load files
     foreach($files as $file){
         if(!file_exists($file)) continue;
-        $ismin = (substr($file,-7) == '.min.js');
+        $ismin = (substr($file, -7) == '.min.js');
         $debugjs = ($conf['allowdebug'] && strpos($file, DOKU_INC.'lib/scripts/') !== 0);
 
         echo "\n\n/* XXXXXXXXXX begin of ".str_replace(DOKU_INC, '', $file) ." XXXXXXXXXX */\n\n";
@@ -176,14 +176,14 @@ function js_load($file){
     static $loaded = [];
 
     $data = io_readFile($file);
-    while(preg_match('#/\*\s*DOKUWIKI:include(_once)?\s+([\w\.\-_/]+)\s*\*/#',$data,$match)){
+    while(preg_match('#/\*\s*DOKUWIKI:include(_once)?\s+([\w\.\-_/]+)\s*\*/#', $data, $match)){
         $ifile = $match[2];
 
         // is it a include_once?
         if($match[1]){
             $base = PhpString::basename($ifile);
             if(array_key_exists($base, $loaded) && $loaded[$base] === true){
-                $data  = str_replace($match[0], '' ,$data);
+                $data  = str_replace($match[0], '', $data);
                 continue;
             }
             $loaded[$base] = true;
@@ -198,7 +198,7 @@ function js_load($file){
             $idata .= io_readFile($ifile);
             if ($ismin) $idata .= "\n/* END NOCOMPRESS */\n";
         }
-        $data  = str_replace($match[0],$idata,$data);
+        $data  = str_replace($match[0], $idata, $data);
     }
     echo "$data\n";
 }
@@ -316,7 +316,7 @@ function js_templatestrings($tpl) {
  * @return string
  */
 function js_escape($string){
-    return str_replace('\\\\n','\\n',addslashes($string));
+    return str_replace('\\\\n', '\\n', addslashes($string));
 }
 
 /**

@@ -1105,7 +1105,7 @@ function tpl_get_img_meta() {
             $t = [$tag[0]];
         }
         if(isset($tag[3]) && is_array($tag[3])) {
-            $t = array_merge($t,$tag[3]);
+            $t = array_merge($t, $tag[3]);
         }
         $value = tpl_img_getTag($t);
         if ($value) {
@@ -1383,7 +1383,7 @@ function tpl_mediaContent($fromajax = false, $sort='natural') {
         if($do == 'filesinuse') {
             media_filesinuse($INUSE, $IMG);
         } elseif($do == 'filelist') {
-            media_filelist($NS, $AUTH, $JUMPTO,false,$sort);
+            media_filelist($NS, $AUTH, $JUMPTO, false, $sort);
         } elseif($do == 'searchlist') {
             media_searchlist($INPUT->str('q'), $NS, $AUTH);
         } else {

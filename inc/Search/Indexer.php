@@ -68,7 +68,7 @@ class Indexer {
         // Remove obsolete index entries
         $pageword_idx = $this->getIndexKey('pageword', '', $pid);
         if ($pageword_idx !== '') {
-            $oldwords = explode(':',$pageword_idx);
+            $oldwords = explode(':', $pageword_idx);
             $delwords = array_diff($oldwords, $pagewords);
             $upwords = [];
             foreach ($delwords as $word) {
@@ -402,7 +402,7 @@ class Indexer {
         // Remove obsolete index entries
         $pageword_idx = $this->getIndexKey('pageword', '', $pid);
         if ($pageword_idx !== '') {
-            $delwords = explode(':',$pageword_idx);
+            $delwords = explode(':', $pageword_idx);
             $upwords = [];
             foreach ($delwords as $word) {
                 if ($word != '') {
@@ -457,9 +457,9 @@ class Indexer {
         $dir = @opendir($conf['indexdir']);
         if($dir!==false){
             while(($f = readdir($dir)) !== false){
-                if(substr($f,-4)=='.idx' &&
-                    (substr($f,0,1)=='i' || substr($f,0,1)=='w'
-                        || substr($f,-6)=='_w.idx' || substr($f,-6)=='_i.idx' || substr($f,-6)=='_p.idx'))
+                if(substr($f, -4)=='.idx' &&
+                    (substr($f, 0, 1)=='i' || substr($f, 0, 1)=='w'
+                        || substr($f, -6)=='_w.idx' || substr($f, -6)=='_i.idx' || substr($f, -6)=='_p.idx'))
                     @unlink($conf['indexdir']."/$f");
             }
         }
@@ -1152,7 +1152,7 @@ class Indexer {
      */
     protected function updateTuple($line, $id, $count) {
         if ($line != ''){
-            $line = preg_replace('/(^|:)'.preg_quote($id,'/').'\*\d*/', '', $line);
+            $line = preg_replace('/(^|:)'.preg_quote($id, '/').'\*\d*/', '', $line);
         }
         $line = trim($line, ':');
         if ($count) {

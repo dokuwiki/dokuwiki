@@ -33,7 +33,7 @@ function io_sweepNS($id,$basedir='datadir'){
 
     //scan all namespaces
     while(($id = getNS($id)) !== false){
-        $dir = $conf[$basedir].'/'.utf8_encodeFN(str_replace(':','/',$id));
+        $dir = $conf[$basedir].'/'.utf8_encodeFN(str_replace(':', '/', $id));
 
         //try to delete dir else return
         if(@rmdir($dir)) {
@@ -106,11 +106,11 @@ function _io_readWikiPage_action($data) {
 function io_readFile($file,$clean=true){
     $ret = '';
     if(file_exists($file)){
-        if (substr($file,-3) == '.gz') {
+        if (substr($file, -3) == '.gz') {
             if(!DOKU_HAS_GZIP) return false;
             $ret = gzfile($file);
             if(is_array($ret)) $ret = implode('', $ret);
-        } elseif (substr($file,-4) == '.bz2') {
+        } elseif (substr($file, -4) == '.bz2') {
             if(!DOKU_HAS_BZIP) return false;
             $ret = bzfile($file);
         } else{
@@ -135,14 +135,14 @@ function io_readFile($file,$clean=true){
  * @return string|array|bool content or false on error
  */
 function bzfile($file, $array=false) {
-    $bz = bzopen($file,"r");
+    $bz = bzopen($file, "r");
     if($bz === false) return false;
 
     if($array) $lines = [];
     $str = '';
     while (!feof($bz)) {
         //8192 seems to be the maximum buffersize?
-        $buffer = bzread($bz,8192);
+        $buffer = bzread($bz, 8192);
         if(($buffer === false) || (bzerrno($bz) !== 0)) {
             return false;
         }
@@ -228,25 +228,25 @@ function _io_saveFile($file, $content, $append) {
     $mode = ($append) ? 'ab' : 'wb';
     $fileexists = file_exists($file);
 
-    if (substr($file,-3) == '.gz') {
+    if (substr($file, -3) == '.gz') {
         if(!DOKU_HAS_GZIP) return false;
-        $fh = @gzopen($file,$mode.'9');
+        $fh = @gzopen($file, $mode.'9');
         if(!$fh) return false;
         gzwrite($fh, $content);
         gzclose($fh);
-    } elseif (substr($file,-4) == '.bz2') {
+    } elseif (substr($file, -4) == '.bz2') {
         if(!DOKU_HAS_BZIP) return false;
         if($append) {
             $bzcontent = bzfile($file);
             if($bzcontent === false) return false;
             $content = $bzcontent.$content;
         }
-        $fh = @bzopen($file,'w');
+        $fh = @bzopen($file, 'w');
         if(!$fh) return false;
         bzwrite($fh, $content);
         bzclose($fh);
     } else{
-        $fh = @fopen($file,$mode);
+        $fh = @fopen($file, $mode);
         if(!$fh) return false;
         fwrite($fh, $content);
         fclose($fh);
@@ -276,7 +276,7 @@ function io_saveFile($file, $content, $append=false) {
     io_makeFileDir($file);
     io_lock($file);
     if(!_io_saveFile($file, $content, $append)) {
-        msg("Writing $file failed",-1);
+        msg("Writing $file failed", -1);
         io_unlock($file);
         return false;
     }
@@ -321,10 +321,10 @@ function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) 
     io_lock($file);
 
     // load into array
-    if (substr($file,-3) == '.gz') {
+    if (substr($file, -3) == '.gz') {
         if(!DOKU_HAS_GZIP) return false;
         $lines = gzfile($file);
-    } elseif (substr($file,-4) == '.bz2') {
+    } elseif (substr($file, -4) == '.bz2') {
         if(!DOKU_HAS_BZIP) return false;
         $lines = bzfile($file, true);
     } else{
@@ -332,7 +332,7 @@ function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) 
     }
 
     // make non-regexes into regexes
-    $pattern = $regex ? $oldline : '/^'.preg_quote($oldline,'/').'$/';
+    $pattern = $regex ? $oldline : '/^'.preg_quote($oldline, '/').'$/';
     $replace = $regex ? $newline : addcslashes($newline, '\$');
 
     // remove matching lines
@@ -355,8 +355,8 @@ function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) 
     }
 
     if(count($lines)){
-        if(!_io_saveFile($file, implode('',$lines), false)) {
-            msg("Removing content from $file failed",-1);
+        if(!_io_saveFile($file, implode('', $lines), false)) {
+            msg("Removing content from $file failed", -1);
             io_unlock($file);
             return false;
         }
@@ -381,7 +381,7 @@ function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) 
  * @return bool true on success
  */
 function io_deleteFromFile($file,$badline,$regex=false){
-    return io_replaceInFile($file,$badline,null,$regex,0);
+    return io_replaceInFile($file, $badline, null, $regex, 0);
 }
 
 /**
@@ -483,7 +483,7 @@ function io_createNamespace($id, $ns_type='pages') {
 function io_makeFileDir($file){
     $dir = dirname($file);
     if(!@is_dir($dir)){
-        io_mkdir_p($dir) || msg("Creating directory $dir failed",-1);
+        io_mkdir_p($dir) || msg("Creating directory $dir failed", -1);
     }
 }
 
@@ -502,7 +502,7 @@ function io_mkdir_p($target){
     if (@is_dir($target)||empty($target)) return 1; // best case check first
     if (file_exists($target) && !is_dir($target)) return 0;
     //recursion
-    if (io_mkdir_p(substr($target,0,strrpos($target,'/')))){
+    if (io_mkdir_p(substr($target, 0, strrpos($target, '/')))){
         $ret = @mkdir($target); // crawl back up & create dir tree
         if($ret && !empty($conf['dperm'])) chmod($target, $conf['dperm']);
         return $ret;
@@ -632,9 +632,9 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=2_
     }
 
     $fileexists = file_exists($file);
-    $fp = @fopen($file,"w");
+    $fp = @fopen($file, "w");
     if(!$fp) return false;
-    fwrite($fp,$data);
+    fwrite($fp, $data);
     fclose($fp);
     if(!$fileexists && $conf['fperm']) chmod($file, $conf['fperm']);
     if ($useAttachment) return $name;
@@ -653,8 +653,8 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=2_
  */
 function io_rename($from,$to){
     global $conf;
-    if(!@rename($from,$to)){
-        if(@copy($from,$to)){
+    if(!@rename($from, $to)){
+        if(@copy($from, $to)){
             if($conf['fperm']) chmod($to, $conf['fperm']);
             @unlink($from);
             return true;
@@ -706,7 +706,7 @@ function io_exec($cmd, $input, &$output){
  * @return array matching lines or backref, false on error
  */
 function io_grep($file,$pattern,$max=0,$backref=false){
-    $fh = @fopen($file,'r');
+    $fh = @fopen($file, 'r');
     if(!$fh) return false;
     $matches = [];
 
@@ -714,10 +714,10 @@ function io_grep($file,$pattern,$max=0,$backref=false){
     $line = '';
     while (!feof($fh)) {
         $line .= fgets($fh, 4096);  // read full line
-        if(substr($line,-1) != "\n") continue;
+        if(substr($line, -1) != "\n") continue;
 
         // check if line matches
-        if(preg_match($pattern,$line,$match)){
+        if(preg_match($pattern, $line, $match)){
             if($backref){
                 $matches[] = $match;
             }else{
@@ -745,7 +745,7 @@ function io_grep($file,$pattern,$max=0,$backref=false){
 function io_getSizeFile($file) {
     if (!file_exists($file)) return 0;
 
-    if (substr($file,-3) == '.gz') {
+    if (substr($file, -3) == '.gz') {
         $fp = @fopen($file, "rb");
         if($fp === false) return 0;
         fseek($fp, -4, SEEK_END);
@@ -753,14 +753,14 @@ function io_getSizeFile($file) {
         fclose($fp);
         $array = unpack("V", $buffer);
         $uncompressedsize = end($array);
-    } elseif (substr($file,-4) == '.bz2') {
+    } elseif (substr($file, -4) == '.bz2') {
         if(!DOKU_HAS_BZIP) return 0;
-        $bz = bzopen($file,"r");
+        $bz = bzopen($file, "r");
         if($bz === false) return 0;
         $uncompressedsize = 0;
         while (!feof($bz)) {
             //8192 seems to be the maximum buffersize?
-            $buffer = bzread($bz,8192);
+            $buffer = bzread($bz, 8192);
             if(($buffer === false) || (bzerrno($bz) !== 0)) {
                 return 0;
             }

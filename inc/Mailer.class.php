@@ -41,9 +41,9 @@ class Mailer {
         global $INPUT;
 
         $server = parse_url(DOKU_URL, PHP_URL_HOST);
-        if(strpos($server,'.') === false) $server .= '.localhost';
+        if(strpos($server, '.') === false) $server .= '.localhost';
 
-        $this->partid   = substr(md5(uniqid(random_int(0, mt_getrandmax()), true)),0, 8).'@'.$server;
+        $this->partid   = substr(md5(uniqid(random_int(0, mt_getrandmax()), true)), 0, 8).'@'.$server;
         $this->boundary = '__________'.md5(uniqid(random_int(0, mt_getrandmax()), true));
 
         $listid = implode('.', array_reverse(explode('/', DOKU_BASE))).$server;
@@ -453,7 +453,7 @@ class Mailer {
             $mime .= '--'.$this->boundary.MAILHEADER_EOL;
             $mime .= $this->wrappedHeaderLine('Content-Type', $media['mime'].'; id="'.$cid.'"');
             $mime .= $this->wrappedHeaderLine('Content-Transfer-Encoding', 'base64');
-            $mime .= $this->wrappedHeaderLine('Content-ID',"<$cid>");
+            $mime .= $this->wrappedHeaderLine('Content-ID', "<$cid>");
             if($media['embed']) {
                 $mime .= $this->wrappedHeaderLine('Content-Disposition', 'inline; filename='.$media['name']);
             } else {

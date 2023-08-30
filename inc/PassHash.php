@@ -94,7 +94,7 @@ class PassHash {
             if(!defined('PASSWORD_'.strtoupper($m[1]))) {
                 throw new \Exception('This PHP installation has no '.strtoupper($m[1]).' support');
             }
-            return password_verify($clear,$hash);
+            return password_verify($clear, $hash);
         } elseif($len == 32) {
             $method = 'md5';
         } elseif($len == 40) {
@@ -745,7 +745,7 @@ class PassHash {
         if(!defined('PASSWORD_ARGON2I')) {
             throw new \Exception('This PHP installation has no ARGON2I support');
         }
-        return password_hash($clear,PASSWORD_ARGON2I);
+        return password_hash($clear, PASSWORD_ARGON2I);
     }
 
     /**
@@ -763,7 +763,7 @@ class PassHash {
         if(!defined('PASSWORD_ARGON2ID')) {
             throw new \Exception('This PHP installation has no ARGON2ID support');
         }
-        return password_hash($clear,PASSWORD_ARGON2ID);
+        return password_hash($clear, PASSWORD_ARGON2ID);
     }
 
     /**

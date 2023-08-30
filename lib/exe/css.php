@@ -10,9 +10,9 @@ use dokuwiki\Cache\Cache;
 use dokuwiki\Extension\Event;
 
 if(!defined('DOKU_INC')) define('DOKU_INC', __DIR__ .'/../../');
-if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
-if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
-if(!defined('NL')) define('NL',"\n");
+if(!defined('NOSESSION')) define('NOSESSION', true); // we do not use a session or authentication here (better caching)
+if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1); // we gzip ourself here
+if(!defined('NL')) define('NL', "\n");
 require_once(DOKU_INC.'inc/init.php');
 
 // Main (don't run when UNIT test)
@@ -44,7 +44,7 @@ function css_out(){
     }
 
     // decide from where to get the template
-    $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
+    $tpl = trim(preg_replace('/[^\w-]+/', '', $INPUT->str('t')));
     if(!$tpl) $tpl = $conf['template'];
 
     // load style.ini
@@ -177,8 +177,8 @@ function css_out(){
 
     // embed small images right into the stylesheet
     if($conf['cssdatauri']){
-        $base = preg_quote(DOKU_BASE,'#');
-        $css = preg_replace_callback('#(url\([ \'"]*)('.$base.')(.*?(?:\.(png|gif)))#i','css_datauri',$css);
+        $base = preg_quote(DOKU_BASE, '#');
+        $css = preg_replace_callback('#(url\([ \'"]*)('.$base.')(.*?(?:\.(png|gif)))#i', 'css_datauri', $css);
     }
 
     http_cached_finish($cache->cache, $css);
@@ -369,14 +369,14 @@ function css_filetypes(){
     $exts = [];
     if($dh = opendir(DOKU_INC.'lib/images/fileicons/svg')){
         while(false !== ($file = readdir($dh))){
-            if(preg_match('/(.*?)\.svg$/i',$file, $match)){
+            if(preg_match('/(.*?)\.svg$/i', $file, $match)){
                 $exts[] = strtolower($match[1]);
             }
         }
         closedir($dh);
     }
     foreach($exts as $ext){
-        $class = preg_replace('/[^_\-a-z0-9]+/','_',$ext);
+        $class = preg_replace('/[^_\-a-z0-9]+/', '_', $ext);
         echo ".mf_$class {";
         echo '  background-image: url('.DOKU_BASE.'lib/images/fileicons/svg/'.$ext.'.svg)';
         echo '}';
@@ -427,8 +427,8 @@ class DokuCssFile {
 
         $this->location = $location;
 
-        $css = preg_replace_callback('#(url\( *)([\'"]?)(.*?)(\2)( *\))#',[$this, 'replacements'],$css);
-        $css = preg_replace_callback('#(@import\s+)([\'"])(.*?)(\2)#',[$this, 'replacements'],$css);
+        $css = preg_replace_callback('#(url\( *)([\'"]?)(.*?)(\2)( *\))#', [$this, 'replacements'], $css);
+        $css = preg_replace_callback('#(@import\s+)([\'"])(.*?)(\2)#', [$this, 'replacements'], $css);
 
         return $css;
     }
@@ -449,7 +449,7 @@ class DokuCssFile {
             }
 
             $basedir = array_map('preg_quote_cb', $basedir);
-            $regex = '/^('.implode('|',$basedir).')/';
+            $regex = '/^('.implode('|', $basedir).')/';
             $this->relative_path = preg_replace($regex, '', dirname($this->filepath));
         }
 
@@ -475,7 +475,7 @@ class DokuCssFile {
             $match[3] = $this->location . $match[3];
         }
 
-        return implode('',array_slice($match,1));
+        return implode('', array_slice($match, 1));
     }
 }
 
@@ -552,15 +552,15 @@ function css_compress($css){
     $css = preg_replace_callback('/(([\'"]).*?(?<!\\\\)\2)/', $quote_cb, $css);
 
     // strip comments through a callback
-    $css = preg_replace_callback('#(/\*)(.*?)(\*/)#s','css_comment_cb',$css);
+    $css = preg_replace_callback('#(/\*)(.*?)(\*/)#s', 'css_comment_cb', $css);
 
     // strip (incorrect but common) one line comments
-    $css = preg_replace_callback('/^.*\/\/.*$/m','css_onelinecomment_cb',$css);
+    $css = preg_replace_callback('/^.*\/\/.*$/m', 'css_onelinecomment_cb', $css);
 
     // strip whitespaces
-    $css = preg_replace('![\r\n\t ]+!',' ',$css);
-    $css = preg_replace('/ ?([;,{}\/]) ?/','\\1',$css);
-    $css = preg_replace('/ ?: /',':',$css);
+    $css = preg_replace('![\r\n\t ]+!', ' ', $css);
+    $css = preg_replace('/ ?([;,{}\/]) ?/', '\\1', $css);
+    $css = preg_replace('/ ?: /', ':', $css);
 
     // number compression
     $css = preg_replace(

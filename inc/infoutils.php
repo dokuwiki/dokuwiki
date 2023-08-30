@@ -13,9 +13,9 @@ use dokuwiki\Logger;
 
 if(!defined('DOKU_MESSAGEURL')){
     if(in_array('ssl', stream_get_transports())) {
-        define('DOKU_MESSAGEURL','https://update.dokuwiki.org/check/');
+        define('DOKU_MESSAGEURL', 'https://update.dokuwiki.org/check/');
     }else{
-        define('DOKU_MESSAGEURL','http://update.dokuwiki.org/check/');
+        define('DOKU_MESSAGEURL', 'http://update.dokuwiki.org/check/');
     }
 }
 
@@ -45,7 +45,7 @@ function checkUpdateMessages(){
         if(is_string($resp) && ($resp == "" || substr(trim($resp), -1) == '%')) {
             // basic sanity check that this is either an empty string response (ie "no messages")
             // or it looks like one of our messages, not WiFi login or other interposed response
-            io_saveFile($cf,$resp);
+            io_saveFile($cf, $resp);
         } else {
             Logger::debug("checkUpdateMessages(): unexpected HTTP response received", $http->error);
         }
@@ -55,9 +55,9 @@ function checkUpdateMessages(){
 
     $data = io_readFile($cf);
     // show messages through the usual message mechanism
-    $msgs = explode("\n%\n",$data);
+    $msgs = explode("\n%\n", $data);
     foreach($msgs as $msg){
-        if($msg) msg($msg,2);
+        if($msg) msg($msg, 2);
     }
 }
 
@@ -155,14 +155,14 @@ function check(){
     global $INPUT;
 
     if ($INFO['isadmin'] || $INFO['ismanager']) {
-        msg('DokuWiki version: '.getVersion(),1);
-        if(version_compare(phpversion(),'7.4.0','<')){
-            msg('Your PHP version is too old ('.phpversion().' vs. 7.4+ needed)',-1);
+        msg('DokuWiki version: '.getVersion(), 1);
+        if(version_compare(phpversion(), '7.4.0', '<')){
+            msg('Your PHP version is too old ('.phpversion().' vs. 7.4+ needed)', -1);
         }else{
-            msg('PHP version '.phpversion(),1);
+            msg('PHP version '.phpversion(), 1);
         }
-    } elseif (version_compare(phpversion(),'7.4.0','<')) {
-        msg('Your PHP version is too old',-1);
+    } elseif (version_compare(phpversion(), '7.4.0', '<')) {
+        msg('Your PHP version is too old', -1);
     }
 
     $mem = php_to_byte(ini_get('memory_limit'));
@@ -184,9 +184,9 @@ function check(){
     }
 
     if (is_writable($conf['changelog'])) {
-        msg('Changelog is writable',1);
+        msg('Changelog is writable', 1);
     } elseif (file_exists($conf['changelog'])) {
-        msg('Changelog is not writable',-1);
+        msg('Changelog is not writable', -1);
     }
 
     if (isset($conf['changelog_old']) && file_exists($conf['changelog_old'])) {
@@ -205,31 +205,31 @@ function check(){
     }
 
     if(is_writable(DOKU_CONF)){
-        msg('conf directory is writable',1);
+        msg('conf directory is writable', 1);
     }else{
-        msg('conf directory is not writable',-1);
+        msg('conf directory is not writable', -1);
     }
 
     if($conf['authtype'] == 'plain'){
         global $config_cascade;
         if(is_writable($config_cascade['plainauth.users']['default'])){
-            msg('conf/users.auth.php is writable',1);
+            msg('conf/users.auth.php is writable', 1);
         }else{
-            msg('conf/users.auth.php is not writable',0);
+            msg('conf/users.auth.php is not writable', 0);
         }
     }
 
     if(function_exists('mb_strpos')){
         if(defined('UTF8_NOMBSTRING')){
-            msg('mb_string extension is available but will not be used',0);
+            msg('mb_string extension is available but will not be used', 0);
         }else{
-            msg('mb_string extension is available and will be used',1);
+            msg('mb_string extension is available and will be used', 1);
             if(ini_get('mbstring.func_overload') != 0){
-                msg('mb_string function overloading is enabled, this will cause problems and should be disabled',-1);
+                msg('mb_string function overloading is enabled, this will cause problems and should be disabled', -1);
             }
         }
     }else{
-        msg('mb_string extension not available - PHP only replacements will be used',0);
+        msg('mb_string extension not available - PHP only replacements will be used', 0);
     }
 
     if (!UTF8_PREGSUPPORT) {
@@ -241,28 +241,28 @@ function check(){
 
     $loc = setlocale(LC_ALL, 0);
     if(!$loc){
-        msg('No valid locale is set for your PHP setup. You should fix this',-1);
-    }elseif(stripos($loc,'utf') === false){
+        msg('No valid locale is set for your PHP setup. You should fix this', -1);
+    }elseif(stripos($loc, 'utf') === false){
         msg('Your locale <code>'.hsc($loc).'</code> seems not to be a UTF-8 locale,
-             you should fix this if you encounter problems.',0);
+             you should fix this if you encounter problems.', 0);
     }else{
         msg('Valid locale '.hsc($loc).' found.', 1);
     }
 
     if($conf['allowdebug']){
-        msg('Debugging support is enabled. If you don\'t need it you should set $conf[\'allowdebug\'] = 0',-1);
+        msg('Debugging support is enabled. If you don\'t need it you should set $conf[\'allowdebug\'] = 0', -1);
     }else{
-        msg('Debugging support is disabled',1);
+        msg('Debugging support is disabled', 1);
     }
 
     if(!empty($INFO['userinfo']['name'])){
-        msg('You are currently logged in as '.$INPUT->server->str('REMOTE_USER').' ('.$INFO['userinfo']['name'].')',0);
-        msg('You are part of the groups '.implode(', ', $INFO['userinfo']['grps']),0);
+        msg('You are currently logged in as '.$INPUT->server->str('REMOTE_USER').' ('.$INFO['userinfo']['name'].')', 0);
+        msg('You are part of the groups '.implode(', ', $INFO['userinfo']['grps']), 0);
     }else{
-        msg('You are currently not logged in',0);
+        msg('You are currently not logged in', 0);
     }
 
-    msg('Your current permission for this page is '.$INFO['perm'],0);
+    msg('Your current permission for this page is '.$INFO['perm'], 0);
 
     if (file_exists($INFO['filepath']) && is_writable($INFO['filepath'])) {
         msg('The current page is writable by the webserver', 1);
@@ -442,7 +442,7 @@ function dbg($msg,$hidden=false){
         echo "\n-->";
     }else{
         echo '<pre class="dbg">';
-        echo hsc(print_r($msg,true));
+        echo hsc(print_r($msg, true));
         echo '</pre>';
     }
 }
@@ -513,7 +513,7 @@ function dbg_backtrace(){
                 }
             }
         }
-        $params = implode(', ',$params);
+        $params = implode(', ', $params);
 
         $calls[$depth - $i] = sprintf('%s(%s) called at %s',
                 $function,
@@ -537,7 +537,7 @@ function dbg_backtrace(){
  */
 function debug_guard(&$data){
     foreach($data as $key => $value){
-        if(preg_match('/(notify|pass|auth|secret|ftp|userinfo|token|buid|mail|proxy)/i',$key)){
+        if(preg_match('/(notify|pass|auth|secret|ftp|userinfo|token|buid|mail|proxy)/i', $key)){
             $data[$key] = '***';
             continue;
         }

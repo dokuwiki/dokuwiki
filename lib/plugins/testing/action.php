@@ -21,6 +21,6 @@ class action_plugin_testing extends ActionPlugin {
     public function dokuwikiStarted() {
         $param = [];
         Event::createAndTrigger('TESTING_PLUGIN_INSTALLED', $param);
-        msg('The testing plugin is enabled and should be disabled.',-1);
+        msg('The testing plugin is enabled and should be disabled.', -1);
     }
 }

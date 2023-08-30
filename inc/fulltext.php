@@ -15,7 +15,7 @@ use dokuwiki\Utf8\Sort;
 /**
  * create snippets for the first few results only
  */
-if(!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER',15);
+if(!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER', 15);
 
 /**
  * The fulltext search
@@ -101,7 +101,7 @@ function _ft_pageSearch(&$data) {
                         'phrase' => $phrase,
                         'text' => rawWiki($id)
                     ];
-                    $evt = new Event('FULLTEXT_PHRASE_MATCH',$evdata);
+                    $evt = new Event('FULLTEXT_PHRASE_MATCH', $evdata);
                     if ($evt->advise_before() && $evt->result !== true) {
                         $text = PhpString::strtolower($evdata['text']);
                         if (strpos($text, $phrase) !== false) {
@@ -326,7 +326,7 @@ function _ft_pageLookup(&$data){
 
     $pages = _ft_filterResultsByTime($pages, $data['after'], $data['before']);
 
-    uksort($pages,'ft_pagesorter');
+    uksort($pages, 'ft_pagesorter');
     return $pages;
 }
 
@@ -390,14 +390,14 @@ function _ft_pageLookupTitleCompare($search, $title) {
  * @return int Returns < 0 if $a is less than $b; > 0 if $a is greater than $b, and 0 if they are equal.
  */
 function ft_pagesorter($a, $b){
-    $ac = count(explode(':',$a));
-    $bc = count(explode(':',$b));
+    $ac = count(explode(':', $a));
+    $bc = count(explode(':', $b));
     if($ac < $bc){
         return -1;
     }elseif($ac > $bc){
         return 1;
     }
-    return Sort::strcmp($a,$b);
+    return Sort::strcmp($a, $b);
 }
 
 /**
@@ -426,7 +426,7 @@ function ft_pagemtimesorter($a, $b) {
  */
 function ft_snippet($id,$highlight){
     $text = rawWiki($id);
-    $text = str_replace("\xC2\xAD",'',$text);
+    $text = str_replace("\xC2\xAD", '', $text);
      // remove soft-hyphens
     $evdata = [
         'id'        => $id,
@@ -435,7 +435,7 @@ function ft_snippet($id,$highlight){
         'snippet'   => ''
     ];
 
-    $evt = new Event('FULLTEXT_SNIPPET_CREATE',$evdata);
+    $evt = new Event('FULLTEXT_SNIPPET_CREATE', $evdata);
     if ($evt->advise_before()) {
         $match = [];
         $snippets = [];
@@ -462,11 +462,11 @@ function ft_snippet($id,$highlight){
 
         for ($cnt=4; $cnt--;) {
             if (0) {
-            } elseif (preg_match('/'.$re3.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
+            } elseif (preg_match('/'.$re3.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
 
-            } elseif (preg_match('/'.$re2.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
+            } elseif (preg_match('/'.$re2.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
 
-            } elseif (preg_match('/'.$re1.'/iu',$text,$match,PREG_OFFSET_CAPTURE,$offset)) {
+            } elseif (preg_match('/'.$re1.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
 
             } else {
                 break;
@@ -475,20 +475,20 @@ function ft_snippet($id,$highlight){
             [$str, $idx] = $match[0];
 
             // convert $idx (a byte offset) into a utf8 character offset
-            $utf8_idx = PhpString::strlen(substr($text,0,$idx));
+            $utf8_idx = PhpString::strlen(substr($text, 0, $idx));
             $utf8_len = PhpString::strlen($str);
 
             // establish context, 100 bytes surrounding the match string
             // first look to see if we can go 100 either side,
             // then drop to 50 adding any excess if the other side can't go to 50,
-            $pre = min($utf8_idx-$utf8_offset,100);
-            $post = min($len-$utf8_idx-$utf8_len,100);
+            $pre = min($utf8_idx-$utf8_offset, 100);
+            $post = min($len-$utf8_idx-$utf8_len, 100);
 
             if ($pre>50 && $post>50) {
                 $pre = 50;
                 $post = 50;
             } elseif ($pre>50) {
-                $pre = min($pre,100-$post);
+                $pre = min($pre, 100-$post);
             } elseif ($post>50) {
                 $post = min($post, 100-$pre);
             } elseif ($offset == 0) {
@@ -506,9 +506,9 @@ function ft_snippet($id,$highlight){
             $end = $utf8_idx + $utf8_len + $post;      // now set it to the end of this context
 
             if ($append) {
-                $snippets[count($snippets)-1] .= PhpString::substr($text,$append,$end-$append);
+                $snippets[count($snippets)-1] .= PhpString::substr($text, $append, $end-$append);
             } else {
-                $snippets[] = PhpString::substr($text,$start,$end-$start);
+                $snippets[] = PhpString::substr($text, $start, $end-$start);
             }
 
             // set $offset for next match attempt
@@ -517,12 +517,12 @@ function ft_snippet($id,$highlight){
             // this prevents further matching of this snippet but for possible matches of length
             // smaller than match length + context (at least 50 characters) this match is part of the context
             $utf8_offset = $utf8_idx + $utf8_len;
-            $offset = $idx + strlen(PhpString::substr($text,$utf8_idx,$utf8_len));
-            $offset = Clean::correctIdx($text,$offset);
+            $offset = $idx + strlen(PhpString::substr($text, $utf8_idx, $utf8_len));
+            $offset = Clean::correctIdx($text, $offset);
         }
 
         $m = "\1";
-        $snippets = preg_replace('/'.$re1.'/iu',$m.'$1'.$m,$snippets);
+        $snippets = preg_replace('/'.$re1.'/iu', $m.'$1'.$m, $snippets);
         $snippet = preg_replace(
             '/' . $m . '([^' . $m . ']*?)' . $m . '/iu',
             '<strong class="search_hit">$1</strong>',
@@ -558,14 +558,14 @@ function ft_snippet_re_preprocess($term) {
         $BR = '\b';
     }
 
-    if(substr($term,0,2) == '\\*'){
-        $term = substr($term,2);
+    if(substr($term, 0, 2) == '\\*'){
+        $term = substr($term, 2);
     }else{
         $term = $BL.$term;
     }
 
-    if(substr($term,-2,2) == '\\*'){
-        $term = substr($term,0,-2);
+    if(substr($term, -2, 2) == '\\*'){
+        $term = substr($term, 0, -2);
     }else{
         $term .= $BR;
     }
@@ -720,8 +720,8 @@ function ft_queryParser($Indexer, $query){
             $term = str_replace('"', ' ', $term);
 
             // fix parentheses
-            $term = str_replace(')'  , ' ) ', $term);
-            $term = str_replace('('  , ' ( ', $term);
+            $term = str_replace(')', ' ) ', $term);
+            $term = str_replace('(', ' ( ', $term);
             $term = str_replace('- (', ' -(', $term);
 
             // treat pipe symbols as 'OR' operators
@@ -729,7 +729,7 @@ function ft_queryParser($Indexer, $query){
 
             // treat ideographic spaces (U+3000) as search term separators
             // FIXME: some more separators?
-            $term = preg_replace('/[ \x{3000}]+/u', ' ',  $term);
+            $term = preg_replace('/[ \x{3000}]+/u', ' ', $term);
             $term = trim($term);
             if ($term === '') continue;
 
@@ -777,11 +777,11 @@ function ft_queryParser($Indexer, $query){
         $parsed_query_old = $parsed_query;
         $parsed_query = preg_replace('/(NOT)?\(\)/u', '', $parsed_query);
     } while ($parsed_query !== $parsed_query_old);
-    $parsed_query = preg_replace('/(NOT|OR)+\)/u', ')'      , $parsed_query);
-    $parsed_query = preg_replace('/(OR)+/u'      , 'OR'     , $parsed_query);
-    $parsed_query = preg_replace('/\(OR/u'       , '('      , $parsed_query);
-    $parsed_query = preg_replace('/^OR|OR$/u'    , ''       , $parsed_query);
-    $parsed_query = preg_replace('/\)(NOT)?\(/u' , ')AND$1(', $parsed_query);
+    $parsed_query = preg_replace('/(NOT|OR)+\)/u', ')', $parsed_query);
+    $parsed_query = preg_replace('/(OR)+/u', 'OR', $parsed_query);
+    $parsed_query = preg_replace('/\(OR/u', '(', $parsed_query);
+    $parsed_query = preg_replace('/^OR|OR$/u', '', $parsed_query);
+    $parsed_query = preg_replace('/\)(NOT)?\(/u', ')AND$1(', $parsed_query);
 
     // adjustment: make highlightings right
     $parens_level     = 0;

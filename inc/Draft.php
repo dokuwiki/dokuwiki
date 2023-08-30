@@ -117,8 +117,8 @@ class Draft
                 "Draft for page $this->id and user $this->client doesn't exist at $this->cname."
             );
         }
-        $draft = unserialize(io_readFile($this->cname,false));
-        return cleanText(con($draft['prefix'],$draft['text'],$draft['suffix'],true));
+        $draft = unserialize(io_readFile($this->cname, false));
+        return cleanText(con($draft['prefix'], $draft['text'], $draft['suffix'], true));
     }
 
     /**

@@ -936,7 +936,7 @@ class helper_plugin_extension_extension extends Plugin
         $file .= $name;
 
         $fileexists = file_exists($file);
-        $fp = @fopen($file,"w");
+        $fp = @fopen($file, "w");
         if (!$fp) return false;
         fwrite($fp, $data);
         fclose($fp);

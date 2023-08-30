@@ -14,7 +14,7 @@ use dokuwiki\Search\Indexer;
 define('INDEXER_VERSION', 8);
 
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
-if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
+if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH', 2);
 
 /**
  * Version of the indexer taking into consideration the external tokenizer.
@@ -60,7 +60,7 @@ function wordlen($w){
     $l = strlen($w);
     // If left alone, all chinese "words" will get put into w3.idx
     // So the "length" of a "word" is faked
-    if(preg_match_all('/[\xE2-\xEF]/',$w,$leadbytes)) {
+    if(preg_match_all('/[\xE2-\xEF]/', $w, $leadbytes)) {
         foreach($leadbytes[0] as $b)
             $l += ord($b) - 0xE1;
     }
@@ -116,7 +116,7 @@ function & idx_get_stopwords() {
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function idx_addPage($page, $verbose=false, $force=false) {
-    $idxtag = metaFN($page,'.indexed');
+    $idxtag = metaFN($page, '.indexed');
     // check if page was deleted but is still in the index
     if (!page_exists($page)) {
         if (!file_exists($idxtag)) {
@@ -201,7 +201,7 @@ function idx_addPage($page, $verbose=false, $force=false) {
     }
 
     if ($result)
-        io_saveFile(metaFN($page,'.indexed'), idx_get_version());
+        io_saveFile(metaFN($page, '.indexed'), idx_get_version());
     if ($verbose) {
         print("Indexer: finished".DOKU_LF);
         return true;
