@@ -24,7 +24,8 @@ use dokuwiki\Extension\Event;
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function io_sweepNS($id,$basedir='datadir'){
+function io_sweepNS($id, $basedir = 'datadir')
+{
     global $conf;
     $types = ['datadir'=>'pages', 'mediadir'=>'media'];
     $ns_type = ($types[$basedir] ?? false);
@@ -67,7 +68,8 @@ function io_sweepNS($id,$basedir='datadir'){
  * @param bool|int $rev revision timestamp
  * @return string
  */
-function io_readWikiPage($file, $id, $rev=false) {
+function io_readWikiPage($file, $id, $rev = false)
+{
     if (empty($rev)) { $rev = false; }
     $data = [[$file, true], getNS($id), noNS($id), $rev];
     return Event::createAndTrigger('IO_WIKIPAGE_READ', $data, '_io_readWikiPage_action', false);
@@ -81,7 +83,8 @@ function io_readWikiPage($file, $id, $rev=false) {
  * @param array $data event data
  * @return string
  */
-function _io_readWikiPage_action($data) {
+function _io_readWikiPage_action($data)
+{
     if (is_array($data) && is_array($data[0]) && count($data[0])===2) {
         return io_readFile(...$data[0]);
     } else {
@@ -103,7 +106,8 @@ function _io_readWikiPage_action($data) {
  * @param bool   $clean
  * @return string|bool the file contents or false on error
  */
-function io_readFile($file,$clean=true){
+function io_readFile($file, $clean = true)
+{
     $ret = '';
     if(file_exists($file)){
         if (substr($file, -3) == '.gz') {
@@ -134,7 +138,8 @@ function io_readFile($file,$clean=true){
  * @param bool   $array return array of lines
  * @return string|array|bool content or false on error
  */
-function bzfile($file, $array=false) {
+function bzfile($file, $array = false)
+{
     $bz = bzopen($file, "r");
     if($bz === false) return false;
 
@@ -186,7 +191,8 @@ function bzfile($file, $array=false) {
  * @param int|bool $rev timestamp of revision
  * @return bool
  */
-function io_writeWikiPage($file, $content, $id, $rev=false) {
+function io_writeWikiPage($file, $content, $id, $rev = false)
+{
     if (empty($rev)) { $rev = false; }
     if ($rev===false) { io_createNamespace($id); } // create namespaces as needed
     $data = [[$file, $content, false], getNS($id), noNS($id), $rev];
@@ -200,7 +206,8 @@ function io_writeWikiPage($file, $content, $id, $rev=false) {
  * @param array $data event data
  * @return bool
  */
-function _io_writeWikiPage_action($data) {
+function _io_writeWikiPage_action($data)
+{
     if (is_array($data) && is_array($data[0]) && count($data[0])===3) {
         $ok = io_saveFile(...$data[0]);
         // for attic files make sure the file has the mtime of the revision
@@ -223,7 +230,8 @@ function _io_writeWikiPage_action($data) {
  * @param bool   $append
  * @return bool true on success, otherwise false
  */
-function _io_saveFile($file, $content, $append) {
+function _io_saveFile($file, $content, $append)
+{
     global $conf;
     $mode = ($append) ? 'ab' : 'wb';
     $fileexists = file_exists($file);
@@ -272,7 +280,8 @@ function _io_saveFile($file, $content, $append) {
  * @param bool   $append
  * @return bool true on success, otherwise false
  */
-function io_saveFile($file, $content, $append=false) {
+function io_saveFile($file, $content, $append = false)
+{
     io_makeFileDir($file);
     io_lock($file);
     if(!_io_saveFile($file, $content, $append)) {
@@ -310,7 +319,8 @@ function io_saveFile($file, $content, $append=false) {
  * @param int    $maxlines number of occurrences of the line to replace
  * @return bool true on success
  */
-function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) {
+function io_replaceInFile($file, $oldline, $newline, $regex = false, $maxlines = 0)
+{
     if ((string)$oldline === '') {
         trigger_error('$oldline parameter cannot be empty in io_replaceInFile()', E_USER_WARNING);
         return false;
@@ -380,7 +390,8 @@ function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) 
  * @param bool   $regex   use regexp?
  * @return bool true on success
  */
-function io_deleteFromFile($file,$badline,$regex=false){
+function io_deleteFromFile($file, $badline, $regex = false)
+{
     return io_replaceInFile($file, $badline, null, $regex, 0);
 }
 
@@ -397,7 +408,8 @@ function io_deleteFromFile($file,$badline,$regex=false){
  *
  * @param string $file filename
  */
-function io_lock($file){
+function io_lock($file)
+{
     global $conf;
 
     $lockDir = $conf['lockdir'].'/'.md5($file);
@@ -423,7 +435,8 @@ function io_lock($file){
  *
  * @param string $file filename
  */
-function io_unlock($file){
+function io_unlock($file)
+{
     global $conf;
 
     $lockDir = $conf['lockdir'].'/'.md5($file);
@@ -444,7 +457,8 @@ function io_unlock($file){
  * @param string $id page id
  * @param string $ns_type 'pages' or 'media'
  */
-function io_createNamespace($id, $ns_type='pages') {
+function io_createNamespace($id, $ns_type = 'pages')
+{
     // verify ns_type
     $types = ['pages'=>'wikiFN', 'media'=>'mediaFN'];
     if (!isset($types[$ns_type])) {
@@ -480,7 +494,8 @@ function io_createNamespace($id, $ns_type='pages') {
  *
  * @param string $file file name
  */
-function io_makeFileDir($file){
+function io_makeFileDir($file)
+{
     $dir = dirname($file);
     if(!@is_dir($dir)){
         io_mkdir_p($dir) || msg("Creating directory $dir failed", -1);
@@ -497,7 +512,8 @@ function io_makeFileDir($file){
  * @param string $target filename
  * @return bool|int|string
  */
-function io_mkdir_p($target){
+function io_mkdir_p($target)
+{
     global $conf;
     if (@is_dir($target)||empty($target)) return 1; // best case check first
     if (file_exists($target) && !is_dir($target)) return 0;
@@ -518,7 +534,8 @@ function io_mkdir_p($target){
  * @param bool   $removefiles defaults to false which will delete empty directories only
  * @return bool
  */
-function io_rmdir($path, $removefiles = false) {
+function io_rmdir($path, $removefiles = false)
+{
     if(!is_string($path) || $path == "") return false;
     if(!file_exists($path)) return true; // it's already gone or was never there, count as success
 
@@ -564,7 +581,8 @@ function io_rmdir($path, $removefiles = false) {
  *
  * @return false|string path to new directory or false
  */
-function io_mktmpdir() {
+function io_mktmpdir()
+{
     global $conf;
 
     $base = $conf['tmpdir'];
@@ -600,7 +618,8 @@ function io_mktmpdir() {
  * @param int    $maxSize       maximum file size
  * @return bool|string          if failed false, otherwise true or the name of the file in the given dir
  */
-function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=2_097_152){
+function io_download($url, $file, $useAttachment = false, $defaultName = '', $maxSize = 2_097_152)
+{
     global $conf;
     $http = new DokuHTTPClient();
     $http->max_bodysize = $maxSize;
@@ -651,7 +670,8 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=2_
  * @param string $to
  * @return bool succes or fail
  */
-function io_rename($from,$to){
+function io_rename($from, $to)
+{
     global $conf;
     if(!@rename($from, $to)){
         if(@copy($from, $to)){
@@ -675,7 +695,8 @@ function io_rename($from,$to){
  * @param string $output output pipe
  * @return int exit code from process
  */
-function io_exec($cmd, $input, &$output){
+function io_exec($cmd, $input, &$output)
+{
     $descspec = [
         0=>["pipe", "r"],
         1=>["pipe", "w"],
@@ -705,7 +726,8 @@ function io_exec($cmd, $input, &$output){
  * @param  bool   $backref When true returns array with backreferences instead of lines
  * @return array matching lines or backref, false on error
  */
-function io_grep($file,$pattern,$max=0,$backref=false){
+function io_grep($file, $pattern, $max = 0, $backref = false)
+{
     $fh = @fopen($file, 'r');
     if(!$fh) return false;
     $matches = [];
@@ -742,7 +764,8 @@ function io_grep($file,$pattern,$max=0,$backref=false){
  * @param string $file filename path to file
  * @return int size of file
  */
-function io_getSizeFile($file) {
+function io_getSizeFile($file)
+{
     if (!file_exists($file)) return 0;
 
     if (substr($file, -3) == '.gz') {

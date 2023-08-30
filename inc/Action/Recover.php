@@ -18,7 +18,8 @@ class Recover extends AbstractAliasAction
      * @inheritdoc
      * @throws ActionAbort
      */
-    public function preProcess() {
+    public function preProcess()
+    {
         throw new ActionAbort('edit');
     }
 }

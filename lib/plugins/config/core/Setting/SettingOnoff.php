@@ -12,7 +12,8 @@ class SettingOnoff extends SettingNumeric
      * We treat the strings 'false' and 'off' as false
      * @inheritdoc
      */
-    protected function cleanValue($value) {
+    protected function cleanValue($value)
+    {
         if($value === null) return null;
 
         if(is_string($value)) {
@@ -25,7 +26,8 @@ class SettingOnoff extends SettingNumeric
     }
 
     /** @inheritdoc */
-    public function html(\admin_plugin_config $plugin, $echo = false) {
+    public function html(\admin_plugin_config $plugin, $echo = false)
+    {
         $disable = '';
 
         if($this->isProtected()) {
@@ -45,7 +47,8 @@ class SettingOnoff extends SettingNumeric
     }
 
     /** @inheritdoc */
-    public function update($input) {
+    public function update($input)
+    {
         if($this->isProtected()) return false;
 
         $input = ($input) ? 1 : 0;

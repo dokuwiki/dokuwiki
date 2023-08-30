@@ -21,7 +21,8 @@ class PluginCLI extends CLI
      * @param Options $options
      * @return void
      */
-    protected function setup(Options $options) {
+    protected function setup(Options $options)
+    {
         $options->setHelp('Excecutes Plugin command line tools');
         $options->registerArgument('plugin', 'The plugin CLI you want to run. Leave off to see list', false);
     }
@@ -34,7 +35,8 @@ class PluginCLI extends CLI
      * @param Options $options
      * @return void
      */
-    protected function main(Options $options) {
+    protected function main(Options $options)
+    {
         global $argv;
         $argv = $options->getArgs();
 
@@ -54,7 +56,8 @@ class PluginCLI extends CLI
     /**
      * List available plugins
      */
-    protected function listPlugins() {
+    protected function listPlugins()
+    {
         /** @var PluginController $plugin_controller */
         global $plugin_controller;
 
@@ -91,7 +94,8 @@ class PluginCLI extends CLI
      * @param string $name
      * @return CLIPlugin|null
      */
-    protected function loadPlugin($name) {
+    protected function loadPlugin($name)
+    {
         if(plugin_isdisabled($name)) return null;
 
         // execute the plugin CLI

@@ -13,7 +13,8 @@ class SettingMulticheckbox extends SettingString
     protected $other = 'always';
 
     /** @inheritdoc */
-    public function update($input) {
+    public function update($input)
+    {
         if($this->isProtected()) return false;
 
         // split any combined values + convert from array to comma separated string
@@ -34,7 +35,8 @@ class SettingMulticheckbox extends SettingString
     }
 
     /** @inheritdoc */
-    public function html(\admin_plugin_config $plugin, $echo = false) {
+    public function html(\admin_plugin_config $plugin, $echo = false)
+    {
 
         $disable = '';
 
@@ -109,7 +111,8 @@ class SettingMulticheckbox extends SettingString
      * @param string $str
      * @return array
      */
-    protected function str2array($str) {
+    protected function str2array($str)
+    {
         $array = explode(',', $str);
 
         if(!empty($this->combine)) {
@@ -135,7 +138,8 @@ class SettingMulticheckbox extends SettingString
      * @param array $input
      * @return string
      */
-    protected function array2str($input) {
+    protected function array2str($input)
+    {
 
         // handle other
         $other = trim($input['other']);

@@ -13,7 +13,8 @@
  * @param  string $varname Name of the JS variable to fill
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function toolbar_JSdefines($varname){
+function toolbar_JSdefines($varname)
+{
     global $lang;
 
     $menu = [];
@@ -255,7 +256,8 @@ function toolbar_JSdefines($varname){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function toolbar_signature(){
+function toolbar_signature()
+{
     global $conf;
     global $INFO;
     /** @var Input $INPUT */

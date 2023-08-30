@@ -46,7 +46,8 @@ class SafeFN
      *
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
-    public static function encode($filename) {
+    public static function encode($filename)
+    {
         return self::unicodeToSafe(Unicode::fromUtf8($filename));
     }
 
@@ -75,15 +76,18 @@ class SafeFN
      *
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
-    public static function decode($filename) {
+    public static function decode($filename)
+    {
         return Unicode::toUtf8(self::safeToUnicode(strtolower($filename)));
     }
 
-    public static function validatePrintableUtf8($printable_utf8) {
+    public static function validatePrintableUtf8($printable_utf8)
+    {
         return !preg_match('#[\x01-\x1f]#', $printable_utf8);
     }
 
-    public static function validateSafe($safe) {
+    public static function validateSafe($safe)
+    {
         return !preg_match('#[^'.self::$plain.self::$post_indicator.self::$pre_indicator.']#', $safe);
     }
 
@@ -95,7 +99,8 @@ class SafeFN
      *
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
-    private static function unicodeToSafe($unicode) {
+    private static function unicodeToSafe($unicode)
+    {
 
         $safe = '';
         $converted = false;
@@ -127,7 +132,8 @@ class SafeFN
      *
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
-    private static function safeToUnicode($safe) {
+    private static function safeToUnicode($safe)
+    {
 
         $unicode = [];
         $split = preg_split('#(?=['.self::$post_indicator.self::$pre_indicator.'])#', $safe, -1, PREG_SPLIT_NO_EMPTY);

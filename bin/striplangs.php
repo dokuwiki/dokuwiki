@@ -20,7 +20,8 @@ class StripLangsCLI extends CLI
      * @param Options $options
      * @return void
      */
-    protected function setup(Options $options) {
+    protected function setup(Options $options)
+    {
 
         $options->setHelp(
             'Remove all languages from the installation, besides the ones specified. English language ' .
@@ -48,7 +49,8 @@ class StripLangsCLI extends CLI
      * @param Options $options
      * @return void
      */
-    protected function main(Options $options) {
+    protected function main(Options $options)
+    {
         if($options->getOpt('keep')) {
             $keep = explode(',', $options->getOpt('keep'));
             if(!in_array('en', $keep)) $keep[] = 'en';
@@ -71,7 +73,8 @@ class StripLangsCLI extends CLI
      * @param string $path path to plugin or template dir
      * @param array $keep_langs languages to keep
      */
-    protected function processExtensions($path, $keep_langs) {
+    protected function processExtensions($path, $keep_langs)
+    {
         if(is_dir($path)) {
             $entries = scandir($path);
 
@@ -96,7 +99,8 @@ class StripLangsCLI extends CLI
      * @param string $path path to lang dir
      * @param array $keep_langs languages to keep
      */
-    protected function stripDirLangs($path, $keep_langs) {
+    protected function stripDirLangs($path, $keep_langs)
+    {
         $dir = dir($path);
 
         while(($cur_dir = $dir->read()) !== false) {

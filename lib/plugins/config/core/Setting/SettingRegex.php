@@ -12,7 +12,8 @@ class SettingRegex extends SettingString
     protected $pregflags = 'ui';   // regex pattern modifiers to be used in testing input
 
     /** @inheritdoc */
-    public function update($input) {
+    public function update($input)
+    {
 
         // let parent do basic checks, value, not changed, etc.
         $local = $this->local;

@@ -23,7 +23,8 @@ class IndexerCLI extends CLI
      * @param Options $options
      * @return void
      */
-    protected function setup(Options $options) {
+    protected function setup(Options $options)
+    {
         $options->setHelp(
             'Updates the searchindex by indexing all new or changed pages. When the -c option is ' .
             'given the index is cleared first.'
@@ -49,7 +50,8 @@ class IndexerCLI extends CLI
      * @param Options $options
      * @return void
      */
-    protected function main(Options $options) {
+    protected function main(Options $options)
+    {
         $this->clear = $options->getOpt('clear');
         $this->quiet = $options->getOpt('quiet');
 
@@ -61,7 +63,8 @@ class IndexerCLI extends CLI
     /**
      * Update the index
      */
-    protected function update() {
+    protected function update()
+    {
         global $conf;
         $data = [];
         $this->quietecho("Searching pages... ");
@@ -78,7 +81,8 @@ class IndexerCLI extends CLI
      *
      * @param string $id
      */
-    protected function index($id) {
+    protected function index($id)
+    {
         $this->quietecho("$id... ");
         idx_addPage($id, !$this->quiet, $this->clear);
         $this->quietecho("done.\n");
@@ -87,7 +91,8 @@ class IndexerCLI extends CLI
     /**
      * Clear all index files
      */
-    protected function clearindex() {
+    protected function clearindex()
+    {
         $this->quietecho("Clearing index... ");
         idx_get_indexer()->clear();
         $this->quietecho("done.\n");
@@ -98,7 +103,8 @@ class IndexerCLI extends CLI
      *
      * @param string $msg
      */
-    protected function quietecho($msg) {
+    protected function quietecho($msg)
+    {
         if(!$this->quiet) echo $msg;
     }
 }

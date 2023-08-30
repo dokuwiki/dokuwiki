@@ -38,7 +38,8 @@ class ActionRouter
      * Sets up the correct action based on the $ACT global. Writes back
      * the selected action to $ACT
      */
-    protected function __construct() {
+    protected function __construct()
+    {
         global $ACT;
         global $conf;
 
@@ -56,7 +57,8 @@ class ActionRouter
      * @param bool $reinit
      * @return ActionRouter
      */
-    public static function getInstance($reinit = false) {
+    public static function getInstance($reinit = false)
+    {
         if((!self::$instance instanceof \dokuwiki\ActionRouter) || $reinit) {
             self::$instance = new ActionRouter();
         }
@@ -72,7 +74,8 @@ class ActionRouter
      * @param string $actionname this is passed as a reference to $ACT, for plugin backward compatibility
      * @triggers ACTION_ACT_PREPROCESS
      */
-    protected function setupAction(&$actionname) {
+    protected function setupAction(&$actionname)
+    {
         $presetup = $actionname;
 
         try {
@@ -123,7 +126,8 @@ class ActionRouter
      * @param string $to new action name
      * @param null|ActionException $e any previous exception that caused the transition
      */
-    protected function transitionAction($from, $to, $e = null) {
+    protected function transitionAction($from, $to, $e = null)
+    {
         $this->transitions++;
 
         // no infinite recursion
@@ -148,7 +152,8 @@ class ActionRouter
      * @param \Exception|FatalException $e
      * @throws FatalException during unit testing
      */
-    protected function handleFatalException(\Throwable $e) {
+    protected function handleFatalException(\Throwable $e)
+    {
         if($e instanceof FatalException) {
             http_status($e->getCode());
         } else {
@@ -176,7 +181,8 @@ class ActionRouter
      * @return AbstractAction
      * @throws NoActionException
      */
-    public function loadAction($actionname) {
+    public function loadAction($actionname)
+    {
         $actionname = strtolower($actionname); // FIXME is this needed here? should we run a cleanup somewhere else?
         $parts = explode('_', $actionname);
         while($parts !== []) {
@@ -198,7 +204,8 @@ class ActionRouter
      * @throws ActionDisabledException
      * @throws ActionException
      */
-    public function checkAction(AbstractAction $action) {
+    public function checkAction(AbstractAction $action)
+    {
         global $INFO;
         global $ID;
 
@@ -224,7 +231,8 @@ class ActionRouter
      *
      * @return AbstractAction
      */
-    public function getAction() {
+    public function getAction()
+    {
         return $this->action;
     }
 }

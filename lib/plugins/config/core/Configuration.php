@@ -45,7 +45,8 @@ class Configuration
     /**
      * ConfigSettings constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->loader = new Loader(new ConfigParser());
         $this->writer = new Writer();
 
@@ -62,7 +63,8 @@ class Configuration
      *
      * @return Setting[]
      */
-    public function getSettings() {
+    public function getSettings()
+    {
         return $this->settings;
     }
 
@@ -71,7 +73,8 @@ class Configuration
      *
      * @return Setting[]
      */
-    public function getUndefined() {
+    public function getUndefined()
+    {
         return $this->undefined;
     }
 
@@ -80,7 +83,8 @@ class Configuration
      *
      * @return bool
      */
-    public function hasChanged() {
+    public function hasChanged()
+    {
         return $this->changed;
     }
 
@@ -89,7 +93,8 @@ class Configuration
      *
      * @return bool
      */
-    public function isLocked() {
+    public function isLocked()
+    {
         return $this->writer->isLocked();
     }
 
@@ -99,7 +104,8 @@ class Configuration
      * @param array $input as posted
      * @return bool true if all updates went through, false on errors
      */
-    public function updateSettings($input) {
+    public function updateSettings($input)
+    {
         $ok = true;
 
         foreach($this->settings as $key => $obj) {
@@ -121,7 +127,8 @@ class Configuration
      *
      * @throws \Exception
      */
-    public function save() {
+    public function save()
+    {
         // only save the undefined settings that have not been handled in settings
         $undefined = array_diff_key($this->undefined, $this->settings);
         $this->writer->save(array_merge($this->settings, $undefined));
@@ -132,7 +139,8 @@ class Configuration
      *
      * @throws \Exception
      */
-    public function touch() {
+    public function touch()
+    {
         $this->writer->touch();
     }
 
@@ -141,14 +149,16 @@ class Configuration
      *
      * @return array
      */
-    public function getLangs() {
+    public function getLangs()
+    {
         return $this->loader->loadLangs();
     }
 
     /**
      * Initalizes the $settings and $undefined properties
      */
-    protected function initSettings() {
+    protected function initSettings()
+    {
         $keys = [
             ...array_keys($this->metadata),
             ...array_keys($this->default),
@@ -180,7 +190,8 @@ class Configuration
      * @param string $key
      * @return Setting
      */
-    protected function instantiateClass($key) {
+    protected function instantiateClass($key)
+    {
         if(isset($this->metadata[$key])) {
             $param = $this->metadata[$key];
             $class = $this->determineClassName(array_shift($param), $key); // first param is class
@@ -200,7 +211,8 @@ class Configuration
      * @param string $key the settings key
      * @return string
      */
-    protected function determineClassName($class, $key) {
+    protected function determineClassName($class, $key)
+    {
         // try namespaced class first
         if(is_string($class)) {
             $modern = str_replace('_', '', ucwords($class, '_'));

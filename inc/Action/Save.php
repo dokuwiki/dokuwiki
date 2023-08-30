@@ -16,7 +16,8 @@ class Save extends AbstractAction
 {
 
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         global $INFO;
         if($INFO['exists']) {
             return AUTH_EDIT;
@@ -26,7 +27,8 @@ class Save extends AbstractAction
     }
 
     /** @inheritdoc */
-    public function preProcess() {
+    public function preProcess()
+    {
         if(!checkSecurityToken()) throw new ActionException('preview');
 
         global $ID;

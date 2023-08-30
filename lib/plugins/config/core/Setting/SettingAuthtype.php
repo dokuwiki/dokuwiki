@@ -9,7 +9,8 @@ class SettingAuthtype extends SettingMultichoice
 {
 
     /** @inheritdoc */
-    public function initialize($default = null, $local = null, $protected = null) {
+    public function initialize($default = null, $local = null, $protected = null)
+    {
         /** @var $plugin_controller \dokuwiki\Extension\PluginController */
         global $plugin_controller;
 
@@ -22,7 +23,8 @@ class SettingAuthtype extends SettingMultichoice
     }
 
     /** @inheritdoc */
-    public function update($input) {
+    public function update($input)
+    {
         /** @var $plugin_controller \dokuwiki\Extension\PluginController */
         global $plugin_controller;
 

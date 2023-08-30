@@ -21,7 +21,8 @@ use dokuwiki\Ui;
 class Show extends AbstractAction
 {
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_READ;
     }
 

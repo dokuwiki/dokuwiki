@@ -27,7 +27,8 @@ use dokuwiki\Utf8\PhpString;
  * @author Gerry Weissbach <dokuwiki@gammaproduction.de>
  *
  */
-function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp=[]) {
+function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp = [])
+{
     global $conf;
     // send mime headers
     header("Content-Type: $mime");
@@ -113,7 +114,8 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
  * @return string           in the format " name=value" for values WITHOUT special characters
  * @return string           in the format " name*=charset'lang'value" for values WITH special characters
  */
-function rfc2231_encode($name, $value, $charset='utf-8', $lang='en') {
+function rfc2231_encode($name, $value, $charset = 'utf-8', $lang = 'en')
+{
     $internal = preg_replace_callback(
         '/[\x00-\x20*\'%()<>@,;:\\\\"\/[\]?=\x80-\xFF]/',
         static fn($match) => rawurlencode($match[0]),
@@ -141,7 +143,8 @@ function rfc2231_encode($name, $value, $charset='utf-8', $lang='en') {
  * @param int    $height
  * @return array as array(STATUS, STATUSMESSAGE)
  */
-function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
+function checkFileStatus(&$media, &$file, $rev = '', $width = 0, $height = 0)
+{
     global $MIME, $EXT, $CACHE, $INPUT;
 
     //media to local file
@@ -191,7 +194,8 @@ function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
  * @param string $cache
  * @return int cachetime in seconds
  */
-function calc_cache($cache) {
+function calc_cache($cache)
+{
     global $conf;
 
     if(strtolower($cache) == 'nocache') return 0; //never cache

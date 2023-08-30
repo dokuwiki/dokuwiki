@@ -9,7 +9,8 @@ class SettingImConvert extends SettingString
 {
 
     /** @inheritdoc */
-    public function update($input) {
+    public function update($input)
+    {
         if($this->isProtected()) return false;
 
         $input = trim($input);

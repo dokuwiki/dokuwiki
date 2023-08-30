@@ -16,7 +16,8 @@ class Draftdel extends AbstractAction
 {
 
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_EDIT;
     }
 
@@ -27,7 +28,8 @@ class Draftdel extends AbstractAction
      *
      * @throws ActionAbort
      */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $INFO, $ID;
         $draft = new Draft($ID, $INFO['client']);
         if ($draft->isDraftAvailable() && checkSecurityToken()) {

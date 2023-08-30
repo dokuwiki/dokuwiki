@@ -8,7 +8,8 @@ namespace dokuwiki\plugin\config\core\Setting;
 class SettingString extends Setting
 {
     /** @inheritdoc */
-    public function html(\admin_plugin_config $plugin, $echo = false) {
+    public function html(\admin_plugin_config $plugin, $echo = false)
+    {
         $disable = '';
 
         if ($this->isProtected()) {

@@ -51,7 +51,8 @@ require_once(DOKU_INC.'inc/legacy.php');
  *
  * @return bool
  */
-function load_autoload($name){
+function load_autoload($name)
+{
     static $classes = null;
     if($classes === null) $classes = [
         'Diff'                  => DOKU_INC.'inc/DifferenceEngine.php',

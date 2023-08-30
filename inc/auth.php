@@ -28,7 +28,8 @@ use dokuwiki\Subscriptions\RegistrationSubscriptionSender;
  * @triggers AUTH_LOGIN_CHECK
  * @return bool
  */
-function auth_setup() {
+function auth_setup()
+{
     global $conf;
     /* @var AuthPlugin $auth */
     global $auth;
@@ -118,7 +119,8 @@ function auth_setup() {
  *
  * @return array
  */
-function auth_loadACL() {
+function auth_loadACL()
+{
     global $config_cascade;
     global $USERINFO;
     /* @var Input $INPUT */
@@ -167,7 +169,8 @@ function auth_loadACL() {
  * @param array $evdata
  * @return bool
  */
-function auth_login_wrapper($evdata) {
+function auth_login_wrapper($evdata)
+{
     return auth_login(
         $evdata['user'],
         $evdata['password'],
@@ -205,7 +208,8 @@ function auth_login_wrapper($evdata) {
  * @param   bool    $silent  Don't show error on bad auth
  * @return  bool             true on successful auth
  */
-function auth_login($user, $pass, $sticky = false, $silent = false) {
+function auth_login($user, $pass, $sticky = false, $silent = false)
+{
     global $USERINFO;
     global $conf;
     global $lang;
@@ -278,7 +282,8 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
  *
  * @return  string  a SHA256 sum of various browser headers
  */
-function auth_browseruid() {
+function auth_browseruid()
+{
     /* @var Input $INPUT */
     global $INPUT;
 
@@ -308,7 +313,8 @@ function auth_browseruid() {
  * @param   bool $secure     if security is more important than keeping the old value
  * @return  string
  */
-function auth_cookiesalt($addsession = false, $secure = false) {
+function auth_cookiesalt($addsession = false, $secure = false)
+{
     if (defined('SIMPLE_TEST')) {
         return 'test';
     }
@@ -336,7 +342,8 @@ function auth_cookiesalt($addsession = false, $secure = false) {
  * @param int $length number of bytes
  * @return string cryptographically secure random bytes
  */
-function auth_randombytes($length) {
+function auth_randombytes($length)
+{
     return random_bytes($length);
 }
 
@@ -349,7 +356,8 @@ function auth_randombytes($length) {
  * @param int $max
  * @return int
  */
-function auth_random($min, $max) {
+function auth_random($min, $max)
+{
     return random_int($min, $max);
 }
 
@@ -363,7 +371,8 @@ function auth_random($min, $max) {
  * @param string $secret The secret/password that shall be used
  * @return string The ciphertext
  */
-function auth_encrypt($data, $secret) {
+function auth_encrypt($data, $secret)
+{
     $iv     = auth_randombytes(16);
     $cipher = new AES();
     $cipher->setPassword($secret);
@@ -386,7 +395,8 @@ function auth_encrypt($data, $secret) {
  * @param string $secret     The secret/password that shall be used
  * @return string The decrypted data
  */
-function auth_decrypt($ciphertext, $secret) {
+function auth_decrypt($ciphertext, $secret)
+{
     $iv     = substr($ciphertext, 0, 16);
     $cipher = new AES();
     $cipher->setPassword($secret);
@@ -405,7 +415,8 @@ function auth_decrypt($ciphertext, $secret) {
  *
  * @param bool $keepbc - when true, the breadcrumb data is not cleared
  */
-function auth_logoff($keepbc = false) {
+function auth_logoff($keepbc = false)
+{
     global $conf;
     global $USERINFO;
     /* @var AuthPlugin $auth */
@@ -456,7 +467,8 @@ function auth_logoff($keepbc = false) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function auth_ismanager($user = null, $groups = null, $adminonly = false, $recache=false) {
+function auth_ismanager($user = null, $groups = null, $adminonly = false, $recache = false)
+{
     global $conf;
     global $USERINFO;
     /* @var AuthPlugin $auth */
@@ -516,7 +528,8 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false, $recac
  * @see auth_ismanager()
  *
  */
-function auth_isadmin($user = null, $groups = null, $recache=false) {
+function auth_isadmin($user = null, $groups = null, $recache = false)
+{
     return auth_ismanager($user, $groups, true, $recache);
 }
 
@@ -531,7 +544,8 @@ function auth_isadmin($user = null, $groups = null, $recache=false) {
  * @param array  $groups     groups the user is member of
  * @return bool       true for membership acknowledged
  */
-function auth_isMember($memberlist, $user, array $groups) {
+function auth_isMember($memberlist, $user, array $groups)
+{
     /* @var AuthPlugin $auth */
     global $auth;
     if(!$auth) return false;
@@ -577,7 +591,8 @@ function auth_isMember($memberlist, $user, array $groups) {
  * @param  string  $id  page ID (needs to be resolved and cleaned)
  * @return int          permission level
  */
-function auth_quickaclcheck($id) {
+function auth_quickaclcheck($id)
+{
     global $conf;
     global $USERINFO;
     /* @var Input $INPUT */
@@ -598,7 +613,8 @@ function auth_quickaclcheck($id) {
  * @param  array|null   $groups Array of groups the user is in
  * @return int             permission level
  */
-function auth_aclcheck($id, $user, $groups) {
+function auth_aclcheck($id, $user, $groups)
+{
     $data = [
         'id'     => $id ?? '',
         'user'   => $user,
@@ -618,7 +634,8 @@ function auth_aclcheck($id, $user, $groups) {
  * @param  array $data event data
  * @return int   permission level
  */
-function auth_aclcheck_cb($data) {
+function auth_aclcheck_cb($data)
+{
     $id     =& $data['id'];
     $user   =& $data['user'];
     $groups =& $data['groups'];
@@ -748,7 +765,8 @@ function auth_aclcheck_cb($data) {
  * @param bool $skip_group
  * @return string
  */
-function auth_nameencode($name, $skip_group = false) {
+function auth_nameencode($name, $skip_group = false)
+{
     global $cache_authname;
     $cache =& $cache_authname;
     $name  = (string) $name;
@@ -780,7 +798,8 @@ function auth_nameencode($name, $skip_group = false) {
  * @param array $matches first complete match, next matching subpatterms
  * @return string
  */
-function auth_nameencode_callback($matches) {
+function auth_nameencode_callback($matches)
+{
     return '%'.dechex(ord(substr($matches[1], -1)));
 }
 
@@ -797,7 +816,8 @@ function auth_nameencode_callback($matches) {
  * @param  string $foruser username for which the password is generated
  * @return string  pronouncable password
  */
-function auth_pwgen($foruser = '') {
+function auth_pwgen($foruser = '')
+{
     $data = [
         'password' => '',
         'foruser'  => $foruser
@@ -833,7 +853,8 @@ function auth_pwgen($foruser = '') {
  * @param string $password The new password in clear text
  * @return bool  true on success
  */
-function auth_sendPassword($user, $password) {
+function auth_sendPassword($user, $password)
+{
     global $lang;
     /* @var AuthPlugin $auth */
     global $auth;
@@ -867,7 +888,8 @@ function auth_sendPassword($user, $password) {
  *
  * @return bool  true on success, false on any error
  */
-function register() {
+function register()
+{
     global $lang;
     global $conf;
     /* @var \dokuwiki\Extension\AuthPlugin $auth */
@@ -936,7 +958,8 @@ function register() {
  *
  * @author    Christopher Smith <chris@jalakai.co.uk>
  */
-function updateprofile() {
+function updateprofile()
+{
     global $conf;
     global $lang;
     /* @var AuthPlugin $auth */
@@ -1025,7 +1048,8 @@ function updateprofile() {
  *
  * @return bool true on success, false on any error
  */
-function auth_deleteprofile(){
+function auth_deleteprofile()
+{
     global $conf;
     global $lang;
     /* @var \dokuwiki\Extension\AuthPlugin $auth */
@@ -1079,7 +1103,8 @@ function auth_deleteprofile(){
  *
  * @return bool true on success, false on any error
  */
-function act_resendpwd() {
+function act_resendpwd()
+{
     global $lang;
     global $conf;
     /* @var AuthPlugin $auth */
@@ -1207,7 +1232,8 @@ function act_resendpwd() {
  * @param string $salt A salt, null for random
  * @return  string  The crypted password
  */
-function auth_cryptPassword($clear, $method = '', $salt = null) {
+function auth_cryptPassword($clear, $method = '', $salt = null)
+{
     global $conf;
     if(empty($method)) $method = $conf['passcrypt'];
 
@@ -1231,7 +1257,8 @@ function auth_cryptPassword($clear, $method = '', $salt = null) {
  * @param  string $crypt The hash to compare with
  * @return bool true if both match
  */
-function auth_verifyPassword($clear, $crypt) {
+function auth_verifyPassword($clear, $crypt)
+{
     $pass = new PassHash();
     return $pass->verify_hash($clear, $crypt);
 }
@@ -1244,7 +1271,8 @@ function auth_verifyPassword($clear, $crypt) {
  * @param bool    $sticky     whether or not the cookie will last beyond the session
  * @return bool
  */
-function auth_setCookie($user, $pass, $sticky) {
+function auth_setCookie($user, $pass, $sticky)
+{
     global $conf;
     /* @var AuthPlugin $auth */
     global $auth;
@@ -1280,7 +1308,8 @@ function auth_setCookie($user, $pass, $sticky) {
  *
  * @returns array
  */
-function auth_getCookie() {
+function auth_getCookie()
+{
     if(!isset($_COOKIE[DOKU_COOKIE])) {
         return [null, null, null];
     }

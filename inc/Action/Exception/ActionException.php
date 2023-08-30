@@ -31,7 +31,8 @@ class ActionException extends \Exception
      * @param string|null $newaction the action that should be used next
      * @param string $message optional message, will not be shown except for some dub classes
      */
-    public function __construct($newaction = null, $message = '') {
+    public function __construct($newaction = null, $message = '')
+    {
         global $INPUT;
         parent::__construct($message);
         if(is_null($newaction)) {
@@ -50,7 +51,8 @@ class ActionException extends \Exception
      *
      * @return string
      */
-    public function getNewAction() {
+    public function getNewAction()
+    {
         return $this->newaction;
     }
 
@@ -60,7 +62,8 @@ class ActionException extends \Exception
      * @param null|bool $set when null is given, the current setting is not changed
      * @return bool
      */
-    public function displayToUser($set = null) {
+    public function displayToUser($set = null)
+    {
         if(!is_null($set)) $this->displayToUser = $set;
         return $set;
     }

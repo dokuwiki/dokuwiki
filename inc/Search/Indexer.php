@@ -32,7 +32,8 @@ class Indexer
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    public function addPageWords($page, $text) {
+    public function addPageWords($page, $text)
+    {
         if (!$this->lock())
             return "locked";
 
@@ -108,7 +109,8 @@ class Indexer
      * @author Christopher Smith <chris@jalakai.co.uk>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function getPageWords($text) {
+    protected function getPageWords($text)
+    {
 
         $tokens = $this->tokenizer($text);
         $tokens = array_count_values($tokens);  // count the frequency of each token
@@ -164,7 +166,8 @@ class Indexer
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Michael Hamann <michael@content-space.de>
      */
-    public function addMetaKeys($page, $key, $value=null) {
+    public function addMetaKeys($page, $key, $value = null)
+    {
         if (!is_array($key)) {
             $key = [$key => $value];
         } elseif (!is_null($value)) {
@@ -268,7 +271,8 @@ class Indexer
      * @param string $newpage The new page name
      * @return string|bool If the page was successfully renamed, can be a message in the case of an error
      */
-    public function renamePage($oldpage, $newpage) {
+    public function renamePage($oldpage, $newpage)
+    {
         if (!$this->lock()) return 'locked';
 
         $pages = $this->getPages();
@@ -313,7 +317,8 @@ class Indexer
      * @param string $newvalue  The new value to which the old value shall be renamed, if exists values will be merged
      * @return bool|string      If renaming the value has been successful, false or error message on error.
      */
-    public function renameMetaValue($key, $oldvalue, $newvalue) {
+    public function renameMetaValue($key, $oldvalue, $newvalue)
+    {
         if (!$this->lock()) return 'locked';
 
         // change the relation references index
@@ -372,7 +377,8 @@ class Indexer
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function deletePage($page) {
+    public function deletePage($page)
+    {
         if (!$this->lock())
             return "locked";
 
@@ -393,7 +399,8 @@ class Indexer
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function deletePageNoLock($page) {
+    protected function deletePageNoLock($page)
+    {
         // load known documents
         $pid = $this->getPIDNoLock($page);
         if ($pid === false) {
@@ -446,7 +453,8 @@ class Indexer
      *
      * @return bool If the index has been cleared successfully
      */
-    public function clear() {
+    public function clear()
+    {
         global $conf;
 
         if (!$this->lock()) return false;
@@ -489,7 +497,8 @@ class Indexer
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    public function tokenizer($text, $wc=false) {
+    public function tokenizer($text, $wc = false)
+    {
         $wc = ($wc) ? '' : '\*';
         $stopwords =& idx_get_stopwords();
 
@@ -529,7 +538,8 @@ class Indexer
      * @param string $page The page to get the PID for
      * @return bool|int The page id on success, false on error
      */
-    public function getPID($page) {
+    public function getPID($page)
+    {
         // return PID without locking when it is in the cache
         if (isset($this->pidCache[$page])) return $this->pidCache[$page];
 
@@ -554,7 +564,8 @@ class Indexer
      * @param string $page The page to get the PID for
      * @return bool|int The page id on success, false on error
      */
-    protected function getPIDNoLock($page) {
+    protected function getPIDNoLock($page)
+    {
         // avoid expensive addIndexKey operation for the most recently requested pages by using a cache
         if (isset($this->pidCache[$page])) return $this->pidCache[$page];
         $pid = $this->addIndexKey('page', '', $page);
@@ -571,7 +582,8 @@ class Indexer
      * @param int $pid The PID to get the page id for
      * @return string The page id
      */
-    public function getPageFromPID($pid) {
+    public function getPageFromPID($pid)
+    {
         return $this->getIndexKey('page', '', $pid);
     }
 
@@ -591,7 +603,8 @@ class Indexer
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    public function lookup(&$tokens) {
+    public function lookup(&$tokens)
+    {
         $result = [];
         $wids = $this->getIndexWords($tokens, $result);
         if (empty($wids)) return [];
@@ -646,7 +659,8 @@ class Indexer
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Michael Hamann <michael@content-space.de>
      */
-    public function lookupKey($key, &$value, $func=null) {
+    public function lookupKey($key, &$value, $func = null)
+    {
         if (!is_array($value))
             $value_array = [$value];
         else
@@ -744,7 +758,8 @@ class Indexer
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function getIndexWords(&$words, &$result) {
+    protected function getIndexWords(&$words, &$result)
+    {
         $tokens = [];
         $tokenlength = [];
         $tokenwild = [];
@@ -825,7 +840,8 @@ class Indexer
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function getPages($key=null) {
+    public function getPages($key = null)
+    {
         $page_idx = $this->getIndex('page', '');
         if (is_null($key)) return $page_idx;
 
@@ -859,7 +875,8 @@ class Indexer
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function histogram($min=1, $max=0, $minlen=3, $key=null) {
+    public function histogram($min = 1, $max = 0, $minlen = 3, $key = null)
+    {
         if ($min < 1)
             $min = 1;
         if ($max < $min)
@@ -920,7 +937,8 @@ class Indexer
      *
      * @return bool|string
      */
-    protected function lock() {
+    protected function lock()
+    {
         global $conf;
         $status = true;
         $run = 0;
@@ -953,7 +971,8 @@ class Indexer
      *
      * @return bool
      */
-    protected function unlock() {
+    protected function unlock()
+    {
         global $conf;
         @rmdir($conf['lockdir'].'/_indexer.lock');
         return true;
@@ -972,7 +991,8 @@ class Indexer
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function getIndex($idx, $suffix) {
+    protected function getIndex($idx, $suffix)
+    {
         global $conf;
         $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
         if (!file_exists($fn)) return [];
@@ -989,7 +1009,8 @@ class Indexer
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function saveIndex($idx, $suffix, &$lines) {
+    protected function saveIndex($idx, $suffix, &$lines)
+    {
         global $conf;
         $fn = $conf['indexdir'].'/'.$idx.$suffix;
         $fh = @fopen($fn.'.tmp', 'w');
@@ -1014,7 +1035,8 @@ class Indexer
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function getIndexKey($idx, $suffix, $id) {
+    protected function getIndexKey($idx, $suffix, $id)
+    {
         global $conf;
         $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
         if (!file_exists($fn)) return '';
@@ -1039,7 +1061,8 @@ class Indexer
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function saveIndexKey($idx, $suffix, $id, $line) {
+    protected function saveIndexKey($idx, $suffix, $id, $line)
+    {
         global $conf;
         if (substr($line, -1) != "\n")
             $line .= "\n";
@@ -1081,7 +1104,8 @@ class Indexer
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    protected function addIndexKey($idx, $suffix, $value) {
+    protected function addIndexKey($idx, $suffix, $value)
+    {
         $index = $this->getIndex($idx, $suffix);
         $id = array_search($value, $index, true);
         if ($id === false) {
@@ -1105,7 +1129,8 @@ class Indexer
      *
      * @return array
      */
-    protected function listIndexLengths() {
+    protected function listIndexLengths()
+    {
         return idx_listIndexLengths();
     }
 
@@ -1120,7 +1145,8 @@ class Indexer
      * @param array|int $filter
      * @return array
      */
-    protected function indexLengths($filter) {
+    protected function indexLengths($filter)
+    {
         global $conf;
         $idx = [];
         if (is_array($filter)) {
@@ -1151,7 +1177,8 @@ class Indexer
      * @param int    $count
      * @return string
      */
-    protected function updateTuple($line, $id, $count) {
+    protected function updateTuple($line, $id, $count)
+    {
         if ($line != ''){
             $line = preg_replace('/(^|:)'.preg_quote($id, '/').'\*\d*/', '', $line);
         }
@@ -1176,7 +1203,8 @@ class Indexer
      * @param string $line
      * @return array
      */
-    protected function parseTuples(&$keys, $line) {
+    protected function parseTuples(&$keys, $line)
+    {
         $result = [];
         if ($line == '') return $result;
         $parts = explode(':', $line);
@@ -1201,7 +1229,8 @@ class Indexer
      * @param string $line
      * @return int
      */
-    protected function countTuples($line) {
+    protected function countTuples($line)
+    {
         $freq = 0;
         $parts = explode(':', $line);
         foreach ($parts as $tuple) {

@@ -28,7 +28,8 @@ class RenderCLI extends CLI
      * @param Options $options
      * @return void
      */
-    protected function setup(Options $options) {
+    protected function setup(Options $options)
+    {
         $options->setHelp(
             'A simple commandline tool to render some DokuWiki syntax with a given renderer.' .
             "\n\n" .
@@ -48,7 +49,8 @@ class RenderCLI extends CLI
      * @throws DokuCLI_Exception
      * @return void
      */
-    protected function main(Options $options) {
+    protected function main(Options $options)
+    {
         $renderer = $options->getOpt('renderer', 'xhtml');
 
         // do the action

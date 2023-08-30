@@ -62,7 +62,7 @@ class Doku_Form
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function __construct($params, $action=false, $method=false, $enctype=false)
+    public function __construct($params, $action = false, $method = false, $enctype = false)
     {
         if (!is_array($params)) {
             $this->params = array('id' => $params);
@@ -345,7 +345,8 @@ class Doku_Form
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
-function form_makeTag($tag, $attrs=array()) {
+function form_makeTag($tag, $attrs = array())
+{
     $elem = array('_elem'=>'tag', '_tag'=>$tag);
     return array_merge($elem, $attrs);
 }
@@ -362,7 +363,8 @@ function form_makeTag($tag, $attrs=array()) {
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
-function form_makeOpenTag($tag, $attrs=array()) {
+function form_makeOpenTag($tag, $attrs = array())
+{
     $elem = array('_elem'=>'opentag', '_tag'=>$tag);
     return array_merge($elem, $attrs);
 }
@@ -378,7 +380,8 @@ function form_makeOpenTag($tag, $attrs=array()) {
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
-function form_makeCloseTag($tag) {
+function form_makeCloseTag($tag)
+{
     return array('_elem'=>'closetag', '_tag'=>$tag);
 }
 
@@ -396,7 +399,8 @@ function form_makeCloseTag($tag) {
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
-function form_makeWikiText($text, $attrs=array()) {
+function form_makeWikiText($text, $attrs = array())
+{
     $elem = array('_elem'=>'wikitext', '_text'=>$text,
                         'class'=>'edit', 'cols'=>'80', 'rows'=>'10');
     return array_merge($elem, $attrs);
@@ -417,7 +421,8 @@ function form_makeWikiText($text, $attrs=array()) {
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
-function form_makeButton($type, $act, $value='', $attrs=array()) {
+function form_makeButton($type, $act, $value = '', $attrs = array())
+{
     if ($value == '') $value = $act;
     $elem = array('_elem'=>'button', 'type'=>$type, '_action'=>$act,
                         'value'=>$value);
@@ -446,7 +451,8 @@ function form_makeButton($type, $act, $value='', $attrs=array()) {
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
-function form_makeField($type, $name, $value='', $label=null, $id='', $class='', $attrs=array()) {
+function form_makeField($type, $name, $value = '', $label = null, $id = '', $class = '', $attrs = array())
+{
     if (is_null($label)) $label = $name;
     $elem = array('_elem'=>'field', '_text'=>$label, '_class'=>$class,
                         'type'=>$type, 'id'=>$id, 'name'=>$name, 'value'=>$value);
@@ -472,7 +478,8 @@ function form_makeField($type, $name, $value='', $label=null, $id='', $class='',
  *
  * @return array
  */
-function form_makeFieldRight($type, $name, $value='', $label=null, $id='', $class='', $attrs=array()) {
+function form_makeFieldRight($type, $name, $value = '', $label = null, $id = '', $class = '', $attrs = array())
+{
     if (is_null($label)) $label = $name;
     $elem = array('_elem'=>'fieldright', '_text'=>$label, '_class'=>$class,
                         'type'=>$type, 'id'=>$id, 'name'=>$name, 'value'=>$value);
@@ -496,7 +503,8 @@ function form_makeFieldRight($type, $name, $value='', $label=null, $id='', $clas
  *
  * @return array
  */
-function form_makeTextField($name, $value='', $label=null, $id='', $class='', $attrs=array()) {
+function form_makeTextField($name, $value = '', $label = null, $id = '', $class = '', $attrs = array())
+{
     if (is_null($label)) $label = $name;
     $elem = array('_elem'=>'textfield', '_text'=>$label, '_class'=>$class,
                         'id'=>$id, 'name'=>$name, 'value'=>$value, 'class'=>'edit');
@@ -520,7 +528,8 @@ function form_makeTextField($name, $value='', $label=null, $id='', $class='', $a
  *
  * @return array
  */
-function form_makePasswordField($name, $label=null, $id='', $class='', $attrs=array()) {
+function form_makePasswordField($name, $label = null, $id = '', $class = '', $attrs = array())
+{
     if (is_null($label)) $label = $name;
     $elem = array('_elem'=>'passwordfield', '_text'=>$label, '_class'=>$class,
                         'id'=>$id, 'name'=>$name, 'class'=>'edit');
@@ -543,7 +552,8 @@ function form_makePasswordField($name, $label=null, $id='', $class='', $attrs=ar
  *
  * @return array
  */
-function form_makeFileField($name, $label=null, $id='', $class='', $attrs=array()) {
+function form_makeFileField($name, $label = null, $id = '', $class = '', $attrs = array())
+{
     if (is_null($label)) $label = $name;
     $elem = array('_elem'=>'filefield', '_text'=>$label, '_class'=>$class,
                         'id'=>$id, 'name'=>$name, 'class'=>'edit');
@@ -569,7 +579,8 @@ function form_makeFileField($name, $label=null, $id='', $class='', $attrs=array(
  *
  * @return array
  */
-function form_makeCheckboxField($name, $value='1', $label=null, $id='', $class='', $attrs=array()) {
+function form_makeCheckboxField($name, $value = '1', $label = null, $id = '', $class = '', $attrs = array())
+{
     if (is_null($label)) $label = $name;
     if (is_null($value) || $value=='') $value='0';
     $elem = array('_elem'=>'checkboxfield', '_text'=>$label, '_class'=>$class,
@@ -594,7 +605,8 @@ function form_makeCheckboxField($name, $value='1', $label=null, $id='', $class='
  *
  * @return array
  */
-function form_makeRadioField($name, $value='1', $label=null, $id='', $class='', $attrs=array()) {
+function form_makeRadioField($name, $value = '1', $label = null, $id = '', $class = '', $attrs = array())
+{
     if (is_null($label)) $label = $name;
     if (is_null($value) || $value=='') $value='0';
     $elem = array('_elem'=>'radiofield', '_text'=>$label, '_class'=>$class,
@@ -626,7 +638,8 @@ function form_makeRadioField($name, $value='1', $label=null, $id='', $class='', 
  * @param array            $attrs    Optional attributes.
  * @return array   pseudo-tag
  */
-function form_makeMenuField($name, $values, $selected='', $label=null, $id='', $class='', $attrs=array()) {
+function form_makeMenuField($name, $values, $selected = '', $label = null, $id = '', $class = '', $attrs = array())
+{
     if (is_null($label)) $label = $name;
     $options = array();
     reset($values);
@@ -672,7 +685,8 @@ function form_makeMenuField($name, $values, $selected='', $label=null, $id='', $
  * @param array            $attrs    Optional attributes.
  * @return array   pseudo-tag
  */
-function form_makeListboxField($name, $values, $selected='', $label=null, $id='', $class='', $attrs=array()) {
+function form_makeListboxField($name, $values, $selected = '', $label = null, $id = '', $class = '', $attrs = array())
+{
     if (is_null($label)) $label = $name;
     $options = array();
     reset($values);
@@ -714,7 +728,8 @@ function form_makeListboxField($name, $values, $selected='', $label=null, $id=''
  * @param array $attrs attributes
  * @return string html of tag
  */
-function form_tag($attrs) {
+function form_tag($attrs)
+{
     return '<'.$attrs['_tag'].' '. buildAttributes($attrs, true) .'/>';
 }
 
@@ -730,7 +745,8 @@ function form_tag($attrs) {
  * @param array $attrs attributes
  * @return string html of tag
  */
-function form_opentag($attrs) {
+function form_opentag($attrs)
+{
     return '<'.$attrs['_tag'].' '. buildAttributes($attrs, true) .'>';
 }
 
@@ -746,7 +762,8 @@ function form_opentag($attrs) {
  * @param array $attrs attributes
  * @return string html of tag
  */
-function form_closetag($attrs) {
+function form_closetag($attrs)
+{
     return '</'.$attrs['_tag'].'>';
 }
 
@@ -762,7 +779,8 @@ function form_closetag($attrs) {
  * @param array $attrs attributes
  * @return string html
  */
-function form_openfieldset($attrs) {
+function form_openfieldset($attrs)
+{
     $s = '<fieldset '. buildAttributes($attrs, true) .'>';
     if (!is_null($attrs['_legend'])) $s .= '<legend>'.$attrs['_legend'].'</legend>';
     return $s;
@@ -778,7 +796,8 @@ function form_openfieldset($attrs) {
  *
  * @return string html
  */
-function form_closefieldset() {
+function form_closefieldset()
+{
     return '</fieldset>';
 }
 
@@ -794,7 +813,8 @@ function form_closefieldset() {
  * @param array $attrs attributes
  * @return string html
  */
-function form_hidden($attrs) {
+function form_hidden($attrs)
+{
     return '<input type="hidden" name="'.$attrs['name'].'" value="'. formText($attrs['value']) .'" />';
 }
 
@@ -810,7 +830,8 @@ function form_hidden($attrs) {
  * @param array $attrs attributes
  * @return string html
  */
-function form_wikitext($attrs) {
+function form_wikitext($attrs)
+{
     // mandatory attributes
     unset($attrs['name']);
     unset($attrs['id']);
@@ -832,7 +853,8 @@ function form_wikitext($attrs) {
  * @param array $attrs attributes
  * @return string html
  */
-function form_button($attrs) {
+function form_button($attrs)
+{
     $p = (!empty($attrs['_action'])) ? 'name="do['.$attrs['_action'].']" ' : '';
     $value = $attrs['value'];
     unset($attrs['value']);
@@ -852,7 +874,8 @@ function form_button($attrs) {
  * @param array $attrs attributes
  * @return string html
  */
-function form_field($attrs) {
+function form_field($attrs)
+{
     $s = '<label';
     if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
     if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
@@ -876,7 +899,8 @@ function form_field($attrs) {
  * @param array $attrs attributes
  * @return string html
  */
-function form_fieldright($attrs) {
+function form_fieldright($attrs)
+{
     $s = '<label';
     if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
     if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
@@ -900,7 +924,8 @@ function form_fieldright($attrs) {
  * @param array $attrs attributes
  * @return string html
  */
-function form_textfield($attrs) {
+function form_textfield($attrs)
+{
     // mandatory attributes
     unset($attrs['type']);
     $s = '<label';
@@ -926,7 +951,8 @@ function form_textfield($attrs) {
  * @param array $attrs attributes
  * @return string html
  */
-function form_passwordfield($attrs) {
+function form_passwordfield($attrs)
+{
     // mandatory attributes
     unset($attrs['type']);
     $s = '<label';
@@ -954,7 +980,8 @@ function form_passwordfield($attrs) {
  * @param array $attrs attributes
  * @return string html
  */
-function form_filefield($attrs) {
+function form_filefield($attrs)
+{
     $s = '<label';
     if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
     if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
@@ -983,7 +1010,8 @@ function form_filefield($attrs) {
  * @param array $attrs attributes
  * @return string html
  */
-function form_checkboxfield($attrs) {
+function form_checkboxfield($attrs)
+{
     // mandatory attributes
     unset($attrs['type']);
     $s = '<label';
@@ -1015,7 +1043,8 @@ function form_checkboxfield($attrs) {
  * @param array $attrs attributes
  * @return string html
  */
-function form_radiofield($attrs) {
+function form_radiofield($attrs)
+{
     // mandatory attributes
     unset($attrs['type']);
     $s = '<label';
@@ -1044,7 +1073,8 @@ function form_radiofield($attrs) {
  * @param array $attrs attributes
  * @return string html
  */
-function form_menufield($attrs) {
+function form_menufield($attrs)
+{
     $attrs['size'] = '1';
     $s = '<label';
     if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
@@ -1092,7 +1122,8 @@ function form_menufield($attrs) {
  * @param array $attrs attributes
  * @return string html
  */
-function form_listboxfield($attrs) {
+function form_listboxfield($attrs)
+{
     $s = '<label';
     if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
     if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';

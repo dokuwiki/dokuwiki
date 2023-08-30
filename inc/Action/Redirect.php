@@ -21,7 +21,8 @@ class Redirect extends AbstractAliasAction
      * @triggers ACTION_SHOW_REDIRECT
      * @throws ActionAbort
      */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $PRE;
         global $TEXT;
         global $INPUT;
@@ -53,7 +54,8 @@ class Redirect extends AbstractAliasAction
      *
      * @param array $opts id and fragment for the redirect and the preact
      */
-    public function redirect($opts) {
+    public function redirect($opts)
+    {
         $go = wl($opts['id'], '', true, '&');
         if(isset($opts['fragment'])) $go .= '#' . $opts['fragment'];
 

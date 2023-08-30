@@ -14,7 +14,8 @@ class SettingArray extends Setting
      * @param string $string
      * @return array
      */
-    protected function fromString($string) {
+    protected function fromString($string)
+    {
         $array = explode(',', $string);
         $array = array_map('trim', $array);
         $array = array_filter($array);
@@ -28,7 +29,8 @@ class SettingArray extends Setting
      * @param array $array
      * @return string
      */
-    protected function fromArray($array) {
+    protected function fromArray($array)
+    {
         return implode(', ', (array) $array);
     }
 
@@ -39,7 +41,8 @@ class SettingArray extends Setting
      * @param string $input
      * @return bool true if changed, false otherwise (incl. on error)
      */
-    public function update($input) {
+    public function update($input)
+    {
         if(is_null($input)) return false;
         if($this->isProtected()) return false;
 
@@ -61,7 +64,8 @@ class SettingArray extends Setting
     }
 
     /** @inheritdoc */
-    public function html(\admin_plugin_config $plugin, $echo = false) {
+    public function html(\admin_plugin_config $plugin, $echo = false)
+    {
         $disable = '';
 
         if ($this->isProtected()) {

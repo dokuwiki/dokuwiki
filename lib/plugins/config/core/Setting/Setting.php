@@ -37,7 +37,8 @@ class Setting
      * @param string $key
      * @param array|null $params array with metadata of setting
      */
-    public function __construct($key, $params = null) {
+    public function __construct($key, $params = null)
+    {
         $this->key = $key;
 
         if(is_array($params)) {
@@ -58,7 +59,8 @@ class Setting
      * @param mixed $local local setting value
      * @param mixed $protected protected setting value
      */
-    public function initialize($default = null, $local = null, $protected = null) {
+    public function initialize($default = null, $local = null, $protected = null)
+    {
         $this->default = $this->cleanValue($default);
         $this->local = $this->cleanValue($local);
         $this->protected = $this->cleanValue($protected);
@@ -72,7 +74,8 @@ class Setting
      * @param  mixed $input the new value
      * @return boolean          true if changed, false otherwise
      */
-    public function update($input) {
+    public function update($input)
+    {
         if(is_null($input)) return false;
         if($this->isProtected()) return false;
         $input = $this->cleanValue($input);
@@ -105,7 +108,8 @@ class Setting
      * @param mixed $value
      * @return mixed
      */
-    protected function cleanValue($value) {
+    protected function cleanValue($value)
+    {
         return $value;
     }
 
@@ -114,7 +118,8 @@ class Setting
      *
      * @return bool
      */
-    public function shouldHaveDefault() {
+    public function shouldHaveDefault()
+    {
         return true;
     }
 
@@ -123,7 +128,8 @@ class Setting
      *
      * @return string
      */
-    public function getKey() {
+    public function getKey()
+    {
         return $this->key;
     }
 
@@ -133,7 +139,8 @@ class Setting
      * @param bool $url link to dokuwiki.org manual?
      * @return string
      */
-    public function getPrettyKey($url = true) {
+    public function getPrettyKey($url = true)
+    {
         $out = str_replace(Configuration::KEYMARKER, "»", $this->key);
         if($url && !strstr($out, '»')) {//provide no urls for plugins, etc.
             if($out == 'start') {
@@ -153,7 +160,8 @@ class Setting
      *
      * @return string key
      */
-    public function getArrayKey() {
+    public function getArrayKey()
+    {
         return str_replace(Configuration::KEYMARKER, "']['", $this->key);
     }
 
@@ -168,7 +176,8 @@ class Setting
      *
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         if (substr($this->getKey(), 0, 10) == 'plugin' . Configuration::KEYMARKER) {
             return 'plugin';
         } elseif (substr($this->getKey(), 0, 7) == 'tpl' . Configuration::KEYMARKER) {
@@ -185,7 +194,8 @@ class Setting
      * @param bool $echo true: show inputted value, when error occurred, otherwise the stored setting
      * @return string[] with content array(string $label_html, string $input_html)
      */
-    public function html(\admin_plugin_config $plugin, $echo = false) {
+    public function html(\admin_plugin_config $plugin, $echo = false)
+    {
         $disable = '';
 
         if ($this->isProtected()) {
@@ -212,7 +222,8 @@ class Setting
      * @see out() to run when this returns true
      * @return bool
      */
-    public function shouldBeSaved() {
+    public function shouldBeSaved()
+    {
         if($this->isProtected()) return false;
         if($this->local === null) return false;
         if($this->default == $this->local) return false;
@@ -225,7 +236,8 @@ class Setting
      * @param string $string
      * @return string
      */
-    protected function escape($string) {
+    protected function escape($string)
+    {
         $tr = ["\\" => '\\\\', "'" => '\\\''];
         return "'" . strtr(cleanText($string), $tr) . "'";
     }
@@ -238,7 +250,8 @@ class Setting
      * @param string $fmt save format
      * @return string
      */
-    public function out($var, $fmt = 'php') {
+    public function out($var, $fmt = 'php')
+    {
         if ($fmt != 'php') return '';
 
         if (is_array($this->local)) {
@@ -258,7 +271,8 @@ class Setting
      * @param \admin_plugin_config $plugin object of config plugin
      * @return string text
      */
-    public function prompt(\admin_plugin_config $plugin) {
+    public function prompt(\admin_plugin_config $plugin)
+    {
         $prompt = $plugin->getLang($this->key);
         if(!$prompt) $prompt = htmlspecialchars(str_replace(['____', '_'], ' ', $this->key));
         return $prompt;
@@ -269,7 +283,8 @@ class Setting
      *
      * @return bool
      */
-    public function isProtected() {
+    public function isProtected()
+    {
         return !is_null($this->protected);
     }
 
@@ -278,7 +293,8 @@ class Setting
      *
      * @return bool
      */
-    public function isDefault() {
+    public function isDefault()
+    {
         return !$this->isProtected() && is_null($this->local);
     }
 
@@ -287,7 +303,8 @@ class Setting
      *
      * @return bool
      */
-    public function hasError() {
+    public function hasError()
+    {
         return $this->error;
     }
 
@@ -296,7 +313,8 @@ class Setting
      *
      * @return false|string caution string, otherwise false for invalid caution
      */
-    public function caution() {
+    public function caution()
+    {
         if(empty($this->caution)) return false;
         if(!in_array($this->caution, Setting::$validCautions)) {
             throw new \RuntimeException(

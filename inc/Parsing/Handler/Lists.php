@@ -172,7 +172,7 @@ class Lists extends AbstractRewriter
         $this->listCalls[] = $call;
     }
 
-    protected function interpretSyntax($match, & $type)
+    protected function interpretSyntax($match, &$type)
     {
         if (substr($match, -1) == '*') {
             $type = 'u';

@@ -24,7 +24,8 @@ class PageCLI extends CLI
      * @param Options $options
      * @return void
      */
-    protected function setup(Options $options) {
+    protected function setup(Options $options)
+    {
         /* global */
         $options->registerOption(
             'force',
@@ -151,7 +152,8 @@ class PageCLI extends CLI
      * @param Options $options
      * @return void
      */
-    protected function main(Options $options) {
+    protected function main(Options $options)
+    {
         $this->force = $options->getOpt('force', false);
         $this->username = $options->getOpt('user', $this->getUser());
 
@@ -201,7 +203,8 @@ class PageCLI extends CLI
      * @param string $wiki_id
      * @param string $localfile
      */
-    protected function commandCheckout($wiki_id, $localfile) {
+    protected function commandCheckout($wiki_id, $localfile)
+    {
         global $conf;
 
         $wiki_id = cleanID($wiki_id);
@@ -241,7 +244,8 @@ class PageCLI extends CLI
      * @param string $message
      * @param bool $minor
      */
-    protected function commandCommit($localfile, $wiki_id, $message, $minor) {
+    protected function commandCommit($localfile, $wiki_id, $message, $minor)
+    {
         $wiki_id = cleanID($wiki_id);
         $message = trim($message);
 
@@ -271,7 +275,8 @@ class PageCLI extends CLI
      *
      * @param string $wiki_id
      */
-    protected function obtainLock($wiki_id) {
+    protected function obtainLock($wiki_id)
+    {
         if($this->force) $this->deleteLock($wiki_id);
 
         $_SERVER['REMOTE_USER'] = $this->username;
@@ -295,7 +300,8 @@ class PageCLI extends CLI
      *
      * @param string $wiki_id
      */
-    protected function clearLock($wiki_id) {
+    protected function clearLock($wiki_id)
+    {
         if($this->force) $this->deleteLock($wiki_id);
 
         $_SERVER['REMOTE_USER'] = $this->username;
@@ -317,7 +323,8 @@ class PageCLI extends CLI
      *
      * @param string $wiki_id
      */
-    protected function deleteLock($wiki_id) {
+    protected function deleteLock($wiki_id)
+    {
         $wikiLockFN = wikiLockFN($wiki_id);
 
         if(file_exists($wikiLockFN)) {
@@ -333,7 +340,8 @@ class PageCLI extends CLI
      *
      * @return string
      */
-    protected function getUser() {
+    protected function getUser()
+    {
         $user = getenv('USER');
         if(empty ($user)) {
             $user = getenv('USERNAME');

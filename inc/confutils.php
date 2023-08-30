@@ -28,7 +28,8 @@ const DOKU_CONF_NEGATION = '!';
  * @param bool   $knownonly
  * @return array with extension, mimetype and if it should be downloaded
  */
-function mimetype($file, $knownonly=true){
+function mimetype($file, $knownonly = true)
+{
     $mtypes = getMimeTypes();     // known mimetypes
     $ext    = strrpos($file, '.');
     if ($ext === false) {
@@ -54,7 +55,8 @@ function mimetype($file, $knownonly=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function getMimeTypes() {
+function getMimeTypes()
+{
     static $mime = null;
     if ( !$mime ) {
         $mime = retrieveConfig('mime', 'confToHash');
@@ -68,7 +70,8 @@ function getMimeTypes() {
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  */
-function getAcronyms() {
+function getAcronyms()
+{
     static $acronyms = null;
     if ( !$acronyms ) {
         $acronyms = retrieveConfig('acronyms', 'confToHash');
@@ -82,7 +85,8 @@ function getAcronyms() {
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  */
-function getSmileys() {
+function getSmileys()
+{
     static $smileys = null;
     if ( !$smileys ) {
         $smileys = retrieveConfig('smileys', 'confToHash');
@@ -96,7 +100,8 @@ function getSmileys() {
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  */
-function getEntities() {
+function getEntities()
+{
     static $entities = null;
     if ( !$entities ) {
         $entities = retrieveConfig('entities', 'confToHash');
@@ -110,7 +115,8 @@ function getEntities() {
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  */
-function getInterwiki() {
+function getInterwiki()
+{
     static $wikis = null;
     if ( !$wikis ) {
         $wikis = retrieveConfig('interwiki', 'confToHash', [true]);
@@ -128,7 +134,8 @@ function getInterwiki() {
  * @trigger CONFUTIL_CDN_SELECT
  * @return array
  */
-function getCdnUrls() {
+function getCdnUrls()
+{
     global $conf;
 
     // load version info
@@ -173,7 +180,8 @@ function getCdnUrls() {
  * returns array of wordblock patterns
  *
  */
-function getWordblocks() {
+function getWordblocks()
+{
     static $wordblocks = null;
     if ( !$wordblocks ) {
         $wordblocks = retrieveConfig('wordblock', 'file', null, 'array_merge_with_removal');
@@ -186,7 +194,8 @@ function getWordblocks() {
  *
  * @return array the schemes
  */
-function getSchemes() {
+function getSchemes()
+{
     static $schemes = null;
     if ( !$schemes ) {
         $schemes = retrieveConfig('scheme', 'file', null, 'array_merge_with_removal');
@@ -212,7 +221,8 @@ function getSchemes() {
  *
  * @return array
  */
-function linesToHash($lines, $lower = false) {
+function linesToHash($lines, $lower = false)
+{
     $conf = [];
     // remove BOM
     if(isset($lines[0]) && substr($lines[0], 0, 3) === pack('CCC', 0xef, 0xbb, 0xbf))
@@ -251,7 +261,8 @@ function linesToHash($lines, $lower = false) {
  *
  * @return array
  */
-function confToHash($file,$lower=false) {
+function confToHash($file, $lower = false)
+{
     $conf = [];
     $lines = @file( $file );
     if ( !$lines ) return $conf;
@@ -293,7 +304,8 @@ function jsonToArray($file)
  *                            and returns an array of the merged configuration values.
  * @return array    configuration values
  */
-function retrieveConfig($type,$fn,$params=null,$combine='array_merge') {
+function retrieveConfig($type, $fn, $params = null, $combine = 'array_merge')
+{
     global $config_cascade;
 
     if(!is_array($params)) $params = [];
@@ -321,7 +333,8 @@ function retrieveConfig($type,$fn,$params=null,$combine='array_merge') {
  * @param  string   $type     the configuration settings to be read, must correspond to a key/array in $config_cascade
  * @return array              list of files, default before local before protected
  */
-function getConfigFiles($type) {
+function getConfigFiles($type)
+{
     global $config_cascade;
     $files = [];
 
@@ -341,7 +354,8 @@ function getConfigFiles($type) {
  * @param string $action
  * @returns boolean true if enabled, false if disabled
  */
-function actionOK($action){
+function actionOK($action)
+{
     static $disabled = null;
     if(is_null($disabled) || defined('SIMPLE_TEST')){
         global $conf;
@@ -387,7 +401,8 @@ function actionOK($action){
  *                                                      navigation applies to all other links
  * @return  boolean             true if headings should be used for $linktype, false otherwise
  */
-function useHeading($linktype) {
+function useHeading($linktype)
+{
     static $useHeading = null;
     if(defined('DOKU_UNITTEST')) $useHeading = null; // don't cache during unit tests
 
@@ -422,7 +437,8 @@ function useHeading($linktype) {
  * @param string       $code    encoding method, values: plain, base64, uuencode.
  * @return string               the encoded value
  */
-function conf_encodeString($str,$code) {
+function conf_encodeString($str, $code)
+{
     switch ($code) {
         case 'base64'   : return '<b>'.base64_encode($str);
         case 'uuencode' : return '<u>'.convert_uuencode($str);
@@ -437,7 +453,8 @@ function conf_encodeString($str,$code) {
  * @param  string      $str   encoded data
  * @return string             plain text
  */
-function conf_decodeString($str) {
+function conf_decodeString($str)
+{
     switch (substr($str, 0, 3)) {
         case '<b>' : return base64_decode(substr($str, 3));
         case '<u>' : return convert_uudecode(substr($str, 3));
@@ -454,7 +471,8 @@ function conf_decodeString($str) {
  *
  * @return array the combined array, numeric keys reset
  */
-function array_merge_with_removal($current, $new) {
+function array_merge_with_removal($current, $new)
+{
     foreach ($new as $val) {
         if (substr($val, 0, 1) == DOKU_CONF_NEGATION) {
             $idx = array_search(trim(substr($val, 1)), $current);

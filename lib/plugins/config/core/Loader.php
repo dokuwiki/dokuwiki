@@ -25,7 +25,8 @@ class Loader
      * @param ConfigParser $parser
      * @triggers PLUGIN_CONFIG_PLUGINLIST
      */
-    public function __construct(ConfigParser $parser) {
+    public function __construct(ConfigParser $parser)
+    {
         global $conf;
         $this->parser = $parser;
         $this->plugins = plugin_list();
@@ -41,7 +42,8 @@ class Loader
      *
      * @return array
      */
-    public function loadMeta() {
+    public function loadMeta()
+    {
         // load main file
         $meta = [];
         include DOKU_PLUGIN . 'config/settings/config.metadata.php';
@@ -121,7 +123,8 @@ class Loader
      *
      * @return array
      */
-    public function loadLangs() {
+    public function loadLangs()
+    {
         $lang = [];
 
         // plugins
@@ -154,7 +157,8 @@ class Loader
      *
      * @return array
      */
-    public function loadLocal() {
+    public function loadLocal()
+    {
         global $config_cascade;
         return $this->loadConfigs($config_cascade['main']['local']);
     }
@@ -164,7 +168,8 @@ class Loader
      *
      * @return array
      */
-    public function loadProtected() {
+    public function loadProtected()
+    {
         global $config_cascade;
         return $this->loadConfigs($config_cascade['main']['protected']);
     }
@@ -175,7 +180,8 @@ class Loader
      * @param string[] $files paths to config php's
      * @return array
      */
-    protected function loadConfigs($files) {
+    protected function loadConfigs($files)
+    {
         $conf = [];
         foreach($files as $file) {
             $conf = array_merge($conf, $this->parser->parse($file));
@@ -193,7 +199,8 @@ class Loader
      * @param string $extname name of the extension
      * @return array
      */
-    protected function loadExtensionMeta($file, $type, $extname) {
+    protected function loadExtensionMeta($file, $type, $extname)
+    {
         if(!file_exists($file)) return [];
         $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
 
@@ -223,7 +230,8 @@ class Loader
      * @param string $extname name of the extension
      * @return array
      */
-    protected function loadExtensionConf($file, $type, $extname) {
+    protected function loadExtensionConf($file, $type, $extname)
+    {
         if(!file_exists($file)) return [];
         $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
 
@@ -248,7 +256,8 @@ class Loader
      * @param string $extname name of the extension
      * @return array
      */
-    protected function loadExtensionLang($dir, $type, $extname) {
+    protected function loadExtensionLang($dir, $type, $extname)
+    {
         global $conf;
         $ll = $conf['lang'];
         $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;

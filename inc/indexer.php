@@ -30,7 +30,8 @@ if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH', 2);
  *
  * @return int|string
  */
-function idx_get_version(){
+function idx_get_version()
+{
     static $indexer_version = null;
     if ($indexer_version == null) {
         $version = INDEXER_VERSION;
@@ -56,7 +57,8 @@ function idx_get_version(){
  * @param string $w
  * @return int
  */
-function wordlen($w){
+function wordlen($w)
+{
     $l = strlen($w);
     // If left alone, all chinese "words" will get put into w3.idx
     // So the "length" of a "word" is faked
@@ -74,7 +76,8 @@ function wordlen($w){
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-function idx_get_indexer() {
+function idx_get_indexer()
+{
     static $Indexer;
     if (!isset($Indexer)) {
         $Indexer = new Indexer();
@@ -89,7 +92,8 @@ function idx_get_indexer() {
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-function & idx_get_stopwords() {
+function & idx_get_stopwords()
+{
     static $stopwords = null;
     if (is_null($stopwords)) {
         global $conf;
@@ -115,7 +119,8 @@ function & idx_get_stopwords() {
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
-function idx_addPage($page, $verbose=false, $force=false) {
+function idx_addPage($page, $verbose = false, $force = false)
+{
     $idxtag = metaFN($page, '.indexed');
     // check if page was deleted but is still in the index
     if (!page_exists($page)) {
@@ -221,7 +226,8 @@ function idx_addPage($page, $verbose=false, $force=false) {
  * @param array      $words  list of words to search for
  * @return array             list of pages found, associated with the search terms
  */
-function idx_lookup(&$words) {
+function idx_lookup(&$words)
+{
     $Indexer = idx_get_indexer();
     return $Indexer->lookup($words);
 }
@@ -234,7 +240,8 @@ function idx_lookup(&$words) {
  *
  * @return array
  */
-function idx_tokenizer($string, $wc=false) {
+function idx_tokenizer($string, $wc = false)
+{
     $Indexer = idx_get_indexer();
     return $Indexer->tokenizer($string, $wc);
 }
@@ -250,7 +257,8 @@ function idx_tokenizer($string, $wc=false) {
  * @param string $suffix
  * @return array
  */
-function idx_getIndex($idx, $suffix) {
+function idx_getIndex($idx, $suffix)
+{
     global $conf;
     $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
     if (!file_exists($fn)) return [];
@@ -267,7 +275,8 @@ function idx_getIndex($idx, $suffix) {
  *
  * @return array
  */
-function idx_listIndexLengths() {
+function idx_listIndexLengths()
+{
     global $conf;
     // testing what we have to do, create a cache file or not.
     if ($conf['readdircache'] == 0) {
@@ -327,7 +336,8 @@ function idx_listIndexLengths() {
  * @param array|int $filter
  * @return array
  */
-function idx_indexLengths($filter) {
+function idx_indexLengths($filter)
+{
     global $conf;
     $idx = [];
     if (is_array($filter)) {
@@ -359,7 +369,8 @@ function idx_indexLengths($filter) {
  * @param string $name
  * @return string
  */
-function idx_cleanName($name) {
+function idx_cleanName($name)
+{
     $name = Clean::romanize(trim((string)$name));
     $name = preg_replace('#[ \./\\:-]+#', '_', $name);
     $name = preg_replace('/[^A-Za-z0-9_]/', '', $name);

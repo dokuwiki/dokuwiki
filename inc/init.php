@@ -15,7 +15,8 @@ use dokuwiki\Extension\EventHandler;
  *
  * @return mixed
  */
-function delta_time($start=0) {
+function delta_time($start = 0)
+{
     return microtime(true)-((float)$start);
 }
 define('DOKU_START_TIME', delta_time());
@@ -248,7 +249,8 @@ Event::createAndTrigger('DOKUWIKI_INIT_DONE', $nil, null, false);
  * @link http://stackoverflow.com/a/33024310/172068
  * @link http://php.net/manual/en/session.configuration.php#ini.session.sid-length
  */
-function init_session() {
+function init_session()
+{
     global $conf;
     session_name(DOKU_SESSION_NAME);
     session_set_cookie_params([
@@ -272,7 +274,8 @@ function init_session() {
 /**
  * Checks paths from config file
  */
-function init_paths(){
+function init_paths()
+{
     global $conf;
 
     $paths = [
@@ -316,7 +319,8 @@ function init_paths(){
  *
  * @param string $langCode language code, as passed by event handler
  */
-function init_lang($langCode) {
+function init_lang($langCode)
+{
     //prepare language array
     global $lang, $config_cascade;
     $lang = [];
@@ -344,7 +348,8 @@ function init_lang($langCode) {
 /**
  * Checks the existence of certain files and creates them if missing.
  */
-function init_files(){
+function init_files()
+{
     global $conf;
 
     $files = [$conf['indexdir'].'/page.idx'];
@@ -374,7 +379,8 @@ function init_files(){
  *
  * @return bool|string
  */
-function init_path($path){
+function init_path($path)
+{
     // check existence
     $p = fullpath($path);
     if(!file_exists($p)){
@@ -403,7 +409,8 @@ function init_path($path){
  * file with chmod. Considers the influence of the system's umask
  * setting the values only if needed.
  */
-function init_creationmodes(){
+function init_creationmodes()
+{
     global $conf;
 
     // Legacy support for old umask/dmask scheme
@@ -443,7 +450,8 @@ function init_creationmodes(){
  *
  * @return string
  */
-function getBaseURL($abs=null){
+function getBaseURL($abs = null)
+{
     global $conf;
     //if canonical url enabled always return absolute
     if(is_null($abs)) $abs = $conf['canonical'];
@@ -520,7 +528,8 @@ function getBaseURL($abs=null){
  *
  * @returns bool true when SSL is active
  */
-function is_ssl() {
+function is_ssl()
+{
     // check if we are behind a reverse proxy
     if(isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
         if($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
@@ -541,7 +550,8 @@ function is_ssl() {
  * checks it is windows OS
  * @return bool
  */
-function isWindows() {
+function isWindows()
+{
     return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
 }
 
@@ -550,7 +560,8 @@ function isWindows() {
  *
  * @param integer|string $msg
  */
-function nice_die($msg){
+function nice_die($msg)
+{
     echo<<<EOT
 <!DOCTYPE html>
 <html>
@@ -585,7 +596,8 @@ EOT;
  *
  * @return bool|string
  */
-function fullpath($path,$exists=false){
+function fullpath($path, $exists = false)
+{
     static $run = 0;
     $root  = '';
     $iswin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' || !empty($GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS']));

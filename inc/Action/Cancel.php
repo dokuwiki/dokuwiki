@@ -18,7 +18,8 @@ class Cancel extends AbstractAliasAction
      * @inheritdoc
      * @throws ActionAbort
      */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $ID;
         unlock($ID);
 

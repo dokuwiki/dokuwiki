@@ -11,7 +11,8 @@ class SettingPassword extends SettingString
     protected $code = 'plain';  // mechanism to be used to obscure passwords
 
     /** @inheritdoc */
-    public function update($input) {
+    public function update($input)
+    {
         if($this->isProtected()) return false;
         if(!$input) return false;
 
@@ -26,7 +27,8 @@ class SettingPassword extends SettingString
     }
 
     /** @inheritdoc */
-    public function html(\admin_plugin_config $plugin, $echo = false) {
+    public function html(\admin_plugin_config $plugin, $echo = false)
+    {
 
         $disable = $this->isProtected() ? 'disabled="disabled"' : '';
 

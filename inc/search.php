@@ -25,7 +25,8 @@ use dokuwiki\Utf8\Sort;
  *                          'date' to sort by filemtime; leave empty to skip sorting.
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
+function search(&$data, $base, $func, $opts, $dir = '', $lvl = 1, $sort = 'natural')
+{
     $dirs   = [];
     $files  = [];
     $filepaths = [];
@@ -106,7 +107,8 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
  *
  * @return bool
  */
-function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
+function search_qsearch(&$data, $base, $file, $type, $lvl, $opts)
+{
     $opts = [
         'idmatch'   => '(^|:)'.preg_quote($opts['query'], '/').'/',
         'listfiles' => true,
@@ -131,7 +133,8 @@ function search_qsearch(&$data,$base,$file,$type,$lvl,$opts){
  *
  * @return bool
  */
-function search_index(&$data,$base,$file,$type,$lvl,$opts){
+function search_index(&$data, $base, $file, $type, $lvl, $opts)
+{
     global $conf;
     $ns = $opts['ns'] ?? '';
     $opts = [
@@ -160,7 +163,8 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
  *
  * @return bool
  */
-function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
+function search_namespaces(&$data, $base, $file, $type, $lvl, $opts)
+{
     $opts = ['listdirs' => true];
     return search_universal($data, $base, $file, $type, $lvl, $opts);
 }
@@ -184,7 +188,8 @@ function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
  *
  * @return bool
  */
-function search_media(&$data,$base,$file,$type,$lvl,$opts){
+function search_media(&$data, $base, $file, $type, $lvl, $opts)
+{
 
     //we do nothing with directories
     if($type == 'd') {
@@ -251,7 +256,8 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
  *
  * @return bool
  */
-function search_mediafiles(&$data,$base,$file,$type,$lvl,$opts){
+function search_mediafiles(&$data, $base, $file, $type, $lvl, $opts)
+{
 
     //we do nothing with directories
     if($type == 'd') {
@@ -298,7 +304,8 @@ function search_mediafiles(&$data,$base,$file,$type,$lvl,$opts){
  *
  * @return bool
  */
-function search_list(&$data,$base,$file,$type,$lvl,$opts){
+function search_list(&$data, $base, $file, $type, $lvl, $opts)
+{
     //we do nothing with directories
     if($type == 'd') return false;
     //only search txt files
@@ -329,7 +336,8 @@ function search_list(&$data,$base,$file,$type,$lvl,$opts){
  *
  * @return bool
  */
-function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
+function search_pagename(&$data, $base, $file, $type, $lvl, $opts)
+{
     //we do nothing with directories
     if($type == 'd') return true;
     //only search txt files
@@ -367,7 +375,8 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
  *
  * @return bool
  */
-function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
+function search_allpages(&$data, $base, $file, $type, $lvl, $opts)
+{
     if(isset($opts['depth']) && $opts['depth']){
         $parts = explode('/', ltrim($file, '/'));
         if(($type == 'd' && count($parts) >= $opts['depth'])
@@ -416,7 +425,8 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
  *
  * @return int
  */
-function sort_search_fulltext($a,$b){
+function sort_search_fulltext($a, $b)
+{
     if($a['count'] > $b['count']){
         return -1;
     }elseif($a['count'] < $b['count']){
@@ -437,7 +447,8 @@ function sort_search_fulltext($a,$b){
  *
  * @return mixed|string
  */
-function pathID($path,$keeptxt=false){
+function pathID($path, $keeptxt = false)
+{
     $id = utf8_decodeFN($path);
     $id = str_replace('/', ':', $id);
     if(!$keeptxt) $id = preg_replace('#\.txt$#', '', $id);
@@ -483,7 +494,8 @@ function pathID($path,$keeptxt=false){
  *
  * @author Andreas Gohr <gohr@cosmocode.de>
  */
-function search_universal(&$data,$base,$file,$type,$lvl,$opts){
+function search_universal(&$data, $base, $file, $type, $lvl, $opts)
+{
     $item   = [];
     $return = true;
 

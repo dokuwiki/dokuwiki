@@ -24,7 +24,8 @@ if(!defined('DOKU_MESSAGEURL')){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function checkUpdateMessages(){
+function checkUpdateMessages()
+{
     global $conf;
     global $INFO;
     global $updateVersion;
@@ -67,7 +68,8 @@ function checkUpdateMessages(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function getVersionData(){
+function getVersionData()
+{
     $version = [];
     //import version string
     if(file_exists(DOKU_INC.'VERSION')){
@@ -137,7 +139,8 @@ function getVersionData(){
  *
  * @author Anika Henke <anika@selfthinker.org>
  */
-function getVersion(){
+function getVersion()
+{
     $version = getVersionData();
     $sha = empty($version['sha']) ? '' : ' (' . $version['sha'] . ')';
     return $version['type'] . ' ' . $version['date'] . $sha;
@@ -148,7 +151,8 @@ function getVersion(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function check(){
+function check()
+{
     global $conf;
     global $INFO;
     /* @var Input $INPUT */
@@ -349,7 +353,8 @@ function check(){
  * @param string $file  file number
  * @param int    $allow who's allowed to see the message, see MSG_* constants
  */
-function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
+function msg($message, $lvl = 0, $line = '', $file = '', $allow = MSG_PUBLIC)
+{
     global $MSG, $MSG_shown;
     static $errors = [
         -1 => 'error',
@@ -399,7 +404,8 @@ function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
  *                                       see MSG_* constants
  * @return bool
  */
-function info_msg_allowed($msg){
+function info_msg_allowed($msg)
+{
     global $INFO, $auth;
 
     // is the message public? - everyone and anyone can see it
@@ -435,7 +441,8 @@ function info_msg_allowed($msg){
  * @param string $msg
  * @param bool $hidden
  */
-function dbg($msg,$hidden=false){
+function dbg($msg, $hidden = false)
+{
     if($hidden){
         echo "<!--\n";
         print_r($msg);
@@ -455,7 +462,8 @@ function dbg($msg,$hidden=false){
  * @param string $msg
  * @param string $header
  */
-function dbglog($msg,$header=''){
+function dbglog($msg, $header = '')
+{
     dbg_deprecated('\\dokuwiki\\Logger');
 
     // was the msg as single line string? use it as header
@@ -475,7 +483,8 @@ function dbglog($msg,$header=''){
  * @param string $alternative The function or method that should be used instead
  * @triggers INFO_DEPRECATION_LOG
  */
-function dbg_deprecated($alternative = '') {
+function dbg_deprecated($alternative = '')
+{
     DebugHelper::dbgDeprecatedFunction($alternative, 2);
 }
 
@@ -484,7 +493,8 @@ function dbg_deprecated($alternative = '') {
  *
  * @author Gary Owen <gary_owen@bigfoot.com>
  */
-function dbg_backtrace(){
+function dbg_backtrace()
+{
     // Get backtrace
     $backtrace = debug_backtrace();
 
@@ -535,7 +545,8 @@ function dbg_backtrace(){
  *
  * @param array $data
  */
-function debug_guard(&$data){
+function debug_guard(&$data)
+{
     foreach($data as $key => $value){
         if(preg_match('/(notify|pass|auth|secret|ftp|userinfo|token|buid|mail|proxy)/i', $key)){
             $data[$key] = '***';

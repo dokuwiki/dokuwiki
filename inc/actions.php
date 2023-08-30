@@ -11,7 +11,8 @@ use dokuwiki\Extension\Event;
 /**
  * All action processing starts here
  */
-function act_dispatch(){
+function act_dispatch()
+{
     // always initialize on first dispatch (test request may dispatch mutliple times on one request)
     $router = ActionRouter::getInstance(true);
 
@@ -34,7 +35,8 @@ function act_dispatch(){
  *
  * @param array $headers The headers that shall be sent
  */
-function act_sendheaders($headers) {
+function act_sendheaders($headers)
+{
     foreach ($headers as $hdr) header($hdr);
 }
 
@@ -46,7 +48,8 @@ function act_sendheaders($headers) {
  * @param array|string $act
  * @return string
  */
-function act_clean($act){
+function act_clean($act)
+{
     // check if the action was given as array key
     if(is_array($act)){
         [$act] = array_keys($act);

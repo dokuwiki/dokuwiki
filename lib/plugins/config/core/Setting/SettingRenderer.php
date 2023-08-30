@@ -16,7 +16,8 @@ class SettingRenderer extends SettingMultichoice
     protected $format;
 
     /** @inheritdoc */
-    public function initialize($default = null, $local = null, $protected = null) {
+    public function initialize($default = null, $local = null, $protected = null)
+    {
         $format = $this->format;
 
         foreach(plugin_list('renderer') as $plugin) {
@@ -33,7 +34,8 @@ class SettingRenderer extends SettingMultichoice
     }
 
     /** @inheritdoc */
-    public function html(\admin_plugin_config $plugin, $echo = false) {
+    public function html(\admin_plugin_config $plugin, $echo = false)
+    {
 
         // make some language adjustments (there must be a better way)
         // transfer some plugin names to the config plugin

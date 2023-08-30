@@ -31,7 +31,8 @@ class WantedPagesCLI extends CLI
      * @param Options $options
      * @return void
      */
-    protected function setup(Options $options) {
+    protected function setup(Options $options)
+    {
         $options->setHelp(
             'Outputs a list of wanted pages (pages that do not exist yet) and their origin pages ' .
             ' (the pages that are linkin to these missing pages).'
@@ -64,7 +65,8 @@ class WantedPagesCLI extends CLI
      * @param Options $options
      * @return void
      */
-    protected function main(Options $options) {
+    protected function main(Options $options)
+    {
         $args = $options->getArgs();
         if($args) {
             $startdir = dirname(wikiFN($args[0] . ':xxx'));
@@ -101,7 +103,8 @@ class WantedPagesCLI extends CLI
      * @param string $basepath
      * @return int
      */
-    protected function dirFilter($entry, $basepath) {
+    protected function dirFilter($entry, $basepath)
+    {
         if($entry == '.' || $entry == '..') {
             return WantedPagesCLI::DIR_CONTINUE;
         }
@@ -124,7 +127,8 @@ class WantedPagesCLI extends CLI
      * @return array
      * @throws DokuCLI_Exception
      */
-    protected function getPages($dir) {
+    protected function getPages($dir)
+    {
         static $trunclen = null;
         if(!$trunclen) {
             global $conf;
@@ -157,7 +161,8 @@ class WantedPagesCLI extends CLI
      *
      * @param array $page array with page id and file path
      */
-    protected function internalLinks($page) {
+    protected function internalLinks($page)
+    {
         global $conf;
         $instructions = p_get_instructions(file_get_contents($page['file']));
         $resolver = new PageResolver($page['id']);

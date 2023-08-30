@@ -25,7 +25,8 @@ class ConfigParser
      * @param string $file
      * @return array
      */
-    public function parse($file) {
+    public function parse($file)
+    {
         if(!file_exists($file)) return [];
 
         $config = [];
@@ -77,7 +78,8 @@ class ConfigParser
      * @param string $value
      * @return bool|string
      */
-    protected function readValue($value) {
+    protected function readValue($value)
+    {
         $removequotes_pattern = '/^(\'|")(.*)(?<!\\\\)\1$/s';
         $unescape_pairs = [
             '\\\\' => '\\',

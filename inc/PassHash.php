@@ -28,7 +28,8 @@ class PassHash
      * @param string $hash  Hash to compare against
      * @return  bool
      */
-    public function verify_hash($clear, $hash) {
+    public function verify_hash($clear, $hash)
+    {
         $method = '';
         $salt   = '';
         $magic  = '';
@@ -127,7 +128,8 @@ class PassHash
      * @param int $len The length of the salt
      * @return string
      */
-    public function gen_salt($len = 32) {
+    public function gen_salt($len = 32)
+    {
         $salt  = '';
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         for($i = 0; $i < $len; $i++) {
@@ -146,7 +148,8 @@ class PassHash
      * @param int          $len   The length of the salt
      * @param bool         $cut   Apply length restriction to existing salt?
      */
-    public function init_salt(&$salt, $len = 32, $cut = true) {
+    public function init_salt(&$salt, $len = 32, $cut = true)
+    {
         if(is_null($salt)) {
             $salt = $this->gen_salt($len);
             $cut  = true; // for new hashes we alway apply length restriction
@@ -173,7 +176,8 @@ class PassHash
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_smd5($clear, $salt = null) {
+    public function hash_smd5($clear, $salt = null)
+    {
         $this->init_salt($salt, 8);
 
         if(defined('CRYPT_MD5') && CRYPT_MD5 && $salt !== '') {
@@ -195,7 +199,8 @@ class PassHash
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_lsmd5($clear, $salt = null) {
+    public function hash_lsmd5($clear, $salt = null)
+    {
         $this->init_salt($salt, 8);
         return "{SMD5}".base64_encode(md5($clear.$salt, true).$salt);
     }
@@ -215,7 +220,8 @@ class PassHash
      * @param string $magic The hash identifier (apr1 or 1)
      * @return string Hashed password
      */
-    public function hash_apr1($clear, $salt = null, $magic = 'apr1') {
+    public function hash_apr1($clear, $salt = null, $magic = 'apr1')
+    {
         $this->init_salt($salt, 8);
 
         $len  = strlen($clear);
@@ -259,7 +265,8 @@ class PassHash
      * @param string $clear The clear text to hash
      * @return string Hashed password
      */
-    public function hash_md5($clear) {
+    public function hash_md5($clear)
+    {
         return md5($clear);
     }
 
@@ -271,7 +278,8 @@ class PassHash
      * @param string $clear The clear text to hash
      * @return string Hashed password
      */
-    public function hash_sha1($clear) {
+    public function hash_sha1($clear)
+    {
         return sha1($clear);
     }
 
@@ -284,7 +292,8 @@ class PassHash
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_ssha($clear, $salt = null) {
+    public function hash_ssha($clear, $salt = null)
+    {
         $this->init_salt($salt, 4);
         return '{SSHA}'.base64_encode(pack("H*", sha1($clear.$salt)).$salt);
     }
@@ -298,7 +307,8 @@ class PassHash
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_crypt($clear, $salt = null) {
+    public function hash_crypt($clear, $salt = null)
+    {
         $this->init_salt($salt, 2);
         return crypt($clear, $salt);
     }
@@ -313,7 +323,8 @@ class PassHash
      * @param string $clear The clear text to hash
      * @return string Hashed password
      */
-    public function hash_mysql($clear) {
+    public function hash_mysql($clear)
+    {
         $nr      = 0x50305735;
         $nr2     = 0x12345671;
         $add     = 7;
@@ -336,7 +347,8 @@ class PassHash
      * @param string $clear The clear text to hash
      * @return string Hashed password
      */
-    public function hash_my411($clear) {
+    public function hash_my411($clear)
+    {
         return '*'.strtoupper(sha1(pack("H*", sha1($clear))));
     }
 
@@ -352,7 +364,8 @@ class PassHash
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_kmd5($clear, $salt = null) {
+    public function hash_kmd5($clear, $salt = null)
+    {
         $this->init_salt($salt);
 
         $key   = substr($salt, 16, 2);
@@ -387,7 +400,8 @@ class PassHash
      * @throws \Exception
      * @return string Hashed password
      */
-    protected function stretched_hash($algo, $clear, $salt = null, $magic = 'P', $compute = 8) {
+    protected function stretched_hash($algo, $clear, $salt = null, $magic = 'P', $compute = 8)
+    {
         $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         if(is_null($salt)) {
             $this->init_salt($salt);
@@ -451,7 +465,8 @@ class PassHash
      * @throws Exception
      * @return string Hashed password
      */
-    public function hash_pmd5($clear, $salt = null, $magic = 'P', $compute = 8) {
+    public function hash_pmd5($clear, $salt = null, $magic = 'P', $compute = 8)
+    {
         return $this->stretched_hash('md5', $clear, $salt, $magic, $compute);
     }
 
@@ -472,7 +487,8 @@ class PassHash
      * @throws Exception
      * @return string Hashed password
      */
-    public function hash_drupal_sha512($clear, $salt = null, $magic = 'S', $compute = 15) {
+    public function hash_drupal_sha512($clear, $salt = null, $magic = 'S', $compute = 15)
+    {
       return substr($this->stretched_hash('sha512', $clear, $salt, $magic, $compute), 0, 55);
     }
 
@@ -487,7 +503,8 @@ class PassHash
      * @return string
      * @throws \Exception
      */
-    public function hash_hmd5($clear, $salt = null, $magic = 'H', $compute = 8) {
+    public function hash_hmd5($clear, $salt = null, $magic = 'H', $compute = 8)
+    {
         return $this->hash_pmd5($clear, $salt, $magic, $compute);
     }
 
@@ -503,7 +520,8 @@ class PassHash
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_djangosha1($clear, $salt = null) {
+    public function hash_djangosha1($clear, $salt = null)
+    {
         $this->init_salt($salt, 5);
         return 'sha1$'.$salt.'$'.sha1($salt.$clear);
     }
@@ -520,7 +538,8 @@ class PassHash
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_djangomd5($clear, $salt = null) {
+    public function hash_djangomd5($clear, $salt = null)
+    {
         $this->init_salt($salt, 5);
         return 'md5$'.$salt.'$'.md5($salt.$clear);
     }
@@ -542,7 +561,8 @@ class PassHash
      * @return string Hashed password
      * @throws Exception when PHP is missing support for the method/algo
      */
-    public function hash_seafilepbkdf2($clear, $salt=null, $opts=[]) {
+    public function hash_seafilepbkdf2($clear, $salt = null, $opts = [])
+    {
         $this->init_salt($salt, 64);
         if(empty($opts['algo'])) {
             $prefixalgo='SHA256';
@@ -578,7 +598,8 @@ class PassHash
      * @return string Hashed password
      * @throws \Exception when PHP is missing support for the method/algo
      */
-    public function hash_djangopbkdf2($clear, $salt=null, $opts=[]) {
+    public function hash_djangopbkdf2($clear, $salt = null, $opts = [])
+    {
         $this->init_salt($salt, 12);
         if(empty($opts['algo'])) {
             $algo = 'sha256';
@@ -610,7 +631,8 @@ class PassHash
      * @return string Hashed password
      * @throws \Exception when PHP is missing support for the method/algo
      */
-    public function hash_djangopbkdf2_sha256($clear, $salt=null, $opts=[]) {
+    public function hash_djangopbkdf2_sha256($clear, $salt = null, $opts = [])
+    {
         $opts['algo'] = 'sha256';
         return $this->hash_djangopbkdf2($clear, $salt, $opts);
     }
@@ -624,7 +646,8 @@ class PassHash
      * @return string Hashed password
      * @throws \Exception when PHP is missing support for the method/algo
      */
-    public function hash_djangopbkdf2_sha1($clear, $salt=null, $opts=[]) {
+    public function hash_djangopbkdf2_sha1($clear, $salt = null, $opts = [])
+    {
         $opts['algo'] = 'sha1';
         return $this->hash_djangopbkdf2($clear, $salt, $opts);
     }
@@ -646,7 +669,8 @@ class PassHash
      * @throws \Exception
      * @return string Hashed password
      */
-    public function hash_bcrypt($clear, $salt = null, $compute = 10) {
+    public function hash_bcrypt($clear, $salt = null, $compute = 10)
+    {
         if(!defined('CRYPT_BLOWFISH') || CRYPT_BLOWFISH !== 1) {
             throw new \Exception('This PHP installation has no bcrypt support');
         }
@@ -676,7 +700,8 @@ class PassHash
      * @return string Hashed password
      * @throws \Exception
      */
-    public function hash_sha2($clear, $salt = null, $opts = []) {
+    public function hash_sha2($clear, $salt = null, $opts = [])
+    {
         if(empty($opts['prefix'])) {
             $prefix = '6';
         } else {
@@ -702,13 +727,15 @@ class PassHash
     }
 
     /** @see sha2 */
-    public function hash_sha512($clear, $salt = null, $opts=[]) {
+    public function hash_sha512($clear, $salt = null, $opts = [])
+    {
         $opts['prefix'] = 6;
         return $this->hash_sha2($clear, $salt, $opts);
     }
 
     /** @see sha2 */
-    public function hash_sha256($clear, $salt = null, $opts=[]) {
+    public function hash_sha256($clear, $salt = null, $opts = [])
+    {
         $opts['prefix'] = 5;
         return $this->hash_sha2($clear, $salt, $opts);
     }
@@ -725,7 +752,8 @@ class PassHash
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_mediawiki($clear, $salt = null) {
+    public function hash_mediawiki($clear, $salt = null)
+    {
         $this->init_salt($salt, 8, false);
         return ':B:'.$salt.':'.md5($salt.'-'.md5($clear));
     }
@@ -742,7 +770,8 @@ class PassHash
      * @param string $clear The clear text to hash
      * @return string Hashed password
      */
-    public function hash_argon2i($clear) {
+    public function hash_argon2i($clear)
+    {
         if(!defined('PASSWORD_ARGON2I')) {
             throw new \Exception('This PHP installation has no ARGON2I support');
         }
@@ -760,7 +789,8 @@ class PassHash
      * @param string $clear The clear text to hash
      * @return string Hashed password
      */
-    public function hash_argon2id($clear) {
+    public function hash_argon2id($clear)
+    {
         if(!defined('PASSWORD_ARGON2ID')) {
             throw new \Exception('This PHP installation has no ARGON2ID support');
         }
@@ -785,7 +815,8 @@ class PassHash
      * @param bool $raw_output When set to TRUE, outputs raw binary data. FALSE outputs lowercase hexits.
      * @return string
      */
-    public static function hmac($algo, $data, $key, $raw_output = false) {
+    public static function hmac($algo, $data, $key, $raw_output = false)
+    {
         // use native function if available and not in unit test
         if(function_exists('hash_hmac') && !defined('SIMPLE_TEST')){
             return hash_hmac($algo, $data, $key, $raw_output);
@@ -822,7 +853,8 @@ class PassHash
      * @param int $max
      * @return int
      */
-    protected function random($min, $max){
+    protected function random($min, $max)
+    {
         try {
             return random_int($min, $max);
         } catch (\Exception $e) {

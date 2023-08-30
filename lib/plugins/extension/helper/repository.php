@@ -67,7 +67,8 @@ class helper_plugin_extension_repository extends Plugin
      * @param bool $usecache use cached result if still valid
      * @return bool If repository access is available
      */
-    public function hasAccess($usecache = true) {
+    public function hasAccess($usecache = true)
+    {
         if ($this->has_access === null) {
             $cache = new Cache('##extension_manager###hasAccess', '.repo');
 

@@ -31,7 +31,8 @@ if(!defined('SIMPLE_TEST')){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function js_out(){
+function js_out()
+{
     global $conf;
     global $lang;
     global $config_cascade;
@@ -171,7 +172,8 @@ function js_out(){
  *
  * @param string $file filename path to file
  */
-function js_load($file){
+function js_load($file)
+{
     if(!file_exists($file)) return;
     static $loaded = [];
 
@@ -210,7 +212,8 @@ function js_load($file){
  *
  * @return array
  */
-function js_pluginscripts(){
+function js_pluginscripts()
+{
     $list = [];
     $plugins = plugin_list();
     foreach ($plugins as $p){
@@ -229,7 +232,8 @@ function js_pluginscripts(){
  *
  * @return array
  */
-function js_pluginstrings() {
+function js_pluginstrings()
+{
     global $conf, $config_cascade;
     $pluginstrings = [];
     $plugins = plugin_list();
@@ -272,7 +276,8 @@ function js_pluginstrings() {
  * @param string $tpl
  * @return array
  */
-function js_templatestrings($tpl) {
+function js_templatestrings($tpl)
+{
     global $conf, $config_cascade;
 
     $path = tpl_incdir() . 'lang/';
@@ -315,7 +320,8 @@ function js_templatestrings($tpl) {
  * @param string $string
  * @return string
  */
-function js_escape($string){
+function js_escape($string)
+{
     return str_replace('\\\\n', '\\n', addslashes($string));
 }
 
@@ -326,6 +332,7 @@ function js_escape($string){
  *
  * @param string $func
  */
-function js_runonstart($func){
+function js_runonstart($func)
+{
     echo "jQuery(function(){ $func; });".NL;
 }

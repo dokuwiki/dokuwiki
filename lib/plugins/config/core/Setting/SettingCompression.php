@@ -11,7 +11,8 @@ class SettingCompression extends SettingMultichoice
     protected $choices = ['0'];      // 0 = no compression, always supported
 
     /** @inheritdoc */
-    public function initialize($default = null, $local = null, $protected = null) {
+    public function initialize($default = null, $local = null, $protected = null)
+    {
 
         // populate _choices with the compression methods supported by this php installation
         if(function_exists('gzopen')) $this->choices[] = 'gz';

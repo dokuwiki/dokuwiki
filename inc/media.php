@@ -33,7 +33,8 @@ use splitbrain\slika\Slika;
  * @param array $data
  * @param string $id
  */
-function media_filesinuse($data,$id){
+function media_filesinuse($data, $id)
+{
     global $lang;
     echo '<h1>'.$lang['reference'].' <code>'.hsc(noNS($id)).'</code></h1>';
     echo '<p>'.hsc($lang['ref_inuse']).'</p>';
@@ -63,7 +64,8 @@ function media_filesinuse($data,$id){
  * @param array $data
  * @return false|string
  */
-function media_metasave($id,$auth,$data){
+function media_metasave($id, $auth, $data)
+{
     if($auth < AUTH_UPLOAD) return false;
     if(!checkSecurityToken()) return false;
     global $lang;
@@ -114,7 +116,8 @@ function media_metasave($id,$auth,$data){
  * @param string $id the media ID or URL
  * @return bool
  */
-function media_isexternal($id){
+function media_isexternal($id)
+{
     if (preg_match('#^(?:https?|ftp)://#i', $id)) return true;
     return false;
 }
@@ -127,7 +130,8 @@ function media_isexternal($id){
  * @param string $id  the media ID or URL
  * @return bool
  */
-function media_ispublic($id){
+function media_ispublic($id)
+{
     if(media_isexternal($id)) return true;
     $id = cleanID($id);
     if(auth_aclcheck(getNS($id).':*', '', []) >= AUTH_READ) return true;
@@ -144,7 +148,8 @@ function media_ispublic($id){
  * @param int $auth permission level
  * @return bool
  */
-function media_metaform($id, $auth) {
+function media_metaform($id, $auth)
+{
     global $lang;
 
     if ($auth < AUTH_UPLOAD) {
@@ -218,7 +223,8 @@ function media_metaform($id, $auth) {
  * @param string $id media id
  * @return array|bool
  */
-function media_inuse($id) {
+function media_inuse($id)
+{
     global $conf;
 
     if($conf['refcheck']){
@@ -248,7 +254,8 @@ function media_inuse($id) {
  *                     DOKU_MEDIA_NOT_AUTH,
  *                     DOKU_MEDIA_INUSE
  */
-function media_delete($id,$auth){
+function media_delete($id, $auth)
+{
     global $lang;
     $auth = auth_quickaclcheck(ltrim(getNS($id).':*', ':'));
     if($auth < AUTH_DELETE) return DOKU_MEDIA_NOT_AUTH;
@@ -298,7 +305,8 @@ function media_delete($id,$auth){
  * @param int    $auth current auth check result
  * @return false|string false on error, id of the new file on success
  */
-function media_upload_xhr($ns,$auth){
+function media_upload_xhr($ns, $auth)
+{
     if(!checkSecurityToken()) return false;
     global $INPUT;
 
@@ -343,7 +351,8 @@ function media_upload_xhr($ns,$auth){
  * @param bool|array $file  $_FILES member, $_FILES['upload'] if false
  * @return false|string false on error, id of the new file on success
  */
-function media_upload($ns,$auth,$file=false){
+function media_upload($ns, $auth, $file = false)
+{
     if(!checkSecurityToken()) return false;
     global $lang;
     global $INPUT;
@@ -397,7 +406,8 @@ function media_upload($ns,$auth,$file=false){
  * @param string $to
  * @return bool
  */
-function copy_uploaded_file($from, $to){
+function copy_uploaded_file($from, $to)
+{
     if(!is_uploaded_file($from)) return false;
     $ok = copy($from, $to);
     @unlink($from);
@@ -426,7 +436,8 @@ function copy_uploaded_file($from, $to){
  * @param string $move name of functions that performs move/copy/..
  * @return false|array|string
  */
-function media_save($file, $id, $ow, $auth, $move) {
+function media_save($file, $id, $ow, $auth, $move)
+{
     if($auth < AUTH_UPLOAD) {
         return ["You don't have permissions to upload files.", -1];
     }
@@ -497,7 +508,8 @@ function media_save($file, $id, $ow, $auth, $move) {
  * @param array $data event data
  * @return false|array|string
  */
-function _media_upload_action($data) {
+function _media_upload_action($data)
+{
     // fixme do further sanity tests of given data?
     if(is_array($data) && count($data)===6) {
         return media_upload_finish($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
@@ -521,7 +533,8 @@ function _media_upload_action($data) {
  * @param string $move      function name
  * @return array|string
  */
-function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'move_uploaded_file') {
+function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'move_uploaded_file')
+{
     global $conf;
     global $lang;
     global $REV;
@@ -579,7 +592,8 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
  * @param string $id
  * @return int - revision date
  */
-function media_saveOldRevision($id) {
+function media_saveOldRevision($id)
+{
     global $conf, $lang;
 
     $oldf = mediaFN($id);
@@ -630,7 +644,8 @@ function media_saveOldRevision($id) {
  * @param string $mime mimetype
  * @return int
  */
-function media_contentcheck($file,$mime){
+function media_contentcheck($file, $mime)
+{
     global $conf;
     if($conf['iexssprotect']){
         $fh = @fopen($file, 'rb');
@@ -672,7 +687,8 @@ function media_contentcheck($file,$mime){
  * @param string   $mime    mime type
  * @param bool|int $old_rev revision timestamp or false
  */
-function media_notify($id,$file,$mime,$old_rev=false,$current_rev=false){
+function media_notify($id, $file, $mime, $old_rev = false, $current_rev = false)
+{
     global $conf;
     if(empty($conf['notify'])) return; //notify enabled?
 
@@ -689,7 +705,8 @@ function media_notify($id,$file,$mime,$old_rev=false,$current_rev=false){
  * @param bool        $fullscreenview
  * @param bool|string $sort           sorting order, false skips sorting
  */
-function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=false){
+function media_filelist($ns, $auth = null, $jump = '', $fullscreenview = false, $sort = false)
+{
     global $conf;
     global $lang;
     $ns = cleanID($ns);
@@ -748,7 +765,8 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
  * @param string $selected_tab - opened tab
  */
 
-function media_tabs_files($selected_tab = ''){
+function media_tabs_files($selected_tab = '')
+{
     global $lang;
     $tabs = [];
     foreach([
@@ -772,7 +790,8 @@ function media_tabs_files($selected_tab = ''){
  * @param string $image filename of the current image
  * @param string $selected_tab opened tab
  */
-function media_tabs_details($image, $selected_tab = '') {
+function media_tabs_details($image, $selected_tab = '')
+{
     global $lang, $conf;
 
     $tabs = [];
@@ -803,7 +822,8 @@ function media_tabs_details($image, $selected_tab = '') {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_tab_files_options() {
+function media_tab_files_options()
+{
     global $lang;
     global $INPUT;
     global $ID;
@@ -859,7 +879,8 @@ function media_tab_files_options() {
  *
  * @return string - sort type
  */
-function _media_get_sort_type() {
+function _media_get_sort_type()
+{
     return _media_get_display_param('sort', ['default' => 'name', 'date']);
 }
 
@@ -870,7 +891,8 @@ function _media_get_sort_type() {
  *
  * @return string - list type
  */
-function _media_get_list_type() {
+function _media_get_list_type()
+{
     return _media_get_display_param('list', ['default' => 'thumbs', 'rows']);
 }
 
@@ -881,7 +903,8 @@ function _media_get_list_type() {
  * @param array  $values  allowed values, where default value has index key 'default'
  * @return string the parameter value
  */
-function _media_get_display_param($param, $values) {
+function _media_get_display_param($param, $values)
+{
     global $INPUT;
     if (in_array($INPUT->str($param), $values)) {
         // FIXME: Set cookie
@@ -904,7 +927,8 @@ function _media_get_display_param($param, $values) {
  * @param null|int  $auth permission level
  * @param string    $jump item id
  */
-function media_tab_files($ns,$auth=null,$jump='') {
+function media_tab_files($ns, $auth = null, $jump = '')
+{
     global $lang;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
@@ -924,7 +948,8 @@ function media_tab_files($ns,$auth=null,$jump='') {
  * @param null|int $auth permission level
  * @param string   $jump item id
  */
-function media_tab_upload($ns,$auth=null,$jump='') {
+function media_tab_upload($ns, $auth = null, $jump = '')
+{
     global $lang;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
@@ -944,7 +969,8 @@ function media_tab_upload($ns,$auth=null,$jump='') {
  * @param string $ns
  * @param null|int $auth permission level
  */
-function media_tab_search($ns,$auth=null) {
+function media_tab_search($ns, $auth = null)
+{
     global $INPUT;
 
     $do = $INPUT->str('mediado');
@@ -968,7 +994,8 @@ function media_tab_search($ns,$auth=null) {
  * @param null|int   $auth  permission level
  * @param string|int $rev   revision timestamp or empty string
  */
-function media_tab_view($image, $ns, $auth=null, $rev='') {
+function media_tab_view($image, $ns, $auth = null, $rev = '')
+{
     global $lang;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
@@ -992,7 +1019,8 @@ function media_tab_view($image, $ns, $auth=null, $rev='') {
  * @param string     $ns
  * @param null|int   $auth permission level
  */
-function media_tab_edit($image, $ns, $auth=null) {
+function media_tab_edit($image, $ns, $auth = null)
+{
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
     if ($image) {
@@ -1010,7 +1038,8 @@ function media_tab_edit($image, $ns, $auth=null) {
  * @param string     $ns
  * @param null|int   $auth permission level
  */
-function media_tab_history($image, $ns, $auth=null) {
+function media_tab_history($image, $ns, $auth = null)
+{
     global $lang;
     global $INPUT;
 
@@ -1039,7 +1068,8 @@ function media_tab_history($image, $ns, $auth=null) {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_preview($image, $auth, $rev = '', $meta = false) {
+function media_preview($image, $auth, $rev = '', $meta = false)
+{
 
     $size = media_image_preview_size($image, $rev, $meta);
 
@@ -1076,7 +1106,8 @@ function media_preview($image, $auth, $rev = '', $meta = false) {
  * @param int        $auth  permission level
  * @param int|string $rev   revision timestamp, or empty string
  */
-function media_preview_buttons($image, $auth, $rev = '') {
+function media_preview_buttons($image, $auth, $rev = '')
+{
     global $lang, $conf;
 
     echo '<ul class="actions">';
@@ -1142,7 +1173,8 @@ function media_preview_buttons($image, $auth, $rev = '') {
  * @param int            $size
  * @return array
  */
-function media_image_preview_size($image, $rev, $meta = false, $size = 500) {
+function media_image_preview_size($image, $rev, $meta = false, $size = 500)
+{
     if (!preg_match("/\.(jpe?g|gif|png)$/", $image)
       || !file_exists($filename = mediaFN($image, $rev))
     ) return [];
@@ -1169,7 +1201,8 @@ function media_image_preview_size($image, $rev, $meta = false, $size = 500) {
  * @param string   $alt  alternative value
  * @return string
  */
-function media_getTag($tags, $meta = false, $alt = '') {
+function media_getTag($tags, $meta = false, $alt = '')
+{
     if (!$meta) return $alt;
     $info = $meta->getField($tags);
     if (!$info) return $alt;
@@ -1184,7 +1217,8 @@ function media_getTag($tags, $meta = false, $alt = '') {
  * @param JpegMeta $meta
  * @return array list of tags of the mediafile
  */
-function media_file_tags($meta) {
+function media_file_tags($meta)
+{
     // load the field descriptions
     static $fields = null;
     if (is_null($fields)) {
@@ -1217,7 +1251,8 @@ function media_file_tags($meta) {
  * @param string|int    $rev   revision timestamp, or empty string
  * @param bool|JpegMeta $meta  image object, or create one if false
  */
-function media_details($image, $auth, $rev='', $meta=false) {
+function media_details($image, $auth, $rev = '', $meta = false)
+{
     global $lang;
 
     if (!$meta) $meta = new JpegMeta(mediaFN($image, $rev));
@@ -1260,7 +1295,8 @@ function media_details($image, $auth, $rev='', $meta=false) {
  *
  * @deprecated 2020-12-31
  */
-function media_diff($image, $ns, $auth, $fromajax = false) {
+function media_diff($image, $ns, $auth, $fromajax = false)
+{
     dbg_deprecated('see '. MediaDiff::class .'::show()');
 }
 
@@ -1271,7 +1307,8 @@ function media_diff($image, $ns, $auth, $fromajax = false) {
  *
  * @deprecated 2020-12-31
  */
-function _media_file_diff($data) {
+function _media_file_diff($data)
+{
     dbg_deprecated('see '. MediaDiff::class .'::show()');
 }
 
@@ -1288,7 +1325,8 @@ function _media_file_diff($data) {
  * @param bool $fromajax
  * @deprecated 2020-12-31
  */
-function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax) {
+function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax)
+{
     dbg_deprecated('see '. MediaDiff::class .'::showFileDiff()');
 }
 
@@ -1306,7 +1344,8 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax) {
  * @param string $type
  * @deprecated 2020-12-31
  */
-function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type) {
+function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type)
+{
     dbg_deprecated('see '. MediaDiff::class .'::showImageDiff()');
 }
 
@@ -1320,7 +1359,8 @@ function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type) {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_restore($image, $rev, $auth){
+function media_restore($image, $rev, $auth)
+{
     global $conf;
     if ($auth < AUTH_UPLOAD || !$conf['mediarevisions']) return false;
     $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')));
@@ -1354,7 +1394,8 @@ function media_restore($image, $rev, $auth){
  * @param bool $fullscreen
  * @param string $sort
  */
-function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural'){
+function media_searchlist($query, $ns, $auth = null, $fullscreen = false, $sort = 'natural')
+{
     global $conf;
     global $lang;
 
@@ -1425,7 +1466,8 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
  * @param string $size     the size subfolder, if not specified 16x16 is used
  * @return string html
  */
-function media_printicon($filename, $size=''){
+function media_printicon($filename, $size = '')
+{
     [$ext] = mimetype(mediaFN($filename), false);
 
     if (file_exists(DOKU_INC.'lib/images/fileicons/'.$size.'/'.$ext.'.png')) {
@@ -1448,7 +1490,8 @@ function media_printicon($filename, $size=''){
  * @param bool       $params_array  return the parmeters array?
  * @return string|array - link or link parameters
  */
-function media_managerURL($params = false, $amp = '&amp;', $abs = false, $params_array = false) {
+function media_managerURL($params = false, $amp = '&amp;', $abs = false, $params_array = false)
+{
     global $ID;
     global $INPUT;
 
@@ -1482,7 +1525,8 @@ function media_managerURL($params = false, $amp = '&amp;', $abs = false, $params
  * @param int    $auth permission level
  * @param bool  $fullscreen
  */
-function media_uploadform($ns, $auth, $fullscreen = false) {
+function media_uploadform($ns, $auth, $fullscreen = false)
+{
     global $lang;
     global $conf;
     global $INPUT;
@@ -1554,7 +1598,8 @@ function media_uploadform($ns, $auth, $fullscreen = false) {
  *
  * @returns int size in bytes
  */
-function media_getuploadsize(){
+function media_getuploadsize()
+{
     $okay = 0;
 
     $post = php_to_byte(@ini_get('post_max_size'));
@@ -1578,7 +1623,8 @@ function media_getuploadsize(){
  * @param string $query
  * @param bool $fullscreen
  */
-function media_searchform($ns, $query = '', $fullscreen = false) {
+function media_searchform($ns, $query = '', $fullscreen = false)
+{
     global $lang;
 
     // The default HTML search form
@@ -1610,7 +1656,8 @@ function media_searchform($ns, $query = '', $fullscreen = false) {
  *
  * @param string $ns
  */
-function media_nstree($ns){
+function media_nstree($ns)
+{
     global $conf;
     global $lang;
 
@@ -1663,7 +1710,8 @@ function media_nstree($ns){
  * @param array $item
  * @return string html
  */
-function media_nstree_item($item){
+function media_nstree_item($item)
+{
     global $INPUT;
     $pos   = strrpos($item['id'], ':');
     $label = substr($item['id'], $pos > 0 ? $pos + 1 : 0);
@@ -1689,7 +1737,8 @@ function media_nstree_item($item){
  * @param array $item
  * @return string html
  */
-function media_nstree_li($item){
+function media_nstree_li($item)
+{
     $class='media level'.$item['level'];
     if($item['open']){
         $class .= ' open';
@@ -1717,7 +1766,7 @@ function media_nstree_li($item){
  * @param bool   $crop should a center crop be used?
  * @return string path to resized or original size if failed
  */
-function media_mod_image($file, $ext, $w, $h=0, $crop=false)
+function media_mod_image($file, $ext, $w, $h = 0, $crop = false)
 {
     global $conf;
     if(!$h) $h = 0;
@@ -1792,7 +1841,8 @@ function media_crop_image($file, $ext, $w, $h = 0)
  * @param int     $h     resize/crop height
  * @return string token or empty string if no token required
  */
-function media_get_token($id,$w,$h){
+function media_get_token($id, $w, $h)
+{
     // token is only required for modified images
     if ($w || $h || media_isexternal($id)) {
         $token = $id;
@@ -1819,7 +1869,8 @@ function media_get_token($id,$w,$h){
  * @param int    $cache cachetime in seconds
  * @return false|string path to cached file
  */
-function media_get_from_URL($url,$ext,$cache){
+function media_get_from_URL($url, $ext, $cache)
+{
     global $conf;
 
     // if no cache or fetchsize just redirect
@@ -1856,7 +1907,8 @@ function media_get_from_URL($url,$ext,$cache){
  * @param string $file path to file in which to put the downloaded content
  * @return bool
  */
-function media_image_download($url,$file){
+function media_image_download($url, $file)
+{
     global $conf;
     $http = new DokuHTTPClient();
     $http->keep_alive = false; // we do single ops here, no need for keep-alive
@@ -1900,7 +1952,8 @@ function media_image_download($url,$file){
  * @param int    $to_h    desired height
  * @return bool
  */
-function media_resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
+function media_resize_imageIM($ext, $from, $from_w, $from_h, $to, $to_w, $to_h)
+{
     global $conf;
 
     // check if convert is configured
@@ -1936,7 +1989,8 @@ function media_resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
  * @return bool
  * @deprecated 2020-09-01
  */
-function media_crop_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x,$ofs_y){
+function media_crop_imageIM($ext, $from, $from_w, $from_h, $to, $to_w, $to_h, $ofs_x, $ofs_y)
+{
     global $conf;
     dbg_deprecated('splitbrain\\Slika');
 
@@ -1974,7 +2028,8 @@ function media_crop_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x,$o
  * @return bool
  * @deprecated 2020-09-01
  */
-function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=0,$ofs_y=0){
+function media_resize_imageGD($ext, $from, $from_w, $from_h, $to, $to_w, $to_h, $ofs_x = 0, $ofs_y = 0)
+{
     global $conf;
     dbg_deprecated('splitbrain\\Slika');
 
@@ -2087,7 +2142,8 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
  *
  * @author Anika Henke <anika@selfthinker.org>
  */
-function media_alternativefiles($src, $exts){
+function media_alternativefiles($src, $exts)
+{
 
     $files = [];
     [$srcExt, ] = mimetype($src);
@@ -2113,7 +2169,8 @@ function media_alternativefiles($src, $exts){
  *
  * @author Anika Henke <anika@selfthinker.org>
  */
-function media_supportedav($mime, $type=NULL){
+function media_supportedav($mime, $type = NULL)
+{
     $supportedAudio = [
         'ogg' => 'audio/ogg',
         'mp3' => 'audio/mpeg',
@@ -2144,7 +2201,8 @@ function media_supportedav($mime, $type=NULL){
  *
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  */
-function media_trackfiles($src){
+function media_trackfiles($src)
+{
     $kinds=[
         'sub' => 'subtitles',
         'cap' => 'captions',

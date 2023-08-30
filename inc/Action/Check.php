@@ -15,11 +15,13 @@ class Check extends AbstractAction
 {
 
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_READ;
     }
 
-    public function preProcess() {
+    public function preProcess()
+    {
         check();
         throw new ActionAbort();
     }

@@ -9,7 +9,8 @@ class SettingSavedir extends SettingString
 {
 
     /** @inheritdoc */
-    public function update($input) {
+    public function update($input)
+    {
         if($this->isProtected()) return false;
 
         $value = is_null($this->local) ? $this->default : $this->local;

@@ -32,7 +32,8 @@ class Mapper
      *
      * @return bool
      */
-    public static function generate(){
+    public static function generate()
+    {
         global $conf;
         if($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) return false;
 
@@ -85,7 +86,8 @@ class Mapper
      *
      * @author Michael Hamann
      */
-    private function getXML($items) {
+    private function getXML($items)
+    {
         ob_start();
         echo '<?xml version="1.0" encoding="UTF-8"?>'.NL;
         echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.NL;
@@ -106,7 +108,8 @@ class Mapper
      *
      * @author Michael Hamann
      */
-    public static function getFilePath() {
+    public static function getFilePath()
+    {
         global $conf;
 
         $sitemap = $conf['cachedir'].'/sitemap.xml';
@@ -122,7 +125,8 @@ class Mapper
      *
      * @return bool If the sitemap file is compressed
      */
-    public static function sitemapIsCompressed() {
+    public static function sitemapIsCompressed()
+    {
         global $conf;
         return $conf['compression'] === 'bz2' || $conf['compression'] === 'gz';
     }
@@ -135,7 +139,8 @@ class Mapper
      *
      * @return bool
      */
-    public static function pingSearchEngines() {
+    public static function pingSearchEngines()
+    {
         //ping search engines...
         $http = new DokuHTTPClient();
         $http->timeout = 8;

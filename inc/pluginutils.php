@@ -27,7 +27,7 @@ if(!defined('DOKU_PLUGIN_NAME_REGEX')) define('DOKU_PLUGIN_NAME_REGEX', '[a-zA-Z
  * @param bool $all; true to retrieve all, false to retrieve only enabled plugins
  * @return array with plugin names or plugin component names
  */
-function plugin_list($type='',$all=false)
+function plugin_list($type = '', $all = false)
 {
     /** @var $plugin_controller PluginController */
     global $plugin_controller;
@@ -47,7 +47,7 @@ function plugin_list($type='',$all=false)
  * @param  $disabled bool   true to load even disabled plugins
  * @return PluginInterface|null  the plugin object or null on failure
  */
-function plugin_load($type,$name,$new=false,$disabled=false)
+function plugin_load($type, $name, $new = false, $disabled = false)
 {
     /** @var $plugin_controller PluginController */
     global $plugin_controller;

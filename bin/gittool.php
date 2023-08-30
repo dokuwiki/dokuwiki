@@ -22,7 +22,8 @@ class GitToolCLI extends CLI
      * @param Options $options
      * @return void
      */
-    protected function setup(Options $options) {
+    protected function setup(Options $options)
+    {
         $options->setHelp(
             "Manage git repositories for DokuWiki and its plugins and templates.\n\n" .
             "$> ./bin/gittool.php clone gallery template:ach\n" .
@@ -80,7 +81,8 @@ class GitToolCLI extends CLI
      * @param Options $options
      * @return void
      */
-    protected function main(Options $options) {
+    protected function main(Options $options)
+    {
         $command = $options->getCmd();
         $args = $options->getArgs();
         if(!$command) $command = array_shift($args);
@@ -109,7 +111,8 @@ class GitToolCLI extends CLI
      *
      * @param array $extensions
      */
-    public function cmdClone($extensions) {
+    public function cmdClone($extensions)
+    {
         $errors = [];
         $succeeded = [];
 
@@ -136,7 +139,8 @@ class GitToolCLI extends CLI
      *
      * @param array $extensions
      */
-    public function cmdInstall($extensions) {
+    public function cmdInstall($extensions)
+    {
         $errors = [];
         $succeeded = [];
 
@@ -168,7 +172,8 @@ class GitToolCLI extends CLI
      * @param $cmd
      * @param $arg
      */
-    public function cmdGit($cmd, $arg) {
+    public function cmdGit($cmd, $arg)
+    {
         $repos = $this->findRepos();
 
         $shell = array_merge(['git', $cmd], $arg);
@@ -196,7 +201,8 @@ class GitToolCLI extends CLI
     /**
      * Simply lists the repositories
      */
-    public function cmdRepos() {
+    public function cmdRepos()
+    {
         $repos = $this->findRepos();
         foreach($repos as $repo) {
             echo "$repo\n";
@@ -209,7 +215,8 @@ class GitToolCLI extends CLI
      * @param string $ext
      * @return bool|null
      */
-    private function downloadExtension($ext) {
+    private function downloadExtension($ext)
+    {
         /** @var helper_plugin_extension_extension $plugin */
         $plugin = plugin_load('helper', 'extension_extension');
         if(!$ext) die("extension plugin not available, can't continue");
@@ -246,7 +253,8 @@ class GitToolCLI extends CLI
      * @param string $repo
      * @return bool
      */
-    private function cloneExtension($ext, $repo) {
+    private function cloneExtension($ext, $repo)
+    {
         if(substr($ext, 0, 9) == 'template:') {
             $target = fullpath(tpl_incdir() . '../' . substr($ext, 9));
         } else {
@@ -272,7 +280,8 @@ class GitToolCLI extends CLI
      *
      * @return array
      */
-    private function findRepos() {
+    private function findRepos()
+    {
         $this->info('Looking for .git directories');
         $data = array_merge(
             glob(DOKU_INC . '.git', GLOB_ONLYDIR),
@@ -295,7 +304,8 @@ class GitToolCLI extends CLI
      * @param $extension
      * @return false|string
      */
-    private function getSourceRepo($extension) {
+    private function getSourceRepo($extension)
+    {
         /** @var helper_plugin_extension_extension $ext */
         $ext = plugin_load('helper', 'extension_extension');
         if(!$ext) die("extension plugin not available, can't continue");

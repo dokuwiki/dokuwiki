@@ -29,7 +29,8 @@ if(!defined('SIMPLE_TEST')){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function css_out(){
+function css_out()
+{
     global $conf;
     global $lang;
     global $config_cascade;
@@ -193,7 +194,8 @@ function css_out(){
  * @param string $css
  * @return string
  */
-function css_parseless($css) {
+function css_parseless($css)
+{
     global $conf;
 
     $less = new lessc();
@@ -258,7 +260,8 @@ function css_parseless($css) {
  * @param array $replacements  array(placeholder => value)
  * @return string
  */
-function css_applystyle($css, $replacements) {
+function css_applystyle($css, $replacements)
+{
     // we convert ini replacements to LESS variable names
     // and build a list of variable: value; pairs
     $less = '';
@@ -287,7 +290,8 @@ function css_applystyle($css, $replacements) {
  * @param array $files set of files that define the current mediatype
  * @return array
  */
-function css_filewrapper($mediatype, $files=[]){
+function css_filewrapper($mediatype, $files = [])
+{
     return [
         'files'                 => $files,
         'mediatype'             => $mediatype,
@@ -305,7 +309,8 @@ function css_filewrapper($mediatype, $files=[]){
  * The event can be distinguished by the mediatype which is:
  *   DW_DEFAULT
  */
-function css_defaultstyles(){
+function css_defaultstyles()
+{
     // print the default classes for interwiki links and file downloads
     print '@media screen {';
     css_interwiki();
@@ -324,7 +329,8 @@ function css_defaultstyles(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function css_interwiki(){
+function css_interwiki()
+{
 
     // default style
     echo 'a.interwiki {';
@@ -355,7 +361,8 @@ function css_interwiki(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function css_filetypes(){
+function css_filetypes()
+{
 
     // default style
     echo '.mediafile {';
@@ -391,7 +398,8 @@ function css_filetypes(){
  * @param string $location
  * @return string
  */
-function css_loadfile($file,$location=''){
+function css_loadfile($file, $location = '')
+{
     $css_file = new DokuCssFile($file);
     return $css_file->load($location);
 }
@@ -408,7 +416,8 @@ class DokuCssFile
     protected $location;             // base url location of the CSS/Less file
     protected $relative_path;
 
-    public function __construct($file) {
+    public function __construct($file)
+    {
         $this->filepath = $file;
     }
 
@@ -420,7 +429,8 @@ class DokuCssFile
      * @param   string   $location   base url for this file
      * @return  string               the CSS/Less contents of the file
      */
-    public function load($location='') {
+    public function load($location = '')
+    {
         if (!file_exists($this->filepath)) return '';
 
         $css = io_readFile($this->filepath);
@@ -439,7 +449,8 @@ class DokuCssFile
      *
      * @return string   relative file system path
      */
-    protected function getRelativePath(){
+    protected function getRelativePath()
+    {
 
         if (is_null($this->relative_path)) {
             $basedir = [DOKU_INC];
@@ -464,7 +475,8 @@ class DokuCssFile
      * @param  array    see http://php.net/preg_replace_callback
      * @return string   see http://php.net/preg_replace_callback
      */
-    public function replacements($match) {
+    public function replacements($match)
+    {
 
         if (preg_match('#^(/|data:|https?://)#', $match[3])) { // not a relative url? - no adjustment required
             return $match[0];
@@ -488,7 +500,8 @@ class DokuCssFile
  * @param array $match
  * @return string
  */
-function css_datauri($match){
+function css_datauri($match)
+{
     global $conf;
 
     $pre   = unslash($match[1]);
@@ -518,7 +531,8 @@ function css_datauri($match){
  * @param string $mediatype
  * @return array
  */
-function css_pluginstyles($mediatype='screen'){
+function css_pluginstyles($mediatype = 'screen')
+{
     $list = [];
     $plugins = plugin_list();
     foreach ($plugins as $p){
@@ -541,7 +555,8 @@ function css_pluginstyles($mediatype='screen'){
  * @param string $css
  * @return string
  */
-function css_compress($css){
+function css_compress($css)
+{
     // replace quoted strings with placeholder
     $quote_storage = [];
 
@@ -630,7 +645,8 @@ function css_compress($css){
  * @param array $matches
  * @return string
  */
-function css_comment_cb($matches){
+function css_comment_cb($matches)
+{
     if(strlen($matches[2]) > 4) return '';
     return $matches[0];
 }
@@ -643,7 +659,8 @@ function css_comment_cb($matches){
  * @param array $matches
  * @return string
  */
-function css_onelinecomment_cb($matches) {
+function css_onelinecomment_cb($matches)
+{
     $line = $matches[0];
 
     $i = 0;

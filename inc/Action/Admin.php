@@ -16,12 +16,14 @@ class Admin extends AbstractUserAction
 {
 
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_READ; // let in check later
     }
 
     /** @inheritDoc */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $INPUT;
 
         // retrieve admin plugin name from $_REQUEST['page']
@@ -37,7 +39,8 @@ class Admin extends AbstractUserAction
     }
 
     /** @inheritDoc */
-    public function tplContent() {
+    public function tplContent()
+    {
         tpl_admin();
     }
 }

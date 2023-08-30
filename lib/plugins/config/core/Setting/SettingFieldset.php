@@ -11,7 +11,8 @@ class SettingFieldset extends Setting
 {
 
     /** @inheritdoc */
-    public function shouldHaveDefault() {
+    public function shouldHaveDefault()
+    {
         return false;
     }
 }

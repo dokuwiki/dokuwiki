@@ -16,7 +16,8 @@ class Export extends AbstractAction
 {
 
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_READ;
     }
 
@@ -35,7 +36,8 @@ class Export extends AbstractAction
      * @author Michael Klier <chi@chimeric.de>
      * @inheritdoc
      */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $ID;
         global $REV;
         global $conf;

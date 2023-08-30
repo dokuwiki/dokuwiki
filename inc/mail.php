@@ -34,7 +34,8 @@ if (!defined('PREG_PATTERN_VALID_EMAIL')) define(
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function mail_setup(){
+function mail_setup()
+{
     global $conf;
     global $USERINFO;
     /** @var Input $INPUT */
@@ -81,7 +82,8 @@ function mail_setup(){
  * @param   string $email the address to check
  * @return  bool          true if address is valid
  */
-function mail_isvalid($email) {
+function mail_isvalid($email)
+{
     return EmailAddressValidator::checkEmailAddress($email, true);
 }
 
@@ -97,7 +99,8 @@ function mail_isvalid($email) {
  *
  * @return string
  */
-function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true) {
+function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit = true)
+{
     // split text into lines
     $aLines= preg_split("/(?:\r\n|\r|\n)/", $sText);
     $cnt = count($aLines);
@@ -157,6 +160,7 @@ function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true)
     return implode(MAILHEADER_EOL, $aLines);
 }
 
-function mail_quotedprintable_encode_callback($matches){
+function mail_quotedprintable_encode_callback($matches)
+{
     return sprintf( "=%02X", ord ( $matches[0] ) ) ;
 }

@@ -15,7 +15,8 @@ abstract class AbstractAclAction extends AbstractAction
 {
 
     /** @inheritdoc */
-    public function checkPreconditions() {
+    public function checkPreconditions()
+    {
         parent::checkPreconditions();
         global $conf;
         global $auth;

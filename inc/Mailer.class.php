@@ -36,7 +36,8 @@ class Mailer
      *
      * Initializes the boundary strings, part counters and token replacements
      */
-    public function __construct() {
+    public function __construct()
+    {
         global $conf;
         /* @var Input $INPUT */
         global $INPUT;
@@ -78,7 +79,8 @@ class Mailer
      * @param string $name The filename to use
      * @param string $embed Unique key to reference this file from the HTML part
      */
-    public function attachFile($path, $mime, $name = '', $embed = '') {
+    public function attachFile($path, $mime, $name = '', $embed = '')
+    {
         if(!$name) {
             $name = PhpString::basename($path);
         }
@@ -99,7 +101,8 @@ class Mailer
      * @param string $name  The filename to use
      * @param string $embed Unique key to reference this file from the HTML part
      */
-    public function attachContent($data, $mime, $name = '', $embed = '') {
+    public function attachContent($data, $mime, $name = '', $embed = '')
+    {
         if(!$name) {
             [, $ext] = explode('/', $mime);
             $name = count($this->attach).".$ext";
@@ -119,7 +122,8 @@ class Mailer
      * @param array $matches
      * @return string placeholder
      */
-    protected function autoEmbedCallBack($matches) {
+    protected function autoEmbedCallBack($matches)
+    {
         static $embeds = 0;
         $embeds++;
 
@@ -143,7 +147,8 @@ class Mailer
      * @param string|string[] $value  the value of the header
      * @param bool   $clean  remove all non-ASCII chars and line feeds?
      */
-    public function setHeader($header, $value, $clean = true) {
+    public function setHeader($header, $value, $clean = true)
+    {
         $header = str_replace(' ', '-', ucwords(strtolower(str_replace('-', ' ', $header)))); // streamline casing
         if($clean) {
             $header = preg_replace('/[^a-zA-Z0-9_ \-\.\+\@]+/', '', $header);
@@ -173,7 +178,8 @@ class Mailer
      *
      * @param string $param
      */
-    public function setParameters($param) {
+    public function setParameters($param)
+    {
         $this->sendparam = $param;
     }
 
@@ -192,7 +198,8 @@ class Mailer
      * @param string $html     the HTML body, leave null to create it from $text
      * @param bool   $wrap     wrap the HTML in the default header/Footer
      */
-    public function setBody($text, $textrep = null, $htmlrep = null, $html = null, $wrap = true) {
+    public function setBody($text, $textrep = null, $htmlrep = null, $html = null, $wrap = true)
+    {
 
         $htmlrep = (array)$htmlrep;
         $textrep = (array)$textrep;
@@ -256,7 +263,8 @@ class Mailer
      *
      * @param string $html
      */
-    public function setHTML($html) {
+    public function setHTML($html)
+    {
         $this->html = $html;
     }
 
@@ -267,7 +275,8 @@ class Mailer
      *
      * @param string $text
      */
-    public function setText($text) {
+    public function setText($text)
+    {
         $this->text = $text;
     }
 
@@ -277,7 +286,8 @@ class Mailer
      * @see cleanAddress
      * @param string|string[]  $address Multiple adresses separated by commas or as array
      */
-    public function to($address) {
+    public function to($address)
+    {
         $this->setHeader('To', $address, false);
     }
 
@@ -287,7 +297,8 @@ class Mailer
      * @see cleanAddress
      * @param string|string[]  $address Multiple adresses separated by commas or as array
      */
-    public function cc($address) {
+    public function cc($address)
+    {
         $this->setHeader('Cc', $address, false);
     }
 
@@ -297,7 +308,8 @@ class Mailer
      * @see cleanAddress
      * @param string|string[]  $address Multiple adresses separated by commas or as array
      */
-    public function bcc($address) {
+    public function bcc($address)
+    {
         $this->setHeader('Bcc', $address, false);
     }
 
@@ -310,7 +322,8 @@ class Mailer
      * @see cleanAddress
      * @param string  $address from address
      */
-    public function from($address) {
+    public function from($address)
+    {
         $this->setHeader('From', $address, false);
     }
 
@@ -319,7 +332,8 @@ class Mailer
      *
      * @param string $subject the mail subject
      */
-    public function subject($subject) {
+    public function subject($subject)
+    {
         $this->headers['Subject'] = $subject;
     }
 
@@ -331,7 +345,8 @@ class Mailer
      * @param string $name the name to clean-up
      * @see cleanAddress
      */
-    public function getCleanName($name) {
+    public function getCleanName($name)
+    {
         $name = trim($name, " \t\"");
         $name = str_replace('"', '\"', $name, $count);
         if ($count > 0 || strpos($name, ',') !== false) {
@@ -358,7 +373,8 @@ class Mailer
      * @param string|string[]  $addresses Multiple adresses separated by commas or as array
      * @return false|string  the prepared header (can contain multiple lines)
      */
-    public function cleanAddress($addresses) {
+    public function cleanAddress($addresses)
+    {
         $headers = '';
         if(!is_array($addresses)){
             $count = preg_match_all('/\s*(?:("[^"]*"[^,]+),*)|([^,]+)\s*,*/', $addresses, $matches, PREG_SET_ORDER);
@@ -436,7 +452,8 @@ class Mailer
      *
      * @return string mime multiparts
      */
-    protected function prepareAttachments() {
+    protected function prepareAttachments()
+    {
         $mime = '';
         $part = 1;
         // embedded attachments
@@ -475,7 +492,8 @@ class Mailer
      *
      * @return string the prepared mail body, false on errors
      */
-    protected function prepareBody() {
+    protected function prepareBody()
+    {
 
         // no HTML mails allowed? remove HTML body
         if(!$this->allowhtml) {
@@ -539,7 +557,8 @@ class Mailer
     /**
      * Cleanup and encode the headers array
      */
-    protected function cleanHeaders() {
+    protected function cleanHeaders()
+    {
         global $conf;
 
         // clean up addresses
@@ -586,7 +605,8 @@ class Mailer
      * @param string $val
      * @return string line
      */
-    protected function wrappedHeaderLine($key, $val){
+    protected function wrappedHeaderLine($key, $val)
+    {
         return wordwrap("$key: $val", 78, MAILHEADER_EOL.'  ').MAILHEADER_EOL;
     }
 
@@ -595,7 +615,8 @@ class Mailer
      *
      * @returns string the headers
      */
-    protected function prepareHeaders() {
+    protected function prepareHeaders()
+    {
         $headers = '';
         foreach($this->headers as $key => $val) {
             if ($val === '' || $val === null) continue;
@@ -612,7 +633,8 @@ class Mailer
      *
      * @return string the mail, false on errors
      */
-    public function dump() {
+    public function dump()
+    {
         $this->cleanHeaders();
         $body = $this->prepareBody();
         if($body === false) return false;
@@ -627,7 +649,8 @@ class Mailer
      * Populates the '$replacements' property.
      * Should be called by the class constructor
      */
-    protected function prepareTokenReplacements() {
+    protected function prepareTokenReplacements()
+    {
         global $INFO;
         global $conf;
         /* @var Input $INPUT */
@@ -689,7 +712,8 @@ class Mailer
      * @triggers MAIL_MESSAGE_SEND
      * @return bool true if the mail was successfully passed to the MTA
      */
-    public function send() {
+    public function send()
+    {
         global $lang;
         $success = false;
 

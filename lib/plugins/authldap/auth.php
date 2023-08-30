@@ -649,8 +649,7 @@ class auth_plugin_authldap extends AuthPlugin
         $attributes = null,
         $attrsonly = 0,
         $sizelimit = 0
-    )
-    {
+    ) {
         if (is_null($attributes)) $attributes = [];
 
         if ($scope == 'base') {

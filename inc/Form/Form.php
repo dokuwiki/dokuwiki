@@ -321,7 +321,7 @@ class Form extends Element
      * @param int $pos
      * @return Element
      */
-    public function addLabel($label, $for='', $pos = -1)
+    public function addLabel($label, $for = '', $pos = -1)
     {
         return $this->addLabelHTML(hsc($label), $for, $pos);
     }
@@ -334,7 +334,7 @@ class Form extends Element
      * @param int $pos
      * @return Element
      */
-    public function addLabelHTML($content, $for='', $pos = -1)
+    public function addLabelHTML($content, $for = '', $pos = -1)
     {
         $element = new LabelElement($content);
 

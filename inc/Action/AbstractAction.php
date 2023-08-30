@@ -23,7 +23,8 @@ abstract class AbstractAction
      *
      * @param string $actionname the name of this action (see getActionName() for caveats)
      */
-    public function __construct($actionname = '') {
+    public function __construct($actionname = '')
+    {
         if($actionname !== '') {
             $this->actionname = $actionname;
         } else {
@@ -49,7 +50,8 @@ abstract class AbstractAction
      * @throws ActionException
      * @return void
      */
-    public function checkPreconditions() {
+    public function checkPreconditions()
+    {
     }
 
     /**
@@ -62,7 +64,8 @@ abstract class AbstractAction
      * @throws ActionException
      * @return void
      */
-    public function preProcess() {
+    public function preProcess()
+    {
     }
 
     /**
@@ -71,7 +74,8 @@ abstract class AbstractAction
      * @fixme we may want to return a Ui class here
      * @throws FatalException
      */
-    public function tplContent() {
+    public function tplContent()
+    {
         throw new FatalException('No content for Action ' . $this->actionname);
     }
 
@@ -83,7 +87,8 @@ abstract class AbstractAction
      *
      * @return string
      */
-    public function getActionName() {
+    public function getActionName()
+    {
         return $this->actionname;
     }
 }

@@ -11,7 +11,8 @@ class SettingEmail extends SettingString
     protected $placeholders = false;
 
     /** @inheritdoc */
-    public function update($input) {
+    public function update($input)
+    {
         if(is_null($input)) return false;
         if($this->isProtected()) return false;
 

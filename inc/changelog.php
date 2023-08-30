@@ -17,7 +17,8 @@ use dokuwiki\File\PageFile;
  * @param string $line changelog line
  * @return array|bool parsed line or false
  */
-function parseChangelogLine($line) {
+function parseChangelogLine($line)
+{
     return ChangeLog::parseLogLine($line);
 }
 
@@ -49,8 +50,8 @@ function addLogEntry(
     $summary = '',
     $extra = '',
     $flags = null,
-    $sizechange = null)
-{
+    $sizechange = null
+) {
     // no more used in DokuWiki core, but left for third-party plugins
     dbg_deprecated('see '. PageFile::class .'::saveWikiText()');
 
@@ -110,8 +111,8 @@ function addMediaLogEntry(
     $summary = '',
     $extra = '',
     $flags = null,
-    $sizechange = null)
-{
+    $sizechange = null
+) {
     /** @var Input $INPUT */
     global $INPUT;
 
@@ -161,7 +162,8 @@ function addMediaLogEntry(
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function getRecents($first, $num, $ns = '', $flags = 0) {
+function getRecents($first, $num, $ns = '', $flags = 0)
+{
     global $conf;
     $recent = [];
     $count  = 0;
@@ -259,7 +261,8 @@ function getRecents($first, $num, $ns = '', $flags = 0) {
  * @author Michael Hamann <michael@content-space.de>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function getRecentsSince($from, $to = null, $ns = '', $flags = 0) {
+function getRecentsSince($from, $to = null, $ns = '', $flags = 0)
+{
     global $conf;
     $recent = [];
 
@@ -311,7 +314,8 @@ function getRecentsSince($from, $to = null, $ns = '', $flags = 0) {
  * @param array  $seen   listing of seen pages
  * @return array|bool    false or array with info about a change
  */
-function _handleRecent($line, $ns, $flags, &$seen) {
+function _handleRecent($line, $ns, $flags, &$seen)
+{
     if (empty($line)) return false;   //skip empty lines
 
     // split the line into parts

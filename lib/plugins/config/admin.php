@@ -34,7 +34,8 @@ class admin_plugin_config extends AdminPlugin
     /**
      * handle user request
      */
-    public function handle() {
+    public function handle()
+    {
         global $ID, $INPUT;
 
         // always initialize the configuration
@@ -70,7 +71,8 @@ class admin_plugin_config extends AdminPlugin
     /**
      * output appropriate html
      */
-    public function html() {
+    public function html()
+    {
         $allow_debug = $GLOBALS['conf']['allowdebug']; // avoid global $conf; here.
         global $lang;
         global $ID;
@@ -160,7 +162,8 @@ class admin_plugin_config extends AdminPlugin
              * @param Setting $b
              * @return int if $a is lower/equal/higher than $b
              */
-            function settingNaturalComparison($a, $b) {
+            function settingNaturalComparison($a, $b)
+            {
                 return strnatcmp($a->getKey(), $b->getKey());
             }
 
@@ -201,7 +204,8 @@ class admin_plugin_config extends AdminPlugin
     /**
      * @param bool $prompts
      */
-    public function setupLocale($prompts = false) {
+    public function setupLocale($prompts = false)
+    {
         parent::setupLocale();
         if(!$prompts || $this->promptsLocalized) return;
         $this->lang = array_merge($this->lang, $this->configuration->getLangs());
@@ -215,7 +219,8 @@ class admin_plugin_config extends AdminPlugin
      *
      * @return array
      */
-    public function getTOC() {
+    public function getTOC()
+    {
         $this->setupLocale(true);
 
         $allow_debug = $GLOBALS['conf']['allowdebug']; // avoid global $conf; here.
@@ -265,7 +270,8 @@ class admin_plugin_config extends AdminPlugin
      * @param string $id
      * @param string $text
      */
-    protected function printH1($id, $text) {
+    protected function printH1($id, $text)
+    {
         echo '<h1 id="' . $id . '">' . $text . '</h1>';
     }
 
@@ -277,7 +283,8 @@ class admin_plugin_config extends AdminPlugin
      * @param string $key
      * @param string $value
      */
-    public function addLang($key, $value) {
+    public function addLang($key, $value)
+    {
         if(!$this->localised) $this->setupLocale();
         $this->lang[$key] = $value;
     }

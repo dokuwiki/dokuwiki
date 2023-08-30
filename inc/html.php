@@ -41,7 +41,8 @@ if (!defined('SEC_EDIT_PATTERN')) {
  * @param string|array  $search  search string(s) that shall be highlighted in the target page
  * @return string the HTML code of the link
  */
-function html_wikilink($id, $name = null, $search = '') {
+function html_wikilink($id, $name = null, $search = '')
+{
     /** @var Doku_Renderer_xhtml $xhtml_renderer */
     static $xhtml_renderer = null;
     if (is_null($xhtml_renderer)) {
@@ -59,7 +60,8 @@ function html_wikilink($id, $name = null, $search = '') {
  * @param bool $svg Whether to show svg icons in the register and resendpwd links or not
  * @deprecated 2020-07-18
  */
-function html_login($svg = false) {
+function html_login($svg = false)
+{
     dbg_deprecated(Login::class .'::show()');
     (new Login($svg))->show();
 }
@@ -70,7 +72,8 @@ function html_login($svg = false) {
  *
  * @deprecated 2020-07-18 not called anymore, see inc/Action/Denied::tplContent()
  */
-function html_denied() {
+function html_denied()
+{
     dbg_deprecated(Denied::class .'::showBanner()');
     (new Denied())->showBanner();
 }
@@ -84,7 +87,8 @@ function html_denied() {
  * @param bool   $show show section edit buttons?
  * @return string
  */
-function html_secedit($text, $show = true) {
+function html_secedit($text, $show = true)
+{
     global $INFO;
 
     if ((isset($INFO) && !$INFO['writable']) || !$show || (isset($INFO) && $INFO['rev'])) {
@@ -105,7 +109,8 @@ function html_secedit($text, $show = true) {
  * @return string
  * @triggers HTML_SECEDIT_BUTTON
  */
-function html_secedit_button($matches){
+function html_secedit_button($matches)
+{
     $json = htmlspecialchars_decode($matches[1], ENT_QUOTES);
     $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
     if ($data === null) {
@@ -130,7 +135,8 @@ function html_secedit_button($matches){
  * @param array $data name, section id and target
  * @return string html
  */
-function html_secedit_get_button($data) {
+function html_secedit_get_button($data)
+{
     global $ID;
     global $INFO;
 
@@ -160,7 +166,8 @@ function html_secedit_get_button($data) {
  *
  * @return string html
  */
-function html_topbtn() {
+function html_topbtn()
+{
     global $lang;
 
     return '<a class="nolink" href="#dokuwiki__top">'
@@ -185,7 +192,8 @@ function html_topbtn() {
  * @param string         $svg (optional) svg code, inserted into the button
  * @return string
  */
-function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $label = false, $svg = null) {
+function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $label = false, $svg = null)
+{
     global $conf;
     global $lang;
 
@@ -237,7 +245,8 @@ function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $l
  * @author Szymon Olewniczak <dokuwiki@imz.re>
  * @deprecated 2020-07-18
  */
-function html_showrev() {
+function html_showrev()
+{
     dbg_deprecated(PageView::class .'::showrev()');
 }
 
@@ -249,7 +258,8 @@ function html_showrev() {
  * @param null|string $txt wiki text or null for showing $ID
  * @deprecated 2020-07-18
  */
-function html_show($txt=null) {
+function html_show($txt = null)
+{
     dbg_deprecated(PageView::class .'::show()');
     (new PageView($txt))->show();
 }
@@ -260,7 +270,8 @@ function html_show($txt=null) {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @deprecated 2020-07-18
  */
-function html_draft() {
+function html_draft()
+{
     dbg_deprecated(PageDraft::class .'::show()');
     (new PageDraft)->show();
 }
@@ -275,7 +286,8 @@ function html_draft() {
  * @param array|string $phrases
  * @return string html
  */
-function html_hilight($html, $phrases) {
+function html_hilight($html, $phrases)
+{
     $phrases = (array) $phrases;
     $phrases = array_map('preg_quote_cb', $phrases);
     $phrases = array_map('ft_snippet_re_preprocess', $phrases);
@@ -301,7 +313,8 @@ function html_hilight($html, $phrases) {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @deprecated 2020-07-18 not called anymore, see inc/Action/Locked::tplContent()
  */
-function html_locked() {
+function html_locked()
+{
     dbg_deprecated(Locked::class .'::showBanner()');
     (new Locked())->showBanner();
 }
@@ -317,7 +330,8 @@ function html_locked() {
  * @param string $media_id id of media, or empty for current page
  * @deprecated 2020-07-18
  */
-function html_revisions($first = -1, $media_id = '') {
+function html_revisions($first = -1, $media_id = '')
+{
     dbg_deprecated(PageRevisions::class .'::show()');
     if ($media_id) {
         (new MediaRevisions($media_id))->show($first);
@@ -339,7 +353,8 @@ function html_revisions($first = -1, $media_id = '') {
  * @param string $show_changes
  * @deprecated 2020-07-18
  */
-function html_recent($first = 0, $show_changes = 'both') {
+function html_recent($first = 0, $show_changes = 'both')
+{
     dbg_deprecated(Recent::class .'::show()');
     (new Recent($first, $show_changes))->show();
 }
@@ -352,7 +367,8 @@ function html_recent($first = 0, $show_changes = 'both') {
  * @param string $ns
  * @deprecated 2020-07-18
  */
-function html_index($ns) {
+function html_index($ns)
+{
     dbg_deprecated(Index::class .'::show()');
     (new Index($ns))->show();
 }
@@ -368,7 +384,8 @@ function html_index($ns) {
  * @return string
  * @deprecated 2020-07-18
  */
-function html_list_index($item) {
+function html_list_index($item)
+{
     dbg_deprecated(Index::class .'::formatListItem()');
     return (new Index)->formatListItem($item);
 }
@@ -386,7 +403,8 @@ function html_list_index($item) {
  * @return string html
  * @deprecated 2020-07-18
  */
-function html_li_index($item) {
+function html_li_index($item)
+{
     dbg_deprecated(Index::class .'::tagListItem()');
     return (new Index)->tagListItem($item);
 }
@@ -400,7 +418,8 @@ function html_li_index($item) {
  * @return string html
  * @deprecated 2020-07-18
  */
-function html_li_default($item){
+function html_li_default($item)
+{
     return '<li class="level'.$item['level'].'">';
 }
 
@@ -427,7 +446,8 @@ function html_li_default($item){
  *                               0 (we have a root object) or 1 (just the root content)
  * @return string html of an unordered list
  */
-function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = false) {
+function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = false)
+{
     if ($data === []) {
         return '';
     }
@@ -497,7 +517,8 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
  * @author Michael Klier <chi@chimeric.de>
  * @deprecated 2020-07-18
  */
-function html_backlinks() {
+function html_backlinks()
+{
     dbg_deprecated(Backlinks::class .'::show()');
     (new Backlinks)->show();
 }
@@ -513,7 +534,8 @@ function html_backlinks() {
  * @return string[] HTML snippets for diff header
  * @deprecated 2020-07-18
  */
-function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = false) {
+function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = false)
+{
     dbg_deprecated('see '. PageDiff::class .'::buildDiffHead()');
     return ['', '', '', ''];
 }
@@ -529,7 +551,8 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
  * @param  string $type  type of the diff (inline or sidebyside)
  * @deprecated 2020-07-18
  */
-function html_diff($text = '', $intro = true, $type = null) {
+function html_diff($text = '', $intro = true, $type = null)
+{
     dbg_deprecated(PageDiff::class .'::show()');
     global $INFO;
     (new PageDiff($INFO['id']))->compareWith($text)->preference([
@@ -548,7 +571,8 @@ function html_diff($text = '', $intro = true, $type = null) {
  * @return string[] html of left and right navigation elements
  * @deprecated 2020-07-18
  */
-function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
+function html_diff_navigation($pagelog, $type, $l_rev, $r_rev)
+{
     dbg_deprecated('see '. PageDiff::class .'::buildRevisionsNavigation()');
     return ['', ''];
 }
@@ -563,7 +587,8 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
  * @return string html of link to a diff
  * @deprecated 2020-07-18
  */
-function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
+function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null)
+{
     dbg_deprecated('see '. PageDiff::class .'::diffViewlink()');
     return '';
 }
@@ -575,7 +600,8 @@ function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
  * @return string
  * @deprecated 2020-07-18
  */
-function html_insert_softbreaks($diffhtml) {
+function html_insert_softbreaks($diffhtml)
+{
     dbg_deprecated(PageDiff::class .'::insertSoftbreaks()');
     return (new PageDiff)->insertSoftbreaks($diffhtml);
 }
@@ -589,7 +615,8 @@ function html_insert_softbreaks($diffhtml) {
  * @param string $summary
  * @deprecated 2020-07-18
  */
-function html_conflict($text, $summary) {
+function html_conflict($text, $summary)
+{
     dbg_deprecated(PageConflict::class .'::show()');
     (new PageConflict($text, $summary))->show();
 }
@@ -599,7 +626,8 @@ function html_conflict($text, $summary) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_msgarea() {
+function html_msgarea()
+{
     global $MSG, $MSG_shown;
     /** @var array $MSG */
     // store if the global $MSG has already been shown and thus HTML output has been started
@@ -628,7 +656,8 @@ function html_msgarea() {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @deprecated 2020-07-18
  */
-function html_register() {
+function html_register()
+{
     dbg_deprecated(UserRegister::class .'::show()');
     (new UserRegister)->show();
 }
@@ -640,7 +669,8 @@ function html_register() {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @deprecated 2020-07-18
  */
-function html_updateprofile() {
+function html_updateprofile()
+{
     dbg_deprecated(UserProfile::class .'::show()');
     (new UserProfile)->show();
 }
@@ -652,7 +682,8 @@ function html_updateprofile() {
  *
  * @deprecated 2020-07-18
  */
-function html_edit() {
+function html_edit()
+{
     dbg_deprecated(Editor::class .'::show()');
     (new Editor)->show();
 }
@@ -665,7 +696,8 @@ function html_edit() {
  * @param array $param
  * @deprecated 2020-07-18
  */
-function html_edit_form($param) {
+function html_edit_form($param)
+{
     dbg_deprecated(Editor::class .'::addTextarea()');
     (new Editor)->addTextarea($param);
 }
@@ -675,7 +707,8 @@ function html_edit_form($param) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_debug() {
+function html_debug()
+{
     global $conf;
     global $lang;
     /** @var AuthPlugin $auth */
@@ -775,7 +808,8 @@ function html_debug() {
  * @author Andreas Gohr <gohr@cosmocode.de>
  * @deprecated 2020-07-18
  */
-function html_resendpwd() {
+function html_resendpwd()
+{
     dbg_deprecated(UserResendPwd::class .'::show()');
     (new UserResendPwd)->show();
 }
@@ -788,7 +822,8 @@ function html_resendpwd() {
  * @param array $toc
  * @return string html
  */
-function html_TOC($toc) {
+function html_TOC($toc)
+{
     if ($toc === []) return '';
     global $lang;
     $out  = '<!-- TOC START -->'.DOKU_LF;
@@ -809,7 +844,8 @@ function html_TOC($toc) {
  * @param array $item
  * @return string html
  */
-function html_list_toc($item) {
+function html_list_toc($item)
+{
     if (isset($item['hid'])){
         $link = '#'.$item['hid'];
     } else {
@@ -830,7 +866,8 @@ function html_list_toc($item) {
  * @param string $hash  - is prepended to the given $link, set blank if you want full links
  * @return array the toc item
  */
-function html_mktocitem($link, $text, $level, $hash='#') {
+function html_mktocitem($link, $text, $level, $hash = '#')
+{
     return  [
         'link'  => $hash.$link,
         'title' => $text,
@@ -850,7 +887,8 @@ function html_mktocitem($link, $text, $level, $hash='#') {
  * @return void
  * @deprecated 2020-07-18
  */
-function html_form($name, $form) {
+function html_form($name, $form)
+{
     dbg_deprecated('use dokuwiki\Form\Form instead of Doku_Form');
     // Safety check in case the caller forgets.
     $form->endFieldset();
@@ -865,7 +903,8 @@ function html_form($name, $form) {
  * @return void
  * @deprecated 2020-07-18
  */
-function html_form_output($form) {
+function html_form_output($form)
+{
     dbg_deprecated('use ' . Form::class . '::toHTML()');
     $form->printForm();
 }
@@ -893,7 +932,8 @@ function html_form_output($form) {
  * @param string $alt      - alternative content (is NOT automatically escaped!)
  * @return string         - the XHTML markup
  */
-function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts=null,$alt=''){
+function html_flashobject($swf, $width, $height, $params = null, $flashvars = null, $atts = null, $alt = '')
+{
     global $lang;
 
     $out = '';
@@ -954,7 +994,8 @@ function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts
  * @param string $current_tab the current tab id
  * @return void
  */
-function html_tabs($tabs, $current_tab = null) {
+function html_tabs($tabs, $current_tab = null)
+{
     echo '<ul class="tabs">'.NL;
 
     foreach ($tabs as $id => $tab) {
@@ -976,7 +1017,8 @@ function html_tabs($tabs, $current_tab = null) {
  * @return void
  */
 
-function html_tab($href, $caption, $selected = false) {
+function html_tab($href, $caption, $selected = false)
+{
     $tab = '<li>';
     if ($selected) {
         $tab .= '<strong>';
@@ -996,7 +1038,8 @@ function html_tab($href, $caption, $selected = false) {
  * @param Doku_Form $form - (optional) form to add elements to
  * @return void|string
  */
-function html_sizechange($sizechange, $form = null) {
+function html_sizechange($sizechange, $form = null)
+{
     if (isset($sizechange)) {
         $class = 'sizechange';
         $value = filesize_h(abs($sizechange));

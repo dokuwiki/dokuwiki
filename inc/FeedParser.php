@@ -13,7 +13,8 @@ class FeedParser extends SimplePie
     /**
      * Constructor. Set some defaults
      */
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         $this->enable_cache(false);
         $this->registry->register(File::class, FeedParserFile::class);
@@ -25,7 +26,8 @@ class FeedParser extends SimplePie
      * phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
      * @param string $url
      */
-    public function feed_url($url){
+    public function feed_url($url)
+    {
         $this->set_feed_url($url);
     }
 }

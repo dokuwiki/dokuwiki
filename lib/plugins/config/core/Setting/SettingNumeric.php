@@ -15,7 +15,8 @@ class SettingNumeric extends SettingString
     protected $max;
 
     /** @inheritdoc */
-    public function update($input) {
+    public function update($input)
+    {
         $local = $this->local;
         $valid = parent::update($input);
         if($valid && !(is_null($this->min) && is_null($this->max))) {
@@ -32,7 +33,8 @@ class SettingNumeric extends SettingString
     }
 
     /** @inheritdoc */
-    public function out($var, $fmt = 'php') {
+    public function out($var, $fmt = 'php')
+    {
         if($fmt != 'php') return '';
 
         $local = $this->local === '' ? "''" : $this->local;

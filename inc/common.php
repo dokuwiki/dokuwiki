@@ -29,7 +29,8 @@ use dokuwiki\Extension\Event;
  * @param string $string the string being converted
  * @return string converted string
  */
-function hsc($string) {
+function hsc($string)
+{
     return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, 'UTF-8');
 }
 
@@ -70,7 +71,8 @@ function sexplode($separator, $string, $limit, $default = null)
  * @param bool $trim Consider a string of whitespace to be blank
  * @return bool
  */
-function blank(&$in, $trim = false) {
+function blank(&$in, $trim = false)
+{
     if(is_null($in)) return true;
     if(is_array($in)) return $in === [];
     if($in === "\0") return true;
@@ -89,7 +91,8 @@ function blank(&$in, $trim = false) {
  * @param string $string  line of text
  * @param int    $indent  number of spaces indention
  */
-function ptln($string, $indent = 0) {
+function ptln($string, $indent = 0)
+{
     echo str_repeat(' ', $indent)."$string\n";
 }
 
@@ -101,7 +104,8 @@ function ptln($string, $indent = 0) {
  * @param string $string being stripped
  * @return string
  */
-function stripctl($string) {
+function stripctl($string)
+{
     return preg_replace('/[\x00-\x1F]+/s', '', $string);
 }
 
@@ -114,7 +118,8 @@ function stripctl($string) {
  *
  * @return  string
  */
-function getSecurityToken() {
+function getSecurityToken()
+{
     /** @var Input $INPUT */
     global $INPUT;
 
@@ -132,7 +137,8 @@ function getSecurityToken() {
  * @param null|string $token security token or null to read it from request variable
  * @return bool success if the token matched
  */
-function checkSecurityToken($token = null) {
+function checkSecurityToken($token = null)
+{
     /** @var Input $INPUT */
     global $INPUT;
     if(!$INPUT->server->str('REMOTE_USER')) return true; // no logged in user, no need for a check
@@ -153,7 +159,8 @@ function checkSecurityToken($token = null) {
  * @param bool $print  if true print the field, otherwise html of the field is returned
  * @return string html of hidden form field
  */
-function formSecurityToken($print = true) {
+function formSecurityToken($print = true)
+{
     $ret = '<div class="no"><input type="hidden" name="sectok" value="'.getSecurityToken().'" /></div>'."\n";
     if($print) echo $ret;
     return $ret;
@@ -170,7 +177,8 @@ function formSecurityToken($print = true) {
  * @return array with info for a request of $id
  *
  */
-function basicinfo($id, $htmlClient=true){
+function basicinfo($id, $htmlClient = true)
+{
     global $USERINFO;
     /* @var Input $INPUT */
     global $INPUT;
@@ -219,7 +227,8 @@ function basicinfo($id, $htmlClient=true){
  *
  * @return array with info about current document
  */
-function pageinfo() {
+function pageinfo()
+{
     global $ID;
     global $REV;
     global $RANGE;
@@ -318,7 +327,8 @@ function pageinfo() {
 /**
  * Initialize and/or fill global $JSINFO with some basic info to be given to javascript
  */
-function jsinfo() {
+function jsinfo()
+{
     global $JSINFO, $ID, $INFO, $ACT;
 
     if (!is_array($JSINFO)) {
@@ -337,7 +347,8 @@ function jsinfo() {
  *
  * @return array with info about current media item
  */
-function mediainfo() {
+function mediainfo()
+{
     global $NS;
     global $IMG;
 
@@ -356,7 +367,8 @@ function mediainfo() {
  * @param string $sep       series of pairs are separated by this character
  * @return string query string
  */
-function buildURLparams($params, $sep = '&amp;') {
+function buildURLparams($params, $sep = '&amp;')
+{
     $url = '';
     $amp = false;
     foreach($params as $key => $val) {
@@ -380,7 +392,8 @@ function buildURLparams($params, $sep = '&amp;') {
  * @param bool  $skipEmptyStrings skip empty string values?
  * @return string
  */
-function buildAttributes($params, $skipEmptyStrings = false) {
+function buildAttributes($params, $skipEmptyStrings = false)
+{
     $url   = '';
     $white = false;
     foreach($params as $key => $val) {
@@ -403,7 +416,8 @@ function buildAttributes($params, $skipEmptyStrings = false) {
  *
  * @return string[] with the data: array(pageid=>name, ... )
  */
-function breadcrumbs() {
+function breadcrumbs()
+{
     // we prepare the breadcrumbs early for quick session closing
     static $crumbs = null;
     if($crumbs != null) return $crumbs;
@@ -467,7 +481,8 @@ function breadcrumbs() {
  * @param bool   $ue apply urlencoding?
  * @return string
  */
-function idfilter($id, $ue = true) {
+function idfilter($id, $ue = true)
+{
     global $conf;
     /* @var Input $INPUT */
     global $INPUT;
@@ -504,7 +519,8 @@ function idfilter($id, $ue = true) {
  * @param string       $separator      parameter separator
  * @return string
  */
-function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp;') {
+function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp;')
+{
     global $conf;
     if(is_array($urlParameters)) {
         if(isset($urlParameters['rev']) && !$urlParameters['rev']) unset($urlParameters['rev']);
@@ -555,7 +571,8 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
  * @param string       $sep            parameter separator
  * @return string
  */
-function exportlink($id = '', $format = 'raw', $urlParameters = '', $abs = false, $sep = '&amp;') {
+function exportlink($id = '', $format = 'raw', $urlParameters = '', $abs = false, $sep = '&amp;')
+{
     global $conf;
     if(is_array($urlParameters)) {
         $urlParameters = buildURLparams($urlParameters, $sep);
@@ -600,7 +617,8 @@ function exportlink($id = '', $format = 'raw', $urlParameters = '', $abs = false
  * @param bool    $abs    Create an absolute URL
  * @return string
  */
-function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) {
+function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
+{
     global $conf;
     $isexternalimage = media_isexternal($id);
     if(!$isexternalimage) {
@@ -688,7 +706,8 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
  *
  * @return string
  */
-function script() {
+function script()
+{
     return DOKU_BASE.DOKU_SCRIPT;
 }
 
@@ -717,7 +736,8 @@ function script() {
  * @param  string $text - optional text to check, if not given the globals are used
  * @return bool         - true if a spam word was found
  */
-function checkwordblock($text = '') {
+function checkwordblock($text = '')
+{
     global $TEXT;
     global $PRE;
     global $SUF;
@@ -786,7 +806,8 @@ function checkwordblock($text = '') {
  * @param  boolean $single If set only a single IP is returned
  * @return string
  */
-function clientIP($single = false) {
+function clientIP($single = false)
+{
     /* @var Input $INPUT */
     global $INPUT, $conf;
 
@@ -835,7 +856,8 @@ function clientIP($single = false) {
  * @deprecated 2018-04-27 you probably want media queries instead anyway
  * @return bool if true, client is mobile browser; otherwise false
  */
-function clientismobile() {
+function clientismobile()
+{
     /* @var Input $INPUT */
     global $INPUT;
 
@@ -869,7 +891,8 @@ function clientismobile() {
  * @param string $link the link, e.g. "wiki>page"
  * @return bool
  */
-function link_isinterwiki($link){
+function link_isinterwiki($link)
+{
     if (preg_match('/^[a-zA-Z0-9\.]+>/u', $link)) return true;
     return false;
 }
@@ -884,7 +907,8 @@ function link_isinterwiki($link){
  * @param  string $ips comma separated list of IP addresses
  * @return string a comma separated list of hostnames
  */
-function gethostsbyaddrs($ips) {
+function gethostsbyaddrs($ips)
+{
     global $conf;
     if(!$conf['dnslookups']) return $ips;
 
@@ -911,7 +935,8 @@ function gethostsbyaddrs($ips) {
  * @param string $id page id
  * @return bool page is locked?
  */
-function checklock($id) {
+function checklock($id)
+{
     global $conf;
     /* @var Input $INPUT */
     global $INPUT;
@@ -943,7 +968,8 @@ function checklock($id) {
  *
  * @param string $id page id to lock
  */
-function lock($id) {
+function lock($id)
+{
     global $conf;
     /* @var Input $INPUT */
     global $INPUT;
@@ -968,7 +994,8 @@ function lock($id) {
  * @param string $id page id to unlock
  * @return bool true if a lock was removed
  */
-function unlock($id) {
+function unlock($id)
+{
     /* @var Input $INPUT */
     global $INPUT;
 
@@ -994,7 +1021,8 @@ function unlock($id) {
  * @param string $text
  * @return string
  */
-function cleanText($text) {
+function cleanText($text)
+{
     $text = preg_replace("/(\015\012)|(\015)/", "\012", $text);
 
     // if the text is not valid UTF-8 we simply assume latin1
@@ -1016,7 +1044,8 @@ function cleanText($text) {
  * @param string $text
  * @return string
  */
-function formText($text) {
+function formText($text)
+{
     $text = str_replace("\012", "\015\012", $text ?? '');
     return htmlspecialchars($text);
 }
@@ -1030,7 +1059,8 @@ function formText($text) {
  * @param string $ext  extension of file being read, default 'txt'
  * @return string
  */
-function rawLocale($id, $ext = 'txt') {
+function rawLocale($id, $ext = 'txt')
+{
     return io_readFile(localeFN($id, $ext));
 }
 
@@ -1043,7 +1073,8 @@ function rawLocale($id, $ext = 'txt') {
  * @param string|int $rev  timestamp when a revision of wikitext is desired
  * @return string
  */
-function rawWiki($id, $rev = '') {
+function rawWiki($id, $rev = '')
+{
     return io_readWikiPage(wikiFN($id, $rev), $id, $rev);
 }
 
@@ -1056,7 +1087,8 @@ function rawWiki($id, $rev = '') {
  * @param string $id the id of the page to be created
  * @return string parsed pagetemplate content
  */
-function pageTemplate($id) {
+function pageTemplate($id)
+{
     global $conf;
 
     if(is_array($id)) $id = $id[0];
@@ -1110,7 +1142,8 @@ function pageTemplate($id) {
  * @param array $data array with event data
  * @return string
  */
-function parsePageTemplate(&$data) {
+function parsePageTemplate(&$data)
+{
     /**
      * @var string $id        the id of the page to be created
      * @var string $tpl       the text used as template
@@ -1195,7 +1228,8 @@ function parsePageTemplate(&$data) {
  * @param string $rev   optional, the revision timestamp
  * @return string[] with three slices
  */
-function rawWikiSlices($range, $id, $rev = '') {
+function rawWikiSlices($range, $id, $rev = '')
+{
     $text = io_readWikiPage(wikiFN($id, $rev), $id, $rev);
 
     // Parse range
@@ -1226,7 +1260,8 @@ function rawWikiSlices($range, $id, $rev = '') {
  * @param bool $pretty add additional empty lines between sections
  * @return string
  */
-function con($pre, $text, $suf, $pretty = false) {
+function con($pre, $text, $suf, $pretty = false)
+{
     if($pretty) {
         if($pre !== '' && substr($pre, -1) !== "\n" &&
             substr($text, 0, 1) !== "\n"
@@ -1254,7 +1289,8 @@ function con($pre, $text, $suf, $pretty = false) {
  * @param string $id the page ID
  * @deprecated 2021-11-28
  */
-function detectExternalEdit($id) {
+function detectExternalEdit($id)
+{
     dbg_deprecated(PageFile::class .'::detectExternalEdit()');
     (new PageFile($id))->detectExternalEdit();
 }
@@ -1271,7 +1307,8 @@ function detectExternalEdit($id) {
  * @param string $summary  summary of text update
  * @param bool   $minor    mark this saved version as minor update
  */
-function saveWikiText($id, $text, $summary, $minor = false) {
+function saveWikiText($id, $text, $summary, $minor = false)
+{
 
     // get COMMON_WIKIPAGE_SAVE event data
     $data = (new PageFile($id))->saveWikiText($text, $summary, $minor);
@@ -1301,7 +1338,8 @@ function saveWikiText($id, $text, $summary, $minor = false) {
  * @return int|string revision timestamp
  * @deprecated 2021-11-28
  */
-function saveOldRevision($id) {
+function saveOldRevision($id)
+{
     dbg_deprecated(PageFile::class .'::saveOldRevision()');
     return (new PageFile($id))->saveOldRevision();
 }
@@ -1320,7 +1358,8 @@ function saveOldRevision($id) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = [], $current_rev = false) {
+function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = [], $current_rev = false)
+{
     global $conf;
     /* @var Input $INPUT */
     global $INPUT;
@@ -1358,7 +1397,8 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
  *
  * @return array|string
  */
-function getGoogleQuery() {
+function getGoogleQuery()
+{
     /* @var Input $INPUT */
     global $INPUT;
 
@@ -1403,7 +1443,8 @@ function getGoogleQuery() {
  * @author      Aidan Lister <aidan@php.net>
  * @version     1.0.0
  */
-function filesize_h($size, $dec = 1) {
+function filesize_h($size, $dec = 1)
+{
     $sizes = ['B', 'KB', 'MB', 'GB'];
     $count = count($sizes);
     $i     = 0;
@@ -1424,7 +1465,8 @@ function filesize_h($size, $dec = 1) {
  * @param int $dt timestamp
  * @return string
  */
-function datetime_h($dt) {
+function datetime_h($dt)
+{
     global $lang;
 
     $ago = time() - $dt;
@@ -1462,7 +1504,8 @@ function datetime_h($dt) {
  * @param string   $format  empty default to $conf['dformat'], or provide format as recognized by strftime()
  * @return string
  */
-function dformat($dt = null, $format = '') {
+function dformat($dt = null, $format = '')
+{
     global $conf;
 
     if(is_null($dt)) $dt = time();
@@ -1482,7 +1525,8 @@ function dformat($dt = null, $format = '') {
  * @param int $int_date current date in UNIX timestamp
  * @return string
  */
-function date_iso8601($int_date) {
+function date_iso8601($int_date)
+{
     $date_mod     = date('Y-m-d\TH:i:s', $int_date);
     $pre_timezone = date('O', $int_date);
     $time_zone    = substr($pre_timezone, 0, 3).":".substr($pre_timezone, 3, 2);
@@ -1499,7 +1543,8 @@ function date_iso8601($int_date) {
  * @param string $email email address
  * @return string
  */
-function obfuscate($email) {
+function obfuscate($email)
+{
     global $conf;
 
     switch($conf['mailguard']) {
@@ -1525,7 +1570,8 @@ function obfuscate($email) {
  * @param string $char backslashed character
  * @return string
  */
-function unslash($string, $char = "'") {
+function unslash($string, $char = "'")
+{
     return str_replace('\\'.$char, $char, $string);
 }
 
@@ -1540,7 +1586,8 @@ function unslash($string, $char = "'") {
  * @param string $value PHP size shorthand
  * @return int
  */
-function php_to_byte($value) {
+function php_to_byte($value)
+{
     switch (strtoupper(substr($value, -1))) {
         case 'G':
             $ret = (int) substr($value, 0, -1) * 1024 * 1024 * 1024;
@@ -1564,7 +1611,8 @@ function php_to_byte($value) {
  * @param string $string
  * @return string
  */
-function preg_quote_cb($string) {
+function preg_quote_cb($string)
+{
     return preg_quote($string, '/');
 }
 
@@ -1583,7 +1631,8 @@ function preg_quote_cb($string) {
  * @param string $char   the shortening character to use
  * @return string
  */
-function shorten($keep, $short, $max, $min = 9, $char = '…') {
+function shorten($keep, $short, $max, $min = 9, $char = '…')
+{
     $max -= PhpString::strlen($keep);
     if($max < $min) return $keep;
     $len = PhpString::strlen($short);
@@ -1605,7 +1654,8 @@ function shorten($keep, $short, $max, $min = 9, $char = '…') {
  *
  * @author Andy Webber <dokuwiki AT andywebber DOT com>
  */
-function editorinfo($username, $textonly = false) {
+function editorinfo($username, $textonly = false)
+{
     return userlink($username, $textonly);
 }
 
@@ -1618,7 +1668,8 @@ function editorinfo($username, $textonly = false) {
  *
  * @triggers COMMON_USER_LINK
  */
-function userlink($username = null, $textonly = false) {
+function userlink($username = null, $textonly = false)
+{
     global $conf, $INFO;
     /** @var AuthPlugin $auth */
     global $auth;
@@ -1739,7 +1790,8 @@ function userlink($username = null, $textonly = false) {
  * @param  string $type - type of image 'badge' or 'button'
  * @return string
  */
-function license_img($type) {
+function license_img($type)
+{
     global $license;
     global $conf;
     if(!$conf['license']) return '';
@@ -1769,7 +1821,8 @@ function license_img($type) {
  * @param int  $bytes  already allocated memory (see above)
  * @return bool
  */
-function is_mem_available($mem, $bytes = 1_048_576) {
+function is_mem_available($mem, $bytes = 1_048_576)
+{
     $limit = trim(ini_get('memory_limit'));
     if(empty($limit)) return true; // no limit set!
     if($limit == -1) return true; // unlimited
@@ -1801,7 +1854,8 @@ function is_mem_available($mem, $bytes = 1_048_576) {
  *
  * @param string $url url being directed to
  */
-function send_redirect($url) {
+function send_redirect($url)
+{
     $url = stripctl($url); // defend against HTTP Response Splitting
 
     /* @var Input $INPUT */
@@ -1860,7 +1914,8 @@ function send_redirect($url) {
  * @return mixed
  * @author Adrian Lang <lang@cosmocode.de>
  */
-function valid_input_set($param, $valid_values, $array, $exc = '') {
+function valid_input_set($param, $valid_values, $array, $exc = '')
+{
     if(isset($array[$param]) && in_array($array[$param], $valid_values)) {
         return $array[$param];
     } elseif(isset($valid_values['default'])) {
@@ -1878,7 +1933,8 @@ function valid_input_set($param, $valid_values, $array, $exc = '') {
  * @param mixed  $default  value returned when preference not found
  * @return string preference value
  */
-function get_doku_pref($pref, $default) {
+function get_doku_pref($pref, $default)
+{
     $enc_pref = urlencode($pref);
     if(isset($_COOKIE['DOKU_PREFS']) && strpos($_COOKIE['DOKU_PREFS'], $enc_pref) !== false) {
         $parts = explode('#', $_COOKIE['DOKU_PREFS']);
@@ -1903,7 +1959,8 @@ function get_doku_pref($pref, $default) {
  * @param string $pref  preference key
  * @param string $val   preference value
  */
-function set_doku_pref($pref, $val) {
+function set_doku_pref($pref, $val)
+{
     global $conf;
     $orig = get_doku_pref($pref, false);
     $cookieVal = '';
@@ -1955,7 +2012,8 @@ function set_doku_pref($pref, $val) {
  *
  * @param string &$text reference to the CSS or JavaScript code to clean
  */
-function stripsourcemaps(&$text){
+function stripsourcemaps(&$text)
+{
     $text = preg_replace('/^(\/\/|\/\*)[@#]\s+sourceMappingURL=.*?(\*\/)?$/im', '\\1\\2', $text);
 }
 
@@ -1972,7 +2030,8 @@ function stripsourcemaps(&$text){
  * @param int $maxsize maximum allowed size for the SVG to be embedded
  * @return string|false the SVG content, false if the file couldn't be loaded
  */
-function inlineSVG($file, $maxsize = 2048) {
+function inlineSVG($file, $maxsize = 2048)
+{
     $file = trim($file);
     if($file === '') return false;
     if(!file_exists($file)) return false;

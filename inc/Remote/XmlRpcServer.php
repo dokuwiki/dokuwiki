@@ -17,7 +17,7 @@ class XmlRpcServer extends Server
     /**
      * Constructor. Register methods and run Server
      */
-    public function __construct($wait=false)
+    public function __construct($wait = false)
     {
         $this->remote = new Api();
         $this->remote->setDateTransformation([$this, 'toDate']);

@@ -20,7 +20,8 @@ jquery_out();
  *
  * uses cache or fills it
  */
-function jquery_out() {
+function jquery_out()
+{
     $cache = new Cache('jquery', '.js');
     $files = [
         DOKU_INC . 'lib/scripts/jquery/jquery.min.js',

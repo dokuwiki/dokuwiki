@@ -19,7 +19,8 @@ class Search extends AbstractAction
     protected $highlight = [];
 
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_NONE;
     }
 
@@ -28,7 +29,8 @@ class Search extends AbstractAction
      *
      * @inheritdoc
      */
-    public function checkPreconditions() {
+    public function checkPreconditions()
+    {
         parent::checkPreconditions();
     }
 

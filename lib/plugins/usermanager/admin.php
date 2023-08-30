@@ -1131,7 +1131,7 @@ class admin_plugin_usermanager extends AdminPlugin
      * @param string $error
      * @return array|false cleaned data or false
      */
-    protected function cleanImportUser($candidate, & $error)
+    protected function cleanImportUser($candidate, &$error)
     {
         global $INPUT;
 

@@ -17,7 +17,8 @@ class Sitemap extends AbstractAction
 {
 
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_NONE;
     }
 
@@ -28,7 +29,8 @@ class Sitemap extends AbstractAction
      * @throws FatalException
      * @inheritdoc
      */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $conf;
 
         if($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) {

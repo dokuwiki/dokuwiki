@@ -32,7 +32,8 @@ class Parser
      *
      * @param Doku_Handler $handler
      */
-    public function __construct(Doku_Handler $handler) {
+    public function __construct(Doku_Handler $handler)
+    {
         $this->handler = $handler;
     }
 
@@ -41,7 +42,8 @@ class Parser
      *
      * @param Base $BaseMode
      */
-    protected function addBaseMode($BaseMode) {
+    protected function addBaseMode($BaseMode)
+    {
         $this->modes['base'] = $BaseMode;
         if(!$this->lexer) {
             $this->lexer = new Lexer($this->handler, 'base', true);
@@ -58,7 +60,8 @@ class Parser
      * @param string $name
      * @param ModeInterface $Mode
      */
-    public function addMode($name, ModeInterface $Mode) {
+    public function addMode($name, ModeInterface $Mode)
+    {
         if(!isset($this->modes['base'])) {
             $this->addBaseMode(new Base());
         }
@@ -71,7 +74,8 @@ class Parser
      *
      * This is the last step before actually parsing.
      */
-    protected function connectModes() {
+    protected function connectModes()
+    {
 
         if($this->connected) {
             return;
@@ -104,7 +108,8 @@ class Parser
      * @param string $doc the wiki syntax text
      * @return array instructions
      */
-    public function parse($doc) {
+    public function parse($doc)
+    {
         $this->connectModes();
         // Normalize CRs and pad doc
         $doc = "\n" . str_replace("\r\n", "\n", $doc) . "\n";

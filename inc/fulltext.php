@@ -32,7 +32,8 @@ if(!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER', 15);
  *
  * @return array
  */
-function ft_pageSearch($query,&$highlight, $sort = null, $after = null, $before = null){
+function ft_pageSearch($query, &$highlight, $sort = null, $after = null, $before = null)
+{
 
     if ($sort === null) {
         $sort = 'hits';
@@ -57,7 +58,8 @@ function ft_pageSearch($query,&$highlight, $sort = null, $after = null, $before 
  * @param array $data event data
  * @return array matching documents
  */
-function _ft_pageSearch(&$data) {
+function _ft_pageSearch(&$data)
+{
     $Indexer = idx_get_indexer();
 
     // parse the given query
@@ -173,7 +175,8 @@ function _ft_pageSearch(&$data) {
  * @param bool   $ignore_perms Ignore the fact that pages are hidden or read-protected
  * @return array The pages that contain links to the given page
  */
-function ft_backlinks($id, $ignore_perms = false){
+function ft_backlinks($id, $ignore_perms = false)
+{
     $result = idx_get_indexer()->lookupKey('relation_references', $id);
 
     if($result === []) return $result;
@@ -204,7 +207,8 @@ function ft_backlinks($id, $ignore_perms = false){
  * @param bool   $ignore_perms Ignore hidden pages and acls (optional, default: false)
  * @return array A list of pages that use the given media file
  */
-function ft_mediause($id, $ignore_perms = false){
+function ft_mediause($id, $ignore_perms = false)
+{
     $result = idx_get_indexer()->lookupKey('relation_media', $id);
 
     if($result === []) return $result;
@@ -244,7 +248,8 @@ function ft_mediause($id, $ignore_perms = false){
  *
  * @return string[]
  */
-function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $before = null){
+function ft_pageLookup($id, $in_ns = false, $in_title = false, $after = null, $before = null)
+{
     $data = [
         'id' => $id,
         'in_ns' => $in_ns,
@@ -262,7 +267,8 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false, $after = null, $befor
  * @param array &$data event data
  * @return string[]
  */
-function _ft_pageLookup(&$data){
+function _ft_pageLookup(&$data)
+{
     // split out original parameters
     $id = $data['id'];
     $Indexer = idx_get_indexer();
@@ -338,7 +344,8 @@ function _ft_pageLookup(&$data){
  *
  * @return array
  */
-function _ft_filterResultsByTime(array $results, $after, $before) {
+function _ft_filterResultsByTime(array $results, $after, $before)
+{
     if ($after || $before) {
         $after = is_int($after) ? $after : strtotime($after);
         $before = is_int($before) ? $before : strtotime($before);
@@ -367,7 +374,8 @@ function _ft_filterResultsByTime(array $results, $after, $before) {
  * @param string $title  title from index
  * @return bool
  */
-function _ft_pageLookupTitleCompare($search, $title) {
+function _ft_pageLookupTitleCompare($search, $title)
+{
     if (Clean::isASCII($search)) {
         $pos = stripos($title, $search);
     } else {
@@ -389,7 +397,8 @@ function _ft_pageLookupTitleCompare($search, $title) {
  * @param string $b
  * @return int Returns < 0 if $a is less than $b; > 0 if $a is greater than $b, and 0 if they are equal.
  */
-function ft_pagesorter($a, $b){
+function ft_pagesorter($a, $b)
+{
     $ac = count(explode(':', $a));
     $bc = count(explode(':', $b));
     if($ac < $bc){
@@ -408,7 +417,8 @@ function ft_pagesorter($a, $b){
  *
  * @return int Returns < 0 if $a is newer than $b, > 0 if $b is newer than $a and 0 if they are of the same age
  */
-function ft_pagemtimesorter($a, $b) {
+function ft_pagemtimesorter($a, $b)
+{
     $mtimeA = filemtime(wikiFN($a));
     $mtimeB = filemtime(wikiFN($b));
     return $mtimeB - $mtimeA;
@@ -424,7 +434,8 @@ function ft_pagemtimesorter($a, $b) {
  * @param array $highlight
  * @return mixed
  */
-function ft_snippet($id,$highlight){
+function ft_snippet($id, $highlight)
+{
     $text = rawWiki($id);
     $text = str_replace("\xC2\xAD", '', $text);
      // remove soft-hyphens
@@ -543,7 +554,8 @@ function ft_snippet($id,$highlight){
  * @param string $term
  * @return string
  */
-function ft_snippet_re_preprocess($term) {
+function ft_snippet_re_preprocess($term)
+{
     // do not process asian terms where word boundaries are not explicit
     if(Asian::isAsianWords($term)) return $term;
 
@@ -585,7 +597,8 @@ function ft_snippet_re_preprocess($term) {
  * @param array $args An array of page arrays
  * @return array
  */
-function ft_resultCombine($args){
+function ft_resultCombine($args)
+{
     $array_count = count($args);
     if($array_count == 1){
         return $args[0];
@@ -617,7 +630,8 @@ function ft_resultCombine($args){
  *
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  */
-function ft_resultUnite($args) {
+function ft_resultUnite($args)
+{
     $array_count = count($args);
     if ($array_count === 1) {
         return $args[0];
@@ -642,7 +656,8 @@ function ft_resultUnite($args) {
  *
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  */
-function ft_resultComplement($args) {
+function ft_resultComplement($args)
+{
     $array_count = count($args);
     if ($array_count === 1) {
         return $args[0];
@@ -667,7 +682,8 @@ function ft_resultComplement($args) {
  * @param string                  $query search query
  * @return array of search formulas
  */
-function ft_queryParser($Indexer, $query){
+function ft_queryParser($Indexer, $query)
+{
     /**
      * parse a search query and transform it into intermediate representation
      *
@@ -904,7 +920,8 @@ function ft_queryParser($Indexer, $query){
  * @param bool                    $phrase_mode
  * @return string
  */
-function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = false) {
+function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = false)
+{
     $parsed = '';
     if ($consider_asian) {
         // successive asian characters need to be searched as a phrase
@@ -943,7 +960,8 @@ function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = f
  *
  * @return string
  */
-function ft_queryUnparser_simple(array $and, array $not, array $phrases, array $ns, array $notns) {
+function ft_queryUnparser_simple(array $and, array $not, array $phrases, array $ns, array $notns)
+{
     $query = implode(' ', $and);
     if ($not !== []) {
         $query .= ' -' . implode(' -', $not);

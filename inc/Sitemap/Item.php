@@ -24,7 +24,8 @@ class Item
      * @param $priority float|string The priority of the item relative to other URLs on your site.
      *                           Valid values range from 0.0 to 1.0.
      */
-    public function __construct($url, $lastmod, $changefreq = null, $priority = null) {
+    public function __construct($url, $lastmod, $changefreq = null, $priority = null)
+    {
         $this->url = $url;
         $this->lastmod = $lastmod;
         $this->changefreq = $changefreq;
@@ -41,7 +42,8 @@ class Item
      *                                 Valid values range from 0.0 to 1.0.
      * @return Item The sitemap item.
      */
-    public static function createFromID($id, $changefreq = null, $priority = null) {
+    public static function createFromID($id, $changefreq = null, $priority = null)
+    {
         $id = trim($id);
         $date = @filemtime(wikiFN($id));
         if(!$date) return null;
@@ -53,7 +55,8 @@ class Item
      *
      * @return string The XML representation.
      */
-    public function toXML() {
+    public function toXML()
+    {
         $result = '  <url>'.NL
             .'    <loc>'.hsc($this->url).'</loc>'.NL
             .'    <lastmod>'.date_iso8601($this->lastmod).'</lastmod>'.NL;

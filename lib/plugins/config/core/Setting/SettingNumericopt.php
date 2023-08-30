@@ -14,7 +14,8 @@ class SettingNumericopt extends SettingNumeric
      * @inheritdoc
      * Empty string is valid for numericopt
      */
-    public function update($input) {
+    public function update($input)
+    {
         if($input === '') {
             if($input == $this->local) return false;
             $this->local = $input;

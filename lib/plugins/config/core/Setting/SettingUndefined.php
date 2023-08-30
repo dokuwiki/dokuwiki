@@ -14,12 +14,14 @@ class SettingUndefined extends SettingHidden
     protected $errorMessage = '_msg_setting_undefined';
 
     /** @inheritdoc */
-    public function shouldHaveDefault() {
+    public function shouldHaveDefault()
+    {
         return false;
     }
 
     /** @inheritdoc */
-    public function html(\admin_plugin_config $plugin, $echo = false) {
+    public function html(\admin_plugin_config $plugin, $echo = false)
+    {
         // determine the name the meta key would be called
         if(preg_match(
             '/^(?:plugin|tpl)' . Configuration::KEYMARKER . '.*?' . Configuration::KEYMARKER . '(.*)$/',

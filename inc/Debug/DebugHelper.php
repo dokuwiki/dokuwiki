@@ -119,8 +119,7 @@ class DebugHelper
         $file,
         $line,
         $callerOffset = 1
-    )
-    {
+    ) {
         if (!self::isEnabled()) return;
 
         $backtrace = array_slice(debug_backtrace(), $callerOffset);
@@ -151,8 +150,7 @@ class DebugHelper
         $caller,
         $file,
         $line
-    )
-    {
+    ) {
         $data = [
             'trace' => $backtrace,
             'alternative' => $alternative,

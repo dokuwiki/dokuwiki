@@ -78,7 +78,8 @@ abstract class AdminPlugin extends Plugin
      *
      * @return bool true if the current user may access this admin plugin
      */
-    public function isAccessibleByCurrentUser() {
+    public function isAccessibleByCurrentUser()
+    {
         $data = [];
         $data['instance'] = $this;
         $data['hasAccess'] = false;

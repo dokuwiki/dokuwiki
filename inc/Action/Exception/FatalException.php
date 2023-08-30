@@ -21,7 +21,8 @@ class FatalException extends \Exception
      * @param int $status the HTTP status to send
      * @param null|\Exception $previous previous exception
      */
-    public function __construct($message = 'A fatal error occured', $status = 500, $previous = null) {
+    public function __construct($message = 'A fatal error occured', $status = 500, $previous = null)
+    {
         parent::__construct($message, $status, $previous);
     }
 }

@@ -18,14 +18,16 @@ abstract class AbstractAliasAction extends AbstractAction
 {
 
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_NONE;
     }
 
     /**
      * @throws FatalException
      */
-    public function preProcess() {
+    public function preProcess()
+    {
         throw new FatalException('Alias Actions need to implement preProcess to load the aliased action');
     }
 }

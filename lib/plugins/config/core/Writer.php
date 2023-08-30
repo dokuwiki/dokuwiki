@@ -18,7 +18,8 @@ class Writer
     /**
      * Writer constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         global $config_cascade;
         $this->savefile = end($config_cascade['main']['local']);
     }
@@ -29,7 +30,8 @@ class Writer
      * @param Setting[] $settings
      * @throws \Exception
      */
-    public function save($settings) {
+    public function save($settings)
+    {
         global $conf;
         if($this->isLocked()) throw new \Exception('no save');
 
@@ -69,7 +71,8 @@ class Writer
      *
      * @throws \Exception when the config isn't writable
      */
-    public function touch() {
+    public function touch()
+    {
         if($this->isLocked()) throw new \Exception('no save');
         @touch($this->savefile);
         $this->opcacheUpdate($this->savefile);
@@ -81,7 +84,8 @@ class Writer
      * @todo this should probably be moved to core
      * @param string $file
      */
-    protected function opcacheUpdate($file) {
+    protected function opcacheUpdate($file)
+    {
         if(!function_exists('opcache_invalidate')) return;
         set_error_handler(function ($errNo, $errMsg) {
             Logger::debug('Unable to invalidate opcache: ' . $errMsg); }
@@ -96,7 +100,8 @@ class Writer
      *
      * @return bool true: locked, false: writable
      */
-    public function isLocked() {
+    public function isLocked()
+    {
         if(!$this->savefile) return true;
         if(!is_writable(dirname($this->savefile))) return true;
         if(file_exists($this->savefile) && !is_writable($this->savefile)) return true;
@@ -108,7 +113,8 @@ class Writer
      *
      * @return string
      */
-    protected function getHeader() {
+    protected function getHeader()
+    {
         return implode(
             "\n",
             [

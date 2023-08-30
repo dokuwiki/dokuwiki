@@ -28,7 +28,8 @@ use dokuwiki\File\PageResolver;
  * @param string $file
  * @return string
  */
-function template($file) {
+function template($file)
+{
     global $conf;
 
     if(@is_readable(DOKU_INC.'lib/tpl/'.$conf['template'].'/'.$file))
@@ -46,7 +47,8 @@ function template($file) {
  * @param string $tpl The template to use, default to current one
  * @return string
  */
-function tpl_incdir($tpl='') {
+function tpl_incdir($tpl = '')
+{
     global $conf;
     if(!$tpl) $tpl = $conf['template'];
     return DOKU_INC.'lib/tpl/'.$tpl.'/';
@@ -61,7 +63,8 @@ function tpl_incdir($tpl='') {
  * @param string $tpl The template to use, default to current one
  * @return string
  */
-function tpl_basedir($tpl='') {
+function tpl_basedir($tpl = '')
+{
     global $conf;
     if(!$tpl) $tpl = $conf['template'];
     return DOKU_BASE.'lib/tpl/'.$tpl.'/';
@@ -84,7 +87,8 @@ function tpl_basedir($tpl='') {
  * @param bool $prependTOC should the TOC be displayed here?
  * @return bool true if any output
  */
-function tpl_content($prependTOC = true) {
+function tpl_content($prependTOC = true)
+{
     global $ACT;
     global $INFO;
     $INFO['prependTOC'] = $prependTOC;
@@ -102,7 +106,8 @@ function tpl_content($prependTOC = true) {
  *
  * @return bool
  */
-function tpl_content_core() {
+function tpl_content_core()
+{
     $router = ActionRouter::getInstance();
     try {
         $router->getAction()->tplContent();
@@ -125,7 +130,8 @@ function tpl_content_core() {
  * @param bool $return Should the TOC be returned instead to be printed?
  * @return string
  */
-function tpl_toc($return = false) {
+function tpl_toc($return = false)
+{
     global $TOC;
     global $ACT;
     global $ID;
@@ -173,7 +179,8 @@ function tpl_toc($return = false) {
  *
  * @return bool
  */
-function tpl_admin() {
+function tpl_admin()
+{
     global $INFO;
     global $TOC;
     global $INPUT;
@@ -212,7 +219,8 @@ function tpl_admin() {
  * @param  bool $alt Should feeds and alternative format links be added?
  * @return bool
  */
-function tpl_metaheaders($alt = true) {
+function tpl_metaheaders($alt = true)
+{
     global $ID;
     global $REV;
     global $INFO;
@@ -404,7 +412,8 @@ function tpl_metaheaders($alt = true) {
  *
  * @param array $data
  */
-function _tpl_metaheaders_action($data) {
+function _tpl_metaheaders_action($data)
+{
     foreach($data as $tag => $inst) {
         if($tag == 'script') {
             echo "<!--[if gte IE 9]><!-->\n"; // no scripts for old IE
@@ -443,7 +452,8 @@ function _tpl_metaheaders_action($data) {
  * @param bool $return if true return the link html, otherwise print
  * @return bool|string html of the link, or true if printed
  */
-function tpl_link($url, $name, $more = '', $return = false) {
+function tpl_link($url, $name, $more = '', $return = false)
+{
     $out = '<a href="'.$url.'" ';
     if($more) $out .= ' '.$more;
     $out .= ">$name</a>";
@@ -464,7 +474,8 @@ function tpl_link($url, $name, $more = '', $return = false) {
  * @param bool        $return
  * @return true|string
  */
-function tpl_pagelink($id, $name = null, $return = false) {
+function tpl_pagelink($id, $name = null, $return = false)
+{
     $out = '<bdi>'.html_wikilink($id, $name).'</bdi>';
     if($return) return $out;
     print $out;
@@ -482,7 +493,8 @@ function tpl_pagelink($id, $name = null, $return = false) {
  * @param string $id page id
  * @return false|string
  */
-function tpl_getparent($id) {
+function tpl_getparent($id)
+{
     $resolver = new PageResolver('root');
 
     $parent = getNS($id).':';
@@ -507,7 +519,8 @@ function tpl_getparent($id) {
  * @return bool|string html, or false if no data, true if printed
  * @deprecated 2017-09-01 see devel:menus
  */
-function tpl_button($type, $return = false) {
+function tpl_button($type, $return = false)
+{
     dbg_deprecated('see devel:menus');
     $data = tpl_get_action($type);
     if($data === false) {
@@ -547,7 +560,8 @@ function tpl_button($type, $return = false) {
  * @return bool|string html or false if no data, true if printed
  * @deprecated 2017-09-01 see devel:menus
  */
-function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = false) {
+function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = false)
+{
     dbg_deprecated('see devel:menus');
     global $lang;
     $data = tpl_get_action($type);
@@ -604,7 +618,8 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
  * @return array|bool|string
  * @deprecated 2017-09-01 see devel:menus
  */
-function tpl_get_action($type) {
+function tpl_get_action($type)
+{
     dbg_deprecated('see devel:menus');
     if($type == 'history') $type = 'revisions';
     if($type == 'subscription') $type = 'subscribe';
@@ -662,7 +677,8 @@ function tpl_get_action($type) {
  * @return bool|string
  * @deprecated 2017-09-01 see devel:menus
  */
-function tpl_action($type, $link = false, $wrapper = false, $return = false, $pre = '', $suf = '', $inner = '') {
+function tpl_action($type, $link = false, $wrapper = false, $return = false, $pre = '', $suf = '', $inner = '')
+{
     dbg_deprecated('see devel:menus');
     $out = '';
     if($link) {
@@ -693,7 +709,8 @@ function tpl_action($type, $link = false, $wrapper = false, $return = false, $pr
  * @param bool $autocomplete
  * @return bool
  */
-function tpl_searchform($ajax = true, $autocomplete = true) {
+function tpl_searchform($ajax = true, $autocomplete = true)
+{
     global $lang;
     global $ACT;
     global $QUERY;
@@ -748,7 +765,8 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
  * @param bool   $return return or print
  * @return bool|string
  */
-function tpl_breadcrumbs($sep = null, $return = false) {
+function tpl_breadcrumbs($sep = null, $return = false)
+{
     global $lang;
     global $conf;
 
@@ -796,7 +814,8 @@ function tpl_breadcrumbs($sep = null, $return = false) {
  * @param bool   $return return or print
  * @return bool|string
  */
-function tpl_youarehere($sep = null, $return = false) {
+function tpl_youarehere($sep = null, $return = false)
+{
     global $conf;
     global $ID;
     global $lang;
@@ -860,7 +879,8 @@ function tpl_youarehere($sep = null, $return = false) {
  *
  * @return bool
  */
-function tpl_userinfo() {
+function tpl_userinfo()
+{
     global $lang;
     /** @var Input $INPUT */
     global $INPUT;
@@ -880,7 +900,8 @@ function tpl_userinfo() {
  * @param bool $ret return content instead of printing it
  * @return bool|string
  */
-function tpl_pageinfo($ret = false) {
+function tpl_pageinfo($ret = false)
+{
     global $conf;
     global $lang;
     global $INFO;
@@ -945,7 +966,8 @@ function tpl_pageinfo($ret = false) {
  * @param bool   $ret return content instead of printing
  * @return bool|string
  */
-function tpl_pagetitle($id = null, $ret = false) {
+function tpl_pagetitle($id = null, $ret = false)
+{
     global $ACT, $INPUT, $conf, $lang;
 
     if(is_null($id)) {
@@ -1033,7 +1055,8 @@ function tpl_pagetitle($id = null, $ret = false) {
  * @param null|string  $src  the image src, uses global $SRC if not given
  * @return string
  */
-function tpl_img_getTag($tags, $alt = '', $src = null) {
+function tpl_img_getTag($tags, $alt = '', $src = null)
+{
     // Init Exif Reader
     global $SRC, $imgMeta;
 
@@ -1051,7 +1074,8 @@ function tpl_img_getTag($tags, $alt = '', $src = null) {
 /**
  * Garbage collects up the open JpegMeta object.
  */
-function tpl_img_close(){
+function tpl_img_close()
+{
     global $imgMeta;
     $imgMeta = null;
 }
@@ -1061,7 +1085,8 @@ function tpl_img_close(){
  *
  * @return string html of description list
  */
-function tpl_img_meta() {
+function tpl_img_meta()
+{
     global $lang;
 
     $tags = tpl_get_img_meta();
@@ -1090,7 +1115,8 @@ function tpl_img_meta() {
  *   - string type     type of value
  *   - string value    tag value (unescaped)
  */
-function tpl_get_img_meta() {
+function tpl_get_img_meta()
+{
 
     $config_files = getConfigFiles('mediameta');
     foreach ($config_files as $config_file) {
@@ -1127,7 +1153,8 @@ function tpl_get_img_meta() {
  * @param $params array  - additional image attributes
  * @return bool Result of TPL_IMG_DISPLAY
  */
-function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
+function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null)
+{
     global $IMG;
     /** @var Input $INPUT */
     global $INPUT;
@@ -1185,7 +1212,8 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
  * @param array $data
  * @return bool
  */
-function _tpl_img_action($data) {
+function _tpl_img_action($data)
+{
     global $lang;
     $p = buildAttributes($data['params']);
 
@@ -1203,7 +1231,8 @@ function _tpl_img_action($data) {
  *
  * @return bool
  */
-function tpl_indexerWebBug() {
+function tpl_indexerWebBug()
+{
     global $ID;
 
     $p           = [];
@@ -1226,7 +1255,8 @@ function tpl_indexerWebBug() {
  * @param mixed  $notset  what to return if the setting is not available
  * @return mixed
  */
-function tpl_getConf($id, $notset=false) {
+function tpl_getConf($id, $notset = false)
+{
     global $conf;
     static $tpl_configloaded = false;
 
@@ -1254,7 +1284,8 @@ function tpl_getConf($id, $notset=false) {
  *
  * @return array
  */
-function tpl_loadConfig() {
+function tpl_loadConfig()
+{
 
     $file = tpl_incdir().'/conf/default.php';
     $conf = [];
@@ -1276,7 +1307,8 @@ function tpl_loadConfig() {
  * @param string $id key of language string
  * @return string
  */
-function tpl_getLang($id) {
+function tpl_getLang($id)
+{
     static $lang = [];
 
     if(count($lang) === 0) {
@@ -1313,7 +1345,8 @@ function tpl_getLang($id) {
  * @param   string $id id of language dependent wiki page
  * @return  string     parsed contents of the wiki page in xhtml format
  */
-function tpl_locale_xhtml($id) {
+function tpl_locale_xhtml($id)
+{
     return p_cached_output(tpl_localeFN($id));
 }
 
@@ -1323,7 +1356,8 @@ function tpl_locale_xhtml($id) {
  * @param string $id id of localized text
  * @return string wiki text
  */
-function tpl_localeFN($id) {
+function tpl_localeFN($id)
+{
     $path = tpl_incdir().'lang/';
     global $conf;
     $file = DOKU_CONF.'template_lang/'.$conf['template'].'/'.$conf['lang'].'/'.$id.'.txt';
@@ -1352,7 +1386,8 @@ function tpl_localeFN($id) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_mediaContent($fromajax = false, $sort='natural') {
+function tpl_mediaContent($fromajax = false, $sort = 'natural')
+{
     global $IMG;
     global $AUTH;
     global $INUSE;
@@ -1403,7 +1438,8 @@ function tpl_mediaContent($fromajax = false, $sort='natural') {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function tpl_mediaFileList() {
+function tpl_mediaFileList()
+{
     global $AUTH;
     global $NS;
     global $JUMPTO;
@@ -1451,7 +1487,8 @@ function tpl_mediaFileList() {
  * @param string $image
  * @param boolean $rev
  */
-function tpl_mediaFileDetails($image, $rev) {
+function tpl_mediaFileDetails($image, $rev)
+{
     global $conf, $DEL, $lang;
     /** @var Input $INPUT */
     global $INPUT;
@@ -1521,7 +1558,8 @@ function tpl_mediaFileDetails($image, $rev) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_mediaTree() {
+function tpl_mediaTree()
+{
     global $NS;
     ptln('<div id="media__tree">');
     media_nstree($NS);
@@ -1539,7 +1577,8 @@ function tpl_mediaTree() {
  * @param string $button submit button label
  * @deprecated 2017-09-01 see devel:menus
  */
-function tpl_actiondropdown($empty = '', $button = '&gt;') {
+function tpl_actiondropdown($empty = '', $button = '&gt;')
+{
     dbg_deprecated('see devel:menus');
     $menu = new MobileMenu();
     echo $menu->getDropdown($empty, $button);
@@ -1555,7 +1594,8 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
  * @param  bool   $wrap    wrap in div with class="license"?
  * @return string
  */
-function tpl_license($img = 'badge', $imgonly = false, $return = false, $wrap = true) {
+function tpl_license($img = 'badge', $imgonly = false, $return = false, $wrap = true)
+{
     global $license;
     global $conf;
     global $lang;
@@ -1598,7 +1638,8 @@ function tpl_license($img = 'badge', $imgonly = false, $return = false, $wrap = 
  * @param bool $useacl Include the page only if the ACLs check out?
  * @return bool|null|string
  */
-function tpl_include_page($pageid, $print = true, $propagate = false, $useacl = true) {
+function tpl_include_page($pageid, $print = true, $propagate = false, $useacl = true)
+{
     if($propagate) {
         $pageid = page_findnearest($pageid, $useacl);
     } elseif($useacl && auth_quickaclcheck($pageid) == AUTH_NONE) {
@@ -1621,7 +1662,8 @@ function tpl_include_page($pageid, $print = true, $propagate = false, $useacl = 
  * @author Adrian Lang <lang@cosmocode.de>
  * @deprecated 2020-07-23
  */
-function tpl_subscribe() {
+function tpl_subscribe()
+{
     dbg_deprecated(Subscribe::class .'::show()');
     (new Subscribe)->show();
 }
@@ -1633,7 +1675,8 @@ function tpl_subscribe() {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_flush() {
+function tpl_flush()
+{
     if( ob_get_level() > 0 ) ob_flush();
     flush();
 }
@@ -1653,7 +1696,8 @@ function tpl_flush() {
  *
  * @author Andreas  Gohr <andi@splitbrain.org>
  */
-function tpl_getMediaFile($search, $abs = false, &$imginfo = null, $fallback = true) {
+function tpl_getMediaFile($search, $abs = false, &$imginfo = null, $fallback = true)
+{
     $img     = '';
     $file    = '';
     $ismedia = false;
@@ -1715,7 +1759,8 @@ function tpl_getMediaFile($search, $abs = false, &$imginfo = null, $fallback = t
  *
  * @param string $file
  */
-function tpl_includeFile($file) {
+function tpl_includeFile($file)
+{
     global $config_cascade;
     foreach(['protected', 'local', 'default'] as $config_group) {
         if(empty($config_cascade['main'][$config_group])) continue;
@@ -1743,7 +1788,8 @@ function tpl_includeFile($file) {
  * @param  array $types - list of icon types to display (favicon|mobile|generic)
  * @return string
  */
-function tpl_favicon($types = ['favicon']) {
+function tpl_favicon($types = ['favicon'])
+{
 
     $return = '';
 
@@ -1773,7 +1819,8 @@ function tpl_favicon($types = ['favicon']) {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function tpl_media() {
+function tpl_media()
+{
     global $NS, $IMG, $JUMPTO, $REV, $lang, $fullscreen, $INPUT;
     $fullscreen = true;
     require_once DOKU_INC.'lib/exe/mediamanager.php';
@@ -1818,7 +1865,8 @@ function tpl_media() {
  *
  * @return string
  */
-function tpl_classes() {
+function tpl_classes()
+{
     global $ACT, $conf, $ID, $INFO;
     /** @var Input $INPUT */
     global $INPUT;
@@ -1843,7 +1891,8 @@ function tpl_classes() {
  * @param string $view e.g. 'main', 'detail', ...
  * @deprecated 2017-09-01 see devel:menus
  */
-function tpl_toolsevent($toolsname, $items, $view = 'main') {
+function tpl_toolsevent($toolsname, $items, $view = 'main')
+{
     dbg_deprecated('see devel:menus');
     $data = ['view' => $view, 'items' => $items];
 

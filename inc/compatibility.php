@@ -13,7 +13,8 @@ if(!function_exists('ctype_space')) {
      * @param string $text
      * @return bool
      */
-    function ctype_space($text) {
+    function ctype_space($text)
+    {
         if(!is_string($text)) return false; #FIXME original treats between -128 and 255 inclusive as ASCII chars
         if(trim($text) === '') return true;
         return false;
@@ -28,7 +29,8 @@ if(!function_exists('ctype_digit')) {
      * @param string $text
      * @return bool
      */
-    function ctype_digit($text) {
+    function ctype_digit($text)
+    {
         if(!is_string($text)) return false; #FIXME original treats between -128 and 255 inclusive as ASCII chars
         if(preg_match('/^\d+$/', $text)) return true;
         return false;
@@ -46,7 +48,8 @@ if(!function_exists('gzopen') && function_exists('gzopen64')) {
      * @param int    $use_include_path
      * @return mixed
      */
-    function gzopen($filename, $mode, $use_include_path = 0) {
+    function gzopen($filename, $mode, $use_include_path = 0)
+    {
         return gzopen64($filename, $mode, $use_include_path);
     }
 }
@@ -62,7 +65,8 @@ if(!function_exists('gzseek') && function_exists('gzseek64')) {
      * @param int      $whence
      * @return int
      */
-    function gzseek($zp, $offset, $whence = SEEK_SET) {
+    function gzseek($zp, $offset, $whence = SEEK_SET)
+    {
         return gzseek64($zp, $offset, $whence);
     }
 }
@@ -76,7 +80,8 @@ if(!function_exists('gztell') && function_exists('gztell64')) {
      * @param resource $zp
      * @return int
      */
-    function gztell($zp) {
+    function gztell($zp)
+    {
         return gztell64($zp);
     }
 }

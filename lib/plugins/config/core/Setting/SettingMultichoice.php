@@ -11,7 +11,8 @@ class SettingMultichoice extends SettingString
     public $lang; //some custom language strings are stored in setting
 
     /** @inheritdoc */
-    public function html(\admin_plugin_config $plugin, $echo = false) {
+    public function html(\admin_plugin_config $plugin, $echo = false)
+    {
         $disable = '';
         $nochoice = '';
 
@@ -57,7 +58,8 @@ class SettingMultichoice extends SettingString
     }
 
     /** @inheritdoc */
-    public function update($input) {
+    public function update($input)
+    {
         if(is_null($input)) return false;
         if($this->isProtected()) return false;
 
