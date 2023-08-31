@@ -19,7 +19,7 @@ use dokuwiki\Extension\Event;
  * $data[0]    ns: The colon separated namespace path minus the trailing page name.
  * $data[1]    ns_type: 'pages' or 'media' namespace tree.
  *
- * @param string $id      - a pageid, the namespace of that id will be tried to deleted
+ * @param string $id - a pageid, the namespace of that id will be tried to deleted
  * @param string $basedir - the config name of the type to delete (datadir or mediadir usally)
  * @return bool - true if at least one namespace was deleted
  *
@@ -65,12 +65,12 @@ function io_sweepNS($id, $basedir = 'datadir')
  * $data[2]    page_name: The wiki page name.
  * $data[3]    rev: The page revision, false for current wiki pages.
  *
- * @author Ben Coburn <btcoburn@silicodon.net>
- *
- * @param string   $file filename
- * @param string   $id page id
+ * @param string $file filename
+ * @param string $id page id
  * @param bool|int $rev revision timestamp
  * @return string
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
 function io_readWikiPage($file, $id, $rev = false)
 {
@@ -84,10 +84,10 @@ function io_readWikiPage($file, $id, $rev = false)
 /**
  * Callback adapter for io_readFile().
  *
- * @author Ben Coburn <btcoburn@silicodon.net>
- *
  * @param array $data event data
  * @return string
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
 function _io_readWikiPage_action($data)
 {
@@ -106,11 +106,12 @@ function _io_readWikiPage_action($data)
  * If you want to use the returned value in unserialize
  * be sure to set $clean to false!
  *
- * @author  Andreas Gohr <andi@splitbrain.org>
  *
- * @param string $file  filename
- * @param bool   $clean
+ * @param string $file filename
+ * @param bool $clean
  * @return string|bool the file contents or false on error
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function io_readFile($file, $clean = true)
 {
@@ -119,7 +120,9 @@ function io_readFile($file, $clean = true)
         if (substr($file, -3) == '.gz') {
             if (!DOKU_HAS_GZIP) return false;
             $ret = gzfile($file);
-            if (is_array($ret)) $ret = implode('', $ret);
+            if (is_array($ret)) {
+                $ret = implode('', $ret);
+            }
         } elseif (substr($file, -4) == '.bz2') {
             if (!DOKU_HAS_BZIP) return false;
             $ret = bzfile($file);
@@ -134,22 +137,25 @@ function io_readFile($file, $clean = true)
         return $ret;
     }
 }
+
 /**
  * Returns the content of a .bz2 compressed file as string
  *
+ * @param string $file filename
+ * @param bool $array return array of lines
+ * @return string|array|bool content or false on error
+ *
  * @author marcel senf <marcel@rucksackreinigung.de>
  * @author  Andreas Gohr <andi@splitbrain.org>
- *
- * @param string $file filename
- * @param bool   $array return array of lines
- * @return string|array|bool content or false on error
  */
 function bzfile($file, $array = false)
 {
     $bz = bzopen($file, "r");
     if ($bz === false) return false;
 
-    if ($array) $lines = [];
+    if ($array) {
+        $lines = [];
+    }
     $str = '';
     while (!feof($bz)) {
         //8192 seems to be the maximum buffersize?
@@ -169,7 +175,9 @@ function bzfile($file, $array = false)
     }
     bzclose($bz);
     if ($array) {
-        if ($str !== '') $lines[] = $str;
+        if ($str !== '') {
+            $lines[] = $str;
+        }
         return $lines;
     }
     return $str;
@@ -189,13 +197,13 @@ function bzfile($file, $array = false)
  * $data[2]    page_name: The wiki page name.
  * $data[3]    rev: The page revision, false for current wiki pages.
  *
- * @author Ben Coburn <btcoburn@silicodon.net>
- *
- * @param string $file      filename
+ * @param string $file filename
  * @param string $content
- * @param string $id        page id
+ * @param string $id page id
  * @param int|bool $rev timestamp of revision
  * @return bool
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
 function io_writeWikiPage($file, $content, $id, $rev = false)
 {
@@ -211,10 +219,11 @@ function io_writeWikiPage($file, $content, $id, $rev = false)
 
 /**
  * Callback adapter for io_saveFile().
- * @author Ben Coburn <btcoburn@silicodon.net>
  *
  * @param array $data event data
  * @return bool
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
 function _io_writeWikiPage_action($data)
 {
@@ -233,12 +242,12 @@ function _io_writeWikiPage_action($data)
 /**
  * Internal function to save contents to a file.
  *
- * @author  Andreas Gohr <andi@splitbrain.org>
- *
  * @param string $file filename path to file
  * @param string $content
- * @param bool   $append
+ * @param bool $append
  * @return bool true on success, otherwise false
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function _io_saveFile($file, $content, $append)
 {
@@ -270,7 +279,9 @@ function _io_saveFile($file, $content, $append)
         fclose($fh);
     }
 
-    if (!$fileexists && $conf['fperm']) chmod($file, $conf['fperm']);
+    if (!$fileexists && $conf['fperm']) {
+        chmod($file, $conf['fperm']);
+    }
     return true;
 }
 
@@ -283,12 +294,12 @@ function _io_saveFile($file, $content, $append)
  * Uses gzip if extension is .gz
  * and bz2 if extension is .bz2
  *
- * @author  Andreas Gohr <andi@splitbrain.org>
- *
  * @param string $file filename path to file
  * @param string $content
- * @param bool   $append
+ * @param bool $append
  * @return bool true on success, otherwise false
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function io_saveFile($file, $content, $append = false)
 {
@@ -318,16 +329,16 @@ function io_saveFile($file, $content, $append = false)
  * Uses gzip if extension is .gz
  * and bz2 if extension is .bz2
  *
+ * @param string $file filename
+ * @param string $oldline exact linematch to remove
+ * @param string $newline new line to insert
+ * @param bool $regex use regexp?
+ * @param int $maxlines number of occurrences of the line to replace
+ * @return bool true on success
+ *
  * @author Steven Danz <steven-danz@kc.rr.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Patrick Brown <ptbrown@whoopdedo.org>
- *
- * @param string $file     filename
- * @param string $oldline  exact linematch to remove
- * @param string $newline  new line to insert
- * @param bool   $regex    use regexp?
- * @param int    $maxlines number of occurrences of the line to replace
- * @return bool true on success
  */
 function io_replaceInFile($file, $oldline, $newline, $regex = false, $maxlines = 0)
 {
@@ -363,7 +374,9 @@ function io_replaceInFile($file, $oldline, $newline, $regex = false, $maxlines =
             if ($count >= $maxlines) break;
             // $matched will be set to 0|1 depending on whether pattern is matched and line replaced
             $lines[$i] = preg_replace($pattern, $replace, $line, -1, $matched);
-            if ($matched) $count++;
+            if ($matched) {
+                $count++;
+            }
         }
     } elseif ($maxlines == 0) {
         $lines = preg_grep($pattern, $lines, PREG_GREP_INVERT);
@@ -393,12 +406,12 @@ function io_replaceInFile($file, $oldline, $newline, $regex = false, $maxlines =
  *
  * Be sure to include the trailing newline in $badline
  *
- * @author Patrick Brown <ptbrown@whoopdedo.org>
- *
- * @param string $file    filename
+ * @param string $file filename
  * @param string $badline exact linematch to remove
- * @param bool   $regex   use regexp?
+ * @param bool $regex use regexp?
  * @return bool true on success
+ *
+ * @author Patrick Brown <ptbrown@whoopdedo.org>
  */
 function io_deleteFromFile($file, $badline, $regex = false)
 {
@@ -414,9 +427,9 @@ function io_deleteFromFile($file, $badline, $regex = false)
  * It waits maximal 3 seconds for the lock, after this time
  * the lock is assumed to be stale and the function goes on
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
  * @param string $file filename
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function io_lock($file)
 {
@@ -431,7 +444,9 @@ function io_lock($file)
         if ((time() - $timeStart) > 3) break;
         $locked = @mkdir($lockDir);
         if ($locked) {
-            if ($conf['dperm']) chmod($lockDir, $conf['dperm']);
+            if ($conf['dperm']) {
+                chmod($lockDir, $conf['dperm']);
+            }
             break;
         }
         usleep(50);
@@ -441,9 +456,9 @@ function io_lock($file)
 /**
  * Unlocks a file
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
  * @param string $file filename
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function io_unlock($file)
 {
@@ -462,10 +477,10 @@ function io_unlock($file)
  * $data[0]    ns: The colon separated namespace path minus the trailing page name.
  * $data[1]    ns_type: 'pages' or 'media' namespace tree.
  *
- * @author Ben Coburn <btcoburn@silicodon.net>
- *
  * @param string $id page id
  * @param string $ns_type 'pages' or 'media'
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
 function io_createNamespace($id, $ns_type = 'pages')
 {
@@ -502,9 +517,9 @@ function io_createNamespace($id, $ns_type = 'pages')
 /**
  * Create the directory needed for the given file
  *
- * @author  Andreas Gohr <andi@splitbrain.org>
- *
  * @param string $file file name
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function io_makeFileDir($file)
 {
@@ -517,12 +532,12 @@ function io_makeFileDir($file)
 /**
  * Creates a directory hierachy.
  *
+ * @param string $target filename
+ * @return bool|int|string
+ *
  * @link    http://php.net/manual/en/function.mkdir.php
  * @author  <saint@corenova.com>
  * @author  Andreas Gohr <andi@splitbrain.org>
- *
- * @param string $target filename
- * @return bool|int|string
  */
 function io_mkdir_p($target)
 {
@@ -532,7 +547,9 @@ function io_mkdir_p($target)
     //recursion
     if (io_mkdir_p(substr($target, 0, strrpos($target, '/')))) {
         $ret = @mkdir($target); // crawl back up & create dir tree
-        if ($ret && !empty($conf['dperm'])) chmod($target, $conf['dperm']);
+        if ($ret && !empty($conf['dperm'])) {
+            chmod($target, $conf['dperm']);
+        }
         return $ret;
     }
     return 0;
@@ -541,10 +558,11 @@ function io_mkdir_p($target)
 /**
  * Recursively delete a directory
  *
- * @author Andreas Gohr <andi@splitbrain.org>
  * @param string $path
- * @param bool   $removefiles defaults to false which will delete empty directories only
+ * @param bool $removefiles defaults to false which will delete empty directories only
  * @return bool
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function io_rmdir($path, $removefiles = false)
 {
@@ -552,7 +570,7 @@ function io_rmdir($path, $removefiles = false)
     if (!file_exists($path)) return true; // it's already gone or was never there, count as success
 
     if (is_dir($path) && !is_link($path)) {
-        $dirs  = [];
+        $dirs = [];
         $files = [];
         if (!$dh = @opendir($path)) return false;
         while (false !== ($f = readdir($dh))) {
@@ -588,20 +606,21 @@ function io_rmdir($path, $removefiles = false)
  * Creates a unique temporary directory and returns
  * its path.
  *
- * @author Michael Klier <chi@chimeric.de>
- *
  * @return false|string path to new directory or false
+ * @throws Exception
+ *
+ * @author Michael Klier <chi@chimeric.de>
  */
 function io_mktmpdir()
 {
     global $conf;
 
     $base = $conf['tmpdir'];
-    $dir  = md5(uniqid(random_int(0, mt_getrandmax()), true));
+    $dir = md5(uniqid(random_int(0, mt_getrandmax()), true));
     $tmpdir = $base . '/' . $dir;
 
     if (io_mkdir_p($tmpdir)) {
-        return($tmpdir);
+        return $tmpdir;
     } else {
         return false;
     }
@@ -618,16 +637,16 @@ function io_mktmpdir()
  * - $file is the directory where the file should be saved
  * - if successful will return the name used for the saved file, false otherwise
  *
+ * @param string $url url to download
+ * @param string $file path to file or directory where to save
+ * @param bool $useAttachment true: try to use name of download, uses otherwise $defaultName
+ *                            false: uses $file as path to file
+ * @param string $defaultName fallback for if using $useAttachment
+ * @param int $maxSize maximum file size
+ * @return bool|string          if failed false, otherwise true or the name of the file in the given dir
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Chris Smith <chris@jalakai.co.uk>
- *
- * @param string $url           url to download
- * @param string $file          path to file or directory where to save
- * @param bool   $useAttachment true: try to use name of download, uses otherwise $defaultName
- *                              false: uses $file as path to file
- * @param string $defaultName   fallback for if using $useAttachment
- * @param int    $maxSize       maximum file size
- * @return bool|string          if failed false, otherwise true or the name of the file in the given dir
  */
 function io_download($url, $file, $useAttachment = false, $defaultName = '', $maxSize = 2_097_152)
 {
@@ -647,7 +666,7 @@ function io_download($url, $file, $useAttachment = false, $defaultName = '', $ma
             $match = [];
             if (
                 is_string($content_disposition) &&
-                    preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)
+                preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)
             ) {
                 $name = PhpString::basename($match[1]);
             }
@@ -666,7 +685,9 @@ function io_download($url, $file, $useAttachment = false, $defaultName = '', $ma
     if (!$fp) return false;
     fwrite($fp, $data);
     fclose($fp);
-    if (!$fileexists && $conf['fperm']) chmod($file, $conf['fperm']);
+    if (!$fileexists && $conf['fperm']) {
+        chmod($file, $conf['fperm']);
+    }
     if ($useAttachment) return $name;
     return true;
 }
@@ -686,7 +707,9 @@ function io_rename($from, $to)
     global $conf;
     if (!@rename($from, $to)) {
         if (@copy($from, $to)) {
-            if ($conf['fperm']) chmod($to, $conf['fperm']);
+            if ($conf['fperm']) {
+                chmod($to, $conf['fperm']);
+            }
             @unlink($from);
             return true;
         }
@@ -699,12 +722,12 @@ function io_rename($from, $to)
  * Runs an external command with input and output pipes.
  * Returns the exit code from the process.
  *
- * @author Tom N Harris <tnharris@whoopdedo.org>
- *
  * @param string $cmd
- * @param string $input  input pipe
+ * @param string $input input pipe
  * @param string $output output pipe
  * @return int exit code from process
+ *
+ * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function io_exec($cmd, $input, &$output)
 {
@@ -730,12 +753,13 @@ function io_exec($cmd, $input, &$output)
  * memory intensive because not the whole file needs to be loaded
  * at once.
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @param  string $file    The file to search
- * @param  string $pattern PCRE pattern
- * @param  int    $max     How many lines to return (0 for all)
- * @param  bool   $backref When true returns array with backreferences instead of lines
+ * @param string $file The file to search
+ * @param string $pattern PCRE pattern
+ * @param int $max How many lines to return (0 for all)
+ * @param bool $backref When true returns array with backreferences instead of lines
  * @return array matching lines or backref, false on error
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function io_grep($file, $pattern, $max = 0, $backref = false)
 {
@@ -743,7 +767,7 @@ function io_grep($file, $pattern, $max = 0, $backref = false)
     if (!$fh) return false;
     $matches = [];
 
-    $cnt  = 0;
+    $cnt = 0;
     $line = '';
     while (!feof($fh)) {
         $line .= fgets($fh, 4096);  // read full line
@@ -770,10 +794,10 @@ function io_grep($file, $pattern, $max = 0, $backref = false)
  * Get size of contents of a file, for a compressed file the uncompressed size
  * Warning: reading uncompressed size of content of bz-files requires uncompressing
  *
- * @author  Gerrit Uitslag <klapinklapin@gmail.com>
- *
  * @param string $file filename path to file
  * @return int size of file
+ *
+ * @author  Gerrit Uitslag <klapinklapin@gmail.com>
  */
 function io_getSizeFile($file)
 {
