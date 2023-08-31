@@ -315,7 +315,7 @@ function check()
         msg(
             'The search index is corrupted. It might produce wrong results and most
                 probably needs to be rebuilt. See
-                <a href="http://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
+                <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
                 for ways to rebuild the search index.',
             -1
         );
@@ -324,7 +324,7 @@ function check()
     } else {
         msg(
             'The search index is empty. See
-                <a href="http://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
+                <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
                 for help on how to fix the search index. If the default indexer
                 isn\'t used or the wiki is actually empty this is normal.'
         );
@@ -334,7 +334,7 @@ function check()
     $http = new DokuHTTPClient();
     $http->max_redirect = 0;
     $http->timeout = 3;
-    $http->sendRequest('http://www.dokuwiki.org', '', 'HEAD');
+    $http->sendRequest('https://www.dokuwiki.org', '', 'HEAD');
     $now = time();
     if (isset($http->resp_headers['date'])) {
         $time = strtotime($http->resp_headers['date']);
@@ -358,12 +358,12 @@ function check()
  *
  * Triggers INFOUTIL_MSG_SHOW
  *
- * @see    html_msgarea()
  * @param string $message
- * @param int    $lvl   -1 = error, 0 = info, 1 = success, 2 = notify
- * @param string $line  line number
- * @param string $file  file number
- * @param int    $allow who's allowed to see the message, see MSG_* constants
+ * @param int $lvl -1 = error, 0 = info, 1 = success, 2 = notify
+ * @param string $line line number
+ * @param string $file file number
+ * @param int $allow who's allowed to see the message, see MSG_* constants
+ * @see html_msgarea()
  */
 function msg($message, $lvl = 0, $line = '', $file = '', $allow = MSG_PUBLIC)
 {
@@ -405,15 +405,15 @@ function msg($message, $lvl = 0, $line = '', $file = '', $allow = MSG_PUBLIC)
     $evt->advise_after();
     unset($evt);
 }
+
 /**
  * Determine whether the current user is allowed to view the message
  * in the $msg data structure
  *
- * @param  $msg   array    dokuwiki msg structure
- *                         msg   => string, the message
- *                         lvl   => int, level of the message (see msg() function)
- *                         allow => int, flag used to determine who is allowed to see the message
- *                                       see MSG_* constants
+ * @param array $msg dokuwiki msg structure:
+ *              msg   => string, the message;
+ *              lvl   => int, level of the message (see msg() function);
+ *              allow => int, flag used to determine who is allowed to see the message, see MSG_* constants
  * @return bool
  */
 function info_msg_allowed($msg)
@@ -450,10 +450,10 @@ function info_msg_allowed($msg)
  *
  * little function to print the content of a var
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
  * @param string $msg
  * @param bool $hidden
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function dbg($msg, $hidden = false)
 {
@@ -471,10 +471,11 @@ function dbg($msg, $hidden = false)
 /**
  * Print info to debug log file
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @deprecated 2020-08-13
  * @param string $msg
  * @param string $header
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @deprecated 2020-08-13
  */
 function dbglog($msg, $header = '')
 {
@@ -558,9 +559,9 @@ function dbg_backtrace()
  * This is used to remove passwords, mail addresses and similar data from the
  * debug output
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
  * @param array $data
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function debug_guard(&$data)
 {
