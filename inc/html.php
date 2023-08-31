@@ -115,8 +115,10 @@ function html_secedit($text, $show = true)
 function html_secedit_button($matches)
 {
     $json = htmlspecialchars_decode($matches[1], ENT_QUOTES);
-    $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-    if ($data === null) {
+
+    try {
+        $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+    } catch (JsonException $e) {
         return '';
     }
     $data['target'] = strtolower($data['target']);
