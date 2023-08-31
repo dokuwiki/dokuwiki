@@ -533,7 +533,7 @@ function io_makeFileDir($file)
  * Creates a directory hierachy.
  *
  * @param string $target filename
- * @return bool|int|string
+ * @return bool
  *
  * @link    http://php.net/manual/en/function.mkdir.php
  * @author  <saint@corenova.com>
@@ -542,8 +542,8 @@ function io_makeFileDir($file)
 function io_mkdir_p($target)
 {
     global $conf;
-    if (@is_dir($target) || empty($target)) return 1; // best case check first
-    if (file_exists($target) && !is_dir($target)) return 0;
+    if (@is_dir($target) || empty($target)) return true; // best case check first
+    if (file_exists($target) && !is_dir($target)) return false;
     //recursion
     if (io_mkdir_p(substr($target, 0, strrpos($target, '/')))) {
         $ret = @mkdir($target); // crawl back up & create dir tree
@@ -552,7 +552,7 @@ function io_mkdir_p($target)
         }
         return $ret;
     }
-    return 0;
+    return false;
 }
 
 /**
