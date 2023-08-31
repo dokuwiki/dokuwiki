@@ -882,29 +882,29 @@ function ft_queryParser($Indexer, $query)
         switch (substr($token, 0, 3)) {
             case 'N+:':
                      $q['ns'][]        = $body; // for backward compatibility
-                     break;
+                break;
             case 'N-:':
                      $q['notns'][]     = $body; // for backward compatibility
-                     break;
+                break;
             case 'W_:':
                      $q['words'][]     = $body;
-                     break;
+                break;
             case 'W-:':
                      $q['words'][]     = $body;
                      $q['not'][]       = $body; // for backward compatibility
-                     break;
+                break;
             case 'W+:':
                      $q['words'][]     = $body;
                      $q['highlight'][] = $body;
                      $q['and'][]       = $body; // for backward compatibility
-                     break;
+                break;
             case 'P-:':
                      $q['phrases'][]   = $body;
-                     break;
+                break;
             case 'P+:':
                      $q['phrases'][]   = $body;
                      $q['highlight'][] = $body;
-                     break;
+                break;
         }
     }
     foreach (['words', 'phrases', 'highlight', 'ns', 'notns', 'and', 'not'] as $key) {

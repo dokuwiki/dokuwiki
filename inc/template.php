@@ -420,7 +420,7 @@ function _tpl_metaheaders_action($data)
         }
         foreach ($inst as $attr) {
             if (empty($attr)) {
-continue; }
+                continue; }
             echo '<', $tag, ' ', buildAttributes($attr);
             if (isset($attr['_data']) || $tag == 'script') {
                 if ($tag == 'script' && isset($attr['_data']))

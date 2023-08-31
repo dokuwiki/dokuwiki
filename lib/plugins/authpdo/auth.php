@@ -220,19 +220,19 @@ class auth_plugin_authpdo extends AuthPlugin
 
             // create all groups that do not exist, the refetch the groups
             $allgroups = $this->selectGroups();
-            foreach ($grps as $group) {
-                if (!isset($allgroups[$group])) {
-                    $ok = $this->addGroup($group);
-                    if ($ok === false) goto FAIL;
-                }
+        foreach ($grps as $group) {
+            if (!isset($allgroups[$group])) {
+                $ok = $this->addGroup($group);
+                if ($ok === false) goto FAIL;
             }
+        }
             $allgroups = $this->selectGroups();
 
             // add user to the groups
-            foreach ($grps as $group) {
-                $ok = $this->joinGroup($userdata, $allgroups[$group]);
-                if ($ok === false) goto FAIL;
-            }
+        foreach ($grps as $group) {
+            $ok = $this->joinGroup($userdata, $allgroups[$group]);
+            if ($ok === false) goto FAIL;
+        }
         }
         $this->pdo->commit();
         return true;
@@ -262,67 +262,67 @@ class auth_plugin_authpdo extends AuthPlugin
             unset($olddata['grps']);
 
             // changing the user name?
-            if (isset($changes['user'])) {
-                if ($this->getUserData($changes['user'], false)) goto FAIL;
-                $params = $olddata;
-                $params['newlogin'] = $changes['user'];
+        if (isset($changes['user'])) {
+            if ($this->getUserData($changes['user'], false)) goto FAIL;
+            $params = $olddata;
+            $params['newlogin'] = $changes['user'];
 
-                $ok = $this->query($this->getConf('update-user-login'), $params);
-                if ($ok === false) goto FAIL;
-            }
+            $ok = $this->query($this->getConf('update-user-login'), $params);
+            if ($ok === false) goto FAIL;
+        }
 
             // changing the password?
-            if (isset($changes['pass'])) {
-                $params = $olddata;
-                $params['clear'] = $changes['pass'];
-                $params['hash'] = auth_cryptPassword($changes['pass']);
+        if (isset($changes['pass'])) {
+            $params = $olddata;
+            $params['clear'] = $changes['pass'];
+            $params['hash'] = auth_cryptPassword($changes['pass']);
 
-                $ok = $this->query($this->getConf('update-user-pass'), $params);
-                if ($ok === false) goto FAIL;
-            }
+            $ok = $this->query($this->getConf('update-user-pass'), $params);
+            if ($ok === false) goto FAIL;
+        }
 
             // changing info?
-            if (isset($changes['mail']) || isset($changes['name'])) {
-                $params = $olddata;
-                if (isset($changes['mail'])) $params['mail'] = $changes['mail'];
-                if (isset($changes['name'])) $params['name'] = $changes['name'];
+        if (isset($changes['mail']) || isset($changes['name'])) {
+            $params = $olddata;
+            if (isset($changes['mail'])) $params['mail'] = $changes['mail'];
+            if (isset($changes['name'])) $params['name'] = $changes['name'];
 
-                $ok = $this->query($this->getConf('update-user-info'), $params);
-                if ($ok === false) goto FAIL;
-            }
+            $ok = $this->query($this->getConf('update-user-info'), $params);
+            if ($ok === false) goto FAIL;
+        }
 
             // changing groups?
-            if (isset($changes['grps'])) {
-                $allgroups = $this->selectGroups();
+        if (isset($changes['grps'])) {
+            $allgroups = $this->selectGroups();
 
-                // remove membership for previous groups
-                foreach ($oldgroups as $group) {
-                    if (!in_array($group, $changes['grps']) && isset($allgroups[$group])) {
-                        $ok = $this->leaveGroup($olddata, $allgroups[$group]);
-                        if ($ok === false) goto FAIL;
-                    }
-                }
-
-                // create all new groups that are missing
-                $added = 0;
-                foreach ($changes['grps'] as $group) {
-                    if (!isset($allgroups[$group])) {
-                        $ok = $this->addGroup($group);
-                        if ($ok === false) goto FAIL;
-                        $added++;
-                    }
-                }
-                // reload group info
-                if ($added > 0) $allgroups = $this->selectGroups();
-
-                // add membership for new groups
-                foreach ($changes['grps'] as $group) {
-                    if (!in_array($group, $oldgroups)) {
-                        $ok = $this->joinGroup($olddata, $allgroups[$group]);
-                        if ($ok === false) goto FAIL;
-                    }
+            // remove membership for previous groups
+            foreach ($oldgroups as $group) {
+                if (!in_array($group, $changes['grps']) && isset($allgroups[$group])) {
+                    $ok = $this->leaveGroup($olddata, $allgroups[$group]);
+                    if ($ok === false) goto FAIL;
                 }
             }
+
+            // create all new groups that are missing
+            $added = 0;
+            foreach ($changes['grps'] as $group) {
+                if (!isset($allgroups[$group])) {
+                    $ok = $this->addGroup($group);
+                    if ($ok === false) goto FAIL;
+                    $added++;
+                }
+            }
+            // reload group info
+            if ($added > 0) $allgroups = $this->selectGroups();
+
+            // add membership for new groups
+            foreach ($changes['grps'] as $group) {
+                if (!in_array($group, $oldgroups)) {
+                    $ok = $this->joinGroup($olddata, $allgroups[$group]);
+                    if ($ok === false) goto FAIL;
+                }
+            }
+        }
 
         }
         $this->pdo->commit();
@@ -517,11 +517,11 @@ class auth_plugin_authpdo extends AuthPlugin
             $allgroups = $this->selectGroups();
 
             // remove group memberships (ignore errors)
-            foreach ($userdata['grps'] as $group) {
-                if (isset($allgroups[$group])) {
-                    $this->leaveGroup($userdata, $allgroups[$group]);
-                }
+        foreach ($userdata['grps'] as $group) {
+            if (isset($allgroups[$group])) {
+                $this->leaveGroup($userdata, $allgroups[$group]);
             }
+        }
 
             $ok = $this->query($this->getConf('delete-user'), $userdata);
             if ($ok === false) goto FAIL;

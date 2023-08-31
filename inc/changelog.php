@@ -235,7 +235,7 @@ function getRecents($first, $num, $ns = '', $flags = 0)
         $count++;
         // break when we have enough entries
         if ($count >= $num) {
-break; }
+            break; }
     }
     return $recent;
 }

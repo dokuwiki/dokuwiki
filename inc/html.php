@@ -465,7 +465,7 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
 
     // set callback function to build the <li> tag, formerly defined as html_li_default()
     if (!is_callable($lifunc)) {
-       $lifunc = static fn($item) => '<li class="level'.$item['level'].'">';
+        $lifunc = static fn($item) => '<li class="level'.$item['level'].'">';
     }
 
     foreach ($data as $item) {

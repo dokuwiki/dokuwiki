@@ -489,7 +489,7 @@ class PassHash
      */
     public function hash_drupal_sha512($clear, $salt = null, $magic = 'S', $compute = 15)
     {
-      return substr($this->stretched_hash('sha512', $clear, $salt, $magic, $compute), 0, 55);
+        return substr($this->stretched_hash('sha512', $clear, $salt, $magic, $compute), 0, 55);
     }
 
     /**

@@ -35,7 +35,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
             <?php if ($showSidebar) : ?>
                 <!-- ********** ASIDE ********** -->
                 <nav id="dokuwiki__aside" aria-label="<?php echo $lang['sidebar']
-                    ?>"><div class="pad aside include group">
+                ?>"><div class="pad aside include group">
                     <h3 class="toggle"><?php echo $lang['sidebar'] ?></h3>
                     <div class="content"><div class="group">
                         <?php tpl_flush() ?>

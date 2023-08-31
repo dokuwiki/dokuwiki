@@ -201,7 +201,7 @@ function basicinfo($id, $htmlClient = true)
     }
 
     return $info;
- }
+}
 
 /**
  * Return info about the current document as associative

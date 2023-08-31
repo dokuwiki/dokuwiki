@@ -444,7 +444,7 @@ function conf_encodeString($str, $code)
         case 'uuencode' : return '<u>'.convert_uuencode($str);
         case 'plain':
         default:
-                          return $str;
+            return $str;
     }
 }
 /**
@@ -459,7 +459,7 @@ function conf_decodeString($str)
         case '<b>' : return base64_decode(substr($str, 3));
         case '<u>' : return convert_uudecode(substr($str, 3));
         default:  // not encoded (or unknown)
-                     return $str;
+            return $str;
     }
 }
 

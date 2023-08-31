@@ -44,7 +44,7 @@ function io_sweepNS($id, $basedir = 'datadir')
                 Event::createAndTrigger('IO_NAMESPACE_DELETED', $data);
             }
         } else {
-return $delone; }
+            return $delone; }
     }
     return $delone;
 }
@@ -72,7 +72,7 @@ return $delone; }
 function io_readWikiPage($file, $id, $rev = false)
 {
     if (empty($rev)) {
-$rev = false; }
+        $rev = false; }
     $data = [[$file, true], getNS($id), noNS($id), $rev];
     return Event::createAndTrigger('IO_WIKIPAGE_READ', $data, '_io_readWikiPage_action', false);
 }
@@ -196,9 +196,9 @@ function bzfile($file, $array = false)
 function io_writeWikiPage($file, $content, $id, $rev = false)
 {
     if (empty($rev)) {
-$rev = false; }
+        $rev = false; }
     if ($rev===false) {
-io_createNamespace($id); } // create namespaces as needed
+        io_createNamespace($id); } // create namespaces as needed
     $data = [[$file, $content, false], getNS($id), noNS($id), $rev];
     return Event::createAndTrigger('IO_WIKIPAGE_WRITE', $data, '_io_writeWikiPage_action', false);
 }
@@ -478,7 +478,7 @@ function io_createNamespace($id, $ns_type = 'pages')
         array_pop($ns_stack);
         $ns = implode(':', $ns_stack);
         if (strlen($ns)==0) {
-break; }
+            break; }
         $missing[] = $ns;
         $tmp = dirname(call_user_func($types[$ns_type], $ns));
     }
@@ -798,4 +798,4 @@ function io_getSizeFile($file)
     }
 
     return $uncompressedsize;
- }
+}

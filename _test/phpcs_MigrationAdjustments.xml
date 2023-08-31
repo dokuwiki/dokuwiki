@@ -6,20 +6,15 @@
     <rule ref="./phpcs.xml">
         <!-- Rules with automatic fixes that we want to adhere to, but currently don't -->
         <exclude name="Generic.Formatting.DisallowMultipleStatements.SameLine"/>
-        <exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact"/>
-        <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect"/>
         <exclude name="Generic.WhiteSpace.IncrementDecrementSpacing.SpaceAfterDecrement"/>
         <exclude name="Generic.WhiteSpace.IncrementDecrementSpacing.SpaceAfterIncrement"/>
 
         <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore"/>
-        <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.Indent"/>
-        <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EndLine"/>
 
         <exclude name="PSR2.Classes.PropertyDeclaration.StaticBeforeVisibility"/>
         <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
         <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpaceBeforeCloseBrace"/>
         <exclude name="PSR2.ControlStructures.ElseIfDeclaration.NotAllowed"/>
-        <exclude name="PSR2.ControlStructures.SwitchDeclaration.BreakIndent"/>
         <exclude name="PSR2.ControlStructures.SwitchDeclaration.BreakNotNewLine"/>
         <exclude name="PSR2.ControlStructures.SwitchDeclaration.BodyOnNextLineCASE"/>
         <exclude name="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonDEFAULT"/>

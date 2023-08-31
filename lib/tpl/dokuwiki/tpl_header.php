@@ -33,7 +33,7 @@ if (!defined('DOKU_INC')) die();
                 '<span>' . $conf['title'] . '</span>',
                 'accesskey="h" title="' . tpl_getLang('home') . ' [h]"'
             );
-        ?></h1>
+            ?></h1>
         <?php if ($conf['tagline']) : ?>
             <p class="claim"><?php echo $conf['tagline']; ?></p>
         <?php endif ?>
@@ -46,11 +46,11 @@ if (!defined('DOKU_INC')) die();
                 <h3 class="a11y"><?php echo $lang['user_tools']; ?></h3>
                 <ul>
                     <?php
-                        if (!empty($_SERVER['REMOTE_USER'])) {
+                    if (!empty($_SERVER['REMOTE_USER'])) {
                         echo '<li class="user">';
                         tpl_userinfo(); /* 'Logged in as ...' */
                         echo '</li>';
-                        }
+                    }
                         echo (new \dokuwiki\Menu\UserMenu())->getListItems('action ');
                     ?>
                 </ul>
