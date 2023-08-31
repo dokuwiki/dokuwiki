@@ -197,7 +197,7 @@ function js_load($file)
 
         $idata = '';
         if (file_exists($ifile)) {
-            $ismin = (substr($ifile, -7) == '.min.js');;
+            $ismin = (substr($ifile, -7) == '.min.js');
             if ($ismin) $idata .= "\n/* BEGIN NOCOMPRESS */\n";
             $idata .= io_readFile($ifile);
             if ($ismin) $idata .= "\n/* END NOCOMPRESS */\n";

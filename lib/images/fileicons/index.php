@@ -29,7 +29,8 @@
 <body>
 
 <?php
-$fi_list = ''; $fi_list32 = '';
+$fi_list = '';
+$fi_list32 = '';
 foreach (glob('*.png') as $img) {
     $fi_list .= '<img src="' . $img . '" alt="' . $img . '" title="' . $img . '" /> ';
 }

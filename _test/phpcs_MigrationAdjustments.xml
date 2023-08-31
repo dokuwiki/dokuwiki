@@ -2,10 +2,8 @@
 <ruleset name="Migration Adjustments for the DokuWiki Coding Standard Standard" namespace="DokuWiki\CS\Standard">
     <description>These are exceptions to the Coding Standard used for DokuWiki that are intended to be removed over time.</description>
 
-    <!-- rules on top of PSR-12 -->
+    <!-- extend the standard configuration -->
     <rule ref="./phpcs.xml">
-        <!-- Rules with automatic fixes that we want to adhere to, but currently don't -->
-        <exclude name="Generic.Formatting.DisallowMultipleStatements.SameLine"/>
     </rule>
 
     <!-- for now we mix declarations and execution here (mostly for defines) -->
