@@ -12,13 +12,6 @@
         <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore"/>
 
         <exclude name="PSR2.Classes.PropertyDeclaration.StaticBeforeVisibility"/>
-        <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
-        <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpaceBeforeCloseBrace"/>
-        <exclude name="PSR2.ControlStructures.ElseIfDeclaration.NotAllowed"/>
-        <exclude name="PSR2.ControlStructures.SwitchDeclaration.BreakNotNewLine"/>
-        <exclude name="PSR2.ControlStructures.SwitchDeclaration.BodyOnNextLineCASE"/>
-        <exclude name="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonDEFAULT"/>
-        <exclude name="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE"/>
         <exclude name="PSR2.Methods.FunctionClosingBrace.SpacingBeforeClose"/>
         <exclude name="PSR2.Methods.MethodDeclaration.StaticBeforeVisibility"/>
         <exclude name="PSR2.Namespaces.NamespaceDeclaration.BlankLineAfter"/>

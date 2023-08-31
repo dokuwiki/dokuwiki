@@ -440,8 +440,10 @@ function useHeading($linktype)
 function conf_encodeString($str, $code)
 {
     switch ($code) {
-        case 'base64'   : return '<b>'.base64_encode($str);
-        case 'uuencode' : return '<u>'.convert_uuencode($str);
+        case 'base64':
+            return '<b>'.base64_encode($str);
+        case 'uuencode':
+            return '<u>'.convert_uuencode($str);
         case 'plain':
         default:
             return $str;
@@ -456,8 +458,10 @@ function conf_encodeString($str, $code)
 function conf_decodeString($str)
 {
     switch (substr($str, 0, 3)) {
-        case '<b>' : return base64_decode(substr($str, 3));
-        case '<u>' : return convert_uudecode(substr($str, 3));
+        case '<b>':
+            return base64_decode(substr($str, 3));
+        case '<u>':
+            return convert_uudecode(substr($str, 3));
         default:  // not encoded (or unknown)
             return $str;
     }

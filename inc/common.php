@@ -1536,15 +1536,15 @@ function obfuscate($email)
     global $conf;
 
     switch ($conf['mailguard']) {
-        case 'visible' :
+        case 'visible':
             $obfuscate = ['@' => ' [at] ', '.' => ' [dot] ', '-' => ' [dash] '];
             return strtr($email, $obfuscate);
 
-        case 'hex' :
+        case 'hex':
             return Conversion::toHtml($email, true);
 
-        case 'none' :
-        default :
+        case 'none':
+        default:
             return $email;
     }
 }

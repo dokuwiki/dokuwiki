@@ -987,7 +987,7 @@ function tpl_pagetitle($id = null, $ret = false)
     // default page title is the page name, modify with the current action
     switch ($ACT) {
         // admin functions
-        case 'admin' :
+        case 'admin':
             $page_title = $lang['btn_admin'];
             // try to get the plugin name
             /** @var $plugin AdminPlugin */
@@ -998,36 +998,36 @@ function tpl_pagetitle($id = null, $ret = false)
             break;
 
         // user functions
-        case 'login' :
-        case 'profile' :
-        case 'register' :
-        case 'resendpwd' :
+        case 'login':
+        case 'profile':
+        case 'register':
+        case 'resendpwd':
             $page_title = $lang['btn_'.$ACT];
             break;
 
          // wiki functions
-        case 'search' :
-        case 'index' :
+        case 'search':
+        case 'index':
             $page_title = $lang['btn_'.$ACT];
             break;
 
         // page functions
-        case 'edit' :
-        case 'preview' :
+        case 'edit':
+        case 'preview':
             $page_title = "✎ ".$name;
             break;
 
-        case 'revisions' :
+        case 'revisions':
             $page_title = $name . ' - ' . $lang['btn_revs'];
             break;
 
-        case 'backlink' :
-        case 'recent' :
-        case 'subscribe' :
+        case 'backlink':
+        case 'recent':
+        case 'subscribe':
             $page_title = $name . ' - ' . $lang['btn_'.$ACT];
             break;
 
-        default : // SHOW and anything else not included
+        default: // SHOW and anything else not included
             $page_title = $name;
     }
 
