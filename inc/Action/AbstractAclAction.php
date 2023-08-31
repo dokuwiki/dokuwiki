@@ -3,6 +3,7 @@
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAclRequiredException;
+use dokuwiki\Extension\AuthPlugin;
 
 /**
  * Class AbstractAclAction
@@ -20,6 +21,6 @@ abstract class AbstractAclAction extends AbstractAction
         global $conf;
         global $auth;
         if (!$conf['useacl']) throw new ActionAclRequiredException();
-        if (!$auth) throw new ActionAclRequiredException();
+        if (!$auth instanceof AuthPlugin) throw new ActionAclRequiredException();
     }
 }

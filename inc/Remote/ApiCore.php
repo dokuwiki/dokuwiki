@@ -1063,7 +1063,7 @@ class ApiCore
         global $auth;
 
         if (!$conf['useacl']) return 0;
-        if (!$auth) return 0;
+        if (!$auth instanceof AuthPlugin) return 0;
 
         @session_start(); // reopen session for login
         $ok = null;
@@ -1094,7 +1094,7 @@ class ApiCore
         global $conf;
         global $auth;
         if (!$conf['useacl']) return 0;
-        if (!$auth) return 0;
+        if (!$auth instanceof AuthPlugin) return 0;
 
         auth_logoff();
 

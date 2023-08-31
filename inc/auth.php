@@ -53,8 +53,8 @@ function auth_setup()
         }
     }
 
-    if (!isset($auth) || !$auth) {
-        msg($lang['authtempfail'], -1);
+    if (!$auth instanceof AuthPlugin) {
+        msg($lang['authtempfail'].'ss', -1);
         return false;
     }
 
@@ -92,7 +92,7 @@ function auth_setup()
     }
 
     $ok = null;
-    if (!is_null($auth) && $auth->canDo('external')) {
+    if ($auth instanceof AuthPlugin && $auth->canDo('external')) {
         $ok = $auth->trustExternal($INPUT->str('u'), $INPUT->str('p'), $INPUT->bool('r'));
     }
 
@@ -222,7 +222,7 @@ function auth_login($user, $pass, $sticky = false, $silent = false)
     /* @var Input $INPUT */
     global $INPUT;
 
-    if (!$auth) return false;
+    if (!$auth instanceof AuthPlugin) return false;
 
     if (!empty($user)) {
         //usual login
@@ -455,7 +455,9 @@ function auth_logoff($keepbc = false)
         'samesite' => $conf['samesitecookie'] ?: null, // null means browser default
     ]);
 
-    if ($auth) $auth->logOff();
+    if ($auth instanceof AuthPlugin) {
+        $auth->logOff();
+    }
 }
 
 /**
@@ -485,7 +487,7 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false, $recac
     global $INPUT;
 
 
-    if (!$auth) return false;
+    if (!$auth instanceof AuthPlugin) return false;
     if (is_null($user)) {
         if (!$INPUT->server->has('REMOTE_USER')) {
             return false;
@@ -556,7 +558,7 @@ function auth_isMember($memberlist, $user, array $groups)
 {
     /* @var AuthPlugin $auth */
     global $auth;
-    if (!$auth) return false;
+    if (!$auth instanceof AuthPlugin) return false;
 
     // clean user and groups
     if (!$auth->isCaseSensitive()) {
@@ -655,7 +657,7 @@ function auth_aclcheck_cb($data)
 
     // if no ACL is used always return upload rights
     if (!$conf['useacl']) return AUTH_UPLOAD;
-    if (!$auth) return AUTH_NONE;
+    if (!$auth instanceof AuthPlugin) return AUTH_NONE;
     if (!is_array($AUTH_ACL)) return AUTH_NONE;
 
     //make sure groups is an array
@@ -870,7 +872,7 @@ function auth_sendPassword($user, $password)
     global $lang;
     /* @var AuthPlugin $auth */
     global $auth;
-    if (!$auth) return false;
+    if (!$auth instanceof AuthPlugin) return false;
 
     $user     = $auth->cleanUser($user);
     $userinfo = $auth->getUserData($user, false);
@@ -1293,7 +1295,7 @@ function auth_setCookie($user, $pass, $sticky)
     global $auth;
     global $USERINFO;
 
-    if (!$auth) return false;
+    if (!$auth instanceof AuthPlugin) return false;
     $USERINFO = $auth->getUserData($user);
 
     // set cookie

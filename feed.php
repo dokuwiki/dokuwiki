@@ -448,7 +448,7 @@ function rss_buildItems(&$rss, &$data, $opt)
                 $item->authorEmail = $user . '@undisclosed.example.com';
 
                 // get real user name if configured
-                if ($conf['useacl'] && $auth) {
+                if ($conf['useacl'] && $auth instanceof AuthPlugin) {
                     $userInfo = $auth->getUserData($user);
                     if ($userInfo) {
                         switch ($conf['showuseras']) {

@@ -63,7 +63,7 @@ class cli_plugin_usermanager extends CLIPlugin
         /** @var AuthPlugin $auth */
         global $auth;
 
-        if (!isset($auth)) {
+        if (!$auth instanceof AuthPlugin) {
             $this->error($this->getLang('noauth'));
             return 1;
         }

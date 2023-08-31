@@ -46,7 +46,7 @@ class admin_plugin_usermanager extends AdminPlugin
 
         $this->setupLocale();
 
-        if (!isset($auth)) {
+        if (!$auth instanceof AuthPlugin) {
             $this->disabled = $this->lang['noauth'];
         } elseif (!$auth->canDo('getUsers')) {
             $this->disabled = $this->lang['nosupport'];
@@ -358,7 +358,7 @@ class admin_plugin_usermanager extends AdminPlugin
     {
         /** @var AuthPlugin $auth */
         global $auth;
-        if (!$auth || !$auth->canDo('getUsers')) {
+        if (!$auth instanceof AuthPlugin || !$auth->canDo('getUsers')) {
             return false;
         }
 
@@ -912,13 +912,17 @@ class admin_plugin_usermanager extends AdminPlugin
         $user[2] = $INPUT->str('username');
         $user[3] = $INPUT->str('usermail');
         $user[4] = explode(',', $INPUT->str('usergroups'));
-        $user[5] = $INPUT->str('userpass2');                // repeated password for confirmation
+        $user[5] = $INPUT->str('userpass2'); // repeated password for confirmation
 
         $user[4] = array_map('trim', $user[4]);
-        if ($clean) $user[4] = array_map([$auth, 'cleanGroup'], $user[4]);
+        if ($clean) {
+            $user[4] = array_map([$auth, 'cleanGroup'], $user[4]);
+        }
         $user[4] = array_filter($user[4]);
         $user[4] = array_unique($user[4]);
-        if ($user[4] === []) $user[4] = null;
+        if ($user[4] === []) {
+            $user[4] = null;
+        }
 
         return $user;
     }

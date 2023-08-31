@@ -771,7 +771,7 @@ function html_debug()
     echo $lang['encoding'];
     echo '</pre>';
 
-    if ($auth) {
+    if ($auth instanceof AuthPlugin) {
         echo '<b>Auth backend capabilities:</b><pre>';
         foreach ($auth->getCapabilities() as $cando) {
             echo '   ' . str_pad($cando, 16) . ' => ' . (int)$auth->canDo($cando) . DOKU_LF;

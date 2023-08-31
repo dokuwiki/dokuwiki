@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Extension\Event;
 
@@ -217,7 +218,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         unset($list);
 
         // user count
-        if ($auth && $auth->canDo('getUserCount')) {
+        if ($auth instanceof AuthPlugin && $auth->canDo('getUserCount')) {
             $data['user_count'] = $auth->getUserCount();
         }
 

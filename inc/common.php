@@ -1694,7 +1694,9 @@ function userlink($username = null, $textonly = false)
     $evt = new Event('COMMON_USER_LINK', $data);
     if ($evt->advise_before(true)) {
         if (empty($data['name'])) {
-            if ($auth) $info = $auth->getUserData($username);
+            if ($auth instanceof AuthPlugin) {
+                $info = $auth->getUserData($username);
+            }
             if ($conf['showuseras'] != 'loginname' && isset($info) && $info) {
                 switch ($conf['showuseras']) {
                     case 'username':
@@ -1716,8 +1718,8 @@ function userlink($username = null, $textonly = false)
 
         if (!$data['textonly'] && empty($data['link']['url'])) {
             if (in_array($conf['showuseras'], ['email_link', 'username_link'])) {
-                if (!isset($info)) {
-                    if ($auth) $info = $auth->getUserData($username);
+                if (!isset($info) && $auth instanceof AuthPlugin) {
+                    $info = $auth->getUserData($username);
                 }
                 if (isset($info) && $info) {
                     if ($conf['showuseras'] == 'email_link') {

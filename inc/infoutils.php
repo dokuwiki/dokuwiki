@@ -7,6 +7,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Debug\DebugHelper;
@@ -424,7 +425,7 @@ function info_msg_allowed($msg)
     if (empty($msg['allow']) || ($msg['allow'] == MSG_PUBLIC)) return true;
 
     // restricted msg, but no authentication
-    if (empty($auth)) return false;
+    if (!$auth instanceof AuthPlugin) return false;
 
     switch ($msg['allow']) {
         case MSG_USERS_ONLY:
