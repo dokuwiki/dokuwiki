@@ -46,7 +46,7 @@ class Item
     {
         $id = trim($id);
         $date = @filemtime(wikiFN($id));
-        if(!$date) return null;
+        if (!$date) return null;
         return new Item(wl($id, '', true), $date, $changefreq, $priority);
     }
 

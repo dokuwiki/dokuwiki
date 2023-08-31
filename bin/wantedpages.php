@@ -6,7 +6,7 @@ use dokuwiki\File\PageResolver;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
+if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
@@ -68,7 +68,7 @@ class WantedPagesCLI extends CLI
     protected function main(Options $options)
     {
         $args = $options->getArgs();
-        if($args) {
+        if ($args) {
             $startdir = dirname(wikiFN($args[0] . ':xxx'));
         } else {
             $startdir = dirname(wikiFN('xxx'));
@@ -79,17 +79,17 @@ class WantedPagesCLI extends CLI
 
         $this->info("searching $startdir");
 
-        foreach($this->getPages($startdir) as $page) {
+        foreach ($this->getPages($startdir) as $page) {
             $this->internalLinks($page);
         }
         Sort::ksort($this->result);
-        foreach($this->result as $main => $subs) {
-            if($this->skip) {
+        foreach ($this->result as $main => $subs) {
+            if ($this->skip) {
                 print "$main\n";
             } else {
                 $subs = array_unique($subs);
                 Sort::sort($subs);
-                foreach($subs as $sub) {
+                foreach ($subs as $sub) {
                     printf("%-40s %s\n", $main, $sub);
                 }
             }
@@ -105,16 +105,16 @@ class WantedPagesCLI extends CLI
      */
     protected function dirFilter($entry, $basepath)
     {
-        if($entry == '.' || $entry == '..') {
+        if ($entry == '.' || $entry == '..') {
             return WantedPagesCLI::DIR_CONTINUE;
         }
-        if(is_dir($basepath . '/' . $entry)) {
-            if(strpos($entry, '_') === 0) {
+        if (is_dir($basepath . '/' . $entry)) {
+            if (strpos($entry, '_') === 0) {
                 return WantedPagesCLI::DIR_CONTINUE;
             }
             return WantedPagesCLI::DIR_NS;
         }
-        if(preg_match('/\.txt$/', $entry)) {
+        if (preg_match('/\.txt$/', $entry)) {
             return WantedPagesCLI::DIR_PAGE;
         }
         return WantedPagesCLI::DIR_CONTINUE;
@@ -130,18 +130,18 @@ class WantedPagesCLI extends CLI
     protected function getPages($dir)
     {
         static $trunclen = null;
-        if(!$trunclen) {
+        if (!$trunclen) {
             global $conf;
             $trunclen = strlen($conf['datadir'] . ':');
         }
 
-        if(!is_dir($dir)) {
+        if (!is_dir($dir)) {
             throw new DokuCLI_Exception("Unable to read directory $dir");
         }
 
         $pages = [];
         $dh = opendir($dir);
-        while(false !== ($entry = readdir($dh))) {
+        while (false !== ($entry = readdir($dh))) {
             $status = $this->dirFilter($entry, $dir);
             if ($status == WantedPagesCLI::DIR_CONTINUE) {
                 continue;
@@ -167,13 +167,13 @@ class WantedPagesCLI extends CLI
         $instructions = p_get_instructions(file_get_contents($page['file']));
         $resolver = new PageResolver($page['id']);
         $pid = $page['id'];
-        foreach($instructions as $ins) {
-            if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink')) {
+        foreach ($instructions as $ins) {
+            if ($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink')) {
                 $mid = $resolver->resolveId($ins[1][0]);
-                if(!page_exists($mid)) {
+                if (!page_exists($mid)) {
                     [$mid] = explode('#', $mid); //record pages without hashes
 
-                    if($this->sort == 'origin') {
+                    if ($this->sort == 'origin') {
                         $this->result[$pid][] = $mid;
                     } else {
                         $this->result[$mid][] = $pid;

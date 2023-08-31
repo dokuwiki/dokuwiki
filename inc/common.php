@@ -73,11 +73,11 @@ function sexplode($separator, $string, $limit, $default = null)
  */
 function blank(&$in, $trim = false)
 {
-    if(is_null($in)) return true;
-    if(is_array($in)) return $in === [];
-    if($in === "\0") return true;
-    if($trim && trim($in) === '') return true;
-    if(strlen($in) > 0) return false;
+    if (is_null($in)) return true;
+    if (is_array($in)) return $in === [];
+    if ($in === "\0") return true;
+    if ($trim && trim($in) === '') return true;
+    if (strlen($in) > 0) return false;
     return empty($in);
 }
 
@@ -127,7 +127,7 @@ function getSecurityToken()
     $session = session_id();
 
     // CSRF checks are only for logged in users - do not generate for anonymous
-    if(trim($user) == '' || trim($session) == '') return '';
+    if (trim($user) == '' || trim($session) == '') return '';
     return PassHash::hmac('md5', $session.$user, auth_cookiesalt());
 }
 
@@ -141,10 +141,10 @@ function checkSecurityToken($token = null)
 {
     /** @var Input $INPUT */
     global $INPUT;
-    if(!$INPUT->server->str('REMOTE_USER')) return true; // no logged in user, no need for a check
+    if (!$INPUT->server->str('REMOTE_USER')) return true; // no logged in user, no need for a check
 
-    if(is_null($token)) $token = $INPUT->str('sectok');
-    if(getSecurityToken() != $token) {
+    if (is_null($token)) $token = $INPUT->str('sectok');
+    if (getSecurityToken() != $token) {
         msg('Security Token did not match. Possible CSRF attack.', -1);
         return false;
     }
@@ -162,7 +162,7 @@ function checkSecurityToken($token = null)
 function formSecurityToken($print = true)
 {
     $ret = '<div class="no"><input type="hidden" name="sectok" value="'.getSecurityToken().'" /></div>'."\n";
-    if($print) echo $ret;
+    if ($print) echo $ret;
     return $ret;
 }
 
@@ -187,23 +187,22 @@ function basicinfo($id, $htmlClient = true)
     $info = [];
     $info['isadmin']   = false;
     $info['ismanager'] = false;
-    if($INPUT->server->has('REMOTE_USER')) {
+    if ($INPUT->server->has('REMOTE_USER')) {
         $info['userinfo']   = $USERINFO;
         $info['perm']       = auth_quickaclcheck($id);
         $info['client']     = $INPUT->server->str('REMOTE_USER');
 
-        if($info['perm'] == AUTH_ADMIN) {
+        if ($info['perm'] == AUTH_ADMIN) {
             $info['isadmin']   = true;
             $info['ismanager'] = true;
-        } elseif(auth_ismanager()) {
+        } elseif (auth_ismanager()) {
             $info['ismanager'] = true;
         }
 
         // if some outside auth were used only REMOTE_USER is set
-        if(empty($info['userinfo']['name'])) {
+        if (empty($info['userinfo']['name'])) {
             $info['userinfo']['name'] = $INPUT->server->str('REMOTE_USER');
         }
-
     } else {
         $info['perm']       = auth_aclcheck($id, '', null);
         $info['client']     = clientIP(true);
@@ -371,8 +370,8 @@ function buildURLparams($params, $sep = '&amp;')
 {
     $url = '';
     $amp = false;
-    foreach($params as $key => $val) {
-        if($amp) $url .= $sep;
+    foreach ($params as $key => $val) {
+        if ($amp) $url .= $sep;
 
         $url .= rawurlencode($key).'=';
         $url .= rawurlencode((string) $val);
@@ -396,10 +395,10 @@ function buildAttributes($params, $skipEmptyStrings = false)
 {
     $url   = '';
     $white = false;
-    foreach($params as $key => $val) {
-        if($key[0] == '_') continue;
-        if($val === '' && $skipEmptyStrings) continue;
-        if($white) $url .= ' ';
+    foreach ($params as $key => $val) {
+        if ($key[0] == '_') continue;
+        if ($val === '' && $skipEmptyStrings) continue;
+        if ($white) $url .= ' ';
 
         $url .= $key.'="';
         $url .= hsc($val);
@@ -420,7 +419,7 @@ function breadcrumbs()
 {
     // we prepare the breadcrumbs early for quick session closing
     static $crumbs = null;
-    if($crumbs != null) return $crumbs;
+    if ($crumbs != null) return $crumbs;
 
     global $ID;
     global $ACT;
@@ -431,30 +430,30 @@ function breadcrumbs()
     $crumbs = $_SESSION[DOKU_COOKIE]['bc'] ?? [];
     //we only save on show and existing visible readable wiki documents
     $file = wikiFN($ID);
-    if($ACT != 'show' || $INFO['perm'] < AUTH_READ || isHiddenPage($ID) || !file_exists($file)) {
+    if ($ACT != 'show' || $INFO['perm'] < AUTH_READ || isHiddenPage($ID) || !file_exists($file)) {
         $_SESSION[DOKU_COOKIE]['bc'] = $crumbs;
         return $crumbs;
     }
 
     // page names
     $name = noNSorNS($ID);
-    if(useHeading('navigation')) {
+    if (useHeading('navigation')) {
         // get page title
         $title = p_get_first_heading($ID, METADATA_RENDER_USING_SIMPLE_CACHE);
-        if($title) {
+        if ($title) {
             $name = $title;
         }
     }
 
     //remove ID from array
-    if(isset($crumbs[$ID])) {
+    if (isset($crumbs[$ID])) {
         unset($crumbs[$ID]);
     }
 
     //add to array
     $crumbs[$ID] = $name;
     //reduce size
-    while(count($crumbs) > $conf['breadcrumbs']) {
+    while (count($crumbs) > $conf['breadcrumbs']) {
         array_shift($crumbs);
     }
     //save to session
@@ -489,15 +488,15 @@ function idfilter($id, $ue = true)
 
     $id = (string) $id;
 
-    if($conf['useslash'] && $conf['userewrite']) {
+    if ($conf['useslash'] && $conf['userewrite']) {
         $id = strtr($id, ':', '/');
-    } elseif(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' &&
+    } elseif (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' &&
         $conf['userewrite'] &&
         strpos($INPUT->server->str('SERVER_SOFTWARE'), 'Microsoft-IIS') === false
     ) {
         $id = strtr($id, ':', ';');
     }
-    if($ue) {
+    if ($ue) {
         $id = rawurlencode($id);
         $id = str_replace('%3A', ':', $id); //keep as colon
         $id = str_replace('%3B', ';', $id); //keep as semicolon
@@ -522,37 +521,37 @@ function idfilter($id, $ue = true)
 function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp;')
 {
     global $conf;
-    if(is_array($urlParameters)) {
-        if(isset($urlParameters['rev']) && !$urlParameters['rev']) unset($urlParameters['rev']);
-        if(isset($urlParameters['at']) && $conf['date_at_format']) {
+    if (is_array($urlParameters)) {
+        if (isset($urlParameters['rev']) && !$urlParameters['rev']) unset($urlParameters['rev']);
+        if (isset($urlParameters['at']) && $conf['date_at_format']) {
             $urlParameters['at'] = date($conf['date_at_format'], $urlParameters['at']);
         }
         $urlParameters = buildURLparams($urlParameters, $separator);
     } else {
         $urlParameters = str_replace(',', $separator, $urlParameters);
     }
-    if($id === '') {
+    if ($id === '') {
         $id = $conf['start'];
     }
     $id = idfilter($id);
-    if($absolute) {
+    if ($absolute) {
         $xlink = DOKU_URL;
     } else {
         $xlink = DOKU_BASE;
     }
 
-    if($conf['userewrite'] == 2) {
+    if ($conf['userewrite'] == 2) {
         $xlink .= DOKU_SCRIPT.'/'.$id;
-        if($urlParameters) $xlink .= '?'.$urlParameters;
-    } elseif($conf['userewrite']) {
+        if ($urlParameters) $xlink .= '?'.$urlParameters;
+    } elseif ($conf['userewrite']) {
         $xlink .= $id;
-        if($urlParameters) $xlink .= '?'.$urlParameters;
-    } elseif($id !== '') {
+        if ($urlParameters) $xlink .= '?'.$urlParameters;
+    } elseif ($id !== '') {
         $xlink .= DOKU_SCRIPT.'?id='.$id;
-        if($urlParameters) $xlink .= $separator.$urlParameters;
+        if ($urlParameters) $xlink .= $separator.$urlParameters;
     } else {
         $xlink .= DOKU_SCRIPT;
-        if($urlParameters) $xlink .= '?'.$urlParameters;
+        if ($urlParameters) $xlink .= '?'.$urlParameters;
     }
 
     return $xlink;
@@ -574,7 +573,7 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
 function exportlink($id = '', $format = 'raw', $urlParameters = '', $abs = false, $sep = '&amp;')
 {
     global $conf;
-    if(is_array($urlParameters)) {
+    if (is_array($urlParameters)) {
         $urlParameters = buildURLparams($urlParameters, $sep);
     } else {
         $urlParameters = str_replace(',', $sep, $urlParameters);
@@ -582,21 +581,21 @@ function exportlink($id = '', $format = 'raw', $urlParameters = '', $abs = false
 
     $format = rawurlencode($format);
     $id     = idfilter($id);
-    if($abs) {
+    if ($abs) {
         $xlink = DOKU_URL;
     } else {
         $xlink = DOKU_BASE;
     }
 
-    if($conf['userewrite'] == 2) {
+    if ($conf['userewrite'] == 2) {
         $xlink .= DOKU_SCRIPT.'/'.$id.'?do=export_'.$format;
-        if($urlParameters) $xlink .= $sep.$urlParameters;
-    } elseif($conf['userewrite'] == 1) {
+        if ($urlParameters) $xlink .= $sep.$urlParameters;
+    } elseif ($conf['userewrite'] == 1) {
         $xlink .= '_export/'.$format.'/'.$id;
-        if($urlParameters) $xlink .= '?'.$urlParameters;
+        if ($urlParameters) $xlink .= '?'.$urlParameters;
     } else {
         $xlink .= DOKU_SCRIPT.'?do=export_'.$format.$sep.'id='.$id;
-        if($urlParameters) $xlink .= $sep.$urlParameters;
+        if ($urlParameters) $xlink .= $sep.$urlParameters;
     }
 
     return $xlink;
@@ -621,29 +620,29 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
 {
     global $conf;
     $isexternalimage = media_isexternal($id);
-    if(!$isexternalimage) {
+    if (!$isexternalimage) {
         $id = cleanID($id);
     }
 
-    if(is_array($more)) {
+    if (is_array($more)) {
         // add token for resized images
         $w = $more['w'] ?? null;
         $h = $more['h'] ?? null;
-        if($w || $h || $isexternalimage){
+        if ($w || $h || $isexternalimage) {
             $more['tok'] = media_get_token($id, $w, $h);
         }
         // strip defaults for shorter URLs
-        if(isset($more['cache']) && $more['cache'] == 'cache') unset($more['cache']);
-        if(empty($more['w'])) unset($more['w']);
-        if(empty($more['h'])) unset($more['h']);
-        if(isset($more['id']) && $direct) unset($more['id']);
-        if(isset($more['rev']) && !$more['rev']) unset($more['rev']);
+        if (isset($more['cache']) && $more['cache'] == 'cache') unset($more['cache']);
+        if (empty($more['w'])) unset($more['w']);
+        if (empty($more['h'])) unset($more['h']);
+        if (isset($more['id']) && $direct) unset($more['id']);
+        if (isset($more['rev']) && !$more['rev']) unset($more['rev']);
         $more = buildURLparams($more, $sep);
     } else {
         $matches = [];
-        if (preg_match_all('/\b(w|h)=(\d*)\b/', $more, $matches, PREG_SET_ORDER) || $isexternalimage){
+        if (preg_match_all('/\b(w|h)=(\d*)\b/', $more, $matches, PREG_SET_ORDER) || $isexternalimage) {
             $resize = ['w'=>0, 'h'=>0];
-            foreach ($matches as $match){
+            foreach ($matches as $match) {
                 $resize[$match[1]] = $match[2];
             }
             $more .= $more === '' ? '' : $sep;
@@ -654,14 +653,14 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
         $more = str_replace(',', $sep, $more);
     }
 
-    if($abs) {
+    if ($abs) {
         $xlink = DOKU_URL;
     } else {
         $xlink = DOKU_BASE;
     }
 
     // external URLs are always direct without rewriting
-    if($isexternalimage) {
+    if ($isexternalimage) {
         $xlink .= 'lib/exe/fetch.php';
         $xlink .= '?'.$more;
         $xlink .= $sep.'media='.rawurlencode($id);
@@ -672,7 +671,7 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
 
     // decide on scriptname
     if ($direct) {
-        if($conf['userewrite'] == 1) {
+        if ($conf['userewrite'] == 1) {
             $script = '_media';
         } else {
             $script = 'lib/exe/fetch.php';
@@ -686,7 +685,7 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
     // build URL based on rewrite mode
     if ($conf['userewrite']) {
         $xlink .= $script.'/'.$id;
-        if($more) $xlink .= '?'.$more;
+        if ($more) $xlink .= '?'.$more;
     } elseif ($more) {
         $xlink .= $script.'?'.$more;
         $xlink .= $sep.'media='.$id;
@@ -747,9 +746,9 @@ function checkwordblock($text = '')
     /* @var Input $INPUT */
     global $INPUT;
 
-    if(!$conf['usewordblock']) return false;
+    if (!$conf['usewordblock']) return false;
 
-    if(!$text) $text = "$PRE $TEXT $SUF $SUM";
+    if (!$text) $text = "$PRE $TEXT $SUF $SUM";
 
     // we prepare the text a tiny bit to prevent spammers circumventing URL checks
     // phpcs:disable Generic.Files.LineLength.TooLong
@@ -765,21 +764,21 @@ function checkwordblock($text = '')
     // MAX_PATTERN_SIZE in modern PCRE
     $chunksize = 200;
 
-    while($blocks = array_splice($wordblocks, 0, $chunksize)) {
+    while ($blocks = array_splice($wordblocks, 0, $chunksize)) {
         $re = [];
         // build regexp from blocks
-        foreach($blocks as $block) {
+        foreach ($blocks as $block) {
             $block = preg_replace('/#.*$/', '', $block);
             $block = trim($block);
-            if(empty($block)) continue;
+            if (empty($block)) continue;
             $re[] = $block;
         }
-        if(count($re) && preg_match('#('.implode('|', $re).')#si', $text, $matches)) {
+        if (count($re) && preg_match('#('.implode('|', $re).')#si', $text, $matches)) {
             // prepare event data
             $data = [];
             $data['matches']        = $matches;
             $data['userinfo']['ip'] = $INPUT->server->str('REMOTE_ADDR');
-            if($INPUT->server->str('REMOTE_USER')) {
+            if ($INPUT->server->str('REMOTE_USER')) {
                 $data['userinfo']['user'] = $INPUT->server->str('REMOTE_USER');
                 $data['userinfo']['name'] = $INFO['userinfo']['name'];
                 $data['userinfo']['mail'] = $INFO['userinfo']['mail'];
@@ -813,28 +812,28 @@ function clientIP($single = false)
 
     $ip   = [];
     $ip[] = $INPUT->server->str('REMOTE_ADDR');
-    if($INPUT->server->str('HTTP_X_FORWARDED_FOR')) {
+    if ($INPUT->server->str('HTTP_X_FORWARDED_FOR')) {
         $ip = array_merge($ip, explode(',', str_replace(' ', '', $INPUT->server->str('HTTP_X_FORWARDED_FOR'))));
     }
-    if($INPUT->server->str('HTTP_X_REAL_IP')) {
+    if ($INPUT->server->str('HTTP_X_REAL_IP')) {
         $ip = array_merge($ip, explode(',', str_replace(' ', '', $INPUT->server->str('HTTP_X_REAL_IP'))));
     }
 
     // remove any non-IP stuff
     $cnt   = count($ip);
-    for($i = 0; $i < $cnt; $i++) {
-        if(filter_var($ip[$i], FILTER_VALIDATE_IP) === false) {
+    for ($i = 0; $i < $cnt; $i++) {
+        if (filter_var($ip[$i], FILTER_VALIDATE_IP) === false) {
             unset($ip[$i]);
         }
     }
     $ip = array_values(array_unique($ip));
-    if($ip === [] || !$ip[0]) $ip[0] = '0.0.0.0'; // for some strange reason we don't have a IP
+    if ($ip === [] || !$ip[0]) $ip[0] = '0.0.0.0'; // for some strange reason we don't have a IP
 
-    if(!$single) return implode(',', $ip);
+    if (!$single) return implode(',', $ip);
 
     // skip trusted local addresses
-    foreach($ip as $i) {
-        if(!empty($conf['trustedproxy']) && preg_match('/'.$conf['trustedproxy'].'/', $i)) {
+    foreach ($ip as $i) {
+        if (!empty($conf['trustedproxy']) && preg_match('/'.$conf['trustedproxy'].'/', $i)) {
             continue;
         } else {
             return $i;
@@ -861,11 +860,11 @@ function clientismobile()
     /* @var Input $INPUT */
     global $INPUT;
 
-    if($INPUT->server->has('HTTP_X_WAP_PROFILE')) return true;
+    if ($INPUT->server->has('HTTP_X_WAP_PROFILE')) return true;
 
-    if(preg_match('/wap\.|\.wap/i', $INPUT->server->str('HTTP_ACCEPT'))) return true;
+    if (preg_match('/wap\.|\.wap/i', $INPUT->server->str('HTTP_ACCEPT'))) return true;
 
-    if(!$INPUT->server->has('HTTP_USER_AGENT')) return false;
+    if (!$INPUT->server->has('HTTP_USER_AGENT')) return false;
 
     $uamatches = implode(
         '|',
@@ -880,7 +879,7 @@ function clientismobile()
         ]
     );
 
-    if(preg_match("/$uamatches/i", $INPUT->server->str('HTTP_USER_AGENT'))) return true;
+    if (preg_match("/$uamatches/i", $INPUT->server->str('HTTP_USER_AGENT'))) return true;
 
     return false;
 }
@@ -910,13 +909,13 @@ function link_isinterwiki($link)
 function gethostsbyaddrs($ips)
 {
     global $conf;
-    if(!$conf['dnslookups']) return $ips;
+    if (!$conf['dnslookups']) return $ips;
 
     $hosts = [];
     $ips   = explode(',', $ips);
 
-    if(is_array($ips)) {
-        foreach($ips as $ip) {
+    if (is_array($ips)) {
+        foreach ($ips as $ip) {
             $hosts[] = gethostbyaddr(trim($ip));
         }
         return implode(',', $hosts);
@@ -944,17 +943,17 @@ function checklock($id)
     $lock = wikiLockFN($id);
 
     //no lockfile
-    if(!file_exists($lock)) return false;
+    if (!file_exists($lock)) return false;
 
     //lockfile expired
-    if((time() - filemtime($lock)) > $conf['locktime']) {
+    if ((time() - filemtime($lock)) > $conf['locktime']) {
         @unlink($lock);
         return false;
     }
 
     //my own lock
     @[$ip, $session] = explode("\n", io_readFile($lock));
-    if($ip == $INPUT->server->str('REMOTE_USER') || (session_id() && $session === session_id())) {
+    if ($ip == $INPUT->server->str('REMOTE_USER') || (session_id() && $session === session_id())) {
         return false;
     }
 
@@ -974,12 +973,12 @@ function lock($id)
     /* @var Input $INPUT */
     global $INPUT;
 
-    if($conf['locktime'] == 0) {
+    if ($conf['locktime'] == 0) {
         return;
     }
 
     $lock = wikiLockFN($id);
-    if($INPUT->server->str('REMOTE_USER')) {
+    if ($INPUT->server->str('REMOTE_USER')) {
         io_saveFile($lock, $INPUT->server->str('REMOTE_USER'));
     } else {
         io_saveFile($lock, clientIP()."\n".session_id());
@@ -1000,9 +999,9 @@ function unlock($id)
     global $INPUT;
 
     $lock = wikiLockFN($id);
-    if(file_exists($lock)) {
+    if (file_exists($lock)) {
         @[$ip, $session] = explode("\n", io_readFile($lock));
-        if($ip == $INPUT->server->str('REMOTE_USER') || $session == session_id()) {
+        if ($ip == $INPUT->server->str('REMOTE_USER') || $session == session_id()) {
             @unlink($lock);
             return true;
         }
@@ -1028,7 +1027,7 @@ function cleanText($text)
     // if the text is not valid UTF-8 we simply assume latin1
     // this won't break any worse than it breaks with the wrong encoding
     // but might actually fix the problem in many cases
-    if(!Clean::isUtf8($text)) $text = utf8_encode($text);
+    if (!Clean::isUtf8($text)) $text = utf8_encode($text);
 
     return $text;
 }
@@ -1091,7 +1090,7 @@ function pageTemplate($id)
 {
     global $conf;
 
-    if(is_array($id)) $id = $id[0];
+    if (is_array($id)) $id = $id[0];
 
     // prepare initial event data
     $data = [
@@ -1102,19 +1101,19 @@ function pageTemplate($id)
     ];
 
     $evt = new Event('COMMON_PAGETPL_LOAD', $data);
-    if($evt->advise_before(true)) {
+    if ($evt->advise_before(true)) {
         // the before event might have loaded the content already
-        if(empty($data['tpl'])) {
+        if (empty($data['tpl'])) {
             // if the before event did not set a template file, try to find one
-            if(empty($data['tplfile'])) {
+            if (empty($data['tplfile'])) {
                 $path = dirname(wikiFN($id));
-                if(file_exists($path.'/_template.txt')) {
+                if (file_exists($path.'/_template.txt')) {
                     $data['tplfile'] = $path.'/_template.txt';
                 } else {
                     // search upper namespaces for templates
                     $len = strlen(rtrim($conf['datadir'], '/'));
-                    while(strlen($path) >= $len) {
-                        if(file_exists($path.'/__template.txt')) {
+                    while (strlen($path) >= $len) {
+                        if (file_exists($path.'/__template.txt')) {
                             $data['tplfile'] = $path.'/__template.txt';
                             break;
                         }
@@ -1125,7 +1124,7 @@ function pageTemplate($id)
             // load the content
             $data['tpl'] = io_readFile($data['tplfile']);
         }
-        if($data['doreplace']) parsePageTemplate($data);
+        if ($data['doreplace']) parsePageTemplate($data);
     }
     $evt->advise_after();
     unset($evt);
@@ -1262,13 +1261,13 @@ function rawWikiSlices($range, $id, $rev = '')
  */
 function con($pre, $text, $suf, $pretty = false)
 {
-    if($pretty) {
-        if($pre !== '' && substr($pre, -1) !== "\n" &&
+    if ($pretty) {
+        if ($pre !== '' && substr($pre, -1) !== "\n" &&
             substr($text, 0, 1) !== "\n"
         ) {
             $pre .= "\n";
         }
-        if($suf !== '' && substr($text, -1) !== "\n" &&
+        if ($suf !== '' && substr($text, -1) !== "\n" &&
             substr($suf, 0, 1) !== "\n"
         ) {
             $text .= "\n";
@@ -1312,7 +1311,7 @@ function saveWikiText($id, $text, $summary, $minor = false)
 
     // get COMMON_WIKIPAGE_SAVE event data
     $data = (new PageFile($id))->saveWikiText($text, $summary, $minor);
-    if(!$data) return; // save was cancelled (for no changes or by a plugin)
+    if (!$data) return; // save was cancelled (for no changes or by a plugin)
 
     // send notify mails
     ['oldRevision' => $rev, 'newRevision' => $new_rev, 'summary' => $summary] = $data;
@@ -1403,32 +1402,32 @@ function getGoogleQuery()
     /* @var Input $INPUT */
     global $INPUT;
 
-    if(!$INPUT->server->has('HTTP_REFERER')) {
+    if (!$INPUT->server->has('HTTP_REFERER')) {
         return '';
     }
     $url = parse_url($INPUT->server->str('HTTP_REFERER'));
 
     // only handle common SEs
-    if(!array_key_exists('host', $url)) return '';
-    if(!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/', $url['host'])) return '';
+    if (!array_key_exists('host', $url)) return '';
+    if (!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/', $url['host'])) return '';
 
     $query = [];
-    if(!array_key_exists('query', $url)) return '';
+    if (!array_key_exists('query', $url)) return '';
     parse_str($url['query'], $query);
 
     $q = '';
-    if(isset($query['q'])){
+    if (isset($query['q'])) {
         $q = $query['q'];
-    }elseif(isset($query['p'])){
+    } elseif (isset($query['p'])) {
         $q = $query['p'];
-    }elseif(isset($query['query'])){
+    } elseif (isset($query['query'])) {
         $q = $query['query'];
     }
     $q = trim($q);
 
-    if(!$q) return '';
+    if (!$q) return '';
     // ignore if query includes a full URL
-    if(strpos($q, '//') !== false) return '';
+    if (strpos($q, '//') !== false) return '';
     $q = preg_split('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/', $q, -1, PREG_SPLIT_NO_EMPTY);
     return $q;
 }
@@ -1450,7 +1449,7 @@ function filesize_h($size, $dec = 1)
     $count = count($sizes);
     $i     = 0;
 
-    while($size >= 1024 && ($i < $count - 1)) {
+    while ($size >= 1024 && ($i < $count - 1)) {
         $size /= 1024;
         $i++;
     }
@@ -1471,22 +1470,22 @@ function datetime_h($dt)
     global $lang;
 
     $ago = time() - $dt;
-    if($ago > 24 * 60 * 60 * 30 * 12 * 2) {
+    if ($ago > 24 * 60 * 60 * 30 * 12 * 2) {
         return sprintf($lang['years'], round($ago / (24 * 60 * 60 * 30 * 12)));
     }
-    if($ago > 24 * 60 * 60 * 30 * 2) {
+    if ($ago > 24 * 60 * 60 * 30 * 2) {
         return sprintf($lang['months'], round($ago / (24 * 60 * 60 * 30)));
     }
-    if($ago > 24 * 60 * 60 * 7 * 2) {
+    if ($ago > 24 * 60 * 60 * 7 * 2) {
         return sprintf($lang['weeks'], round($ago / (24 * 60 * 60 * 7)));
     }
-    if($ago > 24 * 60 * 60 * 2) {
+    if ($ago > 24 * 60 * 60 * 2) {
         return sprintf($lang['days'], round($ago / (24 * 60 * 60)));
     }
-    if($ago > 60 * 60 * 2) {
+    if ($ago > 60 * 60 * 2) {
         return sprintf($lang['hours'], round($ago / (60 * 60)));
     }
-    if($ago > 60 * 2) {
+    if ($ago > 60 * 2) {
         return sprintf($lang['minutes'], round($ago / (60)));
     }
     return sprintf($lang['seconds'], $ago);
@@ -1509,9 +1508,9 @@ function dformat($dt = null, $format = '')
 {
     global $conf;
 
-    if(is_null($dt)) $dt = time();
+    if (is_null($dt)) $dt = time();
     $dt = (int) $dt;
-    if(!$format) $format = $conf['dformat'];
+    if (!$format) $format = $conf['dformat'];
 
     $format = str_replace('%f', datetime_h($dt), $format);
     return strftime($format, $dt);
@@ -1548,7 +1547,7 @@ function obfuscate($email)
 {
     global $conf;
 
-    switch($conf['mailguard']) {
+    switch ($conf['mailguard']) {
         case 'visible' :
             $obfuscate = ['@' => ' [at] ', '.' => ' [dot] ', '-' => ' [dash] '];
             return strtr($email, $obfuscate);
@@ -1635,9 +1634,9 @@ function preg_quote_cb($string)
 function shorten($keep, $short, $max, $min = 9, $char = '…')
 {
     $max -= PhpString::strlen($keep);
-    if($max < $min) return $keep;
+    if ($max < $min) return $keep;
     $len = PhpString::strlen($short);
-    if($len <= $max) return $keep.$short;
+    if ($len <= $max) return $keep.$short;
     $half = floor($max / 2);
     return $keep .
         PhpString::substr($short, 0, $half - 1) .
@@ -1695,22 +1694,22 @@ function userlink($username = null, $textonly = false)
         'userlink' => '', // formatted user name as will be returned
         'textonly' => $textonly,
     ];
-    if($username === null) {
+    if ($username === null) {
         $data['username'] = $username = $INPUT->server->str('REMOTE_USER');
-        if($textonly){
+        if ($textonly) {
             $data['name'] = $INFO['userinfo']['name']. ' (' . $INPUT->server->str('REMOTE_USER') . ')';
-        }else {
+        } else {
             $data['name'] = '<bdi>' . hsc($INFO['userinfo']['name']) . '</bdi> '.
                 '(<bdi>' . hsc($INPUT->server->str('REMOTE_USER')) . '</bdi>)';
         }
     }
 
     $evt = new Event('COMMON_USER_LINK', $data);
-    if($evt->advise_before(true)) {
-        if(empty($data['name'])) {
-            if($auth) $info = $auth->getUserData($username);
-            if($conf['showuseras'] != 'loginname' && isset($info) && $info) {
-                switch($conf['showuseras']) {
+    if ($evt->advise_before(true)) {
+        if (empty($data['name'])) {
+            if ($auth) $info = $auth->getUserData($username);
+            if ($conf['showuseras'] != 'loginname' && isset($info) && $info) {
+                switch ($conf['showuseras']) {
                     case 'username':
                     case 'username_link':
                         $data['name'] = $textonly ? $info['name'] : hsc($info['name']);
@@ -1728,28 +1727,27 @@ function userlink($username = null, $textonly = false)
         /** @var Doku_Renderer_xhtml $xhtml_renderer */
         static $xhtml_renderer = null;
 
-        if(!$data['textonly'] && empty($data['link']['url'])) {
-
-            if(in_array($conf['showuseras'], ['email_link', 'username_link'])) {
-                if(!isset($info)) {
-                    if($auth) $info = $auth->getUserData($username);
+        if (!$data['textonly'] && empty($data['link']['url'])) {
+            if (in_array($conf['showuseras'], ['email_link', 'username_link'])) {
+                if (!isset($info)) {
+                    if ($auth) $info = $auth->getUserData($username);
                 }
-                if(isset($info) && $info) {
-                    if($conf['showuseras'] == 'email_link') {
+                if (isset($info) && $info) {
+                    if ($conf['showuseras'] == 'email_link') {
                         $data['link']['url'] = 'mailto:' . obfuscate($info['mail']);
                     } else {
-                        if(is_null($xhtml_renderer)) {
+                        if (is_null($xhtml_renderer)) {
                             $xhtml_renderer = p_get_renderer('xhtml');
                         }
-                        if(empty($xhtml_renderer->interwiki)) {
+                        if (empty($xhtml_renderer->interwiki)) {
                             $xhtml_renderer->interwiki = getInterwiki();
                         }
                         $shortcut = 'user';
                         $exists = null;
                         $data['link']['url'] = $xhtml_renderer->_resolveInterWiki($shortcut, $username, $exists);
                         $data['link']['class'] .= ' interwiki iw_user';
-                        if($exists !== null) {
-                            if($exists) {
+                        if ($exists !== null) {
+                            if ($exists) {
                                 $data['link']['class'] .= ' wikilink1';
                             } else {
                                 $data['link']['class'] .= ' wikilink2';
@@ -1760,17 +1758,16 @@ function userlink($username = null, $textonly = false)
                 } else {
                     $data['textonly'] = true;
                 }
-
             } else {
                 $data['textonly'] = true;
             }
         }
 
-        if($data['textonly']) {
+        if ($data['textonly']) {
             $data['userlink'] = $data['name'];
         } else {
             $data['link']['name'] = $data['name'];
-            if(is_null($xhtml_renderer)) {
+            if (is_null($xhtml_renderer)) {
                 $xhtml_renderer = p_get_renderer('xhtml');
             }
             $data['userlink'] = $xhtml_renderer->_formatLink($data['link']);
@@ -1795,16 +1792,16 @@ function license_img($type)
 {
     global $license;
     global $conf;
-    if(!$conf['license']) return '';
-    if(!is_array($license[$conf['license']])) return '';
+    if (!$conf['license']) return '';
+    if (!is_array($license[$conf['license']])) return '';
     $try   = [];
     $try[] = 'lib/images/license/'.$type.'/'.$conf['license'].'.png';
     $try[] = 'lib/images/license/'.$type.'/'.$conf['license'].'.gif';
-    if(substr($conf['license'], 0, 3) == 'cc-') {
+    if (substr($conf['license'], 0, 3) == 'cc-') {
         $try[] = 'lib/images/license/'.$type.'/cc.png';
     }
-    foreach($try as $src) {
-        if(file_exists(DOKU_INC.$src)) return $src;
+    foreach ($try as $src) {
+        if (file_exists(DOKU_INC.$src)) return $src;
     }
     return '';
 }
@@ -1825,20 +1822,20 @@ function license_img($type)
 function is_mem_available($mem, $bytes = 1_048_576)
 {
     $limit = trim(ini_get('memory_limit'));
-    if(empty($limit)) return true; // no limit set!
-    if($limit == -1) return true; // unlimited
+    if (empty($limit)) return true; // no limit set!
+    if ($limit == -1) return true; // unlimited
 
     // parse limit to bytes
     $limit = php_to_byte($limit);
 
     // get used memory if possible
-    if(function_exists('memory_get_usage')) {
+    if (function_exists('memory_get_usage')) {
         $used = memory_get_usage();
     } else {
         $used = $bytes;
     }
 
-    if($used + $mem > $limit) {
+    if ($used + $mem > $limit) {
         return false;
     }
 
@@ -1864,7 +1861,7 @@ function send_redirect($url)
 
     //are there any undisplayed messages? keep them in session for display
     global $MSG;
-    if(isset($MSG) && count($MSG) && !defined('NOSESSION')) {
+    if (isset($MSG) && count($MSG) && !defined('NOSESSION')) {
         //reopen session, store data and close session again
         @session_start();
         $_SESSION[DOKU_COOKIE]['msg'] = $MSG;
@@ -1874,7 +1871,7 @@ function send_redirect($url)
     session_write_close();
 
     // check if running on IIS < 6 with CGI-PHP
-    if($INPUT->server->has('SERVER_SOFTWARE') && $INPUT->server->has('GATEWAY_INTERFACE') &&
+    if ($INPUT->server->has('SERVER_SOFTWARE') && $INPUT->server->has('GATEWAY_INTERFACE') &&
         (strpos($INPUT->server->str('GATEWAY_INTERFACE'), 'CGI') !== false) &&
         (preg_match('|^Microsoft-IIS/(\d)\.\d$|', trim($INPUT->server->str('SERVER_SOFTWARE')), $matches)) &&
         $matches[1] < 6
@@ -1885,10 +1882,10 @@ function send_redirect($url)
     }
 
     // no exits during unit tests
-    if(defined('DOKU_UNITTEST')) {
+    if (defined('DOKU_UNITTEST')) {
         // pass info about the redirect back to the test suite
         $testRequest = TestRequest::getRunning();
-        if($testRequest !== null) {
+        if ($testRequest !== null) {
             $testRequest->addData('send_redirect', $url);
         }
         return;
@@ -1917,9 +1914,9 @@ function send_redirect($url)
  */
 function valid_input_set($param, $valid_values, $array, $exc = '')
 {
-    if(isset($array[$param]) && in_array($array[$param], $valid_values)) {
+    if (isset($array[$param]) && in_array($array[$param], $valid_values)) {
         return $array[$param];
-    } elseif(isset($valid_values['default'])) {
+    } elseif (isset($valid_values['default'])) {
         return $valid_values['default'];
     } else {
         throw new Exception($exc);
@@ -1937,14 +1934,14 @@ function valid_input_set($param, $valid_values, $array, $exc = '')
 function get_doku_pref($pref, $default)
 {
     $enc_pref = urlencode($pref);
-    if(isset($_COOKIE['DOKU_PREFS']) && strpos($_COOKIE['DOKU_PREFS'], $enc_pref) !== false) {
+    if (isset($_COOKIE['DOKU_PREFS']) && strpos($_COOKIE['DOKU_PREFS'], $enc_pref) !== false) {
         $parts = explode('#', $_COOKIE['DOKU_PREFS']);
         $cnt   = count($parts);
 
         // due to #2721 there might be duplicate entries,
         // so we read from the end
-        for($i = $cnt-2; $i >= 0; $i -= 2) {
-            if($parts[$i] === $enc_pref) {
+        for ($i = $cnt-2; $i >= 0; $i -= 2) {
+            if ($parts[$i] === $enc_pref) {
                 return urldecode($parts[$i + 1]);
             }
         }
@@ -1974,7 +1971,7 @@ function set_doku_pref($pref, $val)
         $seen = false;
         for ($i = 0; $i < $cnt; $i += 2) {
             if ($parts[$i] === $enc_pref) {
-                if (!$seen){
+                if (!$seen) {
                     if ($val !== false) {
                         $parts[$i + 1] = rawurlencode($val ?? '');
                     } else {
@@ -1996,9 +1993,9 @@ function set_doku_pref($pref, $val)
     }
 
     $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
-    if(defined('DOKU_UNITTEST')) {
+    if (defined('DOKU_UNITTEST')) {
         $_COOKIE['DOKU_PREFS'] = $cookieVal;
-    }else{
+    } else {
         setcookie('DOKU_PREFS', $cookieVal, [
             'expires' => time() + 365 * 24 * 3600,
             'path' => $cookieDir,
@@ -2034,17 +2031,17 @@ function stripsourcemaps(&$text)
 function inlineSVG($file, $maxsize = 2048)
 {
     $file = trim($file);
-    if($file === '') return false;
-    if(!file_exists($file)) return false;
-    if(filesize($file) > $maxsize) return false;
-    if(!is_readable($file)) return false;
+    if ($file === '') return false;
+    if (!file_exists($file)) return false;
+    if (filesize($file) > $maxsize) return false;
+    if (!is_readable($file)) return false;
     $content = file_get_contents($file);
     $content = preg_replace('/<!--.*?(-->)/s', '', $content); // comments
     $content = preg_replace('/<\?xml .*?\?>/i', '', $content); // xml header
     $content = preg_replace('/<!DOCTYPE .*?>/i', '', $content); // doc type
     $content = preg_replace('/>\s+</s', '><', $content); // newlines between tags
     $content = trim($content);
-    if(substr($content, 0, 5) !== '<svg ') return false;
+    if (substr($content, 0, 5) !== '<svg ') return false;
     return $content;
 }
 

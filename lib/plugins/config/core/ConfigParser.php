@@ -27,13 +27,13 @@ class ConfigParser
      */
     public function parse($file)
     {
-        if(!file_exists($file)) return [];
+        if (!file_exists($file)) return [];
 
         $config = [];
         $contents = @php_strip_whitespace($file);
 
         // fallback to simply including the file #3271
-        if($contents === null) {
+        if ($contents === null) {
             $conf = [];
             include $file;
             return $conf;
@@ -44,19 +44,19 @@ class ConfigParser
         preg_match_all($pattern, $contents, $matches, PREG_SET_ORDER);
         $counter = count($matches);
 
-        for($i = 0; $i < $counter; $i++) {
+        for ($i = 0; $i < $counter; $i++) {
             $value = $matches[$i][2];
 
             // merge multi-dimensional array indices using the keymarker
             $key = preg_replace('/.\]\[./', $this->keymarker, $matches[$i][1]);
 
             // handle arrays
-            if(preg_match('/^array ?\((.*)\)/', $value, $match)) {
+            if (preg_match('/^array ?\((.*)\)/', $value, $match)) {
                 $arr = explode(',', $match[1]);
 
                 // remove quotes from quoted strings & unescape escaped data
                 $len = count($arr);
-                for($j = 0; $j < $len; $j++) {
+                for ($j = 0; $j < $len; $j++) {
                     $arr[$j] = trim($arr[$j]);
                     $arr[$j] = $this->readValue($arr[$j]);
                 }
@@ -87,9 +87,9 @@ class ConfigParser
             '\\"' => '"'
         ];
 
-        if($value == 'true') {
+        if ($value == 'true') {
             $value = true;
-        } elseif($value == 'false') {
+        } elseif ($value == 'false') {
             $value = false;
         } else {
             // remove quotes from quoted strings & unescape escaped data

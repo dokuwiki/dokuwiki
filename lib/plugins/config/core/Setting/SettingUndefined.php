@@ -23,7 +23,7 @@ class SettingUndefined extends SettingHidden
     public function html(\admin_plugin_config $plugin, $echo = false)
     {
         // determine the name the meta key would be called
-        if(preg_match(
+        if (preg_match(
             '/^(?:plugin|tpl)' . Configuration::KEYMARKER . '.*?' . Configuration::KEYMARKER . '(.*)$/',
             $this->getKey(),
             $undefined_setting_match

@@ -58,7 +58,6 @@ class PageView extends Ui
             echo $html;
             echo '<div class="clearer"></div>';
             echo '</div></div>';
-
         } else {
             if ($REV || $DATE_AT) {
                 // print intro for old revisions

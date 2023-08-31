@@ -27,7 +27,7 @@ class Draft
         $this->id = $ID;
         $this->client = $client;
         $this->cname = getCacheName("$client\n$ID", '.draft');
-        if(file_exists($this->cname) && file_exists(wikiFN($ID))) {
+        if (file_exists($this->cname) && file_exists(wikiFN($ID))) {
             if (filemtime($this->cname) < filemtime(wikiFN($ID))) {
                 // remove stale draft
                 $this->deleteDraft();

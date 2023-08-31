@@ -20,8 +20,7 @@ function toolbar_JSdefines($varname)
     $menu = [];
 
     $evt = new Event('TOOLBAR_DEFINE', $menu);
-    if ($evt->advise_before()){
-
+    if ($evt->advise_before()) {
         // build button array
         $menu = array_merge($menu, [
             [

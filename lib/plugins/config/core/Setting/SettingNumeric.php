@@ -19,9 +19,9 @@ class SettingNumeric extends SettingString
     {
         $local = $this->local;
         $valid = parent::update($input);
-        if($valid && !(is_null($this->min) && is_null($this->max))) {
+        if ($valid && !(is_null($this->min) && is_null($this->max))) {
             $numeric_local = (int) eval('return ' . $this->local . ';');
-            if((!is_null($this->min) && $numeric_local < $this->min) ||
+            if ((!is_null($this->min) && $numeric_local < $this->min) ||
                 (!is_null($this->max) && $numeric_local > $this->max)) {
                 $this->error = true;
                 $this->input = $input;
@@ -35,7 +35,7 @@ class SettingNumeric extends SettingString
     /** @inheritdoc */
     public function out($var, $fmt = 'php')
     {
-        if($fmt != 'php') return '';
+        if ($fmt != 'php') return '';
 
         $local = $this->local === '' ? "''" : $this->local;
         $out = '$' . $var . "['" . $this->getArrayKey() . "'] = " . $local . ";\n";

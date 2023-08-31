@@ -51,7 +51,7 @@ class Export extends AbstractAction
         $headers['X-Robots-Tag'] = 'noindex';
 
         $mode = substr($this->actionname, 7);
-        switch($mode) {
+        switch ($mode) {
             case 'raw':
                 $headers['Content-Type'] = 'text/plain; charset=utf-8';
                 $headers['Content-Disposition'] = 'attachment; filename=' . noNS($ID) . '.txt';
@@ -102,8 +102,8 @@ class Export extends AbstractAction
 
         Event::createAndTrigger('ACTION_EXPORT_POSTPROCESS', $data);
 
-        if(!empty($data['output'])) {
-            if(is_array($data['headers'])) foreach($data['headers'] as $key => $val) {
+        if (!empty($data['output'])) {
+            if (is_array($data['headers'])) foreach ($data['headers'] as $key => $val) {
                 header("$key: $val");
             }
             print $pre . $data['output'] . $post;

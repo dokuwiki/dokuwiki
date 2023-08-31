@@ -20,7 +20,7 @@ abstract class AbstractAclAction extends AbstractAction
         parent::checkPreconditions();
         global $conf;
         global $auth;
-        if(!$conf['useacl']) throw new ActionAclRequiredException();
-        if(!$auth) throw new ActionAclRequiredException();
+        if (!$conf['useacl']) throw new ActionAclRequiredException();
+        if (!$auth) throw new ActionAclRequiredException();
     }
 }

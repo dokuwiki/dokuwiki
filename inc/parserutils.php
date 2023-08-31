@@ -357,10 +357,8 @@ function p_set_metadata($id, $data, $render = false, $persistent = true)
     // now add the passed metadata
     $protected = ['description', 'date', 'contributor'];
     foreach ($data as $key => $value) {
-
         // be careful with sub-arrays of $meta['relation']
         if ($key == 'relation') {
-
             foreach ($value as $subkey => $subvalue) {
                 if (isset($meta['current'][$key][$subkey]) && is_array($meta['current'][$key][$subkey])) {
                     $meta['current'][$key][$subkey] = array_replace($meta['current'][$key][$subkey], (array)$subvalue);
@@ -381,7 +379,6 @@ function p_set_metadata($id, $data, $render = false, $persistent = true)
 
             // be careful with some senisitive arrays of $meta
         } elseif (in_array($key, $protected)) {
-
             // these keys, must have subkeys - a legitimate value must be an array
             if (is_array($value)) {
                 $meta['current'][$key] = empty($meta['current'][$key]) ?
@@ -433,7 +430,6 @@ function p_purge_metadata($id)
         } else {
             $meta['current'][$key] = '';
         }
-
     }
     return p_save_metadata($id, $meta);
 }
@@ -518,7 +514,6 @@ function p_render_metadata($id, $orig)
     $orig['page'] = $id;
     $evt = new Event('PARSER_METADATA_RENDER', $orig);
     if ($evt->advise_before()) {
-
         // get instructions
         $instructions = p_cached_instructions(wikiFN($id), false, $id);
         if (is_null($instructions)) {
@@ -801,7 +796,6 @@ function p_xhtml_cached_geshi($code, $language, $wrapper = 'pre', array $options
         $ctime > filemtime(reset($config_cascade['main']['default']))) { // dokuwiki changed
         $highlighted_code = io_readFile($cache, false);
     } else {
-
         $geshi = new GeSHi($code, $language);
         $geshi->set_encoding('utf-8');
         $geshi->enable_classes();

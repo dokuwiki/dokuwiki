@@ -36,7 +36,7 @@ class admin_plugin_styling extends AdminPlugin
         global $INPUT;
         $run = $INPUT->extract('run')->str('run');
         if (!$run) return;
-        if(!checkSecurityToken()) return;
+        if (!checkSecurityToken()) return;
         $run = 'run'.ucfirst($run);
         $this->$run();
     }

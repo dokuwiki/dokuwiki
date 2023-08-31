@@ -41,8 +41,8 @@ class Setting
     {
         $this->key = $key;
 
-        if(is_array($params)) {
-            foreach($params as $property => $value) {
+        if (is_array($params)) {
+            foreach ($params as $property => $value) {
                 $property = trim($property, '_'); // we don't use underscores anymore
                 $this->$property = $value;
             }
@@ -76,15 +76,15 @@ class Setting
      */
     public function update($input)
     {
-        if(is_null($input)) return false;
-        if($this->isProtected()) return false;
+        if (is_null($input)) return false;
+        if ($this->isProtected()) return false;
         $input = $this->cleanValue($input);
 
         $value = is_null($this->local) ? $this->default : $this->local;
-        if($value == $input) return false;
+        if ($value == $input) return false;
 
         // validate new value
-        if($this->pattern && !preg_match($this->pattern, $input)) {
+        if ($this->pattern && !preg_match($this->pattern, $input)) {
             $this->error = true;
             $this->input = $input;
             return false;
@@ -142,8 +142,8 @@ class Setting
     public function getPrettyKey($url = true)
     {
         $out = str_replace(Configuration::KEYMARKER, "»", $this->key);
-        if($url && !strstr($out, '»')) {//provide no urls for plugins, etc.
-            if($out == 'start') {
+        if ($url && !strstr($out, '»')) {//provide no urls for plugins, etc.
+            if ($out == 'start') {
                 // exception, because this config name is clashing with our actual start page
                 return '<a href="https://www.dokuwiki.org/config:startpage">' . $out . '</a>';
             } else {
@@ -224,9 +224,9 @@ class Setting
      */
     public function shouldBeSaved()
     {
-        if($this->isProtected()) return false;
-        if($this->local === null) return false;
-        if($this->default == $this->local) return false;
+        if ($this->isProtected()) return false;
+        if ($this->local === null) return false;
+        if ($this->default == $this->local) return false;
         return true;
     }
 
@@ -274,7 +274,7 @@ class Setting
     public function prompt(\admin_plugin_config $plugin)
     {
         $prompt = $plugin->getLang($this->key);
-        if(!$prompt) $prompt = htmlspecialchars(str_replace(['____', '_'], ' ', $this->key));
+        if (!$prompt) $prompt = htmlspecialchars(str_replace(['____', '_'], ' ', $this->key));
         return $prompt;
     }
 
@@ -315,8 +315,8 @@ class Setting
      */
     public function caution()
     {
-        if(empty($this->caution)) return false;
-        if(!in_array($this->caution, Setting::$validCautions)) {
+        if (empty($this->caution)) return false;
+        if (!in_array($this->caution, Setting::$validCautions)) {
             throw new \RuntimeException(
                 'Invalid caution string (' . $this->caution . ') in metadata for setting "' . $this->key . '"'
             );

@@ -54,7 +54,7 @@ require_once(DOKU_INC.'inc/legacy.php');
 function load_autoload($name)
 {
     static $classes = null;
-    if($classes === null) $classes = [
+    if ($classes === null) $classes = [
         'Diff'                  => DOKU_INC.'inc/DifferenceEngine.php',
         'UnifiedDiffFormatter'  => DOKU_INC.'inc/DifferenceEngine.php',
         'TableDiffFormatter'    => DOKU_INC.'inc/DifferenceEngine.php',
@@ -76,7 +76,7 @@ function load_autoload($name)
         'Doku_Renderer_metadata' => DOKU_INC.'inc/parser/metadata.php'
     ];
 
-    if(isset($classes[$name])){
+    if (isset($classes[$name])) {
         require($classes[$name]);
         return true;
     }
@@ -103,10 +103,10 @@ function load_autoload($name)
     }
 
     // plugin namespace
-    if(substr($name, 0, 16) === 'dokuwiki/plugin/') {
+    if (substr($name, 0, 16) === 'dokuwiki/plugin/') {
         $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
         $file = DOKU_PLUGIN . substr($name, 16) . '.php';
-        if(file_exists($file)) {
+        if (file_exists($file)) {
             try {
                 require $file;
             } catch (\Throwable $e) {
@@ -117,10 +117,10 @@ function load_autoload($name)
     }
 
     // template namespace
-    if(substr($name, 0, 18) === 'dokuwiki/template/') {
+    if (substr($name, 0, 18) === 'dokuwiki/template/') {
         $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
         $file = DOKU_INC.'lib/tpl/' . substr($name, 18) . '.php';
-        if(file_exists($file)) {
+        if (file_exists($file)) {
             try {
                 require $file;
             } catch (\Throwable $e) {
@@ -131,16 +131,16 @@ function load_autoload($name)
     }
 
     // our own namespace
-    if(substr($name, 0, 9) === 'dokuwiki/') {
+    if (substr($name, 0, 9) === 'dokuwiki/') {
         $file = DOKU_INC . 'inc/' . substr($name, 9) . '.php';
-        if(file_exists($file)) {
+        if (file_exists($file)) {
             require $file;
             return true;
         }
     }
 
     // Plugin loading
-    if(preg_match(
+    if (preg_match(
         '/^(' . implode('|', PluginController::PLUGIN_TYPES) . ')_plugin_(' .
         DOKU_PLUGIN_NAME_REGEX .
         ')(?:_([^_]+))?$/',
@@ -150,7 +150,7 @@ function load_autoload($name)
         // try to load the wanted plugin file
         $c = ((count($m) === 4) ? "/{$m[3]}" : '');
         $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
-        if(file_exists($plg)){
+        if (file_exists($plg)) {
             try {
                 require $plg;
             } catch (\Throwable $e) {

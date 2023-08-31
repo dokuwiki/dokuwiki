@@ -475,7 +475,6 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
                 $open++;
             }
             $level = $item['level'];
-
         } elseif ($item['level'] < $level) {
             //close last item
             $html .= '</li>'."\n";
@@ -849,7 +848,7 @@ function html_TOC($toc)
  */
 function html_list_toc($item)
 {
-    if (isset($item['hid'])){
+    if (isset($item['hid'])) {
         $link = '#'.$item['hid'];
     } else {
         $link = $item['link'];
@@ -942,11 +941,11 @@ function html_flashobject($swf, $width, $height, $params = null, $flashvars = nu
     $out = '';
 
     // prepare the object attributes
-    if(is_null($atts)) $atts = [];
+    if (is_null($atts)) $atts = [];
     $atts['width']  = (int) $width;
     $atts['height'] = (int) $height;
-    if(!$atts['width'])  $atts['width']  = 425;
-    if(!$atts['height']) $atts['height'] = 350;
+    if (!$atts['width'])  $atts['width']  = 425;
+    if (!$atts['height']) $atts['height'] = 350;
 
     // add object attributes for standard compliant browsers
     $std = $atts;
@@ -967,19 +966,19 @@ function html_flashobject($swf, $width, $height, $params = null, $flashvars = nu
     $out .= '<!--><!-- -->'.NL;
 
     // print params
-    if(is_array($params)) foreach($params as $key => $val){
+    if (is_array($params)) foreach ($params as $key => $val) {
         $out .= '  <param name="'.hsc($key).'" value="'.hsc($val).'" />'.NL;
     }
 
     // add flashvars
-    if(is_array($flashvars)){
+    if (is_array($flashvars)) {
         $out .= '  <param name="FlashVars" value="'.buildURLparams($flashvars).'" />'.NL;
     }
 
     // alternative content
-    if($alt){
+    if ($alt) {
         $out .= $alt.NL;
-    }else{
+    } else {
         $out .= $lang['noflash'].NL;
     }
 

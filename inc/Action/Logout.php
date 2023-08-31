@@ -29,7 +29,7 @@ class Logout extends AbstractUserAction
 
         /** @var AuthPlugin $auth */
         global $auth;
-        if(!$auth->canDo('logout')) throw new ActionDisabledException();
+        if (!$auth->canDo('logout')) throw new ActionDisabledException();
     }
 
     /** @inheritdoc */
@@ -42,7 +42,7 @@ class Logout extends AbstractUserAction
 
         // when logging out during an edit session, unlock the page
         $lockedby = checklock($ID);
-        if($lockedby == $INPUT->server->str('REMOTE_USER')) {
+        if ($lockedby == $INPUT->server->str('REMOTE_USER')) {
             unlock($ID);
         }
 

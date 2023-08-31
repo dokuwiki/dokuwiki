@@ -15,7 +15,7 @@ class SettingAuthtype extends SettingMultichoice
         global $plugin_controller;
 
         // retrieve auth types provided by plugins
-        foreach($plugin_controller->getList('auth') as $plugin) {
+        foreach ($plugin_controller->getList('auth') as $plugin) {
             $this->choices[] = $plugin;
         }
 
@@ -30,21 +30,21 @@ class SettingAuthtype extends SettingMultichoice
 
         // is an update possible/requested?
         $local = $this->local;                       // save this, parent::update() may change it
-        if(!parent::update($input)) return false;    // nothing changed or an error caught by parent
+        if (!parent::update($input)) return false;    // nothing changed or an error caught by parent
         $this->local = $local;                       // restore original, more error checking to come
 
         // attempt to load the plugin
         $auth_plugin = $plugin_controller->load('auth', $input);
 
         // @TODO: throw an error in plugin controller instead of returning null
-        if(is_null($auth_plugin)) {
+        if (is_null($auth_plugin)) {
             $this->error = true;
             msg('Cannot load Auth Plugin "' . $input . '"', -1);
             return false;
         }
 
         // verify proper instantiation (is this really a plugin?) @TODO use instanceof? implement interface?
-        if(is_object($auth_plugin) && !method_exists($auth_plugin, 'getPluginName')) {
+        if (is_object($auth_plugin) && !method_exists($auth_plugin, 'getPluginName')) {
             $this->error = true;
             msg('Cannot create Auth Plugin "' . $input . '"', -1);
             return false;
@@ -52,7 +52,7 @@ class SettingAuthtype extends SettingMultichoice
 
         // did we change the auth type? logout
         global $conf;
-        if($conf['authtype'] != $input) {
+        if ($conf['authtype'] != $input) {
             msg('Authentication system changed. Please re-login.');
             auth_logoff();
         }

@@ -96,7 +96,6 @@ class PluginController
             //plugin already loaded?
             if (!empty($DOKU_PLUGINS[$type][$name])) {
                 if ($new || !$DOKU_PLUGINS[$type][$name]->isSingleton()) {
-
                     return class_exists($class, true) ? new $class() : null;
                 }
 
@@ -128,7 +127,6 @@ class PluginController
                 return null;
             }
             $DOKU_PLUGINS[$type][$name] = new $class();
-
         } catch (\Throwable $e) {
             ErrorHandler::showExceptionMsg($e, sprintf('Failed to load plugin %s', $plugin));
             return null;
@@ -210,7 +208,6 @@ class PluginController
 
                 if (array_key_exists($plugin, $this->masterList) && $this->masterList[$plugin] == 0) {
                     $all_plugins[$plugin] = 0;
-
                 } elseif (array_key_exists($plugin, $this->masterList) && $this->masterList[$plugin] == 1) {
                     $all_plugins[$plugin] = 1;
                 } else {
@@ -345,7 +342,6 @@ class PluginController
         $plugins = [];
 
         foreach ($master_list as $plugin) {
-
             if (file_exists(DOKU_PLUGIN . "$plugin/$type.php")) {
                 $plugins[] = $plugin;
                 continue;
@@ -363,7 +359,6 @@ class PluginController
                     closedir($dp);
                 }
             }
-
         }//foreach
 
         return $plugins;

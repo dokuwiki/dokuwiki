@@ -36,7 +36,7 @@ if (!defined('DOKU_INC')) die();
             <main id="dokuwiki__content"><div class="pad group">
                 <?php html_msgarea() ?>
 
-                <?php if(!$ERROR): ?>
+                <?php if (!$ERROR) : ?>
                     <div class="pageId"><span><?php echo hsc(tpl_img_getTag('IPTC.Headline', $IMG)); ?></span></div>
                 <?php endif; ?>
 
@@ -45,10 +45,10 @@ if (!defined('DOKU_INC')) die();
                     <?php tpl_includeFile('pageheader.html') ?>
                     <!-- detail start -->
                     <?php
-                    if($ERROR):
+                    if ($ERROR) :
                         echo '<h1>'.$ERROR.'</h1>';
-                    else: ?>
-                        <?php if($REV) echo p_locale_xhtml('showrev');?>
+                    else : ?>
+                        <?php if ($REV) echo p_locale_xhtml('showrev');?>
                         <h1><?php echo nl2br(hsc(tpl_img_getTag('simple.title'))); ?></h1>
 
                         <?php tpl_img(900, 700); /* parameters: maximum width, maximum height (and more) */ ?>
@@ -59,11 +59,11 @@ if (!defined('DOKU_INC')) die();
                             <?php
                             echo '<dt>'.$lang['reference'].':</dt>';
                             $media_usage = ft_mediause($IMG, true);
-                            if($media_usage !== []){
-                                foreach($media_usage as $path){
+                            if ($media_usage !== []) {
+                                foreach ($media_usage as $path) {
                                     echo '<dd>'.html_wikilink($path).'</dd>';
                                 }
-                            }else{
+                            } else {
                                 echo '<dd>'.$lang['nothingfound'].'</dd>';
                             }
                             ?>
@@ -86,7 +86,7 @@ if (!defined('DOKU_INC')) die();
             <hr class="a11y" />
 
             <!-- PAGE ACTIONS -->
-            <?php if (!$ERROR): ?>
+            <?php if (!$ERROR) : ?>
                 <nav id="dokuwiki__pagetools" aria-labelledby="dokuwiki__pagetools__heading">
                     <h3 class="a11y" id="dokuwiki__pagetools__heading"><?php echo $lang['page_tools']; ?></h3>
                     <div class="tools">

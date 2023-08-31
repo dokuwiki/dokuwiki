@@ -74,7 +74,6 @@ class CacheRenderer extends CacheParser
 
         // page implies metadata and possibly some other dependencies
         if (isset($this->page)) {
-
             // for xhtml this will render the metadata if needed
             $valid = p_get_metadata($this->page, 'date valid');
             if (!empty($valid['age'])) {

@@ -137,7 +137,6 @@ function css_out()
 
     // build the stylesheet
     foreach ($mediatypes as $mediatype) {
-
         // Check if there is a wrapper set for this type.
         if (!isset($media_files[$mediatype])) {
             continue;

@@ -41,24 +41,24 @@ class admin_plugin_config extends AdminPlugin
         // always initialize the configuration
         $this->configuration = new Configuration();
 
-        if(!$INPUT->bool('save') || !checkSecurityToken()) {
+        if (!$INPUT->bool('save') || !checkSecurityToken()) {
             return;
         }
 
         // don't go any further if the configuration is locked
-        if($this->configuration->isLocked()) return;
+        if ($this->configuration->isLocked()) return;
 
         // update settings and redirect of successful
         $ok = $this->configuration->updateSettings($INPUT->arr('config'));
-        if($ok) { // no errors
+        if ($ok) { // no errors
             try {
-                if($this->configuration->hasChanged()) {
+                if ($this->configuration->hasChanged()) {
                     $this->configuration->save();
                 } else {
                     $this->configuration->touch();
                 }
                 msg($this->getLang('updated'), 1);
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 msg($this->getLang('error'), -1);
             }
             send_redirect(wl($ID, ['do' => 'admin', 'page' => 'config'], true, '&'));
@@ -83,7 +83,7 @@ class admin_plugin_config extends AdminPlugin
 
         echo '<div id="config__manager">';
 
-        if($this->configuration->isLocked()) {
+        if ($this->configuration->isLocked()) {
             echo '<div class="info">' . $this->getLang('locked') . '</div>';
         }
 
@@ -98,12 +98,12 @@ class admin_plugin_config extends AdminPlugin
         $in_fieldset = false;
         $first_plugin_fieldset = true;
         $first_template_fieldset = true;
-        foreach($this->configuration->getSettings() as $setting) {
+        foreach ($this->configuration->getSettings() as $setting) {
             if ($setting instanceof SettingHidden) {
                 continue;
             } elseif ($setting instanceof SettingFieldset) {
                 // config setting group
-                if($in_fieldset) {
+                if ($in_fieldset) {
                     echo '</table>';
                     echo '</div>';
                     echo '</fieldset>';
@@ -148,13 +148,13 @@ class admin_plugin_config extends AdminPlugin
 
         echo '</table>';
         echo '</div>';
-        if($in_fieldset) {
+        if ($in_fieldset) {
             echo '</fieldset>';
         }
 
         // show undefined settings list
         $undefined_settings = $this->configuration->getUndefined();
-        if($allow_debug && !empty($undefined_settings)) {
+        if ($allow_debug && !empty($undefined_settings)) {
             /**
              * Callback for sorting settings
              *
@@ -172,7 +172,7 @@ class admin_plugin_config extends AdminPlugin
             echo '<fieldset>';
             echo '<div class="table">';
             echo '<table class="inline">';
-            foreach($undefined_settings as $setting) {
+            foreach ($undefined_settings as $setting) {
                 [$label, $input] = $setting->html($this);
                 echo '<tr>';
                 echo '<td class="label">' . $label . '</td>';
@@ -189,7 +189,7 @@ class admin_plugin_config extends AdminPlugin
         echo '<input type="hidden" name="do"     value="admin" />';
         echo '<input type="hidden" name="page"   value="config" />';
 
-        if(!$this->configuration->isLocked()) {
+        if (!$this->configuration->isLocked()) {
             echo '<input type="hidden" name="save"   value="1" />';
             echo '<button type="submit" name="submit" accesskey="s">' . $lang['btn_save'] . '</button>';
             echo '<button type="reset">' . $lang['btn_reset'] . '</button>';
@@ -207,7 +207,7 @@ class admin_plugin_config extends AdminPlugin
     public function setupLocale($prompts = false)
     {
         parent::setupLocale();
-        if(!$prompts || $this->promptsLocalized) return;
+        if (!$prompts || $this->promptsLocalized) return;
         $this->lang = array_merge($this->lang, $this->configuration->getLangs());
         $this->promptsLocalized = true;
     }
@@ -229,8 +229,8 @@ class admin_plugin_config extends AdminPlugin
 
         // gather settings data into three sub arrays
         $labels = ['dokuwiki' => [], 'plugin' => [], 'template' => []];
-        foreach($this->configuration->getSettings() as $setting) {
-            if($setting instanceof SettingFieldset) {
+        foreach ($this->configuration->getSettings() as $setting) {
+            if ($setting instanceof SettingFieldset) {
                 $labels[$setting->getType()][] = $setting;
             }
         }
@@ -240,8 +240,8 @@ class admin_plugin_config extends AdminPlugin
         $toc[] = html_mktocitem(sectionID($title, $check), $title, 1);
 
         // main entries
-        foreach(['dokuwiki', 'plugin', 'template'] as $section) {
-            if(empty($labels[$section])) continue; // no entries, skip
+        foreach (['dokuwiki', 'plugin', 'template'] as $section) {
+            if (empty($labels[$section])) continue; // no entries, skip
 
             // create main header
             $toc[] = html_mktocitem(
@@ -251,7 +251,7 @@ class admin_plugin_config extends AdminPlugin
             );
 
             // create sub headers
-            foreach($labels[$section] as $setting) {
+            foreach ($labels[$section] as $setting) {
                 /** @var SettingFieldset $setting */
                 $name = $setting->prompt($this);
                 $toc[] = html_mktocitem($setting->getKey(), $name, 2);
@@ -259,7 +259,7 @@ class admin_plugin_config extends AdminPlugin
         }
 
         // undefined settings if allowed
-        if(count($this->configuration->getUndefined()) && $allow_debug) {
+        if (count($this->configuration->getUndefined()) && $allow_debug) {
             $toc[] = html_mktocitem('undefined_settings', $this->getLang('_header_undefined'), 1);
         }
 
@@ -285,7 +285,7 @@ class admin_plugin_config extends AdminPlugin
      */
     public function addLang($key, $value)
     {
-        if(!$this->localised) $this->setupLocale();
+        if (!$this->localised) $this->setupLocale();
         $this->lang[$key] = $value;
     }
 }

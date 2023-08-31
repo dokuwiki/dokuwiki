@@ -61,7 +61,6 @@ class Manifest
             ];
 
             foreach ($look as $svgLogo) {
-
                 $svgLogoFN = mediaFN($svgLogo);
 
                 if (file_exists($svgLogoFN)) {

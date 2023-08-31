@@ -4,7 +4,7 @@
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
+if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
@@ -85,9 +85,9 @@ class GitToolCLI extends CLI
     {
         $command = $options->getCmd();
         $args = $options->getArgs();
-        if(!$command) $command = array_shift($args);
+        if (!$command) $command = array_shift($args);
 
-        switch($command) {
+        switch ($command) {
             case '':
                 echo $options->help();
                 break;
@@ -116,7 +116,7 @@ class GitToolCLI extends CLI
         $errors = [];
         $succeeded = [];
 
-        foreach($extensions as $ext) {
+        foreach ($extensions as $ext) {
             $repo = $this->getSourceRepo($ext);
 
             if (!$repo) {
@@ -130,8 +130,8 @@ class GitToolCLI extends CLI
         }
 
         echo "\n";
-        if($succeeded) $this->success('successfully cloned the following extensions: ' . implode(', ', $succeeded));
-        if($errors) $this->error('failed to clone the following extensions: ' . implode(', ', $errors));
+        if ($succeeded) $this->success('successfully cloned the following extensions: ' . implode(', ', $succeeded));
+        if ($errors) $this->error('failed to clone the following extensions: ' . implode(', ', $errors));
     }
 
     /**
@@ -144,12 +144,12 @@ class GitToolCLI extends CLI
         $errors = [];
         $succeeded = [];
 
-        foreach($extensions as $ext) {
+        foreach ($extensions as $ext) {
             $repo = $this->getSourceRepo($ext);
 
             if (!$repo) {
                 $this->info("could not find a repository for $ext");
-                if($this->downloadExtension($ext)) {
+                if ($this->downloadExtension($ext)) {
                     $succeeded[] = $ext;
                 } else {
                     $errors[] = $ext;
@@ -162,8 +162,8 @@ class GitToolCLI extends CLI
         }
 
         echo "\n";
-        if($succeeded) $this->success('successfully installed the following extensions: ' . implode(', ', $succeeded));
-        if($errors) $this->error('failed to install the following extensions: ' . implode(', ', $errors));
+        if ($succeeded) $this->success('successfully installed the following extensions: ' . implode(', ', $succeeded));
+        if ($errors) $this->error('failed to install the following extensions: ' . implode(', ', $errors));
     }
 
     /**
@@ -180,8 +180,8 @@ class GitToolCLI extends CLI
         $shell = array_map('escapeshellarg', $shell);
         $shell = implode(' ', $shell);
 
-        foreach($repos as $repo) {
-            if(!@chdir($repo)) {
+        foreach ($repos as $repo) {
+            if (!@chdir($repo)) {
                 $this->error("Could not change into $repo");
                 continue;
             }
@@ -190,7 +190,7 @@ class GitToolCLI extends CLI
             $ret = 0;
             system($shell, $ret);
 
-            if($ret == 0) {
+            if ($ret == 0) {
                 $this->success("git succeeded in $repo");
             } else {
                 $this->error("git failed in $repo");
@@ -204,7 +204,7 @@ class GitToolCLI extends CLI
     public function cmdRepos()
     {
         $repos = $this->findRepos();
-        foreach($repos as $repo) {
+        foreach ($repos as $repo) {
             echo "$repo\n";
         }
     }
@@ -219,12 +219,12 @@ class GitToolCLI extends CLI
     {
         /** @var helper_plugin_extension_extension $plugin */
         $plugin = plugin_load('helper', 'extension_extension');
-        if(!$ext) die("extension plugin not available, can't continue");
+        if (!$ext) die("extension plugin not available, can't continue");
 
         $plugin->setExtension($ext);
 
         $url = $plugin->getDownloadURL();
-        if(!$url) {
+        if (!$url) {
             $this->error("no download URL for $ext");
             return false;
         }
@@ -233,11 +233,11 @@ class GitToolCLI extends CLI
         try {
             $this->info("installing $ext via download from $url");
             $ok = $plugin->installFromURL($url);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $this->error($e->getMessage());
         }
 
-        if($ok) {
+        if ($ok) {
             $this->success("installed $ext via download");
             return true;
         } else {
@@ -255,7 +255,7 @@ class GitToolCLI extends CLI
      */
     private function cloneExtension($ext, $repo)
     {
-        if(substr($ext, 0, 9) == 'template:') {
+        if (substr($ext, 0, 9) == 'template:') {
             $target = fullpath(tpl_incdir() . '../' . substr($ext, 9));
         } else {
             $target = DOKU_PLUGIN . $ext;
@@ -264,7 +264,7 @@ class GitToolCLI extends CLI
         $this->info("cloning $ext from $repo to $target");
         $ret = 0;
         system("git clone $repo $target", $ret);
-        if($ret === 0) {
+        if ($ret === 0) {
             $this->success("cloning of $ext succeeded");
             return true;
         } else {
@@ -289,7 +289,7 @@ class GitToolCLI extends CLI
             glob(fullpath(tpl_incdir() . '../') . '/*/.git', GLOB_ONLYDIR)
         );
 
-        if(!$data) {
+        if (!$data) {
             $this->error('Found no .git directories');
         } else {
             $this->success('Found ' . count($data) . ' .git directories');
@@ -308,31 +308,31 @@ class GitToolCLI extends CLI
     {
         /** @var helper_plugin_extension_extension $ext */
         $ext = plugin_load('helper', 'extension_extension');
-        if(!$ext) die("extension plugin not available, can't continue");
+        if (!$ext) die("extension plugin not available, can't continue");
 
         $ext->setExtension($extension);
 
         $repourl = $ext->getSourcerepoURL();
-        if(!$repourl) return false;
+        if (!$repourl) return false;
 
         // match github repos
-        if(preg_match('/github\.com\/([^\/]+)\/([^\/]+)/i', $repourl, $m)) {
+        if (preg_match('/github\.com\/([^\/]+)\/([^\/]+)/i', $repourl, $m)) {
             $user = $m[1];
             $repo = $m[2];
             return 'https://github.com/' . $user . '/' . $repo . '.git';
         }
 
         // match gitorious repos
-        if(preg_match('/gitorious.org\/([^\/]+)\/([^\/]+)?/i', $repourl, $m)) {
+        if (preg_match('/gitorious.org\/([^\/]+)\/([^\/]+)?/i', $repourl, $m)) {
             $user = $m[1];
             $repo = $m[2];
-            if(!$repo) $repo = $user;
+            if (!$repo) $repo = $user;
 
             return 'https://git.gitorious.org/' . $user . '/' . $repo . '.git';
         }
 
         // match bitbucket repos - most people seem to use mercurial there though
-        if(preg_match('/bitbucket\.org\/([^\/]+)\/([^\/]+)/i', $repourl, $m)) {
+        if (preg_match('/bitbucket\.org\/([^\/]+)\/([^\/]+)/i', $repourl, $m)) {
             $user = $m[1];
             $repo = $m[2];
             return 'https://bitbucket.org/' . $user . '/' . $repo . '.git';

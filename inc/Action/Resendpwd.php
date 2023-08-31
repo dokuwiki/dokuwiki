@@ -118,9 +118,7 @@ class Resendpwd extends AbstractAclAction
                     msg($lang['proffail'], -1);
                     return false;
                 }
-
             } else { // autogenerate the password and send by mail
-
                 $pass = auth_pwgen($user);
                 if (!$auth->triggerUserMod('modify', [$user, ['pass' => $pass]])) {
                     msg($lang['proffail'], -1);
@@ -136,7 +134,6 @@ class Resendpwd extends AbstractAclAction
 
             @unlink($tfile);
             return true;
-
         } else {
             // we're in request phase
 

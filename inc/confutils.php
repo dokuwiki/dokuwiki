@@ -36,16 +36,16 @@ function mimetype($file, $knownonly = true)
         return [false, false, false];
     }
     $ext = strtolower(substr($file, $ext + 1));
-    if (!isset($mtypes[$ext])){
+    if (!isset($mtypes[$ext])) {
         if ($knownonly) {
             return [false, false, false];
         } else {
             return [$ext, 'application/octet-stream', true];
         }
     }
-    if($mtypes[$ext][0] == '!'){
+    if ($mtypes[$ext][0] == '!') {
         return [$ext, substr($mtypes[$ext], 1), true];
-    }else{
+    } else {
         return [$ext, $mtypes[$ext], false];
     }
 }
@@ -141,9 +141,9 @@ function getCdnUrls()
     // load version info
     $versions = [];
     $lines = file(DOKU_INC . 'lib/scripts/jquery/versions');
-    foreach($lines as $line) {
+    foreach ($lines as $line) {
         $line = trim(preg_replace('/#.*$/', '', $line));
-        if($line === '') continue;
+        if ($line === '') continue;
         [$key, $val] = sexplode('=', $line, 2, '');
         $key = trim($key);
         $val = trim($val);
@@ -153,14 +153,14 @@ function getCdnUrls()
     $src = [];
     $data = ['versions' => $versions, 'src' => &$src];
     $event = new Event('CONFUTIL_CDN_SELECT', $data);
-    if($event->advise_before()) {
-        if(!$conf['jquerycdn']) {
+    if ($event->advise_before()) {
+        if (!$conf['jquerycdn']) {
             $jqmod = md5(implode('-', $versions));
             $src[] = DOKU_BASE . 'lib/exe/jquery.php' . '?tseed=' . $jqmod;
-        } elseif($conf['jquerycdn'] == 'jquery') {
+        } elseif ($conf['jquerycdn'] == 'jquery') {
             $src[] = sprintf('https://code.jquery.com/jquery-%s.min.js', $versions['JQ_VERSION']);
             $src[] = sprintf('https://code.jquery.com/ui/%s/jquery-ui.min.js', $versions['JQUI_VERSION']);
-        } elseif($conf['jquerycdn'] == 'cdnjs') {
+        } elseif ($conf['jquerycdn'] == 'cdnjs') {
             $src[] = sprintf(
                 'https://cdnjs.cloudflare.com/ajax/libs/jquery/%s/jquery.min.js',
                 $versions['JQ_VERSION']
@@ -225,18 +225,18 @@ function linesToHash($lines, $lower = false)
 {
     $conf = [];
     // remove BOM
-    if(isset($lines[0]) && substr($lines[0], 0, 3) === pack('CCC', 0xef, 0xbb, 0xbf))
+    if (isset($lines[0]) && substr($lines[0], 0, 3) === pack('CCC', 0xef, 0xbb, 0xbf))
         $lines[0] = substr($lines[0], 3);
-    foreach($lines as $line) {
+    foreach ($lines as $line) {
         //ignore comments (except escaped ones)
         $line = preg_replace('/(?<![&\\\\])#.*$/', '', $line);
         $line = str_replace('\\#', '#', $line);
         $line = trim($line);
-        if($line === '') continue;
+        if ($line === '') continue;
         $line = preg_split('/\s+/', $line, 2);
         $line = array_pad($line, 2, '');
         // Build the associative array
-        if($lower) {
+        if ($lower) {
             $conf[strtolower($line[0])] = $line[1];
         } else {
             $conf[$line[0]] = $line[1];
@@ -308,7 +308,7 @@ function retrieveConfig($type, $fn, $params = null, $combine = 'array_merge')
 {
     global $config_cascade;
 
-    if(!is_array($params)) $params = [];
+    if (!is_array($params)) $params = [];
 
     $combined = [];
     if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "'.$type.'"', E_USER_WARNING);
@@ -357,7 +357,7 @@ function getConfigFiles($type)
 function actionOK($action)
 {
     static $disabled = null;
-    if(is_null($disabled) || defined('SIMPLE_TEST')){
+    if (is_null($disabled) || defined('SIMPLE_TEST')) {
         global $conf;
         /** @var AuthPlugin $auth */
         global $auth;
@@ -365,13 +365,13 @@ function actionOK($action)
         // prepare disabled actions array and handle legacy options
         $disabled = explode(',', $conf['disableactions']);
         $disabled = array_map('trim', $disabled);
-        if((isset($conf['openregister']) && !$conf['openregister']) || is_null($auth) || !$auth->canDo('addUser')) {
+        if ((isset($conf['openregister']) && !$conf['openregister']) || is_null($auth) || !$auth->canDo('addUser')) {
             $disabled[] = 'register';
         }
-        if((isset($conf['resendpasswd']) && !$conf['resendpasswd']) || is_null($auth) || !$auth->canDo('modPass')) {
+        if ((isset($conf['resendpasswd']) && !$conf['resendpasswd']) || is_null($auth) || !$auth->canDo('modPass')) {
             $disabled[] = 'resendpwd';
         }
-        if((isset($conf['subscribers']) && !$conf['subscribers']) || is_null($auth)) {
+        if ((isset($conf['subscribers']) && !$conf['subscribers']) || is_null($auth)) {
             $disabled[] = 'subscribe';
         }
         if (is_null($auth) || !$auth->canDo('Profile')) {
@@ -404,7 +404,7 @@ function actionOK($action)
 function useHeading($linktype)
 {
     static $useHeading = null;
-    if(defined('DOKU_UNITTEST')) $useHeading = null; // don't cache during unit tests
+    if (defined('DOKU_UNITTEST')) $useHeading = null; // don't cache during unit tests
 
     if (is_null($useHeading)) {
         global $conf;

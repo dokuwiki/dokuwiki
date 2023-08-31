@@ -25,7 +25,7 @@ abstract class AbstractAction
      */
     public function __construct($actionname = '')
     {
-        if($actionname !== '') {
+        if ($actionname !== '') {
             $this->actionname = $actionname;
         } else {
             // http://stackoverflow.com/a/27457689/172068

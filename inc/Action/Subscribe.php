@@ -30,7 +30,7 @@ class Subscribe extends AbstractUserAction
         parent::checkPreconditions();
 
         global $conf;
-        if(isset($conf['subscribers']) && !$conf['subscribers']) throw new ActionDisabledException();
+        if (isset($conf['subscribers']) && !$conf['subscribers']) throw new ActionDisabledException();
     }
 
     /** @inheritdoc */

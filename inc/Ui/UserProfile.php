@@ -91,7 +91,6 @@ class UserProfile extends Ui
 
 
         if ($auth->canDo('delUser') && actionOK('profile_delete')) {
-
             // create the profiledelete form
             $form = new Form(['id' => 'dw__profiledelete']);
             $form->addTagOpen('div')->addClass('no');

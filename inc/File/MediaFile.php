@@ -160,7 +160,7 @@ class MediaFile
     /** @return JpegMeta */
     public function getMeta()
     {
-        if($this->meta === null) $this->meta = new JpegMeta($this->path);
+        if ($this->meta === null) $this->meta = new JpegMeta($this->path);
         return $this->meta;
     }
 }

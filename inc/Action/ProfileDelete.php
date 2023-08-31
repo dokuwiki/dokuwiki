@@ -29,14 +29,14 @@ class ProfileDelete extends AbstractUserAction
 
         /** @var AuthPlugin $auth */
         global $auth;
-        if(!$auth->canDo('delUser')) throw new ActionDisabledException();
+        if (!$auth->canDo('delUser')) throw new ActionDisabledException();
     }
 
     /** @inheritdoc */
     public function preProcess()
     {
         global $lang;
-        if(auth_deleteprofile()) {
+        if (auth_deleteprofile()) {
             msg($lang['profdeleted'], 1);
             throw new ActionAbort('show');
         } else {

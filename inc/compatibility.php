@@ -5,7 +5,7 @@
  * This file contains a few functions that might be missing from the PHP build
  */
 
-if(!function_exists('ctype_space')) {
+if (!function_exists('ctype_space')) {
     /**
      * Check for whitespace character(s)
      *
@@ -15,13 +15,13 @@ if(!function_exists('ctype_space')) {
      */
     function ctype_space($text)
     {
-        if(!is_string($text)) return false; #FIXME original treats between -128 and 255 inclusive as ASCII chars
-        if(trim($text) === '') return true;
+        if (!is_string($text)) return false; #FIXME original treats between -128 and 255 inclusive as ASCII chars
+        if (trim($text) === '') return true;
         return false;
     }
 }
 
-if(!function_exists('ctype_digit')) {
+if (!function_exists('ctype_digit')) {
     /**
      * Check for numeric character(s)
      *
@@ -31,13 +31,13 @@ if(!function_exists('ctype_digit')) {
      */
     function ctype_digit($text)
     {
-        if(!is_string($text)) return false; #FIXME original treats between -128 and 255 inclusive as ASCII chars
-        if(preg_match('/^\d+$/', $text)) return true;
+        if (!is_string($text)) return false; #FIXME original treats between -128 and 255 inclusive as ASCII chars
+        if (preg_match('/^\d+$/', $text)) return true;
         return false;
     }
 }
 
-if(!function_exists('gzopen') && function_exists('gzopen64')) {
+if (!function_exists('gzopen') && function_exists('gzopen64')) {
     /**
      * work around for PHP compiled against certain zlib versions #865
      *
@@ -54,7 +54,7 @@ if(!function_exists('gzopen') && function_exists('gzopen64')) {
     }
 }
 
-if(!function_exists('gzseek') && function_exists('gzseek64')) {
+if (!function_exists('gzseek') && function_exists('gzseek64')) {
     /**
      * work around for PHP compiled against certain zlib versions #865
      *
@@ -71,7 +71,7 @@ if(!function_exists('gzseek') && function_exists('gzseek64')) {
     }
 }
 
-if(!function_exists('gztell') && function_exists('gztell64')) {
+if (!function_exists('gztell') && function_exists('gztell64')) {
     /**
      * work around for PHP compiled against certain zlib versions #865
      *

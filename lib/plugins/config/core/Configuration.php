@@ -108,12 +108,12 @@ class Configuration
     {
         $ok = true;
 
-        foreach($this->settings as $key => $obj) {
+        foreach ($this->settings as $key => $obj) {
             $value = $input[$key] ?? null;
-            if($obj->update($value)) {
+            if ($obj->update($value)) {
                 $this->changed = true;
             }
-            if($obj->hasError()) $ok = false;
+            if ($obj->hasError()) $ok = false;
         }
 
         return $ok;
@@ -167,10 +167,10 @@ class Configuration
         ];
         $keys = array_unique($keys);
 
-        foreach($keys as $key) {
+        foreach ($keys as $key) {
             $obj = $this->instantiateClass($key);
 
-            if($obj->shouldHaveDefault() && !isset($this->default[$key])) {
+            if ($obj->shouldHaveDefault() && !isset($this->default[$key])) {
                 $this->undefined[$key] = new SettingNoDefault($key);
             }
 
@@ -192,7 +192,7 @@ class Configuration
      */
     protected function instantiateClass($key)
     {
-        if(isset($this->metadata[$key])) {
+        if (isset($this->metadata[$key])) {
             $param = $this->metadata[$key];
             $class = $this->determineClassName(array_shift($param), $key); // first param is class
             $obj = new $class($key, $param);
@@ -214,12 +214,12 @@ class Configuration
     protected function determineClassName($class, $key)
     {
         // try namespaced class first
-        if(is_string($class)) {
+        if (is_string($class)) {
             $modern = str_replace('_', '', ucwords($class, '_'));
             $modern = '\\dokuwiki\\plugin\\config\\core\\Setting\\Setting' . $modern;
-            if($modern && class_exists($modern)) return $modern;
+            if ($modern && class_exists($modern)) return $modern;
             // try class as given
-            if(class_exists($class)) return $class;
+            if (class_exists($class)) return $class;
             // class wasn't found add to errors
             $this->undefined[$key] = new SettingNoKnownClass($key);
         } else {

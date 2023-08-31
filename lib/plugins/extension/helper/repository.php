@@ -109,7 +109,7 @@ class helper_plugin_extension_repository extends Plugin
             $data = $httpclient->get(self::EXTENSION_REPOSITORY_API.'?fmt=php&ext[]='.urlencode($name));
             if ($data !== false) {
                 $result = unserialize($data);
-                if(count($result)) {
+                if (count($result)) {
                     $cache->storeCache(serialize($result[0]));
                     return $result[0];
                 }

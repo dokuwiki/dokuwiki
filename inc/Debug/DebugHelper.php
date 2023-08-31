@@ -46,7 +46,7 @@ class DebugHelper
 
         $backtrace = debug_backtrace();
         for ($i = 0; $i < $callerOffset; ++$i) {
-            if(count($backtrace) > 1) array_shift($backtrace);
+            if (count($backtrace) > 1) array_shift($backtrace);
         }
 
         [$self, $call] = $backtrace;
@@ -69,7 +69,7 @@ class DebugHelper
     protected static function formatCall($call)
     {
         $thing = '';
-        if(!empty($call['class'])) {
+        if (!empty($call['class'])) {
             $thing .= $call['class'] . '::';
         }
         $thing .= $call['function'] . '()';

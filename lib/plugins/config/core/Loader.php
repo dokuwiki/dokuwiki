@@ -49,7 +49,7 @@ class Loader
         include DOKU_PLUGIN . 'config/settings/config.metadata.php';
 
         // plugins
-        foreach($this->plugins as $plugin) {
+        foreach ($this->plugins as $plugin) {
             $meta = array_merge(
                 $meta,
                 $this->loadExtensionMeta(
@@ -128,7 +128,7 @@ class Loader
         $lang = [];
 
         // plugins
-        foreach($this->plugins as $plugin) {
+        foreach ($this->plugins as $plugin) {
             $lang = array_merge(
                 $lang,
                 $this->loadExtensionLang(
@@ -183,7 +183,7 @@ class Loader
     protected function loadConfigs($files)
     {
         $conf = [];
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $conf = array_merge($conf, $this->parser->parse($file));
         }
         return $conf;
@@ -201,19 +201,19 @@ class Loader
      */
     protected function loadExtensionMeta($file, $type, $extname)
     {
-        if(!file_exists($file)) return [];
+        if (!file_exists($file)) return [];
         $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
 
         // include file
         $meta = [];
         include $file;
-        if($meta === []) return [];
+        if ($meta === []) return [];
 
         // read data
         $data = [];
         $data[$prefix . $type . '_settings_name'] = ['fieldset'];
-        foreach($meta as $key => $value) {
-            if($value[0] == 'fieldset') continue; //plugins only get one fieldset
+        foreach ($meta as $key => $value) {
+            if ($value[0] == 'fieldset') continue; //plugins only get one fieldset
             $data[$prefix . $key] = $value;
         }
 
@@ -232,16 +232,16 @@ class Loader
      */
     protected function loadExtensionConf($file, $type, $extname)
     {
-        if(!file_exists($file)) return [];
+        if (!file_exists($file)) return [];
         $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
 
         // parse file
         $conf = $this->parser->parse($file);
-        if(empty($conf)) return [];
+        if (empty($conf)) return [];
 
         // read data
         $data = [];
-        foreach($conf as $key => $value) {
+        foreach ($conf as $key => $value) {
             $data[$prefix . $key] = $value;
         }
 
@@ -264,16 +264,16 @@ class Loader
 
         // include files
         $lang = [];
-        if(file_exists($dir . 'lang/en/settings.php')) {
+        if (file_exists($dir . 'lang/en/settings.php')) {
             include $dir . 'lang/en/settings.php';
         }
-        if($ll != 'en' && file_exists($dir . 'lang/' . $ll . '/settings.php')) {
+        if ($ll != 'en' && file_exists($dir . 'lang/' . $ll . '/settings.php')) {
             include $dir . 'lang/' . $ll . '/settings.php';
         }
 
         // set up correct keys
         $strings = [];
-        foreach($lang as $key => $val) {
+        foreach ($lang as $key => $val) {
             $strings[$prefix . $key] = $val;
         }
 

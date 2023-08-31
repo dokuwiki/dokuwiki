@@ -15,7 +15,7 @@ use dokuwiki\Utf8\Sort;
 /**
  * create snippets for the first few results only
  */
-if(!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER', 15);
+if (!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER', 15);
 
 /**
  * The fulltext search
@@ -85,7 +85,7 @@ function _ft_pageSearch(&$data)
             case 'W-:':
             case 'W_:': // word
                 $word    = substr($token, 3);
-                if(isset($lookup[$word])) {
+                if (isset($lookup[$word])) {
                     $stack[] = (array)$lookup[$word];
                 }
                 break;
@@ -97,7 +97,7 @@ function _ft_pageSearch(&$data)
                 // all words in this phrase
                 $pages  = end($stack);
                 $pages_matched = [];
-                foreach(array_keys($pages) as $id){
+                foreach (array_keys($pages) as $id) {
                     $evdata = [
                         'id' => $id,
                         'phrase' => $phrase,
@@ -179,13 +179,13 @@ function ft_backlinks($id, $ignore_perms = false)
 {
     $result = idx_get_indexer()->lookupKey('relation_references', $id);
 
-    if($result === []) return $result;
+    if ($result === []) return $result;
 
     // check ACL permissions
-    foreach(array_keys($result) as $idx){
-        if((!$ignore_perms && (
+    foreach (array_keys($result) as $idx) {
+        if ((!$ignore_perms && (
                 isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_READ
-            )) || !page_exists($result[$idx], '', false)){
+            )) || !page_exists($result[$idx], '', false)) {
             unset($result[$idx]);
         }
     }
@@ -211,13 +211,13 @@ function ft_mediause($id, $ignore_perms = false)
 {
     $result = idx_get_indexer()->lookupKey('relation_media', $id);
 
-    if($result === []) return $result;
+    if ($result === []) return $result;
 
     // check ACL permissions
-    foreach(array_keys($result) as $idx){
-        if((!$ignore_perms && (
+    foreach (array_keys($result) as $idx) {
+        if ((!$ignore_perms && (
                     isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_READ
-                )) || !page_exists($result[$idx], '', false)){
+                )) || !page_exists($result[$idx], '', false)) {
             unset($result[$idx]);
         }
     }
@@ -323,8 +323,8 @@ function _ft_pageLookup(&$data)
     // discard hidden pages
     // discard nonexistent pages
     // check ACL permissions
-    foreach(array_keys($pages) as $idx){
-        if(!isVisiblePage($idx) || !page_exists($idx) ||
+    foreach (array_keys($pages) as $idx) {
+        if (!isVisiblePage($idx) || !page_exists($idx) ||
            auth_quickaclcheck($idx) < AUTH_READ) {
             unset($pages[$idx]);
         }
@@ -401,9 +401,9 @@ function ft_pagesorter($a, $b)
 {
     $ac = count(explode(':', $a));
     $bc = count(explode(':', $b));
-    if($ac < $bc){
+    if ($ac < $bc) {
         return -1;
-    }elseif($ac > $bc){
+    } elseif ($ac > $bc) {
         return 1;
     }
     return Sort::strcmp($a, $b);
@@ -474,11 +474,8 @@ function ft_snippet($id, $highlight)
         for ($cnt=4; $cnt--;) {
             if (0) {
             } elseif (preg_match('/'.$re3.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
-
             } elseif (preg_match('/'.$re2.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
-
             } elseif (preg_match('/'.$re1.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
-
             } else {
                 break;
             }
@@ -557,7 +554,7 @@ function ft_snippet($id, $highlight)
 function ft_snippet_re_preprocess($term)
 {
     // do not process asian terms where word boundaries are not explicit
-    if(Asian::isAsianWords($term)) return $term;
+    if (Asian::isAsianWords($term)) return $term;
 
     if (UTF8_PROPERTYSUPPORT) {
         // unicode word boundaries
@@ -570,19 +567,19 @@ function ft_snippet_re_preprocess($term)
         $BR = '\b';
     }
 
-    if(substr($term, 0, 2) == '\\*'){
+    if (substr($term, 0, 2) == '\\*') {
         $term = substr($term, 2);
-    }else{
+    } else {
         $term = $BL.$term;
     }
 
-    if(substr($term, -2, 2) == '\\*'){
+    if (substr($term, -2, 2) == '\\*') {
         $term = substr($term, 0, -2);
-    }else{
+    } else {
         $term .= $BR;
     }
 
-    if($term == $BL || $term == $BR || $term == $BL.$BR) $term = '';
+    if ($term == $BL || $term == $BR || $term == $BL.$BR) $term = '';
     return $term;
 }
 
@@ -600,7 +597,7 @@ function ft_snippet_re_preprocess($term)
 function ft_resultCombine($args)
 {
     $array_count = count($args);
-    if($array_count == 1){
+    if ($array_count == 1) {
         return $args[0];
     }
 

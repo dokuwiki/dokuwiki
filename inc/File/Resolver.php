@@ -51,7 +51,7 @@ abstract class Resolver
      */
     protected function resolvePrefix($id)
     {
-        if($id === '') return $id;
+        if ($id === '') return $id;
 
         // relative to current page (makes the current page a start page)
         if ($id[0] === '~') {

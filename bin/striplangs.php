@@ -4,7 +4,7 @@
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
+if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
@@ -51,10 +51,10 @@ class StripLangsCLI extends CLI
      */
     protected function main(Options $options)
     {
-        if($options->getOpt('keep')) {
+        if ($options->getOpt('keep')) {
             $keep = explode(',', $options->getOpt('keep'));
-            if(!in_array('en', $keep)) $keep[] = 'en';
-        } elseif($options->getOpt('english-only')) {
+            if (!in_array('en', $keep)) $keep[] = 'en';
+        } elseif ($options->getOpt('english-only')) {
             $keep = ['en'];
         } else {
             echo $options->help();
@@ -75,16 +75,15 @@ class StripLangsCLI extends CLI
      */
     protected function processExtensions($path, $keep_langs)
     {
-        if(is_dir($path)) {
+        if (is_dir($path)) {
             $entries = scandir($path);
 
-            foreach($entries as $entry) {
-                if($entry != "." && $entry != "..") {
-                    if(is_dir($path . '/' . $entry)) {
-
+            foreach ($entries as $entry) {
+                if ($entry != "." && $entry != "..") {
+                    if (is_dir($path . '/' . $entry)) {
                         $plugin_langs = $path . '/' . $entry . '/lang';
 
-                        if(is_dir($plugin_langs)) {
+                        if (is_dir($plugin_langs)) {
                             $this->stripDirLangs($plugin_langs, $keep_langs);
                         }
                     }
@@ -103,10 +102,9 @@ class StripLangsCLI extends CLI
     {
         $dir = dir($path);
 
-        while(($cur_dir = $dir->read()) !== false) {
-            if($cur_dir != '.' && $cur_dir != '..' && is_dir($path . '/' . $cur_dir)) {
-
-                if(!in_array($cur_dir, $keep_langs, true)) {
+        while (($cur_dir = $dir->read()) !== false) {
+            if ($cur_dir != '.' && $cur_dir != '..' && is_dir($path . '/' . $cur_dir)) {
+                if (!in_array($cur_dir, $keep_langs, true)) {
                     io_rmdir($path . '/' . $cur_dir, true);
                 }
             }

@@ -45,7 +45,6 @@ class Unicode
         $len = strlen($str);
 
         for ($i = 0; $i < $len; $i++) {
-
             $in = ord($str[$i]);
 
             if ($mState === 0) {
@@ -102,7 +101,6 @@ class Unicode
                         E_USER_WARNING
                     );
                     return false;
-
                 }
             } elseif (0x80 === (0xC0 & $in)) {
                 // When mState is non-zero, we expect a continuation of the multi-octet
@@ -117,7 +115,6 @@ class Unicode
                  * Unicode codepoint to be output
                  */
                 if (0 === --$mState) {
-
                     /*
                      * Check for illegal sequences and codepoints.
                      */
@@ -130,7 +127,6 @@ class Unicode
                         (($mUcs4 & 0xFFFFF800) === 0xD800) ||
                         // Codepoints outside the Unicode range are illegal
                         ($mUcs4 > 0x10FFFF)) {
-
                         if ($strict) {
                             trigger_error(
                                 'utf8_to_unicode: Illegal sequence or codepoint ' .
@@ -140,7 +136,6 @@ class Unicode
 
                             return false;
                         }
-
                     }
 
                     if (0xFEFF !== $mUcs4) {
@@ -201,7 +196,6 @@ class Unicode
         ob_start();
 
         foreach (array_keys($arr) as $k) {
-
             if (($arr[$k] >= 0) && ($arr[$k] <= 0x007f)) {
                 # ASCII range (including control chars)
                 echo chr($arr[$k]);
@@ -235,7 +229,6 @@ class Unicode
                 echo chr(0x80 | (($arr[$k] >> 6) & 0x3f));
                 echo chr(0x80 | ($arr[$k] & 0x3f));
             } elseif ($strict) {
-
                 trigger_error(
                     'unicode_to_utf8: Codepoint out of Unicode range ' .
                     'at index: ' . $k . ', value: ' . $arr[$k],

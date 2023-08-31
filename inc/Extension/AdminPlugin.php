@@ -85,7 +85,7 @@ abstract class AdminPlugin extends Plugin
         $data['hasAccess'] = false;
 
         $event = new Event('ADMINPLUGIN_ACCESS_CHECK', $data);
-        if($event->advise_before()) {
+        if ($event->advise_before()) {
             if ($this->forAdminOnly()) {
                 $data['hasAccess'] = auth_isadmin();
             } else {

@@ -11,12 +11,6 @@
         <exclude name="Generic.WhiteSpace.IncrementDecrementSpacing.SpaceAfterDecrement"/>
         <exclude name="Generic.WhiteSpace.IncrementDecrementSpacing.SpaceAfterIncrement"/>
 
-        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseParenthesis"/>
-        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterKeyword"/>
-        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace"/>
-        <exclude name="Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace"/>
-        <exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen"/>
-        <exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose"/>
         <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore"/>
         <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.Indent"/>
         <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EndLine"/>

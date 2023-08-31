@@ -118,9 +118,9 @@ class Indexer
         $words = [];
         foreach ($tokens as $w => $c) {
             $l = wordlen($w);
-            if (isset($words[$l])){
+            if (isset($words[$l])) {
                 $words[$l][$w] = $c + ($words[$l][$w] ?? 0);
-            }else{
+            } else {
                 $words[$l] = [$w => $c];
             }
         }
@@ -225,7 +225,7 @@ class Indexer
                         $addwords = true;
                     }
                     // test if value is already in the index
-                    if (isset($val_idx[$id]) && $val_idx[$id] <= 0){
+                    if (isset($val_idx[$id]) && $val_idx[$id] <= 0) {
                         $val_idx[$id] = 0;
                     } else { // else add it
                         $val_idx[$id] = 1;
@@ -464,9 +464,9 @@ class Indexer
         @unlink($conf['indexdir'].'/pageword.idx');
         @unlink($conf['indexdir'].'/metadata.idx');
         $dir = @opendir($conf['indexdir']);
-        if($dir!==false){
-            while(($f = readdir($dir)) !== false){
-                if(substr($f, -4)=='.idx' &&
+        if ($dir!==false) {
+            while (($f = readdir($dir)) !== false) {
+                if (substr($f, -4)=='.idx' &&
                     (substr($f, 0, 1)=='i' || substr($f, 0, 1)=='w'
                         || substr($f, -6)=='_w.idx' || substr($f, -6)=='_i.idx' || substr($f, -6)=='_p.idx'))
                     @unlink($conf['indexdir']."/$f");
@@ -615,7 +615,7 @@ class Indexer
         foreach (array_keys($wids) as $wlen) {
             $wids[$wlen] = array_unique($wids[$wlen]);
             $index = $this->getIndex('i', $wlen);
-            foreach($wids[$wlen] as $ixid) {
+            foreach ($wids[$wlen] as $ixid) {
                 if ($ixid < count($index))
                     $docs["$wlen*$ixid"] = $this->parseTuples($page_idx, $index[$ixid]);
             }
@@ -634,8 +634,7 @@ class Indexer
                     if (!page_exists($hitkey, '', false)) continue;
                     if (!isset($final[$word][$hitkey]))
                         $final[$word][$hitkey] = $hitcnt;
-                    else
-                        $final[$word][$hitkey] += $hitcnt;
+                    else $final[$word][$hitkey] += $hitcnt;
                 }
             }
         }
@@ -664,8 +663,7 @@ class Indexer
     {
         if (!is_array($value))
             $value_array = [$value];
-        else
-            $value_array =& $value;
+        else $value_array =& $value;
 
         // the matching ids for the provided value(s)
         $value_ids = [];
@@ -702,7 +700,7 @@ class Indexer
                 }
                 if (!$caret || !$dollar) {
                     $re = $caret.preg_quote($xval, '/').$dollar;
-                    foreach(array_keys(preg_grep('/'.$re.'/', $words)) as $i)
+                    foreach (array_keys(preg_grep('/'.$re.'/', $words)) as $i)
                         $value_ids[$i][] = $val;
                 } elseif (($i = array_search($val, $words, true)) !== false) {
                     $value_ids[$i][] = $val;
@@ -822,7 +820,7 @@ class Indexer
                 if ($wlen >= $ixlen) break;
                 foreach ($tokens[$xword] as $w) {
                     if (is_null($w[1])) continue;
-                    foreach(array_keys(preg_grep($w[1], $word_idx)) as $wid) {
+                    foreach (array_keys(preg_grep($w[1], $word_idx)) as $wid) {
                         $wids[$ixlen][] = $wid;
                         $result[$w[0]][] = "$ixlen*$wid";
                     }
@@ -892,8 +890,7 @@ class Indexer
                 if ($cnt >= $min && (!$max || $cnt <= $max) && strlen($val) >= $minlen)
                     $result[$val] = $cnt;
             }
-        }
-        elseif (!is_null($key)) {
+        } elseif (!is_null($key)) {
             $metaname = idx_cleanName($key);
             $index = $this->getIndex($metaname.'_i', '');
             $val_idx = [];
@@ -909,8 +906,7 @@ class Indexer
                         $result[$words[$wid]] = $freq;
                 }
             }
-        }
-        else {
+        } else {
             $lengths = idx_listIndexLengths();
             foreach ($lengths as $length) {
                 if ($length < $minlen) continue;
@@ -946,7 +942,7 @@ class Indexer
         $lock = $conf['lockdir'].'/_indexer.lock';
         while (!@mkdir($lock)) {
             usleep(50);
-            if(is_dir($lock) && time()-@filemtime($lock) > 60*5){
+            if (is_dir($lock) && time()-@filemtime($lock) > 60*5) {
                 // looks like a stale lock - remove it
                 if (!@rmdir($lock)) {
                     $status = "removing the stale lock failed";
@@ -954,7 +950,7 @@ class Indexer
                 } else {
                     $status = "stale lock removed";
                 }
-            }elseif($run++ == 1000){
+            } elseif ($run++ == 1000) {
                 // we waited 5 seconds for that lock
                 return false;
             }
@@ -1180,7 +1176,7 @@ class Indexer
      */
     protected function updateTuple($line, $id, $count)
     {
-        if ($line != ''){
+        if ($line != '') {
             $line = preg_replace('/(^|:)'.preg_quote($id, '/').'\*\d*/', '', $line);
         }
         $line = trim($line, ':');

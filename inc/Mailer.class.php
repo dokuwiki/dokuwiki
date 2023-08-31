@@ -43,7 +43,7 @@ class Mailer
         global $INPUT;
 
         $server = parse_url(DOKU_URL, PHP_URL_HOST);
-        if(strpos($server, '.') === false) $server .= '.localhost';
+        if (strpos($server, '.') === false) $server .= '.localhost';
 
         $this->partid   = substr(md5(uniqid(random_int(0, mt_getrandmax()), true)), 0, 8).'@'.$server;
         $this->boundary = '__________'.md5(uniqid(random_int(0, mt_getrandmax()), true));
@@ -56,7 +56,7 @@ class Mailer
         $this->allowhtml = (bool)$conf['htmlmail'];
 
         // add some default headers for mailfiltering FS#2247
-        if(!empty($conf['mailreturnpath'])) {
+        if (!empty($conf['mailreturnpath'])) {
             $this->setHeader('Return-Path', $conf['mailreturnpath']);
         }
         $this->setHeader('X-Mailer', 'DokuWiki');
@@ -81,7 +81,7 @@ class Mailer
      */
     public function attachFile($path, $mime, $name = '', $embed = '')
     {
-        if(!$name) {
+        if (!$name) {
             $name = PhpString::basename($path);
         }
 
@@ -103,7 +103,7 @@ class Mailer
      */
     public function attachContent($data, $mime, $name = '', $embed = '')
     {
-        if(!$name) {
+        if (!$name) {
             [, $ext] = explode('/', $mime);
             $name = count($this->attach).".$ext";
         }
@@ -131,7 +131,7 @@ class Mailer
         $media = cleanID($matches[1]);
         [, $mime] = mimetype($media);
         $file = mediaFN($media);
-        if(!file_exists($file)) return $matches[0]; //bad reference, keep as is
+        if (!file_exists($file)) return $matches[0]; //bad reference, keep as is
 
         // attach it and set placeholder
         $this->attachFile($file, $mime, '', 'autoembed'.$embeds);
@@ -150,21 +150,21 @@ class Mailer
     public function setHeader($header, $value, $clean = true)
     {
         $header = str_replace(' ', '-', ucwords(strtolower(str_replace('-', ' ', $header)))); // streamline casing
-        if($clean) {
+        if ($clean) {
             $header = preg_replace('/[^a-zA-Z0-9_ \-\.\+\@]+/', '', $header);
             $value  = preg_replace('/[^a-zA-Z0-9_ \-\.\+\@<>]+/', '', $value);
         }
 
         // empty value deletes
-        if(is_array($value)){
+        if (is_array($value)) {
             $value = array_map('trim', $value);
             $value = array_filter($value);
-            if(!$value) $value = '';
-        }else{
+            if (!$value) $value = '';
+        } else {
             $value = trim($value);
         }
-        if($value === '') {
-            if(isset($this->headers[$header])) unset($this->headers[$header]);
+        if ($value === '') {
+            if (isset($this->headers[$header])) unset($this->headers[$header]);
         } else {
             $this->headers[$header] = $value;
         }
@@ -205,27 +205,27 @@ class Mailer
         $textrep = (array)$textrep;
 
         // create HTML from text if not given
-        if($html === null) {
+        if ($html === null) {
             $html = $text;
             $html = hsc($html);
             $html = preg_replace('/^----+$/m', '<hr >', $html);
             $html = nl2br($html);
         }
-        if($wrap) {
+        if ($wrap) {
             $wrapper = rawLocale('mailwrap', 'html');
             $html = preg_replace('/\n-- <br \/>.*$/s', '', $html); //strip signature
             $html = str_replace('@EMAILSIGNATURE@', '', $html); //strip @EMAILSIGNATURE@
             $html = str_replace('@HTMLBODY@', $html, $wrapper);
         }
 
-        if(strpos($text, '@EMAILSIGNATURE@') === false) {
+        if (strpos($text, '@EMAILSIGNATURE@') === false) {
             $text .= '@EMAILSIGNATURE@';
         }
 
         // copy over all replacements missing for HTML (autolink URLs)
-        foreach($textrep as $key => $value) {
-            if(isset($htmlrep[$key])) continue;
-            if(media_isexternal($value)) {
+        foreach ($textrep as $key => $value) {
+            if (isset($htmlrep[$key])) continue;
+            if (media_isexternal($value)) {
                 $htmlrep[$key] = '<a href="'.hsc($value).'">'.hsc($value).'</a>';
             } else {
                 $htmlrep[$key] = hsc($value);
@@ -244,10 +244,10 @@ class Mailer
         $hrep = array_merge($this->replacements['html'], $htmlrep);
 
         // Apply replacements
-        foreach($trep as $key => $substitution) {
+        foreach ($trep as $key => $substitution) {
             $text = str_replace('@'.strtoupper($key).'@', $substitution, $text);
         }
-        foreach($hrep as $key => $substitution) {
+        foreach ($hrep as $key => $substitution) {
             $html = str_replace('@'.strtoupper($key).'@', $substitution, $html);
         }
 
@@ -377,7 +377,7 @@ class Mailer
     public function cleanAddress($addresses)
     {
         $headers = '';
-        if(!is_array($addresses)){
+        if (!is_array($addresses)) {
             $count = preg_match_all('/\s*(?:("[^"]*"[^,]+),*)|([^,]+)\s*,*/', $addresses, $matches, PREG_SET_ORDER);
             $addresses = [];
             if ($count !== false && is_array($matches)) {
@@ -387,12 +387,12 @@ class Mailer
             }
         }
 
-        foreach($addresses as $part) {
+        foreach ($addresses as $part) {
             $part = preg_replace('/[\r\n\0]+/', ' ', $part); // remove attack vectors
             $part = trim($part);
 
             // parse address
-            if(preg_match('#(.*?)<(.*?)>#', $part, $matches)) {
+            if (preg_match('#(.*?)<(.*?)>#', $part, $matches)) {
                 $text = trim($matches[1]);
                 $addr = $matches[2];
             } else {
@@ -400,32 +400,32 @@ class Mailer
                 $addr = $part;
             }
             // skip empty ones
-            if(empty($addr)) {
+            if (empty($addr)) {
                 continue;
             }
 
             // FIXME: is there a way to encode the localpart of a emailaddress?
-            if(!Clean::isASCII($addr)) {
+            if (!Clean::isASCII($addr)) {
                 msg(hsc("E-Mail address <$addr> is not ASCII"), -1, __LINE__, __FILE__, MSG_ADMINS_ONLY);
                 continue;
             }
 
-            if(!mail_isvalid($addr)) {
+            if (!mail_isvalid($addr)) {
                 msg(hsc("E-Mail address <$addr> is not valid"), -1, __LINE__, __FILE__, MSG_ADMINS_ONLY);
                 continue;
             }
 
             // text was given
-            if(!empty($text) && !isWindows()) { // No named recipients for To: in Windows (see FS#652)
+            if (!empty($text) && !isWindows()) { // No named recipients for To: in Windows (see FS#652)
                 // add address quotes
                 $addr = "<$addr>";
 
-                if(defined('MAILHEADER_ASCIIONLY')) {
+                if (defined('MAILHEADER_ASCIIONLY')) {
                     $text = Clean::deaccent($text);
                     $text = Clean::strip($text);
                 }
 
-                if(strpos($text, ',') !== false || !Clean::isASCII($text)) {
+                if (strpos($text, ',') !== false || !Clean::isASCII($text)) {
                     $text = '=?UTF-8?B?'.base64_encode($text).'?=';
                 }
             } else {
@@ -433,14 +433,14 @@ class Mailer
             }
 
             // add to header comma seperated
-            if($headers != '') {
+            if ($headers != '') {
                 $headers .= ', ';
             }
             $headers .= $text.' '.$addr;
         }
 
         $headers = trim($headers);
-        if(empty($headers)) return false;
+        if (empty($headers)) return false;
 
         return $headers;
     }
@@ -458,14 +458,14 @@ class Mailer
         $mime = '';
         $part = 1;
         // embedded attachments
-        foreach($this->attach as $media) {
+        foreach ($this->attach as $media) {
             $media['name'] = str_replace(':', '_', cleanID($media['name'], true));
 
             // create content id
             $cid = 'part'.$part.'.'.$this->partid;
 
             // replace wildcards
-            if($media['embed']) {
+            if ($media['embed']) {
                 $this->html = str_replace('%%'.$media['embed'].'%%', 'cid:'.$cid, $this->html);
             }
 
@@ -473,7 +473,7 @@ class Mailer
             $mime .= $this->wrappedHeaderLine('Content-Type', $media['mime'].'; id="'.$cid.'"');
             $mime .= $this->wrappedHeaderLine('Content-Transfer-Encoding', 'base64');
             $mime .= $this->wrappedHeaderLine('Content-ID', "<$cid>");
-            if($media['embed']) {
+            if ($media['embed']) {
                 $mime .= $this->wrappedHeaderLine('Content-Disposition', 'inline; filename='.$media['name']);
             } else {
                 $mime .= $this->wrappedHeaderLine('Content-Disposition', 'attachment; filename='.$media['name']);
@@ -497,12 +497,12 @@ class Mailer
     {
 
         // no HTML mails allowed? remove HTML body
-        if(!$this->allowhtml) {
+        if (!$this->allowhtml) {
             $this->html = '';
         }
 
         // check for body
-        if(!$this->text && !$this->html) {
+        if (!$this->text && !$this->html) {
             return false;
         }
 
@@ -511,7 +511,7 @@ class Mailer
 
         $body = '';
 
-        if(!$this->html && !count($this->attach)) { // we can send a simple single part message
+        if (!$this->html && !count($this->attach)) { // we can send a simple single part message
             $this->headers['Content-Type']              = 'text/plain; charset=UTF-8';
             $this->headers['Content-Transfer-Encoding'] = 'base64';
             $body .= chunk_split(base64_encode($this->text), 72, MAILHEADER_EOL);
@@ -522,7 +522,7 @@ class Mailer
             $attachments = $this->prepareAttachments();
 
             // do we have alternative text content?
-            if($this->text && $this->html) {
+            if ($this->text && $this->html) {
                 $this->headers['Content-Type'] = 'multipart/alternative;'.MAILHEADER_EOL.
                     '  boundary="'.$this->boundary.'XX"';
                 $body .= '--'.$this->boundary.'XX'.MAILHEADER_EOL;
@@ -547,7 +547,7 @@ class Mailer
             $body .= '--'.$this->boundary.'--'.MAILHEADER_EOL;
 
             // close open multipart/alternative boundary
-            if($this->text && $this->html) {
+            if ($this->text && $this->html) {
                 $body .= '--'.$this->boundary.'XX--'.MAILHEADER_EOL;
             }
         }
@@ -563,18 +563,18 @@ class Mailer
         global $conf;
 
         // clean up addresses
-        if(empty($this->headers['From'])) $this->from($conf['mailfrom']);
+        if (empty($this->headers['From'])) $this->from($conf['mailfrom']);
         $addrs = ['To', 'From', 'Cc', 'Bcc', 'Reply-To', 'Sender'];
-        foreach($addrs as $addr) {
-            if(isset($this->headers[$addr])) {
+        foreach ($addrs as $addr) {
+            if (isset($this->headers[$addr])) {
                 $this->headers[$addr] = $this->cleanAddress($this->headers[$addr]);
             }
         }
 
-        if(isset($this->headers['Subject'])) {
+        if (isset($this->headers['Subject'])) {
             // add prefix to subject
-            if(empty($conf['mailprefix'])) {
-                if(PhpString::strlen($conf['title']) < 20) {
+            if (empty($conf['mailprefix'])) {
+                if (PhpString::strlen($conf['title']) < 20) {
                     $prefix = '['.$conf['title'].']';
                 } else {
                     $prefix = '['.PhpString::substr($conf['title'], 0, 20).'...]';
@@ -583,16 +583,16 @@ class Mailer
                 $prefix = '['.$conf['mailprefix'].']';
             }
             $len = strlen($prefix);
-            if(substr($this->headers['Subject'], 0, $len) !== $prefix) {
+            if (substr($this->headers['Subject'], 0, $len) !== $prefix) {
                 $this->headers['Subject'] = $prefix.' '.$this->headers['Subject'];
             }
 
             // encode subject
-            if(defined('MAILHEADER_ASCIIONLY')) {
+            if (defined('MAILHEADER_ASCIIONLY')) {
                 $this->headers['Subject'] = Clean::deaccent($this->headers['Subject']);
                 $this->headers['Subject'] = Clean::strip($this->headers['Subject']);
             }
-            if(!Clean::isASCII($this->headers['Subject'])) {
+            if (!Clean::isASCII($this->headers['Subject'])) {
                 $this->headers['Subject'] = '=?UTF-8?B?'.base64_encode($this->headers['Subject']).'?=';
             }
         }
@@ -619,7 +619,7 @@ class Mailer
     protected function prepareHeaders()
     {
         $headers = '';
-        foreach($this->headers as $key => $val) {
+        foreach ($this->headers as $key => $val) {
             if ($val === '' || $val === null) continue;
             $headers .= $this->wrappedHeaderLine($key, $val);
         }
@@ -638,7 +638,7 @@ class Mailer
     {
         $this->cleanHeaders();
         $body = $this->prepareBody();
-        if($body === false) return false;
+        if ($body === false) return false;
         $headers = $this->prepareHeaders();
 
         return $headers.MAILHEADER_EOL.$body;
@@ -694,7 +694,7 @@ class Mailer
             'MAIL' => '<a href="mailto:"' . hsc($mail) . '">' . hsc($mail) . '</a>'
         ];
         $signature = $lang['email_signature_text'];
-        if(!empty($lang['email_signature_html'])) {
+        if (!empty($lang['email_signature_html'])) {
             $signature = $lang['email_signature_html'];
         }
         $signature = str_replace(
@@ -737,18 +737,18 @@ class Mailer
 
         // do our thing if BEFORE hook approves
         $evt = new Event('MAIL_MESSAGE_SEND', $data);
-        if($evt->advise_before(true)) {
+        if ($evt->advise_before(true)) {
             // clean up before using the headers
             $this->cleanHeaders();
 
             // any recipients?
-            if(trim($this->headers['To']) === '' &&
+            if (trim($this->headers['To']) === '' &&
                 trim($this->headers['Cc']) === '' &&
                 trim($this->headers['Bcc']) === ''
             ) return false;
 
             // The To: header is special
-            if(array_key_exists('To', $this->headers)) {
+            if (array_key_exists('To', $this->headers)) {
                 $to = (string)$this->headers['To'];
                 unset($this->headers['To']);
             } else {
@@ -756,7 +756,7 @@ class Mailer
             }
 
             // so is the subject
-            if(array_key_exists('Subject', $this->headers)) {
+            if (array_key_exists('Subject', $this->headers)) {
                 $subject = (string)$this->headers['Subject'];
                 unset($this->headers['Subject']);
             } else {
@@ -765,16 +765,16 @@ class Mailer
 
             // make the body
             $body = $this->prepareBody();
-            if($body === false) return false;
+            if ($body === false) return false;
 
             // cook the headers
             $headers = $this->prepareHeaders();
             // add any headers set by legacy plugins
-            if(trim($data['headers'])) {
+            if (trim($data['headers'])) {
                 $headers .= MAILHEADER_EOL.trim($data['headers']);
             }
 
-            if(!function_exists('mail')){
+            if (!function_exists('mail')) {
                 $emsg = $lang['email_fail'] . $subject;
                 error_log($emsg);
                 msg(hsc($emsg), -1, __LINE__, __FILE__, MSG_MANAGERS_ONLY);
@@ -783,8 +783,8 @@ class Mailer
             }
 
             // send the thing
-            if($to === '') $to = '(undisclosed-recipients)'; // #1422
-            if($this->sendparam === null) {
+            if ($to === '') $to = '(undisclosed-recipients)'; // #1422
+            if ($this->sendparam === null) {
                 $success = @mail($to, $subject, $body, $headers);
             } else {
                 $success = @mail($to, $subject, $body, $headers, $this->sendparam);

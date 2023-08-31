@@ -221,7 +221,7 @@ class auth_plugin_authplain extends AuthPlugin
             return false;
         }
 
-        if(isset($this->users[$user])) unset($this->users[$user]);
+        if (isset($this->users[$user])) unset($this->users[$user]);
         $this->users[$newuser] = $userinfo;
         return true;
     }
@@ -340,12 +340,12 @@ class auth_plugin_authplain extends AuthPlugin
         $groups = [];
 
         if ($this->users === null) $this->loadUserData();
-        foreach($this->users as $info) {
+        foreach ($this->users as $info) {
             $groups = array_merge($groups, array_diff($info['grps'], $groups));
         }
         Sort::ksort($groups);
 
-        if($limit > 0) {
+        if ($limit > 0) {
             return array_splice($groups, $start, $limit);
         }
         return array_splice($groups, $start);
@@ -442,7 +442,7 @@ class auth_plugin_authplain extends AuthPlugin
     protected function splitUserData($line)
     {
         $data = preg_split('/(?<![^\\\\]\\\\)\:/', $line, 5);       // allow for : escaped as \:
-        if(count($data) < 5) {
+        if (count($data) < 5) {
             $data = array_pad($data, 5, '');
             Logger::error('User line with less than 5 fields. Possibly corruption in your user file', $data);
         }

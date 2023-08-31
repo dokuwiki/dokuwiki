@@ -45,7 +45,7 @@ class Parser
     protected function addBaseMode($BaseMode)
     {
         $this->modes['base'] = $BaseMode;
-        if(!$this->lexer) {
+        if (!$this->lexer) {
             $this->lexer = new Lexer($this->handler, 'base', true);
         }
         $this->modes['base']->Lexer = $this->lexer;
@@ -62,7 +62,7 @@ class Parser
      */
     public function addMode($name, ModeInterface $Mode)
     {
-        if(!isset($this->modes['base'])) {
+        if (!isset($this->modes['base'])) {
             $this->addBaseMode(new Base());
         }
         $Mode->Lexer = $this->lexer; // FIXME should be done by setter
@@ -77,23 +77,21 @@ class Parser
     protected function connectModes()
     {
 
-        if($this->connected) {
+        if ($this->connected) {
             return;
         }
 
-        foreach(array_keys($this->modes) as $mode) {
+        foreach (array_keys($this->modes) as $mode) {
             // Base isn't connected to anything
-            if($mode == 'base') {
+            if ($mode == 'base') {
                 continue;
             }
             $this->modes[$mode]->preConnect();
 
-            foreach(array_keys($this->modes) as $cm) {
-
-                if($this->modes[$cm]->accepts($mode)) {
+            foreach (array_keys($this->modes) as $cm) {
+                if ($this->modes[$cm]->accepts($mode)) {
                     $this->modes[$mode]->connectTo($cm);
                 }
-
             }
 
             $this->modes[$mode]->postConnect();

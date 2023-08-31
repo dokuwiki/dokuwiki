@@ -35,18 +35,18 @@ class Mapper
     public static function generate()
     {
         global $conf;
-        if($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) return false;
+        if ($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) return false;
 
         $sitemap = Mapper::getFilePath();
 
         if (file_exists($sitemap)) {
-            if(!is_writable($sitemap)) return false;
+            if (!is_writable($sitemap)) return false;
         } elseif (!is_writable(dirname($sitemap))) {
             return false;
         }
 
-        if(@filesize($sitemap) &&
-           @filemtime($sitemap) > (time()-($conf['sitemap']*86400))){ // 60*60*24=86400
+        if (@filesize($sitemap) &&
+           @filemtime($sitemap) > (time()-($conf['sitemap']*86400))) { // 60*60*24=86400
             Logger::debug('Sitemapper::generate(): Sitemap up to date');
             return false;
         }
@@ -58,10 +58,10 @@ class Mapper
         $items = [];
 
         // build the sitemap items
-        foreach($pages as $id){
+        foreach ($pages as $id) {
             //skip hidden, non existing and restricted files
-            if(isHiddenPage($id)) continue;
-            if(auth_aclcheck($id, '', []) < AUTH_READ) continue;
+            if (isHiddenPage($id)) continue;
+            if (auth_aclcheck($id, '', []) < AUTH_READ) continue;
             $item = Item::createFromID($id);
             if ($item instanceof Item)
                 $items[] = $item;
@@ -160,7 +160,7 @@ class Mapper
             foreach ($data['ping_urls'] as $name => $url) {
                 Logger::debug("Sitemapper::PingSearchEngines(): pinging $name");
                 $resp = $http->get($url);
-                if($http->error) {
+                if ($http->error) {
                     Logger::debug("Sitemapper:pingSearchengines(): $http->error", $resp);
                 }
             }

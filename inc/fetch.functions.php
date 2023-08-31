@@ -49,8 +49,8 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
     }
 
     // smart http caching headers
-    if($maxage) {
-        if($public) {
+    if ($maxage) {
+        if ($public) {
             // cache publically
             header('Expires: '.gmdate("D, d M Y H:i:s", $expires).' GMT');
             header('Cache-Control: public, proxy-revalidate, no-transform, max-age='.$maxage);
@@ -92,7 +92,7 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
 
     // send file contents
     $fp = @fopen($file, "rb");
-    if($fp) {
+    if ($fp) {
         http_rangeRequest($fp, filesize($file), $mime);
     } else {
         http_status(500);
@@ -150,20 +150,20 @@ function checkFileStatus(&$media, &$file, $rev = '', $width = 0, $height = 0)
     global $MIME, $EXT, $CACHE, $INPUT;
 
     //media to local file
-    if(media_isexternal($media)) {
+    if (media_isexternal($media)) {
         //check token for external image and additional for resized and cached images
-        if(media_get_token($media, $width, $height) !== $INPUT->str('tok')) {
+        if (media_get_token($media, $width, $height) !== $INPUT->str('tok')) {
             return [412, 'Precondition Failed'];
         }
         //handle external images
-        if(strncmp($MIME, 'image/', 6) == 0) $file = media_get_from_URL($media, $EXT, $CACHE);
-        if(!$file) {
+        if (strncmp($MIME, 'image/', 6) == 0) $file = media_get_from_URL($media, $EXT, $CACHE);
+        if (!$file) {
             //download failed - redirect to original URL
             return [302, $media];
         }
     } else {
         $media = cleanID($media);
-        if(empty($media)) {
+        if (empty($media)) {
             return [400, 'Bad request'];
         }
         // check token for resized images
@@ -172,14 +172,14 @@ function checkFileStatus(&$media, &$file, $rev = '', $width = 0, $height = 0)
         }
 
         //check permissions (namespace only)
-        if(auth_quickaclcheck(getNS($media).':X') < AUTH_READ) {
+        if (auth_quickaclcheck(getNS($media).':X') < AUTH_READ) {
             return [403, 'Forbidden'];
         }
         $file = mediaFN($media, $rev);
     }
 
     //check file existance
-    if(!file_exists($file)) {
+    if (!file_exists($file)) {
         return [404, 'Not Found'];
     }
 
@@ -200,7 +200,7 @@ function calc_cache($cache)
 {
     global $conf;
 
-    if(strtolower($cache) == 'nocache') return 0; //never cache
-    if(strtolower($cache) == 'recache') return $conf['cachetime']; //use standard cache
+    if (strtolower($cache) == 'nocache') return 0; //never cache
+    if (strtolower($cache) == 'recache') return $conf['cachetime']; //use standard cache
     return -1; //cache endless
 }

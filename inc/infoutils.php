@@ -11,10 +11,10 @@ use dokuwiki\Debug\DebugHelper;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Logger;
 
-if(!defined('DOKU_MESSAGEURL')){
-    if(in_array('ssl', stream_get_transports())) {
+if (!defined('DOKU_MESSAGEURL')) {
+    if (in_array('ssl', stream_get_transports())) {
         define('DOKU_MESSAGEURL', 'https://update.dokuwiki.org/check/');
-    }else{
+    } else {
         define('DOKU_MESSAGEURL', 'http://update.dokuwiki.org/check/');
     }
 }
@@ -29,36 +29,36 @@ function checkUpdateMessages()
     global $conf;
     global $INFO;
     global $updateVersion;
-    if(!$conf['updatecheck']) return;
-    if($conf['useacl'] && !$INFO['ismanager']) return;
+    if (!$conf['updatecheck']) return;
+    if ($conf['useacl'] && !$INFO['ismanager']) return;
 
     $cf = getCacheName($updateVersion, '.updmsg');
     $lm = @filemtime($cf);
     $is_http = substr(DOKU_MESSAGEURL, 0, 5) != 'https';
 
     // check if new messages needs to be fetched
-    if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
+    if ($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)) {
         @touch($cf);
         Logger::debug("checkUpdateMessages(): downloading messages to ".$cf.($is_http?' (without SSL)':' (with SSL)'));
         $http = new DokuHTTPClient();
         $http->timeout = 12;
         $resp = $http->get(DOKU_MESSAGEURL.$updateVersion);
-        if(is_string($resp) && ($resp == "" || substr(trim($resp), -1) == '%')) {
+        if (is_string($resp) && ($resp == "" || substr(trim($resp), -1) == '%')) {
             // basic sanity check that this is either an empty string response (ie "no messages")
             // or it looks like one of our messages, not WiFi login or other interposed response
             io_saveFile($cf, $resp);
         } else {
             Logger::debug("checkUpdateMessages(): unexpected HTTP response received", $http->error);
         }
-    }else{
+    } else {
         Logger::debug("checkUpdateMessages(): messages up to date");
     }
 
     $data = io_readFile($cf);
     // show messages through the usual message mechanism
     $msgs = explode("\n%\n", $data);
-    foreach($msgs as $msg){
-        if($msg) msg($msg, 2);
+    foreach ($msgs as $msg) {
+        if ($msg) msg($msg, 2);
     }
 }
 
@@ -72,11 +72,11 @@ function getVersionData()
 {
     $version = [];
     //import version string
-    if(file_exists(DOKU_INC.'VERSION')){
+    if (file_exists(DOKU_INC.'VERSION')) {
         //official release
         $version['date'] = trim(io_readFile(DOKU_INC.'VERSION'));
         $version['type'] = 'Release';
-    }elseif(is_dir(DOKU_INC.'.git')){
+    } elseif (is_dir(DOKU_INC.'.git')) {
         $version['type'] = 'Git';
         $version['date'] = 'unknown';
 
@@ -126,7 +126,7 @@ function getVersionData()
                 }
             }
         }
-    }else{
+    } else {
         global $updateVersion;
         $version['date'] = 'update version '.$updateVersion;
         $version['type'] = 'snapshot?';
@@ -160,9 +160,9 @@ function check()
 
     if ($INFO['isadmin'] || $INFO['ismanager']) {
         msg('DokuWiki version: '.getVersion(), 1);
-        if(version_compare(phpversion(), '7.4.0', '<')){
+        if (version_compare(phpversion(), '7.4.0', '<')) {
             msg('Your PHP version is too old ('.phpversion().' vs. 7.4+ needed)', -1);
-        }else{
+        } else {
             msg('PHP version '.phpversion(), 1);
         }
     } elseif (version_compare(phpversion(), '7.4.0', '<')) {
@@ -170,7 +170,7 @@ function check()
     }
 
     $mem = php_to_byte(ini_get('memory_limit'));
-    if($mem){
+    if ($mem) {
         if ($mem === -1) {
             msg('PHP memory is unlimited', 1);
         } elseif ($mem < 16_777_216) {
@@ -208,31 +208,31 @@ function check()
         }
     }
 
-    if(is_writable(DOKU_CONF)){
+    if (is_writable(DOKU_CONF)) {
         msg('conf directory is writable', 1);
-    }else{
+    } else {
         msg('conf directory is not writable', -1);
     }
 
-    if($conf['authtype'] == 'plain'){
+    if ($conf['authtype'] == 'plain') {
         global $config_cascade;
-        if(is_writable($config_cascade['plainauth.users']['default'])){
+        if (is_writable($config_cascade['plainauth.users']['default'])) {
             msg('conf/users.auth.php is writable', 1);
-        }else{
+        } else {
             msg('conf/users.auth.php is not writable', 0);
         }
     }
 
-    if(function_exists('mb_strpos')){
-        if(defined('UTF8_NOMBSTRING')){
+    if (function_exists('mb_strpos')) {
+        if (defined('UTF8_NOMBSTRING')) {
             msg('mb_string extension is available but will not be used', 0);
-        }else{
+        } else {
             msg('mb_string extension is available and will be used', 1);
-            if(ini_get('mbstring.func_overload') != 0){
+            if (ini_get('mbstring.func_overload') != 0) {
                 msg('mb_string function overloading is enabled, this will cause problems and should be disabled', -1);
             }
         }
-    }else{
+    } else {
         msg('mb_string extension not available - PHP only replacements will be used', 0);
     }
 
@@ -244,25 +244,25 @@ function check()
     }
 
     $loc = setlocale(LC_ALL, 0);
-    if(!$loc){
+    if (!$loc) {
         msg('No valid locale is set for your PHP setup. You should fix this', -1);
-    }elseif(stripos($loc, 'utf') === false){
+    } elseif (stripos($loc, 'utf') === false) {
         msg('Your locale <code>'.hsc($loc).'</code> seems not to be a UTF-8 locale,
              you should fix this if you encounter problems.', 0);
-    }else{
+    } else {
         msg('Valid locale '.hsc($loc).' found.', 1);
     }
 
-    if($conf['allowdebug']){
+    if ($conf['allowdebug']) {
         msg('Debugging support is enabled. If you don\'t need it you should set $conf[\'allowdebug\'] = 0', -1);
-    }else{
+    } else {
         msg('Debugging support is disabled', 1);
     }
 
-    if(!empty($INFO['userinfo']['name'])){
+    if (!empty($INFO['userinfo']['name'])) {
         msg('You are currently logged in as '.$INPUT->server->str('REMOTE_USER').' ('.$INFO['userinfo']['name'].')', 0);
         msg('You are part of the groups '.implode(', ', $INFO['userinfo']['grps']), 0);
-    }else{
+    } else {
         msg('You are currently not logged in', 0);
     }
 
@@ -299,7 +299,7 @@ function check()
         }
     }
 
-    if($index_corrupted) {
+    if ($index_corrupted) {
         msg(
             'The search index is corrupted. It might produce wrong results and most
                 probably needs to be rebuilt. See
@@ -307,7 +307,7 @@ function check()
                 for ways to rebuild the search index.',
             -1
         );
-    } elseif(!empty($lengths)) {
+    } elseif (!empty($lengths)) {
         msg('The search index seems to be working', 1);
     } else {
         msg(
@@ -324,11 +324,11 @@ function check()
     $http->timeout = 3;
     $http->sendRequest('http://www.dokuwiki.org', '', 'HEAD');
     $now = time();
-    if(isset($http->resp_headers['date'])) {
+    if (isset($http->resp_headers['date'])) {
         $time = strtotime($http->resp_headers['date']);
         $diff = $time - $now;
 
-        if(abs($diff) < 4) {
+        if (abs($diff) < 4) {
             msg("Server time seems to be okay. Diff: {$diff}s", 1);
         } else {
             msg("Your server's clock seems to be out of sync!
@@ -375,17 +375,17 @@ function msg($message, $lvl = 0, $line = '', $file = '', $allow = MSG_PUBLIC)
     $evt = new Event('INFOUTIL_MSG_SHOW', $msgdata);
     if ($evt->advise_before()) {
         /* Show msg normally - event could suppress message show */
-        if($msgdata['line'] || $msgdata['file']) {
+        if ($msgdata['line'] || $msgdata['file']) {
             $basename = PhpString::basename($msgdata['file']);
             $msgdata['msg'] .=' ['.$basename.':'.$msgdata['line'].']';
         }
 
-        if(!isset($MSG)) $MSG = [];
+        if (!isset($MSG)) $MSG = [];
         $MSG[] = $msgdata;
-        if(isset($MSG_shown) || headers_sent()){
-            if(function_exists('html_msgarea')){
+        if (isset($MSG_shown) || headers_sent()) {
+            if (function_exists('html_msgarea')) {
                 html_msgarea();
-            }else{
+            } else {
                 print "ERROR(".$msgdata['lvl'].") ".$msgdata['msg']."\n";
             }
             unset($GLOBALS['MSG']);
@@ -415,7 +415,7 @@ function info_msg_allowed($msg)
     // restricted msg, but no authentication
     if (empty($auth)) return false;
 
-    switch ($msg['allow']){
+    switch ($msg['allow']) {
         case MSG_USERS_ONLY:
             return !empty($INFO['userinfo']);
 
@@ -446,11 +446,11 @@ function info_msg_allowed($msg)
  */
 function dbg($msg, $hidden = false)
 {
-    if($hidden){
+    if ($hidden) {
         echo "<!--\n";
         print_r($msg);
         echo "\n-->";
-    }else{
+    } else {
         echo '<pre class="dbg">';
         echo hsc(print_r($msg, true));
         echo '</pre>';
@@ -470,7 +470,7 @@ function dbglog($msg, $header = '')
     dbg_deprecated('\\dokuwiki\\Logger');
 
     // was the msg as single line string? use it as header
-    if($header === '' && is_string($msg) && strpos($msg, "\n") === false) {
+    if ($header === '' && is_string($msg) && strpos($msg, "\n") === false) {
         $header = $msg;
         $msg = '';
     }
@@ -514,15 +514,15 @@ function dbg_backtrace()
             $call['class'] . $call['type'] . $call['function'] : $call['function'];
 
         $params = [];
-        if (isset($call['args'])){
-            foreach($call['args'] as $arg){
-                if(is_object($arg)){
+        if (isset($call['args'])) {
+            foreach ($call['args'] as $arg) {
+                if (is_object($arg)) {
                     $params[] = '[Object '.get_class($arg).']';
-                }elseif(is_array($arg)){
+                } elseif (is_array($arg)) {
                     $params[] = '[Array]';
-                }elseif(is_null($arg)){
+                } elseif (is_null($arg)) {
                     $params[] = '[NULL]';
-                }else{
+                } else {
                     $params[] = '"'.$arg.'"';
                 }
             }
@@ -553,11 +553,11 @@ function dbg_backtrace()
  */
 function debug_guard(&$data)
 {
-    foreach($data as $key => $value){
-        if(preg_match('/(notify|pass|auth|secret|ftp|userinfo|token|buid|mail|proxy)/i', $key)){
+    foreach ($data as $key => $value) {
+        if (preg_match('/(notify|pass|auth|secret|ftp|userinfo|token|buid|mail|proxy)/i', $key)) {
             $data[$key] = '***';
             continue;
         }
-        if(is_array($value)) debug_guard($data[$key]);
+        if (is_array($value)) debug_guard($data[$key]);
     }
 }

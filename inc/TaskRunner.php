@@ -30,14 +30,14 @@ class TaskRunner
         // check if user abort worked, if yes send output early
         $defer = !@ignore_user_abort() || $conf['broken_iua'];
         $output = $INPUT->has('debug') && $conf['allowdebug'];
-        if(!$defer && !$output){
+        if (!$defer && !$output) {
             $this->sendGIF();
         }
 
         $ID = cleanID($INPUT->str('id'));
 
         // Catch any possible output (e.g. errors)
-        if(!$output) {
+        if (!$output) {
             ob_start();
         } else {
             header('Content-Type: text/plain');
@@ -58,9 +58,9 @@ class TaskRunner
             }
         }
 
-        if(!$output) {
+        if (!$output) {
             ob_end_clean();
-            if($defer) {
+            if ($defer) {
                 $this->sendGIF();
             }
         }

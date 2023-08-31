@@ -616,7 +616,6 @@ abstract class ChangeLog
                 'sizechange' => -io_getSizeFile($this->getFilename($lastRev)),
                 'timestamp' => false,
             ];
-
         } else {                                     // item file exists, with timestamp $fileRev
             // here, file timestamp $fileRev is different with last revision timestamp $lastRev in changelog
             $isJustCreated = $lastRev === false || (

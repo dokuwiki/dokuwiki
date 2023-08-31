@@ -119,7 +119,7 @@ class DropdownElement extends InputElement
 
         // setter
         $this->values = $this->setValuesInOptGroups((array) $value);
-        if(!$this->values) {
+        if (!$this->values) {
             // unknown value set, select first option instead
             $this->values = $this->setValuesInOptGroups((array) $this->getFirstOptionKey());
         }

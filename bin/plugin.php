@@ -8,7 +8,7 @@ use splitbrain\phpcli\Options;
 use dokuwiki\Extension\CLIPlugin;
 use splitbrain\phpcli\TableFormatter;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
+if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
@@ -40,9 +40,9 @@ class PluginCLI extends CLI
         global $argv;
         $argv = $options->getArgs();
 
-        if($argv) {
+        if ($argv) {
             $plugin = $this->loadPlugin($argv[0]);
-            if($plugin instanceof CLIPlugin) {
+            if ($plugin instanceof CLIPlugin) {
                 $plugin->run();
             } else {
                 $this->fatal('Command {cmd} not found.', ['cmd' => $argv[0]]);
@@ -68,14 +68,14 @@ class PluginCLI extends CLI
 
         $list = $plugin_controller->getList('cli');
         sort($list);
-        if($list === []) {
+        if ($list === []) {
             echo $this->colors->wrap("  No plugins providing CLI components available\n", Colors::C_RED);
         } else {
             $tf = new TableFormatter($this->colors);
 
-            foreach($list as $name) {
+            foreach ($list as $name) {
                 $plugin = $this->loadPlugin($name);
-                if(!$plugin instanceof CLIPlugin) continue;
+                if (!$plugin instanceof CLIPlugin) continue;
                 $info = $plugin->getInfo();
 
                 echo $tf->format(
@@ -95,11 +95,11 @@ class PluginCLI extends CLI
      */
     protected function loadPlugin($name)
     {
-        if(plugin_isdisabled($name)) return null;
+        if (plugin_isdisabled($name)) return null;
 
         // execute the plugin CLI
         $class = "cli_plugin_$name";
-        if(class_exists($class)) {
+        if (class_exists($class)) {
             return new $class();
         }
         return null;

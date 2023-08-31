@@ -134,8 +134,7 @@ class Doku_Form
     {
         if (is_null($value))
             unset($this->_hidden[$name]);
-        else
-            $this->_hidden[$name] = $value;
+        else $this->_hidden[$name] = $value;
     }
 
     /**
@@ -327,7 +326,7 @@ class Doku_Form
         global $INPUT;
         $value = (array_key_exists($INPUT->post->str($name), $entries)) ?
                  $INPUT->str($name) : key($entries);
-        foreach($entries as $val => $cap) {
+        foreach ($entries as $val => $cap) {
             $data = ($value === $val) ? array('checked' => 'checked') : array();
             $this->addElement(form_makeRadioField($name, $val, $cap, '', '', $data));
         }
@@ -653,8 +652,7 @@ function form_makeMenuField($name, $values, $selected = '', $label = null, $id =
         foreach ($values as $val) {
             if (is_array($val))
                 @list($val, $text) = $val;
-            else
-                $text = null;
+            else $text = null;
             $options[] = array($val, $text, $val===$selected);
         }
     }
@@ -1085,13 +1083,12 @@ function form_menufield($attrs)
         $selected = false;
 
         $cnt = count($attrs['_options']);
-        for($n=0; $n < $cnt; $n++){
+        for ($n=0; $n < $cnt; $n++) {
             @list($value,$text,$select) = $attrs['_options'][$n];
             $p = '';
             if (!is_null($text))
                 $p .= ' value="'. formText($value) .'"';
-            else
-                $text = $value;
+            else $text = $value;
             if (!empty($select) && !$selected) {
                 $p .= ' selected="selected"';
                 $selected = true;

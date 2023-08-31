@@ -165,7 +165,7 @@ EOT;
         );
         self::logException($ex);
 
-        if($ex->getSeverity() === E_WARNING && $conf['hidewarnings']) {
+        if ($ex->getSeverity() === E_WARNING && $conf['hidewarnings']) {
             return true;
         }
 

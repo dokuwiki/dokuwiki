@@ -15,16 +15,16 @@ class SettingMulticheckbox extends SettingString
     /** @inheritdoc */
     public function update($input)
     {
-        if($this->isProtected()) return false;
+        if ($this->isProtected()) return false;
 
         // split any combined values + convert from array to comma separated string
         $input = $input ?: [];
         $input = $this->array2str($input);
 
         $value = is_null($this->local) ? $this->default : $this->local;
-        if($value == $input) return false;
+        if ($value == $input) return false;
 
-        if($this->pattern && !preg_match($this->pattern, $input)) {
+        if ($this->pattern && !preg_match($this->pattern, $input)) {
             $this->error = true;
             $this->input = $input;
             return false;
@@ -56,7 +56,7 @@ class SettingMulticheckbox extends SettingString
         $default = $this->str2array($this->default);
 
         $input = '';
-        foreach($this->choices as $choice) {
+        foreach ($this->choices as $choice) {
             $idx = array_search($choice, $value);
             $idx_default = array_search($choice, $default);
 
@@ -74,17 +74,16 @@ class SettingMulticheckbox extends SettingString
             $input .= "</div>\n";
 
             // remove this action from the disabledactions array
-            if($idx !== false) unset($value[$idx]);
-            if($idx_default !== false) unset($default[$idx_default]);
+            if ($idx !== false) unset($value[$idx]);
+            if ($idx_default !== false) unset($default[$idx_default]);
         }
 
         // handle any remaining values
-        if($this->other != 'never') {
+        if ($this->other != 'never') {
             $other = implode(',', $value);
             // test equivalent to ($this->_other == 'always' || ($other && $this->_other == 'exists')
             // use != 'exists' rather than == 'always' to ensure invalid values default to 'always'
-            if($this->other != 'exists' || $other) {
-
+            if ($this->other != 'exists' || $other) {
                 $class = (
                     (count($default) === count($value)) &&
                     (count($value) === count(array_intersect($value, $default)))
@@ -115,15 +114,15 @@ class SettingMulticheckbox extends SettingString
     {
         $array = explode(',', $str);
 
-        if(!empty($this->combine)) {
-            foreach($this->combine as $key => $combinators) {
+        if (!empty($this->combine)) {
+            foreach ($this->combine as $key => $combinators) {
                 $idx = [];
-                foreach($combinators as $val) {
-                    if(($idx[] = array_search($val, $array)) === false) break;
+                foreach ($combinators as $val) {
+                    if (($idx[] = array_search($val, $array)) === false) break;
                 }
 
-                if(count($idx) && $idx[count($idx) - 1] !== false) {
-                    foreach($idx as $i) unset($array[$i]);
+                if (count($idx) && $idx[count($idx) - 1] !== false) {
+                    foreach ($idx as $i) unset($array[$i]);
                     $array[] = $key;
                 }
             }
@@ -149,11 +148,10 @@ class SettingMulticheckbox extends SettingString
         $array = array_unique(array_merge($input, $other));
 
         // deconstruct any combinations
-        if(!empty($this->combine)) {
-            foreach($this->combine as $key => $combinators) {
-
+        if (!empty($this->combine)) {
+            foreach ($this->combine as $key => $combinators) {
                 $idx = array_search($key, $array);
-                if($idx !== false) {
+                if ($idx !== false) {
                     unset($array[$idx]);
                     $array = array_merge($array, $combinators);
                 }

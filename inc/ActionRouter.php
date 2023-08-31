@@ -59,7 +59,7 @@ class ActionRouter
      */
     public static function getInstance($reinit = false)
     {
-        if((!self::$instance instanceof \dokuwiki\ActionRouter) || $reinit) {
+        if ((!self::$instance instanceof \dokuwiki\ActionRouter) || $reinit) {
             self::$instance = new ActionRouter();
         }
         return self::$instance;
@@ -90,29 +90,27 @@ class ActionRouter
                 $this->action = new Plugin($actionname);
             }
             $evt->advise_after();
-
-        } catch(ActionException $e) {
+        } catch (ActionException $e) {
             // we should have gotten a new action
             $actionname = $e->getNewAction();
 
             // this one should trigger a user message
-            if($e instanceof ActionDisabledException) {
+            if ($e instanceof ActionDisabledException) {
                 msg('Action disabled: ' . hsc($presetup), -1);
             }
 
             // some actions may request the display of a message
-            if($e->displayToUser()) {
+            if ($e->displayToUser()) {
                 msg(hsc($e->getMessage()), -1);
             }
 
             // do setup for new action
             $this->transitionAction($presetup, $actionname);
-
-        } catch(NoActionException $e) {
+        } catch (NoActionException $e) {
             msg('Action unknown: ' . hsc($actionname), -1);
             $actionname = 'show';
             $this->transitionAction($presetup, $actionname);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->handleFatalException($e);
         }
     }
@@ -131,12 +129,12 @@ class ActionRouter
         $this->transitions++;
 
         // no infinite recursion
-        if($from == $to) {
+        if ($from == $to) {
             $this->handleFatalException(new FatalException('Infinite loop in actions', 500, $e));
         }
 
         // larger loops will be caught here
-        if($this->transitions >= self::MAX_TRANSITIONS) {
+        if ($this->transitions >= self::MAX_TRANSITIONS) {
             $this->handleFatalException(new FatalException('Maximum action transitions reached', 500, $e));
         }
 
@@ -154,12 +152,12 @@ class ActionRouter
      */
     protected function handleFatalException(\Throwable $e)
     {
-        if($e instanceof FatalException) {
+        if ($e instanceof FatalException) {
             http_status($e->getCode());
         } else {
             http_status(500);
         }
-        if(defined('DOKU_UNITTEST')) {
+        if (defined('DOKU_UNITTEST')) {
             throw $e;
         }
         ErrorHandler::logException($e);
@@ -185,10 +183,10 @@ class ActionRouter
     {
         $actionname = strtolower($actionname); // FIXME is this needed here? should we run a cleanup somewhere else?
         $parts = explode('_', $actionname);
-        while($parts !== []) {
+        while ($parts !== []) {
             $load = implode('_', $parts);
             $class = 'dokuwiki\\Action\\' . str_replace('_', '', ucwords($load, '_'));
-            if(class_exists($class)) {
+            if (class_exists($class)) {
                 return new $class($actionname);
             }
             array_pop($parts);
@@ -209,19 +207,19 @@ class ActionRouter
         global $INFO;
         global $ID;
 
-        if(in_array($action->getActionName(), $this->disabled)) {
+        if (in_array($action->getActionName(), $this->disabled)) {
             throw new ActionDisabledException();
         }
 
         $action->checkPreconditions();
 
-        if(isset($INFO)) {
+        if (isset($INFO)) {
             $perm = $INFO['perm'];
         } else {
             $perm = auth_quickaclcheck($ID);
         }
 
-        if($perm < $action->minimumPermission()) {
+        if ($perm < $action->minimumPermission()) {
             throw new ActionException('denied');
         }
     }

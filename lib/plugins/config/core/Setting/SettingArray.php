@@ -43,16 +43,16 @@ class SettingArray extends Setting
      */
     public function update($input)
     {
-        if(is_null($input)) return false;
-        if($this->isProtected()) return false;
+        if (is_null($input)) return false;
+        if ($this->isProtected()) return false;
 
         $input = $this->fromString($input);
 
         $value = is_null($this->local) ? $this->default : $this->local;
-        if($value == $input) return false;
+        if ($value == $input) return false;
 
-        foreach($input as $item) {
-            if($this->pattern && !preg_match($this->pattern, $item)) {
+        foreach ($input as $item) {
+            if ($this->pattern && !preg_match($this->pattern, $item)) {
                 $this->error = true;
                 $this->input = $input;
                 return false;

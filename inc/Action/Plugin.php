@@ -29,7 +29,7 @@ class Plugin extends AbstractAction
     public function tplContent()
     {
         $evt = new Event('TPL_ACT_UNKNOWN', $this->actionname);
-        if($evt->advise_before()) {
+        if ($evt->advise_before()) {
             msg('Failed to handle action: ' . hsc($this->actionname), -1);
         }
         $evt->advise_after();

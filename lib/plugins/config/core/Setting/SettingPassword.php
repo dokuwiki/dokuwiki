@@ -13,10 +13,10 @@ class SettingPassword extends SettingString
     /** @inheritdoc */
     public function update($input)
     {
-        if($this->isProtected()) return false;
-        if(!$input) return false;
+        if ($this->isProtected()) return false;
+        if (!$input) return false;
 
-        if($this->pattern && !preg_match($this->pattern, $input)) {
+        if ($this->pattern && !preg_match($this->pattern, $input)) {
             $this->error = true;
             $this->input = $input;
             return false;

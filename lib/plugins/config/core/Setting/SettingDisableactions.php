@@ -16,8 +16,8 @@ class SettingDisableactions extends SettingMulticheckbox
         // make some language adjustments (there must be a better way)
         // transfer some DokuWiki language strings to the plugin
         $plugin->addLang($this->key . '_revisions', $lang['btn_revs']);
-        foreach($this->choices as $choice) {
-            if(isset($lang['btn_' . $choice])) $plugin->addLang($this->key . '_' . $choice, $lang['btn_' . $choice]);
+        foreach ($this->choices as $choice) {
+            if (isset($lang['btn_' . $choice])) $plugin->addLang($this->key . '_' . $choice, $lang['btn_' . $choice]);
         }
 
         return parent::html($plugin, $echo);

@@ -27,10 +27,10 @@ class Admin extends AbstractUserAction
         global $INPUT;
 
         // retrieve admin plugin name from $_REQUEST['page']
-        if($INPUT->str('page', '', true) != '') {
+        if ($INPUT->str('page', '', true) != '') {
             /** @var AdminPlugin $plugin */
-            if($plugin = plugin_getRequestAdminPlugin()) { // FIXME this method does also permission checking
-                if(!$plugin->isAccessibleByCurrentUser()) {
+            if ($plugin = plugin_getRequestAdminPlugin()) { // FIXME this method does also permission checking
+                if (!$plugin->isAccessibleByCurrentUser()) {
                     throw new ActionException('denied');
                 }
                 $plugin->handle();

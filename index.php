@@ -30,18 +30,15 @@ if (preg_match('/^\/_media\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
     // media dispatcher
     $_GET['media'] = $m[1];
     require $_SERVER['DOCUMENT_ROOT'] . '/lib/exe/fetch.php';
-
 } elseif (preg_match('/^\/_detail\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
     // image detail view
     $_GET['media'] = $m[1];
     require $_SERVER['DOCUMENT_ROOT'] . '/lib/exe/detail.php';
-
 } elseif (preg_match('/^\/_export\/([^\/]+)\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
     // exports
     $_GET['do'] = 'export_' . $m[1];
     $_GET['id'] = $m[2];
     require $_SERVER['DOCUMENT_ROOT'] . '/doku.php';
-
 } elseif (
     $_SERVER['SCRIPT_NAME'] !== '/index.php' &&
     file_exists($_SERVER['DOCUMENT_ROOT'] . $_SERVER['SCRIPT_NAME'])

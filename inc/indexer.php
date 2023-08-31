@@ -62,8 +62,8 @@ function wordlen($w)
     $l = strlen($w);
     // If left alone, all chinese "words" will get put into w3.idx
     // So the "length" of a "word" is faked
-    if(preg_match_all('/[\xE2-\xEF]/', $w, $leadbytes)) {
-        foreach($leadbytes[0] as $b)
+    if (preg_match_all('/[\xE2-\xEF]/', $w, $leadbytes)) {
+        foreach ($leadbytes[0] as $b)
             $l += ord($b) - 0xE1;
     }
     return $l;
@@ -98,9 +98,9 @@ function & idx_get_stopwords()
     if (is_null($stopwords)) {
         global $conf;
         $swfile = DOKU_INC.'inc/lang/'.$conf['lang'].'/stopwords.txt';
-        if(file_exists($swfile)){
+        if (file_exists($swfile)) {
             $stopwords = file($swfile, FILE_IGNORE_NEW_LINES);
-        }else{
+        } else {
             $stopwords = [];
         }
     }
@@ -139,10 +139,10 @@ function idx_addPage($page, $verbose = false, $force = false)
     }
 
     // check if indexing needed
-    if(!$force && file_exists($idxtag)){
-        if(trim(io_readFile($idxtag)) == idx_get_version()){
+    if (!$force && file_exists($idxtag)) {
+        if (trim(io_readFile($idxtag)) == idx_get_version()) {
             $last = @filemtime($idxtag);
-            if($last > @filemtime(wikiFN($page))){
+            if ($last > @filemtime(wikiFN($page))) {
                 if ($verbose) print("Indexer: index for $page up to date".DOKU_LF);
                 return false;
             }
@@ -176,13 +176,11 @@ function idx_addPage($page, $verbose = false, $force = false)
     $metadata['title'] = p_get_metadata($page, 'title', METADATA_RENDER_UNLIMITED);
     if (($references = p_get_metadata($page, 'relation references', METADATA_RENDER_UNLIMITED)) !== null)
         $metadata['relation_references'] = array_keys($references);
-    else
-        $metadata['relation_references'] = [];
+    else $metadata['relation_references'] = [];
 
     if (($media = p_get_metadata($page, 'relation media', METADATA_RENDER_UNLIMITED)) !== null)
         $metadata['relation_media'] = array_keys($media);
-    else
-        $metadata['relation_media'] = [];
+    else $metadata['relation_media'] = [];
 
     $data = ['page' => $page, 'body' => $body, 'metadata' => $metadata, 'pid' => $pid];
     $evt = new Event('INDEXER_PAGE_ADD', $data);

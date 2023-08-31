@@ -319,8 +319,7 @@ class HTTPClient
                 if ($match[1] > $this->max_bodysize) {
                     if ($this->max_bodysize_abort)
                         throw new HTTPClientException('Reported content length exceeds allowed response size');
-                    else
-                        $this->error = 'Reported content length exceeds allowed response size';
+                    else $this->error = 'Reported content length exceeds allowed response size';
                 }
             }
 
@@ -466,7 +465,6 @@ class HTTPClient
                     }
                 }
             }
-
         } catch (HTTPClientException $err) {
             $this->error = $err->getMessage();
             if ($err->getCode())

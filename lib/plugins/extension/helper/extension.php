@@ -924,7 +924,6 @@ class helper_plugin_extension_extension extends Plugin
             ) {
                 $name = PhpString::basename($match[1]);
             }
-
         }
 
         if (!$name) {

@@ -60,7 +60,7 @@ class action_plugin_extension extends ActionPlugin
         switch ($act) {
             case 'enable':
             case 'disable':
-                if(getSecurityToken() != $INPUT->str('sectok')) {
+                if (getSecurityToken() != $INPUT->str('sectok')) {
                     http_status(403);
                     echo 'Security Token did not match. Possible CSRF attack.';
                     return;

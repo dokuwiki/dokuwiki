@@ -43,22 +43,22 @@ function mail_setup()
 
     // auto constructed address
     $host = @parse_url(DOKU_URL, PHP_URL_HOST);
-    if(!$host) $host = 'example.com';
+    if (!$host) $host = 'example.com';
     $noreply = 'noreply@'.$host;
 
     $replace = [];
-    if(!empty($USERINFO['mail'])){
+    if (!empty($USERINFO['mail'])) {
         $replace['@MAIL@'] = $USERINFO['mail'];
-    }else{
+    } else {
         $replace['@MAIL@'] = $noreply;
     }
 
     // use 'noreply' if no user
     $replace['@USER@'] = $INPUT->server->str('REMOTE_USER', 'noreply', true);
 
-    if(!empty($USERINFO['name'])){
+    if (!empty($USERINFO['name'])) {
         $replace['@NAME@'] = $USERINFO['name'];
-    }else{
+    } else {
         $replace['@NAME@'] = '';
     }
 
@@ -70,9 +70,9 @@ function mail_setup()
     );
 
     // any replacements done? set different mailfromnone
-    if($from != $conf['mailfrom']){
+    if ($from != $conf['mailfrom']) {
         $conf['mailfromnobody'] = $noreply;
-    }else{
+    } else {
         $conf['mailfromnobody'] = $from;
     }
     $conf['mailfrom'] = $from;
@@ -131,7 +131,7 @@ function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit =
             // here is, where I don't agree with imap_8_bit,
             // please correct me, if I'm wrong,
             // or comment next line for RFC2045 conformance, if you like
-            if (!($bEmulate_imap_8bit && ($i==count($aLines)-1))){
+            if (!($bEmulate_imap_8bit && ($i==count($aLines)-1))) {
             if (($iLastChar==0x09)||($iLastChar==0x20)) {
                 $sLine[$iLength-1]='=';
                 $sLine .= ($iLastChar==0x09)?'09':'20';
@@ -152,7 +152,7 @@ function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit =
         // at the very first character of the line
         // and after soft linebreaks, as well,
         // but this wouldn't be caught by such an easy RegExp
-        if($maxlen){
+        if ($maxlen) {
             preg_match_all('/.{1,'.($maxlen - 2).'}([^=]{0,2})?/', $sLine, $aMatch);
             $sLine = implode('=' . MAILHEADER_EOL, $aMatch[0]); // add soft crlf's
         }

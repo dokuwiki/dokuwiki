@@ -35,8 +35,8 @@ class ActionException extends \Exception
     {
         global $INPUT;
         parent::__construct($message);
-        if(is_null($newaction)) {
-            if(strtolower($INPUT->server->str('REQUEST_METHOD')) == 'post') {
+        if (is_null($newaction)) {
+            if (strtolower($INPUT->server->str('REQUEST_METHOD')) == 'post') {
                 $newaction = 'redirect';
             } else {
                 $newaction = 'show';
@@ -64,7 +64,7 @@ class ActionException extends \Exception
      */
     public function displayToUser($set = null)
     {
-        if(!is_null($set)) $this->displayToUser = $set;
+        if (!is_null($set)) $this->displayToUser = $set;
         return $set;
     }
 }

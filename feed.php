@@ -335,11 +335,11 @@ function rss_buildItems(&$rss, &$data, $opt)
                             $src_r = ml($id, $more, true, '&amp;', true);
                         }
                         if ($rev && $size = media_image_preview_size(
-                                $id,
-                                $rev,
-                                new JpegMeta(mediaFN($id, $rev)),
-                                300
-                            )) {
+                            $id,
+                            $rev,
+                            new JpegMeta(mediaFN($id, $rev)),
+                            300
+                        )) {
                             $more = 'rev=' . $rev . '&w=' . $size[0] . '&h=' . $size[1];
                             $src_l = ml($id, $more, true, '&amp;', true);
                         }

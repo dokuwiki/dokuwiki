@@ -15,7 +15,7 @@ class SettingLicense extends SettingMultichoice
     {
         global $license;
 
-        foreach($license as $key => $data) {
+        foreach ($license as $key => $data) {
             $this->choices[] = $key;
             $this->lang[$this->key . '_o_' . $key] = $data['name']; // stored in setting
         }

@@ -97,7 +97,6 @@ class LegacyForm extends Form
                         throw new \UnexpectedValueException('Unsupported legacy field ' . $ctl['elem']);
                     default:
                         throw new \UnexpectedValueException('Unknown legacy field ' . $ctl['elem']);
-
                 }
             } else {
                 $this->addHTML($element);
@@ -120,9 +119,9 @@ class LegacyForm extends Form
         foreach ($legacy as $key => $val) {
             if ($key[0] == '_') {
                 $control[substr($key, 1)] = $val;
-            } elseif($key == 'name') {
+            } elseif ($key == 'name') {
                 $control[$key] = $val;
-            } elseif($key == 'id') {
+            } elseif ($key == 'id') {
                 $control[$key] = $val;
             } else {
                 $attributes[$key] = $val;

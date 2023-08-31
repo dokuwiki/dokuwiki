@@ -32,7 +32,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
 
         <div class="wrapper group">
 
-            <?php if($showSidebar): ?>
+            <?php if ($showSidebar) : ?>
                 <!-- ********** ASIDE ********** -->
                 <nav id="dokuwiki__aside" aria-label="<?php echo $lang['sidebar']
                     ?>"><div class="pad aside include group">

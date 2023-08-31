@@ -9,8 +9,8 @@
  * @author Anika Henke <anika@selfthinker.org>
  */
 // phpcs:disable PSR1.Files.SideEffects
-if(!defined('DOKU_INC')) define('DOKU_INC', __DIR__.'/../../');
-if(!defined('NOSESSION')) define('NOSESSION', 1);
+if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__.'/../../');
+if (!defined('NOSESSION')) define('NOSESSION', 1);
 require_once(DOKU_INC.'inc/init.php');
 ?>
 <!DOCTYPE html>
@@ -51,12 +51,12 @@ $ini = $styleUtils->cssStyleini();
 if (!empty($ini)) {
     echo '<table>';
     echo "<caption>".hsc($conf['template'])."'s style.ini</caption>";
-    foreach($ini['replacements'] as $key => $val){
+    foreach ($ini['replacements'] as $key => $val) {
         echo '<tr>';
         echo '<td>'.hsc($key).'</td>';
         echo '<td>'.hsc($val).'</td>';
         echo '<td>';
-        if(preg_match('/^#[0-f]{3,6}$/i', $val)){
+        if (preg_match('/^#[0-f]{3,6}$/i', $val)) {
             echo '<div class="color" style="background-color:'.$val.';">&#160;</div>';
         }
         echo '</td>';

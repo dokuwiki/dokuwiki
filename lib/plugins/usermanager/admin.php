@@ -361,7 +361,7 @@ class admin_plugin_usermanager extends AdminPlugin
     {
         /** @var AuthPlugin $auth */
         global $auth;
-        if(!$auth || !$auth->canDo('getUsers') ) {
+        if (!$auth || !$auth->canDo('getUsers') ) {
             return false;
         }
 

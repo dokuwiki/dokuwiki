@@ -25,11 +25,11 @@ class Ajax
     public function __construct($call)
     {
         $callfn = 'call' . ucfirst($call);
-        if(method_exists($this, $callfn)) {
+        if (method_exists($this, $callfn)) {
             $this->$callfn();
         } else {
             $evt = new Event('AJAX_CALL_UNKNOWN', $call);
-            if($evt->advise_before()) {
+            if ($evt->advise_before()) {
                 print "AJAX call '" . hsc($call) . "' unknown!\n";
             } else {
                 $evt->advise_after();
@@ -51,24 +51,24 @@ class Ajax
         $maxnumbersuggestions = 50;
 
         $query = $INPUT->post->str('q');
-        if(empty($query)) $query = $INPUT->get->str('q');
-        if(empty($query)) return;
+        if (empty($query)) $query = $INPUT->get->str('q');
+        if (empty($query)) return;
 
         $query = urldecode($query);
 
         $data = ft_pageLookup($query, true, useHeading('navigation'));
 
-        if($data === []) return;
+        if ($data === []) return;
 
         print '<strong>' . $lang['quickhits'] . '</strong>';
         print '<ul>';
         $counter = 0;
-        foreach($data as $id => $title) {
-            if(useHeading('navigation')) {
+        foreach ($data as $id => $title) {
+            if (useHeading('navigation')) {
                 $name = $title;
             } else {
                 $ns = getNS($id);
-                if($ns) {
+                if ($ns) {
                     $name = noNS($id) . ' (' . $ns . ')';
                 } else {
                     $name = $id;
@@ -77,7 +77,7 @@ class Ajax
             echo '<li>' . html_wikilink(':' . $id, $name) . '</li>';
 
             $counter++;
-            if($counter > $maxnumbersuggestions) {
+            if ($counter > $maxnumbersuggestions) {
                 echo '<li>...</li>';
                 break;
             }
@@ -96,11 +96,11 @@ class Ajax
         global $INPUT;
 
         $query = cleanID($INPUT->post->str('q'));
-        if(empty($query)) $query = cleanID($INPUT->get->str('q'));
-        if(empty($query)) return;
+        if (empty($query)) $query = cleanID($INPUT->get->str('q'));
+        if (empty($query)) return;
 
         $data = ft_pageLookup($query);
-        if($data === []) return;
+        if ($data === []) return;
         $data = array_keys($data);
 
         // limit results to 15 hits
@@ -134,7 +134,7 @@ class Ajax
         global $INPUT;
 
         $ID = cleanID($INPUT->post->str('id'));
-        if(empty($ID)) return;
+        if (empty($ID)) return;
 
         $INFO = pageinfo();
 
@@ -143,13 +143,13 @@ class Ajax
             'lock' => '0',
             'draft' => '',
         ];
-        if(!$INFO['writable']) {
+        if (!$INFO['writable']) {
             $response['errors'][] = 'Permission to write this page has been denied.';
             echo json_encode($response);
             return;
         }
 
-        if(!checklock($ID)) {
+        if (!checklock($ID)) {
             lock($ID);
             $response['lock'] = '1';
         }
@@ -172,10 +172,10 @@ class Ajax
     {
         global $INPUT;
         $id = cleanID($INPUT->str('id'));
-        if(empty($id)) return;
+        if (empty($id)) return;
 
         $client = $INPUT->server->str('REMOTE_USER');
-        if(!$client) $client = clientIP(true);
+        if (!$client) $client = clientIP(true);
 
         $draft = new Draft($id, $client);
         if ($draft->isDraftAvailable() && checkSecurityToken()) {
@@ -201,7 +201,7 @@ class Ajax
 
         $data = [];
         search($data, $conf['mediadir'], 'search_index', ['nofiles' => true], $dir);
-        foreach(array_keys($data) as $item) {
+        foreach (array_keys($data) as $item) {
             $data[$item]['level'] = $lvl + 1;
         }
         echo html_buildlist($data, 'idx', 'media_nstree_item', 'media_nstree_li');
@@ -219,7 +219,7 @@ class Ajax
 
         $NS = cleanID($INPUT->post->str('ns'));
         $sort = $INPUT->post->bool('recent') ? 'date' : 'natural';
-        if($INPUT->post->str('do') == 'media') {
+        if ($INPUT->post->str('do') == 'media') {
             tpl_mediaFileList();
         } else {
             tpl_mediaContent(true, $sort);
@@ -239,11 +239,11 @@ class Ajax
         require_once(DOKU_INC . 'lib/exe/mediamanager.php');
 
         $image = '';
-        if($INPUT->has('image')) $image = cleanID($INPUT->str('image'));
-        if(isset($IMG)) $image = $IMG;
-        if(isset($JUMPTO)) $image = $JUMPTO;
+        if ($INPUT->has('image')) $image = cleanID($INPUT->str('image'));
+        if (isset($IMG)) $image = $IMG;
+        if (isset($JUMPTO)) $image = $JUMPTO;
         $rev = false;
-        if(isset($REV) && !$JUMPTO) $rev = $REV;
+        if (isset($REV) && !$JUMPTO) $rev = $REV;
 
         html_msgarea();
         tpl_mediaFileDetails($image, $rev);
@@ -259,7 +259,7 @@ class Ajax
         global $INPUT;
 
         $image = '';
-        if($INPUT->has('image')) $image = cleanID($INPUT->str('image'));
+        if ($INPUT->has('image')) $image = cleanID($INPUT->str('image'));
         (new MediaDiff($image))->preference('fromAjax', true)->show();
     }
 
@@ -273,9 +273,9 @@ class Ajax
         global $NS, $MSG, $INPUT;
 
         $id = '';
-        if(isset($_FILES['qqfile']['tmp_name'])) {
+        if (isset($_FILES['qqfile']['tmp_name'])) {
             $id = $INPUT->post->str('mediaid', $_FILES['qqfile']['name']);
-        } elseif($INPUT->get->has('qqfile')) {
+        } elseif ($INPUT->get->has('qqfile')) {
             $id = $INPUT->get->str('qqfile');
         }
 
@@ -285,17 +285,17 @@ class Ajax
         $ns = $NS . ':' . getNS($id);
 
         $AUTH = auth_quickaclcheck("$ns:*");
-        if($AUTH >= AUTH_UPLOAD) {
+        if ($AUTH >= AUTH_UPLOAD) {
             io_createNamespace("$ns:xxx", 'media');
         }
 
-        if(isset($_FILES['qqfile']['error']) && $_FILES['qqfile']['error']) unset($_FILES['qqfile']);
+        if (isset($_FILES['qqfile']['error']) && $_FILES['qqfile']['error']) unset($_FILES['qqfile']);
 
         $res = false;
-        if(isset($_FILES['qqfile']['tmp_name'])) $res = media_upload($NS, $AUTH, $_FILES['qqfile']);
-        if($INPUT->get->has('qqfile')) $res = media_upload_xhr($NS, $AUTH);
+        if (isset($_FILES['qqfile']['tmp_name'])) $res = media_upload($NS, $AUTH, $_FILES['qqfile']);
+        if ($INPUT->get->has('qqfile')) $res = media_upload_xhr($NS, $AUTH);
 
-        if($res) {
+        if ($res) {
             $result = [
                 'success' => true,
                 'link' => media_managerURL(['ns' => $ns, 'image' => $NS . ':' . $id], '&'),
@@ -304,8 +304,8 @@ class Ajax
             ];
         } else {
             $error = '';
-            if(isset($MSG)) {
-                foreach($MSG as $msg) {
+            if (isset($MSG)) {
+                foreach ($MSG as $msg) {
                     $error .= $msg['msg'];
                 }
             }
@@ -363,8 +363,7 @@ class Ajax
         $nsd = utf8_encodeFN(str_replace(':', '/', $ns));
 
         $data = [];
-        if($q !== '' && $ns === '') {
-
+        if ($q !== '' && $ns === '') {
             // use index to lookup matching pages
             $pages = ft_pageLookup($id, true);
 
@@ -380,8 +379,8 @@ class Ajax
             // them seperately
             $dirs = [];
 
-            foreach($pages as $pid => $title) {
-                if(strpos(getNS($pid), $id) !== false) {
+            foreach ($pages as $pid => $title) {
+                if (strpos(getNS($pid), $id) !== false) {
                     // match was in the namespace
                     $dirs[getNS($pid)] = 1; // assoc array avoids dupes
                 } else {
@@ -390,12 +389,10 @@ class Ajax
                 }
                 unset($pages[$pid]);
             }
-            foreach(array_keys($dirs) as $dir) {
+            foreach (array_keys($dirs) as $dir) {
                 $data[] = ['id' => $dir, 'type' => 'd'];
             }
-
         } else {
-
             $opts = [
                 'depth' => 1,
                 'listfiles' => true,
@@ -404,12 +401,12 @@ class Ajax
                 'firsthead' => true,
                 'sneakyacl' => $conf['sneaky_index']
             ];
-            if($id) $opts['filematch'] = '^.*\/' . $id;
-            if($id) $opts['dirmatch'] = '^.*\/' . $id;
+            if ($id) $opts['filematch'] = '^.*\/' . $id;
+            if ($id) $opts['dirmatch'] = '^.*\/' . $id;
             search($data, $conf['datadir'], 'search_universal', $opts, $nsd);
 
             // add back to upper
-            if($ns) {
+            if ($ns) {
                 array_unshift(
                     $data,
                     ['id' => getNS($ns), 'type' => 'u']
@@ -419,22 +416,22 @@ class Ajax
 
         // fixme sort results in a useful way ?
 
-        if(!count($data)) {
+        if (!count($data)) {
             echo $lang['nothingfound'];
             exit;
         }
 
         // output the found data
         $even = 1;
-        foreach($data as $item) {
+        foreach ($data as $item) {
             $even *= -1; //zebra
 
-            if(($item['type'] == 'd' || $item['type'] == 'u') && $item['id'] !== '') $item['id'] .= ':';
+            if (($item['type'] == 'd' || $item['type'] == 'u') && $item['id'] !== '') $item['id'] .= ':';
             $link = wl($item['id']);
 
             echo '<div class="' . (($even > 0) ? 'even' : 'odd') . ' type_' . $item['type'] . '">';
 
-            if($item['type'] == 'u') {
+            if ($item['type'] == 'u') {
                 $name = $lang['upperns'];
             } else {
                 $name = hsc($item['id']);
@@ -442,7 +439,7 @@ class Ajax
 
             echo '<a href="' . $link . '" title="' . hsc($item['id']) . '" class="wikilink1">' . $name . '</a>';
 
-            if(!blank($item['title'])) {
+            if (!blank($item['title'])) {
                 echo '<span>' . hsc($item['title']) . '</span>';
             }
             echo '</div>';

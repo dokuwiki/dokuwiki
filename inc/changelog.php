@@ -223,7 +223,7 @@ function getRecents($first, $num, $ns = '', $flags = 0)
         } else {
             $lines_position--;
             $x = $rec;
-            if ($flags & RECENTS_MEDIA_CHANGES){
+            if ($flags & RECENTS_MEDIA_CHANGES) {
                 $x['media'] = true;
             } else {
                 $x['media'] = false;
@@ -234,7 +234,8 @@ function getRecents($first, $num, $ns = '', $flags = 0)
         $recent[] = $x;
         $count++;
         // break when we have enough entries
-        if ($count >= $num) { break; }
+        if ($count >= $num) {
+break; }
     }
     return $recent;
 }

@@ -542,7 +542,7 @@ class auth_plugin_authad extends AuthPlugin
             if (!isset($this->grpsusers[$this->filterToString($filter)]) ||
                 count($this->grpsusers[$this->filterToString($filter)]) < ($start+$limit)
             ) {
-                if(!isset($this->grpsusers[$this->filterToString($filter)])) {
+                if (!isset($this->grpsusers[$this->filterToString($filter)])) {
                     $this->grpsusers[$this->filterToString($filter)] = [];
                 }
 
