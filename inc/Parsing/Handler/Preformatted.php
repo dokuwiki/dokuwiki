@@ -6,7 +6,7 @@ class Preformatted extends AbstractRewriter
 {
 
     protected $pos;
-    protected $text ='';
+    protected $text = '';
 
     /** @inheritdoc */
     public function finalise()

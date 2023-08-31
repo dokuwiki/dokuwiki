@@ -36,19 +36,19 @@ use splitbrain\slika\Slika;
 function media_filesinuse($data, $id)
 {
     global $lang;
-    echo '<h1>'.$lang['reference'].' <code>'.hsc(noNS($id)).'</code></h1>';
-    echo '<p>'.hsc($lang['ref_inuse']).'</p>';
+    echo '<h1>' . $lang['reference'] . ' <code>' . hsc(noNS($id)) . '</code></h1>';
+    echo '<p>' . hsc($lang['ref_inuse']) . '</p>';
 
-    $hidden=0; //count of hits without read permission
+    $hidden = 0; //count of hits without read permission
     foreach ($data as $row) {
         if (auth_quickaclcheck($row) >= AUTH_READ && isVisiblePage($row)) {
             echo '<div class="search_result">';
-            echo '<span class="mediaref_ref">'.hsc($row).'</span>';
+            echo '<span class="mediaref_ref">' . hsc($row) . '</span>';
             echo '</div>';
         } else $hidden++;
     }
     if ($hidden) {
-        echo '<div class="mediaref_hidden">'.$lang['ref_hidden'].'</div>';
+        echo '<div class="mediaref_hidden">' . $lang['ref_hidden'] . '</div>';
     }
 }
 
@@ -75,7 +75,7 @@ function media_metasave($id, $auth, $data)
     $meta->_parseAll();
 
     foreach ($data as $key => $val) {
-        $val=trim($val);
+        $val = trim($val);
         if (empty($val)) {
             $meta->deleteField($key);
         } else {
@@ -133,7 +133,7 @@ function media_ispublic($id)
 {
     if (media_isexternal($id)) return true;
     $id = cleanID($id);
-    if (auth_aclcheck(getNS($id).':*', '', []) >= AUTH_READ) return true;
+    if (auth_aclcheck(getNS($id) . ':*', '', []) >= AUTH_READ) return true;
     return false;
 }
 
@@ -152,7 +152,7 @@ function media_metaform($id, $auth)
     global $lang;
 
     if ($auth < AUTH_UPLOAD) {
-        echo '<div class="nothing">'.$lang['media_perm_upload'].'</div>'.DOKU_LF;
+        echo '<div class="nothing">' . $lang['media_perm_upload'] . '</div>' . DOKU_LF;
         return false;
     }
 
@@ -186,8 +186,8 @@ function media_metaform($id, $auth)
         // prepare attributes
         $p = [
             'class' => 'edit',
-            'id'    => 'meta__'.$key,
-            'name'  => 'meta['.$field[0].']'
+            'id'    => 'meta__' . $key,
+            'name'  => 'meta[' . $field[0] . ']'
         ];
 
         $form->addTagOpen('div')->addClass('row');
@@ -256,7 +256,7 @@ function media_inuse($id)
 function media_delete($id, $auth)
 {
     global $lang;
-    $auth = auth_quickaclcheck(ltrim(getNS($id).':*', ':'));
+    $auth = auth_quickaclcheck(ltrim(getNS($id) . ':*', ':'));
     if ($auth < AUTH_DELETE) return DOKU_MEDIA_NOT_AUTH;
     if (media_inuse($id)) return DOKU_MEDIA_INUSE;
 
@@ -313,7 +313,7 @@ function media_upload_xhr($ns, $auth)
     [$ext, $mime] = mimetype($id);
     $input = fopen("php://input", "r");
     if (!($tmp = io_mktmpdir())) return false;
-    $path = $tmp.'/'.md5($id);
+    $path = $tmp . '/' . md5($id);
     $target = fopen($path, "w");
     $realSize = stream_copy_to_stream($input, $target);
     fclose($target);
@@ -325,7 +325,7 @@ function media_upload_xhr($ns, $auth)
 
     $res = media_save(
         ['name' => $path, 'mime' => $mime, 'ext'  => $ext],
-        $ns.':'.$id,
+        $ns . ':' . $id,
         ($INPUT->get->str('ow') == 'true'),
         $auth,
         'copy'
@@ -369,7 +369,7 @@ function media_upload($ns, $auth, $file = false)
     [$iext, $imime] = mimetype($id);
     if ($fext && !$iext) {
         // no extension specified in id - read original one
-        $id   .= '.'.$fext;
+        $id   .= '.' . $fext;
         $imime = $fmime;
     } elseif ($fext && $fext != $iext) {
         // extension was changed, print warning
@@ -466,7 +466,7 @@ function media_save($file, $id, $ow, $auth, $move)
     $regex = implode('|', $types);
 
     // because a temp file was created already
-    if (!preg_match('/\.('.$regex.')$/i', $fn)) {
+    if (!preg_match('/\.(' . $regex . ')$/i', $fn)) {
         return [$lang['uploadwrong'], -1];
     }
 
@@ -510,7 +510,7 @@ function media_save($file, $id, $ow, $auth, $move)
 function _media_upload_action($data)
 {
     // fixme do further sanity tests of given data?
-    if (is_array($data) && count($data)===6) {
+    if (is_array($data) && count($data) === 6) {
         return media_upload_finish($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
     } else {
         return false; //callback error
@@ -713,11 +713,11 @@ function media_filelist($ns, $auth = null, $jump = '', $fullscreenview = false, 
     // check auth our self if not given (needed for ajax calls)
     if (is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
-    if (!$fullscreenview) echo '<h1 id="media__ns">:'.hsc($ns).'</h1>'.NL;
+    if (!$fullscreenview) echo '<h1 id="media__ns">:' . hsc($ns) . '</h1>' . NL;
 
     if ($auth < AUTH_READ) {
         // FIXME: print permission warning here instead?
-        echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
+        echo '<div class="nothing">' . $lang['nothingfound'] . '</div>' . NL;
     } else {
         if (!$fullscreenview) {
             media_uploadform($ns, $auth);
@@ -730,14 +730,14 @@ function media_filelist($ns, $auth = null, $jump = '', $fullscreenview = false, 
             $data,
             $conf['mediadir'],
             'search_mediafiles',
-            ['showmsg'=>true, 'depth'=>1],
+            ['showmsg' => true, 'depth' => 1],
             $dir,
             1,
             $sort
         );
 
         if (!count($data)) {
-            echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
+            echo '<div class="nothing">' . $lang['nothingfound'] . '</div>' . NL;
         } else {
             if ($fullscreenview) {
                 echo '<ul class="' . _media_get_list_type() . '">';
@@ -757,7 +757,7 @@ function media_filelist($ns, $auth = null, $jump = '', $fullscreenview = false, 
                     echo '</li>';
                 }
             }
-            if ($fullscreenview) echo '</ul>'.NL;
+            if ($fullscreenview) echo '</ul>' . NL;
         }
     }
 }
@@ -850,7 +850,7 @@ function media_tab_files_options()
     if ($INPUT->has('q')) {
         $form->setHiddenField('q', $INPUT->str('q'));
     }
-    $form->addHTML('<ul>'.NL);
+    $form->addHTML('<ul>' . NL);
     foreach (
         [
                  'list' => ['listType', ['thumbs', 'rows']],
@@ -860,24 +860,24 @@ function media_tab_files_options()
         $checked = "_media_get_{$group}_type";
         $checked = $checked();
 
-        $form->addHTML('<li class="'. $content[0] .'">');
+        $form->addHTML('<li class="' . $content[0] . '">');
         foreach ($content[1] as $option) {
             $attrs = [];
             if ($checked == $option) {
                 $attrs['checked'] = 'checked';
             }
             $radio = $form->addRadioButton(
-                $group.'_dwmedia',
-                $lang['media_'.$group.'_'.$option]
-            )->val($option)->id($content[0].'__'.$option)->addClass($option);
+                $group . '_dwmedia',
+                $lang['media_' . $group . '_' . $option]
+            )->val($option)->id($content[0] . '__' . $option)->addClass($option);
             $radio->attrs($attrs);
         }
-        $form->addHTML('</li>'.NL);
+        $form->addHTML('</li>' . NL);
     }
     $form->addHTML('<li>');
     $form->addButton('', $lang['btn_apply'])->attr('type', 'submit');
-    $form->addHTML('</li>'.NL);
-    $form->addHTML('</ul>'.NL);
+    $form->addHTML('</li>' . NL);
+    $form->addHTML('</ul>' . NL);
     $form->addTagClose('div');
     echo $form->toHTML();
 }
@@ -943,7 +943,7 @@ function media_tab_files($ns, $auth = null, $jump = '')
     if (is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
     if ($auth < AUTH_READ) {
-        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
+        echo '<div class="nothing">' . $lang['media_perm_read'] . '</div>' . NL;
     } else {
         media_filelist($ns, $auth, $jump, true, _media_get_sort_type());
     }
@@ -963,12 +963,12 @@ function media_tab_upload($ns, $auth = null, $jump = '')
     global $lang;
     if (is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
-    echo '<div class="upload">'.NL;
+    echo '<div class="upload">' . NL;
     if ($auth >= AUTH_UPLOAD) {
         echo '<p>' . $lang['mediaupload'] . '</p>';
     }
     media_uploadform($ns, $auth, true);
-    echo '</div>'.NL;
+    echo '</div>' . NL;
 }
 
 /**
@@ -985,13 +985,13 @@ function media_tab_search($ns, $auth = null)
 
     $do = $INPUT->str('mediado');
     $query = $INPUT->str('q');
-    echo '<div class="search">'.NL;
+    echo '<div class="search">' . NL;
 
     media_searchform($ns, $query, true);
     if ($do == 'searchlist' || $query) {
         media_searchlist($query, $ns, $auth, true, _media_get_sort_type());
     }
-    echo '</div>'.NL;
+    echo '</div>' . NL;
 }
 
 /**
@@ -1015,7 +1015,7 @@ function media_tab_view($image, $ns, $auth = null, $rev = '')
         media_preview_buttons($image, $auth, $rev);
         media_details($image, $auth, $rev, $meta);
     } else {
-        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
+        echo '<div class="nothing">' . $lang['media_perm_read'] . '</div>' . NL;
     }
 }
 
@@ -1063,7 +1063,7 @@ function media_tab_history($image, $ns, $auth = null)
             (new MediaRevisions($image))->show($first);
         }
     } else {
-        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
+        echo '<div class="nothing">' . $lang['media_perm_read'] . '</div>' . NL;
     }
 }
 
@@ -1098,8 +1098,8 @@ function media_preview($image, $auth, $rev = '', $meta = false)
         $more['h'] = $size[1];
         $src = ml($image, $more);
 
-        echo '<a href="'.$src.'" target="_blank" title="'.$lang['mediaview'].'">';
-        echo '<img src="'.$src.'" alt="" style="max-width: '.$size[0].'px;" />';
+        echo '<a href="' . $src . '" target="_blank" title="' . $lang['mediaview'] . '">';
+        echo '<img src="' . $src . '" alt="" style="max-width: ' . $size[0] . 'px;" />';
         echo '</a>';
 
         echo '</div>';
@@ -1154,7 +1154,7 @@ function media_preview_buttons($image, $auth, $rev = '')
         // restore button
         $form = new Form([
             'id' => 'mediamanager__btn_restore',
-            'action'=>media_managerURL(['image' => $image], '&'),
+            'action' => media_managerURL(['image' => $image], '&'),
         ]);
         $form->addTagOpen('div')->addClass('no');
         $form->setHiddenField('mediado', 'restore');
@@ -1265,28 +1265,28 @@ function media_details($image, $auth, $rev = '', $meta = false)
     if (!$meta) $meta = new JpegMeta(mediaFN($image, $rev));
     $tags = media_file_tags($meta);
 
-    echo '<dl>'.NL;
+    echo '<dl>' . NL;
     foreach ($tags as $tag) {
         if ($tag['value']) {
             $value = cleanText($tag['value']);
-            echo '<dt>'.$lang[$tag['tag'][1]].'</dt><dd>';
+            echo '<dt>' . $lang[$tag['tag'][1]] . '</dt><dd>';
             if ($tag['tag'][2] == 'date') echo dformat($value);
             else echo hsc($value);
-            echo '</dd>'.NL;
+            echo '</dd>' . NL;
         }
     }
-    echo '</dl>'.NL;
-    echo '<dl>'.NL;
-    echo '<dt>'.$lang['reference'].':</dt>';
+    echo '</dl>' . NL;
+    echo '<dl>' . NL;
+    echo '<dt>' . $lang['reference'] . ':</dt>';
     $media_usage = ft_mediause($image, true);
     if ($media_usage !== []) {
         foreach ($media_usage as $path) {
-            echo '<dd>'.html_wikilink($path).'</dd>';
+            echo '<dd>' . html_wikilink($path) . '</dd>';
         }
     } else {
-        echo '<dd>'.$lang['nothingfound'].'</dd>';
+        echo '<dd>' . $lang['nothingfound'] . '</dd>';
     }
-    echo '</dl>'.NL;
+    echo '</dl>' . NL;
 
 }
 
@@ -1304,7 +1304,7 @@ function media_details($image, $auth, $rev = '', $meta = false)
  */
 function media_diff($image, $ns, $auth, $fromajax = false)
 {
-    dbg_deprecated('see '. MediaDiff::class .'::show()');
+    dbg_deprecated('see ' . MediaDiff::class . '::show()');
 }
 
 /**
@@ -1316,7 +1316,7 @@ function media_diff($image, $ns, $auth, $fromajax = false)
  */
 function _media_file_diff($data)
 {
-    dbg_deprecated('see '. MediaDiff::class .'::show()');
+    dbg_deprecated('see ' . MediaDiff::class . '::show()');
 }
 
 /**
@@ -1334,7 +1334,7 @@ function _media_file_diff($data)
  */
 function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax)
 {
-    dbg_deprecated('see '. MediaDiff::class .'::showFileDiff()');
+    dbg_deprecated('see ' . MediaDiff::class . '::showFileDiff()');
 }
 
 /**
@@ -1353,7 +1353,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax)
  */
 function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type)
 {
-    dbg_deprecated('see '. MediaDiff::class .'::showImageDiff()');
+    dbg_deprecated('see ' . MediaDiff::class . '::showImageDiff()');
 }
 
 /**
@@ -1423,14 +1423,14 @@ function media_searchlist($query, $ns, $auth = null, $fullscreen = false, $sort 
             $quoted = str_replace(['\*', '\?'], ['.*', '.'], $quoted, $count);
 
             //if we use globbing file name must match entirely but may be preceded by arbitrary namespace
-            if ($count > 0) $quoted = '^([^:]*:)*'.$quoted.'$';
+            if ($count > 0) $quoted = '^([^:]*:)*' . $quoted . '$';
 
-            $pattern = '/'.$quoted.'/i';
+            $pattern = '/' . $quoted . '/i';
             search(
                 $evdata['data'],
                 $conf['mediadir'],
                 'search_mediafiles',
-                ['showmsg'=>false, 'pattern'=>$pattern],
+                ['showmsg' => false, 'pattern' => $pattern],
                 $dir,
                 1,
                 $sort
@@ -1441,12 +1441,12 @@ function media_searchlist($query, $ns, $auth = null, $fullscreen = false, $sort 
     }
 
     if (!$fullscreen) {
-        echo '<h1 id="media__ns">'.sprintf($lang['searchmedia_in'], hsc($ns).':*').'</h1>'.NL;
+        echo '<h1 id="media__ns">' . sprintf($lang['searchmedia_in'], hsc($ns) . ':*') . '</h1>' . NL;
         media_searchform($ns, $query);
     }
 
     if (!count($evdata['data'])) {
-        echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
+        echo '<div class="nothing">' . $lang['nothingfound'] . '</div>' . NL;
     } else {
         if ($fullscreen) {
             echo '<ul class="' . _media_get_list_type() . '">';
@@ -1466,7 +1466,7 @@ function media_searchlist($query, $ns, $auth = null, $fullscreen = false, $sort 
                 echo '</li>';
             }
         }
-        if ($fullscreen) echo '</ul>'.NL;
+        if ($fullscreen) echo '</ul>' . NL;
     }
 }
 
@@ -1481,13 +1481,13 @@ function media_printicon($filename, $size = '')
 {
     [$ext] = mimetype(mediaFN($filename), false);
 
-    if (file_exists(DOKU_INC.'lib/images/fileicons/'.$size.'/'.$ext.'.png')) {
-        $icon = DOKU_BASE.'lib/images/fileicons/'.$size.'/'.$ext.'.png';
+    if (file_exists(DOKU_INC . 'lib/images/fileicons/' . $size . '/' . $ext . '.png')) {
+        $icon = DOKU_BASE . 'lib/images/fileicons/' . $size . '/' . $ext . '.png';
     } else {
-        $icon = DOKU_BASE.'lib/images/fileicons/'.$size.'/file.png';
+        $icon = DOKU_BASE . 'lib/images/fileicons/' . $size . '/file.png';
     }
 
-    return '<img src="'.$icon.'" alt="'.$filename.'" class="icon" />';
+    return '<img src="' . $icon . '" alt="' . $filename . '" class="icon" />';
 }
 
 /**
@@ -1543,7 +1543,7 @@ function media_uploadform($ns, $auth, $fullscreen = false)
     global $INPUT;
 
     if ($auth < AUTH_UPLOAD) {
-        echo '<div class="nothing">'.$lang['media_perm_upload'].'</div>'.NL;
+        echo '<div class="nothing">' . $lang['media_perm_upload'] . '</div>' . NL;
         return;
     }
     $auth_ow = (($conf['mediarevisions']) ? AUTH_UPLOAD : AUTH_DELETE);
@@ -1561,7 +1561,7 @@ function media_uploadform($ns, $auth, $fullscreen = false)
         'enctype' => 'multipart/form-data',
         'action' => ($fullscreen)
                     ? media_managerURL(['tab_files' => 'files', 'tab_details' => 'view'], '&')
-                    : DOKU_BASE.'lib/exe/mediamanager.php',
+                    : DOKU_BASE . 'lib/exe/mediamanager.php',
     ]);
     $form->addTagOpen('div')->addClass('no');
     $form->setHiddenField('ns', hsc($ns));  // FIXME hsc required?
@@ -1585,20 +1585,20 @@ function media_uploadform($ns, $auth, $fullscreen = false)
     $form->addTagClose('div');
 
     if (!$fullscreen) {
-        echo '<div class="upload">'. $lang['mediaupload'] .'</div>'.DOKU_LF;
+        echo '<div class="upload">' . $lang['mediaupload'] . '</div>' . DOKU_LF;
     } else {
         echo DOKU_LF;
     }
 
-    echo '<div id="mediamanager__uploader">'.DOKU_LF;
+    echo '<div id="mediamanager__uploader">' . DOKU_LF;
     echo $form->toHTML('Upload');
-    echo '</div>'.DOKU_LF;
+    echo '</div>' . DOKU_LF;
 
     echo '<p class="maxsize">';
     printf($lang['maxuploadsize'], filesize_h(media_getuploadsize()));
-    echo ' <a class="allowedmime" href="#">'. $lang['allowedmime'] .'</a>';
-    echo ' <span>'. implode(', ', array_keys(getMimeTypes())) .'</span>';
-    echo '</p>'.DOKU_LF;
+    echo ' <a class="allowedmime" href="#">' . $lang['allowedmime'] . '</a>';
+    echo ' <span>' . implode(', ', array_keys(getMimeTypes())) . '</span>';
+    echo '</p>' . DOKU_LF;
 }
 
 /**
@@ -1643,7 +1643,7 @@ function media_searchform($ns, $query = '', $fullscreen = false)
         'id'     => 'dw__mediasearch',
         'action' => ($fullscreen)
                     ? media_managerURL([], '&')
-                    : DOKU_BASE.'lib/exe/mediamanager.php',
+                    : DOKU_BASE . 'lib/exe/mediamanager.php',
     ]);
     $form->addTagOpen('div')->addClass('no');
     $form->setHiddenField('ns', $ns);
@@ -1651,7 +1651,7 @@ function media_searchform($ns, $query = '', $fullscreen = false)
 
     $form->addTagOpen('p');
     $form->addTextInput('q', $lang['searchmedia'])
-            ->attr('title', sprintf($lang['searchmedia_in'], hsc($ns) .':*'))
+            ->attr('title', sprintf($lang['searchmedia_in'], hsc($ns) . ':*'))
             ->val($query);
     $form->addHTML(' ');
     $form->addButton('', $lang['btn_search'])->attr('type', 'submit');
@@ -1685,23 +1685,23 @@ function media_nstree($ns)
     search($data, $conf['mediadir'], 'search_index', ['ns' => $ns_dir, 'nofiles' => true]);
 
     // wrap a list with the root level around the other namespaces
-    array_unshift($data, ['level' => 0, 'id' => '', 'open' =>'true', 'label' => '['.$lang['mediaroot'].']']);
+    array_unshift($data, ['level' => 0, 'id' => '', 'open' => 'true', 'label' => '[' . $lang['mediaroot'] . ']']);
 
     // insert the current ns into the hierarchy if it isn't already part of it
     $ns_parts = explode(':', $ns);
     $tmp_ns = '';
     $pos = 0;
     foreach ($ns_parts as $level => $part) {
-        if ($tmp_ns) $tmp_ns .= ':'.$part;
+        if ($tmp_ns) $tmp_ns .= ':' . $part;
         else $tmp_ns = $part;
 
         // find the namespace parts or insert them
         while ($data[$pos]['id'] != $tmp_ns) {
             if (
                 $pos >= count($data) ||
-                ($data[$pos]['level'] <= $level+1 && Sort::strcmp($data[$pos]['id'], $tmp_ns) > 0)
+                ($data[$pos]['level'] <= $level + 1 && Sort::strcmp($data[$pos]['id'], $tmp_ns) > 0)
             ) {
-                array_splice($data, $pos, 0, [['level' => $level+1, 'id' => $tmp_ns, 'open' => 'true']]);
+                array_splice($data, $pos, 0, [['level' => $level + 1, 'id' => $tmp_ns, 'open' => 'true']]);
                 break;
             }
             ++$pos;
@@ -1730,9 +1730,9 @@ function media_nstree_item($item)
 
     $ret  = '';
     if ($INPUT->str('do') != 'media')
-    $ret .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.idfilter($item['id']).'" class="idx_dir">';
-    else $ret .= '<a href="'.media_managerURL(['ns' => idfilter($item['id'], false), 'tab_files' => 'files'])
-        .'" class="idx_dir">';
+    $ret .= '<a href="' . DOKU_BASE . 'lib/exe/mediamanager.php?ns=' . idfilter($item['id']) . '" class="idx_dir">';
+    else $ret .= '<a href="' . media_managerURL(['ns' => idfilter($item['id'], false), 'tab_files' => 'files'])
+        . '" class="idx_dir">';
     $ret .= $item['label'];
     $ret .= '</a>';
     return $ret;
@@ -1750,19 +1750,19 @@ function media_nstree_item($item)
  */
 function media_nstree_li($item)
 {
-    $class='media level'.$item['level'];
+    $class = 'media level' . $item['level'];
     if ($item['open']) {
         $class .= ' open';
-        $img   = DOKU_BASE.'lib/images/minus.gif';
+        $img   = DOKU_BASE . 'lib/images/minus.gif';
         $alt   = '−';
     } else {
         $class .= ' closed';
-        $img   = DOKU_BASE.'lib/images/plus.gif';
+        $img   = DOKU_BASE . 'lib/images/plus.gif';
         $alt   = '+';
     }
     // TODO: only deliver an image if it actually has a subtree...
-    return '<li class="'.$class.'">'.
-        '<img src="'.$img.'" alt="'.$alt.'" />';
+    return '<li class="' . $class . '">' .
+        '<img src="' . $img . '" alt="' . $alt . '" />';
 }
 
 /**
@@ -1857,8 +1857,8 @@ function media_get_token($id, $w, $h)
     // token is only required for modified images
     if ($w || $h || media_isexternal($id)) {
         $token = $id;
-        if ($w) $token .= '.'.$w;
-        if ($h) $token .= '.'.$h;
+        if ($w) $token .= '.' . $w;
+        if ($h) $token .= '.' . $h;
 
         return substr(PassHash::hmac('md5', $token, auth_cookiesalt()), 0, 6);
     }
@@ -1885,7 +1885,7 @@ function media_get_from_URL($url, $ext, $cache)
     global $conf;
 
     // if no cache or fetchsize just redirect
-    if ($cache==0)           return false;
+    if ($cache == 0)           return false;
     if (!$conf['fetchsize']) return false;
 
     $local = getCacheName(strtolower($url), ".media.$ext");
@@ -1973,9 +1973,9 @@ function media_resize_imageIM($ext, $from, $from_w, $from_h, $to, $to_w, $to_h)
 
     // prepare command
     $cmd  = $conf['im_convert'];
-    $cmd .= ' -resize '.$to_w.'x'.$to_h.'!';
+    $cmd .= ' -resize ' . $to_w . 'x' . $to_h . '!';
     if ($ext == 'jpg' || $ext == 'jpeg') {
-        $cmd .= ' -quality '.$conf['jpg_quality'];
+        $cmd .= ' -quality ' . $conf['jpg_quality'];
     }
     $cmd .= " $from $to";
 
@@ -2011,9 +2011,9 @@ function media_crop_imageIM($ext, $from, $from_w, $from_h, $to, $to_w, $to_h, $o
 
     // prepare command
     $cmd  = $conf['im_convert'];
-    $cmd .= ' -crop '.$to_w.'x'.$to_h.'+'.$ofs_x.'+'.$ofs_y;
+    $cmd .= ' -crop ' . $to_w . 'x' . $to_h . '+' . $ofs_x . '+' . $ofs_y;
     if ($ext == 'jpg' || $ext == 'jpeg') {
-        $cmd .= ' -quality '.$conf['jpg_quality'];
+        $cmd .= ' -quality ' . $conf['jpg_quality'];
     }
     $cmd .= " $from $to";
 
@@ -2067,7 +2067,7 @@ function media_resize_imageGD($ext, $from, $from_w, $from_h, $to, $to_w, $to_h, 
     if (!$image) return false;
 
     $newimg = false;
-    if (($conf['gdlib']>1) && function_exists("imagecreatetruecolor") && $ext != 'gif') {
+    if (($conf['gdlib'] > 1) && function_exists("imagecreatetruecolor") && $ext != 'gif') {
         $newimg = @imagecreatetruecolor($to_w, $to_h);
     }
     if (!$newimg) $newimg = @imagecreate($to_w, $to_h);
@@ -2077,7 +2077,7 @@ function media_resize_imageGD($ext, $from, $from_w, $from_h, $to, $to_w, $to_h, 
     }
 
     //keep png alpha channel if possible
-    if ($ext == 'png' && $conf['gdlib']>1 && function_exists('imagesavealpha')) {
+    if ($ext == 'png' && $conf['gdlib'] > 1 && function_exists('imagesavealpha')) {
         imagealphablending($newimg, false);
         imagesavealpha($newimg, true);
     }
@@ -2158,10 +2158,10 @@ function media_alternativefiles($src, $exts)
 
     $files = [];
     [$srcExt, /* srcMime */] = mimetype($src);
-    $filebase = substr($src, 0, -1 * (strlen($srcExt)+1));
+    $filebase = substr($src, 0, -1 * (strlen($srcExt) + 1));
 
     foreach ($exts as $ext) {
-        $fileid = $filebase.'.'.$ext;
+        $fileid = $filebase . '.' . $ext;
         $file = mediaFN($fileid);
         if (file_exists($file)) {
             [/* fileExt */, $fileMime] = mimetype($file);
@@ -2214,7 +2214,7 @@ function media_supportedav($mime, $type = null)
  */
 function media_trackfiles($src)
 {
-    $kinds=[
+    $kinds = [
         'sub' => 'subtitles',
         'cap' => 'captions',
         'des' => 'descriptions',
@@ -2223,13 +2223,13 @@ function media_trackfiles($src)
     ];
 
     $files = [];
-    $re='/\\.(sub|cap|des|cha|met)\\.([^.]+)\\.vtt$/';
-    $baseid=pathinfo($src, PATHINFO_FILENAME);
-    $pattern=mediaFN($baseid).'.*.*.vtt';
-    $list=glob($pattern);
+    $re = '/\\.(sub|cap|des|cha|met)\\.([^.]+)\\.vtt$/';
+    $baseid = pathinfo($src, PATHINFO_FILENAME);
+    $pattern = mediaFN($baseid) . '.*.*.vtt';
+    $list = glob($pattern);
     foreach ($list as $track) {
         if (preg_match($re, $track, $matches)) {
-            $files[$baseid.'.'.$matches[1].'.'.$matches[2].'.vtt']=[$kinds[$matches[1]], $matches[2]];
+            $files[$baseid . '.' . $matches[1] . '.' . $matches[2] . '.vtt'] = [$kinds[$matches[1]], $matches[2]];
         }
     }
     return $files;

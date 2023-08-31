@@ -25,7 +25,7 @@ class Smiley extends AbstractMode
 
         $sep = '';
         foreach ($this->smileys as $smiley) {
-            $this->pattern .= $sep.'(?<=\W|^)'. Lexer::escape($smiley).'(?=\W|$)';
+            $this->pattern .= $sep . '(?<=\W|^)' . Lexer::escape($smiley) . '(?=\W|$)';
             $sep = '|';
         }
     }

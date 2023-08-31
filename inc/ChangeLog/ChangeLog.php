@@ -510,7 +510,7 @@ abstract class ChangeLog
         // add a possible revision of external edit, create or deletion
         if (
             $lastTail == $eof && $afterCount <= (int) ($max / 2) &&
-            count($revs) && !$this->isCurrentRevision($revs[count($revs)-1])
+            count($revs) && !$this->isCurrentRevision($revs[count($revs) - 1])
         ) {
             $revs[] = $this->currentRevision;
             $afterCount++;
@@ -607,12 +607,12 @@ abstract class ChangeLog
 
             // externally deleted, set revision date as late as possible
             $revInfo = [
-                'date' => max($lastRev +1, time() -1), // 1 sec before now or new page save
+                'date' => max($lastRev + 1, time() - 1), // 1 sec before now or new page save
                 'ip'   => '127.0.0.1',
                 'type' => DOKU_CHANGE_TYPE_DELETE,
                 'id'   => $this->id,
                 'user' => '',
-                'sum'  => $lang['deleted'].' - '.$lang['external_edit'].' ('.$lang['unknowndate'].')',
+                'sum'  => $lang['deleted'] . ' - ' . $lang['external_edit'] . ' (' . $lang['unknowndate'] . ')',
                 'extra' => '',
                 'sizechange' => -io_getSizeFile($this->getFilename($lastRev)),
                 'timestamp' => false,
@@ -629,23 +629,23 @@ abstract class ChangeLog
 
             if ($isJustCreated) {
                 $timestamp = $fileRev;
-                $sum = $lang['created'].' - '.$lang['external_edit'];
+                $sum = $lang['created'] . ' - ' . $lang['external_edit'];
             } elseif ($fileRev > $lastRev) {
                 $timestamp = $fileRev;
                 $sum = $lang['external_edit'];
             } else {
                 // $fileRev is older than $lastRev, that is erroneous/incorrect occurrence.
                 $msg = "Warning: current file modification time is older than last revision date";
-                $details = 'File revision: '.$fileRev.' '.dformat($fileRev, "%Y-%m-%d %H:%M:%S")."\n"
-                          .'Last revision: '.$lastRev.' '.dformat($lastRev, "%Y-%m-%d %H:%M:%S");
+                $details = 'File revision: ' . $fileRev . ' ' . dformat($fileRev, "%Y-%m-%d %H:%M:%S") . "\n"
+                          . 'Last revision: ' . $lastRev . ' ' . dformat($lastRev, "%Y-%m-%d %H:%M:%S");
                 Logger::error($msg, $details, $this->getFilename());
                 $timestamp = false;
-                $sum = $lang['external_edit'].' ('.$lang['unknowndate'].')';
+                $sum = $lang['external_edit'] . ' (' . $lang['unknowndate'] . ')';
             }
 
             // externally created or edited
             $revInfo = [
-                'date' => $timestamp ?: $lastRev +1,
+                'date' => $timestamp ?: $lastRev + 1,
                 'ip'   => '127.0.0.1',
                 'type' => $isJustCreated ? DOKU_CHANGE_TYPE_CREATE : DOKU_CHANGE_TYPE_EDIT,
                 'id'   => $this->id,

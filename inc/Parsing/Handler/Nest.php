@@ -69,8 +69,8 @@ class Nest extends AbstractRewriter
     protected function addCall($call)
     {
         $key = count($this->calls);
-        if ($key && $call[0] == 'cdata' && $this->calls[$key-1][0] == 'cdata') {
-            $this->calls[$key-1][1][0] .= $call[1][0];
+        if ($key && $call[0] == 'cdata' && $this->calls[$key - 1][0] == 'cdata') {
+            $this->calls[$key - 1][1][0] .= $call[1][0];
         } elseif ($call[0] == 'eol') {
             // do nothing (eol shouldn't be allowed, to counter preformatted fix in #1652 & #1699)
         } else {

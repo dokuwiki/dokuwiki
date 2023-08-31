@@ -154,7 +154,7 @@ class MediaFile
      */
     public function userPermission()
     {
-        return auth_quickaclcheck(getNS($this->id).':*');
+        return auth_quickaclcheck(getNS($this->id) . ':*');
     }
 
     /** @return JpegMeta */

@@ -52,12 +52,12 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
     if ($maxage) {
         if ($public) {
             // cache publically
-            header('Expires: '.gmdate("D, d M Y H:i:s", $expires).' GMT');
-            header('Cache-Control: public, proxy-revalidate, no-transform, max-age='.$maxage);
+            header('Expires: ' . gmdate("D, d M Y H:i:s", $expires) . ' GMT');
+            header('Cache-Control: public, proxy-revalidate, no-transform, max-age=' . $maxage);
         } else {
             // cache in browser
-            header('Expires: '.gmdate("D, d M Y H:i:s", $expires).' GMT');
-            header('Cache-Control: private, no-transform, max-age='.$maxage);
+            header('Expires: ' . gmdate("D, d M Y H:i:s", $expires) . ' GMT');
+            header('Cache-Control: private, no-transform, max-age=' . $maxage);
         }
     } else {
         // no cache at all
@@ -124,9 +124,9 @@ function rfc2231_encode($name, $value, $charset = 'utf-8', $lang = 'en')
         $value
     );
     if ($value != $internal) {
-        return ' '.$name.'*='.$charset."'".$lang."'".$internal;
+        return ' ' . $name . '*=' . $charset . "'" . $lang . "'" . $internal;
     } else {
-        return ' '.$name.'="'.$value.'"';
+        return ' ' . $name . '="' . $value . '"';
     }
 }
 
@@ -172,7 +172,7 @@ function checkFileStatus(&$media, &$file, $rev = '', $width = 0, $height = 0)
         }
 
         //check permissions (namespace only)
-        if (auth_quickaclcheck(getNS($media).':X') < AUTH_READ) {
+        if (auth_quickaclcheck(getNS($media) . ':X') < AUTH_READ) {
             return [403, 'Forbidden'];
         }
         $file = mediaFN($media, $rev);

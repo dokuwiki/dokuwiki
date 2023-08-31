@@ -31,6 +31,6 @@ class ButtonElement extends Element
      */
     public function toHTML()
     {
-        return '<button ' . buildAttributes($this->attrs(), true) . '>'.$this->content.'</button>';
+        return '<button ' . buildAttributes($this->attrs(), true) . '>' . $this->content . '</button>';
     }
 }

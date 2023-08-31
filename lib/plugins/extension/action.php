@@ -70,9 +70,9 @@ class action_plugin_extension extends ActionPlugin
                 $reverse = ($act == 'disable') ? 'enable' : 'disable';
 
                 $return = [
-                    'state'   => $act.'d', // isn't English wonderful? :-)
+                    'state'   => $act . 'd', // isn't English wonderful? :-)
                     'reverse' => $reverse,
-                    'label'   => $extension->getLang('btn_'.$reverse),
+                    'label'   => $extension->getLang('btn_' . $reverse),
                 ];
 
                 header('Content-Type: application/json');

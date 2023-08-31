@@ -47,7 +47,7 @@ class Mapper
 
         if (
             @filesize($sitemap) &&
-            @filemtime($sitemap) > (time()-($conf['sitemap']*86400))
+            @filemtime($sitemap) > (time() - ($conf['sitemap'] * 86400))
         ) { // 60*60*24=86400
             Logger::debug('Sitemapper::generate(): Sitemap up to date');
             return false;
@@ -56,7 +56,7 @@ class Mapper
         Logger::debug("Sitemapper::generate(): using $sitemap");
 
         $pages = idx_get_indexer()->getPages();
-        Logger::debug('Sitemapper::generate(): creating sitemap using '.count($pages).' pages');
+        Logger::debug('Sitemapper::generate(): creating sitemap using ' . count($pages) . ' pages');
         $items = [];
 
         // build the sitemap items
@@ -91,13 +91,13 @@ class Mapper
     private function getXML($items)
     {
         ob_start();
-        echo '<?xml version="1.0" encoding="UTF-8"?>'.NL;
-        echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.NL;
+        echo '<?xml version="1.0" encoding="UTF-8"?>' . NL;
+        echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . NL;
         foreach ($items as $item) {
             /** @var Item $item */
             echo $item->toXML();
         }
-        echo '</urlset>'.NL;
+        echo '</urlset>' . NL;
         $result = ob_get_contents();
         ob_end_clean();
         return $result;
@@ -114,7 +114,7 @@ class Mapper
     {
         global $conf;
 
-        $sitemap = $conf['cachedir'].'/sitemap.xml';
+        $sitemap = $conf['cachedir'] . '/sitemap.xml';
         if (self::sitemapIsCompressed()) {
             $sitemap .= '.gz';
         }
@@ -149,8 +149,8 @@ class Mapper
 
         $encoded_sitemap_url = urlencode(wl('', ['do' => 'sitemap'], true, '&'));
         $ping_urls = [
-            'google'    => 'https://www.google.com/ping?sitemap='.$encoded_sitemap_url,
-            'yandex'    => 'https://webmaster.yandex.com/ping?sitemap='.$encoded_sitemap_url
+            'google'    => 'https://www.google.com/ping?sitemap=' . $encoded_sitemap_url,
+            'yandex'    => 'https://webmaster.yandex.com/ping?sitemap=' . $encoded_sitemap_url
         ];
 
         $data = [

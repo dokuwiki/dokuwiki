@@ -1,6 +1,8 @@
 <?php
+
 use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\StyleUtils;
+
 /**
  * DokuWiki Plugin styling (Admin Component)
  *
@@ -37,7 +39,7 @@ class admin_plugin_styling extends AdminPlugin
         $run = $INPUT->extract('run')->str('run');
         if (!$run) return;
         if (!checkSecurityToken()) return;
-        $run = 'run'.ucfirst($run);
+        $run = 'run' . ucfirst($run);
         $this->$run();
     }
 
@@ -49,8 +51,8 @@ class admin_plugin_styling extends AdminPlugin
         $class = 'nopopup';
         if ($this->ispopup) $class = 'ispopup page';
 
-        echo '<div id="plugin__styling" class="'.$class.'">';
-        echo '<h1>'.$this->getLang('menu').'</h1>';
+        echo '<div id="plugin__styling" class="' . $class . '">';
+        echo '<h1>' . $this->getLang('menu') . '</h1>';
         $this->form();
         echo '</div>';
     }
@@ -64,21 +66,21 @@ class admin_plugin_styling extends AdminPlugin
         global $ID;
 
         $styleUtil = new StyleUtils($conf['template'], true, true);
-        $styleini     = $styleUtil->cssStyleini();
+        $styleini = $styleUtil->cssStyleini();
         $replacements = $styleini['replacements'];
 
         if ($this->ispopup) {
-            $target = DOKU_BASE.'lib/plugins/styling/popup.php';
+            $target = DOKU_BASE . 'lib/plugins/styling/popup.php';
         } else {
             $target = wl($ID, ['do' => 'admin', 'page' => 'styling']);
         }
 
         if (empty($replacements)) {
-            echo '<p class="error">'.$this->getLang('error').'</p>';
+            echo '<p class="error">' . $this->getLang('error') . '</p>';
         } else {
             echo $this->locale_xhtml('intro');
 
-            echo '<form class="styling" method="post" action="'.$target.'">';
+            echo '<form class="styling" method="post" action="' . $target . '">';
             formSecurityToken();
 
             echo '<table><tbody>';
@@ -88,27 +90,28 @@ class admin_plugin_styling extends AdminPlugin
                 if (empty($name)) $name = $key;
 
                 echo '<tr>';
-                echo '<td><label for="tpl__'.hsc($key).'">'.$name.'</label></td>';
-                echo '<td><input type="'.$this->colorType($value).'" name="tpl['.hsc($key).']" id="tpl__'.hsc($key).'"
-                    value="'.hsc($this->colorValue($value)).'" dir="ltr" required="required"/></td>';
+                echo '<td><label for="tpl__' . hsc($key) . '">' . $name . '</label></td>';
+                echo '<td><input type="' . $this->colorType($value) . '" name="tpl[' . hsc($key) . ']" ' .
+                    'id="tpl__' . hsc($key) . '" value="' . hsc($this->colorValue($value)) . '" ' .
+                    'dir="ltr" required="required"/></td>';
                 echo '</tr>';
             }
             echo '</tbody></table>';
 
             echo '<p>';
-            echo '<button type="submit" name="run[preview]" class="btn_preview primary">'.
-                $this->getLang('btn_preview').'</button> ';
+            echo '<button type="submit" name="run[preview]" class="btn_preview primary">' .
+                $this->getLang('btn_preview') . '</button> ';
             #FIXME only if preview.ini exists:
-            echo '<button type="submit" name="run[reset]">'.$this->getLang('btn_reset').'</button>';
+            echo '<button type="submit" name="run[reset]">' . $this->getLang('btn_reset') . '</button>';
             echo '</p>';
 
             echo '<p>';
-            echo '<button type="submit" name="run[save]" class="primary">'.$this->getLang('btn_save').'</button>';
+            echo '<button type="submit" name="run[save]" class="primary">' . $this->getLang('btn_save') . '</button>';
             echo '</p>';
 
             echo '<p>';
             #FIXME only if local.ini exists:
-            echo '<button type="submit" name="run[revert]">'.$this->getLang('btn_revert').'</button>';
+            echo '<button type="submit" name="run[revert]">' . $this->getLang('btn_revert') . '</button>';
             echo '</p>';
 
             echo '</form>';
@@ -152,7 +155,7 @@ class admin_plugin_styling extends AdminPlugin
     public function runPreview()
     {
         global $conf;
-        $ini = $conf['cachedir'].'/preview.ini';
+        $ini = $conf['cachedir'] . '/preview.ini';
         io_saveFile($ini, $this->makeini());
     }
 
@@ -162,7 +165,7 @@ class admin_plugin_styling extends AdminPlugin
     protected function runReset()
     {
         global $conf;
-        $ini = $conf['cachedir'].'/preview.ini';
+        $ini = $conf['cachedir'] . '/preview.ini';
         io_saveFile($ini, '');
     }
 
@@ -197,7 +200,7 @@ class admin_plugin_styling extends AdminPlugin
         $ini .= ";These overwrites have been generated from the Template styling Admin interface\n";
         $ini .= ";Any values in this section will be overwritten by that tool again\n";
         foreach ($INPUT->arr('tpl') as $key => $val) {
-            $ini .= $key.' = "'.addslashes($val).'"'."\n";
+            $ini .= $key . ' = "' . addslashes($val) . '"' . "\n";
         }
 
         return $ini;
@@ -211,7 +214,7 @@ class admin_plugin_styling extends AdminPlugin
     protected function replaceIni($new)
     {
         global $conf;
-        $ini = DOKU_CONF."tpl/".$conf['template']."/style.ini";
+        $ini = DOKU_CONF . "tpl/" . $conf['template'] . "/style.ini";
         if (file_exists($ini)) {
             $old = io_readFile($ini);
             $old = preg_replace('/\[replacements\]\n.*?(\n\[.*]|$)/s', '\\1', $old);

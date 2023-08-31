@@ -37,12 +37,18 @@ function checkUpdateMessages()
     $is_http = substr(DOKU_MESSAGEURL, 0, 5) != 'https';
 
     // check if new messages needs to be fetched
-    if ($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)) {
+    if ($lm < time() - (60 * 60 * 24) || $lm < @filemtime(DOKU_INC . DOKU_SCRIPT)) {
         @touch($cf);
-        Logger::debug("checkUpdateMessages(): downloading messages to ".$cf.($is_http?' (without SSL)':' (with SSL)'));
+        Logger::debug(
+            sprintf(
+                'checkUpdateMessages(): downloading messages to %s%s',
+                $cf,
+                $is_http ? ' (without SSL)' : ' (with SSL)'
+            )
+        );
         $http = new DokuHTTPClient();
         $http->timeout = 12;
-        $resp = $http->get(DOKU_MESSAGEURL.$updateVersion);
+        $resp = $http->get(DOKU_MESSAGEURL . $updateVersion);
         if (is_string($resp) && ($resp == "" || substr(trim($resp), -1) == '%')) {
             // basic sanity check that this is either an empty string response (ie "no messages")
             // or it looks like one of our messages, not WiFi login or other interposed response
@@ -72,11 +78,11 @@ function getVersionData()
 {
     $version = [];
     //import version string
-    if (file_exists(DOKU_INC.'VERSION')) {
+    if (file_exists(DOKU_INC . 'VERSION')) {
         //official release
-        $version['date'] = trim(io_readFile(DOKU_INC.'VERSION'));
+        $version['date'] = trim(io_readFile(DOKU_INC . 'VERSION'));
         $version['type'] = 'Release';
-    } elseif (is_dir(DOKU_INC.'.git')) {
+    } elseif (is_dir(DOKU_INC . '.git')) {
         $version['type'] = 'Git';
         $version['date'] = 'unknown';
 
@@ -128,7 +134,7 @@ function getVersionData()
         }
     } else {
         global $updateVersion;
-        $version['date'] = 'update version '.$updateVersion;
+        $version['date'] = 'update version ' . $updateVersion;
         $version['type'] = 'snapshot?';
     }
     return $version;
@@ -159,11 +165,11 @@ function check()
     global $INPUT;
 
     if ($INFO['isadmin'] || $INFO['ismanager']) {
-        msg('DokuWiki version: '.getVersion(), 1);
+        msg('DokuWiki version: ' . getVersion(), 1);
         if (version_compare(phpversion(), '7.4.0', '<')) {
-            msg('Your PHP version is too old ('.phpversion().' vs. 7.4+ needed)', -1);
+            msg('Your PHP version is too old (' . phpversion() . ' vs. 7.4+ needed)', -1);
         } else {
-            msg('PHP version '.phpversion(), 1);
+            msg('PHP version ' . phpversion(), 1);
         }
     } elseif (version_compare(phpversion(), '7.4.0', '<')) {
         msg('Your PHP version is too old', -1);
@@ -197,11 +203,11 @@ function check()
         msg('Old changelog exists', 0);
     }
 
-    if (file_exists($conf['changelog'].'_failed')) {
+    if (file_exists($conf['changelog'] . '_failed')) {
         msg('Importing old changelog failed', -1);
-    } elseif (file_exists($conf['changelog'].'_importing')) {
+    } elseif (file_exists($conf['changelog'] . '_importing')) {
         msg('Importing old changelog now.', 0);
-    } elseif (file_exists($conf['changelog'].'_import_ok')) {
+    } elseif (file_exists($conf['changelog'] . '_import_ok')) {
         msg('Old changelog imported', 1);
         if (!plugin_isdisabled('importoldchangelog')) {
             msg('Importoldchangelog plugin not disabled after import', -1);
@@ -247,10 +253,10 @@ function check()
     if (!$loc) {
         msg('No valid locale is set for your PHP setup. You should fix this', -1);
     } elseif (stripos($loc, 'utf') === false) {
-        msg('Your locale <code>'.hsc($loc).'</code> seems not to be a UTF-8 locale,
+        msg('Your locale <code>' . hsc($loc) . '</code> seems not to be a UTF-8 locale,
              you should fix this if you encounter problems.', 0);
     } else {
-        msg('Valid locale '.hsc($loc).' found.', 1);
+        msg('Valid locale ' . hsc($loc) . ' found.', 1);
     }
 
     if ($conf['allowdebug']) {
@@ -260,13 +266,17 @@ function check()
     }
 
     if (!empty($INFO['userinfo']['name'])) {
-        msg('You are currently logged in as '.$INPUT->server->str('REMOTE_USER').' ('.$INFO['userinfo']['name'].')', 0);
-        msg('You are part of the groups '.implode(', ', $INFO['userinfo']['grps']), 0);
+        msg(sprintf(
+            "You are currently logged in as %s (%s)",
+            $INPUT->server->str('REMOTE_USER'),
+            $INFO['userinfo']['name']
+        ), 0);
+        msg('You are part of the groups ' . implode(', ', $INFO['userinfo']['grps']), 0);
     } else {
         msg('You are currently not logged in', 0);
     }
 
-    msg('Your current permission for this page is '.$INFO['perm'], 0);
+    msg('Your current permission for this page is ' . $INFO['perm'], 0);
 
     if (file_exists($INFO['filepath']) && is_writable($INFO['filepath'])) {
         msg('The current page is writable by the webserver', 1);
@@ -293,7 +303,7 @@ function check()
     }
 
     foreach (idx_getIndex('metadata', '') as $index) {
-        if (count(idx_getIndex($index.'_w', '')) !== count(idx_getIndex($index.'_i', ''))) {
+        if (count(idx_getIndex($index . '_w', '')) !== count(idx_getIndex($index . '_i', ''))) {
             $index_corrupted = true;
             break;
         }
@@ -377,7 +387,7 @@ function msg($message, $lvl = 0, $line = '', $file = '', $allow = MSG_PUBLIC)
         /* Show msg normally - event could suppress message show */
         if ($msgdata['line'] || $msgdata['file']) {
             $basename = PhpString::basename($msgdata['file']);
-            $msgdata['msg'] .=' ['.$basename.':'.$msgdata['line'].']';
+            $msgdata['msg'] .= ' [' . $basename . ':' . $msgdata['line'] . ']';
         }
 
         if (!isset($MSG)) $MSG = [];
@@ -386,7 +396,7 @@ function msg($message, $lvl = 0, $line = '', $file = '', $allow = MSG_PUBLIC)
             if (function_exists('html_msgarea')) {
                 html_msgarea();
             } else {
-                echo "ERROR(".$msgdata['lvl'].") ".$msgdata['msg']."\n";
+                echo "ERROR(" . $msgdata['lvl'] . ") " . $msgdata['msg'] . "\n";
             }
             unset($GLOBALS['MSG']);
         }
@@ -427,7 +437,7 @@ function info_msg_allowed($msg)
 
         default:
             trigger_error(
-                'invalid msg allow restriction.  msg="'.$msg['msg'].'" allow='.$msg['allow'].'"',
+                'invalid msg allow restriction.  msg="' . $msg['msg'] . '" allow=' . $msg['allow'] . '"',
                 E_USER_WARNING
             );
             return $INFO['isadmin'];
@@ -517,13 +527,13 @@ function dbg_backtrace()
         if (isset($call['args'])) {
             foreach ($call['args'] as $arg) {
                 if (is_object($arg)) {
-                    $params[] = '[Object '.get_class($arg).']';
+                    $params[] = '[Object ' . get_class($arg) . ']';
                 } elseif (is_array($arg)) {
                     $params[] = '[Array]';
                 } elseif (is_null($arg)) {
                     $params[] = '[NULL]';
                 } else {
-                    $params[] = '"'.$arg.'"';
+                    $params[] = '"' . $arg . '"';
                 }
             }
         }

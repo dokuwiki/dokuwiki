@@ -108,7 +108,7 @@ class Table extends AbstractRewriter
         $th = $this->currentRow['tableheader'];
 
         if (!$th || $td > 2) return false;
-        if (2*$td > $th) return false;
+        if (2 * $td > $th) return false;
 
         return true;
     }
@@ -127,11 +127,11 @@ class Table extends AbstractRewriter
                 $this->tableCalls[] = ['colspan', [], $call[2]];
             }
 
-            $this->tableCalls[] = [$this->lastCellType.'_close', [], $call[2]];
-            $this->tableCalls[] = [$call[0].'_open', [1, null, 1], $call[2]];
+            $this->tableCalls[] = [$this->lastCellType . '_close', [], $call[2]];
+            $this->tableCalls[] = [$call[0] . '_open', [1, null, 1], $call[2]];
             $this->lastCellType = $call[0];
         } else {
-            $this->tableCalls[] = [$call[0].'_open', [1, null, 1], $call[2]];
+            $this->tableCalls[] = [$call[0] . '_open', [1, null, 1], $call[2]];
             $this->lastCellType = $call[0];
             $this->firstCell = false;
         }
@@ -182,7 +182,7 @@ class Table extends AbstractRewriter
             switch ($call[0]) {
                 case 'table_open':
                     if ($this->countTableHeadRows) {
-                        array_splice($this->tableCalls, $key+1, 0, [['tablethead_open', [], $call[2]]]);
+                        array_splice($this->tableCalls, $key + 1, 0, [['tablethead_open', [], $call[2]]]);
                     }
                     break;
 
@@ -198,15 +198,15 @@ class Table extends AbstractRewriter
                     break;
 
                 case 'table_align':
-                    $prev = in_array($this->tableCalls[$key-1][0], ['tablecell_open', 'tableheader_open']);
-                    $next = in_array($this->tableCalls[$key+1][0], ['tablecell_close', 'tableheader_close']);
+                    $prev = in_array($this->tableCalls[$key - 1][0], ['tablecell_open', 'tableheader_open']);
+                    $next = in_array($this->tableCalls[$key + 1][0], ['tablecell_close', 'tableheader_close']);
                     // If the cell is empty, align left
                     if ($prev && $next) {
-                        $this->tableCalls[$key-1][1][1] = 'left';
+                        $this->tableCalls[$key - 1][1][1] = 'left';
 
                         // If the previous element was a cell open, align right
                     } elseif ($prev) {
-                        $this->tableCalls[$key-1][1][1] = 'right';
+                        $this->tableCalls[$key - 1][1][1] = 'right';
 
                         // If the next element is the close of an element, align either center or left
                     } elseif ($next) {
@@ -222,9 +222,9 @@ class Table extends AbstractRewriter
                     break;
 
                 case 'colspan':
-                    $this->tableCalls[$key-1][1][0] = false;
+                    $this->tableCalls[$key - 1][1][0] = false;
 
-                    for ($i = $key-2; $i >= $cellKey[$lastRow][1]; $i--) {
+                    for ($i = $key - 2; $i >= $cellKey[$lastRow][1]; $i--) {
                         if (
                             $this->tableCalls[$i][0] == 'tablecell_open' ||
                             $this->tableCalls[$i][0] == 'tableheader_open'
@@ -236,13 +236,13 @@ class Table extends AbstractRewriter
                         }
                     }
 
-                    $toDelete[] = $key-1;
+                    $toDelete[] = $key - 1;
                     $toDelete[] = $key;
-                    $toDelete[] = $key+1;
+                    $toDelete[] = $key + 1;
                     break;
 
                 case 'rowspan':
-                    if ($this->tableCalls[$key-1][0] == 'cdata') {
+                    if ($this->tableCalls[$key - 1][0] == 'cdata') {
                         // ignore rowspan if previous call was cdata (text mixed with :::)
                         // we don't have to check next call as that wont match regex
                         $this->tableCalls[$key][0] = 'cdata';
@@ -250,8 +250,8 @@ class Table extends AbstractRewriter
                         $spanning_cell = null;
 
                         // can't cross thead/tbody boundary
-                        if (!$this->countTableHeadRows || ($lastRow-1 != $this->countTableHeadRows)) {
-                            for ($i = $lastRow-1; $i > 0; $i--) {
+                        if (!$this->countTableHeadRows || ($lastRow - 1 != $this->countTableHeadRows)) {
+                            for ($i = $lastRow - 1; $i > 0; $i--) {
                                 if (
                                     $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tablecell_open' ||
                                     $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tableheader_open'
@@ -272,11 +272,11 @@ class Table extends AbstractRewriter
                         }
                         $this->tableCalls[$cellKey[$spanning_cell][$lastCell]][1][2]++;
 
-                        $this->tableCalls[$key-1][1][2] = false;
+                        $this->tableCalls[$key - 1][1][2] = false;
 
-                        $toDelete[] = $key-1;
+                        $toDelete[] = $key - 1;
                         $toDelete[] = $key;
-                        $toDelete[] = $key+1;
+                        $toDelete[] = $key + 1;
                     }
                     break;
 
@@ -295,7 +295,7 @@ class Table extends AbstractRewriter
                     }
 
                     if ($this->countTableHeadRows == $lastRow) {
-                        array_splice($this->tableCalls, $key+1, 0, [['tablethead_close', [], $call[2]]]);
+                        array_splice($this->tableCalls, $key + 1, 0, [['tablethead_close', [], $call[2]]]);
                     }
                     break;
             }

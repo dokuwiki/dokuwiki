@@ -53,7 +53,7 @@ function addLogEntry(
     $sizechange = null
 ) {
     // no more used in DokuWiki core, but left for third-party plugins
-    dbg_deprecated('see '. PageFile::class .'::saveWikiText()');
+    dbg_deprecated('see ' . PageFile::class . '::saveWikiText()');
 
     /** @var Input $INPUT */
     global $INPUT;
@@ -339,14 +339,14 @@ function _handleRecent($line, $ns, $flags, &$seen)
     if (isHiddenPage($recent['id'])) return false;
 
     // filter namespace
-    if (($ns) && (strpos($recent['id'], $ns.':') !== 0)) return false;
+    if (($ns) && (strpos($recent['id'], $ns . ':') !== 0)) return false;
 
     // exclude subnamespaces
     if (($flags & RECENTS_SKIP_SUBSPACES) && (getNS($recent['id']) != $ns)) return false;
 
     // check ACL
     if ($flags & RECENTS_MEDIA_CHANGES) {
-        $recent['perms'] = auth_quickaclcheck(getNS($recent['id']).':*');
+        $recent['perms'] = auth_quickaclcheck(getNS($recent['id']) . ':*');
     } else {
         $recent['perms'] = auth_quickaclcheck($recent['id']);
     }

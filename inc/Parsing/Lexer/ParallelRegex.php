@@ -122,8 +122,8 @@ class ParallelRegex
             return false;
         }
 
-        $idx = count($matches)-2;
-        [$pre, $post] = preg_split($this->patterns[$idx].$this->getPerlMatchingFlags(), $subject, 2);
+        $idx = count($matches) - 2;
+        [$pre, $post] = preg_split($this->patterns[$idx] . $this->getPerlMatchingFlags(), $subject, 2);
         $split = [$pre, $matches[0], $post];
 
         return $this->labels[$idx] ?? true;

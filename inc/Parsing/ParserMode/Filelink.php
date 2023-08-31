@@ -14,10 +14,10 @@ class Filelink extends AbstractMode
         $ltrs = '\w';
         $gunk = '/\#~:.?+=&%@!\-';
         $punc = '.:?\-;,';
-        $any  = $ltrs.$gunk.$punc;
+        $any  = $ltrs . $gunk . $punc;
 
-        $this->pattern = '\b(?i)file(?-i)://['.$any.']+?['.
-            $punc.']*[^'.$any.']';
+        $this->pattern = '\b(?i)file(?-i)://[' . $any . ']+?[' .
+            $punc . ']*[^' . $any . ']';
     }
 
     /** @inheritdoc */

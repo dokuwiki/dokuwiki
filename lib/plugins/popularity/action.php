@@ -64,6 +64,6 @@ class action_plugin_popularity extends ActionPlugin
     protected function isTooEarlyToSubmit()
     {
         $lastSubmit = $this->helper->lastSentTime();
-        return $lastSubmit + 24*60*60*30 > time();
+        return $lastSubmit + 24 * 60 * 60 * 30 > time();
     }
 }

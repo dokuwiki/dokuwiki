@@ -89,6 +89,6 @@ class TagCloseElement extends ValueElement
      */
     public function toHTML()
     {
-        return '</'.$this->val().'>';
+        return '</' . $this->val() . '>';
     }
 }

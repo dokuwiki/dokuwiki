@@ -3,7 +3,6 @@
 namespace dokuwiki\Action;
 
 use dokuwiki\Ui\Editor;
-use dokuwiki\Ui;
 
 /**
  * Class Locked
@@ -30,9 +29,9 @@ class Locked extends AbstractAction
     /**
      * Display error on locked pages
      *
+     * @return void
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @return void
      */
     public function showBanner()
     {
@@ -43,14 +42,16 @@ class Locked extends AbstractAction
 
         $locktime = filemtime(wikiLockFN($ID));
         $expire = dformat($locktime + $conf['locktime']);
-        $min    = round(($conf['locktime'] - (time() - $locktime) )/60);
+        $min = round(($conf['locktime'] - (time() - $locktime)) / 60);
 
         // print intro
         echo p_locale_xhtml('locked');
 
         echo '<ul>';
-        echo '<li><div class="li"><strong>'.$lang['lockedby'].'</strong> '.editorinfo($INFO['locked']).'</div></li>';
-        echo '<li><div class="li"><strong>'.$lang['lockexpire'].'</strong> '.$expire.' ('.$min.' min)</div></li>';
-        echo '</ul>'.DOKU_LF;
+        echo '<li><div class="li"><strong>' . $lang['lockedby'] . '</strong> ' .
+            editorinfo($INFO['locked']) . '</div></li>';
+        echo '<li><div class="li"><strong>' . $lang['lockexpire'] . '</strong> ' .
+            $expire . ' (' . $min . ' min)</div></li>';
+        echo '</ul>' . DOKU_LF;
     }
 }

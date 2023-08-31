@@ -43,7 +43,7 @@ class ErrorHandler
             register_shutdown_function([ErrorHandler::class, 'fatalShutdown']);
             set_error_handler(
                 [ErrorHandler::class, 'errorHandler'],
-                E_WARNING|E_USER_ERROR|E_USER_WARNING|E_RECOVERABLE_ERROR
+                E_WARNING | E_USER_ERROR | E_USER_WARNING | E_RECOVERABLE_ERROR
             );
         }
     }

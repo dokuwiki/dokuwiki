@@ -39,7 +39,7 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function __construct()
     {
-        $this->tpllib = dirname(tpl_incdir()).'/';
+        $this->tpllib = dirname(tpl_incdir()) . '/';
     }
 
     /**
@@ -118,7 +118,7 @@ class helper_plugin_extension_extension extends Plugin
     public function isGitControlled()
     {
         if (!$this->isInstalled()) return false;
-        return file_exists($this->getInstallDir().'/.git');
+        return file_exists($this->getInstallDir() . '/.git');
     }
 
     /**
@@ -324,8 +324,8 @@ class helper_plugin_extension_extension extends Plugin
     public function getURL()
     {
         if (!empty($this->localInfo['url'])) return $this->localInfo['url'];
-        return 'https://www.dokuwiki.org/'.
-            ($this->isTemplate() ? 'template' : 'plugin').':'.$this->getBase();
+        return 'https://www.dokuwiki.org/' .
+            ($this->isTemplate() ? 'template' : 'plugin') . ':' . $this->getBase();
     }
 
     /**
@@ -589,9 +589,9 @@ class helper_plugin_extension_extension extends Plugin
     public function getInstallDir()
     {
         if ($this->isTemplate()) {
-            return $this->tpllib.$this->base;
+            return $this->tpllib . $this->base;
         } else {
-            return DOKU_PLUGIN.$this->base;
+            return DOKU_PLUGIN . $this->base;
         }
     }
 
@@ -604,7 +604,7 @@ class helper_plugin_extension_extension extends Plugin
     {
         if (!$this->isInstalled()) return 'none';
         if (!empty($this->managerData)) return 'automatic';
-        if (is_dir($this->getInstallDir().'/.git')) return 'git';
+        if (is_dir($this->getInstallDir() . '/.git')) return 'git';
         return 'manual';
     }
 
@@ -640,7 +640,7 @@ class helper_plugin_extension_extension extends Plugin
     public function installFromUpload($field, $overwrite = true)
     {
         if ($_FILES[$field]['error']) {
-            throw new Exception($this->getLang('msg_upload_failed').' ('.$_FILES[$field]['error'].')');
+            throw new Exception($this->getLang('msg_upload_failed') . ' (' . $_FILES[$field]['error'] . ')');
         }
 
         $tmp = $this->mkTmpDir();
@@ -773,28 +773,28 @@ class helper_plugin_extension_extension extends Plugin
     protected function readLocalData()
     {
         if ($this->isTemplate()) {
-            $infopath = $this->getInstallDir().'/template.info.txt';
+            $infopath = $this->getInstallDir() . '/template.info.txt';
         } else {
-            $infopath = $this->getInstallDir().'/plugin.info.txt';
+            $infopath = $this->getInstallDir() . '/plugin.info.txt';
         }
 
         if (is_readable($infopath)) {
             $this->localInfo = confToHash($infopath);
         } elseif (!$this->isTemplate() && $this->isEnabled()) {
-            $path   = $this->getInstallDir().'/';
+            $path   = $this->getInstallDir() . '/';
             $plugin = null;
 
             foreach (PluginController::PLUGIN_TYPES as $type) {
-                if (file_exists($path.$type.'.php')) {
+                if (file_exists($path . $type . '.php')) {
                     $plugin = plugin_load($type, $this->base);
                     if ($plugin instanceof PluginInterface) break;
                 }
 
-                if ($dh = @opendir($path.$type.'/')) {
+                if ($dh = @opendir($path . $type . '/')) {
                     while (false !== ($cp = readdir($dh))) {
                         if ($cp == '.' || $cp == '..' || strtolower(substr($cp, -4)) != '.php') continue;
 
-                        $plugin = plugin_load($type, $this->base.'_'.substr($cp, 0, -4));
+                        $plugin = plugin_load($type, $this->base . '_' . substr($cp, 0, -4));
                         if ($plugin instanceof PluginInterface) break;
                     }
                     if ($plugin instanceof PluginInterface) break;
@@ -845,7 +845,7 @@ class helper_plugin_extension_extension extends Plugin
      */
     protected function readManagerData()
     {
-        $managerpath = $this->getInstallDir().'/manager.dat';
+        $managerpath = $this->getInstallDir() . '/manager.dat';
         if (is_readable($managerpath)) {
             $file = @file($managerpath);
             if (!empty($file)) {
@@ -866,10 +866,10 @@ class helper_plugin_extension_extension extends Plugin
      */
     protected function writeManagerData()
     {
-        $managerpath = $this->getInstallDir().'/manager.dat';
+        $managerpath = $this->getInstallDir() . '/manager.dat';
         $data = '';
         foreach ($this->managerData as $k => $v) {
-            $data .= $k.'='.$v.DOKU_LF;
+            $data .= $k . '=' . $v . DOKU_LF;
         }
         io_saveFile($managerpath, $data);
     }
@@ -971,15 +971,15 @@ class helper_plugin_extension_extension extends Plugin
         }
 
         // download
-        if (!$file = $this->downloadToFile($url, $tmp.'/', $file)) {
+        if (!$file = $this->downloadToFile($url, $tmp . '/', $file)) {
             io_rmdir($tmp, true);
             throw new Exception(sprintf(
                 $this->getLang('error_download'),
-                '<bdi>'.hsc($url).'</bdi>'
+                '<bdi>' . hsc($url) . '</bdi>'
             ));
         }
 
-        return $tmp.'/'.$file;
+        return $tmp . '/' . $file;
     }
 
     /**
@@ -999,18 +999,18 @@ class helper_plugin_extension_extension extends Plugin
         }
 
         // add default base folder if specified to handle case where zip doesn't contain this
-        if ($base && !@mkdir($tmp.'/'.$base)) {
+        if ($base && !@mkdir($tmp . '/' . $base)) {
             throw new Exception($this->getLang('error_dircreate'));
         }
 
         // decompress
-        $this->decompress($file, "$tmp/".$base);
+        $this->decompress($file, "$tmp/" . $base);
 
         // search $tmp/$base for the folder(s) that has been created
         // move the folder(s) to lib/..
-        $result = ['old'=>[], 'new'=>[]];
+        $result = ['old' => [], 'new' => []];
         $default = ($this->isTemplate() ? 'template' : 'plugin');
-        if (!$this->findFolders($result, $tmp.'/'.$base, $default)) {
+        if (!$this->findFolders($result, $tmp . '/' . $base, $default)) {
             throw new Exception($this->getLang('error_findfolder'));
         }
 
@@ -1046,7 +1046,7 @@ class helper_plugin_extension_extension extends Plugin
             }
 
             // check to make sure we aren't overwriting anything
-            $target = $target_base_dir.$item['base'];
+            $target = $target_base_dir . $item['base'];
             if (!$overwrite && file_exists($target)) {
                 // this info message is not being exposed via exception,
                 // so that it's not interrupting the installation
@@ -1061,7 +1061,7 @@ class helper_plugin_extension_extension extends Plugin
                 // return info
                 $id = $item['base'];
                 if ($item['type'] == 'template') {
-                    $id = 'template:'.$id;
+                    $id = 'template:' . $id;
                 }
                 $installed_extensions[$id] = [
                     'base' => $item['base'],
@@ -1070,8 +1070,8 @@ class helper_plugin_extension_extension extends Plugin
                 ];
             } else {
                 throw new Exception(sprintf(
-                    $this->getLang('error_copy').DOKU_LF,
-                    '<bdi>'.$item['base'].'</bdi>'
+                    $this->getLang('error_copy') . DOKU_LF,
+                    '<bdi>' . $item['base'] . '</bdi>'
                 ));
             }
         }
@@ -1191,7 +1191,7 @@ class helper_plugin_extension_extension extends Plugin
                 $tar->open($file);
                 $tar->extract($target);
             } catch (ArchiveIOException $e) {
-                throw new Exception($this->getLang('error_decompress').' '.$e->getMessage(), $e->getCode(), $e);
+                throw new Exception($this->getLang('error_decompress') . ' ' . $e->getMessage(), $e->getCode(), $e);
             }
 
             return true;
@@ -1201,7 +1201,7 @@ class helper_plugin_extension_extension extends Plugin
                 $zip->open($file);
                 $zip->extract($target);
             } catch (ArchiveIOException $e) {
-                throw new Exception($this->getLang('error_decompress').' '.$e->getMessage(), $e->getCode(), $e);
+                throw new Exception($this->getLang('error_decompress') . ' ' . $e->getMessage(), $e->getCode(), $e);
             }
 
             return true;
@@ -1209,7 +1209,7 @@ class helper_plugin_extension_extension extends Plugin
 
         // the only case when we don't get one of the recognized archive types is
         // when the archive file can't be read
-        throw new Exception($this->getLang('error_decompress').' Couldn\'t read archive file');
+        throw new Exception($this->getLang('error_decompress') . ' Couldn\'t read archive file');
     }
 
     /**
@@ -1286,7 +1286,7 @@ class helper_plugin_extension_extension extends Plugin
             } else {
                 $extensiondir = DOKU_PLUGIN;
             }
-            $extensiondir = $extensiondir . $extension['base'] .'/';
+            $extensiondir = $extensiondir . $extension['base'] . '/';
             $definitionfile = $extensiondir . 'deleted.files';
             if (!file_exists($definitionfile)) continue;
 

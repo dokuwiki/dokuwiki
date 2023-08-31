@@ -210,7 +210,7 @@ class PageFile
         $this->updateMetadata($logEntry);
 
         // update the purgefile (timestamp of the last time anything within the wiki was changed)
-        io_saveFile($conf['cachedir'].'/purgefile', time());
+        io_saveFile($conf['cachedir'] . '/purgefile', time());
 
         return $data;
     }
@@ -238,12 +238,12 @@ class PageFile
             if (touch($fileLastMod, $revInfo['date'])) {
                 clearstatcache();
                 $msg = "PageFile($this->id)::detectExternalEdit(): timestamp successfully modified";
-                $details = '('.$wrong_timestamp.' -> '.$revInfo['date'].')';
+                $details = '(' . $wrong_timestamp . ' -> ' . $revInfo['date'] . ')';
                 Logger::error($msg, $details, $fileLastMod);
             } else {
                 // runtime error
                 $msg = "PageFile($this->id)::detectExternalEdit(): page file should be newer than last revision "
-                      .'('.filemtime($fileLastMod).' < '. $this->changelog->lastRevision() .')';
+                      . '(' . filemtime($fileLastMod) . ' < ' . $this->changelog->lastRevision() . ')';
                 throw new RuntimeException($msg);
             }
         }

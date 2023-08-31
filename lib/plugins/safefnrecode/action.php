@@ -29,24 +29,24 @@ class action_plugin_safefnrecode extends ActionPlugin
         global $conf;
         if ($conf['fnencode'] != 'safe') return;
 
-        if (!file_exists($conf['datadir'].'_safefn.recoded')) {
+        if (!file_exists($conf['datadir'] . '_safefn.recoded')) {
             $this->recode($conf['datadir']);
-            touch($conf['datadir'].'_safefn.recoded');
+            touch($conf['datadir'] . '_safefn.recoded');
         }
 
-        if (!file_exists($conf['olddir'].'_safefn.recoded')) {
+        if (!file_exists($conf['olddir'] . '_safefn.recoded')) {
             $this->recode($conf['olddir']);
-            touch($conf['olddir'].'_safefn.recoded');
+            touch($conf['olddir'] . '_safefn.recoded');
         }
 
-        if (!file_exists($conf['metadir'].'_safefn.recoded')) {
+        if (!file_exists($conf['metadir'] . '_safefn.recoded')) {
             $this->recode($conf['metadir']);
-            touch($conf['metadir'].'_safefn.recoded');
+            touch($conf['metadir'] . '_safefn.recoded');
         }
 
-        if (!file_exists($conf['mediadir'].'_safefn.recoded')) {
+        if (!file_exists($conf['mediadir'] . '_safefn.recoded')) {
             $this->recode($conf['mediadir']);
-            touch($conf['mediadir'].'_safefn.recoded');
+            touch($conf['mediadir'] . '_safefn.recoded');
         }
     }
 

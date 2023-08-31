@@ -62,7 +62,7 @@ function html_wikilink($id, $name = null, $search = '')
  */
 function html_login($svg = false)
 {
-    dbg_deprecated(Login::class .'::show()');
+    dbg_deprecated(Login::class . '::show()');
     (new Login($svg))->show();
 }
 
@@ -74,7 +74,7 @@ function html_login($svg = false)
  */
 function html_denied()
 {
-    dbg_deprecated(Denied::class .'::showBanner()');
+    dbg_deprecated(Denied::class . '::showBanner()');
     (new Denied())->showBanner();
 }
 
@@ -154,13 +154,13 @@ function html_secedit_get_button($data)
     unset($data['secid']);
 
     $params = array_merge(
-        ['do'  => 'edit', 'rev' => $INFO['lastmod'], 'summary' => '['.$name.'] '],
+        ['do'  => 'edit', 'rev' => $INFO['lastmod'], 'summary' => '[' . $name . '] '],
         $data
     );
 
-    $html = '<div class="secedit editbutton_'.$data['target'] .' editbutton_'.$secid .'">';
-    $html.= html_btn('secedit', $ID, '', $params, 'post', $name);
-    $html.= '</div>';
+    $html = '<div class="secedit editbutton_' . $data['target'] . ' editbutton_' . $secid . '">';
+    $html .= html_btn('secedit', $ID, '', $params, 'post', $name);
+    $html .= '</div>';
     return $html;
 }
 
@@ -176,9 +176,9 @@ function html_topbtn()
     global $lang;
 
     return '<a class="nolink" href="#dokuwiki__top">'
-        .'<button class="button" onclick="window.scrollTo(0, 0)" title="'. $lang['btn_top'] .'">'
+        . '<button class="button" onclick="window.scrollTo(0, 0)" title="' . $lang['btn_top'] . '">'
         . $lang['btn_top']
-        .'</button></a>';
+        . '</button></a>';
 }
 
 /**
@@ -203,26 +203,26 @@ function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $l
     global $lang;
 
     if (!$label)
-        $label = $lang['btn_'.$name];
+        $label = $lang['btn_' . $name];
 
     //filter id (without urlencoding)
     $id = idfilter($id, false);
 
     //make nice URLs even for buttons
     if ($conf['userewrite'] == 2) {
-        $script = DOKU_BASE.DOKU_SCRIPT.'/'.$id;
+        $script = DOKU_BASE . DOKU_SCRIPT . '/' . $id;
     } elseif ($conf['userewrite']) {
-        $script = DOKU_BASE.$id;
+        $script = DOKU_BASE . $id;
     } else {
-        $script = DOKU_BASE.DOKU_SCRIPT;
+        $script = DOKU_BASE . DOKU_SCRIPT;
         $params['id'] = $id;
     }
 
-    $html = '<form class="button btn_'.$name.'" method="'.$method.'" action="'.$script.'"><div class="no">';
+    $html = '<form class="button btn_' . $name . '" method="' . $method . '" action="' . $script . '"><div class="no">';
 
     if (is_array($params)) {
         foreach ($params as $key => $val) {
-            $html .= '<input type="hidden" name="'.$key.'" value="'.hsc($val).'" />';
+            $html .= '<input type="hidden" name="' . $key . '" value="' . hsc($val) . '" />';
         }
     }
 
@@ -230,12 +230,12 @@ function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $l
 
     $html .= '<button type="submit" ';
     if ($akey) {
-        $tip  .= ' ['.strtoupper($akey).']';
-        $html .= 'accesskey="'.$akey.'" ';
+        $tip  .= ' [' . strtoupper($akey) . ']';
+        $html .= 'accesskey="' . $akey . '" ';
     }
-    $html .= 'title="'.$tip.'">';
+    $html .= 'title="' . $tip . '">';
     if ($svg) {
-        $html .= '<span>'. hsc($label) .'</span>'. inlineSVG($svg);
+        $html .= '<span>' . hsc($label) . '</span>' . inlineSVG($svg);
     } else {
         $html .= hsc($label);
     }
@@ -252,7 +252,7 @@ function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $l
  */
 function html_showrev()
 {
-    dbg_deprecated(PageView::class .'::showrev()');
+    dbg_deprecated(PageView::class . '::showrev()');
 }
 
 /**
@@ -265,7 +265,7 @@ function html_showrev()
  */
 function html_show($txt = null)
 {
-    dbg_deprecated(PageView::class .'::show()');
+    dbg_deprecated(PageView::class . '::show()');
     (new PageView($txt))->show();
 }
 
@@ -277,7 +277,7 @@ function html_show($txt = null)
  */
 function html_draft()
 {
-    dbg_deprecated(PageDraft::class .'::show()');
+    dbg_deprecated(PageDraft::class . '::show()');
     (new PageDraft())->show();
 }
 
@@ -306,7 +306,7 @@ function html_hilight($html, $phrases)
     return @preg_replace_callback("/((<[^>]*)|$regex)/ui", function ($match) {
         $hlight = unslash($match[0]);
         if (!isset($match[2])) {
-            $hlight = '<span class="search_hit">'.$hlight.'</span>';
+            $hlight = '<span class="search_hit">' . $hlight . '</span>';
         }
         return $hlight;
     }, $html);
@@ -320,7 +320,7 @@ function html_hilight($html, $phrases)
  */
 function html_locked()
 {
-    dbg_deprecated(Locked::class .'::showBanner()');
+    dbg_deprecated(Locked::class . '::showBanner()');
     (new Locked())->showBanner();
 }
 
@@ -337,7 +337,7 @@ function html_locked()
  */
 function html_revisions($first = -1, $media_id = '')
 {
-    dbg_deprecated(PageRevisions::class .'::show()');
+    dbg_deprecated(PageRevisions::class . '::show()');
     if ($media_id) {
         (new MediaRevisions($media_id))->show($first);
     } else {
@@ -360,7 +360,7 @@ function html_revisions($first = -1, $media_id = '')
  */
 function html_recent($first = 0, $show_changes = 'both')
 {
-    dbg_deprecated(Recent::class .'::show()');
+    dbg_deprecated(Recent::class . '::show()');
     (new Recent($first, $show_changes))->show();
 }
 
@@ -374,7 +374,7 @@ function html_recent($first = 0, $show_changes = 'both')
  */
 function html_index($ns)
 {
-    dbg_deprecated(Index::class .'::show()');
+    dbg_deprecated(Index::class . '::show()');
     (new Index($ns))->show();
 }
 
@@ -391,7 +391,7 @@ function html_index($ns)
  */
 function html_list_index($item)
 {
-    dbg_deprecated(Index::class .'::formatListItem()');
+    dbg_deprecated(Index::class . '::formatListItem()');
     return (new Index())->formatListItem($item);
 }
 
@@ -410,7 +410,7 @@ function html_list_index($item)
  */
 function html_li_index($item)
 {
-    dbg_deprecated(Index::class .'::tagListItem()');
+    dbg_deprecated(Index::class . '::tagListItem()');
     return (new Index())->tagListItem($item);
 }
 
@@ -425,7 +425,7 @@ function html_li_index($item)
  */
 function html_li_default($item)
 {
-    return '<li class="level'.$item['level'].'">';
+    return '<li class="level' . $item['level'] . '">';
 }
 
 /**
@@ -465,7 +465,7 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
 
     // set callback function to build the <li> tag, formerly defined as html_li_default()
     if (!is_callable($lifunc)) {
-        $lifunc = static fn($item) => '<li class="level'.$item['level'].'">';
+        $lifunc = static fn($item) => '<li class="level' . $item['level'] . '">';
     }
 
     foreach ($data as $item) {
@@ -473,22 +473,22 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
             //open new list
             for ($i = 0; $i < ($item['level'] - $level); $i++) {
                 if ($i) $html .= '<li class="clear">';
-                $html .= "\n".'<ul class="'.$class.'">'."\n";
+                $html .= "\n" . '<ul class="' . $class . '">' . "\n";
                 $open++;
             }
             $level = $item['level'];
         } elseif ($item['level'] < $level) {
             //close last item
-            $html .= '</li>'."\n";
+            $html .= '</li>' . "\n";
             while ($level > $item['level'] && $open > 0) {
                 //close higher lists
-                $html .= '</ul>'."\n".'</li>'."\n";
+                $html .= '</ul>' . "\n" . '</li>' . "\n";
                 $level--;
                 $open--;
             }
         } elseif ($html !== '') {
             //close previous item
-            $html .= '</li>'."\n";
+            $html .= '</li>' . "\n";
         }
 
         //print item
@@ -500,15 +500,15 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
     }
 
     //close remaining items and lists
-    $html .= '</li>'."\n";
+    $html .= '</li>' . "\n";
     while ($open-- > 0) {
-        $html .= '</ul></li>'."\n";
+        $html .= '</ul></li>' . "\n";
     }
 
     if ($forcewrapper || $start_level < 2) {
         // Trigger building a wrapper ul if the first level is
         // 0 (we have a root object) or 1 (just the root content)
-        $html = "\n".'<ul class="'.$class.'">'."\n".$html.'</ul>'."\n";
+        $html = "\n" . '<ul class="' . $class . '">' . "\n" . $html . '</ul>' . "\n";
     }
 
     return $html;
@@ -523,7 +523,7 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
  */
 function html_backlinks()
 {
-    dbg_deprecated(Backlinks::class .'::show()');
+    dbg_deprecated(Backlinks::class . '::show()');
     (new Backlinks())->show();
 }
 
@@ -540,7 +540,7 @@ function html_backlinks()
  */
 function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = false)
 {
-    dbg_deprecated('see '. PageDiff::class .'::buildDiffHead()');
+    dbg_deprecated('see ' . PageDiff::class . '::buildDiffHead()');
     return ['', '', '', ''];
 }
 
@@ -557,7 +557,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
  */
 function html_diff($text = '', $intro = true, $type = null)
 {
-    dbg_deprecated(PageDiff::class .'::show()');
+    dbg_deprecated(PageDiff::class . '::show()');
     global $INFO;
     (new PageDiff($INFO['id']))->compareWith($text)->preference([
         'showIntro' => $intro,
@@ -577,7 +577,7 @@ function html_diff($text = '', $intro = true, $type = null)
  */
 function html_diff_navigation($pagelog, $type, $l_rev, $r_rev)
 {
-    dbg_deprecated('see '. PageDiff::class .'::buildRevisionsNavigation()');
+    dbg_deprecated('see ' . PageDiff::class . '::buildRevisionsNavigation()');
     return ['', ''];
 }
 
@@ -593,7 +593,7 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev)
  */
 function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null)
 {
-    dbg_deprecated('see '. PageDiff::class .'::diffViewlink()');
+    dbg_deprecated('see ' . PageDiff::class . '::diffViewlink()');
     return '';
 }
 
@@ -606,7 +606,7 @@ function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null)
  */
 function html_insert_softbreaks($diffhtml)
 {
-    dbg_deprecated(PageDiff::class .'::insertSoftbreaks()');
+    dbg_deprecated(PageDiff::class . '::insertSoftbreaks()');
     return (new PageDiff())->insertSoftbreaks($diffhtml);
 }
 
@@ -621,7 +621,7 @@ function html_insert_softbreaks($diffhtml)
  */
 function html_conflict($text, $summary)
 {
-    dbg_deprecated(PageConflict::class .'::show()');
+    dbg_deprecated(PageConflict::class . '::show()');
     (new PageConflict($text, $summary))->show();
 }
 
@@ -644,7 +644,7 @@ function html_msgarea()
         $hash = md5($msg['msg']);
         if (isset($shown[$hash])) continue; // skip double messages
         if (info_msg_allowed($msg)) {
-            echo '<div class="'.$msg['lvl'].'">';
+            echo '<div class="' . $msg['lvl'] . '">';
             echo $msg['msg'];
             echo '</div>';
         }
@@ -662,7 +662,7 @@ function html_msgarea()
  */
 function html_register()
 {
-    dbg_deprecated(UserRegister::class .'::show()');
+    dbg_deprecated(UserRegister::class . '::show()');
     (new UserRegister())->show();
 }
 
@@ -675,7 +675,7 @@ function html_register()
  */
 function html_updateprofile()
 {
-    dbg_deprecated(UserProfile::class .'::show()');
+    dbg_deprecated(UserProfile::class . '::show()');
     (new UserProfile())->show();
 }
 
@@ -688,7 +688,7 @@ function html_updateprofile()
  */
 function html_edit()
 {
-    dbg_deprecated(Editor::class .'::show()');
+    dbg_deprecated(Editor::class . '::show()');
     (new Editor())->show();
 }
 
@@ -702,7 +702,7 @@ function html_edit()
  */
 function html_edit_form($param)
 {
-    dbg_deprecated(Editor::class .'::addTextarea()');
+    dbg_deprecated(Editor::class . '::addTextarea()');
     (new Editor())->addTextarea($param);
 }
 
@@ -754,7 +754,7 @@ function html_debug()
     echo '</pre>';
 
     echo '<b>rel DOKU_BASE:</b><pre>';
-    echo dirname($_SERVER['PHP_SELF']).'/';
+    echo dirname($_SERVER['PHP_SELF']) . '/';
     echo '</pre>';
 
     echo '<b>PHP Version:</b><pre>';
@@ -772,7 +772,7 @@ function html_debug()
     if ($auth) {
         echo '<b>Auth backend capabilities:</b><pre>';
         foreach ($auth->getCapabilities() as $cando) {
-            echo '   '.str_pad($cando, 16) .' => '. (int)$auth->canDo($cando) . DOKU_LF;
+            echo '   ' . str_pad($cando, 16) . ' => ' . (int)$auth->canDo($cando) . DOKU_LF;
         }
         echo '</pre>';
     }
@@ -814,7 +814,7 @@ function html_debug()
  */
 function html_resendpwd()
 {
-    dbg_deprecated(UserResendPwd::class .'::show()');
+    dbg_deprecated(UserResendPwd::class . '::show()');
     (new UserResendPwd())->show();
 }
 
@@ -830,15 +830,15 @@ function html_TOC($toc)
 {
     if ($toc === []) return '';
     global $lang;
-    $out  = '<!-- TOC START -->'.DOKU_LF;
-    $out .= '<div id="dw__toc" class="dw__toc">'.DOKU_LF;
+    $out  = '<!-- TOC START -->' . DOKU_LF;
+    $out .= '<div id="dw__toc" class="dw__toc">' . DOKU_LF;
     $out .= '<h3 class="toggle">';
     $out .= $lang['toc'];
-    $out .= '</h3>'.DOKU_LF;
-    $out .= '<div>'.DOKU_LF;
+    $out .= '</h3>' . DOKU_LF;
+    $out .= '<div>' . DOKU_LF;
     $out .= html_buildlist($toc, 'toc', 'html_list_toc', null, true);
-    $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
-    $out .= '<!-- TOC END -->'.DOKU_LF;
+    $out .= '</div>' . DOKU_LF . '</div>' . DOKU_LF;
+    $out .= '<!-- TOC END -->' . DOKU_LF;
     return $out;
 }
 
@@ -851,12 +851,12 @@ function html_TOC($toc)
 function html_list_toc($item)
 {
     if (isset($item['hid'])) {
-        $link = '#'.$item['hid'];
+        $link = '#' . $item['hid'];
     } else {
         $link = $item['link'];
     }
 
-    return '<a href="'.$link.'">'.hsc($item['title']).'</a>';
+    return '<a href="' . $link . '">' . hsc($item['title']) . '</a>';
 }
 
 /**
@@ -873,7 +873,7 @@ function html_list_toc($item)
 function html_mktocitem($link, $text, $level, $hash = '#')
 {
     return  [
-        'link'  => $hash.$link,
+        'link'  => $hash . $link,
         'title' => $text,
         'type'  => 'ul',
         'level' => $level
@@ -896,7 +896,7 @@ function html_form($name, $form)
     dbg_deprecated('use dokuwiki\Form\Form instead of Doku_Form');
     // Safety check in case the caller forgets.
     $form->endFieldset();
-    Event::createAndTrigger('HTML_'.strtoupper($name).'FORM_OUTPUT', $form, 'html_form_output', false);
+    Event::createAndTrigger('HTML_' . strtoupper($name) . 'FORM_OUTPUT', $form, 'html_form_output', false);
 }
 
 /**
@@ -959,34 +959,34 @@ function html_flashobject($swf, $width, $height, $params = null, $flashvars = nu
     $ie['classid'] = 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000';
 
     // open object (with conditional comments)
-    $out .= '<!--[if !IE]> -->'.NL;
-    $out .= '<object '.buildAttributes($std).'>'.NL;
-    $out .= '<!-- <![endif]-->'.NL;
-    $out .= '<!--[if IE]>'.NL;
-    $out .= '<object '.buildAttributes($ie).'>'.NL;
-    $out .= '    <param name="movie" value="'.hsc($swf).'" />'.NL;
-    $out .= '<!--><!-- -->'.NL;
+    $out .= '<!--[if !IE]> -->' . NL;
+    $out .= '<object ' . buildAttributes($std) . '>' . NL;
+    $out .= '<!-- <![endif]-->' . NL;
+    $out .= '<!--[if IE]>' . NL;
+    $out .= '<object ' . buildAttributes($ie) . '>' . NL;
+    $out .= '    <param name="movie" value="' . hsc($swf) . '" />' . NL;
+    $out .= '<!--><!-- -->' . NL;
 
     // print params
     if (is_array($params)) foreach ($params as $key => $val) {
-        $out .= '  <param name="'.hsc($key).'" value="'.hsc($val).'" />'.NL;
+        $out .= '  <param name="' . hsc($key) . '" value="' . hsc($val) . '" />' . NL;
     }
 
     // add flashvars
     if (is_array($flashvars)) {
-        $out .= '  <param name="FlashVars" value="'.buildURLparams($flashvars).'" />'.NL;
+        $out .= '  <param name="FlashVars" value="' . buildURLparams($flashvars) . '" />' . NL;
     }
 
     // alternative content
     if ($alt) {
-        $out .= $alt.NL;
+        $out .= $alt . NL;
     } else {
-        $out .= $lang['noflash'].NL;
+        $out .= $lang['noflash'] . NL;
     }
 
     // finish
-    $out .= '</object>'.NL;
-    $out .= '<!-- <![endif]-->'.NL;
+    $out .= '</object>' . NL;
+    $out .= '<!-- <![endif]-->' . NL;
 
     return $out;
 }
@@ -1000,13 +1000,13 @@ function html_flashobject($swf, $width, $height, $params = null, $flashvars = nu
  */
 function html_tabs($tabs, $current_tab = null)
 {
-    echo '<ul class="tabs">'.NL;
+    echo '<ul class="tabs">' . NL;
 
     foreach ($tabs as $id => $tab) {
         html_tab($tab['href'], $tab['caption'], $id === $current_tab);
     }
 
-    echo '</ul>'.NL;
+    echo '</ul>' . NL;
 }
 
 /**
@@ -1031,7 +1031,7 @@ function html_tab($href, $caption, $selected = false)
     }
     $tab .= hsc($caption)
          .  '</' . ($selected ? 'strong' : 'a') . '>'
-         .  '</li>'.NL;
+         .  '</li>' . NL;
     echo $tab;
 }
 
@@ -1057,7 +1057,7 @@ function html_sizechange($sizechange, $form = null)
             $value = '±' . $value;
         }
         if (!isset($form)) {
-            return '<span class="'.$class.'">'.$value.'</span>';
+            return '<span class="' . $class . '">' . $value . '</span>';
         } else { // Doku_Form
             $form->addElement(form_makeOpenTag('span', ['class' => $class]));
             $form->addElement($value);

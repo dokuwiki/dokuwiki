@@ -136,7 +136,7 @@ class PageCLI extends CLI
         $options->registerArgument(
             'key',
             'The name of the metadata item to be retrieved.' . "\n" .
-            'If empty, an array of all the metadata items is returned.' ."\n" .
+            'If empty, an array of all the metadata items is returned.' . "\n" .
             'For retrieving items that are stored in sub-arrays, separate the ' .
             'keys of the different levels by spaces, in quotes, eg "date modified".',
             false,

@@ -27,7 +27,7 @@ class Entity extends AbstractMode
 
         $sep = '';
         foreach ($this->entities as $entity) {
-            $this->pattern .= $sep. Lexer::escape($entity);
+            $this->pattern .= $sep . Lexer::escape($entity);
             $sep = '|';
         }
     }

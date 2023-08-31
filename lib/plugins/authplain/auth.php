@@ -112,7 +112,7 @@ class auth_plugin_authplain extends AuthPlugin
         $userline = [$user, $pass, $name, $mail, $groups];
         $userline = str_replace('\\', '\\\\', $userline); // escape \ as \\
         $userline = str_replace(':', '\\:', $userline); // escape : as \:
-        $userline = implode(':', $userline)."\n";
+        $userline = implode(':', $userline) . "\n";
         return $userline;
     }
 
@@ -214,7 +214,7 @@ class auth_plugin_authplain extends AuthPlugin
             $userinfo['grps']
         );
 
-        if (!io_replaceInFile($config_cascade['plainauth.users']['default'], '/^'.$user.':/', $userline, true)) {
+        if (!io_replaceInFile($config_cascade['plainauth.users']['default'], '/^' . $user . ':/', $userline, true)) {
             msg('There was an error modifying your user data. You may need to register again.', -1);
             // FIXME, io functions should be fail-safe so existing data isn't lost
             $ACT = 'register';
@@ -253,7 +253,7 @@ class auth_plugin_authplain extends AuthPlugin
 
         if ($deleted === []) return 0;
 
-        $pattern = '/^('.implode('|', $deleted).'):/';
+        $pattern = '/^(' . implode('|', $deleted) . '):/';
         if (!io_deleteFromFile($config_cascade['plainauth.users']['default'], $pattern, true)) {
             msg($this->getLang('writefail'), -1);
             return 0;
@@ -481,7 +481,7 @@ class auth_plugin_authplain extends AuthPlugin
     {
         $this->pattern = [];
         foreach ($filter as $item => $pattern) {
-            $this->pattern[$item] = '/'.str_replace('/', '\/', $pattern).'/i'; // allow regex characters
+            $this->pattern[$item] = '/' . str_replace('/', '\/', $pattern) . '/i'; // allow regex characters
         }
     }
 }

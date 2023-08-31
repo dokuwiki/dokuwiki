@@ -28,6 +28,6 @@ class TagOpenElement extends ValueElement
      */
     public function toHTML()
     {
-        return '<'.$this->val().' '.buildAttributes($this->attrs()).'>';
+        return '<' . $this->val() . ' ' . buildAttributes($this->attrs()) . '>';
     }
 }

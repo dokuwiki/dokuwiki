@@ -477,11 +477,11 @@ function ft_snippet($id, $highlight)
         $re2 = "$re1.{0,75}(?!\\1)$re1";
         $re3 = "$re1.{0,45}(?!\\1)$re1.{0,45}(?!\\1)(?!\\2)$re1";
 
-        for ($cnt=4; $cnt--;) {
+        for ($cnt = 4; $cnt--;) {
             if (0) {
-            } elseif (preg_match('/'.$re3.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
-            } elseif (preg_match('/'.$re2.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
-            } elseif (preg_match('/'.$re1.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
+            } elseif (preg_match('/' . $re3 . '/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
+            } elseif (preg_match('/' . $re2 . '/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
+            } elseif (preg_match('/' . $re1 . '/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
             } else {
                 break;
             }
@@ -495,16 +495,16 @@ function ft_snippet($id, $highlight)
             // establish context, 100 bytes surrounding the match string
             // first look to see if we can go 100 either side,
             // then drop to 50 adding any excess if the other side can't go to 50,
-            $pre = min($utf8_idx-$utf8_offset, 100);
-            $post = min($len-$utf8_idx-$utf8_len, 100);
+            $pre = min($utf8_idx - $utf8_offset, 100);
+            $post = min($len - $utf8_idx - $utf8_len, 100);
 
-            if ($pre>50 && $post>50) {
+            if ($pre > 50 && $post > 50) {
                 $pre = 50;
                 $post = 50;
-            } elseif ($pre>50) {
-                $pre = min($pre, 100-$post);
-            } elseif ($post>50) {
-                $post = min($post, 100-$pre);
+            } elseif ($pre > 50) {
+                $pre = min($pre, 100 - $post);
+            } elseif ($post > 50) {
+                $post = min($post, 100 - $pre);
             } elseif ($offset == 0) {
                 // both are less than 50, means the context is the whole string
                 // make it so and break out of this loop - there is no need for the
@@ -520,9 +520,9 @@ function ft_snippet($id, $highlight)
             $end = $utf8_idx + $utf8_len + $post;      // now set it to the end of this context
 
             if ($append) {
-                $snippets[count($snippets)-1] .= PhpString::substr($text, $append, $end-$append);
+                $snippets[count($snippets) - 1] .= PhpString::substr($text, $append, $end - $append);
             } else {
-                $snippets[] = PhpString::substr($text, $start, $end-$start);
+                $snippets[] = PhpString::substr($text, $start, $end - $start);
             }
 
             // set $offset for next match attempt
@@ -536,7 +536,7 @@ function ft_snippet($id, $highlight)
         }
 
         $m = "\1";
-        $snippets = preg_replace('/'.$re1.'/iu', $m.'$1'.$m, $snippets);
+        $snippets = preg_replace('/' . $re1 . '/iu', $m . '$1' . $m, $snippets);
         $snippet = preg_replace(
             '/' . $m . '([^' . $m . ']*?)' . $m . '/iu',
             '<strong class="search_hit">$1</strong>',
@@ -576,7 +576,7 @@ function ft_snippet_re_preprocess($term)
     if (substr($term, 0, 2) == '\\*') {
         $term = substr($term, 2);
     } else {
-        $term = $BL.$term;
+        $term = $BL . $term;
     }
 
     if (substr($term, -2, 2) == '\\*') {
@@ -585,7 +585,7 @@ function ft_snippet_re_preprocess($term)
         $term .= $BR;
     }
 
-    if ($term == $BL || $term == $BR || $term == $BL.$BR) $term = '';
+    if ($term == $BL || $term == $BR || $term == $BL . $BR) $term = '';
     return $term;
 }
 
@@ -737,7 +737,7 @@ function ft_queryParser($Indexer, $query)
         if (preg_match('/^(-?)"(.+)"$/u', $term, $matches)) {
             // phrase-include and phrase-exclude
             $not = $matches[1] ? 'NOT' : '';
-            $parsed = $not.ft_termParser($Indexer, $matches[2], false, true);
+            $parsed = $not . ft_termParser($Indexer, $matches[2], false, true);
         } else {
             // fix incomplete phrase
             $term = str_replace('"', ' ', $term);
@@ -778,13 +778,13 @@ function ft_queryParser($Indexer, $query)
                     $parsed .= 'OR';
                 } elseif (preg_match('/^(?:\^|-ns:)(.+)$/u', $token, $matches)) {
                     // namespace-exclude
-                    $parsed .= 'NOT(N+:'.$matches[1].')';
+                    $parsed .= 'NOT(N+:' . $matches[1] . ')';
                 } elseif (preg_match('/^(?:@|ns:)(.+)$/u', $token, $matches)) {
                     // namespace-include
-                    $parsed .= '(N+:'.$matches[1].')';
+                    $parsed .= '(N+:' . $matches[1] . ')';
                 } elseif (preg_match('/^-(.+)$/', $token, $matches)) {
                     // word-exclude
-                    $parsed .= 'NOT('.ft_termParser($Indexer, $matches[1]).')';
+                    $parsed .= 'NOT(' . ft_termParser($Indexer, $matches[1]) . ')';
                 } else {
                     // word-include
                     $parsed .= ft_termParser($Indexer, $token);
@@ -945,12 +945,12 @@ function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = f
         if (empty($words)) {
             $parsed = '()'; // important: do not remove
         } elseif ($words[0] === $term) {
-            $parsed = '(W+:'.$words[0].')';
+            $parsed = '(W+:' . $words[0] . ')';
         } elseif ($phrase_mode) {
             $term_encoded = str_replace(['(', ')'], ['OP', 'CP'], $term);
-            $parsed = '((W_:'.implode(')(W_:', $words).')(P+:'.$term_encoded.'))';
+            $parsed = '((W_:' . implode(')(W_:', $words) . ')(P+:' . $term_encoded . '))';
         } else {
-            $parsed = '((W+:'.implode(')(W+:', $words).'))';
+            $parsed = '((W+:' . implode(')(W+:', $words) . '))';
         }
     }
     return $parsed;

@@ -12,31 +12,31 @@ spl_autoload_register('load_autoload');
 
 // require all the common libraries
 // for a few of these order does matter
-require_once(DOKU_INC.'inc/defines.php');
-require_once(DOKU_INC.'inc/actions.php');
-require_once(DOKU_INC.'inc/changelog.php');
-require_once(DOKU_INC.'inc/common.php');
-require_once(DOKU_INC.'inc/confutils.php');
-require_once(DOKU_INC.'inc/pluginutils.php');
-require_once(DOKU_INC.'inc/form.php');
-require_once(DOKU_INC.'inc/fulltext.php');
-require_once(DOKU_INC.'inc/html.php');
-require_once(DOKU_INC.'inc/httputils.php');
-require_once(DOKU_INC.'inc/indexer.php');
-require_once(DOKU_INC.'inc/infoutils.php');
-require_once(DOKU_INC.'inc/io.php');
-require_once(DOKU_INC.'inc/mail.php');
-require_once(DOKU_INC.'inc/media.php');
-require_once(DOKU_INC.'inc/pageutils.php');
-require_once(DOKU_INC.'inc/parserutils.php');
-require_once(DOKU_INC.'inc/search.php');
-require_once(DOKU_INC.'inc/template.php');
-require_once(DOKU_INC.'inc/toolbar.php');
-require_once(DOKU_INC.'inc/utf8.php');
-require_once(DOKU_INC.'inc/auth.php');
-require_once(DOKU_INC.'inc/compatibility.php');
-require_once(DOKU_INC.'inc/deprecated.php');
-require_once(DOKU_INC.'inc/legacy.php');
+require_once(DOKU_INC . 'inc/defines.php');
+require_once(DOKU_INC . 'inc/actions.php');
+require_once(DOKU_INC . 'inc/changelog.php');
+require_once(DOKU_INC . 'inc/common.php');
+require_once(DOKU_INC . 'inc/confutils.php');
+require_once(DOKU_INC . 'inc/pluginutils.php');
+require_once(DOKU_INC . 'inc/form.php');
+require_once(DOKU_INC . 'inc/fulltext.php');
+require_once(DOKU_INC . 'inc/html.php');
+require_once(DOKU_INC . 'inc/httputils.php');
+require_once(DOKU_INC . 'inc/indexer.php');
+require_once(DOKU_INC . 'inc/infoutils.php');
+require_once(DOKU_INC . 'inc/io.php');
+require_once(DOKU_INC . 'inc/mail.php');
+require_once(DOKU_INC . 'inc/media.php');
+require_once(DOKU_INC . 'inc/pageutils.php');
+require_once(DOKU_INC . 'inc/parserutils.php');
+require_once(DOKU_INC . 'inc/search.php');
+require_once(DOKU_INC . 'inc/template.php');
+require_once(DOKU_INC . 'inc/toolbar.php');
+require_once(DOKU_INC . 'inc/utf8.php');
+require_once(DOKU_INC . 'inc/auth.php');
+require_once(DOKU_INC . 'inc/compatibility.php');
+require_once(DOKU_INC . 'inc/deprecated.php');
+require_once(DOKU_INC . 'inc/legacy.php');
 
 /**
  * spl_autoload_register callback
@@ -55,25 +55,25 @@ function load_autoload($name)
 {
     static $classes = null;
     if ($classes === null) $classes = [
-        'Diff'                  => DOKU_INC.'inc/DifferenceEngine.php',
-        'UnifiedDiffFormatter'  => DOKU_INC.'inc/DifferenceEngine.php',
-        'TableDiffFormatter'    => DOKU_INC.'inc/DifferenceEngine.php',
-        'cache'                 => DOKU_INC.'inc/cache.php',
-        'cache_parser'          => DOKU_INC.'inc/cache.php',
-        'cache_instructions'    => DOKU_INC.'inc/cache.php',
-        'cache_renderer'        => DOKU_INC.'inc/cache.php',
-        'Input'                 => DOKU_INC.'inc/Input.class.php',
-        'JpegMeta'              => DOKU_INC.'inc/JpegMeta.php',
-        'SimplePie'             => DOKU_INC.'inc/SimplePie.php',
-        'FeedParser'            => DOKU_INC.'inc/FeedParser.php',
-        'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
-        'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
-        'Doku_Handler'          => DOKU_INC.'inc/parser/handler.php',
-        'Doku_Renderer'          => DOKU_INC.'inc/parser/renderer.php',
-        'Doku_Renderer_xhtml'    => DOKU_INC.'inc/parser/xhtml.php',
-        'Doku_Renderer_code'     => DOKU_INC.'inc/parser/code.php',
-        'Doku_Renderer_xhtmlsummary' => DOKU_INC.'inc/parser/xhtmlsummary.php',
-        'Doku_Renderer_metadata' => DOKU_INC.'inc/parser/metadata.php'
+        'Diff'                  => DOKU_INC . 'inc/DifferenceEngine.php',
+        'UnifiedDiffFormatter'  => DOKU_INC . 'inc/DifferenceEngine.php',
+        'TableDiffFormatter'    => DOKU_INC . 'inc/DifferenceEngine.php',
+        'cache'                 => DOKU_INC . 'inc/cache.php',
+        'cache_parser'          => DOKU_INC . 'inc/cache.php',
+        'cache_instructions'    => DOKU_INC . 'inc/cache.php',
+        'cache_renderer'        => DOKU_INC . 'inc/cache.php',
+        'Input'                 => DOKU_INC . 'inc/Input.class.php',
+        'JpegMeta'              => DOKU_INC . 'inc/JpegMeta.php',
+        'SimplePie'             => DOKU_INC . 'inc/SimplePie.php',
+        'FeedParser'            => DOKU_INC . 'inc/FeedParser.php',
+        'SafeFN'                => DOKU_INC . 'inc/SafeFN.class.php',
+        'Mailer'                => DOKU_INC . 'inc/Mailer.class.php',
+        'Doku_Handler'          => DOKU_INC . 'inc/parser/handler.php',
+        'Doku_Renderer'          => DOKU_INC . 'inc/parser/renderer.php',
+        'Doku_Renderer_xhtml'    => DOKU_INC . 'inc/parser/xhtml.php',
+        'Doku_Renderer_code'     => DOKU_INC . 'inc/parser/code.php',
+        'Doku_Renderer_xhtmlsummary' => DOKU_INC . 'inc/parser/xhtmlsummary.php',
+        'Doku_Renderer_metadata' => DOKU_INC . 'inc/parser/metadata.php'
     ];
 
     if (isset($classes[$name])) {
@@ -119,7 +119,7 @@ function load_autoload($name)
     // template namespace
     if (substr($name, 0, 18) === 'dokuwiki/template/') {
         $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
-        $file = DOKU_INC.'lib/tpl/' . substr($name, 18) . '.php';
+        $file = DOKU_INC . 'lib/tpl/' . substr($name, 18) . '.php';
         if (file_exists($file)) {
             try {
                 require $file;

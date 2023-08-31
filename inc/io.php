@@ -27,18 +27,18 @@ use dokuwiki\Extension\Event;
 function io_sweepNS($id, $basedir = 'datadir')
 {
     global $conf;
-    $types = ['datadir'=>'pages', 'mediadir'=>'media'];
+    $types = ['datadir' => 'pages', 'mediadir' => 'media'];
     $ns_type = ($types[$basedir] ?? false);
 
     $delone = false;
 
     //scan all namespaces
     while (($id = getNS($id)) !== false) {
-        $dir = $conf[$basedir].'/'.utf8_encodeFN(str_replace(':', '/', $id));
+        $dir = $conf[$basedir] . '/' . utf8_encodeFN(str_replace(':', '/', $id));
 
         //try to delete dir else return
         if (@rmdir($dir)) {
-            if ($ns_type!==false) {
+            if ($ns_type !== false) {
                 $data = [$id, $ns_type];
                 $delone = true; // we deleted at least one dir
                 Event::createAndTrigger('IO_NAMESPACE_DELETED', $data);
@@ -87,7 +87,7 @@ function io_readWikiPage($file, $id, $rev = false)
  */
 function _io_readWikiPage_action($data)
 {
-    if (is_array($data) && is_array($data[0]) && count($data[0])===2) {
+    if (is_array($data) && is_array($data[0]) && count($data[0]) === 2) {
         return io_readFile(...$data[0]);
     } else {
         return ''; //callback error
@@ -157,8 +157,8 @@ function bzfile($file, $array = false)
         if ($array) {
             $pos = strpos($str, "\n");
             while ($pos !== false) {
-                $lines[] = substr($str, 0, $pos+1);
-                $str = substr($str, $pos+1);
+                $lines[] = substr($str, 0, $pos + 1);
+                $str = substr($str, $pos + 1);
                 $pos = strpos($str, "\n");
             }
         }
@@ -197,7 +197,7 @@ function io_writeWikiPage($file, $content, $id, $rev = false)
 {
     if (empty($rev)) {
         $rev = false; }
-    if ($rev===false) {
+    if ($rev === false) {
         io_createNamespace($id); } // create namespaces as needed
     $data = [[$file, $content, false], getNS($id), noNS($id), $rev];
     return Event::createAndTrigger('IO_WIKIPAGE_WRITE', $data, '_io_writeWikiPage_action', false);
@@ -212,7 +212,7 @@ function io_writeWikiPage($file, $content, $id, $rev = false)
  */
 function _io_writeWikiPage_action($data)
 {
-    if (is_array($data) && is_array($data[0]) && count($data[0])===3) {
+    if (is_array($data) && is_array($data[0]) && count($data[0]) === 3) {
         $ok = io_saveFile(...$data[0]);
         // for attic files make sure the file has the mtime of the revision
         if ($ok && is_int($data[3]) && $data[3] > 0) {
@@ -242,7 +242,7 @@ function _io_saveFile($file, $content, $append)
 
     if (substr($file, -3) == '.gz') {
         if (!DOKU_HAS_GZIP) return false;
-        $fh = @gzopen($file, $mode.'9');
+        $fh = @gzopen($file, $mode . '9');
         if (!$fh) return false;
         gzwrite($fh, $content);
         gzclose($fh);
@@ -251,7 +251,7 @@ function _io_saveFile($file, $content, $append)
         if ($append) {
             $bzcontent = bzfile($file);
             if ($bzcontent === false) return false;
-            $content = $bzcontent.$content;
+            $content = $bzcontent . $content;
         }
         $fh = @bzopen($file, 'w');
         if (!$fh) return false;
@@ -346,7 +346,7 @@ function io_replaceInFile($file, $oldline, $newline, $regex = false, $maxlines =
     }
 
     // make non-regexes into regexes
-    $pattern = $regex ? $oldline : '/^'.preg_quote($oldline, '/').'$/';
+    $pattern = $regex ? $oldline : '/^' . preg_quote($oldline, '/') . '$/';
     $replace = $regex ? $newline : addcslashes($newline, '\$');
 
     // remove matching lines
@@ -416,7 +416,7 @@ function io_lock($file)
 {
     global $conf;
 
-    $lockDir = $conf['lockdir'].'/'.md5($file);
+    $lockDir = $conf['lockdir'] . '/' . md5($file);
     @ignore_user_abort(1);
 
     $timeStart = time();
@@ -443,7 +443,7 @@ function io_unlock($file)
 {
     global $conf;
 
-    $lockDir = $conf['lockdir'].'/'.md5($file);
+    $lockDir = $conf['lockdir'] . '/' . md5($file);
     @rmdir($lockDir);
     @ignore_user_abort(0);
 }
@@ -464,7 +464,7 @@ function io_unlock($file)
 function io_createNamespace($id, $ns_type = 'pages')
 {
     // verify ns_type
-    $types = ['pages'=>'wikiFN', 'media'=>'mediaFN'];
+    $types = ['pages' => 'wikiFN', 'media' => 'mediaFN'];
     if (!isset($types[$ns_type])) {
         trigger_error('Bad $ns_type parameter for io_createNamespace().');
         return;
@@ -477,7 +477,7 @@ function io_createNamespace($id, $ns_type = 'pages')
     while (!@is_dir($tmp) && !(file_exists($tmp) && !is_dir($tmp))) {
         array_pop($ns_stack);
         $ns = implode(':', $ns_stack);
-        if (strlen($ns)==0) {
+        if (strlen($ns) == 0) {
             break; }
         $missing[] = $ns;
         $tmp = dirname(call_user_func($types[$ns_type], $ns));
@@ -520,7 +520,7 @@ function io_makeFileDir($file)
 function io_mkdir_p($target)
 {
     global $conf;
-    if (@is_dir($target)||empty($target)) return 1; // best case check first
+    if (@is_dir($target) || empty($target)) return 1; // best case check first
     if (file_exists($target) && !is_dir($target)) return 0;
     //recursion
     if (io_mkdir_p(substr($target, 0, strrpos($target, '/')))) {
@@ -591,7 +591,7 @@ function io_mktmpdir()
 
     $base = $conf['tmpdir'];
     $dir  = md5(uniqid(random_int(0, mt_getrandmax()), true));
-    $tmpdir = $base.'/'.$dir;
+    $tmpdir = $base . '/' . $dir;
 
     if (io_mkdir_p($tmpdir)) {
         return($tmpdir);
@@ -637,7 +637,7 @@ function io_download($url, $file, $useAttachment = false, $defaultName = '', $ma
     if ($useAttachment) {
         if (isset($http->resp_headers['content-disposition'])) {
             $content_disposition = $http->resp_headers['content-disposition'];
-            $match=[];
+            $match = [];
             if (
                 is_string($content_disposition) &&
                     preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)
@@ -702,9 +702,9 @@ function io_rename($from, $to)
 function io_exec($cmd, $input, &$output)
 {
     $descspec = [
-        0=>["pipe", "r"],
-        1=>["pipe", "w"],
-        2=>["pipe", "w"]
+        0 => ["pipe", "r"],
+        1 => ["pipe", "w"],
+        2 => ["pipe", "w"]
     ];
     $ph = proc_open($cmd, $descspec, $pipes);
     if (!$ph) return -1;

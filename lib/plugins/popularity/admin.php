@@ -129,25 +129,25 @@ class admin_plugin_popularity extends AdminPlugin
             $data = $this->helper->gatherAsString();
         }
 
-        $form = '<form method="post" action="'. $url  .'" accept-charset="utf-8">'
-            .'<fieldset style="width: 60%;">'
-            .'<textarea class="edit" rows="10" cols="80" readonly="readonly" name="data">'
-            .$data
-            .'</textarea><br />';
+        $form = '<form method="post" action="' . $url  . '" accept-charset="utf-8">'
+            . '<fieldset style="width: 60%;">'
+            . '<textarea class="edit" rows="10" cols="80" readonly="readonly" name="data">'
+            . $data
+            . '</textarea><br />';
 
         //If we submit via the server, we give the opportunity to suscribe to the autosubmission option
         if ($submissionMode !== 'browser') {
             $form .= '<label for="autosubmit">'
-                .'<input type="checkbox" name="autosubmit" id="autosubmit" '
-                .($this->helper->isAutosubmitEnabled() ? 'checked' : '' )
-                .'/> ' . $this->getLang('autosubmit') .'<br />'
-                .'</label>'
-                .'<input type="hidden" name="do" value="admin" />'
-                .'<input type="hidden" name="page" value="popularity" />';
+                . '<input type="checkbox" name="autosubmit" id="autosubmit" '
+                . ($this->helper->isAutosubmitEnabled() ? 'checked' : '' )
+                . '/> ' . $this->getLang('autosubmit') . '<br />'
+                . '</label>'
+                . '<input type="hidden" name="do" value="admin" />'
+                . '<input type="hidden" name="page" value="popularity" />';
         }
-        $form .= '<button type="submit">'.$this->getLang('submit').'</button>'
-            .'</fieldset>'
-            .'</form>';
+        $form .= '<button type="submit">' . $this->getLang('submit') . '</button>'
+            . '</fieldset>'
+            . '</form>';
         return $form;
     }
 }

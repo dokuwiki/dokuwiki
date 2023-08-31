@@ -77,7 +77,7 @@ class TaskRunner
     {
         $img = base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAIBTAA7');
         header('Content-Type: image/gif');
-        header('Content-Length: '.strlen($img));
+        header('Content-Length: ' . strlen($img));
         header('Connection: Close');
         echo $img;
         tpl_flush();

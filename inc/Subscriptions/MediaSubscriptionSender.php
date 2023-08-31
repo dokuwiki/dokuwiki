@@ -27,7 +27,7 @@ class MediaSubscriptionSender extends SubscriptionSender
 
         $trep = [
             'MIME' => $mime,
-            'MEDIA' => ml($id, $current_rev?('rev='.$current_rev):'', true, '&', true),
+            'MEDIA' => ml($id, $current_rev ? ('rev=' . $current_rev) : '', true, '&', true),
             'SIZE' => filesize_h(filesize($file)),
         ];
 

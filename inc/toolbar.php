@@ -159,7 +159,7 @@ function toolbar_JSdefines($varname)
                 'icon'   => 'linkextern.png',
                 'open'   => '[[',
                 'close'  => ']]',
-                'sample' => 'http://example.com|'.$lang['qb_extlink'],
+                'sample' => 'http://example.com|' . $lang['qb_extlink'],
                 'block'  => false
             ],
             [
@@ -193,7 +193,7 @@ function toolbar_JSdefines($varname)
                 'icon'   => 'image.png',
                 'url'    => 'lib/exe/mediamanager.php?ns=',
                 'name'   => 'mediaselect',
-                'options'=> 'width=750,height=500,left=20,top=20,scrollbars=yes,resizable=yes',
+                'options' => 'width=750,height=500,left=20,top=20,scrollbars=yes,resizable=yes',
                 'block'  => false
             ],
             [
@@ -201,7 +201,7 @@ function toolbar_JSdefines($varname)
                 'title'  => $lang['qb_smileys'],
                 'icon'   => 'smiley.png',
                 'list'   => getSmileys(),
-                'icobase'=> 'smileys',
+                'icobase' => 'smileys',
                 'block'  => false
             ],
             [
@@ -247,7 +247,7 @@ function toolbar_JSdefines($varname)
     unset($evt);
 
     // use JSON to build the JavaScript array
-    echo "var $varname = ".json_encode($menu, JSON_THROW_ON_ERROR).";\n";
+    echo "var $varname = " . json_encode($menu, JSON_THROW_ON_ERROR) . ";\n";
 }
 
 /**

@@ -151,7 +151,7 @@ function auth_loadACL()
             if (isset($USERINFO['grps'])) {
                 foreach ((array) $USERINFO['grps'] as $grp) {
                     $nid   = str_replace('%GROUP%', cleanID($grp), $id);
-                    $nrest = str_replace('%GROUP%', '@'.auth_nameencode($grp), $rest);
+                    $nrest = str_replace('%GROUP%', '@' . auth_nameencode($grp), $rest);
                     $out[] = "$nid\t$nrest";
                 }
             }
@@ -319,9 +319,9 @@ function auth_cookiesalt($addsession = false, $secure = false)
         return 'test';
     }
     global $conf;
-    $file = $conf['metadir'].'/_htcookiesalt';
+    $file = $conf['metadir'] . '/_htcookiesalt';
     if ($secure || !file_exists($file)) {
-        $file = $conf['metadir'].'/_htcookiesalt2';
+        $file = $conf['metadir'] . '/_htcookiesalt2';
     }
     $salt = io_readFile($file);
     if (empty($salt)) {
@@ -383,7 +383,7 @@ function auth_encrypt($data, $secret)
     for unique but necessarily random IVs. The resulting ciphertext is
     compatible to ciphertext that was created using a "normal" IV.
     */
-    return $cipher->encrypt($iv.$data);
+    return $cipher->encrypt($iv . $data);
 }
 
 /**
@@ -667,7 +667,7 @@ function auth_aclcheck_cb($data)
 
     //prepend groups with @ and nameencode
     foreach ($groups as &$group) {
-        $group = '@'.auth_nameencode($group);
+        $group = '@' . auth_nameencode($group);
     }
 
     $ns   = getNS($id);
@@ -680,7 +680,7 @@ function auth_aclcheck_cb($data)
     if ($user) $groups[] = $user;
 
     //check exact match first
-    $matches = preg_grep('/^'.preg_quote($id, '/').'[ \t]+([^ \t]+)[ \t]+/', $AUTH_ACL);
+    $matches = preg_grep('/^' . preg_quote($id, '/') . '[ \t]+([^ \t]+)[ \t]+/', $AUTH_ACL);
     if (count($matches)) {
         foreach ($matches as $match) {
             $match = preg_replace('/#.*$/', '', $match); //ignore comments
@@ -704,13 +704,13 @@ function auth_aclcheck_cb($data)
 
     //still here? do the namespace checks
     if ($ns) {
-        $path = $ns.':*';
+        $path = $ns . ':*';
     } else {
         $path = '*'; //root document
     }
 
     do {
-        $matches = preg_grep('/^'.preg_quote($path, '/').'[ \t]+([^ \t]+)[ \t]+/', $AUTH_ACL);
+        $matches = preg_grep('/^' . preg_quote($path, '/') . '[ \t]+([^ \t]+)[ \t]+/', $AUTH_ACL);
         if (count($matches)) {
             foreach ($matches as $match) {
                 $match = preg_replace('/#.*$/', '', $match); //ignore comments
@@ -735,7 +735,7 @@ function auth_aclcheck_cb($data)
         $ns = getNS($ns);
 
         if ($path != '*') {
-            $path = $ns.':*';
+            $path = $ns . ':*';
             if ($path == ':*') $path = '*';
         } else {
             //we did this already
@@ -777,7 +777,7 @@ function auth_nameencode($name, $skip_group = false)
 
     if (!isset($cache[$name][$skip_group])) {
         if ($skip_group && $name[0] == '@') {
-            $cache[$name][$skip_group] = '@'.preg_replace_callback(
+            $cache[$name][$skip_group] = '@' . preg_replace_callback(
                 '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/',
                 'auth_nameencode_callback',
                 substr($name, 1)
@@ -802,7 +802,7 @@ function auth_nameencode($name, $skip_group = false)
  */
 function auth_nameencode_callback($matches)
 {
-    return '%'.dechex(ord(substr($matches[1], -1)));
+    return '%' . dechex(ord(substr($matches[1], -1)));
 }
 
 /**
@@ -829,7 +829,7 @@ function auth_pwgen($foruser = '')
     if ($evt->advise_before(true)) {
         $c = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones
         $v = 'aeiou'; //vowels
-        $a = $c.$v; //both
+        $a = $c . $v; //both
         $s = '!$%&?+*~#-_:.;,'; // specials
 
         //use thre syllables...
@@ -839,7 +839,7 @@ function auth_pwgen($foruser = '')
             $data['password'] .= $a[auth_random(0, strlen($a) - 1)];
         }
         //... and add a nice number and special
-        $data['password'] .= $s[auth_random(0, strlen($s) - 1)].auth_random(10, 99);
+        $data['password'] .= $s[auth_random(0, strlen($s) - 1)] . auth_random(10, 99);
     }
     $evt->advise_after();
 
@@ -875,7 +875,7 @@ function auth_sendPassword($user, $password)
     ];
 
     $mail = new Mailer();
-    $mail->to($mail->getCleanName($userinfo['name']).' <'.$userinfo['mail'].'>');
+    $mail->to($mail->getCleanName($userinfo['name']) . ' <' . $userinfo['mail'] . '>');
     $mail->subject($lang['regpwmail']);
     $mail->setBody($text, $trep);
     return $mail->send();
@@ -1125,7 +1125,7 @@ function act_resendpwd()
     if ($token) {
         // we're in token phase - get user info from token
 
-        $tfile = $conf['cachedir'].'/'.$token[0].'/'.$token.'.pwauth';
+        $tfile = $conf['cachedir'] . '/' . $token[0] . '/' . $token . '.pwauth';
         if (!file_exists($tfile)) {
             msg($lang['resendpwdbadauth'], -1);
             $INPUT->remove('pwauth');
@@ -1197,8 +1197,8 @@ function act_resendpwd()
 
         // generate auth token
         $token = md5(auth_randombytes(16)); // random secret
-        $tfile = $conf['cachedir'].'/'.$token[0].'/'.$token.'.pwauth';
-        $url   = wl('', ['do'=> 'resendpwd', 'pwauth'=> $token], true, '&');
+        $tfile = $conf['cachedir'] . '/' . $token[0] . '/' . $token . '.pwauth';
+        $url   = wl('', ['do' => 'resendpwd', 'pwauth' => $token], true, '&');
 
         io_saveFile($tfile, $user);
 
@@ -1206,7 +1206,7 @@ function act_resendpwd()
         $trep = ['FULLNAME' => $userinfo['name'], 'LOGIN'    => $user, 'CONFIRM'  => $url];
 
         $mail = new Mailer();
-        $mail->to($userinfo['name'].' <'.$userinfo['mail'].'>');
+        $mail->to($userinfo['name'] . ' <' . $userinfo['mail'] . '>');
         $mail->subject($lang['regpwmail']);
         $mail->setBody($text, $trep);
         if ($mail->send()) {
@@ -1238,7 +1238,7 @@ function auth_cryptPassword($clear, $method = '', $salt = null)
     if (empty($method)) $method = $conf['passcrypt'];
 
     $pass = new PassHash();
-    $call = 'hash_'.$method;
+    $call = 'hash_' . $method;
 
     if (!method_exists($pass, $call)) {
         msg("Unsupported crypt method $method", -1);
@@ -1282,7 +1282,7 @@ function auth_setCookie($user, $pass, $sticky)
     $USERINFO = $auth->getUserData($user);
 
     // set cookie
-    $cookie    = base64_encode($user).'|'.((int) $sticky).'|'.base64_encode($pass);
+    $cookie    = base64_encode($user) . '|' . ((int) $sticky) . '|' . base64_encode($pass);
     $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
     $time      = $sticky ? (time() + 60 * 60 * 24 * 365) : 0; //one year
     setcookie(DOKU_COOKIE, $cookie, [

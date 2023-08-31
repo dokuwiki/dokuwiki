@@ -99,9 +99,9 @@ class Doku_Form
     public function startFieldset($legend)
     {
         if ($this->_infieldset) {
-            $this->addElement(array('_elem'=>'closefieldset'));
+            $this->addElement(array('_elem' => 'closefieldset'));
         }
-        $this->addElement(array('_elem'=>'openfieldset', '_legend'=>$legend));
+        $this->addElement(array('_elem' => 'openfieldset', '_legend' => $legend));
         $this->_infieldset = true;
     }
 
@@ -113,7 +113,7 @@ class Doku_Form
     public function endFieldset()
     {
         if ($this->_infieldset) {
-            $this->addElement(array('_elem'=>'closefieldset'));
+            $this->addElement(array('_elem' => 'closefieldset'));
         }
         $this->_infieldset = false;
     }
@@ -278,23 +278,23 @@ class Doku_Form
         global $lang;
         $form = '';
         $this->params['accept-charset'] = $lang['encoding'];
-        $form .= '<form '. buildAttributes($this->params, false) .'><div class="no">'. DOKU_LF;
+        $form .= '<form ' . buildAttributes($this->params, false) . '><div class="no">' . DOKU_LF;
         if (!empty($this->_hidden)) {
             foreach ($this->_hidden as $name => $value)
-                $form .= form_hidden(array('name'=>$name, 'value'=>$value));
+                $form .= form_hidden(array('name' => $name, 'value' => $value));
         }
         foreach ($this->_content as $element) {
             if (is_array($element)) {
                 $elem_type = $element['_elem'];
-                if (function_exists('form_'.$elem_type)) {
-                    $form .= call_user_func('form_'.$elem_type, $element).DOKU_LF;
+                if (function_exists('form_' . $elem_type)) {
+                    $form .= call_user_func('form_' . $elem_type, $element) . DOKU_LF;
                 }
             } else {
                 $form .= $element;
             }
         }
-        if ($this->_infieldset) $form .= form_closefieldset().DOKU_LF;
-        $form .= '</div></form>'.DOKU_LF;
+        if ($this->_infieldset) $form .= form_closefieldset() . DOKU_LF;
+        $form .= '</div></form>' . DOKU_LF;
 
         return $form;
     }
@@ -346,7 +346,7 @@ class Doku_Form
  */
 function form_makeTag($tag, $attrs = array())
 {
-    $elem = array('_elem'=>'tag', '_tag'=>$tag);
+    $elem = array('_elem' => 'tag', '_tag' => $tag);
     return array_merge($elem, $attrs);
 }
 
@@ -364,7 +364,7 @@ function form_makeTag($tag, $attrs = array())
  */
 function form_makeOpenTag($tag, $attrs = array())
 {
-    $elem = array('_elem'=>'opentag', '_tag'=>$tag);
+    $elem = array('_elem' => 'opentag', '_tag' => $tag);
     return array_merge($elem, $attrs);
 }
 
@@ -381,7 +381,7 @@ function form_makeOpenTag($tag, $attrs = array())
  */
 function form_makeCloseTag($tag)
 {
-    return array('_elem'=>'closetag', '_tag'=>$tag);
+    return array('_elem' => 'closetag', '_tag' => $tag);
 }
 
 /**
@@ -400,8 +400,8 @@ function form_makeCloseTag($tag)
  */
 function form_makeWikiText($text, $attrs = array())
 {
-    $elem = array('_elem'=>'wikitext', '_text'=>$text,
-                        'class'=>'edit', 'cols'=>'80', 'rows'=>'10');
+    $elem = array('_elem' => 'wikitext', '_text' => $text,
+                        'class' => 'edit', 'cols' => '80', 'rows' => '10');
     return array_merge($elem, $attrs);
 }
 
@@ -423,10 +423,10 @@ function form_makeWikiText($text, $attrs = array())
 function form_makeButton($type, $act, $value = '', $attrs = array())
 {
     if ($value == '') $value = $act;
-    $elem = array('_elem'=>'button', 'type'=>$type, '_action'=>$act,
-                        'value'=>$value);
+    $elem = array('_elem' => 'button', 'type' => $type, '_action' => $act,
+                        'value' => $value);
     if (!empty($attrs['accesskey']) && empty($attrs['title'])) {
-        $attrs['title'] = $value .' ['. strtoupper($attrs['accesskey']) .']';
+        $attrs['title'] = $value . ' [' . strtoupper($attrs['accesskey']) . ']';
     }
     return array_merge($elem, $attrs);
 }
@@ -453,8 +453,8 @@ function form_makeButton($type, $act, $value = '', $attrs = array())
 function form_makeField($type, $name, $value = '', $label = null, $id = '', $class = '', $attrs = array())
 {
     if (is_null($label)) $label = $name;
-    $elem = array('_elem'=>'field', '_text'=>$label, '_class'=>$class,
-                        'type'=>$type, 'id'=>$id, 'name'=>$name, 'value'=>$value);
+    $elem = array('_elem' => 'field', '_text' => $label, '_class' => $class,
+                        'type' => $type, 'id' => $id, 'name' => $name, 'value' => $value);
     return array_merge($elem, $attrs);
 }
 
@@ -480,8 +480,8 @@ function form_makeField($type, $name, $value = '', $label = null, $id = '', $cla
 function form_makeFieldRight($type, $name, $value = '', $label = null, $id = '', $class = '', $attrs = array())
 {
     if (is_null($label)) $label = $name;
-    $elem = array('_elem'=>'fieldright', '_text'=>$label, '_class'=>$class,
-                        'type'=>$type, 'id'=>$id, 'name'=>$name, 'value'=>$value);
+    $elem = array('_elem' => 'fieldright', '_text' => $label, '_class' => $class,
+                        'type' => $type, 'id' => $id, 'name' => $name, 'value' => $value);
     return array_merge($elem, $attrs);
 }
 
@@ -505,8 +505,8 @@ function form_makeFieldRight($type, $name, $value = '', $label = null, $id = '',
 function form_makeTextField($name, $value = '', $label = null, $id = '', $class = '', $attrs = array())
 {
     if (is_null($label)) $label = $name;
-    $elem = array('_elem'=>'textfield', '_text'=>$label, '_class'=>$class,
-                        'id'=>$id, 'name'=>$name, 'value'=>$value, 'class'=>'edit');
+    $elem = array('_elem' => 'textfield', '_text' => $label, '_class' => $class,
+                        'id' => $id, 'name' => $name, 'value' => $value, 'class' => 'edit');
     return array_merge($elem, $attrs);
 }
 
@@ -530,8 +530,8 @@ function form_makeTextField($name, $value = '', $label = null, $id = '', $class 
 function form_makePasswordField($name, $label = null, $id = '', $class = '', $attrs = array())
 {
     if (is_null($label)) $label = $name;
-    $elem = array('_elem'=>'passwordfield', '_text'=>$label, '_class'=>$class,
-                        'id'=>$id, 'name'=>$name, 'class'=>'edit');
+    $elem = array('_elem' => 'passwordfield', '_text' => $label, '_class' => $class,
+                        'id' => $id, 'name' => $name, 'class' => 'edit');
     return array_merge($elem, $attrs);
 }
 
@@ -554,8 +554,8 @@ function form_makePasswordField($name, $label = null, $id = '', $class = '', $at
 function form_makeFileField($name, $label = null, $id = '', $class = '', $attrs = array())
 {
     if (is_null($label)) $label = $name;
-    $elem = array('_elem'=>'filefield', '_text'=>$label, '_class'=>$class,
-                        'id'=>$id, 'name'=>$name, 'class'=>'edit');
+    $elem = array('_elem' => 'filefield', '_text' => $label, '_class' => $class,
+                        'id' => $id, 'name' => $name, 'class' => 'edit');
     return array_merge($elem, $attrs);
 }
 
@@ -581,9 +581,9 @@ function form_makeFileField($name, $label = null, $id = '', $class = '', $attrs 
 function form_makeCheckboxField($name, $value = '1', $label = null, $id = '', $class = '', $attrs = array())
 {
     if (is_null($label)) $label = $name;
-    if (is_null($value) || $value=='') $value='0';
-    $elem = array('_elem'=>'checkboxfield', '_text'=>$label, '_class'=>$class,
-                        'id'=>$id, 'name'=>$name, 'value'=>$value);
+    if (is_null($value) || $value == '') $value = '0';
+    $elem = array('_elem' => 'checkboxfield', '_text' => $label, '_class' => $class,
+                        'id' => $id, 'name' => $name, 'value' => $value);
     return array_merge($elem, $attrs);
 }
 
@@ -607,9 +607,9 @@ function form_makeCheckboxField($name, $value = '1', $label = null, $id = '', $c
 function form_makeRadioField($name, $value = '1', $label = null, $id = '', $class = '', $attrs = array())
 {
     if (is_null($label)) $label = $name;
-    if (is_null($value) || $value=='') $value='0';
-    $elem = array('_elem'=>'radiofield', '_text'=>$label, '_class'=>$class,
-                        'id'=>$id, 'name'=>$name, 'value'=>$value);
+    if (is_null($value) || $value == '') $value = '0';
+    $elem = array('_elem' => 'radiofield', '_text' => $label, '_class' => $class,
+                        'id' => $id, 'name' => $name, 'value' => $value);
     return array_merge($elem, $attrs);
 }
 
@@ -645,7 +645,7 @@ function form_makeMenuField($name, $values, $selected = '', $label = null, $id =
     // FIXME: php doesn't know the difference between a string and an integer
     if (is_string(key($values))) {
         foreach ($values as $val => $text) {
-            $options[] = array($val, $text, (!is_null($selected) && $val==$selected));
+            $options[] = array($val, $text, (!is_null($selected) && $val == $selected));
         }
     } else {
         if (is_integer($selected)) $selected = $values[$selected];
@@ -653,11 +653,11 @@ function form_makeMenuField($name, $values, $selected = '', $label = null, $id =
             if (is_array($val))
                 @list($val, $text) = $val;
             else $text = null;
-            $options[] = array($val, $text, $val===$selected);
+            $options[] = array($val, $text, $val === $selected);
         }
     }
-    $elem = array('_elem'=>'menufield', '_options'=>$options, '_text'=>$label, '_class'=>$class,
-                        'id'=>$id, 'name'=>$name);
+    $elem = array('_elem' => 'menufield', '_options' => $options, '_text' => $label, '_class' => $class,
+                        'id' => $id, 'name' => $name);
     return array_merge($elem, $attrs);
 }
 
@@ -709,8 +709,8 @@ function form_makeListboxField($name, $values, $selected = '', $label = null, $i
             $options[] = array($val, $text, in_array($val, $selected), $disabled);
         }
     }
-    $elem = array('_elem'=>'listboxfield', '_options'=>$options, '_text'=>$label, '_class'=>$class,
-                        'id'=>$id, 'name'=>$name);
+    $elem = array('_elem' => 'listboxfield', '_options' => $options, '_text' => $label, '_class' => $class,
+                        'id' => $id, 'name' => $name);
     return array_merge($elem, $attrs);
 }
 
@@ -728,7 +728,7 @@ function form_makeListboxField($name, $values, $selected = '', $label = null, $i
  */
 function form_tag($attrs)
 {
-    return '<'.$attrs['_tag'].' '. buildAttributes($attrs, true) .'/>';
+    return '<' . $attrs['_tag'] . ' ' . buildAttributes($attrs, true) . '/>';
 }
 
 /**
@@ -745,7 +745,7 @@ function form_tag($attrs)
  */
 function form_opentag($attrs)
 {
-    return '<'.$attrs['_tag'].' '. buildAttributes($attrs, true) .'>';
+    return '<' . $attrs['_tag'] . ' ' . buildAttributes($attrs, true) . '>';
 }
 
 /**
@@ -762,7 +762,7 @@ function form_opentag($attrs)
  */
 function form_closetag($attrs)
 {
-    return '</'.$attrs['_tag'].'>';
+    return '</' . $attrs['_tag'] . '>';
 }
 
 /**
@@ -779,8 +779,8 @@ function form_closetag($attrs)
  */
 function form_openfieldset($attrs)
 {
-    $s = '<fieldset '. buildAttributes($attrs, true) .'>';
-    if (!is_null($attrs['_legend'])) $s .= '<legend>'.$attrs['_legend'].'</legend>';
+    $s = '<fieldset ' . buildAttributes($attrs, true) . '>';
+    if (!is_null($attrs['_legend'])) $s .= '<legend>' . $attrs['_legend'] . '</legend>';
     return $s;
 }
 
@@ -813,7 +813,7 @@ function form_closefieldset()
  */
 function form_hidden($attrs)
 {
-    return '<input type="hidden" name="'.$attrs['name'].'" value="'. formText($attrs['value']) .'" />';
+    return '<input type="hidden" name="' . $attrs['name'] . '" value="' . formText($attrs['value']) . '" />';
 }
 
 /**
@@ -834,9 +834,9 @@ function form_wikitext($attrs)
     unset($attrs['name']);
     unset($attrs['id']);
     return '<textarea name="wikitext" id="wiki__text" dir="auto" '
-                . buildAttributes($attrs, true).'>'.DOKU_LF
+                . buildAttributes($attrs, true) . '>' . DOKU_LF
                 . formText($attrs['_text'])
-                .'</textarea>';
+                . '</textarea>';
 }
 
 /**
@@ -853,10 +853,10 @@ function form_wikitext($attrs)
  */
 function form_button($attrs)
 {
-    $p = (!empty($attrs['_action'])) ? 'name="do['.$attrs['_action'].']" ' : '';
+    $p = (!empty($attrs['_action'])) ? 'name="do[' . $attrs['_action'] . ']" ' : '';
     $value = $attrs['value'];
     unset($attrs['value']);
-    return '<button '.$p. buildAttributes($attrs, true) .'>'.$value.'</button>';
+    return '<button ' . $p . buildAttributes($attrs, true) . '>' . $value . '</button>';
 }
 
 /**
@@ -875,10 +875,10 @@ function form_button($attrs)
 function form_field($attrs)
 {
     $s = '<label';
-    if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
-    if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
-    $s .= '><span>'.$attrs['_text'].'</span>';
-    $s .= ' <input '. buildAttributes($attrs, true) .' /></label>';
+    if ($attrs['_class']) $s .= ' class="' . $attrs['_class'] . '"';
+    if (!empty($attrs['id'])) $s .= ' for="' . $attrs['id'] . '"';
+    $s .= '><span>' . $attrs['_text'] . '</span>';
+    $s .= ' <input ' . buildAttributes($attrs, true) . ' /></label>';
     if (preg_match('/(^| )block($| )/', $attrs['_class']))
         $s .= '<br />';
     return $s;
@@ -900,10 +900,10 @@ function form_field($attrs)
 function form_fieldright($attrs)
 {
     $s = '<label';
-    if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
-    if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
-    $s .= '><input '. buildAttributes($attrs, true) .' />';
-    $s .= ' <span>'.$attrs['_text'].'</span></label>';
+    if ($attrs['_class']) $s .= ' class="' . $attrs['_class'] . '"';
+    if (!empty($attrs['id'])) $s .= ' for="' . $attrs['id'] . '"';
+    $s .= '><input ' . buildAttributes($attrs, true) . ' />';
+    $s .= ' <span>' . $attrs['_text'] . '</span></label>';
     if (preg_match('/(^| )block($| )/', $attrs['_class']))
         $s .= '<br />';
     return $s;
@@ -927,10 +927,10 @@ function form_textfield($attrs)
     // mandatory attributes
     unset($attrs['type']);
     $s = '<label';
-    if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
-    if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
-    $s .= '><span>'.$attrs['_text'].'</span> ';
-    $s .= '<input type="text" '. buildAttributes($attrs, true) .' /></label>';
+    if ($attrs['_class']) $s .= ' class="' . $attrs['_class'] . '"';
+    if (!empty($attrs['id'])) $s .= ' for="' . $attrs['id'] . '"';
+    $s .= '><span>' . $attrs['_text'] . '</span> ';
+    $s .= '<input type="text" ' . buildAttributes($attrs, true) . ' /></label>';
     if (preg_match('/(^| )block($| )/', $attrs['_class']))
         $s .= '<br />';
     return $s;
@@ -954,10 +954,10 @@ function form_passwordfield($attrs)
     // mandatory attributes
     unset($attrs['type']);
     $s = '<label';
-    if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
-    if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
-    $s .= '><span>'.$attrs['_text'].'</span> ';
-    $s .= '<input type="password" '. buildAttributes($attrs, true) .' /></label>';
+    if ($attrs['_class']) $s .= ' class="' . $attrs['_class'] . '"';
+    if (!empty($attrs['id'])) $s .= ' for="' . $attrs['id'] . '"';
+    $s .= '><span>' . $attrs['_text'] . '</span> ';
+    $s .= '<input type="password" ' . buildAttributes($attrs, true) . ' /></label>';
     if (preg_match('/(^| )block($| )/', $attrs['_class']))
         $s .= '<br />';
     return $s;
@@ -981,12 +981,12 @@ function form_passwordfield($attrs)
 function form_filefield($attrs)
 {
     $s = '<label';
-    if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
-    if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
-    $s .= '><span>'.$attrs['_text'].'</span> ';
-    $s .= '<input type="file" '. buildAttributes($attrs, true);
-    if (!empty($attrs['_maxlength'])) $s .= ' maxlength="'.$attrs['_maxlength'].'"';
-    if (!empty($attrs['_accept'])) $s .= ' accept="'.$attrs['_accept'].'"';
+    if ($attrs['_class']) $s .= ' class="' . $attrs['_class'] . '"';
+    if (!empty($attrs['id'])) $s .= ' for="' . $attrs['id'] . '"';
+    $s .= '><span>' . $attrs['_text'] . '</span> ';
+    $s .= '<input type="file" ' . buildAttributes($attrs, true);
+    if (!empty($attrs['_maxlength'])) $s .= ' maxlength="' . $attrs['_maxlength'] . '"';
+    if (!empty($attrs['_accept'])) $s .= ' accept="' . $attrs['_accept'] . '"';
     $s .= ' /></label>';
     if (preg_match('/(^| )block($| )/', $attrs['_class']))
         $s .= '<br />';
@@ -1013,16 +1013,16 @@ function form_checkboxfield($attrs)
     // mandatory attributes
     unset($attrs['type']);
     $s = '<label';
-    if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
-    if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
+    if ($attrs['_class']) $s .= ' class="' . $attrs['_class'] . '"';
+    if (!empty($attrs['id'])) $s .= ' for="' . $attrs['id'] . '"';
     $s .= '>';
     if (is_array($attrs['value'])) {
-        echo '<input type="hidden" name="'. hsc($attrs['name']) .'"'
-                .' value="'. hsc($attrs['value'][1]) .'" />';
+        echo '<input type="hidden" name="' . hsc($attrs['name']) . '"'
+                . ' value="' . hsc($attrs['value'][1]) . '" />';
         $attrs['value'] = $attrs['value'][0];
     }
-    $s .= '<input type="checkbox" '. buildAttributes($attrs, true) .' />';
-    $s .= ' <span>'.$attrs['_text'].'</span></label>';
+    $s .= '<input type="checkbox" ' . buildAttributes($attrs, true) . ' />';
+    $s .= ' <span>' . $attrs['_text'] . '</span></label>';
     if (preg_match('/(^| )block($| )/', $attrs['_class']))
         $s .= '<br />';
     return $s;
@@ -1046,10 +1046,10 @@ function form_radiofield($attrs)
     // mandatory attributes
     unset($attrs['type']);
     $s = '<label';
-    if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
-    if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
-    $s .= '><input type="radio" '. buildAttributes($attrs, true) .' />';
-    $s .= ' <span>'.$attrs['_text'].'</span></label>';
+    if ($attrs['_class']) $s .= ' class="' . $attrs['_class'] . '"';
+    if (!empty($attrs['id'])) $s .= ' for="' . $attrs['id'] . '"';
+    $s .= '><input type="radio" ' . buildAttributes($attrs, true) . ' />';
+    $s .= ' <span>' . $attrs['_text'] . '</span></label>';
     if (preg_match('/(^| )block($| )/', $attrs['_class']))
         $s .= '<br />';
     return $s;
@@ -1075,30 +1075,30 @@ function form_menufield($attrs)
 {
     $attrs['size'] = '1';
     $s = '<label';
-    if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
-    if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
-    $s .= '><span>'.$attrs['_text'].'</span>';
-    $s .= ' <select '. buildAttributes($attrs, true) .'>'.DOKU_LF;
+    if ($attrs['_class']) $s .= ' class="' . $attrs['_class'] . '"';
+    if (!empty($attrs['id'])) $s .= ' for="' . $attrs['id'] . '"';
+    $s .= '><span>' . $attrs['_text'] . '</span>';
+    $s .= ' <select ' . buildAttributes($attrs, true) . '>' . DOKU_LF;
     if (!empty($attrs['_options'])) {
         $selected = false;
 
         $cnt = count($attrs['_options']);
-        for ($n=0; $n < $cnt; $n++) {
+        for ($n = 0; $n < $cnt; $n++) {
             @list($value,$text,$select) = $attrs['_options'][$n];
             $p = '';
             if (!is_null($text))
-                $p .= ' value="'. formText($value) .'"';
+                $p .= ' value="' . formText($value) . '"';
             else $text = $value;
             if (!empty($select) && !$selected) {
                 $p .= ' selected="selected"';
                 $selected = true;
             }
-            $s .= '<option'.$p.'>'. formText($text) .'</option>';
+            $s .= '<option' . $p . '>' . formText($text) . '</option>';
         }
     } else {
         $s .= '<option></option>';
     }
-    $s .= DOKU_LF.'</select></label>';
+    $s .= DOKU_LF . '</select></label>';
     if (preg_match('/(^| )block($| )/', $attrs['_class']))
         $s .= '<br />';
     return $s;
@@ -1122,24 +1122,24 @@ function form_menufield($attrs)
 function form_listboxfield($attrs)
 {
     $s = '<label';
-    if ($attrs['_class']) $s .= ' class="'.$attrs['_class'].'"';
-    if (!empty($attrs['id'])) $s .= ' for="'.$attrs['id'].'"';
-    $s .= '><span>'.$attrs['_text'].'</span> ';
-    $s .= '<select '. buildAttributes($attrs, true) .'>'.DOKU_LF;
+    if ($attrs['_class']) $s .= ' class="' . $attrs['_class'] . '"';
+    if (!empty($attrs['id'])) $s .= ' for="' . $attrs['id'] . '"';
+    $s .= '><span>' . $attrs['_text'] . '</span> ';
+    $s .= '<select ' . buildAttributes($attrs, true) . '>' . DOKU_LF;
     if (!empty($attrs['_options'])) {
         foreach ($attrs['_options'] as $opt) {
             @list($value, $text, $select, $disabled) = $opt;
             $p = '';
             if (is_null($text)) $text = $value;
-            $p .= ' value="'. formText($value) .'"';
+            $p .= ' value="' . formText($value) . '"';
             if (!empty($select)) $p .= ' selected="selected"';
             if ($disabled) $p .= ' disabled="disabled"';
-            $s .= '<option'.$p.'>'. formText($text) .'</option>';
+            $s .= '<option' . $p . '>' . formText($text) . '</option>';
         }
     } else {
         $s .= '<option></option>';
     }
-    $s .= DOKU_LF.'</select></label>';
+    $s .= DOKU_LF . '</select></label>';
     if (preg_match('/(^| )block($| )/', $attrs['_class']))
         $s .= '<br />';
     return $s;

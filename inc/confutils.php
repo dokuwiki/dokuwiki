@@ -123,7 +123,7 @@ function getInterwiki()
         $wikis = array_filter($wikis, 'strlen');
 
         //add sepecial case 'this'
-        $wikis['this'] = DOKU_URL.'{NAME}';
+        $wikis['this'] = DOKU_URL . '{NAME}';
     }
     return $wikis;
 }
@@ -311,7 +311,7 @@ function retrieveConfig($type, $fn, $params = null, $combine = 'array_merge')
     if (!is_array($params)) $params = [];
 
     $combined = [];
-    if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "'.$type.'"', E_USER_WARNING);
+    if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "' . $type . '"', E_USER_WARNING);
     foreach (['default', 'local', 'protected'] as $config_group) {
         if (empty($config_cascade[$type][$config_group])) continue;
         foreach ($config_cascade[$type][$config_group] as $file) {
@@ -338,7 +338,7 @@ function getConfigFiles($type)
     global $config_cascade;
     $files = [];
 
-    if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "'.$type.'"', E_USER_WARNING);
+    if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "' . $type . '"', E_USER_WARNING);
     foreach (['default', 'local', 'protected'] as $config_group) {
         if (empty($config_cascade[$type][$config_group])) continue;
         $files = array_merge($files, $config_cascade[$type][$config_group]);
@@ -441,9 +441,9 @@ function conf_encodeString($str, $code)
 {
     switch ($code) {
         case 'base64':
-            return '<b>'.base64_encode($str);
+            return '<b>' . base64_encode($str);
         case 'uuencode':
-            return '<u>'.convert_uuencode($str);
+            return '<u>' . convert_uuencode($str);
         case 'plain':
         default:
             return $str;

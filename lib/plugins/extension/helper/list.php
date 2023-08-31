@@ -57,7 +57,7 @@ class helper_plugin_extension_list extends Plugin
      */
     public function addHeader($id, $header, $level = 2)
     {
-        $this->form .='<h'.$level.' id="'.$id.'">'.hsc($header).'</h'.$level.'>'.DOKU_LF;
+        $this->form .= '<h' . $level . ' id="' . $id . '">' . hsc($header) . '</h' . $level . '>' . DOKU_LF;
     }
 
     /**
@@ -67,7 +67,7 @@ class helper_plugin_extension_list extends Plugin
      */
     public function addParagraph($data)
     {
-        $this->form .= '<p>'.hsc($data).'</p>'.DOKU_LF;
+        $this->form .= '<p>' . hsc($data) . '</p>' . DOKU_LF;
     }
 
     /**
@@ -79,9 +79,9 @@ class helper_plugin_extension_list extends Plugin
     {
         $this->form .= '<div class="no">';
         foreach ($data as $key => $value) {
-            $this->form .= '<input type="hidden" name="'.hsc($key).'" value="'.hsc($value).'" />';
+            $this->form .= '<input type="hidden" name="' . hsc($key) . '" value="' . hsc($value) . '" />';
         }
-        $this->form .= '</div>'.DOKU_LF;
+        $this->form .= '</div>' . DOKU_LF;
     }
 
     /**
@@ -98,7 +98,7 @@ class helper_plugin_extension_list extends Plugin
     public function nothingFound()
     {
         global $lang;
-        $this->form .= '<li class="notfound">'.$lang['nothingfound'].'</li>';
+        $this->form .= '<li class="notfound">' . $lang['nothingfound'] . '</li>';
     }
 
     /**
@@ -119,8 +119,8 @@ class helper_plugin_extension_list extends Plugin
      */
     private function startRow(helper_plugin_extension_extension $extension)
     {
-        $this->form .= '<li id="extensionplugin__'.hsc($extension->getID()).
-            '" class="'.$this->makeClass($extension).'">';
+        $this->form .= '<li id="extensionplugin__' . hsc($extension->getID()) .
+            '" class="' . $this->makeClass($extension) . '">';
     }
 
     /**
@@ -130,7 +130,7 @@ class helper_plugin_extension_list extends Plugin
      */
     private function populateColumn($class, $html)
     {
-        $this->form .= '<div class="'.$class.' col">'.$html.'</div>'.DOKU_LF;
+        $this->form .= '<div class="' . $class . ' col">' . $html . '</div>' . DOKU_LF;
     }
 
     /**
@@ -138,7 +138,7 @@ class helper_plugin_extension_list extends Plugin
      */
     private function endRow()
     {
-        $this->form .= '</li>'.DOKU_LF;
+        $this->form .= '</li>' . DOKU_LF;
     }
 
     /**
@@ -166,8 +166,8 @@ class helper_plugin_extension_list extends Plugin
         if ($linktype == 'extern' && $conf['relnofollow']) {
             $param['rel'] = implode(' ', [$param['rel'], 'ugc nofollow']);
         }
-        $html = ' <a '. buildAttributes($param, true).'>'.
-            $this->getLang('homepage_link').'</a>';
+        $html = ' <a ' . buildAttributes($param, true) . '>' .
+            $this->getLang('homepage_link') . '</a>';
         return $html;
     }
 
@@ -181,12 +181,12 @@ class helper_plugin_extension_list extends Plugin
     {
         $class = ($extension->isTemplate()) ? 'template' : 'plugin';
         if ($extension->isInstalled()) {
-            $class.=' installed';
-            $class.= ($extension->isEnabled()) ? ' enabled':' disabled';
+            $class .= ' installed';
+            $class .= ($extension->isEnabled()) ? ' enabled' : ' disabled';
             if ($extension->updateAvailable()) $class .= ' updatable';
         }
-        if (!$extension->canModify()) $class.= ' notselect';
-        if ($extension->isProtected()) $class.=  ' protected';
+        if (!$extension->canModify()) $class .= ' notselect';
+        if ($extension->isProtected()) $class .=  ' protected';
         //if($this->showinfo) $class.= ' showinfo';
         return $class;
     }
@@ -202,17 +202,17 @@ class helper_plugin_extension_list extends Plugin
         if ($extension->getAuthor()) {
             $mailid = $extension->getEmailID();
             if ($mailid) {
-                $url = $this->gui->tabURL('search', ['q' => 'authorid:'.$mailid]);
-                $html = '<a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" >'.
-                    '<img src="//www.gravatar.com/avatar/'.$mailid.
-                    '?s=20&amp;d=mm" width="20" height="20" alt="" /> '.
-                    hsc($extension->getAuthor()).'</a>';
+                $url = $this->gui->tabURL('search', ['q' => 'authorid:' . $mailid]);
+                $html = '<a href="' . $url . '" class="author" title="' . $this->getLang('author_hint') . '" >' .
+                    '<img src="//www.gravatar.com/avatar/' . $mailid .
+                    '?s=20&amp;d=mm" width="20" height="20" alt="" /> ' .
+                    hsc($extension->getAuthor()) . '</a>';
             } else {
-                $html = '<span class="author">'.hsc($extension->getAuthor()).'</span>';
+                $html = '<span class="author">' . hsc($extension->getAuthor()) . '</span>';
             }
-            $html = '<bdi>'.$html.'</bdi>';
+            $html = '<bdi>' . $html . '</bdi>';
         } else {
-            $html = '<em class="author">'.$this->getLang('unknown_author').'</em>'.DOKU_LF;
+            $html = '<em class="author">' . $this->getLang('unknown_author') . '</em>' . DOKU_LF;
         }
         return $html;
     }
@@ -234,17 +234,17 @@ class helper_plugin_extension_list extends Plugin
             $thumb = str_replace('http://www.dokuwiki.org', '//www.dokuwiki.org', $thumb);
 
             $title = sprintf($this->getLang('screenshot'), hsc($extension->getDisplayName()));
-            $img = '<a href="'.hsc($screen).'" target="_blank" class="extension_screenshot">'.
-                '<img alt="'.$title.'" width="120" height="70" src="'.hsc($thumb).'" />'.
+            $img = '<a href="' . hsc($screen) . '" target="_blank" class="extension_screenshot">' .
+                '<img alt="' . $title . '" width="120" height="70" src="' . hsc($thumb) . '" />' .
                 '</a>';
         } elseif ($extension->isTemplate()) {
-            $img = '<img alt="" width="120" height="70" src="'.DOKU_BASE.
+            $img = '<img alt="" width="120" height="70" src="' . DOKU_BASE .
                 'lib/plugins/extension/images/template.png" />';
         } else {
-            $img = '<img alt="" width="120" height="70" src="'.DOKU_BASE.
+            $img = '<img alt="" width="120" height="70" src="' . DOKU_BASE .
                 'lib/plugins/extension/images/plugin.png" />';
         }
-        $html = '<div class="screenshot" >'.$img.'<span></span></div>'.DOKU_LF;
+        $html = '<div class="screenshot" >' . $img . '<span></span></div>' . DOKU_LF;
         return $html;
     }
 
@@ -261,26 +261,26 @@ class helper_plugin_extension_list extends Plugin
         $html .= '<h2>';
         $html .= sprintf(
             $this->getLang('extensionby'),
-            '<bdi>'.hsc($extension->getDisplayName()).'</bdi>',
+            '<bdi>' . hsc($extension->getDisplayName()) . '</bdi>',
             $this->makeAuthor($extension)
         );
-        $html .= '</h2>'.DOKU_LF;
+        $html .= '</h2>' . DOKU_LF;
 
         $html .= $this->makeScreenshot($extension);
 
         $popularity = $extension->getPopularity();
         if ($popularity !== false && !$extension->isBundled()) {
-            $popularityText = sprintf($this->getLang('popularity'), round($popularity*100, 2));
-            $html .= '<div class="popularity" title="'.$popularityText.'">'.
-                '<div style="width: '.($popularity * 100).'%;">'.
-                '<span class="a11y">'.$popularityText.'</span>'.
-                '</div></div>'.DOKU_LF;
+            $popularityText = sprintf($this->getLang('popularity'), round($popularity * 100, 2));
+            $html .= '<div class="popularity" title="' . $popularityText . '">' .
+                '<div style="width: ' . ($popularity * 100) . '%;">' .
+                '<span class="a11y">' . $popularityText . '</span>' .
+                '</div></div>' . DOKU_LF;
         }
 
         if ($extension->getDescription()) {
             $html .= '<p><bdi>';
-            $html .=  hsc($extension->getDescription()).' ';
-            $html .= '</bdi></p>'.DOKU_LF;
+            $html .=  hsc($extension->getDescription()) . ' ';
+            $html .= '</bdi></p>' . DOKU_LF;
         }
 
         $html .= $this->makeLinkbar($extension);
@@ -292,15 +292,15 @@ class helper_plugin_extension_list extends Plugin
             $url = $this->gui->tabURL('', ['info' => $extension->getID()]);
             $class = '';
         }
-        $html .= ' <a href="'.$url.'#extensionplugin__'.$extension->getID().
-            '" class="info '.$class.'" title="'.$this->getLang('btn_info').
-            '" data-extid="'.$extension->getID().'">'.$this->getLang('btn_info').'</a>';
+        $html .= ' <a href="' . $url . '#extensionplugin__' . $extension->getID() .
+            '" class="info ' . $class . '" title="' . $this->getLang('btn_info') .
+            '" data-extid="' . $extension->getID() . '">' . $this->getLang('btn_info') . '</a>';
 
         if ($showinfo) {
             $html .= $this->makeInfo($extension);
         }
         $html .= $this->makeNoticeArea($extension);
-        $html .= '</div>'.DOKU_LF;
+        $html .= '</div>' . DOKU_LF;
         return $html;
     }
 
@@ -333,24 +333,24 @@ class helper_plugin_extension_list extends Plugin
             if ($conf['relnofollow']) {
                 $param['rel'] = implode(' ', [$param['rel'], 'ugc nofollow']);
             }
-            $html .= ' <a '.buildAttributes($param, true).'>'.
-                  $this->getLang('bugs_features').'</a>';
+            $html .= ' <a ' . buildAttributes($param, true) . '>' .
+                  $this->getLang('bugs_features') . '</a>';
         }
         if ($extension->getTags()) {
             $first = true;
-            $html .= ' <span class="tags">'.$this->getLang('tags').' ';
+            $html .= ' <span class="tags">' . $this->getLang('tags') . ' ';
             foreach ($extension->getTags() as $tag) {
                 if (!$first) {
                     $html .= ', ';
                 } else {
                     $first = false;
                 }
-                $url = $this->gui->tabURL('search', ['q' => 'tag:'.$tag]);
-                $html .= '<bdi><a href="'.$url.'">'.hsc($tag).'</a></bdi>';
+                $url = $this->gui->tabURL('search', ['q' => 'tag:' . $tag]);
+                $html .= '<bdi><a href="' . $url . '">' . hsc($tag) . '</a></bdi>';
             }
             $html .= '</span>';
         }
-        $html .= '</div>'.DOKU_LF;
+        $html .= '</div>' . DOKU_LF;
         return $html;
     }
 
@@ -382,18 +382,18 @@ class helper_plugin_extension_list extends Plugin
                 '</div>';
         }
         if (($securityissue = $extension->getSecurityIssue()) !== false) {
-            $html .= '<div class="msg error">'.
-                sprintf($this->getLang('security_issue'), '<bdi>'.hsc($securityissue).'</bdi>').
+            $html .= '<div class="msg error">' .
+                sprintf($this->getLang('security_issue'), '<bdi>' . hsc($securityissue) . '</bdi>') .
                 '</div>';
         }
         if (($securitywarning = $extension->getSecurityWarning()) !== false) {
-            $html .= '<div class="msg notify">'.
-                sprintf($this->getLang('security_warning'), '<bdi>'.hsc($securitywarning).'</bdi>').
+            $html .= '<div class="msg notify">' .
+                sprintf($this->getLang('security_warning'), '<bdi>' . hsc($securitywarning) . '</bdi>') .
                 '</div>';
         }
         if ($extension->updateAvailable()) {
-            $html .=  '<div class="msg notify">'.
-                sprintf($this->getLang('update_available'), hsc($extension->getLastUpdate())).
+            $html .=  '<div class="msg notify">' .
+                sprintf($this->getLang('update_available'), hsc($extension->getLastUpdate())) .
                 '</div>';
         }
         if ($extension->hasDownloadURLChanged()) {
@@ -405,7 +405,7 @@ class helper_plugin_extension_list extends Plugin
                 ) .
                 '</div>';
         }
-        return $html.DOKU_LF;
+        return $html . DOKU_LF;
     }
 
     /**
@@ -421,13 +421,13 @@ class helper_plugin_extension_list extends Plugin
         $link = parse_url($url);
 
         $base = $link['host'];
-        if (!empty($link['port'])) $base .= $base.':'.$link['port'];
+        if (!empty($link['port'])) $base .= $base . ':' . $link['port'];
         $long = $link['path'];
         if (!empty($link['query'])) $long .= $link['query'];
 
         $name = shorten($base, $long, 55);
 
-        $html = '<a href="'.hsc($url).'" class="urlextern">'.hsc($name).'</a>';
+        $html = '<a href="' . hsc($url) . '" class="urlextern">' . hsc($name) . '</a>';
         return $html;
     }
 
@@ -442,26 +442,26 @@ class helper_plugin_extension_list extends Plugin
         $default = $this->getLang('unknown');
         $html = '<dl class="details">';
 
-        $html .= '<dt>'.$this->getLang('status').'</dt>';
-        $html .= '<dd>'.$this->makeStatus($extension).'</dd>';
+        $html .= '<dt>' . $this->getLang('status') . '</dt>';
+        $html .= '<dd>' . $this->makeStatus($extension) . '</dd>';
 
         if ($extension->getDonationURL()) {
-            $html .= '<dt>'.$this->getLang('donate').'</dt>';
+            $html .= '<dt>' . $this->getLang('donate') . '</dt>';
             $html .= '<dd>';
-            $html .= '<a href="'.$extension->getDonationURL().'" class="donate">'.
-                $this->getLang('donate_action').'</a>';
+            $html .= '<a href="' . $extension->getDonationURL() . '" class="donate">' .
+                $this->getLang('donate_action') . '</a>';
             $html .= '</dd>';
         }
 
         if (!$extension->isBundled()) {
-            $html .= '<dt>'.$this->getLang('downloadurl').'</dt>';
+            $html .= '<dt>' . $this->getLang('downloadurl') . '</dt>';
             $html .= '<dd><bdi>';
             $html .= ($extension->getDownloadURL()
                 ? $this->shortlink($extension->getDownloadURL())
                 : $default);
             $html .= '</bdi></dd>';
 
-            $html .= '<dt>'.$this->getLang('repository').'</dt>';
+            $html .= '<dt>' . $this->getLang('repository') . '</dt>';
             $html .= '<dd><bdi>';
             $html .= ($extension->getSourcerepoURL()
                 ? $this->shortlink($extension->getSourcerepoURL())
@@ -471,13 +471,13 @@ class helper_plugin_extension_list extends Plugin
 
         if ($extension->isInstalled()) {
             if ($extension->getInstalledVersion()) {
-                $html .= '<dt>'.$this->getLang('installed_version').'</dt>';
+                $html .= '<dt>' . $this->getLang('installed_version') . '</dt>';
                 $html .= '<dd>';
                 $html .= hsc($extension->getInstalledVersion());
                 $html .= '</dd>';
             }
             if (!$extension->isBundled()) {
-                $html .= '<dt>'.$this->getLang('install_date').'</dt>';
+                $html .= '<dt>' . $this->getLang('install_date') . '</dt>';
                 $html .= '<dd>';
                 $html .= ($extension->getUpdateDate()
                     ? hsc($extension->getUpdateDate())
@@ -486,7 +486,7 @@ class helper_plugin_extension_list extends Plugin
             }
         }
         if (!$extension->isInstalled() || $extension->updateAvailable()) {
-            $html .= '<dt>'.$this->getLang('available_version').'</dt>';
+            $html .= '<dt>' . $this->getLang('available_version') . '</dt>';
             $html .= '<dd>';
             $html .= ($extension->getLastUpdate()
                 ? hsc($extension->getLastUpdate())
@@ -494,7 +494,7 @@ class helper_plugin_extension_list extends Plugin
             $html .= '</dd>';
         }
 
-        $html .= '<dt>'.$this->getLang('provides').'</dt>';
+        $html .= '<dt>' . $this->getLang('provides') . '</dt>';
         $html .= '<dd><bdi>';
         $html .= ($extension->getTypes()
             ? hsc(implode(', ', $extension->getTypes()))
@@ -502,35 +502,35 @@ class helper_plugin_extension_list extends Plugin
         $html .= '</bdi></dd>';
 
         if (!$extension->isBundled() && $extension->getCompatibleVersions()) {
-            $html .= '<dt>'.$this->getLang('compatible').'</dt>';
+            $html .= '<dt>' . $this->getLang('compatible') . '</dt>';
             $html .= '<dd>';
             foreach ($extension->getCompatibleVersions() as $date => $version) {
-                $html .= '<bdi>'.$version['label'].' ('.$date.')</bdi>, ';
+                $html .= '<bdi>' . $version['label'] . ' (' . $date . ')</bdi>, ';
             }
             $html = rtrim($html, ', ');
             $html .= '</dd>';
         }
         if ($extension->getDependencies()) {
-            $html .= '<dt>'.$this->getLang('depends').'</dt>';
+            $html .= '<dt>' . $this->getLang('depends') . '</dt>';
             $html .= '<dd>';
             $html .= $this->makeLinkList($extension->getDependencies());
             $html .= '</dd>';
         }
 
         if ($extension->getSimilarExtensions()) {
-            $html .= '<dt>'.$this->getLang('similar').'</dt>';
+            $html .= '<dt>' . $this->getLang('similar') . '</dt>';
             $html .= '<dd>';
             $html .= $this->makeLinkList($extension->getSimilarExtensions());
             $html .= '</dd>';
         }
 
         if ($extension->getConflicts()) {
-            $html .= '<dt>'.$this->getLang('conflicts').'</dt>';
+            $html .= '<dt>' . $this->getLang('conflicts') . '</dt>';
             $html .= '<dd>';
             $html .= $this->makeLinkList($extension->getConflicts());
             $html .= '</dd>';
         }
-        $html .= '</dl>'.DOKU_LF;
+        $html .= '</dl>' . DOKU_LF;
         return $html;
     }
 
@@ -544,9 +544,9 @@ class helper_plugin_extension_list extends Plugin
     {
         $html = '';
         foreach ($ext as $link) {
-            $html .= '<bdi><a href="'.
-                $this->gui->tabURL('search', ['q'=>'ext:'.$link]).'">'.
-                hsc($link).'</a></bdi>, ';
+            $html .= '<bdi><a href="' .
+                $this->gui->tabURL('search', ['q' => 'ext:' . $link]) . '">' .
+                hsc($link) . '</a></bdi>, ';
         }
         return rtrim($html, ', ');
     }
@@ -576,7 +576,7 @@ class helper_plugin_extension_list extends Plugin
                     }
                 }
             } else {
-                $errors .= '<p class="permerror">'.$this->getLang($canmod).'</p>';
+                $errors .= '<p class="permerror">' . $this->getLang($canmod) . '</p>';
             }
             if (!$extension->isProtected() && !$extension->isTemplate()) { // no enable/disable for templates
                 if ($extension->isEnabled()) {
@@ -586,31 +586,31 @@ class helper_plugin_extension_list extends Plugin
                 }
             }
             if ($extension->isGitControlled()) {
-                $errors .= '<p class="permerror">'.$this->getLang('git').'</p>';
+                $errors .= '<p class="permerror">' . $this->getLang('git') . '</p>';
             }
             if (
                 $extension->isEnabled() &&
                 in_array('Auth', $extension->getTypes()) &&
                 $conf['authtype'] != $extension->getID()
             ) {
-                $errors .= '<p class="permerror">'.$this->getLang('auth').'</p>';
+                $errors .= '<p class="permerror">' . $this->getLang('auth') . '</p>';
             }
         } elseif (($canmod = $extension->canModify()) === true) {
             if ($extension->getDownloadURL()) {
                 $html .= $this->makeAction('install', $extension);
             }
         } else {
-            $errors .= '<div class="permerror">'.$this->getLang($canmod).'</div>';
+            $errors .= '<div class="permerror">' . $this->getLang($canmod) . '</div>';
         }
 
         if (!$extension->isInstalled() && $extension->getDownloadURL()) {
-            $html .= ' <span class="version">'.$this->getLang('available_version').' ';
+            $html .= ' <span class="version">' . $this->getLang('available_version') . ' ';
             $html .= ($extension->getLastUpdate()
                     ? hsc($extension->getLastUpdate())
-                    : $this->getLang('unknown')).'</span>';
+                    : $this->getLang('unknown')) . '</span>';
         }
 
-        return $html.' '.$errors.DOKU_LF;
+        return $html . ' ' . $errors . DOKU_LF;
     }
 
     /**
@@ -625,14 +625,14 @@ class helper_plugin_extension_list extends Plugin
         $title = '';
 
         if ($action == 'install' || $action == 'reinstall') {
-            $title = 'title="'.hsc($extension->getDownloadURL()).'"';
+            $title = 'title="' . hsc($extension->getDownloadURL()) . '"';
         }
 
-        $classes = 'button '.$action;
-        $name    = 'fn['.$action.']['.hsc($extension->getID()).']';
+        $classes = 'button ' . $action;
+        $name    = 'fn[' . $action . '][' . hsc($extension->getID()) . ']';
 
-        $html = '<button class="'.$classes.'" name="'.$name.'" type="submit" '.$title.'>'.
-            $this->getLang('btn_'.$action).'</button> ';
+        $html = '<button class="' . $classes . '" name="' . $name . '" type="submit" ' . $title . '>' .
+            $this->getLang('btn_' . $action) . '</button> ';
         return $html;
     }
 

@@ -31,7 +31,7 @@ class Wordblock extends AbstractMode
 
         $sep = '';
         foreach ($this->badwords as $badword) {
-            $this->pattern .= $sep.'(?<=\b)(?i)'. Lexer::escape($badword).'(?-i)(?=\b)';
+            $this->pattern .= $sep . '(?<=\b)(?i)' . Lexer::escape($badword) . '(?-i)(?=\b)';
             $sep = '|';
         }
     }

@@ -79,8 +79,8 @@ class auth_plugin_authad extends AuthPlugin
         global $INPUT;
         parent::__construct();
 
-        require_once(DOKU_PLUGIN.'authad/adLDAP/adLDAP.php');
-        require_once(DOKU_PLUGIN.'authad/adLDAP/classes/adLDAPUtils.php');
+        require_once(DOKU_PLUGIN . 'authad/adLDAP/adLDAP.php');
+        require_once(DOKU_PLUGIN . 'authad/adLDAP/classes/adLDAPUtils.php');
 
         // we load the config early to modify it a bit here
         $this->loadConfig();
@@ -268,7 +268,7 @@ class auth_plugin_authad extends AuthPlugin
                 $expiry = $adldap->user()->passwordExpiry($user);
                 if (is_array($expiry)) {
                     $info['expiresat'] = $expiry['expiryts'];
-                    $info['expiresin'] = round(($info['expiresat'] - time())/(24*60*60));
+                    $info['expiresin'] = round(($info['expiresat'] - time()) / (24 * 60 * 60));
 
                     // if this is the current user, warn him (once per request only)
                     if (
@@ -278,8 +278,8 @@ class auth_plugin_authad extends AuthPlugin
                     ) {
                         $msg = sprintf($this->getLang('authpwdexpire'), $info['expiresin']);
                         if ($this->canDo('modPass')) {
-                            $url = wl($ID, ['do'=> 'profile']);
-                            $msg .= ' <a href="'.$url.'">'.$lang['btn_profile'].'</a>';
+                            $url = wl($ID, ['do' => 'profile']);
+                            $msg .= ' <a href="' . $url . '">' . $lang['btn_profile'] . '</a>';
                         }
                         msg($msg);
                         $this->msgshown = true;
@@ -412,15 +412,15 @@ class auth_plugin_authad extends AuthPlugin
                 $usermanager = plugin_load("admin", "usermanager", false);
                 $usermanager->setLastdisabled(true);
                 if (!isset($this->grpsusers[$this->filterToString($filter)])) {
-                    $this->fillGroupUserArray($filter, $usermanager->getStart() + 3*$usermanager->getPagesize());
+                    $this->fillGroupUserArray($filter, $usermanager->getStart() + 3 * $usermanager->getPagesize());
                 } elseif (
                     count($this->grpsusers[$this->filterToString($filter)]) <
-                    $usermanager->getStart() + 3*$usermanager->getPagesize()
+                    $usermanager->getStart() + 3 * $usermanager->getPagesize()
                 ) {
                     $this->fillGroupUserArray(
                         $filter,
                         $usermanager->getStart() +
-                        3*$usermanager->getPagesize() -
+                        3 * $usermanager->getPagesize() -
                         count($this->grpsusers[$this->filterToString($filter)])
                     );
                 }
@@ -481,7 +481,7 @@ class auth_plugin_authad extends AuthPlugin
             $actualstart = 0;
         }
 
-        $i=0;
+        $i = 0;
         $count = 0;
         $this->constructPattern($filter);
         foreach ($this->users as $user => &$info) {
@@ -546,7 +546,7 @@ class auth_plugin_authad extends AuthPlugin
             $usermanager->setLastdisabled(true);
             if (
                 !isset($this->grpsusers[$this->filterToString($filter)]) ||
-                count($this->grpsusers[$this->filterToString($filter)]) < ($start+$limit)
+                count($this->grpsusers[$this->filterToString($filter)]) < ($start + $limit)
             ) {
                 if (!isset($this->grpsusers[$this->filterToString($filter)])) {
                     $this->grpsusers[$this->filterToString($filter)] = [];
@@ -554,7 +554,7 @@ class auth_plugin_authad extends AuthPlugin
 
                 $this->fillGroupUserArray(
                     $filter,
-                    $start+$limit - count($this->grpsusers[$this->filterToString($filter)]) +1
+                    $start + $limit - count($this->grpsusers[$this->filterToString($filter)]) + 1
                 );
             }
             if (!$this->grpsusers[$this->filterToString($filter)]) return [];
@@ -590,7 +590,7 @@ class auth_plugin_authad extends AuthPlugin
             try {
                 $return = $adldap->user()->password($this->getUserName($user), $changes['pass']);
             } catch (adLDAPException $e) {
-                if ($this->conf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
+                if ($this->conf['debug']) msg('AD Auth: ' . $e->getMessage(), -1);
                 $return = false;
             }
             if (!$return) msg($this->getLang('passchangefail'), -1);
@@ -612,7 +612,7 @@ class auth_plugin_authad extends AuthPlugin
             try {
                 $return &= $adldap->user()->modify($this->getUserName($user), $adchanges);
             } catch (adLDAPException $e) {
-                if ($this->conf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
+                if ($this->conf['debug']) msg('AD Auth: ' . $e->getMessage(), -1);
                 $return = false;
             }
             if (!$return) msg($this->getLang('userchangefail'), -1);
@@ -646,7 +646,7 @@ class auth_plugin_authad extends AuthPlugin
             return $this->adldap[$domain];
         } catch (Exception $e) {
             if ($this->conf['debug']) {
-                msg('AD Auth: '.$e->getMessage(), -1);
+                msg('AD Auth: ' . $e->getMessage(), -1);
             }
             $this->success         = false;
             $this->adldap[$domain] = null;
@@ -797,7 +797,7 @@ class auth_plugin_authad extends AuthPlugin
     {
         $this->pattern = [];
         foreach ($filter as $item => $pattern) {
-            $this->pattern[$item] = '/'.str_replace('/', '\/', $pattern).'/i'; // allow regex characters
+            $this->pattern[$item] = '/' . str_replace('/', '\/', $pattern) . '/i'; // allow regex characters
         }
     }
 }

@@ -11,7 +11,7 @@ use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\Extension\PluginController;
 use dokuwiki\Extension\PluginInterface;
 
-if (!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN', DOKU_INC.'lib/plugins/');
+if (!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
 // note that only [a-z0-9]+ is officially supported,
 // this is only to support plugins that don't follow these conventions, too
 if (!defined('DOKU_PLUGIN_NAME_REGEX')) define('DOKU_PLUGIN_NAME_REGEX', '[a-zA-Z0-9\x7f-\xff]+');
@@ -32,7 +32,7 @@ function plugin_list($type = '', $all = false)
     /** @var $plugin_controller PluginController */
     global $plugin_controller;
     $plugins = $plugin_controller->getList($type, $all);
-    sort($plugins, SORT_NATURAL|SORT_FLAG_CASE);
+    sort($plugins, SORT_NATURAL | SORT_FLAG_CASE);
     return $plugins;
 }
 

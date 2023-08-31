@@ -11,7 +11,7 @@
 if (!defined('DOKU_INC')) die(); /* must be run from within DokuWiki */
 
 $hasSidebar = page_findnearest($conf['sidebar']);
-$showSidebar = $hasSidebar && ($ACT=='show');
+$showSidebar = $hasSidebar && ($ACT == 'show');
 ?><!DOCTYPE html>
 <html lang="<?php echo $conf['lang'] ?>" dir="<?php echo $lang['direction'] ?>" class="no-js">
 <head>

@@ -46,7 +46,7 @@ if (!defined('DOKU_INC')) die();
                     <!-- detail start -->
                     <?php
                     if ($ERROR) :
-                        echo '<h1>'.$ERROR.'</h1>';
+                        echo '<h1>' . $ERROR . '</h1>';
                     else : ?>
                         <?php if ($REV) echo p_locale_xhtml('showrev');?>
                         <h1><?php echo nl2br(hsc(tpl_img_getTag('simple.title'))); ?></h1>
@@ -57,14 +57,14 @@ if (!defined('DOKU_INC')) die();
                             <?php tpl_img_meta(); ?>
                             <dl>
                             <?php
-                            echo '<dt>'.$lang['reference'].':</dt>';
+                            echo '<dt>' . $lang['reference'] . ':</dt>';
                             $media_usage = ft_mediause($IMG, true);
                             if ($media_usage !== []) {
                                 foreach ($media_usage as $path) {
-                                    echo '<dd>'.html_wikilink($path).'</dd>';
+                                    echo '<dd>' . html_wikilink($path) . '</dd>';
                                 }
                             } else {
-                                echo '<dd>'.$lang['nothingfound'].'</dd>';
+                                echo '<dd>' . $lang['nothingfound'] . '</dd>';
                             }
                             ?>
                             </dl>

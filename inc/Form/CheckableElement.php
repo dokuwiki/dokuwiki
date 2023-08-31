@@ -71,10 +71,10 @@ class CheckableElement extends InputElement
     public function toHTML()
     {
         if ($this->label) {
-            return '<label '. buildAttributes($this->label->attrs()) .'>'.DOKU_LF
-                . $this->mainElementHTML() .DOKU_LF
-                .'<span>'. $this->label->val() .'</span>'.DOKU_LF
-                .'</label>';
+            return '<label ' . buildAttributes($this->label->attrs()) . '>' . DOKU_LF
+                . $this->mainElementHTML() . DOKU_LF
+                . '<span>' . $this->label->val() . '</span>' . DOKU_LF
+                . '</label>';
         } else {
             return $this->mainElementHTML();
         }

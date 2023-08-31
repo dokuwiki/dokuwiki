@@ -17,7 +17,7 @@ use dokuwiki\Extension\EventHandler;
  */
 function delta_time($start = 0)
 {
-    return microtime(true)-((float)$start);
+    return microtime(true) - ((float)$start);
 }
 define('DOKU_START_TIME', delta_time());
 
@@ -25,20 +25,20 @@ global $config_cascade;
 $config_cascade = [];
 
 // if available load a preload config file
-$preload = fullpath(__DIR__).'/preload.php';
+$preload = fullpath(__DIR__) . '/preload.php';
 if (file_exists($preload)) include($preload);
 
 // define the include path
-if (!defined('DOKU_INC')) define('DOKU_INC', fullpath(__DIR__.'/../').'/');
+if (!defined('DOKU_INC')) define('DOKU_INC', fullpath(__DIR__ . '/../') . '/');
 
 // define Plugin dir
-if (!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN', DOKU_INC.'lib/plugins/');
+if (!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
 
 // define config path (packagers may want to change this to /etc/dokuwiki/)
-if (!defined('DOKU_CONF')) define('DOKU_CONF', DOKU_INC.'conf/');
+if (!defined('DOKU_CONF')) define('DOKU_CONF', DOKU_INC . 'conf/');
 
 // check for error reporting override or set error reporting to sane values
-if (!defined('DOKU_E_LEVEL') && file_exists(DOKU_CONF.'report_e_all')) {
+if (!defined('DOKU_E_LEVEL') && file_exists(DOKU_CONF . 'report_e_all')) {
     define('DOKU_E_LEVEL', E_ALL);
 }
 if (!defined('DOKU_E_LEVEL')) {
@@ -64,7 +64,7 @@ global $cache_metadata;
 
 // always include 'inc/config_cascade.php'
 // previously in preload.php set fields of $config_cascade will be merged with the defaults
-include(DOKU_INC.'inc/config_cascade.php');
+include(DOKU_INC . 'inc/config_cascade.php');
 
 //prepare config array()
 global $conf;
@@ -128,7 +128,7 @@ if (!defined('DOKU_TPL')) {
      * @deprecated 2012-10-13 replaced by more dynamic method
      * @see tpl_basedir()
      */
-    define('DOKU_TPL', DOKU_BASE.'lib/tpl/'.$conf['template'].'/');
+    define('DOKU_TPL', DOKU_BASE . 'lib/tpl/' . $conf['template'] . '/');
 }
 
 if (!defined('DOKU_TPLINC')) {
@@ -136,7 +136,7 @@ if (!defined('DOKU_TPLINC')) {
      * @deprecated 2012-10-13 replaced by more dynamic method
      * @see tpl_incdir()
      */
-    define('DOKU_TPLINC', DOKU_INC.'lib/tpl/'.$conf['template'].'/');
+    define('DOKU_TPLINC', DOKU_INC . 'lib/tpl/' . $conf['template'] . '/');
 }
 
 // make session rewrites XHTML compliant
@@ -201,8 +201,8 @@ global $plugin_controller_class, $plugin_controller;
 if (empty($plugin_controller_class)) $plugin_controller_class = PluginController::class;
 
 // load libraries
-require_once(DOKU_INC.'vendor/autoload.php');
-require_once(DOKU_INC.'inc/load.php');
+require_once(DOKU_INC . 'vendor/autoload.php');
+require_once(DOKU_INC . 'inc/load.php');
 
 // from now on everything is an exception
 ErrorHandler::register();
@@ -295,7 +295,7 @@ function init_paths()
     ];
 
     foreach ($paths as $c => $p) {
-        $path = empty($conf[$c]) ? $conf['savedir'].'/'.$p : $conf[$c];
+        $path = empty($conf[$c]) ? $conf['savedir'] . '/' . $p : $conf[$c];
         $conf[$c] = init_path($path);
         if (empty($conf[$c])) {
             $path = fullpath($path);
@@ -310,11 +310,11 @@ function init_paths()
     $conf['changelog_old'] = init_path(
         $conf['changelog'] ?? $conf['savedir'] . '/changes.log'
     );
-    if ($conf['changelog_old']=='') {
+    if ($conf['changelog_old'] == '') {
         unset($conf['changelog_old']); }
     // hardcoded changelog because it is now a cache that lives in meta
-    $conf['changelog'] = $conf['metadir'].'/_dokuwiki.changes';
-    $conf['media_changelog'] = $conf['metadir'].'/_media.changes';
+    $conf['changelog'] = $conf['metadir'] . '/_dokuwiki.changes';
+    $conf['media_changelog'] = $conf['metadir'] . '/_media.changes';
 }
 
 /**
@@ -329,7 +329,7 @@ function init_lang($langCode)
     $lang = [];
 
     //load the language files
-    require(DOKU_INC.'inc/lang/en/lang.php');
+    require(DOKU_INC . 'inc/lang/en/lang.php');
     foreach ($config_cascade['lang']['core'] as $config_file) {
         if (file_exists($config_file . 'en/lang.php')) {
             include($config_file . 'en/lang.php');
@@ -337,8 +337,8 @@ function init_lang($langCode)
     }
 
     if ($langCode && $langCode != 'en') {
-        if (file_exists(DOKU_INC."inc/lang/$langCode/lang.php")) {
-            require(DOKU_INC."inc/lang/$langCode/lang.php");
+        if (file_exists(DOKU_INC . "inc/lang/$langCode/lang.php")) {
+            require(DOKU_INC . "inc/lang/$langCode/lang.php");
         }
         foreach ($config_cascade['lang']['core'] as $config_file) {
             if (file_exists($config_file . "$langCode/lang.php")) {
@@ -355,7 +355,7 @@ function init_files()
 {
     global $conf;
 
-    $files = [$conf['indexdir'].'/page.idx'];
+    $files = [$conf['indexdir'] . '/page.idx'];
 
     foreach ($files as $file) {
         if (!file_exists($file)) {
@@ -387,7 +387,7 @@ function init_path($path)
     // check existence
     $p = fullpath($path);
     if (!file_exists($p)) {
-        $p = fullpath(DOKU_INC.$path);
+        $p = fullpath(DOKU_INC . $path);
         if (!file_exists($p)) {
             return '';
         }
@@ -467,11 +467,11 @@ function getBaseURL($abs = null)
         $dir = dirname($_SERVER['PHP_SELF']);
     } elseif ($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']) {
         $dir = preg_replace(
-            '/^'.preg_quote($_SERVER['DOCUMENT_ROOT'], '/').'/',
+            '/^' . preg_quote($_SERVER['DOCUMENT_ROOT'], '/') . '/',
             '',
             $_SERVER['SCRIPT_FILENAME']
         );
-        $dir = dirname('/'.$dir);
+        $dir = dirname('/' . $dir);
     } else {
         $dir = '.'; //probably wrong
     }
@@ -489,15 +489,15 @@ function getBaseURL($abs = null)
     if (!$abs) return $dir;
 
     //use config if available, trim any slash from end of baseurl to avoid multiple consecutive slashes in the path
-    if (!empty($conf['baseurl'])) return rtrim($conf['baseurl'], '/').$dir;
+    if (!empty($conf['baseurl'])) return rtrim($conf['baseurl'], '/') . $dir;
 
     //split hostheader into host and port
     if (isset($_SERVER['HTTP_HOST'])) {
-        $parsed_host = parse_url('http://'.$_SERVER['HTTP_HOST']);
+        $parsed_host = parse_url('http://' . $_SERVER['HTTP_HOST']);
         $host = $parsed_host['host'] ?? null;
         $port = $parsed_host['port'] ?? null;
     } elseif (isset($_SERVER['SERVER_NAME'])) {
-        $parsed_host = parse_url('http://'.$_SERVER['SERVER_NAME']);
+        $parsed_host = parse_url('http://' . $_SERVER['SERVER_NAME']);
         $host = $parsed_host['host'] ?? null;
         $port = $parsed_host['port'] ?? null;
     } else {
@@ -521,9 +521,9 @@ function getBaseURL($abs = null)
         }
     }
 
-    if ($port !== '') $port = ':'.$port;
+    if ($port !== '') $port = ':' . $port;
 
-    return $proto.$host.$port.$dir;
+    return $proto . $host . $port . $dir;
 }
 
 /**
@@ -584,7 +584,7 @@ function nice_die($msg)
 </html>
 EOT;
     if (defined('DOKU_UNITTEST')) {
-        throw new RuntimeException('nice_die: '.$msg);
+        throw new RuntimeException('nice_die: ' . $msg);
     }
     exit(1);
 }
@@ -616,7 +616,7 @@ function fullpath($path, $exists = false)
     } elseif ($iswin) {
         // match drive letter and UNC paths
         if (preg_match('!^([a-zA-z]:)(.*)!', $path, $match)) {
-            $root = $match[1].'/';
+            $root = $match[1] . '/';
             $path = $match[2];
         } elseif (preg_match('!^(\\\\\\\\[^\\\\/]+\\\\[^\\\\/]+[\\\\/])(.*)!', $path, $match)) {
             $root = $match[1];
@@ -628,7 +628,7 @@ function fullpath($path, $exists = false)
     // if the given path wasn't absolute already, prepend the script path and retry
     if (!$root) {
         $base = dirname($_SERVER['SCRIPT_FILENAME']);
-        $path = $base.'/'.$path;
+        $path = $base . '/' . $path;
         if ($run == 0) { // avoid endless recursion when base isn't absolute for some reason
             $run++;
             return fullpath($path, $exists);
@@ -637,17 +637,17 @@ function fullpath($path, $exists = false)
     $run = 0;
 
     // canonicalize
-    $path=explode('/', $path);
-    $newpath=[];
+    $path = explode('/', $path);
+    $newpath = [];
     foreach ($path as $p) {
         if ($p === '' || $p === '.') continue;
-        if ($p==='..') {
+        if ($p === '..') {
             array_pop($newpath);
             continue;
         }
         $newpath[] = $p;
     }
-    $finalpath = $root.implode('/', $newpath);
+    $finalpath = $root . implode('/', $newpath);
 
     // check for existence when needed (except when unit testing)
     if ($exists && !defined('DOKU_UNITTEST') && !file_exists($finalpath)) {

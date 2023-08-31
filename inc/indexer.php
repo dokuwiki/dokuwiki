@@ -37,12 +37,12 @@ function idx_get_version()
         $version = INDEXER_VERSION;
 
         // DokuWiki version is included for the convenience of plugins
-        $data = ['dokuwiki'=>$version];
+        $data = ['dokuwiki' => $version];
         Event::createAndTrigger('INDEXER_VERSION_GET', $data, null, false);
         unset($data['dokuwiki']); // this needs to be first
         ksort($data);
         foreach ($data as $plugin => $vers)
-            $version .= '+'.$plugin.'='.$vers;
+            $version .= '+' . $plugin . '=' . $vers;
         $indexer_version = $version;
     }
     return $indexer_version;
@@ -97,7 +97,7 @@ function & idx_get_stopwords()
     static $stopwords = null;
     if (is_null($stopwords)) {
         global $conf;
-        $swfile = DOKU_INC.'inc/lang/'.$conf['lang'].'/stopwords.txt';
+        $swfile = DOKU_INC . 'inc/lang/' . $conf['lang'] . '/stopwords.txt';
         if (file_exists($swfile)) {
             $stopwords = file($swfile, FILE_IGNORE_NEW_LINES);
         } else {
@@ -125,13 +125,13 @@ function idx_addPage($page, $verbose = false, $force = false)
     // check if page was deleted but is still in the index
     if (!page_exists($page)) {
         if (!file_exists($idxtag)) {
-            if ($verbose) echo "Indexer: $page does not exist, ignoring".DOKU_LF;
+            if ($verbose) echo "Indexer: $page does not exist, ignoring" . DOKU_LF;
             return false;
         }
         $Indexer = idx_get_indexer();
         $result = $Indexer->deletePage($page);
         if ($result === "locked") {
-            if ($verbose) echo "Indexer: locked".DOKU_LF;
+            if ($verbose) echo "Indexer: locked" . DOKU_LF;
             return false;
         }
         @unlink($idxtag);
@@ -143,7 +143,7 @@ function idx_addPage($page, $verbose = false, $force = false)
         if (trim(io_readFile($idxtag)) == idx_get_version()) {
             $last = @filemtime($idxtag);
             if ($last > @filemtime(wikiFN($page))) {
-                if ($verbose) echo "Indexer: index for $page up to date".DOKU_LF;
+                if ($verbose) echo "Indexer: index for $page up to date" . DOKU_LF;
                 return false;
             }
         }
@@ -156,19 +156,19 @@ function idx_addPage($page, $verbose = false, $force = false)
             $Indexer = idx_get_indexer();
             $result = $Indexer->deletePage($page);
             if ($result === "locked") {
-                if ($verbose) echo "Indexer: locked".DOKU_LF;
+                if ($verbose) echo "Indexer: locked" . DOKU_LF;
                 return false;
             }
             @unlink($idxtag);
         }
-        if ($verbose) echo "Indexer: index disabled for $page".DOKU_LF;
+        if ($verbose) echo "Indexer: index disabled for $page" . DOKU_LF;
         return $result;
     }
 
     $Indexer = idx_get_indexer();
     $pid = $Indexer->getPID($page);
     if ($pid === false) {
-        if ($verbose) echo "Indexer: getting the PID failed for $page".DOKU_LF;
+        if ($verbose) echo "Indexer: getting the PID failed for $page" . DOKU_LF;
         return false;
     }
     $body = '';
@@ -191,14 +191,14 @@ function idx_addPage($page, $verbose = false, $force = false)
 
     $result = $Indexer->addPageWords($page, $body);
     if ($result === "locked") {
-        if ($verbose) echo "Indexer: locked".DOKU_LF;
+        if ($verbose) echo "Indexer: locked" . DOKU_LF;
         return false;
     }
 
     if ($result) {
         $result = $Indexer->addMetaKeys($page, $metadata);
         if ($result === "locked") {
-            if ($verbose) echo "Indexer: locked".DOKU_LF;
+            if ($verbose) echo "Indexer: locked" . DOKU_LF;
             return false;
         }
     }
@@ -206,7 +206,7 @@ function idx_addPage($page, $verbose = false, $force = false)
     if ($result)
         io_saveFile(metaFN($page, '.indexed'), idx_get_version());
     if ($verbose) {
-        echo "Indexer: finished".DOKU_LF;
+        echo "Indexer: finished" . DOKU_LF;
         return true;
     }
     return $result;
@@ -258,7 +258,7 @@ function idx_tokenizer($string, $wc = false)
 function idx_getIndex($idx, $suffix)
 {
     global $conf;
-    $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
+    $fn = $conf['indexdir'] . '/' . $idx . $suffix . '.idx';
     if (!file_exists($fn)) return [];
     return file($fn);
 }
@@ -282,11 +282,11 @@ function idx_listIndexLengths()
     } else {
         clearstatcache();
         if (
-            file_exists($conf['indexdir'].'/lengths.idx')
-            && (time() < @filemtime($conf['indexdir'].'/lengths.idx') + $conf['readdircache'])
+            file_exists($conf['indexdir'] . '/lengths.idx')
+            && (time() < @filemtime($conf['indexdir'] . '/lengths.idx') + $conf['readdircache'])
         ) {
             if (
-                ($lengths = @file($conf['indexdir'].'/lengths.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))
+                ($lengths = @file($conf['indexdir'] . '/lengths.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))
                 !== false
             ) {
                 $idx = [];
@@ -315,7 +315,7 @@ function idx_listIndexLengths()
         sort($idx);
         // save this in a file
         if ($docache) {
-            $handle = @fopen($conf['indexdir'].'/lengths.idx', 'w');
+            $handle = @fopen($conf['indexdir'] . '/lengths.idx', 'w');
             @fwrite($handle, implode("\n", $idx));
             @fclose($handle);
         }
@@ -342,9 +342,9 @@ function idx_indexLengths($filter)
     $idx = [];
     if (is_array($filter)) {
         // testing if index files exist only
-        $path = $conf['indexdir']."/i";
+        $path = $conf['indexdir'] . "/i";
         foreach (array_keys($filter) as $key) {
-            if (file_exists($path.$key.'.idx'))
+            if (file_exists($path . $key . '.idx'))
                 $idx[] = $key;
         }
     } else {

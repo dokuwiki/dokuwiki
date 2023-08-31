@@ -55,7 +55,7 @@ class Lists extends AbstractRewriter
         //                   array(list type, current depth, index of current listitem_open)
         $this->listStack[] = [$listType, $depth, 1];
 
-        $this->listCalls[] = ['list'.$listType.'_open', [], $call[2]];
+        $this->listCalls[] = ['list' . $listType . '_open', [], $call[2]];
         $this->listCalls[] = ['listitem_open', [1], $call[2]];
         $this->listCalls[] = ['listcontent_open', [], $call[2]];
     }
@@ -71,7 +71,7 @@ class Lists extends AbstractRewriter
                 $closeContent = false;
             }
             $this->listCalls[] = ['listitem_close', [], $call[2]];
-            $this->listCalls[] = ['list'.$list[0].'_close', [], $call[2]];
+            $this->listCalls[] = ['list' . $list[0] . '_close', [], $call[2]];
         }
     }
 
@@ -91,7 +91,7 @@ class Lists extends AbstractRewriter
             if ($listType == $end[0]) {
                 $this->listCalls[] = ['listcontent_close', [], $call[2]];
                 $this->listCalls[] = ['listitem_close', [], $call[2]];
-                $this->listCalls[] = ['listitem_open', [$depth-1], $call[2]];
+                $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
                 $this->listCalls[] = ['listcontent_open', [], $call[2]];
 
                 // new list item, update list stack's index into current listitem_open
@@ -101,9 +101,9 @@ class Lists extends AbstractRewriter
             } else {
                 $this->listCalls[] = ['listcontent_close', [], $call[2]];
                 $this->listCalls[] = ['listitem_close', [], $call[2]];
-                $this->listCalls[] = ['list'.$end[0].'_close', [], $call[2]];
-                $this->listCalls[] = ['list'.$listType.'_open', [], $call[2]];
-                $this->listCalls[] = ['listitem_open', [$depth-1], $call[2]];
+                $this->listCalls[] = ['list' . $end[0] . '_close', [], $call[2]];
+                $this->listCalls[] = ['list' . $listType . '_open', [], $call[2]];
+                $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
                 $this->listCalls[] = ['listcontent_open', [], $call[2]];
 
                 array_pop($this->listStack);
@@ -111,8 +111,8 @@ class Lists extends AbstractRewriter
             }
         } elseif ($depth > $end[1]) { // Getting deeper...
             $this->listCalls[] = ['listcontent_close', [], $call[2]];
-            $this->listCalls[] = ['list'.$listType.'_open', [], $call[2]];
-            $this->listCalls[] = ['listitem_open', [$depth-1], $call[2]];
+            $this->listCalls[] = ['list' . $listType . '_open', [], $call[2]];
+            $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
             $this->listCalls[] = ['listcontent_open', [], $call[2]];
 
             // set the node/leaf state of this item's parent listitem_open to NODE
@@ -122,7 +122,7 @@ class Lists extends AbstractRewriter
         } else { // Getting shallower ( $depth < $end[1] )
             $this->listCalls[] = ['listcontent_close', [], $call[2]];
             $this->listCalls[] = ['listitem_close', [], $call[2]];
-            $this->listCalls[] = ['list'.$end[0].'_close', [], $call[2]];
+            $this->listCalls[] = ['list' . $end[0] . '_close', [], $call[2]];
 
             // Throw away the end - done
             array_pop($this->listStack);
@@ -138,16 +138,16 @@ class Lists extends AbstractRewriter
                     $this->listCalls[] = ['listitem_close', [], $call[2]];
 
                     if ($end[0] == $listType) {
-                        $this->listCalls[] = ['listitem_open', [$depth-1], $call[2]];
+                        $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
                         $this->listCalls[] = ['listcontent_open', [], $call[2]];
 
                         // new list item, update list stack's index into current listitem_open
                         $this->listStack[$key][2] = count($this->listCalls) - 2;
                     } else {
                         // Switching list type...
-                        $this->listCalls[] = ['list'.$end[0].'_close', [], $call[2]];
-                        $this->listCalls[] = ['list'.$listType.'_open', [], $call[2]];
-                        $this->listCalls[] = ['listitem_open', [$depth-1], $call[2]];
+                        $this->listCalls[] = ['list' . $end[0] . '_close', [], $call[2]];
+                        $this->listCalls[] = ['list' . $listType . '_open', [], $call[2]];
+                        $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
                         $this->listCalls[] = ['listcontent_open', [], $call[2]];
 
                         array_pop($this->listStack);
@@ -159,7 +159,7 @@ class Lists extends AbstractRewriter
                     // Haven't dropped down far enough yet.... ( $end[1] > $depth )
                 } else {
                     $this->listCalls[] = ['listitem_close', [], $call[2]];
-                    $this->listCalls[] = ['list'.$end[0].'_close', [], $call[2]];
+                    $this->listCalls[] = ['list' . $end[0] . '_close', [], $call[2]];
 
                     array_pop($this->listStack);
                 }

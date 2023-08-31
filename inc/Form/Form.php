@@ -478,14 +478,14 @@ class Form extends Element
 
         // trigger event to provide an opportunity to modify this form
         if (isset($eventName)) {
-            $eventName = 'FORM_'.strtoupper($eventName).'_OUTPUT';
+            $eventName = 'FORM_' . strtoupper($eventName) . '_OUTPUT';
             Event::createAndTrigger($eventName, $this, null, false);
         }
 
-        $html = '<form '. buildAttributes($this->attrs()) .'>';
+        $html = '<form ' . buildAttributes($this->attrs()) . '>';
 
         foreach ($this->hidden as $name => $value) {
-            $html .= '<input type="hidden" name="'. $name .'" value="'. formText($value) .'" />';
+            $html .= '<input type="hidden" name="' . $name . '" value="' . formText($value) . '" />';
         }
 
         foreach ($this->elements as $element) {

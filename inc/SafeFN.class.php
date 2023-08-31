@@ -88,7 +88,7 @@ class SafeFN
 
     public static function validateSafe($safe)
     {
-        return !preg_match('#[^'.self::$plain.self::$post_indicator.self::$pre_indicator.']#', $safe);
+        return !preg_match('#[^' . self::$plain . self::$post_indicator . self::$pre_indicator . ']#', $safe);
     }
 
     /**
@@ -106,7 +106,7 @@ class SafeFN
         $converted = false;
 
         foreach ($unicode as $codepoint) {
-            if ($codepoint < 127 && (strpos(self::$plain.self::$post_indicator, chr($codepoint))!==false)) {
+            if ($codepoint < 127 && (strpos(self::$plain . self::$post_indicator, chr($codepoint)) !== false)) {
                 if ($converted) {
                     $safe .= self::$post_indicator;
                     $converted = false;
@@ -116,7 +116,7 @@ class SafeFN
                 $safe .= self::$pre_indicator;
                 $converted = true;
             } else {
-                $safe .= self::$pre_indicator.base_convert((string)($codepoint-32), 10, 36);
+                $safe .= self::$pre_indicator . base_convert((string)($codepoint - 32), 10, 36);
                 $converted = true;
             }
         }
@@ -136,7 +136,12 @@ class SafeFN
     {
 
         $unicode = [];
-        $split = preg_split('#(?=['.self::$post_indicator.self::$pre_indicator.'])#', $safe, -1, PREG_SPLIT_NO_EMPTY);
+        $split = preg_split(
+            '#(?=[' . self::$post_indicator . self::$pre_indicator . '])#',
+            $safe,
+            -1,
+            PREG_SPLIT_NO_EMPTY
+        );
 
         $converted = false;
         foreach ($split as $sub) {
@@ -144,11 +149,11 @@ class SafeFN
             if ($sub[0] != self::$pre_indicator) {
                 // plain (unconverted) characters, optionally starting with a post_indicator
                 // set initial value to skip any post_indicator
-                for ($i=($converted?1:0); $i < $len; $i++) {
+                for ($i = ($converted ? 1 : 0); $i < $len; $i++) {
                     $unicode[] = ord($sub[$i]);
                 }
                 $converted = false;
-            } elseif ($len==1) {
+            } elseif ($len == 1) {
                 // a pre_indicator character in the real data
                 $unicode[] = ord($sub);
                 $converted = true;

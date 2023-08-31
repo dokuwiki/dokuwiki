@@ -57,14 +57,14 @@ class Item
      */
     public function toXML()
     {
-        $result = '  <url>'.NL
-            .'    <loc>'.hsc($this->url).'</loc>'.NL
-            .'    <lastmod>'.date_iso8601($this->lastmod).'</lastmod>'.NL;
+        $result = '  <url>' . NL
+            . '    <loc>' . hsc($this->url) . '</loc>' . NL
+            . '    <lastmod>' . date_iso8601($this->lastmod) . '</lastmod>' . NL;
         if ($this->changefreq !== null)
-            $result .= '    <changefreq>'.hsc($this->changefreq).'</changefreq>'.NL;
+            $result .= '    <changefreq>' . hsc($this->changefreq) . '</changefreq>' . NL;
         if ($this->priority !== null)
-            $result .= '    <priority>'.hsc($this->priority).'</priority>'.NL;
-        $result .= '  </url>'.NL;
+            $result .= '    <priority>' . hsc($this->priority) . '</priority>' . NL;
+        $result .= '  </url>' . NL;
         return $result;
     }
 }

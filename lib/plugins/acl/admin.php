@@ -1,4 +1,5 @@
 <?php
+
 use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\Utf8\Sort;
 
@@ -86,7 +87,7 @@ class admin_plugin_acl extends AdminPlugin
         // user or group choosen?
         $who = trim($INPUT->str('acl_w'));
         if ($INPUT->str('acl_t') == '__g__' && $who) {
-            $this->who = '@'.ltrim($auth->cleanGroup($who), '@');
+            $this->who = '@' . ltrim($auth->cleanGroup($who), '@');
         } elseif ($INPUT->str('acl_t') == '__u__' && $who) {
             $this->who = ltrim($who, '@');
             if ($this->who != '%USER%' && $this->who != '%GROUP%') { #keep wildcard as is
@@ -94,8 +95,8 @@ class admin_plugin_acl extends AdminPlugin
             }
         } elseif (
             $INPUT->str('acl_t') &&
-                $INPUT->str('acl_t') != '__u__' &&
-                $INPUT->str('acl_t') != '__g__'
+            $INPUT->str('acl_t') != '__u__' &&
+            $INPUT->str('acl_t') != '__g__'
         ) {
             $this->who = $INPUT->str('acl_t');
         } elseif ($who) {
@@ -111,7 +112,7 @@ class admin_plugin_acl extends AdminPlugin
                 if ($this->ns == '*') {
                     $scope = '*';
                 } else {
-                    $scope = $this->ns.':*';
+                    $scope = $this->ns . ':*';
                 }
             } else {
                 $scope = $ID;
@@ -146,9 +147,9 @@ class admin_plugin_acl extends AdminPlugin
                 // re-add all rules
                 foreach ($acl as $where => $opt) {
                     foreach ($opt as $who => $perm) {
-                        if ($who[0]=='@') {
+                        if ($who[0] == '@') {
                             if ($who != '@ALL') {
-                                $who = '@'.ltrim($auth->cleanGroup($who), '@');
+                                $who = '@' . ltrim($auth->cleanGroup($who), '@');
                             }
                         } elseif ($who != '%USER%' && $who != '%GROUP%') { #keep wildcard as is
                             $who = $auth->cleanUser($who);
@@ -180,31 +181,31 @@ class admin_plugin_acl extends AdminPlugin
      */
     public function html()
     {
-        echo '<div id="acl_manager">'.NL;
-        echo '<h1>'.$this->getLang('admin_acl').'</h1>'.NL;
-        echo '<div class="level1">'.NL;
+        echo '<div id="acl_manager">';
+        echo '<h1>' . $this->getLang('admin_acl') . '</h1>';
+        echo '<div class="level1">';
 
-        echo '<div id="acl__tree">'.NL;
+        echo '<div id="acl__tree">';
         $this->makeExplorer();
-        echo '</div>'.NL;
+        echo '</div>';
 
-        echo '<div id="acl__detail">'.NL;
+        echo '<div id="acl__detail">';
         $this->printDetail();
-        echo '</div>'.NL;
-        echo '</div>'.NL;
+        echo '</div>';
+        echo '</div>';
 
         echo '<div class="clearer"></div>';
-        echo '<h2>'.$this->getLang('current').'</h2>'.NL;
-        echo '<div class="level2">'.NL;
+        echo '<h2>' . $this->getLang('current') . '</h2>';
+        echo '<div class="level2">';
         $this->printAclTable();
-        echo '</div>'.NL;
+        echo '</div>';
 
-        echo '<div class="footnotes"><div class="fn">'.NL;
-        echo '<sup><a id="fn__1" class="fn_bot" href="#fnt__1">1)</a></sup>'.NL;
-        echo '<div class="content">'.$this->getLang('p_include').'</div>';
+        echo '<div class="footnotes"><div class="fn">';
+        echo '<sup><a id="fn__1" class="fn_bot" href="#fnt__1">1)</a></sup>';
+        echo '<div class="content">' . $this->getLang('p_include') . '</div>';
         echo '</div></div>';
 
-        echo '</div>'.NL;
+        echo '</div>';
     }
 
     /**
@@ -214,7 +215,7 @@ class admin_plugin_acl extends AdminPlugin
      */
     protected function getLinkOptions($addopts = null)
     {
-        $opts = ['do'=>'admin', 'page'=>'acl'];
+        $opts = ['do' => 'admin', 'page' => 'acl'];
         if ($this->ns) $opts['ns'] = $this->ns;
         if ($this->who) $opts['acl_w'] = $this->who;
 
@@ -233,14 +234,14 @@ class admin_plugin_acl extends AdminPlugin
         global $ID;
         global $lang;
 
-        $ns  = $this->ns;
+        $ns = $this->ns;
         if (empty($ns)) {
             $ns = dirname(str_replace(':', '/', $ID));
-            if ($ns == '.') $ns ='';
+            if ($ns == '.') $ns = '';
         } elseif ($ns == '*') {
-            $ns ='';
+            $ns = '';
         }
-        $ns  = utf8_encodeFN(str_replace(':', '/', $ns));
+        $ns = utf8_encodeFN(str_replace(':', '/', $ns));
 
         $data = $this->makeTree($ns);
 
@@ -249,8 +250,8 @@ class admin_plugin_acl extends AdminPlugin
             'level' => 0,
             'id' => '*',
             'type' => 'd',
-            'open' =>'true',
-            'label' => '['.$lang['mediaroot'].']'
+            'open' => 'true',
+            'label' => '[' . $lang['mediaroot'] . ']'
         ]);
 
         echo html_buildlist(
@@ -285,8 +286,8 @@ class admin_plugin_acl extends AdminPlugin
         // combine by sorting and removing duplicates
         usort($data, [$this, 'treeSort']);
         $count = count($data);
-        if ($count>0) for ($i=1; $i<$count; $i++) {
-            if ($data[$i-1]['id'] == $data[$i]['id'] && $data[$i-1]['type'] == $data[$i]['type']) {
+        if ($count > 0) for ($i = 1; $i < $count; $i++) {
+            if ($data[$i - 1]['id'] == $data[$i]['id'] && $data[$i - 1]['type'] == $data[$i]['type']) {
                 unset($data[$i]);
                 $i++;  // duplicate found, next $i can't be a duplicate, so skip forward one
             }
@@ -347,25 +348,28 @@ class admin_plugin_acl extends AdminPlugin
     {
         global $ID;
 
-        echo '<form action="'.wl().'" method="post" accept-charset="utf-8"><div class="no">'.NL;
+        echo '<form action="' . wl() . '" method="post" accept-charset="utf-8"><div class="no">';
 
         echo '<div id="acl__user">';
-        echo $this->getLang('acl_perms').' ';
-        $inl =  $this->makeSelect();
-        echo '<input type="text" name="acl_w" class="edit" value="'.(($inl)?'':hsc(ltrim($this->who, '@'))).'" />'.NL;
-        echo '<button type="submit">'.$this->getLang('btn_select').'</button>'.NL;
-        echo '</div>'.NL;
+        echo $this->getLang('acl_perms') . ' ';
+        $inl = $this->makeSelect();
+        echo sprintf(
+            '<input type="text" name="acl_w" class="edit" value="%s" />',
+            ($inl) ? '' : hsc(ltrim($this->who, '@'))
+        );
+        echo '<button type="submit">' . $this->getLang('btn_select') . '</button>';
+        echo '</div>';
 
         echo '<div id="acl__info">';
         $this->printInfo();
         echo '</div>';
 
-        echo '<input type="hidden" name="ns" value="'.hsc($this->ns).'" />'.NL;
-        echo '<input type="hidden" name="id" value="'.hsc($ID).'" />'.NL;
-        echo '<input type="hidden" name="do" value="admin" />'.NL;
-        echo '<input type="hidden" name="page" value="acl" />'.NL;
-        echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />'.NL;
-        echo '</div></form>'.NL;
+        echo '<input type="hidden" name="ns" value="' . hsc($this->ns) . '" />';
+        echo '<input type="hidden" name="id" value="' . hsc($ID) . '" />';
+        echo '<input type="hidden" name="do" value="admin" />';
+        echo '<input type="hidden" name="page" value="acl" />';
+        echo '<input type="hidden" name="sectok" value="' . getSecurityToken() . '" />';
+        echo '</div></form>';
     }
 
     /**
@@ -408,18 +412,18 @@ class admin_plugin_acl extends AdminPlugin
 
         echo '<fieldset>';
         if (is_null($current)) {
-            echo '<legend>'.$this->getLang('acl_new').'</legend>';
+            echo '<legend>' . $this->getLang('acl_new') . '</legend>';
         } else {
-            echo '<legend>'.$this->getLang('acl_mod').'</legend>';
+            echo '<legend>' . $this->getLang('acl_mod') . '</legend>';
         }
 
         echo $this->makeCheckboxes($current, empty($this->ns), 'acl');
 
         if (is_null($current)) {
-            echo '<button type="submit" name="cmd[save]">'.$lang['btn_save'].'</button>'.NL;
+            echo '<button type="submit" name="cmd[save]">' . $lang['btn_save'] . '</button>';
         } else {
-            echo '<button type="submit" name="cmd[save]">'.$lang['btn_update'].'</button>'.NL;
-            echo '<button type="submit" name="cmd[del]">'.$lang['btn_delete'].'</button>'.NL;
+            echo '<button type="submit" name="cmd[save]">' . $lang['btn_update'] . '</button>';
+            echo '<button type="submit" name="cmd[del]">' . $lang['btn_delete'] . '</button>';
         }
 
         echo '</fieldset>';
@@ -436,14 +440,14 @@ class admin_plugin_acl extends AdminPlugin
         global $auth;
 
         $who = $this->who;
-        $ns  = $this->ns;
+        $ns = $this->ns;
 
         // prepare where to check
         if ($ns) {
             if ($ns == '*') {
-                $check='*';
+                $check = '*';
             } else {
-                $check=$ns.':*';
+                $check = $ns . ':*';
             }
         } else {
             $check = $ID;
@@ -451,7 +455,7 @@ class admin_plugin_acl extends AdminPlugin
 
         // prepare who to check
         if ($who[0] == '@') {
-            $user   = '';
+            $user = '';
             $groups = [ltrim($who, '@')];
         } else {
             $user = $who;
@@ -498,9 +502,9 @@ class admin_plugin_acl extends AdminPlugin
 
         // add note if admin
         if ($perm == AUTH_ADMIN) {
-            echo '<p>'.$this->getLang('p_isadmin').'</p>';
+            echo '<p>' . $this->getLang('p_isadmin') . '</p>';
         } elseif (is_null($current)) {
-            echo '<p>'.$this->getLang('p_inherited').'</p>';
+            echo '<p>' . $this->getLang('p_inherited') . '</p>';
         }
     }
 
@@ -519,36 +523,36 @@ class admin_plugin_acl extends AdminPlugin
         if (!empty($item['label'])) {
             $base = $item['label'];
         } else {
-            $base = ':'.$item['id'];
-            $base = substr($base, strrpos($base, ':')+1);
+            $base = ':' . $item['id'];
+            $base = substr($base, strrpos($base, ':') + 1);
         }
 
         // highlight?
-        if (($item['type']== $this->current_item['type'] && $item['id'] == $this->current_item['id'])) {
+        if (($item['type'] == $this->current_item['type'] && $item['id'] == $this->current_item['id'])) {
             $cl = ' cur';
         } else {
             $cl = '';
         }
 
         // namespace or page?
-        if ($item['type']=='d') {
+        if ($item['type'] == 'd') {
             if ($item['open']) {
-                $img   = DOKU_BASE.'lib/images/minus.gif';
-                $alt   = '−';
+                $img = DOKU_BASE . 'lib/images/minus.gif';
+                $alt = '−';
             } else {
-                $img   = DOKU_BASE.'lib/images/plus.gif';
-                $alt   = '+';
+                $img = DOKU_BASE . 'lib/images/plus.gif';
+                $alt = '+';
             }
-            $ret .= '<img src="'.$img.'" alt="'.$alt.'" />';
-            $ret .= '<a href="'.
-                wl('', $this->getLinkOptions(['ns'=> $item['id'], 'sectok'=>getSecurityToken()])).
-                '" class="idx_dir'.$cl.'">';
+            $ret .= '<img src="' . $img . '" alt="' . $alt . '" />';
+            $ret .= '<a href="' .
+                wl('', $this->getLinkOptions(['ns' => $item['id'], 'sectok' => getSecurityToken()])) .
+                '" class="idx_dir' . $cl . '">';
             $ret .= $base;
             $ret .= '</a>';
         } else {
-            $ret .= '<a href="'.
-                wl('', $this->getLinkOptions(['id'=> $item['id'], 'ns'=>'', 'sectok'=>getSecurityToken()])).
-                '" class="wikilink1'.$cl.'">';
+            $ret .= '<a href="' .
+                wl('', $this->getLinkOptions(['id' => $item['id'], 'ns' => '', 'sectok' => getSecurityToken()])) .
+                '" class="wikilink1' . $cl . '">';
             $ret .= noNS($item['id']);
             $ret .= '</a>';
         }
@@ -564,7 +568,7 @@ class admin_plugin_acl extends AdminPlugin
     public function makeListItem($item)
     {
         return '<li class="level' . $item['level'] . ' ' .
-               ($item['open'] ? 'open' : 'closed') . '">';
+            ($item['open'] ? 'open' : 'closed') . '">';
     }
 
 
@@ -577,12 +581,12 @@ class admin_plugin_acl extends AdminPlugin
     {
         global $AUTH_ACL;
         global $conf;
-        $acl_config=[];
+        $acl_config = [];
         $usersgroups = [];
 
         // get special users and groups
         $this->specials[] = '@ALL';
-        $this->specials[] = '@'.$conf['defaultgroup'];
+        $this->specials[] = '@' . $conf['defaultgroup'];
         if ($conf['manager'] != '!!not set!!') {
             $this->specials = array_merge(
                 $this->specials,
@@ -633,51 +637,51 @@ class admin_plugin_acl extends AdminPlugin
         global $lang;
         global $ID;
 
-        echo '<form action="'.wl().'" method="post" accept-charset="utf-8"><div class="no">'.NL;
+        echo '<form action="' . wl() . '" method="post" accept-charset="utf-8"><div class="no">';
         if ($this->ns) {
-            echo '<input type="hidden" name="ns" value="'.hsc($this->ns).'" />'.NL;
+            echo '<input type="hidden" name="ns" value="' . hsc($this->ns) . '" />';
         } else {
-            echo '<input type="hidden" name="id" value="'.hsc($ID).'" />'.NL;
+            echo '<input type="hidden" name="id" value="' . hsc($ID) . '" />';
         }
-        echo '<input type="hidden" name="acl_w" value="'.hsc($this->who).'" />'.NL;
-        echo '<input type="hidden" name="do" value="admin" />'.NL;
-        echo '<input type="hidden" name="page" value="acl" />'.NL;
-        echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />'.NL;
+        echo '<input type="hidden" name="acl_w" value="' . hsc($this->who) . '" />';
+        echo '<input type="hidden" name="do" value="admin" />';
+        echo '<input type="hidden" name="page" value="acl" />';
+        echo '<input type="hidden" name="sectok" value="' . getSecurityToken() . '" />';
         echo '<div class="table">';
         echo '<table class="inline">';
         echo '<tr>';
-        echo '<th>'.$this->getLang('where').'</th>';
-        echo '<th>'.$this->getLang('who').'</th>';
-        echo '<th>'.$this->getLang('perm').'<sup><a id="fnt__1" class="fn_top" href="#fn__1">1)</a></sup></th>';
-        echo '<th>'.$lang['btn_delete'].'</th>';
+        echo '<th>' . $this->getLang('where') . '</th>';
+        echo '<th>' . $this->getLang('who') . '</th>';
+        echo '<th>' . $this->getLang('perm') . '<sup><a id="fnt__1" class="fn_top" href="#fn__1">1)</a></sup></th>';
+        echo '<th>' . $lang['btn_delete'] . '</th>';
         echo '</tr>';
         foreach ($this->acl as $where => $set) {
             foreach ($set as $who => $perm) {
                 echo '<tr>';
                 echo '<td>';
                 if (substr($where, -1) == '*') {
-                    echo '<span class="aclns">'.hsc($where).'</span>';
+                    echo '<span class="aclns">' . hsc($where) . '</span>';
                     $ispage = false;
                 } else {
-                    echo '<span class="aclpage">'.hsc($where).'</span>';
+                    echo '<span class="aclpage">' . hsc($where) . '</span>';
                     $ispage = true;
                 }
                 echo '</td>';
 
                 echo '<td>';
                 if ($who[0] == '@') {
-                    echo '<span class="aclgroup">'.hsc($who).'</span>';
+                    echo '<span class="aclgroup">' . hsc($who) . '</span>';
                 } else {
-                    echo '<span class="acluser">'.hsc($who).'</span>';
+                    echo '<span class="acluser">' . hsc($who) . '</span>';
                 }
                 echo '</td>';
 
                 echo '<td>';
-                echo $this->makeCheckboxes($perm, $ispage, 'acl['.$where.']['.$who.']');
+                echo $this->makeCheckboxes($perm, $ispage, 'acl[' . $where . '][' . $who . ']');
                 echo '</td>';
 
                 echo '<td class="check">';
-                echo '<input type="checkbox" name="del['.hsc($where).'][]" value="'.hsc($who).'" />';
+                echo '<input type="checkbox" name="del[' . hsc($where) . '][]" value="' . hsc($who) . '" />';
                 echo '</td>';
                 echo '</tr>';
             }
@@ -685,12 +689,12 @@ class admin_plugin_acl extends AdminPlugin
 
         echo '<tr>';
         echo '<th class="action" colspan="4">';
-        echo '<button type="submit" name="cmd[update]">'.$lang['btn_update'].'</button>';
+        echo '<button type="submit" name="cmd[update]">' . $lang['btn_update'] . '</button>';
         echo '</th>';
         echo '</tr>';
         echo '</table>';
         echo '</div>';
-        echo '</div></form>'.NL;
+        echo '</div></form>';
     }
 
     /**
@@ -706,7 +710,7 @@ class admin_plugin_acl extends AdminPlugin
             if ($this->ns == '*') {
                 $check = '*';
             } else {
-                $check = $this->ns.':*';
+                $check = $this->ns . ':*';
             }
         } else {
             $check = $ID;
@@ -752,7 +756,7 @@ class admin_plugin_acl extends AdminPlugin
         global $config_cascade;
         $acl_user = auth_nameencode($acl_user, true);
 
-        $acl_pattern = '^'.preg_quote($acl_scope, '/').'[ \t]+'.$acl_user.'[ \t]+[0-8].*$';
+        $acl_pattern = '^' . preg_quote($acl_scope, '/') . '[ \t]+' . $acl_user . '[ \t]+[0-8].*$';
 
         return io_deleteFromFile($config_cascade['acl']['default'], "/$acl_pattern/", true);
     }
@@ -777,13 +781,13 @@ class admin_plugin_acl extends AdminPlugin
 
             //general checkbox attributes
             $atts = [
-                'type'  => 'radio',
-                'id'    => 'pbox'.$label,
-                'name'  => $name,
+                'type' => 'radio',
+                'id' => 'pbox' . $label,
+                'name' => $name,
                 'value' => $perm
             ];
             //dynamic attributes
-            if (!is_null($setperm) && $setperm == $perm) $atts['checked']  = 'checked';
+            if (!is_null($setperm) && $setperm == $perm) $atts['checked'] = 'checked';
             if ($ispage && $perm > AUTH_EDIT) {
                 $atts['disabled'] = 'disabled';
                 $class = ' class="disabled"';
@@ -792,10 +796,10 @@ class admin_plugin_acl extends AdminPlugin
             }
 
             //build code
-            $ret .= '<label for="pbox'.$label.'"'.$class.'>';
-            $ret .= '<input '.buildAttributes($atts).' />&#160;';
-            $ret .= $this->getLang('acl_perm'.$perm);
-            $ret .= '</label>'.NL;
+            $ret .= '<label for="pbox' . $label . '"' . $class . '>';
+            $ret .= '<input ' . buildAttributes($atts) . ' />&#160;';
+            $ret .= $this->getLang('acl_perm' . $perm);
+            $ret .= '</label>';
         }
         return $ret;
     }
@@ -825,46 +829,46 @@ class admin_plugin_acl extends AdminPlugin
             $inlist = true;
         }
 
-        echo '<select name="acl_t" class="edit">'.NL;
-        echo '  <option value="__g__" class="aclgroup"'.$gsel.'>'.$this->getLang('acl_group').'</option>'.NL;
-        echo '  <option value="__u__"  class="acluser"'.$usel.'>'.$this->getLang('acl_user').'</option>'.NL;
+        echo '<select name="acl_t" class="edit">';
+        echo '  <option value="__g__" class="aclgroup"' . $gsel . '>' . $this->getLang('acl_group') . '</option>';
+        echo '  <option value="__u__"  class="acluser"' . $usel . '>' . $this->getLang('acl_user') . '</option>';
         if (!empty($this->specials)) {
-            echo '  <optgroup label="&#160;">'.NL;
+            echo '  <optgroup label="&#160;">';
             foreach ($this->specials as $ug) {
                 if ($ug == $this->who) {
-                    $sel    = ' selected="selected"';
+                    $sel = ' selected="selected"';
                     $inlist = true;
                 } else {
                     $sel = '';
                 }
 
                 if ($ug[0] == '@') {
-                        echo '  <option value="'.hsc($ug).'" class="aclgroup"'.$sel.'>'.hsc($ug).'</option>'.NL;
+                    echo '  <option value="' . hsc($ug) . '" class="aclgroup"' . $sel . '>' . hsc($ug) . '</option>';
                 } else {
-                        echo '  <option value="'.hsc($ug).'" class="acluser"'.$sel.'>'.hsc($ug).'</option>'.NL;
+                    echo '  <option value="' . hsc($ug) . '" class="acluser"' . $sel . '>' . hsc($ug) . '</option>';
                 }
             }
-            echo '  </optgroup>'.NL;
+            echo '  </optgroup>';
         }
         if (!empty($this->usersgroups)) {
-            echo '  <optgroup label="&#160;">'.NL;
+            echo '  <optgroup label="&#160;">';
             foreach ($this->usersgroups as $ug) {
                 if ($ug == $this->who) {
-                    $sel    = ' selected="selected"';
+                    $sel = ' selected="selected"';
                     $inlist = true;
                 } else {
                     $sel = '';
                 }
 
                 if ($ug[0] == '@') {
-                        echo '  <option value="'.hsc($ug).'" class="aclgroup"'.$sel.'>'.hsc($ug).'</option>'.NL;
+                    echo '  <option value="' . hsc($ug) . '" class="aclgroup"' . $sel . '>' . hsc($ug) . '</option>';
                 } else {
-                        echo '  <option value="'.hsc($ug).'" class="acluser"'.$sel.'>'.hsc($ug).'</option>'.NL;
+                    echo '  <option value="' . hsc($ug) . '" class="acluser"' . $sel . '>' . hsc($ug) . '</option>';
                 }
             }
-            echo '  </optgroup>'.NL;
+            echo '  </optgroup>';
         }
-        echo '</select>'.NL;
+        echo '</select>';
         return $inlist;
     }
 }

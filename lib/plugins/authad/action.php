@@ -42,7 +42,7 @@ class action_plugin_authad extends ActionPlugin
             $usr = $auth->cleanUser($event->data['user']);
             $dom = $auth->getUserDomain($usr);
             if (!$dom) {
-                $usr = "$usr@".$INPUT->str('dom');
+                $usr = "$usr@" . $INPUT->str('dom');
             }
             $INPUT->post->set('u', $usr);
             $event->data['user'] = $usr;
@@ -85,7 +85,7 @@ class action_plugin_authad extends ActionPlugin
         }
 
         // add locate domain selector just after the username input box
-        $element = $form->addDropdown('dom', $domains, $this->getLang('domain'), $pos +1);
+        $element = $form->addDropdown('dom', $domains, $this->getLang('domain'), $pos + 1);
         $element->addClass('block');
     }
 }

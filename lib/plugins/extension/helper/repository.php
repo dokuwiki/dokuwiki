@@ -33,7 +33,7 @@ class helper_plugin_extension_repository extends Plugin
             $request_data = ['fmt' => 'php'];
             $request_needed = false;
             foreach ($list as $name) {
-                $cache = new Cache('##extension_manager##'.$name, '.repo');
+                $cache = new Cache('##extension_manager##' . $name, '.repo');
 
                 if (
                     !isset($this->loaded_extensions[$name]) &&
@@ -52,7 +52,7 @@ class helper_plugin_extension_repository extends Plugin
                 if ($data !== false) {
                     $extensions = unserialize($data);
                     foreach ($extensions as $extension) {
-                        $cache = new Cache('##extension_manager##'.$extension['plugin'], '.repo');
+                        $cache = new Cache('##extension_manager##' . $extension['plugin'], '.repo');
                         $cache->storeCache(serialize($extension));
                     }
                 } else {
@@ -73,10 +73,10 @@ class helper_plugin_extension_repository extends Plugin
         if ($this->has_access === null) {
             $cache = new Cache('##extension_manager###hasAccess', '.repo');
 
-            if (!$cache->useCache(['age' => 60*10, 'purge' => !$usecache])) {
+            if (!$cache->useCache(['age' => 60 * 10, 'purge' => !$usecache])) {
                 $httpclient = new DokuHTTPClient();
                 $httpclient->timeout = 5;
-                $data = $httpclient->get(self::EXTENSION_REPOSITORY_API.'?cmd=ping');
+                $data = $httpclient->get(self::EXTENSION_REPOSITORY_API . '?cmd=ping');
                 if ($data !== false) {
                     $this->has_access = true;
                     $cache->storeCache(1);
@@ -99,7 +99,7 @@ class helper_plugin_extension_repository extends Plugin
      */
     public function getData($name)
     {
-        $cache = new Cache('##extension_manager##'.$name, '.repo');
+        $cache = new Cache('##extension_manager##' . $name, '.repo');
 
         if (
             !isset($this->loaded_extensions[$name]) &&
@@ -108,7 +108,7 @@ class helper_plugin_extension_repository extends Plugin
         ) {
             $this->loaded_extensions[$name] = true;
             $httpclient = new DokuHTTPClient();
-            $data = $httpclient->get(self::EXTENSION_REPOSITORY_API.'?fmt=php&ext[]='.urlencode($name));
+            $data = $httpclient->get(self::EXTENSION_REPOSITORY_API . '?fmt=php&ext[]=' . urlencode($name));
             if ($data !== false) {
                 $result = unserialize($data);
                 if (count($result)) {
@@ -147,7 +147,7 @@ class helper_plugin_extension_repository extends Plugin
         // store cache info for each extension
         foreach ($result as $ext) {
             $name = $ext['plugin'];
-            $cache = new Cache('##extension_manager##'.$name, '.repo');
+            $cache = new Cache('##extension_manager##' . $name, '.repo');
             $cache->storeCache(serialize($ext));
             $ids[] = $name;
         }

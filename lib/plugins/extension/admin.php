@@ -54,8 +54,8 @@ class admin_plugin_extension extends AdminPlugin
 
         if (!$repository->hasAccess(!$INPUT->bool('purge'))) {
             $url = $this->gui->tabURL('', ['purge' => 1], '&');
-            msg($this->getLang('repo_error').
-                ' [<a href="'.$url.'">'.$this->getLang('repo_retry').'</a>]', -1);
+            msg($this->getLang('repo_error') .
+                ' [<a href="' . $url . '">' . $this->getLang('repo_retry') . '</a>]', -1);
         }
 
         if (!in_array('ssl', stream_get_transports())) {
@@ -78,7 +78,7 @@ class admin_plugin_extension extends AdminPlugin
                                 $installed = $extension->installOrUpdate();
                                 foreach ($installed as $info) {
                                     msg(sprintf(
-                                        $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
+                                        $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
                                         $info['base']
                                     ), 1);
                                 }
@@ -133,7 +133,7 @@ class admin_plugin_extension extends AdminPlugin
                 );
                 foreach ($installed as $info) {
                     msg(sprintf(
-                        $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
+                        $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
                         $info['base']
                     ), 1);
                 }
@@ -142,7 +142,7 @@ class admin_plugin_extension extends AdminPlugin
                 $installed = $extension->installFromUpload('installfile', $INPUT->post->bool('overwrite'));
                 foreach ($installed as $info) {
                     msg(sprintf(
-                        $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
+                        $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
                         $info['base']
                     ), 1);
                 }
@@ -159,8 +159,8 @@ class admin_plugin_extension extends AdminPlugin
      */
     public function html()
     {
-        echo '<h1>'.$this->getLang('menu').'</h1>'.DOKU_LF;
-        echo '<div id="extension__manager">'.DOKU_LF;
+        echo '<h1>' . $this->getLang('menu') . '</h1>' . DOKU_LF;
+        echo '<div id="extension__manager">' . DOKU_LF;
 
         $this->gui->tabNavigation();
 
@@ -179,7 +179,7 @@ class admin_plugin_extension extends AdminPlugin
                 $this->gui->tabPlugins();
         }
 
-        echo '</div>'.DOKU_LF;
+        echo '</div>' . DOKU_LF;
     }
 }
 

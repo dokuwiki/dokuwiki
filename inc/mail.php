@@ -23,7 +23,7 @@
 if (!defined('RFC2822_ATEXT')) define('RFC2822_ATEXT', "0-9a-zA-Z!#$%&'*+/=?^_`{|}~-");
 if (!defined('PREG_PATTERN_VALID_EMAIL')) define(
     'PREG_PATTERN_VALID_EMAIL',
-    '['.RFC2822_ATEXT.']+(?:\.['.RFC2822_ATEXT.']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,63})'
+    '[' . RFC2822_ATEXT . ']+(?:\.[' . RFC2822_ATEXT . ']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,63})'
 );
 
 /**
@@ -44,7 +44,7 @@ function mail_setup()
     // auto constructed address
     $host = @parse_url(DOKU_URL, PHP_URL_HOST);
     if (!$host) $host = 'example.com';
-    $noreply = 'noreply@'.$host;
+    $noreply = 'noreply@' . $host;
 
     $replace = [];
     if (!empty($USERINFO['mail'])) {
@@ -104,10 +104,10 @@ function mail_isvalid($email)
 function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit = true)
 {
     // split text into lines
-    $aLines= preg_split("/(?:\r\n|\r|\n)/", $sText);
+    $aLines = preg_split("/(?:\r\n|\r|\n)/", $sText);
     $cnt = count($aLines);
 
-    for ($i=0; $i<$cnt; $i++) {
+    for ($i = 0; $i < $cnt; $i++) {
         $sLine =& $aLines[$i];
         if ($sLine === '') continue; // do nothing, if empty
 
@@ -124,24 +124,24 @@ function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit =
         // encode x09,x20 at lineends
         {
             $iLength = strlen($sLine);
-            $iLastChar = ord($sLine[$iLength-1]);
+            $iLastChar = ord($sLine[$iLength - 1]);
 
             //              !!!!!!!!
             // imap_8_bit does not encode x20 at the very end of a text,
             // here is, where I don't agree with imap_8_bit,
             // please correct me, if I'm wrong,
             // or comment next line for RFC2045 conformance, if you like
-        if (!($bEmulate_imap_8bit && ($i==count($aLines)-1))) {
-            if (($iLastChar==0x09)||($iLastChar==0x20)) {
-                $sLine[$iLength-1]='=';
-                $sLine .= ($iLastChar==0x09)?'09':'20';
+        if (!($bEmulate_imap_8bit && ($i == count($aLines) - 1))) {
+            if (($iLastChar == 0x09) || ($iLastChar == 0x20)) {
+                $sLine[$iLength - 1] = '=';
+                $sLine .= ($iLastChar == 0x09) ? '09' : '20';
             }
         }
         }    // imap_8bit encodes x20 before chr(13), too
         // although IMHO not requested by RFC2045, why not do it safer :)
         // and why not encode any x20 around chr(10) or chr(13)
         if ($bEmulate_imap_8bit) {
-            $sLine=str_replace(' =0D', '=20=0D', $sLine);
+            $sLine = str_replace(' =0D', '=20=0D', $sLine);
             //$sLine=str_replace(' =0A','=20=0A',$sLine);
             //$sLine=str_replace('=0D ','=0D=20',$sLine);
             //$sLine=str_replace('=0A ','=0A=20',$sLine);
@@ -153,7 +153,7 @@ function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit =
         // and after soft linebreaks, as well,
         // but this wouldn't be caught by such an easy RegExp
         if ($maxlen) {
-            preg_match_all('/.{1,'.($maxlen - 2).'}([^=]{0,2})?/', $sLine, $aMatch);
+            preg_match_all('/.{1,' . ($maxlen - 2) . '}([^=]{0,2})?/', $sLine, $aMatch);
             $sLine = implode('=' . MAILHEADER_EOL, $aMatch[0]); // add soft crlf's
         }
     }

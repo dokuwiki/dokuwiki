@@ -113,7 +113,7 @@ function getSecurityToken()
 
     // CSRF checks are only for logged in users - do not generate for anonymous
     if (trim($user) == '' || trim($session) == '') return '';
-    return PassHash::hmac('md5', $session.$user, auth_cookiesalt());
+    return PassHash::hmac('md5', $session . $user, auth_cookiesalt());
 }
 
 /**
@@ -146,7 +146,7 @@ function checkSecurityToken($token = null)
  */
 function formSecurityToken($print = true)
 {
-    $ret = '<div class="no"><input type="hidden" name="sectok" value="'.getSecurityToken().'" /></div>'."\n";
+    $ret = '<div class="no"><input type="hidden" name="sectok" value="' . getSecurityToken() . '" /></div>' . "\n";
     if ($print) echo $ret;
     return $ret;
 }
@@ -358,7 +358,7 @@ function buildURLparams($params, $sep = '&amp;')
     foreach ($params as $key => $val) {
         if ($amp) $url .= $sep;
 
-        $url .= rawurlencode($key).'=';
+        $url .= rawurlencode($key) . '=';
         $url .= rawurlencode((string) $val);
         $amp = true;
     }
@@ -385,7 +385,7 @@ function buildAttributes($params, $skipEmptyStrings = false)
         if ($val === '' && $skipEmptyStrings) continue;
         if ($white) $url .= ' ';
 
-        $url .= $key.'="';
+        $url .= $key . '="';
         $url .= hsc($val);
         $url .= '"';
         $white = true;
@@ -527,17 +527,17 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
     }
 
     if ($conf['userewrite'] == 2) {
-        $xlink .= DOKU_SCRIPT.'/'.$id;
-        if ($urlParameters) $xlink .= '?'.$urlParameters;
+        $xlink .= DOKU_SCRIPT . '/' . $id;
+        if ($urlParameters) $xlink .= '?' . $urlParameters;
     } elseif ($conf['userewrite']) {
         $xlink .= $id;
-        if ($urlParameters) $xlink .= '?'.$urlParameters;
+        if ($urlParameters) $xlink .= '?' . $urlParameters;
     } elseif ($id !== '') {
-        $xlink .= DOKU_SCRIPT.'?id='.$id;
-        if ($urlParameters) $xlink .= $separator.$urlParameters;
+        $xlink .= DOKU_SCRIPT . '?id=' . $id;
+        if ($urlParameters) $xlink .= $separator . $urlParameters;
     } else {
         $xlink .= DOKU_SCRIPT;
-        if ($urlParameters) $xlink .= '?'.$urlParameters;
+        if ($urlParameters) $xlink .= '?' . $urlParameters;
     }
 
     return $xlink;
@@ -574,14 +574,14 @@ function exportlink($id = '', $format = 'raw', $urlParameters = '', $abs = false
     }
 
     if ($conf['userewrite'] == 2) {
-        $xlink .= DOKU_SCRIPT.'/'.$id.'?do=export_'.$format;
-        if ($urlParameters) $xlink .= $sep.$urlParameters;
+        $xlink .= DOKU_SCRIPT . '/' . $id . '?do=export_' . $format;
+        if ($urlParameters) $xlink .= $sep . $urlParameters;
     } elseif ($conf['userewrite'] == 1) {
-        $xlink .= '_export/'.$format.'/'.$id;
-        if ($urlParameters) $xlink .= '?'.$urlParameters;
+        $xlink .= '_export/' . $format . '/' . $id;
+        if ($urlParameters) $xlink .= '?' . $urlParameters;
     } else {
-        $xlink .= DOKU_SCRIPT.'?do=export_'.$format.$sep.'id='.$id;
-        if ($urlParameters) $xlink .= $sep.$urlParameters;
+        $xlink .= DOKU_SCRIPT . '?do=export_' . $format . $sep . 'id=' . $id;
+        if ($urlParameters) $xlink .= $sep . $urlParameters;
     }
 
     return $xlink;
@@ -627,12 +627,12 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
     } else {
         $matches = [];
         if (preg_match_all('/\b(w|h)=(\d*)\b/', $more, $matches, PREG_SET_ORDER) || $isexternalimage) {
-            $resize = ['w'=>0, 'h'=>0];
+            $resize = ['w' => 0, 'h' => 0];
             foreach ($matches as $match) {
                 $resize[$match[1]] = $match[2];
             }
             $more .= $more === '' ? '' : $sep;
-            $more .= 'tok='.media_get_token($id, $resize['w'], $resize['h']);
+            $more .= 'tok=' . media_get_token($id, $resize['w'], $resize['h']);
         }
         $more = str_replace('cache=cache', '', $more); //skip default
         $more = str_replace(',,', ',', $more);
@@ -648,8 +648,8 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
     // external URLs are always direct without rewriting
     if ($isexternalimage) {
         $xlink .= 'lib/exe/fetch.php';
-        $xlink .= '?'.$more;
-        $xlink .= $sep.'media='.rawurlencode($id);
+        $xlink .= '?' . $more;
+        $xlink .= $sep . 'media=' . rawurlencode($id);
         return $xlink;
     }
 
@@ -670,13 +670,13 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
 
     // build URL based on rewrite mode
     if ($conf['userewrite']) {
-        $xlink .= $script.'/'.$id;
-        if ($more) $xlink .= '?'.$more;
+        $xlink .= $script . '/' . $id;
+        if ($more) $xlink .= '?' . $more;
     } elseif ($more) {
-        $xlink .= $script.'?'.$more;
-        $xlink .= $sep.'media='.$id;
+        $xlink .= $script . '?' . $more;
+        $xlink .= $sep . 'media=' . $id;
     } else {
-        $xlink .= $script.'?media='.$id;
+        $xlink .= $script . '?media=' . $id;
     }
 
     return $xlink;
@@ -693,7 +693,7 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
  */
 function script()
 {
-    return DOKU_BASE.DOKU_SCRIPT;
+    return DOKU_BASE . DOKU_SCRIPT;
 }
 
 /**
@@ -759,7 +759,7 @@ function checkwordblock($text = '')
             if (empty($block)) continue;
             $re[] = $block;
         }
-        if (count($re) && preg_match('#('.implode('|', $re).')#si', $text, $matches)) {
+        if (count($re) && preg_match('#(' . implode('|', $re) . ')#si', $text, $matches)) {
             // prepare event data
             $data = [];
             $data['matches']        = $matches;
@@ -819,7 +819,7 @@ function clientIP($single = false)
 
     // skip trusted local addresses
     foreach ($ip as $i) {
-        if (!empty($conf['trustedproxy']) && preg_match('/'.$conf['trustedproxy'].'/', $i)) {
+        if (!empty($conf['trustedproxy']) && preg_match('/' . $conf['trustedproxy'] . '/', $i)) {
             continue;
         } else {
             return $i;
@@ -828,7 +828,7 @@ function clientIP($single = false)
 
     // still here? just use the last address
     // this case all ips in the list are trusted
-    return $ip[count($ip)-1];
+    return $ip[count($ip) - 1];
 }
 
 /**
@@ -967,7 +967,7 @@ function lock($id)
     if ($INPUT->server->str('REMOTE_USER')) {
         io_saveFile($lock, $INPUT->server->str('REMOTE_USER'));
     } else {
-        io_saveFile($lock, clientIP()."\n".session_id());
+        io_saveFile($lock, clientIP() . "\n" . session_id());
     }
 }
 
@@ -1093,14 +1093,14 @@ function pageTemplate($id)
             // if the before event did not set a template file, try to find one
             if (empty($data['tplfile'])) {
                 $path = dirname(wikiFN($id));
-                if (file_exists($path.'/_template.txt')) {
-                    $data['tplfile'] = $path.'/_template.txt';
+                if (file_exists($path . '/_template.txt')) {
+                    $data['tplfile'] = $path . '/_template.txt';
                 } else {
                     // search upper namespaces for templates
                     $len = strlen(rtrim($conf['datadir'], '/'));
                     while (strlen($path) >= $len) {
-                        if (file_exists($path.'/__template.txt')) {
-                            $data['tplfile'] = $path.'/__template.txt';
+                        if (file_exists($path . '/__template.txt')) {
+                            $data['tplfile'] = $path . '/__template.txt';
                             break;
                         }
                         $path = substr($path, 0, strrpos($path, '/'));
@@ -1262,7 +1262,7 @@ function con($pre, $text, $suf, $pretty = false)
         }
     }
 
-    return $pre.$text.$suf;
+    return $pre . $text . $suf;
 }
 
 /**
@@ -1278,7 +1278,7 @@ function con($pre, $text, $suf, $pretty = false)
  */
 function detectExternalEdit($id)
 {
-    dbg_deprecated(PageFile::class .'::detectExternalEdit()');
+    dbg_deprecated(PageFile::class . '::detectExternalEdit()');
     (new PageFile($id))->detectExternalEdit();
 }
 
@@ -1327,7 +1327,7 @@ function saveWikiText($id, $text, $summary, $minor = false)
  */
 function saveOldRevision($id)
 {
-    dbg_deprecated(PageFile::class .'::saveOldRevision()');
+    dbg_deprecated(PageFile::class . '::saveOldRevision()');
     return (new PageFile($id))->saveOldRevision();
 }
 
@@ -1442,7 +1442,7 @@ function filesize_h($size, $dec = 1)
         $i++;
     }
 
-    return round($size, $dec)."\xC2\xA0".$sizes[$i]; //non-breaking space
+    return round($size, $dec) . "\xC2\xA0" . $sizes[$i]; //non-breaking space
 }
 
 /**
@@ -1517,7 +1517,7 @@ function date_iso8601($int_date)
 {
     $date_mod     = date('Y-m-d\TH:i:s', $int_date);
     $pre_timezone = date('O', $int_date);
-    $time_zone    = substr($pre_timezone, 0, 3).":".substr($pre_timezone, 3, 2);
+    $time_zone    = substr($pre_timezone, 0, 3) . ":" . substr($pre_timezone, 3, 2);
     $date_mod .= $time_zone;
     return $date_mod;
 }
@@ -1560,7 +1560,7 @@ function obfuscate($email)
  */
 function unslash($string, $char = "'")
 {
-    return str_replace('\\'.$char, $char, $string);
+    return str_replace('\\' . $char, $char, $string);
 }
 
 /**
@@ -1624,7 +1624,7 @@ function shorten($keep, $short, $max, $min = 9, $char = '…')
     $max -= PhpString::strlen($keep);
     if ($max < $min) return $keep;
     $len = PhpString::strlen($short);
-    if ($len <= $max) return $keep.$short;
+    if ($len <= $max) return $keep . $short;
     $half = floor($max / 2);
     return $keep .
         PhpString::substr($short, 0, $half - 1) .
@@ -1685,9 +1685,9 @@ function userlink($username = null, $textonly = false)
     if ($username === null) {
         $data['username'] = $username = $INPUT->server->str('REMOTE_USER');
         if ($textonly) {
-            $data['name'] = $INFO['userinfo']['name']. ' (' . $INPUT->server->str('REMOTE_USER') . ')';
+            $data['name'] = $INFO['userinfo']['name'] . ' (' . $INPUT->server->str('REMOTE_USER') . ')';
         } else {
-            $data['name'] = '<bdi>' . hsc($INFO['userinfo']['name']) . '</bdi> '.
+            $data['name'] = '<bdi>' . hsc($INFO['userinfo']['name']) . '</bdi> ' .
                 '(<bdi>' . hsc($INPUT->server->str('REMOTE_USER')) . '</bdi>)';
         }
     }
@@ -1783,13 +1783,13 @@ function license_img($type)
     if (!$conf['license']) return '';
     if (!is_array($license[$conf['license']])) return '';
     $try   = [];
-    $try[] = 'lib/images/license/'.$type.'/'.$conf['license'].'.png';
-    $try[] = 'lib/images/license/'.$type.'/'.$conf['license'].'.gif';
+    $try[] = 'lib/images/license/' . $type . '/' . $conf['license'] . '.png';
+    $try[] = 'lib/images/license/' . $type . '/' . $conf['license'] . '.gif';
     if (substr($conf['license'], 0, 3) == 'cc-') {
-        $try[] = 'lib/images/license/'.$type.'/cc.png';
+        $try[] = 'lib/images/license/' . $type . '/cc.png';
     }
     foreach ($try as $src) {
-        if (file_exists(DOKU_INC.$src)) return $src;
+        if (file_exists(DOKU_INC . $src)) return $src;
     }
     return '';
 }
@@ -1865,9 +1865,9 @@ function send_redirect($url)
         (preg_match('|^Microsoft-IIS/(\d)\.\d$|', trim($INPUT->server->str('SERVER_SOFTWARE')), $matches)) &&
         $matches[1] < 6
     ) {
-        header('Refresh: 0;url='.$url);
+        header('Refresh: 0;url=' . $url);
     } else {
-        header('Location: '.$url);
+        header('Location: ' . $url);
     }
 
     // no exits during unit tests
@@ -1929,7 +1929,7 @@ function get_doku_pref($pref, $default)
 
         // due to #2721 there might be duplicate entries,
         // so we read from the end
-        for ($i = $cnt-2; $i >= 0; $i -= 2) {
+        for ($i = $cnt - 2; $i >= 0; $i -= 2) {
             if ($parts[$i] === $enc_pref) {
                 return urldecode($parts[$i + 1]);
             }
