@@ -13,7 +13,6 @@ use dokuwiki\Menu\Item\AbstractItem;
  */
 class MobileMenu implements MenuInterface
 {
-
     /**
      * Returns all items grouped by view
      *

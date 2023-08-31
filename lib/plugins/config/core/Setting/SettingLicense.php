@@ -7,7 +7,6 @@ namespace dokuwiki\plugin\config\core\Setting;
  */
 class SettingLicense extends SettingMultichoice
 {
-
     protected $choices = [''];      // none choosen
 
     /** @inheritdoc */

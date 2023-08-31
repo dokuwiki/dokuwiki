@@ -12,7 +12,6 @@ namespace dokuwiki\Extension;
  */
 abstract class ActionPlugin extends Plugin
 {
-
     /**
      * Registers a callback function for a given event
      *

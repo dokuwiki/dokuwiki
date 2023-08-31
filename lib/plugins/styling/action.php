@@ -1,7 +1,9 @@
 <?php
+
 use dokuwiki\Extension\ActionPlugin;
 use dokuwiki\Extension\EventHandler;
 use dokuwiki\Extension\Event;
+
 /**
  * DokuWiki Plugin styling (Action Component)
  *
@@ -10,7 +12,6 @@ use dokuwiki\Extension\Event;
  */
 class action_plugin_styling extends ActionPlugin
 {
-
     /**
      * Registers a callback functions
      *

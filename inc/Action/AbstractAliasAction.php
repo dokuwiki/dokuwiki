@@ -16,7 +16,6 @@ use dokuwiki\Action\Exception\FatalException;
  */
 abstract class AbstractAliasAction extends AbstractAction
 {
-
     /** @inheritdoc */
     public function minimumPermission()
     {

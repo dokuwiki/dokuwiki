@@ -1,5 +1,7 @@
 <?php
+
 use dokuwiki\Extension\AdminPlugin;
+
 /**
  * DokuWiki Plugin extension (Admin Component)
  *

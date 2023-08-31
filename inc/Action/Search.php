@@ -13,7 +13,6 @@ use dokuwiki\Action\Exception\ActionAbort;
  */
 class Search extends AbstractAction
 {
-
     protected $pageLookupResults = [];
     protected $fullTextResults = [];
     protected $highlight = [];
@@ -128,7 +127,6 @@ class Search extends AbstractAction
                         }
 
                         return '*' . $part . '*';
-
                     }, $queryParts);
                     $QUERY = implode(' ', $queryParts);
                 }

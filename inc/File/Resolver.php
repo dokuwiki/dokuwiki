@@ -7,7 +7,6 @@ namespace dokuwiki\File;
  */
 abstract class Resolver
 {
-
     /** @var string context page ID */
     protected $contextID;
     /** @var string namespace of context page ID */

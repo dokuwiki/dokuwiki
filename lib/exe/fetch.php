@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DokuWiki media passthrough file
  *

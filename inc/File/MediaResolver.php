@@ -7,7 +7,6 @@ namespace dokuwiki\File;
  */
 class MediaResolver extends Resolver
 {
-
     /** @inheritDoc */
     public function resolveId($id, $rev = '', $isDateAt = false)
     {

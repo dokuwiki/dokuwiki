@@ -1,10 +1,12 @@
 <?php
+
 /**
  * All output and handler function needed for the media management popup
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
+
 use dokuwiki\Ui\MediaRevisions;
 use dokuwiki\Cache\CacheImageMod;
 use splitbrain\slika\Exception;
@@ -1287,7 +1289,6 @@ function media_details($image, $auth, $rev = '', $meta = false)
         echo '<dd>' . $lang['nothingfound'] . '</dd>';
     }
     echo '</dl>' . NL;
-
 }
 
 /**

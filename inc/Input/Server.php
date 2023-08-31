@@ -7,7 +7,6 @@ namespace dokuwiki\Input;
  */
 class Server extends Input
 {
-
     /** @noinspection PhpMissingParentConstructorInspection
      * Initialize the $access array, remove subclass members
      */

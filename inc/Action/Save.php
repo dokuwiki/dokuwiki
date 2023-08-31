@@ -14,7 +14,6 @@ use dokuwiki\Action\Exception\ActionException;
  */
 class Save extends AbstractAction
 {
-
     /** @inheritdoc */
     public function minimumPermission()
     {

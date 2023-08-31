@@ -7,7 +7,6 @@ namespace dokuwiki\ChangeLog;
  */
 class PageChangeLog extends ChangeLog
 {
-
     /**
      * Returns path to changelog
      *

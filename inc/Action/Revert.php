@@ -14,7 +14,6 @@ use dokuwiki\Action\Exception\ActionException;
  */
 class Revert extends AbstractUserAction
 {
-
     /** @inheritdoc */
     public function minimumPermission()
     {

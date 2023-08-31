@@ -9,7 +9,6 @@ namespace dokuwiki\Menu\Item;
  */
 class Index extends AbstractItem
 {
-
     /** @inheritdoc */
     public function __construct()
     {

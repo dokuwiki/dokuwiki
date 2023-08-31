@@ -1,4 +1,5 @@
 <?php
+
 /*><div style="width:60%; margin: auto; background-color: #fcc;
                 border: 1px solid #faa; padding: 0.5em 1em;">
     <h1 style="font-size: 120%">No PHP Support</h1>

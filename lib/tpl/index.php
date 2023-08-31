@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file reads the style.ini of the used template and displays the
  * replacements defined in it. Color replacements will be displayed
@@ -8,6 +9,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Anika Henke <anika@selfthinker.org>
  */
+
 // phpcs:disable PSR1.Files.SideEffects
 if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
 if (!defined('NOSESSION')) define('NOSESSION', 1);

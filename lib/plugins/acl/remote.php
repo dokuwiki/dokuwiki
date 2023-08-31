@@ -8,7 +8,6 @@ use dokuwiki\Remote\AccessDeniedException;
  */
 class remote_plugin_acl extends RemotePlugin
 {
-
     /**
      * Returns details about the remote plugin methods
      *

@@ -7,7 +7,6 @@ namespace dokuwiki\Utf8;
  */
 class Unicode
 {
-
     /**
      * Takes an UTF-8 string and returns an array of ints representing the
      * Unicode characters. Astral planes are supported ie. the ints in the

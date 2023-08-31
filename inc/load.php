@@ -1,9 +1,11 @@
 <?php
+
 /**
  * Load all internal libraries and setup class autoloader
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
+
 use dokuwiki\ErrorHandler;
 use dokuwiki\Extension\PluginController;
 

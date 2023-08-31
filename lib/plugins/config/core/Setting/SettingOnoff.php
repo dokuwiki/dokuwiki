@@ -7,7 +7,6 @@ namespace dokuwiki\plugin\config\core\Setting;
  */
 class SettingOnoff extends SettingNumeric
 {
-
     /**
      * We treat the strings 'false' and 'off' as false
      * @inheritdoc

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DokuWiki Default Template 2012
  *

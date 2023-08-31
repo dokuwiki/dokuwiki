@@ -13,7 +13,6 @@ use dokuwiki\Action\Exception\ActionAbort;
  */
 class Recover extends AbstractAliasAction
 {
-
     /**
      * @inheritdoc
      * @throws ActionAbort

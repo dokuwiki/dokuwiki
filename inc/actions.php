@@ -1,10 +1,12 @@
 <?php
+
 /**
  * DokuWiki Actions
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
+
 use dokuwiki\ActionRouter;
 use dokuwiki\Extension\Event;
 

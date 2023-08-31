@@ -9,7 +9,6 @@ namespace dokuwiki\Menu;
  */
 class SiteMenu extends AbstractMenu
 {
-
     protected $view = 'site';
 
     protected $types = ['Recent', 'Media', 'Index'];

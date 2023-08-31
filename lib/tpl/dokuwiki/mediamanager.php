@@ -1,10 +1,12 @@
 <?php
+
 /**
  * DokuWiki Media Manager Popup
  *
  * @author   Andreas Gohr <andi@splitbrain.org>
  * @license  GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
+
 // must be run from within DokuWiki
 if (!defined('DOKU_INC')) die();
 

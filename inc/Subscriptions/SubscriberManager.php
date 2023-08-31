@@ -8,7 +8,6 @@ use Exception;
 
 class SubscriberManager
 {
-
     /**
      * Check if subscription system is enabled
      *

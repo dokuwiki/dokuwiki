@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Utilities for collecting data from config files
  *
@@ -14,6 +15,7 @@
 
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
+
 const DOKU_CONF_NEGATION = '!';
 
 /**

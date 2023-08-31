@@ -12,7 +12,6 @@ namespace dokuwiki\Extension;
  */
 abstract class AdminPlugin extends Plugin
 {
-
     /**
      * Return the text that is displayed at the main admin menu
      * (Default localized language string 'menu' is returned, override this function for setting another name)

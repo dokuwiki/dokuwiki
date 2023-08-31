@@ -1,9 +1,9 @@
 <?php
 
-
 namespace dokuwiki\HTTP;
 
 use dokuwiki\Extension\Event;
+
 /**
  * Adds DokuWiki specific configs to the HTTP client
  *
@@ -12,7 +12,6 @@ use dokuwiki\Extension\Event;
  */
 class DokuHTTPClient extends HTTPClient
 {
-
     /**
      * Constructor.
      *

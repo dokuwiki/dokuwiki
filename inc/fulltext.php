@@ -1,10 +1,12 @@
 <?php
+
 /**
  * DokuWiki fulltextsearch functions using the index
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
+
 use dokuwiki\Utf8\Asian;
 use dokuwiki\Search\Indexer;
 use dokuwiki\Extension\Event;

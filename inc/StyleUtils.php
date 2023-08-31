@@ -9,7 +9,6 @@ namespace dokuwiki;
  */
 class StyleUtils
 {
-
     /** @var string current template */
     protected $tpl;
     /** @var bool reinitialize styles config */

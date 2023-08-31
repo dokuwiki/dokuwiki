@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Lexer adapted from Simple Test: http://sourceforge.net/projects/simpletest/
  * For an intro to the Lexer see:

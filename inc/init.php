@@ -1,7 +1,9 @@
 <?php
+
 /**
  * Initialize some defaults needed for DokuWiki
  */
+
 use dokuwiki\Extension\PluginController;
 use dokuwiki\ErrorHandler;
 use dokuwiki\Input\Input;
@@ -311,7 +313,8 @@ function init_paths()
         $conf['changelog'] ?? $conf['savedir'] . '/changes.log'
     );
     if ($conf['changelog_old'] == '') {
-        unset($conf['changelog_old']); }
+        unset($conf['changelog_old']);
+    }
     // hardcoded changelog because it is now a cache that lives in meta
     $conf['changelog'] = $conf['metadir'] . '/_dokuwiki.changes';
     $conf['media_changelog'] = $conf['metadir'] . '/_media.changes';

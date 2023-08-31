@@ -1,12 +1,9 @@
 <?php
 
-
 namespace dokuwiki\Subscriptions;
-
 
 class MediaSubscriptionSender extends SubscriptionSender
 {
-
     /**
      * Send the diff for some media change
      *

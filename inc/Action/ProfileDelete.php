@@ -15,7 +15,6 @@ use dokuwiki\Extension\AuthPlugin;
  */
 class ProfileDelete extends AbstractUserAction
 {
-
     /** @inheritdoc */
     public function minimumPermission()
     {

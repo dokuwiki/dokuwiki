@@ -1,4 +1,5 @@
 <?php
+
 // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 
 namespace dokuwiki\Extension;
@@ -8,7 +9,6 @@ namespace dokuwiki\Extension;
  */
 class EventHandler
 {
-
     // public properties:  none
 
     // private properties

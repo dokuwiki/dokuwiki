@@ -16,7 +16,6 @@ use dokuwiki\Action\Plugin;
  */
 class ActionRouter
 {
-
     /** @var  AbstractAction */
     protected $action;
 

@@ -7,7 +7,6 @@ namespace dokuwiki\plugin\config\core\Setting;
  */
 class SettingPassword extends SettingString
 {
-
     protected $code = 'plain';  // mechanism to be used to obscure passwords
 
     /** @inheritdoc */

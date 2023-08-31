@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Common DokuWiki functions
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
+
 use dokuwiki\PassHash;
 use dokuwiki\Draft;
 use dokuwiki\Utf8\Clean;

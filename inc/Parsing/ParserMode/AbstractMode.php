@@ -3,6 +3,7 @@
 namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Lexer\Lexer;
+
 /**
  * This class and all the subclasses below are used to reduce the effort required to register
  * modes with the Lexer.

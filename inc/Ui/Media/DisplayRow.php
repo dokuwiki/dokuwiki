@@ -51,7 +51,6 @@ class DisplayRow extends DisplayTile
         if ($this->mediaFile->isImage()) $this->showDetails();
         echo '<div class="clearer"></div>' . NL;
         echo '</div>' . NL;
-
     }
 
     /**

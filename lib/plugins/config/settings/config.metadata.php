@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Metadata for configuration manager plugin
  *

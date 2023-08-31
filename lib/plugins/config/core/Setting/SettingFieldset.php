@@ -9,7 +9,6 @@ namespace dokuwiki\plugin\config\core\Setting;
  */
 class SettingFieldset extends Setting
 {
-
     /** @inheritdoc */
     public function shouldHaveDefault()
     {

@@ -13,7 +13,6 @@ namespace dokuwiki\Input;
  */
 class Input
 {
-
     /** @var Post Access $_POST parameters */
     public $post;
     /** @var Get Access $_GET parameters */

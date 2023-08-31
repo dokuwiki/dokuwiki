@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Utilities for accessing the parser
  *
@@ -6,6 +7,7 @@
  * @author     Harry Fuecks <hfuecks@gmail.com>
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
+
 use dokuwiki\Extension\PluginInterface;
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;

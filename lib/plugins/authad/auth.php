@@ -1,4 +1,5 @@
 <?php
+
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Utf8\Clean;
 use dokuwiki\Utf8\PhpString;
@@ -43,7 +44,6 @@ use dokuwiki\Logger;
  */
 class auth_plugin_authad extends AuthPlugin
 {
-
     /**
      * @var array hold connection data for a specific AD domain
      */

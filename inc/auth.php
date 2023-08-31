@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Authentication library
  *
@@ -8,6 +9,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
+
 use phpseclib\Crypt\AES;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Extension\AuthPlugin;

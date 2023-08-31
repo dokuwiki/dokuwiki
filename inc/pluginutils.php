@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Utilities for handling plugins
  *

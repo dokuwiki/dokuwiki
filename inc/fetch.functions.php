@@ -1,6 +1,8 @@
 <?php
+
 use dokuwiki\HTTP\Headers;
 use dokuwiki\Utf8\PhpString;
+
 /**
  * Functions used by lib/exe/fetch.php
  * (not included by other parts of dokuwiki)

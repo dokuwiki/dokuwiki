@@ -3,6 +3,7 @@
 use dokuwiki\Extension\ActionPlugin;
 use dokuwiki\Extension\EventHandler;
 use dokuwiki\Extension\Event;
+
 /** DokuWiki Plugin extension (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,7 +11,6 @@ use dokuwiki\Extension\Event;
  */
 class action_plugin_extension extends ActionPlugin
 {
-
     /**
      * Registers a callback function for a given event
      *

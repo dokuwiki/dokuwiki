@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Forwarder/Router to doku.php
  *
@@ -13,6 +14,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
+
 if (PHP_SAPI != 'cli-server') {
     if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
     require_once(DOKU_INC . 'inc/init.php');

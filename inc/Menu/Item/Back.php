@@ -10,7 +10,6 @@ namespace dokuwiki\Menu\Item;
  */
 class Back extends AbstractItem
 {
-
     /** @inheritdoc */
     public function __construct()
     {

@@ -6,7 +6,6 @@ use Exception;
 
 class SubscriberRegexBuilder
 {
-
     /**
      * Construct a regular expression for parsing a subscription definition line
      *

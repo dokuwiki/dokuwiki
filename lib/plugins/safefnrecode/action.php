@@ -3,6 +3,7 @@
 use dokuwiki\Extension\ActionPlugin;
 use dokuwiki\Extension\EventHandler;
 use dokuwiki\Extension\Event;
+
 /**
  * DokuWiki Plugin safefnrecode (Action Component)
  *
@@ -11,7 +12,6 @@ use dokuwiki\Extension\Event;
  */
 class action_plugin_safefnrecode extends ActionPlugin
 {
-
     /** @inheritdoc */
     public function register(EventHandler $controller)
     {

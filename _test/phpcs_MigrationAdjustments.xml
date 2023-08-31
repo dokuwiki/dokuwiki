@@ -6,16 +6,6 @@
     <rule ref="./phpcs.xml">
         <!-- Rules with automatic fixes that we want to adhere to, but currently don't -->
         <exclude name="Generic.Formatting.DisallowMultipleStatements.SameLine"/>
-
-        <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore"/>
-
-
-        <exclude name="PSR2.Methods.FunctionClosingBrace.SpacingBeforeClose"/>
-        <exclude name="PSR2.Namespaces.NamespaceDeclaration.BlankLineAfter"/>
-        <exclude name="PSR2.Namespaces.UseDeclaration.SpaceAfterLastUse"/>
-
-        <exclude name="PSR12.Classes.OpeningBraceSpace.Found"/>
-        <exclude name="PSR12.Files.FileHeader.SpacingAfterBlock"/>
     </rule>
 
     <!-- for now we mix declarations and execution here (mostly for defines) -->

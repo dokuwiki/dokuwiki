@@ -14,7 +14,6 @@ use dokuwiki\Action\Exception\ActionAbort;
  */
 class Draftdel extends AbstractAction
 {
-
     /** @inheritdoc */
     public function minimumPermission()
     {

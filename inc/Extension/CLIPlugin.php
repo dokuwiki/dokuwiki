@@ -3,6 +3,7 @@
 namespace dokuwiki\Extension;
 
 use splitbrain\phpcli\CLI;
+
 /**
  * CLI plugin prototype
  *

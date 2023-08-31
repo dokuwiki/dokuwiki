@@ -7,7 +7,6 @@ namespace dokuwiki\ChangeLog;
  */
 class MediaChangeLog extends ChangeLog
 {
-
     /**
      * Returns path to changelog
      *

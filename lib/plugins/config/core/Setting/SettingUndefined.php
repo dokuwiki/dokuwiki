@@ -10,7 +10,6 @@ use dokuwiki\plugin\config\core\Configuration;
  */
 class SettingUndefined extends SettingHidden
 {
-
     protected $errorMessage = '_msg_setting_undefined';
 
     /** @inheritdoc */

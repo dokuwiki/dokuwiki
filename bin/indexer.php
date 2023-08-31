@@ -13,7 +13,6 @@ require_once(DOKU_INC . 'inc/init.php');
  */
 class IndexerCLI extends CLI
 {
-
     private $quiet = false;
     private $clear = false;
 

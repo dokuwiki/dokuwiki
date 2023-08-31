@@ -1,4 +1,5 @@
 <?php
+
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\PassHash;
 use dokuwiki\Utf8\Sort;

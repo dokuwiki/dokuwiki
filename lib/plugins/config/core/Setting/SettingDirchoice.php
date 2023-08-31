@@ -7,7 +7,6 @@ namespace dokuwiki\plugin\config\core\Setting;
  */
 class SettingDirchoice extends SettingMultichoice
 {
-
     protected $dir = '';
 
     /** @inheritdoc */

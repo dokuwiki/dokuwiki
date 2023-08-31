@@ -1,10 +1,12 @@
 <?php
+
 /**
  * DokuWiki Plugin extension (Helper Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Michael Hamann <michael@content-space.de>
  */
+
 use dokuwiki\Extension\Plugin;
 use dokuwiki\Cache\Cache;
 use dokuwiki\HTTP\DokuHTTPClient;
@@ -15,7 +17,6 @@ use dokuwiki\Extension\PluginController;
  */
 class helper_plugin_extension_repository extends Plugin
 {
-
     public const EXTENSION_REPOSITORY_API = 'https://www.dokuwiki.org/lib/plugins/pluginrepo/api.php';
 
     private $loaded_extensions = [];

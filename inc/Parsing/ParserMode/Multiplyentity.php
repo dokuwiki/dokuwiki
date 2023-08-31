@@ -7,7 +7,6 @@ namespace dokuwiki\Parsing\ParserMode;
  */
 class Multiplyentity extends AbstractMode
 {
-
     /** @inheritdoc */
     public function connectTo($mode)
     {

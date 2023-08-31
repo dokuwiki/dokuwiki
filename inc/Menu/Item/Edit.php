@@ -10,7 +10,6 @@ namespace dokuwiki\Menu\Item;
  */
 class Edit extends AbstractItem
 {
-
     /** @inheritdoc */
     public function __construct()
     {

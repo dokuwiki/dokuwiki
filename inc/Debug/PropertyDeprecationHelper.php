@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Trait for issuing warnings on deprecated access.
  *
  * Adapted from https://github.com/wikimedia/mediawiki/blob/4aedefdbfd193f323097354bf581de1c93f02715/includes/debug/DeprecationHelper.php
  *
  */
-
 
 namespace dokuwiki\Debug;
 
@@ -32,7 +32,6 @@ namespace dokuwiki\Debug;
  */
 trait PropertyDeprecationHelper
 {
-
     /**
      * List of deprecated properties, in <property name> => <class> format
      * where <class> is the the name of the class defining the property

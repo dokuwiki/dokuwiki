@@ -1,6 +1,5 @@
 <?php
 
-
 namespace dokuwiki\Debug;
 
 use dokuwiki\Extension\Event;
@@ -139,7 +138,6 @@ class DebugHelper
             $file,
             $line
         );
-
     }
 
     /**

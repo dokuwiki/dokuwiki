@@ -1,4 +1,5 @@
 <?php
+
 $meta['server']      = array('string','_caution' => 'danger');
 $meta['port']        = array('numeric','_caution' => 'danger');
 $meta['usertree']    = array('string','_caution' => 'danger');

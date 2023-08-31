@@ -16,7 +16,6 @@ use dokuwiki\Utf8\Sort;
  */
 class Ajax
 {
-
     /**
      * Execute the given call
      *
@@ -444,6 +443,5 @@ class Ajax
             }
             echo '</div>';
         }
-
     }
 }

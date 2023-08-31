@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XMLRPC API backend
  */

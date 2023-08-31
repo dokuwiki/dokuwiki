@@ -3,6 +3,7 @@
 use dokuwiki\Extension\ActionPlugin;
 use dokuwiki\Extension\EventHandler;
 use dokuwiki\Extension\Event;
+
 /**
  * Popularity Feedback Plugin
  *
@@ -10,7 +11,6 @@ use dokuwiki\Extension\Event;
  */
 class action_plugin_popularity extends ActionPlugin
 {
-
     /**
      * @var helper_plugin_popularity
      */

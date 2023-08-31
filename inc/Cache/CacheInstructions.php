@@ -7,7 +7,6 @@ namespace dokuwiki\Cache;
  */
 class CacheInstructions extends CacheParser
 {
-
     /**
      * @param string $id page id
      * @param string $file source file for cache

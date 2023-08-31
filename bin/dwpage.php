@@ -14,7 +14,6 @@ require_once(DOKU_INC . 'inc/init.php');
  */
 class PageCLI extends CLI
 {
-
     protected $force = false;
     protected $username = '';
 

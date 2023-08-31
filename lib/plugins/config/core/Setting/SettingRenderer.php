@@ -1,4 +1,5 @@
 <?php
+
 /**
  * additional setting classes specific to these settings
  *

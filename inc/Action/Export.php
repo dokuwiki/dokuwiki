@@ -14,7 +14,6 @@ use dokuwiki\Extension\Event;
  */
 class Export extends AbstractAction
 {
-
     /** @inheritdoc */
     public function minimumPermission()
     {

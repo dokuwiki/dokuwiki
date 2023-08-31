@@ -13,7 +13,6 @@ use dokuwiki\Extension\Event;
  */
 class action_plugin_testing extends ActionPlugin
 {
-
     /** @inheritdoc */
     public function register(EventHandler $controller)
     {

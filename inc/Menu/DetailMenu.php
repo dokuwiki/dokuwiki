@@ -10,7 +10,6 @@ namespace dokuwiki\Menu;
  */
 class DetailMenu extends AbstractMenu
 {
-
     protected $view = 'detail';
 
     protected $types = ['MediaManager', 'ImgBackto', 'Top'];

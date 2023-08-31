@@ -102,7 +102,6 @@ class LegacyForm extends Form
                 $this->addHTML($element);
             }
         }
-
     }
 
     /**

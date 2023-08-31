@@ -11,7 +11,6 @@ use dokuwiki\StyleUtils;
  */
 class admin_plugin_styling extends AdminPlugin
 {
-
     public $ispopup = false;
 
     /**

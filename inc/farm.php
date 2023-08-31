@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This overwrites DOKU_CONF. Each animal gets its own configuration and data directory.
  * This can be used together with preload.php. See preload.php.dist for an example setup.

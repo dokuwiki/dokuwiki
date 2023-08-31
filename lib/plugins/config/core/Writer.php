@@ -1,6 +1,7 @@
 <?php
 
 namespace dokuwiki\plugin\config\core;
+
 use dokuwiki\plugin\config\core\Setting\Setting;
 use dokuwiki\Logger;
 
@@ -88,7 +89,8 @@ class Writer
     {
         if (!function_exists('opcache_invalidate')) return;
         set_error_handler(function ($errNo, $errMsg) {
-            Logger::debug('Unable to invalidate opcache: ' . $errMsg); });
+            Logger::debug('Unable to invalidate opcache: ' . $errMsg);
+        });
         opcache_invalidate($file);
         restore_error_handler();
     }

@@ -17,7 +17,6 @@ use dokuwiki\Utf8\Sort;
  */
 class Admin extends Ui
 {
-
     protected $forAdmins = ['usermanager', 'acl', 'extension', 'config', 'logviewer', 'styling'];
     protected $forManagers = ['revert', 'popularity'];
     /** @var array[] */

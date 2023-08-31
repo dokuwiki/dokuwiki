@@ -9,7 +9,6 @@ namespace dokuwiki\Menu\Item;
  */
 class Login extends AbstractItem
 {
-
     /** @inheritdoc */
     public function __construct()
     {

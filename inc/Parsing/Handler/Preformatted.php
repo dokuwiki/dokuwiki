@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\Handler;
 
 class Preformatted extends AbstractRewriter
 {
-
     protected $pos;
     protected $text = '';
 

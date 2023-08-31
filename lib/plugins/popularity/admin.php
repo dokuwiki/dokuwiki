@@ -1,6 +1,7 @@
 <?php
 
 use dokuwiki\Extension\AdminPlugin;
+
 /**
  * Popularity Feedback Plugin
  *
@@ -9,7 +10,6 @@ use dokuwiki\Extension\AdminPlugin;
  */
 class admin_plugin_popularity extends AdminPlugin
 {
-
     /** @var helper_plugin_popularity */
     protected $helper;
     protected $sentStatus;

@@ -7,7 +7,6 @@ namespace dokuwiki\plugin\config\core\Setting;
  */
 class SettingImConvert extends SettingString
 {
-
     /** @inheritdoc */
     public function update($input)
     {

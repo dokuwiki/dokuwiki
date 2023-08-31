@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DokuWiki Image Detail Page
  *

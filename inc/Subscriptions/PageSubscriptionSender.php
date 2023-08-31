@@ -1,8 +1,6 @@
 <?php
 
-
 namespace dokuwiki\Subscriptions;
-
 
 use Diff;
 use InlineDiffFormatter;
@@ -10,7 +8,6 @@ use UnifiedDiffFormatter;
 
 class PageSubscriptionSender extends SubscriptionSender
 {
-
     /**
      * Send the diff for some page change
      *

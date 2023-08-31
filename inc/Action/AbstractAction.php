@@ -14,7 +14,6 @@ use dokuwiki\Action\Exception\FatalException;
  */
 abstract class AbstractAction
 {
-
     /** @var string holds the name of the action (lowercase class name, no namespace) */
     protected $actionname;
 

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Information and debugging functions
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
+
 use dokuwiki\Extension\Event;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Debug\DebugHelper;
@@ -345,7 +347,6 @@ function check()
                  Consider configuring a sync with a NTP server.  Diff: {$diff}s");
         }
     }
-
 }
 
 /**

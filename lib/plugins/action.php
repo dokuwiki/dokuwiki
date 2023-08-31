@@ -1,6 +1,7 @@
 <?php
 
 use dokuwiki\Debug\DebugHelper;
+
 DebugHelper::dbgDeprecatedFunction(
     'Autoloading',
     1,

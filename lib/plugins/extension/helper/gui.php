@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DokuWiki Plugin extension (Helper Component)
  *

@@ -15,7 +15,6 @@ require_once(DOKU_INC . 'inc/init.php');
  */
 class WantedPagesCLI extends CLI
 {
-
     protected const DIR_CONTINUE = 1;
     protected const DIR_NS = 2;
     protected const DIR_PAGE = 3;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DokuWiki StyleSheet creator
  *
@@ -420,7 +421,6 @@ function css_loadfile($file, $location = '')
  */
 class DokuCssFile
 {
-
     protected $filepath;             // file system path to the CSS/Less file
     protected $location;             // base url location of the CSS/Less file
     protected $relative_path;

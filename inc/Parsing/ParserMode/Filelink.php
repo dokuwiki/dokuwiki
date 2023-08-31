@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\ParserMode;
 
 class Filelink extends AbstractMode
 {
-
     protected $pattern;
 
     /** @inheritdoc */

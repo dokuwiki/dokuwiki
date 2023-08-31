@@ -3,6 +3,7 @@
 use dokuwiki\Extension\ActionPlugin;
 use dokuwiki\Extension\EventHandler;
 use dokuwiki\Extension\Event;
+
 /**
  * AJAX call handler for ACL plugin
  *
@@ -14,7 +15,6 @@ use dokuwiki\Extension\Event;
  */
 class action_plugin_acl extends ActionPlugin
 {
-
     /**
      * Registers a callback function for a given event
      *

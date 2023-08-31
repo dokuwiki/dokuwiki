@@ -15,7 +15,6 @@ namespace dokuwiki\Action\Exception;
  */
 class ActionException extends \Exception
 {
-
     /** @var string the new action */
     protected $newaction;
 

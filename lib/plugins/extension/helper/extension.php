@@ -1,10 +1,12 @@
 <?php
+
 /**
  * DokuWiki Plugin extension (Helper Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Michael Hamann <michael@content-space.de>
  */
+
 use dokuwiki\Extension\Plugin;
 use dokuwiki\Extension\PluginInterface;
 use dokuwiki\Utf8\PhpString;

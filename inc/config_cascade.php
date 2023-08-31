@@ -1,10 +1,12 @@
 <?php
+
 /**
  * The default config cascade
  *
  * This array configures the default locations of various files in the
  * DokuWiki directory hierarchy. It can be overriden in inc/preload.php
  */
+
 $config_cascade = array_merge(
     [
         'main' => [

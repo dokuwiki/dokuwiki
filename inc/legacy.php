@@ -1,4 +1,5 @@
 <?php
+
 /**
  * We map legacy class names to the new namespaced versions here
  *

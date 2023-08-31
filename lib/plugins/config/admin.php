@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Configuration Manager admin plugin
  *
@@ -6,6 +7,7 @@
  * @author     Christopher Smith <chris@jalakai.co.uk>
  * @author     Ben Coburn <btcoburn@silicodon.net>
  */
+
 use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\plugin\config\core\Configuration;
 use dokuwiki\plugin\config\core\Setting\Setting;
@@ -18,7 +20,6 @@ use dokuwiki\plugin\config\core\Setting\SettingHidden;
  */
 class admin_plugin_config extends AdminPlugin
 {
-
     protected const IMGDIR = DOKU_BASE . 'lib/plugins/config/images/';
 
     /** @var Configuration */

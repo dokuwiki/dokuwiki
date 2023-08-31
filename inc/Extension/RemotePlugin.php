@@ -13,7 +13,6 @@ use ReflectionMethod;
  */
 abstract class RemotePlugin extends Plugin
 {
-
     private Api $api;
 
     /**

@@ -38,7 +38,6 @@ use dokuwiki\Extension\RemotePlugin;
  */
 class Api
 {
-
     /**
      * @var ApiCore|\RemoteAPICoreTest
      */

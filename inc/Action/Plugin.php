@@ -13,7 +13,6 @@ use dokuwiki\Extension\Event;
  */
 class Plugin extends AbstractAction
 {
-
     /** @inheritdoc */
     public function minimumPermission()
     {

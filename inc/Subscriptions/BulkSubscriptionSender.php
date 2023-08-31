@@ -1,8 +1,6 @@
 <?php
 
-
 namespace dokuwiki\Subscriptions;
-
 
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\AuthPlugin;
@@ -11,7 +9,6 @@ use Exception;
 
 class BulkSubscriptionSender extends SubscriptionSender
 {
-
     /**
      * Send digest and list subscriptions
      *

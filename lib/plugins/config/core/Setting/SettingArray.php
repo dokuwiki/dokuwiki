@@ -7,7 +7,6 @@ namespace dokuwiki\plugin\config\core\Setting;
  */
 class SettingArray extends Setting
 {
-
     /**
      * Create an array from a string
      *

@@ -11,7 +11,6 @@ namespace dokuwiki\Form;
  */
 class FieldsetOpenElement extends TagOpenElement
 {
-
     /**
      * @param string $legend
      * @param array $attributes

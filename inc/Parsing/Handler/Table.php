@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\Handler;
 
 class Table extends AbstractRewriter
 {
-
     protected $tableCalls = [];
     protected $maxCols = 0;
     protected $maxRows = 1;

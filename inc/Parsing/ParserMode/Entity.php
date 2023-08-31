@@ -6,7 +6,6 @@ use dokuwiki\Parsing\Lexer\Lexer;
 
 class Entity extends AbstractMode
 {
-
     protected $entities = [];
     protected $pattern = '';
 

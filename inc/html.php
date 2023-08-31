@@ -1,10 +1,12 @@
 <?php
+
 /**
  * HTML output functions
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
+
 use dokuwiki\Ui\MediaRevisions;
 use dokuwiki\Form\Form;
 use dokuwiki\Action\Denied;

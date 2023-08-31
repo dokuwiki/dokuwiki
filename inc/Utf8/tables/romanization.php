@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Romanization lookup table
  *
@@ -24,6 +25,7 @@
  * @link   http://en.wikipedia.org/wiki/Royal_Thai_General_System_of_Transcription
  * @link   http://www.btranslations.com/resources/romanization/korean.asp
  */
+
 return [
     // scandinavian - differs from what we do in deaccent
     'å' => 'a',

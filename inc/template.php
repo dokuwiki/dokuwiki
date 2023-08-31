@@ -1,10 +1,12 @@
 <?php
+
 /**
  * DokuWiki template functions
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
+
 use dokuwiki\ActionRouter;
 use dokuwiki\Action\Exception\FatalException;
 use dokuwiki\Extension\PluginInterface;
@@ -420,7 +422,8 @@ function _tpl_metaheaders_action($data)
         }
         foreach ($inst as $attr) {
             if (empty($attr)) {
-                continue; }
+                continue;
+            }
             echo '<', $tag, ' ', buildAttributes($attr);
             if (isset($attr['_data']) || $tag == 'script') {
                 if ($tag == 'script' && isset($attr['_data']))
@@ -1431,7 +1434,6 @@ function tpl_mediaContent($fromajax = false, $sort = 'natural')
     $evt->advise_after();
     unset($evt);
     if (!$fromajax) echo '</div>';
-
 }
 
 /**

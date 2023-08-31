@@ -14,7 +14,6 @@ use dokuwiki\Parsing\ParserMode\ModeInterface;
  */
 class Parser
 {
-
     /** @var Doku_Handler */
     protected $handler;
 

@@ -7,7 +7,6 @@ namespace dokuwiki\Utf8;
  */
 class PhpString
 {
-
     /**
      * A locale independent basename() implementation
      *

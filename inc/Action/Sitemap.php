@@ -15,7 +15,6 @@ use dokuwiki\Utf8\PhpString;
  */
 class Sitemap extends AbstractAction
 {
-
     /** @inheritdoc */
     public function minimumPermission()
     {

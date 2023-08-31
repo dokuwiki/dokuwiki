@@ -21,7 +21,6 @@ require_once(DOKU_INC . 'inc/init.php');
  */
 class RenderCLI extends CLI
 {
-
     /**
      * Register options and arguments on the given $options object
      *

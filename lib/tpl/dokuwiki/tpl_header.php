@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template header, included in the main and detail files
  */

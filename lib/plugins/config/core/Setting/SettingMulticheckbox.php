@@ -7,7 +7,6 @@ namespace dokuwiki\plugin\config\core\Setting;
  */
 class SettingMulticheckbox extends SettingString
 {
-
     protected $choices = [];
     protected $combine = [];
     protected $other = 'always';

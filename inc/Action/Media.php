@@ -11,7 +11,6 @@ namespace dokuwiki\Action;
  */
 class Media extends AbstractAction
 {
-
     /** @inheritdoc */
     public function minimumPermission()
     {

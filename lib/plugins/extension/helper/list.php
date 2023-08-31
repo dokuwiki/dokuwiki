@@ -1,6 +1,7 @@
 <?php
 
 use dokuwiki\Extension\Plugin;
+
 /**
  * DokuWiki Plugin extension (Helper Component)
  *

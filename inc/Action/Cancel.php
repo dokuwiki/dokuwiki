@@ -13,7 +13,6 @@ use dokuwiki\Action\Exception\ActionAbort;
  */
 class Cancel extends AbstractAliasAction
 {
-
     /**
      * @inheritdoc
      * @throws ActionAbort

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Changelog handling functions
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
+
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\ChangeLog;
 use dokuwiki\File\PageFile;
@@ -235,7 +237,8 @@ function getRecents($first, $num, $ns = '', $flags = 0)
         $count++;
         // break when we have enough entries
         if ($count >= $num) {
-            break; }
+            break;
+        }
     }
     return $recent;
 }

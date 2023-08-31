@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DokuWiki AJAX call handler
  *

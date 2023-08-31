@@ -1,4 +1,5 @@
 <?php
+
 // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 
 namespace dokuwiki\Extension;

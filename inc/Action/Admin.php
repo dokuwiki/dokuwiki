@@ -14,7 +14,6 @@ use dokuwiki\Extension\AdminPlugin;
  */
 class Admin extends AbstractUserAction
 {
-
     /** @inheritdoc */
     public function minimumPermission()
     {

@@ -9,7 +9,6 @@ use SimplePie\File;
  */
 class FeedParser extends SimplePie
 {
-
     /**
      * Constructor. Set some defaults
      */

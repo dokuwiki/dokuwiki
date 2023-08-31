@@ -7,7 +7,6 @@ namespace dokuwiki\Utf8;
  */
 class Conversion
 {
-
     /**
      * Encodes UTF-8 characters to HTML entities
      *

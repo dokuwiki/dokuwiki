@@ -1,4 +1,5 @@
 <?php
+
 /**
  * A class to build and send multi part mails (with HTML content and embedded
  * attachments). All mails are assumed to be in UTF-8 encoding.
@@ -8,6 +9,7 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
+
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Clean;
 use dokuwiki\Extension\Event;
@@ -17,7 +19,6 @@ use dokuwiki\Extension\Event;
  */
 class Mailer
 {
-
     protected $headers   = [];
     protected $attach    = [];
     protected $html      = '';
@@ -596,7 +597,6 @@ class Mailer
                 $this->headers['Subject'] = '=?UTF-8?B?' . base64_encode($this->headers['Subject']) . '?=';
             }
         }
-
     }
 
     /**

@@ -9,7 +9,6 @@ namespace dokuwiki;
  */
 class Info
 {
-
     /**
      * Parse the given version string into its parts
      *

@@ -7,7 +7,6 @@ namespace dokuwiki\Cache;
  */
 class CacheRenderer extends CacheParser
 {
-
     /**
      * method contains cache use decision logic
      *

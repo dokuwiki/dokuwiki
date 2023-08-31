@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Mail functions
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
 
 /**
  * Patterns for use in email detection and validation

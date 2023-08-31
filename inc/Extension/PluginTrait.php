@@ -7,7 +7,6 @@ namespace dokuwiki\Extension;
  */
 trait PluginTrait
 {
-
     protected $localised = false;        // set to true by setupLocale() after loading language dependent strings
     protected $lang = [];           // array to hold language dependent strings, best accessed via ->getLang()
     protected $configloaded = false;     // set to true by loadConfig() after loading plugin configuration variables

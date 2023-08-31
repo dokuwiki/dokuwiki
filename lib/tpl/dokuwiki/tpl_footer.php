@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template footer, included in the main and detail files
  */

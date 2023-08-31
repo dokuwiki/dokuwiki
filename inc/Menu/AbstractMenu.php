@@ -14,7 +14,6 @@ use dokuwiki\Menu\Item\AbstractItem;
  */
 abstract class AbstractMenu implements MenuInterface
 {
-
     /** @var string[] list of Item classes to load */
     protected $types = [];
 

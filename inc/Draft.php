@@ -3,6 +3,7 @@
 namespace dokuwiki;
 
 use dokuwiki\Extension\Event;
+
 /**
  * Class Draft
  *
@@ -10,7 +11,6 @@ use dokuwiki\Extension\Event;
  */
 class Draft
 {
-
     protected $errors = [];
     protected $cname;
     protected $id;

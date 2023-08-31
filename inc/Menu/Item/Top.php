@@ -10,7 +10,6 @@ namespace dokuwiki\Menu\Item;
  */
 class Top extends AbstractItem
 {
-
     /** @inheritdoc */
     public function __construct()
     {

@@ -7,6 +7,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @todo       Combine similar functions like {wiki,media,meta}FN()
  */
+
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Clean;
 use dokuwiki\File\Resolver;

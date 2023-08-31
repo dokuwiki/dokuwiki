@@ -19,7 +19,6 @@ namespace dokuwiki\Menu\Item;
  */
 abstract class AbstractItem
 {
-
     /** menu item is to be shown on desktop screens only */
     public const CTX_DESKTOP = 1;
     /** menu item is to be shown on mobile screens only */

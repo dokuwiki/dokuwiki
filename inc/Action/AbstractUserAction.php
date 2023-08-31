@@ -13,7 +13,6 @@ use dokuwiki\Action\Exception\ActionUserRequiredException;
  */
 abstract class AbstractUserAction extends AbstractAclAction
 {
-
     /** @inheritdoc */
     public function checkPreconditions()
     {

@@ -142,7 +142,6 @@ class Search extends Ui
         $searchForm->addTagClose('ul');
 
         $searchForm->addTagClose('div');
-
     }
 
     /**
@@ -338,7 +337,6 @@ class Search extends Ui
         $searchForm->addTagClose('ul');
 
         $searchForm->addTagClose('div');
-
     }
 
     /**

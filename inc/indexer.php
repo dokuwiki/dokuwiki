@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Functions to create the fulltext search index
  *
@@ -6,6 +7,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Tom N Harris <tnharris@whoopdedo.org>
  */
+
 use dokuwiki\Utf8\Clean;
 use dokuwiki\Extension\Event;
 use dokuwiki\Search\Indexer;

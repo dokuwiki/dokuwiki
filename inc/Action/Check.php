@@ -13,7 +13,6 @@ use dokuwiki\Action\Exception\ActionAbort;
  */
 class Check extends AbstractAction
 {
-
     /** @inheritdoc */
     public function minimumPermission()
     {

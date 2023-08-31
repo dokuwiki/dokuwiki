@@ -7,7 +7,6 @@ namespace dokuwiki\Cache;
  */
 class CacheParser extends Cache
 {
-
     public $file = '';       // source file for cache
     public $mode = '';       // input mode (represents the processing the input file will undergo)
     public $page = '';

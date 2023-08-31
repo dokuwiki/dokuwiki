@@ -11,7 +11,6 @@ use dokuwiki\Menu\Item\AbstractItem;
  */
 interface MenuInterface
 {
-
     /**
      * Get the list of action items in this menu
      *

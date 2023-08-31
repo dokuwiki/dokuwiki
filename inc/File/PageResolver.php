@@ -7,7 +7,6 @@ namespace dokuwiki\File;
  */
 class PageResolver extends Resolver
 {
-
     /**
      * Resolves a given ID to be absolute
      *

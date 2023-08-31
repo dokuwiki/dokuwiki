@@ -2,6 +2,7 @@
 
 use dokuwiki\Extension\SyntaxPlugin;
 use dokuwiki\Extension\PluginInterface;
+
 /**
  * Info Plugin: Displays information about various DokuWiki internals
  *
@@ -11,7 +12,6 @@ use dokuwiki\Extension\PluginInterface;
  */
 class syntax_plugin_info extends SyntaxPlugin
 {
-
     /**
      * What kind of syntax are we?
      */

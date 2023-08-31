@@ -63,8 +63,6 @@ class cli_plugin_extension extends CLIPlugin
         // disable
         $options->registerCommand('disable', 'Disable installed extensions');
         $options->registerArgument('extensions...', 'One or more extensions to disable', true, 'disable');
-
-
     }
 
     /** @inheritdoc */

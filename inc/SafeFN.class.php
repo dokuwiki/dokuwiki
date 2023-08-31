@@ -1,6 +1,7 @@
 <?php
 
 use dokuwiki\Utf8\Unicode;
+
 /**
  * Class to safely store UTF-8 in a Filename
  *
@@ -16,7 +17,6 @@ use dokuwiki\Utf8\Unicode;
  */
 class SafeFN
 {
-
     // 'safe' characters are a superset of $plain, $pre_indicator and $post_indicator
     private static $plain = '-./[_0123456789abcdefghijklmnopqrstuvwxyz'; // these characters aren't converted
     private static $pre_indicator = '%';

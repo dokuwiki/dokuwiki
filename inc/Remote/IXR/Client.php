@@ -14,7 +14,6 @@ use IXR\Request\Request;
  */
 class Client extends \IXR\Client\Client
 {
-
     /** @var HTTPClient */
     protected $httpClient;
 
