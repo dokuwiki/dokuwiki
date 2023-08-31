@@ -54,7 +54,7 @@ function auth_setup()
     }
 
     if (!$auth instanceof AuthPlugin) {
-        msg($lang['authtempfail'].'ss', -1);
+        msg($lang['authtempfail'], -1);
         return false;
     }
 

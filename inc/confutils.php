@@ -368,10 +368,16 @@ function actionOK($action)
         // prepare disabled actions array and handle legacy options
         $disabled = explode(',', $conf['disableactions']);
         $disabled = array_map('trim', $disabled);
-        if ((isset($conf['openregister']) && !$conf['openregister']) || !$auth instanceof AuthPlugin || !$auth->canDo('addUser')) {
+        if (
+            (isset($conf['openregister']) && !$conf['openregister']) || !$auth instanceof AuthPlugin
+            || !$auth->canDo('addUser')
+        ) {
             $disabled[] = 'register';
         }
-        if ((isset($conf['resendpasswd']) && !$conf['resendpasswd']) || !$auth instanceof AuthPlugin || !$auth->canDo('modPass')) {
+        if (
+            (isset($conf['resendpasswd']) && !$conf['resendpasswd']) || !$auth instanceof AuthPlugin
+            || !$auth->canDo('modPass')
+        ) {
             $disabled[] = 'resendpwd';
         }
         if ((isset($conf['subscribers']) && !$conf['subscribers']) || !$auth instanceof AuthPlugin) {
