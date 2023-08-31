@@ -40,9 +40,10 @@ abstract class ChangeLog
     /**
      * Returns path to current page/media
      *
+     * @param string|int $rev empty string or revision timestamp
      * @return string path to file
      */
-    abstract protected function getFilename();
+    abstract protected function getFilename($rev = '');
 
     /**
      * Check whether given revision is the current page
