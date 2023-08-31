@@ -225,7 +225,8 @@ class Table extends AbstractRewriter
                     $this->tableCalls[$key-1][1][0] = false;
 
                     for ($i = $key-2; $i >= $cellKey[$lastRow][1]; $i--) {
-                        if ($this->tableCalls[$i][0] == 'tablecell_open' ||
+                        if (
+                            $this->tableCalls[$i][0] == 'tablecell_open' ||
                             $this->tableCalls[$i][0] == 'tableheader_open'
                         ) {
                             if (false !== $this->tableCalls[$i][1][0]) {
@@ -251,7 +252,8 @@ class Table extends AbstractRewriter
                         // can't cross thead/tbody boundary
                         if (!$this->countTableHeadRows || ($lastRow-1 != $this->countTableHeadRows)) {
                             for ($i = $lastRow-1; $i > 0; $i--) {
-                                if ($this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tablecell_open' ||
+                                if (
+                                    $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tablecell_open' ||
                                     $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tableheader_open'
                                 ) {
                                     if ($this->tableCalls[$cellKey[$i][$lastCell]][1][2] >= $lastRow - $i) {

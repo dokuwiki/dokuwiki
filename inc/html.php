@@ -480,7 +480,7 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
         } elseif ($item['level'] < $level) {
             //close last item
             $html .= '</li>'."\n";
-            while ($level > $item['level'] && $open > 0 ) {
+            while ($level > $item['level'] && $open > 0) {
                 //close higher lists
                 $html .= '</ul>'."\n".'</li>'."\n";
                 $level--;

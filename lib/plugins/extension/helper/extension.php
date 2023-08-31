@@ -919,7 +919,8 @@ class helper_plugin_extension_extension extends Plugin
         if (isset($http->resp_headers['content-disposition'])) {
             $content_disposition = $http->resp_headers['content-disposition'];
             $match = [];
-            if (is_string($content_disposition) &&
+            if (
+                is_string($content_disposition) &&
                 preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)
             ) {
                 $name = PhpString::basename($match[1]);

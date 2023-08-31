@@ -791,9 +791,11 @@ function p_xhtml_cached_geshi($code, $language, $wrapper = 'pre', array $options
     $optionsmd5 = md5(serialize($options));
     $cache = getCacheName($language . $code . $optionsmd5, ".code");
     $ctime = @filemtime($cache);
-    if ($ctime && !$INPUT->bool('purge') &&
+    if (
+        $ctime && !$INPUT->bool('purge') &&
         $ctime > filemtime(DOKU_INC . 'vendor/composer/installed.json') &&  // libraries changed
-        $ctime > filemtime(reset($config_cascade['main']['default']))) { // dokuwiki changed
+        $ctime > filemtime(reset($config_cascade['main']['default']))
+    ) { // dokuwiki changed
         $highlighted_code = io_readFile($cache, false);
     } else {
         $geshi = new GeSHi($code, $language);

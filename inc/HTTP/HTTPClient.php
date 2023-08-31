@@ -167,10 +167,12 @@ class HTTPClient
         $unencodedData = $data;
 
         // don't accept gzip if truncated bodies might occur
-        if ($this->max_bodysize &&
+        if (
+            $this->max_bodysize &&
             !$this->max_bodysize_abort &&
             isset($this->headers['Accept-encoding']) &&
-            $this->headers['Accept-encoding'] == 'gzip') {
+            $this->headers['Accept-encoding'] == 'gzip'
+        ) {
             unset($this->headers['Accept-encoding']);
         }
 
@@ -474,17 +476,21 @@ class HTTPClient
             return false;
         }
 
-        if (!$this->keep_alive ||
-            (isset($this->resp_headers['connection']) && $this->resp_headers['connection'] == 'Close')) {
+        if (
+            !$this->keep_alive ||
+            (isset($this->resp_headers['connection']) && $this->resp_headers['connection'] == 'Close')
+        ) {
             // close socket
             fclose($socket);
             unset(self::$connections[$connectionId]);
         }
 
         // decode gzip if needed
-        if (isset($this->resp_headers['content-encoding']) &&
+        if (
+            isset($this->resp_headers['content-encoding']) &&
             $this->resp_headers['content-encoding'] == 'gzip' &&
-            strlen($r_body) > 10 && substr($r_body, 0, 3) == "\x1f\x8b\x08") {
+            strlen($r_body) > 10 && substr($r_body, 0, 3) == "\x1f\x8b\x08"
+        ) {
             $this->resp_body = @gzinflate(substr($r_body, 10));
             if ($this->resp_body === false) {
                 $this->error = 'Failed to decompress gzip encoded content';

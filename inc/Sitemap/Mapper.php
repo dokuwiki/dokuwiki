@@ -45,8 +45,10 @@ class Mapper
             return false;
         }
 
-        if (@filesize($sitemap) &&
-           @filemtime($sitemap) > (time()-($conf['sitemap']*86400))) { // 60*60*24=86400
+        if (
+            @filesize($sitemap) &&
+            @filemtime($sitemap) > (time()-($conf['sitemap']*86400))
+        ) { // 60*60*24=86400
             Logger::debug('Sitemapper::generate(): Sitemap up to date');
             return false;
         }

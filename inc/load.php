@@ -140,13 +140,15 @@ function load_autoload($name)
     }
 
     // Plugin loading
-    if (preg_match(
-        '/^(' . implode('|', PluginController::PLUGIN_TYPES) . ')_plugin_(' .
-        DOKU_PLUGIN_NAME_REGEX .
-        ')(?:_([^_]+))?$/',
-        $name,
-        $m
-    )) {
+    if (
+        preg_match(
+            '/^(' . implode('|', PluginController::PLUGIN_TYPES) . ')_plugin_(' .
+            DOKU_PLUGIN_NAME_REGEX .
+            ')(?:_([^_]+))?$/',
+            $name,
+            $m
+        )
+    ) {
         // try to load the wanted plugin file
         $c = ((count($m) === 4) ? "/{$m[3]}" : '');
         $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";

@@ -92,9 +92,11 @@ class admin_plugin_acl extends AdminPlugin
             if ($this->who != '%USER%' && $this->who != '%GROUP%') { #keep wildcard as is
                 $this->who = $auth->cleanUser($this->who);
             }
-        } elseif ($INPUT->str('acl_t') &&
+        } elseif (
+            $INPUT->str('acl_t') &&
                 $INPUT->str('acl_t') != '__u__' &&
-                $INPUT->str('acl_t') != '__g__') {
+                $INPUT->str('acl_t') != '__g__'
+        ) {
             $this->who = $INPUT->str('acl_t');
         } elseif ($who) {
             $this->who = $who;
@@ -809,9 +811,11 @@ class admin_plugin_acl extends AdminPlugin
         $usel = '';
         $gsel = '';
 
-        if ($this->who &&
-           !in_array($this->who, $this->usersgroups) &&
-           !in_array($this->who, $this->specials)) {
+        if (
+            $this->who &&
+            !in_array($this->who, $this->usersgroups) &&
+            !in_array($this->who, $this->specials)
+        ) {
             if ($this->who[0] == '@') {
                 $gsel = ' selected="selected"';
             } else {

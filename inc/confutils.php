@@ -58,7 +58,7 @@ function mimetype($file, $knownonly = true)
 function getMimeTypes()
 {
     static $mime = null;
-    if ( !$mime ) {
+    if (!$mime) {
         $mime = retrieveConfig('mime', 'confToHash');
         $mime = array_filter($mime);
     }
@@ -73,7 +73,7 @@ function getMimeTypes()
 function getAcronyms()
 {
     static $acronyms = null;
-    if ( !$acronyms ) {
+    if (!$acronyms) {
         $acronyms = retrieveConfig('acronyms', 'confToHash');
         $acronyms = array_filter($acronyms, 'strlen');
     }
@@ -88,7 +88,7 @@ function getAcronyms()
 function getSmileys()
 {
     static $smileys = null;
-    if ( !$smileys ) {
+    if (!$smileys) {
         $smileys = retrieveConfig('smileys', 'confToHash');
         $smileys = array_filter($smileys, 'strlen');
     }
@@ -103,7 +103,7 @@ function getSmileys()
 function getEntities()
 {
     static $entities = null;
-    if ( !$entities ) {
+    if (!$entities) {
         $entities = retrieveConfig('entities', 'confToHash');
         $entities = array_filter($entities, 'strlen');
     }
@@ -118,7 +118,7 @@ function getEntities()
 function getInterwiki()
 {
     static $wikis = null;
-    if ( !$wikis ) {
+    if (!$wikis) {
         $wikis = retrieveConfig('interwiki', 'confToHash', [true]);
         $wikis = array_filter($wikis, 'strlen');
 
@@ -183,7 +183,7 @@ function getCdnUrls()
 function getWordblocks()
 {
     static $wordblocks = null;
-    if ( !$wordblocks ) {
+    if (!$wordblocks) {
         $wordblocks = retrieveConfig('wordblock', 'file', null, 'array_merge_with_removal');
     }
     return $wordblocks;
@@ -197,7 +197,7 @@ function getWordblocks()
 function getSchemes()
 {
     static $schemes = null;
-    if ( !$schemes ) {
+    if (!$schemes) {
         $schemes = retrieveConfig('scheme', 'file', null, 'array_merge_with_removal');
         $schemes = array_map('trim', $schemes);
         $schemes = preg_replace('/^#.*/', '', $schemes);
@@ -265,7 +265,7 @@ function confToHash($file, $lower = false)
 {
     $conf = [];
     $lines = @file($file);
-    if ( !$lines ) return $conf;
+    if (!$lines) return $conf;
 
     return linesToHash($lines, $lower);
 }

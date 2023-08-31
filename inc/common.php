@@ -490,7 +490,8 @@ function idfilter($id, $ue = true)
 
     if ($conf['useslash'] && $conf['userewrite']) {
         $id = strtr($id, ':', '/');
-    } elseif (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' &&
+    } elseif (
+        strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' &&
         $conf['userewrite'] &&
         strpos($INPUT->server->str('SERVER_SOFTWARE'), 'Microsoft-IIS') === false
     ) {
@@ -1262,12 +1263,14 @@ function rawWikiSlices($range, $id, $rev = '')
 function con($pre, $text, $suf, $pretty = false)
 {
     if ($pretty) {
-        if ($pre !== '' && substr($pre, -1) !== "\n" &&
+        if (
+            $pre !== '' && substr($pre, -1) !== "\n" &&
             substr($text, 0, 1) !== "\n"
         ) {
             $pre .= "\n";
         }
-        if ($suf !== '' && substr($text, -1) !== "\n" &&
+        if (
+            $suf !== '' && substr($text, -1) !== "\n" &&
             substr($suf, 0, 1) !== "\n"
         ) {
             $text .= "\n";
@@ -1871,7 +1874,8 @@ function send_redirect($url)
     session_write_close();
 
     // check if running on IIS < 6 with CGI-PHP
-    if ($INPUT->server->has('SERVER_SOFTWARE') && $INPUT->server->has('GATEWAY_INTERFACE') &&
+    if (
+        $INPUT->server->has('SERVER_SOFTWARE') && $INPUT->server->has('GATEWAY_INTERFACE') &&
         (strpos($INPUT->server->str('GATEWAY_INTERFACE'), 'CGI') !== false) &&
         (preg_match('|^Microsoft-IIS/(\d)\.\d$|', trim($INPUT->server->str('SERVER_SOFTWARE')), $matches)) &&
         $matches[1] < 6

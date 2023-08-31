@@ -440,7 +440,8 @@ class PageDiff extends Diff
                 ]),
                 'attrs' => ['title' => $rev]
             ];
-            if (($side == 'older' && ($rev2 && $rev >= $rev2))
+            if (
+                ($side == 'older' && ($rev2 && $rev >= $rev2))
                 || ($side == 'newer' && ($rev <= $rev1))
             ) {
                 $options[$rev]['attrs']['disabled'] = 'disabled';

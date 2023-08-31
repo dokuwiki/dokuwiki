@@ -40,8 +40,10 @@ class CacheRenderer extends CacheParser
         // for wiki pages, check metadata dependencies
         $metadata = p_get_metadata($this->page);
 
-        if (!isset($metadata['relation']['references']) ||
-            empty($metadata['relation']['references'])) {
+        if (
+            !isset($metadata['relation']['references']) ||
+            empty($metadata['relation']['references'])
+        ) {
             return true;
         }
 

@@ -588,7 +588,8 @@ class helper_plugin_extension_list extends Plugin
             if ($extension->isGitControlled()) {
                 $errors .= '<p class="permerror">'.$this->getLang('git').'</p>';
             }
-            if ($extension->isEnabled() &&
+            if (
+                $extension->isEnabled() &&
                 in_array('Auth', $extension->getTypes()) &&
                 $conf['authtype'] != $extension->getID()
             ) {

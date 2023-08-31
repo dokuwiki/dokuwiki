@@ -159,7 +159,8 @@ class auth_plugin_authad extends AuthPlugin
     public function checkPass($user, $pass)
     {
         global $INPUT;
-        if ($INPUT->server->str('REMOTE_USER') == $user &&
+        if (
+            $INPUT->server->str('REMOTE_USER') == $user &&
             $this->conf['sso']
         ) return true;
 
@@ -270,7 +271,8 @@ class auth_plugin_authad extends AuthPlugin
                     $info['expiresin'] = round(($info['expiresat'] - time())/(24*60*60));
 
                     // if this is the current user, warn him (once per request only)
-                    if (($INPUT->server->str('REMOTE_USER') == $user) &&
+                    if (
+                        ($INPUT->server->str('REMOTE_USER') == $user) &&
                         ($info['expiresin'] <= $this->conf['expirywarn']) &&
                         !$this->msgshown
                     ) {
@@ -334,8 +336,10 @@ class auth_plugin_authad extends AuthPlugin
         $user   = PhpString::strtolower(trim($user));
 
         // is this a known, valid domain or do we work without account suffix? if not discard
-        if ((!isset($this->conf[$domain]) || !is_array($this->conf[$domain])) &&
-            $this->conf['account_suffix'] !== '') {
+        if (
+            (!isset($this->conf[$domain]) || !is_array($this->conf[$domain])) &&
+            $this->conf['account_suffix'] !== ''
+        ) {
             $domain = '';
         }
 
@@ -409,7 +413,8 @@ class auth_plugin_authad extends AuthPlugin
                 $usermanager->setLastdisabled(true);
                 if (!isset($this->grpsusers[$this->filterToString($filter)])) {
                     $this->fillGroupUserArray($filter, $usermanager->getStart() + 3*$usermanager->getPagesize());
-                } elseif (count($this->grpsusers[$this->filterToString($filter)]) <
+                } elseif (
+                    count($this->grpsusers[$this->filterToString($filter)]) <
                     $usermanager->getStart() + 3*$usermanager->getPagesize()
                 ) {
                     $this->fillGroupUserArray(
@@ -539,7 +544,8 @@ class auth_plugin_authad extends AuthPlugin
             /** @var admin_plugin_usermanager $usermanager */
             $usermanager = plugin_load("admin", "usermanager", false);
             $usermanager->setLastdisabled(true);
-            if (!isset($this->grpsusers[$this->filterToString($filter)]) ||
+            if (
+                !isset($this->grpsusers[$this->filterToString($filter)]) ||
                 count($this->grpsusers[$this->filterToString($filter)]) < ($start+$limit)
             ) {
                 if (!isset($this->grpsusers[$this->filterToString($filter)])) {

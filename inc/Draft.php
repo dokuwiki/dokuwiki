@@ -73,8 +73,10 @@ class Draft
         if (!$conf['usedraft']) {
             return false;
         }
-        if (!$INPUT->post->has('wikitext') &&
-            !$EVENT_HANDLER->hasHandlerForEvent('DRAFT_SAVE')) {
+        if (
+            !$INPUT->post->has('wikitext') &&
+            !$EVENT_HANDLER->hasHandlerForEvent('DRAFT_SAVE')
+        ) {
             return false;
         }
         $draft = [

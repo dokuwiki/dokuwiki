@@ -742,7 +742,8 @@ class Mailer
             $this->cleanHeaders();
 
             // any recipients?
-            if (trim($this->headers['To']) === '' &&
+            if (
+                trim($this->headers['To']) === '' &&
                 trim($this->headers['Cc']) === '' &&
                 trim($this->headers['Bcc']) === ''
             ) return false;

@@ -47,7 +47,8 @@ class TaskRunner
         $tmp = []; // No event data
         $evt = new Event('INDEXER_TASKS_RUN', $tmp);
         if ($evt->advise_before()) {
-            if (!(
+            if (
+                !(
                 $this->runIndexer() ||
                 $this->runSitemapper() ||
                 $this->sendDigest() ||
@@ -106,9 +107,11 @@ class TaskRunner
         // Trims the recent changes cache to the last $conf['changes_days'] recent
         // changes or $conf['recent'] items, which ever is larger.
         // The trimming is only done once a day.
-        if (file_exists($fn) &&
+        if (
+            file_exists($fn) &&
             (@filemtime($fn . '.trimmed') + 86400) < time() &&
-            !file_exists($fn . '_tmp')) {
+            !file_exists($fn . '_tmp')
+        ) {
             @touch($fn . '.trimmed');
             io_lock($fn);
             $lines = file($fn);

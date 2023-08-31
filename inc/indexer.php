@@ -281,8 +281,10 @@ function idx_listIndexLengths()
         $docache = false;
     } else {
         clearstatcache();
-        if (file_exists($conf['indexdir'].'/lengths.idx')
-        && (time() < @filemtime($conf['indexdir'].'/lengths.idx') + $conf['readdircache'])) {
+        if (
+            file_exists($conf['indexdir'].'/lengths.idx')
+            && (time() < @filemtime($conf['indexdir'].'/lengths.idx') + $conf['readdircache'])
+        ) {
             if (
                 ($lengths = @file($conf['indexdir'].'/lengths.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))
                 !== false

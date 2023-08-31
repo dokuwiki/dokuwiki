@@ -21,8 +21,10 @@ class SettingNumeric extends SettingString
         $valid = parent::update($input);
         if ($valid && !(is_null($this->min) && is_null($this->max))) {
             $numeric_local = (int) eval('return ' . $this->local . ';');
-            if ((!is_null($this->min) && $numeric_local < $this->min) ||
-                (!is_null($this->max) && $numeric_local > $this->max)) {
+            if (
+                (!is_null($this->min) && $numeric_local < $this->min) ||
+                (!is_null($this->max) && $numeric_local > $this->max)
+            ) {
                 $this->error = true;
                 $this->input = $input;
                 $this->local = $local;

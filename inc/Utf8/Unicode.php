@@ -119,14 +119,16 @@ class Unicode
                      * Check for illegal sequences and codepoints.
                      */
                     // From Unicode 3.1, non-shortest form is illegal
-                    if (((2 === $mBytes) && ($mUcs4 < 0x0080)) ||
+                    if (
+                        ((2 === $mBytes) && ($mUcs4 < 0x0080)) ||
                         ((3 === $mBytes) && ($mUcs4 < 0x0800)) ||
                         ((4 === $mBytes) && ($mUcs4 < 0x10000)) ||
                         (4 < $mBytes) ||
                         // From Unicode 3.2, surrogate characters are illegal
                         (($mUcs4 & 0xFFFFF800) === 0xD800) ||
                         // Codepoints outside the Unicode range are illegal
-                        ($mUcs4 > 0x10FFFF)) {
+                        ($mUcs4 > 0x10FFFF)
+                    ) {
                         if ($strict) {
                             trigger_error(
                                 'utf8_to_unicode: Illegal sequence or codepoint ' .

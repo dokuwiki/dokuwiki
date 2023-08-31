@@ -69,7 +69,8 @@ class auth_plugin_authldap extends AuthPlugin
                 return false;
             }
             $this->bound = 2;
-        } elseif ($this->getConf('binddn') &&
+        } elseif (
+            $this->getConf('binddn') &&
             $this->getConf('usertree') &&
             $this->getConf('userfilter')
         ) {
@@ -564,11 +565,12 @@ class auth_plugin_authldap extends AuthPlugin
 
             //set protocol version and dependend options
             if ($this->getConf('version')) {
-                if (!@ldap_set_option(
-                    $this->con,
-                    LDAP_OPT_PROTOCOL_VERSION,
-                    $this->getConf('version')
-                )
+                if (
+                    !@ldap_set_option(
+                        $this->con,
+                        LDAP_OPT_PROTOCOL_VERSION,
+                        $this->getConf('version')
+                    )
                 ) {
                     msg('Setting LDAP Protocol version ' . $this->getConf('version') . ' failed', -1);
                     $this->debug('LDAP version set: ' . hsc(ldap_error($this->con)), 0, __LINE__, __FILE__);
@@ -582,11 +584,12 @@ class auth_plugin_authldap extends AuthPlugin
                     }
                     // needs version 3
                     if ($this->getConf('referrals') > -1) {
-                        if (!@ldap_set_option(
-                            $this->con,
-                            LDAP_OPT_REFERRALS,
-                            $this->getConf('referrals')
-                        )
+                        if (
+                            !@ldap_set_option(
+                                $this->con,
+                                LDAP_OPT_REFERRALS,
+                                $this->getConf('referrals')
+                            )
                         ) {
                             msg('Setting LDAP referrals failed', -1);
                             $this->debug('LDAP referal set: ' . hsc(ldap_error($this->con)), 0, __LINE__, __FILE__);

@@ -361,7 +361,7 @@ class admin_plugin_usermanager extends AdminPlugin
     {
         /** @var AuthPlugin $auth */
         global $auth;
-        if (!$auth || !$auth->canDo('getUsers') ) {
+        if (!$auth || !$auth->canDo('getUsers')) {
             return false;
         }
 
@@ -1058,7 +1058,8 @@ class admin_plugin_usermanager extends AdminPlugin
         if (!$this->auth->canDo('addUser')) return false;
 
         // check file uploaded ok.
-        if (empty($_FILES['import']['size']) ||
+        if (
+            empty($_FILES['import']['size']) ||
             !empty($_FILES['import']['error']) && $this->isUploadedFile($_FILES['import']['tmp_name'])
         ) {
             msg($this->lang['import_error_upload'], -1);

@@ -92,8 +92,10 @@ class Block
         if (trim($content)=='') {
             //remove the whole paragraph
             //array_splice($this->calls,$i); // <- this is much slower than the loop below
-            for ($x=$ccount; $x>$i;
-            $x--) array_pop($this->calls);
+            for (
+                $x=$ccount; $x>$i;
+                $x--
+            ) array_pop($this->calls);
         } else {
             // remove ending linebreaks in the paragraph
             $i=count($this->calls)-1;

@@ -87,7 +87,8 @@ class BulkSubscriptionSender extends SubscriptionSender
                 foreach ($changes as $rev) {
                     $n = 0;
                     $pagelog = new PageChangeLog($rev['id']);
-                    while (!is_null($rev) && $rev['date'] >= $lastupdate &&
+                    while (
+                        !is_null($rev) && $rev['date'] >= $lastupdate &&
                         ($INPUT->server->str('REMOTE_USER') === $rev['user'] ||
                             $rev['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT)
                     ) {

@@ -775,11 +775,13 @@ function media_tabs_files($selected_tab = '')
 {
     global $lang;
     $tabs = [];
-    foreach ([
+    foreach (
+        [
                 'files'  => 'mediaselect',
                 'upload' => 'media_uploadtab',
                 'search' => 'media_searchtab'
-            ] as $tab => $caption) {
+            ] as $tab => $caption
+    ) {
         $tabs[$tab] = [
             'href'    => media_managerURL(['tab_files' => $tab], '&'),
             'caption' => $lang[$caption]
@@ -849,10 +851,12 @@ function media_tab_files_options()
         $form->setHiddenField('q', $INPUT->str('q'));
     }
     $form->addHTML('<ul>'.NL);
-    foreach ([
+    foreach (
+        [
                  'list' => ['listType', ['thumbs', 'rows']],
                  'sort' => ['sortBy', ['name', 'date']]
-             ] as $group => $content) {
+             ] as $group => $content
+    ) {
         $checked = "_media_get_{$group}_type";
         $checked = $checked();
 
@@ -1177,8 +1181,9 @@ function media_preview_buttons($image, $auth, $rev = '')
  */
 function media_image_preview_size($image, $rev, $meta = false, $size = 500)
 {
-    if (!preg_match("/\.(jpe?g|gif|png)$/", $image)
-      || !file_exists($filename = mediaFN($image, $rev))
+    if (
+        !preg_match("/\.(jpe?g|gif|png)$/", $image)
+        || !file_exists($filename = mediaFN($image, $rev))
     ) return [];
 
     $info = getimagesize($filename);
@@ -1887,7 +1892,8 @@ function media_get_from_URL($url, $ext, $cache)
     $mtime = @filemtime($local); // 0 if not exists
 
     //decide if download needed:
-    if (($mtime == 0) || // cache does not exist
+    if (
+        ($mtime == 0) || // cache does not exist
         ($cache != -1 && $mtime < time() - $cache) // 'recache' and cache has expired
     ) {
         if (media_image_download($url, $local)) {
@@ -2080,7 +2086,7 @@ function media_resize_imageGD($ext, $from, $from_w, $from_h, $to, $to_w, $to_h, 
     if ($ext == 'gif' && function_exists('imagefill') && function_exists('imagecolorallocate')) {
         if (function_exists('imagecolorsforindex') && function_exists('imagecolortransparent')) {
             $transcolorindex = @imagecolortransparent($image);
-            if ($transcolorindex >= 0 ) { //transparent color exists
+            if ($transcolorindex >= 0) { //transparent color exists
                 $transcolor = @imagecolorsforindex($image, $transcolorindex);
                 $transcolorindex = @imagecolorallocate(
                     $newimg,

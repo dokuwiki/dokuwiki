@@ -70,7 +70,7 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
     http_conditionalRequest($fmtime);
 
     // Use the current $file if is $orig is not set.
-    if ( $orig == null ) {
+    if ($orig == null) {
         $orig = $file;
     }
 
@@ -123,7 +123,7 @@ function rfc2231_encode($name, $value, $charset = 'utf-8', $lang = 'en')
         static fn($match) => rawurlencode($match[0]),
         $value
     );
-    if ( $value != $internal ) {
+    if ($value != $internal) {
         return ' '.$name.'*='.$charset."'".$lang."'".$internal;
     } else {
         return ' '.$name.'="'.$value.'"';

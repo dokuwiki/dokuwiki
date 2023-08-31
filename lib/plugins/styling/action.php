@@ -42,7 +42,8 @@ class action_plugin_styling extends ActionPlugin
         // set preview
         $len = count($event->data['link']);
         for ($i = 0; $i < $len; $i++) {
-            if ($event->data['link'][$i]['rel'] == 'stylesheet' &&
+            if (
+                $event->data['link'][$i]['rel'] == 'stylesheet' &&
                 strpos($event->data['link'][$i]['href'], 'lib/exe/css.php') !== false
             ) {
                 $event->data['link'][$i]['href'] .= '&preview=1&tseed='.time();

@@ -183,9 +183,11 @@ function ft_backlinks($id, $ignore_perms = false)
 
     // check ACL permissions
     foreach (array_keys($result) as $idx) {
-        if ((!$ignore_perms && (
+        if (
+            (!$ignore_perms && (
                 isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_READ
-            )) || !page_exists($result[$idx], '', false)) {
+            )) || !page_exists($result[$idx], '', false)
+        ) {
             unset($result[$idx]);
         }
     }
@@ -215,9 +217,11 @@ function ft_mediause($id, $ignore_perms = false)
 
     // check ACL permissions
     foreach (array_keys($result) as $idx) {
-        if ((!$ignore_perms && (
+        if (
+            (!$ignore_perms && (
                     isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_READ
-                )) || !page_exists($result[$idx], '', false)) {
+                )) || !page_exists($result[$idx], '', false)
+        ) {
             unset($result[$idx]);
         }
     }
@@ -324,8 +328,10 @@ function _ft_pageLookup(&$data)
     // discard nonexistent pages
     // check ACL permissions
     foreach (array_keys($pages) as $idx) {
-        if (!isVisiblePage($idx) || !page_exists($idx) ||
-           auth_quickaclcheck($idx) < AUTH_READ) {
+        if (
+            !isVisiblePage($idx) || !page_exists($idx) ||
+            auth_quickaclcheck($idx) < AUTH_READ
+        ) {
             unset($pages[$idx]);
         }
     }

@@ -35,7 +35,8 @@ class helper_plugin_extension_repository extends Plugin
             foreach ($list as $name) {
                 $cache = new Cache('##extension_manager##'.$name, '.repo');
 
-                if (!isset($this->loaded_extensions[$name]) &&
+                if (
+                    !isset($this->loaded_extensions[$name]) &&
                     $this->hasAccess() &&
                     !$cache->useCache(['age' => 3600 * 24])
                 ) {
@@ -100,7 +101,8 @@ class helper_plugin_extension_repository extends Plugin
     {
         $cache = new Cache('##extension_manager##'.$name, '.repo');
 
-        if (!isset($this->loaded_extensions[$name]) &&
+        if (
+            !isset($this->loaded_extensions[$name]) &&
             $this->hasAccess() &&
             !$cache->useCache(['age' => 3600 * 24])
         ) {

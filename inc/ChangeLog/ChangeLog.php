@@ -508,7 +508,8 @@ abstract class ChangeLog
         $lastTail = $tail;
 
         // add a possible revision of external edit, create or deletion
-        if ($lastTail == $eof && $afterCount <= (int) ($max / 2) &&
+        if (
+            $lastTail == $eof && $afterCount <= (int) ($max / 2) &&
             count($revs) && !$this->isCurrentRevision($revs[count($revs)-1])
         ) {
             $revs[] = $this->currentRevision;

@@ -152,12 +152,14 @@ if (!defined('DOKU_TPLINC')) {
 $httpAcceptEncoding = $_SERVER['HTTP_ACCEPT_ENCODING'] ?? '';
 $conf['gzip_output'] &= (strpos($httpAcceptEncoding, 'gzip') !== false);
 global $ACT;
-if ($conf['gzip_output'] &&
+if (
+    $conf['gzip_output'] &&
         !defined('DOKU_DISABLE_GZIP_OUTPUT') &&
         function_exists('ob_gzhandler') &&
         // Disable compression when a (compressed) sitemap might be delivered
         // See https://bugs.dokuwiki.org/index.php?do=details&task_id=2576
-        $ACT != 'sitemap') {
+        $ACT != 'sitemap'
+) {
     ob_start('ob_gzhandler');
 }
 
@@ -542,8 +544,10 @@ function is_ssl()
             return false;
         }
     }
-    if (!isset($_SERVER['HTTPS']) ||
-        preg_match('/^(|off|false|disabled)$/i', $_SERVER['HTTPS'])) {
+    if (
+        !isset($_SERVER['HTTPS']) ||
+        preg_match('/^(|off|false|disabled)$/i', $_SERVER['HTTPS'])
+    ) {
         return false;
     } else {
         return true;

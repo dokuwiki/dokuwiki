@@ -246,7 +246,8 @@ function auth_login($user, $pass, $sticky = false, $silent = false)
             // get session info
             if (isset($_SESSION[DOKU_COOKIE])) {
                 $session = $_SESSION[DOKU_COOKIE]['auth'];
-                if (isset($session) &&
+                if (
+                    isset($session) &&
                     $auth->useSessionCache($user) &&
                     ($session['time'] >= time() - $conf['auth_security_timeout']) &&
                     ($session['user'] == $user) &&
@@ -565,7 +566,7 @@ function auth_isMember($memberlist, $user, array $groups)
 
     // compare cleaned values
     foreach ($members as $member) {
-        if ($member == '@ALL' ) return true;
+        if ($member == '@ALL') return true;
         if (!$auth->isCaseSensitive()) $member = PhpString::strtolower($member);
         if ($member[0] == '@') {
             $member = $auth->cleanGroup(substr($member, 1));
@@ -992,7 +993,8 @@ function updateprofile()
     $changes['mail'] = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $changes['mail']));
 
     // no empty name and email (except the backend doesn't support them)
-    if ((empty($changes['name']) && $auth->canDo('modName')) ||
+    if (
+        (empty($changes['name']) && $auth->canDo('modName')) ||
         (empty($changes['mail']) && $auth->canDo('modMail'))
     ) {
         msg($lang['profnoempty'], -1);

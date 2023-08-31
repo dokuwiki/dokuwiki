@@ -379,8 +379,10 @@ function search_allpages(&$data, $base, $file, $type, $lvl, $opts)
 {
     if (isset($opts['depth']) && $opts['depth']) {
         $parts = explode('/', ltrim($file, '/'));
-        if (($type == 'd' && count($parts) >= $opts['depth'])
-          || ($type != 'd' && count($parts) > $opts['depth'])) {
+        if (
+            ($type == 'd' && count($parts) >= $opts['depth'])
+            || ($type != 'd' && count($parts) > $opts['depth'])
+        ) {
             return false; // depth reached
         }
     }

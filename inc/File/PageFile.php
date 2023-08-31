@@ -300,7 +300,8 @@ class PageFile
         $oldmeta = p_read_metadata($this->id)['persistent'];
         $meta    = [];
 
-        if ($wasCreated &&
+        if (
+            $wasCreated &&
             (empty($oldmeta['date']['created']) || $oldmeta['date']['created'] === $createdDate)
         ) {
             // newly created
