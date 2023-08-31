@@ -12,11 +12,9 @@ use dokuwiki\Draft;
 use dokuwiki\Utf8\Clean;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Conversion;
-use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\File\PageFile;
-use dokuwiki\Logger;
 use dokuwiki\Subscriptions\PageSubscriptionSender;
 use dokuwiki\Subscriptions\SubscriberManager;
 use dokuwiki\Extension\AuthPlugin;
@@ -209,9 +207,10 @@ function basicinfo($id, $htmlClient = true)
  * Return info about the current document as associative
  * array.
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
  * @return array with info about current document
+ * @throws Exception
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function pageinfo()
 {
@@ -219,8 +218,6 @@ function pageinfo()
     global $REV;
     global $RANGE;
     global $lang;
-    /* @var Input $INPUT */
-    global $INPUT;
 
     $info = basicinfo($ID);
 

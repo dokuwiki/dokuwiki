@@ -449,7 +449,7 @@ function sort_search_fulltext($a, $b)
  * @param string $path
  * @param bool $keeptxt
  *
- * @return mixed|string
+ * @return string
  */
 function pathID($path, $keeptxt = false)
 {

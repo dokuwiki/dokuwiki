@@ -170,6 +170,7 @@ function auth_loadACL()
  *
  * @param array $evdata
  * @return bool
+ * @throws Exception
  */
 function auth_login_wrapper($evdata)
 {
@@ -202,13 +203,14 @@ function auth_login_wrapper($evdata)
  * On a successful login $_SERVER[REMOTE_USER] and $USERINFO
  * are set.
  *
- * @author  Andreas Gohr <andi@splitbrain.org>
+ * @param string $user Username
+ * @param string $pass Cleartext Password
+ * @param bool $sticky Cookie should not expire
+ * @param bool $silent Don't show error on bad auth
+ * @return bool true on successful auth
+ * @throws Exception
  *
- * @param   string  $user    Username
- * @param   string  $pass    Cleartext Password
- * @param   bool    $sticky  Cookie should not expire
- * @param   bool    $silent  Don't show error on bad auth
- * @return  bool             true on successful auth
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function auth_login($user, $pass, $sticky = false, $silent = false)
 {
@@ -309,11 +311,12 @@ function auth_browseruid()
  * if no such file is found a random key is created and
  * and stored in this file.
  *
- * @author  Andreas Gohr <andi@splitbrain.org>
- *
- * @param   bool $addsession if true, the sessionid is added to the salt
- * @param   bool $secure     if security is more important than keeping the old value
+ * @param bool $addsession if true, the sessionid is added to the salt
+ * @param bool $secure if security is more important than keeping the old value
  * @return  string
+ * @throws Exception
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function auth_cookiesalt($addsession = false, $secure = false)
 {
@@ -339,10 +342,11 @@ function auth_cookiesalt($addsession = false, $secure = false)
 /**
  * Return cryptographically secure random bytes.
  *
- * @author Niklas Keller <me@kelunik.com>
- *
  * @param int $length number of bytes
  * @return string cryptographically secure random bytes
+ * @throws Exception
+ *
+ * @author Niklas Keller <me@kelunik.com>
  */
 function auth_randombytes($length)
 {
@@ -352,11 +356,12 @@ function auth_randombytes($length)
 /**
  * Cryptographically secure random number generator.
  *
- * @author Niklas Keller <me@kelunik.com>
- *
  * @param int $min
  * @param int $max
  * @return int
+ * @throws Exception
+ *
+ * @author Niklas Keller <me@kelunik.com>
  */
 function auth_random($min, $max)
 {
@@ -369,9 +374,10 @@ function auth_random($min, $max)
  * The mode is CBC with a random initialization vector, the key is derived
  * using pbkdf2.
  *
- * @param string $data   The data that shall be encrypted
+ * @param string $data The data that shall be encrypted
  * @param string $secret The secret/password that shall be used
  * @return string The ciphertext
+ * @throws Exception
  */
 function auth_encrypt($data, $secret)
 {
@@ -813,12 +819,14 @@ function auth_nameencode_callback($matches)
  * The $foruser variable might be used by plugins to run additional password
  * policy checks, but is not used by the default implementation
  *
- * @author   Andreas Gohr <andi@splitbrain.org>
+ * @param string $foruser username for which the password is generated
+ * @return string  pronouncable password
+ * @throws Exception
+ *
  * @link     http://www.phpbuilder.com/annotate/message.php3?id=1014451
  * @triggers AUTH_PASSWORD_GENERATE
  *
- * @param  string $foruser username for which the password is generated
- * @return string  pronouncable password
+ * @author   Andreas Gohr <andi@splitbrain.org>
  */
 function auth_pwgen($foruser = '')
 {
@@ -865,7 +873,7 @@ function auth_sendPassword($user, $password)
     if (!$auth) return false;
 
     $user     = $auth->cleanUser($user);
-    $userinfo = $auth->getUserData($user, $requireGroups = false);
+    $userinfo = $auth->getUserData($user, false);
 
     if (!$userinfo['mail']) return false;
 
@@ -888,15 +896,16 @@ function auth_sendPassword($user, $password)
  *
  * This registers a new user - Data is read directly from $_POST
  *
- * @author  Andreas Gohr <andi@splitbrain.org>
- *
  * @return bool  true on success, false on any error
+ * @throws Exception
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function register()
 {
     global $lang;
     global $conf;
-    /* @var \dokuwiki\Extension\AuthPlugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     global $INPUT;
 
@@ -959,6 +968,8 @@ function register()
 
 /**
  * Update user profile
+ *
+ * @throws Exception
  *
  * @author    Christopher Smith <chris@jalakai.co.uk>
  */
@@ -1057,7 +1068,7 @@ function auth_deleteprofile()
 {
     global $conf;
     global $lang;
-    /* @var \dokuwiki\Extension\AuthPlugin $auth */
+    /* @var AuthPlugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -1102,11 +1113,12 @@ function auth_deleteprofile()
  *   - handling the first request of password reset
  *   - validating the password reset auth token
  *
+ * @return bool true on success, false on any error
+ * @throws Exception
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  * @author Benoit Chesneau <benoit@bchesneau.info>
  * @author Chris Smith <chris@jalakai.co.uk>
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @return bool true on success, false on any error
  */
 function act_resendpwd()
 {
@@ -1142,7 +1154,7 @@ function act_resendpwd()
         }
 
         $user     = io_readfile($tfile);
-        $userinfo = $auth->getUserData($user, $requireGroups = false);
+        $userinfo = $auth->getUserData($user, false);
         if (!$userinfo['mail']) {
             msg($lang['resendpwdnouser'], -1);
             return false;
@@ -1191,7 +1203,7 @@ function act_resendpwd()
             $user = trim($auth->cleanUser($INPUT->post->str('login')));
         }
 
-        $userinfo = $auth->getUserData($user, $requireGroups = false);
+        $userinfo = $auth->getUserData($user, false);
         if (!$userinfo['mail']) {
             msg($lang['resendpwdnouser'], -1);
             return false;
@@ -1253,11 +1265,12 @@ function auth_cryptPassword($clear, $method = '', $salt = null)
 /**
  * Verifies a cleartext password against a crypted hash
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param  string $clear The clear text password
- * @param  string $crypt The hash to compare with
+ * @param string $clear The clear text password
+ * @param string $crypt The hash to compare with
  * @return bool true if both match
+ * @throws Exception
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function auth_verifyPassword($clear, $crypt)
 {

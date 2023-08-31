@@ -277,6 +277,7 @@ function confToHash($file, $lower = false)
  *
  * @param string $file
  * @return array
+ * @throws JsonException
  */
 function jsonToArray($file)
 {
