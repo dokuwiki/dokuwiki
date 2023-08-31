@@ -50,7 +50,7 @@ class admin_plugin_styling extends AdminPlugin
         if ($this->ispopup) $class = 'ispopup page';
 
         echo '<div id="plugin__styling" class="'.$class.'">';
-        ptln('<h1>'.$this->getLang('menu').'</h1>');
+        echo '<h1>'.$this->getLang('menu').'</h1>';
         $this->form();
         echo '</div>';
     }

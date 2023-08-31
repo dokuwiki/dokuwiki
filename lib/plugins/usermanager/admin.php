@@ -3,6 +3,7 @@
 use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Utf8\Clean;
+
 /*
  *  User Manager
  *
@@ -14,13 +15,14 @@ use dokuwiki\Utf8\Clean;
  *  @author  neolao <neolao@neolao.com>
  *  @author  Chris Smith <chris@jalakai.co.uk>
  */
+
 /**
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
  */
 class admin_plugin_usermanager extends AdminPlugin
 {
-    protected const IMAGE_DIR = DOKU_BASE.'lib/plugins/usermanager/images/';
+    protected const IMAGE_DIR = DOKU_BASE . 'lib/plugins/usermanager/images/';
 
     protected $auth;        // auth object
     protected $users_total = 0;     // number of registered users
@@ -50,7 +52,7 @@ class admin_plugin_usermanager extends AdminPlugin
             $this->disabled = $this->lang['nosupport'];
         } else {
             // we're good to go
-            $this->auth = & $auth;
+            $this->auth = &$auth;
         }
 
         // attempt to retrieve any import failures from the session
@@ -69,9 +71,9 @@ class admin_plugin_usermanager extends AdminPlugin
     {
 
         if (!is_null($this->auth))
-          return parent::getMenuText($language);
+            return parent::getMenuText($language);
 
-        return $this->getLang('menu').' '.$this->disabled;
+        return $this->getLang('menu') . ' ' . $this->disabled;
     }
 
     /**
@@ -120,7 +122,7 @@ class admin_plugin_usermanager extends AdminPlugin
 
         // extract the command and any specific parameters
         // submit button name is of the form - fn[cmd][param(s)]
-        $fn   = $INPUT->param('fn');
+        $fn = $INPUT->param('fn');
 
         if (is_array($fn)) {
             $cmd = key($fn);
@@ -150,7 +152,7 @@ class admin_plugin_usermanager extends AdminPlugin
                 break;
             case "search":
                 $this->setFilter($param);
-                            $this->start = 0;
+                $this->start = 0;
                 break;
             case "export":
                 $this->exportCSV();
@@ -188,6 +190,7 @@ class admin_plugin_usermanager extends AdminPlugin
      * Output appropriate html
      *
      * @return bool
+     * @todo split into smaller functions, use Form class
      */
     public function html()
     {
@@ -209,18 +212,16 @@ class admin_plugin_usermanager extends AdminPlugin
         print $this->locale_xhtml('intro');
         print $this->locale_xhtml('list');
 
-        ptln("<div id=\"user__manager\">");
-        ptln("<div class=\"level2\">");
+        echo '<div id="user__manager">';
+        echo '<div class="level2">';
 
         if ($this->users_total > 0) {
-            ptln(
-                "<p>" . sprintf(
-                    $this->lang['summary'],
-                    $this->start + 1,
-                    $this->last,
-                    $this->users_total,
-                    $this->auth->getUserCount()
-                ) . "</p>"
+            printf(
+                '<p>' . $this->lang['summary'] . '</p>',
+                $this->start + 1,
+                $this->last,
+                $this->users_total,
+                $this->auth->getUserCount()
             );
         } else {
             if ($this->users_total < 0) {
@@ -228,126 +229,122 @@ class admin_plugin_usermanager extends AdminPlugin
             } else {
                 $allUserTotal = $this->auth->getUserCount();
             }
-            ptln("<p>".sprintf($this->lang['nonefound'], $allUserTotal)."</p>");
+            printf('<p>%s</p>', sprintf($this->lang['nonefound'], $allUserTotal));
         }
-        ptln("<form action=\"".wl($ID)."\" method=\"post\">");
+        printf('<form action="%s" method="post">', wl($ID));
         formSecurityToken();
-        ptln("  <div class=\"table\">");
-        ptln("  <table class=\"inline\">");
-        ptln("    <thead>");
-        ptln("      <tr>");
-        ptln("        <th>&#160;</th>
-            <th>".$this->lang["user_id"]."</th>
-            <th>".$this->lang["user_name"]."</th>
-            <th>".$this->lang["user_mail"]."</th>
-            <th>".$this->lang["user_groups"]."</th>");
-        ptln("      </tr>");
+        echo '<div class="table">';
+        echo '<table class="inline">';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th>&#160;</th>';
+        echo '<th>' . $this->lang["user_id"] . '</th>';
+        echo '<th>' . $this->lang["user_name"] . '</th>';
+        echo '<th>' . $this->lang["user_mail"] . '</th>';
+        echo '<th>' . $this->lang["user_groups"] . '</th>';
+        echo '</tr>';
 
-        ptln("      <tr>");
-        ptln("        <td class=\"rightalign\"><input type=\"image\" src=\"".
-             self::IMAGE_DIR."search.png\" name=\"fn[search][new]\" title=\"".
-             $this->lang['search_prompt']."\" alt=\"".$this->lang['search']."\" class=\"button\" /></td>");
-        ptln("        <td><input type=\"text\" name=\"userid\" class=\"edit\" value=\"".
-             $this->htmlFilter('user')."\" /></td>");
-        ptln("        <td><input type=\"text\" name=\"username\" class=\"edit\" value=\"".
-             $this->htmlFilter('name')."\" /></td>");
-        ptln("        <td><input type=\"text\" name=\"usermail\" class=\"edit\" value=\"".
-             $this->htmlFilter('mail')."\" /></td>");
-        ptln("        <td><input type=\"text\" name=\"usergroups\" class=\"edit\" value=\"".
-             $this->htmlFilter('grps')."\" /></td>");
-        ptln("      </tr>");
-        ptln("    </thead>");
+        echo '<tr>';
+        echo '<td class="rightalign"><input type="image" src="' .
+            self::IMAGE_DIR . 'search.png" name="fn[search][new]" title="' .
+            $this->lang['search_prompt'] . '" alt="' . $this->lang['search'] . '" class="button" /></td>';
+        echo '<td><input type="text" name="userid" class="edit" value="' . $this->htmlFilter('user') . '" /></td>';
+        echo '<td><input type="text" name="username" class="edit" value="' . $this->htmlFilter('name') . '" /></td>';
+        echo '<td><input type="text" name="usermail" class="edit" value="' . $this->htmlFilter('mail') . '" /></td>';
+        echo '<td><input type="text" name="usergroups" class="edit" value="' . $this->htmlFilter('grps') . '" /></td>';
+        echo '</tr>';
+        echo '</thead>';
 
         if ($this->users_total) {
-            ptln("    <tbody>");
+            echo '<tbody>';
             foreach ($user_list as $user => $userinfo) {
                 extract($userinfo);
                 /**
                  * @var string $name
                  * @var string $pass
                  * @var string $mail
-                 * @var array  $grps
+                 * @var array $grps
                  */
                 $groups = implode(', ', $grps);
-                ptln("    <tr class=\"user_info\">");
-                ptln("      <td class=\"centeralign\"><input type=\"checkbox\" name=\"delete[".hsc($user).
-                     "]\" ".$delete_disable." /></td>");
+                echo '<tr class="user_info">';
+                echo '<td class="centeralign"><input type="checkbox" name="delete[' . hsc($user) .
+                    ']" ' . $delete_disable . ' /></td>';
                 if ($editable) {
-                    ptln("    <td><a href=\"".wl($ID, ['fn[edit]['.$user.']' => 1,
+                    echo '<td><a href="' . wl($ID, ['fn[edit][' . $user . ']' => 1,
                             'do' => 'admin',
                             'page' => 'usermanager',
-                            'sectok' => getSecurityToken()]).
-                         "\" title=\"".$this->lang['edit_prompt']."\">".hsc($user)."</a></td>");
+                            'sectok' => getSecurityToken()]) .
+                        '" title="' . $this->lang['edit_prompt'] . '">' . hsc($user) . '</a></td>';
                 } else {
-                    ptln("    <td>".hsc($user)."</td>");
+                    echo '<td>' . hsc($user) . '</td>';
                 }
-                ptln("      <td>".hsc($name)."</td><td>".hsc($mail)."</td><td>".hsc($groups)."</td>");
-                ptln("    </tr>");
+                echo '<td>' . hsc($name) . '</td><td>' . hsc($mail) . '</td><td>' . hsc($groups) . '</td>';
+                echo '</tr>';
             }
-            ptln("    </tbody>");
+            echo '</tbody>';
         }
 
-        ptln("    <tbody>");
-        ptln("      <tr><td colspan=\"5\" class=\"centeralign\">");
-        ptln("        <span class=\"medialeft\">");
-        ptln("          <button type=\"submit\" name=\"fn[delete]\" id=\"usrmgr__del\" ".$delete_disable.">".
-             $this->lang['delete_selected']."</button>");
-        ptln("        </span>");
-        ptln("        <span class=\"mediaright\">");
-        ptln("          <button type=\"submit\" name=\"fn[start]\" ".$page_buttons['start'].">".
-             $this->lang['start']."</button>");
-        ptln("          <button type=\"submit\" name=\"fn[prev]\" ".$page_buttons['prev'].">".
-             $this->lang['prev']."</button>");
-        ptln("          <button type=\"submit\" name=\"fn[next]\" ".$page_buttons['next'].">".
-             $this->lang['next']."</button>");
-        ptln("          <button type=\"submit\" name=\"fn[last]\" ".$page_buttons['last'].">".
-             $this->lang['last']."</button>");
-        ptln("        </span>");
+        echo '<tbody>';
+        echo '<tr><td colspan="5" class="centeralign">';
+        echo '<span class="medialeft">';
+        echo '<button type="submit" name="fn[delete]" id="usrmgr__del" ' . $delete_disable . '>' .
+            $this->lang['delete_selected'] . '</button>';
+        echo '</span>';
+        echo '<span class="mediaright">';
+        echo '<button type="submit" name="fn[start]" ' . $page_buttons['start'] . '>' .
+            $this->lang['start'] . '</button>';
+        echo '<button type="submit" name="fn[prev]" ' . $page_buttons['prev'] . '>' .
+            $this->lang['prev'] . "</button>";
+        echo '<button type="submit" name="fn[next]" ' . $page_buttons['next'] . '>' .
+            $this->lang['next'] . '</button>';
+        echo '<button type="submit" name="fn[last]" ' . $page_buttons['last'] . '>' .
+            $this->lang['last'] . '</button>';
+        echo '</span>';
         if (!empty($this->filter)) {
-            ptln("    <button type=\"submit\" name=\"fn[search][clear]\">".$this->lang['clear']."</button>");
+            echo '<button type="submit" name="fn[search][clear]">' . $this->lang['clear'] . '</button>';
         }
-        ptln("        <button type=\"submit\" name=\"fn[export]\">".$export_label."</button>");
-        ptln("        <input type=\"hidden\" name=\"do\"    value=\"admin\" />");
-        ptln("        <input type=\"hidden\" name=\"page\"  value=\"usermanager\" />");
+        echo '<button type="submit" name="fn[export]">' . $export_label . '</button>';
+        echo '<input type="hidden" name="do"    value="admin" />';
+        echo '<input type="hidden" name="page"  value="usermanager" />';
 
         $this->htmlFilterSettings(2);
 
-        ptln("      </td></tr>");
-        ptln("    </tbody>");
-        ptln("  </table>");
-        ptln("  </div>");
+        echo '</td></tr>';
+        echo '</tbody>';
+        echo '</table>';
+        echo '</div>';
 
-        ptln("</form>");
-        ptln("</div>");
+        echo '</form>';
+        echo '</div>';
 
-        $style = $this->edit_user ? " class=\"edit_user\"" : "";
+        $style = $this->edit_user ? ' class="edit_user"' : '';
 
         if ($this->auth->canDo('addUser')) {
-            ptln("<div".$style.">");
+            echo '<div' . $style . '>';
             print $this->locale_xhtml('add');
-            ptln("  <div class=\"level2\">");
+            echo '<div class="level2">';
 
             $this->htmlUserForm('add', null, [], 4);
 
-            ptln("  </div>");
-            ptln("</div>");
+            echo '</div>';
+            echo '</div>';
         }
 
-        if ($this->edit_user  && $this->auth->canDo('UserMod')) {
-            ptln("<div".$style." id=\"scroll__here\">");
+        if ($this->edit_user && $this->auth->canDo('UserMod')) {
+            echo '<div' . $style . ' id="scroll__here">';
             print $this->locale_xhtml('edit');
-            ptln("  <div class=\"level2\">");
+            echo '<div class="level2">';
 
             $this->htmlUserForm('modify', $this->edit_user, $this->edit_userdata, 4);
 
-            ptln("  </div>");
-            ptln("</div>");
+            echo '</div>';
+            echo '</div>';
         }
 
         if ($this->auth->canDo('addUser')) {
             $this->htmlImportForm();
         }
-        ptln("</div>");
+        echo '</div>';
         return true;
     }
 
@@ -374,8 +371,9 @@ class admin_plugin_usermanager extends AdminPlugin
      *
      * @param string $cmd 'add' or 'modify'
      * @param string $user id of user
-     * @param array  $userdata array with name, mail, pass and grps
-     * @param int    $indent
+     * @param array $userdata array with name, mail, pass and grps
+     * @param int $indent
+     * @todo use Form class
      */
     protected function htmlUserForm($cmd, $user = '', $userdata = [], $indent = 0)
     {
@@ -394,14 +392,14 @@ class admin_plugin_usermanager extends AdminPlugin
             $notes[] = sprintf($this->lang['note_group'], $conf['defaultgroup']);
         }
 
-        ptln("<form action=\"".wl($ID)."\" method=\"post\">", $indent);
+        printf('<form action="%s" method="post">', wl($ID));
         formSecurityToken();
-        ptln("  <div class=\"table\">", $indent);
-        ptln("  <table class=\"inline\">", $indent);
-        ptln("    <thead>", $indent);
-        ptln("      <tr><th>".$this->lang["field"]."</th><th>".$this->lang["value"]."</th></tr>", $indent);
-        ptln("    </thead>", $indent);
-        ptln("    <tbody>", $indent);
+        echo '<div class="table">';
+        echo '<table class="inline">';
+        echo '<thead>';
+        echo '<tr><th>' . $this->lang["field"] . "</th><th>" . $this->lang["value"] . "</th></tr>";
+        echo '</thead>';
+        echo '<tbody>';
 
         $this->htmlInputField(
             $cmd . "_userid",
@@ -466,40 +464,41 @@ class admin_plugin_usermanager extends AdminPlugin
                 $notes[] = $this->lang['note_notify'];
             }
 
-            ptln("<tr><td><label for=\"".$cmd."_usernotify\" >".
-                 $this->lang["user_notify"].": </label></td>
-                 <td><input type=\"checkbox\" id=\"".$cmd."_usernotify\" name=\"usernotify\" value=\"1\" />
-                 </td></tr>", $indent);
+            echo '<tr><td><label for="' . $cmd . "_usernotify\" >" .
+                $this->lang["user_notify"] . ': </label></td>
+                 <td><input type="checkbox" id="' . $cmd . '_usernotify" name="usernotify" value="1" />
+                 </td></tr>';
         }
 
-        ptln("    </tbody>", $indent);
-        ptln("    <tbody>", $indent);
-        ptln("      <tr>", $indent);
-        ptln("        <td colspan=\"2\">", $indent);
-        ptln("          <input type=\"hidden\" name=\"do\"    value=\"admin\" />", $indent);
-        ptln("          <input type=\"hidden\" name=\"page\"  value=\"usermanager\" />", $indent);
+        echo '</tbody>';
+        echo '<tbody>';
+        echo '<tr>';
+        echo '<td colspan="2">';
+        echo '<input type="hidden" name="do"    value="admin" />';
+        echo '<input type="hidden" name="page"  value="usermanager" />';
 
         // save current $user, we need this to access details if the name is changed
-        if ($user)
-          ptln("          <input type=\"hidden\" name=\"userid_old\"  value=\"".hsc($user)."\" />", $indent);
+        if ($user) {
+            echo '<input type="hidden" name="userid_old"  value="' . hsc($user) . "\" />";
+        }
 
-        $this->htmlFilterSettings($indent+10);
+        $this->htmlFilterSettings($indent + 10);
 
-        ptln("          <button type=\"submit\" name=\"fn[".$cmd."]\">".$this->lang[$cmd]."</button>", $indent);
-        ptln("        </td>", $indent);
-        ptln("      </tr>", $indent);
-        ptln("    </tbody>", $indent);
-        ptln("  </table>", $indent);
+        echo '<button type="submit" name="fn[' . $cmd . ']">' . $this->lang[$cmd] . '</button>';
+        echo '</td>';
+        echo '</tr>';
+        echo '</tbody>';
+        echo '</table>';
 
         if ($notes) {
-            ptln("    <ul class=\"notes\">");
+            echo '<ul class="notes">';
             foreach ($notes as $note) {
-                ptln("      <li><span class=\"li\">".$note."</li>", $indent);
+                echo '<li><span class="li">' . $note . '</li>';
             }
-            ptln("    </ul>");
+            echo '</ul>';
         }
-        ptln("  </div>", $indent);
-        ptln("</form>", $indent);
+        echo '</div>';
+        echo '</form>';
     }
 
     /**
@@ -509,9 +508,10 @@ class admin_plugin_usermanager extends AdminPlugin
      * @param string $name
      * @param string $label
      * @param string $value
-     * @param bool   $cando whether auth backend is capable to do this action
-     * @param bool   $required is this field required?
+     * @param bool $cando whether auth backend is capable to do this action
+     * @param bool $required is this field required?
      * @param int $indent
+     * @todo obsolete when Form class is used
      */
     protected function htmlInputField($id, $name, $label, $value, $cando, $required, $indent = 0)
     {
@@ -520,19 +520,19 @@ class admin_plugin_usermanager extends AdminPlugin
 
         if ($name == 'userpass' || $name == 'userpass2') {
             $fieldtype = 'password';
-            $autocomp  = 'autocomplete="off"';
+            $autocomp = 'autocomplete="off"';
         } elseif ($name == 'usermail') {
             $fieldtype = 'email';
-            $autocomp  = '';
+            $autocomp = '';
         } else {
             $fieldtype = 'text';
-            $autocomp  = '';
+            $autocomp = '';
         }
         $value = hsc($value);
 
         echo "<tr $class>";
         echo "<td><label for=\"$id\" >$label: </label></td>";
-        echo "<td>";
+        echo '<td>';
         if ($cando) {
             $req = '';
             if ($required) $req = 'required="required"';
@@ -543,8 +543,8 @@ class admin_plugin_usermanager extends AdminPlugin
             echo "<input type=\"$fieldtype\" id=\"$id\" name=\"$name\"
                   value=\"$value\" class=\"edit disabled\" disabled=\"disabled\" />";
         }
-        echo "</td>";
-        echo "</tr>";
+        echo '</td>';
+        echo '</tr>';
     }
 
     /**
@@ -567,10 +567,10 @@ class admin_plugin_usermanager extends AdminPlugin
     protected function htmlFilterSettings($indent = 0)
     {
 
-        ptln("<input type=\"hidden\" name=\"start\" value=\"".$this->start."\" />", $indent);
+        echo '<input type="hidden" name="start" value="' . $this->start . '" />';
 
         foreach ($this->filter as $key => $filter) {
-            ptln("<input type=\"hidden\" name=\"filter[".$key."]\" value=\"".hsc($filter)."\" />", $indent);
+            echo '<input type="hidden" name="filter[' . $key . ']" value="' . hsc($filter) . '" />';
         }
     }
 
@@ -583,52 +583,52 @@ class admin_plugin_usermanager extends AdminPlugin
     {
         global $ID;
 
-        $failure_download_link = wl($ID, ['do'=>'admin', 'page'=>'usermanager', 'fn[importfails]'=>1]);
+        $failure_download_link = wl($ID, ['do' => 'admin', 'page' => 'usermanager', 'fn[importfails]' => 1]);
 
-        ptln('<div class="level2 import_users">', $indent);
+        echo '<div class="level2 import_users">';
         print $this->locale_xhtml('import');
-        ptln('  <form action="'.wl($ID).'" method="post" enctype="multipart/form-data">', $indent);
+        echo '<form action="' . wl($ID) . '" method="post" enctype="multipart/form-data">';
         formSecurityToken();
-        ptln('    <label>'.$this->lang['import_userlistcsv'].'<input type="file" name="import" /></label>', $indent);
-        ptln('    <button type="submit" name="fn[import]">'.$this->lang['import'].'</button>', $indent);
-        ptln('    <input type="hidden" name="do"    value="admin" />', $indent);
-        ptln('    <input type="hidden" name="page"  value="usermanager" />', $indent);
+        echo '<label>' . $this->lang['import_userlistcsv'] . '<input type="file" name="import" /></label>';
+        echo '<button type="submit" name="fn[import]">' . $this->lang['import'] . '</button>';
+        echo '<input type="hidden" name="do"    value="admin" />';
+        echo '<input type="hidden" name="page"  value="usermanager" />';
 
-        $this->htmlFilterSettings($indent+4);
-        ptln('  </form>', $indent);
-        ptln('</div>');
+        $this->htmlFilterSettings($indent + 4);
+        echo '</form>';
+        echo '</div>';
 
         // list failures from the previous import
         if ($this->import_failures) {
             $digits = strlen(count($this->import_failures));
-            ptln('<div class="level3 import_failures">', $indent);
-            ptln('  <h3>'.$this->lang['import_header'].'</h3>');
-            ptln('  <table class="import_failures">', $indent);
-            ptln('    <thead>', $indent);
-            ptln('      <tr>', $indent);
-            ptln('        <th class="line">'.$this->lang['line'].'</th>', $indent);
-            ptln('        <th class="error">'.$this->lang['error'].'</th>', $indent);
-            ptln('        <th class="userid">'.$this->lang['user_id'].'</th>', $indent);
-            ptln('        <th class="username">'.$this->lang['user_name'].'</th>', $indent);
-            ptln('        <th class="usermail">'.$this->lang['user_mail'].'</th>', $indent);
-            ptln('        <th class="usergroups">'.$this->lang['user_groups'].'</th>', $indent);
-            ptln('      </tr>', $indent);
-            ptln('    </thead>', $indent);
-            ptln('    <tbody>', $indent);
+            echo '<div class="level3 import_failures">';
+            echo '<h3>' . $this->lang['import_header'] . '</h3>';
+            echo '<table class="import_failures">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th class="line">' . $this->lang['line'] . '</th>';
+            echo '<th class="error">' . $this->lang['error'] . '</th>';
+            echo '<th class="userid">' . $this->lang['user_id'] . '</th>';
+            echo '<th class="username">' . $this->lang['user_name'] . '</th>';
+            echo '<th class="usermail">' . $this->lang['user_mail'] . '</th>';
+            echo '<th class="usergroups">' . $this->lang['user_groups'] . '</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
             foreach ($this->import_failures as $line => $failure) {
-                ptln('      <tr>', $indent);
-                ptln('        <td class="lineno"> '.sprintf('%0'.$digits.'d', $line).' </td>', $indent);
-                ptln('        <td class="error">' .$failure['error'].' </td>', $indent);
-                ptln('        <td class="field userid"> '.hsc($failure['user'][0]).' </td>', $indent);
-                ptln('        <td class="field username"> '.hsc($failure['user'][2]).' </td>', $indent);
-                ptln('        <td class="field usermail"> '.hsc($failure['user'][3]).' </td>', $indent);
-                ptln('        <td class="field usergroups"> '.hsc($failure['user'][4]).' </td>', $indent);
-                ptln('      </tr>', $indent);
+                echo '<tr>';
+                echo '<td class="lineno"> ' . sprintf('%0' . $digits . 'd', $line) . ' </td>';
+                echo '<td class="error">' . $failure['error'] . ' </td>';
+                echo '<td class="field userid"> ' . hsc($failure['user'][0]) . ' </td>';
+                echo '<td class="field username"> ' . hsc($failure['user'][2]) . ' </td>';
+                echo '<td class="field usermail"> ' . hsc($failure['user'][3]) . ' </td>';
+                echo '<td class="field usergroups"> ' . hsc($failure['user'][4]) . ' </td>';
+                echo '</tr>';
             }
-            ptln('    </tbody>', $indent);
-            ptln('  </table>', $indent);
-            ptln('  <p><a href="'.$failure_download_link.'">'.$this->lang['import_downloadfailures'].'</a></p>');
-            ptln('</div>');
+            echo '</tbody>';
+            echo '</table>';
+            echo '<p><a href="' . $failure_download_link . '">' . $this->lang['import_downloadfailures'] . '</a></p>';
+            echo '</div>';
         }
     }
 
@@ -731,12 +731,12 @@ class admin_plugin_usermanager extends AdminPlugin
             msg("$text.", 1);
         } else {
             $part1 = str_replace('%d', $count, $this->lang['delete_ok']);
-            $part2 = str_replace('%d', (count($selected)-$count), $this->lang['delete_fail']);
+            $part2 = str_replace('%d', (count($selected) - $count), $this->lang['delete_fail']);
             msg("$part1, $part2", -1);
         }
 
         // invalidate all sessions
-        io_saveFile($conf['cachedir'].'/sessionpurge', time());
+        io_saveFile($conf['cachedir'] . '/sessionpurge', time());
 
         return true;
     }
@@ -833,7 +833,7 @@ class admin_plugin_usermanager extends AdminPlugin
             }
 
             // invalidate all sessions
-            io_saveFile($conf['cachedir'].'/sessionpurge', time());
+            io_saveFile($conf['cachedir'] . '/sessionpurge', time());
         } else {
             msg($this->lang['update_fail'], -1);
         }
@@ -848,9 +848,9 @@ class admin_plugin_usermanager extends AdminPlugin
     /**
      * Send password change notification email
      *
-     * @param string $user         id of user
-     * @param string $password     plain text
-     * @param bool   $status_alert whether status alert should be shown
+     * @param string $user id of user
+     * @param string $password plain text
+     * @param bool $status_alert whether status alert should be shown
      * @return bool whether succesful
      */
     protected function notifyUser($user, $password, $status_alert = true)
@@ -871,8 +871,8 @@ class admin_plugin_usermanager extends AdminPlugin
      * Verify password meets minimum requirements
      * :TODO: extend to support password strength
      *
-     * @param string  $password   candidate string for new password
-     * @param string  $confirm    repeated password for confirmation
+     * @param string $password candidate string for new password
+     * @param string $confirm repeated password for confirmation
      * @return bool   true if meets requirements, false otherwise
      */
     protected function verifyPassword($password, $confirm)
@@ -1145,7 +1145,7 @@ class admin_plugin_usermanager extends AdminPlugin
         $INPUT->set('usergroups', $candidate[4]);
 
         $cleaned = $this->retrieveUser();
-        [$user, /* pass */ , $name, $mail, /* grps */ ] = $cleaned;
+        [$user, /* pass */, $name, $mail, /* grps */] = $cleaned;
         if (empty($user)) {
             $error = $this->lang['import_error_baduserid'];
             return false;
@@ -1176,7 +1176,7 @@ class admin_plugin_usermanager extends AdminPlugin
      *
      * Required a check of canDo('addUser') before
      *
-     * @param array  $user   data of user
+     * @param array $user data of user
      * @param string &$error reference catched error message
      * @return bool whether successful
      */

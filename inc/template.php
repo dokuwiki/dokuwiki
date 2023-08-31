@@ -1413,7 +1413,7 @@ function tpl_mediaContent($fromajax = false, $sort = 'natural')
     }
 
     // output the content pane, wrapped in an event.
-    if (!$fromajax) ptln('<div id="media__content">');
+    if (!$fromajax) echo '<div id="media__content">';
     $data = ['do' => $do];
     $evt  = new Event('MEDIAMANAGER_CONTENT_OUTPUT', $data);
     if ($evt->advise_before()) {
@@ -1430,7 +1430,7 @@ function tpl_mediaContent($fromajax = false, $sort = 'natural')
     }
     $evt->advise_after();
     unset($evt);
-    if (!$fromajax) ptln('</div>');
+    if (!$fromajax) echo '</div>';
 
 }
 
@@ -1562,9 +1562,9 @@ function tpl_mediaFileDetails($image, $rev)
 function tpl_mediaTree()
 {
     global $NS;
-    ptln('<div id="media__tree">');
+    echo '<div id="media__tree">';
     media_nstree($NS);
-    ptln('</div>');
+    echo '</div>';
 }
 
 /**
