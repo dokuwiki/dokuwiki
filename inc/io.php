@@ -203,8 +203,8 @@ function io_writeWikiPage($file, $content, $id, $rev = false)
         $rev = false;
     }
     if ($rev === false) {
-        io_createNamespace($id);
-    } // create namespaces as needed
+        io_createNamespace($id); // create namespaces as needed
+    }
     $data = [[$file, $content, false], getNS($id), noNS($id), $rev];
     return Event::createAndTrigger('IO_WIKIPAGE_WRITE', $data, '_io_writeWikiPage_action', false);
 }
