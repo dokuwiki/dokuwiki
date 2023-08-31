@@ -82,21 +82,6 @@ function blank(&$in, $trim = false)
 }
 
 /**
- * print a newline terminated string
- *
- * You can give an indention as optional parameter
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param string $string  line of text
- * @param int    $indent  number of spaces indention
- */
-function ptln($string, $indent = 0)
-{
-    echo str_repeat(' ', $indent)."$string\n";
-}
-
-/**
  * strips control characters (<32) from the given string
  *
  * @author Andreas Gohr <andi@splitbrain.org>

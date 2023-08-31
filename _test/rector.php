@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use dokuwiki\test\rector\DokuWikiPtlnRector;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\Array_\CallableThisArrayToAnonymousFunctionRector;
 use Rector\CodeQuality\Rector\Concat\JoinStringConcatRector;
@@ -37,6 +38,9 @@ use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 
 return static function (RectorConfig $rectorConfig): void {
+    // FIXME we may want to autoload these later
+    require_once __DIR__ . '/rector/DokuWikiPtlnRector.php';
+
     $rectorConfig->paths([
         __DIR__ . '/../inc/',
         __DIR__ . '/../lib/',
@@ -185,4 +189,6 @@ return static function (RectorConfig $rectorConfig): void {
         'utf8_bad_replace' => 'dokuwiki\Utf8\Clean::replaceBadBytes',
         'utf8_correctIdx' => 'dokuwiki\Utf8\Clean::correctIdx',
     ]);
+
+    $rectorConfig->rule(DokuWikiPtlnRector::class);
 };

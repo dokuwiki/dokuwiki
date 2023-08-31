@@ -722,3 +722,19 @@ class IXR_Value extends \IXR\DataType\Value
     }
 }
 
+/**
+ * print a newline terminated string
+ *
+ * You can give an indention as optional parameter
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $string  line of text
+ * @param int    $indent  number of spaces indention
+ * @deprecated 2023-08-31 use echo instead
+ */
+function ptln($string, $indent = 0)
+{
+    DebugHelper::dbgDeprecatedFunction('echo');
+    echo str_repeat(' ', $indent) . "$string\n";
+}
