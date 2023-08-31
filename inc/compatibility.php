@@ -9,9 +9,9 @@ if (!function_exists('ctype_space')) {
     /**
      * Check for whitespace character(s)
      *
-     * @see ctype_space
      * @param string $text
      * @return bool
+     * @see ctype_space
      */
     function ctype_space($text)
     {
@@ -25,9 +25,9 @@ if (!function_exists('ctype_digit')) {
     /**
      * Check for numeric character(s)
      *
-     * @see ctype_digit
      * @param string $text
      * @return bool
+     * @see ctype_digit
      */
     function ctype_digit($text)
     {
@@ -45,7 +45,7 @@ if (!function_exists('gzopen') && function_exists('gzopen64')) {
      *
      * @param string $filename
      * @param string $mode
-     * @param int    $use_include_path
+     * @param int $use_include_path
      * @return mixed
      */
     function gzopen($filename, $mode, $use_include_path = 0)
@@ -61,8 +61,8 @@ if (!function_exists('gzseek') && function_exists('gzseek64')) {
      * @link http://stackoverflow.com/questions/23417519/php-zlib-gzopen-not-exists
      *
      * @param resource $zp
-     * @param int      $offset
-     * @param int      $whence
+     * @param int $offset
+     * @param int $whence
      * @return int
      */
     function gzseek($zp, $offset, $whence = SEEK_SET)
@@ -83,5 +83,38 @@ if (!function_exists('gztell') && function_exists('gztell64')) {
     function gztell($zp)
     {
         return gztell64($zp);
+    }
+}
+
+/**
+ * polyfill for PHP < 8
+ * @see https://www.php.net/manual/en/function.str-starts-with
+ */
+if (!function_exists('str_starts_with')) {
+    function str_starts_with(string $haystack, string $needle)
+    {
+        return empty($needle) || strpos($haystack, $needle) === 0;
+    }
+}
+
+/**
+ * polyfill for PHP < 8
+ * @see https://www.php.net/manual/en/function.str-contains
+ */
+if (!function_exists('str_contains')) {
+    function str_contains(string $haystack, string $needle)
+    {
+        return empty($needle) || strpos($haystack, $needle) !== false;
+    }
+}
+
+/**
+ * polyfill for PHP < 8
+ * @see https://www.php.net/manual/en/function.str-ends-with
+ */
+if (!function_exists('str_ends_with')) {
+    function str_ends_with(string $haystack, string $needle)
+    {
+        return empty($needle) || substr($haystack, -strlen($needle)) === $needle;
     }
 }
