@@ -193,7 +193,7 @@ class Event
      *                                      by default this is the return value of the default action however
      *                                      it can be set or modified by event handler hooks
      */
-    static public function createAndTrigger($name, &$data, $action = null, $canPreventDefault = true)
+    public static function createAndTrigger($name, &$data, $action = null, $canPreventDefault = true)
     {
         $evt = new Event($name, $data);
         return $evt->trigger($action, $canPreventDefault);

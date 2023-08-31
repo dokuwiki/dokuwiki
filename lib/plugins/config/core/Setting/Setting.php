@@ -20,7 +20,7 @@ class Setting
     protected $protected;
 
     /** @var array valid alerts, images matching the alerts are in the plugin's images directory */
-    static protected $validCautions = ['warning', 'danger', 'security'];
+    protected static $validCautions = ['warning', 'danger', 'security'];
 
     protected $pattern = '';
     protected $error = false;            // only used by those classes which error check

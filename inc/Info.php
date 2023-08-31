@@ -17,7 +17,7 @@ class Info
      * @return array
      * @throws \Exception
      */
-    static public function parseVersionString($version)
+    public static function parseVersionString($version)
     {
         $return = [
             'type' => '', // stable, rc

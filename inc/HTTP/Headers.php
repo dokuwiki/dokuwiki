@@ -14,7 +14,7 @@ class Headers
      *
      * @param array $policy
      */
-    static public function contentSecurityPolicy($policy)
+    public static function contentSecurityPolicy($policy)
     {
         foreach ($policy as $key => $values) {
             // if the value is not an array, we also accept newline terminated strings

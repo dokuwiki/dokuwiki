@@ -14,7 +14,7 @@ class Logger
     public const LOG_DEBUG = 'debug';
 
     /** @var Logger[] */
-    static protected $instances;
+    protected static $instances;
 
     /** @var string what kind of log is this */
     protected $facility;
@@ -43,7 +43,7 @@ class Logger
      * @param string $facility The type of log
      * @return Logger
      */
-    static public function getInstance($facility = self::LOG_ERROR)
+    public static function getInstance($facility = self::LOG_ERROR)
     {
         if (empty(self::$instances[$facility])) {
             self::$instances[$facility] = new Logger($facility);
@@ -60,7 +60,7 @@ class Logger
      * @param int $line A line number for the above file
      * @return bool has a log been written?
      */
-    static public function error($message, $details = null, $file = '', $line = 0)
+    public static function error($message, $details = null, $file = '', $line = 0)
     {
         return self::getInstance(self::LOG_ERROR)->log(
             $message,
@@ -79,7 +79,7 @@ class Logger
      * @param int $line A line number for the above file
      * @return bool has a log been written?
      */
-    static public function debug($message, $details = null, $file = '', $line = 0)
+    public static function debug($message, $details = null, $file = '', $line = 0)
     {
         return self::getInstance(self::LOG_DEBUG)->log(
             $message,
@@ -98,7 +98,7 @@ class Logger
      * @param int $line A line number for the above file
      * @return bool has a log been written?
      */
-    static public function deprecated($message, $details = null, $file = '', $line = 0)
+    public static function deprecated($message, $details = null, $file = '', $line = 0)
     {
         return self::getInstance(self::LOG_DEPRECATED)->log(
             $message,
