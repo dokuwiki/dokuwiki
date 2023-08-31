@@ -31,6 +31,9 @@ use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
 use Rector\DeadCode\Rector\Stmt\RemoveUnreachableStatementRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
+use Rector\Php80\Rector\Identical\StrEndsWithRector;
+use Rector\Php80\Rector\Identical\StrStartsWithRector;
+use Rector\Php80\Rector\NotIdentical\StrContainsRector;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Set\ValueObject\LevelSetList;
@@ -66,6 +69,11 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::DEAD_CODE,
         SetList::CODING_STYLE,
     ]);
+
+    // future rules for which we have polyfills
+    $rectorConfig->rule(StrContainsRector::class);
+    $rectorConfig->rule(StrEndsWithRector::class);
+    $rectorConfig->rule(StrStartsWithRector::class);
 
     $rectorConfig->skip([
         // skip paths
