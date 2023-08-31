@@ -6,8 +6,6 @@
     <rule ref="./phpcs.xml">
         <!-- Rules with automatic fixes that we want to adhere to, but currently don't -->
         <exclude name="Generic.Formatting.DisallowMultipleStatements.SameLine"/>
-        <exclude name="Generic.WhiteSpace.IncrementDecrementSpacing.SpaceAfterDecrement"/>
-        <exclude name="Generic.WhiteSpace.IncrementDecrementSpacing.SpaceAfterIncrement"/>
 
         <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore"/>
 

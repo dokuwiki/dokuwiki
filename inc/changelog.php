@@ -199,7 +199,7 @@ function getRecents($first, $num, $ns = '', $flags = 0)
         if (empty($rec) && $lines_position >= 0) {
             $rec = _handleRecent(@$lines[$lines_position], $ns, $flags, $seen);
             if (!$rec) {
-                $lines_position --;
+                $lines_position--;
                 continue;
             }
         }
@@ -211,7 +211,7 @@ function getRecents($first, $num, $ns = '', $flags = 0)
                 $seen
             );
             if (!$media_rec) {
-                $media_lines_position --;
+                $media_lines_position--;
                 continue;
             }
         }
