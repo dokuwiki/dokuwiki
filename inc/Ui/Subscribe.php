@@ -109,7 +109,7 @@ class Subscribe extends Ui
         $form->addButton('do[subscribe]', $lang['subscr_m_subscribe'])->attr('type', 'submit');
         $form->addTagClose('div');
 
-        print $form->toHTML('Subscribe');
+        echo $form->toHTML('Subscribe');
 
         echo '</div>';
     }

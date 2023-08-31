@@ -32,9 +32,9 @@ class Index extends Ui
     public function show()
     {
         // print intro
-        print p_locale_xhtml('index');
+        echo p_locale_xhtml('index');
 
-        print $this->sitemap();
+        echo $this->sitemap();
     }
 
     /**

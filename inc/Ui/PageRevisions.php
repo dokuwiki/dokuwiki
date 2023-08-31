@@ -56,7 +56,7 @@ class PageRevisions extends Revisions
         $revisions = $this->getRevisions($first, $hasNext);
 
         // print intro
-        print p_locale_xhtml('revisions');
+        echo p_locale_xhtml('revisions');
 
         // create the form
         $form = new Form([
@@ -108,9 +108,9 @@ class PageRevisions extends Revisions
 
         $form->addTagClose('div'); // close div class=no
 
-        print $form->toHTML('Revisions');
+        echo $form->toHTML('Revisions');
 
         // provide navigation for paginated revision list (of pages and/or media files)
-        print $this->navigation($first, $hasNext, static fn($n) => ['do' => 'revisions', 'first' => $n]);
+        echo $this->navigation($first, $hasNext, static fn($n) => ['do' => 'revisions', 'first' => $n]);
     }
 }

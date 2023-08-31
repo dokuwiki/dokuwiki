@@ -79,6 +79,6 @@ class PageView extends Ui
      */
     public function showrev()
     {
-        print p_locale_xhtml('showrev');
+        echo p_locale_xhtml('showrev');
     }
 }

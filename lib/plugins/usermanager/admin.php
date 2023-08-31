@@ -197,7 +197,7 @@ class admin_plugin_usermanager extends AdminPlugin
         global $ID;
 
         if (is_null($this->auth)) {
-            print $this->lang['badauth'];
+            echo $this->lang['badauth'];
             return false;
         }
 
@@ -209,8 +209,8 @@ class admin_plugin_usermanager extends AdminPlugin
         $editable = $this->auth->canDo('UserMod');
         $export_label = empty($this->filter) ? $this->lang['export_all'] : $this->lang['export_filtered'];
 
-        print $this->locale_xhtml('intro');
-        print $this->locale_xhtml('list');
+        echo $this->locale_xhtml('intro');
+        echo $this->locale_xhtml('list');
 
         echo '<div id="user__manager">';
         echo '<div class="level2">';
@@ -321,7 +321,7 @@ class admin_plugin_usermanager extends AdminPlugin
 
         if ($this->auth->canDo('addUser')) {
             echo '<div' . $style . '>';
-            print $this->locale_xhtml('add');
+            echo $this->locale_xhtml('add');
             echo '<div class="level2">';
 
             $this->htmlUserForm('add', null, [], 4);
@@ -332,7 +332,7 @@ class admin_plugin_usermanager extends AdminPlugin
 
         if ($this->edit_user && $this->auth->canDo('UserMod')) {
             echo '<div' . $style . ' id="scroll__here">';
-            print $this->locale_xhtml('edit');
+            echo $this->locale_xhtml('edit');
             echo '<div class="level2">';
 
             $this->htmlUserForm('modify', $this->edit_user, $this->edit_userdata, 4);
@@ -586,7 +586,7 @@ class admin_plugin_usermanager extends AdminPlugin
         $failure_download_link = wl($ID, ['do' => 'admin', 'page' => 'usermanager', 'fn[importfails]' => 1]);
 
         echo '<div class="level2 import_users">';
-        print $this->locale_xhtml('import');
+        echo $this->locale_xhtml('import');
         echo '<form action="' . wl($ID) . '" method="post" enctype="multipart/form-data">';
         formSecurityToken();
         echo '<label>' . $this->lang['import_userlistcsv'] . '<input type="file" name="import" /></label>';

@@ -145,26 +145,26 @@ function css_out()
         $cssData = $media_files[$mediatype];
 
         // Print the styles.
-        print NL;
+        echo NL;
         if ($cssData['encapsulate'] === true) {
-            print $cssData['encapsulationPrefix'] . ' {';
+            echo $cssData['encapsulationPrefix'] . ' {';
         }
-        print '/* START ' . $cssData['mediatype'] . ' styles */' . NL;
+        echo '/* START ' . $cssData['mediatype'] . ' styles */' . NL;
 
         // load files
         foreach ($cssData['files'] as $file => $location) {
             $display = str_replace(fullpath(DOKU_INC), '', fullpath($file));
-            print "\n/* XXXXXXXXX $display XXXXXXXXX */\n";
-            print css_loadfile($file, $location);
+            echo "\n/* XXXXXXXXX $display XXXXXXXXX */\n";
+            echo css_loadfile($file, $location);
         }
 
-        print NL;
+        echo NL;
         if ($cssData['encapsulate'] === true) {
-            print '} /* /@media ';
+            echo '} /* /@media ';
         } else {
-            print '/*';
+            echo '/*';
         }
-        print ' END ' . $cssData['mediatype'] . ' styles */' . NL;
+        echo ' END ' . $cssData['mediatype'] . ' styles */' . NL;
     }
 
     // end output buffering and get contents
@@ -321,10 +321,10 @@ function css_filewrapper($mediatype, $files = [])
 function css_defaultstyles()
 {
     // print the default classes for interwiki links and file downloads
-    print '@media screen {';
+    echo '@media screen {';
     css_interwiki();
     css_filetypes();
-    print '}';
+    echo '}';
 }
 
 /**

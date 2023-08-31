@@ -40,8 +40,8 @@ class Login extends Ui
         global $INPUT;
 
         // print intro
-        print p_locale_xhtml('login');
-        print '<div class="centeralign">' . NL;
+        echo p_locale_xhtml('login');
+        echo '<div class="centeralign">' . NL;
 
         // create the login form
         $form = new Form(['id' => 'dw__login', 'action' => wl($ID)]);
@@ -76,8 +76,8 @@ class Login extends Ui
             $form->addHTML('<p>' . $lang['pwdforget'] . ': ' . $resendPwLink . '</p>');
         }
 
-        print $form->toHTML('Login');
+        echo $form->toHTML('Login');
 
-        print '</div>';
+        echo '</div>';
     }
 }

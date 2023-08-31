@@ -96,7 +96,7 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
         http_rangeRequest($fp, filesize($file), $mime);
     } else {
         http_status(500);
-        print "Could not read $file - bad permissions?";
+        echo "Could not read $file - bad permissions?";
     }
 }
 

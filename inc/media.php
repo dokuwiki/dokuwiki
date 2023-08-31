@@ -48,7 +48,7 @@ function media_filesinuse($data, $id)
         } else $hidden++;
     }
     if ($hidden) {
-        print '<div class="mediaref_hidden">'.$lang['ref_hidden'].'</div>';
+        echo '<div class="mediaref_hidden">'.$lang['ref_hidden'].'</div>';
     }
 }
 
@@ -879,7 +879,7 @@ function media_tab_files_options()
     $form->addHTML('</li>'.NL);
     $form->addHTML('</ul>'.NL);
     $form->addTagClose('div');
-    print $form->toHTML();
+    echo $form->toHTML();
 }
 
 /**
@@ -1657,7 +1657,7 @@ function media_searchform($ns, $query = '', $fullscreen = false)
     $form->addButton('', $lang['btn_search'])->attr('type', 'submit');
     $form->addTagClose('p');
     $form->addTagClose('div');
-    print $form->toHTML('SearchMedia');
+    echo $form->toHTML('SearchMedia');
 }
 
 /**

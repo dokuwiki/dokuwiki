@@ -51,10 +51,10 @@ class Recent extends Ui
         $recents = $this->getRecents($first, $hasNext);
 
         // print intro
-        print p_locale_xhtml('recent');
+        echo p_locale_xhtml('recent');
 
         if (getNS($ID) != '') {
-            print '<div class="level1"><p>'
+            echo '<div class="level1"><p>'
                 . sprintf($lang['recent_global'], getNS($ID), wl('', 'do=recent'))
                 . '</p></div>';
         }
@@ -103,7 +103,7 @@ class Recent extends Ui
         // provide navigation for paginated recent list (of pages and/or media files)
         $form->addHTML($this->htmlNavigation($first, $hasNext));
 
-        print $form->toHTML('Recent');
+        echo $form->toHTML('Recent');
     }
 
     /**

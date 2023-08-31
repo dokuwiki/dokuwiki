@@ -124,7 +124,7 @@ function http_rangeRequest($fh, $size, $mime)
                 if (!$end) $end = $size - 1;
                 if ($start > $end || $start > $size || $end > $size) {
                     header('HTTP/1.1 416 Requested Range Not Satisfiable');
-                    print 'Bad Range Request!';
+                    echo 'Bad Range Request!';
                     exit;
                 }
                 $len = $end - $start + 1;
@@ -168,7 +168,7 @@ function http_rangeRequest($fh, $size, $mime)
         $chunk = ($len > HTTP_CHUNK_SIZE) ? HTTP_CHUNK_SIZE : $len;
         while (!feof($fh) && $chunk > 0) {
             @set_time_limit(30); // large files can take a lot of time
-            print fread($fh, $chunk);
+            echo fread($fh, $chunk);
             flush();
             $len -= $chunk;
             $chunk = ($len > HTTP_CHUNK_SIZE) ? HTTP_CHUNK_SIZE : $len;
@@ -261,9 +261,9 @@ function http_cached_finish($file, $content)
     if ($conf['gzip_output'] && DOKU_HAS_GZIP) {
         header('Vary: Accept-Encoding');
         header('Content-Encoding: gzip');
-        print gzencode($content, 9, FORCE_GZIP);
+        echo gzencode($content, 9, FORCE_GZIP);
     } else {
-        print $content;
+        echo $content;
     }
 }
 

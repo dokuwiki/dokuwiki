@@ -30,7 +30,7 @@ class Ajax
         } else {
             $evt = new Event('AJAX_CALL_UNKNOWN', $call);
             if ($evt->advise_before()) {
-                print "AJAX call '" . hsc($call) . "' unknown!\n";
+                echo "AJAX call '" . hsc($call) . "' unknown!\n";
             } else {
                 $evt->advise_after();
                 unset($evt);
@@ -60,8 +60,8 @@ class Ajax
 
         if ($data === []) return;
 
-        print '<strong>' . $lang['quickhits'] . '</strong>';
-        print '<ul>';
+        echo '<strong>' . $lang['quickhits'] . '</strong>';
+        echo '<ul>';
         $counter = 0;
         foreach ($data as $id => $title) {
             if (useHeading('navigation')) {
@@ -82,7 +82,7 @@ class Ajax
                 break;
             }
         }
-        print '</ul>';
+        echo '</ul>';
     }
 
     /**
@@ -119,7 +119,7 @@ class Ajax
         ];
 
         header('Content-Type: application/x-suggestions+json');
-        print json_encode($suggestions, JSON_THROW_ON_ERROR);
+        echo json_encode($suggestions, JSON_THROW_ON_ERROR);
     }
 
     /**

@@ -110,10 +110,10 @@ class MediaRevisions extends Revisions
 
         $form->addTagClose('div'); // close div class=no
 
-        print $form->toHTML('Revisions');
+        echo $form->toHTML('Revisions');
 
         // provide navigation for paginated revision list (of pages and/or media files)
-        print $this->navigation(
+        echo $this->navigation(
             $first,
             $hasNext,
             static fn($n) => media_managerURL(['first' => $n], '&', false, true)

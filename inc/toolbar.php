@@ -247,7 +247,7 @@ function toolbar_JSdefines($varname)
     unset($evt);
 
     // use JSON to build the JavaScript array
-    print "var $varname = ".json_encode($menu, JSON_THROW_ON_ERROR).";\n";
+    echo "var $varname = ".json_encode($menu, JSON_THROW_ON_ERROR).";\n";
 }
 
 /**

@@ -386,7 +386,7 @@ function msg($message, $lvl = 0, $line = '', $file = '', $allow = MSG_PUBLIC)
             if (function_exists('html_msgarea')) {
                 html_msgarea();
             } else {
-                print "ERROR(".$msgdata['lvl'].") ".$msgdata['msg']."\n";
+                echo "ERROR(".$msgdata['lvl'].") ".$msgdata['msg']."\n";
             }
             unset($GLOBALS['MSG']);
         }

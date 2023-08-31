@@ -52,7 +52,7 @@ header('X-Robots-Tag: noindex');
 if ($cache->useCache($depends)) {
     http_conditionalRequest($cache->getTime());
     if ($conf['allowdebug']) header("X-CacheUsed: $cache->cache");
-    print $cache->retrieveCache();
+    echo $cache->retrieveCache();
     exit;
 } else {
     http_conditionalRequest(time());
@@ -100,7 +100,7 @@ $feed = $rss->createFeed($opt['feed_type']);
 $cache->storeCache($feed);
 
 // finally deliver
-print $feed;
+echo $feed;
 
 // ---------------------------------------------------------------- //
 

@@ -459,7 +459,7 @@ function tpl_link($url, $name, $more = '', $return = false)
     if ($more) $out .= ' '.$more;
     $out .= ">$name</a>";
     if ($return) return $out;
-    print $out;
+    echo $out;
     return true;
 }
 
@@ -479,7 +479,7 @@ function tpl_pagelink($id, $name = null, $return = false)
 {
     $out = '<bdi>'.html_wikilink($id, $name).'</bdi>';
     if ($return) return $out;
-    print $out;
+    echo $out;
     return true;
 }
 
@@ -692,7 +692,7 @@ function tpl_action($type, $link = false, $wrapper = false, $return = false, $pr
     if ($out && $wrapper) $out = "<$wrapper>$out</$wrapper>";
 
     if ($return) return $out;
-    print $out;
+    echo $out;
     return (bool) $out;
 }
 
@@ -797,7 +797,7 @@ function tpl_breadcrumbs($sep = null, $return = false)
         if ($i == $last) $out .= '</span>';
     }
     if ($return) return $out;
-    print $out;
+    echo $out;
     return (bool) $out;
 }
 
@@ -855,20 +855,20 @@ function tpl_youarehere($sep = null, $return = false)
         $page = (new PageResolver('root'))->resolveId($page);
         if ($page == $part . $parts[$i]) {
             if ($return) return $out;
-            print $out;
+            echo $out;
             return true;
         }
     }
     $page = $part.$parts[$i];
     if ($page == $conf['start']) {
         if ($return) return $out;
-        print $out;
+        echo $out;
         return true;
     }
     $out .= $sep;
     $out .= tpl_pagelink($page, null, true);
     if ($return) return $out;
-    print $out;
+    echo $out;
     return (bool) $out;
 }
 
@@ -889,7 +889,7 @@ function tpl_userinfo()
     global $INPUT;
 
     if ($INPUT->server->str('REMOTE_USER')) {
-        print $lang['loggedinas'].' '.userlink();
+        echo $lang['loggedinas'].' '.userlink();
         return true;
     }
     return false;
@@ -1034,7 +1034,7 @@ function tpl_pagetitle($id = null, $ret = false)
     if ($ret) {
         return hsc($page_title);
     } else {
-        print hsc($page_title);
+        echo hsc($page_title);
         return true;
     }
 }
@@ -1220,9 +1220,9 @@ function _tpl_img_action($data)
     global $lang;
     $p = buildAttributes($data['params']);
 
-    if ($data['url']) print '<a href="'.hsc($data['url']).'" title="'.$lang['mediaview'].'">';
-    print '<img '.$p.'/>';
-    if ($data['url']) print '</a>';
+    if ($data['url']) echo '<a href="'.hsc($data['url']).'" title="'.$lang['mediaview'].'">';
+    echo '<img '.$p.'/>';
+    if ($data['url']) echo '</a>';
     return true;
 }
 
@@ -1245,7 +1245,7 @@ function tpl_indexerWebBug()
     $p['height'] = 1;
     $p['alt']    = '';
     $att         = buildAttributes($p);
-    print "<img $att />";
+    echo "<img $att />";
     return true;
 }
 

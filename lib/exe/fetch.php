@@ -81,7 +81,7 @@ if ($evt->advise_before()) {
     }
     // die on errors
     if ($data['status'] > 203) {
-        print $data['statusmessage'];
+        echo $data['statusmessage'];
         if (defined('SIMPLE_TEST')) return;
         exit;
     }

@@ -98,17 +98,17 @@ function js_out()
     ob_start();
 
     // add some global variables
-    print "var DOKU_BASE   = '" . DOKU_BASE . "';";
-    print "var DOKU_TPL    = '" . tpl_basedir($tpl) . "';";
-    print "var DOKU_COOKIE_PARAM = " . json_encode([
+    echo "var DOKU_BASE   = '" . DOKU_BASE . "';";
+    echo "var DOKU_TPL    = '" . tpl_basedir($tpl) . "';";
+    echo "var DOKU_COOKIE_PARAM = " . json_encode([
             'path' => empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'],
             'secure' => $conf['securecookie'] && is_ssl()
         ], JSON_THROW_ON_ERROR) . ";";
     // FIXME: Move those to JSINFO
-    print "Object.defineProperty(window, 'DOKU_UHN', { get: function() {" .
+    echo "Object.defineProperty(window, 'DOKU_UHN', { get: function() {" .
         "console.warn('Using DOKU_UHN is deprecated. Please use JSINFO.useHeadingNavigation instead');" .
         "return JSINFO.useHeadingNavigation; } });";
-    print "Object.defineProperty(window, 'DOKU_UHC', { get: function() {" .
+    echo "Object.defineProperty(window, 'DOKU_UHC', { get: function() {" .
         "console.warn('Using DOKU_UHC is deprecated. Please use JSINFO.useHeadingContent instead');" .
         "return JSINFO.useHeadingContent; } });";
 

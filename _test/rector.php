@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use dokuwiki\test\rector\DokuWikiPtlnRector;
+use dokuwiki\test\rector\DokuWikiRenamePrintToEcho;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\Array_\CallableThisArrayToAnonymousFunctionRector;
 use Rector\CodeQuality\Rector\Concat\JoinStringConcatRector;
@@ -40,6 +41,7 @@ use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 return static function (RectorConfig $rectorConfig): void {
     // FIXME we may want to autoload these later
     require_once __DIR__ . '/rector/DokuWikiPtlnRector.php';
+    require_once __DIR__ . '/rector/DokuWikiRenamePrintToEcho.php';
 
     $rectorConfig->paths([
         __DIR__ . '/../inc/',
@@ -191,4 +193,5 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->rule(DokuWikiPtlnRector::class);
+    $rectorConfig->rule(DokuWikiRenamePrintToEcho::class);
 };

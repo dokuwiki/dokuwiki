@@ -739,13 +739,13 @@ class HTTPClient
      */
     protected function debugHtml($info, $var = null)
     {
-        print '<b>' . $info . '</b> ' . (microtime(true) - $this->start) . 's<br />';
+        echo '<b>' . $info . '</b> ' . (microtime(true) - $this->start) . 's<br />';
         if (!is_null($var)) {
             ob_start();
             print_r($var);
             $content = htmlspecialchars(ob_get_contents());
             ob_end_clean();
-            print '<pre>' . $content . '</pre>';
+            echo '<pre>' . $content . '</pre>';
         }
     }
 
@@ -757,9 +757,9 @@ class HTTPClient
      */
     protected function debugText($info, $var = null)
     {
-        print '*' . $info . '* ' . (microtime(true) - $this->start) . "s\n";
+        echo '*' . $info . '* ' . (microtime(true) - $this->start) . "s\n";
         if (!is_null($var)) print_r($var);
-        print "\n-----------------------------------------------\n";
+        echo "\n-----------------------------------------------\n";
     }
 
     /**

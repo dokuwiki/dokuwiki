@@ -85,7 +85,7 @@ class WantedPagesCLI extends CLI
         Sort::ksort($this->result);
         foreach ($this->result as $main => $subs) {
             if ($this->skip) {
-                print "$main\n";
+                echo "$main\n";
             } else {
                 $subs = array_unique($subs);
                 Sort::sort($subs);

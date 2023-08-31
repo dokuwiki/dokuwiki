@@ -47,6 +47,6 @@ class Denied extends AbstractAction
     public function showBanner()
     {
         // print intro
-        print p_locale_xhtml('denied');
+        echo p_locale_xhtml('denied');
     }
 }

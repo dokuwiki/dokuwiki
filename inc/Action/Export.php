@@ -106,7 +106,7 @@ class Export extends AbstractAction
             if (is_array($data['headers'])) foreach ($data['headers'] as $key => $val) {
                 header("$key: $val");
             }
-            print $pre . $data['output'] . $post;
+            echo $pre . $data['output'] . $post;
             exit;
         }
 

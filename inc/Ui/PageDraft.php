@@ -29,7 +29,7 @@ class PageDraft extends Ui
         $text = $draft->getDraftText();
 
         // print intro
-        print p_locale_xhtml('draft');
+        echo p_locale_xhtml('draft');
 
         // print difference
         (new PageDiff($INFO['id']))->compareWith($text)->preference('showIntro', false)->show();
@@ -49,6 +49,6 @@ class PageDraft extends Ui
         $form->addButton('do[show]', $lang['btn_cancel'])->attrs(['type' => 'submit', 'tabindex' => '3']);
         $form->addTagClose('div');
 
-        print $form->toHTML('Draft');
+        echo $form->toHTML('Draft');
     }
 }

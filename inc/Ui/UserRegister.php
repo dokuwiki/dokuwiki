@@ -28,8 +28,8 @@ class UserRegister extends Ui
         $email_attrs = $base_attrs + ['type' => 'email'];
 
         // print intro
-        print p_locale_xhtml('register');
-        print '<div class="centeralign">';
+        echo p_locale_xhtml('register');
+        echo '<div class="centeralign">';
 
         // create the login form
         $form = new Form(['id' => 'dw__register']);
@@ -66,8 +66,8 @@ class UserRegister extends Ui
         $form->addFieldsetClose();
         $form->addTagClose('div');
 
-        print $form->toHTML('Register');
+        echo $form->toHTML('Register');
 
-        print '</div>';
+        echo '</div>';
     }
 }

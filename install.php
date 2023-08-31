@@ -120,9 +120,9 @@ header('Content-Type: text/html; charset=utf-8');
         if (file_exists(DOKU_INC . 'inc/lang/' . $LC . '/install.html')) {
             include(DOKU_INC . 'inc/lang/' . $LC . '/install.html');
         } else {
-            print "<div lang=\"en\" dir=\"ltr\">\n";
+            echo "<div lang=\"en\" dir=\"ltr\">\n";
             include(DOKU_INC . 'inc/lang/en/install.html');
-            print "</div>\n";
+            echo "</div>\n";
         }
         ?>
         <a style="

@@ -39,7 +39,7 @@ class PageConflict extends Ui
         global $lang;
 
         // print intro
-        print p_locale_xhtml('conflict');
+        echo p_locale_xhtml('conflict');
 
         // create the form
         $form = new Form(['id' => 'dw__editform']);
@@ -52,9 +52,9 @@ class PageConflict extends Ui
         $form->addButton('do[cancel]', $lang['btn_cancel'])->attrs(['type' => 'submit']);
         $form->addTagClose('div');
 
-        print $form->toHTML('Conflict');
+        echo $form->toHTML('Conflict');
 
-        print '<br /><br /><br /><br />';
+        echo '<br /><br /><br /><br />';
 
         // print difference
         (new PageDiff($INFO['id']))->compareWith($this->text)->preference('showIntro', false)->show();

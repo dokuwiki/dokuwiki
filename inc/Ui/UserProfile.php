@@ -29,8 +29,8 @@ class UserProfile extends Ui
         global $auth;
 
         // print intro
-        print p_locale_xhtml('updateprofile');
-        print '<div class="centeralign">';
+        echo p_locale_xhtml('updateprofile');
+        echo '<div class="centeralign">';
 
         $fullname = $INPUT->post->str('fullname', $INFO['userinfo']['name'], true);
         $email = $INPUT->post->str('email', $INFO['userinfo']['mail'], true);
@@ -87,7 +87,7 @@ class UserProfile extends Ui
         $form->addFieldsetClose();
         $form->addTagClose('div');
 
-        print $form->toHTML('UpdateProfile');
+        echo $form->toHTML('UpdateProfile');
 
 
         if ($auth->canDo('delUser') && actionOK('profile_delete')) {
@@ -116,9 +116,9 @@ class UserProfile extends Ui
             $form->addFieldsetClose();
             $form->addTagClose('div');
 
-            print $form->toHTML('ProfileDelete');
+            echo $form->toHTML('ProfileDelete');
         }
 
-        print '</div>';
+        echo '</div>';
     }
 }

@@ -644,9 +644,9 @@ function html_msgarea()
         $hash = md5($msg['msg']);
         if (isset($shown[$hash])) continue; // skip double messages
         if (info_msg_allowed($msg)) {
-            print '<div class="'.$msg['lvl'].'">';
-            print $msg['msg'];
-            print '</div>';
+            echo '<div class="'.$msg['lvl'].'">';
+            echo $msg['msg'];
+            echo '</div>';
         }
         $shown[$hash] = 1;
     }
@@ -727,68 +727,68 @@ function html_debug()
     $ses = $_SESSION;
     debug_guard($ses);
 
-    print '<html><body>';
+    echo '<html><body>';
 
-    print '<p>When reporting bugs please send all the following ';
-    print 'output as a mail to andi@splitbrain.org ';
-    print 'The best way to do this is to save this page in your browser</p>';
+    echo '<p>When reporting bugs please send all the following ';
+    echo 'output as a mail to andi@splitbrain.org ';
+    echo 'The best way to do this is to save this page in your browser</p>';
 
-    print '<b>$INFO:</b><pre>';
+    echo '<b>$INFO:</b><pre>';
     print_r($nfo);
-    print '</pre>';
+    echo '</pre>';
 
-    print '<b>$_SERVER:</b><pre>';
+    echo '<b>$_SERVER:</b><pre>';
     print_r($_SERVER);
-    print '</pre>';
+    echo '</pre>';
 
-    print '<b>$conf:</b><pre>';
+    echo '<b>$conf:</b><pre>';
     print_r($cnf);
-    print '</pre>';
+    echo '</pre>';
 
-    print '<b>DOKU_BASE:</b><pre>';
-    print DOKU_BASE;
-    print '</pre>';
+    echo '<b>DOKU_BASE:</b><pre>';
+    echo DOKU_BASE;
+    echo '</pre>';
 
-    print '<b>abs DOKU_BASE:</b><pre>';
-    print DOKU_URL;
-    print '</pre>';
+    echo '<b>abs DOKU_BASE:</b><pre>';
+    echo DOKU_URL;
+    echo '</pre>';
 
-    print '<b>rel DOKU_BASE:</b><pre>';
-    print dirname($_SERVER['PHP_SELF']).'/';
-    print '</pre>';
+    echo '<b>rel DOKU_BASE:</b><pre>';
+    echo dirname($_SERVER['PHP_SELF']).'/';
+    echo '</pre>';
 
-    print '<b>PHP Version:</b><pre>';
-    print phpversion();
-    print '</pre>';
+    echo '<b>PHP Version:</b><pre>';
+    echo phpversion();
+    echo '</pre>';
 
-    print '<b>locale:</b><pre>';
-    print setlocale(LC_ALL, 0);
-    print '</pre>';
+    echo '<b>locale:</b><pre>';
+    echo setlocale(LC_ALL, 0);
+    echo '</pre>';
 
-    print '<b>encoding:</b><pre>';
-    print $lang['encoding'];
-    print '</pre>';
+    echo '<b>encoding:</b><pre>';
+    echo $lang['encoding'];
+    echo '</pre>';
 
     if ($auth) {
-        print '<b>Auth backend capabilities:</b><pre>';
+        echo '<b>Auth backend capabilities:</b><pre>';
         foreach ($auth->getCapabilities() as $cando) {
-            print '   '.str_pad($cando, 16) .' => '. (int)$auth->canDo($cando) . DOKU_LF;
+            echo '   '.str_pad($cando, 16) .' => '. (int)$auth->canDo($cando) . DOKU_LF;
         }
-        print '</pre>';
+        echo '</pre>';
     }
 
-    print '<b>$_SESSION:</b><pre>';
+    echo '<b>$_SESSION:</b><pre>';
     print_r($ses);
-    print '</pre>';
+    echo '</pre>';
 
-    print '<b>Environment:</b><pre>';
+    echo '<b>Environment:</b><pre>';
     print_r($_ENV);
-    print '</pre>';
+    echo '</pre>';
 
-    print '<b>PHP settings:</b><pre>';
+    echo '<b>PHP settings:</b><pre>';
     $inis = ini_get_all();
     print_r($inis);
-    print '</pre>';
+    echo '</pre>';
 
     if (function_exists('apache_get_version')) {
         $apache = [];
@@ -797,12 +797,12 @@ function html_debug()
         if (function_exists('apache_get_modules')) {
             $apache['modules'] = apache_get_modules();
         }
-        print '<b>Apache</b><pre>';
+        echo '<b>Apache</b><pre>';
         print_r($apache);
-        print '</pre>';
+        echo '</pre>';
     }
 
-    print '</body></html>';
+    echo '</body></html>';
 }
 
 /**

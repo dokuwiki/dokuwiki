@@ -27,8 +27,8 @@ class UserResendPwd extends Ui
         $token = preg_replace('/[^a-f0-9]+/', '', $INPUT->str('pwauth'));
 
         // print intro
-        print p_locale_xhtml('resetpwd');
-        print '<div class="centeralign">';
+        echo p_locale_xhtml('resetpwd');
+        echo '<div class="centeralign">';
 
         if (!$conf['autopasswd'] && $token) {
             $form = $this->formSetNewPassword($token);
@@ -36,9 +36,9 @@ class UserResendPwd extends Ui
             $form = $this->formResendPassword();
         }
 
-        print $form->toHTML('ResendPwd');
+        echo $form->toHTML('ResendPwd');
 
-        print '</div>';
+        echo '</div>';
     }
 
     /**

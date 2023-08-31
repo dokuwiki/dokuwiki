@@ -79,7 +79,7 @@ class TaskRunner
         header('Content-Type: image/gif');
         header('Content-Length: '.strlen($img));
         header('Connection: Close');
-        print $img;
+        echo $img;
         tpl_flush();
         // Browser should drop connection after this
         // Thinks it's got the whole image
@@ -196,7 +196,7 @@ class TaskRunner
     protected function runIndexer()
     {
         global $ID;
-        print 'runIndexer(): started' . NL;
+        echo 'runIndexer(): started' . NL;
 
         if ((string) $ID === '') {
             return false;
@@ -217,9 +217,9 @@ class TaskRunner
      */
     protected function runSitemapper()
     {
-        print 'runSitemapper(): started' . NL;
+        echo 'runSitemapper(): started' . NL;
         $result = Mapper::generate() && Mapper::pingSearchEngines();
-        print 'runSitemapper(): finished' . NL;
+        echo 'runSitemapper(): finished' . NL;
         return $result;
     }
 
