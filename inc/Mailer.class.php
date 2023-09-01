@@ -338,6 +338,26 @@ class Mailer {
     }
 
     /**
+     * Splits a string with multiple email addresses into an array
+     *
+     * @param string|string[]  $addresses Multiple adresses separated by commas or as array
+     * @return string[]  the email addresses as array
+     */
+    public function splitAddress($addresses) {
+        if(!is_array($addresses)){
+            $count = preg_match_all('/\s*(?:("[^"]*"[^,]+),*)|([^,]+)\s*,*/', $addresses, $matches, PREG_SET_ORDER);
+            $addresses = array();
+            if ($count !== false && is_array($matches)) {
+                foreach ($matches as $match) {
+                    array_push($addresses, rtrim($match[0], ','));
+                }
+            }
+        }
+
+        return $addresses;
+    }
+
+    /**
      * Sets an email address header with correct encoding
      *
      * Unicode characters will be deaccented and encoded base64
@@ -357,15 +377,8 @@ class Mailer {
      */
     public function cleanAddress($addresses) {
         $headers = '';
-        if(!is_array($addresses)){
-            $count = preg_match_all('/\s*(?:("[^"]*"[^,]+),*)|([^,]+)\s*,*/', $addresses, $matches, PREG_SET_ORDER);
-            $addresses = array();
-            if ($count !== false && is_array($matches)) {
-                foreach ($matches as $match) {
-                    array_push($addresses, rtrim($match[0], ','));
-                }
-            }
-        }
+
+        $addresses = $this->splitAddress($addresses);
 
         foreach($addresses as $part) {
             $part = preg_replace('/[\r\n\0]+/', ' ', $part); // remove attack vectors

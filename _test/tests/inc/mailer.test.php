@@ -377,5 +377,27 @@ A test mail in <strong>html</strong>
         $this->assertEquals('Foo tar', $name);
 
     }
+
+    function test_splitAddress() {
+        $mail = new TestMailer();
+
+        $output = ['test@example.com'];
+        $addresses = $mail->splitAddress('test@example.com');
+        $this->assertEquals($output, $addresses);
+        $addresses = $mail->splitAddress($output);
+        $this->assertEquals($output, $addresses);
+
+        $output = ['test1@example.com', 'test2@example.com'];
+        $addresses = $mail->splitAddress('test1@example.com,test2@example.com');
+        $this->assertEquals($output, $addresses);
+        $addresses = $mail->splitAddress($output);
+        $this->assertEquals($output, $addresses);
+
+        $output = ['föö <foo@bar.com>', 'me@somewhere.com', '"foo, Dr." <foo@bar.com>'];
+        $addresses = $mail->splitAddress('föö <foo@bar.com>,me@somewhere.com,"foo, Dr." <foo@bar.com>');
+        $this->assertEquals($output, $addresses);
+        $addresses = $mail->splitAddress($output);
+        $this->assertEquals($output, $addresses);
+    }
 }
 //Setup VIM: ex: et ts=4 :
