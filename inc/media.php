@@ -779,10 +779,10 @@ function media_tabs_files($selected_tab = '')
     $tabs = [];
     foreach (
         [
-                'files'  => 'mediaselect',
-                'upload' => 'media_uploadtab',
-                'search' => 'media_searchtab'
-            ] as $tab => $caption
+            'files' => 'mediaselect',
+            'upload' => 'media_uploadtab',
+            'search' => 'media_searchtab'
+        ] as $tab => $caption
     ) {
         $tabs[$tab] = [
             'href'    => media_managerURL(['tab_files' => $tab], '&'),
@@ -855,9 +855,9 @@ function media_tab_files_options()
     $form->addHTML('<ul>' . NL);
     foreach (
         [
-                 'list' => ['listType', ['thumbs', 'rows']],
-                 'sort' => ['sortBy', ['name', 'date']]
-             ] as $group => $content
+            'list' => ['listType', ['thumbs', 'rows']],
+            'sort' => ['sortBy', ['name', 'date']]
+        ] as $group => $content
     ) {
         $checked = "_media_get_{$group}_type";
         $checked = $checked();
