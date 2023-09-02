@@ -21,7 +21,7 @@ class action_plugin_safefnrecode extends ActionPlugin
     /**
      * Handle indexer event
      *
-     * @param Doku_Event $event
+     * @param Event $event
      * @param $param
      */
     public function handleIndexerTasksRun(Event $event, $param)

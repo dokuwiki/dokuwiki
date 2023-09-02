@@ -15,7 +15,7 @@ class action_plugin_styling extends ActionPlugin
     /**
      * Registers a callback functions
      *
-     * @param Doku_Event_Handler $controller DokuWiki's event controller object
+     * @param EventHandler $controller DokuWiki's event controller object
      * @return void
      */
     public function register(EventHandler $controller)
@@ -26,9 +26,9 @@ class action_plugin_styling extends ActionPlugin
     /**
      * Adds the preview parameter to the stylesheet loading in non-js mode
      *
-     * @param Doku_Event $event  event object by reference
-     * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
-     *                           handler was registered]
+     * @param Event $event event object by reference
+     * @param mixed $param [the parameters passed as fifth argument to register_hook() when this
+     *                      handler was registered]
      * @return void
      */
     public function handleHeader(Event &$event, $param)

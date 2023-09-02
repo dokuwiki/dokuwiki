@@ -30,10 +30,10 @@ class action_plugin_popularity extends ActionPlugin
     /**
      * Event handler
      *
-     * @param Doku_Event $event
+     * @param Event $event
      * @param $param
      */
-    public function autosubmit(Event &$event, $param)
+    public function autosubmit(Event $event, $param)
     {
         //Do we have to send the data now
         if (!$this->helper->isAutosubmitEnabled() || $this->isTooEarlyToSubmit()) {

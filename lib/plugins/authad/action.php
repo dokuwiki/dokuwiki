@@ -28,7 +28,7 @@ class action_plugin_authad extends ActionPlugin
     /**
      * Adds the selected domain as user postfix when attempting a login
      *
-     * @param Doku_Event $event
+     * @param Event $event
      * @param array      $param
      */
     public function handleAuthLoginCheck(Event $event, $param)
@@ -53,7 +53,7 @@ class action_plugin_authad extends ActionPlugin
     /**
      * Shows a domain selection in the login form when more than one domain is configured
      *
-     * @param Doku_Event $event
+     * @param Event $event
      * @param array      $param
      */
     public function handleFormLoginOutput(Event $event, $param)

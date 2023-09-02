@@ -14,7 +14,7 @@ class action_plugin_extension extends ActionPlugin
     /**
      * Registers a callback function for a given event
      *
-     * @param Doku_Event_Handler $controller DokuWiki's event controller object
+     * @param EventHandler $controller DokuWiki's event controller object
      * @return void
      */
     public function register(EventHandler $controller)
@@ -25,8 +25,8 @@ class action_plugin_extension extends ActionPlugin
     /**
      * Create the detail info for a single plugin
      *
-     * @param Doku_Event $event
-     * @param            $param
+     * @param Event $event
+     * @param $param
      */
     public function info(Event $event, $param)
     {
