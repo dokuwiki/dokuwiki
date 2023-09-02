@@ -379,7 +379,7 @@ function search_pagename(&$data, $base, $file, $type, $lvl, $opts)
  */
 function search_allpages(&$data, $base, $file, $type, $lvl, $opts)
 {
-    if (isset($opts['depth']) && $opts['depth']) {
+    if (($opts['depth'] ?? 0) > 0) {
         $parts = explode('/', ltrim($file, '/'));
         if (
             ($type == 'd' && count($parts) >= $opts['depth'])
