@@ -452,15 +452,15 @@ function init_creationmodes()
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param null|string $abs
+ * @param null|bool $abs Return an absolute URL? (null defaults to $conf['canonical'])
  *
  * @return string
  */
 function getBaseURL($abs = null)
 {
     global $conf;
-    //if canonical url enabled always return absolute
-    if (is_null($abs)) $abs = $conf['canonical'];
+
+    $abs ??= $conf['canonical'];
 
     if (!empty($conf['basedir'])) {
         $dir = $conf['basedir'];
@@ -497,18 +497,14 @@ function getBaseURL($abs = null)
     //split hostheader into host and port
     if (isset($_SERVER['HTTP_HOST'])) {
         $parsed_host = parse_url('http://' . $_SERVER['HTTP_HOST']);
-        $host = $parsed_host['host'] ?? null;
-        $port = $parsed_host['port'] ?? null;
+        $host = $parsed_host['host'] ?? '';
+        $port = $parsed_host['port'] ?? '';
     } elseif (isset($_SERVER['SERVER_NAME'])) {
         $parsed_host = parse_url('http://' . $_SERVER['SERVER_NAME']);
-        $host = $parsed_host['host'] ?? null;
-        $port = $parsed_host['port'] ?? null;
+        $host = $parsed_host['host'] ?? '';
+        $port = $parsed_host['port'] ?? '';
     } else {
         $host = php_uname('n');
-        $port = '';
-    }
-
-    if (is_null($port)) {
         $port = '';
     }
 
