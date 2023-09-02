@@ -99,20 +99,20 @@ class PageFile
         $currentSize = file_exists($pagefile) ? filesize($pagefile) : 0;
 
         // prepare data for event COMMON_WIKIPAGE_SAVE
-        $data = array(
-            'id'             => $this->id, // should not be altered by any handlers
-            'file'           => $pagefile, // same above
-            'changeType'     => null,      // set prior to event, and confirm later
+        $data = [
+            'id'             => $this->id,// should not be altered by any handlers
+            'file'           => $pagefile,// same above
+            'changeType'     => null,// set prior to event, and confirm later
             'revertFrom'     => $REV,
             'oldRevision'    => $currentRevision,
             'oldContent'     => $currentContent,
-            'newRevision'    => 0,         // only available in the after hook
+            'newRevision'    => 0,// only available in the after hook
             'newContent'     => $text,
             'summary'        => $summary,
-            'contentChanged' => ($text != $currentContent), // confirm later
-            'changeInfo'     => '',        // automatically determined by revertFrom
-            'sizechange'     => strlen($text) - strlen($currentContent), // TBD
-        );
+            'contentChanged' => ($text != $currentContent),// confirm later
+            'changeInfo'     => '',// automatically determined by revertFrom
+            'sizechange'     => strlen($text) - strlen($currentContent),
+        ];
 
         // determine tentatively change type and relevant elements of event data
         if ($data['revertFrom']) {
@@ -166,7 +166,7 @@ class PageFile
                 $data['summary'] = $lang['deleted'];
             }
             // send "update" event with empty data, so plugins can react to page deletion
-            $ioData = array([$pagefile, '', false], getNS($this->id), noNS($this->id), false);
+            $ioData = [[$pagefile, '', false], getNS($this->id), noNS($this->id), false];
             Event::createAndTrigger('IO_WIKIPAGE_WRITE', $ioData);
             // pre-save deleted revision
             @touch($pagefile);
@@ -210,7 +210,7 @@ class PageFile
         $this->updateMetadata($logEntry);
 
         // update the purgefile (timestamp of the last time anything within the wiki was changed)
-        io_saveFile($conf['cachedir'].'/purgefile', time());
+        io_saveFile($conf['cachedir'] . '/purgefile', time());
 
         return $data;
     }
@@ -238,12 +238,12 @@ class PageFile
             if (touch($fileLastMod, $revInfo['date'])) {
                 clearstatcache();
                 $msg = "PageFile($this->id)::detectExternalEdit(): timestamp successfully modified";
-                $details = '('.$wrong_timestamp.' -> '.$revInfo['date'].')';
+                $details = '(' . $wrong_timestamp . ' -> ' . $revInfo['date'] . ')';
                 Logger::error($msg, $details, $fileLastMod);
             } else {
                 // runtime error
                 $msg = "PageFile($this->id)::detectExternalEdit(): page file should be newer than last revision "
-                      .'('.filemtime($fileLastMod).' < '. $this->changelog->lastRevision() .')';
+                      . '(' . filemtime($fileLastMod) . ' < ' . $this->changelog->lastRevision() . ')';
                 throw new RuntimeException($msg);
             }
         }
@@ -286,11 +286,7 @@ class PageFile
     {
         global $INFO;
 
-        list(
-            'date' => $date,
-            'type' => $changeType,
-            'user' => $user,
-        ) = $logEntry;
+        ['date' => $date, 'type' => $changeType, 'user' => $user, ] = $logEntry;
 
         $wasRemoved   = ($changeType === DOKU_CHANGE_TYPE_DELETE);
         $wasCreated   = ($changeType === DOKU_CHANGE_TYPE_CREATE);
@@ -302,9 +298,10 @@ class PageFile
         if ($wasRemoved) return;
 
         $oldmeta = p_read_metadata($this->id)['persistent'];
-        $meta    = array();
+        $meta    = [];
 
-        if ($wasCreated &&
+        if (
+            $wasCreated &&
             (empty($oldmeta['date']['created']) || $oldmeta['date']['created'] === $createdDate)
         ) {
             // newly created
@@ -330,5 +327,4 @@ class PageFile
         $meta['last_change'] = $logEntry;
         p_set_metadata($this->id, $meta);
     }
-
 }

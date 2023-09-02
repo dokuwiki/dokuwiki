@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\PageDraft;
 use dokuwiki\Action\Exception\ActionException;
 use dokuwiki\Ui;
 
@@ -37,7 +38,6 @@ class Draft extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\PageDraft)->show();
+        (new PageDraft())->show();
     }
-
 }

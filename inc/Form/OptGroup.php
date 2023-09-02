@@ -13,7 +13,7 @@ class OptGroup extends Element
      */
     public function __construct($label, $options)
     {
-        parent::__construct('optGroup', array('label' => $label));
+        parent::__construct('optGroup', ['label' => $label]);
         $this->options($options);
     }
 
@@ -30,7 +30,7 @@ class OptGroup extends Element
     {
         $this->values = [];
         foreach ($values as $value) {
-            if(isset($this->options[$value])) {
+            if (isset($this->options[$value])) {
                 $this->values[] = $value;
             }
         }
@@ -58,24 +58,28 @@ class OptGroup extends Element
     {
         if ($options === null) return $this->options;
         if (!is_array($options)) throw new \InvalidArgumentException('Options have to be an array');
-        $this->options = array();
+        $this->options = [];
         foreach ($options as $key => $val) {
             if (is_array($val)) {
-                if (!key_exists('label', $val)) {
+                if (!array_key_exists('label', $val)) {
                     throw new \InvalidArgumentException(
                         'If option is given as array, it has to have a "label"-key!'
                     );
                 }
-                if (key_exists('attrs', $val) && is_array($val['attrs']) && key_exists('selected', $val['attrs'])) {
+                if (
+                    array_key_exists('attrs', $val) &&
+                    is_array($val['attrs']) &&
+                    array_key_exists('selected', $val['attrs'])
+                ) {
                     throw new \InvalidArgumentException(
                         'Please use function "DropdownElement::val()" to set the selected option'
                     );
                 }
                 $this->options[$key] = $val;
             } elseif (is_int($key)) {
-                $this->options[$val] = array('label' => (string)$val);
+                $this->options[$val] = ['label' => (string)$val];
             } else {
-                $this->options[$key] = array('label' => (string)$val);
+                $this->options[$key] = ['label' => (string)$val];
             }
         }
         return $this;

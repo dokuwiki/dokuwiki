@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\PageRevisions;
 use dokuwiki\Ui;
 
 /**
@@ -23,6 +24,6 @@ class Revisions extends AbstractAction
     public function tplContent()
     {
         global $INFO, $INPUT;
-        (new Ui\PageRevisions($INFO['id']))->show($INPUT->int('first', -1));
+        (new PageRevisions($INFO['id']))->show($INPUT->int('first', -1));
     }
 }

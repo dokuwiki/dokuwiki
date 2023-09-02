@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\UserRegister;
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Extension\AuthPlugin;
@@ -45,7 +46,6 @@ class Register extends AbstractAclAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\UserRegister)->show();
+        (new UserRegister())->show();
     }
-
 }

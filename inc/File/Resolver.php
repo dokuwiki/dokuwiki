@@ -7,7 +7,6 @@ namespace dokuwiki\File;
  */
 abstract class Resolver
 {
-
     /** @var string context page ID */
     protected $contextID;
     /** @var string namespace of context page ID */
@@ -51,7 +50,7 @@ abstract class Resolver
      */
     protected function resolvePrefix($id)
     {
-        if($id === '') return $id;
+        if ($id === '') return $id;
 
         // relative to current page (makes the current page a start page)
         if ($id[0] === '~') {
@@ -94,7 +93,7 @@ abstract class Resolver
                 array_pop($result);
                 continue;
             }
-            array_push($result, $dir);
+            $result[] = $dir;
         }
 
         $id = implode(':', $result);
@@ -102,5 +101,4 @@ abstract class Resolver
 
         return $id;
     }
-
 }

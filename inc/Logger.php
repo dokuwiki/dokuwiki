@@ -9,12 +9,12 @@ use dokuwiki\Extension\Event;
  */
 class Logger
 {
-    const LOG_ERROR = 'error';
-    const LOG_DEPRECATED = 'deprecated';
-    const LOG_DEBUG = 'debug';
+    public const LOG_ERROR = 'error';
+    public const LOG_DEPRECATED = 'deprecated';
+    public const LOG_DEBUG = 'debug';
 
     /** @var Logger[] */
-    static protected $instances;
+    protected static $instances;
 
     /** @var string what kind of log is this */
     protected $facility;
@@ -43,7 +43,7 @@ class Logger
      * @param string $facility The type of log
      * @return Logger
      */
-    static public function getInstance($facility = self::LOG_ERROR)
+    public static function getInstance($facility = self::LOG_ERROR)
     {
         if (empty(self::$instances[$facility])) {
             self::$instances[$facility] = new Logger($facility);
@@ -60,10 +60,13 @@ class Logger
      * @param int $line A line number for the above file
      * @return bool has a log been written?
      */
-    static public function error($message, $details = null, $file = '', $line = 0)
+    public static function error($message, $details = null, $file = '', $line = 0)
     {
         return self::getInstance(self::LOG_ERROR)->log(
-            $message, $details, $file, $line
+            $message,
+            $details,
+            $file,
+            $line
         );
     }
 
@@ -76,10 +79,13 @@ class Logger
      * @param int $line A line number for the above file
      * @return bool has a log been written?
      */
-    static public function debug($message, $details = null, $file = '', $line = 0)
+    public static function debug($message, $details = null, $file = '', $line = 0)
     {
         return self::getInstance(self::LOG_DEBUG)->log(
-            $message, $details, $file, $line
+            $message,
+            $details,
+            $file,
+            $line
         );
     }
 
@@ -92,10 +98,13 @@ class Logger
      * @param int $line A line number for the above file
      * @return bool has a log been written?
      */
-    static public function deprecated($message, $details = null, $file = '', $line = 0)
+    public static function deprecated($message, $details = null, $file = '', $line = 0)
     {
         return self::getInstance(self::LOG_DEPRECATED)->log(
-            $message, $details, $file, $line
+            $message,
+            $details,
+            $file,
+            $line
         );
     }
 
@@ -172,9 +181,7 @@ class Logger
                 $details = json_encode($details, JSON_PRETTY_PRINT);
             }
             $details = explode("\n", $details);
-            $loglines = array_map(function ($line) {
-                return '  ' . $line;
-            }, $details);
+            $loglines = array_map(static fn($line) => '  ' . $line, $details);
         } elseif ($details) {
             $loglines = [$details];
         } else {
@@ -221,8 +228,8 @@ class Logger
     protected function writeLogLines($lines, $logfile)
     {
         if (defined('DOKU_UNITTEST')) {
-            fwrite(STDERR, "\n[" . $this->facility . '] ' . join("\n", $lines) . "\n");
+            fwrite(STDERR, "\n[" . $this->facility . '] ' . implode("\n", $lines) . "\n");
         }
-        return io_saveFile($logfile, join("\n", $lines) . "\n", true);
+        return io_saveFile($logfile, implode("\n", $lines) . "\n", true);
     }
 }

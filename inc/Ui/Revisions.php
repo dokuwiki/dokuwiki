@@ -110,5 +110,4 @@ abstract class Revisions extends Ui
         $html .= '</div>';
         return $html;
     }
-
 }

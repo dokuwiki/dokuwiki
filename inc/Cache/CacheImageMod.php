@@ -7,7 +7,6 @@ namespace dokuwiki\Cache;
  */
 class CacheImageMod extends Cache
 {
-
     /** @var string source file */
     protected $file;
 
@@ -52,5 +51,4 @@ class CacheImageMod extends Cache
             getConfigFiles('main')
         );
     }
-
 }

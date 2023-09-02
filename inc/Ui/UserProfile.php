@@ -15,9 +15,9 @@ class UserProfile extends Ui
     /**
      * Display the User Profile Form Panel
      *
+     * @return void
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @return void
      */
     public function show()
     {
@@ -29,8 +29,8 @@ class UserProfile extends Ui
         global $auth;
 
         // print intro
-        print p_locale_xhtml('updateprofile');
-        print '<div class="centeralign">';
+        echo p_locale_xhtml('updateprofile');
+        echo '<div class="centeralign">';
 
         $fullname = $INPUT->post->str('fullname', $INFO['userinfo']['name'], true);
         $email = $INPUT->post->str('email', $INFO['userinfo']['mail'], true);
@@ -42,20 +42,20 @@ class UserProfile extends Ui
         $form->setHiddenField('do', 'profile');
         $form->setHiddenField('save', '1');
 
-        $attr = array('size' => '50', 'disabled' => 'disabled');
+        $attr = ['size' => '50', 'disabled' => 'disabled'];
         $input = $form->addTextInput('login', $lang['user'])->attrs($attr)->addClass('edit')
             ->val($INPUT->server->str('REMOTE_USER'));
         $input->getLabel()->attr('class', 'block');
         $form->addHTML("<br>\n");
 
-        $attr = array('size' => '50');
+        $attr = ['size' => '50'];
         if (!$auth->canDo('modName')) $attr['disabled'] = 'disabled';
         $input = $form->addTextInput('fullname', $lang['fullname'])->attrs($attr)->addClass('edit')
             ->val($fullname);
         $input->getLabel()->attr('class', 'block');
         $form->addHTML("<br>\n");
 
-        $attr = array('type' => 'email', 'size' =>  '50');
+        $attr = ['type' => 'email', 'size' => '50'];
         if (!$auth->canDo('modMail')) $attr['disabled'] = 'disabled';
         $input = $form->addTextInput('email', $lang['email'])->attrs($attr)->addClass('edit')
             ->val($email);
@@ -63,7 +63,7 @@ class UserProfile extends Ui
         $form->addHTML("<br>\n");
 
         if ($auth->canDo('modPass')) {
-            $attr = array('size'=>'50');
+            $attr = ['size' => '50'];
             $input = $form->addPasswordInput('newpass', $lang['newpass'])->attrs($attr)->addClass('edit');
             $input->getLabel()->attr('class', 'block');
             $form->addHTML("<br>\n");
@@ -75,7 +75,7 @@ class UserProfile extends Ui
 
         if ($conf['profileconfirm']) {
             $form->addHTML("<br>\n");
-            $attr = array('size' => '50', 'required' => 'required');
+            $attr = ['size' => '50', 'required' => 'required'];
             $input = $form->addPasswordInput('oldpass', $lang['oldpass'])->attrs($attr)->addClass('edit');
             $input->getLabel()->attr('class', 'block');
             $form->addHTML("<br>\n");
@@ -87,11 +87,10 @@ class UserProfile extends Ui
         $form->addFieldsetClose();
         $form->addTagClose('div');
 
-        print $form->toHTML('UpdateProfile');
+        echo $form->toHTML('UpdateProfile');
 
 
         if ($auth->canDo('delUser') && actionOK('profile_delete')) {
-
             // create the profiledelete form
             $form = new Form(['id' => 'dw__profiledelete']);
             $form->addTagOpen('div')->addClass('no');
@@ -106,7 +105,7 @@ class UserProfile extends Ui
 
             if ($conf['profileconfirm']) {
                 $form->addHTML("<br>\n");
-                $attr = array('size' => '50', 'required' => 'required');
+                $attr = ['size' => '50', 'required' => 'required'];
                 $input = $form->addPasswordInput('oldpass', $lang['oldpass'])->attrs($attr)
                     ->addClass('edit');
                 $input->getLabel()->attr('class', 'block');
@@ -117,10 +116,9 @@ class UserProfile extends Ui
             $form->addFieldsetClose();
             $form->addTagClose('div');
 
-            print $form->toHTML('ProfileDelete');
+            echo $form->toHTML('ProfileDelete');
         }
 
-        print '</div>';
+        echo '</div>';
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template header, included in the main and detail files
  */
@@ -33,24 +34,24 @@ if (!defined('DOKU_INC')) die();
                 '<span>' . $conf['title'] . '</span>',
                 'accesskey="h" title="' . tpl_getLang('home') . ' [h]"'
             );
-        ?></h1>
-        <?php if ($conf['tagline']): ?>
+            ?></h1>
+        <?php if ($conf['tagline']) : ?>
             <p class="claim"><?php echo $conf['tagline']; ?></p>
         <?php endif ?>
     </div>
 
     <div class="tools group">
         <!-- USER TOOLS -->
-        <?php if ($conf['useacl']): ?>
+        <?php if ($conf['useacl']) : ?>
             <div id="dokuwiki__usertools">
                 <h3 class="a11y"><?php echo $lang['user_tools']; ?></h3>
                 <ul>
                     <?php
-                        if (!empty($_SERVER['REMOTE_USER'])) {
-                            echo '<li class="user">';
-                            tpl_userinfo(); /* 'Logged in as ...' */
-                            echo '</li>';
-                        }
+                    if (!empty($_SERVER['REMOTE_USER'])) {
+                        echo '<li class="user">';
+                        tpl_userinfo(); /* 'Logged in as ...' */
+                        echo '</li>';
+                    }
                         echo (new \dokuwiki\Menu\UserMenu())->getListItems('action ');
                     ?>
                 </ul>
@@ -72,12 +73,12 @@ if (!defined('DOKU_INC')) die();
     </div>
 
     <!-- BREADCRUMBS -->
-    <?php if($conf['breadcrumbs'] || $conf['youarehere']): ?>
+    <?php if ($conf['breadcrumbs'] || $conf['youarehere']) : ?>
         <div class="breadcrumbs">
-            <?php if($conf['youarehere']): ?>
+            <?php if ($conf['youarehere']) : ?>
                 <div class="youarehere"><?php tpl_youarehere() ?></div>
             <?php endif ?>
-            <?php if($conf['breadcrumbs']): ?>
+            <?php if ($conf['breadcrumbs']) : ?>
                 <div class="trace"><?php tpl_breadcrumbs() ?></div>
             <?php endif ?>
         </div>

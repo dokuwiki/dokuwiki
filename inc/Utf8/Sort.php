@@ -55,7 +55,9 @@ class Sort
                 'Collator created with locale "' . $lc . '": numeric collation on, ' .
                 'valid locale "' . $collator->getLocale(\Locale::VALID_LOCALE) . '", ' .
                 'actual locale "' . $collator->getLocale(\Locale::ACTUAL_LOCALE) . '"',
-                null, __FILE__, __LINE__
+                null,
+                __FILE__,
+                __LINE__
             );
             self::$collators[$lc] = $collator;
         }
@@ -128,7 +130,7 @@ class Sort
     {
         $collator = self::getCollator();
         if (isset($collator)) {
-            return uksort($array, array($collator, 'compare'));
+            return uksort($array, [$collator, 'compare']);
         } else {
             return ksort($array, SORT_NATURAL | SORT_FLAG_CASE);
         }

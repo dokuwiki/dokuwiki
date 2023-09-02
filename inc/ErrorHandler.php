@@ -15,7 +15,7 @@ class ErrorHandler
      * Standard error codes used in PHP errors
      * @see https://www.php.net/manual/en/errorfunc.constants.php
      */
-    const ERRORCODES = [
+    protected const ERRORCODES = [
         1 => 'E_ERROR',
         2 => 'E_WARNING',
         4 => 'E_PARSE',
@@ -43,7 +43,7 @@ class ErrorHandler
             register_shutdown_function([ErrorHandler::class, 'fatalShutdown']);
             set_error_handler(
                 [ErrorHandler::class, 'errorHandler'],
-                E_WARNING|E_USER_ERROR|E_USER_WARNING|E_RECOVERABLE_ERROR
+                E_WARNING | E_USER_ERROR | E_USER_WARNING | E_RECOVERABLE_ERROR
             );
         }
     }
@@ -126,7 +126,7 @@ EOT;
      */
     public static function logException($e)
     {
-        if (is_a($e, \ErrorException::class)) {
+        if ($e instanceof \ErrorException) {
             $prefix = self::ERRORCODES[$e->getSeverity()];
         } else {
             $prefix = get_class($e);
@@ -165,7 +165,7 @@ EOT;
         );
         self::logException($ex);
 
-        if($ex->getSeverity() === E_WARNING && $conf['hidewarnings']) {
+        if ($ex->getSeverity() === E_WARNING && $conf['hidewarnings']) {
             return true;
         }
 

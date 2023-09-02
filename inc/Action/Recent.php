@@ -41,5 +41,4 @@ class Recent extends AbstractAction
         global $INPUT;
         (new Ui\Recent($INPUT->extract('first')->int('first'), $this->showType))->show();
     }
-
 }

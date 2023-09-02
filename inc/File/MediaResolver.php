@@ -5,8 +5,8 @@ namespace dokuwiki\File;
 /**
  * Creates an absolute media ID from a relative one
  */
-class MediaResolver extends Resolver {
-
+class MediaResolver extends Resolver
+{
     /** @inheritDoc */
     public function resolveId($id, $rev = '', $isDateAt = false)
     {

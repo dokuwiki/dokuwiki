@@ -15,14 +15,14 @@ use dokuwiki\plugin\config\core\Setting\SettingUndefined;
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-class Configuration {
-
-    const KEYMARKER = '____';
+class Configuration
+{
+    public const KEYMARKER = '____';
 
     /** @var Setting[] metadata as array of Settings objects */
-    protected $settings = array();
+    protected $settings = [];
     /** @var Setting[] undefined and problematic settings */
-    protected $undefined = array();
+    protected $undefined = [];
 
     /** @var array all metadata */
     protected $metadata;
@@ -44,7 +44,8 @@ class Configuration {
     /**
      * ConfigSettings constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->loader = new Loader(new ConfigParser());
         $this->writer = new Writer();
 
@@ -61,7 +62,8 @@ class Configuration {
      *
      * @return Setting[]
      */
-    public function getSettings() {
+    public function getSettings()
+    {
         return $this->settings;
     }
 
@@ -70,7 +72,8 @@ class Configuration {
      *
      * @return Setting[]
      */
-    public function getUndefined() {
+    public function getUndefined()
+    {
         return $this->undefined;
     }
 
@@ -79,7 +82,8 @@ class Configuration {
      *
      * @return bool
      */
-    public function hasChanged() {
+    public function hasChanged()
+    {
         return $this->changed;
     }
 
@@ -88,7 +92,8 @@ class Configuration {
      *
      * @return bool
      */
-    public function isLocked() {
+    public function isLocked()
+    {
         return $this->writer->isLocked();
     }
 
@@ -98,15 +103,16 @@ class Configuration {
      * @param array $input as posted
      * @return bool true if all updates went through, false on errors
      */
-    public function updateSettings($input) {
+    public function updateSettings($input)
+    {
         $ok = true;
 
-        foreach($this->settings as $key => $obj) {
-            $value = isset($input[$key]) ? $input[$key] : null;
-            if($obj->update($value)) {
+        foreach ($this->settings as $key => $obj) {
+            $value = $input[$key] ?? null;
+            if ($obj->update($value)) {
                 $this->changed = true;
             }
-            if($obj->hasError()) $ok = false;
+            if ($obj->hasError()) $ok = false;
         }
 
         return $ok;
@@ -120,7 +126,8 @@ class Configuration {
      *
      * @throws \Exception
      */
-    public function save() {
+    public function save()
+    {
         // only save the undefined settings that have not been handled in settings
         $undefined = array_diff_key($this->undefined, $this->settings);
         $this->writer->save(array_merge($this->settings, $undefined));
@@ -131,7 +138,8 @@ class Configuration {
      *
      * @throws \Exception
      */
-    public function touch() {
+    public function touch()
+    {
         $this->writer->touch();
     }
 
@@ -140,32 +148,34 @@ class Configuration {
      *
      * @return array
      */
-    public function getLangs() {
+    public function getLangs()
+    {
         return $this->loader->loadLangs();
     }
 
     /**
      * Initalizes the $settings and $undefined properties
      */
-    protected function initSettings() {
-        $keys = array_merge(
-            array_keys($this->metadata),
-            array_keys($this->default),
-            array_keys($this->local),
-            array_keys($this->protected)
-        );
+    protected function initSettings()
+    {
+        $keys = [
+            ...array_keys($this->metadata),
+            ...array_keys($this->default),
+            ...array_keys($this->local),
+            ...array_keys($this->protected)
+        ];
         $keys = array_unique($keys);
 
-        foreach($keys as $key) {
+        foreach ($keys as $key) {
             $obj = $this->instantiateClass($key);
 
-            if($obj->shouldHaveDefault() && !isset($this->default[$key])) {
+            if ($obj->shouldHaveDefault() && !isset($this->default[$key])) {
                 $this->undefined[$key] = new SettingNoDefault($key);
             }
 
-            $d = isset($this->default[$key]) ? $this->default[$key] : null;
-            $l = isset($this->local[$key]) ? $this->local[$key] : null;
-            $p = isset($this->protected[$key]) ? $this->protected[$key] : null;
+            $d = $this->default[$key] ?? null;
+            $l = $this->local[$key] ?? null;
+            $p = $this->protected[$key] ?? null;
 
             $obj->initialize($d, $l, $p);
         }
@@ -179,8 +189,9 @@ class Configuration {
      * @param string $key
      * @return Setting
      */
-    protected function instantiateClass($key) {
-        if(isset($this->metadata[$key])) {
+    protected function instantiateClass($key)
+    {
+        if (isset($this->metadata[$key])) {
             $param = $this->metadata[$key];
             $class = $this->determineClassName(array_shift($param), $key); // first param is class
             $obj = new $class($key, $param);
@@ -199,14 +210,15 @@ class Configuration {
      * @param string $key the settings key
      * @return string
      */
-    protected function determineClassName($class, $key) {
+    protected function determineClassName($class, $key)
+    {
         // try namespaced class first
-        if(is_string($class)) {
+        if (is_string($class)) {
             $modern = str_replace('_', '', ucwords($class, '_'));
             $modern = '\\dokuwiki\\plugin\\config\\core\\Setting\\Setting' . $modern;
-            if($modern && class_exists($modern)) return $modern;
+            if ($modern && class_exists($modern)) return $modern;
             // try class as given
-            if(class_exists($class)) return $class;
+            if (class_exists($class)) return $class;
             // class wasn't found add to errors
             $this->undefined[$key] = new SettingNoKnownClass($key);
         } else {
@@ -215,5 +227,4 @@ class Configuration {
         }
         return '\\dokuwiki\\plugin\\config\\core\\Setting\\Setting';
     }
-
 }

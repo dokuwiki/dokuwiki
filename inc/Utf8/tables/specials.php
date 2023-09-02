@@ -1,4 +1,5 @@
 <?php
+
 /**
  * UTF-8 array of common special characters
  *
@@ -13,6 +14,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    \dokuwiki\Utf8\Clean::stripspecials()
  */
+
 return [
     0x1a, // 
     0x1b, // 
