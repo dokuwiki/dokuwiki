@@ -67,7 +67,7 @@ function io_sweepNS($id, $basedir = 'datadir')
  *
  * @param string $file filename
  * @param string $id page id
- * @param bool|int $rev revision timestamp
+ * @param bool|int|string $rev revision timestamp
  * @return string
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
@@ -200,7 +200,7 @@ function bzfile($file, $array = false)
  * @param string $file filename
  * @param string $content
  * @param string $id page id
- * @param int|bool $rev timestamp of revision
+ * @param int|bool|string $rev timestamp of revision
  * @return bool
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
