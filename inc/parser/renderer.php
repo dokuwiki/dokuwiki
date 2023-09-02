@@ -31,9 +31,8 @@ abstract class Doku_Renderer extends Plugin
 {
     /** @var array Settings, control the behavior of the renderer */
     public $info = [
-        'cache' => true,
-        // may the rendered result cached?
-        'toc' => true,
+        'cache' => true, // may the rendered result cached?
+        'toc' => true, // render the TOC?
     ];
 
     /** @var array contains the smiley configuration, set in p_render() */

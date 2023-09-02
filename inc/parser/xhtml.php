@@ -1723,16 +1723,18 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                 $ret .= ' alt=""';
             }
 
-            if (!is_null($width))
+            if (!is_null($width)) {
                 $ret .= ' width="' . $this->_xmlEntities($width) . '"';
+            }
 
-            if (!is_null($height))
+            if (!is_null($height)) {
                 $ret .= ' height="' . $this->_xmlEntities($height) . '"';
+            }
 
             $ret .= ' />';
         } elseif (media_supportedav($mime, 'video') || media_supportedav($mime, 'audio')) {
             // first get the $title
-            $title = is_null($title) ? false : $title;
+            $title ??= false;
             if (!$render) {
                 // if the file is not supposed to be rendered
                 // return the title of the file (just the sourcename if there is no title)

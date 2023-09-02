@@ -38,8 +38,13 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml
         $this->doc .= DOKU_LF . '</div>' . DOKU_LF;
     }
 
-    /** @inheritdoc */
-    public function header($text, $level, $pos)
+    /** @inheritdoc
+     * @param string $text
+     * @param int $level
+     * @param int $pos
+     * @param false $returnonly
+     */
+    public function header($text, $level, $pos, $returnonly = false)
     {
         if (!$this->sum_pageTitle) {
             $this->info['sum_pagetitle'] = $text;
@@ -73,13 +78,13 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml
         if ($this->sum_capture && $this->sum_paragraphs < 2) {
             $this->sum_paragraphs++;
         }
-        parent:: p_open();
+        parent::p_open();
     }
 
     /** @inheritdoc */
     public function p_close()
     {
-        parent:: p_close();
+        parent::p_close();
         if ($this->sum_capture && $this->sum_paragraphs >= 2) {
             $this->sum_summary .= $this->doc;
             $this->sum_capture = false;
