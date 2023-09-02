@@ -980,11 +980,11 @@ class Doku_Handler
         $title = null;
 
         // add protocol on simple short URLs
-        if (substr($url, 0, 3) == 'ftp' && (substr($url, 0, 6) != 'ftp://')) {
+        if (str_starts_with($url, 'ftp') && !str_starts_with($url, 'ftp://')) {
             $title = $url;
             $url = 'ftp://' . $url;
         }
-        if (substr($url, 0, 3) == 'www' && (substr($url, 0, 7) != 'http://')) {
+        if (str_starts_with($url, 'www')) {
             $title = $url;
             $url = 'http://' . $url;
         }
