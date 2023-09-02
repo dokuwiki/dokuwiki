@@ -536,21 +536,15 @@ function getBaseURL($abs = null)
 function is_ssl()
 {
     // check if we are behind a reverse proxy
-    if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
-        if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    if (
-        !isset($_SERVER['HTTPS']) ||
-        preg_match('/^(|off|false|disabled)$/i', $_SERVER['HTTPS'])
-    ) {
-        return false;
-    } else {
+    if (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') == 'https') {
         return true;
     }
+
+    if (preg_match('/^(|off|false|disabled)$/i', $_SERVER['HTTPS'] ?? 'off')) {
+        return false;
+    }
+
+    return true;
 }
 
 /**
