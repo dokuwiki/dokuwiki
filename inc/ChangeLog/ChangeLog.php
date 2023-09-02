@@ -403,7 +403,7 @@ abstract class ChangeLog
         if (empty($revs2)) return [[], []];
 
         //collect revisions around rev1
-        $index = array_search($rev1, $allRevs, true);
+        $index = array_search($rev1, $allRevs);
         if ($index === false) {
             //no overlapping revisions
             [$revs1, , , , , ] = $this->retrieveRevisionsAround($rev1, $max);
