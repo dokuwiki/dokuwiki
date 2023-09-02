@@ -525,7 +525,9 @@ function io_makeFileDir($file)
 {
     $dir = dirname($file);
     if (!@is_dir($dir)) {
-        io_mkdir_p($dir) || msg("Creating directory $dir failed", -1);
+        if (!io_mkdir_p($dir)) {
+            msg("Creating directory $dir failed", -1);
+        }
     }
 }
 
