@@ -613,7 +613,6 @@ class Doku_Handler
     {
 
         switch ($state) {
-
             case DOKU_LEXER_ENTER:
                 $this->callWriter = new Quote($this->callWriter);
                 $this->addCall('quote_start', [$match], $pos);
@@ -633,7 +632,6 @@ class Doku_Handler
             case DOKU_LEXER_UNMATCHED:
                 $this->addCall('cdata', [$match], $pos);
                 break;
-
         }
 
         return true;
@@ -1015,9 +1013,7 @@ class Doku_Handler
     public function table($match, $state, $pos)
     {
         switch ($state) {
-
             case DOKU_LEXER_ENTER:
-
                 $this->callWriter = new Table($this->callWriter);
 
                 $this->addCall('table_start', [$pos + 1], $pos);
@@ -1159,4 +1155,3 @@ function Doku_Handler_Parse_Media($match)
 
     return $params;
 }
-

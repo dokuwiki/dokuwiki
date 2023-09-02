@@ -17,7 +17,6 @@
  */
 class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml
 {
-
     // Namespace these variables to
     // avoid clashes with parent classes
     protected $sum_paragraphs = 0;
@@ -86,7 +85,6 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml
             $this->sum_capture = false;
         }
     }
-
 }
 
 

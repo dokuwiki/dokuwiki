@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Renderer output base class
  *
@@ -671,9 +672,15 @@ abstract class Doku_Renderer extends Plugin
      * @param string $cache cache|recache|nocache
      * @param string $linking linkonly|detail|nolink
      */
-    public function internalmedia($src, $title = null, $align = null, $width = null,
-                                  $height = null, $cache = null, $linking = null)
-    {
+    public function internalmedia(
+        $src,
+        $title = null,
+        $align = null,
+        $width = null,
+        $height = null,
+        $cache = null,
+        $linking = null
+    ) {
     }
 
     /**
@@ -687,9 +694,15 @@ abstract class Doku_Renderer extends Plugin
      * @param string $cache cache|recache|nocache
      * @param string $linking linkonly|detail|nolink
      */
-    public function externalmedia($src, $title = null, $align = null, $width = null,
-                                  $height = null, $cache = null, $linking = null)
-    {
+    public function externalmedia(
+        $src,
+        $title = null,
+        $align = null,
+        $width = null,
+        $height = null,
+        $cache = null,
+        $linking = null
+    ) {
     }
 
     /**
@@ -702,9 +715,14 @@ abstract class Doku_Renderer extends Plugin
      * @param int $height height of media in pixel
      * @param string $cache cache|recache|nocache
      */
-    public function internalmedialink($src, $title = null, $align = null,
-                                      $width = null, $height = null, $cache = null)
-    {
+    public function internalmedialink(
+        $src,
+        $title = null,
+        $align = null,
+        $width = null,
+        $height = null,
+        $cache = null
+    ) {
     }
 
     /**
@@ -717,9 +735,14 @@ abstract class Doku_Renderer extends Plugin
      * @param int $height height of media in pixel
      * @param string $cache cache|recache|nocache
      */
-    public function externalmedialink($src, $title = null, $align = null,
-                                      $width = null, $height = null, $cache = null)
-    {
+    public function externalmedialink(
+        $src,
+        $title = null,
+        $align = null,
+        $width = null,
+        $height = null,
+        $cache = null
+    ) {
     }
 
     /**
@@ -919,7 +942,9 @@ abstract class Doku_Renderer extends Plugin
             $url = str_replace(
                 '{NAME}',
                 ($url[0] === ':') ? $reference : preg_replace_callback(
-                    '/[[\\\\\]^`{|}#%]/', static fn($match) => rawurlencode($match[0]), $reference
+                    '/[[\\\\\]^`{|}#%]/',
+                    static fn($match) => rawurlencode($match[0]),
+                    $reference
                 ),
                 $url
             );

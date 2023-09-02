@@ -72,7 +72,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                 sprintf(
                     'startSectionEdit: $data "%s" is NOT an array! One of your plugins needs an update.',
                     hsc((string)$data)
-                ), -1
+                ),
+                -1
             );
 
             // @deprecated 2018-04-14, backward compatibility
@@ -153,7 +154,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             foreach ($this->footnotes as $id => $footnote) {
                 // check its not a placeholder that indicates actual footnote text is elsewhere
                 if (substr($footnote, 0, 5) != "@@FNT") {
-
                     // open the footnote and set the anchor and backlink
                     $this->doc .= '<div class="fn">';
                     $this->doc .= '<sup><a href="#fnt__' . $id . '" id="fn__' . $id . '" class="fn_bot">';
@@ -237,7 +237,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         }
         $this->lastlevel = $level;
 
-        if ($level <= $conf['maxseclevel'] &&
+        if (
+            $level <= $conf['maxseclevel'] &&
             $this->sectionedits !== [] &&
             $this->sectionedits[count($this->sectionedits) - 1]['target'] === 'section'
         ) {
@@ -486,7 +487,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         }
 
         // output the footnote reference and link
-        $this->doc .= '<sup><a href="#fn__' . $fnid . '" id="fnt__' . $fnid . '" class="fn_top">' . $fnid . ')</a></sup>';
+        $this->doc .= sprintf(
+            '<sup><a href="#fn__%d" id="fnt__%d" class="fn_top">%d)</a></sup>',
+            $fnid,
+            $fnid,
+            $fnid
+        );
     }
 
     /**
@@ -710,12 +716,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     {
 
         if (array_key_exists($acronym, $this->acronyms)) {
-
             $title = $this->_xmlEntities($this->acronyms[$acronym]);
 
             $this->doc .= '<abbr title="' . $title
                 . '">' . $this->_xmlEntities($acronym) . '</abbr>';
-
         } else {
             $this->doc .= $this->_xmlEntities($acronym);
         }
@@ -1177,9 +1181,16 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      * @param bool $return return HTML instead of adding to $doc
      * @return void|string writes to doc attribute or returns html depends on $return
      */
-    public function internalmedia($src, $title = null, $align = null, $width = null,
-                                  $height = null, $cache = null, $linking = null, $return = false)
-    {
+    public function internalmedia(
+        $src,
+        $title = null,
+        $align = null,
+        $width = null,
+        $height = null,
+        $cache = null,
+        $linking = null,
+        $return = false
+    ) {
         global $ID;
         if (strpos($src, '#') !== false) {
             [$src, $hash] = sexplode('#', $src, 2);
@@ -1255,9 +1266,16 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      * @param bool $return return HTML instead of adding to $doc
      * @return void|string writes to doc attribute or returns html depends on $return
      */
-    public function externalmedia($src, $title = null, $align = null, $width = null,
-                                  $height = null, $cache = null, $linking = null, $return = false)
-    {
+    public function externalmedia(
+        $src,
+        $title = null,
+        $align = null,
+        $width = null,
+        $height = null,
+        $cache = null,
+        $linking = null,
+        $return = false
+    ) {
         if (link_isinterwiki($src)) {
             [$shortcut, $reference] = sexplode('>', $src, 2, '');
             $exists = null;
@@ -1650,9 +1668,15 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      * @return string
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    public function _media($src, $title = null, $align = null, $width = null,
-                           $height = null, $cache = null, $render = true)
-    {
+    public function _media(
+        $src,
+        $title = null,
+        $align = null,
+        $width = null,
+        $height = null,
+        $cache = null,
+        $render = true
+    ) {
 
         $ret = '';
 
@@ -1681,14 +1705,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             }
             //add image tag
             $ret .= '<img src="' . ml(
-                    $src,
-                    [
+                $src,
+                [
                         'w' => $width,
                         'h' => $height,
                         'cache' => $cache,
                         'rev' => $this->_getLastMediaRevisionAt($src)
                     ]
-                ) . '"';
+            ) . '"';
             $ret .= ' class="media' . $align . '"';
             $ret .= ' loading="lazy"';
 
@@ -1706,7 +1730,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                 $ret .= ' height="' . $this->_xmlEntities($height) . '"';
 
             $ret .= ' />';
-
         } elseif (media_supportedav($mime, 'video') || media_supportedav($mime, 'audio')) {
             // first get the $title
             $title = is_null($title) ? false : $title;
@@ -1730,7 +1753,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                 //add audio
                 $ret .= $this->_audio($src, $att);
             }
-
         } elseif ($mime == 'application/x-shockwave-flash') {
             if (!$render) {
                 // if the flash is not supposed to be rendered
@@ -1747,7 +1769,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             if ($align == 'right') $att['align'] = 'right';
             if ($align == 'left') $att['align'] = 'left';
             $ret .= html_flashobject(
-                ml($src, ['cache' => $cache], true, '&'), $width, $height,
+                ml($src, ['cache' => $cache], true, '&'),
+                $width,
+                $height,
                 ['quality' => 'high'],
                 null,
                 $att,

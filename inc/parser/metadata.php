@@ -605,9 +605,15 @@ class Doku_Renderer_metadata extends Doku_Renderer
      * @param string $cache cache|recache|nocache
      * @param string $linking linkonly|detail|nolink
      */
-    public function internalmedia($src, $title = null, $align = null, $width = null,
-                                  $height = null, $cache = null, $linking = null)
-    {
+    public function internalmedia(
+        $src,
+        $title = null,
+        $align = null,
+        $width = null,
+        $height = null,
+        $cache = null,
+        $linking = null
+    ) {
         if ($this->capture && $title) {
             $this->doc .= '[' . $title . ']';
         }
@@ -626,9 +632,15 @@ class Doku_Renderer_metadata extends Doku_Renderer
      * @param string $cache cache|recache|nocache
      * @param string $linking linkonly|detail|nolink
      */
-    public function externalmedia($src, $title = null, $align = null, $width = null,
-                                  $height = null, $cache = null, $linking = null)
-    {
+    public function externalmedia(
+        $src,
+        $title = null,
+        $align = null,
+        $width = null,
+        $height = null,
+        $cache = null,
+        $linking = null
+    ) {
         if ($this->capture && $title) {
             $this->doc .= '[' . $title . ']';
         }
