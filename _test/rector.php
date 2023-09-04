@@ -63,7 +63,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->cacheDirectory(__DIR__ . '/.rector-cache');
 
     // supported minimum PHP version can be overridden by environment variable
-    [$major, $minor] = explode('.', $_SERVER['RECTOR_MIN_PHP'] ?? '7.4');
+    [$major, $minor] = explode('.', $_SERVER['RECTOR_MIN_PHP'] ?? '' ?: '7.4');
     $phpset = LevelSetList::class . '::UP_TO_PHP_' . $major . $minor;
     echo "Using PHP set $phpset\n";
 
