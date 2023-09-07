@@ -17,7 +17,6 @@ use Doku_Renderer;
  */
 abstract class SyntaxPlugin extends Plugin
 {
-
     protected $allowedModesSetup = false;
 
     /**

@@ -945,7 +945,7 @@ class ApiCore
 
         $first = (int)$first;
         $first_rev = $first - 1;
-        $first_rev = $first_rev < 0 ? 0 : $first_rev;
+        $first_rev = max(0, $first_rev);
 
         $pagelog = new PageChangeLog($id);
         $revisions = $pagelog->getRevisions($first_rev, $conf['recent']);
