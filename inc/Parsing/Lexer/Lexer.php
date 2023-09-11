@@ -152,7 +152,7 @@ class Lexer
             // If we are closing a block and the last character consumed by our matched
             //  string is a newline, put it back.  See the following for details:
             //  https://github.com/dokuwiki/dokuwiki/issues/4054
-            if ($this->isModeEnd($mode) && substr($matched, -1) == "\n") {
+            if ($this->isModeEnd($mode) && str_ends_with($matched, "\n")) {
                 $raw = "\n" . $raw;
                 $currentLength++;
             }
