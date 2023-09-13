@@ -22,6 +22,7 @@
     <exclude-pattern>*/lang/*/lang.php</exclude-pattern>
     <exclude-pattern>*/lang/*/settings.php</exclude-pattern>
     <exclude-pattern>*/_test/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
 
     <!-- 3rd party libs, these should be moved to composer some day -->
     <exclude-pattern>*/inc/DifferenceEngine.php</exclude-pattern>
