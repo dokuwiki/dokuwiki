@@ -1697,15 +1697,17 @@ function media_nstree($ns)
         else $tmp_ns = $part;
 
         // find the namespace parts or insert them
-        while ($data[$pos]['id'] != $tmp_ns) {
-            if (
-                $pos >= count($data) ||
-                ($data[$pos]['level'] <= $level + 1 && Sort::strcmp($data[$pos]['id'], $tmp_ns) > 0)
-            ) {
-                array_splice($data, $pos, 0, [['level' => $level + 1, 'id' => $tmp_ns, 'open' => 'true']]);
-                break;
+        if (!empty($data[$pos]['id'])) {
+            while ($data[$pos]['id'] != $tmp_ns) {
+                if (
+                    $pos >= count($data) ||
+                    ($data[$pos]['level'] <= $level+1 && Sort::strcmp($data[$pos]['id'], $tmp_ns) > 0)
+                ) {
+                    array_splice($data, $pos, 0, array(array('level' => $level+1, 'id' => $tmp_ns, 'open' => 'true')));
+                    break;
+                }
+                ++$pos;
             }
-            ++$pos;
         }
     }
 
