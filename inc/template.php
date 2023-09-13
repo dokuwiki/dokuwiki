@@ -101,7 +101,9 @@ function tpl_content($prependTOC = true)
     ob_start();
     Event::createAndTrigger('TPL_ACT_RENDER', $ACT, 'tpl_content_core');
     $html_output = ob_get_clean();
-    Event::createAndTrigger('TPL_CONTENT_DISPLAY', $html_output, 'ptln');
+    Event::createAndTrigger('TPL_CONTENT_DISPLAY', $html_output, function ($html_output) {
+        echo $html_output;
+    });
 
     return !empty($html_output);
 }
