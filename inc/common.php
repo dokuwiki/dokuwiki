@@ -1255,7 +1255,7 @@ function con($pre, $text, $suf, $pretty = false)
         }
         if (
             $suf !== '' && !str_ends_with($text, "\n") &&
-            !str_starts_with($suf,  "\n")
+            !str_starts_with($suf, "\n")
         ) {
             $text .= "\n";
         }
