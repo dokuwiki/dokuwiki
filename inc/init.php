@@ -553,7 +553,7 @@ function is_ssl()
  */
 function isWindows()
 {
-    return (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
+    return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
 }
 
 /**
