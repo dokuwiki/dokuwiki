@@ -202,8 +202,7 @@ init_files();
 global $plugin_controller_class, $plugin_controller;
 if (empty($plugin_controller_class)) $plugin_controller_class = PluginController::class;
 
-// load libraries
-require_once(DOKU_INC . 'vendor/autoload.php');
+// autoloader
 require_once(DOKU_INC . 'inc/load.php');
 
 // from now on everything is an exception
