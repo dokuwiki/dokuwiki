@@ -173,7 +173,7 @@ return new class {
             if (file_exists($file)) {
                 $plugin = substr($classPath, 0, strpos($classPath, '/'));
                 // don't load disabled plugin classes (only if plugin controller is available)
-                if ($plugin_controller && plugin_isdisabled($plugin)) return false;
+                if (!defined('DOKU_UNITTEST') && $plugin_controller && plugin_isdisabled($plugin)) return false;
 
                 try {
                     require $file;
@@ -253,7 +253,7 @@ return new class {
             $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
             if (file_exists($plg)) {
                 // don't load disabled plugin classes (only if plugin controller is available)
-                if ($plugin_controller && plugin_isdisabled($m[2])) return false;
+                if (!defined('DOKU_UNITTEST') && $plugin_controller && plugin_isdisabled($m[2])) return false;
                 try {
                     require $plg;
                 } catch (\Throwable $e) {
