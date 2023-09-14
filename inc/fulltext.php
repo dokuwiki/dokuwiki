@@ -575,13 +575,13 @@ function ft_snippet_re_preprocess($term)
         $BR = '\b';
     }
 
-    if (substr($term, 0, 2) == '\\*') {
+    if (str_starts_with($term, '\\*')) {
         $term = substr($term, 2);
     } else {
         $term = $BL . $term;
     }
 
-    if (substr($term, -2, 2) == '\\*') {
+    if (str_ends_with($term, '\\*')) {
         $term = substr($term, 0, -2);
     } else {
         $term .= $BR;

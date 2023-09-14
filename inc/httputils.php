@@ -339,7 +339,7 @@ function http_status($code = 200, $text = '')
 
     $server_protocol = $INPUT->server->str('SERVER_PROTOCOL', false);
 
-    if (substr(PHP_SAPI, 0, 3) == 'cgi' || defined('SIMPLE_TEST')) {
+    if (str_starts_with(PHP_SAPI, 'cgi') || defined('SIMPLE_TEST')) {
         header("Status: {$code} {$text}", true);
     } elseif ($server_protocol == 'HTTP/1.1' || $server_protocol == 'HTTP/1.0') {
         header($server_protocol . " {$code} {$text}", true, $code);

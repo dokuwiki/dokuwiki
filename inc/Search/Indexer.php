@@ -467,12 +467,12 @@ class Indexer
         if ($dir !== false) {
             while (($f = readdir($dir)) !== false) {
                 if (
-                    substr($f, -4) == '.idx' &&
-                    (substr($f, 0, 1) == 'i' ||
-                    substr($f, 0, 1) == 'w' ||
-                        substr($f, -6) == '_w.idx' ||
-                        substr($f, -6) == '_i.idx' ||
-                        substr($f, -6) == '_p.idx')
+                    str_ends_with($f, '.idx') &&
+                    (str_starts_with($f, 'i') ||
+                     str_starts_with($f, 'w') ||
+                     str_ends_with($f, '_w.idx') ||
+                     str_ends_with($f, '_i.idx') ||
+                     str_ends_with($f, '_p.idx'))
                 )
                     @unlink($conf['indexdir'] . "/$f");
             }
@@ -697,11 +697,11 @@ class Indexer
                 $caret = '^';
                 $dollar = '$';
                 // check for wildcards
-                if (substr($xval, 0, 1) == '*') {
+                if (str_starts_with($xval, '*')) {
                     $xval = substr($xval, 1);
                     $caret = '';
                 }
-                if (substr($xval, -1, 1) == '*') {
+                if (str_ends_with($xval, '*')) {
                     $xval = substr($xval, 0, -1);
                     $dollar = '';
                 }
@@ -777,12 +777,12 @@ class Indexer
             $wlen = wordlen($word);
 
             // check for wildcards
-            if (substr($xword, 0, 1) == '*') {
+            if (str_starts_with($xword, '*')) {
                 $xword = substr($xword, 1);
                 $caret = '';
                 --$wlen;
             }
-            if (substr($xword, -1, 1) == '*') {
+            if (str_ends_with($xword, '*')) {
                 $xword = substr($xword, 0, -1);
                 $dollar = '';
                 --$wlen;
@@ -1068,7 +1068,7 @@ class Indexer
     protected function saveIndexKey($idx, $suffix, $id, $line)
     {
         global $conf;
-        if (substr($line, -1) != "\n")
+        if (!str_ends_with($line, "\n"))
             $line .= "\n";
         $fn = $conf['indexdir'] . '/' . $idx . $suffix;
         $fh = @fopen($fn . '.tmp', 'w');

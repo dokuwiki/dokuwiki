@@ -226,7 +226,7 @@ class Lexer
      */
     protected function isSpecialMode($mode)
     {
-        return (strncmp($mode, "_", 1) == 0);
+        return str_starts_with($mode, '_');
     }
 
     /**
@@ -264,7 +264,7 @@ class Lexer
 
         // modes starting with plugin_ are all handled by the same
         // handler but with an additional parameter
-        if (substr($handler, 0, 7) == 'plugin_') {
+        if (str_starts_with($handler, 'plugin_')) {
             [$handler, $plugin] = sexplode('_', $handler, 2, '');
             return $this->handler->$handler($content, $is_match, $pos, $plugin);
         }

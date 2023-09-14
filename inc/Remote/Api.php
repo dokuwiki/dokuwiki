@@ -404,7 +404,7 @@ class Api
      */
     public function argumentWarningHandler($errno, $errstr)
     {
-        if (substr($errstr, 0, 17) == 'Missing argument ') {
+        if (str_starts_with($errstr, 'Missing argument ')) {
             throw new RemoteException('Method does not exist - wrong parameter count.', -32603);
         }
     }

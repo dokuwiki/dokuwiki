@@ -37,7 +37,7 @@ function checkUpdateMessages()
 
     $cf = getCacheName($updateVersion, '.updmsg');
     $lm = @filemtime($cf);
-    $is_http = substr(DOKU_MESSAGEURL, 0, 5) != 'https';
+    $is_http = !str_starts_with(DOKU_MESSAGEURL, 'https');
 
     // check if new messages needs to be fetched
     if ($lm < time() - (60 * 60 * 24) || $lm < @filemtime(DOKU_INC . DOKU_SCRIPT)) {
@@ -52,7 +52,7 @@ function checkUpdateMessages()
         $http = new DokuHTTPClient();
         $http->timeout = 12;
         $resp = $http->get(DOKU_MESSAGEURL . $updateVersion);
-        if (is_string($resp) && ($resp == "" || substr(trim($resp), -1) == '%')) {
+        if (is_string($resp) && ($resp == '' || str_ends_with(trim($resp), '%'))) {
             // basic sanity check that this is either an empty string response (ie "no messages")
             // or it looks like one of our messages, not WiFi login or other interposed response
             io_saveFile($cf, $resp);

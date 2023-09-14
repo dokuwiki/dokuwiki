@@ -27,9 +27,8 @@ class PhpString
             $path = substr($path, $rpos + 1);
         }
 
-        $suflen = strlen($suffix);
-        if ($suflen && (substr($path, -$suflen) === $suffix)) {
-            $path = substr($path, 0, -$suflen);
+        if (str_ends_with($path, $suffix)) {
+            $path = substr($path, 0, -strlen($suffix));
         }
 
         return $path;

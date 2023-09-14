@@ -108,7 +108,7 @@ class MediaFile
     /** @return bool */
     public function isImage()
     {
-        return (substr($this->mime, 0, 6) === 'image/');
+        return (str_starts_with($this->mime, 'image/'));
     }
 
     /**

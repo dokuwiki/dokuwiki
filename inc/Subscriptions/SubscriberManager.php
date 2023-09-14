@@ -288,7 +288,7 @@ class SubscriberManager
     protected function file($id)
     {
         $meta_fname = '.mlist';
-        if ((substr($id, -1, 1) === ':')) {
+        if (str_ends_with($id, ':')) {
             $meta_froot = getNS($id);
             $meta_fname = '/' . $meta_fname;
         } else {

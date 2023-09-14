@@ -134,7 +134,7 @@ class Subscribe extends AbstractUserAction
         }
         $target = $params['target'];
         $valid_styles = ['every', 'digest'];
-        if (substr($target, -1, 1) === ':') {
+        if (str_ends_with($target, ':')) {
             // Allow “list” subscribe style since the target is a namespace.
             $valid_styles[] = 'list';
         }

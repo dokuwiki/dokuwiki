@@ -174,7 +174,7 @@ class Lists extends AbstractRewriter
 
     protected function interpretSyntax($match, &$type)
     {
-        if (substr($match, -1) == '*') {
+        if (str_ends_with($match, '*')) {
             $type = 'u';
         } else {
             $type = 'o';

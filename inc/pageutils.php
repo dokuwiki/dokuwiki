@@ -81,7 +81,7 @@ function getID($param = 'id', $clean = true)
     }
 
     // Namespace autolinking from URL
-    if (substr($id, -1) == ':' || ($conf['useslash'] && substr($id, -1) == '/')) {
+    if (str_ends_with($id, ':') || ($conf['useslash'] && str_ends_with($id, '/'))) {
         if (page_exists($id . $conf['start'])) {
             // start page inside namespace
             $id .= $conf['start'];
@@ -676,7 +676,7 @@ function prettyprint_id($id)
     if (!$id || $id === ':') {
         return '*';
     }
-    if ((substr($id, -1, 1) === ':')) {
+    if (str_ends_with($id, ':')) {
         $id .= '*';
     }
     return hsc($id);

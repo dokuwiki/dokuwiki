@@ -115,7 +115,7 @@ class Display
     {
         if ($this->relativeDisplay !== null) {
             $id = $this->mediaFile->getId();
-            if (substr($id, 0, strlen($this->relativeDisplay)) === $this->relativeDisplay) {
+            if (str_starts_with($id, $this->relativeDisplay)) {
                 $id = substr($id, strlen($this->relativeDisplay));
             }
             return ltrim($id, ':');

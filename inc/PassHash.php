@@ -36,7 +36,7 @@ class PassHash
         $magic  = '';
 
         //determine the used method and salt
-        if (substr($hash, 0, 2) == 'U$') {
+        if (str_starts_with($hash, 'U$')) {
             // This may be an updated password from user_update_7000(). Such hashes
             // have 'U' added as the first character and need an extra md5().
             $hash = substr($hash, 1);
@@ -80,10 +80,10 @@ class PassHash
         } elseif (preg_match('/^\$2(a|y)\$(.{2})\$/', $hash, $m)) {
             $method = 'bcrypt';
             $salt   = $hash;
-        } elseif (substr($hash, 0, 6) == '{SSHA}') {
+        } elseif (str_starts_with($hash, '{SSHA}')) {
             $method = 'ssha';
             $salt   = substr(base64_decode(substr($hash, 6)), 20);
-        } elseif (substr($hash, 0, 6) == '{SMD5}') {
+        } elseif (str_starts_with($hash, '{SMD5}')) {
             $method = 'lsmd5';
             $salt   = substr(base64_decode(substr($hash, 6)), 16);
         } elseif (preg_match('/^:B:(.+?):.{32}$/', $hash, $m)) {

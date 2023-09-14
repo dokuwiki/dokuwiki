@@ -178,7 +178,7 @@ class ParallelRegex
                             $pattern .= '(?';
                             break;
                         default:
-                            if (substr($elt, 0, 1) == '\\')
+                            if (str_starts_with($elt, '\\'))
                                 $pattern .= $elt;
                             else $pattern .= str_replace('/', '\/', $elt);
                     }

@@ -158,7 +158,7 @@ function checkFileStatus(&$media, &$file, $rev = '', $width = 0, $height = 0)
             return [412, 'Precondition Failed'];
         }
         //handle external images
-        if (strncmp($MIME, 'image/', 6) == 0) $file = media_get_from_URL($media, $EXT, $CACHE);
+        if (str_starts_with($MIME, 'image/')) $file = media_get_from_URL($media, $EXT, $CACHE);
         if (!$file) {
             //download failed - redirect to original URL
             return [302, $media];

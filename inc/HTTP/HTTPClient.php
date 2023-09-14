@@ -489,7 +489,7 @@ class HTTPClient
         if (
             isset($this->resp_headers['content-encoding']) &&
             $this->resp_headers['content-encoding'] == 'gzip' &&
-            strlen($r_body) > 10 && substr($r_body, 0, 3) == "\x1f\x8b\x08"
+            strlen($r_body) > 10 && str_starts_with($r_body, "\x1f\x8b\x08")
         ) {
             $this->resp_body = @gzinflate(substr($r_body, 10));
             if ($this->resp_body === false) {

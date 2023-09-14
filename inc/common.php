@@ -475,7 +475,7 @@ function idfilter($id, $ue = true)
     if ($conf['useslash'] && $conf['userewrite']) {
         $id = strtr($id, ':', '/');
     } elseif (
-        strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' &&
+        str_starts_with(strtoupper(PHP_OS), 'WIN') &&
         $conf['userewrite'] &&
         strpos($INPUT->server->str('SERVER_SOFTWARE'), 'Microsoft-IIS') === false
     ) {
@@ -1248,14 +1248,14 @@ function con($pre, $text, $suf, $pretty = false)
 {
     if ($pretty) {
         if (
-            $pre !== '' && substr($pre, -1) !== "\n" &&
-            substr($text, 0, 1) !== "\n"
+            $pre !== '' && !str_ends_with($pre, "\n") &&
+            !str_starts_with($text, "\n")
         ) {
             $pre .= "\n";
         }
         if (
-            $suf !== '' && substr($text, -1) !== "\n" &&
-            substr($suf, 0, 1) !== "\n"
+            $suf !== '' && !str_ends_with($text, "\n") &&
+            !str_starts_with($suf,  "\n")
         ) {
             $text .= "\n";
         }
@@ -1786,7 +1786,7 @@ function license_img($type)
     $try   = [];
     $try[] = 'lib/images/license/' . $type . '/' . $conf['license'] . '.png';
     $try[] = 'lib/images/license/' . $type . '/' . $conf['license'] . '.gif';
-    if (substr($conf['license'], 0, 3) == 'cc-') {
+    if (str_starts_with($conf['license'], 'cc-')) {
         $try[] = 'lib/images/license/' . $type . '/cc.png';
     }
     foreach ($try as $src) {
@@ -2031,7 +2031,7 @@ function inlineSVG($file, $maxsize = 2048)
     $content = preg_replace('/<!DOCTYPE .*?>/i', '', $content); // doc type
     $content = preg_replace('/>\s+</s', '><', $content); // newlines between tags
     $content = trim($content);
-    if (substr($content, 0, 5) !== '<svg ') return false;
+    if (!str_starts_with($content, '<svg ')) return false;
     return $content;
 }
 
