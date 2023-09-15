@@ -351,7 +351,10 @@ class PluginController
             if (is_dir($typedir)) {
                 if ($dp = opendir($typedir)) {
                     while (false !== ($component = readdir($dp))) {
-                        if (strpos($component, '.') === 0 || strtolower(substr($component, -4)) !== '.php') continue;
+                        if (
+                            str_starts_with($component, '.') ||
+                            !str_ends_with(strtolower($component), '.php')
+                        ) continue;
                         if (is_file($typedir . $component)) {
                             $plugins[] = $plugin . '_' . substr($component, 0, -4);
                         }

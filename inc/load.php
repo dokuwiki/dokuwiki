@@ -15,6 +15,7 @@ spl_autoload_register('load_autoload');
 // require all the common libraries
 // for a few of these order does matter
 require_once(DOKU_INC . 'inc/defines.php');
+require_once(DOKU_INC . 'inc/compatibility.php');   // load early so we can use it everywhere
 require_once(DOKU_INC . 'inc/actions.php');
 require_once(DOKU_INC . 'inc/changelog.php');
 require_once(DOKU_INC . 'inc/common.php');
@@ -36,7 +37,6 @@ require_once(DOKU_INC . 'inc/template.php');
 require_once(DOKU_INC . 'inc/toolbar.php');
 require_once(DOKU_INC . 'inc/utf8.php');
 require_once(DOKU_INC . 'inc/auth.php');
-require_once(DOKU_INC . 'inc/compatibility.php');
 require_once(DOKU_INC . 'inc/deprecated.php');
 require_once(DOKU_INC . 'inc/legacy.php');
 
@@ -87,7 +87,7 @@ function load_autoload($name)
     $name = str_replace('\\', '/', $name);
 
     // test mock namespace
-    if (substr($name, 0, 19) === 'dokuwiki/test/mock/') {
+    if (str_starts_with($name, 'dokuwiki/test/mock/')) {
         $file = DOKU_INC . '_test/mock/' . substr($name, 19) . '.php';
         if (file_exists($file)) {
             require $file;
@@ -96,7 +96,7 @@ function load_autoload($name)
     }
 
     // tests namespace
-    if (substr($name, 0, 14) === 'dokuwiki/test/') {
+    if (str_starts_with($name, 'dokuwiki/test/')) {
         $file = DOKU_INC . '_test/tests/' . substr($name, 14) . '.php';
         if (file_exists($file)) {
             require $file;
@@ -105,7 +105,7 @@ function load_autoload($name)
     }
 
     // plugin namespace
-    if (substr($name, 0, 16) === 'dokuwiki/plugin/') {
+    if (str_starts_with($name, 'dokuwiki/plugin/')) {
         $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
         $file = DOKU_PLUGIN . substr($name, 16) . '.php';
         if (file_exists($file)) {
@@ -119,7 +119,7 @@ function load_autoload($name)
     }
 
     // template namespace
-    if (substr($name, 0, 18) === 'dokuwiki/template/') {
+    if (str_starts_with($name, 'dokuwiki/template/')) {
         $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
         $file = DOKU_INC . 'lib/tpl/' . substr($name, 18) . '.php';
         if (file_exists($file)) {
@@ -133,7 +133,7 @@ function load_autoload($name)
     }
 
     // our own namespace
-    if (substr($name, 0, 9) === 'dokuwiki/') {
+    if (str_starts_with($name, 'dokuwiki/')) {
         $file = DOKU_INC . 'inc/' . substr($name, 9) . '.php';
         if (file_exists($file)) {
             require $file;

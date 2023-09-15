@@ -67,7 +67,7 @@ class BulkSubscriptionSender extends SubscriptionSender
                     continue;
                 }
 
-                if (substr($target, -1, 1) === ':') {
+                if (str_ends_with($target, ':')) {
                     // subscription target is a namespace, get all changes within
                     $changes = getRecentsSince($lastupdate, null, getNS($target));
                 } else {

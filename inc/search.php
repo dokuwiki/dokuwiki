@@ -311,7 +311,7 @@ function search_list(&$data, $base, $file, $type, $lvl, $opts)
     //we do nothing with directories
     if ($type == 'd') return false;
     //only search txt files
-    if (substr($file, -4) == '.txt') {
+    if (str_ends_with($file, '.txt')) {
         //check ACL
         $id = pathID($file);
         if (auth_quickaclcheck($id) < AUTH_READ) {
@@ -343,7 +343,7 @@ function search_pagename(&$data, $base, $file, $type, $lvl, $opts)
     //we do nothing with directories
     if ($type == 'd') return true;
     //only search txt files
-    if (substr($file, -4) != '.txt') return true;
+    if (!str_ends_with($file, '.txt')) return true;
 
     //simple stringmatching
     if (!empty($opts['query'])) {
@@ -395,7 +395,7 @@ function search_allpages(&$data, $base, $file, $type, $lvl, $opts)
     }
 
     //only search txt files
-    if (substr($file, -4) != '.txt') return true;
+    if (!str_ends_with($file, '.txt')) return true;
 
     $item = [];
     $item['id']   = pathID($file);
@@ -555,7 +555,7 @@ function search_universal(&$data, $base, $file, $type, $lvl, $opts)
     } else {
         if (empty($opts['listfiles'])) return $return;
         if (empty($opts['skipacl']) && $item['perm'] < AUTH_READ) return $return;
-        if (!empty($opts['pagesonly']) && (substr($file, -4) != '.txt')) return $return;
+        if (!empty($opts['pagesonly']) && !str_ends_with($file, '.txt')) return $return;
         if (empty($opts['showhidden']) && isHiddenPage($item['id'])) return $return;
         if (!empty($opts['filematch']) && !preg_match('/' . $opts['filematch'] . '/', $file)) return $return;
         if (!empty($opts['idmatch']) && !preg_match('/' . $opts['idmatch'] . '/', $item['id'])) return $return;

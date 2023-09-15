@@ -153,7 +153,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
             foreach ($this->footnotes as $id => $footnote) {
                 // check its not a placeholder that indicates actual footnote text is elsewhere
-                if (substr($footnote, 0, 5) != "@@FNT") {
+                if (!str_starts_with($footnote, "@@FNT")) {
                     // open the footnote and set the anchor and backlink
                     $this->doc .= '<div class="fn">';
                     $this->doc .= '<sup><a href="#fnt__' . $id . '" id="fn__' . $id . '" class="fn_bot">';
@@ -680,10 +680,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             $this->doc .= '</a></dt>' . DOKU_LF . '<dd>';
         }
 
-        if ($text[0] == "\n") {
+        if (str_starts_with($text, "\n")) {
             $text = substr($text, 1);
         }
-        if (substr($text, -1) == "\n") {
+        if (str_ends_with($text, "\n")) {
             $text = substr($text, 0, -1);
         }
 
@@ -1203,7 +1203,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         $link = $this->_getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render);
 
         [$ext, $mime] = mimetype($src, false);
-        if (substr($mime, 0, 5) == 'image' && $render) {
+        if (str_starts_with($mime, 'image') && $render) {
             $link['url'] = ml(
                 $src,
                 [
@@ -1297,7 +1297,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         $link['url'] = ml($src, ['cache' => $cache]);
 
         [$ext, $mime] = mimetype($src, false);
-        if (substr($mime, 0, 5) == 'image' && $render) {
+        if (str_starts_with($mime, 'image') && $render) {
             // link only jpeg images
             // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = true;
         } elseif (($mime == 'application/x-shockwave-flash' || media_supportedav($mime)) && $render) {
@@ -1627,7 +1627,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     public function _formatLink($link)
     {
         //make sure the url is XHTML compliant (skip mailto)
-        if (substr($link['url'], 0, 7) != 'mailto:') {
+        if (!str_starts_with($link['url'], 'mailto:')) {
             $link['url'] = str_replace('&', '&amp;', $link['url']);
             $link['url'] = str_replace('&amp;amp;', '&amp;', $link['url']);
         }
@@ -1681,7 +1681,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         $ret = '';
 
         [$ext, $mime] = mimetype($src);
-        if (substr($mime, 0, 5) == 'image') {
+        if (str_starts_with($mime, 'image')) {
             // first get the $title
             if (!is_null($title)) {
                 $title = $this->_xmlEntities($title);

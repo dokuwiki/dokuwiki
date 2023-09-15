@@ -227,7 +227,7 @@ function linesToHash($lines, $lower = false)
 {
     $conf = [];
     // remove BOM
-    if (isset($lines[0]) && substr($lines[0], 0, 3) === pack('CCC', 0xef, 0xbb, 0xbf))
+    if (isset($lines[0]) && str_starts_with($lines[0], pack('CCC', 0xef, 0xbb, 0xbf)))
         $lines[0] = substr($lines[0], 3);
     foreach ($lines as $line) {
         //ignore comments (except escaped ones)
@@ -487,7 +487,7 @@ function conf_decodeString($str)
 function array_merge_with_removal($current, $new)
 {
     foreach ($new as $val) {
-        if (substr($val, 0, 1) == DOKU_CONF_NEGATION) {
+        if (str_starts_with($val, DOKU_CONF_NEGATION)) {
             $idx = array_search(trim(substr($val, 1)), $current);
             if ($idx !== false) {
                 unset($current[$idx]);

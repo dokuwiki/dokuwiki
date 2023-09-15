@@ -583,8 +583,7 @@ class Mailer
             } else {
                 $prefix = '[' . $conf['mailprefix'] . ']';
             }
-            $len = strlen($prefix);
-            if (substr($this->headers['Subject'], 0, $len) !== $prefix) {
+            if (!str_starts_with($this->headers['Subject'], $prefix)) {
                 $this->headers['Subject'] = $prefix . ' ' . $this->headers['Subject'];
             }
 

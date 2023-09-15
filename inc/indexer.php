@@ -307,7 +307,7 @@ function idx_listIndexLengths()
             return [];
         $idx = [];
         while (($f = readdir($dir)) !== false) {
-            if (substr($f, 0, 1) == 'i' && substr($f, -4) == '.idx') {
+            if (str_starts_with($f, 'i') && str_ends_with($f, '.idx')) {
                 $i = substr($f, 1, -4);
                 if (is_numeric($i))
                     $idx[] = (int)$i;

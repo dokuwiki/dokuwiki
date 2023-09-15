@@ -97,7 +97,7 @@ abstract class RemotePlugin extends Plugin
     {
         $types = explode('|', $hint);
         foreach ($types as $t) {
-            if (substr($t, -2) === '[]') {
+            if (str_ends_with($t, '[]')) {
                 return 'array';
             }
             if ($t === 'boolean') {

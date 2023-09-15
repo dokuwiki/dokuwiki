@@ -658,7 +658,7 @@ function media_contentcheck($file, $mime)
             }
         }
     }
-    if (substr($mime, 0, 6) == 'image/') {
+    if (str_starts_with($mime, 'image/')) {
         $info = @getimagesize($file);
         if ($mime == 'image/gif' && $info[2] != 1) {
             return -1; // uploaded content did not match the file extension
@@ -668,7 +668,7 @@ function media_contentcheck($file, $mime)
             return -1;
         }
         # fixme maybe check other images types as well
-    } elseif (substr($mime, 0, 5) == 'text/') {
+    } elseif (str_starts_with($mime, 'text/')) {
         global $TEXT;
         $TEXT = io_readFile($file);
         if (checkwordblock()) {

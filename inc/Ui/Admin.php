@@ -88,7 +88,7 @@ class Admin extends Ui
     protected function showSecurityCheck()
     {
         global $conf;
-        if (substr($conf['savedir'], 0, 2) !== './') return;
+        if (!str_starts_with($conf['savedir'], './')) return;
         $img = DOKU_URL . $conf['savedir'] .
             '/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png';
         echo '<div id="security__check" data-src="' . $img . '"></div>';

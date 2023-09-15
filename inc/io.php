@@ -117,13 +117,13 @@ function io_readFile($file, $clean = true)
 {
     $ret = '';
     if (file_exists($file)) {
-        if (substr($file, -3) == '.gz') {
+        if (str_ends_with($file, '.gz')) {
             if (!DOKU_HAS_GZIP) return false;
             $ret = gzfile($file);
             if (is_array($ret)) {
                 $ret = implode('', $ret);
             }
-        } elseif (substr($file, -4) == '.bz2') {
+        } elseif (str_ends_with($file, '.bz2')) {
             if (!DOKU_HAS_BZIP) return false;
             $ret = bzfile($file);
         } else {
@@ -255,13 +255,13 @@ function _io_saveFile($file, $content, $append)
     $mode = ($append) ? 'ab' : 'wb';
     $fileexists = file_exists($file);
 
-    if (substr($file, -3) == '.gz') {
+    if (str_ends_with($file, '.gz')) {
         if (!DOKU_HAS_GZIP) return false;
         $fh = @gzopen($file, $mode . '9');
         if (!$fh) return false;
         gzwrite($fh, $content);
         gzclose($fh);
-    } elseif (substr($file, -4) == '.bz2') {
+    } elseif (str_ends_with($file, '.bz2')) {
         if (!DOKU_HAS_BZIP) return false;
         if ($append) {
             $bzcontent = bzfile($file);
@@ -352,10 +352,10 @@ function io_replaceInFile($file, $oldline, $newline, $regex = false, $maxlines =
     io_lock($file);
 
     // load into array
-    if (substr($file, -3) == '.gz') {
+    if (str_ends_with($file, '.gz')) {
         if (!DOKU_HAS_GZIP) return false;
         $lines = gzfile($file);
-    } elseif (substr($file, -4) == '.bz2') {
+    } elseif (str_ends_with($file, '.bz2')) {
         if (!DOKU_HAS_BZIP) return false;
         $lines = bzfile($file, true);
     } else {
@@ -773,7 +773,7 @@ function io_grep($file, $pattern, $max = 0, $backref = false)
     $line = '';
     while (!feof($fh)) {
         $line .= fgets($fh, 4096);  // read full line
-        if (substr($line, -1) != "\n") continue;
+        if (!str_ends_with($line, "\n")) continue;
 
         // check if line matches
         if (preg_match($pattern, $line, $match)) {
@@ -805,7 +805,7 @@ function io_getSizeFile($file)
 {
     if (!file_exists($file)) return 0;
 
-    if (substr($file, -3) == '.gz') {
+    if (str_ends_with($file, '.gz')) {
         $fp = @fopen($file, "rb");
         if ($fp === false) return 0;
         fseek($fp, -4, SEEK_END);
@@ -813,7 +813,7 @@ function io_getSizeFile($file)
         fclose($fp);
         $array = unpack("V", $buffer);
         $uncompressedsize = end($array);
-    } elseif (substr($file, -4) == '.bz2') {
+    } elseif (str_ends_with($file, '.bz2')) {
         if (!DOKU_HAS_BZIP) return 0;
         $bz = bzopen($file, "r");
         if ($bz === false) return 0;

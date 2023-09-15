@@ -150,7 +150,7 @@ function tpl_toc($return = false)
     if (is_array($TOC)) {
         // if a TOC was prepared in global scope, always use it
         $toc = $TOC;
-    } elseif (($ACT == 'show' || substr($ACT, 0, 6) == 'export') && !$REV && $INFO['exists']) {
+    } elseif (($ACT == 'show' || str_starts_with($ACT, 'export')) && !$REV && $INFO['exists']) {
         // get TOC from metadata, render if neccessary
         $meta = p_get_metadata($ID, '', METADATA_RENDER_USING_CACHE);
         $tocok = $meta['internal']['toc'] ?? true;
@@ -1711,7 +1711,7 @@ function tpl_getMediaFile($search, $abs = false, &$imginfo = null, $fallback = t
     $ismedia = false;
     // loop through candidates until a match was found:
     foreach ($search as $img) {
-        if (substr($img, 0, 1) == ':') {
+        if (str_starts_with($img, ':')) {
             $file = mediaFN($img);
             $ismedia = true;
         } else {
