@@ -127,7 +127,7 @@ function js_out()
     // load files
     foreach ($files as $file) {
         if (!file_exists($file)) continue;
-        $ismin = (substr($file, -7) == '.min.js');
+        $ismin = str_ends_with($file, '.min.js');
         $debugjs = ($conf['allowdebug'] && strpos($file, DOKU_INC . 'lib/scripts/') !== 0);
 
         echo "\n\n/* XXXXXXXXXX begin of " . str_replace(DOKU_INC, '', $file) . " XXXXXXXXXX */\n\n";
@@ -197,7 +197,7 @@ function js_load($file)
 
         $idata = '';
         if (file_exists($ifile)) {
-            $ismin = (substr($ifile, -7) == '.min.js');
+            $ismin = str_ends_with($ifile, '.min.js');
             if ($ismin) $idata .= "\n/* BEGIN NOCOMPRESS */\n";
             $idata .= io_readFile($ifile);
             if ($ismin) $idata .= "\n/* END NOCOMPRESS */\n";

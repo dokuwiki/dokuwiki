@@ -110,7 +110,7 @@ if ($conf['allowdebug'] && $ACT == 'debug') {
 if (
     !$INFO['exists'] &&
     ($conf['send404'] || preg_match('/^(robots\.txt|sitemap\.xml(\.gz)?|favicon\.ico|crossdomain\.xml)$/', $ID)) &&
-    ($ACT == 'show' || (!is_array($ACT) && substr($ACT, 0, 7) == 'export_'))
+    ($ACT == 'show' || (!is_array($ACT) && str_starts_with($ACT, 'export_')))
 ) {
     header('HTTP/1.0 404 Not Found');
 }

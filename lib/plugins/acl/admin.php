@@ -659,7 +659,7 @@ class admin_plugin_acl extends AdminPlugin
             foreach ($set as $who => $perm) {
                 echo '<tr>';
                 echo '<td>';
-                if (substr($where, -1) == '*') {
+                if (str_ends_with($where, '*')) {
                     echo '<span class="aclns">' . hsc($where) . '</span>';
                     $ispage = false;
                 } else {

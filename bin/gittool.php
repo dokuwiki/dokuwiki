@@ -254,7 +254,7 @@ class GitToolCLI extends CLI
      */
     private function cloneExtension($ext, $repo)
     {
-        if (substr($ext, 0, 9) == 'template:') {
+        if (str_starts_with($ext, 'template:')) {
             $target = fullpath(tpl_incdir() . '../' . substr($ext, 9));
         } else {
             $target = DOKU_PLUGIN . $ext;

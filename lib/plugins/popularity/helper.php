@@ -297,7 +297,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         }
 
         //only search txt files if 'all' option not set
-        if ($opts['all'] || substr($file, -4) == '.txt') {
+        if ($opts['all'] || str_ends_with($file, '.txt')) {
             $size = filesize($base . '/' . $file);
             $date = filemtime($base . '/' . $file);
             $data['file_count']++;

@@ -77,7 +77,7 @@ class helper_plugin_extension_extension extends Plugin
 
         $this->base = $id;
 
-        if (substr($id, 0, 9) == 'template:') {
+        if (str_starts_with($id, 'template:')) {
             $this->base = substr($id, 9);
             $this->is_template = true;
         } else {
@@ -794,7 +794,7 @@ class helper_plugin_extension_extension extends Plugin
 
                 if ($dh = @opendir($path . $type . '/')) {
                     while (false !== ($cp = readdir($dh))) {
-                        if ($cp == '.' || $cp == '..' || strtolower(substr($cp, -4)) != '.php') continue;
+                        if ($cp == '.' || $cp == '..' || !str_ends_with(strtolower($cp), '.php')) continue;
 
                         $plugin = plugin_load($type, $this->base . '_' . substr($cp, 0, -4));
                         if ($plugin instanceof PluginInterface) break;
@@ -1184,7 +1184,7 @@ class helper_plugin_extension_extension extends Plugin
     private function decompress($file, $target)
     {
         // decompression library doesn't like target folders ending in "/"
-        if (substr($target, -1) == "/") $target = substr($target, 0, -1);
+        if (str_ends_with($target, '/')) $target = substr($target, 0, -1);
 
         $ext = $this->guessArchiveType($file);
         if (in_array($ext, ['tar', 'bz', 'gz'])) {
