@@ -24,7 +24,9 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: '8.2'
-                  tools: cs2pr, phpcs
 
             - name: run PHP codesniffer
-              run: phpcs -q --standard=_test/phpcs_MigrationAdjustments.xml
+              run: |
+                cd _test
+                composer install --no-interaction --no-progress --no-suggest --prefer-dist
+                composer run check
