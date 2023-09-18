@@ -95,7 +95,7 @@ $evt = new Event('MEDIA_RESIZE', $data);
 if ($evt->advise_before()) {
     if (
         $MIME != 'image/svg+xml' &&
-        (substr($MIME, 0, 5) == 'image') &&
+        str_starts_with($MIME, 'image') &&
         ($WIDTH || $HEIGHT)
     ) {
         if ($HEIGHT && $WIDTH) {

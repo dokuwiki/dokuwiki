@@ -160,7 +160,7 @@ class admin_plugin_logviewer extends AdminPlugin
 
             if ($size >= self::MAX_READ_SIZE) {
                 array_shift($lines); // Discard the first line
-                while ($lines !== [] && (substr($lines[0], 0, 2) === '  ')) {
+                while ($lines !== [] && str_starts_with($lines[0], '  ')) {
                     array_shift($lines); // Discard indented lines
                 }
 
@@ -186,10 +186,10 @@ class admin_plugin_logviewer extends AdminPlugin
         echo "<dl>";
         for ($i = 0; $i < $numberOfLines; $i++) {
             $line = $lines[$i];
-            if (substr($line, 0, 2) === '  ') {
+            if (str_starts_with($line, '  ')) {
                 // lines indented by two spaces are details, aggregate them
                 echo '<dd>';
-                while (substr($line, 0, 2) === '  ') {
+                while (str_starts_with($line, '  ')) {
                     echo hsc(substr($line, 2)) . '<br />';
                     $i++;
                     $line = $lines[$i] ?? '';

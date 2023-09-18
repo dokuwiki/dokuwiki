@@ -178,9 +178,9 @@ class Setting
      */
     public function getType()
     {
-        if (substr($this->getKey(), 0, 10) == 'plugin' . Configuration::KEYMARKER) {
+        if (str_starts_with($this->getKey(), 'plugin' . Configuration::KEYMARKER)) {
             return 'plugin';
-        } elseif (substr($this->getKey(), 0, 7) == 'tpl' . Configuration::KEYMARKER) {
+        } elseif (str_starts_with($this->getKey(), 'tpl' . Configuration::KEYMARKER)) {
             return 'template';
         } else {
             return 'dokuwiki';

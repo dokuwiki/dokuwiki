@@ -678,7 +678,7 @@ class auth_plugin_authpdo extends AuthPlugin
             $hasnextrowset = true;
             $currentsql = $sql;
             while ($hasnextrowset) {
-                if (strtolower(substr($currentsql, 0, 6)) == 'select') {
+                if (str_starts_with(strtolower($currentsql), 'select')) {
                     $result = $sth->fetchAll();
                 } else {
                     $result = $sth->rowCount();

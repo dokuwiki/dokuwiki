@@ -56,7 +56,7 @@ if (preg_match('/^\/_media\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
         die('Access denied');
     }
 
-    if (substr($_SERVER['SCRIPT_NAME'], -4) == '.php') {
+    if (str_ends_with($_SERVER['SCRIPT_NAME'], '.php')) {
         # php scripts
         require $_SERVER['DOCUMENT_ROOT'] . $_SERVER['SCRIPT_NAME'];
     } else {
