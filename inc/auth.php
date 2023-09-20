@@ -1045,7 +1045,7 @@ function updateprofile()
         return false;
     }
 
-    if ($changes['pass']) {
+    if (array_key_exists('pass', $changes) && $changes['pass']) {
         // update cookie and session with the changed data
         [/* user */, $sticky, /* pass */] = auth_getCookie();
         $pass = auth_encrypt($changes['pass'], auth_cookiesalt(!$sticky, true));
