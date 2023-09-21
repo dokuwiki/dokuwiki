@@ -522,7 +522,7 @@ function dbg_backtrace()
     $calls = [];
     $depth = count($backtrace) - 1;
     foreach ($backtrace as $i => $call) {
-        $location = $call['file'] . ':' . $call['line'];
+        $location = isset($call['file']) ? $call['file'] . ':' . ($call['line'] ?? '0') : '[internal function]';
         $function = (isset($call['class'])) ?
             $call['class'] . $call['type'] . $call['function'] : $call['function'];
 
