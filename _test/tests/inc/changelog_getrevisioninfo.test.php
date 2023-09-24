@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\ChangeLog\ChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
 
 /**
@@ -41,7 +42,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      */
     function test_requestrev() {
         $rev = 1362525899;
-        $infoexpected = parseChangelogLine($this->logline);
+        $infoexpected = ChangeLog::parseLogLine($this->logline);
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
         $info = $pagelog->getRevisionInfo($rev);
@@ -56,7 +57,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      */
     function test_requestrev_chuncked() {
         $rev = 1362525899;
-        $infoexpected = parseChangelogLine($this->logline);
+        $infoexpected = ChangeLog::parseLogLine($this->logline);
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
         $info = $pagelog->getRevisionInfo($rev);
@@ -68,7 +69,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      */
     function test_requestrev_chunckedsmallerthanlinelength() {
         $rev = 1362525899;
-        $infoexpected = parseChangelogLine($this->logline);
+        $infoexpected = ChangeLog::parseLogLine($this->logline);
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 20);
         $info = $pagelog->getRevisionInfo($rev);
@@ -80,7 +81,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      */
     function test_requestrecentestlogline() {
         $rev = 1374261194;
-        $infoexpected = parseChangelogLine($this->firstlogline);
+        $infoexpected = ChangeLog::parseLogLine($this->firstlogline);
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
         $info = $pagelog->getRevisionInfo($rev);
@@ -95,7 +96,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      */
     function test_requestrecentestlogline_chuncked() {
         $rev = 1374261194;
-        $infoexpected = parseChangelogLine($this->firstlogline);
+        $infoexpected = ChangeLog::parseLogLine($this->firstlogline);
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
         $info = $pagelog->getRevisionInfo($rev);
@@ -129,7 +130,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      */
     function test_chuncksizetrue() {
         $rev = 1362525899;
-        $infoexpected = parseChangelogLine($this->logline);
+        $infoexpected = ChangeLog::parseLogLine($this->logline);
 
         $pagelog = new PageChangeLog($this->pageid, true);
         $info = $pagelog->getRevisionInfo($rev);

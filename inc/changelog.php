@@ -14,13 +14,16 @@ use dokuwiki\File\PageFile;
 /**
  * parses a changelog line into it's components
  *
- * @author Ben Coburn <btcoburn@silicodon.net>
- *
  * @param string $line changelog line
  * @return array|bool parsed line or false
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @deprecated 2023-09-25
  */
 function parseChangelogLine($line)
 {
+    dbg_deprecated('see ' . ChangeLog::class . '::parseLogLine()');
     return ChangeLog::parseLogLine($line);
 }
 
