@@ -158,7 +158,7 @@ abstract class ChangeLog
         }
 
         // check if it's already in the memory cache
-        if (isset($this->cache[$this->id]) && isset($this->cache[$this->id][$rev])) {
+        if (isset($this->cache[$this->id][$rev])) {
             return $this->cache[$this->id][$rev];
         }
 
@@ -173,10 +173,8 @@ abstract class ChangeLog
         foreach ($lines as $line) {
             $this->parseAndCacheLogLine($line);
         }
-        if (!isset($this->cache[$this->id][$rev])) {
-            return false;
-        }
-        return $this->cache[$this->id][$rev];
+
+        return $this->cache[$this->id][$rev] ?? false;
     }
 
     /**
@@ -430,7 +428,9 @@ abstract class ChangeLog
                         $revs1[] = $info['date'];
                         $index++;
 
-                        if ($index > (int) ($max / 2)) break 2;
+                        if ($index > (int) ($max / 2)) {
+                            break 2;
+                        }
                     }
                 }
 
@@ -507,10 +507,14 @@ abstract class ChangeLog
                     if ($info['date'] >= $rev) {
                         //count revs after reference $rev
                         $afterCount++;
-                        if ($afterCount == 1) $beforeCount = count($revs);
+                        if ($afterCount == 1) {
+                            $beforeCount = count($revs);
+                        }
                     }
                     //enough revs after reference $rev?
-                    if ($afterCount > (int) ($max / 2)) break 2;
+                    if ($afterCount > (int) ($max / 2)) {
+                        break 2;
+                    }
                 }
             }
             //retrieve next chunk
@@ -546,7 +550,9 @@ abstract class ChangeLog
                     $revs[] = $info['date'];
                     $beforeCount++;
                     //enough revs before reference $rev?
-                    if ($beforeCount > max((int) ($max / 2), $max - $afterCount)) break 2;
+                    if ($beforeCount > max((int) ($max / 2), $max - $afterCount)) {
+                        break 2;
+                    }
                 }
             }
         }
@@ -595,7 +601,9 @@ abstract class ChangeLog
     {
         global $lang;
 
-        if (isset($this->currentRevision)) return $this->getRevisionInfo($this->currentRevision);
+        if (isset($this->currentRevision)) {
+            return $this->getRevisionInfo($this->currentRevision);
+        }
 
         // get revision id from the item file timestamp and changelog
         $fileLastMod = $this->getFilename();

@@ -113,12 +113,15 @@ class PageDiff extends Diff
             // read preference from DokuWiki cookie. PageDiff only
             $mode = get_doku_pref('difftype', null);
         }
-        if (in_array($mode, ['inline', 'sidebyside'])) $this->preference['difftype'] = $mode;
+        if (in_array($mode, ['inline', 'sidebyside'])) {
+            $this->preference['difftype'] = $mode;
+        }
 
         if (!$INPUT->has('rev') && !$INPUT->has('rev2')) {
             global $INFO, $REV;
-            if ($this->id == $INFO['id'])
+            if ($this->id == $INFO['id']) {
                 $REV = $this->rev1; // store revision back in $REV
+            }
         }
     }
 
@@ -373,24 +376,28 @@ class PageDiff extends Diff
          */
         $rev1Navi = '';
         // move backward both side: ◀◀
-        if ($rev1Prev && $rev2Prev)
+        if ($rev1Prev && $rev2Prev) {
             $rev1Navi .= $this->diffViewlink('diffbothprevrev', $rev1Prev, $rev2Prev);
+        }
         // move backward left side: ◀
-        if ($rev1Prev)
+        if ($rev1Prev) {
             $rev1Navi .= $this->diffViewlink('diffprevrev', $rev1Prev, $rev2);
+        }
         // dropdown
         $rev1Navi .= $this->buildDropdownSelector('older', $rev1Options);
         // move forward left side: ▶
-        if ($rev1Next && ($rev1Next < $rev2))
+        if ($rev1Next && ($rev1Next < $rev2)) {
             $rev1Navi .= $this->diffViewlink('diffnextrev', $rev1Next, $rev2);
+        }
 
         /*
          * navigation UI for newer revisions / Right side:
          */
         $rev2Navi = '';
         // move backward right side: ◀
-        if ($rev2Prev && ($rev1 < $rev2Prev))
+        if ($rev2Prev && ($rev1 < $rev2Prev)) {
             $rev2Navi .= $this->diffViewlink('diffprevrev', $rev1, $rev2Prev);
+        }
         // dropdown
         $rev2Navi .= $this->buildDropdownSelector('newer', $rev2Options);
         // move forward right side: ▶
@@ -402,8 +409,9 @@ class PageDiff extends Diff
             }
         }
         // move forward both side: ▶▶
-        if ($rev1Next && $rev2Next)
+        if ($rev1Next && $rev2Next) {
             $rev2Navi .= $this->diffViewlink('diffbothnextrev', $rev1Next, $rev2Next);
+        }
 
         return [$rev1Navi, $rev2Navi];
     }
@@ -429,7 +437,7 @@ class PageDiff extends Diff
             $info['timestamp'] ??= true;
             $date = dformat($info['date']);
             if ($info['timestamp'] === false) {
-                // exteranlly deleted or older file restored
+                // externally deleted or older file restored
                 $date = preg_replace('/[0-9a-zA-Z]/', '_', $date);
             }
             $options[$rev] = [
