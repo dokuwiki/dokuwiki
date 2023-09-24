@@ -115,6 +115,7 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
         $dir = 1;
         $revexpected = 1362525899;
         $infoexpected = ChangeLog::parseLogLine($this->logline);
+        $infoexpected['mode'] = 'page';
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
         $revfound = $pagelog->getRelativeRevision($rev, $dir);
