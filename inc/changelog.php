@@ -9,6 +9,7 @@
 
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\ChangeLog;
+use dokuwiki\ChangeLog\RevisionInfo;
 use dokuwiki\File\PageFile;
 
 /**
@@ -223,15 +224,15 @@ function getRecents($first, $num, $ns = '', $flags = 0)
         if (($flags & RECENTS_MEDIA_PAGES_MIXED) && @$media_rec['date'] >= @$rec['date']) {
             $media_lines_position--;
             $x = $media_rec;
-            $x['media'] = true;
+            $x['mode'] = RevisionInfo::MODE_MEDIA;
             $media_rec = false;
         } else {
             $lines_position--;
             $x = $rec;
             if ($flags & RECENTS_MEDIA_CHANGES) {
-                $x['media'] = true;
+                $x['mode'] = RevisionInfo::MODE_MEDIA;
             } else {
-                $x['media'] = false;
+                $x['mode'] = RevisionInfo::MODE_PAGE;
             }
             $rec = false;
         }
