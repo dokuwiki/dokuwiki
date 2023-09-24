@@ -114,7 +114,7 @@ abstract class ChangeLog
     protected function parseAndCacheLogLine($value)
     {
         $info = static::parseLogLine($value);
-        if(is_array($info)) {
+        if (is_array($info)) {
             $info['mode'] = $this->getMode();
             $this->cache[$this->id][$info['date']] ??= $info;
             return $info;
