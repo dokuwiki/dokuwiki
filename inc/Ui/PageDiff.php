@@ -66,7 +66,9 @@ class PageDiff extends Diff
             $changelog =& $this->changelog;
 
             // revision info object of older file (left side)
-            $this->RevInfo1 = new RevisionInfo($changelog->getCurrentRevisionInfo());
+            $info = $changelog->getCurrentRevisionInfo();
+            $info['media'] = false;
+            $this->RevInfo1 = new RevisionInfo($info);
             $this->RevInfo1->append([
                 'current' => true,
                 'text' => rawWiki($this->id),
