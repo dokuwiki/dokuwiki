@@ -46,6 +46,13 @@ abstract class ChangeLog
     abstract protected function getFilename($rev = '');
 
     /**
+     * Returns mode
+     *
+     * @return string RevisionInfo::MODE_MEDIA or RevisionInfo::MODE_PAGE
+     */
+    abstract protected function getMode();
+
+    /**
      * Check whether given revision is the current page
      *
      * @param int $rev timestamp of current page
@@ -99,17 +106,20 @@ abstract class ChangeLog
     }
 
     /**
-     * Save revision info to the cache pool
+     * Parses a changelog line into its components and save revision info to the cache pool
      *
-     * @param array $info Revision info structure
-     * @return bool
+     * @param string $value changelog line
+     * @return array|bool parsed line or false
      */
-    protected function cacheRevisionInfo($info)
+    protected function parseAndCacheLogLine($value)
     {
-        if (!is_array($info)) return false;
-        //$this->cache[$this->id][$info['date']] ??= $info; // since php 7.4
-        $this->cache[$this->id][$info['date']] ??= $info;
-        return true;
+        $info = static::parseLogLine($value);
+        if(is_array($info)) {
+            $info['mode'] = $this->getMode();
+            $this->cache[$this->id][$info['date']] ??= $info;
+            return $info;
+        }
+        return false;
     }
 
     /**
@@ -131,6 +141,8 @@ abstract class ChangeLog
      *      - sum:   edit summary (or action reason)
      *      - extra: extra data (varies by line type)
      *      - sizechange: change of filesize
+     *    additional:
+     *      - mode: page or media
      *
      * @author Ben Coburn <btcoburn@silicodon.net>
      * @author Kate Arzamastseva <pshns@ukr.net>
@@ -158,9 +170,8 @@ abstract class ChangeLog
         if (empty($lines)) return false;
 
         // parse and cache changelog lines
-        foreach ($lines as $value) {
-            $info = static::parseLogLine($value);
-            $this->cacheRevisionInfo($info);
+        foreach ($lines as $line) {
+            $this->parseAndCacheLogLine($line);
         }
         if (!isset($this->cache[$this->id][$rev])) {
             return false;
@@ -285,8 +296,8 @@ abstract class ChangeLog
 
         // handle lines in reverse order
         for ($i = count($lines) - 1; $i >= 0; $i--) {
-            $info = static::parseLogLine($lines[$i]);
-            if ($this->cacheRevisionInfo($info)) {
+            $info = $this->parseAndCacheLogLine($lines[$i]);
+            if (is_array($info)) {
                 $revs[] = $info['date'];
             }
         }
@@ -342,8 +353,8 @@ abstract class ChangeLog
                 $step = -1;
             }
             for ($i = $start; $i >= 0 && $i < $count; $i += $step) {
-                $info = static::parseLogLine($lines[$i]);
-                if ($this->cacheRevisionInfo($info)) {
+                $info = $this->parseAndCacheLogLine($lines[$i]);
+                if (is_array($info)) {
                     //look for revs older/earlier then reference $rev and select $direction-th one
                     if (($direction > 0 && $info['date'] > $rev) || ($direction < 0 && $info['date'] < $rev)) {
                         $revCounter++;
@@ -414,8 +425,8 @@ abstract class ChangeLog
             $revs1 = $allRevs;
             while ($head > 0) {
                 for ($i = count($lines) - 1; $i >= 0; $i--) {
-                    $info = static::parseLogLine($lines[$i]);
-                    if ($this->cacheRevisionInfo($info)) {
+                    $info = $this->parseAndCacheLogLine($lines[$i]);
+                    if (is_array($info)) {
                         $revs1[] = $info['date'];
                         $index++;
 
@@ -490,8 +501,8 @@ abstract class ChangeLog
         $tail = $startTail;
         while (count($lines) > 0) {
             foreach ($lines as $line) {
-                $info = static::parseLogLine($line);
-                if ($this->cacheRevisionInfo($info)) {
+                $info = $this->parseAndCacheLogLine($line);
+                if (is_array($info)) {
                     $revs[] = $info['date'];
                     if ($info['date'] >= $rev) {
                         //count revs after reference $rev
@@ -530,8 +541,8 @@ abstract class ChangeLog
             [$lines, $head, $tail] = $this->readAdjacentChunk($fp, $head, $tail, -1);
 
             for ($i = count($lines) - 1; $i >= 0; $i--) {
-                $info = static::parseLogLine($lines[$i]);
-                if ($this->cacheRevisionInfo($info)) {
+                $info = $this->parseAndCacheLogLine($lines[$i]);
+                if (is_array($info)) {
                     $revs[] = $info['date'];
                     $beforeCount++;
                     //enough revs before reference $rev?
@@ -575,6 +586,8 @@ abstract class ChangeLog
      *      - extra: extra data (varies by line type)
      *      - sizechange: change of filesize
      *      - timestamp: unix timestamp or false (key set only for external edit occurred)
+     *   additional:
+     *      - mode:  page or media
      *
      * @author  Satoshi Sahara <sahara.satoshi@gmail.com>
      */
@@ -616,6 +629,7 @@ abstract class ChangeLog
                 'extra' => '',
                 'sizechange' => -io_getSizeFile($this->getFilename($lastRev)),
                 'timestamp' => false,
+                'mode' => $this->getMode()
             ];
         } else {                                     // item file exists, with timestamp $fileRev
             // here, file timestamp $fileRev is different with last revision timestamp $lastRev in changelog
@@ -654,6 +668,7 @@ abstract class ChangeLog
                 'extra' => '',
                 'sizechange' => $sizechange,
                 'timestamp' => $timestamp,
+                'mode' => $this->getMode()
             ];
         }
 

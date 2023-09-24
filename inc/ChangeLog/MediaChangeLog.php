@@ -28,6 +28,15 @@ class MediaChangeLog extends ChangeLog
         return mediaFN($this->id, $rev);
     }
 
+    /**
+     * Returns mode
+     *
+     * @return string RevisionInfo::MODE_PAGE
+     */
+    protected function getMode()
+    {
+        return RevisionInfo::MODE_MEDIA;
+    }
 
 
     /**
@@ -52,6 +61,7 @@ class MediaChangeLog extends ChangeLog
 
         // update cache
         $this->currentRevision = $info['date'];
+        $info['mode'] = $this->getMode();
         $this->cache[$this->id][$this->currentRevision] = $info;
         return $info;
     }

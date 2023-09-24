@@ -82,7 +82,6 @@ class MediaDiff extends Diff
 
         $changelogRev1 = $changelog->getRevisionInfo($this->rev1);
         $changelogRev2 = $changelog->getRevisionInfo($this->rev2);
-        $changelogRev1['media'] = $changelogRev2['media'] = true;
 
         $this->RevInfo1 = new RevisionInfo($changelogRev1);
         $this->RevInfo2 = new RevisionInfo($changelogRev2);
