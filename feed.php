@@ -232,7 +232,7 @@ function rss_buildItems(&$rss, &$data, $opt)
             // add date
             if (isset($ditem['date'])) {
                 $date = $ditem['date'];
-            } elseif (isset($ditem['media'])) {
+            } elseif ($ditem['media'] ?? false) {
                 $date = @filemtime(mediaFN($id));
             } elseif (file_exists(wikiFN($id))) {
                 $date = @filemtime(wikiFN($id));
@@ -256,7 +256,7 @@ function rss_buildItems(&$rss, &$data, $opt)
             // add item link
             switch ($opt['link_to']) {
                 case 'page':
-                    if (isset($ditem['media'])) {
+                    if ($ditem['media'] ?? false) {
                         $item->link = media_managerURL(
                             [
                                 'image' => $id,
@@ -271,7 +271,7 @@ function rss_buildItems(&$rss, &$data, $opt)
                     }
                     break;
                 case 'rev':
-                    if (isset($ditem['media'])) {
+                    if ($ditem['media'] ?? false) {
                         $item->link = media_managerURL(
                             [
                                 'image'       => $id,
@@ -287,7 +287,7 @@ function rss_buildItems(&$rss, &$data, $opt)
                     }
                     break;
                 case 'current':
-                    if (isset($ditem['media'])) {
+                    if ($ditem['media'] ?? false) {
                         $item->link = media_managerURL(
                             [
                                 'image' => $id,
@@ -302,7 +302,7 @@ function rss_buildItems(&$rss, &$data, $opt)
                     break;
                 case 'diff':
                 default:
-                    if (isset($ditem['media'])) {
+                    if ($ditem['media'] ?? false) {
                         $item->link = media_managerURL(
                             [
                                 'image'       => $id,
@@ -323,7 +323,7 @@ function rss_buildItems(&$rss, &$data, $opt)
             switch ($opt['item_content']) {
                 case 'diff':
                 case 'htmldiff':
-                    if (isset($ditem['media'])) {
+                    if ($ditem['media'] ?? false) {
                         $medialog = new MediaChangeLog($id);
                         $revs     = $medialog->getRevisions(0, 1);
                         $rev      = $revs[0];
@@ -382,7 +382,7 @@ function rss_buildItems(&$rss, &$data, $opt)
                     }
                     break;
                 case 'html':
-                    if (isset($ditem['media'])) {
+                    if ($ditem['media'] ?? false) {
                         if ($size = media_image_preview_size($id, '', new JpegMeta(mediaFN($id)))) {
                             $more    = 'w=' . $size[0] . '&h=' . $size[1] . '&t=' . @filemtime(mediaFN($id));
                             $src  = ml($id, $more, true, '&amp;', true);
@@ -416,7 +416,7 @@ function rss_buildItems(&$rss, &$data, $opt)
                     break;
                 case 'abstract':
                 default:
-                    if (isset($ditem['media'])) {
+                    if ($ditem['media'] ?? false) {
                         if ($size = media_image_preview_size($id, '', new JpegMeta(mediaFN($id)))) {
                             $more    = 'w=' . $size[0] . '&h=' . $size[1] . '&t=' . @filemtime(mediaFN($id));
                             $src  = ml($id, $more, true, '&amp;', true);
