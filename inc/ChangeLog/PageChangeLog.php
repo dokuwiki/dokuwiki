@@ -28,6 +28,15 @@ class PageChangeLog extends ChangeLog
         return wikiFN($this->id, $rev);
     }
 
+    /**
+     * Returns mode
+     *
+     * @return string RevisionInfo::MODE_PAGE
+     */
+    protected function getMode()
+    {
+        return RevisionInfo::MODE_PAGE;
+    }
 
 
     /**
@@ -52,6 +61,7 @@ class PageChangeLog extends ChangeLog
 
         // update cache
         $this->currentRevision = $info['date'];
+        $info['mode'] = $this->getMode();
         $this->cache[$this->id][$this->currentRevision] = $info;
         return $info;
     }

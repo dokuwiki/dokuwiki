@@ -70,7 +70,6 @@ class MediaRevisions extends Revisions
         $form->addTagOpen('ul');
         foreach ($revisions as $info) {
             $rev = $info['date'];
-            $info['media'] = true;
             $RevInfo = new RevisionInfo($info);
             $RevInfo->isCurrent($changelog->isCurrentRevision($rev));
 

@@ -9,18 +9,22 @@
 
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\ChangeLog;
+use dokuwiki\ChangeLog\RevisionInfo;
 use dokuwiki\File\PageFile;
 
 /**
  * parses a changelog line into it's components
  *
- * @author Ben Coburn <btcoburn@silicodon.net>
- *
  * @param string $line changelog line
  * @return array|bool parsed line or false
+ *
+ * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @deprecated 2023-09-25
  */
 function parseChangelogLine($line)
 {
+    dbg_deprecated('see ' . ChangeLog::class . '::parseLogLine()');
     return ChangeLog::parseLogLine($line);
 }
 
@@ -170,8 +174,9 @@ function getRecents($first, $num, $ns = '', $flags = 0)
     $recent = [];
     $count  = 0;
 
-    if (!$num)
+    if (!$num) {
         return $recent;
+    }
 
     // read all recent changes. (kept short)
     if ($flags & RECENTS_MEDIA_CHANGES) {
@@ -194,19 +199,19 @@ function getRecents($first, $num, $ns = '', $flags = 0)
         $media_lines_position = count($media_lines) - 1;
     }
 
-    $seen = []; // caches seen lines, _handleRecent() skips them
+    $seen = []; // caches seen lines, _handleRecentLogLine() skips them
 
     // handle lines
     while ($lines_position >= 0 || (($flags & RECENTS_MEDIA_PAGES_MIXED) && $media_lines_position >= 0)) {
         if (empty($rec) && $lines_position >= 0) {
-            $rec = _handleRecent(@$lines[$lines_position], $ns, $flags, $seen);
+            $rec = _handleRecentLogLine(@$lines[$lines_position], $ns, $flags, $seen);
             if (!$rec) {
                 $lines_position--;
                 continue;
             }
         }
         if (($flags & RECENTS_MEDIA_PAGES_MIXED) && empty($media_rec) && $media_lines_position >= 0) {
-            $media_rec = _handleRecent(
+            $media_rec = _handleRecentLogLine(
                 @$media_lines[$media_lines_position],
                 $ns,
                 $flags | RECENTS_MEDIA_CHANGES,
@@ -220,15 +225,15 @@ function getRecents($first, $num, $ns = '', $flags = 0)
         if (($flags & RECENTS_MEDIA_PAGES_MIXED) && @$media_rec['date'] >= @$rec['date']) {
             $media_lines_position--;
             $x = $media_rec;
-            $x['media'] = true;
+            $x['mode'] = RevisionInfo::MODE_MEDIA;
             $media_rec = false;
         } else {
             $lines_position--;
             $x = $rec;
             if ($flags & RECENTS_MEDIA_CHANGES) {
-                $x['media'] = true;
+                $x['mode'] = RevisionInfo::MODE_MEDIA;
             } else {
-                $x['media'] = false;
+                $x['mode'] = RevisionInfo::MODE_PAGE;
             }
             $rec = false;
         }
@@ -270,8 +275,9 @@ function getRecentsSince($from, $to = null, $ns = '', $flags = 0)
     global $conf;
     $recent = [];
 
-    if ($to && $to < $from)
+    if ($to && $to < $from) {
         return $recent;
+    }
 
     // read all recent changes. (kept short)
     if ($flags & RECENTS_MEDIA_CHANGES) {
@@ -285,10 +291,10 @@ function getRecentsSince($from, $to = null, $ns = '', $flags = 0)
     $lines = array_reverse($lines);
 
     // handle lines
-    $seen = []; // caches seen lines, _handleRecent() skips them
+    $seen = []; // caches seen lines, _handleRecentLogLine() skips them
 
     foreach ($lines as $line) {
-        $rec = _handleRecent($line, $ns, $flags, $seen);
+        $rec = _handleRecentLogLine($line, $ns, $flags, $seen);
         if ($rec !== false) {
             if ($rec['date'] >= $from) {
                 if (!$to || $rec['date'] <= $to) {
@@ -305,6 +311,7 @@ function getRecentsSince($from, $to = null, $ns = '', $flags = 0)
 
 /**
  * Internal function used by getRecents
+ * Parse a line and checks whether it should be included
  *
  * don't call directly
  *
@@ -318,7 +325,7 @@ function getRecentsSince($from, $to = null, $ns = '', $flags = 0)
  * @param array  $seen   listing of seen pages
  * @return array|bool    false or array with info about a change
  */
-function _handleRecent($line, $ns, $flags, &$seen)
+function _handleRecentLogLine($line, $ns, $flags, &$seen)
 {
     if (empty($line)) return false;   //skip empty lines
 

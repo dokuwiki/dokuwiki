@@ -155,8 +155,7 @@ class Recent extends Ui
      */
     protected function checkCurrentRevision(array &$info)
     {
-        $itemType = $info['media'] ? 'media' : 'page';
-        if ($itemType == 'page') {
+        if ($info['mode'] == RevisionInfo::MODE_PAGE) {
             $changelog = new PageChangelog($info['id']);
         } else {
             $changelog = new MediaChangelog($info['id']);

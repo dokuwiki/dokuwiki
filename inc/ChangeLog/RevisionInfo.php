@@ -9,9 +9,14 @@ namespace dokuwiki\ChangeLog;
  *  - Ui\Recent
  *  - Ui\PageRevisions
  *  - Ui\MediaRevisions
+ *  - Ui\PageDiff
+ *  - Ui\MediaDiff
  */
 class RevisionInfo
 {
+    public const MODE_PAGE = 'page';
+    public const MODE_MEDIA = 'media';
+
     /* @var array */
     protected $info;
 
@@ -34,12 +39,9 @@ class RevisionInfo
      */
     public function __construct($info = null)
     {
-        if (is_array($info) && isset($info['id'])) {
-            // define strategy context
-            $info['mode'] = $info['media'] ? 'media' : 'page';
-        } else {
+        if (!is_array($info) || !isset($info['id'])) {
             $info = [
-                'mode' => 'page',
+                'mode' => self::MODE_PAGE,
                 'date' => false,
             ];
         }
@@ -106,10 +108,10 @@ class RevisionInfo
     public function showFileIcon()
     {
         $id = $this->val('id');
-        if ($this->val('mode') == 'media') {
+        if ($this->val('mode') == self::MODE_MEDIA) {
             // media file revision
             return media_printicon($id);
-        } elseif ($this->val('mode') == 'page') {
+        } elseif ($this->val('mode') == self::MODE_PAGE) {
             // page revision
             return '<img class="icon" src="' . DOKU_BASE . 'lib/images/fileicons/file.png" alt="' . $id . '" />';
         }
@@ -154,7 +156,9 @@ class RevisionInfo
     {
         if ($this->val('user')) {
             $html = '<bdi>' . editorinfo($this->val('user')) . '</bdi>';
-            if (auth_ismanager()) $html .= ' <bdo dir="ltr">(' . $this->val('ip') . ')</bdo>';
+            if (auth_ismanager()) {
+                $html .= ' <bdo dir="ltr">(' . $this->val('ip') . ')</bdo>';
+            }
         } else {
             $html = '<bdo dir="ltr">' . $this->val('ip') . '</bdo>';
         }
@@ -172,14 +176,14 @@ class RevisionInfo
         $id = $this->val('id');
         $rev = $this->isCurrent() ? '' : $this->val('date');
 
-        if ($this->val('mode') == 'media') {
+        if ($this->val('mode') == self::MODE_MEDIA) {
             // media file revision
             $params = ['tab_details' => 'view', 'ns' => getNS($id), 'image' => $id];
             if ($rev) $params += ['rev' => $rev];
             $href = media_managerURL($params, '&');
             $display_name = $id;
             $exists = file_exists(mediaFN($id, $rev));
-        } elseif ($this->val('mode') == 'page') {
+        } elseif ($this->val('mode') == self::MODE_PAGE) {
             // page revision
             $params = $rev ? ['rev' => $rev] : [];
             $href = wl($id, $params, false, '&');
@@ -224,11 +228,11 @@ class RevisionInfo
             : dformat($this->val('date'));
 
 
-        if ($this->val('mode') == 'media') {
+        if ($this->val('mode') == self::MODE_MEDIA) {
             // media file revision
             $href = ml($id, $params, false, '&');
             $exists = file_exists(mediaFN($id, $rev));
-        } elseif ($this->val('mode') == 'page') {
+        } elseif ($this->val('mode') == self::MODE_PAGE) {
             // page revision
             $href = wl($id, $params, false, '&');
             $exists = page_exists($id, $rev);
@@ -260,7 +264,7 @@ class RevisionInfo
         $id = $this->val('id');
 
         $href = '';
-        if ($this->val('mode') == 'media') {
+        if ($this->val('mode') == self::MODE_MEDIA) {
             // media file revision
             // unlike page, media file does not copied to media_attic when uploaded.
             // diff icon will not be shown when external edit occurred
@@ -271,7 +275,7 @@ class RevisionInfo
                 $param = ['tab_details' => 'history', 'mediado' => 'diff', 'ns' => getNS($id), 'image' => $id];
                 $href = media_managerURL($param, '&');
             }
-        } elseif ($this->val('mode') == 'page') {
+        } elseif ($this->val('mode') == self::MODE_PAGE) {
             // page revision
             // when a page just created anyway, it is natural to expect no older revisions
             // even if it had once existed but deleted before. Simply ignore to check changelog.
@@ -303,13 +307,13 @@ class RevisionInfo
         $rev = $this->isCurrent() ? '' : $this->val('date');
 
         $href = '';
-        if ($this->val('mode') == 'media') {
+        if ($this->val('mode') == self::MODE_MEDIA) {
             // media file revision
             if (!$this->isCurrent() && file_exists(mediaFN($id, $rev))) {
                 $param = ['mediado' => 'diff', 'image' => $id, 'rev' => $rev];
                 $href = media_managerURL($param, '&');
             }
-        } elseif ($this->val('mode') == 'page') {
+        } elseif ($this->val('mode') == self::MODE_PAGE) {
             // page revision
             if (!$this->isCurrent()) {
                 $href = wl($id, ['rev' => $rev, 'do' => 'diff'], false, '&');
@@ -341,11 +345,11 @@ class RevisionInfo
         }
 
         $id = $this->val('id');
-        if ($this->val('mode') == 'media') {
+        if ($this->val('mode') == self::MODE_MEDIA) {
             // media file revision
             $param  = ['tab_details' => 'history', 'ns' => getNS($id), 'image' => $id];
             $href = media_managerURL($param, '&');
-        } elseif ($this->val('mode') == 'page') {
+        } elseif ($this->val('mode') == self::MODE_PAGE) {
             // page revision
             $href = wl($id, ['do' => 'revisions'], false, '&');
         }
