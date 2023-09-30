@@ -50,7 +50,7 @@ class PageResolverTest extends \DokuWikiTest
             ['lev1:lev2:context', '....:....:page', 'lev1:lev2:page'],
             ['lev1:lev2:context', '..:..:lev3:page', 'lev3:page'],
             ['lev1:lev2:context', '..:..:lev3:..:page', 'page'],
-            ['lev1:lev2:context', '..:..:lev3:..:page:....:...', 'page'],
+            ['lev1:lev2:context', '..:..:lev3:..:page:....:...', 'page:start'],
 
             // relative to current page
             ['context', '~page', 'context:page'],
@@ -69,6 +69,10 @@ class PageResolverTest extends \DokuWikiTest
             // empty page links to itself
             ['context', '', 'context'],
             ['foo:context', '', 'foo:context'],
+
+            // issue 4072
+            ['context', ':..', 'start'],
+            ['context', ':foo:bar:..', 'foo:bar:start'],
         ];
 
         // run each test without a hash
@@ -97,7 +101,7 @@ class PageResolverTest extends \DokuWikiTest
     }
 
     /**
-     * Tilde start page bahaviour
+     * Tilde start page behaviour
      *
      * Please note that a ~ alone is the same as ~:
      */
