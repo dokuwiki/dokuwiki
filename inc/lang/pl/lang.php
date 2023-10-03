@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Michał <kamykowsky@gmail.com>
  * @author Marek Adamski <fevbew@wp.pl>
  * @author pavulondit <pavloo@vp.pl>
  * @author Bartek S <sadupl@gmail.com>
@@ -382,3 +383,6 @@ $lang['page_nonexist_rev']     = 'Strona nie istnieje w %s. Została następnie 
 $lang['unable_to_parse_date']  = 'Nie można przeanalizować parametru "%s".';
 $lang['email_signature_text']  = 'List został wygenerowany przez DokuWiki pod adresem
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Plik log jest zbyt duży. Poprzednie wiersze zostały pominięte!';
+$lang['log_file_failed_to_open'] = 'Nie udało się otworzyć pliku log.';
+$lang['log_file_failed_to_read'] = 'Wystąpił błąd podczas odczytywania pliku log.';
