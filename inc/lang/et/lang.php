@@ -3,13 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Werewolf <alvar@raamat.polva.ee>
  * @author Oliver S6ro <seem.iges@mail.ee>
  * @author Aari Juhanson <aari@vmg.vil.ee>
  * @author Kaiko Kaur <kaiko@kultuur.edu.ee>
- * @author kristian.kankainen@kuu.la
+ * @author kristian.kankainen <kristian.kankainen@kuu.la>
  * @author Rivo Zängov <eraser@eraser.ee>
  * @author Janar Leas <janarleas@gmail.com>
- * @author Janar Leas <janar.leas@eesti.ee>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -53,6 +53,8 @@ $lang['btn_register']          = 'Registreeri uus kasutaja';
 $lang['btn_apply']             = 'Kinnita';
 $lang['btn_media']             = 'Meedia haldur';
 $lang['btn_deleteuser']        = 'Eemalda minu konto';
+$lang['btn_img_backto']        = 'Tagasi %s';
+$lang['btn_mediaManager']      = 'Näita meediahalduris';
 $lang['loggedinas']            = 'Logis sisse kui:';
 $lang['user']                  = 'Kasutaja';
 $lang['pass']                  = 'Parool';
@@ -68,44 +70,8 @@ $lang['badpassconfirm']        = 'Väär salasõna';
 $lang['minoredit']             = 'Ebaolulised muudatused';
 $lang['draftdate']             = 'Mustand automaatselt salvestatud';
 $lang['nosecedit']             = 'Leht on vahepeal muutunud, jaotiste teave osutus aegunuks sestap laeti tervelehekülg.';
-$lang['regmissing']            = 'Kõik väljad tuleb ära täita.';
-$lang['reguexists']            = 'Tegelikult on sellise nimega kasutaja juba olemas.';
-$lang['regsuccess']            = 'Kasutaja sai tehtud. Parool saadeti Sulle e-posti aadressil.';
-$lang['regsuccess2']           = 'Kasutaja sai tehtud.';
-$lang['regmailfail']           = 'Ilmselt tekkis e-posti teel parooli saatmisel mingi tõrge. Palun suhtle sel teemal
-oma serveri administraatoriga!';
-$lang['regbadmail']            = 'Tundub, et Sinu antud e-posti aadress ei toimi - kui Sa arvad, et tegemist on
-ekstitusega, suhtle oma serveri administraatoriga';
-$lang['regbadpass']            = 'Uus parool on kirjutatud erinevalt. Proovi uuesti.';
-$lang['regpwmail']             = 'Sinu DokuWiki parool';
-$lang['reghere']               = 'Sul ei olegi veel kasutajakontot? No aga tekita see siis endale!';
-$lang['profna']                = 'Viki ei toeta profiili muudatusi';
-$lang['profnochange']          = 'Muutused puuduvad.';
-$lang['profnoempty']           = 'Tühi nimi ega meiliaadress pole lubatud.';
-$lang['profchanged']           = 'Kasutaja info edukalt muudetud';
-$lang['profnodelete']          = 'See wiki ei toeta kasutajate kustutamist';
-$lang['profdeleteuser']        = 'Kustuta konto';
-$lang['profdeleted']           = 'Sinu kasutajakonto on sellest wikist kustutatud';
-$lang['profconfdelete']        = 'Soovin sellest wikist oma konnto eemaldada. <br/> See tegevus on taastamatu.';
-$lang['profconfdeletemissing'] = 'Kinnituse valikkast märkimata.';
-$lang['pwdforget']             = 'Unustasid parooli? Tee uus';
-$lang['resendna']              = 'See wiki ei toeta parooli taassaatmist.';
-$lang['resendpwd']             = 'Sea uus salasõna';
-$lang['resendpwdmissing']      = 'Khmm... Sa pead täitma kõik väljad.';
-$lang['resendpwdnouser']       = 'Aga sellist kasutajat ei ole.';
-$lang['resendpwdbadauth']      = 'See autentimiskood ei ole õige. Kontrolli, et kopeerisid terve lingi.';
-$lang['resendpwdconfirm']      = 'Kinnituslink saadeti meilile.';
-$lang['resendpwdsuccess']      = 'Uus parool saadeti Sinu meilile.';
-$lang['license']               = 'Kus pole öeldud teisiti, kehtib selle wiki sisule järgmine leping:';
-$lang['licenseok']             = 'Teadmiseks: Toimetades seda lehte, nõustud avaldama oma sisu järgmise lepingu alusel:';
-$lang['searchmedia']           = 'Otsi failinime:';
-$lang['searchmedia_in']        = 'Otsi %s';
-$lang['txt_upload']            = 'Vali fail, mida üles laadida:';
-$lang['txt_filename']          = 'Siseta oma Wikinimi (soovituslik):';
-$lang['txt_overwrt']           = 'Kirjutan olemasoleva faili üle';
-$lang['maxuploadsize']         = 'Üleslaadimiseks lubatu enim %s faili kohta.';
-$lang['lockedby']              = 'Praegu on selle lukustanud:';
-$lang['lockexpire']            = 'Lukustus aegub:';
+$lang['search_fullresults']    = 'Täistekstiotsingu tulemused';
+$lang['js']['search_toggle_tools'] = 'Lülita Otsimise Tööriistu';
 $lang['js']['willexpire']      = 'Teie lukustus selle lehe toimetamisele aegub umbes minuti pärast.\nIgasugu  probleemide vältimiseks kasuta eelvaate nuppu, et lukustusarvesti taas tööle panna.';
 $lang['js']['notsavedyet']     = 'Sul on seal salvestamata muudatusi, mis kohe kõige kaduva teed lähevad.
 Kas Sa ikka tahad edasi liikuda?';
@@ -149,6 +115,54 @@ $lang['js']['media_done_btn']  = 'Valmis';
 $lang['js']['media_drop']      = 'Üleslaadimiseks viska failid siia';
 $lang['js']['media_cancel']    = 'eemalda';
 $lang['js']['media_overwrt']   = 'Asenda olemasolevad failid';
+$lang['search_exact_match']    = 'Täpne vaste';
+$lang['search_starts_with']    = 'Algab';
+$lang['search_ends_with']      = 'Lõpeb';
+$lang['search_contains']       = 'Sisaldab';
+$lang['search_custom_match']   = 'Valikuline';
+$lang['search_any_ns']         = 'Suvaline nimeruum';
+$lang['search_any_time']       = 'Suvaline aeg';
+$lang['search_past_7_days']    = 'Viimasel nädalal';
+$lang['search_past_month']     = 'Viimasel kuul';
+$lang['search_past_year']      = 'Viimasel aastal';
+$lang['regmissing']            = 'Kõik väljad tuleb ära täita.';
+$lang['reguexists']            = 'Tegelikult on sellise nimega kasutaja juba olemas.';
+$lang['regsuccess']            = 'Kasutaja sai tehtud. Parool saadeti Sulle e-posti aadressil.';
+$lang['regsuccess2']           = 'Kasutaja sai tehtud.';
+$lang['regmailfail']           = 'Ilmselt tekkis e-posti teel parooli saatmisel mingi tõrge. Palun suhtle sel teemal
+oma serveri administraatoriga!';
+$lang['regbadmail']            = 'Tundub, et Sinu antud e-posti aadress ei toimi - kui Sa arvad, et tegemist on
+ekstitusega, suhtle oma serveri administraatoriga';
+$lang['regbadpass']            = 'Uus parool on kirjutatud erinevalt. Proovi uuesti.';
+$lang['regpwmail']             = 'Sinu DokuWiki parool';
+$lang['reghere']               = 'Sul ei olegi veel kasutajakontot? No aga tekita see siis endale!';
+$lang['profna']                = 'Viki ei toeta profiili muudatusi';
+$lang['profnochange']          = 'Muutused puuduvad.';
+$lang['profnoempty']           = 'Tühi nimi ega meiliaadress pole lubatud.';
+$lang['profchanged']           = 'Kasutaja info edukalt muudetud';
+$lang['profnodelete']          = 'See wiki ei toeta kasutajate kustutamist';
+$lang['profdeleteuser']        = 'Kustuta konto';
+$lang['profdeleted']           = 'Sinu kasutajakonto on sellest wikist kustutatud';
+$lang['profconfdelete']        = 'Soovin sellest wikist oma konnto eemaldada. <br/> See tegevus on taastamatu.';
+$lang['profconfdeletemissing'] = 'Kinnituse valikkast märkimata.';
+$lang['pwdforget']             = 'Unustasid parooli? Tee uus';
+$lang['resendna']              = 'See wiki ei toeta parooli taassaatmist.';
+$lang['resendpwd']             = 'Sea uus salasõna';
+$lang['resendpwdmissing']      = 'Khmm... Sa pead täitma kõik väljad.';
+$lang['resendpwdnouser']       = 'Aga sellist kasutajat ei ole.';
+$lang['resendpwdbadauth']      = 'See autentimiskood ei ole õige. Kontrolli, et kopeerisid terve lingi.';
+$lang['resendpwdconfirm']      = 'Kinnituslink saadeti meilile.';
+$lang['resendpwdsuccess']      = 'Uus parool saadeti Sinu meilile.';
+$lang['license']               = 'Kus pole öeldud teisiti, kehtib selle wiki sisule järgmine leping:';
+$lang['licenseok']             = 'Teadmiseks: Toimetades seda lehte, nõustud avaldama oma sisu järgmise lepingu alusel:';
+$lang['searchmedia']           = 'Otsi failinime:';
+$lang['searchmedia_in']        = 'Otsi %s';
+$lang['txt_upload']            = 'Vali fail, mida üles laadida:';
+$lang['txt_filename']          = 'Siseta oma Wikinimi (soovituslik):';
+$lang['txt_overwrt']           = 'Kirjutan olemasoleva faili üle';
+$lang['maxuploadsize']         = 'Üleslaadimiseks lubatu enim %s faili kohta.';
+$lang['lockedby']              = 'Praegu on selle lukustanud:';
+$lang['lockexpire']            = 'Lukustus aegub:';
 $lang['rssfailed']             = 'Sinu soovitud info ammutamisel tekkis viga: ';
 $lang['nothingfound']          = 'Oops, aga mitte muhvigi ei leitud.';
 $lang['mediaselect']           = 'Hunnik faile';
@@ -239,7 +253,6 @@ $lang['upperns']               = 'mine ülemisse nimeruumi';
 $lang['metaedit']              = 'Muuda lisainfot';
 $lang['metasaveerr']           = 'Lisainfo salvestamine läks untsu.';
 $lang['metasaveok']            = 'Lisainfo salvestatud';
-$lang['btn_img_backto']            = 'Tagasi %s';
 $lang['img_title']             = 'Tiitel:';
 $lang['img_caption']           = 'Kirjeldus:';
 $lang['img_date']              = 'Kuupäev:';
@@ -252,7 +265,6 @@ $lang['img_camera']            = 'Kaamera:';
 $lang['img_keywords']          = 'Võtmesõnad:';
 $lang['img_width']             = 'Laius:';
 $lang['img_height']            = 'Kõrgus:';
-$lang['btn_mediaManager']           = 'Näita meediahalduris';
 $lang['subscr_subscribe_success'] = '%s lisati %s tellijaks';
 $lang['subscr_subscribe_error'] = 'Viga %s lisamisel %s tellijaks';
 $lang['subscr_subscribe_noaddress'] = 'Sinu kasutajaga pole seotud ühtegi aadressi, seega ei saa sind tellijaks lisada';
@@ -332,5 +344,5 @@ $lang['currentns']             = 'Hetke nimeruum';
 $lang['searchresult']          = 'Otsingu tulemus';
 $lang['plainhtml']             = 'Liht-HTML';
 $lang['wikimarkup']            = 'Wiki märgistus';
-$lang['email_signature_text'] = 'See meil on saadetud DokuWiki poolt
+$lang['email_signature_text']  = 'See meil on saadetud DokuWiki poolt
 @DOKUWIKIURL@';
