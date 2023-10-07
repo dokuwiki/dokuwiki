@@ -142,7 +142,7 @@ class TaskRunner
                 }
             }
 
-            if (count($lines) == count($out_lines)) {
+            if (count($lines) === count($out_lines)) {
                 // nothing to trim
                 @unlink($fn . '_tmp');
                 io_unlock($fn);
