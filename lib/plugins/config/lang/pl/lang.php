@@ -99,6 +99,7 @@ $lang['disableactions_other']  = 'Inne akcje (oddzielone przecinkiem)';
 $lang['disableactions_rss']    = 'XML Syndication (RSS)';
 $lang['auth_security_timeout'] = 'Czas wygaśnięcia uwierzytelnienia (w sekundach)';
 $lang['securecookie']          = 'Czy ciasteczka wysłane do przeglądarki przez HTTPS powinny być przez nią odsyłane też tylko przez HTTPS? Odznacz tę opcję tylko wtedy, gdy logowanie użytkowników jest zabezpieczone SSL, ale przeglądanie stron odbywa się bez zabezpieczenia.';
+$lang['samesitecookie']        = 'Atrybut pliku cookie tej samej witryny do użycia. Pozostawienie go pustym pozwoli przeglądarce zdecydować o zasadach tej samej witryny.';
 $lang['remote']                = 'Włącz API zdalnego dostępu. Pozwoli to innym aplikacjom na dostęp do wiki poprzez XML-RPC lub inne mechanizmy.';
 $lang['remoteuser']            = 'Ogranicz dostęp poprzez API zdalnego dostępu do podanych grup lub użytkowników, oddzielonych przecinkami. Pozostaw to pole puste by pozwolić na dostęp be ograniczeń.';
 $lang['remotecors']            = 'Włącz udostępnianie zasobów między źródłami (CORS) dla interfejsów zdalnych. Gwiazdka (*), aby zezwolić na wszystkie źródła. Pozostaw puste, aby odrzucić CORS.';
