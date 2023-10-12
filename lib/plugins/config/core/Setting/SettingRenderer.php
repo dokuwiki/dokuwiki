@@ -23,7 +23,7 @@ class SettingRenderer extends SettingMultichoice
 
         foreach (plugin_list('renderer') as $plugin) {
             $renderer = plugin_load('renderer', $plugin);
-            if (method_exists($renderer, 'canRender') && $renderer->canRender($format)) {
+            if ($renderer && method_exists($renderer, 'canRender') && $renderer->canRender($format)) {
                 $this->choices[] = $plugin;
 
                 $info = $renderer->getInfo();
