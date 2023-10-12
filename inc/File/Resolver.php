@@ -80,7 +80,7 @@ abstract class Resolver
      */
     protected function resolveRelatives($id)
     {
-        $id = trim($id, '.'); // trailing dots are invalid
+        $id = rtrim($id, '.'); // trailing dots are invalid
         if ($id === '') return '';
         $trail = ($id[-1] === ':') ? ':' : ''; // keep trailing colon
 
