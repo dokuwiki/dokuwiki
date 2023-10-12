@@ -28,6 +28,7 @@ class PluginController
     {
         $this->loadConfig();
         $this->populateMasterList();
+        $this->initAutoloaders();
     }
 
     /**
@@ -393,5 +394,22 @@ class PluginController
     protected function negate($input)
     {
         return !(bool)$input;
+    }
+
+    /**
+     * Initialize vendor autoloaders for all plugins that have them
+     */
+    protected function initAutoloaders()
+    {
+        $plugins = $this->getList();
+        foreach ($plugins as $plugin) {
+            if (file_exists(DOKU_PLUGIN . $plugin . '/vendor/autoload.php')) {
+                try {
+                    require_once(DOKU_PLUGIN . $plugin . '/vendor/autoload.php');
+                } catch (\Throwable $e) {
+                    ErrorHandler::showExceptionMsg($e, sprintf('Failed to init plugin %s autoloader', $plugin));
+                }
+            }
+        }
     }
 }
