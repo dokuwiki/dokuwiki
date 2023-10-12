@@ -54,7 +54,7 @@ class PageResolver extends Resolver
     {
         global $conf;
 
-        if ($id[-1] !== ':') return $id;
+        if ($id === '' || $id[-1] !== ':') return $id;
 
         if (page_exists($id . $conf['start'], $rev, true, $isDateAt)) {
             // start page inside namespace
