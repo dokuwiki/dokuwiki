@@ -5,4 +5,5 @@
  *
  * @author talal <ksa76@hotmail.com>
  */
+$lang['domainfail']            = 'يتعذر على LDAP العثور على اسم URL للمستخدم';
 $lang['connectfail']           = 'يتعذر على LDAP الاتصال: %s';
